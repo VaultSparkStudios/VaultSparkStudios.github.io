@@ -901,3 +901,9 @@ Public-safe summary:
 - **Public editorial freshness was accurately reported throughout the outage.** `build-news-freshness.mjs --check --require-daily` failed loudly on every one of the eight dropped runs rather than passing a missing edition. The observability layer told the truth; only the selection layer was broken.
 - **Destination unknowns no longer overstate or understate.** Two destinations (`scriptorium`, `vaultfront`) have never been confirmed reachable within retained history and now report `lastKnownGoodAt: null` rather than an invented anchor, with `neverKnownGood: 2` published. Accumulated unknown time is exposed as duration and is explicitly barred from becoming a failure verdict.
 - **Status:** green. No fabricated evidence, no relabeled hold. `real-provider-e2e-pending`, the missing Obelisk relying-party values and staging registration, the founder passkey ceremony, the D-S303 warm-origin decision, and The Dispatch double opt-in all carry forward unchanged.
+
+### S333 addendum — provider-advertised availability is not servability
+
+- `GET /models` on the managed inference provider listed `Qwen/Qwen3.6-35B-A3B-FP8` as available while every completion against it returned 503. A model registry is a catalogue, not a health check, and no probe we had could tell the two apart.
+- The Desk publisher told the truth throughout the incident: it refused to ship a half-written edition, and the cadence gate kept reporting the edition as 6 days old rather than passing a missing one. Every layer that could have lied did not.
+- An in-session claim was overstated and is corrected here: this session did NOT restore Desk publishing end to end. It fixed selection, exposed and fixed a model-availability failure, and left the newsroom able to publish — with no published edition yet as evidence. Public state remains "periodic, latest 2026-08-25".

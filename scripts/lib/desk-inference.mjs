@@ -29,6 +29,39 @@
 const DEFAULT_MODEL = 'Qwen/Qwen3.6-35B-A3B-FP8';
 
 /**
+ * Ordered authoring models: the preferred voice first, then a declared standby.
+ *
+ * A managed provider can retire a model out from under a pinned client while
+ * still ADVERTISING it. Observed live (S333): `GET /models` listed
+ * `Qwen/Qwen3.6-35B-A3B-FP8` as available, and every `chat/completions` against
+ * it answered `503 ServiceUnavailable - failed to find endpoint candidates`,
+ * twice, while `Qwen3.8-27B` answered 200 on the same key and base URL. With a
+ * single pinned model that is an unrecoverable newsroom outage caused entirely
+ * by someone else's capacity decision.
+ *
+ * A standby is not a quality opinion — it is the difference between a degraded
+ * edition and no edition. The model that actually authored is returned in the
+ * result and carried into provenance, so a fallback is always disclosed rather
+ * than silently substituted.
+ */
+export const AUTHORING_MODELS = Object.freeze([DEFAULT_MODEL, 'Qwen3.8-27B']);
+
+/**
+ * Is this failure worth trying a different model for?
+ *
+ * Deliberately narrow. A 429 is a quota FACT about the whole account and must
+ * never be retried against another model — that converts one rate-limit into
+ * several. A timeout or transport error is about the network, not the model.
+ * Only "this endpoint cannot serve this model right now" earns a failover.
+ */
+export function isEndpointUnavailable(result) {
+  if (!result || result.ok) return false;
+  if (result.state !== 'http-error') return false;
+  return /^HTTP (502|503|504)\b/.test(String(result.reason || ''))
+    || /failed to find endpoint candidates/i.test(String(result.reason || ''));
+}
+
+/**
  * Reasoning models bill reasoning tokens against max_tokens FIRST. A budget
  * below this returns HTTP 200 with empty content — an answer-shaped blank.
  * Enforced here so no caller has to rediscover it.
@@ -78,11 +111,12 @@ export async function resolveCredentials(env = process.env) {
 }
 
 /**
- * One advisory completion. Never throws on an unavailable service.
+ * One advisory completion against ONE model. Never throws on an unavailable
+ * service. Callers should prefer `chat()`, which adds the declared standby.
  *
  * @returns {Promise<{ok:boolean,state:string,content?:string,advisory:true,authoritative:false}>}
  */
-export async function chat({
+export async function chatOnce({
   messages,
   model = DEFAULT_MODEL,
   maxTokens = 4096,
@@ -139,6 +173,37 @@ export async function chat({
 }
 
 /**
+ * One advisory completion, with a declared standby model.
+ *
+ * Tries the requested model first, then the remaining AUTHORING_MODELS, and
+ * ONLY when the failure says this endpoint cannot serve this model. Every other
+ * failure — quota, timeout, transport, truncation, empty answer — returns
+ * immediately and unchanged, because those are not fixed by asking a different
+ * model and retrying them would multiply the problem.
+ *
+ * `fellBackFrom` is set whenever a standby authored, so the caller can disclose
+ * which model actually wrote rather than assuming the preferred one did.
+ */
+export async function chat(options = {}) {
+  const requested = options.model || DEFAULT_MODEL;
+  const candidates = [requested, ...AUTHORING_MODELS.filter((m) => m !== requested)];
+
+  let first = null;
+  for (const model of candidates) {
+    const result = await chatOnce({ ...options, model });
+    if (result.ok) {
+      if (model !== requested) return { ...result, fellBackFrom: requested };
+      return result;
+    }
+    first ??= result;
+    if (!isEndpointUnavailable(result)) return result;
+  }
+  // Every candidate was endpoint-unavailable: report the first failure verbatim
+  // rather than inventing a summary the caller cannot act on.
+  return first;
+}
+
+/**
  * Models fence JSON, prepend commentary, or emit reasoning before the object.
  * Extract the first balanced top-level object rather than trusting the shape.
  */
@@ -189,6 +254,29 @@ export function selfTestDeskInference() {
       const body = buildRequestBody({ model: 'm', messages: [], budget: 1000, temperature: 0.7, thinking: false });
       return body.chat_template_kwargs?.enable_thinking === false && body.top_p === 0.8 && body.top_k === 20;
     })()],
+
+    // S333: the provider retired the pinned model while still listing it in
+    // /models. A depooled model must not be able to stop the newsroom, and a
+    // quota fact must never be multiplied across models.
+    ['a depooled endpoint is a failover-worthy failure',
+      isEndpointUnavailable({ ok: false, state: 'http-error', reason: 'HTTP 503: inference error: ServiceUnavailable - failed to find endpoint candidates for serving the request' })],
+    ['a bare 502/504 is failover-worthy',
+      isEndpointUnavailable({ ok: false, state: 'http-error', reason: 'HTTP 502: bad gateway' })
+      && isEndpointUnavailable({ ok: false, state: 'http-error', reason: 'HTTP 504: gateway timeout' })],
+    ['a quota fact is NEVER retried against another model',
+      !isEndpointUnavailable({ ok: false, state: 'rate-limited', reason: 'quota exceeded (HTTP 429)' })],
+    ['a timeout is not a model problem',
+      !isEndpointUnavailable({ ok: false, state: 'timeout', reason: 'aborted' })],
+    ['a truncation is not a model problem',
+      !isEndpointUnavailable({ ok: false, state: 'truncated', reason: 'budget spent on reasoning' })],
+    ['a 400 is our bug, not a capacity problem',
+      !isEndpointUnavailable({ ok: false, state: 'http-error', reason: 'HTTP 400: bad request' })],
+    ['a successful call is never treated as a failover candidate',
+      !isEndpointUnavailable({ ok: true, state: 'ok' })],
+    ['a standby is declared, distinct, and ordered after the preferred voice',
+      AUTHORING_MODELS.length >= 2
+      && AUTHORING_MODELS[0] === DEFAULT_MODEL
+      && new Set(AUTHORING_MODELS).size === AUTHORING_MODELS.length],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);

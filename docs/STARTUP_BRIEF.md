@@ -62,7 +62,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 333 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    370/370 passing  ·  Deploy: N/A                       ║
+║  Tests:    371/371 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -76,7 +76,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         370/370 passing (2026-08-28) · UNVERIFIED (no  ║
+║  ⚠  Tests         371/371 passing (2026-08-30) · UNVERIFIED (no  ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
 ║  ✓  Context age   0d                                             ║
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      The full derived-build profile is not full  ║
-║        The full derived-build profile is not full: it omits bui  ║
+║  100  [VERIFY]       Confirm the Desk publishes a real edition   ║
+║        Confirm the Desk publishes a real edition end to end on   ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      The Desk freshness banner disagrees with i  ║
+║   90  [PRODUCT]      The full derived-build profile is not full  ║
+║        The full derived-build profile is not full: it omits bui  ║
+║                                                                  ║
+║   87  [PRODUCT]      The Desk freshness banner disagrees with i  ║
 ║        The Desk freshness banner disagrees with its own API by   ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  Audit every other fixed-size scan window   ║
+║   87  [INTELLIGENCE]  Audit every other fixed-size scan window   ║
 ║        Audit every other fixed-size scan window against current  ║
-║                                                                  ║
-║   91  [VERIFY]       Confirm The Desk actually resumes on its o  ║
-║        Confirm The Desk actually resumes on its own schedule. T  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
