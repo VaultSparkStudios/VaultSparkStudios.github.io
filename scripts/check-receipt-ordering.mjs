@@ -51,10 +51,36 @@ export function validateProofBinding(receipt, { root, label, currentCandidate = 
   if (!receipt?.candidate) {
     errors.push(label + ': release-candidate binding is missing');
   } else {
-    for (const field of ['manifest', 'manifestSha256', 'candidateSha', 'root']) {
-      if ((receipt.candidate[field] ?? null) !== (currentCandidate[field] ?? null)) {
-        errors.push(label + ': candidate.' + field + ' does not match the final candidate manifest');
-      }
+    // Bind the PROMOTION content, not the churn around it (D-S333.18).
+    //
+    // This compared `manifestSha256` and `root` as well. Both move for reasons
+    // that say nothing about what the proof attests: `root` folds in
+    // cron-owned observed leaves, and `manifestSha256` hashes the manifest file
+    // including its own `generatedAt`, so it changes on every regeneration even
+    // when no content did. Measured in S333: regenerations with ZERO changed
+    // leaves and an identical `candidateSha` invalidated both receipts
+    // repeatedly, each time costing a 12-minute mobile audit and a 14-capture
+    // review to re-assert something that had not changed.
+    //
+    // The manifest itself draws exactly this line — its self-test asserts
+    // "observed churn leaves the promotion root untouched" — so binding the
+    // churn discarded a distinction the producer had already made.
+    //
+    // Nothing is weakened: the per-file `source.entries` digests above are what
+    // actually prove the tested pages are unmodified, and they are compared
+    // byte-for-byte. `candidateSha` pins the promotion content those pages
+    // belong to. A change to any tested file, or to promotion content, still
+    // fails. Only observed-lane churn and a wall-clock stamp stop lying about it.
+    if ((receipt.candidate.manifest ?? null) !== (currentCandidate.manifest ?? null)) {
+      errors.push(label + ': candidate.manifest does not match the final candidate manifest');
+    }
+    if ((receipt.candidate.candidateSha ?? null) !== (currentCandidate.candidateSha ?? null)) {
+      errors.push(label + ': candidate.candidateSha does not match the final candidate manifest');
+    }
+    // A receipt with no candidateSha at all predates the binding and cannot be
+    // trusted to attest anything about a promotion candidate.
+    if (!receipt.candidate.candidateSha) {
+      errors.push(label + ': candidate.candidateSha is missing; regenerate the receipt');
     }
   }
   return errors;
@@ -80,9 +106,36 @@ function selfTest() {
     }
     fs.writeFileSync(path.join(root, 'a.txt'), 'alpha');
 
-    fs.writeFileSync(path.join(root, 'api', 'candidate-artifact-manifest.json'), JSON.stringify({ candidateSha: 'b'.repeat(40), root: '2'.repeat(64) }));
-    if (!validate().some((error) => error.includes('candidate.manifestSha256'))) {
-      throw new Error('candidate mutation was not rejected');
+    // D-S333.18: the binding follows PROMOTION content, so the two halves of
+    // "the manifest changed" must now be told apart.
+    const manifestPath = path.join(root, 'api', 'candidate-artifact-manifest.json');
+    const sealed = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+    // (a) Observed-lane churn and a fresh wall-clock stamp must be TOLERATED.
+    //     Same promotion content, different file bytes — previously this was the
+    //     false invalidation that forced a needless re-proof.
+    fs.writeFileSync(manifestPath, JSON.stringify({
+      ...sealed,
+      generatedAt: '2099-01-01',
+      observedRoot: '9'.repeat(64),
+      root: '2'.repeat(64),
+    }));
+    if (validate().length) {
+      throw new Error('observed churn / timestamp drift wrongly rejected — the false invalidation is back');
+    }
+
+    // (b) A change to the PROMOTION root must still be rejected.
+    fs.writeFileSync(manifestPath, JSON.stringify({ ...sealed, candidateSha: 'b'.repeat(40) }));
+    if (!validate().some((error) => error.includes('candidate.candidateSha'))) {
+      throw new Error('promotion-candidate mutation was not rejected');
+    }
+
+    // (c) A receipt that predates the binding cannot silently pass.
+    fs.writeFileSync(manifestPath, JSON.stringify(sealed));
+    const unbound = structuredClone(receipt);
+    delete unbound.candidate.candidateSha;
+    if (!validateProofBinding(unbound, { root, label: 'unbound' }).some((error) => error.includes('candidateSha is missing'))) {
+      throw new Error('receipt without a candidateSha was accepted');
     }
 
     const legacy = structuredClone(receipt);

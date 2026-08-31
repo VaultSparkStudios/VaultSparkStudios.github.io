@@ -62,7 +62,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 333 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    371/371 passing  ·  Deploy: N/A                       ║
+║  Tests:    372/372 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -76,7 +76,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         371/371 passing (2026-08-31) · UNVERIFIED (no  ║
+║  ⚠  Tests         372/372 passing (2026-08-31) · UNVERIFIED (no  ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
 ║  ✓  Context age   0d                                             ║
@@ -90,7 +90,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  1d old (2026-08-30)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
+║  ⚠  Doctor        15/16 (94%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.12 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [SECURITY]     Confirm an UNATTENDED scheduled Desk run l  ║
-║        Confirm an UNATTENDED scheduled Desk run lands an editio  ║
+║  100  [VERIFY]       Four new readable feeds are on probation    ║
+║        Four new readable feeds are on probation shipped last se  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Thread fellBackFrom into published story p  ║
-║        Thread fellBackFrom into published story provenance. The  ║
+║   93  [PRODUCT]      The Desk's binding constraint is now topic  ║
+║        The Desk's binding constraint is now topic ACCEPTANCE, a  ║
 ║                                                                  ║
-║   87  [PRODUCT]      The full derived-build profile is not full  ║
-║        The full derived-build profile is not full: it omits bui  ║
+║   93  [SECURITY]     Confirm an UNATTENDED scheduled Desk run l  ║
+║        Confirm an UNATTENDED scheduled Desk run lands an editio  ║
 ║                                                                  ║
-║   84  [PRODUCT]      The Desk freshness banner disagrees with i  ║
-║        The Desk freshness banner disagrees with its own API by   ║
+║   90  [PRODUCT]      news-trend-radar --scan failure is swallow  ║
+║        news-trend-radar --scan failure is swallowed by || echo   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

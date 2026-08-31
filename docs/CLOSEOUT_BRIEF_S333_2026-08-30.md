@@ -10,7 +10,7 @@
 ║    publishing nothing at all.                                                                 ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   84/100                                                       ║
-║  ECOSYSTEM IMPACT   ███████░░░   72/100                                                       ║
+║  ECOSYSTEM IMPACT   ███████▌░░   76/100                                                       ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -26,6 +26,30 @@
          structural detector that derives mode-requirement from each producer's own dispatch
          source.
          → package.json build:check:steps 370→371 · build-order 27/27 · invocation-modes 10/10 · proven to fire on a reintroduced regression and on a typo'd flag
+
+  [#6]  escalated-decisions-resolved                              PROJ 9  ·  ECOS 8
+         ── verification ────────────────────────────────────────────────────────────────────
+         Proof receipts bound values that churn with cron data and the manifest's own
+         timestamp, so regenerations with ZERO changed leaves invalidated them and cost two
+         needless 12-minute audits. They now bind the promotion candidate, and tamper
+         detection was proven intact by editing a tested file and watching it fail.
+         Separately the Desk starved on a structural split: 2 readable-and-corroborated
+         topics against 119 corroborated-but-unreadable and 87 readable-but-single. Loosening
+         clustering was rejected because merging distinct stories manufactures corroboration
+         that does not exist, so corroboration is earned across outlets at a
+         stricter-than-merge bar instead.
+         → D-S333.18/19 · 3 new receipt-binding cases · news-trends 68/68 · tuned live: 0.55 changed nothing, 0.45 took the publishable pool 2 -> 4
+
+  [#7]  review-cycles-found-five-more                             PROJ 8  ·  ECOS 9
+         ── process ─────────────────────────────────────────────────────────────────────────
+         A model-failover loop shipped with its predicate tested and the loop itself
+         uncovered, which is the same defect shape the session existed to fix. A second live
+         fixed-window burial hid 84% of real activity in the studio ledger. A zero-day window
+         bug could only surface on a day the Desk had published, did so that same day, and
+         went unnoticed because its self-test was the third orphaned test found this session
+         and the only one failing. The receipt diagnosis was confidently wrong twice in
+         opposite directions before counting 24 commit tips settled it.
+         → desk-inference 21 -> 27 cases · build:check 371 -> 372 steps · news-trend-radar 68/68 · 24 commit tips measured
 
   [#1]  desk-topic-fallback                                       PROJ 10  ·  ECOS 7
          ── reliability ─────────────────────────────────────────────────────────────────────
@@ -71,6 +95,7 @@
     • [S333][SIL][NEWS/P1] Confirm the next scheduled Desk run goes green unattended and publishes a post-2026-08-30 edition.
     • [S333][SIL][GATE/P1] Extend check-build-gate-reachability to every --self-test-bearing module under scripts/ and scripts/lib/, so an orphaned gate cannot hide inside a passing denominator.
     • [S333][SIL][OBS/P2] Audit every other fixed-size scan window against current automation churn, and gate on the zero-entries-with-recent-human-activity signature — today that is indistinguishable from a genuinely quiet repo.
+    • [S333][NEWS/P2] Readable-source breadth is now the binding constraint: 119 topics are corroborated but carry no readable body, which corroboration cannot fix.
 
   BLOCKERS
     • Identity/auth remains held on real-provider-e2e-pending: OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN missing and obelisk-staging-registration absent. Untouched by this session.
@@ -80,7 +105,7 @@
     • Google News aggregator tokens are deliberately NOT resolved: the modern AU_yqL format embeds no publisher URL and would require Google's undocumented batchexecute RPC.
 
   ACTION GATE
-    5 items shipped · ready to commit & push? [y/N]
+    7 items shipped · ready to commit & push? [y/N]
 
 ```
 

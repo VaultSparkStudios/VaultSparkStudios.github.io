@@ -25,6 +25,7 @@ import { PERSONAS, EDITIONS } from './lib/news-desk.mjs';
 import {
   classifyBeats,
   clusterItems,
+  attachCrossOutletCorroboration,
   scoreTopic,
   deriveTopicQueue,
   similarity,
@@ -294,7 +295,7 @@ async function scan() {
 
   const directResolution = attachDirectPublisherUrls(items);
   const fresh = directResolution.items.filter((i) => i.hoursAgo <= 72);
-  const clusters = clusterItems(fresh);
+  const clusters = attachCrossOutletCorroboration(clusterItems(fresh));
   const titles = publishedTitles();
   const slugs = publishedSlugs();
   const personaBeats = personaBeatMap();
@@ -377,6 +378,10 @@ async function scan() {
       else if (corroborated) bucket.unreadableCorroborated++;
       else bucket.unreadableSingle++;
     }
+    const linked = scored.filter((t) => Array.isArray(t.corroboratedBy) && t.corroboratedBy.length);
+    const links = linked.reduce((n, t) => n + t.corroboratedBy.length, 0);
+    const worst = linked.reduce((m, t) => Math.max(m, t.corroboratedBy.length), 0);
+    console.log(`  ${linked.length} topic(s) gained ${links} cross-outlet link(s) · most on one topic: ${worst}`);
     console.log('  supply shape (readable = has a non-aggregator source · corroborated = 2+ outlets or primary):');
     console.log(`      ${String(bucket.readableCorroborated).padStart(4)} readable + corroborated  ← the only publishable shape`);
     console.log(`      ${String(bucket.readableSingle).padStart(4)} readable, single outlet`);
@@ -515,6 +520,33 @@ function selfTest() {
     { title: 'Lab ships agent control roadmap with safety evaluation', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 2, engagement: 400, beats: ['safety', 'agents', 'evaluation'] },
     { personaBeats },
   );
+  // S333 · cross-outlet corroboration (D-S333.19). Borrow the OUTLET of a story
+  // another cluster demonstrably covered, never its URL, and only above a bar
+  // stricter than the 0.34 merge threshold — so corroboration can rise without
+  // merging distinct stories into fake agreement.
+  const coreA = { title: 'OpenAI ships a frontier reasoning model today', domains: ['openai.com'], sourceCount: 1, readableSourceCount: 1 };
+  const coreB = { title: 'OpenAI ships frontier reasoning model today', domains: ['reuters.com'], sourceCount: 1, readableSourceCount: 0 };
+  const unrelated = { title: 'EU fines a chipmaker over antitrust findings', domains: ['ft.com'], sourceCount: 1, readableSourceCount: 0 };
+  const linked = attachCrossOutletCorroboration([coreA, coreB, unrelated]);
+  t('a near-identical story from another outlet raises corroboration',
+    linked[0].sourceCount === 2 && linked[0].domains.includes('reuters.com'));
+  t('the corroborating outlet is recorded, not silently folded in',
+    Array.isArray(linked[0].corroboratedBy) && linked[0].corroboratedBy.includes('reuters.com'));
+  t('corroboration never invents a readable source',
+    linked[0].readableSourceCount === 1 && linked[1].readableSourceCount === 0);
+  t('an unrelated story is not borrowed from',
+    !linked[0].domains.includes('ft.com') && linked[2].sourceCount === 1);
+  t('an outlet the topic already has is not double counted',
+    attachCrossOutletCorroboration([
+      { title: 'Same wording exactly here', domains: ['a.test'], sourceCount: 1 },
+      { title: 'Same wording exactly here', domains: ['a.test'], sourceCount: 1 },
+    ])[0].sourceCount === 1);
+  t('the corroboration bar is stricter than the merge bar',
+    attachCrossOutletCorroboration([
+      { title: 'OpenAI ships a frontier reasoning model today', domains: ['openai.com'], sourceCount: 1 },
+      { title: 'Frontier model pricing shifts across the industry', domains: ['x.test'], sourceCount: 1 },
+    ])[0].sourceCount === 1);
+
   t('a corroborated fresh castable topic scores well', strong.score >= 60 && strong.eligible);
   t('score breakdown is explainable', Object.keys(strong.breakdown).length === 5);
   t('breakdown sums to the score', Math.abs(Object.values(strong.breakdown).reduce((a, b) => a + b, 0) - strong.score) <= 3);

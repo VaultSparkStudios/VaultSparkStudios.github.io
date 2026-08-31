@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-31T16:30:35.000Z",
+  "generatedAt": "2026-08-31T19:40:33.345Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 333,
     "lastUpdated": "2026-08-31",
-    "currentFocus": "Session 333 restored The Desk to live publishing after a six-day, nine-run outage, and it took two independent fixes stacked in sequence. Topic selection gave up after one topic whose only direct source answered 401 while six readable topics sat untried; that repair then exposed a second failure it had been masking, where the managed inference provider had retired the pinned authoring model while still advertising it. The session also wired a regression self-test that had never been invoked by any runner into build:check, generalized its single-script assertion into a structural invocation-mode detector, repaired a public forge ledger that was publishing zero entries because a fixed 120-commit scan window had been buried by automation churn, and added consecutive-unknown streak plus last-known-good age to canonical destination evidence.",
-    "nextMilestone": "Confirm unattended scheduled Desk runs keep landing editions, thread the authoring-model fallback into published story provenance, extend check-build-gate-reachability to every self-test-bearing module, and complete the founder-reserved Obelisk relying-party/passkey ceremony when available.",
+    "currentFocus": "Session 333 restored The Desk to live publishing after a six-day, nine-run outage caused by two independent defects stacked in sequence — topic selection that gave up after one topic, and a managed provider retiring the pinned authoring model while still advertising it. Three review cycles then found five further defects in the session's own work, including a failover loop shipped without a test for the loop, a second live fixed-window burial hiding 84% of activity, and a boundary bug that only a day with a published edition could expose. Both escalated decisions were delegated and resolved: proof receipts now bind the promotion candidate rather than cron churn, and the Desk earns corroboration across outlets at a stricter-than-merge bar instead of loosening clustering.",
+    "nextMilestone": "Confirm unattended scheduled Desk runs keep landing editions, widen readable-source breadth (the remaining binding constraint at 119 corroborated-but-unreadable topics), thread the authoring model into published story provenance, and complete the founder-reserved Obelisk relying-party/passkey ceremony when available.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -818,7 +818,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-31T09:30:59.071Z",
+    "checkedAt": "2026-08-31T08:30:15.432Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -830,7 +830,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",

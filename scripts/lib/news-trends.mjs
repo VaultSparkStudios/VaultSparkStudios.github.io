@@ -226,6 +226,60 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
   });
 }
 
+/**
+ * Let an outlet corroborate a story it demonstrably covered, without merging.
+ *
+ * The Desk starves on a structural split, measured in S333: of 215 topics, 119
+ * were corroborated but unreadable (aggregator-only) and 87 were readable but
+ * single-outlet, while only 2 were both. Those two populations largely cover the
+ * SAME events — they fail to combine because clustering compares headlines and
+ * outlets word the same story differently.
+ *
+ * The tempting fix is to loosen the 0.34 cluster threshold. That is the wrong
+ * lever: merging two genuinely different stories would inflate `sourceCount` and
+ * manufacture corroboration that does not exist, which on this desk is a truth
+ * failure, not a quality one. S329 tightened dedupe for closely related reasons.
+ *
+ * So corroborate instead of merge, at a STRICTER bar than merging uses:
+ *   • the link must clear `threshold` (0.55), well above the 0.34 merge bar;
+ *   • only the outlet NAME is borrowed, never the URL — so an unreadable
+ *     aggregator item can raise independent-source count but can never enter the
+ *     fact base, which still draws solely on readable sources;
+ *   • `readableSourceCount` is untouched, so "can we actually read a body for
+ *     this?" keeps meaning exactly what it meant before.
+ *
+ * A story therefore becomes publishable only when it is readable in its own
+ * right AND independently covered elsewhere — which is what the corroboration
+ * rule was always trying to express.
+ */
+export function attachCrossOutletCorroboration(clusters, { threshold = 0.45 } = {}) {
+  const list = clusters || [];
+  const tokens = list.map((c) => contentTokens(`${c.title} ${c.summary || ''}`));
+
+  return list.map((cluster, i) => {
+    const own = new Set(cluster.domains || []);
+    const corroborating = new Set();
+
+    for (let j = 0; j < list.length; j++) {
+      if (i === j) continue;
+      if (similarity(tokens[i], tokens[j]) < threshold) continue;
+      for (const outlet of list[j].domains || []) {
+        // Only outlets this story does not already have count as independent.
+        if (!own.has(outlet)) corroborating.add(outlet);
+      }
+    }
+    if (!corroborating.size) return cluster;
+
+    const domains = [...new Set([...own, ...corroborating])].sort();
+    return {
+      ...cluster,
+      domains,
+      sourceCount: domains.length,
+      corroboratedBy: [...corroborating].sort(),
+    };
+  });
+}
+
 /* ── Scoring ───────────────────────────────────────────────────────────── */
 
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
