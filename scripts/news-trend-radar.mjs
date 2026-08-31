@@ -68,6 +68,25 @@ const FEEDS = [
   { url: 'https://venturebeat.com/category/ai/feed/', primary: false },
   { url: 'https://feeds.arstechnica.com/arstechnica/technology-lab', primary: false },
   { url: 'https://www.wired.com/feed/tag/ai/latest/rss', primary: false },
+  // S333: readable-source breadth, not more corroboration.
+  //
+  // Measured starvation: a scan produced 181 topics and queued ZERO, and the
+  // dominant blocker was `no readable publisher source` (127 of 181) — the top
+  // five near-misses were blocked by that rule ALONE, at scores 70-83. Google
+  // News surfaced 230 distinct outlets of which only 3 were readable here, and
+  // `attachDirectPublisherUrls` can only rescue an aggregator item when the SAME
+  // story appears in a publisher feed we already read. So aggregator breadth is
+  // unusable breadth, and the fix is more readable publishers rather than more
+  // aggregator queries. Chasing the aggregator's own top outlets would not work
+  // either — its supply is long-tailed (top 12 unreadable outlets were only 21%
+  // of items) and dominated by crypto/finance sites irrelevant to this desk.
+  //
+  // These four were probed live before being added: reachable, parseable, AI
+  // scoped, and carrying items inside the radar's 72h freshness window.
+  { url: 'https://the-decoder.com/feed/', primary: false },
+  { url: 'https://www.marktechpost.com/feed/', primary: false },
+  { url: 'https://www.zdnet.com/topic/artificial-intelligence/rss.xml', primary: false },
+  { url: 'https://www.theregister.com/software/ai_ml/headlines.atom', primary: false },
   { url: 'https://news.google.com/rss/search?q=artificial+intelligence+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=AI+agents+OR+%22AI+regulation%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=Anthropic+OR+Claude+AI+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
@@ -222,6 +241,20 @@ export function publishedTitles() {
 // slug published inside the window so scoreTopic can hard-block exact reruns.
 export function publishedSlugs({ windowDays = 14, today = new Date() } = {}) {
   if (!fs.existsSync(DAYS_DIR)) return new Set();
+  // A window of zero days contains nothing. Without this the floor lands on
+  // today's own date and the `>= floor` comparison keeps an edition published
+  // TODAY, so a zero-day window returns a non-empty set.
+  //
+  // This was latent for months and could only surface on a day the Desk had
+  // already published: before 2026-08-31 no committed day was ever 0 days old,
+  // so the boundary was never exercised. S333 published an edition and the
+  // assertion started failing the same day — and nothing noticed, because this
+  // self-test is not wired into any runner (now fixed).
+  //
+  // Handled as an explicit guard rather than by tightening the comparison to
+  // `> floor`, which would silently move the real 14-day dedupe boundary and
+  // change editorial re-run behaviour.
+  if (windowDays <= 0) return new Set();
   const floor = new Date(today.getTime() - windowDays * 86400000).toISOString().slice(0, 10);
   const slugs = new Set();
   for (const file of fs.readdirSync(DAYS_DIR)) {
@@ -295,6 +328,60 @@ async function scan() {
   for (const t of queue.topics.slice(0, 8)) {
     console.log(`  ${String(t.score).padStart(3)} [${t.edition || '—'}] ${t.title.slice(0, 72)}`);
     console.log(`      ${t.reasons.join(' · ')}`);
+  }
+
+  // Why the REJECTED ones were rejected.
+  //
+  // This loop previously printed only queued topics, so a scan that queued
+  // nothing printed nothing at all — "0 queued, 177 rejected" with no way to
+  // tell a healthy-but-quiet news cycle from a threshold that has become
+  // unsatisfiable. Observed live (S333): the Desk starved on an empty queue and
+  // the only way to find out why was to re-derive the pipeline by hand.
+  //
+  // A topic can be blocked for several reasons at once, so the tally counts
+  // reason occurrences and is explicitly NOT expected to sum to the topic count.
+  const tally = new Map();
+  for (const t of scored) {
+    if (t.eligible) continue;
+    for (const reason of t.blocked || []) tally.set(reason, (tally.get(reason) || 0) + 1);
+  }
+  if (tally.size) {
+    const ranked = [...tally.entries()].sort((a, b) => b[1] - a[1]);
+    console.log(`  rejected ${queue.rejected} topic(s) — blocking reasons (a topic may hit several):`);
+    for (const [reason, count] of ranked) {
+      console.log(`      ${String(count).padStart(4)} × ${reason}`);
+    }
+    // The near-misses are the actionable part: one reason away from publishable.
+    const nearMiss = scored
+      .filter((t) => !t.eligible && (t.blocked || []).length === 1)
+      .sort((a, b) => (b.score || 0) - (a.score || 0))
+      .slice(0, 5);
+    if (nearMiss.length) {
+      console.log(`  closest ${nearMiss.length} topic(s) — blocked by exactly one rule:`);
+      for (const t of nearMiss) {
+        console.log(`      ${String(t.score).padStart(3)} ${t.blocked[0].padEnd(30)} ${String(t.title).slice(0, 56)}`);
+      }
+    }
+    // Supply shape. Eligibility needs corroboration (>=2 outlets, or a primary
+    // source) AND readability (>=1 non-aggregator source). Those can starve for
+    // opposite reasons, so the counts alone cannot tell you which side is short:
+    // aggregator clusters carry many outlets and no readable body, while a
+    // publisher-direct story is readable but often stands alone. Cross-tabulating
+    // them says which half to widen.
+    const bucket = { readableCorroborated: 0, readableSingle: 0, unreadableCorroborated: 0, unreadableSingle: 0 };
+    for (const t of scored) {
+      const readable = (t.readableSourceCount || 0) > 0;
+      const corroborated = (t.sourceCount || 0) >= 2 || t.hasPrimarySource;
+      if (readable && corroborated) bucket.readableCorroborated++;
+      else if (readable) bucket.readableSingle++;
+      else if (corroborated) bucket.unreadableCorroborated++;
+      else bucket.unreadableSingle++;
+    }
+    console.log('  supply shape (readable = has a non-aggregator source · corroborated = 2+ outlets or primary):');
+    console.log(`      ${String(bucket.readableCorroborated).padStart(4)} readable + corroborated  ← the only publishable shape`);
+    console.log(`      ${String(bucket.readableSingle).padStart(4)} readable, single outlet`);
+    console.log(`      ${String(bucket.unreadableCorroborated).padStart(4)} corroborated, unreadable`);
+    console.log(`      ${String(bucket.unreadableSingle).padStart(4)} neither`);
   }
 }
 
