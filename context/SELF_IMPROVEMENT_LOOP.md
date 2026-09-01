@@ -8,35 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-
-## 2026-09-01 — Session 334 (full-site audit · redirect integrity · discoverable AI layer · two premises retired) | Total: 988/1000 (v3.0) | Velocity: →
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | 12 of 14 audit items shipped with self-tests (site-integrity 15/15, evidence-hub 11/11, surface-spine 14/14, news-desk 65/65). One pre-existing gate (`startup-revenue-agreement`) remains red and is reported, not masked. |
-| Creative Alignment | 99 | `/evidence/` states the studio's actual differentiator in the studio's own voice; pathway routes and orientation strips add substance without adding pages. |
-| Momentum | 98 | Four defects that were live in production retired: redirect-into-404, an ungated internal surface, a duplicate sitemap the gate had been told to ignore, and a duplicating newsroom. |
-| Engagement | 97 | Pathway pages went from 530 bytes of headline to real four-step routes; eight transparency surfaces gained a front door. Real traffic outcomes remain future evidence. |
-| Process Quality | 100 | The session's best work was disproving two of its own items with measurement, and reverting a spectacular-looking fix to a zero diff after a controlled A/B showed it was noise. Both recorded with evidence rather than quietly dropped. |
-| Cross-Repo Coherence | 97 | A studio-ops brief-renderer bug was diagnosed precisely and left to cargo rather than edited in the sibling repo; one stray session lock written there was removed immediately. |
-| Security Posture | 100 | `/ignis-health/` moved from robots.txt to a real edge gate, and the class is now closed by a court rather than the instance being patched. |
-| Ecosystem Integration | 99 | The `.ai/` fact-sheet layer reached sitemap, agents.json, JSON-LD, human cross-links and the answer engine's retrieval corpus — 15/17 project questions now resolve to the studio's own canonical sheet. |
-| Capital Efficiency | 100 | No new dependency, service, or per-user cost. The Desk's novelty gate removes recurring LLM draft and OG-render spend at selection. |
-| Automation Coverage | 99 | Four new structural courts in one build:check entry (per the S192 cmd-length rule), plus generator-side `--check` for the hub, spine and fact-sheet joins. |
-
-**Audit:** 14 items ranked; 12 shipped, 2 disproved by measurement, 3 candidate findings disproved during pre-verification before they ever reached the list.
-
-**Brainstorm / carried to TASK_BOARD:**
-1. `startup-revenue-agreement` — the v5 startup brief and the shared revenue resolver disagree at every date rollover; `context/SIGNALS.md` is a reader keyed on an artifact its producer stopped writing 18 days ago. Studio-ops owned; ship cargo.
-2. Fact extraction accepted syndicated advertising copy ("Top Shark Promo Codes") as a sourced fact under a real publisher URL — a public truth surface issue, not cosmetic.
-3. The footer still names two retired routes; blocked behind reconciling `propagate-nav.mjs`'s stale arrays (the S329 landmine), not a direct edit.
-
-Sparkline (last 5 totals): ▇▆███
-Avgs — 3: 992.0 | 5: 991.4 | 10: 992.0 | 25: 987.3 [N=17] | all: 987.5
-  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
-Velocity trend: →  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~2.0 sessions (phase-sized items — each is a full-session arc)  |  Intent rate: 100% (last 5)
-Last session: 2026-08-27 | Session 330 | Total: 982/1000 | Velocity: +12 | protocolVelocity: 4
+Sparkline (last 5 totals): █████
+Avgs — 3: 991.0 | 5: 992.2 | 10: 991.6 | 25: 987.6 | all: 983.2
+  └ 3-session: Dev 99.3 | Align 99.0 | Momentum 98.7 | Engage 97.3 | Process 99.3
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~12 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-09-01 | Session 335 | Total: 989/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
@@ -2897,3 +2874,32 @@ Sparkline (last 5): █████ · 989, 982, 993, 995, 996
 **Brainstorm / committed to TASK_BOARD:**
 1. [S333][SIL][NEWS/P1] Confirm the next scheduled Desk run goes green unattended and publishes a post-2026-08-30 edition.
 2. [S333][SIL][GATE/P1] Extend `check-build-gate-reachability` to cover every `--self-test`-bearing module under `scripts/` and `scripts/lib/`, so the orphan class cannot hide inside a passing denominator again.
+
+## 2026-09-01 — Session 335 (member-write lockdown · public projection view · route court · four merges · Season 1) | Total: 989/1000 (v3.0) | Velocity: +6 | Debt: ↓
+Avgs — 3: 991.0 | 5: 992.2 | 10: 991.6 | 25: 987.6 | all: 983.2
+Sparkline (last 5): █████ · 995, 996, 988, 989
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Two builds green; new/extended suites all green (worker 54/54, build-order 29/29, route court 7/7, migration applier 12/12, content-freshness 16/16, evidence-hub 21/21). The canonical gate result is bound in PROJECT_STATUS after the write-back, per the convergence order. |
+| Creative Alignment | 99 | `/how-we-build/` turns leaked operator vocabulary into the studio's most on-brand page; Season 1 copy promises only Vault Points; every merge keeps the studio's restrained proof-led voice. |
+| Momentum | 98 | 12 of 16 shipped, four routes retired, a live escalation closed, Season 1 launched. Two items scoped down with designs rather than half-built. |
+| Engagement | 97 | Public member surfaces show real numbers for the first time; members see their IGNIS quota and their feedback's fate; the community page has a season to play for. Real traffic outcomes remain future evidence. |
+| Process Quality | 99 | Plan mode with three explicit founder decisions; merge analyses written to DECISIONS before markup moved (S329 directive); two items disproved by code reading; the TT flip was refused against the repo's own readiness receipt despite approval. |
+| Cross-Repo Coherence | 100 | No sibling repository written; `/start` gates run from studio-ops paths; nothing propagated by hand. |
+| Security Posture | 100 | A live free→paid privilege escalation and leaderboard/treasury integrity hole closed with column grants + definer RPCs, proven by an impersonation probe rather than by the SQL file; no secret printed; the anon-key fetch the classifier blocked was replaced by the management probe. |
+| Ecosystem Integration | 99 | `apply-supabase-migration.mjs` is a reusable agent path (CANON-040) with a probe registry; the route court closes the meta-refresh class; the vocabulary gate closes the operator-leak class. |
+| Capital Efficiency | 100 | Zero new dependencies or paid calls; two fewer scheduled workflows; ~15% fewer build processes; 360 MB out of the index. |
+| Automation Coverage | 98 | Every new behaviour has a self-test or probe; the two rendered-pixel receipts are automated-only this session (manual review owed next). |
+
+**Top win:** The audit's ranked list was mostly IA polish; the P0 came from reading a policy. A member could set their own points and paid tier, and the gift flow had been proving it every day by half-failing. The fix was proven by impersonating a member against the live database, not by trusting the migration file.
+
+**Second win:** The same probe showed the public member surfaces had been empty for months — "honest empty state" UX had been hiding a missing read policy. One definer view lit every one of them.
+
+**Top gap:** Two identical builds minutes apart still churn 47 files from commit-derived feeds; the receipt cascade cost S334 named is real and only diagnosed here, not fixed. And the rendered-pixel receipts for five changed surfaces are automated-only — CANON-053 owes a manual review next session.
+
+**Intent outcome:** Achieved (two deviations recorded: TT flip held on the readiness receipt; uptime Worker-cron designed, not built).
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S335][SEC/P2] Audit every other public table for the silent-zero anon read the members table had.
+2. [S335][BUILD/P2] Bisect the build-to-build churn in commit-derived feeds with a pinned clock.

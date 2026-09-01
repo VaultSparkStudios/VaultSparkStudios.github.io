@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "_note": "S334: the studio publishes eight live-data surfaces (/stats/, /stats/ecosystem/, /status/, /proof/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/) that all answer versions of one question — 'is this studio real and working?' — with no front door. This file defines the spine. Each lane keeps its deep page as the canonical destination; the hub only routes and stamps freshness, so no receipt or permalink moves. `feed` must be a public, publicSafe JSON artifact carrying generatedAt; a lane whose feed cannot be read reports UNKNOWN rather than a stale green.",
+  "_note": "S334: the studio publishes its live-data surfaces (/stats/, /stats/ecosystem/, /status/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/) that all answer versions of one question — 'is this studio real and working?' — with no front door. This file defines the spine. Each lane keeps its deep page as the canonical destination; the hub only routes and stamps freshness, so no receipt or permalink moves. S335: the /proof/ verifier was folded INTO the hub — its lane points at the on-page anchor /evidence/#verify (validateLanes accepts only anchors the generator renders) and /proof/ is an edge 301. `feed` must be a public, publicSafe JSON artifact carrying generatedAt; a lane whose feed cannot be read reports UNKNOWN rather than a stale green.",
   "lanes": [
     {
       "id": "live",
@@ -27,10 +27,10 @@
       "label": "Proof",
       "question": "Can I check any of it myself?",
       "blurb": "This one does not ask for trust. It re-fetches the public deploy ledger and re-computes every hash in your own browser, on your machine, while you watch.",
-      "href": "/proof/",
+      "href": "/evidence/#verify",
       "linkLabel": "Verify In Your Browser",
       "feed": "/api/deploy-currency.json",
-      "also": [{ "label": "Release proof receipts", "href": "/proof/#receipts" }]
+      "also": [{ "label": "Release gate feed", "href": "/api/release-proof.json" }]
     },
     {
       "id": "motion",

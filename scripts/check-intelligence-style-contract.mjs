@@ -11,7 +11,6 @@ const STRICT = process.argv.includes('--strict');
 const HTML_TARGETS = [
   'index.html',
   'oracle/index.html',
-  'feedback/index.html',
   'social/index.html',
   'studio-pulse/index.html',
   'nervous-system/index.html',

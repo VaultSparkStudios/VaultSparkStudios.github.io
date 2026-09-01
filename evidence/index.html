@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="../assets/style.shell-dfee6188fb.css"><!-- vs-speculation:start -->
+<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="../assets/style.shell-bf10f7005d.css"><!-- vs-speculation:start -->
   <script type="speculationrules">
   {
     "prerender": [
@@ -41,10 +41,41 @@
 .ev-fresh[data-state="aging"]{color:#fbbf24}
 .ev-fresh[data-state="unknown"]{color:var(--dim)}
 .ev-foot{color:var(--dim);font-size:.88rem;max-width:68ch;padding-bottom:4rem;line-height:1.7}
-@media(max-width:640px){.ev-head{padding:3.5rem 0 .5rem}.ev-card{padding:1.35rem}}
+.ev-verify{max-width:860px;padding:0 0 5rem;scroll-margin-top:calc(var(--nav-height,78px) + 1rem)}
+.ev-verify h2{font-family:Georgia,"Times New Roman",serif;font-size:1.45rem;letter-spacing:-.03em;margin:2.4rem 0 .7rem;color:var(--text)}
+.ev-verify h2:first-of-type{margin-top:.5rem}
+.ev-verify p{color:var(--muted);font-size:.97rem;line-height:1.72;margin-bottom:.9rem}
+.ev-verify a{color:var(--gold)}
+.ev-verify a:hover{color:#ffe066}
+.proof-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0 .4rem}
+.proof-tile{border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1rem 1.1rem;background:rgba(255,255,255,.02);display:flex;flex-direction:column;gap:.35rem}
+body.light-mode .proof-tile{border-color:rgba(20,28,52,.12);background:rgba(20,28,52,.03)}
+.proof-tile-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.proof-tile-value{font-family:Georgia,"Times New Roman",serif;font-size:1.25rem;color:var(--text)}
+.proof-tile-good .proof-tile-value{color:#6fe3a1}
+.proof-tile-amber .proof-tile-value{color:var(--gold)}
+body.light-mode .proof-tile-good .proof-tile-value{color:#147a43}
+.proof-tile-detail{font-size:.82rem;color:var(--muted);line-height:1.55}
+.proof-run-row{margin:1.6rem 0 1rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.proof-summary{color:var(--text);font-size:.95rem;font-weight:600;max-width:46ch}
+.proof-checks{list-style:none;margin:1rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.proof-check{display:flex;gap:.8rem;align-items:flex-start;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:.85rem 1rem;background:rgba(255,255,255,.02)}
+body.light-mode .proof-check{border-color:rgba(20,28,52,.12);background:rgba(20,28,52,.03)}
+.proof-check-mark{font-weight:700;font-size:1.05rem;line-height:1.4}
+.proof-pass .proof-check-mark{color:#6fe3a1}
+body.light-mode .proof-pass .proof-check-mark{color:#147a43}
+.proof-fail .proof-check-mark{color:#ff7a7a}
+body.light-mode .proof-fail .proof-check-mark{color:#b3261e}
+.proof-check-body{display:flex;flex-direction:column;gap:.15rem}
+.proof-check-body strong{color:var(--text);font-size:.95rem}
+.proof-check-detail{color:var(--muted);font-size:.84rem;line-height:1.55}
+.proof-feeds{list-style:none;margin:.6rem 0 0;padding:0}
+.proof-feeds li{color:var(--muted);font-size:.9rem;line-height:1.7;padding:.22rem 0 .22rem 1.4rem;position:relative}
+.proof-feeds li::before{content:"—";position:absolute;left:0;color:var(--gold);font-weight:700}
+@media(max-width:640px){.ev-head{padding:3.5rem 0 .5rem}.ev-card{padding:1.35rem}.ev-verify{padding-bottom:3.5rem}}
 </style>
 <script type="application/ld+json" data-vs-breadcrumb>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Evidence","item":"https://vaultsparkstudios.com/evidence/"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Evidence — VaultSpark Studios","url":"https://vaultsparkstudios.com/evidence/","description":"Every live, checkable record VaultSpark Studios publishes about itself — status, numbers, in-browser proof, and work in motion.","hasPart":[{"@type":"WebPage","name":"Is everything up right now?","url":"https://vaultsparkstudios.com/status/"},{"@type":"WebPage","name":"How big is any of this, actually?","url":"https://vaultsparkstudios.com/stats/"},{"@type":"WebPage","name":"Can I check any of it myself?","url":"https://vaultsparkstudios.com/proof/"},{"@type":"WebPage","name":"What is actually moving this week?","url":"https://vaultsparkstudios.com/studio-pulse/"}],"publisher":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Evidence — VaultSpark Studios","url":"https://vaultsparkstudios.com/evidence/","description":"Every live, checkable record VaultSpark Studios publishes about itself — status, numbers, in-browser proof, and work in motion.","hasPart":[{"@type":"WebPage","name":"Is everything up right now?","url":"https://vaultsparkstudios.com/status/"},{"@type":"WebPage","name":"How big is any of this, actually?","url":"https://vaultsparkstudios.com/stats/"},{"@type":"WebPage","name":"Can I check any of it myself?","url":"https://vaultsparkstudios.com/evidence/#verify"},{"@type":"WebPage","name":"What is actually moving this week?","url":"https://vaultsparkstudios.com/studio-pulse/"}],"publisher":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com/"}}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -57,10 +88,10 @@
         <a href="/">Home</a>
         <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><a href="https://veilos.io">VEILOS</a><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/proof/" class="dropdown-link-intel">Proof</a><a href="/feedback/" class="dropdown-link-intel">Feedback</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/security/">Security</a><a href="/proof/">Proof · Verify Us</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
@@ -97,8 +128,8 @@
 <p class="ev-label">Proof</p>
 <h2 class="ev-q">Can I check any of it myself?</h2>
 <p class="ev-blurb">This one does not ask for trust. It re-fetches the public deploy ledger and re-computes every hash in your own browser, on your machine, while you watch.</p>
-<a class="ev-cta" href="/proof/">Verify In Your Browser &rarr;</a>
-<ul class="ev-also"><li><a href="/proof/#receipts">Release proof receipts</a></li></ul>
+<a class="ev-cta" href="/evidence/#verify">Verify In Your Browser &rarr;</a>
+<ul class="ev-also"><li><a href="/api/release-proof.json">Release gate feed</a></li></ul>
 <p class="ev-fresh" data-state="unknown" data-ev-feed="/api/deploy-currency.json"><span class="ev-dot" aria-hidden="true"></span><span class="ev-fresh-text">checking freshness…</span></p>
 </article>
 <article class="ev-card" id="motion">
@@ -108,7 +139,28 @@
 <a class="ev-cta" href="/studio-pulse/">Open Studio Pulse &rarr;</a>
 <ul class="ev-also"><li><a href="/notebook/">Commit-level notebook</a></li><li><a href="/oracle/">Ecosystem Oracle</a></li></ul>
 <p class="ev-fresh" data-state="unknown" data-ev-feed="/api/oracle-insights.json"><span class="ev-dot" aria-hidden="true"></span><span class="ev-fresh-text">checking freshness…</span></p>
-</article></div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section></main><footer class="site-footer" aria-label="Site footer">
+</article></div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section><section id="verify" class="container ev-verify" aria-labelledby="verify-heading">
+<span class="eyebrow">Proof</span>
+<h2 id="verify-heading">Verify the deploy ledger in your browser</h2>
+<p>Every deploy this studio ships is written into a public, hash-chained ledger — each entry carries the fingerprint of the one before it, so history cannot be quietly rewritten. Press the button. Your browser — not our server — will download the ledger, re-compute every SHA-256 hash, re-walk the chain link by link, and compare what it finds against the published anchor. If a single byte anywhere had been altered, a check below would turn red.</p>
+<div class="proof-run-row">
+<button type="button" class="button" id="proof-run">Run the verification</button>
+<span class="proof-summary" id="proof-summary" role="status" aria-live="polite"></span>
+</div>
+<ul class="proof-checks" id="proof-checks" aria-label="Verification results"></ul>
+<h2>Live evidence right now</h2>
+<div class="proof-tiles" id="proof-tiles"></div>
+<h2>Check the raw feeds yourself</h2>
+<p>Nothing above is special access — these are the same public files any person or AI agent can fetch:</p>
+<ul class="proof-feeds">
+<li><a href="/data/staging-deploy-history.ndjson">The deploy ledger</a> — append-only, content-addressed, hash-chained</li>
+<li><a href="/api/staging-deploy-continuity.json">The digest anchor</a> — the ledger’s expected hash, depth and head</li>
+<li><a href="/api/release-proof.json">The release gate</a> — what is currently allowed to ship, and what is holding it</li>
+<li><a href="/api/worker-route-provenance.json">Edge route provenance</a> — privacy-safe probes of the live edge</li>
+<li><a href="/status/">The status board</a> — every public signal in one place</li>
+</ul>
+<p>A studio that says “trust us” is asking for something it hasn’t earned. A studio that says “check for yourself” has nothing to hide. When the release gate above reads <em>Holding</em>, that isn’t a failure — it’s the machinery refusing to promote anything that hasn’t proven itself.</p>
+</section></main><footer class="site-footer" aria-label="Site footer">
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
@@ -158,8 +210,6 @@
           <a href="/evidence/">Evidence</a>
           <a href="/status/">Status</a>
           <a href="/stats/">Stats</a>
-          <a href="/proof/">Proof</a>
-          <a href="/feedback/">Feedback</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
@@ -174,13 +224,13 @@
         <div class="footer-col">
           <h2>Membership</h2>
           <a href="/membership/">About Membership</a>
-          <a href="/vaultsparked/">Choose Your Tier</a>
-          <a href="/membership-value/">Value Breakdown</a>
+          <a href="/membership/#tiers">Choose Your Tier</a>
+          <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/members/">Member Directory</a>
           <a href="/member/">Member Lookup</a>
-          <a href="/vault-wall/">Vault Wall</a>
-          <a href="/ranks/">Vault Ranks</a>
+          <a href="/community/#wall">Vault Wall</a>
+          <a href="/leaderboards/#ranks">Vault Ranks</a>
           <a href="/invite/">Refer a Friend</a>
         </div>
         <div class="footer-col">
@@ -191,7 +241,6 @@
         </div>
         <div class="footer-col">
           <h2>Portals</h2>
-          <a href="/vault-portal/">Vault Portal</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/investor-portal/">Investor Portal</a>
           <a href="/investor-portal/apply/">Investor Application</a>
@@ -206,8 +255,8 @@
           <a href="/careers/">Careers</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
+          <a href="/how-we-build/">How We Build</a>
           <a href="/security/">Security</a>
-          <a href="/proof/">Proof · Verify Us</a>
           <a href="/ask-founders/">Ask the Founders</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
@@ -252,14 +301,14 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
-        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/proof/" title="Re-verify our deploy ledger in your own browser">Independently verifiable &#10003;</a></span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/evidence/#verify" title="Re-verify our deploy ledger in your own browser">Independently verifiable &#10003;</a></span>
       </div>
     </div>
   </footer>  <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-2e0e0d195a.js" defer></script>
+<script src="/assets/ambient-core.shell-a2aa51d885.js" defer></script>
 <script src="/assets/ambient-feature.shell-ca3b329506.js" defer></script>
 <!-- vs-ambient:end -->
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script><script>
+<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script><script src="/assets/proof-verify.shell-4b68e2855f.js" defer></script><script>
 (function(){
   function describe(ts,now){
     var t=Date.parse(ts); if(!ts||isNaN(t))return null;

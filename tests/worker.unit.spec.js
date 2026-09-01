@@ -821,3 +821,20 @@ test('S321: the last-resort boundary does not intercept a healthy response', asy
     worker.handle = original;
   }
 });
+
+test('S335: Trusted Types enforce is a one-variable flip with report-only as the default', async () => {
+  const ctx = { waitUntil() {} };
+  const req = () => new Request(`${APEX}/_health`, { headers: { accept: 'application/json' } });
+  const reportOnly = await worker.fetch(req(), {}, ctx);
+  assert.equal(reportOnly.headers.get('content-security-policy-report-only'), "require-trusted-types-for 'script'; report-to vs-tt");
+  assert.ok(!(reportOnly.headers.get('content-security-policy') || '').includes('require-trusted-types-for'), 'default policy does not enforce');
+
+  const enforced = await worker.fetch(req(), { TT_ENFORCE_ENABLED: '1' }, ctx);
+  assert.equal(enforced.headers.get('content-security-policy-report-only'), null, 'report-only header dropped under enforce');
+  assert.ok((enforced.headers.get('content-security-policy') || '').includes("require-trusted-types-for 'script'"), 'live policy carries the directive');
+  assert.equal(enforced.headers.get('reporting-endpoints'), 'vs-tt="/v/tt-report"', 'reports still route to the intake');
+
+  // The flag is per-request: a following request without it must fall back.
+  const after = await worker.fetch(req(), {}, ctx);
+  assert.ok(after.headers.get('content-security-policy-report-only'), 'no state leaks between requests');
+});

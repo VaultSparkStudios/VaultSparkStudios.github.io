@@ -871,3 +871,127 @@ had not found a defect; it had aged into one, mid-session, at the date rollover.
 `analyzeCtaReadiness` already accepted an injectable `now` and one fixture in the
 same file was already using it. Any assertion whose expected output depends on
 elapsed time passes an explicit clock.
+
+## D-S335.1 — Member progression is server-owned; the browser writes profile columns only
+
+The base schema granted an authenticated member UPDATE on every column of their
+own row with no WITH CHECK, and the live database still carried Supabase's
+default grants (anon and authenticated holding INSERT/UPDATE/DELETE/TRUNCATE on
+`vault_members`). Row Level Security hid most of that, but nothing stopped a
+member setting their own `points`, `plan_key` or `is_sparked` — and `ask-ignis`
+grants the paid tier from those columns. The gift flow proved the browser held
+that write: it updated the sender's points directly and then failed RLS on the
+recipient.
+
+Phase 61 revokes table-wide write grants and re-grants UPDATE column by column for
+profile and preference fields only. Points move through security-definer
+functions: a new atomic `gift_points()` (caller from `auth.uid()`, sender row
+locked, 10–500 bounds, self-gift rejected, both ledger rows in one transaction)
+and a hardened `purchase_treasury_item()` that no longer trusts a caller-supplied
+user id. Applied through the management API by `scripts/apply-supabase-migration.mjs`,
+which captures a pre-image and runs a nine-check behavioural probe; the probe is
+the receipt, not the migration file.
+
+## D-S335.2 — `public_leaderboard` is the public projection of the members table
+
+The probe surfaced a second fact: the live table has no anonymous read policy at
+all — only "read own row". Every anonymous public surface that read
+`vault_members` (member counts, recently joined, leaderboards, the directory,
+public profiles, the investor KPI tile) had been rendering empty. The intended
+design (a `public_profile` opt-out) was enforced by nothing because nothing was
+visible in the first place.
+
+A security-definer view filtered on `public_profile = true` now carries exactly
+the columns public surfaces need, and every anonymous reader was repointed to it.
+The base-table anon policy is deliberately left untouched: narrowing it is not
+needed, and widening it would bypass the opt-out again. Consequence: public member
+surfaces show real numbers for the first time, and only opted-in members.
+
+## D-S335.3 — Merge analysis: `/vault-wall/` → `/community/#wall`
+
+S334 (D-S334.6) chose orientation strips over merging because each page earned
+its URL. Re-examined with the RLS finding above: the wall's leaderboard, podium
+and rank distribution queried two columns that do not exist (`rank_title`,
+`vault_points`) and, like every anonymous reader, saw zero rows — the page had
+been empty for every logged-out visitor, so it was not earning its URL. Its
+Recently-Joined, Vault-Activity and Live-From-The-Vault blocks duplicate blocks
+that already live on `/community/` or ambiently sitewide. What is unique to the
+wall — the season countdown, nearest rival, rank distribution and podium — moves
+into `/community/` as a `#wall` section; the rest is dropped as duplicate. Edge
+301 to the anchor; no receipt or feed changes. Founder confirmed the merge this
+session; this supersedes D-S334.6 for this cluster only.
+
+## D-S335.4 — Merge analysis: `/feedback/` + `/feedback/insights/` → `/changelog/#requests`
+
+`/feedback/` and `/changelog/` carried the same headline ("You asked → we
+shipped") over the same underlying record (`feedback-provenance.json` →
+`ship-receipts.json`): one page rendered the loop's closed entries, the other the
+things that closed them. `/feedback/insights/` was a third view of the same
+anonymous feedback signal. Three destinations for one fact stream is the
+sprawl S334 named for the editorial cluster. The changelog keeps its URL (it is
+the page the studio links from everywhere) and gains a `#requests` section that
+carries the loop entries, the provenance mount and the insights summary; the two
+retired routes 301 to the anchor. Seed entries and the anonymous-only data
+posture are unchanged. Founder confirmed; supersedes D-S334.6 for this cluster.
+
+## D-S335.5 — `/proof/` folds into `/evidence/#verify`
+
+`/evidence/` was built in S334 as the one front door for eight live-data
+surfaces; `/proof/` remained beside it answering the same question ("can I check
+this myself?") with the only thing the hub lacked — the in-browser hash
+verifier. The verifier moves into the hub as a section; `/proof/` 301s to it.
+
+## D-S335.6 — Season 1 launches with agent defaults; Vault Points are the only promise
+
+The season pass pane, season XP table, weekly and team boards, and the wall
+countdown all existed; `data/seasons.json` was the single blocker, inactive since
+2026-04-16. Season 1 ("Ignition", 2026-09-02 → 2026-10-14) is declared with
+rewards paid only in Vault Points. The founder approved agent defaults and may
+veto name, dates or rewards at review. The expiring "Q3 2026 VaultSparked Beta
+Launch" event card is replaced by the season card; a freshness rule now fails the
+build when an "Upcoming Events" card carries a month or quarter that has passed.
+
+## D-S335.7 — Trusted Types enforcement is a one-variable flip, held on the readiness receipt
+
+The founder approved flipping Trusted Types from report-only to enforce. The
+Worker now honours `TT_ENFORCE_ENABLED` (default "0"): "1" moves
+`require-trusted-types-for 'script'` into the live policy and drops the
+report-only header; rollback is the same variable. It is NOT flipped this
+session: `api/tt-readiness.json` reports `enforceEligible: false` with 17 warm
+rows whose newest report is dated 2026-07-03. A flag that the repo's own gate
+says is not ready does not get flipped on approval alone; the readiness script's
+ageing logic is itself suspect (two-month-old rows should have gone stale) and is
+carried on the task board.
+
+## D-S335.8 — A generator that re-renders what a session deleted has to lose its write
+
+S334 deleted the meta-refresh stubs twice; `build-route-consolidation.mjs` ran in
+both prebuild and postbuild and wrote them back each time. The script keeps its
+name (proof-surface registry references it) but is now a court: it asserts every
+analysed route has an edge rule in `_redirects`, no retired route ships
+`index.html`, and no tracked HTML carries a meta refresh. Sixteen duplicate or
+dead invocations were also removed from the build chain (seal chain in `build`
+recomputed by `postbuild`; three redundant shell rotations; duplicate agents/shards
+runs), and `DERIVED_BUILD_PROFILES.full` gained `build-public-status.mjs` so it
+is a true superset of what closeout needs.
+
+## D-S335.9 — Session-token diet: untrack per-session snapshots, archive old audits
+
+Four near-duplicate S330 theme-matrix snapshots, two visual-merge runs and an
+S331 link-QA dump (~360 MB of PNGs, read by no script) were tracked under
+`.cache/`; they are untracked and ignored by pattern. `docs/AUDIT_*.md` keeps the
+newest six; older ones move to `docs/archive/audits/` (the JSON receipts the
+staleness gate reads are untouched). `run-build-check.mjs --quiet` prints one line
+per step and replays output only on failure. `CURRENT_STATE.md` (503 KB) and the
+handoff archive are left alone: `compact-handoff` and `rotate-ledger` read them,
+and changing that is a closeout-protocol change for a session that is not
+mid-closeout.
+
+## D-S335.10 — Two audit items disproved by reading the code, not deferred
+
+Prompt caching on `semantic-search`: its system prompt is ~80 tokens, below the
+1,024-token minimum cacheable prefix, so `cache_control` would be a no-op that
+claimed savings. Converting the Desk art masters to AVIF: `data/news-desk/art/*.png`
+are source masters; the served derivatives are already PNG/WebP/AVIF from `sharp`,
+so the change would only shrink the clone and risk the sources. Neither is re-raised
+without new evidence.

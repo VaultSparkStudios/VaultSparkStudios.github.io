@@ -256,6 +256,7 @@ function main() {
   const entrypointHealth = buildEntrypointHealth(pkg);
   if (!entrypointHealth.ok) throw new Error(entrypointHealth.reason);
   const commands = commandsFromPackage(pkg);
+  const QUIET = process.argv.includes('--quiet');
   const fromArg = process.argv.find((arg) => arg.startsWith('--from='));
   const from = fromArg ? Math.max(1, Number(fromArg.split('=')[1]) || 1) : 1;
   const startedAt = new Date().toISOString();
@@ -266,15 +267,27 @@ function main() {
     const command = commands[i];
     const [bin, ...args] = tokenize(command);
     if (!bin) continue;
-    console.log(`\n[build:check ${i + 1}/${commands.length}] ${command}`);
+    if (!QUIET) console.log(`\n[build:check ${i + 1}/${commands.length}] ${command}`);
     const stepStarted = Date.now();
     const result = spawnSync(bin, args, {
       cwd: ROOT,
-      stdio: 'inherit',
+      // S335 --quiet: capture step output and replay it only on failure. The
+      // full run is ~380 steps of stdio; an agent or CI log reader only needs
+      // the failures and the per-step timing line.
+      stdio: QUIET ? 'pipe' : 'inherit',
+      encoding: 'utf8',
       shell: false,
       windowsHide: true,
     });
     const durationMs = Date.now() - stepStarted;
+    if (QUIET) {
+      const ok = !result.error && result.status === 0;
+      console.log(`${ok ? '✓' : '✗'} [${i + 1}/${commands.length}] ${(durationMs / 1000).toFixed(1)}s ${command}`);
+      if (!ok) {
+        if (result.stdout) process.stdout.write(result.stdout);
+        if (result.stderr) process.stderr.write(result.stderr);
+      }
+    }
     rows.push({
       step: i + 1,
       command,

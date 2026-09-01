@@ -289,7 +289,7 @@ export function buildManifest(state) {
         name: 'evidence.ledger.verify',
         method: 'GET',
         url: `${SITE}/data/staging-deploy-history.ndjson`,
-        description: 'Independently verify the deploy ledger: (1) SHA-256 the served NDJSON bytes and compare to bytes.sha256 in /api/staging-deploy-continuity.json; (2) for each row, SHA-256(JSON.stringify(row minus rowId)).slice(0,24) must equal rowId; (3) each row’s previousReceiptId must equal the prior row’s receiptId with strictly increasing generatedAt; (4) final receiptId and row count must match the anchor’s ledger.head/depth. Human-facing walkthrough: ' + `${SITE}/proof/`,
+        description: 'Independently verify the deploy ledger: (1) SHA-256 the served NDJSON bytes and compare to bytes.sha256 in /api/staging-deploy-continuity.json; (2) for each row, SHA-256(JSON.stringify(row minus rowId)).slice(0,24) must equal rowId; (3) each row’s previousReceiptId must equal the prior row’s receiptId with strictly increasing generatedAt; (4) final receiptId and row count must match the anchor’s ledger.head/depth. Human-facing walkthrough: ' + `${SITE}/evidence/#verify`,
       },
     ],
     projects,

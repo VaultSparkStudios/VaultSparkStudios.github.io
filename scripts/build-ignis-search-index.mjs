@@ -153,7 +153,7 @@ function build() {
   const feedback = readJson('api/feedback-provenance.json');
   if (feedback && (feedback.themes || []).length) {
     const labels = feedback.themes.map((t) => t.label || t.key).filter(Boolean);
-    add('Feedback loop', '/feedback/',
+    add('Feedback loop', '/changelog/#requests',
       `Recent visitor feedback clusters around ${labels.join(', ')}. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired.`);
   }
 

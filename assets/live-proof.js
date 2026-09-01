@@ -86,10 +86,10 @@
   }
 
   Promise.all([
-    window.VSPublic.from('vault_members').select('id').count().get(),
-    window.VSPublic.from('vault_members').select('id').eq('is_sparked', true).count().get(),
+    window.VSPublic.from('public_leaderboard').select('id').count().get(),
+    window.VSPublic.from('public_leaderboard').select('id').eq('is_sparked', true).count().get(),
     window.VSPublic.from('challenge_submissions').select('id').count().get(),
-    window.VSPublic.from('vault_members').select('points').get()
+    window.VSPublic.from('public_leaderboard').select('points').get()
   ]).then(function (results) {
     var anyOk = results.some(function (r) { return r && !r.error; });
     if (!anyOk) throw new Error('rest_unavailable');

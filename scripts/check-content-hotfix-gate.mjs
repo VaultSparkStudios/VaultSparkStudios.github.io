@@ -45,7 +45,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  */
 export const SENSITIVE = Object.freeze([
   'auth/', 'login.html', 'member/', 'members/', 'membership/', 'membership-value/',
-  'vault-member/', 'vault-portal/', 'vault-treasury/', 'vault-wall/', 'investor-portal/',
+  'vault-member/', 'vault-portal/', 'vault-treasury/', 'investor-portal/',
   'obelisk-passport/', 'cloudflare/', 'supabase/', 'config/', '.github/', '.well-known/',
   '_headers', '_redirects', 'sw.js', 'robots.txt', 'package.json', 'package-lock.json',
 ]);

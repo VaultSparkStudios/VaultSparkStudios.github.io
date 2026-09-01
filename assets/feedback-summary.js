@@ -1,7 +1,7 @@
 /**
  * feedback-summary.js (S163 audit #9 · feedback-sentiment-cron)
  *
- * Renders the sentiment trend + top-3 un-addressed asks on /feedback/insights/
+ * Renders the sentiment trend + top-3 un-addressed asks in the /changelog/#requests insights block
  * from /api/feedback-summary.json (written by the studio-ops sentiment cron).
  * Silent until the cron produces data — no empty-state noise.
  *

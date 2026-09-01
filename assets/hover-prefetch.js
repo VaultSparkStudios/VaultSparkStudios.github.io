@@ -33,7 +33,6 @@
     '/changelog/':          ['/api/public-intelligence.json'],
     '/community/':          ['/api/founder-presence.json'],
     '/leaderboards/':       ['/api/leaderboard/v1/global.json'],
-    '/vault-wall/':         ['/api/public-intelligence.json'],
     '/ranks/':              ['/api/public-intelligence.json'],
   };
 

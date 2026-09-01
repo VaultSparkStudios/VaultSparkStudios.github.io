@@ -32,7 +32,6 @@ const SKIP_DIRS = new Set([
   'context', 'logs', 'data', '.cache', '.ops-cache',
   '.wrangler', '.well-known', 'cloudflare', 'config',
   'scripts', 'supabase', 'tests', 'ignis', 'api',
-  'feedback',
 ]);
 
 // Each rule: { script: basename, allow: (relPath, html) => boolean, reason }

@@ -39,6 +39,13 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-nervous-system.mjs',        timeout: 30000, why: 'reads api/ outputs refreshed above' },
   { script: 'build-ignis-search-index.mjs',    timeout: 30000, why: 'indexes content refreshed above' },
   { script: 'build-analytics-summary.mjs',     timeout: 30000, why: 'reads RUM/event data' },
+  // S335: `full` was a strict subset of `refresh-live-data` and omitted this
+  // step, so a closeout cascade left api/public-status.json stale and
+  // build:check failed one step later. A profile named full must be full.
+  // (build-oracle-answers.mjs stays out: it reads api/citation.json, the
+  // LAST seal step, so it cannot sit inside this profile without a second
+  // citation pass — it runs in `npm run build` after the postbuild seal.)
+  { script: 'build-public-status.mjs',         timeout: 30000, why: 'projects public intelligence into public status before the proof chain consumes it' },
   { script: 'build-intelligence-budget.mjs',   timeout: 30000, why: 'reads api/ surfaces refreshed above' },
   { script: 'build-newsroom-run.mjs',          timeout: 30000, why: 'derives scheduler evidence before public proof surfaces' },
   { script: 'build-agents-json.mjs',           timeout: 30000, why: 'reads refreshed public intelligence and discovery shards' },
@@ -122,6 +129,8 @@ function selfTest() {
     ['release before status proof', idx('build-release-proof.mjs') < idx('build-status-proof.mjs')],
     ['analytics before stats surface', idx('build-analytics-summary.mjs') < idx('build-stats-surface.mjs')],
     ['status before stats surface', idx('build-status-proof.mjs') < idx('build-stats-surface.mjs')],
+    ['public status before status proof', idx('build-public-status.mjs') >= 0 && idx('build-public-status.mjs') < idx('build-status-proof.mjs')],
+    ['public status before stats surface', idx('build-public-status.mjs') >= 0 && idx('build-public-status.mjs') < idx('build-stats-surface.mjs')],
     ['stats surface before citation', idx('build-stats-surface.mjs') < idx('build-citation.mjs')],
     ['status before citation', idx('build-status-proof.mjs') < idx('build-citation.mjs')],
     ['citation is last', idx('build-citation.mjs') === names.length - 1],

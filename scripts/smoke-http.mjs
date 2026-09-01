@@ -72,7 +72,9 @@ const CHECKS = [
     contains: ['Studio Pulse'],
   },
   {
-    path: '/vault-wall/',
+    // S335: the Vault Wall lives at /community/#wall; the retired route is an
+    // edge 301 in _redirects (no stub to smoke).
+    path: '/community/',
     status: 200,
     contains: ['Vault Wall', 'rank-dist'],
   },

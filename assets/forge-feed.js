@@ -1,5 +1,5 @@
 /*
- * forge-feed.js — Live activity stream on /vault-wall/ (S83).
+ * forge-feed.js — Live activity stream (S83; originally on /vault-wall/, now ambient).
  *
  * Reads /api/public-intelligence.json (generated each closeout) and composes
  * a public-safe Forge Feed across four stream classes:

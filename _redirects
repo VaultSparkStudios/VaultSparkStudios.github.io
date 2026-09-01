@@ -56,5 +56,19 @@
 # other retired route. Cloudflare preserves the query string, which the Obelisk
 # callback depends on.
 /obelisk-passport/login                         /login                                             301
+# S335: /proof/ folded into the Evidence hub (in-browser ledger verifier lives at
+# /evidence/#verify); /feedback/ + /feedback/insights/ folded into the changelog's
+# "You asked. We shipped." section. More specific rules first.
+/proof/*                                        /evidence/#verify                                  301
+/proof                                          /evidence/#verify                                  301
+/feedback/insights/*                            /changelog/#requests                               301
+/feedback/insights                              /changelog/#requests                               301
+/feedback/*                                     /changelog/#requests                               301
+/feedback                                       /changelog/#requests                               301
 /obelisk-passport/callback                      /auth/callback                                     301
 /vault-treasury                                 /vault-member/                                     301
+
+# S335: /vault-wall/ folded into the Community hub — stats, rank distribution,
+# season countdown and podium now live at /community/#wall. Edge 301, no stub.
+/vault-wall/*                                   /community/#wall                                   301
+/vault-wall                                     /community/#wall                                   301

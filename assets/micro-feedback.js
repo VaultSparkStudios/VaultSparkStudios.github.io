@@ -45,7 +45,7 @@
   // For 100+ sessions this widget wrote localStorage and stopped: the studio's
   // headline survey collected nothing. The anonymous usefulness enum now joins
   // the same `page_feedback` table rate-page.js writes (mapped to its CHECK
-  // vocabulary), so /feedback/insights/ aggregates it. goal/blocker remain
+  // vocabulary), so the /changelog/#requests insights block aggregates it. goal/blocker remain
   // browser-local by design — richer server fidelity needs a migration.
   var USEFULNESS_TO_REACTION = { useful: 'useful', mixed: 'ok', not_yet: 'not_useful' };
   function visitDepthBucket() {
@@ -323,7 +323,7 @@
           '</div>' +
         '</form>' +
         '<p class="micro-feedback-loop-link" style="margin:0.85rem 0 0;font-size:0.78rem;color:var(--dim);">' +
-          'See where this goes &rarr; <a href="/feedback/" style="color:rgba(31,162,255,0.85);">/feedback/ loop</a>' +
+          'See where this goes &rarr; <a href="/changelog/#requests" style="color:rgba(31,162,255,0.85);">the feedback loop</a>' +
         '</p>' +
       '</div>';
   }

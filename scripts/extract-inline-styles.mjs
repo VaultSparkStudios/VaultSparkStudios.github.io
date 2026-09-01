@@ -10,10 +10,8 @@ const STYLE_PATH = path.join(ROOT, 'assets', 'style.css');
 const DEFAULT_TARGETS = [
   'index.html',
   'oracle/index.html',
-  'feedback/index.html',
   'social/index.html',
   'studio-pulse/index.html',
-  'nervous-system/index.html',
   'security/index.html'
 ];
 

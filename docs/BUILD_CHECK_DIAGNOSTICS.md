@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-01T13:54:17.285Z
-Receipt: `244f2b5daff1caac04bf5718` · coverage 61/378 from step 1
+Generated: 2026-09-01T23:56:31.177Z
+Receipt: `3901ebbc5d1f4bab76a40a3a` · coverage 72/378 from step 1
 
-Latest: **60/61** passed · failed 1 · total 139.8s
-Concentration: **55.3%** in step 61 · ratchet BREACHED (>30% and ≥45s)
+Latest: **71/72** passed · failed 1 · total 32.7s
+Concentration: **37.3%** in step 61 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 61 | 77.3s | 1 | `node scripts/smoke-startup-scripts.mjs` |
-| 58 | 15.0s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 29 | 7.1s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 23 | 2.0s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 41 | 1.9s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
-| 54 | 1.4s | 0 | `node scripts/check-play-next-impression-contract.mjs` |
-| 60 | 1.3s | 0 | `node scripts/check-obelisk-passport-contract.mjs` |
-| 1 | 1.2s | 0 | `node scripts/manage-forge-editorial.mjs --self-test` |
-| 24 | 1.1s | 0 | `node scripts/check-promotion-scope.mjs --self-test` |
-| 12 | 1.1s | 0 | `node scripts/check-proof-verifier-contract.mjs` |
+| 61 | 12.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 29 | 2.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 66 | 1.5s | 0 | `node scripts/build-shell-assets.mjs --check` |
+| 58 | 1.4s | 0 | `node scripts/run-build-check.mjs --self-test` |
+| 65 | 0.9s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
+| 41 | 0.7s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
+| 23 | 0.7s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
+| 40 | 0.5s | 0 | `node scripts/build-oracle-velocity-public.mjs --self-test` |
+| 63 | 0.3s | 0 | `node scripts/check-lighthouse-route-tiers.mjs` |
+| 11 | 0.3s | 0 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
 
 ## Failures
 
-- Step 61: `node scripts/smoke-startup-scripts.mjs` exited 1
+- Step 72: `node scripts/build-promotion-receipt.mjs --check` exited 1

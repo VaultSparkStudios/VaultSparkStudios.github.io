@@ -8,117 +8,288 @@
     "supabase/migrations/supabase-vaultsparked-discord.sql (is_sparked)",
     "supabase/migrations/phase54_three_tier_membership.sql (member_number)",
     "supabase/migrations/supabase-phase59-public-profile.sql (referred_by, public_profile)",
-    "supabase/migrations/supabase-challenge-submissions.sql"
+    "supabase/migrations/supabase-challenge-submissions.sql",
+    "supabase/migrations/supabase-phase61-member-write-lockdown.sql (public_leaderboard view, gift_points RPC, column-scoped UPDATE grant)"
   ],
   "tables": {
     "vault_members": {
       "columns": [
-        "id", "username", "username_lower", "invite_code",
-        "points", "subscribed", "is_sparked", "prefs", "achievements",
-        "member_number", "season_xp", "current_season_id",
-        "referred_by", "public_profile", "discord_id",
-        "plan_key", "stripe_price_id", "enrolled_phase", "last_monthly_xp_at",
-        "streak_count", "last_login_date",
-        "avatar_id", "avatar_emoji", "accent", "rank_name",
-        "challenge_streak", "last_challenge_date",
-        "onboarding_completed", "delete_requested",
+        "id",
+        "username",
+        "username_lower",
+        "invite_code",
+        "points",
+        "subscribed",
+        "is_sparked",
+        "prefs",
+        "achievements",
+        "member_number",
+        "season_xp",
+        "current_season_id",
+        "referred_by",
+        "public_profile",
+        "discord_id",
+        "plan_key",
+        "stripe_price_id",
+        "enrolled_phase",
+        "last_monthly_xp_at",
+        "streak_count",
+        "last_login_date",
+        "avatar_id",
+        "avatar_emoji",
+        "accent",
+        "rank_name",
+        "challenge_streak",
+        "last_challenge_date",
+        "onboarding_completed",
+        "delete_requested",
         "created_at"
       ],
       "note": "S101 drift fix: subscription_status -> is_sparked, rank_title -> points. Do not reintroduce the old column names. avatar_id/avatar_emoji/accent/rank_name/challenge_streak/last_challenge_date appear in live client code (portal + join flow); dashboard-added after S53 portal rollout. onboarding_completed + delete_requested added S105 after write-path validator surfaced them on portal-auth/portal-settings/portal update paths."
     },
     "challenge_submissions": {
       "columns": [
-        "id", "member_id", "challenge_id", "payload", "status",
-        "completed", "points_awarded", "created_at", "updated_at"
+        "id",
+        "member_id",
+        "challenge_id",
+        "payload",
+        "status",
+        "completed",
+        "points_awarded",
+        "created_at",
+        "updated_at"
       ],
       "note": "S101 drift fix: user_id -> member_id. Do not reintroduce user_id."
     },
     "vault_challenges": {
       "columns": [
-        "id", "slug", "title", "description", "category",
-        "points", "completed", "active", "expires_at", "created_at",
-        "progress_max", "required_plan", "created_by", "publish_at"
+        "id",
+        "slug",
+        "title",
+        "description",
+        "category",
+        "points",
+        "completed",
+        "active",
+        "expires_at",
+        "created_at",
+        "progress_max",
+        "required_plan",
+        "created_by",
+        "publish_at"
       ]
     },
     "game_sessions": {
       "columns": [
-        "id", "user_id", "game_slug", "score", "duration_s",
-        "metadata", "played_at"
+        "id",
+        "user_id",
+        "game_slug",
+        "score",
+        "duration_s",
+        "metadata",
+        "played_at"
       ],
       "note": "game_sessions uses user_id directly (references auth.users). Do NOT apply the challenge_submissions member_id migration here."
     },
     "subscriptions": {
       "columns": [
-        "id", "user_id", "stripe_customer_id", "stripe_subscription_id",
-        "plan", "status", "current_period_end",
-        "created_at", "updated_at"
+        "id",
+        "user_id",
+        "stripe_customer_id",
+        "stripe_subscription_id",
+        "plan",
+        "status",
+        "current_period_end",
+        "created_at",
+        "updated_at"
       ]
     },
     "invite_codes": {
-      "columns": ["id", "code", "notes", "used_at", "used_by", "created_at"]
+      "columns": [
+        "id",
+        "code",
+        "notes",
+        "used_at",
+        "used_by",
+        "created_at"
+      ]
     },
     "studio_pulse": {
-      "columns": ["id", "message", "type", "created_at"]
+      "columns": [
+        "id",
+        "message",
+        "type",
+        "created_at"
+      ]
     },
     "push_subscriptions": {
-      "columns": ["id", "user_id", "endpoint", "keys", "created_at"]
+      "columns": [
+        "id",
+        "user_id",
+        "endpoint",
+        "keys",
+        "created_at"
+      ]
     },
     "point_events": {
       "columns": [
-        "id", "user_id", "member_id", "reason", "label", "description",
-        "source", "points", "amount", "expanded", "occurred_at", "created_at"
+        "id",
+        "user_id",
+        "member_id",
+        "reason",
+        "label",
+        "description",
+        "source",
+        "points",
+        "amount",
+        "expanded",
+        "occurred_at",
+        "created_at"
       ],
       "note": "Base migration (supabase-phase2-3.sql) has user_id/reason/label/points/created_at. Phase 50/54 migrations write member_id + description + source. `occurred_at` and `amount` appear heavily in portal client code — either dashboard-added or aliases; confirmed as live columns via production usage."
     },
     "polls": {
-      "columns": ["id", "question", "options", "is_active", "closes_at", "created_at"]
+      "columns": [
+        "id",
+        "question",
+        "options",
+        "is_active",
+        "closes_at",
+        "created_at"
+      ]
     },
     "poll_votes": {
-      "columns": ["id", "poll_id", "user_id", "option_index", "created_at"]
+      "columns": [
+        "id",
+        "poll_id",
+        "user_id",
+        "option_index",
+        "created_at"
+      ]
     },
     "challenges": {
       "columns": [
-        "id", "title", "description", "points", "points_reward",
-        "challenge_type", "action_key", "expires_at",
-        "active", "is_active", "created_at"
+        "id",
+        "title",
+        "description",
+        "points",
+        "points_reward",
+        "challenge_type",
+        "action_key",
+        "expires_at",
+        "active",
+        "is_active",
+        "created_at"
       ],
       "note": "Distinct from vault_challenges. Base migration uses `points` + `active`; `points_reward` + `is_active` appear in portal client code — either dashboard-added aliases or view-level renames. Both forms tolerated."
     },
     "treasury_items": {
       "columns": [
-        "id", "name", "description", "category", "cost", "icon",
-        "is_active", "min_rank_pts", "stock", "created_at"
+        "id",
+        "name",
+        "description",
+        "category",
+        "cost",
+        "icon",
+        "is_active",
+        "min_rank_pts",
+        "stock",
+        "created_at"
       ]
     },
     "treasury_purchases": {
-      "columns": ["id", "user_id", "item_id", "cost", "created_at"]
+      "columns": [
+        "id",
+        "user_id",
+        "item_id",
+        "cost",
+        "created_at"
+      ]
     },
     "beta_keys": {
       "columns": [
-        "id", "game_slug", "key_code", "claimed_by", "claimed_at",
-        "min_rank", "created_at"
+        "id",
+        "game_slug",
+        "key_code",
+        "claimed_by",
+        "claimed_at",
+        "min_rank",
+        "created_at"
       ]
     },
     "classified_files": {
       "columns": [
-        "id", "slug", "title", "classification", "rank_required",
-        "universe_tag", "content_html", "published_at", "created_at"
+        "id",
+        "slug",
+        "title",
+        "classification",
+        "rank_required",
+        "universe_tag",
+        "content_html",
+        "published_at",
+        "created_at"
       ]
     },
     "investor_updates": {
       "columns": [
-        "id", "title", "body_html", "update_type", "visibility_tier",
-        "is_published", "published_at", "created_by", "created_at", "updated_at"
+        "id",
+        "title",
+        "body_html",
+        "update_type",
+        "visibility_tier",
+        "is_published",
+        "published_at",
+        "created_by",
+        "created_at",
+        "updated_at"
       ]
     },
     "investor_messages": {
       "columns": [
-        "id", "investor_id", "subject", "priority", "message",
-        "read", "created_at"
+        "id",
+        "investor_id",
+        "subject",
+        "priority",
+        "message",
+        "read",
+        "created_at"
       ]
     },
     "member_achievements": {
-      "columns": ["id", "member_id", "achievement_id", "earned_at"]
+      "columns": [
+        "id",
+        "member_id",
+        "achievement_id",
+        "earned_at"
+      ]
+    },
+    "public_leaderboard": {
+      "columns": [
+        "id",
+        "username",
+        "points",
+        "created_at",
+        "member_number",
+        "is_sparked",
+        "avatar_emoji",
+        "accent",
+        "rank_name"
+      ],
+      "note": "S335 phase61: security-definer view over vault_members filtered public_profile = true — the PUBLIC projection of the members table. The base table has no anon read policy (only read-own-row), so every anonymous public surface must read this view. Read-only; dashboard-added columns (avatar_emoji, accent, rank_name) are included only where they exist."
+    },
+    "ignis_usage_monthly": {
+      "columns": [
+        "id",
+        "user_id",
+        "month_bucket",
+        "request_count",
+        "last_request_at",
+        "last_model",
+        "plan_key",
+        "created_at",
+        "updated_at"
+      ],
+      "note": "supabase/migrations/supabase-phase60-ignis-usage.sql. RLS: member SELECT own (auth.uid() = user_id); writes are service_role only (ask-ignis edge function upserts). Client reads only — never write plan_key/request_count from the browser."
     }
   },
   "_alias_traps": {

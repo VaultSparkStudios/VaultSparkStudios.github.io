@@ -7,6 +7,3 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Worlds | 1 | 40d44d41 exempt the relocated Solara world pages from the orphan gate | pending |
-| Transparency | 1 | 5ce86566 rebuild status proof after the feed refresh | pending |
-| Front door | 2 | 0cfded53 put /evidence/ in the footer, where the contract requires it<br>79c9d2a2 re-bind visual and mobile receipts to the final candidate | pending |

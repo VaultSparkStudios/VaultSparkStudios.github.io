@@ -35,7 +35,7 @@
     ['/membership', 'User is on the membership page. Help them understand Vault tiers, Vault Score, rank progression, and the value of joining — or point them to the sign-up flow.'],
     ['/ranks', 'User is exploring the VaultSpark rank system and Vault Score. Help them understand how points are earned, what ranks unlock, and how to climb faster.'],
     ['/leaderboards', 'User is checking the VaultSpark leaderboards. Help them understand ranking mechanics and what drives Vault Score.'],
-    ['/vault-wall', 'User is viewing the Vault Wall — live proof board of real studio output. Help them understand what each card represents and how to contribute.'],
+    ['/community', 'User is on the Community hub, which includes the Vault Wall (standings, rank distribution, season countdown). Help them understand ranks, Vault Points, seasons, and how to get on the wall.'],
     ['/universe/voidfall', 'User is reading about Voidfall — a VaultSpark lore universe. Help them explore the narrative, characters, or find the Signal Log transmissions.'],
     ['/universe/dreadspike', 'User is reading about DreadSpike — a VaultSpark lore universe. Help them explore the story and universe connections.'],
     ['/universe', 'User is exploring the VaultSpark Universe — Voidfall and DreadSpike narrative worlds. Help them dive into the lore, find character pages, or discover the Signal Log.'],

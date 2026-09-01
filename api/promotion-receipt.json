@@ -4,27 +4,27 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
+    "sha": "7d09c18cd2e087468eac8094d31aea468704ebe0",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "d2b15bcf90b6e82e2e9840933b99bdabdd065512",
+    "sha": "d306c26174523e6409ab138cbce8952b1831493f",
     "reachable": true,
-    "reconciliation": "ahead"
+    "reconciliation": "behind"
   },
   "csp": {
     "observed": true,
     "apexReachable": true,
-    "mode": "enforce",
-    "nonce": true,
-    "reportOnlyAlso": true,
-    "headerName": "content-security-policy"
+    "mode": "absent",
+    "nonce": false,
+    "reportOnlyAlso": false,
+    "headerName": null
   },
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 8,
     "signalCardinality": 6,
     "signalEndpoints": [
       "api/ecosystem-state.json",
@@ -61,7 +61,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 1,
+        "consoleErrors": 2,
         "signalCardinality": 3,
         "signalEndpoints": [
           "api/ecosystem-state.json",
@@ -74,17 +74,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production serves d2b15bcf, newer than the recorded promoted 94e78e93 (benign — a later rebuild moved on)",
-    "7 console error(s) on the promoted artifact"
+    "production CSP is 'absent' but source policy is 'enforce' — enforce header missing at the edge",
+    "production origin serves d306c261 — OLDER than promoted 7d09c18c — stranded/stale deploy",
+    "8 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-08-28T19:36:14.616Z",
+  "generatedAt": "2026-09-01T23:55:51.890Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-08-27T10:32:59.128Z",
-    "currentBehindStreak": 0,
+    "lastStrandedAt": "2026-09-01T23:55:51.890Z",
+    "currentBehindStreak": 1,
     "strandedAlert": false
   }
 }

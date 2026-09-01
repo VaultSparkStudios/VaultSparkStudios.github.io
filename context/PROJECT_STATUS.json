@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 334 audited all 185 pages from the marketing landing to the member panel and shipped 12 of 14 ranked items — while disproving 2 of them with measurement rather than building them. Four defects were live: _redirects splat rules that 301'd three Solara world pages, the legacy Franchise Architect build and two whole app trees into 404s; /ignis-health/ calling itself internal while protected only by robots.txt; a tracked duplicate sitemap the orphan gate had been told to ignore; and a newsroom that could spend three consecutive editions on one story because selection remembered dead hosts but not its own output. Two fixes were joins rather than builds — the pathway route data had existed unrendered since S201, and the 17 .ai/ canonical fact sheets were referenced by nothing until they reached sitemap, agents.json, JSON-LD, human cross-links and the answer engine's retrieval corpus. New surface: /evidence/, one front door for eight live-data pages, with freshness fetched live rather than baked and honest UNKNOWN states.",
-  "publicNote": "The newsroom is publishing again after six quiet days, and the site now explains itself better when it cannot publish: a scan that finds nothing worth writing about says exactly why. The desk also refused an easy fix that would have let it claim two outlets agreed when they had not.",
-  "nextMilestone": "Resolve the startup-brief vs revenue-resolver disagreement upstream in studio-ops via Ark cargo (it recurs at every date rollover); stop fact extraction accepting syndicated advertising copy as a sourced fact on a public surface; reconcile propagate-nav's stale arrays so the footer stops naming two retired routes; and complete the founder-reserved Obelisk relying-party/passkey ceremony when available.",
+  "currentFocus": "Session 335 re-audited the site one day after S334 and found the P0 was not on the list: any signed-in member could write their own points, plan and paid AI tier from the browser, and every anonymous public member surface had been blank for months because the members table had no anon read policy. Both are closed with a live-applied, probe-proven migration (column-scoped grants, atomic gift RPC, a public_leaderboard projection view). The stub deletion S334 recorded as shipped had been silently reverted by a generator on every build; that generator is now a court and the stubs are gone. Four redundant routes merged into their canonical pages with edge 301s, a new /how-we-build/ page with a vocabulary gate, Season 1 live, member dashboard quota meter and feedback loop, 16 duplicate build invocations removed, and ~360 MB of session snapshots out of the index.",
+  "publicNote": "Community and leaderboard pages now show real member numbers for opted-in members, Season 1 (Ignition) is open until 14 October, the changelog carries the feedback loop, and a new How We Build page explains the words the studio uses about itself.",
+  "nextMilestone": "Confirm the four merged routes 301 at the apex from a real browser; manual CANON-053 review of the five changed surfaces across seven themes; audit the remaining public tables for the silent-zero anonymous read; fix the Trusted Types readiness ageing and flip TT_ENFORCE_ENABLED; then the founder-reserved Obelisk passkey ceremony when available.",
   "blockers": [
     "identity/auth surfaces remain held on real-provider-e2e-pending: obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; obelisk-staging-registration is also missing. The S332 candidate is blast-radius-disjoint and its scoped production resolver is allowed, which does not resolve or bypass this hold.",
     "identity: the provider chain is live and verified (discovery JSON, authorize redirect, JWKS, and the revocation route all answer correctly as of session 321). The production promotion is held only on the real-provider journey, whose remaining leg is a founder passkey ceremony — hardware-key enrollment is founder-reserved by CANON-019 and is deliberately not automatable.",
@@ -24,14 +24,14 @@
     "startup-revenue-agreement is red: the promoted v5 startup brief renders a revenue evidence age the shared resolver disagrees with, and context/SIGNALS.md — its documented fallback — is 18 days stale and reports 'not found'. Studio-ops brief-renderer owned; must not be fixed by editing the sibling repo."
   ],
   "lastUpdated": "2026-09-01",
-  "currentSession": 334,
+  "currentSession": 335,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-08-31",
-  "silScore": 988,
-  "silAvg3": 992,
-  "silVelocity": 4,
+  "silScore": 989,
+  "silAvg3": 991,
+  "silVelocity": 6,
   "silDebt": "↓",
-  "silLastSession": 334,
+  "silLastSession": 335,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -64,7 +64,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "S332 final settled-tree canonical build:check passed 370/370; mobile runtime passed 235/235, Worker/auth passed 94/94, exact release CI passed, and live apex attention behavior passed 15/15 across Chromium, Firefox, and WebKit."
+      "note": "S335 final settled-tree canonical build:check passed 378/378 (--quiet); mobile runtime 215/215 against a local preview; Worker/auth unit 54/54; rendered-pixel receipt 98 captures, 6 manually reviewed."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
@@ -89,17 +89,17 @@
     "creativeAlignment": 99,
     "momentum": 98,
     "engagement": 97,
-    "processQuality": 100,
-    "crossRepoCoherence": 97,
+    "processQuality": 99,
+    "crossRepoCoherence": 100,
     "securityPosture": 100,
     "ecosystemIntegration": 99,
     "capitalEfficiency": 100,
-    "automationCoverage": 99
+    "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 334,
+  "silCategoriesUpdatedSession": 335,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-08-31",
+    "date": "2026-09-01",
     "passing": 15,
     "warning": 1,
     "failing": 0,
@@ -173,15 +173,15 @@
       },
       {
         "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -229,11 +229,11 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 372,
-  "testsPassing": 372,
-  "testsLastRun": "2026-08-31",
+  "testsTotal": 378,
+  "testsPassing": 378,
+  "testsLastRun": "2026-09-01",
   "testsLabel": "measured build:check steps",
-  "publicNextStep": "Keep widening the set of publications the desk can actually read, since that is now what limits how often it can write. Account verification remains on its separate approval path.",
+  "publicNextStep": "Watch the first week of Season 1 and the community wall, and finish the rendered-pixel review of the merged pages. Account verification remains on its separate approval path.",
   "doctorBlockingFailing": 0,
   "lastAgent": "claude-code",
   "mobileParity": true,
@@ -247,7 +247,7 @@
   "truthGenome": "25/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "0ebf955036e68b89f8b861d2",
-  "testsSourceFingerprint": "5fdb51564ce639b92a79d8c4",
-  "lastSessionSummary": "S333 (2026-08-31, from SIL ledger): Total: 996/1000. The Desk publishes again — live edition 2026-08-31 after a nine-run outage."
+  "testsPlanFingerprint": "76a4d66d93ad034066297093",
+  "testsSourceFingerprint": "83d76c5b492a5258d0b0f612",
+  "lastSessionSummary": "S335 (2026-09-01, from SIL ledger): Total: 989/1000."
 }

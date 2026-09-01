@@ -1,14 +1,16 @@
 // vault-wall.spec.js
-// Playwright smoke — verifies /vault-wall/ loads, the rank distribution bar and
-// leaderboard containers render, and zero CSP console errors are surfaced.
+// Playwright smoke — the Vault Wall was folded into the Community hub (S335):
+// /vault-wall/ is now an edge 301 to /community/#wall. Verifies the retired
+// route still lands on the wall, the rank distribution bar and podium render,
+// and zero CSP console errors are surfaced.
 // Replaces the [SIL:2⛔] recurring manual-incognito smoke check.
+// File name kept so the e2e workflow's explicit spec path stays valid.
 
 const { test, expect } = require('@playwright/test');
-const AxeBuilder = require('@axe-core/playwright').default;
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
-test.describe('Vault Wall public page', () => {
-  test('page loads, rank bar and podium render, zero CSP errors (Chromium)', async ({ page, browserName }) => {
+test.describe('Vault Wall (on the Community hub)', () => {
+  test('wall section loads, rank bar and podium render, zero CSP errors (Chromium)', async ({ page, browserName }) => {
     test.skip(browserName !== 'chromium', 'CSP smoke runs Chromium only');
 
     const cspErrors = [];
@@ -25,15 +27,13 @@ test.describe('Vault Wall public page', () => {
       }
     });
 
-    await page.goto(BASE + '/vault-wall/', { waitUntil: 'load' });
+    await page.goto(BASE + '/community/#wall', { waitUntil: 'load' });
 
     // Page title
-    await expect(page).toHaveTitle(/Vault Wall/i);
+    await expect(page).toHaveTitle(/Community/i);
 
-    // h1 visible
-    await expect(page.locator('#vw-heading')).toBeVisible();
-
-    // Footer present
+    // Wall heading + footer present
+    await expect(page.locator('#wall-heading')).toBeVisible();
     await expect(page.locator('footer.site-footer')).toBeVisible();
 
     // Rank distribution bar is always in DOM (static container populated by JS)
@@ -42,46 +42,31 @@ test.describe('Vault Wall public page', () => {
     // Podium container is always in DOM
     await expect(page.locator('#vw-podium')).toBeVisible();
 
+    // Season slot renders a real state (active/inactive), never stays "loading"
+    await expect(page.locator('[data-season-countdown]')).not.toHaveAttribute('data-state', 'loading', { timeout: 10_000 });
+
     // Allow Supabase JS time to populate member data
     await page.waitForTimeout(3500);
 
     // Rank distribution bar should have segments injected by JS
-    // (segments use .rank-dist-seg class — at least 1 should be present if data loads)
     const segCount = await page.locator('#rank-dist-bar .rank-dist-seg').count();
     if (segCount === 0) {
-      console.warn('WARN: /vault-wall/ rank-dist-seg count = 0 — Supabase may be empty or unreachable in test env');
+      console.warn('WARN: /community/#wall rank-dist-seg count = 0 — Supabase may be empty or unreachable in test env');
     }
 
-    // No CSP violations
     if (cspErrors.length > 0) {
       console.error('CSP violations:\n' + cspErrors.join('\n'));
     }
-    expect(cspErrors, 'CSP violations on /vault-wall/').toHaveLength(0);
+    expect(cspErrors, 'CSP violations on /community/#wall').toHaveLength(0);
   });
 
-  test('forge feed retains valid native list semantics', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'Accessibility contract runs Chromium only');
-
-    await page.goto(BASE + '/vault-wall/', { waitUntil: 'load' });
-    await page.locator('[data-forge-feed][data-state="ready"]').waitFor({ timeout: 10_000 });
-
-    const list = page.locator('.vw-forge-feed ul.ff-list');
-    await expect(list).toHaveCount(1);
-    await expect(list).not.toHaveAttribute('role', /.+/);
-    expect(await list.locator(':scope > li.ff-row').count()).toBeGreaterThan(0);
-
-    const results = await new AxeBuilder({ page })
-      .include('.vw-forge-feed')
-      .withRules(['aria-allowed-role', 'aria-required-children', 'listitem'])
-      .analyze();
-    expect(results.violations).toEqual([]);
-  });
-
-  test('page is accessible without auth (public route)', async ({ page }) => {
+  test('retired /vault-wall/ route 301s onto the wall without auth', async ({ page }) => {
     const response = await page.goto(BASE + '/vault-wall/');
     expect(response.status()).toBeLessThan(400);
 
-    // Page must not redirect to login
-    expect(page.url()).toContain('/vault-wall/');
+    // Must land on the community hub, never on a login page
+    expect(page.url()).toContain('/community/');
+    expect(page.url()).not.toContain('/vault-member/');
+    await expect(page.locator('#wall')).toBeAttached();
   });
 });

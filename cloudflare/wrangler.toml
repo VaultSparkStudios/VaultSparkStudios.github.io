@@ -34,6 +34,12 @@ RATE_LIMIT_ENABLED = "1"
 TT_REPORT_SAMPLE_RATE = "1"
 TT_REPORT_TTL_SEC     = "2592000"
 
+# S335: Trusted Types ENFORCE switch. "1" moves require-trusted-types-for into the
+# live Content-Security-Policy and drops the report-only header. Flip only when
+# api/tt-readiness.json reports enforceEligible: true; set back to "0" to roll
+# back without a code deploy. Founder-approved S335; held on the readiness receipt.
+TT_ENFORCE_ENABLED = "0"
+
 # Hub subdomain migration flag. When "1", the worker:
 #   1) serves auth + proxy for hub.vaultsparkstudios.com (requires HUB_* secrets)
 #   2) 301 redirects legacy /studio-hub/* to https://hub.vaultsparkstudios.com/*

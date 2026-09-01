@@ -109,7 +109,7 @@ function build() {
       { key: 'studio', label: 'Studio Health',       value: humanTileValue(intel?.project?.health || 'unknown'), href: '/studio-pulse/' },
       { key: 'ci',     label: 'Builds',               value: ci?.allGreen === true ? 'Passing' : 'Check',       href: '/status/' },
       { key: 'ignis',  label: 'AI Intelligence',      value: humanTileValue(roi?.summary?.tokensSaved ? 'active' : 'active'), href: '/ignis/' },
-      { key: 'feedback', label: 'Feedback themes',    value: String(feedback?.themeCount || 0),                 href: '/feedback/' },
+      { key: 'feedback', label: 'Feedback themes',    value: String(feedback?.themeCount || 0),                 href: '/changelog/#requests' },
       { key: 'mobile', label: 'Mobile experience',    value: humanTileValue(nav?.readiness?.defaultSwapReady ? 'ready' : 'canary'), href: '/' },
       { key: 'social', label: 'Social channels',      value: String(social?.channels?.length || intel?.stats?.trackedSocialAccounts || 0), href: '/social/' },
     ],

@@ -57,7 +57,6 @@ export const OG_DARK_PATHS = new Map([
   ['vault-treasury/index.html', 'internal treasury surface'],
   ['vault-member/admin/ignis-spend/index.html', 'gated admin surface'],
   ['studio-hub/index.html', 'internal studio hub'],
-  ['feedback/insights/index.html', 'internal insights dashboard'],
   ['brand/system/index.html', 'internal brand/style guide'],
   ['security/trusted-types/index.html', 'technical security doc'],
   ['solara/sun-widget.html', 'embeddable widget fragment'],

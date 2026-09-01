@@ -1,5 +1,5 @@
 /**
- * feedback-insights — public 7-day signal renderer for /feedback/insights/.
+ * feedback-insights — public 7-day signal renderer for the Feedback insights block at /changelog/#requests (S335: folded in from /feedback/insights/).
  *
  * Reads:
  *   - page_feedback_signals view  (overall counts)

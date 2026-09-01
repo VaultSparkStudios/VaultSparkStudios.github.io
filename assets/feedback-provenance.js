@@ -1,7 +1,7 @@
 /**
  * feedback-provenance.js (S163 audit #3 · feedback-ship-provenance)
  *
- * Renders the "shipped in the areas you flagged" strip on /feedback/ from
+ * Renders the "shipped in the areas you flagged" strip in /changelog/#requests from
  * api/feedback-provenance.json (built by scripts/build-feedback-provenance.mjs).
  * Joins the Forge ledger to feedback themes so the loop is evidence-backed, not
  * just hand-curated. Silent if the data is absent or empty — no empty-state noise.

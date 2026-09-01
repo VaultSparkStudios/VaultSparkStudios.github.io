@@ -119,7 +119,7 @@
     { kind: 'page', name: 'Membership', href: '/membership/', tags: 'membership tiers join' },
     { kind: 'page', name: 'Choose Your Tier', href: '/vaultsparked/', tags: 'tiers pricing sparked eternal' },
     { kind: 'page', name: 'Vault Member Portal', href: '/vault-member/', tags: 'portal account dashboard sign in' },
-    { kind: 'page', name: 'Vault Wall', href: '/vault-wall/', tags: 'wall public profile' },
+    { kind: 'page', name: 'Vault Wall', href: '/community/#wall', tags: 'wall public profile standings rank' },
     { kind: 'page', name: 'Universe', href: '/universe/', tags: 'universe lore voidfall dreadspike' },
     { kind: 'page', name: 'Voidfall', href: '/universe/voidfall/', tags: 'voidfall cosmic horror saga novel' },
     { kind: 'page', name: 'DreadSpike', href: '/universe/dreadspike/', tags: 'dreadspike lore' },
@@ -139,7 +139,7 @@
     { kind: 'page', name: 'Contact', href: '/contact/', tags: 'contact reach support' },
     { kind: 'page', name: 'Ranks', href: '/ranks/', tags: 'ranks score progression' },
     { kind: 'page', name: 'Leaderboards', href: '/leaderboards/', tags: 'leaderboard ranking' },
-    { kind: 'page', name: 'Feedback Insights', href: '/feedback/insights/', tags: 'feedback insights public' },
+    { kind: 'page', name: 'Feedback Insights', href: '/changelog/#requests', tags: 'feedback insights public' },
     { kind: 'page', name: 'FAQ', href: '/faq/', tags: 'faq questions help' },
   ];
 

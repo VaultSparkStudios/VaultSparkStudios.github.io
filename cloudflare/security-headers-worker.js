@@ -152,6 +152,11 @@ function resolveTtReportTtl(env) {
 }
 const TT_REPORT_BUCKET_SIZE = 1000;
 const TT_REPORT_CSP = "require-trusted-types-for 'script'; report-to vs-tt";
+// S335: Trusted Types enforcement is a one-variable flip (TT_ENFORCE_ENABLED="1"
+// in wrangler.toml). Default off: api/tt-readiness.json must report
+// enforceEligible before flipping. Rollback is the same variable set back to
+// "0" — no code deploy needed. Set per request from env in fetch().
+let ttEnforceMode = false;
 const TT_REPORTING_ENDPOINTS = 'vs-tt="/v/tt-report"';
 
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
@@ -876,10 +881,17 @@ function withSecurityHeaders(response, { ttl = 0, csp, extra, jsonSwr = false } 
   for (const h of REMOVE_HEADERS) newHeaders.delete(h);
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) newHeaders.set(key, value);
   if (csp) {
-    newHeaders.set('Content-Security-Policy', csp);
-    // S156 #32 — begin Trusted Types in report-only mode without waiting on R2.
-    // Reports land in the existing RATE_LIMIT KV namespace through /v/tt-report.
-    newHeaders.set('Content-Security-Policy-Report-Only', TT_REPORT_CSP);
+    if (ttEnforceMode) {
+      // S335: Trusted Types enforced inside the live policy; the report-only
+      // header is dropped so browsers do not double-report the same sink.
+      newHeaders.set('Content-Security-Policy', `${csp}; ${TT_REPORT_CSP}`);
+      newHeaders.delete('Content-Security-Policy-Report-Only');
+    } else {
+      newHeaders.set('Content-Security-Policy', csp);
+      // S156 #32 — begin Trusted Types in report-only mode without waiting on R2.
+      // Reports land in the existing RATE_LIMIT KV namespace through /v/tt-report.
+      newHeaders.set('Content-Security-Policy-Report-Only', TT_REPORT_CSP);
+    }
     newHeaders.set('Reporting-Endpoints', TT_REPORTING_ENDPOINTS);
   }
   if (jsonSwr) {
@@ -955,6 +967,7 @@ const worker = {
    * than being absorbed into a tidy 503.
    */
   async fetch(request, env, ctx) {
+    ttEnforceMode = env?.TT_ENFORCE_ENABLED === '1';
     try {
       return await worker.handle(request, env, ctx);
     } catch (error) {

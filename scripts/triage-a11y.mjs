@@ -90,7 +90,6 @@ const PAGE_MAP = {
   '/membership/':     'membership/index.html',
   '/contact/':        'contact/index.html',
   '/studio-pulse/':   'studio-pulse/index.html',
-  '/vault-wall/':     'vault-wall/index.html',
   '/press/':          'press/index.html',
   '/universe/':       'universe/index.html',
   '/ignis/':          'ignis/index.html',

@@ -888,6 +888,7 @@
 
         if (items.length === 0) {
           el.innerHTML = '<div class="pulse-empty">No activity yet — start earning points to build your Chronicle.</div>';
+          loadFeedbackShippedStrip(el);
           return;
         }
 
@@ -926,9 +927,95 @@
 
         html += '</div>';
         el.innerHTML = html;
+        loadFeedbackShippedStrip(el);
       } catch (_) {
         if (el) el.innerHTML = '<div class="pulse-empty">Could not load activity chronicle.</div>';
       }
+    }
+
+    // ── S335: "Your feedback that shipped" — closes the loop inside the Chronicle ──
+    // page_feedback rows carry no user id and are SELECT-able by service_role only
+    // (supabase/migrations/supabase-page-feedback.sql), so a member cannot query
+    // "their" rows. The rate-this-page widget keeps the visitor's own reactions on
+    // this device (localStorage vs_rate_page_v1 → { [path]: { at, reaction } }); that
+    // is the only honest per-member record. Join key = theme, exactly as
+    // assets/feedback-insights.js buckets paths and api/ship-receipts.json keys
+    // receipts. Conservative: a receipt counts only when it carries a shipped commit
+    // dated AFTER the member's reaction on a page inside that theme.
+    const FEEDBACK_THEMES = [
+      { key: 'conversion',   test: (p) => /^\/(membership|join|invite|vaultsparked|pricing)/.test(p) },
+      { key: 'worlds',       test: (p) => /^\/(games|universe)/.test(p) },
+      { key: 'transparency', test: (p) => /^\/(studio-pulse|oracle|ignis|studio|roadmap|changelog|journal|press)/.test(p) },
+      { key: 'trust',        test: (p) => /^\/(privacy|terms|cookies|accessibility|data-deletion|security)/.test(p) },
+      { key: 'frontdoor',    test: (p) => p === '/' || p === '' },
+    ];
+    function feedbackThemeFor(path) {
+      const p = String(path || '/');
+      for (const t of FEEDBACK_THEMES) if (t.test(p)) return t.key;
+      return null;
+    }
+    function readOwnPageFeedback() {
+      try {
+        const raw = window.localStorage.getItem('vs_rate_page_v1');
+        const store = raw ? JSON.parse(raw) : {};
+        if (!store || typeof store !== 'object') return [];
+        return Object.entries(store)
+          .filter(([, e]) => e && Number.isFinite(Number(e.at)) && !e.pendingPayload) // delivered only
+          .map(([path, e]) => ({ path: path, at: Number(e.at), reaction: String(e.reaction || '') }))
+          .sort((a, b) => b.at - a.at);
+      } catch (_) { return []; }
+    }
+    async function loadFeedbackShippedStrip(container) {
+      if (!container) return;
+      let strip = document.getElementById('chronicle-feedback-shipped');
+      if (!strip) {
+        strip = document.createElement('div');
+        strip.id = 'chronicle-feedback-shipped';
+        strip.style.marginTop = '1.25rem';
+        container.appendChild(strip);
+      }
+      const header = '<div class="chronicle-day-header">Your feedback that shipped</div>';
+      const quiet = header + '<div class="pulse-empty">No shipped changes tied to your feedback yet — keep the signals coming.</div>';
+
+      const own = readOwnPageFeedback();
+      let receipts = [];
+      try {
+        const res = await fetch('/api/ship-receipts.json', { credentials: 'omit' });
+        if (res.ok) {
+          const data = await res.json();
+          receipts = (Array.isArray(data?.receipts) ? data.receipts : [])
+            .filter((r) => (r.feedbackSignals || 0) > 0 && Array.isArray(r.shippedCommits) && r.shippedCommits.length > 0);
+        }
+      } catch (_) { /* honest-dark below */ }
+
+      const matches = [];
+      for (const fb of own) {
+        const theme = feedbackThemeFor(fb.path);
+        if (!theme) continue;
+        const rec = receipts.find((r) => r.theme === theme);
+        if (!rec) continue;
+        const ships = rec.shippedCommits
+          .filter((c) => c && c.summary && (Date.parse(c.ts) || 0) >= fb.at)
+          .sort((a, b) => (Date.parse(b.ts) || 0) - (Date.parse(a.ts) || 0));
+        if (!ships.length) continue;
+        matches.push({ fb: fb, rec: rec, ship: ships[0] });
+      }
+
+      if (!matches.length) { strip.innerHTML = quiet; return; }
+
+      const pageName = (p) => (!p || p === '/') ? 'Home' : p.replace(/^\/|\/$/g, '').replace(/\//g, ' › ');
+      strip.innerHTML = header + '<div class="chronicle-timeline">' + matches.slice(0, 5).map((m) => {
+        const flagged = new Date(m.fb.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const shipped = Date.parse(m.ship.ts) ? new Date(Date.parse(m.ship.ts)).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+        return '<div class="chronicle-item">'
+          + '<div class="chronicle-icon" style="background:rgba(255,196,0,0.12);color:#fbbf24;">📣</div>'
+          + '<div class="chronicle-body">'
+          + '<div class="chronicle-label">You flagged <strong>' + escHtml(pageName(m.fb.path)) + '</strong> · ' + escHtml(flagged)
+          + ' → shipped: <a href="/changelog/#requests" style="color:var(--gold);font-weight:700;">' + escHtml(m.rec.label || m.rec.theme) + ' — ' + escHtml(m.ship.summary) + '</a></div>'
+          + '<div class="chronicle-time">' + escHtml(shipped ? 'Shipped ' + shipped : 'Shipped') + '</div>'
+          + '</div>'
+          + '</div>';
+      }).join('') + '</div>';
     }
 
     // ── Phase 24: QR Code for referral link ──────────────────────
@@ -1148,34 +1235,31 @@
       fb.style.color = 'var(--dim)'; fb.textContent = 'Sending…';
 
       try {
-        // Look up recipient
-        const { data: recip, error: lookupErr } = await VSSupabase
-          .from('vault_members').select('id, username, points').eq('username', recipient).single();
-        if (lookupErr || !recip) { fb.style.color = '#f87171'; fb.textContent = 'Member not found.'; return; }
+        // S335 (phase61): the transfer is one atomic security-definer RPC.
+        // Points are no longer client-writable — the server resolves the
+        // sender from auth.uid(), locks the row, bounds-checks, rejects
+        // self-gifts, and writes both ledger rows in the same transaction.
+        const GIFT_ERRORS = {
+          recipient_not_found: 'Member not found.',
+          self_gift: 'You cannot gift to yourself.',
+          amount_out_of_range: 'Amount must be 10–500 pts.',
+          insufficient_points: 'Not enough Vault Points.',
+          not_authenticated: 'Please sign in again.',
+        };
+        const { data: result, error: rpcErr } = await VSSupabase
+          .rpc('gift_points', { p_recipient_username: recipient, p_amount: amount });
+        if (rpcErr) throw rpcErr;
+        if (!result || !result.ok) {
+          fb.style.color = '#f87171';
+          fb.textContent = GIFT_ERRORS[result && result.error] || 'Could not send gift.';
+          return;
+        }
 
-        // Deduct from sender
-        const { error: deductErr } = await VSSupabase
-          .from('vault_members').update({ points: _currentMember.points - amount })
-          .eq('id', _currentMember._id);
-        if (deductErr) throw deductErr;
-
-        // Add to recipient
-        const { error: addErr } = await VSSupabase
-          .from('vault_members').update({ points: recip.points + amount })
-          .eq('id', recip.id);
-        if (addErr) throw addErr;
-
-        // Log for both
-        await VSSupabase.from('point_events').insert([
-          { member_id: _currentMember._id, points: -amount, reason: 'gift_sent', description: 'Gift to ' + escHtml(recip.username) },
-          { member_id: recip.id,           points:  amount, reason: 'gift_received', description: 'Gift from ' + escHtml(_currentMember.username || 'member') }
-        ]);
-
-        _currentMember.points -= amount;
+        _currentMember.points = typeof result.balance === 'number' ? result.balance : _currentMember.points - amount;
         document.getElementById('stat-points').textContent = _currentMember.points.toLocaleString();
         document.getElementById('gift-username').value = '';
         document.getElementById('gift-amount').value   = '';
-        fb.style.color = '#10B981'; fb.textContent = '⚡ Gift sent to ' + escHtml(recip.username) + '!';
+        fb.style.color = '#10B981'; fb.textContent = '⚡ Gift sent to ' + escHtml(result.recipient) + '!';
         setTimeout(function(){ if(fb) fb.textContent = ''; }, 3000);
       } catch(err) {
         fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not send gift.');
@@ -1597,6 +1681,131 @@
       }
     }
 
+    // ── S335: Sparked digest — three newest Desk headlines from the public feed ──
+    async function loadSparkedDigest() {
+      const list = document.getElementById('sparked-digest-list');
+      if (!list) return;
+      const fallback = 'The Desk feed is unavailable right now — <a href="/news/" style="color:var(--text);font-weight:700;">open The Desk</a>.';
+      try {
+        const res = await fetch('/api/news-desk-feed.json', { credentials: 'omit' });
+        if (!res.ok) throw new Error('feed ' + res.status);
+        const feed = await res.json();
+        const items = (Array.isArray(feed?.items) ? feed.items : [])
+          .filter((it) => it && it.title && typeof it.url === 'string' && /^(\/|https:\/\/vaultsparkstudios\.com\/)/.test(it.url))
+          .sort((a, b) => (Date.parse(b.date_published) || 0) - (Date.parse(a.date_published) || 0))
+          .slice(0, 3);
+        if (!items.length) { list.innerHTML = fallback; return; }
+        list.innerHTML = items.map((it) => {
+          const t = Date.parse(it.date_published);
+          const when = t ? new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+          return '<a href="' + escHtml(it.url) + '" style="color:var(--text);text-decoration:none;line-height:1.4;">'
+            + '<span style="color:#c084fc;margin-right:0.35rem;" aria-hidden="true">✦</span>' + escHtml(it.title)
+            + (when ? ' <span style="font-size:0.74rem;color:var(--dim);white-space:nowrap;">· ' + escHtml(when) + '</span>' : '')
+            + '</a>';
+        }).join('');
+      } catch (_) {
+        list.innerHTML = fallback;
+      }
+    }
+
+    // ── S335: Ask-IGNIS monthly quota meter ──────────────────────
+    // Limits mirror supabase/functions/ask-ignis/index.ts: DEFAULT_SPARKED_QUOTA = 40
+    // (Sparked), null = unlimited (Eternal), 0 (free). The server may override the
+    // Sparked cap via ASK_IGNIS_SPARKED_MONTHLY_QUOTA, which the browser cannot read,
+    // so the Sparked branch also asks the function's { probe: true } endpoint (no
+    // Claude turn, no quota spend) and prefers its live monthlyLimit when it answers.
+    // Usage comes from the member's own ignis_usage_monthly row (RLS: read-own).
+    const IGNIS_MONTHLY_LIMITS = { free: 0, vault_sparked: 40, vault_sparked_pro: null };
+    const ASK_IGNIS_ENDPOINT = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/ask-ignis';
+
+    async function probeIgnisAccess(session) {
+      try {
+        const res = await fetch(ASK_IGNIS_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij',
+            Authorization: 'Bearer ' + session.access_token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ probe: true }),
+        });
+        if (!res.ok) return null;
+        const json = await res.json();
+        return json && json.access ? json.access : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    async function loadIgnisQuotaMeter(planKey) {
+      const wrap  = document.getElementById('ignis-quota-meter');
+      const value = document.getElementById('ignisQuotaValue');
+      const bar   = document.getElementById('ignisQuotaBar');
+      const hint  = document.getElementById('ignisQuotaHint');
+      if (!wrap || !value || !bar || !hint) return;
+
+      const tier = planKey === 'vault_sparked_pro' ? 'vault_sparked_pro'
+        : planKey === 'vault_sparked' ? 'vault_sparked' : 'free';
+      const setBar = (pct) => {
+        const p = Math.max(0, Math.min(100, Number(pct) || 0));
+        bar.style.width = p + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(p)));
+      };
+      const dark = (msg) => { value.textContent = '—'; setBar(0); hint.textContent = msg; };
+
+      if (tier === 'free') {
+        value.textContent = '—';
+        setBar(0);
+        hint.innerHTML = 'Ask IGNIS opens with Sparked. <a href="/membership/#tiers" style="color:var(--gold);font-weight:700;">Upgrade to ask IGNIS →</a>';
+        return;
+      }
+
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { dark('Sign in again to see your IGNIS usage.'); return; }
+
+        const now = new Date();
+        const bucket = now.getUTCFullYear() + '-' + String(now.getUTCMonth() + 1).padStart(2, '0');
+        const [usage, access] = await Promise.all([
+          VSSupabase.from('ignis_usage_monthly')
+            .select('request_count, last_request_at')
+            .eq('user_id', session.user.id)
+            .eq('month_bucket', bucket)
+            .maybeSingle(),
+          tier === 'vault_sparked' ? probeIgnisAccess(session) : Promise.resolve(null),
+        ]);
+        if (usage.error) throw usage.error;
+
+        // No row yet means the function has never upserted for this month: 0 used is the truth.
+        const used = Number(usage.data?.request_count ?? 0);
+        let limit = IGNIS_MONTHLY_LIMITS[tier];
+        if (access && (access.unlimited === true || access.monthlyLimit === null)) limit = null;
+        else if (access && Number.isFinite(Number(access.monthlyLimit)) && Number(access.monthlyLimit) > 0) limit = Number(access.monthlyLimit);
+
+        if (limit === null) {
+          value.textContent = used + ' · Unlimited';
+          setBar(0);
+          bar.setAttribute('aria-valuetext', used + ' questions asked, no monthly cap');
+          hint.textContent = 'Eternal has no monthly cap on Ask IGNIS.';
+          return;
+        }
+
+        const remaining = Math.max(limit - used, 0);
+        const pct = limit > 0 ? (used / limit) * 100 : 0;
+        value.textContent = used + ' / ' + limit;
+        setBar(pct);
+        bar.setAttribute('aria-valuetext', used + ' of ' + limit + ' questions used');
+        if (remaining === 0) {
+          hint.innerHTML = 'Quota spent — resets on the 1st (UTC). <a href="/membership/#tiers" style="color:#c084fc;font-weight:700;">Eternal removes the cap →</a>';
+        } else {
+          hint.textContent = remaining + ' left this month · resets on the 1st (UTC).';
+        }
+      } catch (err) {
+        console.warn('[ignis-quota]', err);
+        dark('Usage unavailable right now.');
+      }
+    }
+
     async function loadEternalIntelligencePanel(planKey) {
       const el = document.getElementById('eternal-intelligence-content');
       if (!el) return;
@@ -1605,20 +1814,24 @@
       const isPro = planKey === 'vault_sparked_pro';
 
       if (!isSparked) {
+        // Free tier: ONE locked card, one link (S335 — no stacked paywalls).
         el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">'
           + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">Locked Surface</div>'
           + '<div style="font-size:0.92rem;color:var(--text);margin-bottom:0.45rem;">Ask IGNIS, full Vault Wall depth, and Eternal studio briefings unlock above the free tier.</div>'
-          + '<a href="/vaultsparked/" style="display:inline-flex;align-items:center;gap:0.35rem;color:var(--gold);font-weight:700;text-decoration:none;">Unlock VaultSparked →</a>'
+          + '<a href="/membership/#tiers" style="display:inline-flex;align-items:center;gap:0.35rem;color:var(--gold);font-weight:700;text-decoration:none;">Compare tiers →</a>'
           + '</div>';
         return;
       }
 
       if (!isPro) {
+        // Sparked (not Eternal): a digest the member can actually use — the three
+        // newest Desk headlines — plus ONE upsell line. Replaces the second locked card.
         el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.18);">'
-          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#c084fc;margin-bottom:0.4rem;">Eternal Upgrade</div>'
-          + '<div style="font-size:0.92rem;color:var(--text);margin-bottom:0.55rem;">Eternal unlocks the quarterly Dispatch, 48-hour sealed reveal previews, unlimited IGNIS, and permanent shipped-title credits.</div>'
-          + '<a href="/vaultsparked/" style="display:inline-flex;align-items:center;gap:0.35rem;color:#c084fc;font-weight:700;text-decoration:none;">Go VaultSparked Eternal →</a>'
+          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#c084fc;margin-bottom:0.5rem;">Your Sparked digest</div>'
+          + '<div id="sparked-digest-list" style="display:flex;flex-direction:column;gap:0.45rem;font-size:0.88rem;color:var(--dim);">Loading the Desk…</div>'
+          + '<div style="font-size:0.8rem;color:var(--muted);margin-top:0.7rem;">Eternal adds unlimited IGNIS and sealed previews → <a href="/membership/#tiers" style="color:#c084fc;font-weight:700;">Go Eternal</a></div>'
           + '</div>';
+        loadSparkedDigest();
         return;
       }
 
@@ -1790,8 +2003,9 @@
         el.innerHTML += '<div style="margin-top:0.75rem;padding:0.8rem 1rem;border-radius:12px;'
           + 'background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.1);'
           + 'font-size:0.8rem;color:var(--muted);">'
-          + 'Upgrade to <a href="/vaultsparked/" style="color:var(--gold);font-weight:700;">VaultSparked</a> to unlock more games.</div>';
+          + 'Upgrade to <a href="/membership/#tiers" style="color:var(--gold);font-weight:700;">VaultSparked</a> to unlock more games.</div>';
       }
 
       loadEternalIntelligencePanel(planKey);
+      loadIgnisQuotaMeter(planKey);
     }

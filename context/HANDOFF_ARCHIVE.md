@@ -1998,3 +1998,14 @@ Self-tests added or extended: reachability 7/7 · release-dependencies 11/11 · 
 - [ ] Complete the real-provider passkey ceremony with `node scripts/verify-provider-journey.mjs --live`; hardware-key enrollment is founder-reserved and remains the only identity leg holding full-site production promotion.
 - [ ] Authorize or decline the D-S303 immutable GitHub Pages warm-origin migration.
 - [ ] Click The Dispatch double-opt-in confirmation in the founder mailbox if the first subscriber should become confirmed.
+
+
+---
+<!-- archived: 2026-09-01 -->
+
+## Where We Left Off — S331 · 2026-08-27
+
+- **Shipped locally:** all four verified audit items. The release ceremony now requires the 15-case cross-browser attention suite; real Solara destinations and canonical VaultFront/Scriptorium/Seamline calls to action are repaired; the link court understands edge routes/templates/NDJSON; bounded RUM helper flow removes false dead-event warnings and exposed two real allowlist gaps, now fixed.
+- **Evidence:** `build:check` 370/370 · mobile runtime 235/235 · rendered-pixel review 42/42 across seven themes and desktop/mobile · link court 200 files/24,361 links/zero findings · RUM court 82 events/188 call sites/zero warnings · exact staging attention 15/15 · canonical ceremony 10/10.
+- **Release posture:** no production deploy or push was requested or performed. Production continues to serve the older bundle. The full-site promotion remains correctly held on `real-provider-e2e-pending`, missing `OBELISK_RP_ID` / `OBELISK_RP_NAME` / `OBELISK_RP_ORIGIN`, and missing `obelisk-staging-registration`.
+- **Next locally actionable item:** privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket. Do not store or expose per-browser histories.

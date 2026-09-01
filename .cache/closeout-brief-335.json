@@ -1,0 +1,116 @@
+{
+  "session": "S335",
+  "date": "2026-09-01",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "A member could forge points and the paid AI tier from the browser, and every public member surface had been blank for months — both closed with one probe-proven migration; 12 of 16 audit items shipped",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "member-write-lockdown",
+      "title": "Member progression is server-owned; the browser writes profile columns only",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The base policy granted UPDATE on every column with no WITH CHECK and the live database still carried Supabase's default table grants, so any member could set points, plan_key and is_sparked — the columns ask-ignis reads for the paid tier. The gift flow proved the browser held that write every day by half-failing. Column-scoped grants and security-definer RPCs close it; the migration was applied through a new agent path that pre-images the touched objects and proves the behaviour by impersonating a member.",
+      "evidence": "apply-supabase-migration.mjs --probe member-write-lockdown 9/9 (points update → 42501, prefs update → 1 row, self-gift/unknown/out-of-range rejected, anon cannot execute gift_points, anon has no DELETE); pre-image .cache/supabase-preimage-20260901T195643.sql"
+    },
+    {
+      "id": "#2",
+      "slug": "public-leaderboard-projection",
+      "title": "public_leaderboard is the public projection of the members table",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The probe surfaced that the members table has no anonymous read policy at all — only read-own-row — so counts, recently-joined, leaderboards, the directory, public profiles and the investor KPI tile had been rendering empty, and the public_profile opt-out was a client filter on data nobody could read. A definer view filtered on the opt-out is now the only thing anonymous surfaces read.",
+      "evidence": "probe: base table visible to anon 0 rows, view 7 of 7 opted-in; ten anonymous readers repointed at the source (community, leaderboards + six generated subpages, members directory, member profile, live-proof, membership-stats, home-intelligence, vault-pulse, investor KPI)"
+    },
+    {
+      "id": "#3",
+      "slug": "route-consolidation-court",
+      "title": "The generator that resurrected S334's deleted stubs is now a court",
+      "axis": "organization",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "S334 deleted the meta-refresh stubs twice and recorded it as shipped; build-route-consolidation.mjs ran in prebuild and postbuild and re-rendered eleven of them on every build. The script keeps its name and loses its write: it asserts every analysed route has an edge rule, no retired route ships index.html, and no tracked HTML carries a meta refresh. Thirteen stubs are gone, and the footer's four retired links point at live anchors.",
+      "evidence": "build-route-consolidation --self-test 7/7; --check: 16 retired routes owned by _redirects, zero stubs, zero meta-refresh pages; footer manifest 62 header · 70 footer"
+    },
+    {
+      "id": "#4",
+      "slug": "build-chain-dedupe",
+      "title": "Sixteen duplicate or dead build invocations removed; page writers moved before the seal",
+      "axis": "organization",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "The seal chain ran in build and was recomputed in postbuild; three shell rotations ran where one is needed; agents/shards ran twice. DERIVED_BUILD_PROFILES.full was a strict subset of what closeout needs and now carries build-public-status. Two page writers (evidence hub, surface spine) and early-hints ran after the seal and rotation — the first drift the gate found this session was exactly that ordering, now fixed in package.json.",
+      "evidence": "build-order --self-test 29/29 (+2 assertions); postbuild 23 → 21 steps with writers before build-candidate-artifact-manifest; three consecutive builds green"
+    },
+    {
+      "id": "#5",
+      "slug": "four-route-merges",
+      "title": "/proof/, /feedback/, /feedback/insights/ and /vault-wall/ folded into their canonical pages",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The in-browser verifier moved into the evidence hub generator; the feedback loop and insights moved into the changelog as #requests; the wall's season countdown, rival, rank distribution and podium moved into the community page — its leaderboard had been querying two columns that do not exist. Each merge has a written analysis in DECISIONS per the S329 directive, and the founder confirmed both clusters S334 had left as orientation strips.",
+      "evidence": "route court 16 rules; nav-orphans, orphan-assets --strict, page-script-relevance, intelligence-style-contract --strict, evidence-hub self-test 21/21 all green; rendered-pixel receipt 98 captures across 7 themes, 6 manually reviewed"
+    },
+    {
+      "id": "#6",
+      "slug": "how-we-build-and-vocabulary-gate",
+      "title": "/how-we-build/ explains the studio's working vocabulary; a gate keeps the terms linked",
+      "axis": "ux",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "SIL score, CANON-NNN, closeout and handoff were leaking onto public pages unexplained. Rather than delete them, one page explains sessions, SIL, canon, receipts, handoff and the agent surfaces in visitor voice, and check-vocabulary-consistency now fails any public page that uses an operator term without linking to it. Eight offenders were fixed by linking, none by exclusion.",
+      "evidence": "check-vocabulary-consistency --self-test + live clean; meta, schema, OG, touch-target, hero-jsonld, navigation-scent gates green for the new page"
+    },
+    {
+      "id": "#7",
+      "slug": "season-1-and-member-loops",
+      "title": "Season 1 is live; the member dashboard shows its IGNIS quota and the fate of feedback",
+      "axis": "featureDepth",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "Every consumer of a season existed; data/seasons.json was the single blocker. Season 1 — Ignition runs 2026-09-02 to 2026-10-14 with rewards in Vault Points only. Three expired event cards were replaced and a freshness rule now fails on a past month or quarter label. The dashboard gained a quota meter with limits read from the edge function, a single upsell instead of two stacked paywalls, and a chronicle strip that shows which flagged pages later shipped.",
+      "evidence": "check-content-freshness --self-test 16/16 (+7); validate-supabase-queries 0 errors; lint-tt-policies, check-active-tt-sinks, check-mobile-contracts green; mobile runtime contract 215/215 zero P0/P1 against a local preview"
+    }
+  ],
+  "followUps": [
+    "Trusted Types enforcement is wired as TT_ENFORCE_ENABLED (default 0) and approved, but api/tt-readiness.json says enforceEligible:false on rows dated 2026-07-03 — fix the readiness ageing first, then flip.",
+    "Two identical builds minutes apart still churn 47 files from commit-derived feeds (forge ledger, feedback provenance, ship receipts); bisect with a pinned clock.",
+    "Audit the other public tables for the same silent-zero anonymous read the members table had.",
+    "Confirm the four merged routes 301 at the apex from a real browser; scripted probes get 429 from the Worker's scanner block.",
+    "Move the 30-minute uptime probe (48 [skip ci] commits a day) to a Worker cron; design on the board."
+  ],
+  "blockers": [
+    "Full-site production promotion remains held on the real-provider passkey ceremony (founder-reserved); the content lane and Worker deploy on push as before."
+  ],
+  "silDelta": {
+    "previous": 988,
+    "current": 989,
+    "kind": "incremental"
+  },
+  "honestyLedger": [
+    {
+      "title": "Trusted Types was NOT flipped despite founder approval",
+      "why": "The repo's own readiness receipt reports not eligible; enforcing against it would break every page with an unwrapped DOM sink. The switch exists and rollback is one variable."
+    },
+    {
+      "title": "Prompt caching on semantic-search was NOT added",
+      "why": "Its system prompt is ~80 tokens, below the 1,024-token cacheable minimum; the change would have been a no-op that claimed savings."
+    },
+    {
+      "title": "Desk art masters were NOT converted to AVIF",
+      "why": "The served derivatives are already PNG/WebP/AVIF from sharp; converting the masters only shrinks the clone and risks the sources."
+    },
+    {
+      "title": "The uptime Worker-cron migration was designed, not built",
+      "why": "It rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged instead."
+    },
+    {
+      "title": "Rendered-pixel review is partial",
+      "why": "98 captures are hash-bound; 6 were inspected by eye (community, changelog, evidence, how-we-build across dark and light). The remaining 92 are automated-only and owed a manual pass."
+    }
+  ]
+}

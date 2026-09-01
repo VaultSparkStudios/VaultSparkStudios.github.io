@@ -42,7 +42,7 @@
       eyebrow: 'Community',
       title: 'Meet the vault publicly',
       copy: 'See the live wall, rank distribution, and current public member signal.',
-      href: '/vault-wall/',
+      href: '/community/#wall',
     },
     universe: {
       eyebrow: 'Universe',

@@ -7,7 +7,8 @@
  * its neighbours.
  *
  *   membership — /membership/, /vault-member/, /members/, /member/,
- *                /vault-wall/, /invite/, /community/, /leaderboards/
+ *                /invite/, /community/ (which now hosts the Vault Wall at
+ *                #wall — S335), /leaderboards/
  *   editorial  — /news/, /journal/, /journal/dispatches/, /journal/archive/,
  *                /changelog/, /notebook/, and two more under /news/
  *

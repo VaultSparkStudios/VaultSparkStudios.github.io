@@ -5,7 +5,7 @@
 (function () {
   if (!window.VSPublic) return;
 
-  VSPublic.from('vault_members').select('id', { count: 'exact', head: true }).then(function (r) {
+  VSPublic.from('public_leaderboard').select('id', { count: 'exact', head: true }).then(function (r) {
     var n = r.count || 0;
     ['proof-members', 'stat-members'].forEach(function (id) {
       var el = document.getElementById(id);
@@ -13,7 +13,7 @@
     });
   });
 
-  VSPublic.from('vault_members').select('id', { count: 'exact', head: true }).eq('is_sparked', true).then(function (r) {
+  VSPublic.from('public_leaderboard').select('id', { count: 'exact', head: true }).eq('is_sparked', true).then(function (r) {
     var n = r.count || 0;
     ['proof-sparked', 'stat-sparked'].forEach(function (id) {
       var el = document.getElementById(id);

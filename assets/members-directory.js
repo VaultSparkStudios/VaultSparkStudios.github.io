@@ -107,7 +107,7 @@
   }
 
   async function fetchMembers(query) {
-    var response = await fetch(SB + '/rest/v1/vault_members?' + query, { headers: HEADERS });
+    var response = await fetch(SB + '/rest/v1/public_leaderboard?' + query, { headers: HEADERS });
     if (!response.ok) throw new Error('members query failed: ' + response.status);
     return response.json();
   }

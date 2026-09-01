@@ -70,7 +70,7 @@ const THROTTLE = {
 
 // Default: the routes whose CWV are load-bearing on CI + the Supabase-fill
 // routes whose post-paint injection is the historical CLS class.
-const DEFAULT_ROUTES = ['/ranks/', '/', '/join/', '/vault-wall/', '/community/', '/games/'];
+const DEFAULT_ROUTES = ['/ranks/', '/', '/join/', '/community/', '/games/'];
 const routes = (valueFor('--routes') || DEFAULT_ROUTES.join(','))
   .split(',').map((r) => r.trim()).filter(Boolean);
 const settleMs = Number(valueFor('--settle', '5000'));
@@ -89,7 +89,7 @@ function runSelfTest() {
   t('slow-4G latency is 150ms', THROTTLE.net.latency === 150);
   t('default route set includes /ranks/', DEFAULT_ROUTES.includes('/ranks/'));
   t('default route set includes the Supabase-fill routes',
-    ['/join/', '/vault-wall/'].every((r) => DEFAULT_ROUTES.includes(r)));
+    ['/join/', '/community/'].every((r) => DEFAULT_ROUTES.includes(r)));
   // median helper correctness
   t('median of [0.81,0.78,0.82] = 0.81', median([0.81, 0.78, 0.82]) === 0.81);
   t('median of [1,2] = 1.5', median([1, 2]) === 1.5);

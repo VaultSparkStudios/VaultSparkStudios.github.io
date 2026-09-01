@@ -324,7 +324,11 @@ function buildManifest() {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     version: SHELL_ASSETS.map((asset) => assets[asset.key].hash).join('-'),
-    cacheName: `vaultspark-shell-${SHELL_ASSETS.map((asset) => assets[asset.key].hash).join('-')}`,
+    // S335: the cache name used to concatenate every shell hash (17 segments,
+    // one more per shell asset added) and was shipped inside sw.js to every
+    // visitor. A composite digest is just as unique per rotation and does not
+    // grow. Any change to any shell hash still yields a new name.
+    cacheName: `vaultspark-shell-${crypto.createHash('sha256').update(SHELL_ASSETS.map((asset) => assets[asset.key].hash).join('-')).digest('hex').slice(0, 16)}`,
     assets,
     generatedFiles,
   };

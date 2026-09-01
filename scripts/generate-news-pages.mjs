@@ -798,7 +798,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
       ? `<strong>Nothing has been graded yet.</strong> The desk has ${open} prediction${open === 1 ? '' : 's'} on the record and none have come due, so every persona reads <em>unproven</em> — not "accurate". A track record is earned by being graded against evidence, and this one has not started.`
       : `<strong>${graded} prediction${graded === 1 ? '' : 's'} graded</strong> against published evidence · ${open} still open. Corrections are published when the desk was wrong.`;
   })()}</p>
-  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">VaultSpark Proof</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
+  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/evidence/#verify" style="color:var(--gold)">VaultSpark Evidence</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
 </section></main>${DISPATCH_SCRIPT}${chromeFoot('../')}`;
 }

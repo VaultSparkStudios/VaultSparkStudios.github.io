@@ -1534,3 +1534,18 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Also fixed:** `check-cta-readiness`'s self-test, which aged into failure at the midnight date rollover because its fixture asserted freshness-dependent wording without pinning a clock.
 
 **Open and reported, not masked:** `startup-revenue-agreement` — the promoted v5 startup brief and the shared revenue resolver disagree on evidence age; a studio-ops brief-renderer concern, carried to TASK_BOARD for Ark cargo.
+
+## 2026-09-01 — Session 335
+
+**Intent:** re-audit the whole site one day after S334, rank one combined plan, implement in token-optimal order, close out and push.
+
+**Shipped:**
+- `supabase-phase61-member-write-lockdown.sql` applied live via the new `scripts/apply-supabase-migration.mjs` (pre-image, apply, post-image, 9/9 probe): column-scoped UPDATE grants, atomic `gift_points()`, hardened `purchase_treasury_item()`, `public_leaderboard` definer view; every anonymous reader repointed to the view.
+- `build-route-consolidation.mjs` rewritten as a court; 13 meta-refresh stubs deleted for good; footer's four retired links reconciled; 16 duplicate/dead build invocations removed; `full` profile complete; early-hints after shell rotation; `run-build-check --quiet`.
+- Four merges with edge 301s: `/proof/`→`/evidence/#verify`, `/feedback/`+`/feedback/insights/`→`/changelog/#requests`, `/vault-wall/`→`/community/#wall`. New `/how-we-build/` + vocabulary gate. Season 1 live; expired event cards replaced; past-label freshness rule.
+- Member dashboard: IGNIS quota meter, single-upsell Eternal panel with Sparked digest, feedback-shipped strip; every `/vaultsparked/` link repointed.
+- Worker `TT_ENFORCE_ENABLED` switch (off) + unit test; `weekly-maintenance.yml` replaces two same-cron workflows; SW cache name is a composite digest; `.cache/s3xx-*`, `audit-shots-full` untracked; 69 audit docs archived.
+
+**Disproved:** semantic-search prompt caching (below cacheable minimum); Desk art AVIF (served derivatives already optimized).
+
+**Held / carried:** Trusted Types flip (readiness receipt says not eligible); uptime probe Worker-cron (designed); CURRENT_STATE sharding; `/atlas/` retirement; build-to-build churn in commit-derived feeds; `page_feedback` schema drift.

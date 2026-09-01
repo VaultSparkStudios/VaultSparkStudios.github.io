@@ -110,3 +110,13 @@ context/changelog-drafts/
 # reads them from disk; they never belong in history.
 .cache/ark-sig-fails.ndjson
 .cache/ark-drained.ndjson
+
+# S335 token diet: per-session visual/link snapshot dirs are working files, not
+# repo state. ~360MB of PNGs across four near-duplicate theme-matrix snapshots
+# and two visual-merge runs were tracked and read by nothing. Receipts that
+# matter live in docs/visual-qa/ and docs/mobile-audit/; .cache/theme-matrix/
+# stays tracked (it is the hash-bound CANON-053 corpus).
+.cache/s3[0-9][0-9]-*/
+.cache/audit-shots-full/
+.cache/supabase-preimage-*.sql
+.cache/supabase-migration-last.json

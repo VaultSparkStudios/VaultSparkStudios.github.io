@@ -14,6 +14,11 @@
  * canonical; the hub routes to it and stamps how fresh its feed is. Nothing
  * moves, so no permalink, receipt, or evidence graph edge breaks.
  *
+ * S335 exception: /proof/ was folded INTO this page. The in-browser ledger
+ * verifier (assets/proof-verify.js) now lives at /evidence/#verify, the old
+ * route is an edge 301 in _redirects, and the "proof" lane points at the
+ * on-page anchor rather than a separate door.
+ *
  * The freshness stamp is fetched live in the browser rather than baked at build
  * time, because a build-time stamp ages into a lie the moment it ships — the
  * exact failure this whole surface exists to avoid. A feed that cannot be read
@@ -53,6 +58,10 @@ export function escapeHtml(s) {
  * turns a navigation problem into a 404. Every href and every feed is resolved
  * against the tree at build time.
  */
+const SELF_PATH = '/evidence/';
+/** Anchors this generator itself renders — a self-referential lane must land on one. */
+export const SELF_ANCHORS = new Set(['verify']);
+
 export function validateLanes(lanes, exists) {
   const problems = [];
   const seen = new Set();
@@ -60,8 +69,15 @@ export function validateLanes(lanes, exists) {
     if (seen.has(lane.id)) problems.push(`duplicate lane id "${lane.id}"`);
     seen.add(lane.id);
     for (const [what, href] of [['href', lane.href], ...(lane.also || []).map((a) => ['also', a.href])]) {
-      const path = String(href).split('#')[0];
+      const [path, anchor] = String(href).split('#');
       if (!path.startsWith('/')) { problems.push(`${lane.id}: ${what} "${href}" is not site-absolute`); continue; }
+      if (path === SELF_PATH) {
+        // S335: a lane may route to a section of this page — but only to one the
+        // generator actually renders. Checking the tree here would be circular
+        // (the page this script writes is the one being validated).
+        if (!anchor || !SELF_ANCHORS.has(anchor)) problems.push(`${lane.id}: ${what} "${href}" is self-referential but names no rendered anchor (${[...SELF_ANCHORS].join(', ')})`);
+        continue;
+      }
       const rel = path.replace(/^\//, '');
       const target = rel.endsWith('/') ? `${rel}index.html` : rel;
       if (!exists(target)) problems.push(`${lane.id}: ${what} "${href}" does not resolve to ${target}`);
@@ -103,8 +119,69 @@ const HUB_STYLE = `<style>
 .ev-fresh[data-state="aging"]{color:#fbbf24}
 .ev-fresh[data-state="unknown"]{color:var(--dim)}
 .ev-foot{color:var(--dim);font-size:.88rem;max-width:68ch;padding-bottom:4rem;line-height:1.7}
-@media(max-width:640px){.ev-head{padding:3.5rem 0 .5rem}.ev-card{padding:1.35rem}}
+.ev-verify{max-width:860px;padding:0 0 5rem;scroll-margin-top:calc(var(--nav-height,78px) + 1rem)}
+.ev-verify h2{font-family:Georgia,"Times New Roman",serif;font-size:1.45rem;letter-spacing:-.03em;margin:2.4rem 0 .7rem;color:var(--text)}
+.ev-verify h2:first-of-type{margin-top:.5rem}
+.ev-verify p{color:var(--muted);font-size:.97rem;line-height:1.72;margin-bottom:.9rem}
+.ev-verify a{color:var(--gold)}
+.ev-verify a:hover{color:#ffe066}
+.proof-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0 .4rem}
+.proof-tile{border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1rem 1.1rem;background:rgba(255,255,255,.02);display:flex;flex-direction:column;gap:.35rem}
+body.light-mode .proof-tile{border-color:rgba(20,28,52,.12);background:rgba(20,28,52,.03)}
+.proof-tile-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.proof-tile-value{font-family:Georgia,"Times New Roman",serif;font-size:1.25rem;color:var(--text)}
+.proof-tile-good .proof-tile-value{color:#6fe3a1}
+.proof-tile-amber .proof-tile-value{color:var(--gold)}
+body.light-mode .proof-tile-good .proof-tile-value{color:#147a43}
+.proof-tile-detail{font-size:.82rem;color:var(--muted);line-height:1.55}
+.proof-run-row{margin:1.6rem 0 1rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.proof-summary{color:var(--text);font-size:.95rem;font-weight:600;max-width:46ch}
+.proof-checks{list-style:none;margin:1rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.proof-check{display:flex;gap:.8rem;align-items:flex-start;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:.85rem 1rem;background:rgba(255,255,255,.02)}
+body.light-mode .proof-check{border-color:rgba(20,28,52,.12);background:rgba(20,28,52,.03)}
+.proof-check-mark{font-weight:700;font-size:1.05rem;line-height:1.4}
+.proof-pass .proof-check-mark{color:#6fe3a1}
+body.light-mode .proof-pass .proof-check-mark{color:#147a43}
+.proof-fail .proof-check-mark{color:#ff7a7a}
+body.light-mode .proof-fail .proof-check-mark{color:#b3261e}
+.proof-check-body{display:flex;flex-direction:column;gap:.15rem}
+.proof-check-body strong{color:var(--text);font-size:.95rem}
+.proof-check-detail{color:var(--muted);font-size:.84rem;line-height:1.55}
+.proof-feeds{list-style:none;margin:.6rem 0 0;padding:0}
+.proof-feeds li{color:var(--muted);font-size:.9rem;line-height:1.7;padding:.22rem 0 .22rem 1.4rem;position:relative}
+.proof-feeds li::before{content:"—";position:absolute;left:0;color:var(--gold);font-weight:700}
+@media(max-width:640px){.ev-head{padding:3.5rem 0 .5rem}.ev-card{padding:1.35rem}.ev-verify{padding-bottom:3.5rem}}
 </style>`;
+
+/**
+ * The in-browser verifier, carried over from the retired /proof/ page (S335).
+ * Every id here is a contract with assets/proof-verify.js — proof-tiles,
+ * proof-run, proof-summary, proof-checks — so none of them is renamed.
+ */
+export function buildVerifySection() {
+  return `<section id="verify" class="container ev-verify" aria-labelledby="verify-heading">
+<span class="eyebrow">Proof</span>
+<h2 id="verify-heading">Verify the deploy ledger in your browser</h2>
+<p>Every deploy this studio ships is written into a public, hash-chained ledger — each entry carries the fingerprint of the one before it, so history cannot be quietly rewritten. Press the button. Your browser — not our server — will download the ledger, re-compute every SHA-256 hash, re-walk the chain link by link, and compare what it finds against the published anchor. If a single byte anywhere had been altered, a check below would turn red.</p>
+<div class="proof-run-row">
+<button type="button" class="button" id="proof-run">Run the verification</button>
+<span class="proof-summary" id="proof-summary" role="status" aria-live="polite"></span>
+</div>
+<ul class="proof-checks" id="proof-checks" aria-label="Verification results"></ul>
+<h2>Live evidence right now</h2>
+<div class="proof-tiles" id="proof-tiles"></div>
+<h2>Check the raw feeds yourself</h2>
+<p>Nothing above is special access — these are the same public files any person or AI agent can fetch:</p>
+<ul class="proof-feeds">
+<li><a href="/data/staging-deploy-history.ndjson">The deploy ledger</a> — append-only, content-addressed, hash-chained</li>
+<li><a href="/api/staging-deploy-continuity.json">The digest anchor</a> — the ledger’s expected hash, depth and head</li>
+<li><a href="/api/release-proof.json">The release gate</a> — what is currently allowed to ship, and what is holding it</li>
+<li><a href="/api/worker-route-provenance.json">Edge route provenance</a> — privacy-safe probes of the live edge</li>
+<li><a href="/status/">The status board</a> — every public signal in one place</li>
+</ul>
+<p>A studio that says “trust us” is asking for something it hasn’t earned. A studio that says “check for yourself” has nothing to hide. When the release gate above reads <em>Holding</em>, that isn’t a failure — it’s the machinery refusing to promote anything that hasn’t proven itself.</p>
+</section>`;
+}
 
 /**
  * Freshness is read in the browser, from the same public feeds the deep pages
@@ -202,8 +279,8 @@ ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main conten
         </button>
       </div>
     </div>
-  </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section></main>${chrome.footer}  ${chrome.ambient}
-${chrome.navSheet}${HUB_SCRIPT}
+  </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section>${buildVerifySection()}</main>${chrome.footer}  ${chrome.ambient}
+${chrome.navSheet}<script src="${chrome.proofVerify}" defer></script>${HUB_SCRIPT}
 </body></html>
 `;
 }
@@ -286,7 +363,15 @@ function readChrome() {
     process.exit(1);
   }
   const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage\.getItem\('vs_theme'\)[\s\S]*?<\/script>/) || [''])[0];
+  // proof-verify.js is a fingerprinted shell asset. Resolve its current hashed
+  // name from the manifest (the same way generate-news-pages resolves
+  // deskReactions) so the page never points at a file the content lane withholds;
+  // fall back to the source name, which build-shell-assets rewrites.
+  const manifestPath = join(ROOT, 'assets/shell-manifest.json');
+  const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : { assets: {} };
+  const proofVerify = manifest.assets?.proofVerify?.path ? `/${manifest.assets.proofVerify.path}` : '/assets/proof-verify.js';
   return {
+    proofVerify,
     nav,
     footer: between('<footer class="site-footer"', '</footer>').replaceAll('../assets/', '../assets/'),
     ambient: between('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->'),
@@ -312,6 +397,23 @@ function selfTest() {
     validateLanes([{ id: 'a', href: '/stats/#x', feed: '/api/x.json' }], exists).length === 0);
   t('a duplicate lane id is rejected',
     validateLanes([{ id: 'a', href: '/status/', feed: '/api/x.json' }, { id: 'a', href: '/status/', feed: '/api/x.json' }], exists).length === 1);
+  // S335: /proof/ lives on this page now. A self-referential lane is judged
+  // against the anchors the generator renders, never against the tree.
+  t('a self-referential lane on a rendered anchor passes without the tree',
+    validateLanes([{ id: 'a', href: '/evidence/#verify', feed: '/api/x.json' }], exists).length === 0);
+  t('a self-referential lane without an anchor is rejected',
+    validateLanes([{ id: 'a', href: '/evidence/', feed: '/api/x.json' }], exists).length === 1);
+  t('a self-referential lane on an unrendered anchor is rejected',
+    validateLanes([{ id: 'a', href: '/evidence/#nope', feed: '/api/x.json' }], exists).length === 1);
+  const verify = buildVerifySection();
+  t('every rendered self-anchor exists in the verify section',
+    [...SELF_ANCHORS].every((a) => verify.includes(`id="${a}"`)));
+  t('the verifier keeps the ids proof-verify.js looks up',
+    ['proof-tiles', 'proof-run', 'proof-summary', 'proof-checks'].every((id) => verify.includes(`id="${id}"`)));
+  t('the verify section is rendered inside main, before the footer', (() => {
+    const page = buildPage([], { style: 's', speculation: '', themeBoot: '', nav: '', footer: '<footer class="site-footer"></footer>', ambient: '', navSheet: '', proofVerify: '/assets/proof-verify.js' });
+    return page.indexOf('id="verify"') < page.indexOf('</main>') && page.includes('<script src="/assets/proof-verify.js" defer></script>');
+  })());
 
   const now = Date.parse('2026-09-01T12:00:00Z');
   t('a missing timestamp is unknown, not fresh', describeAge(undefined, now) === null);

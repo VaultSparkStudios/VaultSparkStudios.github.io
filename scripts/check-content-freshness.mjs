@@ -73,6 +73,45 @@ export function runFreshness({ nowMs, root = '.' } = {}) {
   return results;
 }
 
+// S335: the community "Upcoming Events" cards carried "April 2026", "May 2026"
+// and "Q3 2026" labels four months after those windows closed. A dated event
+// card is a public promise with an expiry; once the month/quarter is over the
+// card is stale by construction. This is narrow on purpose — it only reads
+// [data-event] cards on community/index.html, and only labels shaped like
+// "<Month> <year>" or "Q<n> <year>". Undated cadence cards ("Every week") and
+// explicit day ranges are left alone.
+const EVENT_SURFACE = 'community/index.html';
+const MONTHS = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+const EVENT_LABEL_RE = /\b((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+20\d\d|Q[1-4]\s+20\d\d)\b/g;
+
+// Pure: return the month/quarter labels on [data-event] cards that are strictly
+// in the past at nowMs. A label is past once its month (or the quarter's last
+// month) has fully elapsed in UTC.
+export function staleEventLabels(html, nowMs) {
+  const stale = [];
+  const cardRe = /<[^>]*\bdata-event="([^"]+)"[^>]*>([\s\S]*?)(?=<[^>]*\bdata-event="|<!--|$)/g;
+  let card;
+  while ((card = cardRe.exec(String(html || ''))) !== null) {
+    const body = card[2];
+    let m;
+    EVENT_LABEL_RE.lastIndex = 0;
+    while ((m = EVENT_LABEL_RE.exec(body)) !== null) {
+      const label = m[1];
+      const year = Number(label.slice(-4));
+      let endMonth; // 1-based month whose END marks expiry
+      const q = /^Q([1-4])/.exec(label);
+      if (q) endMonth = Number(q[1]) * 3;
+      else endMonth = MONTHS.indexOf(label.split(/\s+/)[0].toLowerCase()) + 1;
+      if (!endMonth) continue;
+      const expiresMs = Date.UTC(year, endMonth, 1); // first instant AFTER the window
+      if (nowMs >= expiresMs && !stale.some((s) => s.label === label && s.event === card[1])) {
+        stale.push({ event: card[1], label });
+      }
+    }
+  }
+  return stale;
+}
+
 export function readEditorialReceipt(root = '.') {
   try {
     const receipt = JSON.parse(readFileSync(join(root, EDITORIAL_RECEIPT), 'utf8'));
@@ -99,6 +138,21 @@ function selfTest() {
   const fakeFile = () => 'posted 2026-04-01 and 2026-05-09 here';
   check('newest picks latest date', newestDateIn('j', fakeRead, fakeFile) === '2026-05-09');
   check('missing editorial receipt is honest', readEditorialReceipt('__missing__').state === 'missing');
+  // staleEventLabels — dated event cards
+  const sep2026 = new Date('2026-09-01T00:00:00Z').getTime();
+  const cards = '<div data-event="a"><div>April 2026</div><button data-event="a">RSVP</button></div>'
+    + '<div data-event="b"><div>Q3 2026</div></div>'
+    + '<div data-event="c"><div>Sep 2 – Oct 14, 2026</div></div>'
+    + '<div data-event="d"><div>Every week</div></div>'
+    + '<div data-event="e"><div>Q4 2026</div></div>';
+  const stale = staleEventLabels(cards, sep2026);
+  check('past month label is stale', stale.some((s) => s.event === 'a' && s.label === 'April 2026'));
+  check('past-month label reported once per card', stale.filter((s) => s.event === 'a').length === 1);
+  check('current quarter is not stale until it ends', !stale.some((s) => s.event === 'b'));
+  check('future quarter is not stale', !stale.some((s) => s.event === 'e'));
+  check('undated cadence + day-range cards ignored', !stale.some((s) => s.event === 'c' || s.event === 'd'));
+  check('quarter goes stale the instant it ends', staleEventLabels(cards, Date.UTC(2026, 9, 1)).some((s) => s.event === 'b'));
+  check('no cards → empty', staleEventLabels('<p>nothing</p>', sep2026).length === 0);
   console.log(`check-content-freshness self-test: ${pass}/${pass + fail} passing`);
   return fail === 0;
 }
@@ -131,6 +185,21 @@ if (RUN_DIRECT) {
   const editorialIcon = editorial.state === 'fresh' ? '✓' : editorial.publishable ? '◐' : '⚠';
   console.log(`${editorialIcon}  forge-edit ${editorial.state}${editorial.latest ? ` · ${editorial.latest.id} (${editorial.latest.status})` : ''}`);
   if (editorial.nextAction) console.log(`     → ${editorial.nextAction}`);
+
+  // Dated event cards on /community/ — a past month/quarter label is a public
+  // promise that already expired. Hard fail (no --strict needed): the fix is
+  // to replace or undate the card, which is a one-line edit.
+  let eventHtml = null;
+  try { eventHtml = readFileSync(EVENT_SURFACE, 'utf8'); } catch { /* surface absent → nothing to judge */ }
+  const staleEvents = eventHtml ? staleEventLabels(eventHtml, nowMs) : [];
+  if (staleEvents.length) {
+    anyBlocked = true;
+    console.log(`⛔  events     stale    ${staleEvents.length} dated card${staleEvents.length === 1 ? '' : 's'} already in the past on ${EVENT_SURFACE}`);
+    for (const s of staleEvents) console.log(`     ⛔ [data-event="${s.event}"] labelled "${s.label}"`);
+    console.log('        → replace the card with a current window, or drop the month/quarter label for an undated cadence card.');
+  } else {
+    console.log(`✓  events     fresh    no past-dated [data-event] cards on ${EVENT_SURFACE}`);
+  }
   if (anyBlocked) process.exit(1);          // hard ceiling — blocks regardless of --strict
   if (anyStale && strict) process.exit(1);
   process.exit(0); // warn-only by default

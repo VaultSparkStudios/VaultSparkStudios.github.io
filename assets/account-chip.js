@@ -100,13 +100,13 @@
           (email ? '<div class="vs-account-menu__email">' + escape(email) + '</div>' : '') +
         '</div>' +
         '<a role="menuitem" href="/vault-member/">Vault Member portal</a>' +
-        '<a role="menuitem" href="/vault-wall/">Vault Wall</a>' +
+        '<a role="menuitem" href="/community/#wall">Vault Wall</a>' +
         '<a role="menuitem" href="/ranks/">Ranks &amp; points</a>' +
         '<a role="menuitem" href="/leaderboards/">Leaderboards</a>' +
         '<a role="menuitem" href="/vault-member/settings/">Settings</a>' +
         '<div class="vs-account-menu__sep" role="separator" aria-hidden="true"></div>' +
         '<a role="menuitem" href="/membership/">Upgrade membership</a>' +
-        '<a role="menuitem" href="/feedback/">Feedback loop</a>' +
+        '<a role="menuitem" href="/changelog/#requests">Feedback loop</a>' +
         '<div class="vs-account-menu__sep" role="separator" aria-hidden="true"></div>' +
         '<button type="button" role="menuitem" class="vs-account-menu__danger" data-vs-signout>Sign out</button>' +
       '</div>';

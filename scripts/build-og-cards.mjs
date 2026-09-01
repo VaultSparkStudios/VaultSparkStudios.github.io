@@ -82,7 +82,7 @@ export const PUBLIC_NO_OG = [
   // route 301'd them into 404s), and solara/index.html + membership-value were
   // retired to edge redirects. Paths follow the pages.
   'games/solara/archive.html', 'games/solara/chronicle.html',
-  'feedback/index.html', 'stats/index.html',
+  'stats/index.html',
   'stats/ecosystem/index.html', 'ask-founders/index.html',
   // S334: /evidence/ is the front door to the studio's live-data surfaces —
   // exactly the kind of link that gets shared into a thread about whether any
@@ -115,7 +115,7 @@ export function metaFor(rel) {
   if (p.startsWith('leaderboards/') || p.startsWith('api/leaderboard')) return { eyebrow: 'Leaderboard · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('membership/') || p.startsWith('vaultsparked/')) return { eyebrow: 'Vault Membership · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('studio-pulse/') || p.startsWith('ignis/') || p.startsWith('notebook/') || p.startsWith('signal-log/')) return { eyebrow: 'Studio · VaultSpark Studios', status: 'sparked' };
-  if (p.startsWith('vault-wall/') || p.startsWith('social/') || p.startsWith('invite/')) return { eyebrow: 'Community · VaultSpark Studios', status: 'sparked' };
+  if (p.startsWith('social/') || p.startsWith('invite/')) return { eyebrow: 'Community · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('press/') || p.startsWith('studio/')) return { eyebrow: 'About · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('changelog/')) return { eyebrow: 'Changelog · VaultSpark Studios', status: 'sparked' };
   // S238: public no-og pages promoted to bespoke cards (see PUBLIC_NO_OG).

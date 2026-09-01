@@ -1,7 +1,7 @@
 {
   "$schema": "seasons v1 — vault competitive windows",
-  "updated": "2026-04-16",
-  "note": "Declare a new season by adding an entry with active:true and endsAt (ISO 8601 UTC). Only one season should be active at a time. The public /vault-wall/ reads this file and renders a live countdown. No backdating — seasons are announced before they start.",
+  "updated": "2026-09-01",
+  "note": "Declare a new season by adding an entry with active:true and endsAt (ISO 8601 UTC). Only one season should be active at a time. The Vault Wall on /community/#wall reads this file (assets/seasons-rivals.js) and renders a live countdown. Rewards are Vault Points only — promise nothing else here. No backdating — seasons are announced before they start.",
   "seasons": [
     {
       "id": "pre-season-2026",
@@ -9,7 +9,21 @@
       "tagline": "The vault is warming. Competitive seasons launch once the leaderboard engine ships.",
       "startedAt": null,
       "endsAt": null,
+      "endedAt": "2026-09-02T00:00:00Z",
       "active": false
+    },
+    {
+      "id": "season-1-2026",
+      "label": "Season 1 — Ignition",
+      "tagline": "The vault's first competitive window: six weeks of ranked play, with Vault Point rewards for the top of the wall and for every member who completes a challenge.",
+      "startedAt": "2026-09-02T00:00:00Z",
+      "endsAt": "2026-10-14T00:00:00Z",
+      "active": true,
+      "rewards": [
+        { "tier": "top-10", "label": "Top 10 on the wall at season end", "vaultPoints": 1500 },
+        { "tier": "top-50", "label": "Top 50 on the wall at season end", "vaultPoints": 500 },
+        { "tier": "participant", "label": "Every member who completes at least one challenge during the season", "vaultPoints": 100 }
+      ]
     }
   ]
 }

@@ -23,7 +23,7 @@ const SHELL_MANIFEST = readJson('assets/shell-manifest.json');
 // Directories to skip
 const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results',
-  'investor', 'investor-portal', 'studio-hub', 'vaultsparked',
+  'investor', 'investor-portal', 'studio-hub',
   '.ai', '.git', '.well-known', 'scripts',
   // S135: legacy /products/ catalog pending architectural decision (Task #5).
   // Has its own design system + 29 duplicate pages of /projects/ + /games/ content.
@@ -235,7 +235,7 @@ function buildNav(assetPrefix, activeHref) {
         ${a('/', 'Home')}
         <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a>${buildStatusSections(NAV_GAMES)}</div></div>
         <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a>${buildStatusSections(NAV_PROJECTS)}</div></div>
-        <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/"${activeAttr(activeHref === '/universe/')}>Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
         <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
         <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span>${resourceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
@@ -341,13 +341,13 @@ function buildFooter(assetPrefix) {
         <div class="footer-col">
           <h2>Membership</h2>
           <a href="/membership/">About Membership</a>
-          <a href="/vaultsparked/">Choose Your Tier</a>
-          <a href="/membership-value/">Value Breakdown</a>
+          <a href="/membership/#tiers">Choose Your Tier</a>
+          <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/members/">Member Directory</a>
           <a href="/member/">Member Lookup</a>
-          <a href="/vault-wall/">Vault Wall</a>
-          <a href="/ranks/">Vault Ranks</a>
+          <a href="/community/#wall">Vault Wall</a>
+          <a href="/leaderboards/#ranks">Vault Ranks</a>
           <a href="/invite/">Refer a Friend</a>
         </div>
         <div class="footer-col">
@@ -358,7 +358,6 @@ function buildFooter(assetPrefix) {
         </div>
         <div class="footer-col">
           <h2>Portals</h2>
-          <a href="/vault-portal/">Vault Portal</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/investor-portal/">Investor Portal</a>
           <a href="/investor-portal/apply/">Investor Application</a>
@@ -394,7 +393,7 @@ function buildFooter(assetPrefix) {
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
-        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/proof/" title="Re-verify our deploy ledger in your own browser">Independently verifiable &#10003;</a></span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/evidence/#verify" title="Re-verify our deploy ledger in your own browser">Independently verifiable &#10003;</a></span>
       </div>
     </div>
   </footer>`;

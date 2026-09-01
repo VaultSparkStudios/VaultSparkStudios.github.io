@@ -101,7 +101,7 @@
   function fetchRealEvents() {
     if (!window.VSPublic) return Promise.resolve([]);
     return Promise.allSettled([
-      window.VSPublic.from('vault_members').select('created_at').order('created_at', false).limit(POOL_LIMIT).get(),
+      window.VSPublic.from('public_leaderboard').select('created_at').order('created_at', false).limit(POOL_LIMIT).get(),
       window.VSPublic.from('challenge_submissions').select('created_at').order('created_at', false).limit(POOL_LIMIT).get(),
       window.VSPublic.from('game_sessions').select('game_slug,played_at').order('played_at', false).limit(POOL_LIMIT).get()
     ]).then(function (results) {
@@ -138,7 +138,7 @@
     foot.className = 'vp-foot';
     foot.appendChild(document.createTextNode('Recent member activity — anonymized, pulled live from the vault. '));
     var footLink = document.createElement('a');
-    footLink.href = '/vault-wall/';
+    footLink.href = '/community/#wall';
     footLink.textContent = 'View Vault Wall →';
     foot.appendChild(footLink);
     root.appendChild(foot);

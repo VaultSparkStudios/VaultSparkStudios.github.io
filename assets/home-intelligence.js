@@ -28,7 +28,7 @@
       ? window.VSPublicIntel.get()
       : Promise.resolve(null);
     var memberQueries = window.VSPublic ? Promise.allSettled([
-      window.VSPublic.from('vault_members').select('username,created_at').order('created_at', false).limit(6).get(),
+      window.VSPublic.from('public_leaderboard').select('username,created_at').order('created_at', false).limit(6).get(),
       window.VSPublic.from('challenge_submissions').select('member_id,created_at').order('created_at', false).limit(5).get(),
       window.VSPublic.from('game_sessions').select('game_slug,played_at').order('played_at', false).limit(5).get()
     ]) : Promise.resolve([]);

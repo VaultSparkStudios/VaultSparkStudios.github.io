@@ -1,0 +1,62 @@
+name: Weekly Maintenance
+
+# S335: `linkcheck.yml` and `member-seo.yml` fired on the identical cron
+# (`0 6 * * 1`) as two runner cold-starts. One workflow, two jobs, one schedule.
+# Each job keeps its previous behaviour and permissions; they do not depend on
+# each other, so a link-check failure never blocks the member page regeneration.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  linkcheck:
+    name: Link check (sitemap)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check links from sitemap
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,201,202,204,301,302,403,429
+            --exclude "^https://discord\.gg/"
+            --exclude "^https://discord\.com/users/"
+            --exclude "^mailto:"
+            --exclude "^https://twitter\.com/intent/"
+            --timeout 15
+            --max-retries 2
+            https://vaultsparkstudios.com/sitemap.xml
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  member-seo:
+    name: Regenerate member SEO pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Generate member profile pages
+        run: node scripts/generate-member-seo.mjs
+
+      - name: Commit generated pages if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add member/*/index.html member-sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: regenerate member SEO pages [skip ci]"
+            git pull --rebase --autostash origin main
+            git push
+          else
+            echo "No changes, skipping commit"
+          fi
