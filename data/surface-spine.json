@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "_note": "S334 (audit items 9 and 13). The site has three clusters where several surfaces answer overlapping questions and none of them says how it differs from its neighbours: membership/identity (8 surfaces), editorial (8 surfaces), and evidence (handled separately by /evidence/). This file states, for each page, what it IS in one line and which sibling to use instead when the visitor wants the other thing. It is orientation, not navigation — the site nav still routes; this stops a visitor landing on the wrong one of three near-identical doors and bouncing. Every href is resolved against the tree at build time.",
+  "_note": "S334 (audit items 9 and 13). The site has three clusters where several surfaces answer overlapping questions and none of them says how it differs from its neighbours: membership/identity (8 surfaces), editorial (8 surfaces), and evidence (handled separately by /evidence/). This file states, for each page, what it IS in one line and which sibling to use instead when the visitor wants the other thing. It is orientation, not navigation — the site nav still routes; this stops a visitor landing on the wrong one of three near-identical doors and bouncing. Every href is resolved against the tree at build time. S334: news/index.html is deliberately NOT in this list — generate-news-pages.mjs owns that file and rewrites it, so a strip injected here would be clobbered on every build and would make generate-news-pages --check permanently stale. The three surfaces that actually confuse a visitor (/journal/, /changelog/, /notebook/ — the same record at three granularities) carry the disambiguation; The Desk is distinctive enough to stand without it.",
   "clusters": [
     {
       "id": "membership",
@@ -10,49 +10,88 @@
           "file": "membership/index.html",
           "self": "This is the pitch — what an account gives you, and what the three tiers cost.",
           "kin": [
-            { "label": "Already have one? Open your account", "href": "/vault-member/" },
-            { "label": "Looking for other members?", "href": "/community/" }
+            {
+              "label": "Already have one? Open your account",
+              "href": "/vault-member/"
+            },
+            {
+              "label": "Looking for other members?",
+              "href": "/community/"
+            }
           ]
         },
         {
           "file": "vault-member/index.html",
           "self": "This is your account — everything you do once you are signed in.",
           "kin": [
-            { "label": "Not sure what membership gives you?", "href": "/membership/" },
-            { "label": "Looking for other members?", "href": "/community/" }
+            {
+              "label": "Not sure what membership gives you?",
+              "href": "/membership/"
+            },
+            {
+              "label": "Looking for other members?",
+              "href": "/community/"
+            }
           ]
         },
         {
           "file": "community/index.html",
           "self": "This is everyone else — the people, the boards, and where they gather.",
           "kin": [
-            { "label": "Member directory", "href": "/members/" },
-            { "label": "Top-ranked members", "href": "/vault-wall/" },
-            { "label": "Leaderboards", "href": "/leaderboards/" }
+            {
+              "label": "Member directory",
+              "href": "/members/"
+            },
+            {
+              "label": "Top-ranked members",
+              "href": "/vault-wall/"
+            },
+            {
+              "label": "Leaderboards",
+              "href": "/leaderboards/"
+            }
           ]
         },
         {
           "file": "members/index.html",
           "self": "The searchable directory of every Vault Member.",
           "kin": [
-            { "label": "Ranked standings instead", "href": "/vault-wall/" },
-            { "label": "Back to the Community hub", "href": "/community/" }
+            {
+              "label": "Ranked standings instead",
+              "href": "/vault-wall/"
+            },
+            {
+              "label": "Back to the Community hub",
+              "href": "/community/"
+            }
           ]
         },
         {
           "file": "vault-wall/index.html",
           "self": "The standings — who is ranked highest, and how ranks are distributed.",
           "kin": [
-            { "label": "Search every member instead", "href": "/members/" },
-            { "label": "Per-game leaderboards", "href": "/leaderboards/" }
+            {
+              "label": "Search every member instead",
+              "href": "/members/"
+            },
+            {
+              "label": "Per-game leaderboards",
+              "href": "/leaderboards/"
+            }
           ]
         },
         {
           "file": "invite/index.html",
           "self": "Bring someone in — and the recognition you earn for it.",
           "kin": [
-            { "label": "Your account", "href": "/vault-member/" },
-            { "label": "The Community hub", "href": "/community/" }
+            {
+              "label": "Your account",
+              "href": "/vault-member/"
+            },
+            {
+              "label": "The Community hub",
+              "href": "/community/"
+            }
           ]
         }
       ]
@@ -62,36 +101,53 @@
       "spine": "The Desk is the publication · the Signal Log is the studio's own record",
       "pages": [
         {
-          "file": "news/index.html",
-          "self": "This is the publication — AI news, investigated by fictional correspondents, with every prediction left on a public scorecard.",
-          "kin": [
-            { "label": "Want the studio's own build log instead?", "href": "/journal/" }
-          ]
-        },
-        {
           "file": "journal/index.html",
           "self": "This is the studio's own record, written as narrative — what we decided and why.",
           "kin": [
-            { "label": "Session-by-session shipped list", "href": "/changelog/" },
-            { "label": "Commit-by-commit, unedited", "href": "/notebook/" },
-            { "label": "In-fiction transmissions", "href": "/journal/dispatches/" }
+            {
+              "label": "Session-by-session shipped list",
+              "href": "/changelog/"
+            },
+            {
+              "label": "Commit-by-commit, unedited",
+              "href": "/notebook/"
+            },
+            {
+              "label": "In-fiction transmissions",
+              "href": "/journal/dispatches/"
+            }
           ]
         },
         {
           "file": "changelog/index.html",
           "self": "The same record at session granularity — every shipped feature, with its commit.",
           "kin": [
-            { "label": "The narrative version", "href": "/journal/" },
-            { "label": "Finer still: every commit", "href": "/notebook/" },
-            { "label": "What is coming next", "href": "/roadmap/" }
+            {
+              "label": "The narrative version",
+              "href": "/journal/"
+            },
+            {
+              "label": "Finer still: every commit",
+              "href": "/notebook/"
+            },
+            {
+              "label": "What is coming next",
+              "href": "/roadmap/"
+            }
           ]
         },
         {
           "file": "notebook/index.html",
           "self": "The same record at commit granularity — the forge writing itself, unedited.",
           "kin": [
-            { "label": "The narrative version", "href": "/journal/" },
-            { "label": "Grouped by session", "href": "/changelog/" }
+            {
+              "label": "The narrative version",
+              "href": "/journal/"
+            },
+            {
+              "label": "Grouped by session",
+              "href": "/changelog/"
+            }
           ]
         }
       ]
