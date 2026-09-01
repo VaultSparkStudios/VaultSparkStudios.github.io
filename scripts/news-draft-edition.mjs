@@ -166,6 +166,131 @@ export function draftableTopics(topics) {
  */
 export const MAX_TOPIC_ATTEMPTS = 4;
 
+/** How far back the desk remembers what it already covered. */
+export const NOVELTY_WINDOW_DAYS = 14;
+
+/**
+ * Words that carry no topical signal, so two headlines are not judged similar
+ * for sharing them. Deliberately small: an over-broad stop list makes distinct
+ * stories collide, which suppresses real news — a worse failure than an
+ * occasional duplicate.
+ */
+const STOPWORDS = new Set(['the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'for', 'with', 'at', 'by', 'from', 'as', 'is', 'are', 'was', 'were', 'it', 'its', 'this', 'that', 'new', 'now', 'how', 'why', 'what', 'just']);
+
+/**
+ * Crudest useful stemming: fold a trailing plural.
+ *
+ * Without it the two real S334 duplicates ("DeepMind Game Research" and
+ * "DeepMind's AI Plays Complex Games") scored 0.375 — game and games counted as
+ * different topics, which is the opposite of true. A full stemmer would be
+ * dependency weight for one comparison; folding the plural recovers most of the
+ * signal and cannot merge unrelated words.
+ */
+const stem = (w) => (w.length > 3 && w.endsWith('s') && !w.endsWith('ss') ? w.slice(0, -1) : w);
+
+export function titleTokens(s) {
+  return new Set(
+    String(s || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter((w) => w.length > 2 && !STOPWORDS.has(w))
+      .map(stem)
+  );
+}
+
+/** Jaccard overlap of two token sets. 0 = disjoint, 1 = identical. */
+export function tokenOverlap(a, b) {
+  if (!a.size || !b.size) return 0;
+  let shared = 0;
+  for (const t of a) if (b.has(t)) shared += 1;
+  return shared / (a.size + b.size - shared);
+}
+
+/**
+ * At or above this overlap, two headlines are the same story wearing a
+ * different slug.
+ *
+ * Calibrated against the actual S334 duplicates rather than picked round: the
+ * two real repeat headlines score 0.57 once plurals fold, and an unrelated AI
+ * story sharing three generic tokens with a six-token headline scores ~0.33. So
+ * the boundary sits between measured same-story and measured different-story,
+ * not at a number that felt safe. The asymmetry is deliberate — suppressing real
+ * news is a worse failure than an occasional duplicate, so when in doubt this
+ * publishes.
+ */
+export const SAME_STORY_OVERLAP = 0.45;
+
+/**
+ * What the desk published inside the novelty window.
+ *
+ * `readDay` is injected so this is testable without a filesystem, and `today`
+ * so a test is not hostage to the wall clock.
+ */
+export function recentlyPublished(dayFiles, readDay, today, windowDays = NOVELTY_WINDOW_DAYS) {
+  const cutoff = Date.parse(`${today}T00:00:00Z`) - windowDays * 86400000;
+  const out = [];
+  for (const file of dayFiles) {
+    const date = String(file).replace(/\.json$/, '');
+    const ts = Date.parse(`${date}T00:00:00Z`);
+    if (Number.isNaN(ts) || ts < cutoff) continue;
+    const day = readDay(file);
+    for (const story of day?.stories || []) {
+      out.push({
+        date,
+        slug: story.slug,
+        tokens: titleTokens(story.headline || story.slug),
+        sourceUrls: new Set((story.facts || []).map((f) => f && f.sourceUrl).filter(Boolean)),
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * Has the desk already covered this topic — and if so, does the queue offer a
+ * genuine reason to return to it?
+ *
+ * S334: `selectDraftableTopic()` remembered which HOSTS had refused it (the
+ * S333 fix) but nothing about what it had already published. The ranked queue is
+ * stable across days, so a story that holds the top slot gets drafted again the
+ * next morning: 2026-08-21, -22 and -23 all carry the slug
+ * `from-atari-to-eve-online-building-on-15-years`. The duplicates were correctly
+ * noindexed and canonicalised downstream, so search was never damaged — but each
+ * still spent an LLM draft, an OG render, and one of the newsroom's publish
+ * slots, and three days of output became one story. Containing it at publish
+ * was always more expensive than declining it at selection.
+ *
+ * A repeat is NOT automatically wrong: a developing story with new primary
+ * sources is a follow-up, which is journalism. So the rule is narrow — refuse a
+ * repeat only when it brings nothing the published piece did not already cite.
+ */
+export function noveltyVerdict(topic, published) {
+  const urls = new Set((topic.sources || []).map((s) => s && s.url).filter(Boolean));
+  const tokens = titleTokens(topic.title || topic.slug);
+
+  for (const prior of published) {
+    const sameSlug = prior.slug && prior.slug === topic.slug;
+    const sameStory = sameSlug || tokenOverlap(tokens, prior.tokens) >= SAME_STORY_OVERLAP;
+    if (!sameStory) continue;
+
+    const fresh = [...urls].filter((u) => !prior.sourceUrls.has(u));
+    if (fresh.length) {
+      return { novel: true, followUp: true, priorSlug: prior.slug, priorDate: prior.date, newSources: fresh.length };
+    }
+    return {
+      novel: false,
+      followUp: false,
+      priorSlug: prior.slug,
+      priorDate: prior.date,
+      reason: sameSlug
+        ? `already published ${prior.date} and no source has been added since`
+        : `same story as "${prior.slug}" (${prior.date}) under a different slug, with no new source`,
+    };
+  }
+  return { novel: true, followUp: false };
+}
+
 /**
  * Choose the best topic that can ACTUALLY be drafted, not merely the best one
  * that looks draftable.
@@ -190,10 +315,12 @@ export async function selectDraftableTopic(topics, {
   fetcher = fetchSource,
   max = MAX_TOPIC_ATTEMPTS,
   maxSources = 4,
+  published = [],
 } = {}) {
   const ranked = draftableTopics(topics);
   const attempts = [];
   const skipped = [];
+  const followUps = [];
   // Blocking is a property of the DOMAIN, not of the story. The queue is ranked
   // by newsworthiness, so one lab's blog can legitimately hold the top four
   // slots — and when that lab answers 403 to our (honestly identified) desk
@@ -205,6 +332,20 @@ export async function selectDraftableTopic(topics, {
 
   for (const topic of ranked) {
     if (used >= max) break;
+
+    // Novelty is checked BEFORE the attempt budget is spent, and costs nothing:
+    // deciding we already covered a story needs no network. A topic we have
+    // covered with nothing new to say is skipped for free, exactly like a topic
+    // whose every host has already refused us this run.
+    const novelty = noveltyVerdict(topic, published);
+    if (!novelty.novel) {
+      skipped.push({ slug: topic.slug, title: topic.title, reason: novelty.reason });
+      continue;
+    }
+    if (novelty.followUp) {
+      followUps.push({ slug: topic.slug, priorSlug: novelty.priorSlug, priorDate: novelty.priorDate, newSources: novelty.newSources });
+    }
+
     const urls = [...new Set((topic.sources || []).map((s) => s.url))]
       .filter((u) => !isAggregatorLink(u))
       .slice(0, maxSources);
@@ -220,7 +361,7 @@ export async function selectDraftableTopic(topics, {
     used += 1;
     const sources = await Promise.all(urls.map((u) => fetcher(u)));
     const reachable = sources.filter((s) => s.ok);
-    if (reachable.length) return { topic, sources, attempts, skipped, exhausted: false };
+    if (reachable.length) return { topic, sources, attempts, skipped, followUps, exhausted: false };
     for (const s of sources) {
       const host = sourceHost(s.url);
       if (host) deadDomains.add(host);
@@ -235,6 +376,7 @@ export async function selectDraftableTopic(topics, {
     sources: [],
     attempts,
     skipped,
+    followUps,
     exhausted: used >= max && ranked.length > attempts.length + skipped.length,
   };
 }
@@ -446,7 +588,21 @@ async function prepare(argv) {
       console.log(`  (${queue.topics.length - draftable.length} queued topic(s) skipped: aggregator-only sources cannot be read for facts)`);
     }
 
-    const picked = await selectDraftableTopic(queue.topics);
+    // What the desk already said, so it does not say it again for free.
+    const today = arg('--date') || new Date().toISOString().slice(0, 10);
+    let dayFiles = [];
+    try { dayFiles = fs.readdirSync(DAYS_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)); } catch {}
+    const published = recentlyPublished(dayFiles, (f) => readJson(path.join(DAYS_DIR, f)), today);
+
+    const picked = await selectDraftableTopic(queue.topics, { published });
+    if (published.length) {
+      console.log(`  · novelty: ${published.length} story/stories published in the last ${NOVELTY_WINDOW_DAYS} days are held against the queue`);
+    }
+    // A follow-up is a deliberate return to a developing story, not a duplicate.
+    // Say so in the log, or the next reader cannot tell the two apart.
+    for (const f of picked.followUps || []) {
+      console.log(`  ↻ ${f.slug} is a FOLLOW-UP to "${f.priorSlug}" (${f.priorDate}) — ${f.newSources} source(s) it did not cite`);
+    }
     // Say what was tried and why it lost — a dropped slot must be diagnosable
     // from the run log alone, without re-running the fetches by hand.
     for (const a of picked.attempts) {
@@ -608,6 +764,34 @@ function promote(argv) {
 async function selfTest() {
   const cases = [];
   const t = (label, ok) => cases.push([label, ok]);
+
+  /* novelty (S334) — the three cases that matter, plus the two failure modes
+     an over-eager novelty gate would introduce. */
+  const days = { '2026-08-21.json': { stories: [{ slug: 'atari-to-eve', headline: 'From Atari to EVE: DeepMind Game Research', facts: [{ sourceUrl: 'https://deepmind.example/post' }] }] } };
+  const pub = recentlyPublished(Object.keys(days), (f) => days[f], '2026-08-23');
+  t('published history is read from the day artifacts', pub.length === 1 && pub[0].slug === 'atari-to-eve');
+
+  const exact = noveltyVerdict({ slug: 'atari-to-eve', title: 'From Atari to EVE: DeepMind Game Research', sources: [{ url: 'https://deepmind.example/post' }] }, pub);
+  t('an identical slug with no new source is refused', exact.novel === false);
+
+  const reslugged = noveltyVerdict({ slug: 'atari-to-eve-online-building-on-15-years', title: 'From Atari to EVE: DeepMind’s AI Plays Complex Games', sources: [{ url: 'https://deepmind.example/post' }] }, pub);
+  t('the same story under a new slug is refused', reslugged.novel === false);
+
+  const followUp = noveltyVerdict({ slug: 'atari-to-eve', title: 'From Atari to EVE: DeepMind Game Research', sources: [{ url: 'https://deepmind.example/post' }, { url: 'https://regulator.example/filing' }] }, pub);
+  t('a repeat carrying a new primary source is allowed as a follow-up', followUp.novel === true && followUp.followUp === true);
+
+  const unrelated = noveltyVerdict({ slug: 'chip-export-rules', title: 'New Export Rules Reshape Chip Supply', sources: [{ url: 'https://x.example/a' }] }, pub);
+  t('an unrelated story is not suppressed by a shared common word', unrelated.novel === true);
+
+  const stale = recentlyPublished(['2026-07-01.json'], () => days['2026-08-21.json'], '2026-08-23');
+  t('history outside the window is forgotten', stale.length === 0);
+
+  const refusedFree = await selectDraftableTopic(
+    [{ slug: 'atari-to-eve', title: 'From Atari to EVE: DeepMind Game Research', sources: [{ url: 'https://deepmind.example/post' }] },
+     { slug: 'fresh-one', title: 'Something Genuinely Different Happened', sources: [{ url: 'https://y.example/a' }] }],
+    { published: pub, fetcher: async (url) => ({ url, ok: true, chars: 2000, facts: [{ text: 'f', score: 1 }] }) }
+  );
+  t('a covered topic is skipped for free and the next one is drafted', refusedFree.topic?.slug === 'fresh-one' && refusedFree.attempts.length === 0);
 
   const priorStory = { slug: 'morning-story', headline: 'Morning' };
   const closeStory = { slug: 'close-story', headline: 'Close' };
