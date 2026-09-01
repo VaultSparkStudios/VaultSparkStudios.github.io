@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-01T10:26:40.681Z",
+  "capturedAt": "2026-09-01T10:41:26.895Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "d33b1ba8e7a3fc1ddbfb36ab5806f87a44e99b380ac5e602d69fbbf7428a56b0",
+    "sha256": "e3127a65b6bd38eeee12bf1207edf1d05ce128baa0ef78802aeab6a6adcd05fa",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -186,7 +186,7 @@
       },
       {
         "path": "status/index.html",
-        "sha256": "110a1fd83f9801f86f47947aa56a0b48136da0dc66004dc1ca4072f65606b73c"
+        "sha256": "178cb6c747f27ffc72123331cb9d25da23ade5e3666c6f392ad24de47224b095"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -212,9 +212,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "767b7ada38ff2e1adcba7e4cb1b29481203c70b1d6036f801140852c9dcad728",
+    "manifestSha256": "833cfd3dce8ff32fa041572e0503e7c8f361ebfb82717ab3a8c5afe7da9bd53f",
     "candidateSha": "5bfab316d8c98244b6c0d5fec56f1657948ce29e",
-    "root": "9adaa7d23e3d9c150c33f9407a2d3d1e8e48ea6377da3d77b4769832ace592df"
+    "root": "a2735face5c82f846c2f7b0ecf401f5bc7b4db73d1fdde3cf19e55f38db91f97"
   },
   "matrix": {
     "routes": [
@@ -257,7 +257,7 @@
     },
     "reviewer": "Claude Opus 5 (S334)",
     "findings": [
-      "Re-inspected the /status/ theme matrix across all 7 themes at desktop and mobile after the final build. All themes render legibly with correct contrast; the status chip bar, hero, operational banner and service rows are intact and no theme shows black-on-black or light-on-white. Re-captured because the tree changed after the previous receipt (pathway regeneration and rebuild), so the earlier attestation no longer described the shipped bytes."
+      "Re-inspected the /status/ theme matrix across all 7 themes at desktop and mobile after the footer fix and manifest rebuild. All themes legible with correct contrast; intelligence chip bar, hero, operational banner and service rows intact. Re-captured because the footer change moved the candidate graph, so the prior attestation no longer described the shipped bytes."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -273,7 +273,7 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "43675bc89c410b101566ddf143b0fdc54e809f0d0c90d8e48eba5b24c40b4544",
+      "sha256": "07103bf00425c076c34d9473f3d7c594e65e40d0ed3ea00e37d33c2a7756598e",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -290,7 +290,7 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "f88c1d323808ea69be97b705a69f49c34822e8d4c2c1f82e1a91105eefe1d2db",
+      "sha256": "4a38e9a75d06e1cb1655b4564a8603eb5d799ae61fb0b9389eb66751d4864632",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -307,7 +307,7 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "f0106005fc0caaac1bafcad31156c0121541844f079f5857b4e4652725fd5551",
+      "sha256": "4f98067a37b6a41f0f3adc82d0e6090ff584c94af1402affba78d30fbf03b976",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -324,7 +324,7 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "d3dabcd3cfd551ab5a1828acdf2b5c0a249e568734bb40eb983aef627b9aff44",
+      "sha256": "2a8fcd8c876cd6692622562155564e060aac6077eaf50a013cede96f27ce5adf",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -341,7 +341,7 @@
         "height": 900
       },
       "file": "status--cool--desktop.png",
-      "sha256": "e38d92b7813a6eb584fbe20c8e20de0c4bd8840f20d817f028da839686272560",
+      "sha256": "8e24190aece23d590de4e3e7a8a01fc053d9617951d7c2695cc042f1b3bd0b61",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -358,7 +358,7 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "670342ecc640af8de9429dd60ac459feffeefb0757939a7652906a9a5e8b020e",
+      "sha256": "a17aeac738acc4cce349c1f9914b10fc3d454e109fef50d8347a2ef56b0a62b3",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -375,7 +375,7 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "a3f0fe52553abf9144caf8618d5bd2f69ad07f0792e4d7775fb2e2874e2486e1",
+      "sha256": "19dd4c8d7026d04ace49382f1188b6ddc8b6c26739735c8a4abb23c431474724",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -392,7 +392,7 @@
         "height": 844
       },
       "file": "status--dark--mobile.png",
-      "sha256": "d6cabbdaf8dfe449c204649088040ef64901be46406dc5e72e4b6534f102b1f1",
+      "sha256": "6a5a79c648a0d30798ee6cedf54541e3531dbcee4edda072d956720b2423c3b2",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -409,7 +409,7 @@
         "height": 844
       },
       "file": "status--light--mobile.png",
-      "sha256": "c72da6d94862860f1d1de3732e1f2f0ddfe7f083216ca373ccafa82b3da2e137",
+      "sha256": "6ba4dd8cc033238eb7d8d3212719bc27cffef544b19f857511b27e9a3b558fd1",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -426,7 +426,7 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "fcdde24ba757c73d62c3af5e4dcfa66082d1d0f87f89886d665be7d4613b1cff",
+      "sha256": "489ef57b0547aa00fb45ac381bf259010a60862c6e02242c7e706b8683219d68",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -443,7 +443,7 @@
         "height": 844
       },
       "file": "status--warm--mobile.png",
-      "sha256": "ed0a32795d03e7a90a6084e5b91cf2c5a24c5f50bb2af70cd31580e6b587f29b",
+      "sha256": "fc3c879bbcfb02e298f75dd5e5744c6bc2f9f9f97fe5bda51456a4ecf562d907",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -460,7 +460,7 @@
         "height": 844
       },
       "file": "status--cool--mobile.png",
-      "sha256": "ddb163f72cbbac6680c1d92869bde3552262d26c2ba581a7e44c1b656b7c6927",
+      "sha256": "7da2c7522fd73de9348a1a106c9d107c478dcd03505c34dce19b17da5e99cbd0",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -477,7 +477,7 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "1c195f42f18852dfb0d7c92f285c1f4aca8d312408ed15b02869aad56dc6c1dd",
+      "sha256": "4bb1b5f009d5c229c9b447bb199f2feb82c44607b01f8fae0c17cb8f15d51608",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -494,7 +494,7 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "76f93653a75ece172b19e782be3ee10c43f62db61337d512e0c482beae865542",
+      "sha256": "7f8236b0e7ccab6fa270cc23ccb5855b6d88a06f701a82879df437edcc3041a3",
       "page": "/status/",
       "state": "page",
       "inspection": {
