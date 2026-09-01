@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "_note": "S334: the studio publishes eight live-data surfaces (/stats/, /stats/ecosystem/, /status/, /proof/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/) that all answer versions of one question — 'is this studio real and working?' — with no front door. This file defines the spine. Each lane keeps its deep page as the canonical destination; the hub only routes and stamps freshness, so no receipt or permalink moves. `feed` must be a public, publicSafe JSON artifact carrying generatedAt; a lane whose feed cannot be read reports UNKNOWN rather than a stale green.",
+  "lanes": [
+    {
+      "id": "live",
+      "label": "Live",
+      "question": "Is everything up right now?",
+      "blurb": "Real-time service status for the Vault, the games, and the edge in front of them.",
+      "href": "/status/",
+      "linkLabel": "Open System Status",
+      "feed": "/api/public-status.json",
+      "also": [{ "label": "Edge + discovery health", "href": "/status/#discovery" }]
+    },
+    {
+      "id": "numbers",
+      "label": "Numbers",
+      "question": "How big is any of this, actually?",
+      "blurb": "Source-dated portfolio, audience, editorial and performance statistics — each figure carrying its own freshness, bots separated from people.",
+      "href": "/stats/",
+      "linkLabel": "Open Public Stats",
+      "feed": "/api/ecosystem-stats.json",
+      "also": [{ "label": "Ecosystem + edge analytics", "href": "/stats/ecosystem/" }]
+    },
+    {
+      "id": "proof",
+      "label": "Proof",
+      "question": "Can I check any of it myself?",
+      "blurb": "This one does not ask for trust. It re-fetches the public deploy ledger and re-computes every hash in your own browser, on your machine, while you watch.",
+      "href": "/proof/",
+      "linkLabel": "Verify In Your Browser",
+      "feed": "/api/deploy-currency.json",
+      "also": [{ "label": "Release proof receipts", "href": "/proof/#receipts" }]
+    },
+    {
+      "id": "motion",
+      "label": "Motion",
+      "question": "What is actually moving this week?",
+      "blurb": "The forge in motion — every world under construction, the commit-level notebook, and the Oracle's live read of each project.",
+      "href": "/studio-pulse/",
+      "linkLabel": "Open Studio Pulse",
+      "feed": "/api/oracle-insights.json",
+      "also": [
+        { "label": "Commit-level notebook", "href": "/notebook/" },
+        { "label": "Ecosystem Oracle", "href": "/oracle/" }
+      ]
+    }
+  ]
+}
