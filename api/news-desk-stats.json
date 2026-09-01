@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-31",
+  "generatedAt": "2026-09-01",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 10,
+    "days": 11,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-31",
-    "stories": 16,
-    "words": 4676,
-    "minutes": 21,
+    "latestDate": "2026-09-01",
+    "stories": 17,
+    "words": 5019,
+    "minutes": 23,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -42,32 +42,33 @@
       "kpmg.com",
       "newsletter.semianalysis.com",
       "openai.com",
+      "the-decoder.com",
       "wired.com"
     ],
-    "sourceCount": 11,
-    "facts": 51,
-    "panels": 16,
+    "sourceCount": 12,
+    "facts": 54,
+    "panels": 17,
     "formats": {
       "bit": 4,
       "roast": 1,
       "quick": 5,
       "explainer": 2,
-      "debate": 2
+      "debate": 3
     },
     "editions": {
       "midday": 4,
-      "wire": 5,
+      "wire": 6,
       "close": 3,
       "latenight": 2
     },
     "shapes": {
       "split": 3,
       "solo": 4,
-      "agree": 9
+      "agree": 10
     },
     "predictions": {
-      "onRecord": 8,
-      "open": 8,
+      "onRecord": 10,
+      "open": 10,
       "graded": 0,
       "correct": 0,
       "wrong": 0,
@@ -748,6 +749,55 @@
         },
         {
           "personaId": "vera",
+          "direction": 0,
+          "verdict": "fair"
+        }
+      ],
+      "predictions": {
+        "onRecord": 2,
+        "open": 2,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-09-01",
+      "slug": "openai-starts-charging-some-customers-only-when-its-ai",
+      "words": 343,
+      "minutes": 2,
+      "voices": [
+        "dot",
+        "rex",
+        "echo"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "the-decoder.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "dot",
+      "format": "debate",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "3 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "echo",
           "direction": 0,
           "verdict": "fair"
         }
