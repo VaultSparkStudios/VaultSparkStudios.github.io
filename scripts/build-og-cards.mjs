@@ -78,9 +78,16 @@ export const PUBLIC_NO_OG = [
   'pathways/index.html', 'pathways/builders/index.html', 'pathways/investors/index.html',
   'pathways/lore/index.html', 'pathways/players/index.html', 'pathways/press/index.html',
   'pathways/supporters/index.html',
-  'solara/index.html', 'solara/archive.html', 'solara/chronicle.html',
-  'membership-value/index.html', 'feedback/index.html', 'stats/index.html',
+  // S334: the Solara world pages moved under /games/solara/ (the old /solara/*
+  // route 301'd them into 404s), and solara/index.html + membership-value were
+  // retired to edge redirects. Paths follow the pages.
+  'games/solara/archive.html', 'games/solara/chronicle.html',
+  'feedback/index.html', 'stats/index.html',
   'stats/ecosystem/index.html', 'ask-founders/index.html',
+  // S334: /evidence/ is the front door to the studio's live-data surfaces —
+  // exactly the kind of link that gets shared into a thread about whether any
+  // of this is real, so it must not render as a bare URL.
+  'evidence/index.html',
 ];
 
 // rel path → stable slug for the PNG filename.  index.html → "home".

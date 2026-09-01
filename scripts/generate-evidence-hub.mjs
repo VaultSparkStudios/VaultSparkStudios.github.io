@@ -156,6 +156,18 @@ ${also}
 </article>`;
 }
 
+/** Every indexable page carries a BreadcrumbList — inject-breadcrumb-jsonld gates it. */
+function buildBreadcrumb() {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vaultsparkstudios.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Evidence', item: 'https://vaultsparkstudios.com/evidence/' },
+    ],
+  });
+}
+
 function buildJsonLd(lanes) {
   return JSON.stringify({
     '@context': 'https://schema.org',
@@ -170,8 +182,9 @@ function buildJsonLd(lanes) {
 
 export function buildPage(lanes, chrome) {
   const depth = '../';
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
-<script type="application/ld+json" data-vs-breadcrumb>${buildJsonLd(lanes)}</script>
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
+<script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb()}</script>
+<script type="application/ld+json">${buildJsonLd(lanes)}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
 ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">

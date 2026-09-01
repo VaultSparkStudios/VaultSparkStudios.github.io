@@ -40,7 +40,10 @@ export const OG_DARK_PATTERNS = [
 ];
 export const OG_DARK_PATHS = new Map([
   ['404.html', 'error page'],
+  ['games/solara/404.html', 'error page'],
   ['solara/404.html', 'error page'],
+  // S334: an embeddable widget endpoint, not a page anyone shares a link to.
+  ['games/solara/sun-widget.html', 'embeddable widget endpoint'],
   ['offline.html', 'offline fallback'],
   ['login.html', 'auth flow'],
   ['auth/callback.html', 'oauth callback'],
