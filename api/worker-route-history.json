@@ -28,14 +28,18 @@
   "honesty": {
     "observationBounded": true,
     "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
-    "corroboration": null,
+    "corroboration": {
+      "source": "data/uptime-history.ndjson",
+      "resolution": "coarse (whole-edge, not per-route)",
+      "edgeDegradedSince": "2026-09-01T14:37:59.522Z"
+    },
     "onsetEvidence": {
-      "state": "unbounded",
+      "state": "bounded",
       "interval": {
         "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
-        "onsetNotLaterThan": null,
-        "widthHours": null,
-        "widthDays": null
+        "onsetNotLaterThan": "2026-09-01T14:37:59.522Z",
+        "widthHours": 470.6,
+        "widthDays": 19.6
       },
       "contributions": [
         {
@@ -47,6 +51,12 @@
           },
           "samples": 1,
           "role": "lower-bound"
+        },
+        {
+          "source": "data/uptime-history.ndjson",
+          "role": "upper-bound",
+          "resolution": "coarse whole-edge probe",
+          "value": "2026-09-01T14:37:59.522Z"
         }
       ],
       "exclusions": [
@@ -63,7 +73,7 @@
   "current": {
     "openIncidents": 0,
     "totalRoutes": 7,
-    "onsetNotLaterThan": null,
+    "onsetNotLaterThan": "2026-09-01T14:37:59.522Z",
     "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
     "degradedForMs": 0,
     "degradedForHours": 0,
