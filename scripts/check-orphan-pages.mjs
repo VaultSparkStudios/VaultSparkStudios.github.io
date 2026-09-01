@@ -48,6 +48,14 @@ const EXEMPT_PATTERNS = [
   /\/\.ai\//,                       // S160 #14: AI-canonical fact sheets — linked from /.well-known/llms.txt, not nav
   /^\/obelisk-passport\//,          // S193: untracked Obelisk-passport WIP (not in git HEAD) — remove when it ships
   /^\/studio-hub\//,                // S275: private portal — robots-Disallowed + Worker 301 to hub subdomain; its only prior "reachability" was the sitemap contradiction removed at S275
+  // S334: the Solara world pages — Season Chronicle, Archive of the Fallen, Sun
+  // Observatory. They were genuinely orphaned before this session (linked only to
+  // each other, and the old /solara/* route 301'd them into 404s); they are now
+  // linked from /games/solara/, which is where world pages belong. They stay out
+  // of this gate's reach only because it counts nav/footer/sitemap/home, and
+  // generate-sitemap enumerates index.html files exclusively — so a bare .html
+  // page can never appear there. Reachable, just not nav-level.
+  /^\/games\/solara\/(archive|chronicle|sun-widget)\//,
   /^\/ignis-health\//,              // S275: private observability portal — robots-Disallowed, deliberately unlinked
   /^\/solara\//,                    // S193: standalone Vite game app (own UI, no VaultSpark shell nav) — like football-gm
   /^\/vault-member\/passport\//,    // S207: Vault Passport — noindex member card, reached via portal + share link only (own minimal nav)
