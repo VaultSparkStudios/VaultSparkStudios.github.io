@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-08-30 -->
+<!-- generated-at: 2026-09-01 -->
 
 # Ship Receipts
 
@@ -7,5 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Trust & legal | 2 | a744f428 assert single-node consent banner<br>a77095dc remove relocated redirect stubs from a11y scan list | longtail-s171 (6) |
-| Speed | 1 | 80836542 make closeout cache local-only | home-lcp-s173 (4) |
+| Conversion | 1 | bdaba033 the Desk remembers what it already published | pending |
+| Transparency | 1 | 407230ac reconcile status-proof and intent-map after scheduled-publisher rebase | pending |
+| Speed | 1 | b44d4164 measure the two perf items, and retire both premises | home-lcp-s173 (4) |

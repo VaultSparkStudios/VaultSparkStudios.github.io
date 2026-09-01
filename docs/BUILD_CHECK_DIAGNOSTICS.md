@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-31T21:35:19.869Z
-Receipt: `52c8dc0e5634d20da5681cfe` · coverage 372/372 from step 1
+Generated: 2026-09-01T06:58:29.931Z
+Receipt: `73c678bf1c17aec7aa518ed8` · coverage 56/378 from step 1
 
-Latest: **372/372** passed · failed 0 · total 2245.3s
-Concentration: **14.2%** in step 140 · ratchet clear (>30% and ≥45s)
+Latest: **55/56** passed · failed 1 · total 45.7s
+Concentration: **17.9%** in step 29 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 140 | 318.3s | 0 | `node scripts/check-proof-surface.mjs` |
-| 97 | 317.1s | 0 | `node scripts/lint-repo.mjs` |
-| 61 | 161.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 96 | 156.2s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 263 | 106.6s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 125 | 76.7s | 0 | `node scripts/check-mobile-contracts.mjs` |
-| 93 | 68.8s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 98 | 66.0s | 0 | `node scripts/validate-module-imports.mjs` |
-| 66 | 59.1s | 0 | `node scripts/build-shell-assets.mjs --check` |
-| 133 | 56.4s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 29 | 8.2s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 23 | 4.8s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
+| 41 | 2.3s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
+| 37 | 1.8s | 0 | `node scripts/build-worker-route-history.mjs --check` |
+| 25 | 1.5s | 0 | `node scripts/check-production-promotion-gate.mjs --self-test` |
+| 48 | 1.4s | 0 | `node scripts/build-ambient-bundle.mjs --check` |
+| 40 | 1.2s | 0 | `node scripts/build-oracle-velocity-public.mjs --self-test` |
+| 24 | 1.0s | 0 | `node scripts/check-promotion-scope.mjs --self-test` |
+| 26 | 1.0s | 0 | `node scripts/check-production-promotion-gate.mjs --check` |
+| 17 | 0.9s | 0 | `node scripts/build-identity-migration-receipt.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 56: `node scripts/check-cta-readiness.mjs --self-test` exited 1

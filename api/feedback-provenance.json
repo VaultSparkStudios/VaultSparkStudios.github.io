@@ -1,29 +1,36 @@
 {
-  "generatedAt": "2026-08-31",
+  "generatedAt": "2026-09-01",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 2,
+  "themeCount": 3,
   "themes": [
     {
-      "key": "trust",
-      "label": "Trust & legal",
-      "count": 2,
+      "key": "conversion",
+      "label": "Conversion",
+      "count": 1,
       "commits": [
         {
-          "sha": "a744f428",
+          "sha": "bdaba033",
           "move": "Fixed",
           "tone": "fix",
-          "summary": "assert single-node consent banner",
-          "ts": "2026-08-28T10:49:34.000Z"
-        },
+          "summary": "the Desk remembers what it already published",
+          "ts": "2026-09-01T06:15:54.000Z"
+        }
+      ]
+    },
+    {
+      "key": "transparency",
+      "label": "Transparency",
+      "count": 1,
+      "commits": [
         {
-          "sha": "a77095dc",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "remove relocated redirect stubs from a11y scan list",
-          "ts": "2026-08-28T09:25:45.000Z"
+          "sha": "407230ac",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "reconcile status-proof and intent-map after scheduled-publisher rebase",
+          "ts": "2026-08-31T08:19:40.000Z"
         }
       ]
     },
@@ -33,11 +40,11 @@
       "count": 1,
       "commits": [
         {
-          "sha": "80836542",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "make closeout cache local-only",
-          "ts": "2026-08-28T10:36:58.000Z"
+          "sha": "b44d4164",
+          "move": "Sped up",
+          "tone": "perf",
+          "summary": "measure the two perf items, and retire both premises",
+          "ts": "2026-09-01T06:32:15.000Z"
         }
       ]
     }

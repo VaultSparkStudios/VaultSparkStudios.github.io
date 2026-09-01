@@ -122,11 +122,20 @@ function selfTest() {
   const waiting = analyzeCtaReadiness({ families: [{ family: 'play-next', counts: { shown: 0, click: 0 }, since: '2026-07-02' }] });
   const ready = analyzeCtaReadiness({ families: [{ family: 'play-next', counts: { shown: 22, click: 1 }, since: '2026-07-02' }] });
   // S328 fixtures: a funnel that declares its window + how far the evidence reaches.
+  // S334: pin the clock. These fixtures assert the WINDOW-BOUND wording, which
+  // only appears while the evidence is still fresh — and freshness is measured
+  // against the wall clock. asOf 2026-08-01 was fresh when the test was written
+  // and turned 31 days old on 2026-09-01, at which point the staleness branch
+  // took over the reason string and both assertions failed. The gate had not
+  // found a defect; it had aged into one. `analyzeCtaReadiness` already accepts
+  // an injectable `now` (staleRow below was already using it) — these calls
+  // simply were not passing it.
+  const NOW = new Date('2026-08-02T12:00:00Z');
   const windowed = analyzeCtaReadiness({
     windowDays: 30,
     asOf: '2026-08-01',
     families: [{ family: 'play-next', counts: { shown: 5, click: 0 }, since: '2026-07-02' }],
-  });
+  }, RULES, NOW);
   const frozen = analyzeCtaReadiness({
     windowDays: 30,
     asOf: '2026-07-02',
@@ -153,7 +162,7 @@ function selfTest() {
     // The whole point of A3: the bar is per-window, and the message must say so.
     ['waiting reason states the window bound', /within a single 30-day window/.test(w.reason)],
     ['ready reason states the window bound too',
-      /within a single 30-day window/.test(analyzeCtaReadiness({ windowDays: 30, asOf: '2026-08-01', families: [{ family: 'play-next', counts: { shown: 22, click: 1 }, since: '2026-07-02' }] }).readiness['play-next'].reason)],
+      /within a single 30-day window/.test(analyzeCtaReadiness({ windowDays: 30, asOf: '2026-08-01', families: [{ family: 'play-next', counts: { shown: 22, click: 1 }, since: '2026-07-02' }] }, RULES, NOW).readiness['play-next'].reason)],
     // Evidence that stops at the epoch must not print a confident countdown.
     ['epoch == asOf reports no post-epoch span, not a countdown',
       /no post-epoch observation span yet/.test(f.reason) && !/waiting for/.test(f.reason)],
