@@ -8,6 +8,29 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
+
+## 2026-09-01 — Session 334 (full-site audit · redirect integrity · discoverable AI layer · two premises retired) | Total: 988/1000 (v3.0) | Velocity: →
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | 12 of 14 audit items shipped with self-tests (site-integrity 15/15, evidence-hub 11/11, surface-spine 14/14, news-desk 65/65). One pre-existing gate (`startup-revenue-agreement`) remains red and is reported, not masked. |
+| Creative Alignment | 99 | `/evidence/` states the studio's actual differentiator in the studio's own voice; pathway routes and orientation strips add substance without adding pages. |
+| Momentum | 98 | Four defects that were live in production retired: redirect-into-404, an ungated internal surface, a duplicate sitemap the gate had been told to ignore, and a duplicating newsroom. |
+| Engagement | 97 | Pathway pages went from 530 bytes of headline to real four-step routes; eight transparency surfaces gained a front door. Real traffic outcomes remain future evidence. |
+| Process Quality | 100 | The session's best work was disproving two of its own items with measurement, and reverting a spectacular-looking fix to a zero diff after a controlled A/B showed it was noise. Both recorded with evidence rather than quietly dropped. |
+| Cross-Repo Coherence | 97 | A studio-ops brief-renderer bug was diagnosed precisely and left to cargo rather than edited in the sibling repo; one stray session lock written there was removed immediately. |
+| Security Posture | 100 | `/ignis-health/` moved from robots.txt to a real edge gate, and the class is now closed by a court rather than the instance being patched. |
+| Ecosystem Integration | 99 | The `.ai/` fact-sheet layer reached sitemap, agents.json, JSON-LD, human cross-links and the answer engine's retrieval corpus — 15/17 project questions now resolve to the studio's own canonical sheet. |
+| Capital Efficiency | 100 | No new dependency, service, or per-user cost. The Desk's novelty gate removes recurring LLM draft and OG-render spend at selection. |
+| Automation Coverage | 99 | Four new structural courts in one build:check entry (per the S192 cmd-length rule), plus generator-side `--check` for the hub, spine and fact-sheet joins. |
+
+**Audit:** 14 items ranked; 12 shipped, 2 disproved by measurement, 3 candidate findings disproved during pre-verification before they ever reached the list.
+
+**Brainstorm / carried to TASK_BOARD:**
+1. `startup-revenue-agreement` — the v5 startup brief and the shared revenue resolver disagree at every date rollover; `context/SIGNALS.md` is a reader keyed on an artifact its producer stopped writing 18 days ago. Studio-ops owned; ship cargo.
+2. Fact extraction accepted syndicated advertising copy ("Top Shark Promo Codes") as a sourced fact under a real publisher URL — a public truth surface issue, not cosmetic.
+3. The footer still names two retired routes; blocked behind reconciling `propagate-nav.mjs`'s stale arrays (the S329 landmine), not a direct edit.
+
 Sparkline (last 5 totals): ▇▆███
 Avgs — 3: 992.0 | 5: 991.4 | 10: 992.0 | 25: 987.3 [N=17] | all: 987.5
   └ 3-session: Dev 100.0 | Align 99.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
@@ -2601,7 +2624,7 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 2. [NEXT][ARK] Ship a `pattern-share` to studio-ops: the registry's live-URL field is `runtimeUrl`, not `liveUrl`, and case-sensitive `vaultStatus === 'SPARKED'` comparisons silently disable SPARKED enforcement portfolio-wide — both are latent in any sibling that copied the launch-ready pattern.
 
 
-## 2026-08-20 — Session 324 (build-gate reachability sweep: twelve `--check` gates nobody ran, three of them red, three public feeds stale) | Total: 991/1000 (v3.0) | Velocity: +2 | Debt: ↓
+## 2026-08-20 — Session 324 (build-gate reachability sweep: twelve `--check` gates nobody ran, three of them red, three public feeds stale) | Total: 988/1000 (v3.0) | Velocity: +2 | Debt: ↓
 
 | Category | Score | Notes |
 |---|---:|---|

@@ -1509,3 +1509,28 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Closed the corroboration half of the Desk starvation. Measured single-blocker headroom first — 70 topics lack only a readable source, 55 lack only corroboration, and zero lack only a persona beat — which disproved the beat-map lever before any code was written.
 - Fixed the real cause: clusters retained only their lead headline, so cross-outlet matching compared one wording against one wording. Clusters now carry up to six member wordings and match on any pair at the unchanged 0.45 bar; readable-and-corroborated topics went 2 to 5.
 - Capped borrowing at 8 outlets after auditing the heaviest link by name (a genuine 26-outlet mega-story). Corroboration is a threshold signal, so beyond a handful the extra links change no decision while widening the blast radius of a bad match; `corroborationCapped` records the true count so the clamp is visible.
+
+## Session 334 — 2026-09-01 — Full-site audit, implemented
+
+**Intent:** `/start`, audit every page from the marketing landing to the member panel, produce one ranked plan, implement it in efficiency order, close out, push to `main`, deploy.
+
+**Shipped (12 of 14 audit items):**
+- `_redirects` splat rules that 301'd three Solara world pages, the legacy Franchise Architect build, the Solara SPA bundle and a 30-file app tree into 404s — replaced with explicit per-route tombstones; the Solara pages moved under `/games/solara/` and given their first inbound link.
+- `/ignis-health/` gated at the edge instead of by robots.txt alone, plus a court closing the whole class.
+- 16 meta-refresh stubs retired onto `_redirects` as the single redirect mechanism.
+- `sitemap.html` — a tracked, byte-drifted duplicate with zero inbound links, allowlisted in the orphan gate rather than removed — deleted with both exemptions; 2 orphan 192KB style shells (376KB) removed.
+- Six `/pathways/*` pages now render the four-step route `data/pathways.json` has carried since S201 (534 → 1,880 bytes of content each); four stale step targets repointed.
+- The `.ai/` fact-sheet layer joined into sitemap (18 entries), agents.json (17 `aiFactSheet` fields), JSON-LD, and human cross-links; root cause was `generate-sitemap`'s blanket `startsWith('.')` rule.
+- The Desk now declines a topic it already covered, at selection; a repeat with a new primary source is allowed as a follow-up. Verified by replaying the entire published history — 14 allowed, exactly the 2 known duplicates refused.
+- `/evidence/` — a new four-lane front door for eight live-data surfaces, with live (never baked) freshness and honest UNKNOWN states.
+- Orientation strips across the membership and editorial clusters.
+- The answer engine grounded in the fact-sheet corpus (41 → 58 docs; 15/17 project questions reach the canonical sheet).
+
+**Disproved by measurement (recorded as skips, with evidence):**
+- "Homepage ships 66KB of critical CSS" — the shared shell is 5,363 bytes; the rest is page-unique (7% overlap with the shared sheet) and measured mobile LCP is ~900ms with it inline.
+- "The member dashboard's 133KB nine-pane document is a perf defect" — FCP 860ms, 1,414 DOM nodes.
+- A `/games/` reading of 4,724ms FCP that appeared to overturn S275's blocking-stylesheet decision was a cold-start artifact; a controlled A/B put blocking at 724ms and async at 752ms. Change reverted to a zero diff.
+
+**Also fixed:** `check-cta-readiness`'s self-test, which aged into failure at the midnight date rollover because its fixture asserted freshness-dependent wording without pinning a clock.
+
+**Open and reported, not masked:** `startup-revenue-agreement` — the promoted v5 startup brief and the shared revenue resolver disagree on evidence age; a studio-ops brief-renderer concern, carried to TASK_BOARD for Ark cargo.

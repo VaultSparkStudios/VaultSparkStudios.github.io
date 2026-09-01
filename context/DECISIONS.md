@@ -774,3 +774,100 @@ The operational consequence is that **chasing a perfectly-bound tip by hand is n
 **D-S333.20 — Corroboration matches every headline a story carries, and borrowing is capped.** Cross-outlet corroboration (D-S333.19) was converting almost nothing, and the cause was recall rather than strictness: clusters retained only their LEAD headline, so a cluster of eight articles hid seven of its own wordings and the matcher compared one headline against one headline. Clusters now retain up to six member wordings and a link is made when ANY pair clears the bar — still 0.45, still stricter than the 0.34 merge threshold, and still requiring agreement between two headlines that outlets actually published. **Measured headroom first, which killed one candidate lever outright:** of topics blocked by exactly one rule, 70 lacked only a readable source and 57 lacked only corroboration, while **zero** were blocked solely as uncastable — so widening the persona beat map, listed as an option the previous cycle, would have unlocked nothing and was not built.
 
 Borrowing is capped at 8 outlets per story. Corroboration is a threshold signal — the gate asks for two independent outlets, not twenty — so beyond a handful, extra borrowed outlets change no decision while widening the blast radius of a bad match and skewing the corroboration term in scoring. Observed live: a genuine mega-story ("OpenAI's ad business hits $1 billion") legitimately drew 26 outlets, and a spurious match would have looked identical in the count; the cap keeps every decision-relevant bit and discards only the part that could mislead. `corroborationCapped` records the true count when clamped, so the cap is visible rather than silent. Net effect measured across the session: readable-and-corroborated topics went 2 → 5, with the heaviest remaining link auditable by name in the scan output.
+
+## D-S334.1 — A splat redirect is only safe when the destination mirrors the source
+
+`_redirects` carried `/solara/* -> /games/solara/:splat` and
+`/franchise-architect/* -> /games/franchise-architect/:splat`. Both promised that
+every sub-path of the source had a counterpart under the destination. Neither
+did: three Solara world pages, the legacy Franchise Architect build, the Solara
+SPA bundle and a 30-file app tree all 301'd into 404s.
+
+Retired ROUTES are now enumerated one by one. Wildcards over a prefix that still
+holds tracked files are forbidden, and `check-site-integrity`'s
+`redirects-resolve` court fails the build when a splat would strand a tracked
+file or when its destination prefix holds nothing at all.
+
+## D-S334.2 — robots.txt is not access control; a page that calls itself internal must be gated
+
+`/ignis-health/` titled itself "(internal)", published the ask-ignis edge-function
+contract, and appeared only in robots.txt — a request to polite crawlers, readable
+by anyone holding the URL. It is now in the worker's `GATED_PATH_PATTERNS`.
+
+The class is closed rather than the instance: a court asserts every path
+`robots.txt` Disallows for the `*` group is either genuinely gated at the edge or
+listed in `INTENTIONALLY_PUBLIC_UNINDEXED` with a written reason. `/.well-known/`
+is declared there (its four citable AI-discovery files are longest-match Allowed;
+nothing behind it is secret and gating it would break agent discovery for no
+security gain).
+
+## D-S334.3 — Render the route you already have before proposing to delete the page
+
+The S334 audit proposed collapsing six `/pathways/*` pages into anchors: each was
+23KB of chrome around ~530 bytes of headline, the classic doorway shape.
+
+`data/pathways.json` had carried a four-step route per pathway since S201 and
+`buildPage()` discarded it. The content was in the source of truth the whole
+time; only the renderer was missing. Rendering it took main content from 534 to
+1,880 bytes per page — real deep links with a reason to follow them — and
+surfaced four stale step targets pointing at routes retired into anchors months
+ago.
+
+Deletion remains available if these pages still fail to convert. It is simply not
+the first move when the missing content already exists.
+
+## D-S334.4 — The Desk declines a repeat at selection, and a follow-up is not a repeat
+
+`selectDraftableTopic()` remembered which hosts had refused it and nothing about
+what it had already published, so a story holding the top queue slot was drafted
+three mornings running. The duplicates were noindexed and canonicalised
+downstream — search was never damaged — but each still spent an LLM draft, an OG
+render, and one of four daily publish slots.
+
+Novelty is now judged before the attempt budget is touched, since deciding we
+already covered something needs no network. The rule is deliberately narrow: a
+repeat is refused only when it brings no source the published piece already
+cited. A repeat carrying a NEW primary source is a follow-up, is allowed, and is
+logged as one — refusing a developing story would be a worse failure than an
+occasional duplicate, and the 0.45 similarity threshold is calibrated to favour
+publishing (measured same-story 0.57, measured different-story ~0.33).
+
+## D-S334.5 — S275's blocking-stylesheet decision stands; the measurement that appeared to overturn it was an artifact
+
+`/games/` measured 4,724ms FCP against ~1s for every other page under identical
+conditions, and switching it to the async stylesheet swap appeared to fix it
+outright: FCP 4724 -> 200ms, CLS 0 across six runs, no unstyled flash at 300ms.
+
+A controlled A/B — same harness, alternating variants, stylesheet strategy the
+only difference — put blocking at 724ms and async at 752ms median FCP. The
+4,724ms was the first page load in a fresh Chromium process. The change was
+reverted to a zero diff.
+
+Two standing consequences. S275's field evidence (CLS p75 0.24–0.64 on content
+routes under the async swap) remains the governing data, and content routes stay
+blocking. And no perf number from this harness is believed until the browser has
+been warmed; the first navigation in a process is not a measurement of the page.
+
+## D-S334.6 — Orientation over merging, where each page still earns its URL
+
+The audit found two clusters of overlapping surfaces — eight membership/identity
+pages (four overlapping on "who else is here and how do I rank") and eight
+editorial pages (three of them the same fact stream at narrative, session and
+commit granularity) — and proposed folding them together.
+
+Each page earns its URL. The failure was that a visitor who picked the wrong door
+could not tell they had. So each carries one orientation strip: a line saying what
+THIS page is, plus direct links to the sibling that answers the other thing.
+Nothing moves, nothing merges, no permalink or receipt changes — and unlike a
+merge, it is reversible if the copy is wrong.
+
+## D-S334.7 — A fixture that asserts freshness-dependent wording must pin its clock
+
+`check-cta-readiness`'s self-test asserted the window-bound reason string, which
+only appears while evidence is fresh. Its fixture's `asOf: 2026-08-01` turned 31
+days old on 2026-09-01 and the staleness branch took over the message. The gate
+had not found a defect; it had aged into one, mid-session, at the date rollover.
+
+`analyzeCtaReadiness` already accepted an injectable `now` and one fixture in the
+same file was already using it. Any assertion whose expected output depends on
+elapsed time passes an explicit clock.
