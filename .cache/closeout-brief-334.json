@@ -1,0 +1,138 @@
+{
+  "session": "S334",
+  "date": "2026-09-01",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Full-site audit: 12 of 14 items shipped, and 2 retired by measurement rather than built",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "redirects-splat-301-into-404",
+      "title": "Four real pages were 301'd into 404s by splat redirects",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "A splat rule promises every sub-path of the source has a twin under the destination. Two of them promised that over prefixes holding three Solara world pages, the legacy Franchise Architect build, the Solara SPA bundle and a 30-file app tree — and the destinations held one file each. Retired routes are now enumerated one by one, and a court fails the build when a wildcard would strand a tracked file.",
+      "evidence": "scripts/check-site-integrity.mjs redirects-resolve court, 0 failures over 41 rules; also caught a chained /vaultspark-football-gm redirect pointing at a stub this session deleted"
+    },
+    {
+      "id": "#2",
+      "slug": "pathways-doorway-pages",
+      "title": "Rendered the pathway route that had existed unrendered since S201",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Six pages shipped 23KB of chrome around ~530 bytes of headline, and the audit proposed deleting them. data/pathways.json had carried a four-step route per pathway since S201 and the generator discarded it — the content was in the source of truth the whole time. Rendering it also surfaced four step targets pointing at routes retired into anchors months ago.",
+      "evidence": "main content 534 -> 1880 bytes per page; generate-pathways --check current; rendered-pixel verified 1440px + 390px across dark, light and lava"
+    },
+    {
+      "id": "#3",
+      "slug": "transparency-surface-sprawl",
+      "title": "/evidence/ — one front door for eight live-data surfaces",
+      "axis": "ux",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Eight pages answered versions of one question with no entrance. Four lanes now route to the deep page that still owns each answer, so nothing moved and no permalink broke. Freshness is fetched live rather than baked, because a baked stamp ages into a lie — which is precisely the failure this whole surface exists to prevent.",
+      "evidence": "generate-evidence-hub self-test 15/15; all four lanes resolved live against real feeds; linked into nav and footer on 124 pages; --check gates page, nav and footer drift"
+    },
+    {
+      "id": "#4",
+      "slug": "desk-topic-novelty-gate",
+      "title": "The Desk declines a story it already covered, at selection",
+      "axis": "tokenCost",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "Selection remembered which hosts refused it and nothing about its own output, so one story held the top queue slot for three mornings. The duplicates were noindexed downstream, which is why it went unnoticed — but each still spent an LLM draft, an OG render and a publish slot. A repeat carrying a new primary source is allowed and logged as a follow-up, because refusing a developing story would be the worse failure.",
+      "evidence": "replayed the entire published history: 14 legitimate stories allowed, exactly the 2 known duplicates refused, zero false positives; self-test 65/65"
+    },
+    {
+      "id": "#5",
+      "slug": "ai-factsheet-layer-undiscoverable",
+      "title": "The 17-page AI fact-sheet layer was referenced by nothing",
+      "axis": "ai",
+      "projectImpact": 8,
+      "ecosystemImpact": 9,
+      "insight": "Index-follow, self-describing, cite-this-page sheets appeared in no sitemap entry, no agents.json field, carried no structured data and had no inbound link. Root cause was one line: a blanket startsWith('.') rule written for .git and .cache swallowed .ai as well. Three generator-side joins later they are discoverable, and grounding the answer engine in them took its corpus from 41 to 58 documents.",
+      "evidence": "18 sitemap entries, 17 aiFactSheet fields, JSON-LD in every sheet, rel=alternate from every human page; replaying the engine's real ranking, 15/17 project questions now reach the canonical sheet"
+    },
+    {
+      "id": "#6",
+      "slug": "ignis-health-ungated",
+      "title": "A page titled internal was protected only by robots.txt",
+      "axis": "security",
+      "projectImpact": 7,
+      "ecosystemImpact": 8,
+      "insight": "/ignis-health/ published the ask-ignis edge-function contract and appeared in robots.txt alone, which is a request to polite crawlers rather than access control. It is now gated by the same edge session as every other internal surface, and the class is closed rather than the instance patched.",
+      "evidence": "worker GATED_PATH_PATTERNS; new robots-vs-gate court asserts every wildcard-Disallowed path is gated or declared public-but-unindexed with a written reason"
+    },
+    {
+      "id": "#7",
+      "slug": "orphan-sitemap-html-duplicate",
+      "title": "A duplicate sitemap the orphan gate had been told to ignore",
+      "axis": "organization",
+      "projectImpact": 5,
+      "ecosystemImpact": 6,
+      "insight": "sitemap.html was tracked, deployed, byte-drifted from /sitemap-page/ and had zero inbound links — and it was explicitly allowlisted in check-orphan-pages. The gate had seen it and been instructed not to care. Deleted with both exemptions, plus two orphaned 192KB style shells nothing referenced.",
+      "evidence": "376KB of orphan shells removed; both allowlist entries dropped; edge 301 retained for bookmarks"
+    },
+    {
+      "id": "#9",
+      "slug": "membership-and-editorial-spine",
+      "title": "Orientation strips instead of the merge the audit proposed",
+      "axis": "ux",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "Two clusters overlapped — eight membership surfaces and eight editorial ones, three of the latter being the same record at narrative, session and commit granularity. Each page earns its URL; the failure was that a visitor who picked the wrong door could not tell. One line per page saying what it is, plus links to the sibling answering the other thing. Reversible, unlike a merge.",
+      "evidence": "apply-surface-spine self-test 14/14; every kin href resolved against the tree before writing; --check wired into build:check"
+    },
+    {
+      "id": "#10",
+      "slug": "dual-redirect-implementations",
+      "title": "Sixteen retired routes had two redirect mechanisms",
+      "axis": "organization",
+      "projectImpact": 5,
+      "ecosystemImpact": 6,
+      "insight": "Each shipped a meta-refresh page AND an edge 301 for the same path — two implementations that can silently disagree, the slower of which paints first. _redirects is now the single source of truth, and three routes that had a stub but no edge rule got one.",
+      "evidence": "no-meta-refresh court, 0 failures across 163 pages; every deleted stub's route verified covered before deletion"
+    },
+    {
+      "id": "#11",
+      "slug": "unified-grounded-answer-surface",
+      "title": "Grounded the answer engine in the studio's own canonical record",
+      "axis": "ai",
+      "projectImpact": 7,
+      "ecosystemImpact": 9,
+      "insight": "The engine had rendered a source link per result from the start — it was citation-capable and had nothing canonical to cite. Sheets are enumerated from the registry projection rather than globbed, and a zero-sheet build fails loudly instead of quietly un-grounding every project answer while reporting success.",
+      "evidence": "index 41 -> 58 docs, 0 voice leaks; ranking replay shows 15/17 project questions reaching the canonical sheet, 10 in the top two"
+    }
+  ],
+  "followUps": [
+    "startup-revenue-agreement and startup-session-coherence stay red: the startup brief renders a stale date, session and revenue age, and on some invocations logs a promotion while writing no file. Studio-ops owned; repo-question cargo shipped (01K1E8OOSRE21313CE89EFE252).",
+    "Fact extraction accepted syndicated advertising copy as a sourced fact under a real publisher URL — a public truth surface, not a cosmetic issue.",
+    "The footer still names two retired routes; blocked behind reconciling propagate-nav's stale arrays (the S329 landmine).",
+    "Run the mobile audit at DEFAULT concurrency — a --workers=4 pass raced on findings.jsonl and persisted 139 of 215 cells, which reads as missing matrix cells rather than lost writes."
+  ],
+  "blockers": [
+    "startup-revenue-agreement / startup-session-coherence: two build:check smoke sub-checks fail on the studio-ops startup-brief renderer, not on site code."
+  ],
+  "silDelta": { "previous": 996, "current": 988, "kind": "structural" },
+  "honestyLedger": [
+    {
+      "title": "The 66KB critical-CSS item was NOT built",
+      "why": "Measurement disproved it. The shared critical shell is 5,363 bytes and correctly scoped; the rest is page-unique CSS with only 7% overlap against the shared sheet, and measured mobile LCP is ~900ms with it inline. Extracting it would trade a parse for a round trip on the site's fastest page."
+    },
+    {
+      "title": "The member-panel pane-deferral item was NOT built",
+      "why": "The dashboard does ship nine panes in one 133KB document, and it measures FCP 860ms at 1,414 DOM nodes — comparable to the rest of the site. Deferring eight panes would risk deep links and tab accessibility on the authenticated surface for no measured gain."
+    },
+    {
+      "title": "A /games/ perf fix that looked like a 23x win was reverted to a zero diff",
+      "why": "It measured FCP 4724 -> 200ms with CLS 0 across six runs. A controlled A/B — alternating variants, stylesheet strategy the only difference — put blocking at 724ms and async at 752ms. The baseline was the first page load in a fresh browser process. S275's blocking decision stands on its field data."
+    },
+    {
+      "title": "The startup-brief failure was diagnosed but not patched",
+      "why": "It lives in studio-ops. CANON-018 routes it through Ark cargo rather than a sibling-repo edit, so build:check is reported red rather than made green by reaching across the boundary."
+    }
+  ],
+  "diffStat": { "files": 300, "insertions": 4200, "deletions": 1500, "suite": "215/215 mobile cells · zero P0/P1", "testsDelta": 45, "probesDelta": 4 }
+}
