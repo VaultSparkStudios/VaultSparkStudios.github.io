@@ -23,7 +23,20 @@ const NON_PUBLIC_DIRECTORIES = new Set([
   'output',
 ]);
 
+/**
+ * Dot-directories are tooling by convention (.git, .cache, .claude, .wrangler)
+ * — except one.
+ *
+ * S334: `.ai/` holds the 17 index-follow, "cite this page" canonical fact
+ * sheets, and the blanket startsWith('.') rule swallowed every one of them. The
+ * layer was built to be found by machines and was absent from the single file
+ * machines read to find things. The exception is explicit rather than a
+ * loosened prefix rule, so the next dot-directory is still excluded by default.
+ */
+const PUBLIC_DOT_DIRECTORIES = new Set(['.ai']);
+
 export function isExcludedDirectory(name) {
+  if (PUBLIC_DOT_DIRECTORIES.has(name)) return false;
   return name.startsWith('.') || NON_PUBLIC_DIRECTORIES.has(name);
 }
 
@@ -73,6 +86,8 @@ function selfTest() {
   if (!isExcludedDirectory('playwright-report')) throw new Error('Playwright report directory must never enter the public sitemap');
   if (!isExcludedDirectory('test-results')) throw new Error('test result directory must never enter the public sitemap');
   if (isExcludedDirectory('projects')) throw new Error('public project directory was excluded');
+  if (isExcludedDirectory('.ai')) throw new Error('the .ai fact-sheet layer must reach the sitemap — it is the surface machines read to find it');
+  if (!isExcludedDirectory('.cache')) throw new Error('the .ai exception must not loosen the dot-directory rule for tooling directories');
   console.log('generate-sitemap: self-test passed');
 }
 

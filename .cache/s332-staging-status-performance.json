@@ -1,0 +1,750 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-28T07:17:46.642Z",
+  "traceMode": "cold",
+  "baseUrl": "https://website.staging.vaultsparkstudios.com",
+  "profiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 1800,
+      "inpBudget": 300
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "lcpBudget": 2200,
+      "inpBudget": 200
+    },
+    {
+      "name": "mobile-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "lcpBudget": 2400,
+      "inpBudget": 200
+    }
+  ],
+  "batchSize": 3,
+  "freeDiskMb": 810642,
+  "deployParity": {
+    "skipped": false,
+    "ok": true,
+    "source": "https://website.staging.vaultsparkstudios.com/",
+    "status": 200,
+    "manifestVersion": "dfee6188fb-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-2e0e0d195a-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-c2aa7d689a-e6b0b21c77-8dd57eb3a3-a910e120bb",
+    "expected": [
+      "assets/ambient-core.shell-2e0e0d195a.js",
+      "assets/ambient-feature.shell-ca3b329506.js",
+      "assets/desk-presence.shell-8e69ca1566.js",
+      "assets/desk-reactions.shell-3f177f4c17.js",
+      "assets/ecosystem-stats.shell-e6b0b21c77.js",
+      "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+      "assets/home-idle-loader.shell-1d24709d88.js",
+      "assets/journey-conductor.shell-a910e120bb.js",
+      "assets/nav-sheet.shell-d6938be4eb.js",
+      "assets/nav-toggle.shell-8c1f2155b5.js",
+      "assets/proof-verify.shell-4b68e2855f.js",
+      "assets/sentry-init.shell-8b1d92d92b.js",
+      "assets/shell-health.shell-0995bd7945.js",
+      "assets/stats-surface.shell-c2aa7d689a.js",
+      "assets/style.shell-dfee6188fb.css",
+      "assets/supabase-client.shell-c0eeeb2001.js",
+      "assets/theme-toggle.shell-8221605898.js"
+    ],
+    "actual": [
+      "assets/ambient-core.shell-2e0e0d195a.js",
+      "assets/ambient-feature.shell-ca3b329506.js",
+      "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+      "assets/home-idle-loader.shell-1d24709d88.js",
+      "assets/nav-sheet.shell-d6938be4eb.js",
+      "assets/nav-toggle.shell-8c1f2155b5.js",
+      "assets/sentry-init.shell-8b1d92d92b.js",
+      "assets/shell-health.shell-0995bd7945.js",
+      "assets/stats-surface.shell-c2aa7d689a.js",
+      "assets/style.shell-dfee6188fb.css",
+      "assets/theme-toggle.shell-8221605898.js"
+    ],
+    "missing": [],
+    "unexpected": []
+  },
+  "routes": [
+    {
+      "profile": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 1800,
+      "inpBudget": 300,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 656,
+      "fcp": 348,
+      "cls": 0.0092,
+      "inp": 0,
+      "interactions": [],
+      "clsSources": [
+        {
+          "value": 0.0091,
+          "startTime": 450,
+          "sources": [
+            {
+              "tag": "NAV",
+              "id": "nav-menu",
+              "className": "nav-center",
+              "text": "Home Games ▼GamesAll Games🔥 SparkedCall of DoodieFranchise Architect⚒️ In The F"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "nav-right",
+              "text": "Sign In Join The Vault"
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "className": "brand",
+              "text": "VaultSpark StudiosThe vault is sparked"
+            }
+          ]
+        },
+        {
+          "value": 0.0001,
+          "startTime": 1911,
+          "sources": [
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Operational"
+            }
+          ]
+        },
+        {
+          "value": 0,
+          "startTime": 1878,
+          "sources": [
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Operational"
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 348,
+          "size": 9120,
+          "tag": "DIV",
+          "id": "",
+          "className": "mobile-nav-footer",
+          "src": "",
+          "text": "Sign In Membership Join The Vault GitHub"
+        },
+        {
+          "startTime": 528,
+          "size": 13184,
+          "tag": "IMG",
+          "id": "",
+          "className": "",
+          "src": "https://website.staging.vaultsparkstudios.com/assets/vaultspark-icon-nav.webp",
+          "text": ""
+        },
+        {
+          "startTime": 656,
+          "size": 22554,
+          "tag": "H1",
+          "id": "status-heading",
+          "className": "",
+          "src": "",
+          "text": "Studio Status"
+        }
+      ],
+      "domContentLoaded": 667,
+      "load": 672,
+      "ttfb": 220,
+      "transferSize": 21407,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 105,
+          "transferSize": 43424,
+          "encodedBodySize": 43124
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 104,
+          "transferSize": 5145,
+          "encodedBodySize": 4845
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 108,
+          "transferSize": 2272,
+          "encodedBodySize": 1972
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 119,
+          "transferSize": 1104,
+          "encodedBodySize": 804
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 122,
+          "transferSize": 2883,
+          "encodedBodySize": 2583
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 141,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 128,
+          "transferSize": 817,
+          "encodedBodySize": 517
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 124,
+          "transferSize": 3136,
+          "encodedBodySize": 2836
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 114,
+          "transferSize": 1606,
+          "encodedBodySize": 1306
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 138,
+          "transferSize": 2454,
+          "encodedBodySize": 2154
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 152,
+          "transferSize": 3838,
+          "encodedBodySize": 3538
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 189,
+          "transferSize": 3255,
+          "encodedBodySize": 2955
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 136,
+          "transferSize": 21473,
+          "encodedBodySize": 21173
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 144,
+          "transferSize": 4928,
+          "encodedBodySize": 4628
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 147,
+          "transferSize": 6662,
+          "encodedBodySize": 6362
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 96,
+          "transferSize": 4348,
+          "encodedBodySize": 4048
+        }
+      ],
+      "navigationWaitUntil": "domcontentloaded",
+      "navigationError": "",
+      "pageErrors": []
+    },
+    {
+      "profile": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "lcpBudget": 2200,
+      "inpBudget": 200,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 528,
+      "fcp": 360,
+      "cls": 0.0008,
+      "inp": 0,
+      "interactions": [],
+      "clsSources": [
+        {
+          "value": 0.0005,
+          "startTime": 865,
+          "sources": [
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Operational"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Operational"
+            }
+          ]
+        },
+        {
+          "value": 0.0003,
+          "startTime": 568,
+          "sources": [
+            {
+              "tag": "SPAN",
+              "id": "overallText",
+              "className": "",
+              "text": "All Systems Operational"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "overall-dot",
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 360,
+          "size": 1072,
+          "tag": "SPAN",
+          "id": "",
+          "className": "brand-wordmark",
+          "src": "",
+          "text": "VaultSpark StudiosThe vault is sparked"
+        },
+        {
+          "startTime": 528,
+          "size": 15886,
+          "tag": "P",
+          "id": "",
+          "className": "",
+          "src": "",
+          "text": "Real-time health of VaultSpark services — Vault, games, and infrastructure."
+        }
+      ],
+      "domContentLoaded": 586,
+      "load": 595,
+      "ttfb": 218,
+      "transferSize": 21407,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 89,
+          "transferSize": 43424,
+          "encodedBodySize": 43124
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 133,
+          "transferSize": 5145,
+          "encodedBodySize": 4845
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 110,
+          "transferSize": 2883,
+          "encodedBodySize": 2583
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 111,
+          "transferSize": 1104,
+          "encodedBodySize": 804
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 115,
+          "transferSize": 2272,
+          "encodedBodySize": 1972
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 106,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 100,
+          "transferSize": 817,
+          "encodedBodySize": 517
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 126,
+          "transferSize": 3136,
+          "encodedBodySize": 2836
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 125,
+          "transferSize": 3838,
+          "encodedBodySize": 3538
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 128,
+          "transferSize": 2454,
+          "encodedBodySize": 2154
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 132,
+          "transferSize": 1606,
+          "encodedBodySize": 1306
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 134,
+          "transferSize": 3255,
+          "encodedBodySize": 2955
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 144,
+          "transferSize": 21473,
+          "encodedBodySize": 21173
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 175,
+          "transferSize": 4928,
+          "encodedBodySize": 4628
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 144,
+          "transferSize": 6662,
+          "encodedBodySize": 6362
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 80,
+          "transferSize": 4348,
+          "encodedBodySize": 4048
+        }
+      ],
+      "navigationWaitUntil": "domcontentloaded",
+      "navigationError": "",
+      "pageErrors": []
+    },
+    {
+      "profile": "mobile-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "lcpBudget": 2400,
+      "inpBudget": 200,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 916,
+      "fcp": 680,
+      "cls": 0.0009,
+      "inp": 0,
+      "interactions": [],
+      "clsSources": [
+        {
+          "value": 0.0004,
+          "startTime": 2761,
+          "sources": [
+            {
+              "tag": "SPAN",
+              "id": "overallText",
+              "className": "",
+              "text": "Partial Degradation Detected"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "overall-dot",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "value": 0.0003,
+          "startTime": 2726,
+          "sources": [
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Operational"
+            }
+          ]
+        },
+        {
+          "value": 0.0001,
+          "startTime": 2845,
+          "sources": [
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Degraded"
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 680,
+          "size": 1072,
+          "tag": "SPAN",
+          "id": "",
+          "className": "brand-wordmark",
+          "src": "",
+          "text": "VaultSpark StudiosThe vault is sparked"
+        },
+        {
+          "startTime": 760,
+          "size": 8448,
+          "tag": "IMG",
+          "id": "",
+          "className": "",
+          "src": "https://website.staging.vaultsparkstudios.com/assets/vaultspark-icon-nav.webp",
+          "text": ""
+        },
+        {
+          "startTime": 916,
+          "size": 15886,
+          "tag": "P",
+          "id": "",
+          "className": "",
+          "src": "",
+          "text": "Real-time health of VaultSpark services — Vault, games, and infrastructure."
+        }
+      ],
+      "domContentLoaded": 930,
+      "load": 942,
+      "ttfb": 229,
+      "transferSize": 21407,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 84,
+          "transferSize": 43424,
+          "encodedBodySize": 43124
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 101,
+          "transferSize": 5145,
+          "encodedBodySize": 4845
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 113,
+          "transferSize": 2272,
+          "encodedBodySize": 1972
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 96,
+          "transferSize": 1104,
+          "encodedBodySize": 804
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 113,
+          "transferSize": 2883,
+          "encodedBodySize": 2583
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 99,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 103,
+          "transferSize": 817,
+          "encodedBodySize": 517
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 119,
+          "transferSize": 3136,
+          "encodedBodySize": 2836
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 105,
+          "transferSize": 1606,
+          "encodedBodySize": 1306
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 114,
+          "transferSize": 2454,
+          "encodedBodySize": 2154
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 124,
+          "transferSize": 3838,
+          "encodedBodySize": 3538
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 135,
+          "transferSize": 21473,
+          "encodedBodySize": 21173
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 156,
+          "transferSize": 3255,
+          "encodedBodySize": 2955
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 123,
+          "transferSize": 6662,
+          "encodedBodySize": 6362
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 126,
+          "transferSize": 4928,
+          "encodedBodySize": 4628
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 80,
+          "transferSize": 4348,
+          "encodedBodySize": 4048
+        }
+      ],
+      "navigationWaitUntil": "domcontentloaded",
+      "navigationError": "",
+      "pageErrors": []
+    }
+  ],
+  "stylesheetShell": [
+    {
+      "route": "/status/",
+      "htmlPath": "status\\index.html",
+      "violations": []
+    }
+  ]
+}

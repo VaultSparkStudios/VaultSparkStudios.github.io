@@ -1,0 +1,696 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-28T07:14:31.841Z",
+  "traceMode": "cold",
+  "baseUrl": "http://127.0.0.1:4739",
+  "profiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 1800,
+      "inpBudget": 300
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "lcpBudget": 2200,
+      "inpBudget": 200
+    },
+    {
+      "name": "mobile-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "lcpBudget": 2400,
+      "inpBudget": 200
+    }
+  ],
+  "batchSize": 3,
+  "freeDiskMb": 810872,
+  "deployParity": {
+    "skipped": true,
+    "reason": "local preview"
+  },
+  "routes": [
+    {
+      "profile": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 1800,
+      "inpBudget": 300,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 328,
+      "fcp": 88,
+      "cls": 0.0092,
+      "inp": 40,
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "duration": 40,
+          "startTime": 2950,
+          "target": "theme-picker-label"
+        },
+        {
+          "name": "mousedown",
+          "duration": 40,
+          "startTime": 2950,
+          "target": "theme-picker-label"
+        },
+        {
+          "name": "pointerup",
+          "duration": 40,
+          "startTime": 2951,
+          "target": "theme-picker-label"
+        },
+        {
+          "name": "mouseup",
+          "duration": 40,
+          "startTime": 2951,
+          "target": "theme-picker-label"
+        },
+        {
+          "name": "click",
+          "duration": 40,
+          "startTime": 2951,
+          "target": "theme-picker-label"
+        }
+      ],
+      "clsSources": [
+        {
+          "value": 0.0091,
+          "startTime": 244,
+          "sources": [
+            {
+              "tag": "NAV",
+              "id": "nav-menu",
+              "className": "nav-center",
+              "text": "Home Games ▼GamesAll Games🔥 SparkedCall of DoodieFranchise Architect⚒️ In The F"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "nav-right",
+              "text": "Sign In Join The Vault"
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "className": "brand",
+              "text": "VaultSpark StudiosThe vault is sparked"
+            }
+          ]
+        },
+        {
+          "value": 0.0001,
+          "startTime": 274,
+          "sources": [
+            {
+              "tag": "SPAN",
+              "id": "overallText",
+              "className": "",
+              "text": "Partial Outage Detected"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "overall-dot",
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 328,
+          "size": 22554,
+          "tag": "H1",
+          "id": "status-heading",
+          "className": "",
+          "src": "",
+          "text": "Studio Status"
+        }
+      ],
+      "domContentLoaded": 327,
+      "load": 339,
+      "ttfb": 23,
+      "transferSize": 21333,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 26,
+          "transferSize": 40509,
+          "encodedBodySize": 40209
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 21,
+          "transferSize": 4965,
+          "encodedBodySize": 4665
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 41,
+          "transferSize": 2242,
+          "encodedBodySize": 1942
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 42,
+          "transferSize": 1093,
+          "encodedBodySize": 793
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 46,
+          "transferSize": 2993,
+          "encodedBodySize": 2693
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 22,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 23,
+          "transferSize": 816,
+          "encodedBodySize": 516
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 48,
+          "transferSize": 3070,
+          "encodedBodySize": 2770
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 52,
+          "transferSize": 1596,
+          "encodedBodySize": 1296
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 53,
+          "transferSize": 2412,
+          "encodedBodySize": 2112
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 59,
+          "transferSize": 3743,
+          "encodedBodySize": 3443
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 61,
+          "transferSize": 3199,
+          "encodedBodySize": 2899
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 65,
+          "transferSize": 20729,
+          "encodedBodySize": 20429
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 63,
+          "transferSize": 4839,
+          "encodedBodySize": 4539
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 64,
+          "transferSize": 6476,
+          "encodedBodySize": 6176
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 77,
+          "transferSize": 4229,
+          "encodedBodySize": 3929
+        }
+      ],
+      "navigationWaitUntil": "load",
+      "navigationError": "",
+      "pageErrors": []
+    },
+    {
+      "profile": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "lcpBudget": 2200,
+      "inpBudget": 200,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 228,
+      "fcp": 52,
+      "cls": 0.0005,
+      "inp": 0,
+      "interactions": [],
+      "clsSources": [
+        {
+          "value": 0.0005,
+          "startTime": 219,
+          "sources": [
+            {
+              "tag": "SPAN",
+              "id": "overallText",
+              "className": "",
+              "text": "Partial Outage Detected"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "overall-dot",
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 228,
+          "size": 15886,
+          "tag": "P",
+          "id": "",
+          "className": "",
+          "src": "",
+          "text": "Real-time health of VaultSpark services — Vault, games, and infrastructure."
+        }
+      ],
+      "domContentLoaded": 237,
+      "load": 251,
+      "ttfb": 11,
+      "transferSize": 21333,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 29,
+          "transferSize": 40509,
+          "encodedBodySize": 40209
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 24,
+          "transferSize": 4965,
+          "encodedBodySize": 4665
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 40,
+          "transferSize": 1093,
+          "encodedBodySize": 793
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 41,
+          "transferSize": 2242,
+          "encodedBodySize": 1942
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 44,
+          "transferSize": 2993,
+          "encodedBodySize": 2693
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 25,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 31,
+          "transferSize": 816,
+          "encodedBodySize": 516
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 45,
+          "transferSize": 3070,
+          "encodedBodySize": 2770
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 48,
+          "transferSize": 1596,
+          "encodedBodySize": 1296
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 49,
+          "transferSize": 2412,
+          "encodedBodySize": 2112
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 55,
+          "transferSize": 3743,
+          "encodedBodySize": 3443
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 54,
+          "transferSize": 3199,
+          "encodedBodySize": 2899
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 60,
+          "transferSize": 4839,
+          "encodedBodySize": 4539
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 60,
+          "transferSize": 20729,
+          "encodedBodySize": 20429
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 61,
+          "transferSize": 6476,
+          "encodedBodySize": 6176
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 104,
+          "transferSize": 4229,
+          "encodedBodySize": 3929
+        }
+      ],
+      "navigationWaitUntil": "load",
+      "navigationError": "",
+      "pageErrors": []
+    },
+    {
+      "profile": "mobile-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "lcpBudget": 2400,
+      "inpBudget": 200,
+      "route": "/status/",
+      "status": 200,
+      "lcp": 180,
+      "fcp": 40,
+      "cls": 0.0005,
+      "inp": 0,
+      "interactions": [],
+      "clsSources": [
+        {
+          "value": 0.0005,
+          "startTime": 172,
+          "sources": [
+            {
+              "tag": "SPAN",
+              "id": "overallText",
+              "className": "",
+              "text": "Partial Outage Detected"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-vault",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "status-label-db",
+              "className": "status-card-label",
+              "text": "Down"
+            },
+            {
+              "tag": "DIV",
+              "id": "",
+              "className": "overall-dot",
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 40,
+          "size": 1072,
+          "tag": "SPAN",
+          "id": "",
+          "className": "brand-wordmark",
+          "src": "",
+          "text": "VaultSpark StudiosThe vault is sparked"
+        },
+        {
+          "startTime": 180,
+          "size": 15886,
+          "tag": "P",
+          "id": "",
+          "className": "",
+          "src": "",
+          "text": "Real-time health of VaultSpark services — Vault, games, and infrastructure."
+        }
+      ],
+      "domContentLoaded": 193,
+      "load": 210,
+      "ttfb": 9,
+      "transferSize": 21333,
+      "styleLinks": [
+        {
+          "href": "/assets/style.shell-dfee6188fb.css",
+          "media": "all",
+          "asyncCss": true
+        },
+        {
+          "href": "/assets/intelligence-suite.css",
+          "media": "",
+          "asyncCss": false
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-dfee6188fb.css",
+          "initiatorType": "link",
+          "duration": 20,
+          "transferSize": 40509,
+          "encodedBodySize": 40209
+        },
+        {
+          "name": "/assets/theme-toggle.shell-8221605898.js",
+          "initiatorType": "script",
+          "duration": 15,
+          "transferSize": 4965,
+          "encodedBodySize": 4665
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 30,
+          "transferSize": 2242,
+          "encodedBodySize": 1942
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 31,
+          "transferSize": 1093,
+          "encodedBodySize": 793
+        },
+        {
+          "name": "/assets/pwa-install.js",
+          "initiatorType": "script",
+          "duration": 31,
+          "transferSize": 2993,
+          "encodedBodySize": 2693
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 16,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/intelligence-suite.css",
+          "initiatorType": "link",
+          "duration": 16,
+          "transferSize": 816,
+          "encodedBodySize": 516
+        },
+        {
+          "name": "/assets/kit.js",
+          "initiatorType": "script",
+          "duration": 32,
+          "transferSize": 3070,
+          "encodedBodySize": 2770
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 36,
+          "transferSize": 1596,
+          "encodedBodySize": 1296
+        },
+        {
+          "name": "/assets/nav-toggle.shell-8c1f2155b5.js",
+          "initiatorType": "script",
+          "duration": 37,
+          "transferSize": 2412,
+          "encodedBodySize": 2112
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 42,
+          "transferSize": 3743,
+          "encodedBodySize": 3443
+        },
+        {
+          "name": "/assets/proof-card.js",
+          "initiatorType": "script",
+          "duration": 43,
+          "transferSize": 3199,
+          "encodedBodySize": 2899
+        },
+        {
+          "name": "/assets/ambient-core.shell-2e0e0d195a.js",
+          "initiatorType": "script",
+          "duration": 46,
+          "transferSize": 20729,
+          "encodedBodySize": 20429
+        },
+        {
+          "name": "/assets/ambient-feature.shell-ca3b329506.js",
+          "initiatorType": "script",
+          "duration": 44,
+          "transferSize": 4839,
+          "encodedBodySize": 4539
+        },
+        {
+          "name": "/assets/nav-sheet.shell-d6938be4eb.js",
+          "initiatorType": "script",
+          "duration": 47,
+          "transferSize": 6476,
+          "encodedBodySize": 6176
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 78,
+          "transferSize": 4229,
+          "encodedBodySize": 3929
+        }
+      ],
+      "navigationWaitUntil": "load",
+      "navigationError": "",
+      "pageErrors": []
+    }
+  ],
+  "stylesheetShell": [
+    {
+      "route": "/status/",
+      "htmlPath": "status\\index.html",
+      "violations": []
+    }
+  ]
+}

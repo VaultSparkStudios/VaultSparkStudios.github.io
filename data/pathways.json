@@ -1,6 +1,7 @@
 {
-  "schemaVersion": "1.1",
-  "generatedAt": "2026-06-15",
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-09-01",
+  "_note": "S334: `steps` was a bare href array the generator never rendered — every pathway page shipped 23KB of chrome around ~530 bytes of headline. Steps are now {href,label,why} objects and ARE rendered as an ordered route. Four targets were also stale, pointing at routes retired into anchors (/ranks/, /membership-value/, /vaultsparked/, /nervous-system/); they now point where those routes actually live. scripts/check-site-integrity.mjs resolves every one of these against the tracked tree.",
   "pathways": [
     {
       "slug": "players",
@@ -12,7 +13,12 @@
       "headline": "Play first.",
       "lede": "Start with live games, then carry progress into ranks, leaderboards, and a free Vault identity.",
       "description": "A focused route for visitors who want games, progression, leaderboards, and a free identity.",
-      "steps": ["/games/", "/games/call-of-doodie/", "/ranks/", "/vault-member/#register"],
+      "steps": [
+        { "href": "/games/", "label": "See what's playable now", "why": "Every world in the vault, sorted by whether you can play it today or are watching it get built." },
+        { "href": "/games/call-of-doodie/", "label": "Start with Call of Doodie", "why": "The first world unsealed — an action comedy browser shooter, free, no download, no account needed." },
+        { "href": "/leaderboards/#ranks", "label": "See how ranking works", "why": "Nine Vault ranks. Progress carries across every game, not just the one you started in." },
+        { "href": "/vault-member/#register", "label": "Claim your free identity", "why": "One account across every world we build, so your progress stops being per-game." }
+      ],
       "ctas": [
         { "label": "Open Games", "href": "/games/", "type": "button" },
         { "label": "Create Free Identity", "href": "/vault-member/#register", "type": "button-secondary" }
@@ -28,10 +34,15 @@
       "headline": "Back proof, not promises.",
       "lede": "Review the live Studio Pulse, membership value, and paid support tiers before deciding.",
       "description": "A route through shipped work, membership value, paid tiers, and the public feedback loop.",
-      "steps": ["/studio-pulse/", "/membership/", "/membership-value/", "/vaultsparked/"],
+      "steps": [
+        { "href": "/studio-pulse/", "label": "Check the pulse before anything else", "why": "A live window into what is actually moving this week — updated every session, not every launch." },
+        { "href": "/proof/", "label": "Verify it yourself", "why": "This page re-fetches the deploy ledger and re-computes every hash in your own browser. Do not take our word for it." },
+        { "href": "/membership/#benefits", "label": "See what membership actually gives", "why": "What changes for you, stated plainly, before any tier or price enters the conversation." },
+        { "href": "/membership/#tiers", "label": "Compare the three tiers", "why": "Free, Sparked, Eternal. The free tier is cost-neutral by policy, so it stays free." }
+      ],
       "ctas": [
         { "label": "See Live Proof", "href": "/studio-pulse/", "type": "button" },
-        { "label": "Compare Tiers", "href": "/vaultsparked/", "type": "button-secondary" }
+        { "label": "Compare Tiers", "href": "/membership/#tiers", "type": "button-secondary" }
       ]
     },
     {
@@ -44,7 +55,12 @@
       "headline": "Follow the signal.",
       "lede": "Enter through transmissions, entity files, and saga pages before any membership decision.",
       "description": "A story-first route across Voidfall, DreadSpike, journal dispatches, and the archive layer.",
-      "steps": ["/universe/", "/universe/voidfall/", "/universe/dreadspike/", "/journal/dispatches/"],
+      "steps": [
+        { "href": "/universe/", "label": "Open the universe index", "why": "Every world, entity, and transmission the vault has released, in one place." },
+        { "href": "/universe/voidfall/", "label": "Read Voidfall", "why": "The deepest saga in the vault — start here if you want the throughline." },
+        { "href": "/universe/dreadspike/", "label": "Then DreadSpike", "why": "A different corner of the same universe, and the one that explains the tone." },
+        { "href": "/journal/dispatches/", "label": "Follow the dispatches", "why": "In-fiction transmissions from the forge, posted as the worlds develop." }
+      ],
       "ctas": [
         { "label": "Read Voidfall", "href": "/universe/voidfall/", "type": "button" },
         { "label": "Open Dispatches", "href": "/journal/dispatches/", "type": "button-secondary" }
@@ -54,15 +70,20 @@
       "slug": "builders",
       "title": "Builders",
       "pageTitle": "Builders Pathway | VaultSpark Studios",
-      "metaDescription": "Builder route through VaultSpark Studios operating system, nervous system, Oracle, IGNIS, and changelog.",
+      "metaDescription": "Builder route through VaultSpark Studios public operating system, Studio Pulse, Oracle, IGNIS, and changelog.",
       "breadcrumbName": "Builders Pathway",
       "eyebrow": "Pathway · Builders",
       "headline": "Study the system.",
-      "lede": "See the public operating layer: nervous system, Oracle, IGNIS, and shipped work.",
-      "description": "A route for operators, collaborators, and tool-watchers: nervous system, Oracle, IGNIS, and changelog.",
-      "steps": ["/nervous-system/", "/oracle/", "/ignis/", "/changelog/"],
+      "lede": "See the public operating layer: the signal digest, the Oracle, IGNIS, and every shipped session.",
+      "description": "A route for operators, collaborators, and tool-watchers: signal digest, Oracle, IGNIS, and changelog.",
+      "steps": [
+        { "href": "/studio-pulse/#signal-digest", "label": "Read the signal digest", "why": "The studio's own nervous system, published — what the operating layer noticed this session." },
+        { "href": "/oracle/", "label": "Consult the Oracle", "why": "A live cross-project read: health, focus, and freshness for every project, from one ecosystem feed." },
+        { "href": "/ignis/", "label": "Understand IGNIS", "why": "The intelligence layer underneath the Oracle — how the studio scores and ranks its own work." },
+        { "href": "/changelog/", "label": "Audit the build log", "why": "Every session, every shipped feature, with the commit. The full record, not a highlight reel." }
+      ],
       "ctas": [
-        { "label": "Open Nervous System", "href": "/nervous-system/", "type": "button" },
+        { "label": "Read the Signal Digest", "href": "/studio-pulse/#signal-digest", "type": "button" },
         { "label": "Consult Oracle", "href": "/oracle/", "type": "button-secondary" }
       ]
     },
@@ -76,7 +97,12 @@
       "headline": "Get the clean story.",
       "lede": "Facts, brand assets, current proof, and contact routes in one path.",
       "description": "A press-facing route through facts, brand assets, live proof, and public contact.",
-      "steps": ["/press/", "/brand/", "/studio-pulse/", "/contact/"],
+      "steps": [
+        { "href": "/press/", "label": "Start with the press kit", "why": "Studio facts, founding, status vocabulary, and what is on the record — written to be quoted." },
+        { "href": "/brand/", "label": "Take the brand assets", "why": "Logos, wordmark, colour, and the usage rules, so a story runs with the right marks." },
+        { "href": "/proof/", "label": "Verify any claim", "why": "The deploy ledger re-computes in your browser. Every number on this site is checkable." },
+        { "href": "/contact/", "label": "Reach a human", "why": "One address, on our own domain, that answers — with the reply coming from the same identity." }
+      ],
       "ctas": [
         { "label": "Open Press Kit", "href": "/press/", "type": "button" },
         { "label": "Brand Assets", "href": "/brand/", "type": "button-secondary" }
@@ -92,9 +118,14 @@
       "headline": "Read discipline first.",
       "lede": "Public-safe velocity, risk posture, and operating signal before gated investor access.",
       "description": "A public-safe investor route before gated portal access.",
-      "steps": ["/nervous-system/", "/oracle/", "/security/", "/investor-portal/"],
+      "steps": [
+        { "href": "/studio-pulse/#signal-digest", "label": "Read the operating signal", "why": "Velocity and focus as the studio itself measures them, published every session rather than every quarter." },
+        { "href": "/stats/", "label": "Check the numbers", "why": "Source-dated portfolio, audience, editorial, and performance statistics — with each figure's own freshness stamp." },
+        { "href": "/security/", "label": "Read the risk posture", "why": "Edge security, secrets discipline, and what the studio does when a control fails." },
+        { "href": "/investor-portal/apply/", "label": "Apply for gated access", "why": "Everything above is public on purpose. The portal is where the rest lives." }
+      ],
       "ctas": [
-        { "label": "Open Nervous System", "href": "/nervous-system/", "type": "button" },
+        { "label": "Read the Operating Signal", "href": "/studio-pulse/#signal-digest", "type": "button" },
         { "label": "Investor Portal", "href": "/investor-portal/", "type": "button-secondary" }
       ]
     }

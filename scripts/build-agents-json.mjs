@@ -93,6 +93,14 @@ function projectEntry(p) {
   };
   // Only advertise a shard URL where the shard file actually exists on disk.
   if (onSite) entry.llmsFull = `${SITE}${route}llms-full.txt`;
+  // S334: the .ai/ fact sheets — 17 index-follow, self-describing, "cite this
+  // page" canonical sheets — were referenced by nothing. Not agents.json, not
+  // sitemap.xml, not one human page. The strongest CANON-048 asset on the site
+  // was unreachable by the audience it was written for. Same existence gate as
+  // the shard above: advertise it only where the sheet is actually on disk.
+  if (onSite && existsSync(join(dir, '.ai', 'index.html'))) {
+    entry.aiFactSheet = `${SITE}${route}.ai/`;
+  }
   return entry;
 }
 

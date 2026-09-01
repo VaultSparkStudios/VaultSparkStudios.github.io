@@ -54,6 +54,39 @@ function vaultStatusLabel(p) {
   return (p.vaultStatus || p.lifecycle || 'forge').toUpperCase();
 }
 
+/**
+ * S334: the sheet told agents in prose to cite it and gave a machine reader
+ * nothing to parse. A page whose entire purpose is to be the machine-canonical
+ * record is the last page on the site that should ship without structured data.
+ *
+ * Modelled as the project itself (SoftwareApplication for anything runnable,
+ * CreativeWork otherwise) rather than as a WebPage about the project, because
+ * the sheet IS the canonical record — `mainEntityOfPage` points the two at each
+ * other so a reader can tell the record from the document.
+ */
+function factSheetJsonLd(p, url, status, diffs) {
+  const runnable = ['app', 'game', 'website', 'internal-tool'].includes(String(p.medium || '').toLowerCase());
+  return {
+    '@context': 'https://schema.org',
+    '@type': runnable ? 'SoftwareApplication' : 'CreativeWork',
+    name: p.name,
+    url,
+    description: p.summary || `${p.name} — VaultSpark Studios.`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    ...(runnable ? { applicationCategory: p.medium } : {}),
+    ...(diffs && diffs.length ? { keywords: diffs.join(', ') } : {}),
+    creativeWorkStatus: status,
+    isPartOf: { '@type': 'Collection', name: 'VaultSpark Studios portfolio', url: 'https://vaultsparkstudios.com/projects/' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'VaultSpark Studios',
+      url: 'https://vaultsparkstudios.com/',
+      legalName: 'VaultSpark Studios LLC',
+    },
+    license: 'https://vaultsparkstudios.com/rights/',
+  };
+}
+
 function renderHtml(p, slugPath) {
   const title = `${p.name} — AI-canonical fact sheet | VaultSpark Studios`;
   const url = `https://vaultsparkstudios.com${slugPath}.ai/`;
@@ -73,6 +106,7 @@ function renderHtml(p, slugPath) {
 <meta property="og:title" content="${escape(p.name)} (AI fact sheet)" />
 <meta property="og:url" content="${escape(url)}" />
 <meta property="og:type" content="article" />
+<script type="application/ld+json">${JSON.stringify(factSheetJsonLd(p, url, status, diffs))}</script>
 <style>
 :root{color-scheme:dark light;font-family:Inter,system-ui,sans-serif;line-height:1.6;max-width:64ch;margin:3rem auto;padding:0 1.25rem;color:#1a1a1f;background:#fafafa}
 @media (prefers-color-scheme:dark){:root{color:#eef2ff;background:#07080f}}
@@ -117,6 +151,39 @@ function loadRegistry() {
   catch { return { projects: [] }; }
 }
 
+const CROSSLINK_MARK = 'data-vs-ai-factsheet';
+
+/**
+ * Point the human page at its machine twin.
+ *
+ * S334: the sheets were reachable only by knowing the URL. sitemap.xml and
+ * agents.json now list them; this is the third join — the one a crawler follows
+ * from the page it already has. This builder owns it because it already knows
+ * every project directory and which of them actually has a sheet; the sitewide
+ * head injector (propagate-nav) is a far riskier place to add a per-page link.
+ *
+ * Idempotent by marker: written once, rewritten in place on change, never
+ * duplicated. Returns true when the file changed.
+ */
+function crossLinkHumanPage(projectDir, slugPath) {
+  const humanPage = path.join(projectDir, 'index.html');
+  if (!fs.existsSync(humanPage)) return false;
+  const tag = `<link rel="alternate" type="text/html" href="${slugPath}.ai/" title="AI-canonical fact sheet" ${CROSSLINK_MARK} />`;
+  let html = fs.readFileSync(humanPage, 'utf8');
+  const existing = new RegExp(`\\s*<link[^>]*${CROSSLINK_MARK}[^>]*/?>`, 'i');
+  if (existing.test(html)) {
+    const replaced = html.replace(existing, `\n${tag}`);
+    if (replaced === html) return false;
+    fs.writeFileSync(humanPage, replaced);
+    return true;
+  }
+  // Anchor on </head> so the tag lands inside the head regardless of how the
+  // page was generated. A page with no </head> is left alone rather than guessed at.
+  if (!/<\/head>/i.test(html)) return false;
+  fs.writeFileSync(humanPage, html.replace(/<\/head>/i, `${tag}\n</head>`));
+  return true;
+}
+
 function main() {
   const registry = loadRegistry();
   const projects = (registry.projects || [])
@@ -127,7 +194,7 @@ function main() {
     const found = findProjectDir(p.slug);
     if (!found) continue;
     const slugPath = `/${found.cat}/${p.slug}/`;
-    targets.push({ p, slugPath, outDir: path.join(found.dir, '.ai') });
+    targets.push({ p, slugPath, outDir: path.join(found.dir, '.ai'), humanDir: found.dir });
   }
 
   let stale = [];
@@ -145,6 +212,28 @@ function main() {
       fs.writeFileSync(outFile, html);
       wrote++;
     }
+  }
+
+  // The cross-link is checked and written independently of the sheet: a sheet
+  // that is already current must still be reachable from its human page, so
+  // gating this behind "the sheet changed" would leave the join permanently
+  // unwritten on a settled tree.
+  let linked = 0;
+  const missingLinks = [];
+  for (const t of targets) {
+    if (!fs.existsSync(path.join(t.outDir, 'index.html')) && CHECK) continue;
+    if (CHECK) {
+      const humanPage = path.join(t.humanDir, 'index.html');
+      const html = fs.existsSync(humanPage) ? fs.readFileSync(humanPage, 'utf8') : '';
+      if (html && !html.includes(CROSSLINK_MARK)) missingLinks.push(t.slugPath);
+    } else if (crossLinkHumanPage(t.humanDir, t.slugPath)) {
+      linked++;
+    }
+  }
+  if (!CHECK && linked) console.log(`build-ai-canonical-pages: cross-linked ${linked} human page(s) to their fact sheet`);
+  if (CHECK && missingLinks.length) {
+    console.error(`build-ai-canonical-pages --check: ${missingLinks.length} human page(s) do not link their fact sheet: ${missingLinks.slice(0, 5).join(', ')}`);
+    process.exitCode = 1;
   }
 
   if (CHECK) {

@@ -88,6 +88,39 @@ function buildCtas(ctas) {
   }).join(' ');
 }
 
+/**
+ * Render the route.
+ *
+ * S334: `steps` had been in data/pathways.json since S201 and buildPage() threw
+ * it away, so every pathway page shipped 23KB of nav and footer around ~530
+ * bytes of headline — a doorway page that told a visitor less than the hub they
+ * clicked from. The route was always the point; it just never reached the page.
+ *
+ * An ordered list is the honest element here: these are sequential, and a
+ * screen reader announcing "1 of 4" is carrying real meaning rather than
+ * decoration. Numbering comes from <ol> itself so it stays correct if a step is
+ * added, and the marker is hidden from assistive tech only because the list
+ * already announces position.
+ */
+/**
+ * Route styling ships inline, deliberately.
+ *
+ * These six pages are the only consumers, and adding ~1KB to assets/style.css
+ * would rotate the 192KB shared shell hash for every page on the site — a
+ * cold-cache cost paid by every visitor to buy styling for six. Every colour is
+ * an existing custom property, so all seven themes are correct for free rather
+ * than by seven hand-written overrides.
+ */
+const ROUTE_STYLE = '<style>.pathway-route{margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(127,127,127,.22)}.pathway-route-title{font:600 .78rem/1 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 1.5rem}.pathway-step-list{list-style:none;padding:0;margin:0;display:grid;gap:1.5rem;max-width:70ch;counter-reset:none}.pathway-step{display:grid;grid-template-columns:2rem 1fr;gap:1rem;align-items:start}.pathway-step-n{display:flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;border:1px solid rgba(127,127,127,.35);font:600 .85rem/1 system-ui,sans-serif;color:var(--dim)}.pathway-step-link{font:600 1.08rem/1.35 Georgia,serif;color:var(--text);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s ease,color .15s ease}.pathway-step-link:hover,.pathway-step-link:focus-visible{color:var(--gold);border-bottom-color:currentColor}.pathway-step-why{color:var(--muted);font-size:.95rem;line-height:1.6;margin:.35rem 0 0}@media (max-width:520px){.pathway-step{grid-template-columns:1.6rem 1fr;gap:.75rem}.pathway-step-n{width:1.6rem;height:1.6rem;font-size:.75rem}}</style>';
+
+function buildRoute(steps) {
+  if (!Array.isArray(steps) || !steps.length) return '';
+  const items = steps.map(function (s, i) {
+    return `<li class="pathway-step"><span class="pathway-step-n" aria-hidden="true">${i + 1}</span><div><a class="pathway-step-link" href="${escapeHtml(s.href)}">${escapeHtml(s.label)}</a><p class="pathway-step-why">${escapeHtml(s.why)}</p></div></li>`;
+  }).join('');
+  return `<nav class="pathway-route" aria-label="Suggested route"><h2 class="pathway-route-title">The route</h2><ol class="pathway-step-list">${items}</ol></nav>`;
+}
+
 // S305: never hardcode a shell hash — the old literal (style.shell-cade1bd169)
 // outlived its asset by dozens of rotations and served the pages unstyled.
 // Harvest the live stylesheet path from the sample instead.
@@ -99,7 +132,7 @@ const NAV_SHEET_TAG = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-
 function buildPage(p) {
   const depthPrefix = '../../';
   const ogImage = `https://vaultsparkstudios.com/assets/og/og-pathways-${p.slug}.png`;
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}${SAMPLE_STYLE}">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}${SAMPLE_STYLE}">${speculationBlock}${ROUTE_STYLE}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb(p)}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -119,7 +152,7 @@ function buildPage(p) {
         </button>
       </div>
     </div>
-  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
+  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
 ${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }
