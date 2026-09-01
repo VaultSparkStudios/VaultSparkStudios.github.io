@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-01T13:42:50.888Z
-Receipt: `9089f13294755546f7e8a0e0` · coverage 26/378 from step 239
+Generated: 2026-09-01T13:47:48.741Z
+Receipt: `4fd08c0fd36a9d0979ed8b28` · coverage 100/378 from step 264
 
-Latest: **25/26** passed · failed 1 · total 73.6s
-Concentration: **69.5%** in step 263 · ratchet BREACHED (>30% and ≥45s)
+Latest: **99/100** passed · failed 1 · total 219.6s
+Concentration: **24.9%** in step 296 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 263 | 51.2s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 257 | 5.5s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 245 | 4.6s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 243 | 1.5s | 0 | `node scripts/ensure-preconnects.mjs --check` |
-| 253 | 1.1s | 0 | `node scripts/check-evidence-graph.mjs` |
-| 259 | 0.9s | 0 | `node scripts/check-status-feed-field-contract.mjs` |
-| 246 | 0.9s | 0 | `node scripts/check-public-safe-tracking.mjs --self-test` |
-| 247 | 0.7s | 0 | `node scripts/check-public-safe-tracking.mjs` |
-| 251 | 0.7s | 0 | `node scripts/check-build-step-resilience.mjs --check` |
-| 240 | 0.7s | 0 | `node scripts/check-placeholder-orphans.mjs` |
+| 296 | 54.7s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 345 | 10.4s | 0 | `node scripts/check-orphan-libs.mjs --check` |
+| 363 | 8.6s | 1 | `node scripts/check-windows-hide.mjs` |
+| 337 | 6.3s | 0 | `node scripts/check-hardfail-resilience.mjs` |
+| 351 | 6.2s | 0 | `node scripts/check-static-csp-routes.mjs` |
+| 336 | 5.2s | 0 | `node scripts/check-hardfail-resilience.mjs --self-test` |
+| 285 | 4.5s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 310 | 4.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 320 | 4.0s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 324 | 3.8s | 0 | `node scripts/check-news-claim-parity.mjs` |
 
 ## Failures
 
-- Step 264: `node scripts/check-evidence-graph-coverage.mjs --self-test` exited 1
+- Step 363: `node scripts/check-windows-hide.mjs` exited 1
