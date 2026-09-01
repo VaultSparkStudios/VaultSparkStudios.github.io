@@ -172,6 +172,35 @@ function build() {
     if (html) add(pageSlug, '/' + rel.replace('index.html', ''), html, metaDescription(html), STATIC_ENTITY[pageSlug] || null);
   });
 
+  // S334: ground the answer engine in the studio's own canonical record.
+  //
+  // The .ai/ fact sheets are the one corpus written to BE quoted — each is
+  // index-follow, self-describing, and carries an explicit "cite this page"
+  // block with its canonical URL. The engine has always rendered a source link
+  // per document, so it was already citation-capable; it simply had none of
+  // these 16 sheets to cite, and answered about projects from looser prose
+  // instead. Adding them means a question about a project resolves to the
+  // studio's own canonical answer, with a link the reader can verify.
+  //
+  // Enumerated from the registry projection rather than by globbing, so a sheet
+  // that exists but is not a public project cannot slip into the public corpus.
+  const factSheetProjects = readJson('agents.json');
+  let factSheets = 0;
+  for (const p of (factSheetProjects && factSheetProjects.projects) || []) {
+    if (!p.aiFactSheet) continue;
+    const rel = p.aiFactSheet.replace('https://vaultsparkstudios.com/', '') + 'index.html';
+    const html = read(rel);
+    if (!html) continue;
+    add(`${p.name} — canonical fact sheet`, p.aiFactSheet.replace('https://vaultsparkstudios.com', ''), html, metaDescription(html));
+    factSheets += 1;
+  }
+  if (!factSheets) {
+    // A silent zero here would quietly un-ground every project answer while the
+    // build still reported success. Fail loudly instead.
+    console.error('build-ignis-search-index: no .ai fact sheets reached the index — agents.json may be stale (run build-agents-json.mjs)');
+    process.exitCode = 1;
+  }
+
   return { schemaVersion: '1.0', generatedAt: new Date().toISOString(), generatedBy: 'scripts/build-ignis-search-index.mjs', publicSafe: true, documents: docs };
 }
 
