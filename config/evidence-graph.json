@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
-  "revisedAt": "2026-08-20",
+  "revisedAt": "2026-09-01",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -671,6 +671,33 @@
         "pathways/investors/index.html"
       ],
       "note": "The generator writes all six pathway pages from data/pathways.json while harvesting the current nav/footer from journal/index.html and hashed shell paths from assets/shell-manifest.json. Builders is the canonical output; the other five pages are atomic sibling outputs."
+    },
+    {
+      "id": "evidence-hub",
+      "output": "evidence/index.html",
+      "sources": [
+        "data/evidence-hub.json",
+        "journal/index.html"
+      ],
+      "builder": "scripts/generate-evidence-hub.mjs",
+      "check": [
+        "node",
+        "scripts/generate-evidence-hub.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "surface-spine",
+      "output": "data/surface-spine.json",
+      "sources": [
+        "data/surface-spine.json"
+      ],
+      "builder": "scripts/apply-surface-spine.mjs",
+      "check": [
+        "node",
+        "scripts/apply-surface-spine.mjs",
+        "--check"
+      ]
     }
   ]
 }
