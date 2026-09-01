@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
-  "generatedAt": "2026-08-20",
-  "contractSha256": "f47526f99e447202f756487b612d72881fcac64e6c8329bfb3a3ebbb95e660c4",
+  "generatedAt": "2026-09-01",
+  "contractSha256": "cc356204472df05aede8b5348eb9ee62c8f0fe6d1fa4739eeccf1ad4f8e8bc45",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 38,
+  "nodeCount": 40,
   "cascadeNodeCount": 26,
   "buildOrder": [
     "attention-pressure",
@@ -18,6 +18,7 @@
     "cta-readiness",
     "evidence-graph-agent",
     "evidence-graph-doc",
+    "evidence-hub",
     "founder-presence",
     "heartbeat",
     "news-desk",
@@ -33,6 +34,7 @@
     "public-intelligence",
     "rank-climbers",
     "security-posture",
+    "surface-spine",
     "tt-summary",
     "worker-route-history",
     "you-asked-shipped",
@@ -92,7 +94,8 @@
       "publishCascade": true,
       "dependsOn": [
         "api/public-intelligence.json",
-        "index.html"
+        "index.html",
+        "membership/index.html"
       ],
       "feeds": [
         "api/release-proof.json",
@@ -110,7 +113,6 @@
         "assets/proof-conversion-line.js",
         "assets/security-posture.js",
         "assets/shell-manifest.json",
-        "membership/index.html",
         "status/index.html",
         "studio-pulse/index.html"
       ]
@@ -207,6 +209,19 @@
       "feeds": [],
       "externalSources": [
         "config/evidence-graph.json"
+      ]
+    },
+    {
+      "id": "evidence-hub",
+      "output": "evidence/index.html",
+      "builder": "scripts/generate-evidence-hub.mjs",
+      "verify": "node scripts/generate-evidence-hub.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/evidence-hub.json",
+        "journal/index.html"
       ]
     },
     {
@@ -652,6 +667,20 @@
         "api/supabase-control-plane.json",
         "api/uptime.json",
         "api/worker-route-provenance.json"
+      ]
+    },
+    {
+      "id": "surface-spine",
+      "output": "membership/index.html",
+      "builder": "scripts/apply-surface-spine.mjs",
+      "verify": "node scripts/apply-surface-spine.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/candidate-artifact-manifest.json"
+      ],
+      "externalSources": [
+        "data/surface-spine.json"
       ]
     },
     {
