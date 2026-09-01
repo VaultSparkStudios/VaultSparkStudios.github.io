@@ -46,7 +46,6 @@ export const OG_DARK_PATHS = new Map([
   ['auth/callback.html', 'oauth callback'],
   ['obelisk-passport/login.html', 'auth flow'],
   ['obelisk-passport/callback.html', 'oauth callback'],
-  ['sitemap.html', 'utility index'],
   ['search/index.html', 'utility search'],
   ['share/index.html', 'share-utility endpoint'],
   ['nervous-system/index.html', 'internal telemetry dashboard'],

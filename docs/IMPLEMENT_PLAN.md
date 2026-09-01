@@ -1,29 +1,22 @@
-# Implementation Plan — S332
+# Implement Plan — S334 (2026-09-01)
 
-Source of truth: `docs/AUDIT_2026-08-28.json`
+Source: `docs/AUDIT_2026-08-31.json` (14 items). Re-sorted for EFFICIENCY, not priority:
+same-axis grouped, small 🔥 first, foundations before facades, token-cost item placed where
+its measurement lane can run, consolidations last.
 
-## Selected depth
+| Wave | Items | Rung | Why here |
+|---|---|---|---|
+| 1 — correctness + security | 6, 1, 7, 12 | L2 / L1 | Smallest verifiable fixes; builds the orphan/tombstone machinery waves 2 reuses |
+| 2 — structural wins | 2, 5, 10 | L1 / L2 | Consumes wave-1 tombstone machinery; deletes 6 pages, joins the .ai layer |
+| 3 — token | 4 | L2 | Standalone file, offline self-test, pays out every scheduled run |
+| 4 — perf | 8, 14 | L2 / L1 | Both need the CANON-053 rendered-pixel loop — batch the browser work |
+| 5 — consolidation | 3, 9, 13 | L1 | Largest; benefits from waves 1–2 having removed the noise |
+| 6 — flagship | 11 | L1 | Depends on item 5 making the .ai corpus discoverable |
 
-All three verified items ship at **L2**. Each result must carry a regression test and a machine-readable receipt; no new dependency, model call, lowered privacy floor, or auth/security bypass is permitted.
+## Fork resolved (audit item 2)
 
-## Execution order
-
-1. **cta-evidence-age** — add the smallest source-derived truth field and four-state tests first, so later release surfaces can consume a trustworthy age signal.
-2. **attention-pressure-rollup** — reuse the existing RUM transport/history to emit one bounded claim event, aggregate only coarse surface/depth cohorts, enforce the privacy floor, and publish the receipt.
-3. **external-destination-reachability** — extend the now-zero-finding link court with offline-tested three-state classification, bounded live sampling, and a freshness-checked public receipt that never treats network uncertainty as health.
-
-## Verification ladder
-
-- Focused self-tests and check modes after every item.
-- Existing RUM allowlist/privacy courts, link court, generated-artifact checks, and build-gate reachability.
-- Canonical `npm run build:check` with its direct exit code.
-- Lighthouse mobile Performance ≥90 for any public page whose rendered output changes; otherwise record the measured exception.
-- Exact Hetzner staging release ceremony and rendered-pixel inspection before any push to remote `main`.
-
-## Rollback boundary
-
-Each item is independently reversible. Raw RUM rows, probe response bodies, identifiers, and session histories remain uncommitted. A failed or unavailable destination probe is represented as `failed` or `unknown`, never rewritten to green.
-
-## Completion — S332
-
-All three L2 items are implemented and focused checks are green. The live destination receipt is intentionally mixed (10 passed, 0 failed, 2 unknown); the two unknowns are a 401 and repeated 503, neither of which satisfies the two-404/410 dead-target rule. Canonical build, rendered-pixel, staging, release, and production verification remain the next arc waves.
+The audit flagged a founder fork: collapse all six Pathways, or keep `investors` + `press` as
+real guided routes. Resolved to **collapse all six to `/pathways/#anchor`** for this session.
+Rationale: reversible, zero content lost, and the current 530-byte pages convert nothing — a
+real investor/press route is a content commitment, not a refactor, so it belongs in a session
+with founder copy input. Recorded in DECISIONS.

@@ -25,13 +25,36 @@
 /ignis/roi                                      /ignis/#roi                                        301
 /security/trusted-types/*                       /security/#trusted-types                           301
 /security/trusted-types                         /security/#trusted-types                           301
-/franchise-architect/*                          /games/franchise-architect/:splat                  301
+# S334: the * splat here 301'd every sub-path of the two legacy app trees into a
+# 404 — /solara/assets/*.js (the Solara SPA bundle, still loaded by
+# /solara/404.html) and the whole 30-file /franchise-architect/ build. A splat
+# is only safe when a counterpart exists under the destination, and it did not.
+# Retired ROUTES are now listed one by one; the app trees serve themselves.
+/franchise-architect/game.html                  /games/franchise-architect/                        301
+/franchise-architect/                           /games/franchise-architect/                        301
 /franchise-architect                            /games/franchise-architect/                        301
-/solara/*                                       /games/solara/:splat                               301
+/solara/archive.html                            /games/solara/archive.html                         301
+/solara/chronicle.html                          /games/solara/chronicle.html                       301
+/solara/sun-widget.html                         /games/solara/sun-widget.html                      301
+/solara/                                        /games/solara/                                     301
 /solara                                         /games/solara/                                     301
 # Splat rules preserve sub-paths (game app assets, /games/ marketing, .ai, llms-full.txt).
-/vaultspark-football-gm/*                        /franchise-architect/:splat                        301
-/vaultspark-football-gm                          /franchise-architect/                              301
+/vaultspark-football-gm/*                        /games/franchise-architect/:splat                         301
+/vaultspark-football-gm                          /games/franchise-architect/                               301
 /games/vaultspark-football-gm/*                  /games/franchise-architect/:splat                  301
 /games/vaultspark-football-gm                    /games/franchise-architect/                        301
 /api/leaderboard/v1/vaultspark-football-gm.json  /api/leaderboard/v1/franchise-architect.json       301
+
+# S334: sitemap.html was a tracked, deployed, byte-drifted duplicate of
+# /sitemap-page/ with zero inbound links — allowlisted in the orphan gate rather
+# than removed. The file is gone; this keeps external bookmarks working.
+/sitemap.html                                   /sitemap-page/                                     301
+
+# S334: these three retired routes shipped a meta-refresh page instead of an
+# edge 301 — the page painted before it redirected, and the two mechanisms could
+# drift. The stub files are gone; the redirect now happens at the edge like every
+# other retired route. Cloudflare preserves the query string, which the Obelisk
+# callback depends on.
+/obelisk-passport/login                         /login                                             301
+/obelisk-passport/callback                      /auth/callback                                     301
+/vault-treasury                                 /vault-member/                                     301

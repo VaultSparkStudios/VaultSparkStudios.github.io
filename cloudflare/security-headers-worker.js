@@ -119,6 +119,12 @@ const GATED_PATH_PATTERNS = [
   /^\/investor-portal(\/|$)/i,
   /^\/studio-hub(\/|$)/i,
   /^\/vault-member\/admin(\/|$)/i,
+  // S334: /ignis-health/ titles itself "(internal)" and publishes the ask-ignis
+  // edge-function contract. It was listed in robots.txt only — which is a
+  // request to polite crawlers, not access control, so the page was readable by
+  // anyone holding the URL. A surface that calls itself internal must be gated
+  // by the same edge session as every other internal surface.
+  /^\/ignis-health(\/|$)/i,
 ];
 
 // Public forms protected by rate-limit + CSRF (POST only).

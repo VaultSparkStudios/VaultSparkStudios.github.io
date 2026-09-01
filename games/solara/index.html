@@ -263,6 +263,18 @@
               <a class="button" href="/vault-member/#register">Join the Waitlist</a>
               <a class="button-secondary" href="/games/">All Games</a>
             </div>
+
+            <!-- S334: the Solara world pages were an unreachable island — they
+                 only linked to each other and the old /solara/* route 301'd them
+                 into 404s. This is their first inbound link from the live site. -->
+            <nav class="solara-world-links" aria-label="Solara world" style="margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.08);">
+              <p style="font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);margin:0 0 0.6rem;">Inside the world</p>
+              <div style="display:flex;gap:1.25rem;flex-wrap:wrap;font-size:0.95rem;">
+                <a href="/games/solara/chronicle.html">Season Chronicle</a>
+                <a href="/games/solara/archive.html">Archive of the Fallen</a>
+                <a href="/games/solara/sun-widget.html">Sun Observatory</a>
+              </div>
+            </nav>
           </div>
 
           <!-- IGNIS-BLOCK-SLOT:start -->
