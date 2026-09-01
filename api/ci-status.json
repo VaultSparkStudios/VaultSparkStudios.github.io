@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T00:27:57.703Z",
+  "generatedAt": "2026-09-01T00:36:49.519Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-01T00:25:53Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-01T00:36:12Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33454710923",
       "headSha": "8a44a02762293bc1ed55e33021647c43f5a509c0",
       "event": "push"
@@ -56,7 +56,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-09-01T00:25:52Z",
+      "updatedAt": "2026-09-01T00:34:40Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33454710929",
       "headSha": "8a44a02762293bc1ed55e33021647c43f5a509c0",
       "event": "push"
@@ -182,7 +182,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.1,
+      "ageHours": 2.25,
       "staleAfterHours": 48
     },
     {
@@ -206,7 +206,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.96,
+      "ageHours": 4.11,
       "staleAfterHours": 48
     },
     {
@@ -223,7 +223,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T23:34:46Z",
+      "lastUpdatedAt": "2026-09-01T00:36:30Z",
       "recentConclusions": [
         "success",
         "success",
@@ -232,7 +232,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.89,
+      "ageHours": 0.01,
       "staleAfterHours": 48
     },
     {
