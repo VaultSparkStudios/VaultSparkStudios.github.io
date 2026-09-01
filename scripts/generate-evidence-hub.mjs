@@ -229,6 +229,46 @@ export function injectNavLink(html) {
   return html.replace(NAV_LABEL, NAV_LABEL + NAV_LINK);
 }
 
+const FOOTER_ANCHOR = '<a href="/status/">Status</a>';
+const FOOTER_LINK = '<a href="/evidence/">Evidence</a>';
+
+function footerSpan(html) {
+  const start = html.indexOf('<footer class="site-footer"');
+  if (start < 0) return null;
+  const end = html.indexOf('</footer>', start);
+  return end < 0 ? null : { start, end };
+}
+
+/**
+ * The header/footer contract (check-footer-contract, derived from index.html)
+ * requires every header link to be reachable from the footer too — a reader who
+ * scrolled past the nav must still be able to get anywhere the nav offered.
+ * Adding Evidence to the Live Intelligence dropdown without the footer entry
+ * correctly failed that gate.
+ *
+ * Scoped to the <footer> element on purpose: `<a href="/status/">Status</a>`
+ * also occurs in the header nav, so an unscoped replace() hit the HEADER's first
+ * match and left the footer untouched — producing a duplicate header link and
+ * the identical gate failure it was meant to fix.
+ */
+export function injectFooterLink(html) {
+  const span = footerSpan(html);
+  if (!span) return null;
+  const footer = html.slice(span.start, span.end);
+  if (footer.includes(FOOTER_LINK)) return null;
+  if (!footer.includes(FOOTER_ANCHOR)) return null;
+  const patched = footer.replace(FOOTER_ANCHOR, `${FOOTER_LINK}\n          ${FOOTER_ANCHOR}`);
+  return html.slice(0, span.start) + patched + html.slice(span.end);
+}
+
+/** Does the FOOTER — not the whole document — already satisfy the contract? */
+export function footerHasLink(html) {
+  const span = footerSpan(html);
+  if (!span) return true;                            // no footer to satisfy
+  const footer = html.slice(span.start, span.end);
+  return !footer.includes(FOOTER_ANCHOR) || footer.includes(FOOTER_LINK);
+}
+
 /** Harvest shared chrome from a page this generator does not write (S305). */
 function readChrome() {
   const sample = readFileSync(join(ROOT, 'journal/index.html'), 'utf8');
@@ -281,6 +321,19 @@ function selfTest() {
   t('a week renders as days', describeAge('2026-08-25T12:00:00Z', now) === '7d ago');
   t('escaping is applied to lane text', buildCard({ id: 'x', label: 'L', question: '<b>q</b>', blurb: 'b', href: '/a/', linkLabel: 'go', feed: '/f.json' }).includes('&lt;b&gt;q&lt;/b&gt;'));
 
+  // The footer link must land in the FOOTER even though the same anchor text
+  // appears earlier in the header — the first version of this replaced the
+  // header's match, added a duplicate nav link, and left the gate failing.
+  const dual = '<header><a href="/status/">Status</a></header><footer class="site-footer"><a href="/status/">Status</a></footer>';
+  const injected = injectFooterLink(dual);
+  t('the footer link lands in the footer, not the header',
+    injected.indexOf(FOOTER_LINK) > injected.indexOf('<footer'));
+  t('the header copy is left untouched',
+    (injected.match(/<a href="\/evidence\/">Evidence<\/a>/g) || []).length === 1);
+  t('a page whose footer already has it is a no-op', injectFooterLink(injected) === null);
+  t('footerHasLink is judged on the footer alone',
+    footerHasLink('<header><a href="/evidence/">Evidence</a></header><footer class="site-footer"><a href="/status/">Status</a></footer>') === false);
+
   const failed = results.filter(([, ok]) => !ok);
   for (const [n, ok] of results) console.log(`  ${ok ? '✓' : '⛔'} ${n}`);
   console.log(`[generate-evidence-hub] self-test ${results.length - failed.length}/${results.length}`);
@@ -306,20 +359,31 @@ const navTargets = execFileSync('git', ['ls-files', '*.html'], { cwd: ROOT, enco
   .split('\n').map((s) => s.trim())
   .filter((f) => f && !f.startsWith('docs/') && !f.startsWith('lighthouse-results/') && !f.startsWith('.cache/'));
 let navLinked = 0;
+let footerLinked = 0;
 const navMissing = [];
+const footerMissing = [];
 for (const rel of navTargets) {
   const file = join(ROOT, rel);
   if (!existsSync(file)) continue;
-  const body = readFileSync(file, 'utf8');
-  if (!body.includes(NAV_LABEL)) continue;
-  if (body.includes(NAV_LINK)) continue;
-  if (CHECK) { navMissing.push(rel); continue; }
-  const next = injectNavLink(body);
-  if (next) { writeFileSync(file, next, 'utf8'); navLinked += 1; }
+  let body = readFileSync(file, 'utf8');
+  let dirty = false;
+
+  if (body.includes(NAV_LABEL) && !body.includes(NAV_LINK)) {
+    if (CHECK) navMissing.push(rel);
+    else { const next = injectNavLink(body); if (next) { body = next; dirty = true; navLinked += 1; } }
+  }
+  // Header and footer travel together — the contract requires both.
+  if (!footerHasLink(body)) {
+    if (CHECK) footerMissing.push(rel);
+    else { const next = injectFooterLink(body); if (next) { body = next; dirty = true; footerLinked += 1; } }
+  }
+  if (dirty) writeFileSync(file, body, 'utf8');
 }
 if (navLinked) console.log(`[generate-evidence-hub] linked /evidence/ into the Live Intelligence nav on ${navLinked} page(s)`);
-if (CHECK && navMissing.length) {
-  console.error(`[generate-evidence-hub] --check: ${navMissing.length} page(s) have the Live Intelligence nav group but no /evidence/ link`);
+if (footerLinked) console.log(`[generate-evidence-hub] linked /evidence/ into the Studio footer column on ${footerLinked} page(s)`);
+if (CHECK && (navMissing.length || footerMissing.length)) {
+  if (navMissing.length) console.error(`[generate-evidence-hub] --check: ${navMissing.length} page(s) have the Live Intelligence nav group but no /evidence/ link`);
+  if (footerMissing.length) console.error(`[generate-evidence-hub] --check: ${footerMissing.length} page(s) have the Studio footer column but no /evidence/ link`);
   process.exitCode = 1;
 }
 
