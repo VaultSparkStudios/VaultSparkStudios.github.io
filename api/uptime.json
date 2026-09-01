@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-09-01T15:50:18.772Z",
+  "generatedAt": "2026-09-01T16:33:16.120Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "edge-degraded",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 429,
-    "ms": 37,
+    "ms": 70,
     "ok": false
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
     "status": 429,
-    "ms": 13,
+    "ms": 59,
     "ok": false
   },
   "rumIngestPost": {
     "endpoint": "/v/rum (POST)",
     "status": 429,
-    "ms": 15,
+    "ms": 27,
     "ok": false,
     "contractLive": false
   },
   "login": {
     "endpoint": "/login (GET)",
     "status": 429,
-    "ms": 15,
+    "ms": 62,
     "ok": true,
     "shape": "challenged",
     "degraded": false,
@@ -36,22 +36,56 @@
     {
       "route": "/",
       "status": 200,
-      "ms": 243,
+      "ms": 367,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 243,
+        "ms": 367,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 117,
+        "ms": 191,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
     },
     {
       "route": "/games/",
+      "status": 200,
+      "ms": 155,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 155,
+        "ok": true
+      },
+      "edge": {
+        "status": 429,
+        "ms": 189,
+        "shape": "other",
+        "note": "other (informational)"
+      }
+    },
+    {
+      "route": "/vault-member/",
+      "status": 200,
+      "ms": 47,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 47,
+        "ok": true
+      },
+      "edge": {
+        "status": 429,
+        "ms": 61,
+        "shape": "other",
+        "note": "other (informational)"
+      }
+    },
+    {
+      "route": "/membership/",
       "status": 200,
       "ms": 45,
       "ok": true,
@@ -62,41 +96,7 @@
       },
       "edge": {
         "status": 429,
-        "ms": 40,
-        "shape": "other",
-        "note": "other (informational)"
-      }
-    },
-    {
-      "route": "/vault-member/",
-      "status": 200,
-      "ms": 76,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 76,
-        "ok": true
-      },
-      "edge": {
-        "status": 429,
-        "ms": 15,
-        "shape": "other",
-        "note": "other (informational)"
-      }
-    },
-    {
-      "route": "/membership/",
-      "status": 200,
-      "ms": 69,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 69,
-        "ok": true
-      },
-      "edge": {
-        "status": 429,
-        "ms": 14,
+        "ms": 60,
         "shape": "other",
         "note": "other (informational)"
       }
@@ -104,16 +104,16 @@
     {
       "route": "/status/",
       "status": 200,
-      "ms": 53,
+      "ms": 185,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 53,
+        "ms": 185,
         "ok": true
       },
       "edge": {
         "status": 429,
-        "ms": 14,
+        "ms": 61,
         "shape": "other",
         "note": "other (informational)"
       }
@@ -122,15 +122,15 @@
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded. S320: `rumIngestPost` (POST /v/rum expecting 202) exercises the REAL ingest method, because the OPTIONS preflight above answers 204 unconditionally and stayed green throughout an outage in which POST returned 500 — it sends `synthetic: true` so the worker validates and replies without writing a row, and requires that flag echoed back so an older worker build cannot pass. `login` (GET /login) exercises the auth entry point, which no probe touched until production sign-in was found 500ing by accident; a named 503 `auth_store_unavailable` is an honest self-restoring degradation, while a 500/1101 crash is our own fault and is judged `down`.",
   "rollup": {
     "checks": 1488,
-    "upPct": 64,
-    "fullStackPct": 64,
+    "upPct": 63.9,
+    "fullStackPct": 63.9,
     "originContentPct": 100,
     "originContentChecks": 1488,
-    "edgeLivenessPct": 99.7,
-    "edgeLivenessChecks": 864,
-    "workerIngestPct": 81.8,
-    "workerIngestChecks": 864,
-    "lastIncidentAt": "2026-09-01T15:50:18.772Z",
+    "edgeLivenessPct": 99.5,
+    "edgeLivenessChecks": 865,
+    "workerIngestPct": 81.7,
+    "workerIngestChecks": 865,
+    "lastIncidentAt": "2026-09-01T16:33:16.120Z",
     "lastIncidentState": "edge-degraded"
   }
 }
