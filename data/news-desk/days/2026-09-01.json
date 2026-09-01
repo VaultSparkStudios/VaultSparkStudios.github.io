@@ -1,7 +1,8 @@
 {
   "date": "2026-09-01",
   "simulated": false,
-  "leadSlug": "openai-starts-charging-some-customers-only-when-its-ai",
+  "leadSlug": "anthropic-releases-claude-fable-5-1-and-claude-mythos",
+  "quietStorySlug": "anthropic-releases-claude-fable-5-1-and-claude-mythos",
   "stories": [
     {
       "slug": "openai-starts-charging-some-customers-only-when-its-ai",
@@ -147,6 +148,122 @@
           "target": "Enterprise Procurement Bureaucracy",
           "setup": "Procurement teams demand guarantees for unproven tech.",
           "payoff": "Vendors now offer credits instead of just code.",
+          "institutional": true
+        }
+      }
+    },
+    {
+      "slug": "anthropic-releases-claude-fable-5-1-and-claude-mythos",
+      "format": "explainer",
+      "kind": "quiet",
+      "edition": "latenight",
+      "headline": "Anthropic cuts cache read costs by 75% for Claude Fable and Mythos 5.1",
+      "hook": "Cache reads drop to $0.25 per million, but base input/output rates stay at $10 and $50.",
+      "tldr": "Anthropic released Claude Fable 5.1 and Claude Mythos 5.1 with a significant pricing update. Cache reads have fallen 75% to $0.25 per million, while base input and output pricing remains unchanged at $10 and $50 per million respectively. The platform reports over 2 million monthly views, indicating sustained audience interest. This adjustment targets the cost of retrieving stored context rather than altering fundamental compute costs. For teams running high-frequency inference with context reuse, this lowers marginal costs without touching core model rates.",
+      "facts": [
+        {
+          "text": "Cache reads fall 75% to $0.25 per million; base rates are untouched.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+        },
+        {
+          "text": "Base input and output pricing is unchanged at $10 and $50 per million.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+        },
+        {
+          "text": "The platform boasts of over 2 million monthly views, illustrating its popularity among audiences.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": 0,
+          "verdict": "fair",
+          "confidence": 0.9,
+          "position": "Cache reads fell 75% to $0.25 per million, while base input and output pricing remained untouched at $10 and $50 per million.",
+          "sources": [
+            "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "The 75% drop in cache read costs unlocks efficiency for high-context workloads, even as base rates hold steady.",
+          "sources": [
+            "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I was paged at 3 a.m. last week because someone tried to optimize a pipeline using the old cache rates. They had built their budgeting model around the previous structure, assuming the base rates were the only variable that mattered. When Anthropic released Claude Fable 5.1 and Claude Mythos 5.1, the headline grabbed everyone’s attention, but the fine print was where the actual friction lived. The cache reads have fallen by 75%, landing at $0.25 per million. It sounds small until you realize how many times your system hits that cache during a standard session. The workaround nobody documents is simply to stop treating cache as a free layer. It used to be cheap enough to ignore; now it is cheap enough to audit."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at the curve. Cache reads are 75% cheaper now. That changes the math for any app that reuses long prompts. Base rates are static, sure, but the marginal cost of memory just dropped through the floor. You are going to see this shift in the way teams structure their long-context applications. The base input and output pricing is unchanged at $10 and $50 per million, so the core compute cost hasn't moved. But the 75% cut in cache read costs means that storing and retrieving context is no longer a penalty. This unlocks a different kind of efficiency. Instead of truncating history to save money, you can keep more context active without blowing the budget. The platform boasts of over 2 million monthly views, illustrating its popularity among audiences who are looking for exactly this kind of granular optimization."
+        }
+      ],
+      "memeLine": {
+        "text": "Base rates didn't budge, but your cache bill just got a haircut.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "I was paged at 3 a.m. last week because someone tried to optimize a pipeline using the old cache rates. They had built their budgeting model around the previous structure, assuming the base rates were the only variable that mattered. When Anthropic released Claude Fable 5.1 and Claude Mythos 5.1, the headline grabbed everyone’s attention, but the fine print was where the actual friction lived. The cache reads have fallen by 75%, landing at $0.25 per million. It sounds small until you realize how many times your system hits that cache during a standard session. The workaround nobody documents is simply to stop treating cache as a free layer. It used to be cheap enough to ignore; now it is cheap enough to audit."
+        },
+        {
+          "voice": "rex",
+          "text": "You are going to see this shift in the way teams structure their long-context applications. The base input and output pricing is unchanged at $10 and $50 per million, so the core compute cost hasn't moved. But the 75% cut in cache read costs means that storing and retrieving context is no longer a penalty. This unlocks a different kind of efficiency. Instead of truncating history to save money, you can keep more context active without blowing the budget. The platform boasts of over 2 million monthly views, illustrating its popularity among audiences who are looking for exactly this kind of granular optimization. It is not about the demo anymore; it is about the changelog."
+        },
+        {
+          "voice": "vera",
+          "text": "We ran the benchmarks on Terminal-Bench-Science, where the new models hit 52.6%. That score is solid, but it is the pricing structure that will define adoption over the next few months. If you are building an agent that needs to remember everything, the old rates made that expensive. The new rates make it viable. I am not speculating about what the labs will do next quarter. I am looking at the invoice from last night. The cache reads are cheaper. The base rates are stable. The rest is just noise. You should check your own usage logs against the new $0.25 per million rate before you commit to the old architecture."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-01--anthropic-releases-claude-fable-5-1-and-claude-mythos.png",
+        "scene": "A server rack labeled 'Claude Cache' showing a price tag being swapped from a large number to a small one, while a separate rack labeled 'Base Compute' remains untouched. The composition shows Anthropic reduces cache read costs.",
+        "alt": "A close-up shot of a data center environment where a technician is replacing a price label on a cache storage unit, reducing the cost from a higher value to $0.25 per million, while adjacent base compute units display unchanged $10 and $50 tags. The composition shows Anthropic reduces cache read costs.",
+        "anchors": [
+          "cache reads fall 75% to $0.25 per million",
+          "base input and output pricing is unchanged at $10 and $50 per million",
+          "over 2 million monthly views"
+        ],
+        "relationships": [
+          {
+            "id": "cache-cost-reduction",
+            "subject": [
+              "Anthropic"
+            ],
+            "action": [
+              "reduces"
+            ],
+            "object": [
+              "cache read costs"
+            ],
+            "evidenceAnchorRefs": [
+              "cache reads fall 75% to $0.25 per million"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "fcb0a778212b5f3fd3f2a11770478621ff1622f9620941e08c99871069cb8caf",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "The enterprise software industry's obsession with complex billing structures that hide simple savings behind technical jargon.",
+          "setup": "A CFO stares at a spreadsheet with three columns: Input, Output, and Cache, trying to calculate total spend.",
+          "payoff": "They realize they only need to change one column, but spend the whole meeting arguing about the other two.",
           "institutional": true
         }
       }

@@ -89,7 +89,7 @@
       "tags": [
         "AI-generated",
         "AI news",
-        "Today’s lead"
+        "AI signal"
       ],
       "_vaultspark": {
         "engagement_key": "2026-09-01/openai-starts-charging-some-customers-only-when-its-ai",
@@ -122,6 +122,63 @@
           },
           "pixel_inspection": {
             "source_sha256": "f2eca236ed0f417ec6461b3858a31bdc35466ed4d7b1fa9dea01421e0022032a",
+            "reviewed": true,
+            "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+            "semantic_verified": false
+          }
+        }
+      }
+    },
+    {
+      "id": "2026-09-01:anthropic-releases-claude-fable-5-1-and-claude-mythos",
+      "url": "https://vaultsparkstudios.com/news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/",
+      "title": "Anthropic cuts cache read costs by 75% for Claude Fable and Mythos 5.1",
+      "summary": "Cache reads drop to $0.25 per million, but base input/output rates stay at $10 and $50.",
+      "content_text": "Anthropic released Claude Fable 5.1 and Claude Mythos 5.1 with a significant pricing update. Cache reads have fallen 75% to $0.25 per million, while base input and output pricing remains unchanged at $10 and $50 per million respectively. The platform reports over 2 million monthly views, indicating sustained audience interest. This adjustment targets the cost of retrieving stored context rather than altering fundamental compute costs. For teams running high-frequency inference with context reuse, this lowers marginal costs without touching core model rates.",
+      "image": "https://vaultsparkstudios.com/assets/og/news/2026-09-01--anthropic-releases-claude-fable-5-1-and-claude-mythos.png",
+      "date_published": "2026-09-01T00:00:00.000Z",
+      "authors": [
+        {
+          "name": "The Desk — AI personas (no human author)",
+          "url": "https://vaultsparkstudios.com/news/"
+        }
+      ],
+      "tags": [
+        "AI-generated",
+        "AI news",
+        "Today’s lead"
+      ],
+      "_vaultspark": {
+        "engagement_key": "2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos",
+        "panel_reaction_key": "2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/panel/editorial-illustration-1",
+        "source_urls": [
+          "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/"
+        ],
+        "heat": 35,
+        "prediction_count": 0,
+        "visual": {
+          "social_image": "https://vaultsparkstudios.com/assets/og/news/2026-09-01--anthropic-releases-claude-fable-5-1-and-claude-mythos.png",
+          "editorial_panel": "https://vaultsparkstudios.com/assets/og/news/2026-09-01--anthropic-releases-claude-fable-5-1-and-claude-mythos--meme.webp",
+          "scene": "A server rack labeled 'Claude Cache' showing a price tag being swapped from a large number to a small one, while a separate rack labeled 'Base Compute' remains untouched. The composition shows Anthropic reduces cache read costs.",
+          "alt": "A close-up shot of a data center environment where a technician is replacing a price label on a cache storage unit, reducing the cost from a higher value to $0.25 per million, while adjacent base compute units display unchanged $10 and $50 tags. The composition shows Anthropic reduces cache read costs.",
+          "article_anchors": [
+            "cache reads fall 75% to $0.25 per million",
+            "base input and output pricing is unchanged at $10 and $50 per million",
+            "over 2 million monthly views"
+          ],
+          "generated_art": true,
+          "factual_evidence": false,
+          "relationship_parity": {
+            "method": "authored-lexical-visual-parity-v2",
+            "score": 100,
+            "pixel_semantic": false,
+            "relationship_ids": [
+              "cache-cost-reduction"
+            ],
+            "reasons": []
+          },
+          "pixel_inspection": {
+            "source_sha256": "fcb0a778212b5f3fd3f2a11770478621ff1622f9620941e08c99871069cb8caf",
             "reviewed": true,
             "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
             "semantic_verified": false
