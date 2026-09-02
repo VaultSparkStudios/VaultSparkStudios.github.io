@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "7d09c18cd2e087468eac8094d31aea468704ebe0",
+    "sha": "38dd4b18ac14e0a5a83da50d6cca1f0205c389cd",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -16,76 +16,32 @@
   "csp": {
     "observed": true,
     "apexReachable": true,
-    "mode": "absent",
-    "nonce": false,
-    "reportOnlyAlso": false,
-    "headerName": null
+    "mode": "enforce",
+    "nonce": true,
+    "reportOnlyAlso": true,
+    "headerName": "content-security-policy"
   },
   "browser": {
-    "captured": true,
-    "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 8,
-    "signalCardinality": 6,
-    "signalEndpoints": [
-      "api/ecosystem-state.json",
-      "api/founder-presence.json",
-      "api/ignis-conduit.json",
-      "api/public-intelligence.json",
-      "api/rank-climbers.json",
-      "v/rum"
-    ],
-    "routes": [
-      {
-        "route": "/",
-        "target": "https://vaultsparkstudios-website.pages.dev/",
-        "captured": true,
-        "consoleErrors": 5,
-        "signalCardinality": 5,
-        "signalEndpoints": [
-          "api/founder-presence.json",
-          "api/ignis-conduit.json",
-          "api/public-intelligence.json",
-          "api/rank-climbers.json",
-          "v/rum"
-        ]
-      },
-      {
-        "route": "/vault-member/",
-        "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
-        "captured": true,
-        "consoleErrors": 1,
-        "signalCardinality": 0,
-        "signalEndpoints": []
-      },
-      {
-        "route": "/games/franchise-architect/",
-        "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
-        "captured": true,
-        "consoleErrors": 2,
-        "signalCardinality": 3,
-        "signalEndpoints": [
-          "api/ecosystem-state.json",
-          "api/founder-presence.json",
-          "api/public-intelligence.json"
-        ]
-      }
-    ]
+    "captured": false,
+    "target": null,
+    "consoleErrors": null,
+    "signalCardinality": null,
+    "signalEndpoints": [],
+    "routes": []
   },
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production CSP is 'absent' but source policy is 'enforce' — enforce header missing at the edge",
-    "production origin serves d306c261 — OLDER than promoted 7d09c18c — stranded/stale deploy",
-    "8 console error(s) on the promoted artifact"
+    "production origin serves d306c261 — OLDER than promoted 38dd4b18 — stranded/stale deploy"
   ],
-  "generatedAt": "2026-09-01T23:55:51.890Z",
+  "generatedAt": "2026-09-02T00:32:26.893Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-01T23:55:51.890Z",
-    "currentBehindStreak": 1,
-    "strandedAlert": false
+    "lastStrandedAt": "2026-09-02T00:32:26.893Z",
+    "currentBehindStreak": 2,
+    "strandedAlert": true
   }
 }

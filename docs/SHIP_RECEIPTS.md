@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-09-01 -->
+<!-- generated-at: 2026-09-02 -->
 
 # Ship Receipts
 
@@ -7,3 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Conversion | 1 | 38dd4b18 lock member writes, light the public member surfaces, make the stub deletion stick, merge four routes | pending |

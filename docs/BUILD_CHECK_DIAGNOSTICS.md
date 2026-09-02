@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-01T23:56:31.177Z
-Receipt: `3901ebbc5d1f4bab76a40a3a` · coverage 72/378 from step 1
+Generated: 2026-09-02T00:57:57.679Z
+Receipt: `56efb9f622f200935b2f2d41` · coverage 378/378 from step 1
 
-Latest: **71/72** passed · failed 1 · total 32.7s
-Concentration: **37.3%** in step 61 · ratchet clear (>30% and ≥45s)
+Latest: **378/378** passed · failed 0 · total 230.2s
+Concentration: **10.8%** in step 296 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 61 | 12.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 29 | 2.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 66 | 1.5s | 0 | `node scripts/build-shell-assets.mjs --check` |
-| 58 | 1.4s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 65 | 0.9s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
-| 41 | 0.7s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
-| 23 | 0.7s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 40 | 0.5s | 0 | `node scripts/build-oracle-velocity-public.mjs --self-test` |
-| 63 | 0.3s | 0 | `node scripts/check-lighthouse-route-tiers.mjs` |
-| 11 | 0.3s | 0 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
+| 296 | 24.8s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 129 | 20.6s | 0 | `node scripts/measure-throttled-vitals.mjs --self-test` |
+| 140 | 16.9s | 0 | `node scripts/check-proof-surface.mjs` |
+| 263 | 14.5s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 96 | 10.7s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 236 | 9.8s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
+| 61 | 9.7s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 245 | 8.0s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 93 | 4.0s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 133 | 3.8s | 0 | `node scripts/build-geo-vitals.mjs --check` |
 
 ## Failures
 
-- Step 72: `node scripts/build-promotion-receipt.mjs --check` exited 1
+- None.
