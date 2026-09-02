@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T06:35:03.792Z",
+  "generatedAt": "2026-09-02T06:36:20.414Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 2,
-    "healthy": 1,
-    "unknown": 12,
+    "observed": 1,
+    "healthy": 0,
+    "unknown": 13,
     "stale": 0,
     "dead": 1
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "queued",
-      "rawStatus": "queued",
-      "conclusion": null,
-      "updatedAt": "2026-09-02T06:34:51Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-02T06:36:10Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33599477109",
       "headSha": "438cfd6dbb17e1275033af10e41742d4943c4c2b",
       "event": "push"
@@ -174,15 +174,13 @@
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-02T04:36:36Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 1.97,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +206,7 @@
       "dead": true,
       "streak": 3,
       "state": "dead",
-      "ageHours": 0.17,
+      "ageHours": 0.19,
       "staleAfterHours": 48
     },
     {
