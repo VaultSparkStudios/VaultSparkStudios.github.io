@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-09-02T20:11:16.430Z",
+  "generatedAt": "2026-09-02T20:37:03.469Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -14,18 +14,18 @@
     ]
   },
   "state": "content-current",
-  "observedAt": "2026-09-02T20:11:16.430Z",
+  "observedAt": "2026-09-02T20:37:03.469Z",
   "observedOrigin": "multi-vantage-quorum",
   "deployedSha": "e1c7cef4bd492fcffadbf4313ae3f04322549dd5",
   "deployedShaShort": "e1c7cef4bd49",
-  "repoTipShaShort": "e5ba15e1db88",
-  "commitsBehind": 40,
+  "repoTipShaShort": "9b1d59277b9b",
+  "commitsBehind": 42,
   "deployedCommitAt": "2026-09-02T09:13:56.000Z",
-  "ageHours": 10.3,
+  "ageHours": 11.3,
   "undeployedContentCommits": 1,
   "oldestUndeployedContentAt": "2026-09-02T18:29:26Z",
-  "contentLagHours": 1.7,
-  "ageDays": 0.4,
+  "contentLagHours": 2.1,
+  "ageDays": 0.5,
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48,
@@ -44,8 +44,8 @@
   "quorum": {
     "state": "agreed",
     "required": 2,
-    "agreementCount": 3,
-    "observedAt": "2026-09-02T20:11:16.430Z",
+    "agreementCount": 2,
+    "observedAt": "2026-09-02T20:37:03.469Z",
     "agreedShaShort": "e1c7cef4bd49",
     "agreedSha256": "399c7067a13876ac50cdbd3baac1e4c2d8786d8b6ca7d5a0b9833d0c62c79cde",
     "evidence": [
@@ -53,7 +53,7 @@
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-09-02T20:11:16.430Z",
+        "observedAt": "2026-09-02T20:37:03.469Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +67,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-09-02T20:11:16.454Z",
+        "observedAt": "2026-09-02T20:37:03.492Z",
         "shaShort": "e1c7cef4bd49",
         "sha256": "399c7067a13876ac50cdbd3baac1e4c2d8786d8b6ca7d5a0b9833d0c62c79cde",
         "httpStatus": 200,
@@ -81,7 +81,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-09-02T20:11:16.456Z",
+        "observedAt": "2026-09-02T20:37:03.493Z",
         "shaShort": "e1c7cef4bd49",
         "sha256": "399c7067a13876ac50cdbd3baac1e4c2d8786d8b6ca7d5a0b9833d0c62c79cde",
         "httpStatus": 200,
@@ -94,13 +94,13 @@
       {
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
-        "state": "observed",
-        "observedAt": "2026-09-02T20:11:16.457Z",
-        "shaShort": "e1c7cef4bd49",
-        "sha256": "399c7067a13876ac50cdbd3baac1e4c2d8786d8b6ca7d5a0b9833d0c62c79cde",
+        "state": "unobserved",
+        "observedAt": "2026-09-02T20:37:03.495Z",
+        "shaShort": null,
+        "sha256": null,
         "httpStatus": 200,
-        "reason": null,
-        "evidenceIdSha256": "e03197f98cc766be811252bcce31d6482de57c03964b2762c330d5cdc3d4ed5f",
+        "reason": "no-successful-deploy-step",
+        "evidenceIdSha256": null,
         "contentLaneHeadShort": null,
         "contentLaneHeadSha256": null,
         "contentLanePathSetSha256": null
@@ -110,14 +110,14 @@
       {
         "shaShort": "e1c7cef4bd49",
         "sha256": "399c7067a13876ac50cdbd3baac1e4c2d8786d8b6ca7d5a0b9833d0c62c79cde",
-        "count": 3
+        "count": 2
       }
     ]
   },
   "shellParity": {
     "state": "matched",
     "route": "/",
-    "observedAt": "2026-09-02T20:11:16.430Z",
+    "observedAt": "2026-09-02T20:37:03.469Z",
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
       "assets/ambient-core.shell-a2aa51d885.js",
