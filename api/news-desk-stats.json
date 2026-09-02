@@ -10,9 +10,9 @@
     "days": 12,
     "firstDate": "2026-08-07",
     "latestDate": "2026-09-02",
-    "stories": 19,
-    "words": 5805,
-    "minutes": 27,
+    "stories": 20,
+    "words": 6183,
+    "minutes": 29,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -47,29 +47,30 @@
       "wired.com"
     ],
     "sourceCount": 13,
-    "facts": 60,
-    "panels": 19,
+    "facts": 63,
+    "panels": 20,
     "formats": {
       "bit": 4,
       "roast": 1,
       "quick": 5,
       "explainer": 3,
-      "debate": 4
+      "debate": 5
     },
     "editions": {
       "midday": 4,
       "wire": 7,
-      "close": 3,
+      "close": 4,
       "latenight": 3
     },
     "shapes": {
       "split": 3,
       "solo": 4,
-      "agree": 12
+      "agree": 12,
+      "lean": 1
     },
     "predictions": {
-      "onRecord": 12,
-      "open": 12,
+      "onRecord": 14,
+      "open": 14,
       "graded": 0,
       "correct": 0,
       "wrong": 0,
@@ -873,7 +874,7 @@
       "panelBy": "vera",
       "format": "debate",
       "edition": "wire",
-      "isLead": true,
+      "isLead": false,
       "shape": "agree",
       "spread": 1,
       "label": "2 voices, broadly agreed",
@@ -890,8 +891,57 @@
         }
       ],
       "predictions": {
-        "onRecord": 2,
-        "open": 2,
+        "onRecord": 3,
+        "open": 3,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-09-02",
+      "slug": "proactive-cyber-defense-for-governments-and-enterprises",
+      "words": 378,
+      "minutes": 2,
+      "voices": [
+        "mara",
+        "rex",
+        "echo"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "deepmind.google"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "mara",
+      "format": "debate",
+      "edition": "close",
+      "isLead": true,
+      "shape": "lean",
+      "spread": 2,
+      "label": "3 voices, same side, different degree",
+      "positions": [
+        {
+          "personaId": "mara",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "echo",
+          "direction": 0,
+          "verdict": "fair"
+        }
+      ],
+      "predictions": {
+        "onRecord": 3,
+        "open": 3,
         "graded": 0,
         "correct": 0
       }
