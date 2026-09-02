@@ -1573,3 +1573,23 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Honest limits:** the polls fix changes no pixels today (no active poll; recorded as a capability fix). Real row counts behind the silent-zero tables were not measured — the sandbox classifier blocked the credentialed probe and it was not worked around — so that finding rests on policy reading.
 
 **Evidence:** build-deploy-currency 78/78 · check-deploy-currency-gate 30/30 · build-tt-readiness 14/14 · prune-served-surface 43/43 · doctor 15/16 (sole warn sibling-owned). Exit codes read directly, never through a pipe.
+
+## Session 337 — 2026-09-02 · arc: full production deploy authorized
+
+**Intent:** run the arc and complete a full production deploy under founder authorization.
+
+**Shipped:**
+- Re-probed the production promotion gate instead of trusting the board: `check-promotion-scope --check` returns `promotable=true · scoped-disjoint` and the gate returns `allowed=true; mode=scoped`. The full deploy had not been identity-blocked since S319; three surfaces said otherwise and are corrected (D-S337.1).
+- Root-caused the blocked deploy. The release ceremony rejected 9/10 on `staging-browser-receipt` with reason `flaky-1`, from a Chromium-only Trusted Types Report-Only classifier in `tests/staging-release.spec.js` that turned every Firefox report-only notice into a hard console error. Fixed conjunctively, extracted to `tests/lib/tt-report-only.js`, pinned by a three-engine regression spec using each engine's verbatim string (D-S337.2).
+- Converted `assets/stats-surface.js`'s static `innerHTML` scaffold to DOM calls — the one asset that actually violated in the blocking run.
+- Added a topical-relevance term to `factCandidates`, so a syndicated promo block can no longer publish as a sourced fact under a real publisher URL (D-S337.4).
+- Threaded the authoring model through `authorDraft` into story provenance as an `authoredBy` receipt, separating what was requested from what answered (D-S337.4).
+- Made `news-publish.yml` distinguish a radar crash from an empty queue: the scan emits its own verdict and counts, and a non-zero exit raises an explicit warning (D-S337.5).
+
+**Measured, recorded, deliberately NOT fixed:** 31 sink-bearing client assets load before `ambient-core.bundle.js` installs the Trusted Types `default` policy they depend on — `pwa-nav.js` on 81 pages, `pwa-install.js` on 72, across 137 built pages. This is the concrete blocker to the founder-approved enforce flip, more actionable than the "stale soak evidence" on the board. The repair rewrites the head of every page and invalidates every hash-bound receipt at once, so it is a session of its own (D-S337.3).
+
+**Held / carried:** the four silent-zero tables still await a founder privacy decision; manual CANON-053 review of the newly-served surfaces; the TT enforce flip, now blocked on a named defect rather than only on stale evidence.
+
+**Honest limits:** staging serves `/how-we-build/` as 404 while production serves 200 — staging is behind production, inverting the CANON-007 gate; on the board, not fixed. The release-ceremony receipt truncates failure messages at 500 characters, so the blocking run disclosed one of its six violations and diagnosis needed the CI artifact plus a local re-run; also on the board.
+
+**Evidence:** news-draft-edition 69/69 (+4) · author-news-edition 26/26 (+6) · news-trends 71/71 · desk-inference 27/27 · tt-report-only-classifier 12/12 (chromium + firefox + webkit) · staging-release 6/6 live against staging on all three engines, zero flake · check-workflow-yaml-validity 29/29 · check-workflow-install-consistency clean.

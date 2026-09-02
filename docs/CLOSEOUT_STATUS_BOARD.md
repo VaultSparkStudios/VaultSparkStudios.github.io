@@ -1,30 +1,30 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-08-24 (Session 328 closeout) -->
+<!-- generated-at: 2026-09-02 (Session 337 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S328 ═══════╗
-║  Date: 2026-08-24  ·  SIL: 994/1000  ·  Velocity: -6 ↓           ║
-║  Mode: FOUNDER  ·  Agent: codex                                  ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S337 ═══════╗
+║  Date: 2026-09-02  ·  SIL: 991/1000  ·  Velocity: 4 ↓            ║
+║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Opened on a contradiction.** S327 closed at `build:check 3  ║
-║  ✓ **Shipped four fixes**, all verified against live code befor  ║
-║  ✓ **Two self-corrections, recorded rather than buried.** The a  ║
-║  ✓ **Open and named, not implied closed:** 17 other byte-checke  ║
-║  ✓ **Scope held:** the passkey ceremony, the D-S303 warm-origin  ║
+║  ✓ **The full production deploy was never identity-blocked.** T  ║
+║  ✓ **What actually blocked the deploy was a Chromium-shaped ass  ║
+║  ✓ **Fixed engine-agnostically and pinned.** Matching is now co  ║
+║  ✓ **The REAL Trusted Types enforce blocker is load order, meas  ║
+║  ✓ **`stats-surface.js` is no longer a sink.** The one asset th  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
-║    Dev Health         96   ██████████                            ║
-║    Alignment          100  ██████████                            ║
-║    Momentum           100  ██████████                            ║
-║    Engagement         98   ██████████                            ║
+╔══ SCORES · SIL 991/1000 ═══════════════════════════════════════╗
+║    Dev Health         100  ██████████                            ║
+║    Alignment          98   ██████████                            ║
+║    Momentum           99   ██████████                            ║
+║    Engagement         96   ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          100  ██████████                            ║
-║    Security           100  ██████████                            ║
-║    Ecosystem          100  ██████████                            ║
+║    Security           99   ██████████                            ║
+║    Ecosystem          99   ██████████                            ║
 ║    Capital            100  ██████████                            ║
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,12 +36,12 @@
 ║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 107 files  ·  M:104 A:0 D:0 ?:3                        ║
+║  Changes: 244 files  ·  M:238 A:0 D:1 ?:5                        ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -50,12 +50,12 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/16                                            ║
+║  Doctor:        14/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         368/368                                          ║
+║  Tests:         379/379                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         3d ago                                           ║
-║  Truth:         green                                            ║
+║  IGNIS:         8d ago                                           ║
+║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝

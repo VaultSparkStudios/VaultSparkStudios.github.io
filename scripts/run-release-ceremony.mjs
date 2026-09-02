@@ -273,6 +273,13 @@ if (process.argv.includes('--check')) {
         'scripts/run-release-ceremony.mjs',
         'scripts/run-staging-release-gate.mjs',
         'tests/staging-release.spec.js',
+    // S337: the release contract must cover the code that DECIDES pass/fail.
+    // The Trusted Types report-only classifier moved out of the spec into this
+    // module (a spec importing another spec double-registers its tests), and it
+    // is what separates an expected report-only notice from a real console
+    // error. Left unhashed, the single most consequential predicate in the
+    // browser gate could change without changing contractSha256.
+    'tests/lib/tt-report-only.js',
         'scripts/run-attention-release-gate.mjs',
         'tests/attention-surfaces.spec.js',
         'scripts/check-production-promotion-gate.mjs',
@@ -364,6 +371,13 @@ const receipt = {
     'scripts/run-release-ceremony.mjs',
     'scripts/run-staging-release-gate.mjs',
     'tests/staging-release.spec.js',
+    // S337: the release contract must cover the code that DECIDES pass/fail.
+    // The Trusted Types report-only classifier moved out of the spec into this
+    // module (a spec importing another spec double-registers its tests), and it
+    // is what separates an expected report-only notice from a real console
+    // error. Left unhashed, the single most consequential predicate in the
+    // browser gate could change without changing contractSha256.
+    'tests/lib/tt-report-only.js',
     'scripts/run-attention-release-gate.mjs',
     'tests/attention-surfaces.spec.js',
     'scripts/check-production-promotion-gate.mjs',

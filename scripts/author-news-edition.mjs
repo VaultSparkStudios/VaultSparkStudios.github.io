@@ -324,6 +324,26 @@ export function retryNote({ blanks, blocks }) {
 // generous reasoning allowance above desk-inference's 256-token floor.
 export const AUTHOR_MAX_TOKENS = 2048;
 
+/**
+ * The authoring receipt that travels with a published story.
+ *
+ * `requested` is what the desk asked for and `model` is what actually answered;
+ * they differ exactly when a standby authored. Recording both lets a reader of
+ * the artifact tell a preference from an outcome, which is the whole point -
+ * "almost certainly standby-authored" is not a receipt.
+ */
+export function authoredBy(result, attempt) {
+  const model = result?.model ?? null;
+  const fellBackFrom = result?.fellBackFrom ?? null;
+  return {
+    model,
+    requested: fellBackFrom ?? model,
+    fellBack: Boolean(fellBackFrom),
+    attempt,
+    at: new Date().toISOString(),
+  };
+}
+
 async function authorDraft(draft, { attempts, dryRun }) {
   const messages = buildPrompt(draft);
   let last = null;
@@ -350,10 +370,24 @@ async function authorDraft(draft, { attempts, dryRun }) {
       continue;
     }
     const candidate = applyProposal(draft, proposal);
+    // S337: record WHICH model wrote this, on the story, before the draft is
+    // written.
+    //
+    // `chat()` sets `fellBackFrom` precisely so the caller can disclose a
+    // standby author rather than assume the preferred one wrote - and this
+    // function was dropping both `model` and `fellBackFrom` on the floor. The
+    // day artifact carried date/simulated/leadSlug/stories and no story
+    // recorded a model, so with the preferred model depooled the /news/
+    // editorial disclosure stated an assumption where it should state a fact.
+    //
+    // It goes on `story` rather than `_authoring` because `_authoring` is the
+    // input brief and `promote()` publishes `draft.story` alone - provenance
+    // that does not travel with the story it describes is not provenance.
+    candidate.story.authoredBy = authoredBy(result, attempt);
     const verdict = evaluate(candidate);
     if (verdict.ok) {
       if (!dryRun) fs.writeFileSync(draftPathFor(draft), `${JSON.stringify(candidate, null, 2)}\n`);
-      return { ok: true, attempt, draft: candidate, findings: verdict.findings };
+      return { ok: true, attempt, model: result.model ?? null, fellBackFrom: result.fellBackFrom ?? null, draft: candidate, findings: verdict.findings };
     }
     last = verdict;
     messages.push({ role: 'assistant', content: JSON.stringify(proposal).slice(0, 4000) });
@@ -388,7 +422,7 @@ async function main() {
     const result = await authorDraft(draft, { attempts, dryRun });
     if (result.ok) {
       authored += 1;
-      console.log(`✓ ${file} — authored on attempt ${result.attempt}`);
+      console.log(`✓ ${file} — authored on attempt ${result.attempt} by ${result.model || 'unknown'}${result.fellBackFrom ? ` (standby; ${result.fellBackFrom} unavailable)` : ''}`);
     } else if (['credential-missing', 'timeout', 'transport-error', 'rate-limited', 'http-error', 'bad-response', 'empty-response', 'truncated'].includes(result.state)) {
       unavailable += 1;
       console.error(`⚠ ${file} — inference ${result.state}: ${result.reason}`);
@@ -460,6 +494,17 @@ function selfTest() {
   add('a certainty of 1 is refused for a prediction', applyProposal(baseDraft, { predictions: [{ id: 'p-1', confidence: 1 }] }).story.predictions[0].confidence === null);
   add('a stance confidence of 1 is allowed', applyProposal(baseDraft, { stances: [{ personaId: 'x', confidence: 1 }] }).story.stances[0].confidence === 1);
   add('a non-numeric confidence does not overwrite', applyProposal(baseDraft, { stances: [{ personaId: 'x', confidence: 'high' }] }).story.stances[0].confidence === null);
+
+  // S337 authoring provenance. `chat()` sets `fellBackFrom` only when a standby
+  // answered, so these two shapes are the only two the pipeline can produce.
+  const preferred = authoredBy({ ok: true, model: 'Qwen/Qwen3.6-35B-A3B-FP8' }, 1);
+  const standby = authoredBy({ ok: true, model: 'Qwen/Qwen3.8-27B', fellBackFrom: 'Qwen/Qwen3.6-35B-A3B-FP8' }, 2);
+  add('a preferred-model author records no fallback', preferred.fellBack === false && preferred.requested === preferred.model);
+  add('a standby author records what actually wrote', standby.model === 'Qwen/Qwen3.8-27B' && standby.fellBack === true);
+  add('a standby author preserves what was asked for', standby.requested === 'Qwen/Qwen3.6-35B-A3B-FP8');
+  add('the receipt keeps the attempt it was authored on', standby.attempt === 2);
+  add('an unknown model records null, never a guess', authoredBy({ ok: true }, 1).model === null);
+  add('the receipt is timestamped', !Number.isNaN(Date.parse(preferred.at)));
 
   // The gate that matters: an invented figure must not pass.
   const inventedFigure = applyProposal(baseDraft, {

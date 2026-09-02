@@ -273,6 +273,26 @@ const personaBeatMap = () => Object.fromEntries(PERSONAS.map((p) => [p.id, p.bea
 
 /* ── Modes ─────────────────────────────────────────────────────────────── */
 
+/**
+ * Publish the scan's verdict where the workflow can branch on it.
+ *
+ * The publisher used to run this scan as `--scan || echo "trend radar produced
+ * no new corroborated topics"`, which made a genuine radar CRASH and a
+ * legitimate zero-topic result the same green step - the failure then
+ * resurfaced one step later as the misleading `no topic queue`, so the true
+ * cause had to be recovered by reading the log rather than the run status.
+ * Emitting the counts and an explicit verdict lets an empty queue state its own
+ * cause and lets a crash look like a crash. No-ops off CI.
+ */
+function emitScanVerdict(fields) {
+  const out = process.env.GITHUB_OUTPUT;
+  if (!out) return;
+  try {
+    const lines = Object.entries(fields).map(([k, v]) => k + '=' + v);
+    fs.appendFileSync(out, lines.join('\n') + '\n');
+  } catch { /* never fail a scan because the runner's output file misbehaved */ }
+}
+
 async function scan() {
   const now = Date.now();
   const items = [];
@@ -318,6 +338,7 @@ async function scan() {
 
   if (!reached.length) {
     console.error('✗ scan: every source failed — refusing to overwrite the queue with an empty result');
+    emitScanVerdict({ verdict: 'sources-unreachable', items: items.length, topics: clusters.length, queued: 0, rejected: 0 });
     process.exitCode = 1;
     return;
   }
@@ -325,6 +346,13 @@ async function scan() {
   fs.mkdirSync(path.dirname(QUEUE_PATH), { recursive: true });
   fs.writeFileSync(QUEUE_PATH, `${JSON.stringify(queue, null, 2)}\n`, 'utf8');
   console.log(`✓ scan: ${items.length} items → ${clusters.length} topics → ${queue.queued} queued, ${queue.rejected} rejected`);
+  emitScanVerdict({
+    verdict: queue.queued > 0 ? 'queued' : 'empty-queue',
+    items: items.length,
+    topics: clusters.length,
+    queued: queue.queued,
+    rejected: queue.rejected,
+  });
   console.log(`  sources reached ${queue.sourceHealth.reached.length}/${FEEDS.length + 1}${failed.length ? ` · failed: ${[...new Set(failed)].join(', ')}` : ''}`);
   for (const t of queue.topics.slice(0, 8)) {
     console.log(`  ${String(t.score).padStart(3)} [${t.edition || '—'}] ${t.title.slice(0, 72)}`);

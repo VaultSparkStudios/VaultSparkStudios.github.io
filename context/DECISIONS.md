@@ -1132,3 +1132,113 @@ polls right now, and `game_sessions` stays empty for anon under D-S336.5. Today'
 pixels do not change. What changed is that both feeds are now capable of working
 at all — previously the moment the studio posted a poll, it still would not have
 rendered.
+
+## D-S337.1 — The full production deploy was never identity-blocked; the board had been stale for 18 sessions
+
+The founder authorized a full deploy. Three surfaces — the S336 `DEPLOY/P3` board
+item and two `PROJECT_STATUS.json` blockers — recorded the full `confirm_production`
+deploy as gated on the Obelisk identity hold. Measured before acting:
+`check-promotion-scope --check` returns `promotable=true · scoped-disjoint`, and the
+gate under real dispatch conditions returns `allowed=true; mode=scoped`.
+
+That has been true since S319 (D-S319.2), which added the blast-radius resolver:
+the hold is not cleared, and `auth/**`, `surface:identity` and `worker:identity`
+stay held and named on the public receipt — but a candidate provably disjoint from
+that radius may promote. The stale sentence was doing exactly the damage CANON-031
+exists to prevent, and it is the same failure class S321 already paid for: a
+hand-maintained claim about a hold, outliving the hold.
+
+**Rule:** a blocker sentence is a claim with an expiry. Re-probe the gate before
+repeating what the board says about it — the gate is the authority, the prose is a
+cache.
+
+## D-S337.2 — The production deploy was blocked by a Chromium-shaped assertion, not by the site
+
+The dispatched deploy failed the canonical release ceremony 9/10 on
+`staging-browser-receipt`, reason `flaky-1`. The failing check was
+`tests/staging-release.spec.js`, which classifies Trusted Types Report-Only console
+notices as observations rather than errors — deliberately, because
+`require-trusted-types-for 'script'` ships Report-Only by design while the soak runs.
+
+The classifier matched only **Chromium's** phrasing. Firefox words the same
+report-only notice completely differently, so in Firefox every one of those notices
+fell through to `consoleErrors` and failed `expect(consoleErrors).toEqual([])`. The
+sinks involved run off async renders, so it fired on some runs and not others —
+which Playwright reports as flaky, and a flaky result rejects the ceremony. A
+correct site, a correct security posture, and a test that could only ever be right
+in one of the three engines it runs in.
+
+Fixed by matching conjunctively — a report-only marker AND a Trusted Types marker —
+so the classification is engine-agnostic without widening. An ENFORCED violation
+carries no report-only marker and still fails loudly, which is precisely the signal
+the enforce flip depends on. The classifier moved to `tests/lib/tt-report-only.js`
+(a spec importing another spec double-registers its tests) and is pinned by a
+regression spec carrying each engine's verbatim string, including the curly
+quotation marks Gecko renders the directive with — copied from the receipt of the
+run that blocked the deploy. **Proven:** 6/6 staging release tests pass locally
+across chromium, firefox and webkit, zero flake.
+
+**Rule:** a suppressor and the thing it suppresses must be read from the same
+corpus. A pattern written from one engine's console output is a single-engine
+assertion wearing a cross-engine test matrix.
+
+## D-S337.3 — The real Trusted Types enforce blocker is load ORDER, and it is measured but not fixed
+
+While diagnosing the above, the site's actual exposure was measured rather than
+assumed. `ambient-core.bundle.js` installs a TT `default` policy precisely so the
+site's legacy `innerHTML` sinks keep working under enforcement — its own comment
+says it "MUST load before any sink usage". It is the first source *within*
+ambient-core, but ambient-core is not the first script on the page.
+
+Measured across 137 built pages: **31 sink-bearing client assets are loaded before
+the policy that they depend on**, led by `pwa-nav.js` on 81 pages and
+`pwa-install.js` on 72. Under the Report-Only header this is invisible; under the
+founder-approved enforce flip those assignments throw.
+
+This is a materially more actionable blocker than the one on the board, which reads
+that the TT soak evidence is stale. Both are true; only this one names a defect.
+It is **recorded and not fixed** this session: the correct repair hoists the policy
+installer ahead of every sink-bearing asset, which changes the head of every page
+and invalidates every hash-bound receipt at once — a dedicated session's work, not
+a rider on a deploy. The one asset that actually fired in the blocking run
+(`stats-surface.js`, a static scaffold with no interpolation) was converted to DOM
+calls, so it is no longer a sink at all.
+
+**Rule:** a migration bridge is only as good as its load order. "Installs a default
+policy" is not the same claim as "installs it first".
+
+## D-S337.4 — A fact must be about the story, and an edition must record who wrote it
+
+Two public-truth defects in The Desk, both fixed at the source.
+
+`factCandidates` scored digits, proper nouns and reporting verbs and penalised
+marketing pronouns — but nothing tied a candidate sentence to the story it was
+supposedly about, so the 2026-08-31 edition published a syndicated vacuum-cleaner
+promo block as its first sourced fact, under a real publisher URL. Promo copy
+written in a reportorial register is indistinguishable from reporting by VOICE and
+separable only by SUBJECT, so the fix is a relevance term (reusing the existing
+`titleTokens`/`tokenOverlap` helpers), not a tighter marketing filter. It is a
+penalty rather than a filter, and disabled when no topic is supplied.
+
+Separately, `chat()` sets `fellBackFrom` specifically so a caller can disclose a
+standby author — and `authorDraft` was discarding both it and `model`. No published
+story recorded which model wrote it, so with the preferred model depooled the
+`/news/` editorial disclosure stated an assumption. Stories now carry an
+`authoredBy` receipt distinguishing what was requested from what answered.
+
+**Rule:** "almost certainly" is not a receipt, and a filter that scores register
+rather than subject will admit anything written in the right voice.
+
+## D-S337.5 — A publisher step that cannot fail cannot report a failure
+
+`news-publish.yml` ran the trend radar as `--scan || echo "…"`, making a genuine
+radar crash and a legitimate zero-topic slot the same green step; the failure then
+resurfaced one step later as the misleading `no topic queue`. The scan now emits its
+own verdict (`queued` / `empty-queue` / `sources-unreachable`) with
+items/topics/queued/rejected to `GITHUB_OUTPUT`, and a non-zero exit is surfaced as
+an explicit warning carried in `steps.radar.outputs.status`. The step still does not
+paint an unattended publisher red for an upstream blip — that tolerance was
+deliberate and is kept — but tolerance and silence are now separate things.
+
+**Rule:** tolerating a failure and being unable to see it are different design
+choices; `|| echo` collapses them into one.

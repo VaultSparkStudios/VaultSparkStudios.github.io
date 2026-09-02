@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
+const { isTrustedTypesReportOnly } = require('./lib/tt-report-only.js');
 
 const BASE = (process.env.STAGING_RELEASE_URL || '').replace(/\/$/, '');
 const RELEASE_REQUIRED = process.env.STAGING_RELEASE_REQUIRED === '1';
 const THEMES = ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast'];
-const TT_REPORT_ONLY = /^\[Report Only\] This requires a TrustedHTML value else it violates the following Content Security Policy directive:/;
 
 function captureConsoleEvidence(page) {
   const consoleErrors = [];
@@ -14,7 +14,7 @@ function captureConsoleEvidence(page) {
   page.on('console', (message) => {
     if (message.type() !== 'error') return;
     const text = message.text();
-    if (TT_REPORT_ONLY.test(text)) reportOnlyObservations.push(text);
+    if (isTrustedTypesReportOnly(text)) reportOnlyObservations.push(text);
     else consoleErrors.push(text);
   });
   return { consoleErrors, reportOnlyObservations };
@@ -130,7 +130,7 @@ test.describe('explicit staging release evidence', () => {
     await expect(signIn).toBeVisible();
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
-    expect(reportOnlyObservations.every((message) => TT_REPORT_ONLY.test(message))).toBe(true);
+    expect(reportOnlyObservations.every((message) => isTrustedTypesReportOnly(message))).toBe(true);
 
     await Promise.all([
       // Obelisk's discovery-backed authorization endpoint is /auth/authorize;

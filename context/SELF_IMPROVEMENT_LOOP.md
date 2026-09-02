@@ -2673,3 +2673,34 @@ Sparkline (last 5): █████ · 995, 996, 988, 989, 987
 **Brainstorm / committed to TASK_BOARD:**
 1. [S336][SEC/P1] Founder decision on the four silent-zero projection views, then one short migration (D-S336.5).
 2. [S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only now actually serve.
+
+## 2026-09-02 — Session 337 (full deploy unblocked · Chromium-shaped assertion root-caused · TT enforce blocker measured) | Total: 991/1000 (v3.0) | Velocity: +4 | Debt: ↓
+Avgs — 3: 989.0 | 5: 991.6 | 10: 991.4 | 25: 987.7 | all: 983.4
+Sparkline (last 5): █████ · 996, 988, 989, 987, 991
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Five suites green with exit codes read directly: news-draft-edition 69/69 (+4), author-news-edition 26/26 (+6), news-trends 71/71, desk-inference 27/27, tt-report-only-classifier 12/12 across three engines. The decisive receipt is the live one — staging-release 6/6 against the real staging origin on chromium, firefox and webkit, zero flake, reproducing and clearing the exact rejection that blocked the deploy. |
+| Creative Alignment | 98 | No creative surface authored. The Desk work defends the publication's voice from the outside — a syndicated promo block was wearing a reportorial register well enough to publish as a fact, and the fix separates subject from register rather than tightening the voice filter. |
+| Momentum | 99 | Six items shipped, three audit candidates disproved before inclusion rather than deferred, and the session's largest finding — 31 assets loading before the policy they depend on — was not on the list and was reached by measuring rather than assuming. |
+| Engagement | 96 | No engagement surface built. The indirect win is that the deploy path is honest again, so member-facing work reaches readers rather than stalling behind a flaky gate. |
+| Process Quality | 100 | Every audit premise verified against live code or a live probe before inclusion. The blocked deploy was diagnosed to its root — CI artifact downloaded, test re-run locally against real staging — rather than retried; a retry would have passed on the race and taught nothing. The 31-asset exposure was measured across 137 pages before being described, and then NOT fixed, because the honest repair does not fit this session. |
+| Cross-Repo Coherence | 100 | No sibling repository written. studio-ops used only for canon sync and the secrets audit. |
+| Security Posture | 99 | The temptation here was to widen the Trusted Types suppressor until Firefox went quiet. It is instead conjunctive, so an ENFORCED violation — which carries no report-only marker — still fails loudly, and a regression spec pins that direction explicitly. The genuine enforce blocker was named with numbers rather than left as "stale evidence". |
+| Ecosystem Integration | 99 | The relevance term reuses the repo's own `titleTokens`/`tokenOverlap` helpers rather than inventing a similarity measure (CANON-039); the classifier extraction follows the repo's existing CommonJS test idiom. Zero new dependencies. |
+| Capital Efficiency | 100 | No new dependency, no paid call, no new scheduled workflow. One deploy dispatch, which paid for itself by exposing the classifier defect. |
+| Automation Coverage | 100 | Every fix ships a self-test, and the deploy-blocking one ships a regression spec carrying each engine's verbatim console string — the artifact that would have prevented it, pinned so it cannot regress silently. |
+
+**Top win:** The founder asked for a full deploy. The board said it was identity-blocked; the gate said otherwise, and the gate had been saying otherwise for eighteen sessions. Probing before repeating is the whole of that win. The deploy then failed anyway — and the cause was a test that could only ever be right in one of the three browsers it runs in. `tests/staging-release.spec.js` classifies Trusted Types Report-Only notices as observations by design, but recognised only Chromium's phrasing; Firefox words the same notice completely differently, so its report-only notices became hard console errors. Because the sinks render asynchronously it fired on some runs and not others, which Playwright calls flaky, and a flaky result rejects the release ceremony. A correct site, a correct security posture, and a production deploy stopped by a single-engine assertion wearing a three-engine matrix.
+
+**Second win:** Refusing to stop at the fix. Asking *why* Firefox had anything to report at all produced the session's most valuable finding: `ambient-core.bundle.js` installs the TT `default` policy that ~167 legacy sinks depend on, its own comment says it "MUST load before any sink usage", and it is not the first script on the page. Thirty-one sink-bearing assets load before it across 137 pages — `pwa-nav.js` on 81, `pwa-install.js` on 72. Under Report-Only that is invisible. Under the founder-approved enforce flip, every one of them throws.
+
+**Top gap:** That finding is measured and recorded, not fixed. Hoisting the policy installer rewrites the head of every page and invalidates every hash-bound receipt at once, which is a session with its own reseal budget rather than a rider on a deploy — but it means the enforce flip is still blocked and now for a sharper reason than the board carried. Separately, staging serves a route production serves, as a 404: staging is behind production, which inverts the CANON-007 gate the ceremony depends on, and I recorded it rather than chasing it.
+
+**Honesty ledger:** The 31-asset exposure is a static load-order measurement, not a runtime observation — it proves those assets are ordered before the policy, not that each one's sink fires on every page. The `stats-surface` sink removal is a genuine improvement but was not what unblocked the deploy; the classifier was. The release-ceremony receipt truncates failure messages at 500 characters, so the blocking run disclosed one of its six violations and I needed the CI artifact plus a local re-run to see the rest — that cost a round trip and is on the board. TT enforcement remains NOT flipped despite standing founder approval.
+
+**Intent outcome:** Achieved. The deploy was authorized, unblocked at its root rather than retried past, and the block turned out to be ours and fixable.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S337][SEC/P1] Hoist the Trusted Types default-policy installer ahead of every sink-bearing asset; re-measure the 31 before and after (D-S337.3).
+2. [S337][OBS/P2] Record the distinct violating files in the release-ceremony receipt as a structured array, so a rejection is legible without downloading the artifact.

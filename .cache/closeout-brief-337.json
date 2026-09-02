@@ -1,0 +1,79 @@
+{
+  "session": "S337",
+  "date": "2026-09-02",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The full production deploy was never identity-blocked; what actually blocked it was a Chromium-shaped assertion that misread every Firefox report-only notice as a hard error.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "promotion-authority-reprobed",
+      "title": "The full deploy had not been identity-blocked since S319",
+      "axis": "truth",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Three surfaces recorded the confirm_production deploy as gated on the Obelisk identity hold. The gate disagreed and had for eighteen sessions: check-promotion-scope returns promotable=true scoped-disjoint and the gate returns allowed=true mode=scoped. A blocker sentence is a claim with an expiry; the gate is the authority and the prose is a cache.",
+      "evidence": "scripts/check-promotion-scope.mjs --check; scripts/check-production-promotion-gate.mjs --emit-github-output"
+    },
+    {
+      "id": "#2",
+      "slug": "tt-report-only-classifier-engine-agnostic",
+      "title": "A single-engine assertion wearing a three-engine test matrix blocked production",
+      "axis": "correctness",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The release ceremony rejected 9/10 on staging-browser-receipt with reason flaky-1. tests/staging-release.spec.js classifies Trusted Types Report-Only notices as observations by design, but matched only Chromium's wording; Firefox phrases the same notice completely differently, so its notices became hard console errors. The sinks render asynchronously, so it fired intermittently, which Playwright calls flaky, and a flaky result rejects the ceremony. Matching is now conjunctive so an ENFORCED violation still fails loudly.",
+      "evidence": "tests/lib/tt-report-only.js; tests/tt-report-only.unit.spec.js; staging-release 6/6 live on chromium+firefox+webkit, zero flake"
+    },
+    {
+      "id": "#3",
+      "slug": "tt-enforce-blocker-measured",
+      "title": "The real Trusted Types enforce blocker is load order, and it is 31 assets wide",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "ambient-core.bundle.js installs the TT default policy the site's ~167 legacy sinks depend on and says it MUST load before any sink usage, but it is not the first script on the page. Across 137 built pages, 31 sink-bearing assets load before it, led by pwa-nav.js on 81 pages and pwa-install.js on 72. Report-Only hides this; enforcement throws. Measured and recorded rather than half-fixed.",
+      "evidence": "context/TASK_BOARD.md [S337][SEC/P1]; D-S337.3"
+    },
+    {
+      "id": "#4",
+      "slug": "desk-truth-defects",
+      "title": "An advertisement was publishing as a sourced fact, and no edition recorded who wrote it",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "factCandidates scored register and never subject, so a syndicated vacuum-cleaner promo block ran as the 2026-08-31 edition's first sourced fact under a real publisher URL. And authorDraft discarded the model and fellBackFrom that chat() sets specifically for disclosure. Stories now carry an authoredBy receipt separating what was requested from what answered.",
+      "evidence": "news-draft-edition 69/69; author-news-edition 26/26"
+    },
+    {
+      "id": "#5",
+      "slug": "publisher-crash-visibility",
+      "title": "A publisher step that could not fail could not report a failure",
+      "axis": "observability",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "news-publish.yml ran the radar as --scan || echo, making a crash and an empty queue the same green step. The scan now emits its own verdict and counts to GITHUB_OUTPUT and a non-zero exit raises an explicit warning. Tolerance kept; silence removed.",
+      "evidence": "news-trends 71/71; .github/workflows/news-publish.yml"
+    },
+    {
+      "id": "#6",
+      "slug": "release-contract-covers-its-predicate",
+      "title": "The release contract now hashes the code that decides pass/fail",
+      "axis": "security",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "Extracting the classifier out of the spec moved the browser gate's most consequential predicate outside contractSha256, where it could have changed without changing the contract. Both evidenceHash lists now include it.",
+      "evidence": "scripts/run-release-ceremony.mjs"
+    }
+  ],
+  "followUps": [
+    "Hoist the Trusted Types default-policy installer ahead of all 31 sink-bearing assets, re-measure, then decide the founder-approved enforce flip on real evidence.",
+    "Record the distinct violating files in the release-ceremony receipt as a structured array; its 500-character message truncation disclosed one of six violations.",
+    "Diagnose why staging serves /how-we-build/ as 404 while production serves 200, and add a parity probe."
+  ],
+  "blockers": [
+    "uptime-probe cron is red on two consecutive scheduled runs: it rebinds api/deploy-currency.json, runs the seal chain, then byte-checks the artifact it already moved.",
+    "Four public tables still render a silent zero to anonymous visitors, awaiting a founder privacy decision.",
+    "Trusted Types enforcement remains held, now on a named defect rather than only on stale soak evidence."
+  ]
+}

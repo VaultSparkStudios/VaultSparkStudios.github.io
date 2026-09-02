@@ -86,9 +86,39 @@ jobs:
           echo "Publishing slot: $edition ($(date -u +%F))"
 
       - name: Refresh the trend radar
-        # Corroborated topics only. A failure here means no new topics this slot,
-        # which is a normal outcome, not a broken run.
-        run: node scripts/news-trend-radar.mjs --scan || echo "trend radar produced no new corroborated topics"
+        id: radar
+        # An empty queue is a normal outcome; a radar CRASH is not - and until
+        # S337 this step could not tell them apart. `--scan || echo "…"` made
+        # both a green step, and the failure then resurfaced one step later as
+        # the misleading "no topic queue", so the real cause had to be recovered
+        # by reading the log rather than the run status.
+        #
+        # The scan now writes its own verdict (queued / empty-queue /
+        # sources-unreachable) plus items/topics/queued/rejected to
+        # GITHUB_OUTPUT, so downstream steps and a human reading the run see the
+        # cause stated rather than inferred. The step still does not fail the
+        # workflow on a thin slot - an unattended publisher painted red by an
+        # upstream blip is the failure this repo's resilience gate exists to
+        # prevent - but a non-zero exit is now surfaced as an explicit warning
+        # and carried in `steps.radar.outputs.status`.
+        run: |
+          set +e
+          node scripts/news-trend-radar.mjs --scan
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ]; then
+            echo "::warning title=Trend radar scan failed::exit $status — this is a RADAR FAILURE, not an empty queue"
+          fi
+
+      - name: Report the trend radar verdict
+        run: |
+          echo "radar verdict : ${{ steps.radar.outputs.verdict || 'unreported' }}"
+          echo "exit status   : ${{ steps.radar.outputs.status }}"
+          echo "items         : ${{ steps.radar.outputs.items }}"
+          echo "topics        : ${{ steps.radar.outputs.topics }}"
+          echo "queued        : ${{ steps.radar.outputs.queued }}"
+          echo "rejected      : ${{ steps.radar.outputs.rejected }}"
 
       - name: Prepare the edition skeleton
         id: prepare

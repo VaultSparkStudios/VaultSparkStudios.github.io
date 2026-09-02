@@ -81,7 +81,34 @@ export function extractText(html) {
  * quote. Scored so the ones a reader could actually verify float up —
  * quantities and named organizations beat adjectives.
  */
-export function factCandidates(text, { max = 8 } = {}) {
+/**
+ * A sentence that shares NO significant token with the story is off-topic copy,
+ * not a fact about it.
+ *
+ * S334 shipped a syndicated advertising block as the 2026-08-31 edition's first
+ * sourced fact - "Scott Gilbertson Top Shark Promo Codes for August 2026 Shark
+ * makes some seriously powerful vacuums..." - rendered as a cited claim under a
+ * real publisher URL. It passed every filter this function had: it carries
+ * digits (+3) and proper nouns (+1) and uses none of the marketing pronouns or
+ * calls-to-action the rubric penalises. Nothing tied a candidate to the story it
+ * was supposedly about, so a promo interstitial scored like reporting.
+ *
+ * The fix is a relevance term, not a tighter marketing filter: promo copy
+ * written in a reportorial register is indistinguishable from reporting by
+ * VOICE, and separable only by SUBJECT. Sentences sharing at least one topic
+ * token are untouched, so this cannot demote an on-topic claim; it sinks only
+ * copy about something else entirely.
+ *
+ * It is a penalty rather than a hard filter because a real article does carry
+ * on-topic sentences naming none of the headline's words - a follow-on sentence
+ * carrying the quantity while its subject sits in the previous one. At -4 the
+ * promo block (+4) falls below the score>0 cut while a quantified, attributed
+ * claim (+8) survives at +4. Omitting `topicTokens` disables the term, so every
+ * caller without a topic keeps the previous behaviour exactly.
+ */
+const OFF_TOPIC_PENALTY = 4;
+
+export function factCandidates(text, { max = 8, topicTokens = null } = {}) {
   const sentences = String(text || '')
     .split(/(?<=[.!?])\s+(?=[A-Z])/)
     .map((s) => s.trim())
@@ -95,6 +122,10 @@ export function factCandidates(text, { max = 8 } = {}) {
     if (/\b[A-Z][a-z]+ [A-Z][a-z]+\b/.test(s)) score += 1;          // proper nouns
     if (/\b(we|our|you|your)\b/i.test(s)) score -= 3;                // marketing voice
     if (/\b(sign up|learn more|contact us|subscribe)\b/i.test(s)) score -= 6;
+    // Off-topic: shares no significant token with the story being drafted.
+    if (topicTokens && topicTokens.size && tokenOverlap(titleTokens(s), topicTokens) === 0) {
+      score -= OFF_TOPIC_PENALTY;
+    }
     return { text: s, score };
   }).filter((c) => c.score > 0);
 
@@ -129,7 +160,7 @@ export const sourceHost = (url) => {
  */
 const MIN_ARTICLE_CHARS = 900;
 
-async function fetchSource(url) {
+async function fetchSource(url, { topicTokens = null } = {}) {
   if (isAggregatorLink(url)) {
     return { url, ok: false, reason: 'aggregator-redirect (no article body)', facts: [] };
   }
@@ -139,7 +170,7 @@ async function fetchSource(url) {
     const res = await fetch(url, { headers: { 'user-agent': UA }, signal: controller.signal });
     if (!res.ok) return { url, ok: false, reason: `HTTP ${res.status}`, facts: [] };
     const text = extractText(await res.text());
-    const facts = factCandidates(text);
+    const facts = factCandidates(text, { topicTokens });
     if (text.length < MIN_ARTICLE_CHARS) return { url, ok: false, reason: `thin body (${text.length} chars)`, chars: text.length, facts };
     if (!facts.length) return { url, ok: false, reason: 'no extractable factual claims', chars: text.length, facts };
     return { url, ok: true, chars: text.length, facts };
@@ -359,7 +390,10 @@ export async function selectDraftableTopic(topics, {
     }
 
     used += 1;
-    const sources = await Promise.all(urls.map((u) => fetcher(u)));
+    // The topic's own words are what separate a fact ABOUT this story from
+    // syndicated copy that merely shares the page with it.
+    const topicTokens = titleTokens(topic.title || topic.slug);
+    const sources = await Promise.all(urls.map((u) => fetcher(u, { topicTokens })));
     const reachable = sources.filter((s) => s.ok);
     if (reachable.length) return { topic, sources, attempts, skipped, followUps, exhausted: false };
     for (const s of sources) {
@@ -569,7 +603,8 @@ async function prepare(argv) {
       return;
     }
     const urls = [...new Set((topic.sources || []).map((s) => s.url))].slice(0, 4);
-    sources = await Promise.all(urls.map(fetchSource));
+    const topicTokens = titleTokens(topic.title || topic.slug);
+    sources = await Promise.all(urls.map((u) => fetchSource(u, { topicTokens })));
     if (!sources.some((s) => s.ok)) {
       console.error(`✗ every source for ${wanted} was unreachable — refusing to draft from nothing`);
       for (const s of sources) console.error(`    ${s.url} — ${s.reason}`);
@@ -814,6 +849,21 @@ async function selfTest() {
   t('marketing voice is demoted or dropped', !facts.some((f) => /sign up for our newsletter/.test(f.text)));
   t('fact candidates are quotable length', facts.every((f) => f.text.length >= 60 && f.text.length <= 260));
   t('empty prose yields no facts', factCandidates('').length === 0);
+
+  // S337: the real 2026-08-31 defect — a syndicated promo block published as the
+  // edition's first sourced fact. Scores +4 under the pre-S337 rubric (digits,
+  // proper nouns) with no penalty, because nothing tied a candidate to its story.
+  const promo = 'Scott Gilbertson Top Shark Promo Codes for August 2026 Shark makes some seriously powerful vacuums and right now you can save on several of them. '
+    + 'OpenAI said the training run consumed 25,000 accelerators over eleven weeks. '
+    + 'The company confirmed that the resulting checkpoint will be released to researchers under an evaluation licence.';
+  const aiTokens = titleTokens('OpenAI ships a frontier training checkpoint to researchers');
+  const onTopic = factCandidates(promo, { topicTokens: aiTokens });
+  t('an off-topic promo block is not a sourced fact', !onTopic.some((f) => /Shark Promo Codes/.test(f.text)));
+  t('on-topic quantified claims survive the relevance term', onTopic.some((f) => /25,000 accelerators/.test(f.text)));
+  t('the relevance term is opt-in — no topic, previous behaviour',
+    factCandidates(promo).some((f) => /Shark Promo Codes/.test(f.text)));
+  t('an empty topic token set disables the term',
+    factCandidates(promo, { topicTokens: new Set() }).some((f) => /Shark Promo Codes/.test(f.text)));
 
   t('the first prediction comes due inside the near-term window',
     daysBetween('2026-08-08', defaultResolveBy('2026-08-08', 0)) <= NEAR_TERM_DAYS);

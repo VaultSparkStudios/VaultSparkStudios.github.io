@@ -11,7 +11,39 @@
     const article = document.createElement('article');
     article.className = 'analytica-metric';
     article.dataset.state = metric.available === false ? 'unavailable' : (metric.freshnessState || 'unknown');
-    article.innerHTML = `<p class="analytica-metric__value"></p><h3></h3><p class="analytica-metric__unit"></p><p class="analytica-metric__reading"></p><p class="analytica-metric__meta"></p><details class="analytica-metric__provenance"><summary>Measurement receipt</summary><dl></dl></details>`;
+    // S337: built with DOM calls rather than an innerHTML scaffold.
+    //
+    // The string carried no interpolation and every value below is written with
+    // textContent, so this was never an XSS risk - but it IS a Trusted Types
+    // injection sink, and this module can run before ambient-core.bundle.js
+    // installs the `default` policy that lets the site's ~167 legacy sinks keep
+    // working. Under the Report-Only header that race surfaces as a console
+    // violation, which is what rejected the S337 release ceremony as `flaky-1`:
+    // Firefox logged it on one run and not the retry, because the ordering is a
+    // race rather than a constant. Under the founder-approved enforce flip the
+    // same race throws and the stats surface renders nothing.
+    //
+    // A static scaffold needs no policy at all, so the fix is to stop being a
+    // sink rather than to depend on load order or reach for a named policy. The
+    // provenance rows below already build this way; this now matches them.
+    const scaffold = [
+      ['p', 'analytica-metric__value'],
+      ['h3', null],
+      ['p', 'analytica-metric__unit'],
+      ['p', 'analytica-metric__reading'],
+      ['p', 'analytica-metric__meta'],
+    ];
+    for (const [tag, className] of scaffold) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      article.append(node);
+    }
+    const details = document.createElement('details');
+    details.className = 'analytica-metric__provenance';
+    const summary = document.createElement('summary');
+    summary.textContent = 'Measurement receipt';
+    details.append(summary, document.createElement('dl'));
+    article.append(details);
     article.querySelector('.analytica-metric__value').textContent = fmt(metric);
     article.querySelector('h3').textContent = metric.label;
     article.querySelector('.analytica-metric__unit').textContent = `${metric.unitOrDenominator} · ${metric.period}`;

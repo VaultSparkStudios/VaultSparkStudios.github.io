@@ -1,3 +1,24 @@
+## S337 Promotion-Authority and Cross-Engine Assertion Correction (2026-09-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Stories gain an `authoredBy` receipt (`model`, `requested`, `fellBack`, `attempt`, `at`) separating what the desk asked for from what answered; the trend-radar scan emits `verdict` plus items/topics/queued/rejected to `GITHUB_OUTPUT`. Both are additive and self-tested. |
+| Prompt/template alignment | 5 | The Trusted Types Report-Only classifier is now conjunctive and pinned against each engine's verbatim console string, so the assertion says what it means in all three engines rather than in one. |
+| Derived-view freshness | 4 | The promotion gate was re-probed live rather than read from the board; staging was probed live and found BEHIND production (`/how-we-build/` 404 vs 200 at the apex), which is recorded as an open yellow rather than smoothed over. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S337.1..5), SIL, WORK_LOG, PROJECT_STATUS and this file all reference S337. |
+| Contradiction density | 5 | Closed a contradiction that had stood for eighteen sessions — three surfaces asserting a production blocker the gate itself disagreed with. Open and named: the 31-asset Trusted Types load-order exposure, staging parity, and the four silent-zero tables. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — for staging parity and the measured-but-unrepaired Trusted Types load order, both stated with numbers rather than deferred quietly.
+
+- **Truth corrected: a blocker sentence outlived its blocker.** The S336 board item and two `PROJECT_STATUS.json` blockers recorded the full production deploy as gated on the Obelisk identity hold. `check-promotion-scope --check` returns `promotable=true · scoped-disjoint` and the gate returns `allowed=true; mode=scoped`, and has since S319's blast-radius resolver. All three surfaces are corrected to say what is actually held — the identity radius — and what is not. (D-S337.1)
+- **Truth corrected: a green suppressor was engine-specific.** The release ceremony's browser gate classified Trusted Types Report-Only notices as observations using Chromium's wording alone, so Firefox's report-only notices were counted as hard console errors. It rejected correct releases intermittently and blamed the site. Now conjunctive, engine-agnostic, and pinned by regression. (D-S337.2)
+- **Truth preserved: an ENFORCED violation must still fail.** Widening the suppressor until Firefox went quiet would have passed the ceremony and destroyed the only signal the enforce flip depends on. Matching requires a report-only marker AND a Trusted Types marker, and a test asserts explicitly that an enforced violation is NOT suppressed.
+- **Truth corrected: an advertisement was published as a sourced fact.** The 2026-08-31 edition's first fact was a syndicated vacuum-cleaner promo block under a real publisher URL, because fact scoring measured register and never subject.
+- **Truth corrected: the newsroom did not record who wrote it.** `chat()` sets `fellBackFrom` for disclosure and `authorDraft` discarded it, so with the preferred model depooled the `/news/` disclosure stated an assumption. Stories now carry the receipt.
+- **Not verified, stated as such:** the 31-asset Trusted Types exposure is a static load-order measurement across 137 built pages. It proves those assets are ordered before the policy they depend on; it does not prove each one's sink fires on every page. The repair is unshipped.
+- **Not verified, stated as such:** staging is behind production and the cause is undiagnosed. The release ceremony's browser matrix therefore measures a tree that does not match what is being promoted.
+- **Not verified, stated as such:** the release-ceremony receipt truncates a failure message at 500 characters, so the blocking run named one of its six violations. The other five were never enumerated; the fix was validated by a clean local three-engine run rather than by exhausting that list.
+
 ## S336 Deploy-Truth and Evidence-Age Correction (2026-09-02)
 
 | Dimension | Score | Evidence |
