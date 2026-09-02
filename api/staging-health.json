@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T08:10:01.512Z",
+  "generatedAt": "2026-09-02T09:35:44.799Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
@@ -9,10 +9,10 @@
     "/studio-pulse/:localShellParity",
     "/membership/:localShellParity"
   ],
-  "candidateBuildSha": "ec0a63bb3a854b66f589d56477f553d7cd206d1c",
+  "candidateBuildSha": "01ff999b91a09b09074e7d347c7088d29a901c49",
   "stagingBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
   "artifactManifest": {
-    "candidateRoot": "06bb0790fb54056a9913dfb84f3d22ad8efe8fba21fdfd84530bf93ce155d777",
+    "candidateRoot": "60660472a3892a564b4b33022f33a6b6b92e5fc9651e346b5fb180caa6028ff2",
     "candidateLeafCount": 29,
     "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
     "stagingLeafCount": 29,
@@ -24,66 +24,25 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "staging-behind",
-    "productionRoutes": 134,
+    "state": "uncomparable",
+    "productionRoutes": null,
     "stagingRoutes": 115,
-    "missingOnStaging": [
-      "/evidence/",
-      "/games/call-of-doodie/.ai/",
-      "/games/franchise-architect/.ai/",
-      "/games/mindframe/.ai/",
-      "/games/solara/.ai/",
-      "/games/vaultfront/.ai/",
-      "/how-we-build/",
-      "/news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/",
-      "/news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/",
-      "/news/2026-09-01/openai-starts-charging-some-customers-only-when-its-ai/",
-      "/projects/atlas/.ai/",
-      "/projects/concurrent/.ai/",
-      "/projects/hashmark/.ai/",
-      "/projects/ouren/.ai/",
-      "/projects/promogrind/.ai/",
-      "/projects/scriptorium/.ai/",
-      "/projects/seamline/.ai/",
-      "/projects/shadow/.ai/",
-      "/projects/sparkraid/.ai/",
-      "/projects/statvault/.ai/",
-      "/projects/syntha/.ai/",
-      "/projects/velaxis/.ai/",
-      "/projects/vorn/.ai/"
-    ],
-    "missingOnStagingCount": 23,
-    "aheadOnStaging": [
-      "/feedback/",
-      "/feedback/insights/",
-      "/proof/",
-      "/vault-wall/"
-    ],
-    "aheadOnStagingCount": 4,
+    "missingOnStaging": [],
+    "missingOnStagingCount": null,
+    "aheadOnStaging": [],
+    "aheadOnStagingCount": null,
     "gating": false,
     "gatingDeferredBecause": "staging refresh path is an open blocker (S337); measure before gating"
   },
   "routes": [
     {
       "route": "/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
+      "statusParity": false,
       "shellParity": false,
-      "prodShell": [
-        "assets/ambient-core.shell-a2aa51d885.js",
-        "assets/ambient-feature.shell-ca3b329506.js",
-        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/home-idle-loader.shell-1d24709d88.js",
-        "assets/nav-sheet.shell-d6938be4eb.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-bf10f7005d.css",
-        "assets/theme-toggle.shell-8221605898.js"
-      ],
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-2e0e0d195a.js",
         "assets/ambient-feature.shell-ca3b329506.js",
@@ -97,12 +56,12 @@
         "assets/style.shell-dfee6188fb.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "headerParity": true,
+      "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -115,7 +74,10 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "shell-mismatch"
+        "status-mismatch",
+        "prod-forbidden",
+        "shell-mismatch",
+        "header-mismatch"
       ]
     },
     {
