@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T22:10:55.377Z",
+  "generatedAt": "2026-09-02T22:36:00.939Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
     "staging-artifact-root-mismatch",
     "/membership/:localShellParity"
   ],
-  "candidateBuildSha": "01ff999b91a09b09074e7d347c7088d29a901c49",
+  "candidateBuildSha": "86b206eab87177f2100a560e2c56ae9a89a15624",
   "stagingBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
   "artifactManifest": {
-    "candidateRoot": "252dc2cbfc2db57cd0e375e063a78fdb079570407fc9be344012275c9a387235",
+    "candidateRoot": "5ec1582e8b7fea9052121c664577053f3b0a19dab0f33958808cbebb10460c13",
     "candidateLeafCount": 29,
-    "stagingRoot": "84f7206d751b8cb9a080f9424218cae272e4e6023bac7291b3788cb677ac3e51",
+    "stagingRoot": "523a93e04d63236544ba9807c2a047f7e8849b4f5fb421ba8fa2dadffa0fd195",
     "stagingLeafCount": 29,
     "matched": false
   },
@@ -24,13 +24,14 @@
   "surfaceParity": {
     "state": "uncomparable",
     "productionRoutes": null,
-    "stagingRoutes": 135,
+    "stagingRoutes": 136,
     "missingOnStaging": [],
     "missingOnStagingCount": null,
     "aheadOnStaging": [],
     "aheadOnStagingCount": null,
-    "gating": false,
-    "gatingDeferredBecause": "staging refresh path is an open blocker (S337); measure before gating"
+    "gating": true,
+    "gatingSince": "S339",
+    "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
   },
   "routes": [
     {
