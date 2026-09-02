@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-01T20:30:17.607Z",
+  "generatedAt": "2026-09-02T04:36:27.726Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
@@ -17,10 +17,10 @@
   },
   "counts": {
     "total": 12,
-    "passed": 6,
+    "passed": 10,
     "failed": 0,
-    "unknown": 6,
-    "longestUnknownStreak": 12,
+    "unknown": 2,
+    "longestUnknownStreak": 13,
     "neverKnownGood": 2
   },
   "results": [
@@ -38,7 +38,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +55,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +72,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +89,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -105,58 +105,48 @@
           "outcome": "unknown"
         },
         {
-          "status": 429,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 12,
+      "unknownStreak": 13,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
     {
       "slug": "seamline",
       "destination": "https://seamline.now/",
-      "verdict": "unknown",
-      "reason": "transient-or-blocked",
-      "attemptCount": 2,
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
       "attempts": [
         {
-          "status": 429,
+          "status": 200,
           "redirected": false,
-          "outcome": "unknown"
-        },
-        {
-          "status": 429,
-          "redirected": false,
-          "outcome": "unknown"
+          "outcome": "reachable"
         }
       ],
-      "unknownStreak": 2,
-      "lastKnownGoodAt": "2026-09-01T12:40:53.098Z",
-      "lastKnownGoodAgeHours": 7.8
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "shadow",
       "destination": "https://yourshadow.io/",
-      "verdict": "unknown",
-      "reason": "transient-or-blocked",
-      "attemptCount": 2,
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
       "attempts": [
         {
-          "status": 429,
+          "status": 200,
           "redirected": false,
-          "outcome": "unknown"
-        },
-        {
-          "status": 429,
-          "redirected": false,
-          "outcome": "unknown"
+          "outcome": "reachable"
         }
       ],
-      "unknownStreak": 2,
-      "lastKnownGoodAt": "2026-09-01T12:40:53.098Z",
-      "lastKnownGoodAgeHours": 7.8
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "statvault",
@@ -172,30 +162,25 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "syntha",
       "destination": "https://syntha.music/",
-      "verdict": "unknown",
-      "reason": "transient-or-blocked",
-      "attemptCount": 2,
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
       "attempts": [
         {
-          "status": 429,
+          "status": 200,
           "redirected": false,
-          "outcome": "unknown"
-        },
-        {
-          "status": 429,
-          "redirected": false,
-          "outcome": "unknown"
+          "outcome": "reachable"
         }
       ],
-      "unknownStreak": 2,
-      "lastKnownGoodAt": "2026-09-01T12:40:53.098Z",
-      "lastKnownGoodAgeHours": 7.8
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "vaultfront",
@@ -215,31 +200,26 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 12,
+      "unknownStreak": 13,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
     {
       "slug": "veilos",
       "destination": "https://veilos.io/",
-      "verdict": "unknown",
-      "reason": "transient-or-blocked",
-      "attemptCount": 2,
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
       "attempts": [
         {
-          "status": 429,
+          "status": 200,
           "redirected": false,
-          "outcome": "unknown"
-        },
-        {
-          "status": 429,
-          "redirected": false,
-          "outcome": "unknown"
+          "outcome": "reachable"
         }
       ],
-      "unknownStreak": 2,
-      "lastKnownGoodAt": "2026-09-01T12:40:53.098Z",
-      "lastKnownGoodAgeHours": 7.8
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "velaxis",
@@ -255,7 +235,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-01T20:30:17.607Z",
+      "lastKnownGoodAt": "2026-09-02T04:36:27.726Z",
       "lastKnownGoodAgeHours": 0
     }
   ],
