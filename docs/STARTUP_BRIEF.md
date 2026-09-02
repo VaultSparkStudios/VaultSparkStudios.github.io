@@ -18,10 +18,10 @@
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
-║  Expected S338; PROJECT_STATUS summary says S337.                ║
-║  Session 338 ran the arc under founder authorization for a dire  ║
-║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
+╔══ LAST SESSION (S338) - WHAT SHIPPED ══════════════════════════╗
+║  S338 (2026-09-02, from SIL ledger): Total: 991/1000 | Velocity  ║
+║  Tests  -                                                        ║
+║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -62,21 +62,21 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 338 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    379/379 passing  ·  Deploy: N/A                       ║
+║  Tests:    381/381 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   381/381 passing  ·  2026-09-02                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         379/379 passing (2026-09-02) · UNVERIFIED (no  ║
+║  ✓  Tests         381/381 passing (2026-09-02)                   ║
 ║  ⛔  Velocity      0 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
@@ -129,17 +129,17 @@
 ║   96  [PRODUCT]      Refresh staging, then flip surfaceParity.g  ║
 ║        Refresh staging, then flip surfaceParity.gating to true.  ║
 ║                                                                  ║
-║   96  [INTELLIGENCE]  Audit the other receipt round trips for t  ║
-║        Audit the other receipt round trips for the D-S338.1 cla  ║
+║   96  [INTELLIGENCE]  Two more receipts may be ordered before w  ║
+║        Two more receipts may be ordered before what they observ  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   87  [PRODUCT]      <!-- evidence-open: the files named are th  ║
-║        <!-- evidence-open: the files named are the churning OUT  ║
+║   90  [PRODUCT]      The home portfolio cards render a doubled   ║
+║        The home portfolio cards render a doubled status label.   ║
 ║                                                                  ║
-║   81  [VERIFY]       <!-- evidence-open: weekly-maintenance.yml  ║
-║        <!-- evidence-open: weekly-maintenance.yml and uptime-pr  ║
+║   90  [INTELLIGENCE]  Audit the other receipt round trips for t  ║
+║        Audit the other receipt round trips for the D-S338.1 cla  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
