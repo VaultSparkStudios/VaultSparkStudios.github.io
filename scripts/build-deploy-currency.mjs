@@ -103,6 +103,25 @@ export function isChallengeError(error) {
 }
 
 /**
+ * Transient upstream failure — an edge challenge, an origin 5xx, or a network
+ * reset/timeout. Distinct from a REAL error (auth, config, a drifted receipt),
+ * which must still hard-fail.
+ *
+ * S336: this probe already degraded correctly — `mergeObservation` retains the
+ * last usable observation on any unusable read and `main` exits 0, so a blip
+ * never destroys the measurement. What it lacked was a NAME for that policy,
+ * so `check-ci-publisher-resilience` could not see it, and a network reset was
+ * logged identically to a genuine failure. Both are fixed by classifying here.
+ */
+export function isTransientProbeError(error) {
+  if (!error) return false;
+  const text = String(error);
+  if (isChallengeError(error)) return true;
+  if (/\b5\d\d\b/.test(text)) return true;
+  return /ECONNRESET|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|ECONNREFUSED|socket hang up|network|aborted|timeout/i.test(text);
+}
+
+/**
  * Age of a retained observation, FROZEN at merge time.
  *
  * Deliberately not computed at derive time from the wall clock: `--check`
@@ -754,6 +773,15 @@ function selfTest() {
       !isHandAuthoredContent('api/public-intelligence.json', { generated: new Set(['api/public-intelligence.json']) })],
 
     ['the content ceiling is published, not implicit', current.thresholds.contentBlockHours === CONTENT_BLOCK_HOURS],
+
+    // S336: the degrade policy is named so it can be seen, and is honest in both directions.
+    ['an edge challenge is transient', isTransientProbeError('build-sha feed HTTP 403')],
+    ['an origin 5xx is transient', isTransientProbeError('build-sha feed HTTP 503')],
+    ['a network reset is transient', isTransientProbeError('fetch failed: ECONNRESET')],
+    ['a timeout is transient', isTransientProbeError('The operation was aborted due to timeout')],
+    ['an auth/config error is NOT transient', !isTransientProbeError('missing CLOUDFLARE_API_TOKEN')],
+    ['a drifted receipt is NOT transient', !isTransientProbeError('receipt drifted; run --probe')],
+    ['no error is not transient', !isTransientProbeError(null)],
     ['the receipt discloses the content clock', 'contentLagHours' in current && 'oldestUndeployedContentAt' in current && 'undeployedContentCommits' in current],
     ['a failed content measurement is null, never a clean zero',
       deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: null }).contentLagHours === null],
@@ -899,7 +927,12 @@ async function main() {
     fs.writeFileSync(OUT, content);
   }
   const feed = JSON.parse(content);
-  if (feed.honesty.challengedAt) console.log(`build-deploy-currency: probe at ${feed.honesty.challengedAt} was challenged (${feed.honesty.challengeError}) — last usable observation retained`);
+  if (feed.honesty.challengedAt) {
+    // Transient upstream trouble is a degrade, not a failure: the retained
+    // observation still stands and this exits 0 (see isTransientProbeError).
+    const kind = isTransientProbeError(feed.honesty.challengeError) ? 'transient' : 'unclassified';
+    console.log(`build-deploy-currency: probe at ${feed.honesty.challengedAt} failed — ${kind} (${feed.honesty.challengeError}) — last usable observation retained, exiting 0`);
+  }
   console.log(`build-deploy-currency: ${feed.state}${feed.commitsBehind !== null ? ` · ${feed.commitsBehind} commit(s) behind · ${feed.ageDays}d` : ''}`);
 }
 

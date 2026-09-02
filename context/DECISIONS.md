@@ -995,3 +995,140 @@ claimed savings. Converting the Desk art masters to AVIF: `data/news-desk/art/*.
 are source masters; the served derivatives are already PNG/WebP/AVIF from `sharp`,
 so the change would only shrink the clone and risk the sources. Neither is re-raised
 without new evidence.
+
+## D-S336.1 — A route the site advertises must survive its own deploy prune, and the gate says so locally
+
+`prune-served-surface.mjs` deletes anything not positively classified by
+`config/served-surface.json`, then refuses if the prune broke an advertised
+route. That refusal is correct, but it only ever ran inside `pages-deploy.yml`.
+`build:check` ran the script's `--self-test`, which exercises pure functions over
+synthetic fixtures and never touches the real manifest. So the manifest could
+drift from the pages that actually exist and nothing said so until a deploy was
+already running.
+
+It had drifted twice. `/evidence/` (S334) and `/how-we-build/` (S335) were both
+built, linked and advertised in `sitemap.xml`, and neither was ever added to the
+manifest. Every deploy path — content lane and full production alike — refused.
+The failure is delayed and self-planting: the content lane promotes
+`sitemap.xml`, so a new route becomes *advertised in production* on one deploy
+and only breaks the NEXT one. That is why S334 and S335 both appeared to
+succeed.
+
+`--check` now runs the real manifest against the real git-tracked tree in
+`build:check`. Proven by restoring the S335-era manifest: exit 1 naming exactly
+those two routes, exit 0 once fixed.
+
+## D-S336.2 — `vault-wall/` stays in the served manifest until a full deploy actually retires it
+
+S335 deleted `vault-wall/index.html` and removed its manifest prefix. But the
+content lane cannot delete files and cannot promote `_redirects`, so production
+still serves the page (probed: HTTP 200) and the deployed `sitemap.xml` still
+advertises it. With the prefix removed, an overlay deploy prunes a live
+advertised route out of the tree it is about to publish.
+
+The manifest describes what the tree being deployed should serve, and that tree
+is the baseline, not HEAD. So the prefix is restored; it matches nothing at HEAD
+and is therefore inert there. It comes out when a full production deploy
+actually retires the page and regenerates the sitemap.
+
+Declaring `/vault-wall/` an `edgeRoutes` entry was rejected: `edgeRoutes` means
+the Worker resolves the route before Pages, and no such 301 serves today. Using
+it to silence the gate would have been a claim about production that is not true.
+
+## D-S336.3 — Deploy currency gets a second clock, aged from the oldest undeployed content
+
+`build-deploy-currency.mjs` measured one thing: the span from the deployed commit
+to the repo tip, against a 48h ceiling. Hourly `[skip ci]` publishers commit
+several times an hour and promotions land on whatever HEAD is at dispatch time,
+so that clock is continuously reset by automation. Measured live this session:
+34 commits behind, `ageHours` 10.1, verdict `behind` — a PASS — while the entire
+S335 release was unpromoted and `/how-we-build/` returned 404. Thirty-four
+uptime crons and one stranded release are the same reading to a commit counter.
+
+The receipt now also carries `undeployedContentCommits`,
+`oldestUndeployedContentAt` and `contentLagHours`, aged from the OLDEST
+undeployed hand-authored commit so one fresh commit cannot mask days of waiting
+behind it, and escalates to `stale` past a much tighter 12h content ceiling.
+
+Two constraints shaped the design:
+- **Churn is classified structurally, never by subject line or author.** A path
+  counts as hand-authored when the served-surface manifest classifies it as
+  served AND `config/evidence-graph.json` does not declare it a generated output.
+  `scripts/` is hand-authored but never deployed, so it correctly does not count;
+  `api/uptime.json` is served but regenerated hourly, so it correctly does not.
+- **The held identity backlog must never trip it.** Matched shell parity returns
+  `content-current` before the content clock is consulted, and content lag is
+  measured against the promoted `contentLaneHead` rather than the deliberately
+  held baseline sha — otherwise the receipt would report pages as undeployed
+  that a reader can already load.
+
+`check-deploy-currency-gate.mjs` now names which ceiling fired, because the two
+call for different actions.
+
+## D-S336.4 — TT readiness discloses the age of its evidence, and a stale manifest never unlocks enforcement
+
+`api/tt-readiness.json` is `publicSafe` and gates the Trusted Types enforce flip.
+It computed no age at all: `amber-soak` held whenever a warm row existed, at any
+age, forever, while `nextAction` told the reader to "wait for warm rows to age
+out". Nothing aged anything out. Separately it re-stamped `generatedAt` on every
+build over a manifest generated 2026-07-07 against a declared 30-day window — a
+57-day-old reading published under today's date.
+
+The builder now computes real ages from each row's own `lastSeen`, ages rows out
+for real, and publishes `manifestGeneratedAt`, `manifestAgeDays`,
+`soakWindowDays` and `evidenceStale` so a fresh `generatedAt` can never again
+imply a fresh reading.
+
+A manifest older than its own window yields a new `stale-evidence` status that
+keeps `enforceEligible` false. This is the load-bearing part: all 17 warm rows
+report `stillPresentNearReportedLine: false` and would age out, which would have
+produced `enforce-candidate` from a two-month-old fossil. Manufacturing
+readiness from absence is the one thing this receipt must not do. The live
+artifact moves `amber-soak` → `stale-evidence` and names the real next step,
+re-running the KV soak.
+
+This resolves the D-S335.7 carry and deliberately does NOT flip
+`TT_ENFORCE_ENABLED`. The founder's S335 approval stands; the evidence does not
+yet exist to act on it.
+
+## D-S336.5 — The remaining silent-zero tables need a founder privacy decision, not an agent migration
+
+S335 fixed `vault_members` with a `public_leaderboard` definer view. A sweep of
+every anon-key read on a public page found the same defect in four more places,
+verified against the migrations and probed live:
+
+- `challenge_submissions` — no anon SELECT policy (only `read_own` + admin). Read
+  anonymously by `/community/` and all seven `/leaderboards/*` pages. Probed:
+  HTTP 200, count 0.
+- `game_sessions` — no SELECT policy for anon at all. Read by `/community/` and `/`.
+- `point_events` — `auth.uid() = user_id` only. Powers the referral leaderboard
+  and the public profile's "Recent activity", which renders its empty state forever.
+- `member_achievements` — `auth.uid() = member_id` only; the public profile shows
+  "No achievements unlocked yet." permanently. Its policy also keys `member_id`
+  while the client filters `user_id`.
+- The `vault_members(username)` PostgREST embeds on the leaderboards resolve to
+  null for anon, so even fixing the four above would render raw UUIDs.
+
+The remedy generalizes cleanly — definer projection views alongside
+`public_leaderboard`, each honouring `public_profile`, each with an explicit
+`grant select … to anon`. It is NOT applied this session because it is not a bug
+fix: it decides *which member activity becomes publicly readable*. Exposing
+per-member point events and achievement timelines to anonymous visitors is a
+privacy and product decision reserved for the founder under the escalation rule,
+and it is not one to make unattended. The diagnosis is on the board with the
+exact call sites; the SQL is a short session once the columns are chosen.
+
+## D-S336.6 — The community polls filter could never parse, and it is recorded as a capability fix, not a lit surface
+
+`community/index.html` queried `?eq.is_active=true` — operator and column
+swapped. Probed live against the anon endpoint: `HTTP 400 PGRST100 "failed to
+parse filter (true)"`; the corrected `is_active=eq.true` returns 200. The RLS
+policy was always correct. The same block filtered `game_sessions` on
+`created_at`, which does not exist on that table (`HTTP 400`, the column is
+`played_at`).
+
+Recorded honestly: the corrected query returns `[]` because there are no active
+polls right now, and `game_sessions` stays empty for anon under D-S336.5. Today's
+pixels do not change. What changed is that both feeds are now capable of working
+at all — previously the moment the studio posted a poll, it still would not have
+rendered.

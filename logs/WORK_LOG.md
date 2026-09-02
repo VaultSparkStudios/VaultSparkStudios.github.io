@@ -1549,3 +1549,27 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Disproved:** semantic-search prompt caching (below cacheable minimum); Desk art AVIF (served derivatives already optimized).
 
 **Held / carried:** Trusted Types flip (readiness receipt says not eligible); uptime probe Worker-cron (designed); CURRENT_STATE sharding; `/atlas/` retirement; build-to-build churn in commit-derived feeds; `page_feedback` schema drift.
+
+---
+
+## 2026-09-02 — Session 336 (stranded release recovered · deploy alarm gets a second clock · TT evidence age disclosed)
+
+**Intent:** run the full project-aware `/arc` under founder authorization to commit/push directly to `main` and fully deploy production.
+
+**Shipped:**
+- **Restored the deploy path.** `prune-served-surface` had been refusing on `/evidence/` (S334) and `/how-we-build/` (S335) — both pages exist, are linked, and are advertised in `sitemap.xml`, and neither was ever added to `config/served-surface.json`. No deploy of any kind could succeed. Added both prefixes; restored `vault-wall/` because the content lane cannot delete files or promote `_redirects`, so production still serves it and the deployed sitemap still advertises it (D-S336.2).
+- **Added `prune-served-surface --check`** and wired it into `build:check`. Until now the gate ran only `--self-test` over synthetic fixtures while the real manifest was exercised solely inside `pages-deploy.yml`, so drift was undiscoverable until a deploy was already running. Proven by restoring the S335-era manifest: exit 1 naming exactly the two routes, exit 0 once fixed.
+- **Promoted the content lane and verified it live.** Run `33585666290`, 194 paths. `/how-we-build/` 404 → **200**; served `contentLaneHead 88393a29` contains `aff64499`. The entire S335 release — member-write lockdown, Season 1, community wall, dashboard meter — reached readers for the first time.
+- **Gave `deploy-currency` a second clock.** It measured only `deployedCommit → repo tip` against a 48h ceiling, a span hourly cron commits continuously reset, so 34 uptime crons and one stranded release were the same reading (`behind`, PASS). Now publishes `undeployedContentCommits` / `oldestUndeployedContentAt` / `contentLagHours`, aged from the OLDEST undeployed hand-authored commit against a 12h ceiling, with churn classified structurally against the served-surface manifest and `config/evidence-graph.json` rather than by commit subject. Measured against the promoted `contentLaneHead` so held identity work and already-live pages cannot trip it. `check-deploy-currency-gate` now names which ceiling fired.
+- **Made `api/tt-readiness.json` disclose the age of its evidence.** It computed no age at all (`amber-soak` forever on any warm row, while telling the reader to wait for rows to age out that nothing aged) and re-stamped `generatedAt` every build over a manifest from 2026-07-07 against a 30-day window. Now ages rows for real, publishes `manifestAgeDays`/`soakWindowDays`/`evidenceStale`, and adds `stale-evidence`, which keeps `enforceEligible` false so a fossil can never manufacture readiness. Live artifact moved `amber-soak → stale-evidence`.
+- **Fixed two unparseable PostgREST queries on `/community/`:** `?eq.is_active=true` (operator/column swapped — probed live, `HTTP 400 PGRST100`) and a `game_sessions` filter on `created_at`, a column that does not exist (`played_at` does).
+
+**Closed by evidence, no work needed:** the four merged routes carried from S335 — `/nervous-system`, `/membership-value`, `/vaultsparked`, `/ip` all 301 correctly at the apex under a real browser UA.
+
+**Escalated, not built:** four public tables (`challenge_submissions`, `game_sessions`, `point_events`, `member_achievements`) still render a silent zero to anonymous visitors. The remedy generalizes S335's `public_leaderboard` pattern, but it decides which member activity becomes publicly readable — a founder privacy decision. Full diagnosis with call sites in D-S336.5.
+
+**Held / carried:** Trusted Types flip (now honestly blocked on a stale soak, not on a broken gate); manual CANON-053 review of the newly-served surfaces; the four projection views; everything on the identity/Obelisk hold, untouched.
+
+**Honest limits:** the polls fix changes no pixels today (no active poll; recorded as a capability fix). Real row counts behind the silent-zero tables were not measured — the sandbox classifier blocked the credentialed probe and it was not worked around — so that finding rests on policy reading.
+
+**Evidence:** build-deploy-currency 78/78 · check-deploy-currency-gate 30/30 · build-tt-readiness 14/14 · prune-served-surface 43/43 · doctor 15/16 (sole warn sibling-owned). Exit codes read directly, never through a pipe.

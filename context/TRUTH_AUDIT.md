@@ -1,3 +1,23 @@
+## S336 Deploy-Truth and Evidence-Age Correction (2026-09-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | `api/deploy-currency.json` gains `undeployedContentCommits`/`oldestUndeployedContentAt`/`contentLagHours` and a published `contentBlockHours` ceiling; `api/tt-readiness.json` goes to schema 1.1 with `manifestGeneratedAt`/`manifestAgeDays`/`soakWindowDays`/`evidenceStale`. Both receipts now publish the inputs their verdicts depend on rather than implying them. |
+| Prompt/template alignment | 5 | The founder's standing S335 approval to flip Trusted Types is recorded as still standing and deliberately not acted on, because the evidence it depends on is stale — approval and evidence are kept as separate facts. |
+| Derived-view freshness | 4 | Production now serves the S335 release (`contentLaneHead 88393a29`, `/how-we-build/` 200) and `deploy-currency` reads `content-current`. Held at 4: four public member tables still render a silent zero to anonymous visitors, so `/community/` and `/leaderboards/*` show numbers that are not the truth about the underlying data. Named, escalated, not concealed. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S336.1..6), SIL, WORK_LOG, PROJECT_STATUS and this file all record S336. |
+| Contradiction density | 5 | Closed three surfaces that reported a property they did not measure. Open and named: the four silent-zero tables (founder decision), and the Trusted Types soak input. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — not for the identity leg alone this time, but because four public surfaces render zeros that anonymous visitors cannot distinguish from an honest empty state.
+
+- **Truth corrected: "deployed" was never checked against a reader.** Production had been serving a build that predated the entire S335 release by eight hours, and `/how-we-build/` returned 404 to the public while the repo, the handoff and every gate reported the session shipped. The claim "content lane deploys on push" in the S335 handoff was false — `pages-deploy.yml` states that pushes and schedules cannot deploy at all. Corrected at the source: the deploy path was repaired, the lane promoted, and the result verified by fetching the URL rather than by reading a workflow conclusion.
+- **Truth corrected: a green gate was measuring a clock automation rewinds.** `deploy-currency` escalated only on `deployedCommit → repo tip` against a 48h ceiling. Because hourly `[skip ci]` publishers commit constantly and promotions land on those commits, the span never grows — so 34 cron commits and one stranded release produced the identical verdict `behind` · PASS. A second clock now ages from the oldest undeployed hand-authored commit, and the gate names which ceiling fired.
+- **Truth corrected: a public receipt wore a fresh date over two-month-old evidence.** `api/tt-readiness.json` is `publicSafe` and re-stamped `generatedAt` on every build while its only input had not been regenerated since 2026-07-07 — against its own declared 30-day window. It now discloses `manifestAgeDays` so a fresh generation timestamp can never again imply a fresh reading.
+- **Truth preserved: a stale manifest does not become readiness.** All 17 warm Trusted Types rows report their sinks already gone and would age out under the new logic, which would have produced `enforce-candidate` from a fossil and unlocked a live security-header change. The new `stale-evidence` status refuses that explicitly and keeps `enforceEligible:false`. Manufacturing readiness from absence was available, cheap, and declined.
+- **Truth preserved: the identity hold was not touched.** Only the scoped content partition was promoted; `confirm_production` remained false and `check-production-promotion-gate` still reports `hold (real-provider-e2e-pending)`.
+- **Not verified, stated as such:** how many rows the four silent-zero tables actually hide is unmeasured — the credentialed probe was blocked by the sandbox classifier and was not worked around. The policy reading proves anonymous visitors can never see a row; it does not quantify what they are missing.
+- **Not verified, stated as such:** the surfaces that began serving this session have no manual CANON-053 rendered-pixel review. S335's captures were taken while production still served the previous build, so they are not evidence about the live pages.
+
 ## S329 Sitewide Truth-Currency Sweep (2026-08-24)
 
 | Dimension | Score | Evidence |

@@ -7,4 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 1 | 38dd4b18 lock member writes, light the public member surfaces, make the stub deletion stick, merge four routes | pending |
+| Conversion | 1 | aff64499 lock member writes, light the public member surfaces, make the stub deletion stick, merge four routes | pending |

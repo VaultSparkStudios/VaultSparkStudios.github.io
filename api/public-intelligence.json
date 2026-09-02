@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-02T04:36:27.835Z",
+  "generatedAt": "2026-09-02T03:41:00.339Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 335,
+    "currentSession": 336,
     "lastUpdated": "2026-09-02",
-    "currentFocus": "Session 335 re-audited the site one day after S334 and found the P0 was not on the list: any signed-in member could write their own points, plan and paid AI tier from the browser, and every anonymous public member surface had been blank for months because the members table had no anon read policy. Both are closed with a live-applied, probe-proven migration (column-scoped grants, atomic gift RPC, a public_leaderboard projection view). The stub deletion S334 recorded as shipped had been silently reverted by a generator on every build; that generator is now a court and the stubs are gone. Four redundant routes merged into their canonical pages with edge 301s, a new /how-we-build/ page with a vocabulary gate, Season 1 live, member dashboard quota meter and feedback loop, 16 duplicate build invocations removed, and ~360 MB of session snapshots out of the index.",
-    "nextMilestone": "Confirm the four merged routes 301 at the apex from a real browser; manual CANON-053 review of the five changed surfaces across seven themes; audit the remaining public tables for the silent-zero anonymous read; fix the Trusted Types readiness ageing and flip TT_ENFORCE_ENABLED; then the founder-reserved Obelisk passkey ceremony when available.",
+    "currentFocus": "Session 336 set out to run the arc and deploy, and found the deploy path itself was broken: prune-served-surface had been REFUSING on /evidence/ (added S334) and /how-we-build/ (added S335) because neither page was ever added to the hand-maintained config/served-surface.json, so no deploy of any kind could succeed. The failure was self-planting — the content lane promotes sitemap.xml, so a new route becomes advertised in production on one deploy and only breaks the next one, which is why S334 and S335 both looked like they worked. The entire S335 release had been sitting unserved. Fixed the manifest, added a prune --check that runs the real manifest against the real tree in build:check (proven to fire on the restored regression), and promoted the content lane: /how-we-build/ now returns 200 and the deployed contentLaneHead contains the S335 commit. Then fixed the reason nothing alarmed — deploy-currency measured only deployed-commit-to-tip against a 48h ceiling, a clock hourly cron commits continuously reset, so 34 uptime crons and one stranded release read identically; it now ages a second clock from the oldest undeployed hand-authored commit, classified structurally against the served-surface manifest and evidence graph. Also made api/tt-readiness.json disclose the age of its evidence: it had been stamping a fresh generatedAt over a manifest from 2026-07-07 and holding amber-soak forever on rows nothing ever aged out.",
+    "nextMilestone": "Founder decision on which member activity becomes publicly readable, then one short migration adding definer projection views for challenge_submissions, game_sessions, point_events and member_achievements — four public tables still render a silent zero to anonymous visitors. Then the manual CANON-053 rendered-pixel review of the surfaces that only now actually serve, and a fresh Trusted Types KV soak so the enforce flip can be decided on real evidence.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 335,
+    "sessionsCompleted": 336,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -145,17 +145,17 @@
     "vaulted": 0,
     "silCategories": {
       "devHealth": 99,
-      "alignment": 99,
+      "alignment": 98,
       "momentum": 98,
-      "engagement": 97,
+      "engagement": 96,
       "process": 99,
       "coherence": 100,
-      "security": 100,
+      "security": 99,
       "ecosystem": 99,
       "capital": 100,
-      "automation": 98,
-      "total": 989,
-      "updatedSession": 335
+      "automation": 99,
+      "total": 987,
+      "updatedSession": 336
     },
     "sealedNextRevealAt": null
   },
@@ -818,7 +818,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-02T03:10:18.331Z",
+    "checkedAt": "2026-09-02T01:38:59.505Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

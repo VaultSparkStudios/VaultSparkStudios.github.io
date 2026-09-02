@@ -16,123 +16,6 @@ Momentum runway: ~12 sessions  |  Intent rate: 100% (last 5)
 Last session: 2026-09-01 | Session 335 | Total: 989/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
-## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Full build 309/309; focused release, Worker, News, mobile, crawler, claims, and status suites green. |
-| Creative Alignment | 99 | SOUL-aligned public language and elite multi-theme mobile execution; no unsupported “daily” or green-status claims retained. |
-| Momentum | 97 | Seven of eight audit items shipped and staging completed; production and immutable rollback correctly remain open. |
-| Engagement | 97 | Rank Projector mobile usability and Desk claim/freshness surfaces improved; real traffic outcomes remain future evidence. |
-| Process Quality | 98 | Independent NO-GO honored; circular Doctor gate root-fixed with a narrow staging-bound phase transition. Deduction for discovering that circularity during ceremony rather than preflight. |
-| Cross-Repo Coherence | 96 | Obelisk dependency is named precisely and no sibling tree was edited; the real provider journey remains incomplete. |
-| Security Posture | 100 | Deploy bypass closed, capability slices enforced, push storage bounded, secrets stayed behind the gateway, production hold preserved. |
-| Ecosystem Integration | 99 | Humans, agents, News, status, CI, staging, and release receipts agree; immutable rollback origin remains unresolved. |
-| Capital Efficiency | 100 | No new package, SaaS, runtime model, or per-user variable cost. |
-| Automation Coverage | 100 | Mobile runtime, touch, caller/callee, crawler, freshness, claim parity, CI unknown, and status projection failure classes are executable gates. |
-
-**Top win:** The release path now makes the S317 caller/callee outage structurally impossible and makes a local production command obey the same evidence as CI.
-
-**Top gap:** The exact staging candidate cannot advance until Obelisk proves the real provider journey; the warm rollback origin also remains mutable `main` pending a founder architecture decision.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. Bind the post-Pages deploy currency probe and ordinary Doctor=0 to an automatic paired rollback trigger.
-2. Productize the capability-slice receipt so Pages bytes, Worker version, route contracts, and rollback anchors are one two-phase promotion artifact.
-
-## 2026-08-16 — Session 317 (Desk reader loop · per-article stats · gate closure) | Total: 981/1000 (v3.0) | Velocity: +9 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | build:check 302/302 with the exit code read directly, Playwright 23/23, Worker units 43/43, doctor blockingFailing 0. The suite itself grew by 7 real gates. |
-| Creative Alignment | 100 | Every fix serves SOUL #1 (coherent Vault vocabulary — the signal labels were the clearest violation on the site) and SOUL #3 (security/observability not negotiable). Nothing shipped that the evidence could not carry. |
-| Momentum | 99 | Four phases, seven founder-visible defects, five broken gates, all in one session, each traced to a root cause rather than patched. |
-| Engagement | 97 | The reader loop is genuinely connected again and readers can now see reach, engaged time and attention. Held back because none of it displays a real number yet — the surfaces are honest but empty. |
-| Process Quality | 98 | Premises were verified against live production before any code, the console log was treated as evidence and every line of it chased down, and the counting-unit error was caught by inspecting raw rows rather than trusting the obvious approach. Deducted for the long rebase churn on generated artifacts. |
-| Cross-Repo Coherence | 100 | No sibling tree touched. The Worker deploy used the documented deadlock-breaking lane, which leaves the promotion hold intact. |
-| Security Posture | 100 | The idle field is allow-list validated at the edge so a free-text duration can never be stored; the reaction rollup avoids unbounded KV enumeration; no credential material touched; secrets scan clean on every commit. |
-| Ecosystem Integration | 99 | Three feeds modeled in the evidence graph, registered in agents.json for AI discovery, and wired into the nightly publisher with their history files staged. |
-| Capital Efficiency | 96 | Flat-rate time; the expensive part was diagnosis and it produced permanent gates. Deducted for the ambient-core hash rotation, which costs every returning visitor one ~66KB re-download. |
-| Automation | 93 | The nightly publisher now carries both new rollups, and a real cascade strand was closed. Deducted because the reactions probe has only ever run by hand — its first scheduled run is unproven, and the same is true of the idle-band path end to end. |
-
-**What improved:** The through-line is that every reported symptom had a deeper cause than the symptom suggested, and chasing each one paid. "The buttons are broken" was a release-lane shape that ships callers and strands callees. "I don't understand these labels" was a label reading the wrong field, capable of marking two stories as the day's lead. "I can't see article stats" was a counter that already existed, with a counting unit that would have overstated reach tenfold had it been used naively. The founder's console log — offered almost as an aside — contained a 404 that had been live on every page of the site for weeks. The most durable outcome is not any single fix but the gate arithmetic: 295 → 302, including two byte-drift gates that had existed, worked, and never once run.
-
-**What to watch:** This session shipped pipelines, not numbers. Reach, reader signals and idle bands are all correct and all empty, and there is a real risk that a future session reads "0 above floor" as a defect and starts loosening thresholds to make the page look alive. The floors are the feature. The honest next step is to wait for traffic and confirm the surfaces cross them on their own. Separately, the identity/promotion hold remains the structural constraint behind most of this session's damage — the stale Link preload header still cannot be fixed without a full-site deploy.
-
-**Committed next ([SIL]):**
-- `[SIL][OBS/P1]` Confirm reach and reader signals cross their floors and render real numbers from a scheduled run — the only outstanding proof for this session's work, and the first end-to-end observation of an `idleBand` row in R2.
-- `[SIL][NEWS/P1]` Complete `Reader-signal → Director's Report closure` now that the rollup exists: move the ranked table from "not enough yet" to real content and add the public "You asked → The Desk changed/filed" receipt, reusing `build-you-asked-shipped.mjs`.
-
-## 2026-08-14 — Session 316 (deploy-currency truth chain · propagation recovery) | Total: 972/1000 (v3.0) | Velocity: -22 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 97 | Canonical build:check passed 295/295 from step one on the final tree, Playwright compliance 18/18, doctor blockingFailing 0. Deducted because reaching green required recovering a build break this session's own propagation commit introduced. |
-| Creative Alignment | 99 | The work serves SOUL #3 (security/observability not negotiable) and CANON-031 directly: a public trust surface now states what is true instead of a permanent neutral placeholder. |
-| Momentum | 96 | Seven ranked items shipped end to end, but the session spent substantial effort on recovery rather than net-new visitor-facing value. |
-| Engagement | 94 | No new visitor-facing capability. The gain is that an existing public signal is honest — real, but not additive to what a visitor can do. |
-| Process Quality | 95 | Premises were verified against live code before inclusion and two candidates were rejected as false, the gate fix was mutation-tested against the real tree, and exit codes were read directly rather than through pipes. Deducted for committing a 38-file propagation delivery before running the suite against it — the break was discoverable earlier. |
-| Cross-Repo Coherence | 100 | Three upstream regressions were restored locally and reported to studio-ops as Ark cargo; no sibling tree was edited, and D-S220.1 was applied consistently to seven re-delivered duplicates. |
-| Security Posture | 99 | Restored the CANON-019 unknown-vs-missing distinction that had been silently reverted, so a typo can no longer be escalated as a human-blocked missing credential. No credential material touched. |
-| Ecosystem Integration | 98 | The canon index was two active canons stale; brought current. Both Ark cargos carry precise before/after and the consumer-side failure mode. |
-| Capital Efficiency | 97 | Flat-rate model time; the expensive part was diagnosis, and it produced a permanent structural gate rather than a one-off patch. |
-| Automation | 97 | Both publishing crons now survive transient push failures, and the git-depth gate detects the defect class through indirection. The oracle-feed sanitizer's mid-run drift was identified but not fixed. |
-
-**What improved:** The session's real contribution is diagnostic rather than additive. Three defects were each individually invisible and were jointly masking one another on the public `/status/` surface — a blind gate permitted a shallow checkout, the shallow checkout manufactured a false `diverged`, and a producer/reader field mismatch hid that false alarm behind a permanent neutral tile. Every surface-vs-surface check stayed green throughout, because the surfaces agreed with each other and were simply all wrong together. Root-fixing all three, then proving the strengthened gate fails on the real defect in the real tree (not just on fixtures), converts a one-time repair into a class-level guarantee. The fourth finding — an assertion that could only pass in the degraded states, so CI went red precisely when production was healthy — is the same pathology wearing different clothes.
-
-**What to watch:** The propagation clobber is now a recurring pattern rather than an incident: three local-ahead surfaces in a single delivery, one of which a prior decision had already resolved. Restoring locally and shipping Ark cargo is correct but is a treadmill; the startup-brief renderer in particular now diverges from upstream in *both* directions, which will clobber again on the next propagation unless studio-ops merges rather than overwrites. Also unresolved: the corrected deploy-currency feed was re-probed from this workstation, so CI-side proof is still pending, and `sanitize-public-oracle-feed --check` can drift mid-run against an externally regenerated gitignored file.
-
-**Committed next ([SIL]):**
-- `[SIL][OBS/P1]` Confirm the next CI `uptime-probe` run publishes `content-current` with `historyComplete: true` — the first CI-side proof that `fetch-depth: 0` produces the corrected state where it actually gets published.
-- `[SIL][OPS/P1]` Drive a real two-way merge of `render-startup-brief.mjs` from studio-ops (upstream's brief-preflight + semantic-fingerprint with this repo's startup-evidence + revenue-freshness) so the clobber cycle ends instead of replaying.
-
-## 2026-08-14 — Session 315 (Cloudflare ecosystem analytics · Desk reader feedback) | Total: 994/1000 (v3.0) | Velocity: +6 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Canonical build-check passed 295/295 from step one; browser, Worker, visual, contract, and lint gates are also green. |
-| Creative Alignment | 100 | The expansion turns analytics into a readable Studio narrative and makes every Desk illustration a participatory editorial object without vanity metrics. |
-| Momentum | 100 | Six concrete packages shipped across ingestion, public surfaces, ecosystem separation, reactions, engaged-time telemetry, and automation. |
-| Engagement | 100 | Visitors can react to each generated panel and see privacy-safe presence/attention states; the signals have stable editorial destinations. |
-| Process Quality | 96 | The first duplicate browser run used a nonexistent preview filename and produced connection-refusal noise before the health-gated rerun passed 32/32; the unrelated dirty-tree gate boundary was then isolated precisely. |
-| Cross-Repo Coherence | 99 | No sibling tree was edited; Cloudflare/Analytica capability follow-ups are shipped through Ark rather than direct writes. |
-| Security Posture | 100 | Credential material stayed ignored/gateway-bound; public receipts redact identifiers; presence and time summaries are bounded, deduped, rate-limited, and sample-suppressed. |
-| Ecosystem Integration | 100 | All 29 active zones are classified and the explorer exposes 19 public project states plus coverage gaps without borrowing traffic between products. |
-| Capital Efficiency | 100 | GraphQL pulls, static feeds, KV TTLs, R2 rollups, and zero runtime model calls preserve the cost-neutral architecture. |
-| Automation Coverage | 100 | Scheduled analytics and engagement builds, discovery contracts, content hashes, Lighthouse tiers, mutation/privacy tests, Axe, and 56-state visual review close the loop. |
-
-**Intent:** Achieved in source and verification. The founder's Cloudflare ecosystem analytics, per-article reader/time request, and per-meme reaction request are fully implemented; provider/release boundaries remain honestly dark.
-
-**Brainstormed improvements**
-1. Bind main-domain Web Analytics activation to a public-safe Site Info/tag receipt once the narrow Account Settings scope exists.
-2. Turn sample-gated figure/story reactions into Director's Report assignments and visible “You asked → The Desk changed” receipts after the Worker can deploy.
-3. Add per-article attention trend cohorts bound to content-release receipts so headline/art changes can be evaluated without visitor identity.
-
-**Committed to TASK_BOARD:** items 1 and 2.
-
-## 2026-08-13 — Session 314 (public Analytica · honest interaction · durable content releases) | Total: 997/1000 (v3.0) | Velocity: +10 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Canonical build, final rebased-tree build:check 295/295 (receipt 16cd2fe9841849b708b166cc), changed-surface browser suites, mutation tests, secret/supply-chain scans, staging, and production all green; the unbounded full Playwright matrix timeout is explicitly not counted. |
-| Creative Alignment | 100 | Stats and News deepen the site's public proof identity instead of adding generic dashboard chrome. |
-| Momentum | 100 | Ten audit items shipped and reached production in one continuous arc. |
-| Engagement | 100 | Hero choices now have honest denominators; reaction UI distinguishes accepted, counted, failed, unavailable, and retry states. |
-| Process Quality | 98 | Staging caught a root Stats feed 404 and production caught a receipt-finalizer false negative; both were root-fixed and rerun green before closeout. |
-| Cross-Repo Coherence | 99 | No sibling trees were edited; the existing Obelisk dependency remained held. |
-| Security Posture | 100 | Positive served manifest, fail-closed exact path exceptions, no auth/Worker widening, secrets clean. |
-| Ecosystem Integration | 100 | Stats is linked from human and agent discovery; content receipts bind the general promotion receipt rather than forking release truth. |
-| Capital Efficiency | 100 | Static/precomputed surfaces, zero runtime model spend, proof wall time reduced about 90%. |
-| Automation Coverage | 100 | Relationship mutations, delivery states, focus/inert behavior, discovery, manifest, receipt continuity, and 42 capture receipts are enforced. |
-
-**Intent:** Achieved. The requested autonomous arc saturated the ranked audit, released every safe content change, and preserved the unrelated full-site identity hold.
-
-**Brainstormed improvements**
-1. Claim-evidence relationship map with stable fact IDs, factRefs, and one-click agent critique packets.
-2. Field-vitals observed-through/stale-days state machine bound to release SHA and minimum samples.
-3. Reader-signal aggregation into the Director's Report once the Worker endpoint is deployable, with explicit insufficient-sample states.
-
-**Committed to TASK_BOARD:** items 1 and 2.
-
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
 ### What happened
@@ -2457,150 +2340,6 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
 
-## 2026-08-12 — Session 313 (article-bound Desk art + exact live release proof) | Total: 994/1000 (v3.0) | Velocity: +1 | Debt: ↓
-
-**Score (SIL v3.0): 994/1000.**
-
-| Category | Score | Evidence |
-|---|---:|---|
-| Dev Health | 99 | News self-tests 133/133 and release build-check 295/295; generated dependency drift found by post-release compliance was fully rebuilt. |
-| Creative Alignment | 100 | Founder direction became seven genuinely article-specific scenes, not a cosmetic template refresh. |
-| Momentum | 100 | Audit 10/10 shipped through staged and production release in one arc. |
-| Engagement | 100 | Art-led index cards, stronger first-viewport promise, richer satire, and visible recurring voices materially improve story selection and retention. |
-| Process Quality | 97 | Exact live proof is now structural; deduction for discovering unrelated generated-metric drift only in post-release compliance. |
-| Cross-Repo Coherence | 99 | Identity hold and content-lane boundary preserved; no sibling tree edited. |
-| Security Posture | 99 | Source masters excluded from the served lane, metadata stripped, staged secret scan clean, and generated art is not represented as evidence. |
-| Ecosystem Integration | 100 | Feed provenance, agents, sitemap, visual QA, deploy workflow, and Studio status surfaces agree. |
-| Capital Efficiency | 100 | Authoring-time assets and deterministic static delivery add no runtime model/API cost. |
-| Automation Coverage | 100 | Duplicate-pixel, article-anchor, icon, responsive-format, visual-matrix, and exact live-byte gates cover the new failure classes. |
-
-**Top win:** Article specificity is enforced at three layers—brief, asset, and decoded pixels—so “unique art” can no longer mean renamed templates.
-
-**Top gap:** The current anchor gate proves that the right nouns are present, not that image and caption communicate the right relationship.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [NEXT][SIL] Add editor-facing semantic caption/art parity scoring with a human-readable mismatch explanation.
-2. [NEXT][SIL] Persist an append-only News release receipt containing canonical description, icon declarations, art hashes, workflow run, and verification time.
-
-## 2026-08-18 — Session 319 (reproducible candidate · scoped hold · scheduled Desk · login outage) | Total: 972/1000 (v3.0) | Velocity: -13 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | build:check 309 → 317 steps, all passing. Seven new/extended self-test suites, several mutation-tested against the real tree. |
-| Creative Alignment | 98 | The Desk reached the homepage and a real cadence, both founder-requested. Cadence copy stayed evidence-derived and currently reads "Paused" because that is true. |
-| Momentum | 94 | Eight of ten audit items shipped plus two founder items; production promotion still did not land. |
-| Engagement | 96 | The Desk is discoverable from the homepage for the first time; the reader-signal closure was deferred rather than half-shipped. |
-| Process Quality | 96 | Founder-gated decisions were asked before building, not after. Deduction: I wired the blast-radius resolver into the ceremony but not the gate the deploy path calls first, and only the failed dispatch revealed it. |
-| Cross-Repo Coherence | 99 | Two precise Ark cargos, no sibling tree touched. The Obelisk blocker went from a vague 12-day label to one measured misconfiguration. |
-| Security Posture | 99 | The hold was resolved, never waived; fail-closed in four directions and mutation-tested both ways. A live auth crash was converted to an honest 503. |
-| Ecosystem Integration | 97 | Modeling index.html in the evidence graph exposed a real strand in refresh-live-data. IGNIS freshness remains portfolio-owned and unresolvable here. |
-| Capital Efficiency | 100 | Scheduled publishing runs on already-provisioned free self-hosted inference. No new package, SaaS, or per-token spend. |
-| Automation Coverage | 94 | The reproducibility defect class, the promotion scope, the artifact contract and the auth guard are all executable gates now. Deduction: the ceremony's browser suite is still not blast-radius-scoped, which is what actually blocks promotion. |
-
-**Top win:** The 12-day production dark period turned out to have a second, unfiled cause — a cron invalidating the release candidate and re-judging it in the same commit — and the structural gate written for it immediately found a second instance the point fix had missed.
-
-**Top gap:** Blast-radius scoping stopped one layer short. The promotion *authority* is scoped; the ceremony's *evidence suite* is not, so it still demands the held identity surface be healthy. That is precisely what blocks promotion now.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. Scope the ceremony's browser evidence to the promotion blast radius, with `held` as a first-class state distinct from `skipped`, so evidence for a surface that is not being promoted cannot block a disjoint release.
-2. Add a live `/login` synthetic probe to the uptime cron — a 500 on the sign-in entry point went unnoticed long enough to be discovered incidentally during a deploy.
-
-## 2026-08-18 — Session 320 (content lane promoted · Worker deployed · three gate-honesty fixes) | Total: 981/1000 (v3.0) | Velocity: +9 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | build:check 319/319 passing, verified by direct exit code rather than through a pipe. Three self-test suites extended (writeback-currency 6→11, probe-uptime 33→40) and mutation-tested against the real tree. |
-| Creative Alignment | 97 | No founder creative direction this session; the work was the deploy the founder asked for plus the instruments guarding it. Nothing invented beyond that scope. |
-| Momentum | 100 | The promotion that two prior sessions could not land is live, and the Worker shipped behind it. Four of four audit items shipped. |
-| Engagement | 98 | 259 content-pure paths and the homepage Desk module reached readers after 13.8 days dark — the single largest reader-visible change available to this repo. |
-| Process Quality | 95 | Root causes were fixed at source and no gate was bypassed. Two deductions: I shipped a probe asserting a Worker contract whose callee half could not deploy yet, and only the failed dispatch revealed the ordering; and I spent several push attempts fighting a rejection whose real cause was a detached HEAD from an unfinished rebase, which `rev-list` was reporting as 0-behind. |
-| Cross-Repo Coherence | 99 | No sibling tree touched. The production promotion hold was respected throughout and never waived — the content lane is a narrower authorised path, not a bypass. |
-| Security Posture | 99 | Staged secret scan clean. A pre-push coherence hook blocked a push and was fixed at source (`build-status-proof`), never with `--no-verify`. The identity hold stayed intact. |
-| Ecosystem Integration | 98 | deploy-currency, worker-route-provenance, status-proof, public-status and citation all agree post-deploy, and the served `build-sha.json` matches the pushed head. |
-| Capital Efficiency | 100 | No new package, service, or per-token spend. Both deploys ran on already-provisioned lanes. |
-| Automation Coverage | 96 | The unmeasurable-window false green, the preflight-only ingest probe, and the unprobed auth path are all executable, mutation-tested gates now. Deduction: the capability-slice evidence still depends on a probe vantage CI cannot reach, so a human-run probe remains load-bearing for content promotion. |
-
-**Top win:** The arc's own cut-off detector was the thing reading green on nothing. `check-writeback-currency` treated an unmeasurable window as a pass, so the more `[skip ci]` automation this repo accumulated, the blinder its write-back debt detector became — and it was caught only because the same session saw it report debt before a `git pull` and silence after one.
-
-**Top gap:** Content promotion is not yet self-sufficient. The split-release guard correctly demands live route evidence, but CI's vantage is bot-challenged and cannot produce it, so the lane opens only after a probe run from an unchallenged vantage. That makes a human-timed step load-bearing on the path that most needs to be routine.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [NEXT][SIL] Give the route-provenance probe a vantage CI can actually use — probe the unchallenged `pages.dev` origin as a corroborating second vantage — so content promotion stops depending on a locally-run probe.
-2. [NEXT][SIL] Tighten the `/v/rum` ingest probe to assert `contractLive` now that the synthetic no-write contract is deployed and verified, closing the informational gap left open for the rollout.
-
-
-## 2026-08-19 — Session 321 (three inherited blockers disproven · auth crash class closed on every leg · Worker deployed) | Total: 983/1000 (v3.0) | Velocity: +2 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | build:check green, verified by direct exit code rather than through a pipe. Two suites extended (obelisk-auth 39→41, worker 48→50) and two new self-tested gates added (verify-provider-chain 20/20, check-public-note-freshness 8/8), each mutation-tested in both directions. Found and fixed a false red that was blocking every production deploy. |
-| Creative Alignment | 97 | No founder creative direction this session. The work was the arc the founder asked for plus the deploy; nothing was invented beyond that scope. |
-| Momentum | 100 | Six of seven audit items shipped and the seventh disproven with evidence. The Worker deployed to staging and production, ceremony 8/8, and a hold that had stood for roughly twenty sessions was reclassified from externally blocked to one founder ceremony away. |
-| Engagement | 98 | The public status surface stopped telling visitors that sign-in was unavailable while sign-in was working — a deterrent removed from the join path — and the sign-in path itself is now hardened end to end. |
-| Process Quality | 96 | Every inherited premise was re-probed before being acted on, and the one that failed was recorded as a disproof rather than built around. Deduction: I invoked `verify-provider-journey.mjs --live` before reading its header, and it opened a headed browser and began a ten-minute wait for a founder passkey ceremony. Reading the file first would have cost seconds; I stopped it, but it was avoidable. |
-| Cross-Repo Coherence | 99 | One precise Ark cargo for the missing `start-canon-sync.mjs` propagation. No sibling tree touched, and the canon-sync gate result was verified to be about THIS repo before being trusted. |
-| Security Posture | 99 | The crash class that took production sign-in down twice is now closed on all three legs, with a deliberate asymmetry — the callback fails closed, logout degrades and reports it, because failing logout would leave the credential in the browser. The edge gained a last-resort boundary that is mutation-tested to confirm it does not intercept healthy responses. The production hold was respected, never waived. |
-| Ecosystem Integration | 98 | Route provenance was re-probed after the deploy so the receipt binds the new source to the new deployment rather than the old one, and reads 7/7 matched. The new provider-chain receipt is public-safe by construction. IGNIS freshness remains portfolio-owned and unresolvable here. |
-| Capital Efficiency | 100 | No new package, service, or per-token spend. Both deploys ran on already-provisioned lanes. |
-| Automation Coverage | 97 | A gate that had promised freshness for fifteen sessions without measuring it now measures it; the `/v/rum` no-write contract is a hard assertion; and the external identity dependency is probed rather than asserted in hand-maintained prose. Deduction: route provenance still depends on an unchallenged vantage that CI cannot reach. |
-
-**Top win:** Three blockers inherited from the previous session had all quietly stopped being true, and nothing in the repo could notice, because they were prose in a JSON file refreshed by hand. The provider's discovery document, JWKS, authorize redirect and revocation route are all live and correct — so a production hold recorded for twenty sessions as "blocked on another team" was actually one founder passkey ceremony away, and is now backed by a machine-produced receipt instead of a sentence.
-
-**Top gap:** The same failure shape appeared twice more this session in different clothes. A gate named `check-public-note-freshness` contained no freshness check; a release-ceremony browser test failed on a healthy site purely because a 7-theme axe sweep outgrew a shared 30-second budget. In both cases the instrument was reporting something other than what its name claimed, and in both cases the cost was paid by trusting the name. The remaining instance is route provenance, whose only honest corroborating vantage is one that IS the Worker.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [NEXT][SIL] Wire the staging `workers_dev` binding as the route-provenance corroborating vantage — measured this session, it serves the full Worker route contract (7/7) and is not behind the zone's bot management, unlike `pages.dev`, which 404s every Worker route. Attest what it can honestly attest: the build, distinctly labelled from the production route binding.
-2. [NEXT][SIL] Audit the remaining gate names against what they actually assert. Two instruments this session measured something other than their name, and both had been trusted for months on the strength of the name alone.
-
-
-## 2026-08-19 — Session 322 (S321 write-back gap recovered · route-provenance gained a CI-reachable build-vantage) | Total: 986/1000 (v3.0) | Velocity: +3 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | build:check 319/319, verified by real exit code from a file-captured background run, never through `\| tail`. `build-worker-route-provenance` self-test grew from 13 to 19 cases (6 new, covering the added `buildVantage` behavior); `check-content-capability-slice` self-test unchanged 7/7. |
-| Creative Alignment | 97 | No founder creative direction this session; scope was the arc the founder asked for. |
-| Momentum | 100 | One TASK_BOARD P1 carry item shipped end-to-end (probe, self-test, downstream-consumer verification, full build:check, commit) plus a small write-back gap closed. Small session, but everything opened was closed — no partial handback. |
-| Engagement | 98 | No visitor-facing surface changed this session; the shipped item is release-infrastructure, not conversion-facing. |
-| Process Quality | 99 | F7 write-back-currency triage caught a real gap (a post-closeout commit from S321 never wrote back) and it was recorded rather than re-implemented, since the code was already shipped and pushed. The new field was verified additive by reading the actual downstream consumer (`check-content-capability-slice.mjs`) before writing a line of code, not assumed safe. |
-| Cross-Repo Coherence | 99 | No sibling tree touched. `../vaultspark-studio-ops` scripts used only for canon/secrets/capability lookups, never as a state source for this repo (arc-profile confirmed local vs ops root-resolution hazard, used local copy where present). |
-| Security Posture | 99 | No security-relevant surface touched; the new probe reuses the existing privacy-validated, no-body, no-cookie GET/OPTIONS pattern already audited for the primary receipt. |
-| Ecosystem Integration | 98 | `api/worker-route-provenance.json` now carries a `buildVantage` leg that every downstream reader of the file (`build-release-proof`, `build-security-posture`, `build-status-proof`, `check-content-capability-slice`) either ignores (untouched fields) or was verified not to consume before shipping. |
-| Capital Efficiency | 100 | No new package, service, or per-token spend. |
-| Automation Coverage | 97 | CI's hourly `uptime-probe.yml` now corroborates build correctness even while production stays vantage-challenged, closing half of the S321-carried gap. Deduction: the production-route half of the gap is unchanged — content promotion still depends on a locally-run probe for the primary receipt, by design (the guard should not be weakened). |
-
-**Top win:** The TASK_BOARD item this session shipped was carried from S321 with an explicit warning built in — "label the two distinctly rather than letting one stand in for the other." The implementation was checked against that warning before being called done: `check-content-capability-slice.mjs` was read line-by-line to confirm it still requires `observedOrigin === production` verbatim, and a self-test case (`buildVantage never claims to observe production`) asserts the origin distinction structurally, not just in a comment.
-
-**Top gap:** Session scope was narrow by design — one carried P1 item plus a recovery fix, on a mature 983/1000 codebase where a from-scratch audit surfaced little else agent-actionable that wasn't already founder-gated (passkey ceremony, GitHub Pages rollback migration, forge devlog voice review) or already carried on TASK_BOARD verbatim. The remaining S321-carried item (`[S321][SIL][GATE/P1]` — audit gate names against what they assert) is still open and is exactly the shape of finding this repo's memory record calls out repeatedly; it deserves a dedicated sweep session rather than being squeezed in here.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [NEXT][SIL][GATE/P1] Carried unchanged from S321 — sweep the gate inventory for names that promise a property their body never measures. `check-public-note-freshness` and the release-ceremony browser gate were both this shape; there is no reason to believe they are the only two.
-2. [NEXT][SIL] `docs/AUDIT_2026-08-19.md` is now fully consumed (all S321 items shipped/disproven, this session's item was TASK_BOARD-sourced) — the audit-file-per-calendar-date convention collided with two sessions landing on one date; next session should either date-suffix by session or archive-and-regenerate rather than silently treating a stale audit file as current.
-
-
-## 2026-08-19 — Session 323 (gate-name honesty sweep: ten offenders where the name promised a property the body never measured) | Total: 989/1000 (v3.0) | Velocity: +3 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Ten CI gates hardened, each with a both-directions self-test; build:check 319/319 verified by a real captured exit code — the first run's background wrapper said exit 0 while the command's own `BUILDCHECK_EXIT` was 1, exactly the indirection trap. Regenerated derived artifacts (cron-churn resync) separated cleanly from the code fixes. |
-| Creative Alignment | 97 | No founder creative direction this session; scope was the arc the founder asked for plus the exact carried GATE/P1 item the S322 brainstorm committed. |
-| Momentum | 100 | The carried `[GATE/P1]` item shipped as a whole-inventory sweep (173 gates read), not one gate — ten offenders found, verified, fixed. Three latent bugs *beneath* the named findings (Worker cacheableGet scanner drift, launch-ready case+field chain, mindframe registry drift) were fixed or surfaced, not stepped around. No partial handback. |
-| Engagement | 97 | No visitor-facing surface changed; the work is CI-trust infrastructure, not conversion-facing. |
-| Process Quality | 100 | Verify-before-fix held for every candidate (no phantom findings). Caught my own too-loose regex via a self-test that failed (canon-compliance matched the adjective "proprietary" in prose), and caught the pipe/indirection exit-code trap live. When a newly-wired safety scanner flagged the live Worker, I read the Worker before touching the gate — it was scanner drift, not a Worker bug. |
-| Cross-Repo Coherence | 99 | No sibling tree touched. Surfaced sibling-owned findings (mindframe registry URL drift, franchise-architect portfolio drift) as advisories rather than reaching across (CANON-018). |
-| Security Posture | 100 | Restored a dormant safety gate: `check-worker-rewriter-safety` was blind to two of the four unsafe ops it defines — a nonce-branch that drops `Content-Type` (raw-source render under nosniff) and a HEAD request poisoning the GET body cache. Both scanners now run live; the Worker was confirmed safe on all four. |
-| Ecosystem Integration | 98 | Gate honesty strengthens the whole CI trust surface every downstream receipt depends on; the derived-artifact resync kept the served feeds coherent with the pulled cron churn. |
-| Capital Efficiency | 100 | No new package, service, or per-token spend. The audit fan-out and the fixes ran as in-process subagents — parallel, zero OS windows (§0). |
-| Automation Coverage | 99 | Every fix adds or extends a both-directions self-test that locks the named property, so the gap cannot silently reopen. `check-build-step-resilience` now catches unguarded gitignored reads across all 82 build-chain scripts; `check-worker-rewriter-safety` asserts every registered scanner reaches the live path. |
-
-**Top win:** The sweep did not just confirm the two known instances — it found the class. `check-worker-rewriter-safety` had defined and *self-tested* four unsafe-op scanners while wiring only two into the code that runs against the real Worker; its exemplary self-test is exactly why the omission survived, because the self-test calls the scanners directly and only `runScan` was blind. Wiring the dormant HEAD-cache scanner then surfaced a second-order truth: the scanner's assertion had drifted from the Worker it guards (the Worker had *strengthened* its GET guard to `&& edgeCacheOn`). The Worker was read before the gate was touched — scanner drift, not a Worker regression — and the fix tolerates a narrowed guard while still catching a widened one.
-
-**Top gap:** The sweep surfaced real advisory findings this repo cannot close from here — `mindframe`'s registry `deployedUrl` drift and the `franchise-architect` portfolio-coherence drift are studio-ops-owned (CANON-018), and the registry storing the live URL under `runtimeUrl` while `liveUrl` is sparse is a portfolio schema inconsistency worth an Ark note. They are recorded, not backdated or reached-across.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [NEXT][SIL][GATE/P2] The sweep read `check-*.mjs` and the build-chain self-tests; it did NOT audit the `build-*.mjs --check` gates as a class for the same defect (a `--check` that re-renders from a volatile input always drifts, or one that defaults an absent input to green). That is the same shape one level over — worth its own pass.
-2. [NEXT][ARK] Ship a `pattern-share` to studio-ops: the registry's live-URL field is `runtimeUrl`, not `liveUrl`, and case-sensitive `vaultStatus === 'SPARKED'` comparisons silently disable SPARKED enforcement portfolio-wide — both are latent in any sibling that copied the launch-ready pattern.
-
-
 ## 2026-08-20 — Session 324 (build-gate reachability sweep: twelve `--check` gates nobody ran, three of them red, three public feeds stale) | Total: 988/1000 (v3.0) | Velocity: +2 | Debt: ↓
 
 | Category | Score | Notes |
@@ -2903,3 +2642,34 @@ Sparkline (last 5): █████ · 995, 996, 988, 989
 **Brainstorm / committed to TASK_BOARD:**
 1. [S335][SEC/P2] Audit every other public table for the silent-zero anon read the members table had.
 2. [S335][BUILD/P2] Bisect the build-to-build churn in commit-derived feeds with a pinned clock.
+
+## 2026-09-02 — Session 336 (stranded release recovered · deploy alarm gets a second clock · TT evidence age disclosed) | Total: 987/1000 (v3.0) | Velocity: −2 | Debt: ↓
+Avgs — 3: 988.0 | 5: 991.0 | 10: 991.3 | 25: 987.4 | all: 983.2
+Sparkline (last 5): █████ · 995, 996, 988, 989, 987
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Three suites extended and green with exit codes read directly, never through a pipe: build-deploy-currency 78/78 (+18), check-deploy-currency-gate 30/30 (+6), build-tt-readiness 14/14 (+11), prune-served-surface 43/43. Doctor 15/16, the sole warn sibling-owned. |
+| Creative Alignment | 98 | No creative surface authored this session; the work restored the studio's own shipped pages to readers and made a designed poll feature capable of running. Voice and brand untouched, which was correct here. |
+| Momentum | 98 | Three ranked items shipped, one closed by evidence without work, and the session's largest finding — a totally broken deploy path — was not on the list. One item escalated rather than half-built. |
+| Engagement | 96 | The engagement win is indirect but real: an entire session of member-facing work (Season 1, the community wall, the quota meter, /how-we-build/) had been invisible to every visitor and now serves. No new engagement surface was built. |
+| Process Quality | 99 | Every audit premise verified against live code or a live probe before inclusion; the new gate proven to fire by restoring the exact regression and reading both exit codes; a blocked credential probe respected rather than worked around; my own date arithmetic corrected against the code rather than the code bent to the assertion. |
+| Cross-Repo Coherence | 100 | No sibling repository written or read for state; studio-ops used only for canon, capability lookup and the secrets gateway. |
+| Security Posture | 99 | The TT receipt was made honest without manufacturing readiness — the tempting fix (age the fossil's rows out, reach enforce-candidate, flip) was rejected explicitly. Four more silent-zero tables fully diagnosed with call sites. No secret printed; nothing bypassed. |
+| Ecosystem Integration | 99 | Both new mechanisms reuse existing internal registries rather than inventing taxonomies (CANON-039): the served-surface manifest and the evidence graph decide what counts as content. `prune --check` and the content clock are patterns any deployable repo can adopt. |
+| Capital Efficiency | 100 | Zero new dependencies, zero paid calls, no new scheduled workflows. Two deploy dispatches, the first of which paid for itself by exposing the manifest drift. |
+| Automation Coverage | 99 | Every fix ships a self-test, and the recurrence gate is wired into `build:check` and demonstrated to fail on the regression it exists for. CANON-053 rendered-pixel review for the newly-served surfaces is owed and on the board. |
+
+**Top win:** The founder asked for a deploy. The deploy was impossible. `prune-served-surface` had been refusing on `/evidence/` and `/how-we-build/` — two pages that exist, are linked, and are advertised in the sitemap but were never added to a hand-maintained allowlist. The failure was self-planting: the content lane promotes `sitemap.xml`, so a new route becomes advertised in production on one deploy and only breaks the next. S334 and S335 each shipped a page and each armed the trap for the session after it. The whole S335 release — a member-write privilege lockdown, Season 1, the community wall, a new page — had been sitting unserved behind a green gate.
+
+**Second win:** Finding *why* nothing alarmed. `deploy-currency` measured only the span from the deployed commit to the repo tip against a 48h ceiling, and promotions land on hourly cron commits, so automation was continuously rewinding the only clock the alarm had. It now ages a second clock from the oldest undeployed hand-authored commit, classified structurally against the served-surface manifest and the evidence graph — so publisher churn cannot mask a stranded release, and the deliberately-held identity backlog cannot cry wolf.
+
+**Top gap:** Four public tables still render a silent zero to every anonymous visitor, and I did not fix them. That is the right call — it decides which member activity becomes publicly readable, which is a founder privacy decision, not an agent migration — but it means `/community/` and the leaderboards have been showing zeros and empty states for months and still are. The diagnosis is complete and the SQL is short; the decision is not mine. Separately, the newly-served surfaces have no manual CANON-053 review yet.
+
+**Honesty ledger:** The polls fix does not change today's pixels — the corrected query returns `[]` because no poll is active — and is recorded as a capability fix, not a lit surface. I could not measure real row counts behind the silent-zero tables because the sandbox classifier blocked the credentialed probe; the finding rests on policy reading, which is definitive for "anon can never see a row" but does not quantify how many rows are hidden. TT enforcement was NOT flipped despite standing founder approval, because the evidence to justify it does not exist yet.
+
+**Intent outcome:** Achieved, with the deploy reached by a different route than expected — the blocker was the deploy path itself, not a missing dispatch.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S336][SEC/P1] Founder decision on the four silent-zero projection views, then one short migration (D-S336.5).
+2. [S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only now actually serve.
