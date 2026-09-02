@@ -999,6 +999,8 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Reordered `postbuild` so `build-news-visual-receipts` runs after every page-rewriting step and immediately before the seal. It hashed rendered pages four steps before `build-shell-assets` rewrote them, so it was stale by construction on every shell rotation, and its own error message prescribed a hand-rebuild instead of the ordering fix (D-S338.4).
 - Recaptured the visual and mobile proof receipts against the final tree. No UI changed, so CANON-053 was not triggered — but these receipts bind the candidate manifest sha, which every rebuild reseals, so `check-receipt-ordering` correctly rejected the deferral (D-S338.5).
 
+**Deployed:** full production deploy run `33613020727` completed the release ceremony and promoted a clean dist. Production serves `e1c7cef4b` — exactly the pushed `main` HEAD. Eleven public routes verified 200 live with a real browser UA; `/ranks/`, `/vaultsparked/` and `/vault-wall/` verified 301. A live `--probe` then `--check` on `build-deploy-currency` — the sequence that had been reddening the uptime cron — exits 0 on both, with `state: current · 0 commits behind`.
+
 **Disproved before implementing:** the board's own proposed fix for the top-ranked item ("order the `--check` before the seal chain, or rebind once after it"). Reproducing the failure first showed neither would have worked.
 
 **Held / carried:** staging refresh itself; the Trusted Types load-order repair and enforce flip; the four silent-zero tables awaiting a founder privacy decision; manual CANON-053 review of the newly-served surfaces; everything on the identity/Obelisk hold, untouched.
