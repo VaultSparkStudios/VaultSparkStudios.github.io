@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-09-02",
+  "session": 336,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "sample": {
+    "method": "premise-first: every item below was verified against live code, the live site, or the live CI record before inclusion",
+    "liveProbes": [
+      "GET https://vaultsparkstudios.com/how-we-build/ -> 404 (page exists at HEAD in aff64499)",
+      "GET /nervous-system,/membership-value,/vaultsparked,/ip -> 301 to correct targets",
+      "api/build-sha.json served: contentLaneHead d858e0a4 @ 2026-09-01T15:50Z",
+      "check-production-promotion-gate --check -> hold (real-provider-e2e-pending)",
+      "check-content-lane-purity --partition -> deployable=true, 194 promotable"
+    ]
+  },
+  "notes": "S336 audit is deliberately narrow and deep. The site scored 989/1000 at S335 closeout with every write-back surface current, so a breadth sweep would have re-listed known-good work. Instead this audit asks one question - is what S335 shipped actually serving? - and follows the answer to the two gates that said yes when it was not.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "s335-release-stranded-in-production",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 1,
+      "impact": 10,
+      "innovation": 3,
+      "priority": 25,
+      "title": "The entire S335 release never reached production - a shipped page 404s live",
+      "why": "PRE-VERIFIED ON THE LIVE SITE. /how-we-build/ was created in aff64499 (S335) and exists at HEAD; https://vaultsparkstudios.com/how-we-build/ returns 404. Production serves content-lane head d858e0a4 (2026-09-01T15:50Z), which predates the S335 feat commit (2026-09-01T23:57Z) - 35 commits, one whole session. S335's own handoff recorded Deploy as 'pending - content lane deploys on push (ci-on-push)'. That premise is false: pages-deploy.yml states plainly that pushes and schedules evaluate the promotion interlock but cannot deploy. Promotion happens ONLY on a manual workflow_dispatch. The session closed out believing the push had shipped it. Outcome for a reader: the new page explaining the studio's vocabulary is unreachable, and every member-facing surface S335 lit up is still serving the pre-S335 build.",
+      "recipe": "Dispatch pages-deploy.yml with confirm_content=true (the identity-independent lane; confirm_production is correctly held at real-provider-e2e-pending and must not be forced). Baseline resolves from api/deploy-currency.json. Then verify by probe, not by workflow conclusion: /how-we-build/ must return 200 and api/build-sha.json must report a contentLaneHead at or after aff64499.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Dispatch the content lane and probe the live URL."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Also correct the handoff/protocol wording so no future session records 'deploys on push'."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Item 2 - make the gate incapable of staying green through this."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "deploy-currency-blind-to-substantive-lag",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 40.5,
+      "title": "deploy-currency counts commits but cannot see that any of them mattered",
+      "why": "PRE-VERIFIED IN CODE. This is the gate that should have caught item 1 and reported ok throughout. build-deploy-currency.mjs:284 computes ageHours as tipCommitAt minus deployedCommitAt, and classify() at :179 escalates to 'stale' only when that span passes blockHours=48. Every other input is ignored. So 34 hourly [skip ci] uptime-cron commits and one stranded session release are the same reading: commitsBehind=34, ageHours=10.1, state='behind' -> the gate PASSES with a warning. The one commit that matters - a whole release including a page that 404s - is invisible, because the metric has no notion of which undeployed commits are substantive. Worse, promotions land on whatever HEAD is at dispatch time, which is almost always a fresh cron commit, so the clock this gate depends on is continuously reset by automation. A 48h ceiling on a clock that automation keeps rewinding is not a ceiling.",
+      "recipe": "Add a second, independent clock measured from the OLDEST undeployed commit that the content lane could have promoted - not from the newest deployed one. Classify churn STRUCTURALLY (a commit whose entire touched path set lies outside the content-lane-promotable partition is churn), never by subject-line matching. Publish oldestUndeployedContentAt + contentLagHours + undeployedContentCommits on the receipt so the artifact discloses them. Escalate 'behind' -> 'stale' when contentLagHours passes a much tighter contentBlockHours ceiling, independent of the 48h churn ceiling. Critically this must NOT fire on the held identity backlog: scoping 'substantive' to content-lane-promotable paths means the deliberately-held Obelisk work can never trip it, so the alarm cannot cry wolf on a decision. Self-test must include the exact S336 shape: 34 commits behind, 10h span, one promotable page undeployed -> FAIL.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Publish contentLagHours on the receipt as disclosure only."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Escalate the state and fail the gate on it, with the S336 shape locked into the self-test."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Also surface the undeployed-content clock on the public status page."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "slug": "tt-readiness-fossil-evidence",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 33.6,
+      "title": "A public-safe readiness artifact stamps a fresh timestamp onto two-month-old evidence and promises an ageing rule it never implements",
+      "why": "PRE-VERIFIED IN CODE AND DATA. api/tt-readiness.json is publicSafe:true and carries generatedAt 2026-09-02, but its sole input .cache/tt-active-local-sinks.json was generated 2026-07-07 - 57 days ago, against a declared windowDays of 30 - and has never been regenerated. The manifest's stored freshness.ageDays:4 is a fossil computed in July; the rows it describes were last seen 2026-06-30..2026-07-03. Every build re-stamps a current generatedAt over that, which is exactly the CANON-031 failure of a receipt claiming a currency its evidence does not have. Second, independent defect: build-tt-readiness.mjs computes no age at all. status is 'amber-soak' iff warmRows.length > 0 - forever, at any age - while nextAction tells the reader to wait for warm rows to age out. Nothing ages anything out. All 17 warm rows already report stillPresentNearReportedLine:false, i.e. the sinks they describe are gone from the code. D-S335.7 recorded this ageing logic as 'suspect'; it is not suspect, it does not exist.",
+      "recipe": "Compute age at build time from each row's lastSeen against now, and from the manifest's own generatedAt. Publish manifestGeneratedAt, manifestAgeDays and soakWindowDays on the receipt so its evidence age is disclosed rather than hidden behind a fresh stamp. Add an honest 'stale-evidence' status for when the manifest is older than its own windowDays. That status must keep enforceEligible FALSE: ageing rows out of a fossil manifest and calling the result 'enforce-candidate' would manufacture readiness from absence, which is the one thing this receipt must never do. This resolves the D-S335.7 carry honestly and explicitly does NOT flip TT_ENFORCE_ENABLED - that stays held on real evidence, which requires a fresh KV soak.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Disclose manifest age on the receipt."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Real ageing + stale-evidence status that cannot unlock enforcement."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Re-run the KV soak so a real enforcement decision becomes possible."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "confirm-four-merged-routes-301-at-apex",
+      "reason": "CLOSED BY EVIDENCE, no work needed. The S335 handoff carried this as next-session item (1). Probed all four at the apex with a browser UA: /nervous-system -> 301 /studio-pulse/#signal-digest, /membership-value -> 301 /membership/#benefits, /vaultsparked -> 301 /membership/#tiers, /ip -> 301 /rights/. All correct. Recording it as verified rather than re-doing it."
+    }
+  ],
+  "totals": {
+    "items": 3,
+    "closedByEvidence": 1,
+    "top3": [
+      "deploy-currency-blind-to-substantive-lag",
+      "tt-readiness-fossil-evidence",
+      "s335-release-stranded-in-production"
+    ],
+    "count": 3,
+    "priority": 99.1
+  }
+}

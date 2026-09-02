@@ -36,6 +36,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -195,8 +196,57 @@ function selfTest() {
   console.log(`prune-served-surface --self-test: ${cases.length}/${cases.length} passed`);
 }
 
+/**
+ * --check: run the REAL manifest against the REAL git-tracked tree, locally.
+ *
+ * S336. Until now this script only ever ran `--self-test` in build:check — pure
+ * functions over synthetic fixtures — while the one invocation that uses the
+ * real `config/served-surface.json` lived inside pages-deploy.yml. So the
+ * manifest could drift from the pages that actually exist and nothing said so
+ * until a deploy was already running.
+ *
+ * It drifted twice. `/evidence/` (S334) and `/how-we-build/` (S335) were both
+ * added to the site, advertised in sitemap.xml, and never added to the manifest.
+ * A prune therefore classified both as not-served, and REFUSED — which means no
+ * deploy of any kind could succeed. Worse, the failure is delayed and
+ * self-planting: the content lane promotes sitemap.xml, so the new route only
+ * becomes *advertised in production* on one deploy and only breaks the NEXT one.
+ *
+ * This mode moves that discovery to the local gate, before the push. It asks the
+ * one question the self-test cannot: does every route this repo advertises
+ * survive its own prune?
+ */
+function check() {
+  const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', windowsHide: true })
+    .split('\n').map((s) => s.trim()).filter(Boolean);
+
+  const read = (p) => { try { return fs.readFileSync(path.join(ROOT, p), 'utf8'); } catch { return ''; } };
+  const advertised = advertisedRoutes({
+    sitemap: read('sitemap.xml'),
+    agents: read('agents.json'),
+    llms: read('.well-known/llms.txt'),
+  });
+
+  // Deployable candidates only: internal prefixes are pruned by design and are
+  // not what this gate is about.
+  const candidates = tracked.filter((p) => !isInternal(p));
+  const plan = planPrune(candidates, advertised, { edgeRoutes: SERVED_MANIFEST.edgeRoutes || [] });
+
+  console.log(`prune-served-surface --check: ${candidates.length} tracked deployable file(s) · ${plan.kept.length} positively classified · ${advertised.length} advertised route(s)`);
+  if (!plan.ok) {
+    console.error(`prune-served-surface --check: ${plan.broken.length} advertised route(s) would NOT survive a prune:`);
+    for (const r of plan.broken.slice(0, 20)) console.error(`  ✗ ${r}`);
+    console.error('Add the owning prefix to config/served-surface.json (or an edgeRoutes entry if the Worker owns the route).');
+    console.error('A route advertised in sitemap.xml/agents.json/llms.txt but absent from the served-surface manifest');
+    console.error('is deleted by the deploy prune — the page 404s in production even though it exists in this repo.');
+    process.exit(1);
+  }
+  console.log('prune-served-surface --check: ok — every advertised route survives its own prune');
+}
+
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
+  if (process.argv.includes('--check')) return check();
 
   const distArg = process.argv.find((a) => a.startsWith('--dist'));
   const dist = distArg?.includes('=') ? distArg.split('=')[1] : process.argv[process.argv.indexOf('--dist') + 1];
