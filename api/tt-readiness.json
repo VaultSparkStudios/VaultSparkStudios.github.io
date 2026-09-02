@@ -1,17 +1,24 @@
 {
-  "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T00:14:02.932Z",
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-09-02T03:10:07.843Z",
   "generatedBy": "scripts/build-tt-readiness.mjs",
   "publicSafe": true,
-  "status": "amber-soak",
+  "status": "stale-evidence",
   "enforceEligible": false,
   "newestLastSeen": "2026-07-03",
+  "newestLastSeenAgeDays": 61,
+  "manifestGeneratedAt": "2026-07-07T01:32:44.057Z",
+  "manifestAgeDays": 57,
+  "soakWindowDays": 30,
+  "evidenceStale": true,
   "counts": {
     "totalReports": 328,
     "activeLocal": 0,
     "activeStillPresent": 0,
     "warmLocal": 17,
+    "warmLive": 0,
+    "warmAgedOut": 17,
     "staleLocal": 0
   },
-  "nextAction": "Wait for warm rows to age out or refresh R2 reports before enforcement."
+  "nextAction": "Soak evidence is 57d old, past its own 30d window — re-run scripts/analyze-tt-violations.mjs against live KV reports. Enforcement stays blocked until the reading is current."
 }

@@ -37,6 +37,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { compareShellHtml } from './lib/shell-parity.mjs';
 import { getSecret } from './lib/secrets.mjs';
+import { isServed } from './prune-served-surface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'deploy-currency.json');
@@ -57,6 +58,10 @@ const sha256 = (value) => createHash('sha256').update(String(value)).digest('hex
 /** Warn once a deploy is this far behind; block-worthy past the hard ceiling. */
 export const WARN_HOURS = 12;
 export const BLOCK_HOURS = 48;
+// S336: hand-authored content waiting to be promoted gets a far tighter ceiling
+// than repo churn. A shipped session that nobody dispatched should alarm the
+// same working day, not two days later.
+export const CONTENT_BLOCK_HOURS = 12;
 export const PUBLISHER_PROMOTION = Object.freeze({
   strategy: 'coalesced',
   maxLagHours: 4,
@@ -146,7 +151,7 @@ export function mergeShellParity(previous, fresh) {
   };
 }
 
-export function classify({ found, commitsBehind, ageHours, retainedForHours, shellParityState, historyComplete }) {
+export function classify({ found, commitsBehind, ageHours, contentLagHours, retainedForHours, shellParityState, historyComplete }) {
   if (found === false) {
     // S316 — `diverged` is a claim about the FULL history: this sha exists
     // nowhere in the repo. In a truncated clone the lookup fails for every
@@ -176,7 +181,12 @@ export function classify({ found, commitsBehind, ageHours, retainedForHours, she
   // Measured evidence decides this — shell parity — not an assumption about
   // which lane ran.
   if (shellParityState === 'matched') return 'content-current';
-  return Number.isFinite(ageHours) && ageHours >= BLOCK_HOURS ? 'stale' : 'behind';
+  if (Number.isFinite(ageHours) && ageHours >= BLOCK_HOURS) return 'stale';
+  // S336 second clock. Hand-authored content that nobody promoted is stale on a
+  // much tighter ceiling than repo churn, and is measured from the OLDEST such
+  // commit so one fresh commit cannot mask days of waiting behind it.
+  if (Number.isFinite(contentLagHours) && contentLagHours >= CONTENT_BLOCK_HOURS) return 'stale';
+  return 'behind';
 }
 
 export function deriveCurrency(observation) {
@@ -206,8 +216,15 @@ export function deriveCurrency(observation) {
     commitsBehind: Number.isInteger(o.commitsBehind) ? o.commitsBehind : null,
     deployedCommitAt: o.deployedCommitAt || null,
     ageHours,
+    // S336 — the second clock, disclosed alongside the first. `commitsBehind`
+    // counts everything including hourly publisher churn; these three fields
+    // say whether any of it was hand-authored content a reader is missing, and
+    // for how long, measured from the OLDEST such commit.
+    undeployedContentCommits: Number.isInteger(o.undeployedContentCommits) ? o.undeployedContentCommits : null,
+    oldestUndeployedContentAt: o.oldestUndeployedContentAt || null,
+    contentLagHours: Number.isFinite(o.contentLagHours) ? Math.round(o.contentLagHours * 10) / 10 : null,
     ageDays: ageHours === null ? null : Math.round((ageHours / 24) * 10) / 10,
-    thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS, observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS },
+    thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS, contentBlockHours: CONTENT_BLOCK_HOURS, observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS },
     publisherPromotion: PUBLISHER_PROMOTION,
     // How long the rendered numbers have been standing in for a live reading.
     // null = this observation IS live. Any number here means every field below
@@ -263,7 +280,7 @@ export function isShallowRepo(runGit = git) {
   try { return runGit(['rev-parse', '--is-shallow-repository']) === 'true'; } catch { return false; }
 }
 
-function compareToRepo(deployedSha) {
+function compareToRepo(deployedSha, contentBase = deployedSha) {
   const repoTipSha = git(['rev-parse', 'HEAD']);
   const historyComplete = !isShallowRepo();
   let found = true;
@@ -282,7 +299,108 @@ function compareToRepo(deployedSha) {
   const deployedCommitAt = new Date(git(['show', '-s', '--format=%cI', deployedSha])).toISOString();
   const tipCommitAt = new Date(git(['show', '-s', '--format=%cI', repoTipSha])).toISOString();
   const ageHours = (Date.parse(tipCommitAt) - Date.parse(deployedCommitAt)) / HOUR_MS;
-  return { repoTipSha, found: true, historyComplete, commitsBehind, deployedCommitAt, ageHours };
+  // Content lag is measured from what the content lane promoted (contentBase),
+  // which may be ahead of the deliberately-held deployedSha.
+  const content = collectUndeployedContent(contentBaseResolved(contentBase, deployedSha));
+  return { repoTipSha, found: true, historyComplete, commitsBehind, deployedCommitAt, ageHours, ...content };
+}
+
+/**
+ * S336 — the second clock.
+ *
+ * `ageHours` above spans deployedCommit → repo tip, and `classify` escalates to
+ * `stale` only when that span passes BLOCK_HOURS. That measures how long the
+ * repo has been moving, not how long real work has been waiting, and the two
+ * are not the same thing here: scheduled `[skip ci]` publishers commit several
+ * times an hour, and a promotion lands on whatever HEAD is at dispatch time —
+ * which is almost always one of those cron commits. The clock the alarm depends
+ * on is therefore continuously reset by automation.
+ *
+ * Measured live in S336: production sat 34 commits behind with the whole S335
+ * release unpromoted — including /how-we-build/, which 404'd — and the receipt
+ * read `behind` · ageHours 10.1 · PASS. Thirty-four uptime crons and one
+ * stranded release are indistinguishable to a commit counter.
+ *
+ * So: age from the OLDEST undeployed HAND-AUTHORED commit, never from the
+ * newest deployed one. "Hand-authored" is decided structurally — a path that is
+ * part of the served surface (config/served-surface.json) and is NOT a declared
+ * generated output (config/evidence-graph.json) — never by matching commit
+ * subjects or authors, which drift the moment someone renames a workflow.
+ *
+ * This deliberately cannot cry wolf on the held identity backlog: `classify`
+ * returns `content-current` on matched shell parity BEFORE this clock is
+ * consulted, so work that is held by design never trips it.
+ */
+export function isGeneratedOutput(rel, graph = readEvidenceGraph()) {
+  const p = String(rel).replace(/\\/g, '/');
+  return graph.has(p);
+}
+
+function readEvidenceGraph() {
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'evidence-graph.json'), 'utf8'));
+    return new Set((raw.nodes || []).map((n) => n.output).filter(Boolean));
+  } catch { return new Set(); }
+}
+
+/** Paths that are regenerated by publishers on a schedule, so their churn is not work. */
+export const DERIVED_PREFIXES = Object.freeze([
+  'api/', 'data/', 'docs/', '.cache/', 'context/', 'logs/',
+]);
+export const DERIVED_EXACT = Object.freeze([
+  'stats.json', 'feed.xml', 'sitemap.xml', 'agents.json', 'llms.txt', '.well-known/llms.txt',
+]);
+
+/**
+ * Hand-authored AND actually deployable.
+ *
+ * The served-surface intersection matters: `scripts/` is hand-authored but is
+ * pruned from every deploy, so a scripts-only session has nothing waiting for
+ * production and must not trip a deploy alarm. Conversely `api/uptime.json` is
+ * served but is regenerated hourly by a publisher, so its churn is not work.
+ * Only the intersection — served, and not a declared generated output — is
+ * "content a reader is missing because nobody promoted it".
+ */
+export function isHandAuthoredContent(rel, { generated = new Set(), served = isServed } = {}) {
+  const p = String(rel).replace(/\\/g, '/');
+  if (!p) return false;
+  if (generated.has(p)) return false;
+  if (DERIVED_EXACT.includes(p)) return false;
+  if (DERIVED_PREFIXES.some((prefix) => p.startsWith(prefix))) return false;
+  return served(p);
+}
+
+function contentBaseResolved(contentBase, fallback) {
+  try { git(['cat-file', '-e', contentBase]); return contentBase; } catch { return fallback; }
+}
+
+function collectUndeployedContent(deployedSha) {
+  try {
+    const generated = readEvidenceGraph();
+    // One git call: each commit, then its changed paths.
+    const raw = git(['log', '--format=%x00%H %cI', '--name-only', `${deployedSha}..HEAD`]);
+    const commits = raw.split('\u0000').map((s) => s.trim()).filter(Boolean);
+    let oldestAt = null;
+    let count = 0;
+    for (const block of commits) {
+      const [header, ...paths] = block.split('\n');
+      const [, iso] = header.split(' ');
+      const substantive = paths.map((s) => s.trim()).filter(Boolean)
+        .some((p) => isHandAuthoredContent(p, { generated }));
+      if (!substantive) continue;
+      count += 1;
+      if (!oldestAt || Date.parse(iso) < Date.parse(oldestAt)) oldestAt = iso;
+    }
+    const contentLagHours = oldestAt ? (Date.now() - Date.parse(oldestAt)) / HOUR_MS : null;
+    return {
+      undeployedContentCommits: count,
+      oldestUndeployedContentAt: oldestAt,
+      contentLagHours: Number.isFinite(contentLagHours) ? contentLagHours : null,
+    };
+  } catch {
+    // Never fabricate a clean reading from a failed measurement.
+    return { undeployedContentCommits: null, oldestUndeployedContentAt: null, contentLagHours: null };
+  }
 }
 
 async function probeSha() {
@@ -298,7 +416,15 @@ async function probeSha() {
     const body = await response.json();
     const deployedSha = String(body.sha || body.buildSha || '').trim();
     if (!/^[0-9a-f]{7,40}$/.test(deployedSha)) return { observedAt, observedOrigin: new URL(PROD).origin, error: 'build-sha feed carried no usable sha' };
-    return { observedAt, observedOrigin: new URL(PROD).origin, deployedSha, ...compareToRepo(deployedSha) };
+    // S336: the content clock measures against what the CONTENT LANE actually
+    // promoted, not against `sha`. `sha` deliberately stays at the baseline so
+    // deploy-currency never claims production is at HEAD while the identity
+    // backlog is held — but content promoted by the lane IS live, and counting
+    // it as "undeployed content" would report a reader as missing pages they
+    // can already load. Falls back to the baseline when no lane head is served.
+    const laneHead = String(body.contentLaneHead || '').trim();
+    const contentBase = /^[0-9a-f]{7,40}$/i.test(laneHead) ? laneHead : deployedSha;
+    return { observedAt, observedOrigin: new URL(PROD).origin, deployedSha, ...compareToRepo(deployedSha, contentBase) };
   } catch (error) {
     return { observedAt, observedOrigin: new URL(PROD).origin, error: String(error?.message || error).slice(0, 120) };
   }
@@ -434,6 +560,16 @@ export function deriveQuorum(vantages, observedAt = new Date().toISOString()) {
     evidence: vantages.map(({ _sha, _contentLaneHead, ...publicFields }) => publicFields),
     disagreements: observedShas,
     _sha: certifiedSha,
+    // S336: private, stripped before publication exactly like _sha. The content
+    // clock needs the RAW lane head; only its short form and hash are public.
+    // Any vantage that served a lane head supplies the content base — not just
+    // the overlay-agreed case. When two vantages agree on the held BASELINE sha the
+    // quorum is plain 'agreed', yet the content lane may still have promoted well
+    // past it; measuring content lag from the baseline would then report pages as
+    // undeployed that a reader can already load.
+    _contentLaneHead: (overlayProvider && overlayProvider._contentLaneHead)
+      || (vantages.find((v) => v && v._contentLaneHead) || {})._contentLaneHead
+      || null,
   };
 }
 
@@ -485,8 +621,9 @@ async function probe() {
   const [quorum, shellParity] = await Promise.all([probeQuorum(), probeShellParity(observedAt)]);
   const publicQuorum = { ...quorum };
   delete publicQuorum._sha;
+  delete publicQuorum._contentLaneHead;
   if ((quorum.state === 'agreed' || quorum.state === 'overlay-agreed') && quorum._sha) {
-    return { observedAt, observedOrigin: 'multi-vantage-quorum', deployedSha: quorum._sha, ...compareToRepo(quorum._sha), quorum: publicQuorum, shellParity };
+    return { observedAt, observedOrigin: 'multi-vantage-quorum', deployedSha: quorum._sha, ...compareToRepo(quorum._sha, quorum._contentLaneHead || quorum._sha), quorum: publicQuorum, shellParity };
   }
   return { observedAt, observedOrigin: 'multi-vantage-quorum', error: `deploy quorum ${quorum.state}`, quorum: publicQuorum, shellParity };
 }
@@ -581,6 +718,45 @@ function selfTest() {
     ['NO PROBE IS NEVER CURRENT', dark.state === 'unobserved' && dark.commitsBehind === null],
     ['a failed probe is not current either', errored.state === 'unobserved' && errored.error === 'HTTP 503'],
     ['the warn/block ceiling is published, not implicit', current.thresholds.blockHours === BLOCK_HOURS && current.thresholds.warnHours === WARN_HOURS],
+
+    // ── S336: the second clock ────────────────────────────────────────────
+    // THE LIVE S336 SHAPE. Production sat 34 commits behind with the entire
+    // S335 release unpromoted (/how-we-build/ 404'd) and this returned 'behind'
+    // — a PASS — because 10.1h of repo span is well under the 48h ceiling.
+    ['THE LIVE CASE: 34 behind · 10h span · a day of undeployed content reads STALE',
+      classify({ found: true, commitsBehind: 34, ageHours: 10.1, contentLagHours: 26 }) === 'stale'],
+    ['the same shape WITHOUT undeployed content stays behind',
+      classify({ found: true, commitsBehind: 34, ageHours: 10.1, contentLagHours: null }) === 'behind'],
+    ['pure publisher churn never trips the content clock',
+      classify({ found: true, commitsBehind: 200, ageHours: 3, contentLagHours: 0.2 }) === 'behind'],
+    ['just under the content ceiling still passes',
+      classify({ found: true, commitsBehind: 5, ageHours: 1, contentLagHours: CONTENT_BLOCK_HOURS - 0.1 }) === 'behind'],
+    ['at the content ceiling it fires',
+      classify({ found: true, commitsBehind: 5, ageHours: 1, contentLagHours: CONTENT_BLOCK_HOURS }) === 'stale'],
+
+    // The held identity backlog must never be able to trip this alarm: a
+    // promoted content lane reports matched shell parity and returns first.
+    ['a promoted content lane outranks any content lag',
+      classify({ found: true, commitsBehind: 448, ageHours: 99, contentLagHours: 999, shellParityState: 'matched' }) === 'content-current'],
+    ['an unverified vantage still outranks the content clock',
+      classify({ found: true, commitsBehind: 5, ageHours: 1, contentLagHours: 999, retainedForHours: OBSERVATION_MAX_AGE_HOURS }) === 'unverified'],
+    ['current still wins — zero behind is never stale',
+      classify({ found: true, commitsBehind: 0, ageHours: 0, contentLagHours: 999 }) === 'current'],
+
+    // Structural churn classification, not subject-line matching.
+    ['a served hand-authored page counts as content', isHandAuthoredContent('how-we-build/index.html')],
+    ['an hourly publisher feed does NOT count', !isHandAuthoredContent('api/uptime.json')],
+    ['a root derived feed does NOT count', !isHandAuthoredContent('stats.json')],
+    ['scripts are hand-authored but never deployed, so they do NOT count', !isHandAuthoredContent('scripts/build-deploy-currency.mjs')],
+    ['operator context does NOT count', !isHandAuthoredContent('context/TASK_BOARD.md')],
+    ['a served stylesheet counts', isHandAuthoredContent('assets/style.css')],
+    ['a declared evidence-graph output does NOT count',
+      !isHandAuthoredContent('api/public-intelligence.json', { generated: new Set(['api/public-intelligence.json']) })],
+
+    ['the content ceiling is published, not implicit', current.thresholds.contentBlockHours === CONTENT_BLOCK_HOURS],
+    ['the receipt discloses the content clock', 'contentLagHours' in current && 'oldestUndeployedContentAt' in current && 'undeployedContentCommits' in current],
+    ['a failed content measurement is null, never a clean zero',
+      deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: null }).contentLagHours === null],
     ['scheduled publishers disclose their bounded coalesced promotion',
       current.publisherPromotion.strategy === 'coalesced'
       && current.publisherPromotion.maxLagHours === 4

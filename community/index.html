@@ -845,7 +845,7 @@
         }).catch(function(){});
 
       /* Community Polls */
-      fetch(SB+'/rest/v1/polls?select=id,question,options,closes_at&eq.is_active=true&order=created_at.desc&limit=3',{headers:H})
+      fetch(SB+'/rest/v1/polls?select=id,question,options,closes_at&is_active=eq.true&order=created_at.desc&limit=3',{headers:H})
         .then(function(r){return r.ok?r.json():[];})
         .then(function(polls){
           var el=document.getElementById('polls-container');
@@ -891,7 +891,7 @@
             setText('stat-week',n>0?'+'+n:'0');
           }}
         }).catch(function(){});
-      fetch(SB+'/rest/v1/game_sessions?select=id&created_at=gte.'+encodeURIComponent(wago),{headers:Object.assign({},H,{'Prefer':'count=exact','Range':'0-0'})})
+      fetch(SB+'/rest/v1/game_sessions?select=id&played_at=gte.'+encodeURIComponent(wago),{headers:Object.assign({},H,{'Prefer':'count=exact','Range':'0-0'})})
         .then(function(r){
           var cr=r.headers.get('Content-Range');
           if(cr){var parts=cr.split('/');if(parts[1]&&parts[1]!=='*'){var ss=document.getElementById('stat-sessions');if(ss)ss.textContent=fmt(parseInt(parts[1],10));}}

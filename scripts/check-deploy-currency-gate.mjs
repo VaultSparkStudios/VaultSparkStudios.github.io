@@ -57,9 +57,18 @@ export function evaluate(receipt) {
     case 'current':
       return { pass: true, warn: false, state, detail: `production current (${deployedShaShort || 'sha unknown'})` };
 
-    case 'behind':
+    case 'behind': {
       // Normal lag between a merge and its deploy — visible, not alarming.
-      return { pass: true, warn: true, state, detail: `production ${behindText}${ageText} — within the ${receipt.thresholds?.blockHours ?? '?'}h ceiling` };
+      // S336: say whether any of that gap is hand-authored content, so "34
+      // commits behind" cannot again read the same as "a whole release is
+      // stranded". `commitsBehind` counts hourly publisher churn too.
+      const contentText = Number.isInteger(receipt.undeployedContentCommits)
+        ? (receipt.undeployedContentCommits === 0
+          ? ' · no undeployed content'
+          : ` · ${receipt.undeployedContentCommits} undeployed content commit(s), oldest ${receipt.contentLagHours ?? '?'}h`)
+        : '';
+      return { pass: true, warn: true, state, detail: `production ${behindText}${ageText}${contentText} — within the ${receipt.thresholds?.blockHours ?? '?'}h ceiling` };
+    }
 
     case 'content-current':
       // The deployed commit is behind, but the served shell matches the repo
@@ -69,8 +78,24 @@ export function evaluate(receipt) {
       // operator hunting for content to ship that is already live.
       return { pass: true, warn: true, state, detail: `content promoted (shell parity matched) · ${behindText} of held non-content work — identity backlog unpromoted by design` };
 
-    case 'stale':
+    case 'stale': {
+      // S336: two independent clocks can produce `stale`, and they call for
+      // different actions. Naming the wrong one sends an operator hunting the
+      // wrong gap — the same class of defect this gate exists to prevent.
+      const contentCeiling = receipt.thresholds?.contentBlockHours;
+      const contentFired = Number.isFinite(receipt.contentLagHours)
+        && Number.isFinite(contentCeiling)
+        && receipt.contentLagHours >= contentCeiling;
+      if (contentFired) {
+        return {
+          pass: false,
+          warn: false,
+          state,
+          detail: `PRODUCTION STALE: ${receipt.undeployedContentCommits ?? '?'} hand-authored content commit(s) undeployed, oldest ${receipt.contentLagHours}h — past the ${contentCeiling}h content ceiling. Dispatch the content lane (CANON-036)`,
+        };
+      }
       return { pass: false, warn: false, state, detail: `PRODUCTION STALE: ${behindText}${ageText} — past the ${receipt.thresholds?.blockHours ?? '?'}h ceiling (CANON-036)` };
+    }
 
     case 'unverified':
       // Distinct from `stale` on purpose: the fix is the vantage, not a deploy.
@@ -144,6 +169,7 @@ async function readContentReceipt() {
 
 function selfTest() {
   const T = { blockHours: 48, observationMaxAgeHours: 12 };
+  const TC = { blockHours: 48, contentBlockHours: 12, observationMaxAgeHours: 12 };
   const cases = [
     ['current passes', evaluate({ state: 'current', commitsBehind: 0, thresholds: T }).pass === true],
     ['current does not warn', evaluate({ state: 'current', commitsBehind: 0, thresholds: T }).warn === false],
@@ -176,6 +202,27 @@ function selfTest() {
     ['content-current still reports the residual gap', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail.includes('448')],
     ['content-current and stale read differently', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail !== evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).detail],
     ['stale STILL fails — the escape hatch did not widen', evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).pass === false],
+
+    // ── S336: the content clock, reported distinctly from the churn clock ──
+    ['a behind receipt says when NO content is undeployed',
+      evaluate({ state: 'behind', commitsBehind: 34, ageDays: 0.4, undeployedContentCommits: 0, thresholds: TC }).detail.includes('no undeployed content')],
+    ['a behind receipt names undeployed content when there is some',
+      evaluate({ state: 'behind', commitsBehind: 34, ageDays: 0.4, undeployedContentCommits: 2, contentLagHours: 5, thresholds: TC }).detail.includes('2 undeployed content commit')],
+    ['THE S336 CASE: a content-clock stale names the content ceiling, not the 48h one',
+      (() => {
+        const d = evaluate({ state: 'stale', commitsBehind: 34, ageDays: 0.4, undeployedContentCommits: 1, contentLagHours: 26, thresholds: TC }).detail;
+        return d.includes('content ceiling') && d.includes('content lane') && !d.includes('48h');
+      })()],
+    ['a churn-clock stale still names the 48h ceiling',
+      (() => {
+        const d = evaluate({ state: 'stale', commitsBehind: 391, ageDays: 6.8, undeployedContentCommits: 0, contentLagHours: 1, thresholds: TC }).detail;
+        return d.includes('48h') && !d.includes('content ceiling');
+      })()],
+    ['both stale flavours still FAIL',
+      evaluate({ state: 'stale', commitsBehind: 1, undeployedContentCommits: 1, contentLagHours: 26, thresholds: TC }).pass === false
+      && evaluate({ state: 'stale', commitsBehind: 391, ageDays: 6.8, thresholds: TC }).pass === false],
+    ['a receipt with no content fields degrades gracefully, not into a crash',
+      evaluate({ state: 'behind', commitsBehind: 3, thresholds: T }).pass === true],
 
     ['verified composite content upgrades an unobserved raw SHA to warning', (() => {
       const r = evaluateWithContent(
