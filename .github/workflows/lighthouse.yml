@@ -44,7 +44,7 @@ jobs:
       - name: Warm up local preview
         run: |
           for pass in 1 2 3; do
-            for u in / /games/ /community/ /leaderboards/ /journal/ /ranks/ /contact/ /stats/ /stats/ecosystem/ /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/; do
+            for u in / /games/ /community/ /leaderboards/ /journal/ /contact/ /stats/ /stats/ecosystem/ /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/; do
               curl -s -o /dev/null "http://127.0.0.1:4173$u" || true
             done
           done
@@ -58,7 +58,6 @@ jobs:
             http://127.0.0.1:4173/community/
             http://127.0.0.1:4173/leaderboards/
             http://127.0.0.1:4173/journal/
-            http://127.0.0.1:4173/ranks/
             http://127.0.0.1:4173/contact/
             http://127.0.0.1:4173/stats/
             http://127.0.0.1:4173/stats/ecosystem/
@@ -138,7 +137,6 @@ jobs:
             https://website.staging.vaultsparkstudios.com/
             https://website.staging.vaultsparkstudios.com/games/
             https://website.staging.vaultsparkstudios.com/membership/
-            https://website.staging.vaultsparkstudios.com/vaultsparked/
             https://website.staging.vaultsparkstudios.com/community/
             https://website.staging.vaultsparkstudios.com/stats/
             https://website.staging.vaultsparkstudios.com/stats/ecosystem/

@@ -1,3 +1,23 @@
+## S338 Silent-Gate and Audit-Target Correction (2026-09-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | `api/deploy-currency.json` round-trips every field it emits, proven by a fixed-point self-test rather than a list of remembered field names. `api/staging-health.json` gains an additive `surfaceParity` block carrying its own `gating` flag and the reason gating is withheld. |
+| Prompt/template alignment | 5 | No prompt or template surface changed this session. |
+| Derived-view freshness | 5 | Every claim here was re-probed live: the CI sequence reproduced locally in both directions, the Lighthouse failure read from the run log, staging's sitemap and `build-sha.json` fetched directly. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S338.1..3), SIL, WORK_LOG, PROJECT_STATUS and this file all reference S338. |
+| Contradiction density | 4 | Two silent contradictions closed: a gate whose verdict could not fire, and a performance gate reporting nothing while appearing configured. One remains open and is now quantified rather than described: staging is 23 advertised routes and five days behind production. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — staging is measurably behind production and the CANON-007 gate that depends on it is therefore running backwards.
+
+- **Truth corrected: a gate that could not fire had been reading as a gate that passes.** The S336 content ceiling consumed `contentLagHours`, which every non-probe re-derive silently set to null. Between S336 and S338 the alarm built to catch a stranded release could not have caught one. Fixed at the round trip, and closed as a class with a fixed-point property test. (D-S338.1)
+- **Truth corrected: the site's performance gate had produced no verdict for over a day.** Fifteen consecutive Lighthouse CI runs failed on a route retired behind an edge redirect that the local preview cannot apply. Nothing surfaced the silence; the gate looked configured. (D-S338.2)
+- **Truth quantified: staging is behind production by a measured amount.** S337 recorded one 404. S338 measures 23 advertised routes missing and a staging build five days old. The anecdote is replaced by a number that can be watched. (D-S338.3)
+- **Truth preserved: a measurement is not an enforcement, and says so.** `surfaceParity` publishes `gating: false` with its reason on the artifact rather than being wired into the release verdict, because gating on a known-open blocker would convert an honest observation into a self-inflicted release outage.
+- **Not verified, stated as such:** the 23-route figure compares advertised sitemaps. It proves staging does not claim those routes; it does not prove each one was individually requested and refused.
+- **Not verified, stated as such:** the `uptime-probe` fix is proven locally against the exact failing CI sequence, but the scheduled run that confirms it had not occurred at closeout. The same applies to the first green Lighthouse CI run.
+- **Not verified, stated as such:** the new fixed-point self-test is wider than the S300 one it supersedes, but it inherits the same hazard — a fixed-point test is only as wide as its fixture's field coverage. That risk is recorded on the board rather than assumed away.
+
 ## S337 Promotion-Authority and Cross-Engine Assertion Correction (2026-09-02)
 
 | Dimension | Score | Evidence |

@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T06:44:05.960Z",
+  "generatedAt": "2026-09-02T08:51:24.678Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "ec0a63bb3a854b66f589d56477f553d7cd206d1c",
+    "sha": "01ff999b91a09b09074e7d347c7088d29a901c49",
     "shellVersion": "bf10f7005d-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-a2aa51d885-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-b33242e1cc-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
@@ -13,10 +13,7 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
@@ -26,11 +23,11 @@
       "/studio-pulse/:localShellParity",
       "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "38dd4b18ac14e0a5a83da50d6cca1f0205c389cd",
+    "candidateBuildSha": "ec0a63bb3a854b66f589d56477f553d7cd206d1c",
     "deployedBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "5de1026b329339f73e3efc6bc0c13e91ba920824c39eb1a774f22062e12ae14e",
+      "candidateRoot": "06bb0790fb54056a9913dfb84f3d22ad8efe8fba21fdfd84530bf93ce155d777",
       "candidateLeafCount": 29,
       "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
       "stagingLeafCount": 29,
@@ -74,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 5,
-    "ageHours": 0.1,
-    "observedAt": "2026-09-02T06:32:52.760Z",
+    "commitsBehind": 20,
+    "ageHours": 1.2,
+    "observedAt": "2026-09-02T07:59:32.989Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-02T06:32:52.760Z",
+      "observedAt": "2026-09-02T07:59:32.989Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a2aa51d885.js",

@@ -684,6 +684,18 @@ export function observationFromReceipt(c) {
     // emits null where the committed receipt carries a boolean, and `--check`
     // drifts on every run forever after.
     historyComplete: typeof c.honesty?.historyComplete === 'boolean' ? c.honesty.historyComplete : null,
+    // S338 — the same class again, third time, and the most expensive yet. These
+    // three were added in S336 and never restored here, so every NON-probe
+    // re-derive collapsed them to null. That is not only a drifted receipt (the
+    // red uptime cron): `classify()` READS contentLagHours, so the S336 content
+    // ceiling — the gate built precisely to catch a whole release stranded in
+    // production — was silently disabled on every rebind, including
+    // `npm run build:check` and the content lane. A field-by-field list has now
+    // failed three times; the structural fixed-point case in selfTest() below is
+    // what actually closes this hole for fields nobody has written yet.
+    undeployedContentCommits: Number.isInteger(c.undeployedContentCommits) ? c.undeployedContentCommits : null,
+    oldestUndeployedContentAt: c.oldestUndeployedContentAt || null,
+    contentLagHours: Number.isFinite(c.contentLagHours) ? c.contentLagHours : null,
     ...(c.error ? { error: c.error } : {}),
   };
 }
@@ -783,6 +795,48 @@ function selfTest() {
     ['a drifted receipt is NOT transient', !isTransientProbeError('receipt drifted; run --probe')],
     ['no error is not transient', !isTransientProbeError(null)],
     ['the receipt discloses the content clock', 'contentLagHours' in current && 'oldestUndeployedContentAt' in current && 'undeployedContentCommits' in current],
+
+    // ── S338: the round trip, closed STRUCTURALLY ─────────────────────────
+    // Three fields have now been added to deriveCurrency() and forgotten in
+    // observationFromReceipt(): retainedForHours (S300), historyComplete (S316),
+    // and the S336 content clock. Each was caught only after it had already
+    // reddened a cron in production, and each was fixed by adding one more line
+    // to a hand-maintained list plus one more hand-written assertion naming that
+    // field. A list of the fields someone remembered cannot cover the field
+    // nobody has written yet.
+    //
+    // This case names no field at all. It asserts the property the two functions
+    // actually owe each other: for a FULLY-POPULATED observation, re-deriving
+    // from the round trip must be a fixed point. That is exactly what `--check`
+    // computes, so any future field that fails to survive the round trip fails
+    // here — at `--self-test`, in `build:check`, before it can strand a
+    // publisher. It also fails loudly and legibly: the diff names the field.
+    (() => {
+      const populated = {
+        ...base,
+        commitsBehind: 20, ageHours: 1.2, deployedCommitAt: '2026-07-25T22:48:00.000Z',
+        undeployedContentCommits: 1, oldestUndeployedContentAt: '2026-07-26T06:44:08Z', contentLagHours: 1.2,
+        retainedForHours: 3.5, historyComplete: true, challengedAt: null,
+        quorum: { state: 'agreed', required: 2, agreementCount: 2, observedAt: base.observedAt, agreedShaShort: 'a'.repeat(12), evidence: [], disagreements: [] },
+        shellParity: shellDrift,
+      };
+      const once = deriveCurrency(populated);
+      const twice = deriveCurrency(observationFromReceipt(once));
+      const drifted = Object.keys(once).filter((k) => JSON.stringify(once[k]) !== JSON.stringify(twice[k]));
+      return [
+        `EVERY emitted field survives the receipt round trip${drifted.length ? ` (drifted: ${drifted.join(', ')})` : ''}`,
+        JSON.stringify(once) === JSON.stringify(twice),
+      ];
+    })(),
+    // The guard above must be able to FAIL — a fixed-point test over a function
+    // that drops the same field on both passes is self-consistently green. Prove
+    // the detector detects by round-tripping a receipt with a field deliberately
+    // stripped, exactly as a forgotten field would arrive.
+    ['the round-trip guard can actually fail', (() => {
+      const once = deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: 9.4, undeployedContentCommits: 2 });
+      const { contentLagHours, ...stripped } = once;
+      return JSON.stringify(deriveCurrency(observationFromReceipt(stripped))) !== JSON.stringify(once);
+    })()],
     ['a failed content measurement is null, never a clean zero',
       deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: null }).contentLagHours === null],
     ['scheduled publishers disclose their bounded coalesced promotion',

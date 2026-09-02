@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T05:38:01.767Z",
+  "generatedAt": "2026-09-02T08:51:10.711Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "The site's own release checks were rejecting good releases because one of them only understood how a single web browser words a particular security notice — that is fixed and now verified across all three browsers the studio tests in. The AI news desk also stopped being able to mistake an advertisement for a reported fact, and now records which model wrote each edition instead of assuming.",
+  "focus": "Three of the site's own safety checks were quietly not working. One had switched off an alarm meant to catch a release that never reaches readers; one had left the site's speed check failing for over a day without saying so; and one could not notice when the test environment falls behind the live site — it now measures exactly how far, and it is five days and 23 pages behind. All three are fixed or measured, and everything here is live: the site was fully redeployed and verified.",
   "nextStep": "Finish the browser-security migration so the strictest setting can be switched on safely, then the rendered-pixel review of the newly-served pages. Account verification remains on its separate approval path.",
   "decisions": [
     {

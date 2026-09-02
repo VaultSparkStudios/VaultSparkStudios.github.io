@@ -12,13 +12,13 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 337 ran the arc under founder authorization for a full production deploy and found, first, that the deploy had never been identity-blocked: check-promotion-scope returns promotable=true scoped-disjoint and the gate returns allowed=true mode=scoped, and has since S319 — three surfaces had been asserting a blocker the gate itself disagreed with. The dispatched deploy then failed the release ceremony 9/10 on staging-browser-receipt with reason flaky-1, and the cause was ours but not the site's: tests/staging-release.spec.js classifies Trusted Types Report-Only console notices as observations by design, but recognised only Chromium's phrasing. Firefox words the same notice completely differently, so every Firefox report-only notice became a hard console error; the sinks render asynchronously, so it fired on some runs and not others, which Playwright calls flaky, and a flaky result rejects the ceremony. Fixed conjunctively — a report-only marker AND a Trusted Types marker — so an ENFORCED violation still fails loudly, extracted to a shared module, and pinned by a regression spec carrying each engine's verbatim string; proven by 6/6 staging release tests passing locally on all three engines with zero flake. While there, measured the real enforce blocker across 137 built pages: 31 sink-bearing client assets load BEFORE ambient-core installs the Trusted Types default policy they depend on, led by pwa-nav.js on 81 pages and pwa-install.js on 72. Recorded with its numbers and deliberately not fixed — the repair rewrites every page head and invalidates every hash-bound receipt at once. Also closed two Desk truth defects: fact extraction scored register but never subject, so a syndicated promo block published as a sourced fact under a real publisher URL; and no published story recorded which model wrote it while the preferred model is depooled. OUTCOME: the full production deploy LANDED. Run 33598223667 completed the release ceremony that had rejected, promoted a clean dist, and a second run (33598806172) brought production exactly to main — api/build-sha.json reports bba962ac8 and /, /how-we-build/, /evidence/, /community/, /news/, /stats/ and /status/ all return 200. The full deploy also retired /vault-wall/ (301, was 200) and dropped it from the deployed sitemap, which released the S336 hold on removing it from config/served-surface.json; prune-served-surface --check stays green at 193 advertised routes.",
-  "publicNote": "The site's own release checks were rejecting good releases because one of them only understood how a single web browser words a particular security notice — that is fixed and now verified across all three browsers the studio tests in. The AI news desk also stopped being able to mistake an advertisement for a reported fact, and now records which model wrote each edition instead of assuming. Everything on this list is now live: the site was fully redeployed and every page checked.",
-  "nextMilestone": "Hoist the Trusted Types default-policy installer ahead of the 31 client assets that currently load before it, then re-measure and decide the founder-approved enforce flip on real evidence. Then the founder privacy decision on the four silent-zero tables and its one migration, the manual CANON-053 rendered-pixel review of the newly-served surfaces, and a staging parity probe — staging currently serves a route production serves, as a 404.",
+  "currentFocus": "Session 338 ran the arc under founder authorization for a direct push to main and a full production deploy, and its three findings were all gates that were not doing what their names promised. FIRST: the red uptime-probe cron was not the ordering race the board recorded. Reproduced locally, build-deploy-currency drifted between --probe and --check because observationFromReceipt() never restored the three content-clock fields added in S336 — the third time a field was added to the emitter and forgotten in the reader (after retainedForHours in S300 and historyComplete in S316). The consequence was far larger than a red cron: classify() reads contentLagHours, so every non-probe re-derive — npm run build:check, the content lane, every local build — collapsed it to null, which silently disabled the content ceiling S336 built specifically to catch a whole release stranded in production. Fixed, and the class closed with a fixed-point self-test that names no field (derive(read(derive(x))) === derive(x)) plus a companion case proving that guard can fail; 87/87, was 85. Notably an S300 test of exactly this shape already existed and stayed green throughout, because its fixtures omitted the dropped fields. SECOND: Lighthouse CI had been red for 15 consecutive runs across ~27 hours, so the site's performance gate had produced no verdict for over a day and nothing said so. /ranks/ was consolidated into /leaderboards/#ranks and answered by a _redirects 301, but three CI audit-target lists still named it — including the one auditing the LOCAL PREVIEW, which serves the built tree with no edge layer, so the redirect cannot apply and Lighthouse 404'd on a page that cannot exist there. /vaultsparked/ was in the same state. Both removed, and scripts/check-workflow-audit-targets.mjs added to build:check with two rules that name no route: no target may be a `from` in route-consolidation.json, and every local-preview target must resolve to a real page. THIRD: staging parity was a hand-maintained three-route sample and structurally could not see an absent route, which is why S337 could only record /how-we-build/ as an anecdote. It now compares the surface each origin advertises: production advertises 134 routes, staging 115, 23 missing on staging including /evidence/, /how-we-build/, three news editions and the whole .ai/ layer, with staging's build-sha reporting 94e78e93 built 2026-08-28 — five days behind production. Published as surfaceParity with gating:false and the reason stated on the artifact, because gating on a known-open blocker is a self-inflicted release outage. OUTCOME: closed out, pushed directly to main, and fully deployed to production. FOURTH, surfaced by converging the gate rather than by the audit: build-news-visual-receipts hashes each story's rendered page but ran four steps before build-shell-assets rewrote them, so it was stale by construction on every shell rotation and its own error message prescribed a hand-rebuild rather than the ordering fix; moved after every page rewriter and immediately before the seal, which also removes a confound from the standing build-to-build churn investigation. The visual and mobile proof receipts were then recaptured against the final tree: no UI changed, so CANON-053 was not triggered, but those receipts bind the candidate manifest sha rather than any appearance, and every reseal invalidates them.",
+  "publicNote": "Three of the site's own safety checks were quietly not working. One had switched off an alarm meant to catch a release that never reaches readers; one had left the site's speed check failing for over a day without saying so; and one could not notice when the test environment falls behind the live site — it now measures exactly how far, and it is five days and 23 pages behind. All three are fixed or measured, and everything here is live: the site was fully redeployed and verified.",
+  "nextMilestone": "Find and fix whatever refreshes the staging origin — it stopped on 2026-08-28 and is 23 advertised routes behind production — then flip surfaceParity to gating so CANON-007 stops running backwards. Then hoist the Trusted Types default-policy installer ahead of the 31 client assets that load before it and decide the founder-approved enforce flip on fresh evidence, the founder privacy decision on the four silent-zero tables, and the manual CANON-053 rendered-pixel review of the newly-served surfaces.",
   "blockers": [
     "TRUSTED TYPES ENFORCE: blocked by a named defect, not only by stale evidence. ambient-core.bundle.js installs the TT default policy that the site's ~167 legacy innerHTML sinks depend on, and its own comment says it MUST load before any sink usage — but it is not the first script on the page. Measured across 137 built pages in S337: 31 sink-bearing assets load before it (pwa-nav.js 81 pages, pwa-install.js 72). Report-Only hides this; enforcement throws. The repair rewrites every page head and invalidates every hash-bound receipt, so it is a session of its own (D-S337.3).",
     "identity/auth surfaces remain held on real-provider-e2e-pending (obelisk.identity.verify missing OBELISK_RP_ID/RP_NAME/RP_ORIGIN; obelisk-staging-registration missing). NOTE (S337, D-S337.1): this holds the IDENTITY BLAST RADIUS only — auth/**, surface:identity, worker:identity. It does NOT block a full production deploy: the S319 scoped path returns allowed=true mode=scoped for any candidate disjoint from that radius, and did so this session.",
-    "STAGING PARITY: https://website.staging.vaultsparkstudios.com/how-we-build/ returns 404 while the apex returns 200 — staging is behind production, which inverts the CANON-007 gate the release ceremony depends on. Established by live probe in S337; not yet diagnosed.",
+    "STAGING IS FIVE DAYS BEHIND PRODUCTION, now measured rather than anecdotal (S338, D-S338.3). check-staging-parity compares advertised sitemaps: production 134 routes, staging 115, 23 missing — /evidence/, /how-we-build/, three news editions and the whole .ai/ fact-sheet layer — and staging's api/build-sha.json reports 94e78e93 built 2026-08-28. CANON-007 makes staging the thing production is verified against, so the release ceremony's browser matrix is clearing a tree five days newer than the one it measures. surfaceParity is published with gating:false on purpose: gating on a known-open blocker would be a self-inflicted release outage. Unblock by establishing what deploys the Hetzner staging origin and why it stopped, then flip gating.",
     "PRIVACY DECISION (founder): four public tables — challenge_submissions, game_sessions, point_events, member_achievements — have no anonymous read path, so /community/, all seven /leaderboards/* and public member profiles render zeros and empty states to signed-out visitors. The fix generalizes the S335 public_leaderboard pattern, but it decides which member activity becomes publicly readable and is escalated rather than applied (D-S336.5).",
     "identity: the provider chain is live and verified; production promotion is held only on the real-provider journey, whose remaining leg is a founder passkey ceremony — hardware-key enrollment is founder-reserved by CANON-019 and is deliberately not automatable.",
     "Trusted Types enforcement stays held. Founder approved the flip in S335, but api/tt-readiness.json now honestly reports stale-evidence: its soak manifest is 57 days old against a declared 30-day window. The ageing defect is fixed; the missing input is a fresh KV soak, not a code change.",
@@ -28,14 +28,14 @@
     "startup-revenue-agreement is red: the promoted v5 startup brief renders a revenue evidence age the shared resolver disagrees with, and context/SIGNALS.md is stale. Studio-ops brief-renderer owned; must not be fixed by editing the sibling repo."
   ],
   "lastUpdated": "2026-09-02",
-  "currentSession": 337,
+  "currentSession": 338,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-02",
   "silScore": 991,
-  "silAvg3": 989,
-  "silVelocity": 4,
+  "silAvg3": 990,
+  "silVelocity": 0,
   "silDebt": "↓",
-  "silLastSession": 337,
+  "silLastSession": 338,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -100,17 +100,17 @@
     "capitalEfficiency": 100,
     "automationCoverage": 100
   },
-  "silCategoriesUpdatedSession": 337,
+  "silCategoriesUpdatedSession": 338,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-02",
-    "passing": 14,
-    "warning": 1,
+    "passing": 13,
+    "warning": 2,
     "failing": 1,
     "blockingFailing": 0,
     "advisoryFailing": 1,
     "total": 16,
-    "score": 88,
+    "score": 81,
     "checks": [
       {
         "id": "manifest",
@@ -177,8 +177,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -233,8 +233,8 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 379,
-  "testsPassing": 379,
+  "testsTotal": 381,
+  "testsPassing": 381,
   "testsLastRun": "2026-09-02",
   "testsLabel": "measured build:check steps",
   "publicNextStep": "Finish the browser-security migration so the strictest setting can be switched on safely, then the rendered-pixel review of the newly-served pages. Account verification remains on its separate approval path.",
@@ -251,7 +251,7 @@
   "truthGenome": "25/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "d929a924d36f54e34cea5e48",
-  "testsSourceFingerprint": "12ae68900ae732da63c0174f",
-  "lastSessionSummary": "S337 (2026-09-02, from SIL ledger): Total: 991/1000."
+  "testsPlanFingerprint": "55be7c5c55915da045afa456",
+  "testsSourceFingerprint": "0e4fb817a5f7a069b5ba07bd",
+  "lastSessionSummary": "S338 (2026-09-02, from SIL ledger): Total: 991/1000 | Velocity: 0."
 }

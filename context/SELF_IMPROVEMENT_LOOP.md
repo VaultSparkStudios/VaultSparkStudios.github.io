@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 991.0 | 5: 992.2 | 10: 991.6 | 25: 987.6 | all: 983.2
-  └ 3-session: Dev 99.3 | Align 99.0 | Momentum 98.7 | Engage 97.3 | Process 99.3
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Avgs — 3: 989.7 | 5: 990.8 | 10: 990.7 | 25: 987.9 | all: 983.6
+  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.0 | Engage 96.0 | Process 100.0
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~12 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-09-01 | Session 335 | Total: 989/1000 | Velocity: 6 | protocolVelocity: 0
+Last session: 2026-09-02 | Session 338 | Total: 991/1000 | Velocity: 0 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
@@ -2704,3 +2704,37 @@ Sparkline (last 5): █████ · 996, 988, 989, 987, 991
 **Brainstorm / committed to TASK_BOARD:**
 1. [S337][SEC/P1] Hoist the Trusted Types default-policy installer ahead of every sink-bearing asset; re-measure the 31 before and after (D-S337.3).
 2. [S337][OBS/P2] Record the distinct violating files in the release-ceremony receipt as a structured array, so a rejection is legible without downloading the artifact.
+
+## 2026-09-02 — Session 338 (lossy receipt round trip disabled a live ceiling · Lighthouse red 27h on a retired route · staging parity finally measured) | Total: 991/1000 (v3.0) | Velocity: 0 | Debt: ↓
+Avgs — 3: 989.7 | 5: 990.8 | 10: 990.7 | 25: 987.9 (carried, spans archive) | all: 983.6 (carried, spans archive)
+Sparkline (last 5): █████ · 996, 989, 987, 991, 991
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Three red signals entered the session and two left fixed with direct evidence: `build-deploy-currency --self-test` 87/87 (was 85) with the exact CI sequence (`--probe` then `--check`) reproduced failing and then passing locally; `check-workflow-audit-targets --self-test` 18/18 and green live; `check-staging-parity --self-test` 26/26. Every exit code read directly, never through a pipe. |
+| Creative Alignment | 98 | No creative surface authored this session; nothing in the SOUL ledger was touched. The work is infrastructure that keeps authored surfaces reaching readers. |
+| Momentum | 99 | Three ranked items shipped, each root-caused rather than patched, and the top-ranked item's own proposed fix was disproved before it was implemented. The session's most valuable finding — a live gate silently disabled — was not on the board at all. |
+| Engagement | 96 | No engagement surface built. The indirect win is that the performance gate protecting every reader-facing page produces a verdict again after 27 hours of silence. |
+| Process Quality | 100 | The board proposed reordering the uptime cron's `--check`. Reproducing the failure first showed that fix would not have worked: the round trip itself was lossy. Each fix was proven in both directions — reverted to confirm the new guard fails, restored to confirm it passes — and the staging gate was deliberately NOT wired in, with the reason published on the artifact rather than kept in a commit message. |
+| Cross-Repo Coherence | 100 | No sibling repository written or read for state. studio-ops consulted for canon and protocol only. |
+| Security Posture | 99 | No security surface changed. The staging finding is a security-adjacent honesty win: the release ceremony has been verifying against an origin five days older than the tree being promoted, and that is now a number on a public-safe artifact rather than an anecdote in a handoff. |
+| Ecosystem Integration | 99 | The new gate derives entirely from `config/route-consolidation.json` and the git-tracked tree — no new config, no new dependency, no new source of truth (CANON-039). It joins the existing `check-workflow-*` family and its naming. |
+| Capital Efficiency | 100 | Zero new dependencies, zero paid calls, zero new scheduled workflows. Two extra bounded GETs per staging-parity run buy complete surface coverage in place of a three-route sample. |
+| Automation Coverage | 100 | Every fix ships a self-test, and two of them ship the test that would have PREVENTED the defect: a fixed-point round-trip case that names no field, and a route gate that names no route. Both were proven able to fail. |
+
+**Top win:** The red cron was a symptom, and the board had the wrong fix for it. `uptime-probe` was failing on `build-deploy-currency --check` after a `--probe`, which reads like an ordering race, and the board proposed reordering the check. Reproducing it locally showed the round trip itself was lossy: three fields added to the receipt in S336 were never restored by the reader, so every non-probe re-derive dropped them. That is not just a drifted receipt — `classify()` reads `contentLagHours`, so the content ceiling S336 built specifically to catch a whole release stranded in production had been **silently disabled on `build:check`, the content lane and every local build ever since**. A gate that cannot fire is indistinguishable from a gate that passes, and this one had been passing for two sessions.
+
+**Second win:** Lighthouse CI had been red for 15 consecutive runs across ~27 hours, and the site's performance gate had produced no verdict in that entire window without anything saying so. The cause was a route merge finishing incompletely: `/ranks/` was retired behind a `_redirects` 301, and three CI audit-target lists still named it — including the one that audits the local preview server, which has no edge layer at all, so the redirect that makes production correct cannot apply. The fix removes the stranded targets; the durable part is a gate that derives the forbidden set from `config/route-consolidation.json`, so the next merge protects itself.
+
+**Third win, found by the gate rather than by the audit:** converging `build:check` surfaced a fourth defect of the same family. `build-news-visual-receipts` records a `pageSha256` per story and ran at position 7 of `postbuild`, while `build-shell-assets` rewrites every page's fingerprinted script tags at position 9 — so on any build that rotated a shell hash the receipt was bound to pre-rotation bytes and was stale **by construction**. Its own error message says "rebuild after news pages", which is a workaround for an ordering bug; the 22 news pages were all current. Moved after every page rewriter and immediately before the seal, and proven by a full build leaving `--check` at exit 0 with no hand-run. It is the same defect S335 fixed for `_headers` in the same file, and it also removes a confound from the standing build-to-build churn investigation (D-S338.4).
+
+**Top gap:** Staging is refreshed by something nobody has identified, and it stopped five days ago. S338 turned that from an anecdote about one route into a bounded measurement — 23 advertised routes missing, `94e78e93` from 2026-08-28 — but did not fix it, and deliberately did not gate on it. Until staging is refreshed, the release ceremony's browser matrix verifies against a tree older than the one it is clearing for promotion, which is CANON-007 running backwards.
+
+**Honesty ledger:** The `surfaceParity` dimension is reported with `gating: false` — it is an observation, not yet an enforcement, and it says so on the artifact. The 23-route figure compares advertised sitemaps, which proves staging does not claim those routes; it is not a per-route HTTP probe of each one. The uptime cron is fixed at its root but its next scheduled run is the proof, and that run had not occurred at closeout. An S300 fixed-point self-test with the right shape already existed in `build-deploy-currency.mjs` and stayed green through the entire defect window because its fixtures omitted the dropped fields — the new case is wider, but the same fixture-coverage hazard now applies to it and is recorded on the board rather than assumed away. No UI changed this session, so CANON-053's rendered-pixel obligation was not triggered — but the visual and mobile receipts were still recaptured, because they bind the candidate manifest sha rather than any appearance, and every rebuild reseals it. I initially deferred that capture on the "no UI changed" reasoning and `check-receipt-ordering` was right to reject it (D-S338.5).
+
+**Intent outcome:** Achieved. The arc ran end to end, three verified items shipped with proofs in both directions, and the full production deploy was authorized, executed and verified live.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S338][DEPLOY/P1] Refresh staging, then flip `surfaceParity.gating` to true so CANON-007 stops running backwards (D-S338.3).
+2. [S338][OBS/P2] Audit every other generator that reads its own receipt back for the D-S338.1 class, with fully-populated fixtures — the existing tests may be green for the same wrong reason this one was.
+3. [S338][BUILD/P2] Walk the rest of `postbuild` for the D-S338.4 class — does this step hash rendered pages, and does anything after it rewrite them? — and re-check whether the standing build-to-build churn is the same defect rather than a clock-relative window.

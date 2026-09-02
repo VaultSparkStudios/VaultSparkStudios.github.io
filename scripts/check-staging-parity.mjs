@@ -178,6 +178,78 @@ function localArtifactManifest() {
 
 // Pure status classifier (exported for self-test). Staging unreachable on every
 // route → 'staging-unreachable'; reachable + full parity → 'green'; else 'yellow'.
+/**
+ * S338 — SURFACE parity, as distinct from the three-route sample above.
+ *
+ * ROUTES is a hand-maintained list of three. That is enough to compare shells,
+ * headers and CSP, and it is structurally incapable of noticing that a route
+ * production serves is missing from staging — which is exactly what happened:
+ * S337 probed `/how-we-build/` and found 200 on production, 404 on staging,
+ * while this checker reported `production-parity yellow` and exited 0 for weeks.
+ * CANON-007 makes staging the thing production is verified against, so staging
+ * quietly older than production inverts the gate the release ceremony leans on.
+ *
+ * Rather than grow the hand list (which strands the NEXT new route the same
+ * way), compare the surface each origin ADVERTISES: two sitemap GETs cover
+ * every route the site claims to serve, and new routes are covered the moment
+ * they enter the sitemap. `missingOnStaging` is the inversion that matters —
+ * production advertising something staging cannot serve.
+ */
+export function parseSitemapRoutes(xml, origins) {
+  // Staging serves a sitemap whose <loc> entries name the CANONICAL production
+  // origin, not the host that served the file — correct for SEO, and fatal to a
+  // comparison that filters by serving origin: the first live run of this probe
+  // read 115 staging entries as 0 and reported `uncomparable`. Accept any known
+  // site origin and compare PATHS, which is what parity is actually about.
+  const accepted = (Array.isArray(origins) ? origins : [origins]).filter(Boolean);
+  const routes = new Set();
+  for (const match of String(xml).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)) {
+    const raw = match[1];
+    const origin = accepted.find((o) => raw.startsWith(o));
+    if (!origin) continue;
+    const route = raw.slice(origin.length).split('#')[0].split('?')[0] || '/';
+    routes.add(route.startsWith('/') ? route : `/${route}`);
+  }
+  return routes;
+}
+
+export function compareSurfaces(prodRoutes, stagingRoutes) {
+  // An unreadable sitemap is UNCOMPARABLE, never a clean parity. A checker that
+  // reports "0 missing" because it could not read the list is the silent-zero
+  // shape this project has paid for repeatedly.
+  if (!prodRoutes || !stagingRoutes || !prodRoutes.size || !stagingRoutes.size) {
+    return { state: 'uncomparable', productionRoutes: prodRoutes?.size ?? null, stagingRoutes: stagingRoutes?.size ?? null, missingOnStaging: [], missingOnStagingCount: null, aheadOnStaging: [], aheadOnStagingCount: null };
+  }
+  const missing = [...prodRoutes].filter((r) => !stagingRoutes.has(r)).sort();
+  const ahead = [...stagingRoutes].filter((r) => !prodRoutes.has(r)).sort();
+  return {
+    state: missing.length ? 'staging-behind' : (ahead.length ? 'staging-ahead' : 'matched'),
+    productionRoutes: prodRoutes.size,
+    stagingRoutes: stagingRoutes.size,
+    // Bounded so one badly-out-of-sync origin cannot publish an unbounded list
+    // into a public-safe feed; the counts stay exact either way.
+    missingOnStaging: missing.slice(0, 25),
+    missingOnStagingCount: missing.length,
+    aheadOnStaging: ahead.slice(0, 25),
+    aheadOnStagingCount: ahead.length,
+  };
+}
+
+async function fetchSitemapRoutes(origin) {
+  // Same never-throw contract as fetchRoute: an unreachable origin yields null,
+  // which compareSurfaces() reports as `uncomparable` rather than as parity.
+  try {
+    const res = await fetch(`${origin}/sitemap.xml`, {
+      headers: { 'user-agent': 'VaultSpark staging parity checker' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    return parseSitemapRoutes(await res.text(), [PROD, STAGING]);
+  } catch {
+    return null;
+  }
+}
+
 export function classifyStatus(routes) {
   const stagingReachable = routes.some((r) => r.stagingReachable);
   if (!stagingReachable) return 'staging-unreachable';
@@ -234,6 +306,35 @@ if (SELF_TEST) {
     ['nonce-bound Worker strict-dynamic policy is safe', servedCspSafe("script-src 'self' 'nonce-abcdefghijklmnop' 'strict-dynamic'")],
     ['short nonce cannot make strict-dynamic safe', !servedCspSafe("script-src 'self' 'nonce-short' 'strict-dynamic'")],
     ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
+    // ── S338: advertised-surface parity ──────────────────────────────────
+    ['a sitemap yields the routes of its own origin',
+      [...parseSitemapRoutes('<url><loc>https://x.test/</loc></url><url><loc>https://x.test/a/</loc></url>', 'https://x.test')].sort().join(',') === '/,/a/'],
+    ['a foreign origin in the sitemap is not counted as ours',
+      parseSitemapRoutes('<loc>https://other.test/a/</loc>', 'https://x.test').size === 0],
+    // Caught on this probe's own first live run: staging returned 115 entries
+    // and they were read as 0, because every one of them names production.
+    ['a staging sitemap naming the PRODUCTION origin still yields its routes',
+      parseSitemapRoutes('<loc>https://vaultsparkstudios.com/how-we-build/</loc>', ['https://vaultsparkstudios.com', 'https://website.staging.vaultsparkstudios.com']).has('/how-we-build/')],
+    // THE LIVE S337 SHAPE: /how-we-build/ advertised by production, absent from
+    // staging, while the three-route sample reported parity and exited 0.
+    ['a route production advertises and staging lacks is staging-behind', (() => {
+      const c = compareSurfaces(new Set(['/', '/how-we-build/']), new Set(['/']));
+      return c.state === 'staging-behind' && c.missingOnStagingCount === 1 && c.missingOnStaging[0] === '/how-we-build/';
+    })()],
+    ['a staging-only route is ahead, not behind',
+      compareSurfaces(new Set(['/']), new Set(['/', '/next/'])).state === 'staging-ahead'],
+    ['identical surfaces match', compareSurfaces(new Set(['/', '/a/']), new Set(['/a/', '/'])).state === 'matched'],
+    // An unreadable sitemap must never render as clean parity — the silent-zero
+    // shape this project has already paid for on four public tables.
+    ['an unreadable sitemap is uncomparable, never matched',
+      compareSurfaces(null, new Set(['/'])).state === 'uncomparable'
+      && compareSurfaces(null, new Set(['/'])).missingOnStagingCount === null],
+    ['an empty sitemap is uncomparable too', compareSurfaces(new Set(), new Set(['/'])).state === 'uncomparable'],
+    ['the published missing list is bounded but the count is exact', (() => {
+      const prod = new Set(['/']); for (let i = 0; i < 40; i += 1) prod.add(`/r${i}/`);
+      const c = compareSurfaces(prod, new Set(['/']));
+      return c.missingOnStaging.length === 25 && c.missingOnStagingCount === 40;
+    })()],
     ['reachable but mismatched → yellow', classifyStatus([compareRoute(reachable, { ...reachable, html: '<script src="assets/ambient.shell-zzzzzzzzzz.js"></script>' })]) === 'yellow'],
   ];
   let failed = 0;
@@ -273,6 +374,8 @@ if (CHECK || REQUIRE_GREEN) {
   process.exit(0);
 }
 
+const prodSitemapPromise = fetchSitemapRoutes(PROD);
+const stagingSitemapPromise = fetchSitemapRoutes(STAGING);
 const stagingBuildPromise = fetchBuildSha(STAGING);
 const stagingManifestPromise = fetchArtifactManifest(STAGING);
 const routes = [];
@@ -298,6 +401,7 @@ const artifactManifest = {
   stagingLeafCount: stagingArtifactManifest?.leafCount ?? null,
   matched: Boolean(candidateArtifactManifest?.root && candidateArtifactManifest.root === stagingArtifactManifest?.root && candidateArtifactManifest.leafCount === stagingArtifactManifest?.leafCount),
 };
+const surfaceParity = compareSurfaces(await prodSitemapPromise, await stagingSitemapPromise);
 const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, artifactManifest, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha, candidateArtifactManifest);
 const payload = {
   schemaVersion: '1.0',
@@ -312,6 +416,13 @@ const payload = {
   production: PROD,
   staging: STAGING,
   status,
+  // S338 — advertised-surface parity, reported but NOT gating. Staging is known
+  // to be behind production right now (the S337 probe), so wiring this into
+  // classifyStatus() today would turn staging-health red on a blocker already on
+  // the board and block releases on a condition nobody has fixed yet. Publishing
+  // the measurement first is the honest order: the gate flips once staging
+  // refresh is understood, and until then the number is visible instead of absent.
+  surfaceParity: { ...surfaceParity, gating: false, gatingDeferredBecause: 'staging refresh path is an open blocker (S337); measure before gating' },
   // Honest reason when we can't compare — the feed stays fresh (no seed-rot) and
   // says WHY rather than silently reporting a stale 'green'.
   reason: status === 'staging-unreachable'
@@ -320,7 +431,7 @@ const payload = {
   routes,
 };
 fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-console.log(`check-staging-parity: ${status} (${routes.length} route(s))`);
+console.log(`check-staging-parity: ${status} (${routes.length} sampled route(s)) · surface ${surfaceParity.state}${surfaceParity.missingOnStagingCount ? ` · ${surfaceParity.missingOnStagingCount} route(s) missing on staging` : ''}`);
 // --refresh tolerates an unreachable staging box (scheduled path); the default
 // path also exits 0 — staging-unreachable is an honest state, not a build failure.
 if (!REFRESH && status === 'staging-unreachable') {

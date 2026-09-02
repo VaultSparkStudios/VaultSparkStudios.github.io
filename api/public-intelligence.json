@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-02T08:38:22.809Z",
+  "generatedAt": "2026-09-02T08:51:04.777Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 337,
+    "currentSession": 338,
     "lastUpdated": "2026-09-02",
-    "currentFocus": "Session 337 ran the arc under founder authorization for a full production deploy and found, first, that the deploy had never been identity-blocked: check-promotion-scope returns promotable=true scoped-disjoint and the gate returns allowed=true mode=scoped, and has since S319 — three surfaces had been asserting a blocker the gate itself disagreed with. The dispatched deploy then failed the release ceremony 9/10 on staging-browser-receipt with reason flaky-1, and the cause was ours but not the site's: tests/staging-release.spec.js classifies Trusted Types Report-Only console notices as observations by design, but recognised only Chromium's phrasing. Firefox words the same notice completely differently, so every Firefox report-only notice became a hard console error; the sinks render asynchronously, so it fired on some runs and not others, which Playwright calls flaky, and a flaky result rejects the ceremony. Fixed conjunctively — a report-only marker AND a Trusted Types marker — so an ENFORCED violation still fails loudly, extracted to a shared module, and pinned by a regression spec carrying each engine's verbatim string; proven by 6/6 staging release tests passing locally on all three engines with zero flake. While there, measured the real enforce blocker across 137 built pages: 31 sink-bearing client assets load BEFORE ambient-core installs the Trusted Types default policy they depend on, led by pwa-nav.js on 81 pages and pwa-install.js on 72. Recorded with its numbers and deliberately not fixed — the repair rewrites every page head and invalidates every hash-bound receipt at once. Also closed two Desk truth defects: fact extraction scored register but never subject, so a syndicated promo block published as a sourced fact under a real publisher URL; and no published story recorded which model wrote it while the preferred model is depooled. OUTCOME: the full production deploy LANDED. Run 33598223667 completed the release ceremony that had rejected, promoted a clean dist, and a second run (33598806172) brought production exactly to main — api/build-sha.json reports bba962ac8 and /, /how-we-build/, /evidence/, /community/, /news/, /stats/ and /status/ all return 200. The full deploy also retired /vault-wall/ (301, was 200) and dropped it from the deployed sitemap, which released the S336 hold on removing it from config/served-surface.json; prune-served-surface --check stays green at 193 advertised routes.",
-    "nextMilestone": "Hoist the Trusted Types default-policy installer ahead of the 31 client assets that currently load before it, then re-measure and decide the founder-approved enforce flip on real evidence. Then the founder privacy decision on the four silent-zero tables and its one migration, the manual CANON-053 rendered-pixel review of the newly-served surfaces, and a staging parity probe — staging currently serves a route production serves, as a 404.",
+    "currentFocus": "Session 338 ran the arc under founder authorization for a direct push to main and a full production deploy, and its three findings were all gates that were not doing what their names promised. FIRST: the red uptime-probe cron was not the ordering race the board recorded. Reproduced locally, build-deploy-currency drifted between --probe and --check because observationFromReceipt() never restored the three content-clock fields added in S336 — the third time a field was added to the emitter and forgotten in the reader (after retainedForHours in S300 and historyComplete in S316). The consequence was far larger than a red cron: classify() reads contentLagHours, so every non-probe re-derive — npm run build:check, the content lane, every local build — collapsed it to null, which silently disabled the content ceiling S336 built specifically to catch a whole release stranded in production. Fixed, and the class closed with a fixed-point self-test that names no field (derive(read(derive(x))) === derive(x)) plus a companion case proving that guard can fail; 87/87, was 85. Notably an S300 test of exactly this shape already existed and stayed green throughout, because its fixtures omitted the dropped fields. SECOND: Lighthouse CI had been red for 15 consecutive runs across ~27 hours, so the site's performance gate had produced no verdict for over a day and nothing said so. /ranks/ was consolidated into /leaderboards/#ranks and answered by a _redirects 301, but three CI audit-target lists still named it — including the one auditing the LOCAL PREVIEW, which serves the built tree with no edge layer, so the redirect cannot apply and Lighthouse 404'd on a page that cannot exist there. /vaultsparked/ was in the same state. Both removed, and scripts/check-workflow-audit-targets.mjs added to build:check with two rules that name no route: no target may be a `from` in route-consolidation.json, and every local-preview target must resolve to a real page. THIRD: staging parity was a hand-maintained three-route sample and structurally could not see an absent route, which is why S337 could only record /how-we-build/ as an anecdote. It now compares the surface each origin advertises: production advertises 134 routes, staging 115, 23 missing on staging including /evidence/, /how-we-build/, three news editions and the whole .ai/ layer, with staging's build-sha reporting 94e78e93 built 2026-08-28 — five days behind production. Published as surfaceParity with gating:false and the reason stated on the artifact, because gating on a known-open blocker is a self-inflicted release outage. OUTCOME: closed out, pushed directly to main, and fully deployed to production. FOURTH, surfaced by converging the gate rather than by the audit: build-news-visual-receipts hashes each story's rendered page but ran four steps before build-shell-assets rewrote them, so it was stale by construction on every shell rotation and its own error message prescribed a hand-rebuild rather than the ordering fix; moved after every page rewriter and immediately before the seal, which also removes a confound from the standing build-to-build churn investigation. The visual and mobile proof receipts were then recaptured against the final tree: no UI changed, so CANON-053 was not triggered, but those receipts bind the candidate manifest sha rather than any appearance, and every reseal invalidates them.",
+    "nextMilestone": "Find and fix whatever refreshes the staging origin — it stopped on 2026-08-28 and is 23 advertised routes behind production — then flip surfaceParity to gating so CANON-007 stops running backwards. Then hoist the Trusted Types default-policy installer ahead of the 31 client assets that load before it and decide the founder-approved enforce flip on fresh evidence, the founder privacy decision on the four silent-zero tables, and the manual CANON-053 rendered-pixel review of the newly-served surfaces.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 337,
+    "sessionsCompleted": 338,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -155,7 +155,7 @@
       "capital": 100,
       "automation": 100,
       "total": 991,
-      "updatedSession": 337
+      "updatedSession": 338
     },
     "sealedNextRevealAt": null
   },
