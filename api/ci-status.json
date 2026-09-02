@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-02T04:52:20.564Z",
+  "generatedAt": "2026-09-02T06:19:34.510Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
-  "hasDeadCron": false,
+  "hasDeadCron": true,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 11,
+    "observed": 2,
+    "healthy": 1,
+    "unknown": 12,
     "stale": 0,
-    "dead": 0
+    "dead": 1
   },
   "terminalState": "failing",
   "knownTerminalBlockers": [],
@@ -36,40 +36,40 @@
       "status": "failure",
       "rawStatus": "completed",
       "conclusion": "failure",
-      "updatedAt": "2026-09-02T04:48:48Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33592120829",
-      "headSha": "b830f8e48d35421c5dd23fe6da1b363f7d2346df",
+      "updatedAt": "2026-09-02T06:19:05Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33598216319",
+      "headSha": "fe82e5116b60e5ff6d432fb69637725d8f65167f",
       "event": "push"
     },
     {
       "name": "Accessibility Audit",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-02T04:48:58Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33592120821",
-      "headSha": "b830f8e48d35421c5dd23fe6da1b363f7d2346df",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-02T06:17:49Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33598216264",
+      "headSha": "fe82e5116b60e5ff6d432fb69637725d8f65167f",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-02T04:51:37Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33592120860",
-      "headSha": "b830f8e48d35421c5dd23fe6da1b363f7d2346df",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-02T06:17:50Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33598216224",
+      "headSha": "fe82e5116b60e5ff6d432fb69637725d8f65167f",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-02T01:04:04Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33577830685",
-      "headSha": "21a422e0263cd8301fe72d9914aa67b5030a0e21",
-      "event": "push"
+      "status": "unknown",
+      "rawStatus": "unknown",
+      "conclusion": null,
+      "updatedAt": null,
+      "url": null,
+      "headSha": null,
+      "event": null
     }
   ],
   "scheduledWorkflows": [
@@ -163,15 +163,13 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-02T01:10:53Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 3.69,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -184,7 +182,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.26,
+      "ageHours": 1.72,
       "staleAfterHours": 48
     },
     {
@@ -200,17 +198,17 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-02T04:40:10Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-09-02T05:38:51Z",
       "recentConclusions": [
-        "success",
-        "success",
+        "failure",
+        "failure",
         "success"
       ],
-      "dead": false,
-      "streak": 0,
-      "state": "healthy",
-      "ageHours": 0.2,
+      "dead": true,
+      "streak": 2,
+      "state": "dead",
+      "ageHours": 0.68,
       "staleAfterHours": 48
     },
     {
