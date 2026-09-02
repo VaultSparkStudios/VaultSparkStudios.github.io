@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T00:31:12.434Z",
+  "generatedAt": "2026-09-02T01:21:09.921Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,13 +21,16 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-artifact-root-mismatch",
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "fe9237baee4c1a0fe8a2e96ab37b9eb85f68313c",
+    "candidateBuildSha": "38dd4b18ac14e0a5a83da50d6cca1f0205c389cd",
     "deployedBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "4c674bdaf48b71355305cdc7564d61af66510870eb8af94f4aed1558ffc0954b",
+      "candidateRoot": "866193d29c53f383a06dfac25b2d73b3c4053401767d21b79fb59569ae12300f",
       "candidateLeafCount": 29,
       "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
       "stagingLeafCount": 29,
@@ -70,17 +73,17 @@
     "sourceContractSha256": "c3e3f566c33163a92d07e1ec34081f42adcab290891874f130d207cdefccf8a6"
   },
   "productionDeploy": {
-    "state": "content-current",
-    "commitsBehind": 18,
-    "ageHours": 7.7,
-    "observedAt": "2026-09-02T00:31:12.434Z",
+    "state": "behind",
+    "commitsBehind": 28,
+    "ageHours": 9.3,
+    "observedAt": "2026-09-02T01:21:09.921Z",
     "shellParity": {
-      "state": "matched",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-09-02T00:31:12.434Z",
+      "observedAt": "2026-09-02T01:21:09.921Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
-        "assets/ambient-core.shell-2e0e0d195a.js",
+        "assets/ambient-core.shell-a2aa51d885.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
@@ -89,7 +92,7 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-c2aa7d689a.js",
-        "assets/style.shell-dfee6188fb.css",
+        "assets/style.shell-bf10f7005d.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
@@ -105,8 +108,14 @@
         "assets/style.shell-dfee6188fb.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-a2aa51d885.js",
+        "assets/style.shell-bf10f7005d.css"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-2e0e0d195a.js",
+        "assets/style.shell-dfee6188fb.css"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -166,7 +175,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": true,
+    "productionShellParityMatched": false,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -179,6 +188,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
+    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
