@@ -1003,6 +1003,8 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 
 **Disproved before implementing:** the board's own proposed fix for the top-ranked item ("order the `--check` before the seal chain, or rebind once after it"). Reproducing the failure first showed neither would have worked.
 
+**Verified in CI, not only locally:** `uptime-probe` run `33614902860` succeeded while taking the commit-worthy path — the exact failure condition — and Lighthouse CI run `33612994478` completed success on `e1c7cef4b`, ending 15 consecutive failures across ~27 hours.
+
 **Held / carried:** staging refresh itself; the Trusted Types load-order repair and enforce flip; the four silent-zero tables awaiting a founder privacy decision; manual CANON-053 review of the newly-served surfaces; everything on the identity/Obelisk hold, untouched.
 
 **Honest limits:** the 23-route staging figure compares advertised sitemaps, not per-route probes. The uptime cron fix is proven locally against the exact CI sequence, but its next scheduled run is the live proof and had not occurred at closeout. `surfaceParity` is an observation, not an enforcement, and says so on the artifact.

@@ -5,9 +5,9 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Three gates were not doing what their names promised — one had been switched off for       ║
-║    two sessions, one had reported nothing for 27 hours, and one could not see the thing it    ║
-║    existed to watch.                                                                          ║
+║    Three gates were not doing what their names promised — one switched off for two            ║
+║    sessions, one mute for 27 hours, one blind to what it existed to watch. All three          ║
+║    fixed, verified in CI, and fully deployed.                                                 ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████████░   90/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███████▌░░   77/100                                                       ║
@@ -28,7 +28,7 @@
          stranded release could not fire, and had not since the session that created it.
          Closed as a class with a fixed-point self-test that names no field, plus a companion
          case proving that guard can actually fail.
-         → build-deploy-currency --self-test 87/87 (was 85); --probe then --check exits 0 with contentLagHours 1.3 intact; reverting the fix fails the new case naming all three fields
+         → build-deploy-currency --self-test 87/87 (was 85) · VERIFIED IN CI: uptime-probe run 33614902860 took the commit-worthy path — the exact failure condition — and exited 0 where it used to print 'receipt drifted'
 
   [#2]  stranded-audit-targets-gated                              PROJ 9  ·  ECOS 8
          ── observability ───────────────────────────────────────────────────────────────────
@@ -40,7 +40,7 @@
          verdict for over a day and nothing surfaced the silence. Fixed in all four consumers
          and gated by two structural rules that name no route, both derived from config that
          already exists.
-         → scripts/check-workflow-audit-targets.mjs 18/18 self-test, live 11 route targets against 16 guarded consolidated routes; pre-fix state restored → exit 1 naming /ranks/ and its replacement
+         → check-workflow-audit-targets 18/18 self-test · VERIFIED IN CI: Lighthouse run 33612994478 completed SUCCESS on e1c7cef4b, ending 15 consecutive failures across ~27 hours
 
   [#3]  staging-surface-parity-measured                           PROJ 8  ·  ECOS 7
          ── truth ───────────────────────────────────────────────────────────────────────────
@@ -52,14 +52,14 @@
          reports 94e78e93 built 2026-08-28. Published with gating false and the reason on the
          artifact, because gating on a known-open blocker would be a self-inflicted release
          outage.
-         → check-staging-parity --self-test 26/26 (+7); api/staging-health.json surfaceParity; staging /api/build-sha.json probed live
+         → check-staging-parity 26/26 (+7) · api/staging-health.json surfaceParity: production 134 routes, staging 115, 23 missing · staging build-sha 94e78e93 from 2026-08-28, probed live
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
     • [S338][DEPLOY/P1] Find what deploys the Hetzner staging origin and why it stopped on 2026-08-28, refresh it, then flip surfaceParity.gating to true so CANON-007 stops running backwards.
     • [S338][OBS/P2] Audit every other generator that reads its own receipt back for the D-S338.1 class, with fully-populated fixtures — the existing tests may be green for the same wrong reason this one was.
-    • Confirm the next scheduled uptime-probe run goes green and that Lighthouse CI returns a verdict again.
+    • Both CI signals are confirmed green on the real commit; no further verification is outstanding for D-S338.1 or D-S338.2.
 
   BLOCKERS
     • Staging is 23 advertised routes and five days behind production; the release ceremony verifies against it, so CANON-007 currently runs backwards.
