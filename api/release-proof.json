@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T02:33:06.039Z",
+  "generatedAt": "2026-09-02T03:14:15.009Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -73,14 +73,14 @@
     "sourceContractSha256": "c3e3f566c33163a92d07e1ec34081f42adcab290891874f130d207cdefccf8a6"
   },
   "productionDeploy": {
-    "state": "behind",
-    "commitsBehind": 34,
-    "ageHours": 10.1,
-    "observedAt": "2026-09-02T02:33:06.039Z",
+    "state": "content-current",
+    "commitsBehind": 3,
+    "ageHours": 0.1,
+    "observedAt": "2026-09-02T03:14:15.009Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-02T02:33:06.039Z",
+      "observedAt": "2026-09-02T03:14:15.009Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a2aa51d885.js",
@@ -96,7 +96,7 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-2e0e0d195a.js",
+        "assets/ambient-core.shell-a2aa51d885.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
@@ -105,17 +105,11 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-c2aa7d689a.js",
-        "assets/style.shell-dfee6188fb.css",
+        "assets/style.shell-bf10f7005d.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-a2aa51d885.js",
-        "assets/style.shell-bf10f7005d.css"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-2e0e0d195a.js",
-        "assets/style.shell-dfee6188fb.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -175,7 +169,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -188,7 +182,6 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
