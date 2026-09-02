@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-01T23:34:34.090Z",
+  "generatedAt": "2026-09-02T00:31:12.434Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,36 +14,23 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "staging-canonical-csp-drift",
-      "staging-security-header-baseline",
+      "prod-forbidden",
+      "shell-mismatch",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch",
-      "/:stagingStatus",
-      "/:stagingCanonicalCsp",
-      "/:stagingSecurityHeaders",
-      "/:localShellParity",
-      "/studio-pulse/:stagingStatus",
-      "/studio-pulse/:stagingCanonicalCsp",
-      "/studio-pulse/:stagingSecurityHeaders",
-      "/studio-pulse/:localShellParity",
-      "/membership/:stagingStatus",
-      "/membership/:stagingCanonicalCsp",
-      "/membership/:stagingSecurityHeaders",
-      "/membership/:localShellParity"
+      "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "fe9237baee4c1a0fe8a2e96ab37b9eb85f68313c",
-    "deployedBuildSha": null,
+    "deployedBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "4c674bdaf48b71355305cdc7564d61af66510870eb8af94f4aed1558ffc0954b",
       "candidateLeafCount": 29,
-      "stagingRoot": null,
-      "stagingLeafCount": null,
+      "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
+      "stagingLeafCount": 29,
       "matched": false
     },
     "productionParity": false,
@@ -84,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 17,
-    "ageHours": 7.3,
-    "observedAt": "2026-09-01T23:34:34.090Z",
+    "commitsBehind": 18,
+    "ageHours": 7.7,
+    "observedAt": "2026-09-02T00:31:12.434Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-01T23:34:34.090Z",
+      "observedAt": "2026-09-02T00:31:12.434Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-2e0e0d195a.js",
