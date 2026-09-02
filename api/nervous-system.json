@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T08:51:10.711Z",
+  "generatedAt": "2026-09-02T20:42:58.824Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback themes",
-      "value": "1",
+      "value": "3",
       "href": "/changelog/#requests"
     },
     {
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Three of the site's own safety checks were quietly not working. One had switched off an alarm meant to catch a release that never reaches readers; one had left the site's speed check failing for over a day without saying so; and one could not notice when the test environment falls behind the live site — it now measures exactly how far, and it is five days and 23 pages behind. All three are fixed or measured, and everything here is live: the site was fully redeployed and verified.",
+  "focus": "The test copy of the website had quietly fallen five days and 23 pages behind the real one, and this session found out why: nothing had ever been set up to update it. Five automated checks were comparing the live site against it; none of them was responsible for keeping it current. It is now up to date and identical in coverage, and a new check refuses to let any address be used for verification unless something is on the hook for publishing to it. The home page was also telling visitors that three finished products were still being built -- every other page on the site said they were live. Those cards now come from the same source of truth as the rest of the site, and a new check keeps them there.",
   "nextStep": "Finish the browser-security migration so the strictest setting can be switched on safely, then the rendered-pixel review of the newly-served pages. Account verification remains on its separate approval path.",
   "decisions": [
     {

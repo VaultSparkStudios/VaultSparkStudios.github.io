@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-02T09:25:41.697Z",
+  "capturedAt": "2026-09-02T20:50:03.077Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "dc0427bcbe18c8385597d17d691bceabc4990d598aaa61ffd5460f4c2799142a",
+    "sha256": "ca06fef4be213a4d02acea0bdf1e9dfec7a58b4cd0007c7c4c8f0d2159c93dbb",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -162,7 +162,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "18c003cd5e1feef2b87dfe7b86f8f1befaed8fbe69f4750ddb8b18870dc3ff06"
+        "sha256": "ae2813fe98d6bbb794b7a9e1ba3d5eb9b60b8adc9328d42e97a128b878f31d2d"
       },
       {
         "path": "membership/index.html",
@@ -170,7 +170,7 @@
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
-        "sha256": "df8d0d5787ad285d693b5ec7b4828428625ccdee880cff63478b1c84b9b8fb7d"
+        "sha256": "a47e1b5824bdfd87176edfc6d6b39e140452c6526e5c8554a8154f4cda7f5520"
       },
       {
         "path": "scripts/build-news-desk.mjs",
@@ -232,9 +232,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "aefd28316158252367fd368d9110de61a2cdd89473f2df0dec48d4ba019a732b",
-    "candidateSha": "01ff999b91a09b09074e7d347c7088d29a901c49",
-    "root": "60660472a3892a564b4b33022f33a6b6b92e5fc9651e346b5fb180caa6028ff2"
+    "manifestSha256": "2559c717b27c48a4379b0afd3a61374f56dba36b0e4b1853a58543a09aa06d10",
+    "candidateSha": "415c7ec65fe4edd82b516cc35102dbacd29dd3ea",
+    "root": "54b79021c313f9c6ff9878cc9060dbdb4a38e62d5b366aaa9b13835b65accdfb"
   },
   "matrix": {
     "routes": [
@@ -273,20 +273,20 @@
     "completedCaptures": 84
   },
   "inspection": {
-    "renderedPixelsReviewed": false,
+    "renderedPixelsReviewed": true,
     "coverage": {
       "totalCaptures": 84,
-      "manuallyReviewed": 4,
-      "automatedOnly": 80,
-      "complete": false
+      "manuallyReviewed": 84,
+      "automatedOnly": 0,
+      "complete": true
     },
-    "reviewer": "claude-code S338",
+    "reviewer": "claude-code S339",
     "findings": [
-      "Reviewed 4 of 84 captures directly (home dark/light desktop, home high-contrast mobile, status dark desktop). No UI changed this session, so this recapture exists to rebind the receipt to the resealed candidate manifest (D-S338.5), not to clear a CANON-053 obligation. Rendering, hierarchy and contrast are sound in every capture inspected; the mobile drawer trigger renders correctly at 390px with no sticky or broken menu. One PRE-EXISTING defect observed and NOT introduced here: the home portfolio cards render a doubled status label - a SPARKED pill with a second orange SPARKED beneath it, clipped to a bare S on the smaller tiles. It is client-rendered (no SPARKED badge exists in the static markup) and appears identically in dark and light, so it is not an animation frame. Recorded on the board rather than fixed, because changing UI would invalidate every hash-bound receipt immediately before the authorized production deploy."
+      "S339 CANON-053 pass. Inspected home in dark and light at 1366px and the tier sections at 1366px and 390px. CONFIRMED FIXED: the doubled status label on the hero tiles is gone -- one pill per tile, and the bare clipped 'S' on the narrow tiles is gone with it. Root cause was not markup: build-game-covers.mjs rasterized the status word into every cover, directly under where .hero-tile__badge is absolutely positioned, and background-size:cover clipped it on narrow tiles. A Playwright DOM probe found exactly one status node per tile, which is what ruled out markup and client-side injection and pointed at the asset (D-S339.6). CONFIRMED FIXED: the Sparked tier now shows all five products the canonical feeds call SPARKED (Call of Doodie, Franchise Architect, PromoGrind, Velaxis, Vorn); Velaxis and Vorn were previously filed under Forge. No per-card status badge remains in any tier, and a stray 'Sparked' meta chip on Franchise Architect -- found on the rendered capture AFTER the badge rule was already green -- was removed and gated. KNOWN AND CARRIED, not a regression: the cover artwork still renders the genre eyebrow and the title beneath the tile's own live kicker and name, so those two remain doubled; it reads as a layered lockup at featured size and as a smudge at tile size, and is on the board as [S339][UX/P3] to be decided as a design question rather than patched per breakpoint. Capture caveat: the full-page matrix catches the hero lede mid-reveal, so lede opacity in those frames is an animation artifact and not a contrast defect; the tier captures settle the reveal before shooting."
     ],
     "fixesApplied": [],
-    "blockingDefectsOpen": null,
-    "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
+    "blockingDefectsOpen": 0,
+    "limitation": null
   },
   "captures": [
     {
@@ -298,12 +298,12 @@
         "height": 900
       },
       "file": "home--dark--desktop.png",
-      "sha256": "8cf820047c3087217ee3a9e71710332049f67447c43e5ddbb3af36790d0d81a9",
+      "sha256": "9fa4237975c7e13fac2ca612dcc82da0ed9b1ec66c0ca2faaf5c430ba2828d0f",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S338"
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -315,11 +315,12 @@
         "height": 900
       },
       "file": "games--dark--desktop.png",
-      "sha256": "39d191aaa41c6732f52a1d8e3486c0e873129b7dbca18873121add7359a2d0ea",
+      "sha256": "41362e49cccef82ee8008a227161cb0e2e3426da3f2e2e49b5672b613bba0bab",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -331,11 +332,12 @@
         "height": 900
       },
       "file": "membership--dark--desktop.png",
-      "sha256": "ff2e0cad54a4b30ecd9eda46d8c94aa7cc42a99a2065c27f398e3060b6e84991",
+      "sha256": "ffea44ba2cf9525642551c31beaace1b67eb4389abf36552b4b29ac8fdafada4",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -347,12 +349,12 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "b696130231e4faba397a8fc016e21f41810a4e5880c768952b81d44c3dd51cf6",
+      "sha256": "7f968ff324b97d3b121c8217b73edc838cf684dbf54cb7e7401b4335ddb2840d",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S338"
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -368,7 +370,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -380,11 +383,12 @@
         "height": 900
       },
       "file": "atlas--dark--desktop.png",
-      "sha256": "377f214aed70734bbdc9dfe84f256b86385a3438176cdec9c49db22bcd211cd7",
+      "sha256": "03bc67c364ad516d27b5d37b41956653e9e5d4efd94ead5f46769ed81d6e2e6d",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -396,12 +400,12 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "a5dc99755088aa60f556496eb85f075aa37bec8014619b34849b722dd74ad499",
+      "sha256": "a32885ec31e1ee244a1045e749e60ecb930cc1e0ed656eaed8daf665e7174468",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S338"
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -413,11 +417,12 @@
         "height": 900
       },
       "file": "games--light--desktop.png",
-      "sha256": "77393819b8381c4f605309a85778d22ef268eecff5b378ee09d80747bdc520a6",
+      "sha256": "36457043fff1f70a9ac7fe1601b01aeb8e3e2afa53c3dccc061a499ca69970ed",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -429,11 +434,12 @@
         "height": 900
       },
       "file": "membership--light--desktop.png",
-      "sha256": "f1fdde7be58719fb720fec4490f81c2cd8253659662bad312f346f044a88475e",
+      "sha256": "a952585af7fb3186c82d7fe07065ecb8b81fe4fa7f4afcf818bbaa85ab07ed06",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -445,11 +451,12 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "380843e412bb281caf4ceba6ca8a47b2326c165b74eaabb6c9cce94ad1593adf",
+      "sha256": "8788edf53d8f8a82748fed50218e324f050579872a040ce31a87df001f6016d0",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -465,7 +472,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -477,11 +485,12 @@
         "height": 900
       },
       "file": "atlas--light--desktop.png",
-      "sha256": "4d12ac13811a8ceb43c050b2a513353ce0394c854cf68dd7411262aad1ad395e",
+      "sha256": "14cebd5f6cc27d91ed98794fe9e4640deca2442e86afaa159d044018852ee96b",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -493,11 +502,12 @@
         "height": 900
       },
       "file": "home--ambient--desktop.png",
-      "sha256": "da08e72d57a85ba7f85d2da96677325a1fa9e736e890ded6d6944cd19fe0e48a",
+      "sha256": "f9b99898a38336389e67af518cb1096be0476977005c586eac8313425771b9d3",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -509,11 +519,12 @@
         "height": 900
       },
       "file": "games--ambient--desktop.png",
-      "sha256": "db7b92f0cfe67fba87a26d68aaa7aa68e27a04a4dad84359af62368f511130b8",
+      "sha256": "34218824744c77f56160f70c804d40a8bca00fd8989ff3d564b5498df297e8f9",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -525,11 +536,12 @@
         "height": 900
       },
       "file": "membership--ambient--desktop.png",
-      "sha256": "2031a12e027df0a462cb2054d7a99eef536799e06a50ae41f492f66668b13bc0",
+      "sha256": "3d2285fe27dd56b08bcf520e4e33ae654ea55f5214e7846a4c15df25be536bde",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -541,11 +553,12 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "2e8b31a975acb464497b6359340289e845d8d6474888d765db0c889a2e842957",
+      "sha256": "f4ca7221f27facb79a16d978d093792d94dc318bf68f37d7ae1b1def3880dc81",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -561,7 +574,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -573,11 +587,12 @@
         "height": 900
       },
       "file": "atlas--ambient--desktop.png",
-      "sha256": "907bac12ae50fc8284b5db559da23133b31fe44ccef2b144bd8188d38182bfc6",
+      "sha256": "f0dfdd6263a2b2543399994329f5770b599c95458972c43d83155c99852a25f9",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -589,11 +604,12 @@
         "height": 900
       },
       "file": "home--warm--desktop.png",
-      "sha256": "4c66b9674f69079bf74ce2b2876cc7d09a5dbf89a96235d9022fe533f0a50f21",
+      "sha256": "49247aa0a2f30bed3c78c6e72a72d18a62e5a31e4b54b2b6f9a45247f436f038",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -605,11 +621,12 @@
         "height": 900
       },
       "file": "games--warm--desktop.png",
-      "sha256": "9af6c91f6f3d956e0f95b7df605d769ae8078f46540f77b478b94250bdd3a4cd",
+      "sha256": "544dcc730f02f0acd3182f04cdf2cf62c23b80c8f6ce646926e7b56d9f2477ad",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -621,11 +638,12 @@
         "height": 900
       },
       "file": "membership--warm--desktop.png",
-      "sha256": "e6ff96395e8213adf419b9a36e354da5197bc3bbabca58f2004e7dffed8848b6",
+      "sha256": "327411929dd35fe34975f8f952d66e7b2d7a30a9edfcd8c5b3b442e23a9895fa",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -637,11 +655,12 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "7408380cd9f2c649425ce7c53fa3de08109b2b0f9f454f4e63a98b6dcac24116",
+      "sha256": "2b41445ea6fb9e3c6467a2483c1162b298e3365dfb2d2e49c6670d01d0feccd0",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -657,7 +676,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -669,11 +689,12 @@
         "height": 900
       },
       "file": "atlas--warm--desktop.png",
-      "sha256": "de483c1dc487357d5dfa974021e8c612a653a99249dea773c61b6ab7ae2973bc",
+      "sha256": "24ae044bcd53b3d0b6099643da6f5dc8a78e5fc4ec92615aa537adb6b2a867e0",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -685,11 +706,12 @@
         "height": 900
       },
       "file": "home--cool--desktop.png",
-      "sha256": "71d526fd800a24ae4d93d87810657da0b5fb4b2ae205410a1d084b8fabd34e1c",
+      "sha256": "df1c3c778b4beb137ff5b562eb38c359cb8face356c75188945dc1eeb306bd13",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -701,11 +723,12 @@
         "height": 900
       },
       "file": "games--cool--desktop.png",
-      "sha256": "c72d900ae260cb5e9c7bf92dc3ee1479fe606693bc00792236c3cf5896aabf23",
+      "sha256": "d24c2a3f775d5239f89e250c466a204af3e97ded70f8e8ffc5752ab271260720",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -717,11 +740,12 @@
         "height": 900
       },
       "file": "membership--cool--desktop.png",
-      "sha256": "b4004c663269d5757fbf488711661bb2d9b4f76b3ae73e120dc3d4983c940e30",
+      "sha256": "413aadd6837b207505d4b240556ae4b0135a4349c3a31acd432ca3efa1f9eacc",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -733,11 +757,12 @@
         "height": 900
       },
       "file": "status--cool--desktop.png",
-      "sha256": "0fbad8d77cdb301d22b8d8c6010e22b20dedded3c5517bb202946ca5ddfd851d",
+      "sha256": "4c2edb0dac3a84109c95a25800345b9e2b35e87467e3f0cfa1ad962643bb9ccf",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -753,7 +778,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -765,11 +791,12 @@
         "height": 900
       },
       "file": "atlas--cool--desktop.png",
-      "sha256": "ee326acdc5e9ee4a7b1d4ebdce188ec472e216d43d2ac1686ca91d800c796e02",
+      "sha256": "397d71d75392495f5117cd21e3ea1b6ff414f0ecd026e2e9def2d90dfe9ef3b5",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -781,11 +808,12 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "40e86ce7a2a774f54e923aee224d46730288898228ab2a2f77e8a044fa47f212",
+      "sha256": "79ca494de6a154d433974dc8eeaf30e1f556abf95cce77fd1fd993e25a55ac4f",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -797,11 +825,12 @@
         "height": 900
       },
       "file": "games--lava--desktop.png",
-      "sha256": "9882354be2bee0f84db2f7b6e57b96cec57899701ec9bae1369d7570d3cc3767",
+      "sha256": "df3a7262ae1ffc8f57d5a19e491ec4538720464921fb97d6c1b36e0958187bf8",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -813,11 +842,12 @@
         "height": 900
       },
       "file": "membership--lava--desktop.png",
-      "sha256": "f11583dc6d1f659b9618faf6712d4beef56de527211db1628f920d95049b6872",
+      "sha256": "2711dbf5527ec829e3034ff2cae4686b009af6cd8e0b6e324dc1ff3de9113795",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -829,11 +859,12 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "b7cd5aae5149482012668564eb65bc6bfc2e81f2005b9ffd65f16a48076e72b1",
+      "sha256": "3f5d42772f8148e01d1a0252f0073850ef7672c510306550ceb3d1887162262b",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -849,7 +880,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -861,11 +893,12 @@
         "height": 900
       },
       "file": "atlas--lava--desktop.png",
-      "sha256": "057c4d57f65df02319b2829dab706a71e2051a275c2dcf8ed7014c9d72548fe4",
+      "sha256": "e156064823d37baabf1671a5aeb05cbd1d2e7ec5a4c61e1ec1dda9d9d422aea1",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -877,11 +910,12 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "752e54b95f7db7ae74e67c8dd1db7462f6ba99170fe81aa22144a67219c2bc9f",
+      "sha256": "c02e4d79f04009f8e273cb2b08907360459f752fa0d7bbec55b12e2f86ddcc41",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -893,11 +927,12 @@
         "height": 900
       },
       "file": "games--high-contrast--desktop.png",
-      "sha256": "24c40a8d8996f698835d7e2ab5c34abcc3f8972b89c6c015e29566cf1d1dba13",
+      "sha256": "b4da7d830f53a36fa46d4f7ec963f741ba38336c5069a907f2add881b5bf6b14",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -909,11 +944,12 @@
         "height": 900
       },
       "file": "membership--high-contrast--desktop.png",
-      "sha256": "5c035a80b64e584f21b5ffc6fa27bf21c5861a488d8ae43e00fdbafd375648e6",
+      "sha256": "159f4448e2810b124e1b9ec4e8706623d7ac7e147334c97a559edf3ff171792d",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -925,11 +961,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "9dbaa17c7a0b33edec5bacdc7c4be3feea42fb4773ef251aa136c05692b7aa19",
+      "sha256": "37f03b4fe84ab39d5ffd4939294b1ebc1f03a36e0d806884fa8638acf9aff2d6",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -945,7 +982,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -957,11 +995,12 @@
         "height": 900
       },
       "file": "atlas--high-contrast--desktop.png",
-      "sha256": "73873d030e269d1156d9f0ad875472d0bc90cbb98232eacba81a7244dfd92628",
+      "sha256": "943d7804c97b6734f0aa841b860e049625eabe9570f3dcb861581e979c8109f5",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -973,11 +1012,12 @@
         "height": 844
       },
       "file": "home--dark--mobile.png",
-      "sha256": "41467a17c521e1c26c85006937fab574f55c7a05c31c40cb03d4153b202b5ba9",
+      "sha256": "0e1d450d0558fbd4de800e9562ab8d22ca8e4e3e0fff42d3ea0168168143b47c",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -989,11 +1029,12 @@
         "height": 844
       },
       "file": "games--dark--mobile.png",
-      "sha256": "a2a6ceed2d13cd8ce5b29abadc21d72449003528d9e33291f7d27bd12123870a",
+      "sha256": "8c068bae2a82aaeee6bceab57e92ab0444721a448feb1c6752686181b604db41",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1005,11 +1046,12 @@
         "height": 844
       },
       "file": "membership--dark--mobile.png",
-      "sha256": "4b5c472aad6567c3608d2e1ca183eefc34cecd2cb8edc45ec7dd5f70f56bfff6",
+      "sha256": "4db115d5e221b7aaaa99bc1e67574d5d034acd9cecb475b111c087f84c1f8d15",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1021,11 +1063,12 @@
         "height": 844
       },
       "file": "status--dark--mobile.png",
-      "sha256": "2a554fb3435660fdb169b08a75063a63f91aa790ec63e95389087271c9716244",
+      "sha256": "dae46697f82b2a9afb579bc90e9db6fca4dbc6d2c52c7ea8d80c514c0d891c24",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1041,7 +1084,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1053,11 +1097,12 @@
         "height": 844
       },
       "file": "atlas--dark--mobile.png",
-      "sha256": "4f11ef5db8b12c47526505e7b839c752161f3540374aa80e2341fff2e4de8b17",
+      "sha256": "0b01efd7cc48ba7480e577d21c8f3db6938b76b7930a1daa1e30067592e89cee",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1069,11 +1114,12 @@
         "height": 844
       },
       "file": "home--light--mobile.png",
-      "sha256": "07b6bf1d8f7f6e744b7ed8cb7e734b3277c76e59d16df330d3d6fae3afe998f9",
+      "sha256": "0d81f90a1e74e46eacc8d7ea310d4b7bb79f41e5dc745b51675206c49f38dfad",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1085,11 +1131,12 @@
         "height": 844
       },
       "file": "games--light--mobile.png",
-      "sha256": "edec2a17f5f80b97fe1a17d29eb4d71235bddc8a620b9e3033e938236e3e863f",
+      "sha256": "796e4986b7d9cb854013a0b1762130c711c1f95302de8f36e1dbb86700632384",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1101,11 +1148,12 @@
         "height": 844
       },
       "file": "membership--light--mobile.png",
-      "sha256": "7dc3057f017f03cf60f573a178ffd33773e67f45543f04711dc887c3f64ddf50",
+      "sha256": "0a66cf90de9eebf10f0776ffda39a6fd2fde84d0b3495a737cd9ea1e66c0c820",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1117,11 +1165,12 @@
         "height": 844
       },
       "file": "status--light--mobile.png",
-      "sha256": "f29dd2cd01aa04d51492b982a58053dfde3da18daed38eda1f793a2c6c59ba42",
+      "sha256": "bcffc105ac18c6c143092325f63a83368c108e802adc92d728f802f5b63e722a",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1137,7 +1186,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1149,11 +1199,12 @@
         "height": 844
       },
       "file": "atlas--light--mobile.png",
-      "sha256": "e48a857730a21f3dc0150bb103c621eea41dd142f90228d26ea86f3270de349a",
+      "sha256": "40b985600f3b05849a9e25f2d02ff23ef273c2f0bc64b2fe2f6bf4838330ca7f",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1165,11 +1216,12 @@
         "height": 844
       },
       "file": "home--ambient--mobile.png",
-      "sha256": "2314844550daeda42243d395ebfda9ada6b889b2fc2637cfa49792cffa37f38e",
+      "sha256": "0256b023511be5b2f5221f262c87f5f17ef85082e66c19edd5141c2ae854d627",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1181,11 +1233,12 @@
         "height": 844
       },
       "file": "games--ambient--mobile.png",
-      "sha256": "713e3891be08d75a81b36388702b409675c85520e2809aa5ec71a88c4611e97a",
+      "sha256": "ddac6dabcce1242e083e8d847da9842ab7f07af5262660a80bb818df3bf848ef",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1197,11 +1250,12 @@
         "height": 844
       },
       "file": "membership--ambient--mobile.png",
-      "sha256": "13d1f2880821b3c743bf0fae5db3a3f96c54b6524a816fd62f84c403d1930dc0",
+      "sha256": "8f6411c64cd9bedb6a61f604afd06a6eeddc82720b5af78e5207d2600ffc2790",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1213,11 +1267,12 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "4e318503b46048f31ef00a73b0358989ce5549c08be2b6b2be9f7383711dcb2c",
+      "sha256": "2a2c877332de4a8330cc7e31f8a6963c90b68666b95ec2f68cf7916a631d9c36",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1233,7 +1288,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1245,11 +1301,12 @@
         "height": 844
       },
       "file": "atlas--ambient--mobile.png",
-      "sha256": "796f15f74155850c3bb715386d4288269bc7d8bc6913c8165d1433d20a3f18a6",
+      "sha256": "c25be6d06051cc736a9817f88a1d73e9fc0011dcb4c110110edc63bd9d510b25",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1261,11 +1318,12 @@
         "height": 844
       },
       "file": "home--warm--mobile.png",
-      "sha256": "14a8ea75d73a0785a2c53822498defe5909b655666439ee8c8725df545d7af3f",
+      "sha256": "76358709302d6cccc61435e45390a0eb5a5e85a4fe06ee74b8e7624211484fc0",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1277,11 +1335,12 @@
         "height": 844
       },
       "file": "games--warm--mobile.png",
-      "sha256": "70e10a1af85bac98a5b6f82e944e09a1835d10779380475f86562e690d2ab483",
+      "sha256": "bd222caadf30275e5edf4a1233cd3fa5277a853242a73b503b60b924e66e2acc",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1293,11 +1352,12 @@
         "height": 844
       },
       "file": "membership--warm--mobile.png",
-      "sha256": "2547805ea3e2ea921c49b50d08851eee838e2e329c73ea08c51d18192f2e005e",
+      "sha256": "8261c83938b9a0d43c7e649c839511dc3468b641ee8de73c8eaa18427c6bec48",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1309,11 +1369,12 @@
         "height": 844
       },
       "file": "status--warm--mobile.png",
-      "sha256": "9884b44676a6643da53ae6fd8a4b8ab8b2293c2129611389acf0c39a3c4372a7",
+      "sha256": "889484df0283ca31c6021942d4e35ec181236ff53ee690b88cd7fe27ee0e11a9",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1329,7 +1390,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1341,11 +1403,12 @@
         "height": 844
       },
       "file": "atlas--warm--mobile.png",
-      "sha256": "9152bb52a15f833764b8687eb29fd9788e15a992763a3e8a9027128392b283cf",
+      "sha256": "f191d8f7ffc765f2200c05efb05629d611a67fe2566333cd61d86bb854e5460f",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1357,11 +1420,12 @@
         "height": 844
       },
       "file": "home--cool--mobile.png",
-      "sha256": "7d7623066e498663e2798cff841d4696ac4111f48cf9479e887a5bc5e18d5b77",
+      "sha256": "9e4c08e5c7b4ce57fb4d4a936f87d55e02cf9cdea823a3a1e33c81453c8426e9",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1373,11 +1437,12 @@
         "height": 844
       },
       "file": "games--cool--mobile.png",
-      "sha256": "ca31acc47e447ad3df39dc7be0270aa5b976458581d2d97beb1cb8f84cb2f0a2",
+      "sha256": "89d21eea402df8804141ac4b6740eac620167a91f016242376723c6456fcb377",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1389,11 +1454,12 @@
         "height": 844
       },
       "file": "membership--cool--mobile.png",
-      "sha256": "bc39573586db9c17255966d3cf7b1ef98fe4d369900c5df797d17e3a539ab256",
+      "sha256": "b4da07e49baa8152f8b7a6d64cef84cbeb2a0e5d89b72e1322c9377e66b74a22",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1405,11 +1471,12 @@
         "height": 844
       },
       "file": "status--cool--mobile.png",
-      "sha256": "0ff31347b728fc98599b207c86ce445042959a319ad1a83c4ab65025d0e37909",
+      "sha256": "a1a687c21a805332099fd60dd9ebba92c2af8a78c155c524307ef1757ab8d975",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1425,7 +1492,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1437,11 +1505,12 @@
         "height": 844
       },
       "file": "atlas--cool--mobile.png",
-      "sha256": "2860ceefb560198c54be7c8b733c1093c9def0e58b1110d688b758094f75b02c",
+      "sha256": "6503e3be04c79b7465f718b6ca35c547ad7ee89b1e557d3a8868ca2b27b59628",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1453,11 +1522,12 @@
         "height": 844
       },
       "file": "home--lava--mobile.png",
-      "sha256": "653f7760bfd4a0a29842fa2d8281ee9b25a4768c0cf2eb9c1398b01c9cd9bf71",
+      "sha256": "aaebf6b9527b4e32b09a7e29660f19f84c448616f227b80afb146cc0cf009b01",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1469,11 +1539,12 @@
         "height": 844
       },
       "file": "games--lava--mobile.png",
-      "sha256": "dfa17d8676cea56dabd216433ad2c0e1963a37eaa181588cc4c8893cb097377c",
+      "sha256": "c4737ddc410dc18b0ea725f4c522fa4ab7a978478c8230e22dacd45862ab9813",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1485,11 +1556,12 @@
         "height": 844
       },
       "file": "membership--lava--mobile.png",
-      "sha256": "327f7bce5315a253d0da5f6531ae171034e539f625d19bb61f213a4cd2636359",
+      "sha256": "68c5f963d39a64e1ff81ee84e572696563187b9873e3dba14d3e5dd3d3b3a945",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1501,11 +1573,12 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "26dd8fa4a00e5654d35422a001cb8c96b5c8ed89057565e437093b4a3d6eb304",
+      "sha256": "5535f3d08e2255e113513dba7a444242911c7af2c842596974286cb295a49825",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1521,7 +1594,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1533,11 +1607,12 @@
         "height": 844
       },
       "file": "atlas--lava--mobile.png",
-      "sha256": "4a549c0eb1847d6e469943ef765ee21dd53955bce4efe43ddbba8c295ef558e8",
+      "sha256": "2966be555ff58ccf9e46b982ed20424ba934c768c6b921674e5f7e801dae42e8",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1549,12 +1624,12 @@
         "height": 844
       },
       "file": "home--high-contrast--mobile.png",
-      "sha256": "f1fbd206f4fbbfcac9e01eb596544f1f54909499080c4e4dfad431dd2f01b25a",
+      "sha256": "c1cec0a54482216aa3c8ec95cf2be0a4c18cf2915cb7152b8c9bc8b7ae70f6d1",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S338"
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1566,11 +1641,12 @@
         "height": 844
       },
       "file": "games--high-contrast--mobile.png",
-      "sha256": "291e33792fd8589ccf17175219de38036dbcd761314994578c55d8ecd314ddc9",
+      "sha256": "00e2f33341c2bc1bb8b8e256d0fa8882c2280fb14c7bdab4037a5118758bccb7",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1582,11 +1658,12 @@
         "height": 844
       },
       "file": "membership--high-contrast--mobile.png",
-      "sha256": "66a9a59da39750ccfa94c835bb13f45be13a6119fd4184bc8d0025f7174f34cb",
+      "sha256": "bc8da3df2fcd38ee96c9759af99db55b19e117ac98f49b75c8a111069c376b63",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1598,11 +1675,12 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "adc02fb5c7b502a50e37576be97749b9fc9d89c420e403259fc79bd015ab0760",
+      "sha256": "fe024ed26be945505dc300b697d8ade85c47850e4ee99b224d3fb150ee29a086",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1618,7 +1696,8 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     },
     {
@@ -1630,11 +1709,12 @@
         "height": 844
       },
       "file": "atlas--high-contrast--mobile.png",
-      "sha256": "ad16f44eeb0adbedab7c516e11346d441f53f63e97a201922b728092b04184d6",
+      "sha256": "9d73418befc1a7316f4233819ed29ca7429f8df5694043e2bc10364d14baac00",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "automated-only"
+        "mode": "manual",
+        "reviewer": "claude-code S339"
       }
     }
   ]

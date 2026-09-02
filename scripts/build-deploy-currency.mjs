@@ -31,6 +31,7 @@
  *   node scripts/build-deploy-currency.mjs --self-test
  */
 import fs from 'node:fs';
+import { receiptRoundTripCases } from './lib/receipt-roundtrip.mjs';
 import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
@@ -796,47 +797,34 @@ function selfTest() {
     ['no error is not transient', !isTransientProbeError(null)],
     ['the receipt discloses the content clock', 'contentLagHours' in current && 'oldestUndeployedContentAt' in current && 'undeployedContentCommits' in current],
 
-    // ── S338: the round trip, closed STRUCTURALLY ─────────────────────────
-    // Three fields have now been added to deriveCurrency() and forgotten in
+    // ── S338/S339: the round trip, closed STRUCTURALLY and now SHARED ────
+    // Three fields have been added to deriveCurrency() and forgotten in
     // observationFromReceipt(): retainedForHours (S300), historyComplete (S316),
-    // and the S336 content clock. Each was caught only after it had already
-    // reddened a cron in production, and each was fixed by adding one more line
-    // to a hand-maintained list plus one more hand-written assertion naming that
-    // field. A list of the fields someone remembered cannot cover the field
-    // nobody has written yet.
+    // and the S336 content clock. Each was caught only after it had reddened a
+    // cron in production, and each was fixed by adding one more line to a
+    // hand-maintained list plus one more assertion naming that field. A list of
+    // the fields someone remembered cannot cover the field nobody has written yet.
     //
-    // This case names no field at all. It asserts the property the two functions
-    // actually owe each other: for a FULLY-POPULATED observation, re-deriving
-    // from the round trip must be a fixed point. That is exactly what `--check`
-    // computes, so any future field that fails to survive the round trip fails
-    // here — at `--self-test`, in `build:check`, before it can strand a
-    // publisher. It also fails loudly and legibly: the diff names the field.
-    (() => {
-      const populated = {
+    // S339 moved the property itself into scripts/lib/receipt-roundtrip.mjs. It
+    // asserts what the two functions owe each other — derive(read(derive(x)))
+    // must be a fixed point over a FULLY-POPULATED observation — and it ships
+    // paired with its own proof-of-liveness, because a fixed-point test over a
+    // function that drops the same field on both passes is self-consistently
+    // green. check-receipt-roundtrip-coverage.mjs makes the pairing mandatory for
+    // every re-derive site, so the next one cannot copy-paste half of it.
+    ...receiptRoundTripCases({
+      derive: deriveCurrency,
+      read: observationFromReceipt,
+      stripField: 'contentLagHours',
+      populated: {
         ...base,
         commitsBehind: 20, ageHours: 1.2, deployedCommitAt: '2026-07-25T22:48:00.000Z',
         undeployedContentCommits: 1, oldestUndeployedContentAt: '2026-07-26T06:44:08Z', contentLagHours: 1.2,
         retainedForHours: 3.5, historyComplete: true, challengedAt: null,
         quorum: { state: 'agreed', required: 2, agreementCount: 2, observedAt: base.observedAt, agreedShaShort: 'a'.repeat(12), evidence: [], disagreements: [] },
         shellParity: shellDrift,
-      };
-      const once = deriveCurrency(populated);
-      const twice = deriveCurrency(observationFromReceipt(once));
-      const drifted = Object.keys(once).filter((k) => JSON.stringify(once[k]) !== JSON.stringify(twice[k]));
-      return [
-        `EVERY emitted field survives the receipt round trip${drifted.length ? ` (drifted: ${drifted.join(', ')})` : ''}`,
-        JSON.stringify(once) === JSON.stringify(twice),
-      ];
-    })(),
-    // The guard above must be able to FAIL — a fixed-point test over a function
-    // that drops the same field on both passes is self-consistently green. Prove
-    // the detector detects by round-tripping a receipt with a field deliberately
-    // stripped, exactly as a forgotten field would arrive.
-    ['the round-trip guard can actually fail', (() => {
-      const once = deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: 9.4, undeployedContentCommits: 2 });
-      const { contentLagHours, ...stripped } = once;
-      return JSON.stringify(deriveCurrency(observationFromReceipt(stripped))) !== JSON.stringify(once);
-    })()],
+      },
+    }),
     ['a failed content measurement is null, never a clean zero',
       deriveCurrency({ ...base, commitsBehind: 3, ageHours: 1, contentLagHours: null }).contentLagHours === null],
     ['scheduled publishers disclose their bounded coalesced promotion',

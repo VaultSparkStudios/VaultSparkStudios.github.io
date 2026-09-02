@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 989.7 | 5: 990.8 | 10: 990.7 | 25: 987.9 | all: 983.6
-  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.0 | Engage 96.0 | Process 100.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Avgs — 3: 991.7 | 5: 992.0 | 10: 991.0 | 25: 988.1 | all: 983.9
+  └ 3-session: Dev 100.0 | Align 98.3 | Momentum 99.0 | Engage 96.3 | Process 100.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~12 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-09-02 | Session 338 | Total: 991/1000 | Velocity: 0 | protocolVelocity: 0
+Last session: 2026-09-02 | Session 339 | Total: 993/1000 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
@@ -2704,6 +2704,35 @@ Sparkline (last 5): █████ · 996, 988, 989, 987, 991
 **Brainstorm / committed to TASK_BOARD:**
 1. [S337][SEC/P1] Hoist the Trusted Types default-policy installer ahead of every sink-bearing asset; re-measure the 31 before and after (D-S337.3).
 2. [S337][OBS/P2] Record the distinct violating files in the release-ceremony receipt as a structured array, so a rejection is legible without downloading the artifact.
+
+## 2026-09-02 — Session 339 (the origin the release ceremony verifies against had no publisher · the home page advertised three shipped products as unfinished) | Total: 993/1000 (v3.0) | Velocity: +2 | Debt: ↓
+Avgs — 3: 991.7 | 5: 992.0 | 10: 991.0 | 25: 988.1 (carried, spans archive) | all: 983.9 (carried, spans archive)
+Sparkline (last 5): █████ · 989, 987, 991, 991, 993
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | `npm run build` exit 0 read directly. Three new gates, each self-tested and each proven able to FAIL against the live tree, not only against fixtures: `check-verification-origin-publisher` 19/19 (live-negative reproduces the real defect and names all five workflows), `check-receipt-roundtrip-coverage` 15/15, `check-home-portfolio-status-coherence` 17/17 (live-negative on a reintroduced badge). `check-staging-parity` 31/31 (was 26). `build-deploy-currency` holds 87/87 across a refactor onto the shared harness. `deploy-staging-content --self-test` 21/21 before it was trusted with a real deploy. |
+| Creative Alignment | 99 | The home page is the site's first creative impression and it was contradicting itself: a Forge badge under a Sparked heading, and two live products filed as unbuilt. Removing the per-card badge entirely is the alignment win — the tier heading says it once, so the design can no longer disagree with itself. |
+| Momentum | 99 | Three board items closed, the top-ranked P1 among them, plus one defect found by the work rather than by the board. The P1 had been open with the wrong cause recorded; correcting the cause was most of the fix. |
+| Engagement | 97 | A visitor's first read of PromoGrind, Velaxis and Vorn was "still building" while every other surface said live. That is the highest-leverage truth defect available this session and it is fixed at the source, not patched per-card. |
+| Process Quality | 100 | Followed the known convergence order exactly (context edits final → build → fixups → provenance probe → drift sweep → seal → receipts → gate). Tried the credential before declaring a blocker (CANON-019) and it was ready. Declined to widen the blast radius to make a metric green. Recorded one honest deferral with the method attached instead of shipping a guess. |
+| Cross-Surface Coherence | 100 | The home page is now bound to the same canonical feeds the nav groups by. The remaining divergence — studio-ops' `PROJECT_REGISTRY.json` disagreeing about four projects — is on the board as Ark cargo, not edited from here (CANON-018). |
+| Security | 99 | The cheapest path to an "automated" publisher was `gh secret set HETZNER_SSH_KEY`, which would place a root key on the staging box reachable from every workflow run. Declined, recorded as a founder decision, and compensated with a gate rather than with access. Not 100 because the staging box still has no least-privilege deploy identity to offer CI even if the founder wanted one. |
+| Ecosystem | 99 | The sibling-registry divergence is raised, not shipped — the Ark cargo is on the board for next session. |
+| Capital Efficiency | 100 | Flat-rate. One build, no repeated convergence attempts, no wasted gate cycles. |
+| Automation Coverage | 100 | Three structural gates added to `build:check`, each naming no origin, no script and no project — the class, not the instance. |
+
+**First win — the question was wrong, not just unanswered.** S338 left the top-ranked P1 as *find what deploys the Hetzner staging origin and why it stopped*. Nothing ever deployed it. `website.staging.vaultsparkstudios.com` is named 14 times across the workflows and every one of those references **reads** it; the only publisher was invoked by zero workflows and reachable only through an npm alias nothing called. **A thing that never started cannot have stopped** — the blocker's premise, not only its status, needed re-probing. `hetzner.ssh` was `READY 2/2` throughout, so the fix was agent work: 340 overlays, 25 safe removals, exact-byte verified, identity untouched, advertised surface 115 → **135/135**. `surfaceParity` then graduated from reported to gating, with the remedy command on the artifact (D-S339.1, D-S339.2).
+
+**Second win — the property outlived its instance.** S338's fixed-point round-trip test was the right fix for a defect that had recurred three times. S339 moved it into `scripts/lib/receipt-roundtrip.mjs` paired with its proof-of-liveness, and made the pairing mandatory, because the fixed point WITHOUT its companion is self-consistently green — it reports success while measuring nothing. Exactly one re-derive site exists today, so the gate is entirely for the second one, which is where all three historical losses happened (D-S339.3).
+
+**Third win, and the one a person would notice.** S247 bound destination pages to the nav; nobody had bound the home page to anything, and it had gone stale on three live products. Every coherence gate was green because each compared surfaces that agreed with each other. Fixed at the source and gated (D-S339.4).
+
+**Top gap:** `check-build-gate-reachability` counts only gates carrying the literal `--check`, so all three gates added this session sit outside its denominator — its count held at 249/249 across two additions. `check-orphan-scripts` independently confirms they have consumers, so nothing is unreached; but a gate whose name promises reachability coverage while scoping itself to one flag is the exact class it exists to catch. On the board.
+
+**Honesty ledger:** The staging refresh is real and verified, but its publisher is **operator-run, not automated** — CI cannot do it, by decision, and the artifact says so rather than implying a lane exists. `surfaceParity` compares advertised sitemaps: it proves both origins claim the same 135 routes, not that each was individually probed. The `postbuild` ordering audit was **deferred, not attempted** — the grep-based classification tried first was wrong in both directions, and the honest instrument perturbs the build being converged for this deploy, so it returns to the board with the method rather than a guess (D-S339.5). The studio-ops registry disagrees with this repo about four projects' status; the site is internally coherent and its own feeds are authoritative for the site, but the portfolio surface is wrong and that is reported, not fixed from here. S338 recorded the doubled badge as client-side rendered and absent from the markup — it was static markup, missed by a case-sensitive search; the correction is in D-S339.4 rather than silently applied.
+
+**Committed to TASK_BOARD:** `[S339][BUILD/P2]` instrumented postbuild ordering run, and `[S339][OBS/P3]` widen or rename `check-build-gate-reachability`.
 
 ## 2026-09-02 — Session 338 (lossy receipt round trip disabled a live ceiling · Lighthouse red 27h on a retired route · staging parity finally measured) | Total: 991/1000 (v3.0) | Velocity: 0 | Debt: ↓
 Avgs — 3: 989.7 | 5: 990.8 | 10: 990.7 | 25: 987.9 (carried, spans archive) | all: 983.6 (carried, spans archive)

@@ -1,3 +1,22 @@
+## S339 Publisher-Absence and Home-Surface Correction (2026-09-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | `api/staging-health.json` carries `surfaceParity` with `gating: true`, `gatingSince: S339` and a `remedy` command — a gate that blocks a release now names what unblocks it. New declaration surface `config/verification-origins.json` binds each verification origin to a publisher and an invocation mode. |
+| Prompt/template alignment | 5 | No prompt or template surface changed this session. |
+| Derived-view freshness | 5 | Every claim re-probed live: staging `build-sha.json` and both sitemaps fetched directly, the overlay's 340 promotions and 25 removals exact-byte verified through the edge, `worker-route-provenance --probe` run from a residential vantage returning `matched (7/7)`, and all three new gates run against the live tree in BOTH directions. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S339.1..5), SIL, WORK_LOG, PROJECT_STATUS and this file all reference S339. |
+| Contradiction density | 4 | Two closed, one newly disclosed. Closed: staging is no longer behind production (135/135 advertised routes) and the gate that depends on it now enforces rather than reports; the home page no longer contradicts the nav, the catalog and three destination pages about which products are live. Open and now named: this repo's feeds and studio-ops' `PROJECT_REGISTRY.json` disagree about the status of four projects. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — the site's own surfaces are coherent, but the portfolio registry a sibling repo owns disagrees with them, and that is reported rather than edited (CANON-018).
+
+- **Truth corrected: an origin five workflows verified against had no publisher, and the drift was invisible to every probe.** Staging had fallen five days and 23 advertised routes behind production not because a publisher broke but because none had ever existed. Every surface-vs-surface check stayed green throughout, because the surfaces agreed with each other and were all equally stale. Refreshed, and the class gated by `check-verification-origin-publisher.mjs`. (D-S339.1, D-S339.2)
+- **Truth corrected: the home page advertised three shipped products as unfinished.** PromoGrind carried a Forge badge beneath a Sparked heading; Velaxis and Vorn were filed in the Forge tier while the catalog, the nav and their own destination pages all said SPARKED. Bound to the canonical feeds and gated. (D-S339.4)
+- **Truth corrected: a prior session's recorded mechanism was wrong.** S338 logged the doubled status badge as client-side rendered and absent from `index.html`; it was static markup, missed by a case-sensitive search for `SPARKED`. Corrected in the record rather than quietly superseded.
+- **Truth disclosed, not fixed: the portfolio registry disagrees with the site.** `data/game-registry.json` and `api/public-intelligence.json` say `call-of-doodie` is SPARKED; studio-ops' `PROJECT_REGISTRY.json` says `forge`. The same divergence covers PromoGrind, Velaxis and Vorn. The site's feeds are authoritative for the site and the site is internally coherent, so nothing here is wrong — but portfolio-level rollups read the sibling, so the portfolio surface is. On the board as Ark cargo.
+- **Truth disclosed: staging's publisher is operator-run and the artifact says so.** It is declared `operator`, not `automated`, in `config/verification-origins.json` with the reason recorded — CI holds no Hetzner SSH credential and is deliberately not given one. The gate refuses to accept an `operator` claim unless the npm script it names actually exists and actually runs the publisher, so the declaration cannot decay into a fiction.
+- **Truth disclosed: `surfaceParity` compares advertised sitemaps.** It proves both origins claim the same 135 routes. It is not a per-route HTTP probe of each one, and does not say so only here — the artifact carries the same framing.
+
 ## S338 Silent-Gate and Audit-Target Correction (2026-09-02)
 
 | Dimension | Score | Evidence |

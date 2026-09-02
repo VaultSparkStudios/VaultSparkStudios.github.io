@@ -250,10 +250,31 @@ async function fetchSitemapRoutes(origin) {
   }
 }
 
-export function classifyStatus(routes) {
+/**
+ * S339 (D-S339.1) — the sampled routes and the advertised SURFACE are two
+ * different questions, and only the second one can see an absent page.
+ *
+ * S338 built `compareSurfaces()` but deliberately left it non-gating, because at
+ * the time staging was 23 routes behind with no known way to refresh it, and
+ * gating on an open blocker is a self-inflicted release outage. That premise no
+ * longer holds: S339 established that nothing had EVER published to staging
+ * (`deploy-staging-content.mjs` was invoked by zero workflows), ran the overlay,
+ * and brought the surface to 135/135. With a working one-command publisher the
+ * honest order flips — a surface mismatch is now a condition someone can fix, so
+ * it should block rather than merely be reported.
+ *
+ * `surfaceParity` is optional: called with routes alone this classifies exactly
+ * as it did before, so every pre-existing caller and self-test is unaffected.
+ */
+export function classifyStatus(routes, surfaceParity = null) {
   const stagingReachable = routes.some((r) => r.stagingReachable);
   if (!stagingReachable) return 'staging-unreachable';
-  return routes.every((r) => r.stagingReachable && r.statusParity && r.shellParity && r.headerParity && r.stagingStaticCspSafe) ? 'green' : 'yellow';
+  const routesGreen = routes.every((r) => r.stagingReachable && r.statusParity && r.shellParity && r.headerParity && r.stagingStaticCspSafe);
+  if (!routesGreen) return 'yellow';
+  // A surface we could not measure is not a surface we verified. Only an
+  // explicit `matched` clears; absent, errored or mismatched all hold at yellow.
+  if (surfaceParity && surfaceParity.state !== 'matched') return 'yellow';
+  return 'green';
 }
 
 export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null, expectedManifest = undefined) {
@@ -306,6 +327,21 @@ if (SELF_TEST) {
     ['nonce-bound Worker strict-dynamic policy is safe', servedCspSafe("script-src 'self' 'nonce-abcdefghijklmnop' 'strict-dynamic'")],
     ['short nonce cannot make strict-dynamic safe', !servedCspSafe("script-src 'self' 'nonce-short' 'strict-dynamic'")],
     ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
+    // ── S339 (D-S339.1): the surface signal actually reaches the verdict ──
+    // S338's compareSurfaces() was correct and unconsumed — it computed a real
+    // mismatch that no caller ever read. These four pin the wiring itself, in
+    // both directions, so the gate cannot rot back into a reported-only number.
+    ['a matched surface leaves a green verdict green',
+      classifyStatus([compareRoute(reachable, reachable)], { state: 'matched', missingOnStagingCount: 0 }) === 'green'],
+    ['a route missing on staging downgrades an otherwise green verdict',
+      classifyStatus([compareRoute(reachable, reachable)], { state: 'mismatched', missingOnStagingCount: 1 }) === 'yellow'],
+    ['an unmeasurable surface is not treated as a matched one',
+      classifyStatus([compareRoute(reachable, reachable)], { state: 'unavailable' }) === 'yellow'],
+    ['omitting the surface argument classifies exactly as before',
+      classifyStatus([compareRoute(reachable, reachable)]) === 'green'
+        && classifyStatus([compareRoute(reachable, { ...reachable, headers: { csp: 'y' } })]) === 'yellow'],
+    ['an unreachable staging origin still reports unreachable, not a surface verdict',
+      classifyStatus([compareRoute(reachable, unreachable)], { state: 'mismatched' }) === 'staging-unreachable'],
     // ── S338: advertised-surface parity ──────────────────────────────────
     ['a sitemap yields the routes of its own origin',
       [...parseSitemapRoutes('<url><loc>https://x.test/</loc></url><url><loc>https://x.test/a/</loc></url>', 'https://x.test')].sort().join(',') === '/,/a/'],
@@ -384,7 +420,8 @@ for (const route of ROUTES) {
   routes.push(compareRoute(prod, staging));
 }
 
-const status = classifyStatus(routes);
+const surfaceParityRaw = compareSurfaces(await prodSitemapPromise, await stagingSitemapPromise);
+const status = classifyStatus(routes, surfaceParityRaw);
 const generatedAt = new Date().toISOString();
 const candidateBuildSha = localBuildSha();
 const stagingBuildSha = await stagingBuildPromise;
@@ -401,7 +438,7 @@ const artifactManifest = {
   stagingLeafCount: stagingArtifactManifest?.leafCount ?? null,
   matched: Boolean(candidateArtifactManifest?.root && candidateArtifactManifest.root === stagingArtifactManifest?.root && candidateArtifactManifest.leafCount === stagingArtifactManifest?.leafCount),
 };
-const surfaceParity = compareSurfaces(await prodSitemapPromise, await stagingSitemapPromise);
+const surfaceParity = surfaceParityRaw;
 const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, artifactManifest, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha, candidateArtifactManifest);
 const payload = {
   schemaVersion: '1.0',
@@ -416,13 +453,17 @@ const payload = {
   production: PROD,
   staging: STAGING,
   status,
-  // S338 — advertised-surface parity, reported but NOT gating. Staging is known
-  // to be behind production right now (the S337 probe), so wiring this into
-  // classifyStatus() today would turn staging-health red on a blocker already on
-  // the board and block releases on a condition nobody has fixed yet. Publishing
-  // the measurement first is the honest order: the gate flips once staging
-  // refresh is understood, and until then the number is visible instead of absent.
-  surfaceParity: { ...surfaceParity, gating: false, gatingDeferredBecause: 'staging refresh path is an open blocker (S337); measure before gating' },
+  // S339 (D-S339.1) — now GATING, and it carries its own remedy. The S338
+  // deferral was conditional on staging refresh being an unsolved blocker; it
+  // isn't any more, so the measurement graduates into the classifier above.
+  // `remedy` is on the artifact deliberately: a gate that blocks a release
+  // should name the command that unblocks it.
+  surfaceParity: {
+    ...surfaceParity,
+    gating: true,
+    gatingSince: 'S339',
+    remedy: 'node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>',
+  },
   // Honest reason when we can't compare — the feed stays fresh (no seed-rot) and
   // says WHY rather than silently reporting a stale 'green'.
   reason: status === 'staging-unreachable'

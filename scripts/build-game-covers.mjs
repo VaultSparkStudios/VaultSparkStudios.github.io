@@ -4,8 +4,9 @@
    The win: the games grid is the #1 conversion surface and every card was a bare
    radial-gradient blur behind text — uniform and impersonal, the opposite of
    "studio-owned, not generic" (SOUL). This generates one branded SVG→PNG cover tile
-   per game (per-game accent palette + serif title lockup + genre eyebrow + status +
-   a faint vault grid texture) so each card reads as its own world. ZERO new deps —
+   per game (per-game accent palette + serif title lockup + genre eyebrow + a faint
+   vault grid texture) so each card reads as its own world. The cover carries ART
+   ONLY — no status word; see D-S339.6 on renderCoverSvg. ZERO new deps —
    sharp@0.34.5 is already a trusted devDependency (S196 OG-card pattern reused).
 
    Covers are keyed by the per-game CSS class already on each .card-hero (.doodie,
@@ -33,23 +34,22 @@ const W = 800, H = 460;
 
 // class → cover spec. Accent hi/lo mirror the existing .card-hero::before gradients.
 export const COVERS = [
-  { cls: 'doodie',      title: 'Call of Doodie',  eyebrow: 'Action Comedy Shooter', status: 'SPARKED', hi: '#e84040', lo: '#6b1a1a' },
-  { cls: 'gridiron',    title: 'Gridiron GM',     eyebrow: 'Franchise Simulation',  status: 'VAULTED', hi: '#1fa2ff', lo: '#0a3d70' },
-  { cls: 'footballgm',  title: 'Franchise Architect',     eyebrow: 'NFL Front Office Sim',  status: 'SPARKED', hi: '#22c55e', lo: '#064e1e' },
-  { cls: 'vaultfront',  title: 'VaultFront',      eyebrow: 'Real-Time Strategy',    status: 'FORGE',   hi: '#ffc400', lo: '#5c3d00' },
-  { cls: 'solara',      title: 'Solara',          eyebrow: 'Roguelite RPG',         status: 'FORGE',   hi: '#c084fc', lo: '#3b0764' },
-  { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Cognitive Puzzle',      status: 'FORGE',   hi: '#06b6d4', lo: '#012d35' },
-  { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Narrative Survival',    status: 'FORGE',   hi: '#f97316', lo: '#4a1d05' },
-  { cls: 'vault-sealed', title: 'Project ???',    eyebrow: 'Classified',            status: 'SEALED',  hi: '#64748b', lo: '#0f172a' },
+  { cls: 'doodie',      title: 'Call of Doodie',  eyebrow: 'Action Comedy Shooter', hi: '#e84040', lo: '#6b1a1a' },
+  { cls: 'gridiron',    title: 'Gridiron GM',     eyebrow: 'Franchise Simulation',  hi: '#1fa2ff', lo: '#0a3d70' },
+  { cls: 'footballgm',  title: 'Franchise Architect',     eyebrow: 'NFL Front Office Sim',  hi: '#22c55e', lo: '#064e1e' },
+  { cls: 'vaultfront',  title: 'VaultFront',      eyebrow: 'Real-Time Strategy',    hi: '#ffc400', lo: '#5c3d00' },
+  { cls: 'solara',      title: 'Solara',          eyebrow: 'Roguelite RPG',         hi: '#c084fc', lo: '#3b0764' },
+  { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Cognitive Puzzle',      hi: '#06b6d4', lo: '#012d35' },
+  { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Narrative Survival',    hi: '#f97316', lo: '#4a1d05' },
+  { cls: 'vault-sealed', title: 'Project ???',    eyebrow: 'Classified',            hi: '#64748b', lo: '#0f172a' },
   // S249 — bespoke covers for the 2 spotlit PROJECTS (not games) that S248's hero
   // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Franchise Architect);
   // without these two, 2 of the 5 spotlight tiles fell back to accent-gradient-only.
   // Palettes + eyebrows are the products' own brand (api/public-intelligence.json).
-  { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Cognitive Civilization OS', status: 'SPARKED', hi: '#22d3ee', lo: '#083344' },
-  { cls: 'vorn',        title: 'Vorn',            eyebrow: 'Social Agent Platform', status: 'SPARKED', hi: '#a78bfa', lo: '#2e1065' },
+  { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Cognitive Civilization OS', hi: '#22d3ee', lo: '#083344' },
+  { cls: 'vorn',        title: 'Vorn',            eyebrow: 'Social Agent Platform', hi: '#a78bfa', lo: '#2e1065' },
 ];
 
-const STATUS_COLOR = { SPARKED: '#fbbf24', VAULTED: '#94a3b8', FORGE: '#f59e0b', SEALED: '#cbd5e1' };
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -64,9 +64,29 @@ function titleSize(title) {
   return 46;
 }
 
-export function renderCoverSvg({ title, eyebrow, status, hi, lo }) {
+/**
+ * S339 (D-S339.6) — the cover carries ART, never STATUS.
+ *
+ * Every consumer of these covers paints its own live status chrome on top:
+ * `.hero-tile__badge` renders `● Sparked` at top-left, which is exactly where
+ * this SVG used to stamp `SPARKED` in amber. So the home page showed the status
+ * twice on every tile, and on the narrower tiles the baked word was clipped by
+ * `background-size: cover` to a bare `S` — the artefact S338 saw and recorded as
+ * "rendered client-side", which it never was.
+ *
+ * The worse half is truth, not layout. The status here came from a hardcoded
+ * array duplicating `data/game-registry.json` and the public-intelligence
+ * catalog, and a PNG cannot follow a feed. The moment a project's status changed,
+ * the artwork kept asserting the old one underneath a pill asserting the new one
+ * — a lying surface baked into a binary, invisible to every text-based coherence
+ * gate in the repo.
+ *
+ * So the status text is gone from the artwork entirely rather than being wired to
+ * the feed: the live chrome already states it correctly, and the only reliable
+ * way for an image not to go stale about a fact is not to assert the fact.
+ */
+export function renderCoverSvg({ title, eyebrow, hi, lo }) {
   const ts = titleSize(title);
-  const sc = STATUS_COLOR[status] || '#cbd5e1';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <radialGradient id="glow" cx="28%" cy="34%" r="85%">
@@ -86,8 +106,6 @@ export function renderCoverSvg({ title, eyebrow, status, hi, lo }) {
   <rect width="${W}" height="${H}" fill="url(#glow)"/>
   <rect width="${W}" height="${H}" fill="url(#grid)"/>
   <rect width="${W}" height="${H}" fill="url(#legibility)"/>
-  <text x="44" y="64" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700"
-        letter-spacing="3" fill="${sc}">${esc(status)}</text>
   <text x="44" y="${H - 96}" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="600"
         letter-spacing="1.5" fill="#c8d2ec" opacity="0.92">${esc(eyebrow.toUpperCase())}</text>
   <text x="42" y="${H - 36}" font-family="Georgia, 'Times New Roman', serif" font-size="${ts}" font-weight="700"
@@ -141,7 +159,17 @@ async function selfTest() {
   assert(new Set(COVERS.map(c => c.cls)).size === COVERS.length, 'cover classes are unique');
   assert(titleSize('Franchise Architect Extended') < titleSize('Solara'), 'long titles shrink');
   const svg = renderCoverSvg(COVERS[0]);
-  assert(svg.includes('Call of Doodie') && svg.includes('SPARKED'), 'svg carries title + status');
+  assert(svg.includes('Call of Doodie'), 'svg carries the title lockup');
+  // S339 (D-S339.6): the artwork must assert no status. The live tile chrome
+  // states it, and a binary cannot follow the feed — asserted for EVERY spec, not
+  // just the first, and against every status word rather than the one this fixture
+  // happens to use, so a status re-entering any cover fails here.
+  for (const spec of COVERS) {
+    const s = renderCoverSvg(spec);
+    for (const word of ['SPARKED', 'FORGE', 'VAULTED', 'SEALED']) {
+      assert(!s.includes(`>${word}<`), `${spec.cls} cover must not bake the status word ${word} into the artwork`);
+    }
+  }
   const png = await renderCoverPng(COVERS[0]);
   const meta = await sharp(png).metadata();
   assert(meta.width === W && meta.height === H, `cover is ${W}×${H} (got ${meta.width}×${meta.height})`);

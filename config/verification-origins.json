@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "$comment": "S339 (D-S339.2) — every origin a workflow VERIFIES AGAINST must have a declared publisher. See scripts/check-verification-origin-publisher.mjs. Adding an origin to a workflow without adding it here fails build:check.",
+  "origins": [
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "role": "production",
+      "publisher": ".github/workflows/pages-deploy.yml",
+      "invocation": "automated",
+      "invokedBy": ".github/workflows/pages-deploy.yml",
+      "note": "Production is published by the release lane itself (wrangler pages deploy, main branch); the ceremony verifies what that lane promoted.",
+      "binding": "--project-name vaultsparkstudios-website"
+    },
+    {
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "role": "staging",
+      "publisher": "scripts/deploy-staging-content.mjs",
+      "invocation": "operator",
+      "invokedBy": "npm run deploy:staging:content",
+      "note": "S339: CI holds no Hetzner SSH credential and deliberately is not given one — a root key reachable from every workflow run is a blast-radius expansion that is the founder's call, not an agent's. The publisher therefore runs from an operator vantage, and surfaceParity gating (D-S339.1) is what makes drift block a release rather than pass unnoticed."
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "role": "preview",
+      "publisher": ".github/workflows/pages-deploy.yml",
+      "invocation": "automated",
+      "invokedBy": ".github/workflows/pages-deploy.yml",
+      "note": "The Cloudflare Pages warm origin is written by the same lane that writes production."
+    }
+  ],
+  "external": [
+    "https://api.cloudflare.com",
+    "https://api.supabase.com"
+  ],
+  "$externalComment": "Third-party APIs a workflow CALLS. They are not surfaces we publish, so they are exempt — but they must be listed here explicitly, so the exemption is a decision on the record rather than a silent skip."
+}

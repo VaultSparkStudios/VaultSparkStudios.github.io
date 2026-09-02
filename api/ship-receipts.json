@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-02T03:35:37.568Z",
+  "generatedAt": "2026-09-02T20:19:39.701Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -17,6 +17,45 @@
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "transparency",
+      "label": "Transparency",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "0997fea3",
+          "summary": "resync status-proof and stats after the second publisher race",
+          "ts": "2026-09-02T09:34:11.000Z"
+        }
+      ],
+      "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "611041b9",
+          "summary": "close three silent gates — a disabled ceiling, a mute performance gate, an unmeasurable staging",
+          "ts": "2026-09-02T09:12:15.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -74.9,
+        "confidence": "high"
+      }
     }
   ]
 }

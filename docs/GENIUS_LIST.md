@@ -1,4 +1,4 @@
-# Genius Hit List — Session 338
+# Genius Hit List — Session 339
 
 Generated: 2026-09-02
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **79/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
-- Current SIL: **991/1000**
+- Current SIL: **993/1000**
 - CI health: **check gh run list**
-- Current focus: Session 338 ran the arc under founder authorization for a direct push to main and a full production deploy, and its three findings were all gates that were not doing what their names promised. FIRST: the red uptime-probe cron was not the ordering race the board recorded. Reproduced locally, build-deploy-currency drifted between --probe and --check because observationFromReceipt() never restored the three content-clock fields added in S336 — the third time a field was added to the emitter and forgotten in the reader (after retainedForHours in S300 and historyComplete in S316). The consequence was far larger than a red cron: classify() reads contentLagHours, so every non-probe re-derive — npm run build:check, the content lane, every local build — collapsed it to null, which silently disabled the content ceiling S336 built specifically to catch a whole release stranded in production. Fixed, and the class closed with a fixed-point self-test that names no field (derive(read(derive(x))) === derive(x)) plus a companion case proving that guard can fail; 87/87, was 85. Notably an S300 test of exactly this shape already existed and stayed green throughout, because its fixtures omitted the dropped fields. SECOND: Lighthouse CI had been red for 15 consecutive runs across ~27 hours, so the site's performance gate had produced no verdict for over a day and nothing said so. /ranks/ was consolidated into /leaderboards/#ranks and answered by a _redirects 301, but three CI audit-target lists still named it — including the one auditing the LOCAL PREVIEW, which serves the built tree with no edge layer, so the redirect cannot apply and Lighthouse 404'd on a page that cannot exist there. /vaultsparked/ was in the same state. Both removed, and scripts/check-workflow-audit-targets.mjs added to build:check with two rules that name no route: no target may be a `from` in route-consolidation.json, and every local-preview target must resolve to a real page. THIRD: staging parity was a hand-maintained three-route sample and structurally could not see an absent route, which is why S337 could only record /how-we-build/ as an anecdote. It now compares the surface each origin advertises: production advertises 134 routes, staging 115, 23 missing on staging including /evidence/, /how-we-build/, three news editions and the whole .ai/ layer, with staging's build-sha reporting 94e78e93 built 2026-08-28 — five days behind production. Published as surfaceParity with gating:false and the reason stated on the artifact, because gating on a known-open blocker is a self-inflicted release outage. OUTCOME: closed out, pushed directly to main, and fully deployed to production. FOURTH, surfaced by converging the gate rather than by the audit: build-news-visual-receipts hashes each story's rendered page but ran four steps before build-shell-assets rewrote them, so it was stale by construction on every shell rotation and its own error message prescribed a hand-rebuild rather than the ordering fix; moved after every page rewriter and immediately before the seal, which also removes a confound from the standing build-to-build churn investigation. The visual and mobile proof receipts were then recaptured against the final tree: no UI changed, so CANON-053 was not triggered, but those receipts bind the candidate manifest sha rather than any appearance, and every reseal invalidates them. OUTCOME: the full production deploy LANDED. Run 33613020727 completed the release ceremony without rejection and promoted a clean dist; api/build-sha.json reports e1c7cef4b, exactly the pushed main HEAD. Eleven public routes verified 200 live with a real browser user-agent and the three consolidated routes verified 301. A live build-deploy-currency --probe followed by --check — the exact sequence that had been reddening the uptime cron — now exits 0 on both, with state current and 0 commits behind, so the content ceiling disabled since S336 is measuring again in production. Both red CI signals were then confirmed green on the real commit: uptime-probe run 33614902860 succeeded while taking the commit-worthy path that used to kill it, and Lighthouse CI run 33612994478 completed success on e1c7cef4b, ending 15 consecutive failures across ~27 hours.
+- Current focus: Session 339 ran the arc under founder authorization for a direct push to main and a full production deploy. FIRST, and it answers a question S338 left open: the reason the Hetzner staging origin had drifted five days and 23 advertised routes behind production is that NOTHING HAD EVER PUBLISHED TO IT. The origin is named 14 times across the workflows and every one of those references reads it -- the release ceremony's --url, the Lighthouse targets, the uptime probe, the cache purge -- while the repo's only publisher, scripts/deploy-staging-content.mjs, was invoked by zero workflows and reachable only through an npm alias nothing called. S338 recorded the cause as 'find what deploys staging and why it stopped'; nothing ever did, and a thing that never started cannot have stopped. CANON-007 had therefore been running backwards: the release ceremony was clearing a tree five days newer than the one it measured, and no probe could see it because every surface agreed with every other surface. hetzner.ssh was READY 2/2 the whole time, so under CANON-019 this was agent work rather than a founder blocker -- the overlay promoted 340 files with 25 safe removals, exact-byte verified, identity untouched, and the advertised surface went from 23 routes missing to 135/135 with zero missing. surfaceParity then graduated from reported to gating: classifyStatus() consumes it, an unmeasurable surface holds at yellow rather than passing as matched, and the artifact carries the remedy command. SECOND, the class was gated. check-verification-origin-publisher.mjs requires every origin a workflow names to be declared with a publisher that exists, that actually references the origin, and that is reachable by the exact route it claims -- an automated claim needs a workflow that really invokes it, an operator claim needs an npm script that really exists and really runs it, which is the half that catches an alias nothing calls being dressed up as a publication path. Run live with the staging declaration removed it reproduces the exact defect and names all five workflows that verify against it. Staging is declared operator rather than automated because CI holds no Hetzner SSH credential and deliberately is not given one: a root key reachable from every workflow run is a blast-radius expansion that belongs to the founder, not to an agent. THIRD, the lossy-receipt-reader class moved from a fixed instance to a harness. scripts/lib/receipt-roundtrip.mjs now owns the property S338 proved, paired with its own proof-of-liveness because a fixed point over a function that drops the same field on both passes is self-consistently green, and check-receipt-roundtrip-coverage.mjs makes the pairing mandatory. An audit of the whole tree found exactly one re-derive site, so the class is closed everywhere it currently occurs; the gate exists for the second site, which is where all three historical field losses happened. FOURTH, and the one a visitor would have seen: the home page had been advertising three shipped products as still being built. PromoGrind sat under the Sparked heading wearing a Forge badge, and Velaxis and Vorn sat in the Forge tier entirely, while the catalog, the nav and all three of their own destination pages said SPARKED. Every existing coherence gate was green, because S247 had bound destination pages to the nav and nobody had ever bound the home page to anything. Moved both cards, removed the per-card badge from all 11 tier cards -- which also closes the S338 doubled-label item, since the tier heading states the fact once -- and bound tier placement and badge absence to the canonical feeds with check-home-portfolio-status-coherence.mjs. Carried honestly: the postbuild ordering audit needs an instrumented run that would perturb the exact build being converged for this deploy, so it returns to the board with the method attached rather than half-answered from a grep that was wrong in both directions.
 
 ## Strategic Read
 
@@ -22,36 +22,34 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Refresh staging, then flip surfaceParity.gating to true. S338 measure…
+#### 1. [PRODUCT] The cover artwork still duplicates the tile's KICKER and TITLE, the s…
 Final score: **96**
-[S338][DEPLOY/P1] Refresh staging, then flip surfaceParity.gating to true. S338 measured it: staging is 23 advertised routes and five days behind production (94e78e93, 2026-08-28). The parity probe is built and reporting; it is deliberately non-gating because gating on a known-open blocker is a self-inflicted release outage. Find what deploys the Hetzner staging origin, why it stopped, and whether it is wired to any lane at all — then refresh, confirm surfaceParity.state reads matched, and set gating. Until then the release ceremony's browser matrix is measuring a tree that is five days older than the one being promoted, which inverts CANON-007. (D-S338.3)
-Why it matters: Refresh staging, then flip surfaceParity.gating to true. S338 measured is open, local, and unblocked — can ship this session.
+[S339][UX/P3] The cover artwork still duplicates the tile's KICKER and TITLE, the same way it used to duplicate the status. D-S339.6 removed the baked status word, which was the reported defect and the only one that could go stale against a feed. But build-game-covers.mjs still rasterizes the genre eyebrow and the game title into every cover, and .hero-tile renders its own __kicker and __name over them — so "ACTION COMEDY SHOOTER / Call of Doodie" appears in the artwork behind "Action Comedy / Call of Doodie" in live text. It reads as a deliberate layered lockup at featured size and as a smudge at tile size, which is why it is P3 and not P1. Decide it as a design question with rendered captures at both sizes: either the cover goes art-only and the tile owns all text, or the tile drops its own chrome on covered tiles. Do not split the difference per-breakpoint.
+Why it matters: The cover artwork still duplicates the tile's KICKER and TITLE, the sa is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Two more receipts may be ordered before what they observe
-Final score: **96**
-[S338][BUILD/P2] Two more receipts may be ordered before what they observe — audit the whole postbuild chain for the D-S338.4 class. build-news-visual-receipts hashed news pages while running four steps before build-shell-assets rewrote them, so it was stale by construction on every shell rotation and had been quietly listed among the S335 "47 files churn between identical builds" set. Fixed by moving it after every page rewriter and immediately before the seal. Walk the rest of postbuild with the same question — *does this step hash or read rendered pages, and does anything after it rewrite them?* — and in particular re-check whether the remaining build-to-build churn ([S335][BUILD/P2]) is the same defect rather than a clock-relative selection window, which was the standing theory. A pinned-clock double build now has one fewer confound.
-Why it matters: Two more receipts may be ordered before what they observe keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
-
-#### 3. [VERIFY] Post-push CI confirmation
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 4. [PRODUCT] The home portfolio cards render a doubled status label. Observed dire…
+#### 3. [PRODUCT] Answer the postbuild ordering question with an instrumented run, not …
+Final score: **93**
+[S339][BUILD/P2] Answer the postbuild ordering question with an instrumented run, not a grep. Carried from [S338][BUILD/P2] with a method attached. S339 tried static classification of the 23 postbuild steps and it was wrong in both directions -- page writes go through helpers, so grep cannot tell a writer from a reader. The honest instrument is a run that snapshots rendered-page mtimes between steps, deriving the writer set and the hasher set empirically, then asserts every hasher runs after the last writer. Deferred from S339 deliberately: it perturbs the exact build being converged for a production deploy (D-S339.5). Do it in a session with no deploy in it.
+Why it matters: Answer the postbuild ordering question with an instrumented run, not a is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] check-build-gate-reachability counts only --check-flagged gates, so t…
 Final score: **90**
-[S338][UX/P3] The home portfolio cards render a doubled status label. Observed directly in the S338 CANON-053 capture pass: each card shows a ● SPARKED pill and, beneath it, a second orange SPARKED that is clipped to a bare S on the smaller tiles. It appears identically in dark and light at 1366px and is therefore not an animation frame, and no SPARKED badge exists in the static markup of index.html (only one unrelated prose mention), so it is rendered client-side — start at whatever writes the card status pill. PRE-EXISTING, not introduced in S338, and deliberately not fixed there: changing UI would have invalidated every hash-bound receipt immediately before an authorized production deploy. Full description is on docs/visual-qa/LATEST.json.
-Why it matters: The home portfolio cards render a doubled status label. Observed direc is open, local, and unblocked — can ship this session.
+[S339][OBS/P3] check-build-gate-reachability counts only --check-flagged gates, so three new S339 gates are outside its denominator. The count held at 249/249 across two gate additions because the reachability gate's scope is scripts containing the literal --check. That is defensible -- check-orphan-scripts independently confirms all three new gates have consumers -- but the gate's name promises more than its scope delivers, which is the exact class it was built to catch. Either widen it to default-run gates or rename it to say what it measures.
+Why it matters: check-build-gate-reachability counts only --check-flagged gates, so th is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [INTELLIGENCE] Audit the other receipt round trips for the D-S338.1 class. build-dep…
+#### 1. [INTELLIGENCE] Two more receipts may be ordered before what they observe
 Final score: **90**
-[S338][OBS/P2] Audit the other receipt round trips for the D-S338.1 class. build-deploy-currency.mjs now proves derive(read(derive(x))) === derive(x) over a fully-populated observation. Every other generator with a committed-receipt reader has the same hazard and, in at least one case, the same false comfort: an S300 structural case already existed here and stayed green for two sessions because its fixtures omitted the fields that were actually dropped. Enumerate the generators that read their own output back (build-worker-route-history, build-release-proof, build-status-proof, build-citation, build-public-status are the candidates), and give each the fully-populated fixed-point case plus its can-fail companion. A fixed-point test is only as wide as its fixture's field coverage.
-Why it matters: Audit the other receipt round trips for the D-S338.1 class. build-depl keeps the ranked audit current so later sessions don't iterate on stale signal.
+[S338][BUILD/P2] Two more receipts may be ordered before what they observe — audit the whole postbuild chain for the D-S338.4 class. build-news-visual-receipts hashed news pages while running four steps before build-shell-assets rewrote them, so it was stale by construction on every shell rotation and had been quietly listed among the S335 "47 files churn between identical builds" set. Fixed by moving it after every page rewriter and immediately before the seal. Walk the rest of postbuild with the same question — *does this step hash or read rendered pages, and does anything after it rewrite them?* — and in particular re-check whether the remaining build-to-build churn ([S335][BUILD/P2]) is the same defect rather than a clock-relative selection window, which was the standing theory. A pinned-clock double build now has one fewer confound.
+Why it matters: Two more receipts may be ordered before what they observe keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
@@ -60,26 +58,26 @@ Final score: **81**
 <!-- evidence-open: the files named are the churning OUTPUTS and the suspect generators, not deliverables; the deliverable is a pinned-clock bisect and fix --> [S335][BUILD/P2] Two identical builds minutes apart still churn 47 files — commit-derived feeds are the source, not timestamps. With no commit between them, build 2 rewrote feed/forge-ledger.{json,xml} (206 lines), api/feedback-provenance.json (a whole theme dropped), api/ship-receipts.json, api/status-proof.json, api/news-visual-receipts.json and the changelog SSR block; a third build would churn again. All derive from api/commit-map.json / the git log through build-parallel-phase.mjs (which runs build-feedback-provenance + build-ship-receipts), so the working theory is a clock-relative selection window in that chain. Bisect: run build-forge-feed.mjs twice with a pinned --now (add the flag if absent) and diff; then the provenance pair. This is the receipt-cascade cost the S334 "vs-yas" item was really measuring. Fixed this session: _headers lagged one build because early-hints ran before the postbuild shell rotation — moved into postbuild after build-shell-assets.
 Why it matters: <!-- evidence-open: the files named are the churning OUTPUTS and the s is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-Final score: **75**
-<!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
-Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [VERIFY] The release-ceremony receipt truncates a failure message at 500 chara…
-Final score: **74**
+#### 3. [VERIFY] The release-ceremony receipt truncates a failure message at 500 chara…
+Final score: **69**
 [S337][OBS/P2] The release-ceremony receipt truncates a failure message at 500 characters, so a multi-violation failure names only its first file. The S337 blocking run recorded Received + 6 — six console errors — and api/staging-release-browser.json disclosed exactly one file before the message was cut. Diagnosing it needed the CI artifact downloaded and the test re-run locally; the receipt that exists to make a rejection legible could not. Either raise the cap or, better, record the DISTINCT violating files as a structured array alongside the prose message, so the receipt answers "what is violating" without a round trip.
-Why it matters: The release-ceremony receipt truncates a failure message at 500 charac shipped last session — confirm it works in production before piling new work on top.
+Why it matters: The release-ceremony receipt truncates a failure message at 500 charac was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 5. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+#### 4. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
 Final score: **69**
 [S335][TOKEN/P2] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs shards the handoff. It is the largest file any session can touch (~126K tokens raw). compact-handoff.mjs and rotate-ledger.mjs read the handoff archive, so the shard has to be introduced through those readers, not by moving files. Measure with context-meter.mjs before and after.
 Why it matters: Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs sh lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
+
+#### 5. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+Final score: **68**
+<!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
+Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### LATER
 
@@ -144,15 +142,15 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 
 ## Recommended Build Order
 
-1. Refresh staging, then flip surfaceParity.gating to true. S338 measure…
-2. Two more receipts may be ordered before what they observe
-3. Post-push CI confirmation
-4. The home portfolio cards render a doubled status label. Observed dire…
-5. Audit the other receipt round trips for the D-S338.1 class. build-dep…
+1. The cover artwork still duplicates the tile's KICKER and TITLE, the s…
+2. Post-push CI confirmation
+3. Answer the postbuild ordering question with an instrumented run, not …
+4. check-build-gate-reachability counts only --check-flagged gates, so t…
+5. Two more receipts may be ordered before what they observe
 6. <!-- evidence-open: the files named are the churning OUTPUTS and the …
-7. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-8. The release-ceremony receipt truncates a failure message at 500 chara…
-9. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+7. The release-ceremony receipt truncates a failure message at 500 chara…
+8. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+9. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
 10. The Desk's binding constraint is now topic ACCEPTANCE, and it current…
 11. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
 12. news-trend-radar --scan failure is swallowed by || echo in the publis…
