@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-02T04:23:32.809Z
-Receipt: `05028b6d19385d344316fe82` · coverage 379/379 from step 1
+Generated: 2026-09-02T04:44:09.463Z
+Receipt: `bfb12076e8582c74a7429e5d` · coverage 379/379 from step 1
 
-Latest: **379/379** passed · failed 0 · total 270.9s
-Concentration: **13.6%** in step 140 · ratchet clear (>30% and ≥45s)
+Latest: **379/379** passed · failed 0 · total 110.9s
+Concentration: **13.3%** in step 140 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 140 | 36.8s | 0 | `node scripts/check-proof-surface.mjs` |
-| 263 | 20.6s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 61 | 10.4s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 236 | 10.1s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
-| 96 | 9.2s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 296 | 7.8s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 245 | 7.1s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 352 | 6.6s | 0 | `node scripts/check-static-csp-routes.mjs` |
-| 133 | 5.5s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 360 | 5.1s | 0 | `node scripts/check-mobile-runtime-contract.mjs` |
+| 140 | 14.7s | 0 | `node scripts/check-proof-surface.mjs` |
+| 263 | 10.1s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 96 | 7.2s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 236 | 6.9s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
+| 61 | 6.5s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 245 | 3.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 93 | 2.6s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 133 | 1.4s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 342 | 1.3s | 0 | `node scripts/check-hero-lcp-element.mjs` |
+| 285 | 1.2s | 0 | `node scripts/crawl-all-pages.mjs` |
 
 ## Failures
 
