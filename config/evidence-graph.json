@@ -698,6 +698,23 @@
         "scripts/apply-surface-spine.mjs",
         "--check"
       ]
+    },
+    {
+      "id": "lqip-map",
+      "output": "data/lqip-map.json",
+      "sources": [
+        "assets/og/news/",
+        "data/news-desk/art/",
+        "assets/og/",
+        "assets/covers/"
+      ],
+      "builder": "scripts/build-lqip-map.mjs",
+      "check": [
+        "node",
+        "scripts/build-lqip-map.mjs",
+        "--check"
+      ],
+      "publishCascade": true
     }
   ]
 }

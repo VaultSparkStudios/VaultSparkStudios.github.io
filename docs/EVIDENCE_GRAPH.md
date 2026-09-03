@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**40 nodes** · **26** participate in the publish cascade ·
+**41 nodes** · **27** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -63,6 +63,7 @@ flowchart LR
   n_index_html[["index.html"]]
   n_api_intent_map_json[["api/intent-map.json"]]
   n_index_html["index.html"]
+  n_data_lqip_map_json[["data/lqip-map.json"]]
   n_api_news_desk_json[["api/news-desk.json"]]
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
   n_api_news_desk_freshness_json[["api/news-desk-freshness.json"]]
@@ -143,6 +144,7 @@ flowchart LR
   n_api_worker_route_history_json --> n_api_public_status_json
   n_assets_ --> n_api_candidate_artifact_manifest_json
   n_assets_ --> n_api_security_posture_json
+  n_assets_ --> n_data_lqip_map_json
   n_assets_ --> n_pathways_builders_index_html
   n_cloudflare_ --> n_api_security_posture_json
   n_config_ --> n_api_evidence_graph_json
@@ -165,6 +167,7 @@ flowchart LR
   n_data_ --> n_api_staging_deploy_receipt_json
   n_data_ --> n_api_tt_summary_json
   n_data_ --> n_api_worker_route_history_json
+  n_data_ --> n_data_lqip_map_json
   n_data_ --> n_data_stats_surface_json
   n_data_ --> n_evidence_index_html
   n_data_ --> n_membership_index_html
@@ -204,6 +207,7 @@ flowchart LR
 | `home-desk-module` | `index.html` | yes | `api/news-desk-freshness.json`<br>`api/news-desk.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
 | `intent-map` | `api/intent-map.json` | yes | `api/deploy-currency.json`<br>`api/news-desk.json`<br>`api/public-intelligence.json`<br>`api/public-status.json` | — |
 | `launch-age` | `index.html` | — | `api/public-status.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
+| `lqip-map` | `data/lqip-map.json` | yes | — | — |
 | `news-desk` | `api/news-desk.json` | yes | — | `api/intent-map.json`<br>`index.html` |
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
 | `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `index.html`<br>`news/index.html` |
@@ -249,6 +253,7 @@ flowchart LR
 | `home-desk-module` | `scripts/build-home-desk-module.mjs` | `node scripts/build-home-desk-module.mjs --check` |
 | `intent-map` | `scripts/build-intent-map.mjs` | `node scripts/build-intent-map.mjs --check` |
 | `launch-age` | `scripts/build-launch-age.mjs` | `node scripts/build-launch-age.mjs --check` |
+| `lqip-map` | `scripts/build-lqip-map.mjs` | `node scripts/build-lqip-map.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
 | `news-desk-freshness` | `scripts/build-news-freshness.mjs` | `node scripts/build-news-freshness.mjs --check` |
@@ -281,11 +286,11 @@ flowchart LR
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
 - `api/` → `attention-pressure`, `candidate-artifact-manifest`, `canonical-destination-reachability`, `changelog-narrative`, `cta-readiness`, `deploy-currency`, `intent-map`, `newsroom-run`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `worker-route-history`, `you-asked-shipped`
-- `assets/` → `candidate-artifact-manifest`, `pathways-pages`, `security-posture`
+- `assets/` → `candidate-artifact-manifest`, `lqip-map`, `pathways-pages`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `evidence-hub`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `pathways-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `worker-route-history`
+- `data/` → `evidence-hub`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `pathways-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `worker-route-history`
 - `journal/` → `evidence-hub`, `pathways-pages`
 - `news/` → `news-visual-receipts`
 - `package.json` → `security-posture`
@@ -305,33 +310,34 @@ flowchart LR
 8. `evidence-hub`
 9. `founder-presence`
 10. `heartbeat`
-11. `news-desk`
-12. `news-desk-engagement`
-13. `news-desk-freshness`
-14. `news-desk-reactions`
-15. `news-desk-stats`
-16. `news-visual-receipts`
-17. `newsroom-run`
-18. `oracle-velocity-public`
-19. `pathways-pages`
-20. `proof-aware-projects`
-21. `public-intelligence`
-22. `rank-climbers`
-23. `security-posture`
-24. `surface-spine`
-25. `tt-summary`
-26. `worker-route-history`
-27. `you-asked-shipped`
-28. `home-desk-module`
-29. `news-pages`
-30. `public-status`
-31. `launch-age`
-32. `candidate-artifact-manifest`
-33. `deploy-currency`
-34. `intent-map`
-35. `staging-deploy-receipt`
-36. `startup-brief`
-37. `status-proof`
-38. `citation`
-39. `release-proof`
-40. `stats-surface`
+11. `lqip-map`
+12. `news-desk`
+13. `news-desk-engagement`
+14. `news-desk-freshness`
+15. `news-desk-reactions`
+16. `news-desk-stats`
+17. `news-visual-receipts`
+18. `newsroom-run`
+19. `oracle-velocity-public`
+20. `pathways-pages`
+21. `proof-aware-projects`
+22. `public-intelligence`
+23. `rank-climbers`
+24. `security-posture`
+25. `surface-spine`
+26. `tt-summary`
+27. `worker-route-history`
+28. `you-asked-shipped`
+29. `home-desk-module`
+30. `news-pages`
+31. `public-status`
+32. `launch-age`
+33. `candidate-artifact-manifest`
+34. `deploy-currency`
+35. `intent-map`
+36. `staging-deploy-receipt`
+37. `startup-brief`
+38. `status-proof`
+39. `citation`
+40. `release-proof`
+41. `stats-surface`

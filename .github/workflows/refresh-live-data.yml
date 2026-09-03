@@ -39,6 +39,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # S342 cascade-resync: this step does a bare `git add data/`, which sweeps
+          # in data/news-desk/art/ -- an LQIP source -- alongside data/lqip-map.json
+          # itself. Committing the art without re-deriving the map is the strand the
+          # Desk publisher hit on 2026-09-03, found by the evidence-graph edge added
+          # this session. Cheap to run: the map reuses every unchanged placeholder.
+          node scripts/build-lqip-map.mjs
+          node scripts/build-lqip-map.mjs --check
           git add index.html changelog/index.html news/ api/ data/ stats.json feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
           git add 'projects/*/llms-full.txt' .cache/cta-readiness.json 2>/dev/null || true
           if git diff --cached --quiet; then

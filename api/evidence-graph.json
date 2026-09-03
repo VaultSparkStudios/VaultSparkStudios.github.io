@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-01",
-  "contractSha256": "cc356204472df05aede8b5348eb9ee62c8f0fe6d1fa4739eeccf1ad4f8e8bc45",
+  "contractSha256": "a29aa3a40a2bd1e2ff68461fc2dee66931af09c8ecc5dde2c70e331254387f3f",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 40,
-  "cascadeNodeCount": 26,
+  "nodeCount": 41,
+  "cascadeNodeCount": 27,
   "buildOrder": [
     "attention-pressure",
     "cache-evidence-classification",
@@ -21,6 +21,7 @@
     "evidence-hub",
     "founder-presence",
     "heartbeat",
+    "lqip-map",
     "news-desk",
     "news-desk-engagement",
     "news-desk-freshness",
@@ -302,6 +303,21 @@
         "api/deploy-currency.json"
       ],
       "externalSources": []
+    },
+    {
+      "id": "lqip-map",
+      "output": "data/lqip-map.json",
+      "builder": "scripts/build-lqip-map.mjs",
+      "verify": "node scripts/build-lqip-map.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "assets/covers/",
+        "assets/og/",
+        "assets/og/news/",
+        "data/news-desk/art/"
+      ]
     },
     {
       "id": "news-desk",

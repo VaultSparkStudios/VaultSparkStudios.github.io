@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   388/388 passing  ·  2026-09-03                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         388/388 passing (2026-09-03)                   ║
+║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      The live probe settles the dependency only  ║
-║        The live probe settles the dependency only on the no-car  ║
+║   96  [PRODUCT]      The silent cron verdict is fixture-proven   ║
+║        The silent cron verdict is fixture-proven only. check-sc  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      The silent cron verdict is fixture-proven   ║
-║        The silent cron verdict is fixture-proven only. check-sc  ║
-║                                                                  ║
-║   87  [VERIFY]       resync-derived.mjs does not cover every --  ║
+║   90  [VERIFY]       resync-derived.mjs does not cover every --  ║
 ║        resync-derived.mjs does not cover every --checked derive  ║
 ║                                                                  ║
-║   84  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
+║   87  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
 ║        <!-- evidence-open: config/intelligence-suite.json and j  ║
+║                                                                  ║
+║   87  [PRODUCT]      Make the game covers art-only; the tile ow  ║
+║        Make the game covers art-only; the tile owns all text. T  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

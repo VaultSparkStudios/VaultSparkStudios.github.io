@@ -2749,7 +2749,7 @@ Sparkline (last 5): █████ · 991, 993, 994, 994, 977
 
 **Top gap — this is the session's real story.** The founder had to tell me that Obelisk should already be complete before I re-probed a receipt I had quoted as current. It was eight days old, and four of the five blockers I listed were already satisfied. Then I recommended `--live` twice, sending the founder into an automated browser that structurally could not reach a Chrome-held passkey, while `--watch` — sign in from your own browser, native Windows Hello, twelve-hour window — sat one line away in a usage block I had already read. Two runs expired writing nothing. Roughly forty minutes of founder time went to misdirection that reading one more line would have prevented.
 
-**Honesty ledger:** Four of my own claims were wrong and all four are retracted in the record rather than quietly corrected — the cross-repo registration blocker (D-S342.2), the three MISSING Obelisk credentials that nothing here consumes, an email-OTP path asserted from a grep that the live UI contradicted, and a near-published conclusion that the journey producer was never deployed, which was a grep of this repo's **stale** worker source against my own standing note to verify the live script (D-S342.4). `api/identity-migration-receipt.json` remains the 2026-08-26 copy: my rebuild timed out and I did not retry, so its verdict (`honest-dark`, `productionEligible: false`) is accurate while its supporting timestamps are stale. The registration probe's 14-day clock has **no re-probe cadence** and will expire on its own — the fail-closed direction, but it will read as a regression to whoever sees it first; boarded. The live probe settles the dependency only on the **no-cargo** path, so a deliberately reopened conversation would demote it; found mid-change, boarded rather than fixed untested beside a deploy. **Obelisk is not complete** — the provider journey is unobserved, and no amount of work here changes that.
+**Honesty ledger:** Four of my own claims were wrong and all four are retracted in the record rather than quietly corrected — the cross-repo registration blocker (D-S342.2), the three MISSING Obelisk credentials that nothing here consumes, an email-OTP path asserted from a grep that the live UI contradicted, and a near-published conclusion that the journey producer was never deployed, which was a grep of this repo's **stale** worker source against my own standing note to verify the live script (D-S342.4). `api/identity-migration-receipt.json` is NOT stale and never was — I said otherwise four times this session and was wrong. `generatedAt: evidence.updatedAt` by construction, so the receipt carries the timestamp of the EVIDENCE, not of the build; a rebuild cannot and must not advance it. It reads 2026-08-26 because that is genuinely when the identity evidence was last observed, and it will move when the journey runs. Re-ran the builder to confirm: exit 0, `honest-dark (1 blocker)`, timestamp unchanged. What I called a personal failure was the system being correct. The registration probe's 14-day clock has **no re-probe cadence** and will expire on its own — the fail-closed direction, but it will read as a regression to whoever sees it first; boarded. The live probe settles the dependency only on the **no-cargo** path, so a deliberately reopened conversation would demote it; found mid-change, boarded rather than fixed untested beside a deploy. **Obelisk is not complete** — the provider journey is unobserved, and no amount of work here changes that.
 
 **Intent outcome:** Partially achieved. The founder's premise — that the remaining work was smaller than reported — was correct and is now proven. The stated goal of completing Obelisk is not met, because the single remaining step requires a human at a passkey and the verifier refuses to assert a journey it did not observe.
 
@@ -2760,3 +2760,44 @@ Sparkline (last 5): █████ · 991, 993, 994, 994, 977
 4. [S341][OPS/P1] Decide the Monthly Member Newsletter — six failures since April, never once sent (carried).
 5. [S340][BUILD/P1] Register `/evidence/` in `config/intelligence-suite.json` (carried, D-S340.5).
 
+### S342 addendum — post-closeout review pass
+
+The SIL block above was written before roughly half this session's work. Recorded here rather than
+rewritten, because the score is an append-only judgement and editing it would hide the sequence.
+
+**Shipped after the closeout commit** (`d50e74b08`), all gated:
+
+1. **`origin/main` was red and no gate had said so.** A `[skip ci]` Desk edition committed five art
+   files with no LQIP placeholders. Publisher fixed; `build-lqip-map --check` on main went 1 → 0.
+2. **The cascade gate that should have caught it now does — and the first attempt was decorative.**
+   Adding an `lqip-map` node to the evidence graph changed nothing, because the gate filters
+   `node.publishCascade === true` and the node lacked the flag. The negative control caught it; had I
+   trusted the green I would have shipped a fix that fixed nothing. With the flag, reverting the
+   publisher repair makes the gate name the violation and exit 1. The new edge then found a **second**
+   publisher with the same gap (`refresh-live-data` does a bare `git add data/`), now fixed too.
+3. **The demotion bug I boarded is fixed rather than carried.** `liveSettles` now applies after the
+   cargo-path status, so re-opening the Ark conversation can no longer demote a live-verified
+   dependency. Writing the regression tests surfaced a second latent bug: a **future-dated** probe
+   produced a negative age that sailed past the `> 14 days` bound and settled the contract. Both ends
+   of the clock are now rejected. 32/32.
+4. **The 14-day probe clock has a cadence.** `weekly-maintenance` re-probes, re-derives the receipt,
+   `--check`s it and stages both, `continue-on-error` so an unreachable provider settles nothing.
+5. **`--since <hours>` on the journey verifier**, and `_drafts/` exempted across the three nav/orphan
+   gates.
+
+**A fifth wrong claim of mine, retracted.** I said four times that
+`api/identity-migration-receipt.json` was eight days stale because a rebuild of mine timed out.
+It carries `generatedAt: evidence.updatedAt` **by construction** — the timestamp of the evidence,
+not of the build — so a rebuild cannot and must not advance it. Re-ran the builder to confirm:
+exit 0, verdict unchanged, timestamp unchanged. What I recorded as my failure was the system being
+correct, and the honesty ledger above now says so.
+
+**What this pass did not change:** the identity hold. `releaseState: hold`, both
+`real-provider-e2e-pending` blockers present, `auth/**` · `surface:identity` · `worker:identity`
+still held. Three of four S342 items closed with evidence; the fourth is the ceremony, which is
+the founder's and blocks nothing.
+
+**Score impact:** none applied. Process Quality 88 already priced the misdirection, and the fixes
+above are the correction of my own carried debt rather than new value — counting them upward would
+be marking my own homework. Dev Health and Automation Coverage would arguably rise on the
+both-directions proofs; left alone deliberately.

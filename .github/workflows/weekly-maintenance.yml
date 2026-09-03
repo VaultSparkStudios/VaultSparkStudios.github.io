@@ -48,11 +48,28 @@ jobs:
       - name: Generate member profile pages
         run: node scripts/generate-member-seo.mjs
 
+      - name: Re-probe the Obelisk relying-party registration
+        # S342: build-release-dependencies settles obelisk-staging-registration from a
+        # LIVE observation of the IdP, and that observation carries a 14-day clock so a
+        # snapshot cannot vouch for a registration indefinitely. Nothing refreshed it,
+        # so it would have expired and the dependency would have fallen back to
+        # `missing` on a public trust surface -- the fail-closed direction, but it reads
+        # as a regression to whoever sees it first. Weekly is well inside the 14 days.
+        # Never hard-fails: an unreachable provider leaves the probe `unreachable`,
+        # which settles nothing, which is exactly the honest outcome.
+        continue-on-error: true
+        run: node scripts/build-release-dependencies.mjs --probe
+
       - name: Commit generated pages if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add member/*/index.html member-sitemap.xml
+          # The probe writes only the .cache observation; api/release-dependencies.json
+          # is DERIVED from it, so re-derive before staging or the receipt keeps the
+          # old probedAt and the freshness clock never actually advances.
+          node scripts/build-release-dependencies.mjs
+          node scripts/build-release-dependencies.mjs --check
+          git add member/*/index.html member-sitemap.xml .cache/obelisk-registration-probe.json api/release-dependencies.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: regenerate member SEO pages [skip ci]"
             bash scripts/ci/publish-push.sh "member SEO pages"

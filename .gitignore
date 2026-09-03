@@ -87,6 +87,12 @@ ignis/output/
 .cache/*-s17*.txt
 .cache/*scratch*.txt
 journal/_drafts/
+# S342: changelog drafts are generated locally by generate-changelog-entry.mjs and
+# await a human decision, exactly like journal drafts above — but this line was
+# missing, so a `git add -A` during closeout committed one. A tracked draft then
+# fails four separate gates that reasonably treat it as a public page
+# (check-nav-orphans, check-orphan-pages, check-og-images, propagate-nav).
+changelog/_drafts/
 .cache/*.log
 # S301: rollback pre-images captured by verify-supabase-runtime.mjs before a
 # migration. Live production function/policy definitions — no secrets, and the

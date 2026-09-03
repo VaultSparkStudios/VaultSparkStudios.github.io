@@ -129,7 +129,11 @@ export function probeAgeDays(probe, now = new Date()) {
 
 export function liveSettles(config, probe, now = new Date()) {
   if (!probe || probe.verdict !== 'verified') return false;
-  if (probeAgeDays(probe, now) > PROBE_MAX_AGE_DAYS) return false;
+  const age = probeAgeDays(probe, now);
+  // A future-dated probe is not fresh evidence, it is a broken clock or a forged
+  // timestamp — and a negative age would sail past an upper bound. Reject both
+  // ends. (Caught by a regression test that dated a probe after its `now`.)
+  if (!(age >= 0) || age > PROBE_MAX_AGE_DAYS) return false;
   const covered = Object.entries(probe.checks || {}).filter(([, ok]) => ok).map(([name]) => name);
   return (config.requestedChecks || []).every((check) => covered.includes(check));
 }
@@ -193,6 +197,16 @@ export function deriveDependency({ config, cargo, receipts = [], replies = [], s
   else if (completion) status = 'completed';
   else if (now.getTime() > new Date(expiresAt).getTime()) status = 'expired';
   else if (ack) status = 'acknowledged';
+  // S342: substance outranks the correspondence on BOTH paths. The live probe was
+  // consulted only when the cargo was ABSENT, so re-opening the conversation would
+  // have DEMOTED a live-verified dependency from `completed` back to `sent` and
+  // re-raised `releaseDependenciesSatisfied` as a blocker -- the asking would have
+  // undone the answer. Found mid-change when instructed to re-ship the registration
+  // request; the instruction was withdrawn before it shipped, so the bug stayed
+  // latent. A dependency whose every requestedCheck is verified live IS satisfied,
+  // whether its cargo is in flight, acknowledged, expired or gone.
+  const settledLive = liveSettles(config, probe, now);
+  if (settledLive) status = 'completed';
   return {
     id: config.id,
     cargoId: config.cargoId,
@@ -202,6 +216,8 @@ export function deriveDependency({ config, cargo, receipts = [], replies = [], s
     cargoSignatureSha256: /^[a-f0-9]{64}$/.test(cargo.sig || '') ? sha256(cargo.sig) : null,
     signatureState,
     status,
+    ...(settledLive ? { completedBy: 'live-probe' } : {}),
+    ...(probe ? { liveVerification: liveSummary(config, probe, now) } : {}),
     requestedChecks: config.requestedChecks,
     sentAt: cargo.shippedAt,
     acknowledgedAt: ack?.shippedAt || null,
@@ -300,6 +316,29 @@ function selfTest() {
   const partial = { verdict: 'verified', checks: { 'production-callback-retained': true }, probedAt: new Date().toISOString(), method: 'm', issuer: 'i' };
   cases.push(['a verified probe that covers only SOME requestedChecks does not settle', !liveSettles(cfg4, partial)]);
   cases.push(['live verification is disclosed on the receipt', !!withProbe(fresh).liveVerification]);
+  // S342: the bug this file shipped with for one session — reopening the Ark
+  // conversation must NOT demote a dependency the IdP has already verified.
+  // Fresh RELATIVE TO the `now` these cases pass — a probe dated to wall-clock
+  // would be future-dated against a 2026-01-02 clock and correctly refused.
+  const freshThen = { ...verified, probedAt: '2026-01-01T12:00:00Z', method: 'm', issuer: 'i' };
+  const withCargo = deriveDependency({ config: cfg4, cargo, signatureState: 'verified',
+    now: new Date('2026-01-02T00:00:00Z'), probe: freshThen });
+  cases.push(['a live-verified dependency stays completed even with an in-flight cargo (status would be `sent`)',
+    withCargo.status === 'completed' && withCargo.completedBy === 'live-probe']);
+  const withExpiredCargo = deriveDependency({ config: cfg4, cargo, signatureState: 'verified',
+    now: new Date('2026-01-05T02:00:00Z'), probe: { ...verified, probedAt: '2026-01-04T12:00:00Z', method: 'm', issuer: 'i' } });
+  cases.push(['a live-verified dependency stays completed even with an EXPIRED cargo',
+    withExpiredCargo.status === 'completed']);
+  const cargoNoProbe = deriveDependency({ config: cfg4, cargo, signatureState: 'verified',
+    now: new Date('2026-01-02T00:00:00Z'), probe: null });
+  cases.push(['without a probe the cargo path is unchanged (still `sent`)', cargoNoProbe.status === 'sent']);
+  const staleAtThatTime = { ...verified, probedAt: '2025-12-01T00:00:00Z', method: 'm', issuer: 'i' };
+  const cargoStaleProbe = deriveDependency({ config: cfg4, cargo, signatureState: 'verified',
+    now: new Date('2026-01-02T00:00:00Z'), probe: staleAtThatTime });
+  cases.push(['a STALE probe does not settle the cargo path either', cargoStaleProbe.status === 'sent']);
+  const futureProbe = { ...verified, probedAt: '2027-01-01T00:00:00Z', method: 'm', issuer: 'i' };
+  cases.push(['a FUTURE-DATED probe is rejected, not treated as maximally fresh',
+    !liveSettles(cfg4, futureProbe, new Date('2026-01-02T00:00:00Z'))]);
   cases.push(['probe record carries no location bodies', !JSON.stringify(withProbe(fresh)).includes('screen=signin')]);
 
   const failed = cases.filter(([, ok]) => !ok);
