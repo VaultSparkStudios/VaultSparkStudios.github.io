@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-03T01:05:18.013Z",
+  "generatedAt": "2026-09-03T01:09:43.365Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 339,
+    "currentSession": 340,
     "lastUpdated": "2026-09-02",
-    "currentFocus": "Session 339 ran the arc under founder authorization for a direct push to main and a full production deploy. FIRST, and it answers a question S338 left open: the reason the Hetzner staging origin had drifted five days and 23 advertised routes behind production is that NOTHING HAD EVER PUBLISHED TO IT. The origin is named 14 times across the workflows and every one of those references reads it -- the release ceremony's --url, the Lighthouse targets, the uptime probe, the cache purge -- while the repo's only publisher, scripts/deploy-staging-content.mjs, was invoked by zero workflows and reachable only through an npm alias nothing called. S338 recorded the cause as 'find what deploys staging and why it stopped'; nothing ever did, and a thing that never started cannot have stopped. CANON-007 had therefore been running backwards: the release ceremony was clearing a tree five days newer than the one it measured, and no probe could see it because every surface agreed with every other surface. hetzner.ssh was READY 2/2 the whole time, so under CANON-019 this was agent work rather than a founder blocker -- the overlay promoted 340 files with 25 safe removals, exact-byte verified, identity untouched, and the advertised surface went from 23 routes missing to 135/135 with zero missing. surfaceParity then graduated from reported to gating: classifyStatus() consumes it, an unmeasurable surface holds at yellow rather than passing as matched, and the artifact carries the remedy command. SECOND, the class was gated. check-verification-origin-publisher.mjs requires every origin a workflow names to be declared with a publisher that exists, that actually references the origin, and that is reachable by the exact route it claims -- an automated claim needs a workflow that really invokes it, an operator claim needs an npm script that really exists and really runs it, which is the half that catches an alias nothing calls being dressed up as a publication path. Run live with the staging declaration removed it reproduces the exact defect and names all five workflows that verify against it. Staging is declared operator rather than automated because CI holds no Hetzner SSH credential and deliberately is not given one: a root key reachable from every workflow run is a blast-radius expansion that belongs to the founder, not to an agent. THIRD, the lossy-receipt-reader class moved from a fixed instance to a harness. scripts/lib/receipt-roundtrip.mjs now owns the property S338 proved, paired with its own proof-of-liveness because a fixed point over a function that drops the same field on both passes is self-consistently green, and check-receipt-roundtrip-coverage.mjs makes the pairing mandatory. An audit of the whole tree found exactly one re-derive site, so the class is closed everywhere it currently occurs; the gate exists for the second site, which is where all three historical field losses happened. FOURTH, and the one a visitor would have seen: the home page had been advertising three shipped products as still being built. PromoGrind sat under the Sparked heading wearing a Forge badge, and Velaxis and Vorn sat in the Forge tier entirely, while the catalog, the nav and all three of their own destination pages said SPARKED. Every existing coherence gate was green, because S247 had bound destination pages to the nav and nobody had ever bound the home page to anything. Moved both cards, removed the per-card badge from all 11 tier cards -- which also closes the S338 doubled-label item, since the tier heading states the fact once -- and bound tier placement and badge absence to the canonical feeds with check-home-portfolio-status-coherence.mjs. Carried honestly: the postbuild ordering audit needs an instrumented run that would perturb the exact build being converged for this deploy, so it returns to the board with the method attached rather than half-answered from a grep that was wrong in both directions. OUTCOME: closed out, pushed directly to main and FULLY DEPLOYED. Run 33689612089 completed the release ceremony without rejection; production serves 5cada45b6, exactly the pushed HEAD, with twelve public routes verified 200 and three consolidated routes 301 under a real browser user-agent. The cover fix was verified on the bytes production actually serves rather than on the local tree. The new surfaceParity gate then fired correctly on its first real cycle -- staging-behind at 136 advertised routes against 135, a drift that would have passed silently before this session -- and the remedy the artifact names closed it back to matched 136/136.",
-    "nextMilestone": "Answer the postbuild ordering question with an instrumented run in a session that has no deploy in it, report the Call of Doodie / PromoGrind / Velaxis / Vorn status divergence to studio-ops as Ark cargo rather than editing the sibling, and widen or rename check-build-gate-reachability so its name matches its scope. Then the Trusted Types load-order repair and the founder privacy decision on the four silent-zero tables.",
+    "currentFocus": "S340 ran the arc under founder authorization for a direct push to main and a full production deploy. FIRST, it found the E2E Test Suite had been failing on every push for more than 17 hours -- eight consecutive runs -- with nothing surfacing it. Both jobs died on the same HTTP smoke pre-gate, which asserted /vaultsparked/ and /ranks/ as 200 pages carrying the body of stubs that S335 deleted; because it is a PRE-gate it also hid eight further stranded Playwright specs that never got to run. The root cause was an asymmetry S338 fixed around rather than fixed: local-preview-server.mjs deliberately parses _headers, and never parsed _redirects, so the preview answers every retired route 404 where the edge answers 301 -- the identical asymmetry that cost S338 twenty-seven hours of Lighthouse verdicts. The preview now applies _redirects with the edge precedence, which resolves every stranded consumer at once and covers every future route merge automatically, and the smoke asserts the 301 CONTRACT derived from config/route-consolidation.json rather than a typed list: 12 checks became 26 with zero failures, and all eight formerly-stranded specs pass. SECOND, the gate built in S338 for exactly this class had stayed green through all 17 hours because its subject was workflow YAML while the routes lived one hop in, inside a script the YAML runs by name; it now follows the invocation edge, with two refinements making it real -- a target expecting a 3xx asserts a merge contract rather than auditing a page, without which it would have refused this session own repair, and a skip:true entry asserts nothing, which it discovered against itself on its first live run. 29/29, reproduced in both directions against the real files. THIRD, the postbuild ordering question carried and deferred twice is answered by instrument rather than a third reading: a preload observes the real fs calls of all 22 steps, and with transforms excluded and no-op writes discounted the measured answer is that S338 fix holds. FOURTH, that run found a defect nobody was hunting -- propagate-nav strips the /evidence/ link from 125 pages every build and generate-evidence-hub restores it, net-zero in git and therefore invisible to every existing gate. Two deferrals were published with their reasons rather than half-built beside a deploy: the nav registration (five consumers) and the art-only cover regeneration (rotates the home LCP asset).",
+    "nextMilestone": "Confirm the E2E Test Suite runs green on GitHub (the local proof is complete; the CI run is the actual proof), then register /evidence/ in config/intelligence-suite.json to end the 125-page nav tug-of-war, and execute the art-only cover regeneration whose direction is already decided.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 339,
+    "sessionsCompleted": 340,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -146,7 +146,7 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 99,
-      "momentum": 99,
+      "momentum": 100,
       "engagement": 97,
       "process": 100,
       "coherence": 100,
@@ -154,8 +154,8 @@
       "ecosystem": 99,
       "capital": 100,
       "automation": 100,
-      "total": 993,
-      "updatedSession": 339
+      "total": 994,
+      "updatedSession": 340
     },
     "sealedNextRevealAt": null
   },
