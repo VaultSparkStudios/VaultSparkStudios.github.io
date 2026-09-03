@@ -46,6 +46,11 @@
  * Usage:
  *   node scripts/verify-provider-journey.mjs --self-test
  *   node scripts/verify-provider-journey.mjs --live [--origin=https://vaultsparkstudios.com]
+ *                                                   [--channel=chrome|msedge|chromium] [--wait-minutes=N]
+ *
+ *   --channel matters: a passkey in Windows Hello is reachable from either
+ *   browser, but one held in Chrome's own password manager is invisible to
+ *   Edge. The default order is msedge, chrome, bundled.
  */
 
 import fs from 'node:fs';
@@ -229,7 +234,7 @@ async function expectedInvestorAllow(userId) {
   return { expectedAllow: Array.isArray(rows) && rows.length > 0, source: 'service-role' };
 }
 
-async function runLive({ origin }) {
+async function runLive({ origin, channel: forcedChannel = null, waitMs = SIGNIN_TIMEOUT_MS }) {
   const { chromium } = await import('@playwright/test');
   console.log(`\nverify-provider-journey --live against ${origin}`);
   console.log('A browser window will open. Complete the Obelisk sign-in there.');
@@ -240,15 +245,34 @@ async function runLive({ origin }) {
   // Playwright's bundled Chromium cannot reach. The REAL Edge/Chrome binary
   // can — passkeys are per-site platform credentials, not browser-profile
   // state, so a fresh profile in a real channel still offers Hello.
+  //
+  // S342: the default order picked Edge on a machine whose passkey lived in the
+  // CHROME profile, so the ceremony window offered no credential at all and the
+  // ten minutes lapsed with nothing written. A passkey held by Windows Hello is
+  // reachable from either channel; one held by Chrome's own password manager is
+  // not. That is a per-founder fact this script cannot detect, so it is an
+  // explicit choice: --channel=chrome|msedge|chromium.
   let browser = null;
-  for (const channel of ['msedge', 'chrome', null]) {
+  const order = forcedChannel
+    ? [forcedChannel === 'chromium' ? null : forcedChannel]
+    : ['msedge', 'chrome', null];
+  const failures = [];
+  for (const channel of order) {
     try {
       browser = await chromium.launch({ headless: false, ...(channel ? { channel } : {}) });
       console.log(`browser: ${channel || 'bundled chromium (no Windows Hello — install Edge/Chrome for passkeys)'}`);
       break;
-    } catch { /* channel not installed — try the next */ }
+    } catch (error) {
+      failures.push(`${channel || 'chromium'}: ${String(error.message).slice(0, 90)}`);
+    }
   }
-  if (!browser) throw new Error('no launchable browser found');
+  if (!browser) {
+    // A REQUESTED channel that will not launch must say so, not silently fall
+    // back to one whose profile cannot see the founder's passkey.
+    throw new Error(forcedChannel
+      ? `--channel=${forcedChannel} could not be launched — ${failures.join(' · ')}`
+      : `no launchable browser found — ${failures.join(' · ')}`);
+  }
   const context = await browser.newContext();
   const founderPage = await context.newPage();
   let probePage = await context.newPage();
@@ -276,12 +300,12 @@ async function runLive({ origin }) {
     }, [url, init]);
 
   const obs = {};
-  const deadline = Date.now() + SIGNIN_TIMEOUT_MS;
+  const deadline = Date.now() + waitMs;
   process.stdout.write('waiting for the founder sign-in ');
   for (;;) {
     if (Date.now() > deadline) {
       await browser.close();
-      throw new Error('sign-in was not completed within the window — nothing was written');
+      throw new Error(`sign-in was not completed within ${Math.round(waitMs / 60000)} min — nothing was written; re-run with --channel=<chrome|msedge> and/or --wait-minutes=N`);
     }
     let me = null;
     try {
@@ -537,11 +561,25 @@ if (flag('--self-test')) {
     process.exit(1);
   });
 } else if (flag('--live')) {
-  runLive({ origin: opt('--origin', 'https://vaultsparkstudios.com') }).catch((error) => {
+  const channel = opt('--channel', null);
+  if (channel && !['chrome', 'msedge', 'chromium'].includes(channel)) {
+    console.error(`✗ --channel must be chrome, msedge or chromium (got "${channel}")`);
+    process.exit(2);
+  }
+  const waitMinutes = Number(opt('--wait-minutes', '10'));
+  if (!Number.isFinite(waitMinutes) || waitMinutes <= 0) {
+    console.error('✗ --wait-minutes must be a positive number');
+    process.exit(2);
+  }
+  runLive({
+    origin: opt('--origin', 'https://vaultsparkstudios.com'),
+    channel,
+    waitMs: waitMinutes * 60 * 1000,
+  }).catch((error) => {
     console.error(`\n✗ ${error.message}`);
     process.exit(1);
   });
 } else {
-  console.error('Usage: --self-test | --watch | --live [--origin=https://…]');
+  console.error('Usage: --self-test | --watch | --live [--origin=https://…] [--channel=chrome|msedge|chromium] [--wait-minutes=N]');
   process.exitCode = 2;
 }

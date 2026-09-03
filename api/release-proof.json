@@ -137,12 +137,12 @@
     "blockers": []
   },
   "releaseDependencies": {
-    "state": "rejected",
+    "state": "completed",
     "dependencies": [
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "missing",
+        "status": "completed",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
         "sentAt": null,
@@ -173,7 +173,7 @@
     "identityMigrationVerified": false,
     "supabaseControlPlaneReady": true,
     "productionPromotionReady": false,
-    "releaseDependenciesSatisfied": false
+    "releaseDependenciesSatisfied": true
   },
   "blockers": [
     "stagingCandidateReady",
@@ -182,9 +182,7 @@
     "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
-    "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
-    "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:missing"
+    "identity:real-provider-e2e-pending"
   ]
 }

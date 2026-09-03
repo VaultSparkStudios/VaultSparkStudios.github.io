@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "probedAt": "2026-09-03T07:41:43.277Z",
+  "method": "authorize-endpoint-observation",
+  "issuer": "https://obeliskgate.com",
+  "clientId": "vaultsparkstudios-website",
+  "verdict": "verified",
+  "checks": {
+    "production-callback-retained": true,
+    "staging-callback-exact-match-accepted": true,
+    "cross-client-redirect-denied": true,
+    "live-authorize-tenant-boundary-clear": true
+  },
+  "observed": [
+    {
+      "check": "production-callback-retained",
+      "status": 302
+    },
+    {
+      "check": "staging-callback-exact-match-accepted",
+      "status": 302
+    },
+    {
+      "check": "cross-client-redirect-denied",
+      "status": 400
+    }
+  ]
+}

@@ -1,230 +1,78 @@
 {
-  "drainedAt": "2026-09-03T03:16:37.038Z",
+  "drainedAt": "2026-09-03T05:46:19.743Z",
   "slug": "vaultsparkstudios-website",
-  "count": 12,
+  "count": 4,
   "cargo": [
     {
-      "id": "01K1HMSTUREA7B919A232CEACD",
+      "id": "01K1IOREGS519AEE95920BE284",
       "type": "pattern-share",
-      "from": "atlas",
-      "shippedAt": "2026-09-02T18:42:59.163Z",
-      "payload": {
-        "session": "S132",
-        "project": "atlas",
-        "headline": "Fresh-subsystem sweep: 10 agent-owned defects + 4 founder-approved matcher corrections; suite 207/207 -> 212/212",
-        "patterns": [
-          "A read-only gate must distinguish 'cannot reach' from 'wrong target'. ATLAS's trust-graph parity probe reported wrong-project 404s as a transport blip and produced no verdict for 16 days while showing a benign yellow. Any project consuming a GENERIC single-project capability (supabase.client/supabase.admin) should assert the resolved project identity before trusting a result.",
-          "A permanently-advisory check is indistinguishable from a check nobody has. Escalate on the ABSENCE of a verdict across N runs, independent of what is measured.",
-          "A doctor needs three tiers, not two: pass / warn / blocking leaves a real red that the project does not own with nowhere honest to go — it either wedges every closeout or gets downgraded into a warning and stops looking like a failure. Add a failing-but-not-blocking tier.",
-          "Prove the red in the same commit as the guard. Two guards written this session were green against the very defect they targeted: one matched an adjacent GET handler because the route contract needle was only a path, one read a partially-written state because the generator writes in two passes.",
-          "When N copies of a routine exist, a fix applied to N-1 of them looks complete. S94 repaired 2 of 3 override-refresh copies; S101 B16/B18 repaired 1 of 2 surfaces twice."
-        ],
-        "escalated": [
-          "scoring E5: a second hand-typed confidence derivation publishing 0.484 where the freshness-gated scorer says 0/blocked",
-          "scoring E6: isScorableEvidence allow-lists a status the corpus never emits and drops real weakly_supported rows"
-        ],
-        "crossRepoAsk": "studio-ops: provision a project-scoped atlas.supabase capability (Ark 01K1GJ67421555FD4BBF5FD13E). Generic single-project capabilities consumed by multiple projects should carry an owning-project pin, or repointing one project silently redirects the others.",
-        "productionState": "NOT promoted. deploy-production.mjs is fail-closed with no override; two red checks are records of a human review that has not happened and were not set."
-      }
-    },
-    {
-      "id": "01K1HUD4UR94FEC0C924C7761A",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-09-02T20:54:10.652Z",
-      "payload": {
-        "sessionId": "S279",
-        "slug": "seamline",
-        "headline": "Seamline bounded its living state, made release truth converge, and promoted exact source through staging to production.",
-        "bullets": [
-          "Four audit items shipped with 2,607/2,607 tests passing.",
-          "Route growth was classified as addition-dominated instead of deleting product depth.",
-          "Production is healthy on the exact staged source; public launch remains independently gated."
-        ],
-        "synopsis": "S279 added lossless state archival, semantic UI contracts, derived-truth convergence, and route-history evidence. Exact-source staging preceded a healthy three-plane production deployment; no launch flip, billing action, privacy relaxation, or destructive data operation occurred."
-      }
-    },
-    {
-      "id": "01K1I159G7FDD6F706C8488CD5",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-02T21:42:18.887Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 319,
-        "sil": 996,
-        "prevSil": 995,
-        "delta": 1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 115,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-02T21:42:18.637Z"
-      }
-    },
-    {
-      "id": "01K1I1Q38H006B2ED8C6154774",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-02T21:53:40.625Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 319,
-        "sil": 996,
-        "prevSil": 995,
-        "delta": 1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 122,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-02T21:53:40.423Z"
-      }
-    },
-    {
-      "id": "01K1I1T7576BB0F33BC3F59A19",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-02T21:55:22.920Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1I246LMAAB9AEB2B9B222AB",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-02T21:59:11.799Z",
-      "payload": {
-        "sessionId": "S319",
-        "slug": "studio-ops",
-        "headline": "A capability that cannot be RESOLVED is not one whose credentials are MISSING — and the studio DR backup had been failing on that distinction, unescalated, for nine consecutive nights.",
-        "bullets": [
-          "The Postgres-to-R2 backup held 19 receipts and 2 successes, both ad-hoc local. CI seeded all five credentials and never CAPABILITY_MAP.json, the gitignored schema that names which variables a capability needs. Committed a names-only export (72 capabilities, no values) and a per-run seed, guarded on export and on seed.",
-          "Escalation moved from age to a lane-aware failure streak: one manual success had been resetting a 12h clock that nine failed nights never moved. Receipts now carry a lane read from the runner, and an unlabelled success cannot clear a lane-filtered streak. True reading: 14 consecutive scheduled-lane failures, no proven success.",
-          "The startup brief had printed audit premises UNVERIFIED for thirty sessions because S311 remedy could never fire in its only caller — the brief runs before the doctor it depends on. Fixed order-independently; proven with the cache deleted.",
-          "Applies fleet-wide: if your CI resolves a capability, check the workflow seeds the capability map. A workflow that resolves a capability it never seeds fails preflight with every credential present."
-        ],
-        "itemsShipped": 8,
-        "suite": "565/565 files, 3632 assertions, 0 failed, 0 deferred",
-        "silScore": 996
-      }
-    },
-    {
-      "id": "01K1I96ACH125B44006E18A177",
-      "type": "session-impact-summary",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-09-03T00:02:41.170Z",
-      "payload": {
-        "sessionId": "S97",
-        "slug": "franchise-architect-football",
-        "headline": "Franchise records now preserve ties everywhere, health refreshes stop fabricating activity, and the mobile decision commit is reachable; the exact artifact is live.",
-        "bullets": [
-          "W-L-T and half-win semantics now agree across engine and player surfaces.",
-          "Doctor health writes preserve the substantive project-activity clock.",
-          "The phone decision deck keeps both commit actions visible above safe-area edges.",
-          "One artifact passed 1,300 canonical tests, 54 browser cases, 255 visual states, stable staging, and production verification."
-        ],
-        "synopsis": "S97 shipped all three reproduced audit findings and promoted exact source 9559790 / artifact 47b3cee through stable staging to production. Technical deployment is complete; public launch remains HOLD pending independent email, approval, and lifecycle evidence."
-      }
-    },
-    {
-      "id": "01K1IC1O3BC1F16B7DC32B1867",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T00:52:37.099Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 320,
-        "sil": 995,
-        "prevSil": 996,
-        "delta": -1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 21,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T00:52:36.901Z"
-      }
-    },
-    {
-      "id": "01K1ICFBTRD0899B6E63F21888",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T01:00:03.387Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 320,
-        "sil": 995,
-        "prevSil": 996,
-        "delta": -1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 28,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T01:00:03.158Z"
-      }
-    },
-    {
-      "id": "01K1ICKRR4E6BF0D99B8FD47E0",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T01:03:03.524Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 320,
-        "sil": 995,
-        "prevSil": 996,
-        "delta": -1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 28,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T01:03:03.348Z"
-      }
-    },
-    {
-      "id": "01K1ICOIPJ8287505052FF0955",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T01:05:05.332Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1IESTV089ED680D111BCE60",
-      "type": "session-impact-summary",
       "from": "obelisk",
-      "shippedAt": "2026-09-03T01:42:24.993Z",
+      "shippedAt": "2026-09-03T04:36:22.172Z",
       "payload": {
-        "session": "S287",
-        "project": "obelisk",
-        "headline": "A gate that cannot fail on its own finding",
-        "summary": "Three gates in the enforcing chain printed a non-measuring state and exited 0. Flagship cause: two capability vocabularies with an EMPTY intersection left the scope-creep monitor measuring nothing since W140, and a --strict added in S285 to restore teeth could never fire from the state the gate was actually in. Closed the class with check-gate-verdict-teeth: runs every chain gate, population derived from package.json, fails on NON-MEASURING-BUT-GREEN or LEAKED-ERROR-BUT-GREEN. Behavioural by necessity - a static scan for the shape returns 0 of 54.",
-        "shipped": 7,
-        "silTotal": 954,
-        "silDelta": 5,
-        "tests": "5727/5726 pass, 0 fail, 1 skip",
-        "deploy": "staging then production, both VERIFIED 8/8 on ebf9afcb",
-        "siblingTreesTouched": 0
+        "pattern": "severity-marker-but-green",
+        "context": "A gate that PRINTS its blocking marker and exits 0. S287 built a behavioural census keyed on a vocabulary of BLINDNESS (UNMEASURED/DARK-PRODUCER); that misses the gate which sees perfectly, stamps the finding blocking, and returns success. Obelisk had 1 live in-chain case and 7 out-of-chain.",
+        "solution": "Add a third census arm keyed on the gate OWN blocking marker with exitCode 0. Silence it only with a dated claim the gate restates in its own render (Nd of cover left / waived until YYYY-MM-DD) that the census RE-VERIFIES, so an expired cover silences nothing. Second: the census denominator must range over every script that can print a verdict, not only the enforcing chain — behavioural where you can safely run it, static (no non-zero exit path exists at all) where you cannot, and a declared-advisory marker as the only silencer.",
+        "tags": [
+          "gates",
+          "teeth",
+          "census",
+          "denominator",
+          "obelisk-S288"
+        ]
+      }
+    },
+    {
+      "id": "01K1IQ039A1C3CE80D9CDA31E5",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-03T04:56:23.083Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 321,
+        "sil": 992,
+        "prevSil": 995,
+        "delta": -3,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 89,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-03T04:56:22.517Z"
+      }
+    },
+    {
+      "id": "01K1IQH45R60946268D290B025",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-03T05:05:41.051Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 321,
+        "sil": 992,
+        "prevSil": 995,
+        "delta": -3,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 91,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-03T05:05:40.325Z"
+      }
+    },
+    {
+      "id": "01K1IQO2PI8D3565E0FB7E76D3",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-03T05:09:29.011Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
       }
     }
   ],

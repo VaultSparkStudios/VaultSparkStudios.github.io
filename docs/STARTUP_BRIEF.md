@@ -67,7 +67,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -129,6 +129,9 @@
 ║   96  [PRODUCT]      The silent cron verdict is fixture-proven   ║
 ║        The silent cron verdict is fixture-proven only. check-sc  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   95  [VERIFY]       resync-derived.mjs does not cover every --  ║
 ║        resync-derived.mjs does not cover every --checked derive  ║
 ║                                                                  ║
@@ -137,9 +140,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Make the game covers art-only; the tile ow  ║
 ║        Make the game covers art-only; the tile owns all text. T  ║
-║                                                                  ║
-║   86  [VERIFY]       check-postbuild-ordering --check reports u  ║
-║        check-postbuild-ordering --check reports unmeasured in C  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

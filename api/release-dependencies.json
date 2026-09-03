@@ -1,23 +1,39 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T05:26:43.487Z",
+  "generatedAt": "2026-09-03T07:55:17.365Z",
   "generatedBy": "scripts/build-release-dependencies.mjs",
   "publicSafe": true,
-  "state": "rejected",
+  "state": "completed",
   "dependencies": [
     {
       "id": "obelisk-staging-registration",
       "cargoId": "01JV7U1UQ309B28328DCEF5A95",
       "ownerSlug": "obelisk",
       "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-      "status": "missing",
+      "status": "completed",
       "signatureState": "unverified",
       "requestedChecks": [
         "production-callback-retained",
         "staging-callback-exact-match-accepted",
         "cross-client-redirect-denied",
         "live-authorize-tenant-boundary-clear"
-      ]
+      ],
+      "liveVerification": {
+        "verdict": "verified",
+        "ageDays": 0,
+        "maxAgeDays": 14,
+        "stale": false,
+        "method": "authorize-endpoint-observation",
+        "probedAt": "2026-09-03T07:41:43.277Z",
+        "issuer": "https://obeliskgate.com",
+        "settles": true,
+        "checks": {
+          "production-callback-retained": true,
+          "staging-callback-exact-match-accepted": true,
+          "cross-client-redirect-denied": true,
+          "live-authorize-tenant-boundary-clear": true
+        }
+      }
     }
   ],
   "privacy": {
