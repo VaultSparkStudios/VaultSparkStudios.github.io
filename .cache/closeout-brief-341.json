@@ -13,7 +13,7 @@
       "projectImpact": 9,
       "ecosystemImpact": 8,
       "insight": "uptime-probe failed two consecutive runs from 01:52Z with the public availability surface unpublished, and the conflict was not the defect: `git pull --rebase || true` swallowed a failed rebase, leaving a detached HEAD, so attempts 2-4 could only fail on 'unmerged files'. The 03:45Z run then self-recovered once the race cleared, which is why the defect is durable rather than resolved — the loop succeeds only when it meets no conflict. Eleven of twelve publishers carried that shape, and news-publish was the sole survivor that already had the answer. All twelve now call one gated helper, plus the re-validation news-publish lacked.",
-      "evidence": "scripts/ci/publish-push.sh · 12 call sites · 0 raw `pull --rebase` landing sites remain"
+      "evidence": "scripts/ci/publish-push.sh · 12 call sites · 0 raw `pull --rebase` landing sites · VERIFIED LIVE: uptime-probe run 33716566954 success, 'published on attempt 1.'"
     },
     {
       "id": "#2",

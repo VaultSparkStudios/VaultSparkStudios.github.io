@@ -981,6 +981,8 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 
 **Held / carried:** Trusted Types flip (now honestly blocked on a stale soak, not on a broken gate); manual CANON-053 review of the newly-served surfaces; the four projection views; everything on the identity/Obelisk hold, untouched.
 
+**VERIFIED IN CI AND IN PRODUCTION.** `build:check` 388/388 green and doctor `blockingFailing 0`; pushed directly to `main` as `1d1ccc68d` after one publisher race resolved by rebase + deterministic re-derive. The production deploy (run `33716265674`) completed **success with 0 failed steps**, and `https://vaultsparkstudios.com/api/build-sha.json` serves exactly `1d1ccc68d` — verified against the served artifact, not the workflow's own verdict. `/`, `/evidence/`, `/status/` and `/games/` all 200; `/proof/` correctly 301. The primary fix was then exercised on the real cron: `uptime-probe` run `33716566954` completed **success**, logging `uptime publish: published on attempt 1.` — the new shared helper landing a real publish against real `main`.
+
 **Honest limits:** the polls fix changes no pixels today (no active poll; recorded as a capability fix). Real row counts behind the silent-zero tables were not measured — the sandbox classifier blocked the credentialed probe and it was not worked around — so that finding rests on policy reading.
 
 **Evidence:** build-deploy-currency 78/78 · check-deploy-currency-gate 30/30 · build-tt-readiness 14/14 · prune-served-surface 43/43 · doctor 15/16 (sole warn sibling-owned). Exit codes read directly, never through a pipe.

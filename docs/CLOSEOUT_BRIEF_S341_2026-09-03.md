@@ -38,7 +38,7 @@
          when it meets no conflict. Eleven of twelve publishers carried that shape, and
          news-publish was the sole survivor that already had the answer. All twelve now call
          one gated helper, plus the re-validation news-publish lacked.
-         → scripts/ci/publish-push.sh · 12 call sites · 0 raw `pull --rebase` landing sites remain
+         → scripts/ci/publish-push.sh · 12 call sites · 0 raw `pull --rebase` landing sites · VERIFIED LIVE: uptime-probe run 33716566954 success, 'published on attempt 1.'
 
   [#3]  dead-cron-window                                          PROJ 8  ·  ECOS 8
          ── observability ───────────────────────────────────────────────────────────────────
