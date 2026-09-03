@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-03T04:31:12.371Z",
+  "generatedAt": "2026-09-03T14:00:24.811Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Repaired the automation that publishes this site's live availability numbers. The publisher could retry a failed update but could not recover from one, so a single collision with another automated job stopped it for two update cycles before it happened to clear on its own; the recovery logic now lives in one shared, tested place used by all twelve publishers. Also widened the monitor that watches for stalled automation -- it could only see the last few hours of activity, which meant daily, weekly and monthly jobs were invisible to it and counted as healthy. The wider view immediately found a monthly member newsletter that had never successfully sent; it is documented and queued for a decision rather than switched on unannounced. Separately, the screenshot check that proves each page still renders correctly in every theme had been pointed at a page retired six months ago, so fourteen of its images were blank and were still being recorded as reviewed; it now points at the right page and refuses to file a blank image at all.",
+  "focus": "Corrected a long-standing false entry on the public release page. A cross-project dependency was being reported as outstanding because the tracker watched for a message that had since expired, rather than checking whether the work itself was done -- it had been done for months. The check now verifies the real thing directly against the login provider, including a deliberate negative test to prove the check can still fail, and it expires after two weeks so it cannot vouch for something indefinitely. The remaining sign-in work is unchanged and still pending a person completing it, and that restriction was left in place on purpose.",
   "nextStep": "Tidy how the site builds its navigation, and refresh the game cover artwork.",
   "decisions": [
     {

@@ -1105,3 +1105,88 @@ replaces, and the only one I can support.
 **Rule:** a screenshot of nothing is still a PNG, so it flows through every downstream check that
 counts files rather than looks at them. Never certify a rendered-pixel review you have not
 performed, and make the tool refuse to produce the artifact that makes the lie easy.
+
+
+## D-S342.1 — A dependency tracker that keys on a conversation reports the work undone
+
+`api/release-dependencies.json` published `obelisk-staging-registration: missing` and
+`state: rejected`, and `api/release-proof.json` carried it as a release blocker. All of it was
+false, and had been for months.
+
+`deriveDependency` returns `missing` when it cannot find the request **cargo**. Cargo
+`01JV7U1UQ309B28328DCEF5A95` is a May ULID that aged out of the 168-hour Ark window, so the
+tracker lost the message and concluded the work had not happened. Meanwhile the relying party sat
+`active` in the Obelisk registry — passport v2, **both** callbacks registered, production and
+`website.staging` — and the live authorize endpoint accepted them.
+
+All four of the contract's `requestedChecks` turned out to be directly observable at the IdP, so
+they are now observed. `--probe` requests `/auth/authorize` with each registered `redirect_uri`
+(3xx = accepted) plus an **unregistered control** redirect that must be denied. The control is
+what makes acceptance mean anything: if an unregistered redirect were also accepted, a 302 would
+prove nothing at all. Three properties keep it honest, each pinned in both directions (27/27):
+**fail closed** — an unreachable provider settles nothing; **coverage** — a verified probe
+covering only some requestedChecks does not settle the contract; **a clock** — a committed
+observation is a snapshot that would otherwise vouch forever, so past 14 days it stops settling
+and the dependency falls back to `missing`.
+
+The identity hold is deliberately untouched: `releaseState` stays `hold`, both
+`real-provider-e2e-pending` blockers remain, and `auth/**`, `surface:identity` and
+`worker:identity` stay held. Only the two false entries cleared.
+
+**Rule:** track the substance, not the correspondence about it. A tracker whose subject is a
+message will report a completed job as missing the moment the message expires — and will do it on
+a public trust surface, where it looks like someone else's fault.
+
+## D-S342.2 — A founder assertion that contradicts a receipt is a re-probe trigger, not a debate
+
+Asked what remained on Obelisk, I answered from `api/identity-migration-receipt.json` and reported
+the last step as "one registration the obelisk repo has to ship." The founder replied that Obelisk
+should be complete as of now. That was not a misunderstanding to correct — it was **right**, and
+the receipt I quoted was eight days old.
+
+Re-probing took minutes and found: the relying party registered and active with both callbacks;
+`/login` redirecting to `obeliskgate.com/auth/authorize` with correct PKCE, client_id, state and
+nonce; the revocation endpoint live in OIDC discovery; `recordJourney` wired into all three legs of
+the deployed Worker; and `OBELISK_RP_ID`/`RP_NAME`/`RP_ORIGIN` consumed by **zero** files here, so
+their MISSING status blocked nothing. Four of the five things I had listed as remaining were
+already done.
+
+**Rule:** when the founder's account of the world disagrees with a receipt, re-probe the receipt
+first. A blocker sentence is a claim with an expiry, and "the founder is mistaken" is the least
+likely explanation to check last.
+
+## D-S342.3 — Do not re-request work that is provably done, even when told to
+
+The founder instructed me to ship the registration request cargo after I had recommended against
+it. I began implementing, then stopped at a defect I found mid-change: the live probe settles the
+dependency only on the **no-cargo** path, so re-establishing the conversation would have **demoted**
+`obelisk-staging-registration` from `completed` back to `sent` and re-raised
+`releaseDependenciesSatisfied` as a blocker. The asking would have undone the answer.
+
+The founder then redirected to the recommended path, so nothing shipped. What went out instead is
+a `pattern-share` (`01K1J2NO0FB8B3B26F4CD77A8D`) carrying the class and the control/coverage/clock
+rules to the portfolio — the other repos get the fix rather than the news.
+
+**Rule:** an instruction to reopen a settled item deserves the check for whether reopening it
+regresses the settlement. If it does, that is a fact to surface before executing, not after.
+The ordering bug remains: if the conversation is ever reopened deliberately, fix it first.
+
+## D-S342.4 — The repo is not the deployment, and I checked it in the wrong order
+
+Investigating why the journey watcher saw nothing, I grepped this repo's
+`cloudflare/security-headers-worker.js` for the `auth:journey:` producer, found zero references and
+zero auth routes, and began building toward the conclusion that watch mode was structurally broken
+— a signal whose producer was never deployed.
+
+That was wrong. The **live** Worker contains `recordJourney()` writing `auth:journey:<ts>` into the
+`RATE_LIMIT` namespace with a seven-day TTL, called at all three legs (callback 1164, compat 1395,
+logout 1382), and `wrangler.toml:53` confirms the watcher polls exactly that namespace. The repo
+copy is simply stale relative to what is deployed. The empty KV listing was also not evidence:
+`[]` with exit 0 is a real read, and receipts only exist once a journey completes.
+
+This repo's own operating note already says *verify the LIVE worker script, not the repo*. I had
+that note and reached for the local file first anyway.
+
+**Rule:** for any claim about deployed behaviour, the deployed artifact is the only admissible
+evidence. A local source file is a hypothesis about production, and on this repo it is frequently
+a stale one.

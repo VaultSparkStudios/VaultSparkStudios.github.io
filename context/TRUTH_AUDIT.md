@@ -1,3 +1,22 @@
+## S342 Phantom-Blocker Correction on a Public Trust Surface (2026-09-03)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No public schema broke. `api/release-dependencies.json` dependencies gain `liveVerification` (verdict · ageDays · maxAgeDays · stale · settles · per-check booleans) and `completedBy` where a live probe settled them; statuses stay within the existing whitelist so every consumer keeps parsing. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Derived-view freshness | 5 | Every claim re-probed live this session: relying-party registration read from the Obelisk registry, authorize acceptance and control denial observed at the IdP, revocation read from OIDC discovery, `recordJourney` call sites read from the **deployed** Worker rather than the repo copy, KV namespace listed directly. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S342.1..4), CDR, SIL, WORK_LOG, PROJECT_STATUS and this file all reference S342. |
+| Contradiction density | 4 | One long-standing false public claim retired; two of my own false claims retracted in-session; one honest staleness newly disclosed. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — the release surface is now truthful and the identity hold is correctly preserved, but the provider journey remains unobserved and one receipt is knowingly stale.
+
+- **Truth corrected: a public trust surface published a phantom blocker for months.** `api/release-dependencies.json` reported `obelisk-staging-registration: missing` and `state: rejected`, and `api/release-proof.json` carried it as a release blocker, because the tracker keyed on an Ark cargo that had aged out of retention. The registration was live and active the whole time with both callbacks. Now verified by observation, fail-closed five ways, with a 14-day clock so the fix cannot itself go stale silently.
+- **Truth corrected (mine): I reported four blockers that were already satisfied.** The registration, the revocation route, the journey producer's deployment, and three "MISSING" Obelisk credentials that nothing in this repo consumes. All four were retracted in-session against live evidence after the founder disputed the summary (D-S342.2).
+- **Truth corrected (mine): I nearly published "the journey producer was never deployed."** It was a grep of this repo's stale worker source. The live Worker calls `recordJourney` at all three legs. Retracted before it reached any surface (D-S342.4).
+- **Truth disclosed: `api/identity-migration-receipt.json` is eight days stale.** Generated 2026-08-26; my rebuild timed out and was not retried. It still reads `state: honest-dark` / `productionEligible: false`, which remains accurate — the staleness affects the supporting evidence timestamps, not the verdict.
+- **Truth disclosed: the registration probe has no re-probe cadence.** The 14-day clock will expire and the dependency will fall back to `missing` with no automation to refresh it. That is the fail-closed direction and therefore safe, but it will read as a regression to whoever sees it first; boarded as `[S342][OBS/P2]`.
+- **Truth preserved deliberately: the identity hold was not cleared.** `releaseState: hold` with both `real-provider-e2e-pending` blockers intact and `auth/**`, `surface:identity`, `worker:identity` still held. A phantom was removed; the real gate was left exactly where it was.
+
 ## S341 Publisher-Landing and Cron-Visibility Correction (2026-09-03)
 
 | Dimension | Score | Evidence |

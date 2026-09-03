@@ -1,0 +1,87 @@
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session S342 · 2026-09-03 · agent: claude-code · repo: VaultSparkStudios.github.io           ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    The founder said Obelisk should already be complete. The receipt I had quoted was eight    ║
+║    days old, and four of the five blockers I listed were already satisfied.                   ║
+║                                                                                               ║
+║  PROJECT IMPACT     ██████▌░░░   68/100                                                       ║
+║  ECOSYSTEM IMPACT   ██████░░░░   62/100                                                       ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [#1]  phantom-release-blocker                                   PROJ 9  ·  ECOS 9
+         ── truth ───────────────────────────────────────────────────────────────────────────
+         api/release-dependencies.json read `obelisk-staging-registration: missing` and
+         `state: rejected`, and release-proof carried it as a blocker, because
+         deriveDependency returns missing when it cannot find the request CARGO — and that
+         cargo aged out of the 168-hour Ark window. The registration had been active with
+         both callbacks the whole time. All four contract requestedChecks are directly
+         observable at the IdP, so they are now observed, with an unregistered control
+         redirect that must be denied — the half that makes acceptance mean anything.
+         → 27/27 both directions · fails closed 5 ways · 14-day clock · --probe verified live against obeliskgate.com
+
+  [#2]  hold-preserved                                            PROJ 8  ·  ECOS 7
+         ── security ────────────────────────────────────────────────────────────────────────
+         The easy version of this fix clears a blocker and takes the credit. releaseState
+         stays hold, both real-provider-e2e-pending blockers remain, and auth/**,
+         surface:identity and worker:identity stay held. Only the two false entries cleared,
+         and the hold was re-verified after the change rather than assumed.
+         → releaseState: hold · promotion+identity real-provider-e2e-pending intact · held surfaces unchanged
+
+  [#3]  obelisk-actually-verified                                 PROJ 8  ·  ECOS 6
+         ── verification ────────────────────────────────────────────────────────────────────
+         Re-probing found the relying party active with passport v2 and both callbacks,
+         /login redirecting with correct PKCE S256, the revocation endpoint live in OIDC
+         discovery, recordJourney wired at all three legs of the deployed Worker, and
+         OBELISK_RP_* consumed by zero files here. The only real remaining step is a human
+         completing the sign-in ceremony, which the verifier refuses to assert without
+         observing.
+         → registration active · authorize 302 · control 400 · revocation_endpoint live · recordJourney at legs 1164/1395/1382
+
+  [#4]  board-ceiling-real-fix                                    PROJ 6  ·  ECOS 5
+         ── organization ────────────────────────────────────────────────────────────────────
+         D-S341.6 recorded that the budget gate names a repair which is a no-op when it
+         fires. Confirmed why: rotate-taskboard rotates (Session N) blocks while the board
+         holds ~270 resolved rows as a flat list. 79 pre-S200 resolved rows moved verbatim
+         into the archive the tooling already maintains; headroom went from 4 tokens to
+         5,916, with zero open rows touched, proven from the diff.
+         → 42,069 -> 36,084 of 42,000 · 79 archived + 4 orphan-checked duplicates removed = 83 · 0 open rows moved
+
+  [#5]  my-own-misdirection                                       PROJ 3  ·  ECOS 4
+         ── process ─────────────────────────────────────────────────────────────────────────
+         I recommended --live twice — an automated browser whose fresh profile structurally
+         could not reach a Chrome-held passkey — while --watch, which signs in from the
+         founder's own browser with native Windows Hello over a 12-hour window, sat one line
+         away in a usage block I had already read. Two runs expired writing nothing. I also
+         asserted an email-OTP path from a grep the live UI contradicted, and nearly
+         published that the journey producer was never deployed after grepping this repo's
+         stale worker source against my own standing note to verify the live script.
+         → two expired 10-min runs · ~40 min of founder time · 4 wrong claims, all retracted in-session, none reaching a surface
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • [S342][AUTH/P0] Complete the provider journey with --watch — the single remaining step; clears the identity hold.
+    • [S342][OBS/P2] Give the registration probe's 14-day clock a re-probe cadence, without widening the clock.
+    • [S342][BUILD/P3] Apply liveSettles after the cargo-path status so a reopened conversation cannot demote a live-verified dependency.
+    • [S341][OPS/P1] Decide the Monthly Member Newsletter — six failures since April, never once sent.
+    • [S340][BUILD/P1] Register /evidence/ in config/intelligence-suite.json (D-S340.5).
+
+  BLOCKERS
+    • real-provider-e2e-pending — requires a human at a passkey; the verifier will not assert a journey it did not observe.
+
+  ACTION GATE
+    5 items shipped · ready to commit & push? [y/N]
+
+```
+
+---
+
+*Generated by `scripts/render-closeout-brief.mjs` · spec: `docs/CLOSEOUT_BRIEF_SPEC.md`*
