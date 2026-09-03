@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
+║  100  [VERIFY]       resync-derived.mjs does not cover every --  ║
+║        resync-derived.mjs does not cover every --checked derive  ║
+║                                                                  ║
+║   97  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
 ║        <!-- evidence-open: config/intelligence-suite.json and j  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   94  [VERIFY]       Confirm the E2E Test Suite is green on a r  ║
+║   91  [VERIFY]       Confirm the E2E Test Suite is green on a r  ║
 ║        Confirm the E2E Test Suite is green on a real scheduled/  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Make the game covers art-only; the tile ow  ║
+║   90  [PRODUCT]      Make the game covers art-only; the tile ow  ║
 ║        Make the game covers art-only; the tile owns all text. T  ║
-║                                                                  ║
-║   91  [VERIFY]       check-postbuild-ordering --check reports u  ║
-║        check-postbuild-ordering --check reports unmeasured in C  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
