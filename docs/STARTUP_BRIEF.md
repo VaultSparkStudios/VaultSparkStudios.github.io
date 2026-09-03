@@ -126,8 +126,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Register /evidence/ in config/intelligence  ║
-║        Register /evidence/ in config/intelligence-suite.json an  ║
+║  100  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
+║        <!-- evidence-open: config/intelligence-suite.json and j  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
