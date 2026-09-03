@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-02 (Session 339 closeout) -->
+<!-- generated-at: 2026-09-02 (Session 340 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 339 closeout · 2026-09-02.
+> **Fast-boot brief** — generated at Session 340 closeout · 2026-09-02.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 340 · 2026-09-02 · FOUNDER MODE                         ║
+║  Session 341 · 2026-09-02 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
-║  Expected S339; PROJECT_STATUS summary says S338.                ║
-║  Session 339 ran the arc under founder authorization for a dire  ║
-║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
+╔══ LAST SESSION (S340) - WHAT SHIPPED ══════════════════════════╗
+║  S340 -- E2E suite dead 17h on a route merge reaching a second   ║
+║  Tests  -                                                        ║
+║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -40,18 +40,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    993/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 2↑                      ║
+║    994/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 3↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▁  ↑  (last 1 sessions)                                ║
+║    Trend  ▄▁  ↑  (last 2 sessions)                               ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ███▇▇███ →                ║
+║    Dev Health       100    ██████████  ██▇▇████ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          99    ██████████  █▇█▇▇▇▇▇ →                ║
+║    Momentum         100    ██████████  ▇█▇▇▇▇▇█ →                ║
 ║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual     100    ██████████  ▇▇▇▇▇███ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇████ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
@@ -60,7 +60,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 339 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 340 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    381/381 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,7 +77,7 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
-║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      3 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         47138 FORGE  ·  8d old                         ║
@@ -96,8 +96,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║     5d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
-║    10d · Complete the real-provider passkey ceremony. Run `      ║
+║     6d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
+║    11d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -115,31 +115,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▁  2↑  (last 5 sessions)                            ║
+║  Velocity:   ▄▁  3↑  (last 5 sessions)                           ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  991/1000  (↓2 vs current 993)                       ║
-║  At-risk:    Momentum Δ-3                                        ║
+║  Projected:  993/1000  (↓1 vs current 994)                       ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      The cover artwork still duplicates the til  ║
-║        The cover artwork still duplicates the tile's KICKER and  ║
+║  100  [VERIFY]       Register /evidence/ in config/intelligence  ║
+║        Register /evidence/ in config/intelligence-suite.json an  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Answer the postbuild ordering question wit  ║
-║        Answer the postbuild ordering question with an instrumen  ║
+║   94  [VERIFY]       Confirm the E2E Test Suite is green on a r  ║
+║        Confirm the E2E Test Suite is green on a real scheduled/  ║
 ║                                                                  ║
-║   90  [PRODUCT]      check-build-gate-reachability counts only   ║
-║        check-build-gate-reachability counts only --check-flagge  ║
+║   93  [PRODUCT]      Make the game covers art-only; the tile ow  ║
+║        Make the game covers art-only; the tile owns all text. T  ║
 ║                                                                  ║
-║   90  [INTELLIGENCE]  Two more receipts may be ordered before w  ║
-║        Two more receipts may be ordered before what they observ  ║
+║   91  [VERIFY]       check-postbuild-ordering --check reports u  ║
+║        check-postbuild-ordering --check reports unmeasured in C  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 339 closeout · 2026-09-02*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 340 closeout · 2026-09-02*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

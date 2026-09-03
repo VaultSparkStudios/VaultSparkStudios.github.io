@@ -33,6 +33,63 @@ function parseHeadersFile() {
 
 const headersRules = parseHeadersFile();
 
+/**
+ * Parse Cloudflare `_redirects` — the other half of the fidelity this server
+ * already promises for `_headers`.
+ *
+ * THE LIVE S340 CASE. `/ranks/` and `/vaultsparked/` were consolidated and their
+ * stub pages deleted; a `_redirects` 301 answers them in production. This server
+ * did not read `_redirects`, so against the preview those routes 404'd — and
+ * every CI consumer that asked for one broke. `smoke-http.mjs` is a PRE-gate, so
+ * its two failures killed the whole E2E workflow, both jobs, on every push for
+ * 17 hours, hiding eight more stranded specs behind it. S338 had already lost 27
+ * hours of Lighthouse verdicts to the identical cause.
+ *
+ * Fixing the consumers one at a time treats a symptom that regenerates on the
+ * next route merge. The defect is that the preview is not a faithful stand-in
+ * for the edge. Teaching it `_redirects` resolves every consumer at once, and
+ * every future merge automatically, because `_redirects` is generated from
+ * `config/route-consolidation.json`.
+ *
+ * Cloudflare semantics honoured: first matching rule wins (so the file's own
+ * "more specific rules first" ordering is load-bearing), `/*` splats capture a
+ * suffix that `:splat` re-inserts, and the declared status code is used.
+ */
+export function parseRedirects(text) {
+  const rules = [];
+  for (const raw of String(text).split('\n')) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    const [from, to, code] = line.split(/\s+/);
+    if (!from || !to || !from.startsWith('/')) continue;
+    rules.push({ from, to, status: Number(code) || 301 });
+  }
+  return rules;
+}
+
+/** First match wins, exactly as Cloudflare resolves the file top-down. */
+export function matchRedirect(rules, pathname) {
+  for (const rule of rules) {
+    if (rule.from.endsWith('/*')) {
+      const prefix = rule.from.slice(0, -1); // keep the trailing slash
+      if (pathname.startsWith(prefix)) {
+        const splat = pathname.slice(prefix.length);
+        return { status: rule.status, location: rule.to.replace(':splat', splat) };
+      }
+      continue;
+    }
+    if (pathname === rule.from) {
+      return { status: rule.status, location: rule.to.replace(':splat', '') };
+    }
+  }
+  return null;
+}
+
+const redirectRules = (() => {
+  const p = path.join(root, '_redirects');
+  return fs.existsSync(p) ? parseRedirects(fs.readFileSync(p, 'utf8')) : [];
+})();
+
 function getExtraHeaders(pathname) {
   const extra = [];
   for (const [pattern, hdrs] of Object.entries(headersRules)) {
@@ -79,6 +136,19 @@ function resolvePath(requestUrl) {
 }
 
 const server = http.createServer((req, res) => {
+  // Redirects are evaluated BEFORE static assets, which is how the real edge
+  // resolves them — proven on this site in S334, when a `/solara/*` splat 301'd
+  // the SPA's own existing bundle into a 404. Matching that precedence here is
+  // the point: a rule that shadows a real page now fails in CI instead of in
+  // production.
+  const requested = new URL(req.url || '/', `http://${host}:${port}`).pathname;
+  const redirect = matchRedirect(redirectRules, requested);
+  if (redirect) {
+    res.writeHead(redirect.status, { Location: redirect.location });
+    res.end();
+    return;
+  }
+
   const filePath = resolvePath(req.url || '/');
   if (!filePath || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     const custom404 = path.join(root, '404.html');

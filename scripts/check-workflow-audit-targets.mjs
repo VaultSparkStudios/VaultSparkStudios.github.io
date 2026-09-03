@@ -77,6 +77,61 @@ export function extractTargets(text, file) {
   return found;
 }
 
+/**
+ * A workflow's audited routes are not all IN the workflow.
+ *
+ * THE LIVE S340 CASE. `e2e.yml` starts the local preview and then runs
+ * `node scripts/smoke-http.mjs`, whose own table asserted `/vaultsparked/` and
+ * `/ranks/` — both consolidated, both deleted pages. This gate, built in S338
+ * for exactly that class, stayed green through 17 hours of a fully dead E2E
+ * workflow, because its subject was absolute URLs and `for` loops in YAML and
+ * those routes live one hop in, inside a script the workflow invokes by name.
+ * A detector blind to helper indirection reports clean while the defect it was
+ * built for runs in the next file.
+ *
+ * So follow the edge. For every `node scripts/<x>.mjs` a workflow runs, read the
+ * script and take the routes it DECLARES — `path: '/…'` table entries, the shape
+ * a smoke/probe table actually uses. A declared table is precise enough to carry
+ * no false positives, and it travels with the script instead of living in a list
+ * here that nobody updates.
+ *
+ * Provenance is inherited from the job, not guessed: a script invoked by a
+ * workflow that starts `local-preview-server.mjs` is auditing the preview, and
+ * is judged by the preview's rules.
+ */
+export function invokedScripts(text) {
+  const out = new Set();
+  for (const m of String(text).matchAll(/\bnode\s+(?:--[^\s]+\s+)*scripts\/([a-z0-9][a-z0-9.-]*\.mjs)/g)) out.add(m[1]);
+  return out;
+}
+
+/**
+ * Routes a script DECLARES in a check table — not every string that looks like
+ * a path. The expected status travels with the route, because it decides which
+ * rule applies: a table entry asserting a consolidated route as `301` is
+ * checking the redirect CONTRACT and is correct, while the same route asserted
+ * as `200` is the S338/S340 defect. Judging the route without its status would
+ * refuse the fix along with the bug.
+ */
+export function declaredRoutes(src) {
+  const out = [];
+  for (const m of String(src).matchAll(/\bpath:\s*'(\/[^']*)'([\s\S]{0,300}?)status:\s*(null|\d+)([\s\S]{0,200}?)(?=\n\s*\}|$)/g)) {
+    const route = normalizeRoute(m[1]);
+    if (!route) continue;
+    // An entry the runner skips asserts nothing, so the gate must not judge it.
+    // Found by this gate on its own first live run: a `skip: true` placeholder
+    // holding an asset PREFIX, not a route, was reported as a stranded page.
+    if (/\bskip:\s*true/.test(m[2] + m[4])) continue;
+    out.push({ route, status: m[3] === 'null' ? null : Number(m[3]) });
+  }
+  return out;
+}
+
+/** A workflow audits the preview when it starts one. */
+export function usesLocalPreview(text) {
+  return /local-preview-server\.mjs/.test(String(text));
+}
+
 export function consolidatedRoutes(config) {
   const map = new Map();
   for (const entry of config?.redirects || []) {
@@ -100,10 +155,13 @@ export function routeResolves(route, { tracked, exists }) {
 export function evaluate(targets, consolidated, resolver) {
   const problems = [];
   const seen = new Set();
-  for (const { route, local, file } of targets) {
+  for (const { route, local, file, expects } of targets) {
     const key = `${file}|${route}|${local}`;
     if (seen.has(key)) continue;
     seen.add(key);
+    // A target that expects a redirect is asserting the merge contract, not
+    // auditing a page. Both rules below are about pages, so neither applies.
+    if (expects && expects >= 300 && expects < 400) continue;
     if (consolidated.has(route)) {
       problems.push({
         kind: 'consolidated',
@@ -124,6 +182,10 @@ export function evaluate(targets, consolidated, resolver) {
   }
   return problems;
 }
+
+const readScript = (name) => {
+  try { return fs.readFileSync(path.join(ROOT, 'scripts', name), 'utf8'); } catch { return ''; }
+};
 
 function trackedFiles() {
   try {
@@ -182,6 +244,35 @@ function selfTest() {
       routeResolves('/fresh/', { tracked: new Set(), exists: (p) => p === 'fresh/index.html' }) === true],
     ['a duplicate target is reported once',
       evaluate([{ route: '/ranks/', local: true, file: 'w.yml' }, { route: '/ranks/', local: true, file: 'w.yml' }], consolidated, resolver).length === 1],
+
+    // ── THE S340 EDGE-FOLLOW. The routes that killed E2E were never in the YAML.
+    ['a script the workflow runs is followed',
+      invokedScripts('      - name: HTTP smoke pre-gate\n        run: node scripts/smoke-http.mjs\n').has('smoke-http.mjs')],
+    ['a script named only in prose is not followed',
+      !invokedScripts('# see scripts/smoke-http.mjs for details\n').has('smoke-http.mjs')],
+    ['a declared check table yields its routes and statuses',
+      JSON.stringify(declaredRoutes("const C=[{ path: '/games/', status: 200, contains: [] }];"))
+        === JSON.stringify([{ route: '/games/', status: 200 }])],
+    ['a table entry with a null status is still read',
+      declaredRoutes("[{ path: '/x/', status: null }]")[0].status === null],
+    ['a bare path string outside a table is not a declared route',
+      declaredRoutes("await page.goto(BASE + '/ranks/');").length === 0],
+    ['a skipped table entry is not judged',
+      declaredRoutes("[{ path: '/assets/style.shell-', status: null, contains: [], skip: true,\n  },\n]").length === 0],
+    ['a non-skipped entry beside a skipped one is still read',
+      declaredRoutes("[{ path: '/a/', status: 200,\n  },\n  { path: '/b/', status: null, skip: true,\n  },\n]")
+        .map((r) => r.route).join(',') === '/a/'],
+    ['a job that starts the preview marks its scripts local',
+      usesLocalPreview('run: node scripts/local-preview-server.mjs &') === true],
+    ['a job with no preview does not', usesLocalPreview('run: npm test') === false],
+    // The exact live defect, reproduced through the edge rather than the YAML.
+    ['a consolidated route declared 200 by an invoked script is refused',
+      evaluate([{ route: '/ranks/', local: true, file: 'e2e.yml → scripts/smoke-http.mjs', expects: 200 }],
+        consolidated, resolver)[0].kind === 'consolidated'],
+    // ...and the repair for it must not be refused alongside the defect.
+    ['the same route declared 301 is the merge contract, and passes',
+      evaluate([{ route: '/ranks/', local: true, file: 'e2e.yml → scripts/smoke-http.mjs', expects: 301 }],
+        consolidated, resolver).length === 0],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -197,7 +288,20 @@ function main() {
   const consolidated = consolidatedRoutes(JSON.parse(fs.readFileSync(CONSOLIDATION, 'utf8')));
   const targets = [];
   for (const file of fs.readdirSync(WORKFLOW_DIR).filter((f) => /\.ya?ml$/.test(f))) {
-    targets.push(...extractTargets(fs.readFileSync(path.join(WORKFLOW_DIR, file), 'utf8'), `.github/workflows/${file}`));
+    const text = fs.readFileSync(path.join(WORKFLOW_DIR, file), 'utf8');
+    const rel = `.github/workflows/${file}`;
+    targets.push(...extractTargets(text, rel));
+
+    // Follow the invocation edge. The routes that killed E2E for 17 hours were
+    // never in the YAML — they were in a script the YAML runs by name.
+    const local = usesLocalPreview(text);
+    for (const script of invokedScripts(text)) {
+      const src = readScript(script);
+      if (!src) continue;
+      for (const { route, status } of declaredRoutes(src)) {
+        targets.push({ route, local, file: `${rel} → scripts/${script}`, expects: status });
+      }
+    }
   }
   // The tier config is an audit-target list in its own right: a tier for a
   // CONSOLIDATED route is the same stranding one layer down.

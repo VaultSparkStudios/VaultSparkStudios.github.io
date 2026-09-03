@@ -1028,3 +1028,17 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Honest limits:** the 23-route staging figure compares advertised sitemaps, not per-route probes. The uptime cron fix is proven locally against the exact CI sequence, but its next scheduled run is the live proof and had not occurred at closeout. `surfaceParity` is an observation, not an enforcement, and says so on the artifact.
 
 **Evidence:** build-deploy-currency 87/87 (+2) · check-workflow-audit-targets 18/18 (new) · check-staging-parity 26/26 (+7) · check-lighthouse-route-tiers 16/16 · check-build-gate-reachability 248/248 · check-sil-integrity green · promotion scope `promotable=true · scoped-disjoint`. Exit codes read directly, never through a pipe.
+
+## Session 340 — 2026-09-02
+
+**Intent:** Run the full project-aware `/arc` under founder authorization to commit/push directly to `main` and fully deploy production.
+
+**Shipped:** five ranked items. The E2E blackout root-caused and fixed at the preview (D-S340.1) with the smoke's redirect contracts derived from config (D-S340.2); the S338 audit-target gate widened to follow the workflow→script invocation edge (D-S340.3); the postbuild ordering instrument built and run (D-S340.4); two masked tests repaired to assert what actually exists (D-S340.6); one genius-list item closed by evidence as a phantom.
+
+**Found, not sought:** `propagate-nav` and `generate-evidence-hub` have been fighting over the `/evidence/` link on 125 pages every build, net-zero in git and therefore invisible to every gate (D-S340.5).
+
+**Deliberately deferred with reasons published:** the nav registration (five consumers of `intelligence-suite.json`) and the art-only cover regeneration (rotates the home LCP asset, invalidates every cover-bound receipt) — neither belongs next to an authorized production deploy. Both boarded with the reproduction or the decision attached.
+
+**Evidence:** check-workflow-audit-targets 29/29 (+11, proven in both directions against the real files) · check-postbuild-ordering 11/11 (new) · smoke-http 26/26 (was 10 passed / 2 failed) · eight formerly-stranded specs 26 passed / 0 failed · check-build-gate-reachability 252/252.
+
+**Honest limits:** the E2E fix is proven locally, not yet by a green GitHub run (boarded `[S340][VERIFY/P1]`). The ordering gate's `--check` is not wired into `build:check` — only its self-test — because it needs a trace no CI job produces; boarded rather than implied.

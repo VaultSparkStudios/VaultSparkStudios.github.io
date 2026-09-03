@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-02T22:32:56.599Z",
+  "capturedAt": "2026-09-03T00:40:07.617Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "95aea9c613fc90176e1e8d4f6cf18b2b79f94d03ef0ce9a8af12d4e9ff9d65bf",
+    "sha256": "619fb430d499499303be493b25f0a042863225a6c73d6f2a15e49cbaf360311b",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -162,7 +162,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "a91fecf315cb28c89268736c7188de56ec4d13cc87d13d3d64fb4875dec22451"
+        "sha256": "b35a63911a13a114d75236bd19baf664daf9368bd6aa90efc34f5a60f890ec3f"
       },
       {
         "path": "membership/index.html",
@@ -232,9 +232,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "346e99d59eafb4060b53c8699d23036ea65eafa722a39fe423c4dca21e0f6c24",
-    "candidateSha": "86b206eab87177f2100a560e2c56ae9a89a15624",
-    "root": "a37b2a7fac9ad50a5cc8bc0a241558e31afe04197b1fbc6f3883d22d12a11cf6"
+    "manifestSha256": "f96c1e6158430f87c5332d4847923ed69cc033113e1a8a9b2675d51f1485a7ae",
+    "candidateSha": "641c4cc56e7d9477b6b3c5acb630dd45ab7eaa6a",
+    "root": "c2b6875d3918b5a133c40af0f9f69e39380a294eb2fd6724b07dfdc0e47f9ec5"
   },
   "matrix": {
     "routes": [
@@ -273,20 +273,18 @@
     "completedCaptures": 84
   },
   "inspection": {
-    "renderedPixelsReviewed": true,
+    "renderedPixelsReviewed": false,
     "coverage": {
       "totalCaptures": 84,
-      "manuallyReviewed": 84,
-      "automatedOnly": 0,
-      "complete": true
+      "manuallyReviewed": 0,
+      "automatedOnly": 84,
+      "complete": false
     },
-    "reviewer": "claude-code S339",
-    "findings": [
-      "S339 final CANON-053 receipt, recaptured after a third scheduled-publisher rebase touched index.html (receipts bind the tree and the candidate manifest, so a publisher commit invalidates them exactly as a reseal does). Home re-inspected in dark and light at 1366px: one status pill per hero tile, no amber second label, no clipped bare 'S' on the narrow tiles. Verified live on production earlier this session by fetching /assets/covers/doodie.png from the origin and sha256-matching it against the regenerated local file, so the fix is confirmed on the bytes people actually receive rather than on the local tree. Root cause was the cover artwork, not markup (D-S339.6). Tier grid holds all five SPARKED products with no per-card badge and no status meta chip. KNOWN AND CARRIED: the artwork still renders the genre eyebrow and title beneath the tile's own live kicker and name, on the board as [S339][UX/P3]. Capture caveat: the full-page matrix catches the hero lede mid-reveal, so lede opacity there is an animation artifact, not a contrast defect."
-    ],
+    "reviewer": null,
+    "findings": [],
     "fixesApplied": [],
-    "blockingDefectsOpen": 0,
-    "limitation": null
+    "blockingDefectsOpen": null,
+    "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
   },
   "captures": [
     {
@@ -302,8 +300,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -319,8 +316,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -336,8 +332,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -353,8 +348,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -370,8 +364,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -387,8 +380,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -404,8 +396,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -421,8 +412,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -438,8 +428,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -455,8 +444,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -472,8 +460,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -489,8 +476,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -506,8 +492,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -523,8 +508,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -540,8 +524,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -557,8 +540,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -574,8 +556,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -591,8 +572,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -608,8 +588,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -625,8 +604,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -642,8 +620,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -659,8 +636,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -676,8 +652,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -693,8 +668,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -710,8 +684,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -727,8 +700,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -744,8 +716,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -761,8 +732,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -778,8 +748,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -795,8 +764,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -812,8 +780,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -829,8 +796,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -846,8 +812,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -863,8 +828,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -880,8 +844,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -897,8 +860,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -914,8 +876,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -931,8 +892,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -948,8 +908,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -965,8 +924,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -982,8 +940,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -999,8 +956,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1016,8 +972,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1033,8 +988,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1050,8 +1004,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1067,8 +1020,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1084,8 +1036,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1101,8 +1052,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1118,8 +1068,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1135,8 +1084,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1152,8 +1100,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1169,8 +1116,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1186,8 +1132,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1203,8 +1148,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1220,8 +1164,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1237,8 +1180,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1254,8 +1196,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1271,8 +1212,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1288,8 +1228,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1305,8 +1244,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1322,8 +1260,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1339,8 +1276,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1356,8 +1292,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1373,8 +1308,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1390,8 +1324,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1407,8 +1340,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1424,8 +1356,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1441,8 +1372,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1458,8 +1388,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1475,8 +1404,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1492,8 +1420,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1509,8 +1436,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1526,8 +1452,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1543,8 +1468,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1560,8 +1484,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1577,8 +1500,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1594,8 +1516,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1611,8 +1532,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1628,8 +1548,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1645,8 +1564,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1662,8 +1580,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1679,8 +1596,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1696,8 +1612,7 @@
       "page": "/proof/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     },
     {
@@ -1713,8 +1628,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S339"
+        "mode": "automated-only"
       }
     }
   ]

@@ -1,3 +1,22 @@
+## S340 CI-Blackout and Preview-Fidelity Correction (2026-09-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No public schema changed. `smoke-http.mjs` gained a `location` assertion field and derives its consolidated-route entries from `config/route-consolidation.json`; `check-postbuild-ordering` writes `.cache/postbuild-ordering.json` with an explicit `schemaVersion`. |
+| Prompt/template alignment | 5 | No prompt or template surface changed this session. |
+| Derived-view freshness | 5 | Every claim re-probed live: the E2E failure read from run `33692360413`'s own log, the smoke and all eight stranded specs re-run against a real preview, the nav tug-of-war reproduced by running `propagate-nav` and `generate-evidence-hub` in sequence and counting the link, and the widened gate re-run against a restored defect. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S340.1..7), SIL, WORK_LOG, PROJECT_STATUS and this file all reference S340. |
+| Contradiction density | 4 | Three closed, one newly disclosed and one phantom retired. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — the site's surfaces are coherent and the CI blackout is closed at its root, but the proof of the fix is a GitHub run that had not occurred at closeout.
+
+- **Truth corrected: a gate reported clean for 17 hours while the workflow it protects was entirely dead.** `check-workflow-audit-targets` was built in S338 for the exact class that killed E2E in S340 and stayed green throughout, because its subject was workflow YAML and the defect was one invocation hop away. It now follows the edge, and the reproduction is pinned in its self-test.
+- **Truth corrected: the local preview was never a faithful stand-in for the edge, and two sessions of CI failures were attributed to their consumers.** S338 recorded the Lighthouse outage as three stale target lists; the durable cause was that the preview applies `_headers` and not `_redirects`. Fixing the consumers left the class intact, which is why it recurred in `smoke-http.mjs`.
+- **Truth corrected: two tests had been asserting things that do not exist.** `s103-surfaces` demanded four marketing strings absent from the whole tree since S335; `pages.spec` demanded a password form on a surface that delegates identity to Obelisk. Both had been red behind a pre-gate rather than proving anything, and neither failure had ever been read.
+- **Truth disclosed, not fixed: 125 pages are rewritten twice per build to a net-zero result.** `propagate-nav` removes the `/evidence/` nav and footer link and `generate-evidence-hub` restores it, so every existing coherence gate sees a settled tree. The output is correct; the derivation is not. Reproduction is recorded in D-S340.5 and boarded as `[S340][BUILD/P1]`.
+- **Phantom retired: `check-build-gate-reachability` "counts only `--check`-flagged gates".** Ranked 90 on the genius list and false against live code — `isDefaultCheck` admits every `check-*` script, and the live count is 252/252, exactly the claimed 249 plus the three S339 gates. Recorded rather than silently dropped, because a hit list that carries phantoms costs the next session the same minutes.
+- **Honesty hold: the headline fix is proven locally only.** The smoke reads 26/26 and the eight stranded specs pass against a real preview, but the E2E workflow had not run green on GitHub at closeout. Stated as a limit in the handoff and boarded as `[S340][VERIFY/P1]` rather than reported as verified in CI.
+
 ## S339 Publisher-Absence and Home-Surface Correction (2026-09-02)
 
 | Dimension | Score | Evidence |

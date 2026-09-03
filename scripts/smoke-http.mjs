@@ -18,6 +18,11 @@
  */
 
 import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const args = Object.fromEntries(
   process.argv.slice(2)
@@ -57,16 +62,6 @@ const CHECKS = [
     contains: ['Membership', 'Vault Member'],
   },
   {
-    path: '/vaultsparked/',
-    status: 200,
-    contains: ['Membership tiers moved', '/membership/#tiers'],
-  },
-  {
-    path: '/ranks/',
-    status: 200,
-    contains: ['Vault ranks moved', '/leaderboards/#ranks'],
-  },
-  {
     path: '/studio-pulse/',
     status: 200,
     contains: ['Studio Pulse'],
@@ -101,6 +96,38 @@ const CHECKS = [
   },
 ];
 
+/**
+ * Every consolidated route, asserted as the 301 CONTRACT it actually is.
+ *
+ * `/vaultsparked/` and `/ranks/` used to be smoked as `200` carrying the body of
+ * a stub page — and S335 deleted the stubs. The assertion outlived the thing it
+ * asserted. Because this script is a PRE-gate, those two failures killed both
+ * E2E jobs on every push for 17 hours while eight further stranded specs sat
+ * untested behind them; S338 had already lost 27 hours of Lighthouse verdicts to
+ * the same route merge reaching a consumer nobody updated.
+ *
+ * Two changes end the class rather than the instance. `local-preview-server.mjs`
+ * now applies `_redirects`, so the preview answers these routes the way the edge
+ * does. And this list is DERIVED from `config/route-consolidation.json` rather
+ * than typed out, so the next merge is covered the moment it is recorded — and
+ * can never again be asserted as a page that no longer exists.
+ */
+function consolidatedChecks() {
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'route-consolidation.json'), 'utf8'));
+    return (cfg.redirects || []).map((r) => ({
+      path: r.from,
+      status: 301,
+      location: r.to,
+      contains: [],
+    }));
+  } catch {
+    return [];
+  }
+}
+
+CHECKS.push(...consolidatedChecks());
+
 function fetch(path) {
   return new Promise((resolve, reject) => {
     const url = BASE + path;
@@ -108,7 +135,7 @@ function fetch(path) {
       let body = '';
       res.setEncoding('utf8');
       res.on('data', chunk => { body += chunk; });
-      res.on('end', () => resolve({ status: res.statusCode, body, url }));
+      res.on('end', () => resolve({ status: res.statusCode, body, url, location: res.headers.location }));
     });
     req.on('error', reject);
     req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
@@ -122,10 +149,12 @@ let failed = 0;
 for (const check of CHECKS) {
   if (check.skip) continue;
   try {
-    const { status, body, url } = await fetch(check.path);
+    const { status, body, url, location } = await fetch(check.path);
     const statusOk = check.status === null || status === check.status;
     const missingStrings = (check.contains || []).filter(s => !body.includes(s));
-    const ok = statusOk && missingStrings.length === 0;
+    // A redirect check is about WHERE it sends you, not what it renders.
+    const locationOk = !check.location || location === check.location;
+    const ok = statusOk && locationOk && missingStrings.length === 0;
 
     if (ok) {
       passed++;
@@ -134,6 +163,7 @@ for (const check of CHECKS) {
       failed++;
       process.stdout.write(`  ✗  ${check.path}\n`);
       if (!statusOk) process.stdout.write(`       status: expected ${check.status}, got ${status}\n`);
+      if (!locationOk) process.stdout.write(`       location: expected ${check.location}, got ${location ?? '(none)'}\n`);
       missingStrings.forEach(s => process.stdout.write(`       missing: "${s}"\n`));
     }
     results.push({ path: check.path, ok, status, missingStrings, url });
