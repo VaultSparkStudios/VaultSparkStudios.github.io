@@ -26,6 +26,12 @@ const ROOT = join(__dirname, '..');
 
 // Mirror propagate-nav.mjs skip lists.
 const SKIP_DIRS = new Set([
+  // S342: `_drafts/` is pre-publication by convention — `generate-changelog-entry.mjs`
+  // and the journal drafters write HTML there before a human decides it ships. Those
+  // pages have no sitewide shell yet and must not, so nav-injecting them (or failing
+  // the orphan gate on them) is wrong in both directions. Caught when a locally
+  // generated changelog draft failed check-nav-orphans at build:check step 237.
+  '_drafts',
   'node_modules', 'playwright-report', 'test-results',
   'investor', 'investor-portal', 'studio-hub', 'vaultsparked',
   '.ai', '.git', '.well-known', 'scripts',

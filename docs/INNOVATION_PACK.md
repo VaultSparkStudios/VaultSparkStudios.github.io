@@ -1,10 +1,10 @@
 # Innovation Pack
 
-Generated: 2026-08-23 · source: live tracked code
+Generated: 2026-09-03 · source: live tracked code
 
 Second-order candidates derived after the primary Unified Genius List pass. Status is computed from source evidence; no candidate is marked shipped by prose alone.
 
-Signals: 5238 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 998/1000.
+Signals: 6504 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 977/1000.
 
 ## 1. Close the /go innovation-pack command parity gap
 
@@ -18,7 +18,7 @@ Signals: 5238 tracked files · 33 TODO/FIXME markers outside archives · latest 
 
 **Status:** SHIPPED THIS PASS
 
-**Evidence:** Required source routes present: 4/4.
+**Evidence:** Required source routes present: 3/4.
 
 **Quality bar:** Require both source existence and sitemap membership for privacy, terms, contact, and IP.
 
@@ -50,7 +50,7 @@ Signals: 5238 tracked files · 33 TODO/FIXME markers outside archives · latest 
 
 **Status:** SHIPPED THIS PASS
 
-**Evidence:** Latest scored ledger: S326 · 998/1000.
+**Evidence:** Latest scored ledger: S342 · 977/1000.
 
 **Quality bar:** Fail when PROJECT_STATUS session, total, or category vector diverges from the append-only ledger.
 

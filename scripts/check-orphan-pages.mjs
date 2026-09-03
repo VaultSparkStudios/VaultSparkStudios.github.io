@@ -36,6 +36,11 @@ const SKIP_FILES = new Set([
 // Pages we accept as not-linked-from-nav (intentional: redirects, admin, deep
 // links, sub-routes, premium-flow children, etc).
 const EXEMPT_PATTERNS = [
+  // S342: `_drafts/` is pre-publication by convention -- the changelog and journal
+  // drafters write there before a human decides it ships, so a draft being
+  // unreachable from nav/sitemap is the CORRECT state, not a disappearance.
+  // Mirrors the same exemption in propagate-nav.mjs and check-nav-orphans.mjs.
+  /\/_drafts\//,
   /^\/investor\//,                // legacy redirect alias
   /^\/admin\//,                   // any admin
   /\/admin\//,                    // sub-route admin

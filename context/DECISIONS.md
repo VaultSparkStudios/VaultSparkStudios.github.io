@@ -1190,3 +1190,47 @@ that note and reached for the local file first anyway.
 **Rule:** for any claim about deployed behaviour, the deployed artifact is the only admissible
 evidence. A local source file is a hypothesis about production, and on this repo it is frequently
 a stale one.
+
+
+## D-S342.5 — The ceremony's friction was choreography, not security
+
+Asked for the easiest way to complete the provider journey, the honest answer turned out to be
+that most of the difficulty was self-inflicted. `--watch` set `sinceMs = Date.now()` at start and
+discarded every receipt older than itself, so the terminal had to be running **before** the founder
+signed in — while the Worker stores those same receipts in KV with `expirationTtl: 7 * 86400`.
+The evidence was durable for a week; only the reader insisted on being present for it.
+
+`--since <hours>` decouples them: sign in whenever, verify afterwards. The freshness guarantee the
+start-time filter provided is kept — the window is bounded, explicit, **capped at the KV TTL**, and
+disclosed on the written evidence as `observationWindow`, so a reader can always tell a journey
+observed live from one read back out of storage. The default is unchanged.
+
+Also settled, and worth stating plainly: **this hold blocks nothing anyone is doing.** Its blast
+radius is `auth/**`, `surface:identity`, `worker:identity`, and 11 of the last 12 production deploys
+succeeded with it active. Completing the ceremony closes the last Obelisk gap; it does not unblock
+work, and treating it as urgent was my framing, not the repo's.
+
+**Rule:** before asking a human to perform a ritual, check which parts of it are load-bearing. A
+constraint that exists only because a reader chose to be synchronous is friction, not a control.
+
+## D-S342.6 — A [skip ci] publisher put main in the red, and the gate for that class said 29/29 clean
+
+The Desk publisher (`58e167d95`, `feat(desk): publish the midday edition [skip ci]`) committed five
+new art files under `assets/og/news/` and `data/news-desk/art/` without regenerating
+`data/lqip-map.json`. Both directories are LQIP inputs. `build-lqip-map --check` was therefore red on
+`origin/main`, and because the commit carries `[skip ci]` no run observed it — the next human push
+would have inherited a failure it did not cause. Found only because a reseal during this closeout
+tripped it.
+
+Two fixes of different weight. The publisher now runs `build-lqip-map` and `inject-lqip`, `--check`s
+both, and stages `data/lqip-map.json` — that closes this instance. But
+`check-publish-cascade-coverage`, which exists precisely to catch a publisher committing a source
+without re-deriving its consumer, reported **"29 workflow(s) — all publish cascades closed"**
+throughout: the art→lqip edge is simply absent from the evidence graph. The gate is not wrong so
+much as under-informed, and it will stay that way for any other publisher that commits an image.
+Boarded rather than fixed here, because widening the graph deserves the both-directions proof S341
+used and not a rushed edit beside a deploy.
+
+**Rule:** a cascade gate is only as wide as its graph — the third time this repo has learned that.
+When such a gate reports all-clear while a derived artifact is demonstrably stale, the finding is
+the missing edge, not the stale file.

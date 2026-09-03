@@ -211,6 +211,18 @@ jobs:
           # story cannot ship without its read-time and reader-view row.
           node scripts/build-news-desk-engagement.mjs
           node scripts/build-news-desk-reactions.mjs
+          # S342 cascade-resync: this publisher commits assets/og/news/ and
+          # data/news-desk/art/, which are BOTH inputs to the LQIP map — but it
+          # never regenerated it. The 2026-09-03 midday edition therefore landed
+          # five new art files on main with no placeholders, leaving
+          # `build-lqip-map --check` red on origin/main. Because the commit is
+          # [skip ci] no run caught it, so the next human push inherits the red.
+          # Same class as the S340/S341 cascade gaps: a publisher committing a
+          # source without re-deriving its consumer.
+          node scripts/build-lqip-map.mjs
+          node scripts/inject-lqip.mjs
+          node scripts/build-lqip-map.mjs --check
+          node scripts/inject-lqip.mjs --check
           node scripts/build-shell-assets.mjs
           node scripts/generate-news-pages.mjs --apply
 
@@ -276,7 +288,7 @@ jobs:
           # history file is staged separately: putting a missing path in this
           # command makes git add reject EVERY path while `|| true` paints the
           # edition as "Nothing new to publish."
-          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/news-visual-receipts.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
+          git add index.html data/news-desk/ assets/og/news/ data/lqip-map.json api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/news-visual-receipts.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
           if [ -e data/news-desk-engagement-history.ndjson ]; then
             git add data/news-desk-engagement-history.ndjson
           fi

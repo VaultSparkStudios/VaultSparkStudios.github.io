@@ -63,6 +63,14 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EVIDENCE_PATH = path.join(ROOT, 'context', 'IDENTITY_MIGRATION_EVIDENCE.json');
 const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
 const SIGNIN_TIMEOUT_MS = 10 * 60 * 1000;
+// S342: the Worker stores journey receipts with `expirationTtl: 7 * 86400`, but
+// --watch discarded everything older than its own start time, so the terminal had
+// to be running BEFORE the founder signed in. That choreography was the friction,
+// not the ceremony: the evidence is already durable for a week. `--since <hours>`
+// decouples the two -- sign in whenever, verify afterwards -- while keeping the
+// freshness guarantee the start-time filter provided, because the window stays
+// bounded, explicit, capped at the TTL, and DISCLOSED on the written evidence.
+const RECEIPT_TTL_HOURS = 7 * 24;
 const POLL_MS = 2500;
 
 /* ------------------------------------------------------------------ *
@@ -422,15 +430,24 @@ async function anonDenied(table) {
   return Array.isArray(rows) && rows.length === 0;
 }
 
-async function runWatch() {
+async function runWatch({ sinceHours = null } = {}) {
   const key = await serviceRoleKey();
   if (!key) throw new Error('service-role key unavailable — the truth reads need it');
-  const sinceMs = Date.now();
+  // Default is unchanged: only journeys occurring from now on count.
+  const sinceMs = sinceHours == null
+    ? Date.now()
+    : Date.now() - Math.min(sinceHours, RECEIPT_TTL_HOURS) * 3600000;
   console.log('\nverify-provider-journey --watch');
   console.log('In YOUR OWN browser (any device — native Windows Hello):');
   console.log('  1. Sign in at  https://vaultsparkstudios.com/login');
   console.log('  2. Land on /vault-member/ — then SIGN OUT there.');
   console.log('The Worker records each leg as a privacy-safe receipt; I observe.\n');
+  if (sinceHours == null) {
+    console.log('Window: from NOW - sign in AFTER this line. (--since=<hours> reads receipts already in KV.)');
+  } else {
+    const capped = Math.min(sinceHours, RECEIPT_TTL_HOURS);
+    console.log(`Window: the last ${capped}h of receipts${capped < sinceHours ? ` (capped at the ${RECEIPT_TTL_HOURS}h KV TTL)` : ''} - a sign-in already completed counts.`);
+  }
 
   // The founder journeys on their own schedule — give them a real window.
   const deadline = Date.now() + 12 * 60 * 60 * 1000;
@@ -457,6 +474,14 @@ async function runWatch() {
   const journey = deriveJourneyFromReceipts({
     receipts, sinceMs, linkCount, anonMemberDenied, anonInvestorDenied, investorApproved,
   });
+  // A reader must be able to tell a journey observed live from one read back out
+  // of KV, and how far the window reached. Timestamps only, never identifiers.
+  journey.observationWindow = {
+    mode: sinceHours == null ? 'run-start' : 'explicit-since',
+    hours: sinceHours == null ? null : Math.min(sinceHours, RECEIPT_TTL_HOURS),
+    sinceIso: new Date(sinceMs).toISOString(),
+    receiptTtlHours: RECEIPT_TTL_HOURS,
+  };
   writeEvidenceAndRebuild(journey);
 }
 
@@ -527,6 +552,20 @@ function selfTest() {
     investorApproved: false,
   };
   cases.push([journeyPassed(deriveJourneyFromReceipts(goodWatch, { now: () => 't' })), 'complete receipts + truths pass all five legs']);
+
+  // S342 --since window. The whole point of the flag is that a journey completed
+  // BEFORE the verifier starts still counts, so prove the window is what decides
+  // it — and prove the default still refuses a stale one.
+  const staleWatch = { ...goodWatch, sinceMs: 200 };   // every receipt predates the window
+  cases.push([!journeyPassed(deriveJourneyFromReceipts(staleWatch, { now: () => 't' })),
+    'receipts older than the window are NOT counted (default run-start behaviour preserved)']);
+  const widened = { ...goodWatch, sinceMs: 0 };        // an explicit --since reaching back
+  cases.push([journeyPassed(deriveJourneyFromReceipts(widened, { now: () => 't' })),
+    'a widened window counts a journey completed before the verifier started']);
+  const partialWindow = { ...goodWatch, sinceMs: 115 }; // only the logout receipt survives
+  cases.push([!journeyPassed(deriveJourneyFromReceipts(partialWindow, { now: () => 't' })),
+    'a window that clips the callback leg does not pass on the logout alone']);
+  cases.push([Math.min(9999, 7 * 24) === 168, 'an over-wide --since is capped at the 7-day KV TTL']);
   cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: goodWatch.receipts.slice(0, 2) }).revocation === 'unverified', 'no logout receipt → revocation unverified']);
   cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: [goodWatch.receipts[0], goodWatch.receipts[1], rc('logout', 120, { attempted: false, revoked: 0, failed: 0, reason: 'not_implemented' })] }).revocation === 'failed', 'not_implemented logout fails the leg']);
   cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: [goodWatch.receipts[0], goodWatch.receipts[1], rc('logout', 120, { attempted: true, revoked: 1, failed: 1, reason: null })] }).revocation === 'failed', 'a failed grant revocation fails the leg']);
@@ -556,7 +595,16 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`${name}=`))?.spli
 if (flag('--self-test')) {
   selfTest();
 } else if (flag('--watch')) {
-  runWatch().catch((error) => {
+  const rawSince = opt('--since', null);
+  let sinceHours = null;
+  if (rawSince != null) {
+    sinceHours = Number(rawSince);
+    if (!Number.isFinite(sinceHours) || sinceHours <= 0) {
+      console.error(`x --since must be a positive number of hours (got "${rawSince}")`);
+      process.exit(2);
+    }
+  }
+  runWatch({ sinceHours }).catch((error) => {
     console.error(`\n✗ ${error.message}`);
     process.exit(1);
   });
@@ -580,6 +628,6 @@ if (flag('--self-test')) {
     process.exit(1);
   });
 } else {
-  console.error('Usage: --self-test | --watch | --live [--origin=https://…] [--channel=chrome|msedge|chromium] [--wait-minutes=N]');
+  console.error('Usage: --self-test | --watch [--since=<hours>] | --live [--origin=https://…] [--channel=chrome|msedge|chromium] [--wait-minutes=N]');
   process.exitCode = 2;
 }

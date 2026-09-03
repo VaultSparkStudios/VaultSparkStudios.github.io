@@ -107,40 +107,40 @@ Final score: **100**
 [S342][AUTH/P0] Complete the Obelisk provider journey — it is the LAST step, and the command is --watch. node scripts/verify-provider-journey.mjs --watch, then in YOUR OWN browser (native Windows Hello works): sign in at /login → land on /vault-member/ → SIGN OUT there (the logout leg is the revocation evidence). 12-hour window, live callback:✓ compat:✓ logout:✓. Self-check: /api/auth/me returning identity: {...} means the callback landed. Do NOT use --live unless the passkey is in Windows Hello — it opens a fresh automated profile that cannot reach a Chrome-held credential (two 10-min runs expired writing nothing). Everything upstream is verified live: registration active with both callbacks, authorize with correct PKCE, revocation endpoint live, recordJourney wired at all three Worker legs. Clears real-provider-e2e-pending and unholds auth/, surface:identity, worker:identity.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 2. [PRODUCT] The registration probe's 14-day clock has no re-probe cadence. Past P…
-Final score: **93**
+#### 2. [VERIFY] <!-- evidence-open: data/lqip-map.json and the news-publish workflow …
+Final score: **97**
+<!-- evidence-open: data/lqip-map.json and the news-publish workflow fix are the ALREADY-SHIPPED remediation of one instance; the deliverable is the missing art->lqip edge in the evidence graph, which check-publish-cascade-coverage still cannot see --> [S342][BUILD/P1] check-publish-cascade-coverage does not know that news art feeds the LQIP map, and said "all cascades closed" while main was red. The Desk publisher (58e167d95, [skip ci]) committed five new art files under assets/og/news/ and data/news-desk/art/ without regenerating data/lqip-map.json, so build-lqip-map --check failed on origin/main and — being [skip ci] — no run caught it; the next human push inherits the red. Found live during the S342 closeout. The publisher is fixed (it now runs build-lqip-map + inject-lqip, --checks both, and stages data/lqip-map.json), but the gate that exists to catch this class still reports 29/29 clean: the art→lqip edge is absent from the evidence graph. Add it, then verify by reverting the workflow fix and confirming the gate goes red — the same both-directions proof S341 used. Until then this class can recur through any other publisher that commits an image.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 3. [PRODUCT] The registration probe's 14-day clock has no re-probe cadence. Past P…
+Final score: **90**
 [S342][OBS/P2] The registration probe's 14-day clock has no re-probe cadence. Past PROBE_MAX_AGE_DAYS = 14 the probe stops settling obelisk-staging-registration and it falls back to missing — fail-closed and safe, but with nothing refreshing it the surface will read as a regression to whoever sees it first. Add --probe to a low-frequency cron (weekly-maintenance is the natural home) and commit the receipt, or fold it into closeout. Do NOT widen the clock instead — the clock is the point.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 3. [BRAND] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. …
-Final score: **87**
+#### 4. [BRAND] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. …
+Final score: **84**
 [S337][SEC/P1] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. ambient-core.bundle.js installs the TT default policy that the site's ~167 legacy innerHTML sinks depend on, and its own comment says it "MUST load before any sink usage" — but ambient-core is not the first script on the page. Measured across 137 built pages in S337: 31 sink-bearing client assets load before it, led by pwa-nav.js (81 pages) and pwa-install.js (72). Report-Only hides this; enforcement throws. This is the concrete blocker the board has been recording as "stale soak evidence" — both are true, only this one names a defect. The repair hoists the policy installer ahead of every sink-bearing asset, which rewrites the head of every page and invalidates every hash-bound receipt at once, so it needs its own session and its own reseal budget, not a rider on a deploy. Re-measure with the scan in D-S337.3 before and after. (D-S337.3)
 Why it matters: Changes public vocabulary or navigation — requires founder sign-off before user-visible copy changes.
 
-#### 4. [SECURITY] Decide whether to arm the Monthly Member Newsletter
-Final score: **84**
+#### 5. [SECURITY] Decide whether to arm the Monthly Member Newsletter
+Final score: **81**
 [S341][OPS/P1] Decide whether to arm the Monthly Member Newsletter — it has never once sent. Every scheduled run since 2026-04-02 has failed; zero successes on record. Two confirmed causes: NEWSLETTER_SECRET does not exist as a repository secret, so the workflow sends Authorization: Bearer with an empty token; and POST {SUPABASE_FUNCTION_BASE_URL}/send-member-newsletter returns 404 NOT_FOUND because supabase/functions/send-member-newsletter/ exists here but was never deployed. Not founder-blocked: supabase.management is READY, so both the deploy and the secret are agent paths (CANON-019, phantom-blocker test satisfied). Deliberately not armed because doing so emails every member on the 2nd of next month, which is not a side effect of a website deploy session (D-S341.4). If armed: deploy the function, mint the secret, dispatch ONE manual run before the cron fires.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 5. [PRODUCT] portal-feedback.js writes columns the checked-in page_feedback migrat…
-Final score: **81**
+#### 6. [PRODUCT] portal-feedback.js writes columns the checked-in page_feedback migrat…
+Final score: **78**
 [S335][DATA/P2] portal-feedback.js writes columns the checked-in page_feedback migration does not define. The client inserts page_path/question/answer/session_id; the migration defines path/reaction/visit_depth_bucket/ua_kind/created_at with service-role-only SELECT and no user_id. Either the live table was altered in the dashboard (probe it with the pre-image shape in apply-supabase-migration.mjs) or member feedback has been failing silently. A true account-linked "your feedback shipped" loop needs a user_id-bearing feedback table with read-own RLS; the S335 chronicle strip is device-scoped (localStorage) for that reason.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 6. [INTELLIGENCE] Four public tables still render a silent zero
-Final score: **78**
+#### 7. [INTELLIGENCE] Four public tables still render a silent zero
+Final score: **75**
 [S336][SEC/P1 · FOUNDER DECISION] Four public tables still render a silent zero — decide which member activity becomes publicly readable, then ship one migration. S336 completed the audit; the remaining step is a decision, not investigation. Verified against the migrations and probed live: challenge_submissions (no anon SELECT policy — only read_own + admin; read anonymously by /community/ and all seven /leaderboards/*; probe returns HTTP 200 count 0), game_sessions (no anon SELECT at all; /community/ and /), point_events (auth.uid() = user_id only — powers the referral leaderboard and the public profile's "Recent activity", which renders its empty state forever), member_achievements (auth.uid() = member_id only — public profile shows "No achievements unlocked yet." permanently; its policy also keys member_id while the client filters user_id). The vault_members(username,…) PostgREST embeds at leaderboards/index.html:822,868 resolve to null for anon, so fixing the four alone would render raw UUIDs. Proposed shape, generalizing S335's public_leaderboard: definer projection views (public_challenge_feed, public_game_activity, public_point_events, public_member_achievements), each honouring vault_members.public_profile, each with an explicit grant select … to anon, authenticated, then repoint the ~20 call sites. NOT applied in S336 because it decides what member activity is publicly visible — a privacy/product call reserved for the founder. Apply with scripts/apply-supabase-migration.mjs (pre-image + probe) once the columns are chosen. (D-S336.5)
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 7. [VERIFY] Manual CANON-053 rendered-pixel review of the surfaces that only NOW …
-Final score: **74**
+#### 8. [VERIFY] Manual CANON-053 rendered-pixel review of the surfaces that only NOW …
+Final score: **71**
 [S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only NOW actually serve. S335 captured automated receipts for /community/#wall, /changelog/#requests, /evidence/#verify, /how-we-build/ and the member dashboard meter — but production was serving the pre-S335 build at the time, so those captures could not have been of the live pages. They serve as of S336. Capture across all seven themes at 1366px desktop and 390px mobile, inspect the images, and leave a hash-bound docs/visual-qa/LATEST.json. Verify with check-visual-qa.mjs --project . --changed.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
-
-#### 8. [PRODUCT] Confirm the founder-approved Season 1 defaults, then watch the first …
-Final score: **72**
-[S335][ENGAGE/P2] Confirm the founder-approved Season 1 defaults, then watch the first week. data/seasons.json declares "Season 1 — Ignition" (2026-09-02 → 2026-10-14, rewards in Vault Points only). Founder may veto name/dates/rewards at review. After a week: does season_xp move, does the weekly board fill, does the community #wall countdown render on mobile across all themes (CANON-053 receipt).
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order
 
