@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **79/100**
 - Health: **yellow**
 - Current SIL: **994/1000**
 - CI health: **check gh run list**
@@ -43,10 +43,10 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 4. [VERIFY] Confirm the E2E Test Suite is green on a real scheduled/push run, not…
+#### 4. [VERIFY] check-postbuild-ordering --check reports unmeasured in CI and always …
 Final score: **91**
-[S340][VERIFY/P1] Confirm the E2E Test Suite is green on a real scheduled/push run, not only locally. S340 fixed it at the root and proved it locally: the smoke went 12 checks to 26 with 0 failures, and all eight previously-stranded specs pass (26 passed / 0 failed against the preview). But the workflow itself had been red on eight consecutive pushes, and the proof that it is fixed is a green run on GitHub -- which had not happened at closeout. Check gh run list --workflow="E2E Test Suite". If it is still red, read the failing step before touching anything: the pre-gate is no longer the failure point, so anything red now is a consumer that was masked for 17 hours and has not yet been seen.
-Why it matters: Confirm the E2E Test Suite is green on a real scheduled/push run, not  shipped last session — confirm it works in production before piling new work on top.
+[S340][OBS/P3] check-postbuild-ordering --check reports unmeasured in CI and always will. Only --self-test is wired into build:check; the --check half needs a trace, and no CI job runs --instrument. That is deliberate for now -- the instrument runs the whole postbuild chain, so wiring it into every build doubles the build -- but a gate that can only ever report unmeasured in CI is one step from a gate that has never run. Decide: either run --instrument on a weekly cron and commit the receipt, or fold the tracing into the real postbuild so every build produces its own evidence for free. The second is better if the preload cost is negligible; measure it before choosing.
+Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -57,50 +57,50 @@ Final score: **90**
 [S340][UX/P2] Make the game covers art-only; the tile owns all text. The direction is DECIDED (D-S340.7), so this is execution, not another design round. build-game-covers.mjs rasterizes the genre eyebrow and the game title into every cover while .hero-tile renders its own __kicker and __name over them. D-S339.6 already established the governing principle by removing the baked status word: text baked into an image goes stale against the feed that owns it, and the kicker and title are feed-derived from the same catalog. So the covers lose their text rather than the tiles losing their chrome -- the alternative re-introduces exactly what S339 removed. Deferred from S340 because regenerating every cover is binary churn that invalidates every cover-bound receipt and rotates the home page's LCP asset, which does not belong in a session that must also land a production deploy. Budget a reseal and a CANON-053 capture pass at both tile sizes and both themes. Supersedes [S339][UX/P3].
 Why it matters: Make the game covers art-only; the tile owns all text. The direction i is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] check-postbuild-ordering --check reports unmeasured in CI and always …
-Final score: **88**
-[S340][OBS/P3] check-postbuild-ordering --check reports unmeasured in CI and always will. Only --self-test is wired into build:check; the --check half needs a trace, and no CI job runs --instrument. That is deliberate for now -- the instrument runs the whole postbuild chain, so wiring it into every build doubles the build -- but a gate that can only ever report unmeasured in CI is one step from a gate that has never run. Decide: either run --instrument on a weekly cron and commit the receipt, or fold the tracing into the real postbuild so every build produces its own evidence for free. The second is better if the preload cost is negligible; measure it before choosing.
-Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 3. [PRODUCT] The cover artwork still duplicates the tile's KICKER and TITLE, the s…
-Final score: **81**
+#### 2. [PRODUCT] The cover artwork still duplicates the tile's KICKER and TITLE, the s…
+Final score: **84**
 [S339][UX/P3] The cover artwork still duplicates the tile's KICKER and TITLE, the same way it used to duplicate the status. D-S339.6 removed the baked status word, which was the reported defect and the only one that could go stale against a feed. But build-game-covers.mjs still rasterizes the genre eyebrow and the game title into every cover, and .hero-tile renders its own __kicker and __name over them — so "ACTION COMEDY SHOOTER / Call of Doodie" appears in the artwork behind "Action Comedy / Call of Doodie" in live text. It reads as a deliberate layered lockup at featured size and as a smudge at tile size, which is why it is P3 and not P1. Decide it as a design question with rendered captures at both sizes: either the cover goes art-only and the tile owns all text, or the tile drops its own chrome on covered tiles. Do not split the difference per-breakpoint.
 Why it matters: The cover artwork still duplicates the tile's KICKER and TITLE, the sa is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] <!-- evidence-open: the files named are the churning OUTPUTS and the …
-Final score: **75**
+#### 3. [PRODUCT] <!-- evidence-open: the files named are the churning OUTPUTS and the …
+Final score: **78**
 <!-- evidence-open: the files named are the churning OUTPUTS and the suspect generators, not deliverables; the deliverable is a pinned-clock bisect and fix --> [S335][BUILD/P2] Two identical builds minutes apart still churn 47 files — commit-derived feeds are the source, not timestamps. With no commit between them, build 2 rewrote feed/forge-ledger.{json,xml} (206 lines), api/feedback-provenance.json (a whole theme dropped), api/ship-receipts.json, api/status-proof.json, api/news-visual-receipts.json and the changelog SSR block; a third build would churn again. All derive from api/commit-map.json / the git log through build-parallel-phase.mjs (which runs build-feedback-provenance + build-ship-receipts), so the working theory is a clock-relative selection window in that chain. Bisect: run build-forge-feed.mjs twice with a pinned --now (add the flag if absent) and diff; then the provenance pair. This is the receipt-cascade cost the S334 "vs-yas" item was really measuring. Fixed this session: _headers lagged one build because early-hints ran before the postbuild shell rotation — moved into postbuild after build-shell-assets.
 Why it matters: <!-- evidence-open: the files named are the churning OUTPUTS and the s is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] The release-ceremony receipt truncates a failure message at 500 chara…
-Final score: **63**
+#### 4. [VERIFY] The release-ceremony receipt truncates a failure message at 500 chara…
+Final score: **66**
 [S337][OBS/P2] The release-ceremony receipt truncates a failure message at 500 characters, so a multi-violation failure names only its first file. The S337 blocking run recorded Received + 6 — six console errors — and api/staging-release-browser.json disclosed exactly one file before the message was cut. Diagnosing it needed the CI artifact downloaded and the test re-run locally; the receipt that exists to make a rejection legible could not. Either raise the cap or, better, record the DISTINCT violating files as a structured array alongside the prose message, so the receipt answers "what is violating" without a round trip.
 Why it matters: The release-ceremony receipt truncates a failure message at 500 charac was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### LATER
-
-#### 1. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-Final score: **63**
+#### 5. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+Final score: **66**
 [S335][TOKEN/P2] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs shards the handoff. It is the largest file any session can touch (~126K tokens raw). compact-handoff.mjs and rotate-ledger.mjs read the handoff archive, so the shard has to be introduced through those readers, not by moving files. Measure with context-meter.mjs before and after.
 Why it matters: Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs sh lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 2. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-Final score: **62**
+### LATER
+
+#### 1. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+Final score: **65**
 <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
 Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 3. [PRODUCT] The Desk's binding constraint is now topic ACCEPTANCE, and it current…
-Final score: **57**
+#### 2. [PRODUCT] The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+Final score: **60**
 [S333][NEWS/P0] The Desk's binding constraint is now topic ACCEPTANCE, and it currently queues nothing. Measured across four runs on 2026-08-31: 03:19 queued 3, 04:10 queued 2 (one became the published edition), the 06:44 scheduled run queued 0 of 177, and a local news-trend-radar.mjs --scan reproduces 0 queued / 176 rejected deterministically. Selection and the authoring model are both fixed and proven; the pipeline now starves upstream instead. Prediction to check first: today's edition ages to 1 day old on 2026-09-01, at which point build-news-freshness --check --require-daily fails again and the Desk returns to red — not from the defects fixed in S333, but from an empty queue. Investigate the rejection thresholds (corroboration count, recency window, published-slug dedupe from S329, vendor filter) and establish what acceptance rate a 4-slot daily cadence actually requires.
 Why it matters: The Desk's binding constraint is now topic ACCEPTANCE, and it currentl is open, local, and unblocked — can ship this session.
+
+#### 3. [SECURITY] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
+Final score: **60**
+[S333][NEWS/P1] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08-31 edition proves the pipeline works, but it was manually dispatched under observation. The cron itself has not gone green unattended since 2026-08-29. Check the 06:07 / 12:07 / 18:07 / 22:07 UTC slots; if they still drop while a dispatch succeeds, the difference is environmental (scheduler context, token scope, or queue freshness), not the selection or model logic this session fixed.
+Why it matters: Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08 lowers operational risk and is entirely local — no external dependencies block it.
+
+First command: `node scripts/lint-repo.mjs`
 
 ### DEFERRED / GATED
 
@@ -149,15 +149,15 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 1. resync-derived.mjs does not cover every --checked derived artifact, a…
 2. <!-- evidence-open: config/intelligence-suite.json and journal/index.…
 3. Post-push CI confirmation
-4. Confirm the E2E Test Suite is green on a real scheduled/push run, not…
+4. check-postbuild-ordering --check reports unmeasured in CI and always …
 5. Make the game covers art-only; the tile owns all text. The direction …
-6. check-postbuild-ordering --check reports unmeasured in CI and always …
-7. The cover artwork still duplicates the tile's KICKER and TITLE, the s…
-8. <!-- evidence-open: the files named are the churning OUTPUTS and the …
-9. The release-ceremony receipt truncates a failure message at 500 chara…
-10. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-11. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-12. The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+6. The cover artwork still duplicates the tile's KICKER and TITLE, the s…
+7. <!-- evidence-open: the files named are the churning OUTPUTS and the …
+8. The release-ceremony receipt truncates a failure message at 500 chara…
+9. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+10. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+11. The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+12. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
 
 ## Best Immediate Move
 
