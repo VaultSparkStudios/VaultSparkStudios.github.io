@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T05:20:10.543Z",
+  "generatedAt": "2026-09-03T05:21:04.478Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -43,10 +43,10 @@
     },
     {
       "name": "Accessibility Audit",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-03T05:18:36Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-03T05:20:23Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33718306653",
       "headSha": "f72034a5247e2cea16c7ece7ab1091f94df70ad3",
       "event": "push"
@@ -206,7 +206,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.08,
+      "ageHours": 0.1,
       "staleAfterHours": 48
     },
     {
