@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T08:10:58.028Z",
+  "generatedAt": "2026-09-03T14:36:06.478Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 8,
-    "healthy": 8,
-    "unknown": 6,
+    "observed": 9,
+    "healthy": 9,
+    "unknown": 5,
     "stale": 0,
     "dead": 0
   },
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-03T08:06:23Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33730612566",
-      "headSha": "685ffe66335cfe4ce552586f471478acbafb3816",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-03T14:33:30Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33767532426",
+      "headSha": "d50e74b084cc29aa68709a66c75396792671a510",
       "event": "push"
     },
     {
@@ -46,19 +46,19 @@
       "status": "failure",
       "rawStatus": "completed",
       "conclusion": "failure",
-      "updatedAt": "2026-09-03T07:57:32Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33730612322",
-      "headSha": "685ffe66335cfe4ce552586f471478acbafb3816",
+      "updatedAt": "2026-09-03T14:35:15Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33767532476",
+      "headSha": "d50e74b084cc29aa68709a66c75396792671a510",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-03T08:09:59Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33730612406",
-      "headSha": "685ffe66335cfe4ce552586f471478acbafb3816",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-03T14:33:23Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33767532197",
+      "headSha": "d50e74b084cc29aa68709a66c75396792671a510",
       "event": "push"
     },
     {
@@ -75,13 +75,15 @@
   "scheduledWorkflows": [
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-09-03T09:19:56Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 5.27,
       "staleAfterHours": 48
     },
     {
@@ -94,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.3,
+      "ageHours": 7.72,
       "staleAfterHours": 48
     },
     {
@@ -118,7 +120,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.81,
+      "ageHours": 7.23,
       "staleAfterHours": 48
     },
     {
@@ -134,15 +136,13 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-03T06:38:55Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 1.53,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -159,40 +159,42 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-03T06:40:13Z",
+      "lastUpdatedAt": "2026-09-03T12:38:15Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.51,
+      "ageHours": 1.96,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-03T06:55:10Z",
+      "lastUpdatedAt": "2026-09-03T12:52:59Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.26,
+      "ageHours": 1.72,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-03T05:26:51Z",
+      "lastUpdatedAt": "2026-09-03T12:42:47Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.74,
+      "ageHours": 1.89,
       "staleAfterHours": 48
     },
     {
@@ -205,13 +207,13 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.42,
+      "ageHours": 7.83,
       "staleAfterHours": 48
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-03T07:38:23Z",
+      "lastUpdatedAt": "2026-09-03T14:12:37Z",
       "recentConclusions": [
         "success",
         "success",
@@ -220,18 +222,20 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.54,
+      "ageHours": 0.39,
       "staleAfterHours": 48
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-09-03T13:08:43Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 1.46,
       "staleAfterHours": 48
     },
     {
