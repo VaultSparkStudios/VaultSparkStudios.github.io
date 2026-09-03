@@ -284,24 +284,13 @@ jobs:
             echo "Nothing new to publish for the ${{ steps.slot.outputs.edition }} slot"
           else
             git commit -m "feat(desk): publish the ${{ steps.slot.outputs.edition }} edition [skip ci]"
-            pushed=false
-            for attempt in 1 2 3; do
-              # During a rebase Git calls the fetched main side "ours" and the
-              # publisher commit "theirs". Keep the already-gated publication
-              # transaction when another bot changed the same derived proof
-              # files, while retaining every non-conflicting remote receipt.
-              if git pull --rebase -X theirs --autostash origin main && git push; then
-                pushed=true
-                break
-              fi
-              git rebase --abort >/dev/null 2>&1 || true
-              echo "push attempt $attempt failed; retrying"
-              sleep $((attempt * 5))
-            done
-            if [ "$pushed" != "true" ]; then
-              echo "::error::Edition passed every Desk gate but could not reach main after 3 attempts."
-              exit 1
-            fi
+            # S341 — this loop was the ONE of twelve publishers that could already
+            # survive a conflict (-X theirs to keep the gated publication
+            # transaction, rebase --abort to unwedge before retrying). Its shape is
+            # now the shared implementation every publisher calls, plus the
+            # re-validation it lacked: -X theirs settles a collision but says
+            # nothing about a dependent that merely hashes an input the rebase moved.
+            bash scripts/ci/publish-push.sh "Desk edition (${{ steps.slot.outputs.edition }})" --resync --attempts 3
           fi
 
       - name: Slot summary

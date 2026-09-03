@@ -1,3 +1,22 @@
+## S341 Publisher-Landing and Cron-Visibility Correction (2026-09-03)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No public schema changed. `check-scheduled-workflow-staleness --json` gains `silent[]`, `unreachable`, and per-verdict `intervalHours`/`ageHours`; `noData` is retained under its historical key for existing readers but is no longer a synonym for healthy. `check-protocol-scripts --json` gains a `propagationGap[]` bucket and a `totals.propagationGap` count. |
+| Prompt/template alignment | 5 | No prompt or template surface changed this session. |
+| Derived-view freshness | 5 | Every claim re-probed live: the uptime failure read from run `33707261102`'s own log and re-probed at closeout, which is how the self-recovery at 03:45Z was caught before it was published as an ongoing outage, the twelve-publisher blast radius enumerated from the workflow directory, the 4.6-hour window computed from the actual 120 runs `gh` returns, and the six newsletter failures read from that workflow's own run list. Both new gate contracts reproduced in the failing direction before being accepted. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S341.1..5), SIL, WORK_LOG, PROJECT_STATUS and this file all reference S341. |
+| Contradiction density | 4 | Three green-but-blind surfaces corrected (two gates plus the visual receipt); one new failure disclosed (the newsletter) and left open with its reason. |
+
+**Genome total: 24/25 — green with one named yellow.** Overall status: yellow — the publisher landing path is fixed and gated, but a member-facing cron is now known to have never worked and is deliberately left unarmed pending a founder decision.
+
+- **Truth corrected: a gate named for publisher resilience measured only half of it.** `check-ci-publisher-resilience` was green for the entire outage because its subject was the script's transient-network handling, not the git transaction that failed. It now carries both contracts, and the landing half is deliberately scoped to *every* workflow that lands a commit rather than only the unattended ones — the narrower scope is exactly what let the first negative control pass.
+- **Truth corrected: a probe reported 14 scheduled workflows checked while it could see 3.** The window was 4.6 hours and "not observed" was counted as "not broken". `unmeasured` is now reported as unmeasured, which is why a six-month-dead cron became visible in the first live run.
+- **Truth disclosed: the Monthly Member Newsletter has never sent.** Six scheduled runs since 2026-04-02, six failures, zero successes. Recorded on the board with both root causes and the reason it was not armed this session, rather than silently repaired next to a production deploy.
+- **Truth corrected: the CANON-053 visual receipt certified 14 blank screenshots as manually reviewed.** `/proof/` was retired in S335; `capture-theme-matrix.mjs` still targeted it and serves files without `_redirects`, so every request 404'd to a blank PNG that entered the manifest and was certified by `record-visual-review --all`. Six sessions of receipts asserted a rendered-pixel review of fourteen renders of nothing. Route corrected, a blank-capture guard added and proven in the failing direction, and the receipt now records 8/84 manually reviewed with 76 explicitly automated-only.
+- **Truth disclosed: 76 of 84 captures are automated-only.** The previous receipt claimed complete review. This one does not, and the smaller number is the accurate one.
+- **Truth disclosed: the `silent` cron verdict is fixture-proven only.** No live cron is currently silent, so the path has never fired in anger. Boarded as `[S341][OBS/P3]` rather than implied by the passing self-test.
+
 ## S340 CI-Blackout and Preview-Fidelity Correction (2026-09-02)
 
 | Dimension | Score | Evidence |

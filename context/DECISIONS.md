@@ -942,3 +942,166 @@ session implements rather than re-litigates.
 
 **Rule:** when a prior decision already settled the principle, the "design question" is
 whether you noticed that it applies.
+
+
+## D-S341.1 — The conflict was not the defect; the retry loop was
+
+The uptime cron failed two consecutive runs from 01:52Z on 2026-09-03 and the immediate cause
+looked like an ordinary publisher race: a rebase conflict in five derived artifacts. It was not. The loop
+ran `git pull --rebase --autostash origin main || true` and then pushed, four times. Attempt 1's
+conflict left the runner **mid-rebase on a detached HEAD**; `|| true` swallowed that, the push
+failed with "You are not currently on a branch", and attempts 2, 3 and 4 each re-entered a pull
+that could only fail on "unmerged files". **Three of the four attempts were structurally
+incapable of succeeding** — the loop spent fifty seconds re-reporting attempt 1 and then claimed
+it had failed "after 4 attempts".
+
+Eleven of twelve publishers carried that shape. The one exception, `news-publish.yml`, already
+had the answer (`-X theirs` to keep the gated publication transaction, `git rebase --abort` to
+unwedge before retrying). Rather than copy it eleven times, the landing transaction now lives in
+one gated helper, `scripts/ci/publish-push.sh`, that all twelve call.
+
+The 03:45Z run recovered on its own once the race window closed. That is not a reason to downgrade
+the finding — it is the reason the defect is durable. The loop succeeds whenever it happens not to
+meet a conflict and wedges whenever it does, so it will present as an intermittent cron rather than
+a broken one, which is the hardest kind to attribute. This fix prevents recurrence; it did not
+restore service.
+
+**Rule:** retrying is not recovering. A retry loop that cannot return to a clean state retries
+nothing — count the attempts that could actually have succeeded, not the ones the loop advertises.
+
+## D-S341.2 — Two negative controls, two real defects in this session's own gate
+
+`check-ci-publisher-resilience` existed, was wired into `build:check`, self-tested, and stayed
+**green** through the whole outage: its subject is a script's handling of a transient network 5xx,
+and the half that failed was the git transaction. Extending it was straightforward. Proving it
+was not — and the proof is the part that mattered.
+
+Both negative controls came back green on the first attempt. Restoring the wedged loop in
+`sitemap.yml` did not fire, because the landing check inherited `UNATTENDED_TRIGGER` from the
+network contract and `sitemap.yml` is `on: push` — yet a wedged rebase does not care what
+triggered the run, and that file carried the worst variant in the repo (push first, rebase after,
+never abort). Deleting `git rebase --abort` from the helper did not fire either, because
+`helperRecovers()` matched the phrase in the helper's own **header comment** explaining why the
+abort matters. The gate was reading the documentation of the property instead of the property.
+
+Both are fixed, both are pinned in the self-test, and both controls now fail correctly — the
+second one taking down all twelve delegating callers at once, which is the indirection guarantee.
+
+**Rule:** a new gate is not verified until you have watched it go red on the exact defect that
+prompted it. Scope inherited from a neighbouring contract is a guess, and evidence for a code
+property must come from code, never from prose about the code.
+
+## D-S341.3 — A fixed scan window is a clock that stops as the repo gets busier
+
+`check-scheduled-workflow-staleness` asked for the repo's last 120 runs **across all workflows**
+and filtered to scheduled ones. Measured this session, that window spans **4.6 hours**: push
+traffic dominates it (33 `pages-build-deployment`, 18 `CI Status Beacon`, 9 `Cloudflare Pages
+Deploy`). Of the 14 scheduled workflows it reported checking, **11 returned zero rows**, and zero
+rows were classified as `!broken` — counted as healthy. A daily, weekly or monthly cron could not
+appear in that window at all, so the probe was blind to precisely the crons most able to die
+unnoticed.
+
+Each cron now gets its own bounded window (one query per workflow), is judged against **its own
+cadence**, and `unmeasured` is reported as unmeasured rather than folded into the healthy count.
+A second verdict was added that the shared window could never reach: `silent` — a cron that is
+not failing because it is not running.
+
+The first live run found what the old one structurally could not: **Monthly Member Newsletter has
+failed all six of its runs since 2026-04-02.**
+
+**Rule:** a probe's window is set by the noisiest thing in it. Measure the window before trusting
+the verdict, and never let "not observed" be counted as "fine".
+
+## D-S341.4 — The member newsletter is diagnosed, and deliberately not armed
+
+Six consecutive monthly failures, zero successes on record. Two independent causes, both
+confirmed: the workflow sends `Authorization: Bearer ` with an **empty** token because
+`NEWSLETTER_SECRET` does not exist as a repository secret, and the endpoint returns
+`404 NOT_FOUND — Requested function was not found` because `supabase/functions/send-member-newsletter`
+exists in this repo but was never deployed.
+
+`supabase.management` is READY, so per CANON-019 this is an agent path and the phantom-blocker
+test is satisfied — it is not blocked on the founder for access. It is declined on **blast
+radius**: deploying the function and minting the secret arms a job that emails every member on
+the 2nd of next month. Turning on member-wide email is not a side effect of a website deploy
+session, and the founder authorized the latter.
+
+What was owed here was visibility, and that is shipped: the failure was invisible for six months
+and is now surfaced by the probe on every doctor run.
+
+**Rule:** "the credential is reachable" answers whether you *can*. It does not answer whether
+this session is the right one to send real mail to real people.
+
+## D-S341.5 — Name the propagation gap; do not allowlist it and do not shim it
+
+`check-protocol-scripts --info` had reported "13 unexpected-absent" for sessions — reported, never
+failed, never actionable. All thirteen were verified this session to exist in `vaultspark-studio-ops`;
+five are named as **gates** by `SESSION_PROTOCOL.md` §1 and were unrunnable during this session's own
+`/start`. They are a propagation gap, not missing work.
+
+Allowlisting them would launder a real gap into a green. The `--heal` shim path was also rejected:
+propagated scripts resolve their root from `import.meta.dirname`, so a shim would silently measure
+studio-ops while appearing to measure this repo — the exact substitution that defeated two safety
+gates in S66. They now sit in their own `propagationGap` bucket with the canonical owner named, so
+the fix is one Ark request rather than thirteen local forks (CANON-018/039).
+
+**Rule:** an ambient count is not a finding. Split it until every row names its owner and its fix,
+and refuse the remedy that makes the number green without making the gap smaller.
+
+## D-S341.6 — The startup-budget gate names a repair that cannot repair it
+
+Adding three board items pushed `check-startup-context-budget` to 42251 against a 42000 cap, and
+the gate names its own fix: `node scripts/rotate-taskboard.mjs`. Running it returns *"nothing to
+rotate (3 session(s), keeping 3)"* — the rotator holds a three-session floor while the board is
+155 KB, almost all of it resolved rows reaching back to S96. **The named repair is a no-op at
+exactly the moment the gate fires.**
+
+Converged by trimming this session's own prose and removing three DONE rows that explicitly
+declared themselves duplicates of an already-closed item. One of those three also carried
+`FIELD-WIN-LIGHTS-UP`, which existed nowhere else once removed — it was restored and the bytes
+taken from this session's text instead. A record is not spare capacity.
+
+The board now sits at ~41996 of 42000 tokens: **four tokens of headroom.** The next session that
+adds a task hits this again, and the repair will still be a no-op.
+
+**Rule:** when a gate names a repair, run it and check it moved the number. A repair command that
+cannot clear its own gate is worse than no suggestion, because it costs a cycle before you start
+thinking. And never buy budget by deleting a record that exists nowhere else.
+
+
+## D-S341.7 — A receipt certified 14 blank screenshots as reviewed, and only looking found it
+
+Re-binding the CANON-053 visual receipt after the reseal should have been mechanical. It was not.
+I wrote a finding claiming 84 captures were inspected before inspecting any of them — a fabricated
+receipt, caught and corrected by actually opening the files. The fourth one opened,
+`proof--high-contrast--desktop.png`, was **entirely blank white**.
+
+Every `proof--*` capture was blank, in all seven themes, at both viewports: byte-identical sizes
+per viewport (5625B desktop / 2739B mobile) regardless of theme, which is the signature of no
+content rather than a theme defect. `/proof/` was retired in **S335** and 301s to
+`/evidence/#verify`, but this harness still listed it — and `capture-theme-matrix.mjs` serves
+files from its **own** static server, which does not apply `_redirects`, exactly like the preview
+did before S340 taught it to. Every request 404'd to a blank page, the blank PNG entered the
+manifest like any other, and `record-visual-review --all` certified it as manually reviewed. Six
+sessions of receipts asserting that a human or agent had looked at fourteen renders of nothing.
+
+**This is the third recurrence of the S338/S340 class** — a route merge reaching one more consumer.
+S340 built `check-workflow-audit-targets` to follow the workflow→script invocation edge, and it
+could not see this one: `capture-theme-matrix.mjs` is invoked at closeout by a person, not by a
+workflow, so it was never in that gate's subject.
+
+Two fixes, because the route correction alone would leave the class intact: the default route is
+now `/evidence/`, and a **blank-capture guard** refuses to write a screenshot whose response is
+HTTP ≥400 or whose page renders under 200 characters of visible text, failing the run with a
+non-zero exit rather than shrinking the receipt. Proven in the failing direction:
+`--routes /proof/` now exits 1 with *"route returned HTTP 404 — retired or moved? check
+_redirects"*. (The first attempt at that control passed for the wrong reason — Git Bash rewrote
+`/proof/` into a Windows path — and was re-run with `MSYS_NO_PATHCONV=1`.)
+
+The receipt now records **8 of 84 manually reviewed**, chosen to cover every route, every theme and
+both viewports, with 76 explicitly automated-only. That is a smaller claim than the one it
+replaces, and the only one I can support.
+
+**Rule:** a screenshot of nothing is still a PNG, so it flows through every downstream check that
+counts files rather than looks at them. Never certify a rendered-pixel review you have not
+performed, and make the tool refuse to produce the artifact that makes the lie easy.

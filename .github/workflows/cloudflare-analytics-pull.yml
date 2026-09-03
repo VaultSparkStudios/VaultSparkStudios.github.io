@@ -70,15 +70,12 @@ jobs:
             # loses a run to an ordinary push race with this repo's other crons.
             # Retry with backoff, re-basing each time; a genuine permission or
             # conflict error still fails loudly after the attempts are spent.
-            pushed=0
-            for attempt in 1 2 3 4; do
-              git pull --rebase --autostash origin main || true
-              if git push; then pushed=1; break; fi
-              echo "push attempt $attempt failed — retrying in $((attempt * 5))s"
-              sleep $((attempt * 5))
-            done
-            if [ "$pushed" != "1" ]; then
-              echo "::error::analytics commit could not be pushed after 4 attempts — this window was NOT published"
-              exit 1
-            fi
+            # S341 — retrying is not recovering. That loop swallowed a failed
+            # rebase with `|| true`, so a content conflict left the repo detached
+            # mid-rebase and attempts 2-4 could only fail on "unmerged files".
+            # One shared, gated implementation now owns the landing transaction;
+            # --resync repairs the derived closure of whatever the rebase brought
+            # in, which matters here because this step stages status-proof,
+            # release-proof, citation, intent-map and the stats surface.
+            bash scripts/ci/publish-push.sh "analytics publish" --resync
           fi

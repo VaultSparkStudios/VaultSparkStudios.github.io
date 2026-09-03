@@ -8,7 +8,7 @@
  * verdict lands in docs/THEME_READABILITY_MATRIX.md).
  *
  * Usage:
- *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/proof/]
+ *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/evidence/]
  *   Add --receipt --receipt-all to hash-bind every requested route/theme/viewport
  *   into docs/visual-qa/LATEST.json for a focused changed-surface review. Pass
  *   --reviewed-files <comma-separated filenames> only after directly inspecting
@@ -33,7 +33,16 @@ const OUT_DIR = path.resolve(ROOT, arg('--out', '.cache/theme-matrix'));
 const PORT = Number(arg('--port', '4179'));
 
 const THEMES = arg('--themes', 'dark,light,ambient,warm,cool,lava,high-contrast').split(',');
-const ROUTES = arg('--routes', '/,/games/,/membership/,/status/,/proof/,/atlas/').split(',');
+// S341: `/proof/` was retired in S335 and 301s to `/evidence/#verify` (see _redirects).
+// It stayed in this default for six sessions, and because the static server below is
+// this tool's OWN server -- it does not apply `_redirects`, exactly like the preview
+// before S340 taught it to -- every request 404'd and produced a BLANK PNG. All 14
+// proof captures were byte-identical blanks (5625B desktop / 2739B mobile, the same
+// size in all seven themes, which is the signature of "no content, theme irrelevant"),
+// and `record-visual-review --all` certified them as manually reviewed every session.
+// Third recurrence of the S338/S340 class: a route merge reaching one more consumer.
+// The blank-capture guard below is what makes it non-silent next time.
+const ROUTES = arg('--routes', '/,/games/,/membership/,/status/,/evidence/,/atlas/').split(',');
 const VIEWPORT_PRESETS = [
   { name: 'desktop', width: 1366, height: 900 },
   { name: 'mobile-small', width: 360, height: 640 },
@@ -79,6 +88,7 @@ async function main() {
   const server = await serve();
   const browser = await chromium.launch();
   const manifest = [];
+  const failures = [];
   for (const viewport of VIEWPORTS) {
     const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height }, deviceScaleFactor: 1 });
     for (const theme of THEMES) {
@@ -93,8 +103,20 @@ async function main() {
         const page = await context.newPage();
         try {
           // 'load' not 'networkidle': several pages poll feeds forever.
-          await page.goto(`http://127.0.0.1:${PORT}${route}`, { waitUntil: 'load', timeout: 30000 });
+          const response = await page.goto(`http://127.0.0.1:${PORT}${route}`, { waitUntil: 'load', timeout: 30000 });
           await page.waitForTimeout(600);
+
+          // S341 blank-capture guard. A screenshot of nothing is not evidence, but it
+          // IS a PNG, so it flows into the manifest and `record-visual-review --all`
+          // certifies it as reviewed like any other. That is how 14 blank renders sat
+          // inside a CANON-053 receipt for six sessions. Refuse to write one: a route
+          // that stops rendering must break the capture, not quietly pass through it.
+          const status = response?.status?.() ?? 0;
+          if (status >= 400) throw new Error(`route returned HTTP ${status} — retired or moved? check _redirects`);
+          const visibleText = await page.evaluate(() => (document.body?.innerText || '').replace(/\s+/g, ' ').trim().length);
+          if (visibleText < 200) {
+            throw new Error(`rendered only ${visibleText} chars of visible text — blank/near-blank capture refused`);
+          }
           if (OPEN_NAV) {
             await page.locator('#hamburger').dispatchEvent('click');
             await page.locator('.vs-nav-sheet.open').waitFor({ state: 'visible', timeout: 5000 });
@@ -134,7 +156,11 @@ async function main() {
           manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
-          console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 90)}`);
+          // S341: count it. A skipped capture used to shrink the receipt silently,
+          // so a route that stopped rendering produced a SMALLER set of "fully
+          // reviewed" captures rather than a failure.
+          failures.push(`${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 120)}`);
+          console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 120)}`);
         } finally {
           await page.close();
         }
@@ -148,13 +174,20 @@ async function main() {
   server.close();
   fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), JSON.stringify({ capturedAt: new Date().toISOString(), shots: manifest }, null, 2));
   console.log(`capture-theme-matrix: ${manifest.length} screenshot(s) → ${OUT_DIR}`);
+  if (failures.length) {
+    console.error(`capture-theme-matrix: ${failures.length} capture(s) FAILED — the receipt would be incomplete:`);
+    for (const f of failures) console.error(`  - ${f}`);
+    console.error('  A missing capture is not a smaller review; it is an unreviewed surface. Fix the route, then re-run.');
+    process.exitCode = 1;
+    return;
+  }
   if (argv.includes('--receipt')) writeCanonReceipt(manifest);
 }
 
 /**
  * CANON-053: emit the hash-bound rendered-pixel review receipt at
  * docs/visual-qa/LATEST.json, with a committed capture subset (homepage
- * desktop+mobile per theme, plus /proof/ in dark+light). Capture and inspection
+ * desktop+mobile per theme, plus /evidence/ in dark+light). Capture and inspection
  * are separate facts: only files named by --reviewed-files receive a manual
  * inspection receipt, and the aggregate can claim complete review only when
  * every hash-bound capture was named.

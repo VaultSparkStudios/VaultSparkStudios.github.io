@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-03T02:02:08.191Z",
+  "generatedAt": "2026-09-03T04:43:39.262Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 340,
-    "lastUpdated": "2026-09-02",
-    "currentFocus": "S340 ran the arc under founder authorization for a direct push to main and a full production deploy. FIRST, it found the E2E Test Suite had been failing on every push for more than 17 hours -- eight consecutive runs -- with nothing surfacing it. Both jobs died on the same HTTP smoke pre-gate, which asserted /vaultsparked/ and /ranks/ as 200 pages carrying the body of stubs that S335 deleted; because it is a PRE-gate it also hid eight further stranded Playwright specs that never got to run. The root cause was an asymmetry S338 fixed around rather than fixed: local-preview-server.mjs deliberately parses _headers, and never parsed _redirects, so the preview answers every retired route 404 where the edge answers 301 -- the identical asymmetry that cost S338 twenty-seven hours of Lighthouse verdicts. The preview now applies _redirects with the edge precedence, which resolves every stranded consumer at once and covers every future route merge automatically, and the smoke asserts the 301 CONTRACT derived from config/route-consolidation.json rather than a typed list: 12 checks became 26 with zero failures, and all eight formerly-stranded specs pass. SECOND, the gate built in S338 for exactly this class had stayed green through all 17 hours because its subject was workflow YAML while the routes lived one hop in, inside a script the YAML runs by name; it now follows the invocation edge, with two refinements making it real -- a target expecting a 3xx asserts a merge contract rather than auditing a page, without which it would have refused this session own repair, and a skip:true entry asserts nothing, which it discovered against itself on its first live run. 29/29, reproduced in both directions against the real files. THIRD, the postbuild ordering question carried and deferred twice is answered by instrument rather than a third reading: a preload observes the real fs calls of all 22 steps, and with transforms excluded and no-op writes discounted the measured answer is that S338 fix holds. FOURTH, that run found a defect nobody was hunting -- propagate-nav strips the /evidence/ link from 125 pages every build and generate-evidence-hub restores it, net-zero in git and therefore invisible to every existing gate. Two deferrals were published with their reasons rather than half-built beside a deploy: the nav registration (five consumers) and the art-only cover regeneration (rotates the home LCP asset).",
-    "nextMilestone": "Register /evidence/ in config/intelligence-suite.json to end the 125-page nav tug-of-war, execute the art-only cover regeneration whose direction is already decided, and close the resync-derived coverage gap so a rebase cannot leave a gated artifact stale.",
+    "currentSession": 341,
+    "lastUpdated": "2026-09-03",
+    "currentFocus": "S341 ran the arc under founder authorization for a direct push to main and a full production deploy. FIRST, it found the uptime cron had failed two consecutive runs from 01:52Z, leaving the public availability surface unpublished (the 03:45Z run then recovered on its own once the race cleared, which is why the defect is durable rather than resolved -- the loop succeeds only when it does not meet a conflict, so it presents as an intermittent cron) -- and the rebase conflict in its log was not the defect. The retry loop was: `git pull --rebase --autostash || true` swallowed a failed rebase, so attempt 1's conflict left the runner mid-rebase on a detached HEAD and attempts 2, 3 and 4 could only fail on \"unmerged files\". Three of the four attempts were structurally incapable of succeeding, and the loop then reported failure \"after 4 attempts\". SECOND, eleven of twelve publishers carried that shape; news-publish was the sole survivor and already had the answer, so the landing transaction now lives in one gated helper all twelve call, plus the re-validation news-publish lacked -- a rebase can move an INPUT under a dependent that never conflicted, so --resync rebuilds the derived closure through the evidence graph and amends it into the publish commit. Zero raw pull --rebase landing sites remain. THIRD, the gate named for this class had been green throughout because it measured only the script's transient-network half, and BOTH negative controls for its extension passed on the first attempt: the landing check inherited an unattended-trigger scope from the network contract, so push-triggered sitemap.yml -- which carried the worst variant in the repo -- was invisible to it, and the helper check matched `git rebase --abort` in the helper's own header COMMENT rather than its code. Both fixed and pinned; the controls now fail correctly, the second taking down all twelve callers at once. FOURTH, the dead-cron detector's window was measured rather than assumed at 4.6 hours -- push traffic consumes its 120-run budget -- so 11 of the 14 scheduled workflows it claimed to check returned zero rows, and zero rows counted as healthy. Each cron now gets its own bounded window judged against its own cadence, with unmeasured reported honestly and a new silent verdict. That fix immediately surfaced the Monthly Member Newsletter having failed all six runs since 2026-04-02 with no success on record: no NEWSLETTER_SECRET and an undeployed edge function. It is an agent path, not a founder block, and was deliberately NOT armed -- arming it emails every member next month, which is not a side effect of a website deploy session. FIFTH, re-binding the CANON-053 visual receipt after the reseal found that it had been certifying 14 BLANK screenshots as manually reviewed: /proof/ was retired in S335 and capture-theme-matrix.mjs still targeted it, serving files from its own server with no _redirects, so every request 404'd to a blank PNG that record-visual-review --all then certified. Third recurrence of the S338/S340 route-merge class and invisible to the S340 gate because a person invokes this harness, not a workflow. Route corrected to /evidence/, a blank-capture guard added that fails the run on HTTP >=400 or under 200 characters of visible text, and the receipt now honestly records 8 of 84 manually reviewed with 76 explicitly automated-only.",
+    "nextMilestone": "Decide whether the member newsletter should ship at all and, if so, deploy its edge function and mint NEWSLETTER_SECRET with one manual run before the cron fires; ship the Ark request propagating the twelve studio-ops protocol scripts (five of them SESSION_PROTOCOL gates); register /evidence/ in config/intelligence-suite.json to end the 125-page nav tug-of-war; and execute the art-only cover regeneration whose direction is already decided.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 340,
+    "sessionsCompleted": 341,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -155,7 +155,7 @@
       "capital": 100,
       "automation": 100,
       "total": 994,
-      "updatedSession": 340
+      "updatedSession": 341
     },
     "sealedNextRevealAt": null
   },
@@ -817,16 +817,16 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-03T01:31:44.352Z",
+    "summary": "Production deployment is stranded for 2 consecutive receipts. CI gate status is unknown.",
+    "checkedAt": "2026-09-03T02:36:21.328Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Lighthouse CI",

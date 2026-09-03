@@ -179,14 +179,12 @@ jobs:
           # S316 — same single-shot push shape that lost a whole analytics window
           # to a transient GitHub 500. This cron runs every 30 minutes alongside
           # several other publishers, so it is the most race-prone of them all.
-          pushed=0
-          for attempt in 1 2 3 4; do
-            git pull --rebase --autostash origin main || true
-            if git push; then pushed=1; break; fi
-            echo "push attempt $attempt failed — retrying in $((attempt * 5))s"
-            sleep $((attempt * 5))
-          done
-          if [ "$pushed" != "1" ]; then
-            echo "::error::uptime publish could not be pushed after 4 attempts"
-            exit 1
-          fi
+          #
+          # S341 — and being the most race-prone, it is where the retry loop's real
+          # defect surfaced: it retried, but it could not RECOVER. A rebase conflict
+          # left the repo detached mid-rebase, so attempts 2-4 each failed instantly
+          # on "unmerged files" and the availability surface went unpublished. The
+          # loop now lives in one shared, gated helper (scripts/ci/publish-push.sh);
+          # --resync repairs the derived closure of anything the rebase brought in,
+          # which is the cascade-width class S340 had to repair by hand.
+          bash scripts/ci/publish-push.sh "uptime publish" --resync

@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-02 (Session 340 closeout) -->
+<!-- generated-at: 2026-09-03 (Session 341 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 340 closeout · 2026-09-02.
+> **Fast-boot brief** — generated at Session 341 closeout · 2026-09-03.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 341 · 2026-09-02 · FOUNDER MODE                         ║
+║  Session 342 · 2026-09-03 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S340) - WHAT SHIPPED ══════════════════════════╗
-║  S340 -- E2E suite dead 17h on a route merge reaching a second   ║
-║  Tests  -                                                        ║
-║  Deploy -                                                        ║
+╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
+║  Expected S341; PROJECT_STATUS summary says S340.                ║
+║  S341 ran the arc under founder authorization for a direct push  ║
+║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -43,15 +43,15 @@
 ║    994/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 3↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▁  ↑  (last 2 sessions)                               ║
+║    Trend  ▄▄▁  ↑  (last 3 sessions)                              ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ██▇▇████ →                ║
+║    Dev Health       100    ██████████  █▇▇█████ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum         100    ██████████  ▇█▇▇▇▇▇█ →                ║
+║    Momentum         100    ██████████  █▇▇▇▇▇██ →                ║
 ║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual     100    ██████████  ▇▇▇▇████ →                ║
+║    Process Qual     100    ██████████  ▇▇▇█████ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
@@ -60,7 +60,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 340 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 341 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    381/381 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -80,7 +80,7 @@
 ║  ✓  Velocity      3 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
-║  ⚠  IGNIS         47138 FORGE  ·  8d old                         ║
+║  ⚠  IGNIS         47138 FORGE  ·  9d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -88,9 +88,9 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  3d old (2026-08-30)                            ║
+║  ✓  Revenue sig.  4d old (2026-08-30)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⚠  Doctor        14/16 (88%)  ·  2 warn: 2 self                 ║
+║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -115,7 +115,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▁  3↑  (last 5 sessions)                           ║
+║  Velocity:   ▄▄▁  3↑  (last 5 sessions)                          ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       resync-derived.mjs does not cover every --  ║
+║   96  [PRODUCT]      The silent cron verdict is fixture-proven   ║
+║        The silent cron verdict is fixture-proven only. check-sc  ║
+║                                                                  ║
+║   95  [VERIFY]       resync-derived.mjs does not cover every --  ║
 ║        resync-derived.mjs does not cover every --checked derive  ║
 ║                                                                  ║
-║   97  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
+║   92  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
 ║        <!-- evidence-open: config/intelligence-suite.json and j  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   91  [VERIFY]       Confirm the E2E Test Suite is green on a r  ║
-║        Confirm the E2E Test Suite is green on a real scheduled/  ║
-║                                                                  ║
-║   90  [PRODUCT]      Make the game covers art-only; the tile ow  ║
+║   87  [PRODUCT]      Make the game covers art-only; the tile ow  ║
 ║        Make the game covers art-only; the tile owns all text. T  ║
+║                                                                  ║
+║   86  [VERIFY]       check-postbuild-ordering --check reports u  ║
+║        check-postbuild-ordering --check reports unmeasured in C  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 340 closeout · 2026-09-02*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 341 closeout · 2026-09-03*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

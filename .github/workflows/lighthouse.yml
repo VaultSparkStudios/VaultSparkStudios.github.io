@@ -100,8 +100,7 @@ jobs:
             exit 0
           fi
           git commit -m "chore: update lighthouse trend ledger [skip ci]"
-          git pull --rebase origin main || true
-          git push || echo "trend push skipped (non-fatal)"
+          bash scripts/ci/publish-push.sh "lighthouse trend" --attempts 2 || echo "trend push skipped (non-fatal)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

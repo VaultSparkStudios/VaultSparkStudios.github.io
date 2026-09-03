@@ -59,6 +59,28 @@ const NETWORK_CALL = [
 // from being misclassified as a Node publisher dependency.
 const NETWORK_FREE_MARKER = /@ci-publisher-network-free\b/;
 
+// ── S341: the publisher's OTHER half ────────────────────────────────────────
+// Everything above measures the GENERATE half of a publisher: whether the node
+// script survives a transient upstream 5xx. A publisher is two transactions,
+// though, and the second one — LANDING the commit on main — had no contract at
+// all. This gate carried the name "publisher resilience" and stayed green while
+// the uptime cron failed every run for hours (2026-09-03) on the landing half.
+// A gate whose name promises a property must measure that property, or its green
+// is worse than no gate: it is an assurance nobody re-checks.
+//
+// THE LANDING CONTRACT — a publisher that rebases to land MUST be able to recover
+// from a conflict. A conflicted rebase leaves the runner on a detached HEAD, so
+// every subsequent `git pull --rebase` fails instantly on "unmerged files" and
+// every subsequent push fails on "not currently on a branch": a retry loop
+// without `git rebase --abort` cannot succeed after its first attempt, however
+// many attempts it advertises.
+//
+// Satisfied either by delegating to the shared helper, or by aborting in place.
+// The helper is resolved and CHECKED rather than trusted by name — a detector
+// blind to helper indirection would pass twelve callers on the strength of a
+// filename, and would keep passing if the recovery were deleted from it.
+const PUBLISH_HELPER = 'scripts/ci/publish-push.sh';
+
 // Transient-degrade marker = the script can survive an upstream blip.
 const DEGRADE_MARKER = [
   /isTransient\w*Error/, /\w+Safe\s*\(/, /function\s+\w*[Ss]afe\b/,
@@ -122,6 +144,63 @@ function deskArtworkGuardFinding(src) {
   return null;
 }
 
+// Split a workflow into step blocks so a `git push` is judged together with the
+// rebase and retry logic that surrounds it, not against the whole file.
+function stepBlocks(src) {
+  const lines = src.split('\n');
+  const starts = [];
+  lines.forEach((l, i) => { if (/^\s*-\s+(name|uses|run|id)\s*:/.test(l)) starts.push(i); });
+  return starts.map((s, k) => lines.slice(s, starts[k + 1] ?? lines.length).join('\n'));
+}
+
+// The helper is only a valid answer while it still DOES the thing. Read it — and
+// read the code, not the prose. The first draft of this function matched the
+// whole file and was satisfied by the helper's own header comment explaining why
+// `git rebase --abort` matters; deleting the actual line left the gate green.
+// Evidence for a code property has to come from code.
+function stripShellComments(src) {
+  return src.split('\n').map((l) => l.replace(/(^|\s)#.*$/, '$1')).join('\n');
+}
+function helperRecovers() {
+  const p = join(ROOT, 'scripts', 'ci', 'publish-push.sh');
+  if (!existsSync(p)) return false;
+  return /git\s+rebase\s+--abort/.test(stripShellComments(readFileSync(p, 'utf8')));
+}
+
+const LANDING_FIX =
+  'rebases to land but cannot recover from a conflict — a conflicted rebase leaves a detached HEAD, ' +
+  'so every later `git pull --rebase` fails on "unmerged files" and the push can never succeed. ' +
+  `Delegate the landing to ${PUBLISH_HELPER}, or \`git rebase --abort\` before retrying.`;
+
+// NOTE the subject: EVERY workflow that lands a commit, not only the unattended
+// ones. The transient-network contract above is rightly scoped to schedule:/
+// workflow_run: — a human is watching a push-triggered run's network call. A
+// wedged rebase is different: it does not care what triggered the run, and the
+// first negative control for this gate proved the point by passing. sitemap.yml
+// carried the worst variant in the repo (push first, rebase after, never abort)
+// and was invisible here purely because its trigger is `push:`.
+function landingAudit(workflowFiles = listWorkflowFiles()) {
+  const findings = [];
+  const helperOk = helperRecovers();
+  for (const wf of workflowFiles) {
+    const src = readFileSync(join(WF_DIR, wf), 'utf8');
+    for (const block of stepBlocks(src)) {
+      const delegates = block.includes(PUBLISH_HELPER);
+      if (delegates) {
+        if (!helperOk) {
+          findings.push({ workflow: wf, reason: `delegates landing to ${PUBLISH_HELPER}, which no longer aborts an in-progress rebase` });
+        }
+        continue;
+      }
+      if (!/\bgit\s+push\b/.test(block)) continue;          // not a landing step
+      if (!/git\s+pull\s+--rebase/.test(block)) continue;    // not the rebase-to-land shape
+      if (/git\s+rebase\s+--abort/.test(block)) continue;    // recovers in place
+      findings.push({ workflow: wf, reason: LANDING_FIX });
+    }
+  }
+  return findings;
+}
+
 // Core: find unattended publisher network-callers, invoked non-tolerantly, lacking a degrade marker.
 function audit(workflowFiles = listWorkflowFiles()) {
   const findings = [];
@@ -179,6 +258,47 @@ function selfTest() {
   const live = audit();
   assert(live.length === 0, `live CI publisher surface must be clean (found: ${live.map((f) => f.script).join(', ') || 'none'})`);
 
+  // ── S341 landing contract ────────────────────────────────────────────────
+  // Reproduce the exact shape that failed live: a retry loop that rebases and
+  // swallows the failure, with no way out of a conflicted rebase.
+  const wfWedged = `on:\n  schedule:\n    - cron: '*/30 * * * *'\njobs:\n  x:\n    steps:\n      - name: publish\n        run: |\n          for attempt in 1 2 3 4; do\n            git pull --rebase --autostash origin main || true\n            if git push; then break; fi\n          done\n`;
+  const wfInPlace = wfWedged.replace('if git push; then break; fi', 'if git push; then break; fi\n            git rebase --abort || true');
+  const wfDelegates = `on:\n  schedule:\n    - cron: '*/30 * * * *'\njobs:\n  x:\n    steps:\n      - name: publish\n        run: |\n          bash ${PUBLISH_HELPER} "x"\n`;
+  const wfPushOnly = `on:\n  schedule:\n    - cron: '0 9 * * *'\njobs:\n  x:\n    steps:\n      - name: tag\n        run: git push origin --tags\n`;
+
+  // audit() reads real files, so exercise the landing classifier through the
+  // same block/regex path using synthetic sources.
+  const landingOf = (src) => {
+    const helperOk = helperRecovers();
+    const out = [];
+    for (const block of stepBlocks(src)) {
+      if (block.includes(PUBLISH_HELPER)) { if (!helperOk) out.push('helper-broken'); continue; }
+      if (!/\bgit\s+push\b/.test(block)) continue;
+      if (!/git\s+pull\s+--rebase/.test(block)) continue;
+      if (/git\s+rebase\s+--abort/.test(block)) continue;
+      out.push('wedged');
+    }
+    return out;
+  };
+  assert(landingOf(wfWedged).length === 1, 'a rebase-to-land loop with no abort is rejected');
+  assert(landingOf(wfInPlace).length === 0, 'an in-place `git rebase --abort` satisfies the landing contract');
+  assert(landingOf(wfDelegates).length === 0, 'delegating to the shared helper satisfies the landing contract');
+  assert(landingOf(wfPushOnly).length === 0, 'a push that never rebases is not a landing finding');
+  assert(helperRecovers(), `${PUBLISH_HELPER} exists and aborts an in-progress rebase`);
+  // A push-triggered publisher is in scope: the wedge does not care who fired
+  // the run. This case is here because its absence let the first negative
+  // control pass — sitemap.yml is `on: push` and carried the worst variant.
+  const wfPushTriggered = `on:\n  push:\n    branches: [main]\njobs:\n  x:\n    steps:\n      - name: publish\n        run: |\n          git pull --rebase origin main || true\n          git push\n`;
+  assert(landingOf(wfPushTriggered).length === 1, 'a push-triggered publisher is still held to the landing contract');
+  // Evidence must come from code, not from prose about the code: the helper's
+  // header explains why the abort matters, and matching the raw file made the
+  // gate green with the real line deleted.
+  assert(stripShellComments('  : # git rebase --abort explained here').trim() === ':', 'shell comments are stripped before matching');
+  assert(!/git\s+rebase\s+--abort/.test(stripShellComments('# `git rebase --abort` is what makes a retry a retry')), 'a comment mentioning the abort is not evidence of the abort');
+  assert(/git\s+rebase\s+--abort/.test(stripShellComments('  git rebase --abort >/dev/null 2>&1 || true')), 'the real abort line survives comment-stripping');
+  const liveLanding = landingAudit();
+  assert(liveLanding.length === 0, `live landing surface must be clean (found: ${liveLanding.map((f) => f.workflow).join(', ') || 'none'})`);
+
   // Regression guard: the two archetype fixes must register as network publishers
   // WITH a degrade marker (i.e. would be flagged if the marker were removed).
   const beacon = scriptFlags('build-ci-status-beacon.mjs');
@@ -192,19 +312,30 @@ function selfTest() {
 
 function main() {
   const findings = audit();
-  if (findings.length === 0) {
+  const landing = landingAudit();
+
+  if (findings.length === 0 && landing.length === 0) {
     const n = listWorkflowFiles().length;
-    console.log(`check-ci-publisher-resilience: ✓ ${n} workflows scanned — every unattended publisher network-caller degrades on transient upstream errors`);
+    console.log(`check-ci-publisher-resilience: ✓ ${n} workflows scanned — every unattended publisher degrades on transient upstream errors AND can recover a conflicted landing`);
     return;
   }
-  console.error(`check-ci-publisher-resilience: ${findings.length} unguarded publisher network-caller(s):`);
-  for (const f of findings) {
-    console.error(f.reason
-      ? `  ${f.workflow} → scripts/${f.script}: ${f.reason}`
-      : `  ${f.workflow} → scripts/${f.script}: makes a network call + publishes data, invoked non-tolerantly, no transient-degrade marker`);
+
+  if (findings.length) {
+    console.error(`check-ci-publisher-resilience: ${findings.length} unguarded publisher network-caller(s):`);
+    for (const f of findings) {
+      console.error(f.reason
+        ? `  ${f.workflow} → scripts/${f.script}: ${f.reason}`
+        : `  ${f.workflow} → scripts/${f.script}: makes a network call + publishes data, invoked non-tolerantly, no transient-degrade marker`);
+    }
+    console.error('  Fix: on a TRANSIENT upstream error (5xx/429/network reset), warn + process.exit(0) (preserve last-known-good);');
+    console.error('       keep hard-failing on REAL errors (auth/config). See scripts/build-ci-status-beacon.mjs isTransientGhError for the pattern.');
   }
-  console.error('  Fix: on a TRANSIENT upstream error (5xx/429/network reset), warn + process.exit(0) (preserve last-known-good);');
-  console.error('       keep hard-failing on REAL errors (auth/config). See scripts/build-ci-status-beacon.mjs isTransientGhError for the pattern.');
+
+  if (landing.length) {
+    console.error(`check-ci-publisher-resilience: ${landing.length} publisher(s) cannot recover a conflicted landing:`);
+    for (const f of landing) console.error(`  ${f.workflow}: ${f.reason}`);
+  }
+
   if (CHECK) process.exit(1);
 }
 

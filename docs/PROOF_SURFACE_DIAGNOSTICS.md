@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-03T02:17:38.471Z
-Receipt: `b7a5c7664c807902dd861d4d` · coverage 107/107
+Generated: 2026-09-03T04:37:10.981Z
+Receipt: `e001dcb5c7b86430008b0c60` · coverage 107/107
 
-Latest: **106/107** passed · blocking 90/90 · advisory findings 1/17 · total 27.4s
+Latest: **106/107** passed · blocking 90/90 · advisory findings 1/17 · total 26.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 33 | blocking | 0.9s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 34 | blocking | 0.6s | 0 | `node scripts/build-news-desk.mjs --self-test` |
-| 44 | blocking | 0.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 47 | blocking | 0.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 35 | blocking | 0.6s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 22 | blocking | 0.6s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 90 | blocking | 0.5s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 86 | blocking | 0.4s | 0 | `node scripts/check-receipt-ordering.mjs` |
-| 104 | advisory | 0.4s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 16 | blocking | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 47 | blocking | 0.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 86 | blocking | 0.7s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 90 | blocking | 0.6s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 65 | blocking | 0.5s | 0 | `node scripts/build-oracle-answers.mjs --check` |
+| 33 | blocking | 0.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 69 | blocking | 0.5s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 64 | blocking | 0.4s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
+| 44 | blocking | 0.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 12 | blocking | 0.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 63 | blocking | 0.3s | 0 | `node scripts/check-content-coherence.mjs` |
 
 ## Failures
 

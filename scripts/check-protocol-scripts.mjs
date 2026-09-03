@@ -41,6 +41,38 @@ const KNOWN_ABSENT_ALLOWLIST = {
   'scripts/render-founder-queue.mjs': 'founder-queue renderer is studio-ops-side; not bundled with public website repo',
   'scripts/studio-pulse.mjs': 'portfolio-level Studio Pulse runs from studio-ops, reads this repo via PROJECT_STATUS.json',
   'scripts/twin-ask.mjs': 'founder-twin verdict service lives in studio-ops; PreToolUse hook wires it when present',
+  'scripts/studio-oracle.mjs': 'cross-project queryable data plane; ingests every repo from studio-ops, not runnable per-project',
+};
+
+// ── S341: name the propagation gap instead of leaving it ambient ────────────
+// `--info` made this check report and never fail, so "13 unexpected-absent" had
+// been ambient for sessions: a number nobody could act on, mixing two very
+// different things. Verified this session against the sibling checkout: all
+// thirteen EXIST in studio-ops. They are not missing work — they are per-project
+// protocol steps that were never propagated here, which is why five of them
+// (start-sync, start-canon-sync, frontier-capability-radar, run-maintenance,
+// check-maintenance-lane-ran) are named as GATES by docs/SESSION_PROTOCOL.md §1
+// and were simply unrunnable during this session's own /start. A protocol step
+// whose script does not exist in the repo that runs it has never run here.
+//
+// These must NOT be laundered into the allowlist — that would turn a real gap
+// green. They are their own bucket, with the canonical owner named, so the fix
+// is one Ark `repo-question`/propagation request rather than thirteen local
+// re-implementations (CANON-018: never write into a sibling's tree; CANON-039:
+// reuse the canonical implementation rather than forking it).
+const STUDIO_OPS_PROPAGATION_GAP = {
+  'scripts/start-sync.mjs': 'SESSION_PROTOCOL §1 step 0.8 gate',
+  'scripts/start-canon-sync.mjs': 'SESSION_PROTOCOL §1 step 2.3 gate (D-S259.5)',
+  'scripts/frontier-capability-radar.mjs': 'SESSION_PROTOCOL §1 step 2.6 gate (CANON-049)',
+  'scripts/run-maintenance.mjs': 'SESSION_PROTOCOL §1 step 2.7 gate (S301 · CANON-031)',
+  'scripts/check-maintenance-lane-ran.mjs': 'SESSION_PROTOCOL §1 step 2.8 gate (S315)',
+  'scripts/start-recovery-preflight.mjs': 'no-write /start cut-off detector',
+  'scripts/start-stalled-remediation-resume.mjs': 'stalled-remediation resume (S288)',
+  'scripts/check-audit-premises.mjs': '/audit typed-premise verifier (S239)',
+  'scripts/check-release-proof.mjs': 'release-proof verifier',
+  'scripts/render-closeout-checklist.mjs': 'token-lean closeout surface (S236)',
+  'scripts/compact-memory-index.mjs': 'agent-memory index remediator',
+  'scripts/task-slice.mjs': 'focused single-task TASK_BOARD lookup',
 };
 
 // S172 protocol-script-self-heal: scripts the session protocol invokes that
@@ -139,6 +171,7 @@ for (const rel of PROTOCOL_FILES) {
 
 const present = [];
 const allowedAbsent = [];
+const propagationGap = [];
 const unexpectedAbsent = [];
 
 for (const ref of [...referenced].sort()) {
@@ -146,6 +179,8 @@ for (const ref of [...referenced].sort()) {
     present.push(ref);
   } else if (Object.hasOwn(KNOWN_ABSENT_ALLOWLIST, ref)) {
     allowedAbsent.push({ path: ref, reason: KNOWN_ABSENT_ALLOWLIST[ref] });
+  } else if (Object.hasOwn(STUDIO_OPS_PROPAGATION_GAP, ref)) {
+    propagationGap.push({ path: ref, role: STUDIO_OPS_PROPAGATION_GAP[ref], owner: 'vaultspark-studio-ops' });
   } else {
     unexpectedAbsent.push(ref);
   }
@@ -159,20 +194,27 @@ const payload = {
     referenced: referenced.size,
     present: present.length,
     allowedAbsent: allowedAbsent.length,
+    propagationGap: propagationGap.length,
     unexpectedAbsent: unexpectedAbsent.length,
   },
   unexpectedAbsent,
   allowedAbsent,
+  propagationGap,
   present,
 };
 
 if (asJson) {
   console.log(JSON.stringify(payload, null, 2));
 } else {
-  console.log(`check-protocol-scripts: ${present.length} present · ${allowedAbsent.length} allowed-absent · ${unexpectedAbsent.length} unexpected-absent (of ${referenced.size} referenced)`);
+  console.log(`check-protocol-scripts: ${present.length} present · ${allowedAbsent.length} allowed-absent · ${propagationGap.length} awaiting propagation · ${unexpectedAbsent.length} unexpected-absent (of ${referenced.size} referenced)`);
   if (allowedAbsent.length) {
     console.log('Allowed absences (intentional, studio-ops-side):');
     for (const e of allowedAbsent) console.log(`  · ${e.path} — ${e.reason}`);
+  }
+  if (propagationGap.length) {
+    console.log('AWAITING PROPAGATION — canonical in studio-ops, per-project step, not yet propagated here:');
+    for (const e of propagationGap) console.log(`  ~ ${e.path} — ${e.role} (owner: ${e.owner})`);
+    console.log('  Fix path: Ark cargo to studio-ops requesting propagation — never re-implement locally (CANON-018/039).');
   }
   if (unexpectedAbsent.length) {
     console.log('UNEXPECTED ABSENCES — protocol references a script that should be in this repo:');
