@@ -180,8 +180,16 @@
       window.sessionStorage.setItem(SESSION_MARK, currentPath());
     } catch (_) {}
 
-    var count = Number(safeGet(STORAGE_KEYS.visitCount) || 0) + 1;
-    safeSet(STORAGE_KEYS.visitCount, String(count));
+    // S343 — `vs_visit_count` had TWO writers with different meanings, and every
+    // trust/cadence threshold on the site reads it:
+    //   this file                     incremented once per session-PATH (6 pages)
+    //   returning-visitor-digest.js   increments once per browser SESSION (sitewide)
+    // A counter named "visit count" that also counts page views makes a first-time
+    // visitor who browses five pages read as `visits > 4` → "established" in
+    // ambient-loader.js, and `returning` in this file's own returning_status. The
+    // session-scoped writer is the correct one and is already sitewide, so it now
+    // owns the key outright and this module reads it. `lastPath` stays here — it is
+    // this module's own concern and has no second writer.
     safeSet(STORAGE_KEYS.lastPath, currentPath());
   }
 

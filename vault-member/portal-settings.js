@@ -557,6 +557,18 @@
             history.replaceState(null, '', window.location.pathname);
           }
 
+          // S343 — `create-checkout` has always redirected back with
+          // `?checkout=success&plan=…`, and nothing anywhere read it. A member
+          // completed a purchase and returned to a portal that acknowledged
+          // nothing: no toast, no receipt, no confirmation the payment landed.
+          // The gift flow above got this right, which is why the omission reads
+          // as an oversight rather than a decision. Same shape, same cleanup.
+          if (qp.get('checkout') === 'success') {
+            const planLabel = qp.get('plan') === 'eternal' ? 'VaultSparked Eternal' : 'VaultSparked';
+            setTimeout(() => showToast('⚡ Welcome to ' + planLabel + ' — your access is live.', { emoji: '' }), 600);
+            history.replaceState(null, '', window.location.pathname);
+          }
+
           return;
         }
 

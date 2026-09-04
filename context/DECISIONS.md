@@ -1234,3 +1234,71 @@ used and not a rushed edit beside a deploy.
 **Rule:** a cascade gate is only as wide as its graph — the third time this repo has learned that.
 When such a gate reports all-clear while a derived artifact is demonstrably stale, the finding is
 the missing edge, not the stale file.
+
+## D-S343.1 — One undefined function was the whole funnel
+
+`vault-member/portal-auth.js` called `VS.kitSubscribe(...)`. That identifier appears exactly once
+in the entire repository: at the call site. It was never defined. It sat inside the `try`, **before**
+`showDashboard()`, and the "Subscribe to Vault Dispatch" checkbox is `checked` by default. So the
+default path for every new member was: `register_open` succeeds, the row is written, the account
+exists — then a `TypeError`, the catch, and *"Could not complete registration. Please try again."*
+The dashboard never rendered. Retrying hit the username-uniqueness guard, so the only escape was a
+hard reload most people would never try.
+
+The site has been unable to onboard a single member, and every downstream symptom — no accounts, no
+RUM samples, no clicks — follows from it.
+
+Fixed with the real API (`window.VaultKit.subscribe`, which existed the whole time), fired **after**
+`showDashboard()` in its own promise chain. A newsletter opt-in is a side effect; it must never be
+able to fail a registration. The same block also treated a taken handle as success, because
+`register_open` reports that rejection as *data* rather than as `rpcErr` — now checked.
+
+**Rule:** an optional side effect on a critical path must be sequenced last and isolated. And when
+a product has no users, read the signup path's actual runtime behaviour before concluding anything
+about demand.
+
+## D-S343.2 — Two of my own plan items were wrong, and the negative controls said so
+
+The approved plan asserted two things that investigation disproved. Both are corrected in place
+rather than quietly dropped:
+
+**"Enrollment may be invite-only, which would make the free-account goal unreachable."** False.
+`?screen=signup` renders *"Create your VaultSpark Studios account"*, and the sign-in screen carries
+*"New here? Create your account"*. The OAuth authorize endpoint ignores both `login_hint` and
+`screen` and always lands on sign-in, so open enrolment costs one extra click — friction, not a
+wall. What *was* real: our own copy read *"Enrollment is currently invite-led inside Obelisk"*, which
+was untrue and sat on the primary conversion path telling strangers not to bother. Replaced.
+
+**"The funnel cannot record a click."** False. `cta` is a bounded dynamic prefix family
+(`security-headers-worker.js`), `maxLen` applies to the *suffix* (`hero-choice:click:play` is 22 of
+36), and `rollup-rum-ux.mjs` is prefix-aware (`ev.startsWith(exact + ':')`), so a suffixed click
+folds into `counts.click` correctly. The plumbing is sound end to end and **the zero is real**.
+
+That makes the true cause the other hypothesis: **no bot/human separation anywhere in the funnel.**
+A rendering crawler trips an IntersectionObserver exactly like a person and never clicks — which is
+precisely 371 impressions and zero clicks, alongside `totalSamples: 0` human RUM. The beacon now
+classifies at ingest and stores a **boolean**; the user-agent is read and discarded, because a
+stored UA is a fingerprint and this beacon is names-and-counts only.
+
+**Rule:** a plan is a hypothesis. Verify each claim against the running system before implementing
+against it — two of mine survived approval and neither survived contact.
+
+## D-S343.3 — The Obelisk seal is a security escalation, not a bug fix
+
+`[data-obelisk-seal]` is an empty div nothing hydrates, and `check-obelisk-passport-contract.mjs`
+asserted only that the *attribute string* appears — so it passed against a blank placeholder for as
+long as it has existed.
+
+The seal is real and live: `https://obeliskgate.com/embed/seal.js` returns 200 and our markup
+already matches its documented usage exactly. It is deliberately **not** wired, because it renders
+in an iframe and loading it requires `script-src` **and** `frame-src` widened to a third-party
+origin **on the authentication surface**. SOUL: *"Security is not negotiable… never disable or
+weaken without explicit Studio Owner approval."* CLAUDE.md: escalate auth and security flows.
+
+Instead the contract now asserts the load-bearing property — the seal must declare the login URL
+and relying party it fronts — so a stale or mismatched entry point can no longer hide behind an
+element that renders nothing. Proven in both directions.
+
+**Rule:** when the honest fix widens a security boundary, the fix is the escalation. Strengthen the
+gate meanwhile so the gap is visible rather than papered over.
+

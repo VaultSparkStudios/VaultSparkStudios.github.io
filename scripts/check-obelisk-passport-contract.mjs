@@ -64,6 +64,23 @@ function check(fixtures = null) {
   for (const [name, html] of [['member', files.member], ['investor', files.investor]]) {
     assert(/data-obelisk-seal/.test(html), `${name} auth surface is missing the live Obelisk seal`, failures);
     assert(/\/login\?intent=signin/.test(html), `${name} auth surface does not start the OIDC edge flow`, failures);
+    // S343: the assertion above tests for an ATTRIBUTE STRING, and the element it
+    // marks is an empty div that nothing in this repo hydrates — so it passed
+    // against a blank placeholder for as long as it has existed. The real seal is
+    // an iframe rendered by https://obeliskgate.com/embed/seal.js (live, 200), and
+    // our markup already matches its documented usage exactly. It is NOT loaded
+    // because doing so needs `script-src` and `frame-src` widened to a third-party
+    // origin on the authentication surface — a security change reserved for the
+    // Studio Owner (SOUL: "Security is not negotiable"; CLAUDE.md: escalate auth).
+    //
+    // Until that decision, assert the load-bearing thing instead of the decorative
+    // one: the seal must carry the login URL it claims to protect, so a stale or
+    // mismatched entry point cannot hide behind a placeholder that renders nothing.
+    const seal = html.match(/<div[^>]*data-obelisk-seal[^>]*>/);
+    assert(seal && /data-login-url="\/login\?intent=(signin|signup)/.test(seal[0]),
+      `${name} Obelisk seal does not declare the login URL it fronts`, failures);
+    assert(seal && /data-rp="vaultsparkstudios-website"/.test(seal[0]),
+      `${name} Obelisk seal does not declare the relying party it authenticates`, failures);
   }
   assert(!/id="signupPassword"/.test(files.investor), 'investor enrollment still asks VaultSpark to create a password', failures);
   assert(/investor_requests/.test(files.investor) && /prior_gaming:/.test(files.investor), 'investor application workflow was not preserved', failures);
@@ -105,9 +122,9 @@ function selfTest() {
     identity: "provider: 'obelisk' Obelisk is the required VaultSpark identity provider",
     signedState: '/api/auth/me',
     chipLoader: 'VSSignedInState.getSession',
-    member: 'data-obelisk-seal /login?intent=signin',
+    member: '<div data-obelisk-seal data-rp="vaultsparkstudios-website" data-login-url="/login?intent=signin"></div> /login?intent=signin',
     memberAuth: 'register_open',
-    investor: 'data-obelisk-seal /login?intent=signin investor_requests prior_gaming:',
+    investor: '<div data-obelisk-seal data-rp="vaultsparkstudios-website" data-login-url="/login?intent=signin"></div> /login?intent=signin investor_requests prior_gaming:',
     tests: 'authorization-code + PKCE callback creates a live edge session without exposing Obelisk tokens bridge outage rejects a stale browser session corrupt flow state fails closed',
     packageJson: 'obelisk-auth.unit.spec.js',
     readiness: 'altered-callback-host foreign-client publicSafe: true',

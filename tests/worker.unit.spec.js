@@ -838,3 +838,42 @@ test('S335: Trusted Types enforce is a one-variable flip with report-only as the
   const after = await worker.fetch(req(), {}, ctx);
   assert.ok(after.headers.get('content-security-policy-report-only'), 'no state leaks between requests');
 });
+
+// ── S343: bot/human separation at the RUM beacon ────────────────────────────
+// The funnel had no bot filter at all, so `cta:hero-choice:shown` reached 371
+// with zero clicks while RUM reported 0 human samples over 7 days — a shape a
+// rendering crawler produces exactly. These pin the classifier in BOTH
+// directions: a real browser must never be discarded as a machine.
+test('looksLikeBot: real browser user-agents are treated as human', async () => {
+  const { looksLikeBot } = await import('../cloudflare/worker-lib.mjs');
+  const humans = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15',
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+    'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36',
+  ];
+  for (const ua of humans) assert.equal(looksLikeBot(ua), false, `misclassified a person: ${ua.slice(0, 48)}`);
+});
+
+test('looksLikeBot: crawlers, agents and tooling are treated as machines', async () => {
+  const { looksLikeBot } = await import('../cloudflare/worker-lib.mjs');
+  const bots = [
+    'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+    'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
+    'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.1; +https://openai.com/gptbot)',
+    'Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)',
+    'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
+    'facebookexternalhit/1.1',
+    'curl/8.4.0',
+    'python-requests/2.31.0',
+    'Mozilla/5.0 (X11; Linux x86_64) HeadlessChrome/140.0.0.0 Safari/537.36',
+    'Chrome-Lighthouse',
+  ];
+  for (const ua of bots) assert.equal(looksLikeBot(ua), true, `let a machine through: ${ua.slice(0, 48)}`);
+});
+
+test('looksLikeBot: a missing user-agent is not a browser', async () => {
+  const { looksLikeBot } = await import('../cloudflare/worker-lib.mjs');
+  for (const v of ['', '   ', null, undefined, 42, {}]) assert.equal(looksLikeBot(v), true);
+});

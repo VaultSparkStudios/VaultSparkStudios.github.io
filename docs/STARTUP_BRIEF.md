@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   388/388 passing  ·  2026-09-04                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
+║  ✓  Tests         388/388 passing (2026-09-04)                   ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
@@ -88,7 +88,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  4d old (2026-08-30)                            ║
+║  ✓  Revenue sig.  0d old (2026-09-04)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
@@ -96,8 +96,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║     6d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
-║    11d · Complete the real-provider passkey ceremony. Run `      ║
+║     7d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
+║    12d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗

@@ -1,8 +1,19 @@
 (function () {
   const scripts = [
+  // S343 — two entries removed from this list because both were guaranteed no-ops
+  // on the only page that loads them:
+  //   home-personalized.js  — S123 made it early-return on `/` (line 6-8), and its
+  //                           mount `#home-personalized-welcome` exists in ZERO
+  //                           html files. ~6 KB fetched + parsed per homepage view
+  //                           to reach a `return`.
+  //   pathways-router.js    — requires `[data-pathways-root]`, which `index.html`
+  //                           does not contain; init() returns immediately. It is
+  //                           still loaded (correctly) by games/, universe/, invite/.
+  // Neither file is deleted: both hold logic Phase 3's adaptive front door will
+  // either reuse or retire deliberately. What is removed is shipping them to a
+  // page where they provably cannot run.
     '/assets/studio-milestones.js',
     '/assets/home-intelligence.js',
-    '/assets/home-personalized.js',
     '/assets/studio-stats.js',
     '/assets/ignis-live.js',
     '/assets/micro-feedback.js',
@@ -14,7 +25,6 @@
     // S228: moved from defer → idle (below-fold, non-critical for initial paint)
     '/assets/trust-depth.js',
     '/assets/related-content.js',
-    '/assets/pathways-router.js',
   ];
 
   // S174 TT burndown: script.src is a TrustedScriptURL sink. Narrow policy

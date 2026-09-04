@@ -410,18 +410,36 @@
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) throw new Error('Session expired. Please sign in again.');
-        const { error: rpcErr } = await VSSupabase.rpc('register_open', {
+        const { data: rpcData, error: rpcErr } = await VSSupabase.rpc('register_open', {
           p_invite_code: invite || '',
           p_username: username,
           p_subscribe: subscribe,
           p_ref_by: sessionStorage.getItem('vs_ref') || '',
         });
         if (rpcErr) throw new Error(rpcErr.message);
+        // `register_open` reports a taken handle as DATA, not as an rpc error, so
+        // checking only `rpcErr` read a rejection as success and dropped the member
+        // into a dashboard their handle was never bound to.
+        const rpcRejection = rpcData && (Array.isArray(rpcData) ? rpcData[0]?.error : rpcData.error);
+        if (rpcRejection) throw new Error(rpcRejection);
+
         const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();
-        if (subscribe && session.user.email) {
-          VS.kitSubscribe(session.user.email, username, { updates: true, lore: true, access: true });
-        }
+
+        // The account now exists. Show it BEFORE anything optional runs.
         if (row) { showDashboard(buildMember(session.user, row)); }
+
+        // Newsletter opt-in is a side effect and must never be able to fail
+        // registration. This previously called `VS.kitSubscribe`, which was never
+        // defined anywhere in the codebase — and because the checkbox defaults to
+        // checked and the call sat in the try BEFORE showDashboard(), every new
+        // member hit a TypeError and was told "Could not complete registration"
+        // while their account had in fact been created. Real API, fired last,
+        // isolated, and never awaited into the registration path.
+        if (subscribe && session.user.email && window.VaultKit) {
+          Promise.resolve()
+            .then(function () { return window.VaultKit.subscribe(session.user.email, window.VaultKit.ALL_TAGS); })
+            .catch(function () { /* opt-in is best-effort; the member is already in */ });
+        }
       } catch(err) {
         errEl.textContent = err.message || 'Could not complete registration. Please try again.';
         errEl.classList.add('show');

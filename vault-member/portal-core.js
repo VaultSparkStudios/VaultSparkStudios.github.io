@@ -195,6 +195,47 @@
         }
       },
 
+      // S343 — members could not cancel. `VS.openCustomerPortal` was referenced in
+      // exactly one place (the click handler below) and defined nowhere, and that
+      // handler is `typeof`-guarded, so pressing "Manage Billing" did nothing at
+      // all: no navigation, no message, not even a console error. Meanwhile the
+      // product promises "Cancel anytime from your portal settings" in three
+      // separate places. `supabase/functions/customer-portal-session` was written,
+      // correct, deployed — and had zero callers.
+      //
+      // Selling a subscription while the documented cancel path silently fails is
+      // a consumer-protection problem before it is a bug, so this mirrors the
+      // existing startVaultSparkedCheckout() shape exactly and handles the 404 the
+      // function returns for a member with no Stripe subscription, rather than
+      // showing them a dead button a second time.
+      async openCustomerPortal() {
+        const btn = document.getElementById('open-customer-portal-btn');
+        const original = btn ? btn.textContent : '';
+        if (btn) { btn.textContent = 'Opening…'; btn.disabled = true; }
+        try {
+          const { data: { session } } = await VSSupabase.auth.getSession();
+          if (!session) { showAuth(); return; }
+          const { data, error } = await VSSupabase.functions.invoke('customer-portal-session', {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          });
+          if (data?.url) { window.location.href = data.url; return; }
+          // A free member has no Stripe customer; say so instead of failing blankly.
+          const reason = data?.error || error?.message || '';
+          if (btn) {
+            btn.textContent = /no subscription/i.test(reason)
+              ? 'No paid plan to manage'
+              : 'Billing portal unavailable — try again';
+            btn.disabled = false;
+          }
+          if (error && window.Sentry) Sentry.captureException(error);
+        } catch (err) {
+          if (btn) { btn.textContent = 'Billing portal unavailable — try again'; btn.disabled = false; }
+          if (window.Sentry) Sentry.captureException(err);
+        } finally {
+          if (btn && btn.textContent === 'Opening…') { btn.textContent = original; btn.disabled = false; }
+        }
+      },
+
       async savePrefs() {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;

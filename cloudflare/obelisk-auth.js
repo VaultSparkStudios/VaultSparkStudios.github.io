@@ -42,6 +42,50 @@ function json(body, status = 200, headers = {}) {
   });
 }
 
+// S343 — a person who clicked "Create your Obelisk account" during a provider
+// outage was shown a raw JSON blob in their browser window. The 503 is the right
+// STATUS and the JSON is the right body for a programmatic caller, but a browser
+// navigation deserves a page. Content-negotiated so both callers keep what they
+// need: `Accept: text/html` gets this, everything else keeps the JSON shape.
+function outagePage(status, heading, detail, retryHref) {
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]
+  ));
+  const body = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>${esc(heading)} — VaultSpark Studios</title>
+<style>
+:root{color-scheme:dark}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0d12;color:#e8eaf0;
+font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:2rem}
+.card{max-width:34rem;text-align:left;border:1px solid #232838;border-radius:14px;padding:2rem;background:#11141c}
+h1{font-size:1.35rem;margin:0 0 .6rem}
+p{color:#a8b0c2;margin:0 0 1rem}
+code{background:#0b0d12;border:1px solid #232838;border-radius:5px;padding:.1rem .35rem;font-size:.85em;color:#8f97ab}
+a.btn{display:inline-block;background:#f5c542;color:#0b0d12;font-weight:600;text-decoration:none;
+padding:.6rem 1.1rem;border-radius:9px}
+a.alt{color:#8f97ab;font-size:.86rem;margin-left:1rem}
+</style></head><body><main class="card">
+<h1>${esc(heading)}</h1>
+<p>${esc(detail)}</p>
+<p><a class="btn" href="${esc(retryHref)}">Try again</a><a class="alt" href="/">Back to VaultSpark Studios</a></p>
+<p style="font-size:.8rem;margin:0"><code>${status}</code> — this is an upstream identity-provider outage, not a problem with your account. Nothing was lost; sign-in will work once it returns.</p>
+</main></body></html>`;
+  return new Response(body, {
+    status,
+    headers: {
+      'Cache-Control': 'no-store',
+      'Content-Type': 'text/html; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
+    },
+  });
+}
+
+function wantsHtml(request) {
+  return /text\/html/i.test(request.headers.get('accept') || '');
+}
+
 function redirect(location, headers = {}) {
   return new Response(null, {
     status: 302,
@@ -589,6 +633,15 @@ async function startLogin(request, env, fetchImpl) {
   try {
     discovery = await getDiscovery(config, fetchImpl);
   } catch (error) {
+    // S343: a browser gets a page, a programmatic caller keeps the JSON contract.
+    if (wantsHtml(request)) {
+      return outagePage(
+        503,
+        'Sign-in is temporarily unavailable',
+        'Our identity provider is not responding right now, so we cannot start a secure sign-in. This is on our side, not yours.',
+        url.pathname + url.search,
+      );
+    }
     return json({
       ok: false,
       code: 'identity_provider_unavailable',

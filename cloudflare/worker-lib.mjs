@@ -253,6 +253,28 @@ export async function verifyTurnstileToken({ token, ip = '', secret, fetchImpl =
 // suffix passes a charset + length cap, so dynamic instrumentation ships without
 // loosening the global Set. The suffix is a single bounded token (colon-free);
 // structured names use a longer multi-segment family (e.g. 'oracle-answer:helpful').
+// S343 — separate machines from people at the beacon.
+//
+// The funnel had no bot filter anywhere, so every conversion number on the site
+// was undecidable. Measured live: `cta:hero-choice:shown` = 371 with zero clicks
+// on any of the three hero CTAs, while `data/rum-summary.json` reported
+// `totalSamples: 0` over a 7-day window. A rendering crawler trips an
+// IntersectionObserver exactly like a person and then never clicks, which
+// produces precisely that shape. Without this flag a 0% click rate is
+// indistinguishable from an audience made entirely of robots.
+//
+// PRIVACY: this returns a BOOLEAN. The user-agent is read and discarded — it is
+// never stored, because a stored UA string is a fingerprint and this repo's
+// beacon contract is names-and-counts only. Conservative by design: anything not
+// positively matched is treated as human, so the filter can under-count bots but
+// never silently discards a real person's signal.
+const BOT_UA = /(bot|crawl|spider|slurp|search|fetch|monitor|scan|check|preview|render|headless|phantom|puppeteer|playwright|selenium|lighthouse|curl|wget|python-requests|axios|okhttp|java\/|go-http|libwww|httpclient|facebookexternalhit|embedly|quora|pinterest|vkshare|whatsapp|telegram|slackbot|discordbot|twitterbot|linkedinbot|applebot|duckduck|yandex|baidu|sogou|exabot|ia_archiver|semrush|ahrefs|mj12|dotbot|petal|bytespider|gptbot|claudebot|perplexity|ccbot|anthropic|openai)/i;
+
+export function looksLikeBot(userAgent) {
+  if (typeof userAgent !== 'string' || !userAgent.trim()) return true; // no UA at all is not a browser
+  return BOT_UA.test(userAgent);
+}
+
 export function prefixAllowlist(family, { charset = /^[a-z0-9-]+$/, maxLen = 32 } = {}) {
   const prefix = `${family}:`;
   return (value) => {

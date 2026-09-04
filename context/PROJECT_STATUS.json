@@ -16,7 +16,7 @@
   "publicNote": "Corrected a long-standing false entry on the public release page. A cross-project dependency was being reported as outstanding because the tracker watched for a message that had since expired, rather than checking whether the work itself was done -- it had been done for months. The check now verifies the real thing directly against the login provider, including a deliberate negative test to prove the check can still fail, and it expires after two weeks so it cannot vouch for something indefinitely. The remaining sign-in work is unchanged and still pending a person completing it, and that restriction was left in place on purpose.",
   "nextMilestone": "Complete the Obelisk provider journey -- `verify-provider-journey.mjs --watch [--since=<hours>]`, sign in from your own browser, land on /vault-member/, sign out there. It is the single remaining S342 item and clears the identity hold on auth/**, surface:identity and worker:identity. Then decide the Monthly Member Newsletter that has never once sent, and register /evidence/ in config/intelligence-suite.json.",
   "blockers": [],
-  "lastUpdated": "2026-09-03",
+  "lastUpdated": "2026-09-04",
   "currentSession": 342,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-03",
@@ -92,7 +92,7 @@
   "silCategoriesUpdatedSession": 340,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-09-03",
+    "date": "2026-09-04",
     "passing": 13,
     "warning": 2,
     "failing": 1,

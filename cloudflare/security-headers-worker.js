@@ -36,6 +36,7 @@ import {
   verifyTurnstileToken,
   CSRF_TTL_MS,
   prefixAllowlist,
+  looksLikeBot,
   makeRumUxCleaner,
   cleanAttentionLabel,
   verifyObeliskSession,
@@ -531,11 +532,16 @@ async function handleRumIngest(request, env, ctx) {
   const attentionLabel = cleanedUx === 'attention:claimed' ? cleanAttentionLabel(raw?.label) : null;
   const storedUx = cleanedUx === 'attention:claimed' && !attentionLabel ? null : cleanedUx;
   const isInpSlow = storedUx === 'inp:slow_interaction';
+  // S343: classify machine vs person at ingest. Boolean only — the user-agent is
+  // read here and never stored. Rows written before this existed carry no `bot`
+  // key at all, which readers must treat as UNKNOWN rather than as human.
+  const isBot = looksLikeBot(request.headers.get('User-Agent'));
   const row = {
     schemaVersion: '1.0',
     ts: now.toISOString(),
     route: cleanRumRoute(raw?.route),
     ux: storedUx,
+    bot: isBot,
     ...(attentionLabel && { label: attentionLabel }),
     vitals: {
       lcp: cleanRumNumber(vitals.lcp, 60000),
