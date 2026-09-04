@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-03",
+  "generatedAt": "2026-09-04",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 13,
+    "days": 14,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-09-03",
-    "stories": 22,
-    "words": 6842,
-    "minutes": 32,
+    "latestDate": "2026-09-04",
+    "stories": 23,
+    "words": 7269,
+    "minutes": 34,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -29,6 +29,7 @@
       "juno",
       "mara",
       "nib",
+      "rex",
       "vera"
     ],
     "sources": [
@@ -36,6 +37,7 @@
       "alexeyondata.substack.com",
       "arstechnica.com",
       "blog.cloudflare.com",
+      "cnbc.com",
       "deepmind.google",
       "engineering.fb.com",
       "huggingface.co",
@@ -47,26 +49,26 @@
       "theverge.com",
       "wired.com"
     ],
-    "sourceCount": 14,
-    "facts": 69,
-    "panels": 22,
+    "sourceCount": 15,
+    "facts": 72,
+    "panels": 23,
     "formats": {
       "bit": 4,
       "roast": 1,
       "quick": 5,
-      "explainer": 4,
+      "explainer": 5,
       "debate": 6
     },
     "editions": {
       "midday": 5,
       "wire": 7,
       "close": 4,
-      "latenight": 4
+      "latenight": 5
     },
     "shapes": {
       "split": 3,
       "solo": 4,
-      "agree": 14,
+      "agree": 15,
       "lean": 1
     },
     "predictions": {
@@ -1029,6 +1031,49 @@
       "predictions": {
         "onRecord": 2,
         "open": 2,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-09-04",
+      "slug": "openai-releases-astra-its-most-capable-model-yet-amid",
+      "words": 427,
+      "minutes": 2,
+      "voices": [
+        "rex",
+        "dot"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "cnbc.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "rex",
+      "format": "explainer",
+      "edition": "latenight",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "rex",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
         "graded": 0,
         "correct": 0
       }
