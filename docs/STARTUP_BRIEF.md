@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-03 (Session 342 closeout) -->
+<!-- generated-at: 2026-09-04 (Session 343 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 342 closeout · 2026-09-03.
+> **Fast-boot brief** — generated at Session 343 closeout · 2026-09-04.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,13 +14,13 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 343 · 2026-09-03 · FOUNDER MODE                         ║
+║  Session 344 · 2026-09-04 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
-║  Expected S342; PROJECT_STATUS summary says S340.                ║
-║  S342 answered the founder's challenge that Obelisk should alre  ║
+║  Expected S343; PROJECT_STATUS summary says S340.                ║
+║  Phase 0-2 of the finalization plan shipped and verified live a  ║
 ║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    977/1000   ███████████████████████░   98%                     ║
+║    982/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 2↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄▄▁  ↑  (last 3 sessions)                              ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ▇▇█████▇ →                ║
-║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          97    ██████████  ▇▇▇▇▇██▇ ↓                ║
-║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      88    █████████░  ▇▇█████▇ ↓                ║
+║    Dev Health        99    ██████████  ▇█████▇▇ →                ║
+║    Alignment         97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum         100    ██████████  ▇▇▇▇██▇█ →                ║
+║    Engagement        99    ██████████  ▇▇▇▇▇▇▇▇ ↑                ║
+║    Process Qual      92    █████████░  ▇█████▇▇ ↓                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation        97    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 342 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 343 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    381/381 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -72,15 +72,15 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   388/388 passing  ·  2026-09-04                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         388/388 passing (2026-09-04)                   ║
+║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
-║  ⚠  IGNIS         47138 FORGE  ·  9d old                         ║
+║  ⚠  IGNIS         47138 FORGE  ·  10d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -121,8 +121,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  962/1000  (↓15 vs current 977)                      ║
-║  At-risk:    Process Quality Δ-7 · Momentum Δ-5                  ║
+║  Projected:  981/1000  (↓1 vs current 982)                       ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 342 closeout · 2026-09-03*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 343 closeout · 2026-09-04*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

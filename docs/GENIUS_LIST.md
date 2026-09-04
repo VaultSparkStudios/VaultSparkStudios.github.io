@@ -1,4 +1,4 @@
-# Genius Hit List — Session 342
+# Genius Hit List — Session 343
 
 Generated: 2026-09-04
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **78/100**
 - Health: **yellow**
-- Current SIL: **977/1000**
+- Current SIL: **982/1000**
 - CI health: **check gh run list**
-- Current focus: S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. I had answered from api/identity-migration-receipt.json, generated 2026-08-26 and eight days stale, and named a cross-repo registration as the last step. Re-probing took minutes and found four of five listed blockers already satisfied: the relying party is ACTIVE in the Obelisk registry with passport v2 and BOTH callbacks registered including website.staging; /login redirects to obeliskgate.com/auth/authorize with correct PKCE S256, client_id, state and nonce; the revocation endpoint is live in OIDC discovery; recordJourney is wired at all three legs of the deployed Worker; and OBELISK_RP_ID/RP_NAME/RP_ORIGIN are consumed by ZERO files here, so their MISSING status blocks nothing. FIRST substantive fix: a public trust surface had published a phantom blocker for months -- api/release-dependencies.json read obelisk-staging-registration:missing and state:rejected because deriveDependency returns missing when it cannot find the request CARGO, and that cargo aged out of the 168-hour Ark window. All four of the contract's requestedChecks are directly observable at the IdP, so --probe observes them: each registered redirect_uri accepted AND an unregistered control redirect denied, which is the half that makes acceptance mean anything. Fails closed five ways -- unreachable, refuted, absent, stale past a 14-day clock, partial coverage -- 27/27 with each direction pinned, and --probe stays out of the default build so a byte-checked artifact cannot drift with the network. SECOND: the identity hold was preserved deliberately. releaseState stays hold, both real-provider-e2e-pending blockers remain, and auth/**, surface:identity and worker:identity stay held; only the two false entries cleared. THIRD: the task board's chronic budget ceiling got a real fix rather than a fourth shave -- 79 pre-S200 resolved rows moved verbatim into the archive the tooling already maintains, taking headroom from 4 tokens to 5,916, after confirming why the gate's named repair is a no-op here. FOURTH, and the session's real story: I sent the founder into the --live verifier twice, an automated browser that structurally could not reach a Chrome-held passkey, while --watch sat one line away in a usage block I had already read; two runs expired writing nothing and roughly forty minutes of founder time went to avoidable misdirection. Obelisk is NOT complete: the provider journey remains unobserved and requires a human at a passkey. POST-CLOSEOUT REVIEW PASS: found origin/main red from a [skip ci] Desk edition that committed five art files with no LQIP placeholders (build-lqip-map --check 1 -> 0 after the fix), then closed three of the four S342 items rather than carrying them. The cascade gate that should have caught the red now does -- and the first attempt at that fix was DECORATIVE, because the gate filters node.publishCascade === true and the new evidence-graph node lacked the flag; the negative control caught it before it shipped, and the corrected edge immediately found a second publisher with the same gap. Also fixed the latent demotion bug (a reopened Ark conversation could downgrade a live-verified dependency) plus a future-dated-probe hole found while writing its regression tests, and gave the 14-day probe clock a weekly re-probe cadence. Retracted a fifth wrong claim of mine: the identity migration receipt was never stale -- it carries generatedAt: evidence.updatedAt by construction, so a rebuild cannot advance it. The identity hold is untouched and the ceremony remains the only open S342 item.
+- Current focus: Phase 0-2 of the finalization plan shipped and verified live at 57e69bfcd: registration works again (an undefined VS.kitSubscribe had failed every signup while creating the account), a taken handle no longer reads as success, /login serves browsers a page instead of JSON, the funnel separates bots from people, and subscriptions have a working cancel path. Next: the human signup walkthrough that is the plan's actual Phase 0 gate, then Phases 3-7 (adaptive front door, activation instrumentation, welcome email, the three divergent rank ladders).
 
 ## Strategic Read
 
@@ -37,14 +37,14 @@ First command: `gh run list --limit 10`
 #### 3. [VERIFY] resync-derived.mjs does not cover every --checked derived artifact, a…
 Final score: **90**
 [S340][BUILD/P2] resync-derived.mjs does not cover every --checked derived artifact, and the gap only shows up after a rebase. Found live during the S340 closeout push. Four scheduled-publisher races forced four rebases; each was resolved by taking one side and regenerating through resync-derived, which rebuilt up to 20 artifacts and reported clean. api/intelligence-budget.json is not in its set, so it stayed at the conflict-resolved value and build-intelligence-budget --check failed in CI at build:check step 185 — the compliance job of run 33702593208 — while every local coherence check I ran after the rebase passed. Reproduced locally on the pushed tip, fixed by hand. This is the cascade-width class: a resync is only as wide as its graph, and a rebase is exactly the situation where the uncovered artifact keeps a stale value rather than a regenerated one. Fix: derive resync-derived's set from the artifacts build:check actually --checks (or make check-publish-cascade-coverage assert the two sets match) so an artifact cannot be gated without being resyncable. Verify by rebasing onto a publisher commit, running only resync-derived, and confirming build:check is green with no hand-run. S341 confirmed it again and found a SECOND member. Enumerating all 61 build-*.mjs --check invocations in build:check against the graph: resync-derived --changed <all changed> rebuilt and verified 17 artifacts and reported clean, while build-nervous-system AND build-intelligence-budget were both stale and both absent from its graph. Two hand-rebuilds fixed them. The one-line reproduction of this gap is that enumeration -- run the 61 --checks and diff the failures against the graph's node set.
-Why it matters: resync-derived.mjs does not cover every --checked derived artifact, an was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: resync-derived.mjs does not cover every --checked derived artifact, an was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 4. [VERIFY] <!-- evidence-open: config/intelligence-suite.json and journal/index.…
 Final score: **87**
 <!-- evidence-open: config/intelligence-suite.json and journal/index.html are the config to EDIT and the page to VERIFY AGAINST, not deliverables; the deliverable is the route registered in that config and the instrument showing the writer pair gone --> [S340][BUILD/P1] Register /evidence/ in config/intelligence-suite.json and end the nav tug-of-war. propagate-nav.mjs (postbuild #5) strips the /evidence/ link from the nav AND footer of 125 pages on every build, and generate-evidence-hub.mjs (#13) puts it back. Reproduced directly: journal/index.html has the link, drops to 0 after propagate-nav, returns to 2 after generate-evidence-hub --apply. Net-zero across a full chain, so git status is clean and no surface-vs-surface gate can see it. Root cause: /evidence/ (S334) was never added to the canonical nav source, so the nav is rebuilt without it and a downstream script bolts it back on -- and that script's own comment refuses to gate its re-linking on "the page changed" because that would leave the hub "permanently unlinked on a settled tree", which is a repair built around a remover nobody went looking for. Deferred from S340 only because intelligence-suite.json is read by the nav, the footer, the Studio Pulse tiles, the sitemap expectations and the intelligence-suite builder, and that blast radius does not belong in a deploy session. Verify the fix by re-running check-postbuild-ordering --instrument and watching the pair disappear, then confirm generate-evidence-hub reports 0 pages linked -- it should become defence in depth, not a repair. (D-S340.5)
-Why it matters: <!-- evidence-open: config/intelligence-suite.json and journal/index.h was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: <!-- evidence-open: config/intelligence-suite.json and journal/index.h was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
@@ -58,7 +58,7 @@ Why it matters: Make the game covers art-only; the tile owns all text. The direc
 #### 2. [VERIFY] check-postbuild-ordering --check reports unmeasured in CI and always …
 Final score: **81**
 [S340][OBS/P3] check-postbuild-ordering --check reports unmeasured in CI and always will. Only --self-test is wired into build:check; the --check half needs a trace, and no CI job runs --instrument. That is deliberate for now -- the instrument runs the whole postbuild chain, so wiring it into every build doubles the build -- but a gate that can only ever report unmeasured in CI is one step from a gate that has never run. Decide: either run --instrument on a weekly cron and commit the receipt, or fold the tracing into the real postbuild so every build produces its own evidence for free. The second is better if the preload cost is negligible; measure it before choosing.
-Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -84,7 +84,7 @@ First command: `node scripts/lint-repo.mjs`
 #### 1. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
 Final score: **62**
 <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
-Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 7-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 8-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -102,45 +102,45 @@ First command: `node scripts/lint-repo.mjs`
 
 ### DEFERRED / GATED
 
-#### 1. [VERIFY] Complete the Obelisk provider journey
-Final score: **100**
+#### 1. [VERIFY] The homepage hero is publishing CI jargon to strangers. The IGNIS chi…
+Final score: **97**
+[S343][VOICE/P1] The homepage hero is publishing CI jargon to strangers. The IGNIS chip on / rendered *"The studio keeps resync after publisher race"* — a chore commit about a rebase collision — as the first sentence under the studio name. Same class as public_surface_fed_by_raw_git_leaks; the publicNote/publicNextStep overrides that fixed the sibling surfaces are not consulted by this chip. Found in the CANON-053 pixel review and deliberately left: the tree was frozen under a passing gate with two hash-bound receipts. See D-S343.5.
+Why it matters: Owned by another repo or already moved through Ark cargo.
+
+#### 2. [PRODUCT] The Phase 0 gate is a HUMAN walkthrough and has not been run. The pla…
+Final score: **90**
+[S343][QA/P0] The Phase 0 gate is a HUMAN walkthrough and has not been run. The plan's own gate is a real signup in a clean browser profile with the subscribe box left checked, landing on the dashboard. The fix is verified by build:check 388/388, mobile 215/215, worker 57/57, and by reading the SERVED bundle — but not by a person actually creating an account. ~3 minutes; do it before any onboarding push.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 3. [VERIFY] Complete the Obelisk provider journey
+Final score: **89**
 [S342][AUTH/P0] Complete the Obelisk provider journey — it is the LAST step, and the command is --watch. node scripts/verify-provider-journey.mjs --watch, then in YOUR OWN browser (native Windows Hello works): sign in at /login → land on /vault-member/ → SIGN OUT there (the logout leg is the revocation evidence). 12-hour window, live callback:✓ compat:✓ logout:✓. Self-check: /api/auth/me returning identity: {...} means the callback landed. Do NOT use --live unless the passkey is in Windows Hello — it opens a fresh automated profile that cannot reach a Chrome-held credential (two 10-min runs expired writing nothing). Everything upstream is verified live: registration active with both callbacks, authorize with correct PKCE, revocation endpoint live, recordJourney wired at all three Worker legs. Clears real-provider-e2e-pending and unholds auth/, surface:identity, worker:identity.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 2. [BRAND] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. …
-Final score: **90**
+#### 4. [INTELLIGENCE] The gateway's Supabase service-role key is scoped to a DIFFERENT proj…
+Final score: **87**
+[S343][SEC/P0] The gateway's Supabase service-role key is scoped to a DIFFERENT project. Valid, unexpired, role: service_role — and ref: ckwtolofoqzrqouqkmvs while this site ships fjnpzjjyhnpmunfoycrp. Both are real VaultSpark projects; the gateway has one SUPABASE_SERVICE_ROLE_KEY slot for at least two. It 401s on first use while check-secrets --audit reports READY 2/2, because presence is not validity. This is a second, independent reason the Obelisk ceremony would not settle — --watch calls serviceRoleKey(), gets a non-null key, sails past its guard and fails at the truth reads AFTER the founder completes the passkey flow. Fix belongs in studio-ops (per-project key names, not one shared slot) — CANON-018 forbids writing that tree directly, so ship Ark cargo. See D-S343.4.
+Why it matters: Owned by another repo or already moved through Ark cargo.
+
+#### 5. [BRAND] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. …
+Final score: **81**
 [S337][SEC/P1] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. ambient-core.bundle.js installs the TT default policy that the site's ~167 legacy innerHTML sinks depend on, and its own comment says it "MUST load before any sink usage" — but ambient-core is not the first script on the page. Measured across 137 built pages in S337: 31 sink-bearing client assets load before it, led by pwa-nav.js (81 pages) and pwa-install.js (72). Report-Only hides this; enforcement throws. This is the concrete blocker the board has been recording as "stale soak evidence" — both are true, only this one names a defect. The repair hoists the policy installer ahead of every sink-bearing asset, which rewrites the head of every page and invalidates every hash-bound receipt at once, so it needs its own session and its own reseal budget, not a rider on a deploy. Re-measure with the scan in D-S337.3 before and after. (D-S337.3)
 Why it matters: Changes public vocabulary or navigation — requires founder sign-off before user-visible copy changes.
 
-#### 3. [SECURITY] Decide whether to arm the Monthly Member Newsletter
-Final score: **87**
+#### 6. [SECURITY] Decide whether to arm the Monthly Member Newsletter
+Final score: **78**
 [S341][OPS/P1] Decide whether to arm the Monthly Member Newsletter — it has never once sent. Every scheduled run since 2026-04-02 has failed; zero successes on record. Two confirmed causes: NEWSLETTER_SECRET does not exist as a repository secret, so the workflow sends Authorization: Bearer with an empty token; and POST {SUPABASE_FUNCTION_BASE_URL}/send-member-newsletter returns 404 NOT_FOUND because supabase/functions/send-member-newsletter/ exists here but was never deployed. Not founder-blocked: supabase.management is READY, so both the deploy and the secret are agent paths (CANON-019, phantom-blocker test satisfied). Deliberately not armed because doing so emails every member on the 2nd of next month, which is not a side effect of a website deploy session (D-S341.4). If armed: deploy the function, mint the secret, dispatch ONE manual run before the cron fires.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 4. [PRODUCT] portal-feedback.js writes columns the checked-in page_feedback migrat…
-Final score: **84**
+#### 7. [PRODUCT] portal-feedback.js writes columns the checked-in page_feedback migrat…
+Final score: **75**
 [S335][DATA/P2] portal-feedback.js writes columns the checked-in page_feedback migration does not define. The client inserts page_path/question/answer/session_id; the migration defines path/reaction/visit_depth_bucket/ua_kind/created_at with service-role-only SELECT and no user_id. Either the live table was altered in the dashboard (probe it with the pre-image shape in apply-supabase-migration.mjs) or member feedback has been failing silently. A true account-linked "your feedback shipped" loop needs a user_id-bearing feedback table with read-own RLS; the S335 chronicle strip is device-scoped (localStorage) for that reason.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 5. [INTELLIGENCE] Four public tables still render a silent zero
-Final score: **81**
+#### 8. [INTELLIGENCE] Four public tables still render a silent zero
+Final score: **72**
 [S336][SEC/P1 · FOUNDER DECISION] Four public tables still render a silent zero — decide which member activity becomes publicly readable, then ship one migration. S336 completed the audit; the remaining step is a decision, not investigation. Verified against the migrations and probed live: challenge_submissions (no anon SELECT policy — only read_own + admin; read anonymously by /community/ and all seven /leaderboards/*; probe returns HTTP 200 count 0), game_sessions (no anon SELECT at all; /community/ and /), point_events (auth.uid() = user_id only — powers the referral leaderboard and the public profile's "Recent activity", which renders its empty state forever), member_achievements (auth.uid() = member_id only — public profile shows "No achievements unlocked yet." permanently; its policy also keys member_id while the client filters user_id). The vault_members(username,…) PostgREST embeds at leaderboards/index.html:822,868 resolve to null for anon, so fixing the four alone would render raw UUIDs. Proposed shape, generalizing S335's public_leaderboard: definer projection views (public_challenge_feed, public_game_activity, public_point_events, public_member_achievements), each honouring vault_members.public_profile, each with an explicit grant select … to anon, authenticated, then repoint the ~20 call sites. NOT applied in S336 because it decides what member activity is publicly visible — a privacy/product call reserved for the founder. Apply with scripts/apply-supabase-migration.mjs (pre-image + probe) once the columns are chosen. (D-S336.5)
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 6. [VERIFY] Manual CANON-053 rendered-pixel review of the surfaces that only NOW …
-Final score: **77**
-[S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only NOW actually serve. S335 captured automated receipts for /community/#wall, /changelog/#requests, /evidence/#verify, /how-we-build/ and the member dashboard meter — but production was serving the pre-S335 build at the time, so those captures could not have been of the live pages. They serve as of S336. Capture across all seven themes at 1366px desktop and 390px mobile, inspect the images, and leave a hash-bound docs/visual-qa/LATEST.json. Verify with check-visual-qa.mjs --project . --changed.
-Why it matters: Requires missing credential, provider dashboard data, or an external access path.
-
-#### 7. [PRODUCT] Confirm the founder-approved Season 1 defaults, then watch the first …
-Final score: **75**
-[S335][ENGAGE/P2] Confirm the founder-approved Season 1 defaults, then watch the first week. data/seasons.json declares "Season 1 — Ignition" (2026-09-02 → 2026-10-14, rewards in Vault Points only). Founder may veto name/dates/rewards at review. After a week: does season_xp move, does the weekly board fill, does the community #wall countdown render on mobile across all themes (CANON-053 receipt).
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 8. [INTELLIGENCE] The mobile audit measures PRODUCTION by default, so it cannot see an …
-Final score: **75**
-[S334][MOBILE/P2] The mobile audit measures PRODUCTION by default, so it cannot see an undeployed change. playwright's baseURL defaults to https://vaultsparkstudios.com, and a local pass on a not-yet-deployed page is measuring the OLD live page. That is exactly how a P1 tap-target on the new pathway route reached CI: six local runs passed because they were probing the previous version. Set BASE_URL to a local preview when verifying an unshipped change, and add a route to the audit list only AFTER the deploy that ships it. Also run it at default concurrency — a --workers=4 pass raced on findings.jsonl and persisted 139 of 215 cells, which reads as missing matrix cells rather than lost writes.
-Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 ## Recommended Build Order
 

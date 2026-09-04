@@ -1302,3 +1302,54 @@ element that renders nothing. Proven in both directions.
 **Rule:** when the honest fix widens a security boundary, the fix is the escalation. Strengthen the
 gate meanwhile so the gap is visible rather than papered over.
 
+
+---
+
+## D-S343.4 — A READY credential can be scoped to the wrong project
+
+`check-secrets --audit` reports `supabase.admin ✓ READY 2/2`. The key is present,
+well-formed, and unexpired — and returns **401 Invalid API key** against this site.
+Decoding its own claims explains why: `ref: ckwtolofoqzrqouqkmvs`, while the site ships
+`fjnpzjjyhnpmunfoycrp`. Both are real VaultSpark Supabase projects. The gateway has ONE
+`SUPABASE_SERVICE_ROLE_KEY` slot and the studio has at least two Supabase projects, so
+every project whose ref does not match silently receives a sibling's key.
+
+**Consequence, and it is not theoretical.** `verify-provider-journey.mjs --watch` calls
+`serviceRoleKey()` for its truth reads. The key is non-null, so the ceremony proceeds
+past its guard and fails at the final step — after the founder has completed the passkey
+flow. The two expired runs this session were a mode error (D-S342.4); this is a second,
+independent reason the ceremony would not have settled.
+
+**Decision:** presence checks and validity checks are different assertions, and a
+slot-based gateway can only make the former. A per-project capability needs a
+per-project key name, not one shared slot. Boarded as `[S343][SEC/P0]`; not fixed here
+because the gateway lives in studio-ops and CANON-018 forbids writing to a sibling tree —
+Ark cargo instead.
+
+**Rule:** before trusting a scoped credential, compare its own claim of scope against the
+target the code actually uses. For a Supabase JWT that is one line. Never print the key;
+length, prefix and decoded claims are sufficient evidence.
+
+---
+
+## D-S343.5 — The homepage hero is publishing CI jargon
+
+The IGNIS chip on `/` renders the studio's most recent activity line. At capture time it
+read *"The studio keeps resync after publisher race"* — a paraphrase of a chore commit
+about a rebase collision between publisher crons. It is the first sentence a stranger
+reads under the studio name.
+
+This is the pattern already recorded as `public_surface_fed_by_raw_git_leaks`: a feed
+whose upstream is engineering activity will eventually publish engineering vocabulary,
+because nothing in the path is accountable for audience. The prior fix added
+`publicNote`/`publicNextStep` overrides for exactly this; the homepage chip does not
+consult them.
+
+**Decision:** the chip needs the same audience filter as the other derived surfaces — an
+explicit public phrasing, or suppression when none exists. Found during the CANON-053
+pixel review and deliberately not fixed in-session: the tree was frozen under a passing
+gate with two hash-bound receipts, and unfreezing to fix a cosmetic leak would have
+invalidated both. Boarded as `[S343][VOICE/P1]`.
+
+**Rule:** a surface fed by commit history is a publishing surface. It needs an editor in
+the path, not just a formatter.

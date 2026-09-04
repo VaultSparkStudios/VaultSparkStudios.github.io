@@ -1094,3 +1094,57 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **After the closeout commit, three more things.** (1) Asked for the easiest route through the ceremony, I found most of its difficulty was choreography rather than security: `--watch` discarded receipts older than its own start while the Worker keeps them in KV for seven days. `--since <hours>` decouples sign-in from verification, capped at the TTL and disclosed as `observationWindow`; default unchanged, 36/36 (D-S342.5). (2) Established that the hold blocks nothing in flight — 11 of the last 12 production deploys succeeded with it active. (3) A reseal tripped a real red on `origin/main`: the Desk publisher committed five new art files with no LQIP placeholders and, being `[skip ci]`, nothing caught it. Publisher fixed; the cascade gate that should have caught it reported 29/29 clean because the art→lqip edge is absent from the graph — boarded (D-S342.6). Ark `repo-question` shipped to `obelisk` on the consent button that silently no-ops an expired `req`.
 
 **Honest limits:** `api/identity-migration-receipt.json` is NOT stale and never was — I said otherwise four times this session and was wrong. `generatedAt: evidence.updatedAt` by construction, so the receipt carries the timestamp of the EVIDENCE, not of the build; a rebuild cannot and must not advance it. It reads 2026-08-26 because that is genuinely when the identity evidence was last observed. Re-ran the builder to confirm: exit 0, `honest-dark (1 blocker)`, timestamp unchanged. What I called a personal failure was the system being correct. The 14-day probe clock has no automated re-probe cadence yet, so it will go stale on its own and fall honestly back to `missing`; boarded. Obelisk is **not** complete: the provider journey remains unobserved.
+
+---
+
+## 2026-09-04 — Session 343 · the site had no users because it could not accept one
+
+**The finding.** Asked to plan the site's finalization, I went looking for why a live,
+announced, architecturally excellent site had zero members. It was not marketing.
+`vault-member/portal-auth.js` called `VS.kitSubscribe(...)` — a function defined nowhere
+in the codebase — inside the registration try-block, before `showDashboard()`. The
+subscribe checkbox ships checked. So every stranger who tried to join threw a TypeError,
+read *"Could not complete registration. Please try again."*, and left — while their
+account had in fact been created, so the retry hit `register_open`'s uniqueness guard and
+failed differently. Every other finding this session was downstream of that one.
+
+**Shipped (live at `57e69bfcd`, production serving verified, not inferred).** The opt-in
+moved off the success path entirely: after `showDashboard()`, guarded on `window.VaultKit`,
+un-awaited, rejection swallowed — an optional side effect must never be able to fail a
+registration. A taken handle, which `register_open` reports as DATA rather than as
+`rpcErr`, no longer reads as success. `/login` content-negotiates so a browser gets a
+branded page instead of a raw JSON blob when the IdP is down. The funnel beacon now
+separates bots from people — the site has advertised that on `/stats/ecosystem/` for
+months without doing it — with `looksLikeBot()` returning a boolean so the UA is read and
+discarded rather than stored, because a retained UA is a fingerprint. `VS.openCustomerPortal()`
+now exists: the edge function had zero callers and the button was `typeof`-guarded, so it
+failed silently while the copy promised "Cancel anytime". The homepage stopped shipping
+~6 KB to run two modules that early-return on `/`. `vs_visit_count` has one writer again.
+
+**Verification.** build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean ·
+mobile 215/215 · worker 57/57 · CANON-053: 84 captures, 2 pixel-inspected. Production
+verified by reading the SERVED `portal-auth.js`, not by trusting the deploy's green: the
+only surviving `kitSubscribe` is the comment explaining its removal.
+
+**Two rebase races.** Publisher crons landed 14 commits during the gate run and 1 more
+during the push. Both conflicted only on generated artifacts; resolved take-theirs then
+re-derive (22 and 17 artifacts rebuilt), with the hash-bound receipts re-checked after
+each so the CANON-053 evidence binds to what actually shipped rather than to a pre-rebase
+tree. The `0 0` divergence reported by the first failed push was the detached-HEAD
+artifact, not a clean state — checked the branch was attached before believing it.
+
+**Two findings logged, not fixed.** The gateway's `supabase.admin` key is valid and
+scoped to a DIFFERENT project (`ckwtolofoqzrqouqkmvs` vs this site's `fjnpzjjyhnpmunfoycrp`),
+401s on first use, and reads `READY 2/2` in the audit because presence is not validity —
+a second, independent reason the Obelisk ceremony would fail, after the founder completes
+the passkey flow (D-S343.4). And the homepage hero published *"The studio keeps resync
+after publisher race"* to strangers (D-S343.5). Neither was fixed in-session: the tree was
+frozen under a passing gate with two hash-bound receipts.
+
+**Honest limits.** The plan's Phase 0 gate is a human signup in a clean browser profile,
+and it has NOT been run — I verified the code path in the served bundle, not the lived
+experience. The pixel review covered 2 of 84 captures; the vault-member portal, which
+carries this session's largest change, is absent from the theme matrix entirely and was
+covered by the mobile suite instead. Phases 3–7 of the plan are untouched: the adaptive
+front door, the three competing intent taxonomies, activation instrumentation, the welcome
+email, the three divergent rank ladders, and surfacing `/how-we-build/` and `/evidence/`.

@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-04T16:31:28.509Z",
+  "generatedAt": "2026-09-04T17:02:21.864Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 342,
+    "currentSession": 343,
     "lastUpdated": "2026-09-04",
-    "currentFocus": "S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. I had answered from api/identity-migration-receipt.json, generated 2026-08-26 and eight days stale, and named a cross-repo registration as the last step. Re-probing took minutes and found four of five listed blockers already satisfied: the relying party is ACTIVE in the Obelisk registry with passport v2 and BOTH callbacks registered including website.staging; /login redirects to obeliskgate.com/auth/authorize with correct PKCE S256, client_id, state and nonce; the revocation endpoint is live in OIDC discovery; recordJourney is wired at all three legs of the deployed Worker; and OBELISK_RP_ID/RP_NAME/RP_ORIGIN are consumed by ZERO files here, so their MISSING status blocks nothing. FIRST substantive fix: a public trust surface had published a phantom blocker for months -- api/release-dependencies.json read obelisk-staging-registration:missing and state:rejected because deriveDependency returns missing when it cannot find the request CARGO, and that cargo aged out of the 168-hour Ark window. All four of the contract's requestedChecks are directly observable at the IdP, so --probe observes them: each registered redirect_uri accepted AND an unregistered control redirect denied, which is the half that makes acceptance mean anything. Fails closed five ways -- unreachable, refuted, absent, stale past a 14-day clock, partial coverage -- 27/27 with each direction pinned, and --probe stays out of the default build so a byte-checked artifact cannot drift with the network. SECOND: the identity hold was preserved deliberately. releaseState stays hold, both real-provider-e2e-pending blockers remain, and auth/**, surface:identity and worker:identity stay held; only the two false entries cleared. THIRD: the task board's chronic budget ceiling got a real fix rather than a fourth shave -- 79 pre-S200 resolved rows moved verbatim into the archive the tooling already maintains, taking headroom from 4 tokens to 5,916, after confirming why the gate's named repair is a no-op here. FOURTH, and the session's real story: I sent the founder into the --live verifier twice, an automated browser that structurally could not reach a Chrome-held passkey, while --watch sat one line away in a usage block I had already read; two runs expired writing nothing and roughly forty minutes of founder time went to avoidable misdirection. Obelisk is NOT complete: the provider journey remains unobserved and requires a human at a passkey. POST-CLOSEOUT REVIEW PASS: found origin/main red from a [skip ci] Desk edition that committed five art files with no LQIP placeholders (build-lqip-map --check 1 -> 0 after the fix), then closed three of the four S342 items rather than carrying them. The cascade gate that should have caught the red now does -- and the first attempt at that fix was DECORATIVE, because the gate filters node.publishCascade === true and the new evidence-graph node lacked the flag; the negative control caught it before it shipped, and the corrected edge immediately found a second publisher with the same gap. Also fixed the latent demotion bug (a reopened Ark conversation could downgrade a live-verified dependency) plus a future-dated-probe hole found while writing its regression tests, and gave the 14-day probe clock a weekly re-probe cadence. Retracted a fifth wrong claim of mine: the identity migration receipt was never stale -- it carries generatedAt: evidence.updatedAt by construction, so a rebuild cannot advance it. The identity hold is untouched and the ceremony remains the only open S342 item.",
-    "nextMilestone": "Complete the Obelisk provider journey -- `verify-provider-journey.mjs --watch [--since=<hours>]`, sign in from your own browser, land on /vault-member/, sign out there. It is the single remaining S342 item and clears the identity hold on auth/**, surface:identity and worker:identity. Then decide the Monthly Member Newsletter that has never once sent, and register /evidence/ in config/intelligence-suite.json.",
+    "currentFocus": "Phase 0-2 of the finalization plan shipped and verified live at 57e69bfcd: registration works again (an undefined VS.kitSubscribe had failed every signup while creating the account), a taken handle no longer reads as success, /login serves browsers a page instead of JSON, the funnel separates bots from people, and subscriptions have a working cancel path. Next: the human signup walkthrough that is the plan's actual Phase 0 gate, then Phases 3-7 (adaptive front door, activation instrumentation, welcome email, the three divergent rank ladders).",
+    "nextMilestone": "A human completes a signup in a clean browser profile with the subscribe box checked and lands on the dashboard - the only evidence that closes Phase 0.",
     "ignis": {
       "score": 47138,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 342,
+    "sessionsCompleted": 343,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -145,17 +145,17 @@
     "vaulted": 0,
     "silCategories": {
       "devHealth": 99,
-      "alignment": 99,
-      "momentum": 97,
-      "engagement": 97,
-      "process": 88,
+      "alignment": 97,
+      "momentum": 100,
+      "engagement": 99,
+      "process": 92,
       "coherence": 100,
       "security": 99,
       "ecosystem": 99,
       "capital": 100,
-      "automation": 99,
-      "total": 977,
-      "updatedSession": 342
+      "automation": 97,
+      "total": 982,
+      "updatedSession": 343
     },
     "sealedNextRevealAt": null
   },
@@ -818,11 +818,11 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-04T03:36:11.243Z",
+    "checkedAt": "2026-09-03T22:11:57.561Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -830,11 +830,11 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "success"
+        "status": "unknown"
       }
     ]
   }

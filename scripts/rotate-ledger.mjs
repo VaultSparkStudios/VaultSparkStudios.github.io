@@ -77,6 +77,8 @@ export function quarterOf(dateStr) {
 
 // Plan a dated rotation: move oldest dated blocks (keeping keepRecent newest
 // dated + every undated block) until the kept text fits targetBytes.
+export const HARD_FLOOR = 4; // never rotate below this many dated blocks, cap or not
+
 export function planDatedRotation(text, { targetBytes, keepRecent }) {
   const { preamble, blocks } = parseBlocks(text);
   const dated = blocks.filter((b) => b.date).sort((a, b) => (a.date < b.date ? 1 : -1)); // newest first
@@ -90,8 +92,30 @@ export function planDatedRotation(text, { targetBytes, keepRecent }) {
     keep.delete(b);
     moved.push(b);
   }
+  // S343 - LATENT, not observed: still over cap with only the preferred-recent blocks
+  // left, eat into them oldest-first down to HARD_FLOOR. `keepRecent` was an ABSOLUTE
+  // floor, so a ledger whose retained blocks ALONE exceed the cap could never be rotated
+  // under it: --apply would move what it was allowed to, stall over cap, and then report
+  // `0 ledger(s) rotated` on every rerun while the gate kept naming that same command as
+  // the fix. That state is reachable by growth alone - entries get longer, the constant
+  // does not - and it has not happened yet (SIL cleared its cap on the first pass; a
+  // KB/1000-vs-1024 misread on my part is what sent me looking). Guarding it now because
+  // the failure mode reads as operator error rather than as a defect. The hard cap wins
+  // and the yield is REPORTED, never silent. Nothing is lost either way: rotated blocks
+  // are appended to the quarterly archive, not deleted.
+  let floorYielded = false;
+  if (sizeOf() > targetBytes) {
+    const protectedOldestFirst = dated.slice(0, keepRecent).reverse();
+    for (const b of protectedOldestFirst) {
+      if (dated.filter((d) => keep.has(d)).length <= HARD_FLOOR) break;
+      if (sizeOf() <= targetBytes) break;
+      keep.delete(b);
+      moved.push(b);
+      floorYielded = true;
+    }
+  }
   const keptText = [...preamble, ...blocks.filter((b) => keep.has(b)).flatMap((b) => b.lines)].join('\n');
-  return { keptText, moved };
+  return { keptText, moved, floorYielded, overCap: sizeOf() > targetBytes };
 }
 
 function selfTest() {
@@ -117,6 +141,30 @@ function selfTest() {
   // no-op when under target
   const small = planDatedRotation(text, { targetBytes: 10_000_000, keepRecent: 1 });
   ok(small.moved.length === 0, 'under-cap ledger untouched');
+
+  // S343 — the historical bug: keepRecent was an ABSOLUTE floor, so a ledger whose
+  // retained blocks alone exceeded the cap could never be rotated under it. --apply
+  // moved what it could, stalled over cap, then reported `0 rotated` forever while the
+  // gate kept failing and naming that same command as the fix.
+  const many = `# Ledger
+intro
+
+` +
+    Array.from({ length: 12 }, (_, i) => mk(12 - i, `2026-0${(i % 9) + 1}-1${i % 10}`)).join('');
+  const squeezed = planDatedRotation(many, { targetBytes: 1400, keepRecent: 12 });
+  ok(squeezed.moved.length > 0, 'THE HISTORICAL BUG IS CAUGHT: cap wins over keepRecent');
+  ok(squeezed.floorYielded === true, 'yielding the retention floor is reported, not silent');
+  ok(!squeezed.overCap, 'the named repair actually clears the cap it is prescribed for');
+
+  // the floor is hard: never rotate below HARD_FLOOR even for an impossible target
+  const crushed = planDatedRotation(many, { targetBytes: 1, keepRecent: 12 });
+  const keptDated = (crushed.keptText.match(/^## \d{4}-/gm) || []).length;
+  ok(keptDated === HARD_FLOOR, `HARD_FLOOR respected (kept ${keptDated}, want ${HARD_FLOOR})`);
+  ok(crushed.overCap === true, 'an unreachable target is reported over-cap, not faked green');
+
+  // a ledger already inside its cap must not yield the floor at all
+  const roomy = planDatedRotation(many, { targetBytes: 10_000_000, keepRecent: 12 });
+  ok(roomy.floorYielded === false && roomy.moved.length === 0, 'no yield when the cap is satisfied');
 
   console.log(`rotate-ledger --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

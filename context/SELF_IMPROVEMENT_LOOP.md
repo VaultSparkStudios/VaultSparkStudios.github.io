@@ -2340,66 +2340,6 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
 
-## 2026-08-24 — Session 329 (mega-audit: sitewide truth drift · Desk slug-rerun class · micro-feedback finally transmits) | Total: 989/1000 (v3.0) | Velocity: +12 | Debt: ↓
-Avgs — 3: 994.3 | 5: 995.4 | 10: 990.7 | 25: 987.3 [N=15] | all: 987.3
-  └ 3-session: Dev 97.3 | Align 100.0 | Momentum 100.0 | Engage 98.7 | Process 98.7
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 96 | Ended all-green at 370/370 with two new proven-fail gates — but the session burned three extra full cascades on self-inflicted drift: a brief re-render between build and check, and a mobile receipt invalidated by re-running build after the audit. The correct order (build → test:mobile → build:check) is now recorded. |
-| Creative Alignment | 100 | Every fix served the SOUL's honesty spine: no floor lowered, a privacy promise renegotiated in visible copy rather than silently weakened, a rerun consolidated instead of erased, a "Forging" label corrected to what the running service actually is. |
-| Momentum | 100 | Three phases of the approved 8-phase plan landed in one session across three verified pushes — 13 concrete items, each regression-locked. |
-| Engagement | 98 | The feedback loop is structurally closed (transport + e2e + insights aggregation) but has zero real signal until the Cloudflare Web Analytics founder unlock and real traffic arrive; the surface is honest, not yet informative. |
-| Process Quality | 96 | One push briefly landed with step 357 red because a verdict was read through a pipe — the exact class the memory bank warns about. Caught within minutes, fixed forward, and every later push gated on real exit codes + a marker. Deducted honestly; the miss happened. |
-| Cross-Repo Coherence | 100 | Three Ark cargos (Call of Doodie status drift, sentiment-cron handoff, plus the S329 plan's earlier repo-question); zero sibling writes; the tempting local sentiment workflow was NOT built because its contract says studio-ops owns it. |
-| Security Posture | 100 | Nothing widened; internal-voice leaks reduced (health grade out of the AI corpus, root junk removed); the new page_feedback path is anonymous-enum-only under an e2e privacy contract. |
-| Ecosystem Integration | 100 | llms.txt, agents.json, game-registry, nav, and the catalog now agree on one set of facts through shared derivation (portfolio.total, ROUTE_ALIAS in both resolvers). |
-| Capital Efficiency | 100 | Zero dependencies added; every fix reused existing machinery — the page_feedback table, the press-kit gate, the claim-parity gate shape, the trust-feed ceiling table, the Ark. |
-| Automation Coverage | 99 | Two new gates proven-fail on real defects before being trusted; deducted one: propagate-nav remains an unreconciled landmine that only discipline (a filed task) currently guards. |
-
-**Top win:** The Desk's 3-day duplicate wasn't a content accident — it was a class defect (every dedupe layer compared AI-rewritten text, never the deterministic identity), and it's now structurally unshippable at three layers with a gate that failed on the live defect before the fix landed.
-
-**Top gap:** The feedback loop is wired but starving — Cloudflare Web Analytics doesn't observe the production hostname, so every voluntary-signal floor (reactions, reader views, RUM budgets, the new usefulness votes) waits on one founder dashboard toggle.
-
-**Intent outcome:** Achieved — the mega-audit ran (3 parallel sweeps + sequencing verification), the founder approved the 8-phase plan and 4 decision points, and phases 1–3 shipped fully verified; phases 4–8 are sequenced runway, not scope misses.
-
-**Brainstorm**
-1. Sitemap generation should move from the CI shell FS-walk into a build-chain script that enumerates git-tracked pages and skips robots-noindex heads structurally — fixes the `vault-member` substring exclusion bug and covers superseded stories for free. (High — Phase 4a already scopes it.)
-2. A "superseded" count chip on the Desk stats panel ("11 stories · 2 superseded") so the archive number and the visible card count never read as a contradiction. (Medium — one stats-surface field + gate.)
-3. Auto-generate the per-cluster merge-analysis for Phase 4b from the audit data (inbound links, unique sections, generator ownership) so the founder-required analysis is evidence, not prose. (Medium — the page-inventory audit already produced the raw graph.)
-4. A `check-receipt-ordering` meta-gate asserting the mobile/visual receipts were captured AFTER the newest build stamp, turning the D-S329.8 ordering rule from discipline into a gate. (High — the receipts already carry source hashes; compare against the built tree.)
-
-**Committed to TASK_BOARD:** [SIL] sitemap → build-chain structural generator (folded into Phase 4a item) · [SIL] check-receipt-ordering meta-gate
-
-## 2026-08-27 — Session 330 (attention-safe visitor journeys · exact staging proof · production hold preserved) | Total: 982/1000 (v3.0) | Velocity: +12 | Debt: ↓
-Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
-  └ 3-session: Dev 97.0 | Align 100.0 | Momentum 95.0 | Engage 98.3 | Process 98.3
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Final tree passed 370/370 build steps, 235/235 mobile cells, 42/42 reviewed renders, 15/15 staging attention cases, and 8/8 ceremony checks; one point retained for the production/staging divergence that remains externally gated. |
-| Creative Alignment | 100 | The interruption reduction preserves every useful capability while making the experience calmer, consent-first, and visibly intentional across human and member journeys. |
-| Momentum | 85 | Twelve concrete improvements and the full staging release landed on main, but the authorized production outcome could not complete because the mandatory real-provider ceremony remains unverified. |
-| Engagement | 99 | The change directly improves first-time and returning visitor experience; aggregate effectiveness data is not yet available and no private histories were invented to fill that gap. |
-| Process Quality | 99 | Exact-tree receipts, staged/browser/live distinctions, safe cron-race reconciliation, and canonical blocker probes were followed; production failure was reported as 3/15 rather than renamed green. |
-| Cross-Repo Coherence | 100 | Obelisk-owned registration remains an explicit dependency; no sibling repository was edited to manufacture readiness. |
-| Security Posture | 100 | Consent priority was strengthened, no auth/security gate was bypassed, secret scans were clean, and production stayed immutable under the identity hold. |
-| Ecosystem Integration | 100 | Public journeys, the portal, build reachability, staging receipts, and mobile evidence all consume one coherent attention contract. |
-| Capital Efficiency | 100 | No dependency or paid service was added; existing browser, storage, and release machinery were reused. |
-| Automation Coverage | 100 | Static policy, behavioral browser coverage, mobile runtime binding, and final-tree receipt ordering make the full regression class machine-detectable. |
-
-**Top win:** Independent prompt timers became one explicit visitor-attention budget, proven on both new and returning journeys across desktop/mobile and three browser engines.
-
-**Top gap:** Production still serves the old bundle and scores 3/15 because the full-site identity gate requires missing Obelisk relying-party configuration plus the founder passkey ceremony.
-
-**Intent outcome:** Partial — audit, implementation, exact staging, push, and live inspection completed; production deployment was correctly withheld by the mandatory identity gate.
-
-**Brainstorm**
-1. Wire the 15-case attention suite into the canonical release ceremony so future releases cannot promote a prompt-budget regression. (High — the suite and stable assertions already exist.)
-2. Publish privacy-thresholded aggregate attention claims by surface and visitor-depth bucket, never a per-browser history, to measure interruption pressure over time. (High — reuse existing public-safe telemetry aggregation.)
-3. Add a small inline “notification preferences” center after consent so visitors can opt into categories without triggering another modal. (Medium — reuse consent storage and keep entry user-initiated.)
-
-**Committed to TASK_BOARD:** [SIL] attention behavior in release ceremony · [SIL] privacy-thresholded attention-pressure metric
 ## 2026-08-27 — Session 331 (sitewide audit follow-through · attention release invariant · link and telemetry truth) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
 
 | Category | Score | Notes |
@@ -2801,3 +2741,38 @@ the founder's and blocks nothing.
 above are the correction of my own carried debt rather than new value — counting them upward would
 be marking my own homework. Dev Health and Automation Coverage would arguably rise on the
 both-directions proofs; left alone deliberately.
+
+## 2026-09-04 — Session 343 (the site had no users because one undefined function failed every registration while creating the account · a cancel path was sold but never wired · the funnel advertised a bot filter it did not have) | Total: 982/1000 (v3.0) | Velocity: +5 | Debt: ↓
+Avgs — 3: 984.3 | 5: 988.0 | 10: 989.0 (carried) | 25: 988.0 (carried, spans archive) | all: 984.0 (carried, spans archive)
+Sparkline (last 5): █████ · 993, 994, 977, 982 (4 shown; S339 993)
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean · mobile 215/215 · worker 57/57. Production verified by reading the SERVED bundle rather than trusting the deploy's green. Deduction: two rebase races cost two full re-derive cycles that better ordering would have avoided. |
+| Creative Alignment | 97 | One audience-facing copy change: `vault-member/index.html` no longer tells a stranger that "enrollment is currently invite-led inside Obelisk" when enrolment is open. Corrective, in voice, no pricing or identity claim touched. No new creative surface authored. |
+| Momentum | 100 | The question was why a live, announced site had zero members. It is answered, fixed, deployed and verified in the served asset. Nothing else this session was close in leverage. |
+| Engagement | 99 | Registration works. That is the highest-leverage engagement fix available on this site, and it is live. Deduction: it is not yet proven by a human completing a signup. |
+| Process Quality | 92 | Captured receipts before the tree had converged — twice — because `build-home-desk-module` rewrites `index.html` and invalidates them; that is my own recorded convergence order and I deviated from it, burning a gate run. A convergence script I wrote only ECHOED its stale list without acting on it. I probed Supabase with a URL I had not verified and read the 401 as a bad credential before checking the key's own scope claim, which turned out to be the real finding. All caught before shipping, none reached a surface. |
+| Cross-Repo Coherence | 100 | The Supabase gateway defect belongs to studio-ops and was NOT written there — boarded with Ark cargo as the route (CANON-018). Obelisk read for evidence, never written. |
+| Security Posture | 99 | `looksLikeBot()` returns a boolean so the user agent is read and discarded — a stored UA is a fingerprint, and the honest-looking version of this fix would have kept it. No CSP relaxation; the Obelisk seal remains escalated rather than quietly widened (D-S343.3). The credential probe printed length, prefix and decoded claims, never the key. |
+| Ecosystem Integration | 99 | Every fix reuses what existed: `window.VaultKit.subscribe` (the real API the dead call was reaching for), the working `?gift=success` handler as the model for `?checkout=success`, the already-deployed `customer-portal-session` function that had zero callers, `startVaultSparkedCheckout` as the shape for `openCustomerPortal`. No new dependency, no new config surface. |
+| Capital Efficiency | 100 | Zero new dependencies. Net −6 KB per homepage visit by deleting two modules that could only early-return. |
+| Automation Coverage | 97 | Existing gates all held. Deduction, and it is the honest one: **nothing in 388 steps catches a call to an undefined global.** `VS.kitSubscribe` was a plain `TypeError` on the site's most important path and it survived every gate, every test and a live deploy. The class can recur tomorrow. Committed as a board item rather than left as a lesson. |
+
+**Top win:** The site could not accept a member, and had not been able to for as long as the call had been there. `vault-member/portal-auth.js` invoked `VS.kitSubscribe(...)` — defined nowhere in the codebase — inside the registration try-block, ahead of `showDashboard()`, with the subscribe checkbox shipping `checked`. Every stranger on the default path threw a TypeError, was told *"Could not complete registration. Please try again."*, and left; their account had in fact been created, so the retry failed differently against `register_open`'s uniqueness guard. The fix is small and the ordering is the point: the account is shown FIRST, and the opt-in fires afterwards, guarded, un-awaited, with its rejection swallowed. An optional side effect must never sit upstream of the outcome it decorates.
+
+**Second win — a cancel path that was sold but never wired.** `supabase/functions/customer-portal-session` had zero callers and the Settings button was `typeof`-guarded, so it failed SILENTLY while the marketing copy promised "Cancel anytime". That is a consumer-law exposure rather than a bug, and it would have surfaced only once someone tried to leave.
+
+**Third win — the funnel now does what the site says it does.** `/stats/ecosystem/` has advertised "bots separated from people" for months; the funnel beacon applied no such filter, so all 371 hero impressions were of unknown provenance and every conversion number derived from them was undecidable. The filter reads the user agent and discards it.
+
+**Top gap:** I know the convergence order for this repo — it is written in my own memory, in the exact words "converge artifacts → seal → capture receipts → sanitize last → gate" — and I still captured receipts twice before the tree had settled, because `build-home-desk-module` rewrites `index.html` after I had already decided the tree was final. Each miss cost a full re-capture and, once, a whole gate run. Knowing a rule and sequencing against it are different skills, and this session only demonstrated the first.
+
+**Honesty ledger:** The plan's Phase 0 gate is a **human signup in a clean browser profile** and it has NOT been run — the fix is verified by the gate, three suites, and by reading the served bundle, but not by a person creating an account, and I will not describe it as user-proven until someone has. The CANON-053 review covered **2 of 84** captures, and the `vault-member` portal — this session's largest change — is absent from the theme matrix entirely and was covered by the mobile suite instead; the receipt says so in those words. The `supabase.admin` credential reads `READY 2/2` and is scoped to a different project, which means the Obelisk ceremony has a second independent failure mode I did not fix. Phases 3–7 of the approved plan are untouched. Two rebase races against publisher crons were resolved take-theirs-then-re-derive, and the `0 0` divergence the first failed push reported was a detached-HEAD artifact, not a clean state.
+
+**Intent outcome:** Achieved for what was scoped. Phases 0–2 are code-complete, gated, deployed and verified in production. The founder's broader ask — finalize everything, all phases — is roughly a third done, and the remaining two thirds are product work rather than repair.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S343][QA/P0] Run the human signup walkthrough — the Phase 0 gate, ~3 minutes, and the only evidence that actually closes this.
+2. [S343][BUILD/P1] Gate the class, not the instance: a check that flags calls to `VS.*` / `window.VS*` members that no source defines. This session's headline bug survived 388 steps because nothing looks for it.
+3. [S343][SEC/P0] Ark cargo to studio-ops for per-project Supabase key names — one shared slot cannot serve two projects, and the audit calls the mismatch READY.
+4. [S343][VOICE/P1] Give the homepage IGNIS chip the `publicNote` treatment the sibling surfaces already have.

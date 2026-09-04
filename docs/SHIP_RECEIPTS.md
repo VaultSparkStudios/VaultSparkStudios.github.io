@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-09-03 -->
+<!-- generated-at: 2026-09-04 -->
 
 # Ship Receipts
 
@@ -7,5 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 1 | 0997fea3 resync status-proof and stats after the second publisher race | pending |
+| Conversion | 1 | 57e69bfc repair the signup path that was failing every registration | pending |
 | Speed | 1 | 7ec24fd7 repair the intelligence-budget artifact resync-derived does not cover | home-lcp-s173 (4) |

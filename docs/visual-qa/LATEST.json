@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-04T03:07:28.565Z",
+  "capturedAt": "2026-09-04T17:19:27.019Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -237,9 +237,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "b9cceb647ad400e90d3b3eb55ac8dbfbd04a9a57b7e1cc1bc42d2a1de253a6fb",
-    "candidateSha": "d50e74b084cc29aa68709a66c75396792671a510",
-    "root": "d468d3c7a2c9ef9a550a40e75e7dde14277fa93c4ca9669b0499988c65a64176"
+    "manifestSha256": "8641614292409a4c8861177583c3298f52217a18d6089ba0c841f6f8d2343306",
+    "candidateSha": "57e69bfcd48a194a5a6ea3a2a61d176ac0211b32",
+    "root": "4d175cdbb7d997fb94c3ffaa212f471ae5682795d7c0897b395ae031a27cbd1f"
   },
   "matrix": {
     "routes": [
@@ -285,9 +285,9 @@
       "automatedOnly": 82,
       "complete": false
     },
-    "reviewer": "claude-opus-5 (S343)",
+    "reviewer": "claude-opus-5 (S343 closeout)",
     "findings": [
-      "PASS (partial). Inspected 2 of 84 captures, both homepage - the only theme-matrix surface this session's changes touch (assets/home-idle-loader.js dropped two guaranteed-no-op modules). dark/desktop: hero, nav, 6 project cards, 3 CTAs, live-count chip all render correctly. light/mobile: nav collapses to hamburger, body copy legible; CTAs caught mid-entrance-animation (washed out at capture, fully opaque on desktop) - animation artifact, not a contrast defect. NOT pixel-inspected: the other 82 captures, and the vault-member portal, which carries this session's largest change (portal-auth.js registration path) and is absent from the theme matrix entirely - covered by the 215/215 mobile suite instead."
+      "PASS (partial). Re-captured after the full-build convergence changed changelog/index.html and invalidated the prior receipts. Inspected 2 of 84, both homepage - the only theme-matrix surface this session's code touches. dark/desktop: hero, nav, 6 project cards, 3 CTAs and the live-count chip all render correctly; unchanged from the pre-convergence capture apart from the IGNIS chip text. light/mobile: nav collapses to hamburger, body copy legible, CTAs caught mid-entrance-animation (animation artifact, opaque on desktop). ONE DEFECT CONFIRMED, boarded not fixed: the IGNIS chip publishes machine-mangled commit prose to strangers - was 'The studio keeps resync after publisher race', now 'The studio steadies repair the signup path that was...' - see D-S343.5. NOT pixel-inspected: the other 82 captures, and the vault-member portal, which carries this session's largest change and is absent from the theme matrix entirely (covered by the mobile suite, 215/215)."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": null,
@@ -303,12 +303,12 @@
         "height": 900
       },
       "file": "home--dark--desktop.png",
-      "sha256": "9977b3acdc71300705061a631aee1870e899a0306e27c157523f3eedfe59401f",
+      "sha256": "1b9a4aec0ff450cd53973ac1eac5bd166b5623584c09a536a93b64755646a75d",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-opus-5 (S343)"
+        "reviewer": "claude-opus-5 (S343 closeout)"
       }
     },
     {
@@ -320,7 +320,7 @@
         "height": 900
       },
       "file": "games--dark--desktop.png",
-      "sha256": "1b10cfdc44b73d7804c7762bc1de241530fa48a2c504372a9034522184cfc9be",
+      "sha256": "88eed1807194644cee54391c388869a2f7ed04f9c370a34395cb37b94e82e31e",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -336,7 +336,7 @@
         "height": 900
       },
       "file": "membership--dark--desktop.png",
-      "sha256": "777fe1993a84f96fc066a65d8bd1fa35fa091de9e9aac8fca0a02d21779e592b",
+      "sha256": "f1b58a0589353b2812f6d335687939d081ea1fa85a26a1b525940513a74199c1",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -352,7 +352,7 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "31f75ad3b8b0cb172acafabaec21154b18a965b04fe6adc6c29fd4380a0773d4",
+      "sha256": "0e4896068ab9af786f4e0a9f8d9b17a287f860454a8fd056ca7ae2bfc80f3880",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -368,7 +368,7 @@
         "height": 900
       },
       "file": "evidence--dark--desktop.png",
-      "sha256": "72120267bd8c0ff738db5f5326a0a7929df56b83af5eded05762aab6532f93d8",
+      "sha256": "1f1487590f7a27d0f080e55b021abd7c7c105c6db3dfa3f857070d386298c783",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -400,7 +400,7 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "a540d4e017b2fb580a5443bdfd08d9d94e164a21042f34c01af391d158019cd1",
+      "sha256": "be681b1572135292ca9a34598706650837d556bad48a8c826d428c835d7a55a6",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -416,7 +416,7 @@
         "height": 900
       },
       "file": "games--light--desktop.png",
-      "sha256": "8e97621252a2ef7b1c369a287d4e5f282ccbb03f996ff4979c08a04482a5953e",
+      "sha256": "f37b673ee67be742496f1c97e4db68bcdd4a6937ebf442c1b86b2a1b874580f0",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -432,7 +432,7 @@
         "height": 900
       },
       "file": "membership--light--desktop.png",
-      "sha256": "b268cc605164a52dae4c4949a2369b49e414239914e03c684411b1f2315bd039",
+      "sha256": "67bc6923fd2d9e8e69cbcb55f8db2d22fab69b595f9f817fb54b481e8edd31e2",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -448,7 +448,7 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "43d604e937f91e1a627bcaf5d48002ed06af2e91e5c05ff6ff7f611d2d596686",
+      "sha256": "5b005cceeb62d6014be3c3c69f46b45928c0e274b1c4c1b3f44dda920b24a16d",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -464,7 +464,7 @@
         "height": 900
       },
       "file": "evidence--light--desktop.png",
-      "sha256": "9553a587b6e677a18b9a41fa432575e3fcb6d817d673f81147675439c314fb42",
+      "sha256": "87829d3cc0937693ac8f44816254db4a84bc71e148c4c83d340626111555d86e",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -496,7 +496,7 @@
         "height": 900
       },
       "file": "home--ambient--desktop.png",
-      "sha256": "cc422d1febf010d7fbf7086c9e1de37bc6a2d3f319ca9e5397e4a553daadacea",
+      "sha256": "e41d5e0520329c101b0232f041e7c8841fde5e093925042c60a7b624fb1b66fb",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -512,7 +512,7 @@
         "height": 900
       },
       "file": "games--ambient--desktop.png",
-      "sha256": "986e5cdb0e2c0f947907c3918a23797b76c2d40333b7d9e94b0e56a66d04033c",
+      "sha256": "d87f562a173366fb7ff63f906fe0d3c7d78ba7882f13c122bcc32e46e3cc6ba7",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -528,7 +528,7 @@
         "height": 900
       },
       "file": "membership--ambient--desktop.png",
-      "sha256": "4b0738d4a2ed5719a8aa475652359022e3f5af5c5a47fad8dddee4e1d1a8e9a2",
+      "sha256": "579b6e315cc61f6c42eeb95ef87a2799e5115eef50574f6c1e6f780bf16b6834",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -544,7 +544,7 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "e4c4c643a79a9d530b434a7226a0c76912c83678f1e492b3b8dd9b6500e61d08",
+      "sha256": "794c8075128ba319f2de96dff35762dd78ed4752aef139c28df699698fd66cca",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -560,7 +560,7 @@
         "height": 900
       },
       "file": "evidence--ambient--desktop.png",
-      "sha256": "deab0ac48c282029f2f866dd5cfa1c7e686bca119a470fad13d2d707b87add08",
+      "sha256": "519621f962f0f45620af10ada84c8fb854fba45b7e1d7e2f1ef457c11bddafdb",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -592,7 +592,7 @@
         "height": 900
       },
       "file": "home--warm--desktop.png",
-      "sha256": "ba66bc561b42f1681b17aef62e55a16c80f278493c167cc4cd5ed5b86614efdd",
+      "sha256": "39dbb9ae357a5c7697783c12b4c5348e8624d204b58a0473ac1be034d0734aaa",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -608,7 +608,7 @@
         "height": 900
       },
       "file": "games--warm--desktop.png",
-      "sha256": "f6a06e588e544c8b7cdf22aaef1fd370f5dcc02adfb4d4acdbed31e54402d296",
+      "sha256": "7061076e52dc06e62e60f3dffcbd06371d30481c1fc3f71f106887fc3505f23c",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -624,7 +624,7 @@
         "height": 900
       },
       "file": "membership--warm--desktop.png",
-      "sha256": "21637a1408c7ee69f60da13aaa772490b5fcbf55e2425d3ed1b2e24463f3afd5",
+      "sha256": "1782bf448a6729c58e05eee8a6728685aa24ab13a3f9f2530418f4e42fbcc00c",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -640,7 +640,7 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "0bcbad0c0b692bbcb2ec7a9574fb51d2a3d824202be7e8baad2f1181f8a3ad34",
+      "sha256": "547d17f0e6aa369cbebae3f9e11b5cf434aad91bd350dcf6db105ed7668a88d0",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -656,7 +656,7 @@
         "height": 900
       },
       "file": "evidence--warm--desktop.png",
-      "sha256": "ef2067af495f0cbc7b1507804ec57508d519ed63ad8599999688c83705e2894c",
+      "sha256": "3c68a6367f4e80146560c4f2d429ed887df7c5852404e870804353e23f0ba896",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -672,7 +672,7 @@
         "height": 900
       },
       "file": "atlas--warm--desktop.png",
-      "sha256": "de483c1dc487357d5dfa974021e8c612a653a99249dea773c61b6ab7ae2973bc",
+      "sha256": "5ee5603d03a6f8af0a28c35b6042f12bf1316921164fa450d3516ed235f49d30",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
@@ -688,7 +688,7 @@
         "height": 900
       },
       "file": "home--cool--desktop.png",
-      "sha256": "4369941c6e8af0c9c8a4bdc36581be063767c9c59b79c072a37bfe5a56ad76fe",
+      "sha256": "9aa839150829ad51fb4d908e676f20eece305edefdbb1d476e58241e7f7f147c",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -704,7 +704,7 @@
         "height": 900
       },
       "file": "games--cool--desktop.png",
-      "sha256": "c72d900ae260cb5e9c7bf92dc3ee1479fe606693bc00792236c3cf5896aabf23",
+      "sha256": "9e865ecaa2865441a74c233491843afe611dbda436466ba2eea17da32f81ba0d",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -720,7 +720,7 @@
         "height": 900
       },
       "file": "membership--cool--desktop.png",
-      "sha256": "1cd7209e0ac6e1f74cd497fefce104d0b6536244e0552894fc2c0a2e14388fca",
+      "sha256": "6706e139110c2d6b5995811228b0d81229d8296a2560eef95e55aae1d4b5d14c",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -736,7 +736,7 @@
         "height": 900
       },
       "file": "status--cool--desktop.png",
-      "sha256": "e1863540e67b8b21e05251bbe3a3e0af1e6765f7b47f7e41b1bc5d1940778ec9",
+      "sha256": "2f66f8438f63a89644a052194206595208265d82de1a7316e4f213350ccd4b4f",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -752,7 +752,7 @@
         "height": 900
       },
       "file": "evidence--cool--desktop.png",
-      "sha256": "08ba0e97eaa1fd2bfbf2bcc0aa3fb555b07898103a181bd214f1acdb19a21eb5",
+      "sha256": "8e31ca0178ac4cc2a2305defa714d6a975160a1a234d18d5a8554f4bd67bc544",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -784,7 +784,7 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "6fb64eb7b75a7341fccc6e272b7807d70726fdaee7cf1e0409615dad3d1df21d",
+      "sha256": "e8cf3788c0d83967d868626d241fb3db11737bee4c5a09eafadcde5d529cc94f",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -800,7 +800,7 @@
         "height": 900
       },
       "file": "games--lava--desktop.png",
-      "sha256": "968fc6d762be0a6405cc337649bf7fbde33e49aa0f705e796386e2813b50a07f",
+      "sha256": "8a54baadedcc39c5171d5d6a936c20d4bb329d46ab3d70c9dee9657f2301223a",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -816,7 +816,7 @@
         "height": 900
       },
       "file": "membership--lava--desktop.png",
-      "sha256": "11cccea8c46e621b0613b81ffb7d7ae8f9588ae19433bad977ee378ebbd6f077",
+      "sha256": "d94e1b6f250360e08d21d712c828886c92428237d765fc0f5d1e87beabcc5e78",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -832,7 +832,7 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "959698701681bbcfef652e466294c5053d8bf749c866d1fd61727e9b19dd5d01",
+      "sha256": "3d9365fca31c8e0556407eef71a5352d1c94f6411f5e271df23fbe1caf0aff0e",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -848,7 +848,7 @@
         "height": 900
       },
       "file": "evidence--lava--desktop.png",
-      "sha256": "a77e7a24de69985d29ad67ff06bc29ee7341edc2ba421f0bbaf620a2a956f9ef",
+      "sha256": "fdb1760f5bb26b17b58a7bf53ed034725767394963c8926e4c739e192fcdaa85",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -880,7 +880,7 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "ec141b88e8c6ea86ac82462bb58bf7ff8276a5ed807fad3b67b59755dafc5ab7",
+      "sha256": "6cab56ec12aae4622386fd90c7c580eb4d2752fa5b1588d8fe2b3c576013bab3",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -896,7 +896,7 @@
         "height": 900
       },
       "file": "games--high-contrast--desktop.png",
-      "sha256": "bf8eac8213806c9162039f01039ed81af638d68326b72188e9d38f6d31d6c761",
+      "sha256": "fc69ee50725091472ceae4c5e22840237e0d037c1a6af9247fd8da1a02e0d584",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -912,7 +912,7 @@
         "height": 900
       },
       "file": "membership--high-contrast--desktop.png",
-      "sha256": "052f7386e1542de262ff26ec9b15e9e1c8ddb49eeb8a67affa4905eb10bd6dd4",
+      "sha256": "fb7f7acecddd382c11ba8e2804dc2a049a3418aeed9a203f24b09ae14763d838",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -928,7 +928,7 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "829fdc63862d91b6ee7822e9b39eff167895c8428ec9ab60ce2c3a992c021f59",
+      "sha256": "a699763a842a079fb5b11dd316e863d4dca1196337191b845b2df35fd93b1c57",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -944,7 +944,7 @@
         "height": 900
       },
       "file": "evidence--high-contrast--desktop.png",
-      "sha256": "388f88ba99365c4f62df2225110273a0fc720b2cb72acd7491c79309819f0d0a",
+      "sha256": "32cbef10386ffd056e596f7449f3366c13b25b65cccb05090863f48dd7ba2f7d",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -976,7 +976,7 @@
         "height": 844
       },
       "file": "home--dark--mobile.png",
-      "sha256": "384fff4793e8d64f6396245151aa52abc8b4ae8835dda5a83aaaa4174fdf5afe",
+      "sha256": "860183cd2df49a8725f4dc50710a93a44a5569a9aad191dc93668225fd8d9909",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -992,7 +992,7 @@
         "height": 844
       },
       "file": "games--dark--mobile.png",
-      "sha256": "438873b367501ef161681c31d4443b5c443d438f28ec9095c6612bf5050def61",
+      "sha256": "90d9e3066308dd8435c3a255dd5d1d250b9d8f73b5e48dbc4673c173b64bad27",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1008,7 +1008,7 @@
         "height": 844
       },
       "file": "membership--dark--mobile.png",
-      "sha256": "3e5291e127307cebd0e1b65aef26090160f097b330ec5d30bff7fcf2f27e5d2e",
+      "sha256": "e0f87ec9fc0c6a7b05f7311ff78c8b66d4674644e2403d01f536d28ccb2a1ccf",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1024,7 +1024,7 @@
         "height": 844
       },
       "file": "status--dark--mobile.png",
-      "sha256": "a1d2efd4738b5517ffd358bb412fda1022c081de989f63cfb3148f2946b265ad",
+      "sha256": "edd51b48207bcd329e3858177da58515c892ad6ed35510525a885b0acd8feece",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1040,7 +1040,7 @@
         "height": 844
       },
       "file": "evidence--dark--mobile.png",
-      "sha256": "c5ffd21c9e410afad85c06a20364a5e5910e3aa8a675458b2d05a061bbddd07f",
+      "sha256": "746f00fb75dc3afa80bd1924750841fd94188539021f5da83f57d56c98a01138",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1072,12 +1072,12 @@
         "height": 844
       },
       "file": "home--light--mobile.png",
-      "sha256": "5f577f2bede95af5d93b24fc43e94dfd53aa235d7eade8b8fd19f4f580a3ffa2",
+      "sha256": "0a44cc77b31eac4450f7e08a70d94f6f384a6eed47c9c3eeb14156b134ec95b7",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-opus-5 (S343)"
+        "reviewer": "claude-opus-5 (S343 closeout)"
       }
     },
     {
@@ -1089,7 +1089,7 @@
         "height": 844
       },
       "file": "games--light--mobile.png",
-      "sha256": "9c53ed9eab82c5003ece0bc51c0a5978bb1b7f9218fa5b94ad4bd910ff2ec936",
+      "sha256": "32de2ee9beda646fcb8c78aa871d0d07b7d785749936a23e56cd50bc439ccaad",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1105,7 +1105,7 @@
         "height": 844
       },
       "file": "membership--light--mobile.png",
-      "sha256": "ecaefd14cba32fec9d4cfcd49f6d63f5da53e626dbd241d127c69515c9a4d1f2",
+      "sha256": "d20caf3550814023d0a376d4a78588c7ab64e41952de37f5a9a240f69c1b9d7a",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1121,7 +1121,7 @@
         "height": 844
       },
       "file": "status--light--mobile.png",
-      "sha256": "883004dca1bac070adcb0cbc4f1538e6452559ab230dd825e28664031ef4686b",
+      "sha256": "1495c53f7894154482d60449a88c90f8d73eee37d934a9753d04f9aa1a2e0a34",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1137,7 +1137,7 @@
         "height": 844
       },
       "file": "evidence--light--mobile.png",
-      "sha256": "991efbf271db3386993aa27d995ca14124f306d803e5dd612132d08ebaf9b41a",
+      "sha256": "0080b729572a21935631d25030ef61793dc14cd9578c1e86752df29f0a17c6d2",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1153,7 +1153,7 @@
         "height": 844
       },
       "file": "atlas--light--mobile.png",
-      "sha256": "39f17d25317ed2ea8b98be6d3a603195567b1ef375d50da2e6faf3db4297eb11",
+      "sha256": "e48a857730a21f3dc0150bb103c621eea41dd142f90228d26ea86f3270de349a",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
@@ -1169,7 +1169,7 @@
         "height": 844
       },
       "file": "home--ambient--mobile.png",
-      "sha256": "bb26bb1b2649ae9beff8943bd5cfb5844ed5b769a806e1b9d7c42dadcbaaddf2",
+      "sha256": "ec9a3e544de423b374afcf5dc1a487a8c1da8661165f6b9c919dac3bf4ad2dce",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -1185,7 +1185,7 @@
         "height": 844
       },
       "file": "games--ambient--mobile.png",
-      "sha256": "56a49d19b78d07603642d3001e9bb48027f24c4e39eda2271c51918266de9f02",
+      "sha256": "fafeb1e2b9ee9224c06c47f414371490d6d653eb0d9892e4b248cdf70a2bb08d",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1201,7 +1201,7 @@
         "height": 844
       },
       "file": "membership--ambient--mobile.png",
-      "sha256": "7c6acabd3aa92f472ff8c9ea54fb58e2bb3ccd91a348f56ce663ea8ceed0b854",
+      "sha256": "d16a376e662fe98206881a9a91a1113c2c19f58f7f5ddbb4cc7c06ec5d088e73",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1217,7 +1217,7 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "50a2a49875e09c1b375102ba1acd623eb0aaee7210101290927839386e0afd6f",
+      "sha256": "21322216fcb99661e39a5ca4d088a2f6af968bcca4bcc60524daa29dfc653e4f",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1233,7 +1233,7 @@
         "height": 844
       },
       "file": "evidence--ambient--mobile.png",
-      "sha256": "eacb266a6c415e9227ff918d175885711ab121158ccaf6fc69c04437caca5697",
+      "sha256": "7720168edd63b8f9d347d5cf8fb15e3397f52e46d90567c6d3c4d6fad4109a53",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1265,7 +1265,7 @@
         "height": 844
       },
       "file": "home--warm--mobile.png",
-      "sha256": "f74fdbe9709bf65bd2e2e08d8d710419c95862ff391aaacd0eb6c3f6fcc17692",
+      "sha256": "ba052307321c3fbed76c109f16d8745b3dfd178d4f5c6aa1e1dc406ba11e8cb8",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -1281,7 +1281,7 @@
         "height": 844
       },
       "file": "games--warm--mobile.png",
-      "sha256": "d39add4c1663994ab3e7c2bcee377bb058b9359d3318fc77a0bb288f4bf7bdd6",
+      "sha256": "a4bf47f3298f62d9d0868ef2ba0b5cb5446d78363d38ac7446828a956c2d8896",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1297,7 +1297,7 @@
         "height": 844
       },
       "file": "membership--warm--mobile.png",
-      "sha256": "c9300d3cdaca0274f59d509cee99c235963132380b3d5c4df5e9275daed82035",
+      "sha256": "9033b5d5ba7e5cc83408fa5dcd5001ebf312594c0b26ceb11beb26adb3436431",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1313,7 +1313,7 @@
         "height": 844
       },
       "file": "status--warm--mobile.png",
-      "sha256": "a95c145b2a1753accac7fd0f90d495b1c975d08bf5260a59493389c3d14dd031",
+      "sha256": "300803a5a6c39cc02648749b3b8b49e4efb2ca58cb2d6497e35a80f165a08e5a",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1329,7 +1329,7 @@
         "height": 844
       },
       "file": "evidence--warm--mobile.png",
-      "sha256": "c174bee9f095e145cc2b3827195d963a5bbcf0e99cedd3e90fdb8175e515c69c",
+      "sha256": "8433f48b41ca270dbc3619037a467eadbbc071562654665316bb98c8b9206113",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1361,7 +1361,7 @@
         "height": 844
       },
       "file": "home--cool--mobile.png",
-      "sha256": "674c2405a3e204b2999fd0f4ebfeb20495e0816d293e55dda317d6397aeb3f03",
+      "sha256": "5d6bbecbe272840f6e72a6995a334fb8adeabd14566618d1629ce34240e477be",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -1377,7 +1377,7 @@
         "height": 844
       },
       "file": "games--cool--mobile.png",
-      "sha256": "ca31acc47e447ad3df39dc7be0270aa5b976458581d2d97beb1cb8f84cb2f0a2",
+      "sha256": "9645fddebc51ecbba923b8616c344851e96c17ec02a324b725d4abf634cee7c3",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1393,7 +1393,7 @@
         "height": 844
       },
       "file": "membership--cool--mobile.png",
-      "sha256": "ef64ab2140f6f697cd79d7a7fc6963974543194d635181a2c63a1b3146ac9448",
+      "sha256": "b27e984befc9cf8d72e29240cdcd14d1ba5d1ab0f5db857650f4bcd69edad1a6",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1409,7 +1409,7 @@
         "height": 844
       },
       "file": "status--cool--mobile.png",
-      "sha256": "cd9b9ee4a034df6aad34bb22a06ad8007b9a14d4b42740bd1ec88cb9926bd050",
+      "sha256": "aad03644df65a664c6952585b17d9022ac4cb7b1a88fd4f7b03e80fb68b0d66f",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1425,7 +1425,7 @@
         "height": 844
       },
       "file": "evidence--cool--mobile.png",
-      "sha256": "4640c0383552eeac568166a85dc17143950253408693510c6ff3402e5beac080",
+      "sha256": "79fc18257f1331432b36522c42cb3935ae1c3714ae2818746cf2ed1c1c306df6",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1457,7 +1457,7 @@
         "height": 844
       },
       "file": "home--lava--mobile.png",
-      "sha256": "e65fd6fb06abec83977b7378fe192b4525a7934e953c05b22822ff33c6b57b26",
+      "sha256": "6cb83a6af67cb9b0558d7e5fe7d4798e7ebc55167bcf3e4187688ae029c504d2",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -1473,7 +1473,7 @@
         "height": 844
       },
       "file": "games--lava--mobile.png",
-      "sha256": "d71c010ef634ac2be36d9780992fb8e834ab677d4cf0a642467c7bbe1087d923",
+      "sha256": "d897d5e23cb3000628d2fe36432a07100afd738e7bd4dd70d2655433d53a4f87",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1489,7 +1489,7 @@
         "height": 844
       },
       "file": "membership--lava--mobile.png",
-      "sha256": "d861ef7c0dc84bb117ac42addf85ba11482d2575f0bb8b2a0300768681ea86b7",
+      "sha256": "f9fea6abe713760a141464e0eb2d9dc4a6e5cf691940b7bbcfb02110e82e62be",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1505,7 +1505,7 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "d5d7baa9ee6299f094a32a75d34f810eb340e364836cc610b86ee346f48c4d9d",
+      "sha256": "31fd94a966607817945a62ca45edb032b976d4c7857c1fe054f02971715e56ab",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1521,7 +1521,7 @@
         "height": 844
       },
       "file": "evidence--lava--mobile.png",
-      "sha256": "23d006ccdeab1bc08744e195a15c0490f3d9a8ebfae96d004807fbe960719d41",
+      "sha256": "0475f8f61ee7c231568b7db4124507fb7571de2f6f327c4b17664b17671cf012",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
@@ -1553,7 +1553,7 @@
         "height": 844
       },
       "file": "home--high-contrast--mobile.png",
-      "sha256": "4b90a85d07f7c9af3883b6a69a1dc01b532d226811a2aeef99e5907e3e39c8d3",
+      "sha256": "b79862a504f718d7501a91928b646c6d11ac06704753b6a7fc213e9ed0273b5d",
       "page": "/",
       "state": "page",
       "inspection": {
@@ -1569,7 +1569,7 @@
         "height": 844
       },
       "file": "games--high-contrast--mobile.png",
-      "sha256": "25e1b647c23f407332eddc521484c44c6f225253441f40ec1a8bab7483e79f47",
+      "sha256": "9048ecd5e0dfaa6383aba665c75748427ac2ba98dd647b6c350564225ab9325d",
       "page": "/games/",
       "state": "page",
       "inspection": {
@@ -1585,7 +1585,7 @@
         "height": 844
       },
       "file": "membership--high-contrast--mobile.png",
-      "sha256": "527c435467c3f25a50bdf418224cc4a5f6f140ea81b97e13e36c35c2d285fe0a",
+      "sha256": "46bfade1feca60d8b26fb0dcbdf281abf7a68092794189e644e7ae528c61e10d",
       "page": "/membership/",
       "state": "page",
       "inspection": {
@@ -1601,7 +1601,7 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "b8528222ebd348f756b93222a577266b93bf48031a405bcced33c1c3582dc13a",
+      "sha256": "7fa9b466787e5dee9b2c0df92bcf2f4bfccca6d7f57efaba0da992622a92c12b",
       "page": "/status/",
       "state": "page",
       "inspection": {
@@ -1617,7 +1617,7 @@
         "height": 844
       },
       "file": "evidence--high-contrast--mobile.png",
-      "sha256": "00425db54a94ba6b566fdc182e25eb26d1b94d6d38a60fccc3b3b45f8e12ba86",
+      "sha256": "77da68fcf8abeed79d5d5097382797ce1cf151769d8227fc3829eec7f62cf3d4",
       "page": "/evidence/",
       "state": "page",
       "inspection": {

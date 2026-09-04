@@ -1,5 +1,35 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S343 · 2026-09-04
+
+- **The site had no users because it could not accept one, and that is now fixed and live.** `vault-member/portal-auth.js` called `VS.kitSubscribe(...)` — defined **nowhere** in the codebase — inside the registration try-block, ahead of `showDashboard()`, with the subscribe checkbox shipping `checked`. Every stranger on the default path threw a `TypeError`, saw *"Could not complete registration. Please try again."*, and left, **while their account had in fact been created** — so the retry then collided with `register_open`'s uniqueness guard and failed differently. Opt-in now fires after the dashboard, guarded on `window.VaultKit`, un-awaited, rejection swallowed. (D-S343.1)
+- **Live at `57e69bfcd`, and verified in the SERVED bundle rather than from the deploy's green.** `/api/build-sha.json` returns the exact sha; the only `kitSubscribe` left in the served `portal-auth.js` is the comment explaining its removal; `portal-core.js` now carries `openCustomerPortal`. build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean · mobile 215/215 · worker 57/57.
+- **Also shipped:** a taken handle no longer reads as success (`register_open` reports rejection as *data*, not `rpcErr`) · `/login` serves browsers a branded page instead of a JSON blob when the IdP is down, machines keeping the JSON contract · the funnel separates bots from people, which `/stats/ecosystem/` had advertised for months without doing, with the UA read and **discarded** because a stored UA is a fingerprint · a working cancel path (`customer-portal-session` had **zero callers** while the copy promised "Cancel anytime") · `?checkout=success` is read · ~6 KB/visit of guaranteed-no-op JS off the homepage · `vs_visit_count` has one writer again.
+
+### THE NEXT THING TO DO — it takes about three minutes and it is not something I can do
+
+**Create an account on the live site, in a clean browser profile, with the subscribe box left checked.** Land on the dashboard. That single walkthrough is the plan's actual Phase 0 gate. The fix is verified by the gate, three suites and by reading the served asset — but *nobody has actually signed up yet*, and until someone has, "registration works" is an inference rather than an observation.
+
+### Two blockers found this session, neither fixed here
+
+- **[SEC/P0] The gateway's Supabase service-role key is scoped to the WRONG project.** Valid, unexpired, `role: service_role`, `ref: ckwtolofoqzrqouqkmvs` — this site ships `fjnpzjjyhnpmunfoycrp`. Both are real VaultSpark projects; the gateway has one `SUPABASE_SERVICE_ROLE_KEY` slot for at least two. It **401s on first use** while `check-secrets --audit` reports `READY 2/2`, because presence is not validity. **This means the Obelisk ceremony has a second, independent failure mode:** `--watch` calls `serviceRoleKey()`, receives a non-null key, sails past its guard, and fails at the truth reads *after* you have completed the passkey flow. Fix the key before attempting the ceremony again. It lives in studio-ops, so it needs Ark cargo, not a direct write (CANON-018). (D-S343.4)
+- **[VOICE/P1] The homepage hero is publishing CI jargon.** The IGNIS chip rendered *"The studio keeps resync after publisher race"* — a chore commit about a rebase collision between publisher crons — as the first sentence a stranger reads under the studio name. Same class as the `public_surface_fed_by_raw_git_leaks` pattern; the `publicNote`/`publicNextStep` overrides that fixed the sibling surfaces are not consulted by this chip. Found in the pixel review, left alone because the tree was frozen under a passing gate with two hash-bound receipts. (D-S343.5)
+
+### The Obelisk ceremony is unchanged and still `--watch`
+
+`node scripts/verify-provider-journey.mjs --watch` (or `--since <hours>` to verify a sign-in you already did, capped at the 7-day KV TTL), then sign in at `/login` in **your own browser** → land on `/vault-member/` → **sign out there**. Do **not** use `--live`. Fix the Supabase key first, or the truth reads will fail at the end.
+
+### What is still open from the approved plan
+
+Phases 0–2 are done. **Phases 3–7 are untouched:** the adaptive front door and the three competing intent taxonomies (`intent-state.js` / `membership-journey.js` / `pathways-router.js` plus six disconnected `/pathways/*` slugs); activation instrumentation, of which there is currently **no concept in the codebase**; the welcome email (there is no welcome, no verification and no receipt email — a new member hears nothing until the 2nd of the following month at the earliest); the three divergent rank ladders, where a member at 60 points has a different rank depending on which surface they read; and surfacing `/how-we-build/`, `/evidence/`, `/news/directors-report/` and `/stats/ecosystem/`, all live and none reachable from the homepage body.
+
+### Watch out for
+
+Publisher crons landed 14 commits during the gate run and one more during the push. Both rebases conflicted **only** on generated artifacts — resolve take-theirs, then re-derive (`resync-derived.mjs`), then re-check `check-receipt-ordering` so the hash-bound receipts still bind to the tree that actually ships. The `0 0` divergence a failed push reports mid-rebase is the **detached-HEAD artifact**, not a clean state; confirm the branch is attached before believing it.
+
+---
+
+
 ## Where We Left Off — S342 · 2026-09-03
 
 - **The Obelisk "remaining work" was four-fifths phantom, and the founder caught it.** Asked what was left, I answered from `api/identity-migration-receipt.json` (generated **2026-08-26**, eight days stale) and named a cross-repo registration as the last step. The founder replied that Obelisk should be complete as of now — a correct challenge to a false claim. Re-probing took minutes. (D-S342.2)
