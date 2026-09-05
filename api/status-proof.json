@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-09-05T01:01:23.790Z",
+  "generatedAt": "2026-09-05T01:05:49.375Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 89,
     "worstStale": {
       "key": "supabase-control-plane",
-      "ageSeconds": 3013014,
+      "ageSeconds": 3013280,
       "generatedAt": "2026-08-01T04:04:29.427Z"
     },
     "seedRisk": [
@@ -34,38 +34,38 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-09-05T00:29:45.571Z",
-      "freshnessSeconds": 1898,
+      "generatedAt": "2026-09-05T01:05:47.104Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-09-05T00:29:45.571Z",
+        "generatedAt": "2026-09-05T01:05:47.104Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 30,
+          "ms": 41,
           "ok": true
         },
         "workerIngest": {
           "endpoint": "/v/rum (OPTIONS)",
           "status": 204,
-          "ms": 54,
+          "ms": 51,
           "ok": true
         },
         "rumIngestPost": {
           "endpoint": "/v/rum (POST)",
           "status": 202,
-          "ms": 100,
+          "ms": 60,
           "ok": true,
           "contractLive": true
         },
         "login": {
           "endpoint": "/login (GET)",
           "status": 302,
-          "ms": 257,
+          "ms": 269,
           "ok": true,
           "shape": "other",
           "degraded": false,
@@ -76,22 +76,39 @@
           {
             "route": "/",
             "status": 200,
-            "ms": 260,
+            "ms": 123,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 260,
+              "ms": 123,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 75,
+              "ms": 66,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
           },
           {
             "route": "/games/",
+            "status": 200,
+            "ms": 28,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 28,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 165,
+              "shape": "served",
+              "note": "served (real content reached)"
+            }
+          },
+          {
+            "route": "/vault-member/",
             "status": 200,
             "ms": 31,
             "ok": true,
@@ -102,24 +119,7 @@
             },
             "edge": {
               "status": 200,
-              "ms": 119,
-              "shape": "served",
-              "note": "served (real content reached)"
-            }
-          },
-          {
-            "route": "/vault-member/",
-            "status": 200,
-            "ms": 30,
-            "ok": true,
-            "origin": {
-              "status": 200,
-              "ms": 30,
-              "ok": true
-            },
-            "edge": {
-              "status": 200,
-              "ms": 47,
+              "ms": 70,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -127,16 +127,16 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 37,
+            "ms": 32,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 37,
+              "ms": 32,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 47,
+              "ms": 57,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -153,7 +153,7 @@
             },
             "edge": {
               "status": 200,
-              "ms": 52,
+              "ms": 48,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -167,9 +167,9 @@
           "originContentPct": 100,
           "originContentChecks": 1488,
           "edgeLivenessPct": 98.1,
-          "edgeLivenessChecks": 947,
-          "workerIngestPct": 81.8,
-          "workerIngestChecks": 947,
+          "edgeLivenessChecks": 948,
+          "workerIngestPct": 81.9,
+          "workerIngestChecks": 948,
           "lastIncidentAt": "2026-09-01T23:34:33.128Z",
           "lastIncidentState": "edge-degraded"
         }
@@ -179,7 +179,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-09-03T01:11:23.448Z",
-      "freshnessSeconds": 172200,
+      "freshnessSeconds": 172466,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -279,7 +279,7 @@
           }
         ],
         "buildVantage": {
-          "generatedAt": "2026-09-05T00:29:47.578Z",
+          "generatedAt": "2026-09-05T01:05:49.097Z",
           "observedOrigin": "https://vaultspark-security-headers-staging.founder-d73.workers.dev",
           "attests": "build",
           "sourceSha256": "2e86b4c31923f37c489cceeb35c3074f797c3bea13f59aae768f835dcb4bc1d0",
@@ -295,14 +295,14 @@
     "deploy-currency": {
       "present": true,
       "source": "/api/deploy-currency.json",
-      "generatedAt": "2026-09-05T00:29:46.237Z",
-      "freshnessSeconds": 1898,
+      "generatedAt": "2026-09-05T01:05:47.706Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-deploy-currency.mjs",
-        "generatedAt": "2026-09-05T00:29:46.237Z",
+        "generatedAt": "2026-09-05T01:05:47.706Z",
         "publicSafe": true,
         "privacy": {
           "responseBodiesRecorded": false,
@@ -315,18 +315,18 @@
           ]
         },
         "state": "content-current",
-        "observedAt": "2026-09-05T00:29:46.237Z",
+        "observedAt": "2026-09-05T01:05:47.706Z",
         "observedOrigin": "multi-vantage-quorum",
         "deployedSha": "ae247aaebc57af4e33ac20d1ea51bedf90deaf68",
         "deployedShaShort": "ae247aaebc57",
-        "repoTipShaShort": "2366dac83f43",
-        "commitsBehind": 18,
+        "repoTipShaShort": "4adfa3cf2865",
+        "commitsBehind": 20,
         "deployedCommitAt": "2026-09-04T17:41:39.000Z",
-        "ageHours": 5.9,
+        "ageHours": 7.3,
         "undeployedContentCommits": 1,
         "oldestUndeployedContentAt": "2026-09-04T22:20:53Z",
-        "contentLagHours": 2.1,
-        "ageDays": 0.2,
+        "contentLagHours": 2.7,
+        "ageDays": 0.3,
         "thresholds": {
           "warnHours": 12,
           "blockHours": 48,
@@ -346,7 +346,7 @@
           "state": "agreed",
           "required": 2,
           "agreementCount": 3,
-          "observedAt": "2026-09-05T00:29:46.238Z",
+          "observedAt": "2026-09-05T01:05:47.707Z",
           "agreedShaShort": "ae247aaebc57",
           "agreedSha256": "89c7e5bef7be555e30d4648f7c675dc825633d9b9adfa8245e6e5b6d2c5576a7",
           "evidence": [
@@ -354,7 +354,7 @@
               "id": "routed-apex",
               "evidenceClass": "routed-http",
               "state": "challenged",
-              "observedAt": "2026-09-05T00:29:46.238Z",
+              "observedAt": "2026-09-05T01:05:47.707Z",
               "shaShort": null,
               "sha256": null,
               "httpStatus": 403,
@@ -368,7 +368,7 @@
               "id": "provider-origin",
               "evidenceClass": "provider-origin-http",
               "state": "observed",
-              "observedAt": "2026-09-05T00:29:46.269Z",
+              "observedAt": "2026-09-05T01:05:47.729Z",
               "shaShort": "ae247aaebc57",
               "sha256": "89c7e5bef7be555e30d4648f7c675dc825633d9b9adfa8245e6e5b6d2c5576a7",
               "httpStatus": 200,
@@ -382,7 +382,7 @@
               "id": "cloudflare-pages-api",
               "evidenceClass": "provider-metadata",
               "state": "observed",
-              "observedAt": "2026-09-05T00:29:46.270Z",
+              "observedAt": "2026-09-05T01:05:47.730Z",
               "shaShort": "ae247aaebc57",
               "sha256": "89c7e5bef7be555e30d4648f7c675dc825633d9b9adfa8245e6e5b6d2c5576a7",
               "httpStatus": 200,
@@ -396,7 +396,7 @@
               "id": "github-deploy-step",
               "evidenceClass": "workflow-attestation",
               "state": "observed",
-              "observedAt": "2026-09-05T00:29:46.272Z",
+              "observedAt": "2026-09-05T01:05:47.732Z",
               "shaShort": "ae247aaebc57",
               "sha256": "89c7e5bef7be555e30d4648f7c675dc825633d9b9adfa8245e6e5b6d2c5576a7",
               "httpStatus": 200,
@@ -418,7 +418,7 @@
         "shellParity": {
           "state": "matched",
           "route": "/",
-          "observedAt": "2026-09-05T00:29:46.237Z",
+          "observedAt": "2026-09-05T01:05:47.706Z",
           "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
           "expected": [
             "assets/ambient-core.shell-a2aa51d885.js",
@@ -468,7 +468,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-09-04T17:02:02.679Z",
-      "freshnessSeconds": 28761,
+      "freshnessSeconds": 29027,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -535,7 +535,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-09-04T17:02:50.024Z",
-      "freshnessSeconds": 28714,
+      "freshnessSeconds": 28979,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -569,7 +569,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-09-04T17:57:46.067Z",
-      "freshnessSeconds": 25418,
+      "freshnessSeconds": 25683,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -829,7 +829,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-09-04T17:57:46.067Z",
-      "freshnessSeconds": 25418,
+      "freshnessSeconds": 25683,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -880,7 +880,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-09-02T00:32:26.893Z",
-      "freshnessSeconds": 260937,
+      "freshnessSeconds": 261202,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -935,7 +935,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-09-04T17:02:33.641Z",
-      "freshnessSeconds": 28730,
+      "freshnessSeconds": 28996,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -962,13 +962,13 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-09-05T00:29:46.150Z",
-      "freshnessSeconds": 1898,
+      "generatedAt": "2026-09-05T01:05:47.653Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-05T00:29:46.150Z",
+        "generatedAt": "2026-09-05T01:05:47.653Z",
         "candidateReady": false,
         "candidateFindings": [
           "staging-build-sha-mismatch",
@@ -979,7 +979,7 @@
         "candidateBuildSha": "57e69bfcd48a194a5a6ea3a2a61d176ac0211b32",
         "stagingBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
         "artifactManifest": {
-          "candidateRoot": "aa9b1bae484e74ace085b1ca0bdf2d1e44d0b29fa8b274af360de5ba1256ed69",
+          "candidateRoot": "32d4032e50bcdbfac6dc09735bec98c66f5a97c3fd5c4bb21de0dba716940b60",
           "candidateLeafCount": 29,
           "stagingRoot": "523a93e04d63236544ba9807c2a047f7e8849b4f5fb421ba8fa2dadffa0fd195",
           "stagingLeafCount": 29,
@@ -1141,7 +1141,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 862569,
+      "freshnessSeconds": 862835,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1313,7 +1313,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 3013014,
+      "freshnessSeconds": 3013280,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1385,13 +1385,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-09-05T00:29:47.881Z",
-      "freshnessSeconds": 1896,
+      "generatedAt": "2026-09-05T01:05:49.234Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-05T00:29:47.881Z",
+        "generatedAt": "2026-09-05T01:05:49.234Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1540,7 +1540,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 1731684,
+      "freshnessSeconds": 1731949,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1914,7 +1914,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 1731684,
+      "freshnessSeconds": 1731949,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1945,7 +1945,7 @@
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
       "generatedAt": "2026-09-05T01:01:22.227Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 267,
       "staleAfterH": 36,
       "stale": false,
       "data": {
@@ -2196,7 +2196,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-09-05T00:00:00.000Z",
-      "freshnessSeconds": 3684,
+      "freshnessSeconds": 3949,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2259,7 +2259,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-09-05T00:00:00.000Z",
-      "freshnessSeconds": 3684,
+      "freshnessSeconds": 3949,
       "staleAfterH": 720,
       "stale": false,
       "data": {
