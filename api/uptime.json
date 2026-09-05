@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-09-05T20:10:06.147Z",
+  "generatedAt": "2026-09-05T20:34:38.108Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "up",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 55,
+    "ms": 57,
     "ok": true
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
     "status": 204,
-    "ms": 88,
+    "ms": 117,
     "ok": true
   },
   "rumIngestPost": {
     "endpoint": "/v/rum (POST)",
     "status": 202,
-    "ms": 115,
+    "ms": 127,
     "ok": true,
     "contractLive": true
   },
   "login": {
     "endpoint": "/login (GET)",
     "status": 302,
-    "ms": 354,
+    "ms": 386,
     "ok": true,
     "shape": "other",
     "degraded": false,
@@ -36,16 +36,16 @@
     {
       "route": "/",
       "status": 200,
-      "ms": 241,
+      "ms": 219,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 241,
+        "ms": 219,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 177,
+        "ms": 147,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
@@ -53,16 +53,16 @@
     {
       "route": "/games/",
       "status": 200,
-      "ms": 62,
+      "ms": 41,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 62,
+        "ms": 41,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 211,
+        "ms": 193,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -70,11 +70,11 @@
     {
       "route": "/vault-member/",
       "status": 200,
-      "ms": 65,
+      "ms": 51,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 65,
+        "ms": 51,
         "ok": true
       },
       "edge": {
@@ -87,16 +87,16 @@
     {
       "route": "/membership/",
       "status": 200,
-      "ms": 56,
+      "ms": 48,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 56,
+        "ms": 48,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 71,
+        "ms": 72,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -104,16 +104,16 @@
     {
       "route": "/status/",
       "status": 200,
-      "ms": 64,
+      "ms": 46,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 64,
+        "ms": 46,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 72,
+        "ms": 65,
         "shape": "served",
         "note": "served (real content reached)"
       }
