@@ -765,7 +765,7 @@
           return '<div class="vw-podium-card'+(isFirst[i]?' first':'')+'">'+
             '<div class="vw-podium-place" aria-hidden="true">'+places[i]+'</div>'+
             '<div class="vw-podium-avatar" style="background:'+ri.color+'22;color:'+ri.color+';border-color:'+ri.color+'55;">'+esc(initial)+'</div>'+
-            '<div class="vw-podium-username"><a href="/member/?u='+encodeURIComponent(m.username)+'">'+esc(m.username)+'</a></div>'+
+            '<div class="vw-podium-username">'+(m.username?'<a href="/member/?u='+encodeURIComponent(m.username)+'">'+esc(m.username)+'</a>':esc(m.username||''))+'</div>'+
             '<div class="vw-podium-rank" style="color:'+ri.color+';">'+ri.name+'</div>'+
             '<div class="vw-podium-pts">'+(m.points||0).toLocaleString()+' pts</div>'+
           '</div>';
@@ -823,7 +823,7 @@
               var initials=m.username.charAt(0).toUpperCase();
               return '<div class="recent-member-chip">'+
                 '<div class="rmc-avatar" style="background:'+ri.color+'22;color:'+ri.color+';border:1px solid '+ri.color+'44;">'+initials+'</div>'+
-                '<div><div class="rmc-name"><a href="/member/?u='+encodeURIComponent(m.username)+'" style="color:inherit;text-decoration:none;">'+esc(m.username)+'</a></div>'+
+                '<div><div class="rmc-name">'+(m.username?'<a href="/member/?u='+encodeURIComponent(m.username)+'" style="color:inherit;text-decoration:none;">'+esc(m.username)+'</a>':esc(m.username||''))+'</div>'+
                 '<div class="rmc-rank" style="color:'+ri.color+';">'+ri.name+'</div></div>'+
               '</div>';
             }).join('')+'<a href="/members/" style="display:inline-flex;align-items:center;padding:0.35rem 0.85rem;border:1px solid rgba(255,255,255,0.1);border-radius:999px;font-size:0.8rem;color:var(--muted);text-decoration:none;margin-top:0.15rem;">All members →</a>';
