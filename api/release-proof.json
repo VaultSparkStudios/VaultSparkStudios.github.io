@@ -5,7 +5,7 @@
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "57e69bfcd48a194a5a6ea3a2a61d176ac0211b32",
+    "sha": "8751ae8f06e29f8f53321a7890d06baaaed84ec4",
     "shellVersion": "bf10f7005d-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-6f2bb4fa73-a2aa51d885-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-b33242e1cc-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
@@ -117,7 +117,8 @@
     "releaseState": "hold",
     "hold": true,
     "reasons": [
-      "real-provider-e2e-pending"
+      "real-provider-e2e-pending",
+      "supabase-control-plane-partial"
     ],
     "requiresWorkflowDispatch": true,
     "requiresExplicitConfirmation": true
@@ -128,14 +129,17 @@
     "environment": "production",
     "workerVersion": "cb41cd7f-d466-4f1b-a4af-ca8ba0abe0cf",
     "blockers": [
-      "real-provider-e2e-pending"
+      "real-provider-e2e-pending",
+      "supabase-control-plane-partial"
     ]
   },
   "supabaseControlPlane": {
-    "overall": "ready",
-    "readyPlanes": 4,
+    "overall": "blocked",
+    "readyPlanes": 3,
     "totalPlanes": 4,
-    "blockers": []
+    "blockers": [
+      "supabase-credential-project-mismatch"
+    ]
   },
   "releaseDependencies": {
     "state": "completed",
@@ -172,7 +176,7 @@
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
-    "supabaseControlPlaneReady": true,
+    "supabaseControlPlaneReady": false,
     "productionPromotionReady": false,
     "releaseDependenciesSatisfied": true
   },
@@ -182,8 +186,12 @@
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
+    "supabaseControlPlaneReady",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",
-    "identity:real-provider-e2e-pending"
+    "promotion:supabase-control-plane-partial",
+    "identity:real-provider-e2e-pending",
+    "identity:supabase-control-plane-partial",
+    "control-plane:supabase-credential-project-mismatch"
   ]
 }

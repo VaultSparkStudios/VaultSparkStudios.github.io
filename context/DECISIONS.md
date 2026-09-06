@@ -1353,3 +1353,91 @@ invalidated both. Boarded as `[S343][VOICE/P1]`.
 
 **Rule:** a surface fed by commit history is a publishing surface. It needs an editor in
 the path, not just a formatter.
+
+---
+
+## D-S344.1 — Two shared Supabase projects, one gateway slot: the collision is structural
+
+The website's `supabase.admin` credential has been resolving a **sibling project's** key
+since **2026-08-17** (`CAPABILITY_MAP.lastIntakeAt 2026-08-17T18:29:09Z`). Both
+`supabase.env.2026-08-13.bak` and `.2026-08-17.bak` still carry `fjnpzjjyhnpmunfoycrp`;
+the live `supabase.env` carries `ckwtolofoqzrqouqkmvs`.
+
+**The root cause is not a bad intake, it is the namespace.** `loadEnv()` merges every
+`secrets/*.env` into ONE flat key namespace. The studio runs two shared Supabase
+projects and both want `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. With a shared
+name and a flat merge, **whichever project intakes last silently takes the slot from the
+other** — so this will recur every time either project is re-intaked, and nothing in the
+gateway will say so.
+
+**Compounding it, the audit contradicts its own evidence.** `check-secrets --for
+supabase.admin` prints `✓ READY 2/2 all present` while the same `CAPABILITY_MAP.json`
+entry records `lastProbeStatus: "auth-error"` from `2026-09-03T18:51:53Z`. The gateway
+holds the disproof and does not consult it. `READY` means *present*; every caller reads
+it as *usable*; and it is the surface an agent checks before declaring itself blocked
+(CANON-019), so a false READY sends the agent to the provider instead of to the slot.
+
+**Decision — fix the half this repo owns, ship the half it does not.** The gateway is
+studio-ops' domain (CANON-012) and `scripts/lib/secrets.mjs` is shared, so its semantics
+were NOT forked locally. Shipped instead as Ark `repo-question` `01K1S867GM47A2B15C3C840B38`
+proposing project-scoped names (`SUPABASE_SERVICE_ROLE_KEY__<PROJECT_SLUG_UPPER>`,
+unscoped as fallback) and surfacing `lastProbeStatus` as a state distinct from READY.
+
+What this repo owns was fixed here: `probe-supabase-control-plane.mjs` already
+*diagnosed* `credential-project-mismatch` and then **threw that diagnosis away**,
+reporting the generic `supabase-rest-probe-failed`. The two demand opposite actions — a
+probe failure means wait and retry, a mismatch means the slot is wrong and waiting can
+never fix it. The blocker is now named, and the probe additionally decodes the
+service-role JWT's own `ref` claim, so a slot holding the RIGHT url and ANOTHER
+project's key is caught too. A non-JWT key yields `null` and is explicitly NOT treated as
+a mismatch — absence of evidence is not evidence of mismatch. 16/16, with the historical
+generic-name bug pinned and a negative control proving a real probe failure still reports
+as one.
+
+**Rule:** when two tenants share a credential name, the namespace is the bug. Scope the
+name; do not re-intake the slot and hope.
+
+---
+
+## D-S344.2 — Self-host on the shared box where it wins; for this project that is not the website
+
+Founder direction: projects self-host on the shared Hetzner box where applicable.
+CANON-038 makes self-hosted Postgres the studio's first-choice database and cloud-managed
+databases **the explicit exception, justified in DECISIONS**. This repo had no such
+justification, which is itself the conformance gap. Recording the assessment now.
+
+**Already self-hosted, and correctly so:** staging (`website.staging.vaultsparkstudios.com`,
+`stagingType: hetzner`) · editorial inference (`hetzner.inference`, which authors The Desk
+at zero marginal cost) · backups (`backup.restic` to the box over SFTP) · the
+`canon-staging` self-hosted Supabase stack (`canon.db.vaultsparkstudios.com`, live).
+
+**Deliberately NOT self-hosted — the static site.** CANON-038's test is "self-host-first
+whenever it **beats** a paid cloud/vendor". GitHub Pages + Cloudflare is free, globally
+edge-cached, and already carries the strict-CSP Worker. A single box in one region loses
+on latency, availability and operational burden while saving nothing, because there is no
+bill to cut. Moving it would be canon-compliant in letter and worse in every measure the
+canon exists to protect.
+
+**The applicable candidate is the data/auth plane, and it is blocked on infra.**
+`STUDIO_PG_ADMIN_URL` is **ABSENT** from the gateway, so the shared Postgres cluster
+cannot be provisioned into — CANON-038 names this as its own remaining founder-aware
+step ("stand up the shared Postgres service on the box + vault `STUDIO_PG_ADMIN_URL`").
+Until that exists there is nothing to migrate *to*, and `provision-project-db.mjs` has no
+admin DSN to use.
+
+**And when it is unblocked, this specific migration is still an escalation, not a task.**
+It moves live member accounts and the sign-in path off managed infrastructure onto a
+single box the studio operates. `AGENTS.md` requires escalation before changing auth or
+security flows, and the honest trade is real: cost saving is ~zero here (the Supabase
+free tier is already cost-neutral under CANON-029), while the failure domain becomes one
+machine. That is a decision worth taking deliberately — possibly yes, for data ownership
+and consolidation — but not one to take as a side effect of a maintenance session.
+
+**Decision:** the website's cloud Supabase is hereby the **explicit, justified CANON-038
+exception** for the static surface and the current data plane, pending the shared cluster
+existing. Boarded: `[S344][INFRA/P1]` to re-evaluate the data plane once
+`STUDIO_PG_ADMIN_URL` is vaulted, with the auth-flow escalation named up front.
+
+**Rule:** "self-host when applicable" is a test, not a default. Applicable means it beats
+the alternative on the axes the canon names — cost, control, ownership — and a free
+global CDN is not beaten by one box.

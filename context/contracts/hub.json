@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-04T17:02:21.861Z",
+  "generatedAt": "2026-09-06T22:12:07.828Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -23,7 +23,7 @@
   },
   "pulse": {
     "currentSession": 343,
-    "lastUpdated": "2026-09-04",
+    "lastUpdated": "2026-09-06",
     "currentFocus": "Phase 0-2 of the finalization plan shipped and verified live at 57e69bfcd: registration works again (an undefined VS.kitSubscribe had failed every signup while creating the account), a taken handle no longer reads as success, /login serves browsers a page instead of JSON, the funnel separates bots from people, and subscriptions have a working cancel path. Next: the human signup walkthrough that is the plan's actual Phase 0 gate, then Phases 3-7 (adaptive front door, activation instrumentation, welcome email, the three divergent rank ladders).",
     "nextMilestone": "A human completes a signup in a clean browser profile with the subscribe box checked and lands on the dashboard - the only evidence that closes Phase 0.",
     "blockers": [
@@ -34,11 +34,14 @@
     ],
     "queues": {
       "now": [
+        "[S344][SEC/P0] The Supabase credential mismatch is named at the probe, and the gateway fix is shipped. DONE S344. Root cause is structural, not a bad intake: `loadEnv()` merges every `secrets/*.env` into ONE flat namespace, the studio runs TWO shared Supabase projects, and both want `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` — so whichever intakes last silently takes the slot. It flipped on 2026-08-17. Fixed here: `probe-supabase-control-plane.mjs` was *diagnosing* `credential-project-mismatch` and then reporting the generic `supabase-rest-probe-failed`, which sends the reader to the provider when the fix is one line in the gateway; the blocker is now named, and the probe also decodes the service-role JWT's own `ref` so a right-URL/wrong-key slot is caught. 16/16 with the historical bug pinned. Gateway half shipped to studio-ops as Ark `01K1S867GM47A2B15C3C840B38` (project-scoped names + surface `lastProbeStatus`). See D-S344.1.",
+        "[S344][SEC/P0] FOUNDER: the website's Supabase slot needs its own scoped entry. Until studio-ops adopts scoped names, this repo resolves the sibling project's key and every `supabase.admin` call 401s. The website's own key is still on disk in `secrets/supabase.env.2026-08-17.bak` (project `fjnpzjjyhnpmunfoycrp`). One line in the gateway; not an agent path because it writes a sibling repo's secrets tree (CANON-018). This also blocks the Obelisk ceremony — `verify-provider-journey --watch` gets a non-null key, passes its guard, and fails at the truth reads *after* the passkey flow.",
+        "[S344][OBS/P1] `check-secrets` reports READY for a credential it knows is failing. `--for supabase.admin` prints `✓ READY 2/2 all present` while the same `CAPABILITY_MAP.json` entry records `lastProbeStatus: \"auth-error\"` (2026-09-03). The gateway holds the disproof and does not consult it, on the surface an agent checks before declaring itself blocked (CANON-019). Shipped in the same Ark cargo; tracked here because this repo is the one being misled.",
+        "[S344][INFRA/P1] Re-evaluate the data plane for the shared box once `STUDIO_PG_ADMIN_URL` is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, `AGENTS.md` requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.",
         "[S343][AUTH/P0] Nobody could join this website — one undefined function was failing every registration. DONE S343, live in production. `vault-member/portal-auth.js` called `VS.kitSubscribe(...)`, defined nowhere in the codebase, inside the registration try-block and BEFORE `showDashboard()`. The subscribe checkbox ships `checked`, so every new member on the default path hit a TypeError, was told *\"Could not complete registration. Please try again.\"* — and was stranded while their account had in fact been created; the retry then collided with `register_open`'s username-uniqueness guard. This is the explanation for zero users. Opt-in now fires AFTER `showDashboard()`, guarded on `window.VaultKit`, un-awaited, rejection swallowed. Verified in the SERVED bundle at `57e69bfcd`: the only surviving `kitSubscribe` is the comment explaining its removal.",
         "[S343][AUTH/P0] A taken Vault Handle was reading as a successful registration. DONE S343. `register_open` reports a rejection as DATA, not as `rpcErr`; the client checked only `rpcErr`, so a taken handle dropped the member into a dashboard their handle was never bound to. Now inspects `rpcData` on both the array and object shapes.",
         "[S343][UX/P1] `/login` served browsers a raw JSON blob when the IdP was down. DONE S343. `cloudflare/obelisk-auth.js` content-negotiates: browsers get a branded retry page, machines keep the `identity_provider_unavailable` JSON contract byte-for-byte. 57/57 worker tests.",
-        "[S343][OBS/P1] The funnel had no bot separation, while the site advertised that it did. DONE S343. `/stats/ecosystem/` has claimed \"bots separated from people\" for months; the funnel beacon applied no such filter, leaving all 371 hero impressions of unknown provenance. `looksLikeBot()` returns a BOOLEAN — the UA is read and discarded, never stored, because a retained UA is a fingerprint.",
-        "[S343][LEGAL/P1] Subscriptions were sellable with no cancel path. DONE S343. `supabase/functions/customer-portal-session` had"
+        "[S343][OBS/P1] The funnel had no bot separation, while the site advertised that it did. DONE S343. `/stats/ecosystem/` has claimed \"bots separated from people\" for months; the funnel beacon applied no such filter, leaving all 371 hero impressions of unknown provenance. `looksLikeBot()` returns a BOOLEAN — the UA is read and discarded, never stored, because a retained UA is a fingerprint."
       ],
       "next": [
         "[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.",

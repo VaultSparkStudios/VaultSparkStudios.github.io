@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-05 (Session 343 closeout) -->
+<!-- generated-at: 2026-09-06 (Session 343 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 343 closeout · 2026-09-05.
+> **Fast-boot brief** — generated at Session 343 closeout · 2026-09-06.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 344 · 2026-09-05 · FOUNDER MODE                         ║
+║  Session 344 · 2026-09-06 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -42,7 +42,7 @@
 ║                                                                  ║
 ║    982/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 2↑                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 2d  ·  (active = newest o  ║
 ║    Trend  ▄▄▁  ↑  (last 3 sessions)                              ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -72,32 +72,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   388/388 passing  ·  2026-09-06                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
+║  ✓  Tests         388/388 passing (2026-09-06)                   ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
-║  ✓  Context age   1d                                             ║
-║  ⚠  IGNIS         47138 FORGE  ·  11d old                        ║
+║  ✓  Context age   0d                                             ║
+║  ⚠  IGNIS         47138 FORGE  ·  12d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
 ║  ✓  Entropy       0.197  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
+║  ✓  Revenue sig.  2d old (2026-09-04)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
+║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7345 <   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║     8d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
-║    13d · Complete the real-provider passkey ceremony. Run `      ║
+║     9d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
+║    14d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      The silent cron verdict is fixture-proven   ║
-║        The silent cron verdict is fixture-proven only. check-sc  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [VERIFY]       resync-derived.mjs does not cover every --  ║
+║   93  [PRODUCT]      The silent cron verdict is fixture-proven   ║
+║        The silent cron verdict is fixture-proven only. check-sc  ║
+║                                                                  ║
+║   87  [VERIFY]       resync-derived.mjs does not cover every --  ║
 ║        resync-derived.mjs does not cover every --checked derive  ║
 ║                                                                  ║
-║   87  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
-║        <!-- evidence-open: config/intelligence-suite.json and j  ║
+║   84  [PRODUCT]      Re-evaluate the data plane for the shared   ║
+║        Re-evaluate the data plane for the shared box once STUDI  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Make the game covers art-only; the tile ow  ║
-║        Make the game covers art-only; the tile owns all text. T  ║
+║   84  [VERIFY]       <!-- evidence-open: config/intelligence-su  ║
+║        <!-- evidence-open: config/intelligence-suite.json and j  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 343 closeout · 2026-09-05*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 343 closeout · 2026-09-06*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

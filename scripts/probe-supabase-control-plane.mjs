@@ -31,6 +31,22 @@ function sha256File(relativePath) {
   return crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, relativePath))).digest('hex');
 }
 
+// S344 — a Supabase service-role key is a JWT whose payload carries the project it
+// was minted for (`ref`). Comparing only SUPABASE_URL leaves the harder half of the
+// mismatch invisible: a slot holding the RIGHT url and ANOTHER project's key 401s with
+// no hint that the key is the wrong one. Reads the claim only; never logs the token.
+export function projectRefFromServiceRole(token) {
+  if (typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length !== 3) return null; // not a JWT (e.g. a new-style sb_secret_ key)
+  try {
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf8'));
+    return typeof payload?.ref === 'string' && payload.ref ? payload.ref : null;
+  } catch {
+    return null;
+  }
+}
+
 function projectRefFromUrl(value) {
   try {
     const host = new URL(value).hostname;
@@ -89,7 +105,22 @@ export function classifyControlPlane({ inventory, observations, source }) {
   };
 
   const blockers = [];
-  if (!dataRestReady) blockers.push(inventory.dataRest ? 'supabase-rest-probe-failed' : 'supabase-rest-credential-missing');
+  if (!dataRestReady) {
+    // S344 — the probe already DIAGNOSES a credential pointed at a sibling project
+    // (`credential-project-mismatch`, set where the URL's ref is not this repo's), and
+    // this line used to throw that diagnosis away and report the generic
+    // `supabase-rest-probe-failed`. The two demand completely different actions: a
+    // failed probe means the provider or the network is unwell and you wait or retry;
+    // a project mismatch means the gateway slot is pointed at the wrong project and
+    // waiting can never fix it. The studio has TWO shared Supabase projects, so this
+    // is a routine, recurring state — not an exotic one — and the generic name sent
+    // the last reader looking at the provider instead of at the slot. Name the cause.
+    if (observations.dataRest?.status === 'credential-project-mismatch') {
+      blockers.push('supabase-credential-project-mismatch');
+    } else {
+      blockers.push(inventory.dataRest ? 'supabase-rest-probe-failed' : 'supabase-rest-credential-missing');
+    }
+  }
   if (!managementReady) blockers.push(inventory.managementToken ? 'supabase-management-probe-failed' : 'supabase-management-token-missing');
   if (!sqlReady) {
     if (inventory.managementToken) blockers.push('supabase-sql-probe-failed');
@@ -154,7 +185,13 @@ async function probeLive(inventory) {
   // never retarget this probe or a later deploy.
   const projectRef = DEFAULT_PROJECT_REF;
   const observations = {};
-  if (supabaseUrl && serviceRole && projectRefFromUrl(supabaseUrl) === projectRef) {
+  // A key whose own `ref` claim names a different project cannot authenticate here,
+  // whatever the URL says. An unparseable/non-JWT key yields null and is NOT treated as
+  // a mismatch — absence of evidence is not evidence of mismatch.
+  const keyRef = projectRefFromServiceRole(serviceRole);
+  const urlMatches = projectRefFromUrl(supabaseUrl) === projectRef;
+  const keyMatches = keyRef === null || keyRef === projectRef;
+  if (supabaseUrl && serviceRole && urlMatches && keyMatches) {
     observations.dataRest = await readOnlyFetch(`https://${projectRef}.supabase.co/rest/v1/`, {
       headers: { apikey: serviceRole, Authorization: `Bearer ${serviceRole}`, Accept: 'application/json' },
     });
@@ -216,6 +253,14 @@ function selfTest() {
     observations: { dataRest: { status: 'auth-error', httpStatus: 401 }, managementApi: { status: 'auth-error', httpStatus: 401 }, edgeFunctions: { status: 'auth-error', httpStatus: 401 } },
     source,
   });
+  const mismatch = classifyControlPlane({
+    inventory: { dataRest: true, managementToken: false, databaseCredential: false },
+    observations: { dataRest: { status: 'credential-project-mismatch', httpStatus: null } },
+    source,
+  });
+  const fakeJwt = (ref) =>
+    `x.${Buffer.from(JSON.stringify({ role: 'service_role', ref })).toString('base64')}.y`;
+
   const cases = [
     ['service-role-only is partial', partial.overall === 'partial'],
     ['service role never implies DDL', partial.planes.dataRest.canRunSqlMigrations === false],
@@ -225,6 +270,30 @@ function selfTest() {
     ['provider auth failures do not become ready', authFail.overall === 'blocked'],
     ['HTTP normalization distinguishes auth from outage', normalizeProbe({ status: 403 }).status === 'auth-error' && normalizeProbe({ kind: 'unreachable' }).status === 'unreachable'],
     ['no mutating probe is represented', partial.invariants.noMutatingProbeExecuted === true],
+
+    // S344 — the studio runs TWO shared Supabase projects, so a slot pointed at the
+    // sibling is a routine state. It used to be reported as `supabase-rest-probe-failed`,
+    // which sends the reader to the provider when the fix is one line in the gateway.
+    ['THE HISTORICAL BUG IS CAUGHT: a project mismatch is named, not generic',
+      mismatch.blockers.includes('supabase-credential-project-mismatch')],
+    ['a mismatch is NOT reported as a probe failure',
+      !mismatch.blockers.includes('supabase-rest-probe-failed')],
+    ['a genuine probe failure still reports as one, not as a mismatch',
+      authFail.blockers.includes('supabase-rest-probe-failed')
+        && !authFail.blockers.includes('supabase-credential-project-mismatch')],
+    ['a missing credential outranks both names',
+      classifyControlPlane({ inventory: { dataRest: false, managementToken: false, databaseCredential: false },
+        observations: {}, source }).blockers.includes('supabase-rest-credential-missing')],
+
+    // key-ref decoding: reads the claim, never the token
+    ['a service-role key declares the project it was minted for',
+      projectRefFromServiceRole(fakeJwt('fjnpzjjyhnpmunfoycrp')) === 'fjnpzjjyhnpmunfoycrp'],
+    ['a sibling project key is distinguishable from ours',
+      projectRefFromServiceRole(fakeJwt('ckwtolofoqzrqouqkmvs')) !== 'fjnpzjjyhnpmunfoycrp'],
+    ['a non-JWT key yields null rather than a false mismatch',
+      projectRefFromServiceRole('sb_secret_abc123') === null && projectRefFromServiceRole(null) === null],
+    ['a malformed JWT payload yields null, never a throw',
+      projectRefFromServiceRole('a.!!!not-base64!!!.c') === null],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([label, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${label}`));

@@ -53,7 +53,9 @@ export const YAS_STYLE =
   '<style id="vs-yas-style">' +
   '.vs-yas{margin:2.5rem 0;padding:1.4rem;border:1px solid var(--line,rgba(255,255,255,.08));border-radius:18px;background:linear-gradient(135deg,rgba(255,196,0,.05),rgba(126,201,255,.03))}' +
   '.vs-yas__eyebrow{font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold,#ffc400);font-weight:700}' +
-  '.vs-yas__title{font-family:Georgia,serif;font-size:1.4rem;margin:.3rem 0 1rem}' +
+  '.vs-yas__title{font-family:Georgia,serif;font-size:1.4rem;margin:.3rem 0 .35rem}' +
+  '.vs-yas__note{font-size:.8rem;color:var(--muted,#a8b4d0);margin:0 0 1rem}' +
+  '.vs-yas__note a{color:var(--gold,#ffc400)}' +
   '.vs-yas__row{display:flex;align-items:flex-start;gap:.8rem;padding:.75rem 0;border-top:1px solid var(--line,rgba(255,255,255,.06))}' +
   '.vs-yas__ask{flex:0 0 auto;min-width:120px}' +
   '.vs-yas__ask-k{display:block;font-size:.72rem;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.06em}' +
@@ -102,6 +104,13 @@ export function renderYasBox(data, nowMs) {
     '<section class="vs-yas" data-yas-ssr>' +
     '<div class="vs-yas__eyebrow">Closed loops</div>' +
     '<h2 class="vs-yas__title">You asked → we shipped.</h2>' +
+    // S344 — these rows are drawn from the studio's own release history, so they
+    // carry working vocabulary a visitor has no reason to know ("closeout",
+    // "handoff"). One line of orientation, with the definition a click away, is the
+    // difference between a reader feeling let in and feeling locked out — and it is
+    // what check-vocabulary-consistency asks for: explain the term where it is used,
+    // not only in chrome the gate rightly ignores.
+    '<p class="vs-yas__note">Straight from our release log — so the wording is ours. <a href="/how-we-build/">How we build</a> explains the terms.</p>' +
     recs.map((rec) => renderRow(rec, nowMs)).join('') +
     '</section>'
   );

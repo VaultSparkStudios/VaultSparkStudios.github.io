@@ -4,7 +4,8 @@
   "hold": true,
   "updatedAt": "2026-07-24",
   "reasons": [
-    "real-provider-e2e-pending"
+    "real-provider-e2e-pending",
+    "supabase-control-plane-partial"
   ],
   "promotionContract": {
     "requiresWorkflowDispatch": true,
@@ -16,6 +17,10 @@
       "auth/**",
       "surface:identity",
       "worker:identity"
+    ],
+    "supabase-control-plane-partial": [
+      "auth/**",
+      "surface:identity"
     ]
   },
   "blastRadiusAddedAt": "2026-08-17",
