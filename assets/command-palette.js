@@ -22,6 +22,7 @@
   'use strict';
 
   var INTEL_URL = '/api/public-intelligence.json';
+  var INTENT_URL = '/api/intent-map.json';
   var SEARCH_FN_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/semantic-search';
   var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var INTEL_TTL_MS = 5 * 60 * 1000;
@@ -93,7 +94,7 @@
     '.vs-palette-ai__loading{font-style:italic;color:var(--text-muted,#889);font-size:0.85rem;}',
     '.vs-palette-trigger{position:fixed;bottom:1rem;right:1rem;z-index:50;padding:0.55rem 0.95rem;background:rgba(13,16,28,0.92);border:1px solid rgba(255,255,255,0.12);border-radius:999px;color:var(--text);font-size:0.8rem;font-family:Georgia,serif;cursor:pointer;backdrop-filter:blur(8px);min-height:44px;display:none;align-items:center;gap:0.45rem;}',
     'body.light-mode .vs-palette-trigger{background:rgba(255,253,247,0.95);border-color:rgba(20,28,52,0.15);}',
-    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100vh;height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);}.vs-palette-results{flex:1;max-height:none;overflow-y:auto;-webkit-overflow-scrolling:touch;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint kbd{display:none;}}',
+    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100vh;height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);}.vs-palette-results{flex:1;max-height:none;overscroll-behavior:contain;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint kbd{display:none;}}',
     '@media (prefers-reduced-motion: reduce){.vs-palette-overlay{animation:none;}}',
   ].join('\n');
 
@@ -118,7 +119,7 @@
     { kind: 'page', name: 'Membership', href: '/membership/', tags: 'membership tiers join' },
     { kind: 'page', name: 'Choose Your Tier', href: '/vaultsparked/', tags: 'tiers pricing sparked eternal' },
     { kind: 'page', name: 'Vault Member Portal', href: '/vault-member/', tags: 'portal account dashboard sign in' },
-    { kind: 'page', name: 'Vault Wall', href: '/vault-wall/', tags: 'wall public profile' },
+    { kind: 'page', name: 'Vault Wall', href: '/community/#wall', tags: 'wall public profile standings rank' },
     { kind: 'page', name: 'Universe', href: '/universe/', tags: 'universe lore voidfall dreadspike' },
     { kind: 'page', name: 'Voidfall', href: '/universe/voidfall/', tags: 'voidfall cosmic horror saga novel' },
     { kind: 'page', name: 'DreadSpike', href: '/universe/dreadspike/', tags: 'dreadspike lore' },
@@ -138,7 +139,7 @@
     { kind: 'page', name: 'Contact', href: '/contact/', tags: 'contact reach support' },
     { kind: 'page', name: 'Ranks', href: '/ranks/', tags: 'ranks score progression' },
     { kind: 'page', name: 'Leaderboards', href: '/leaderboards/', tags: 'leaderboard ranking' },
-    { kind: 'page', name: 'Feedback Insights', href: '/feedback/insights/', tags: 'feedback insights public' },
+    { kind: 'page', name: 'Feedback Insights', href: '/changelog/#requests', tags: 'feedback insights public' },
     { kind: 'page', name: 'FAQ', href: '/faq/', tags: 'faq questions help' },
   ];
 
@@ -147,10 +148,24 @@
   async function ensureIndex() {
     if (indexCache.fetchedAt && (Date.now() - indexCache.fetchedAt) < INTEL_TTL_MS) return indexCache.items;
     try {
-      var res = await fetch(INTEL_URL, { cache: 'default' });
-      if (!res.ok) throw new Error('intel fetch');
-      var data = await res.json();
+      var responses = await Promise.all([
+        fetch(INTEL_URL, { cache: 'default' }),
+        fetch(INTENT_URL, { cache: 'default' }).catch(function () { return null; }),
+      ]);
+      if (!responses[0].ok) throw new Error('intel fetch');
+      var data = await responses[0].json();
+      var intentMap = responses[1] && responses[1].ok ? await responses[1].json() : { intents: [] };
       var items = STATIC_INDEX.slice();
+      (intentMap.intents || []).forEach(function (intent) {
+        var target = intent.primary && intent.primary.url ? intent.primary.url : (intent.fallback && intent.fallback.url);
+        if (!target) return;
+        items.push({
+          kind: 'action',
+          name: intent.label,
+          href: target.replace(/^https:\/\/vaultsparkstudios\.com/, '') || '/',
+          tags: [intent.id].concat(intent.aliases || [], intent.audience || [], [intent.freshness && intent.freshness.state]).filter(Boolean).join(' ').toLowerCase(),
+        });
+      });
       (data.catalog || []).forEach(function (c) {
         var href = c.deployedUrl || (c.type === 'game' ? '/games/' + c.id + '/' : '/projects/' + c.id + '/');
         items.push({
@@ -250,6 +265,10 @@
 
   async function onInput() {
     var q = refs.input.value.trim();
+    if (q && !refs.input.dataset.intentSignaled) {
+      refs.input.dataset.intentSignaled = 'true';
+      document.dispatchEvent(new CustomEvent('vs:command-palette-intent', { detail: { kind: 'query' } }));
+    }
     var items = await ensureIndex();
     lastResults = search(q, items);
     selectedIdx = 0;
