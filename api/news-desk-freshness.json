@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-05",
+  "generatedAt": "2026-09-06",
   "generatedBy": "scripts/build-news-freshness.mjs",
   "publicSafe": true,
-  "state": "daily",
-  "cadenceLabel": "Daily",
+  "state": "periodic",
+  "cadenceLabel": "Periodic",
   "latestEditionDate": "2026-09-04",
   "observedThrough": "2026-09-04",
-  "ageDays": 1,
+  "ageDays": 2,
   "dailyEvidenceWindowDays": 1,
   "pauseAfterDays": 7,
-  "overdue": false,
-  "recoveryRequired": false,
+  "overdue": true,
+  "recoveryRequired": true,
   "recoveryCommand": "gh workflow run news-publish.yml",
   "publicationPolicy": "Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot."
 }
