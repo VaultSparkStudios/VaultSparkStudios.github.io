@@ -31,6 +31,7 @@ const STRIP_RE = [
   /\b\d{3}\/\d{4}\b/g,       // 981/1000
   /\s*—\s*SIL.*$/i,          // — SIL ...
   /\s*·\s*SIL.*$/i,          // · SIL ...
+  /\s*\(attempt\s+\d+\)/gi,  // (attempt 1) — a CI retry counter, never public
 ];
 
 function strip(text) {
@@ -82,7 +83,24 @@ const TONE_BADGE = {
 
 // ── Build narrative for one commit ────────────────────────────────────────────
 function narrativeFor(commit) {
-  var verb = MOVE_VERB[commit.move] || MOVE_VERB[commit.type] || null;
+  // S344 — STRUCTURAL GATE. A commit that touched nothing a visitor can
+  // perceive has no public sentence, whatever its move type. `visitorFacing` is
+  // written for every entry by build-commit-map.mjs, which regenerates the map
+  // wholesale from git; an ABSENT field therefore means the producer did not
+  // run, and the honest response to that is silence, not publishing everything.
+  if (commit.visitorFacing !== true) return null;
+
+  // S344 — PRECEDENCE. This read `MOVE_VERB[commit.move] || MOVE_VERB[commit.type]`,
+  // which made the `chore: null` rule below DEAD CODE: build-commit-map maps
+  // every chore commit to move `Tended`, and MOVE_VERB.Tended is the truthy
+  // 'Refined', so the null was never reached. 13 of the 24 sentences on the live
+  // feed were chore commits this filter was written to drop — including
+  // "Refined resync after publisher race (attempt 1)." on the homepage.
+  // The TYPE is the authority; the move label is only a fallback for types the
+  // map has no own entry for (build, style).
+  var verb = Object.prototype.hasOwnProperty.call(MOVE_VERB, commit.type)
+    ? MOVE_VERB[commit.type]
+    : (MOVE_VERB[commit.move] || null);
   if (!verb) return null; // filtered (chore/test)
   var summary = strip(commit.summary || '');
   if (!summary) return null;
@@ -108,9 +126,26 @@ function isoWeek(ts) {
 function selfTest() {
   var cases = [
     { name: 'strip S203', input: 'closeout — manifesto write-backs + SIL 981 (S203)', expect: 'closeout — manifesto write-backs' },
-    { name: 'Shipped move', commit: { sha: 'a', ts: '2026-01-01', move: 'Shipped', tone: 'sparked', summary: 'live IGNIS intelligence panel on /ignis/' }, expectVerb: 'Shipped' },
-    { name: 'chore filtered', commit: { sha: 'b', ts: '2026-01-01', move: null, type: 'chore', summary: 'update CI' }, expectNull: true },
-    { name: 'Tended becomes Refined', commit: { sha: 'c', ts: '2026-01-01', move: 'Tended', tone: 'muted', summary: 'orbit shift' }, expectVerb: 'Refined' },
+    { name: 'strip a CI retry counter', input: 'resync after publisher race (attempt 1)', expect: 'resync after publisher race' },
+    { name: 'Shipped move', commit: { sha: 'a', ts: '2026-01-01', move: 'Shipped', type: 'feat', tone: 'sparked', visitorFacing: true, summary: 'live IGNIS intelligence panel on /ignis/' }, expectVerb: 'Shipped' },
+
+    // S344 — this case USED to pass while the bug was live, because its fixture
+    // set `move: null`, a shape build-commit-map.mjs never emits: it maps every
+    // chore commit to move `Tended`. The test therefore exercised a path
+    // production never took. Both shapes are pinned now.
+    { name: 'chore filtered (move:null fixture)', commit: { sha: 'b', ts: '2026-01-01', move: null, type: 'chore', visitorFacing: true, summary: 'update CI' }, expectNull: true },
+    { name: 'chore filtered in its REAL producer shape (move:Tended)', commit: { sha: 'b2', ts: '2026-01-01', move: 'Tended', type: 'chore', tone: 'muted', visitorFacing: true, summary: 'update CI' }, expectNull: true },
+
+    // The exact sentence that reached the live homepage, pinned so it cannot return.
+    { name: 'the live leak is refused', commit: { sha: 'd17f7380', ts: '2026-09-03', move: 'Tended', type: 'chore', tone: 'muted', visitorFacing: false, summary: 'resync after publisher race (attempt 1)' }, expectNull: true },
+
+    // Structural gate, isolated from the type filter: a `feat` — the most
+    // publishable type there is — still earns no sentence if it moved nothing
+    // a visitor can see.
+    { name: 'a feat touching no visitor surface is refused', commit: { sha: 'e', ts: '2026-01-01', move: 'Shipped', type: 'feat', tone: 'sparked', visitorFacing: false, summary: 'a new build gate' }, expectNull: true },
+    { name: 'an absent visitorFacing field is refused, not defaulted open', commit: { sha: 'f', ts: '2026-01-01', move: 'Shipped', type: 'feat', tone: 'sparked', summary: 'producer did not run' }, expectNull: true },
+
+    { name: 'Tended becomes Refined for a non-chore type', commit: { sha: 'c', ts: '2026-01-01', move: 'Tended', tone: 'muted', visitorFacing: true, summary: 'orbit shift' }, expectVerb: 'Refined' },
   ];
   var pass = 0, fail = 0;
   cases.forEach(function (c) {

@@ -2340,292 +2340,6 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
 
-## 2026-08-27 — Session 331 (sitewide audit follow-through · attention release invariant · link and telemetry truth) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Canonical build/check passed 370/370; focused courts pass; the release ceremony records 10/10 rather than the previous eight-step contract. |
-| Creative Alignment | 99 | Product calls to action are clear and visually coherent across seven themes; one point remains because this was refinement, not a broader creative leap. |
-| Momentum | 100 | All four verified audit items shipped in one session, including their regression checks, receipts, and operator-facing reconciliation. |
-| Engagement | 98 | Visitor interruption is structurally protected and product destinations are easier to find; aggregate real-traffic attention-pressure evidence remains future work. |
-| Process Quality | 97 | The final evidence is clean, but one WebKit timing retry and two expected receipt-order regenerations required extra full verification cycles before the final green run. |
-| Cross-Repo Coherence | 100 | No sibling repository was written; the Obelisk-owned identity dependency remains explicit rather than being locally bypassed. |
-| Security Posture | 100 | Security posture remains 8/8, RUM changes add only named aggregate events, and the production identity gate was preserved. |
-| Ecosystem Integration | 99 | Human links, agent-readable receipts, ceremony evidence, status projection, and telemetry now agree; production still serves the older held bundle. |
-| Capital Efficiency | 100 | No package, paid service, or runtime model judge was added; existing Playwright, release, and static-analysis infrastructure was reused. |
-| Automation Coverage | 100 | Attention behavior, link truth, RUM helper flow, status projection, visual review, mobile runtime, and the entire build chain are machine-checked. |
-
-**Top win:** A popup-overload regression can no longer hide behind a generic staging pass: the same five new/returning visitor journeys must now pass in all three browsers before the canonical ceremony can succeed.
-
-**Top gap:** Production still serves the older bundle because the real-provider passkey ceremony and Obelisk relying-party registration remain unresolved; no local test can truthfully substitute for that evidence.
-
-**Intent outcome:** Achieved for the audit and all locally actionable fixes; production promotion was outside this request and remains correctly held.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S330][SIL][OBS/P2] Publish privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket.
-2. [S331][SIL][GATE/P2] Add sampled external canonical-destination reachability to the link court without making transient network failures a silent pass.
-## 2026-08-28 — Session 332 (attention evidence · canonical reachability · refresh-profile CI recovery) | Total: 995/1000 (v3.0) | Velocity: +4 | Debt: ↓
-Avgs — 3: 990.0 | 5: 990.6 | 10: 992.7 | 25: 986.5 | all: 982.7
-Sparkline (last 5): █████ · 994, 989, 982, 993, 995
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Canonical build passed 370/370 after remote-main reconciliation; Worker/auth passed 94/94; the exact failing scheduled profile now passes all 29 steps. |
-| Creative Alignment | 99 | The status surface explains evidence age and uncertainty in the site's restrained proof-led voice; one point retained because this was evidence refinement rather than a new visual concept. |
-| Momentum | 99 | Three ranked audit items plus the discovered CI regression shipped and reached exact staging; final production promotion remained in the active closeout wave at scoring time. |
-| Engagement | 99 | Interruption pressure is now measurable without identities, but real groups remain below the 20-claim publication floor and are correctly suppressed. |
-| Process Quality | 99 | The branch was checkpointed, scheduler commits merged without force, derived conflicts regenerated rather than hand-edited, and the candidate was restaged; one point retained for the extra reconciliation/restage cycle. |
-| Cross-Repo Coherence | 100 | No sibling repository was written; canonical destinations derive from the public registry projection and identity dependencies remain sibling-owned. |
-| Security Posture | 100 | Settings and staged leak scans are clean; fixed-vocabulary telemetry adds no identifier; identity/passkey gates remain intact. |
-| Ecosystem Integration | 100 | Human status UI, agent evidence graph, refresh publisher, release proof, and public JSON receipts now consume the same attention/reachability contracts. |
-| Capital Efficiency | 100 | Zero dependencies, paid calls, or new services; existing Worker RUM, build runner, Playwright, and Hetzner staging infrastructure were reused. |
-| Automation Coverage | 99 | New artifacts are builder/check/evidence-graph/workflow/status covered and the exact CI failure is regression-locked; a general mode-required CLI scanner remains future work. |
-
-**Top win:** Interruption pressure and destination health moved from unmeasured assumptions to privacy-safe, uncertainty-honest public evidence, while the exact scheduled workflow regression discovered during release gating was closed at its shared runner.
-
-**Top gap:** The release candidate is production-promotable only for its declared disjoint blast radius; Obelisk relying-party registration and the founder passkey ceremony remain unresolved for identity/auth surfaces.
-
-**Intent outcome:** Achieved end to end. The exact candidate passed staging and canonical gates, the authorized non-force main release deployed through separate Pages and Worker workflows, and the apex passed exact route/CSP/provenance checks plus the 15-case attention suite. Identity evidence remained held rather than inferred from deploy success.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S332][SIL][GATE/P2] Generalize invocation-mode validation across every derived-build profile.
-2. [S332][SIL][OBS/P2] Publish destination unknown streak and last-known-good age without converting retained evidence into a pass.
-
-### S332 production-closeout addendum
-
-- Exact staging was resealed at root `1cb71fc2a094…`, receipt `3822cf612d7f040cd6feab5a`, 6,953 files, rollback `20260828102714`, continuity depth 58, ceremony 10/10.
-- Pages run `33167403022` and Worker run `33167667067` completed successfully. Live apex routes, CSP, build/candidate provenance, and attention behavior 15/15 were independently verified.
-- The test harness, not the application, caused the first cross-browser apex failures: its init script cleared storage inside a same-origin telemetry iframe. Scoping initialization to `window.top` closed the false negative without weakening the product contract.
-- Final settled-tree verification passed 370/370. SIL remains **995/1000**: the release outcome improved momentum, but the same named sparse/stale evidence and identity holds still justify the five-point debt rather than a celebratory score increase.
-
-## 2026-08-30 — Session 333 (Desk publish recovery · orphaned-gate discovery · evidence continuity) | Total: 996/1000 (v3.0) | Velocity: +4 | Debt: ↓
-Avgs — 3: 992.0 | 5: 991.4 | 10: 992.0 | 25: 987.3 | all: 983.1
-Sparkline (last 5): █████ · 989, 982, 993, 995, 996
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Three suites extended and one created, all green: news-draft-edition 58/58, build-order 27/27, invocation-modes 10/10, probe-canonical-destinations 23/23. A gate that had never executed is now a build:check step. |
-| Creative Alignment | 99 | The status tile explains an unknown as a duration in the site's restrained proof-led voice, and the desk's refusal to disguise its user-agent is consistent with the project's honesty posture; one point retained because this was evidence and reliability work rather than a new visual concept. |
-| Momentum | 100 | Four verified findings shipped in one session, including a five-day public outage returned to service and proven with a real drafting run. |
-| Engagement | 98 | The newsroom can publish again, which is the precondition for reader signal — but real reader evidence still sits below its publication floors, so the engagement gain is restored capacity, not measured response. |
-| Process Quality | 99 | Every finding was verified against live code before implementation, both new gates were proven to FAIL on a reintroduced defect before being trusted, and all fourteen rendered captures were individually inspected rather than asserted. One point retained: build:check was started once before the closeout write-back, which the verification-surface fingerprint rule makes a wasted run. |
-| Cross-Repo Coherence | 100 | No sibling repository was written. The stale branch was abandoned rather than merged, and sibling lock drift was left to its owner. |
-| Security Posture | 100 | No secrets touched or printed. The desk's honest identifying user-agent was retained rather than spoofed to evade publisher bot policy, and two stale wildcard permission rules that could auto-approve injected options were removed from local settings. |
-| Ecosystem Integration | 100 | Destination continuity flows through the same receipt consumed by status proof and the public status tile; the invocation-mode contract covers every derived-build profile rather than one caller. |
-| Capital Efficiency | 100 | Zero dependencies, paid calls, or new services. The rejected Google News resolution would have added an undocumented external RPC for no durable gain. |
-| Automation Coverage | 100 | The orphaned self-test is reachable, the mode contract is structural rather than name-based, and both new gates are regression-locked with proven-failing cases. |
-
-**Top win:** The Desk's five-day silence was not a source drought — it was a selection bug that gave up after one topic. Finding that meant disbelieving the obvious reading of the log ("every source unreachable") and checking what else was in the queue: six readable topics, untried.
-
-**Second win:** the forge ledger was publishing zero entries and nothing anywhere reported it — a noise filter with nothing but noise to read looks identical to a quiet repo. It surfaced only because a routine rebuild shrank two downstream feeds and that shrink was investigated rather than committed.
-
-**Top gap:** S332 believed it had locked this class of regression with a self-test. That self-test had never run — it was in no npm script and no workflow. The lesson generalizes past this file: a passing self-test is evidence only if something invokes it, and `check-build-gate-reachability` reported 246/246 reachable precisely because its denominator never included the orphan class.
-
-**Outcome addendum (post-deploy):** The session ended with the Desk actually publishing — edition `2026-08-31`, live and serving 200, freshness `daily · age 0d`. Seven verified defects shipped, not five: the two later ones (the blind forge ledger and the retired authoring model) were both found *after* the audit closed, one by investigating an unexplained shrink in a generated feed and one by refusing to stop at "the workflow got further than before".
-
-**Process cost worth recording honestly:** the canonical gate was run **eight times**. Three of those were my error — I chased individual drifting artifacts instead of running `npm run build` once, which this project's own notes explicitly warn against, costing roughly ninety minutes. A fourth was spent because I started the gate before the closeout write-back, which the verification-surface fingerprint rule makes worthless. The remaining runs were legitimate: a UTC midnight rollover mid-session, a late-arriving scope addition, and the receipt-ordering gate correctly refusing stale proof.
-
-**Review-cycle addendum:** Three founder-requested review cycles found five further defects **in this session's own work** and corrected two claims the session had made about itself. The most useful pattern: every cycle produced at least one finding that only appeared because something was measured rather than asserted — a settings value read back, 24 commit tips counted, a scan's rejection reasons tallied, capture files hashed before claiming a review. The least flattering: the same finding was diagnosed wrongly twice in opposite directions, each time with real supporting evidence, before counting settled it.
-
-**Closing addendum:** After both delegated decisions shipped, the remaining open item was worked rather than filed. Measuring single-blocker headroom first disproved one of the session's own proposed levers (zero topics were blocked solely as uncastable), and the real defect turned out to be recall — the corroboration matcher only ever saw cluster lead headlines. The publishable pool went 2 → 5, borrowing was capped after auditing the heaviest link by name, and readable-source breadth is now isolated as the single remaining lever with its size reported directly by the scan.
-
-**Deploy:** **VERIFIED IN CI AND IN PRODUCTION.** `build:check` 388/388 green and doctor `blockingFailing 0`; pushed directly to `main` as `1d1ccc68d` after one publisher race resolved by rebase + deterministic re-derive. The production deploy (run `33716265674`) completed **success with 0 failed steps**, and `https://vaultsparkstudios.com/api/build-sha.json` serves exactly `1d1ccc68d` — verified against the served artifact, not the workflow's own verdict. `/`, `/evidence/`, `/status/` and `/games/` all 200; `/proof/` correctly 301. The primary fix was then exercised on the real cron: `uptime-probe` run `33716566954` completed **success**, logging `uptime publish: published on attempt 1.` — the new shared helper landing a real publish against real `main`.
-
-**Intent outcome:** Achieved. The full project-aware arc ran, four verified agent-owned findings shipped and were verified, the canonical gate and CANON-053 rendered-pixel review passed, and the release was committed and deployed under founder authorization. Identity holds were carried forward unchanged rather than being relabeled by deploy success.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S333][SIL][NEWS/P1] Confirm the next scheduled Desk run goes green unattended and publishes a post-2026-08-30 edition.
-2. [S333][SIL][GATE/P1] Extend `check-build-gate-reachability` to cover every `--self-test`-bearing module under `scripts/` and `scripts/lib/`, so the orphan class cannot hide inside a passing denominator again.
-
-## 2026-09-01 — Session 335 (member-write lockdown · public projection view · route court · four merges · Season 1) | Total: 989/1000 (v3.0) | Velocity: +6 | Debt: ↓
-Avgs — 3: 991.0 | 5: 992.2 | 10: 991.6 | 25: 987.6 | all: 983.2
-Sparkline (last 5): █████ · 995, 996, 988, 989
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Two builds green; new/extended suites all green (worker 54/54, build-order 29/29, route court 7/7, migration applier 12/12, content-freshness 16/16, evidence-hub 21/21). The canonical gate result is bound in PROJECT_STATUS after the write-back, per the convergence order. |
-| Creative Alignment | 99 | `/how-we-build/` turns leaked operator vocabulary into the studio's most on-brand page; Season 1 copy promises only Vault Points; every merge keeps the studio's restrained proof-led voice. |
-| Momentum | 98 | 12 of 16 shipped, four routes retired, a live escalation closed, Season 1 launched. Two items scoped down with designs rather than half-built. |
-| Engagement | 97 | Public member surfaces show real numbers for the first time; members see their IGNIS quota and their feedback's fate; the community page has a season to play for. Real traffic outcomes remain future evidence. |
-| Process Quality | 99 | Plan mode with three explicit founder decisions; merge analyses written to DECISIONS before markup moved (S329 directive); two items disproved by code reading; the TT flip was refused against the repo's own readiness receipt despite approval. |
-| Cross-Repo Coherence | 100 | No sibling repository written; `/start` gates run from studio-ops paths; nothing propagated by hand. |
-| Security Posture | 100 | A live free→paid privilege escalation and leaderboard/treasury integrity hole closed with column grants + definer RPCs, proven by an impersonation probe rather than by the SQL file; no secret printed; the anon-key fetch the classifier blocked was replaced by the management probe. |
-| Ecosystem Integration | 99 | `apply-supabase-migration.mjs` is a reusable agent path (CANON-040) with a probe registry; the route court closes the meta-refresh class; the vocabulary gate closes the operator-leak class. |
-| Capital Efficiency | 100 | Zero new dependencies or paid calls; two fewer scheduled workflows; ~15% fewer build processes; 360 MB out of the index. |
-| Automation Coverage | 98 | Every new behaviour has a self-test or probe; the two rendered-pixel receipts are automated-only this session (manual review owed next). |
-
-**Top win:** The audit's ranked list was mostly IA polish; the P0 came from reading a policy. A member could set their own points and paid tier, and the gift flow had been proving it every day by half-failing. The fix was proven by impersonating a member against the live database, not by trusting the migration file.
-
-**Second win:** The same probe showed the public member surfaces had been empty for months — "honest empty state" UX had been hiding a missing read policy. One definer view lit every one of them.
-
-**Top gap:** Two identical builds minutes apart still churn 47 files from commit-derived feeds; the receipt cascade cost S334 named is real and only diagnosed here, not fixed. And the rendered-pixel receipts for five changed surfaces are automated-only — CANON-053 owes a manual review next session.
-
-**Intent outcome:** Achieved (two deviations recorded: TT flip held on the readiness receipt; uptime Worker-cron designed, not built).
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S335][SEC/P2] Audit every other public table for the silent-zero anon read the members table had.
-2. [S335][BUILD/P2] Bisect the build-to-build churn in commit-derived feeds with a pinned clock.
-
-## 2026-09-02 — Session 336 (stranded release recovered · deploy alarm gets a second clock · TT evidence age disclosed) | Total: 987/1000 (v3.0) | Velocity: −2 | Debt: ↓
-Avgs — 3: 988.0 | 5: 991.0 | 10: 991.3 | 25: 987.4 | all: 983.2
-Sparkline (last 5): █████ · 995, 996, 988, 989, 987
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 99 | Three suites extended and green with exit codes read directly, never through a pipe: build-deploy-currency 78/78 (+18), check-deploy-currency-gate 30/30 (+6), build-tt-readiness 14/14 (+11), prune-served-surface 43/43. Doctor 15/16, the sole warn sibling-owned. |
-| Creative Alignment | 98 | No creative surface authored this session; the work restored the studio's own shipped pages to readers and made a designed poll feature capable of running. Voice and brand untouched, which was correct here. |
-| Momentum | 98 | Three ranked items shipped, one closed by evidence without work, and the session's largest finding — a totally broken deploy path — was not on the list. One item escalated rather than half-built. |
-| Engagement | 96 | The engagement win is indirect but real: an entire session of member-facing work (Season 1, the community wall, the quota meter, /how-we-build/) had been invisible to every visitor and now serves. No new engagement surface was built. |
-| Process Quality | 99 | Every audit premise verified against live code or a live probe before inclusion; the new gate proven to fire by restoring the exact regression and reading both exit codes; a blocked credential probe respected rather than worked around; my own date arithmetic corrected against the code rather than the code bent to the assertion. |
-| Cross-Repo Coherence | 100 | No sibling repository written or read for state; studio-ops used only for canon, capability lookup and the secrets gateway. |
-| Security Posture | 99 | The TT receipt was made honest without manufacturing readiness — the tempting fix (age the fossil's rows out, reach enforce-candidate, flip) was rejected explicitly. Four more silent-zero tables fully diagnosed with call sites. No secret printed; nothing bypassed. |
-| Ecosystem Integration | 99 | Both new mechanisms reuse existing internal registries rather than inventing taxonomies (CANON-039): the served-surface manifest and the evidence graph decide what counts as content. `prune --check` and the content clock are patterns any deployable repo can adopt. |
-| Capital Efficiency | 100 | Zero new dependencies, zero paid calls, no new scheduled workflows. Two deploy dispatches, the first of which paid for itself by exposing the manifest drift. |
-| Automation Coverage | 99 | Every fix ships a self-test, and the recurrence gate is wired into `build:check` and demonstrated to fail on the regression it exists for. CANON-053 rendered-pixel review for the newly-served surfaces is owed and on the board. |
-
-**Top win:** The founder asked for a deploy. The deploy was impossible. `prune-served-surface` had been refusing on `/evidence/` and `/how-we-build/` — two pages that exist, are linked, and are advertised in the sitemap but were never added to a hand-maintained allowlist. The failure was self-planting: the content lane promotes `sitemap.xml`, so a new route becomes advertised in production on one deploy and only breaks the next. S334 and S335 each shipped a page and each armed the trap for the session after it. The whole S335 release — a member-write privilege lockdown, Season 1, the community wall, a new page — had been sitting unserved behind a green gate.
-
-**Second win:** Finding *why* nothing alarmed. `deploy-currency` measured only the span from the deployed commit to the repo tip against a 48h ceiling, and promotions land on hourly cron commits, so automation was continuously rewinding the only clock the alarm had. It now ages a second clock from the oldest undeployed hand-authored commit, classified structurally against the served-surface manifest and the evidence graph — so publisher churn cannot mask a stranded release, and the deliberately-held identity backlog cannot cry wolf.
-
-**Top gap:** Four public tables still render a silent zero to every anonymous visitor, and I did not fix them. That is the right call — it decides which member activity becomes publicly readable, which is a founder privacy decision, not an agent migration — but it means `/community/` and the leaderboards have been showing zeros and empty states for months and still are. The diagnosis is complete and the SQL is short; the decision is not mine. Separately, the newly-served surfaces have no manual CANON-053 review yet.
-
-**Honesty ledger:** The polls fix does not change today's pixels — the corrected query returns `[]` because no poll is active — and is recorded as a capability fix, not a lit surface. I could not measure real row counts behind the silent-zero tables because the sandbox classifier blocked the credentialed probe; the finding rests on policy reading, which is definitive for "anon can never see a row" but does not quantify how many rows are hidden. TT enforcement was NOT flipped despite standing founder approval, because the evidence to justify it does not exist yet.
-
-**Intent outcome:** Achieved, with the deploy reached by a different route than expected — the blocker was the deploy path itself, not a missing dispatch.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S336][SEC/P1] Founder decision on the four silent-zero projection views, then one short migration (D-S336.5).
-2. [S336][VERIFY/P2] Manual CANON-053 rendered-pixel review of the surfaces that only now actually serve.
-
-## 2026-09-02 — Session 337 (full deploy unblocked · Chromium-shaped assertion root-caused · TT enforce blocker measured) | Total: 991/1000 (v3.0) | Velocity: +4 | Debt: ↓
-Avgs — 3: 989.0 | 5: 991.6 | 10: 991.4 | 25: 987.7 | all: 983.4
-Sparkline (last 5): █████ · 996, 988, 989, 987, 991
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Five suites green with exit codes read directly: news-draft-edition 69/69 (+4), author-news-edition 26/26 (+6), news-trends 71/71, desk-inference 27/27, tt-report-only-classifier 12/12 across three engines. The decisive receipt is the live one — staging-release 6/6 against the real staging origin on chromium, firefox and webkit, zero flake, reproducing and clearing the exact rejection that blocked the deploy. |
-| Creative Alignment | 98 | No creative surface authored. The Desk work defends the publication's voice from the outside — a syndicated promo block was wearing a reportorial register well enough to publish as a fact, and the fix separates subject from register rather than tightening the voice filter. |
-| Momentum | 99 | Six items shipped, three audit candidates disproved before inclusion rather than deferred, and the session's largest finding — 31 assets loading before the policy they depend on — was not on the list and was reached by measuring rather than assuming. |
-| Engagement | 96 | No engagement surface built. The indirect win is that the deploy path is honest again, so member-facing work reaches readers rather than stalling behind a flaky gate. |
-| Process Quality | 100 | Every audit premise verified against live code or a live probe before inclusion. The blocked deploy was diagnosed to its root — CI artifact downloaded, test re-run locally against real staging — rather than retried; a retry would have passed on the race and taught nothing. The 31-asset exposure was measured across 137 pages before being described, and then NOT fixed, because the honest repair does not fit this session. |
-| Cross-Repo Coherence | 100 | No sibling repository written. studio-ops used only for canon sync and the secrets audit. |
-| Security Posture | 99 | The temptation here was to widen the Trusted Types suppressor until Firefox went quiet. It is instead conjunctive, so an ENFORCED violation — which carries no report-only marker — still fails loudly, and a regression spec pins that direction explicitly. The genuine enforce blocker was named with numbers rather than left as "stale evidence". |
-| Ecosystem Integration | 99 | The relevance term reuses the repo's own `titleTokens`/`tokenOverlap` helpers rather than inventing a similarity measure (CANON-039); the classifier extraction follows the repo's existing CommonJS test idiom. Zero new dependencies. |
-| Capital Efficiency | 100 | No new dependency, no paid call, no new scheduled workflow. One deploy dispatch, which paid for itself by exposing the classifier defect. |
-| Automation Coverage | 100 | Every fix ships a self-test, and the deploy-blocking one ships a regression spec carrying each engine's verbatim console string — the artifact that would have prevented it, pinned so it cannot regress silently. |
-
-**Top win:** The founder asked for a full deploy. The board said it was identity-blocked; the gate said otherwise, and the gate had been saying otherwise for eighteen sessions. Probing before repeating is the whole of that win. The deploy then failed anyway — and the cause was a test that could only ever be right in one of the three browsers it runs in. `tests/staging-release.spec.js` classifies Trusted Types Report-Only notices as observations by design, but recognised only Chromium's phrasing; Firefox words the same notice completely differently, so its report-only notices became hard console errors. Because the sinks render asynchronously it fired on some runs and not others, which Playwright calls flaky, and a flaky result rejects the release ceremony. A correct site, a correct security posture, and a production deploy stopped by a single-engine assertion wearing a three-engine matrix.
-
-**Second win:** Refusing to stop at the fix. Asking *why* Firefox had anything to report at all produced the session's most valuable finding: `ambient-core.bundle.js` installs the TT `default` policy that ~167 legacy sinks depend on, its own comment says it "MUST load before any sink usage", and it is not the first script on the page. Thirty-one sink-bearing assets load before it across 137 pages — `pwa-nav.js` on 81, `pwa-install.js` on 72. Under Report-Only that is invisible. Under the founder-approved enforce flip, every one of them throws.
-
-**Top gap:** That finding is measured and recorded, not fixed. Hoisting the policy installer rewrites the head of every page and invalidates every hash-bound receipt at once, which is a session with its own reseal budget rather than a rider on a deploy — but it means the enforce flip is still blocked and now for a sharper reason than the board carried. Separately, staging serves a route production serves, as a 404: staging is behind production, which inverts the CANON-007 gate the ceremony depends on, and I recorded it rather than chasing it.
-
-**Honesty ledger:** The 31-asset exposure is a static load-order measurement, not a runtime observation — it proves those assets are ordered before the policy, not that each one's sink fires on every page. The `stats-surface` sink removal is a genuine improvement but was not what unblocked the deploy; the classifier was. The release-ceremony receipt truncates failure messages at 500 characters, so the blocking run disclosed one of its six violations and I needed the CI artifact plus a local re-run to see the rest — that cost a round trip and is on the board. TT enforcement remains NOT flipped despite standing founder approval.
-
-**Intent outcome:** Achieved. The deploy was authorized, unblocked at its root rather than retried past, and the block turned out to be ours and fixable.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S337][SEC/P1] Hoist the Trusted Types default-policy installer ahead of every sink-bearing asset; re-measure the 31 before and after (D-S337.3).
-2. [S337][OBS/P2] Record the distinct violating files in the release-ceremony receipt as a structured array, so a rejection is legible without downloading the artifact.
-
-## 2026-09-02 — Session 339 (the origin the release ceremony verifies against had no publisher · the home page advertised three shipped products as unfinished) | Total: 993/1000 (v3.0) | Velocity: +2 | Debt: ↓
-Avgs — 3: 991.7 | 5: 992.0 | 10: 991.0 | 25: 988.1 (carried, spans archive) | all: 983.9 (carried, spans archive)
-Sparkline (last 5): █████ · 989, 987, 991, 991, 993
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | `npm run build` exit 0 read directly. Three new gates, each self-tested and each proven able to FAIL against the live tree, not only against fixtures: `check-verification-origin-publisher` 19/19 (live-negative reproduces the real defect and names all five workflows), `check-receipt-roundtrip-coverage` 15/15, `check-home-portfolio-status-coherence` 17/17 (live-negative on a reintroduced badge). `check-staging-parity` 31/31 (was 26). `build-deploy-currency` holds 87/87 across a refactor onto the shared harness. `deploy-staging-content --self-test` 21/21 before it was trusted with a real deploy. |
-| Creative Alignment | 99 | The home page is the site's first creative impression and it was contradicting itself: a Forge badge under a Sparked heading, and two live products filed as unbuilt. Removing the per-card badge entirely is the alignment win — the tier heading says it once, so the design can no longer disagree with itself. |
-| Momentum | 99 | Three board items closed, the top-ranked P1 among them, plus one defect found by the work rather than by the board. The P1 had been open with the wrong cause recorded; correcting the cause was most of the fix. |
-| Engagement | 97 | A visitor's first read of PromoGrind, Velaxis and Vorn was "still building" while every other surface said live. That is the highest-leverage truth defect available this session and it is fixed at the source, not patched per-card. |
-| Process Quality | 100 | Followed the known convergence order exactly (context edits final → build → fixups → provenance probe → drift sweep → seal → receipts → gate). Tried the credential before declaring a blocker (CANON-019) and it was ready. Declined to widen the blast radius to make a metric green. Recorded one honest deferral with the method attached instead of shipping a guess. |
-| Cross-Surface Coherence | 100 | The home page is now bound to the same canonical feeds the nav groups by. The remaining divergence — studio-ops' `PROJECT_REGISTRY.json` disagreeing about four projects — is on the board as Ark cargo, not edited from here (CANON-018). |
-| Security | 99 | The cheapest path to an "automated" publisher was `gh secret set HETZNER_SSH_KEY`, which would place a root key on the staging box reachable from every workflow run. Declined, recorded as a founder decision, and compensated with a gate rather than with access. Not 100 because the staging box still has no least-privilege deploy identity to offer CI even if the founder wanted one. |
-| Ecosystem | 99 | The sibling-registry divergence is raised, not shipped — the Ark cargo is on the board for next session. |
-| Capital Efficiency | 100 | Flat-rate. One build, no repeated convergence attempts, no wasted gate cycles. |
-| Automation Coverage | 100 | Three structural gates added to `build:check`, each naming no origin, no script and no project — the class, not the instance. |
-
-**First win — the question was wrong, not just unanswered.** S338 left the top-ranked P1 as *find what deploys the Hetzner staging origin and why it stopped*. Nothing ever deployed it. `website.staging.vaultsparkstudios.com` is named 14 times across the workflows and every one of those references **reads** it; the only publisher was invoked by zero workflows and reachable only through an npm alias nothing called. **A thing that never started cannot have stopped** — the blocker's premise, not only its status, needed re-probing. `hetzner.ssh` was `READY 2/2` throughout, so the fix was agent work: 340 overlays, 25 safe removals, exact-byte verified, identity untouched, advertised surface 115 → **135/135**. `surfaceParity` then graduated from reported to gating, with the remedy command on the artifact (D-S339.1, D-S339.2).
-
-**Second win — the property outlived its instance.** S338's fixed-point round-trip test was the right fix for a defect that had recurred three times. S339 moved it into `scripts/lib/receipt-roundtrip.mjs` paired with its proof-of-liveness, and made the pairing mandatory, because the fixed point WITHOUT its companion is self-consistently green — it reports success while measuring nothing. Exactly one re-derive site exists today, so the gate is entirely for the second one, which is where all three historical losses happened (D-S339.3).
-
-**Third win, and the one a person would notice.** S247 bound destination pages to the nav; nobody had bound the home page to anything, and it had gone stale on three live products. Every coherence gate was green because each compared surfaces that agreed with each other. Fixed at the source and gated (D-S339.4).
-
-**Top gap:** `check-build-gate-reachability` counts only gates carrying the literal `--check`, so all three gates added this session sit outside its denominator — its count held at 249/249 across two additions. `check-orphan-scripts` independently confirms they have consumers, so nothing is unreached; but a gate whose name promises reachability coverage while scoping itself to one flag is the exact class it exists to catch. On the board.
-
-**Honesty ledger:** The staging refresh is real and verified, but its publisher is **operator-run, not automated** — CI cannot do it, by decision, and the artifact says so rather than implying a lane exists. `surfaceParity` compares advertised sitemaps: it proves both origins claim the same 135 routes, not that each was individually probed. The `postbuild` ordering audit was **deferred, not attempted** — the grep-based classification tried first was wrong in both directions, and the honest instrument perturbs the build being converged for this deploy, so it returns to the board with the method rather than a guess (D-S339.5). The studio-ops registry disagrees with this repo about four projects' status; the site is internally coherent and its own feeds are authoritative for the site, but the portfolio surface is wrong and that is reported, not fixed from here. S338 recorded the doubled badge as client-side rendered and absent from the markup — it was static markup, missed by a case-sensitive search; the correction is in D-S339.4 rather than silently applied.
-
-**Committed to TASK_BOARD:** `[S339][BUILD/P2]` instrumented postbuild ordering run, and `[S339][OBS/P3]` widen or rename `check-build-gate-reachability`.
-
-## 2026-09-02 — Session 338 (lossy receipt round trip disabled a live ceiling · Lighthouse red 27h on a retired route · staging parity finally measured) | Total: 991/1000 (v3.0) | Velocity: 0 | Debt: ↓
-Avgs — 3: 989.7 | 5: 990.8 | 10: 990.7 | 25: 987.9 (carried, spans archive) | all: 983.6 (carried, spans archive)
-Sparkline (last 5): █████ · 996, 989, 987, 991, 991
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | Three red signals entered the session and two left fixed with direct evidence: `build-deploy-currency --self-test` 87/87 (was 85) with the exact CI sequence (`--probe` then `--check`) reproduced failing and then passing locally; `check-workflow-audit-targets --self-test` 18/18 and green live; `check-staging-parity --self-test` 26/26. Every exit code read directly, never through a pipe. |
-| Creative Alignment | 98 | No creative surface authored this session; nothing in the SOUL ledger was touched. The work is infrastructure that keeps authored surfaces reaching readers. |
-| Momentum | 99 | Three ranked items shipped, each root-caused rather than patched, and the top-ranked item's own proposed fix was disproved before it was implemented. The session's most valuable finding — a live gate silently disabled — was not on the board at all. |
-| Engagement | 96 | No engagement surface built. The indirect win is that the performance gate protecting every reader-facing page produces a verdict again after 27 hours of silence. |
-| Process Quality | 100 | The board proposed reordering the uptime cron's `--check`. Reproducing the failure first showed that fix would not have worked: the round trip itself was lossy. Each fix was proven in both directions — reverted to confirm the new guard fails, restored to confirm it passes — and the staging gate was deliberately NOT wired in, with the reason published on the artifact rather than kept in a commit message. |
-| Cross-Repo Coherence | 100 | No sibling repository written or read for state. studio-ops consulted for canon and protocol only. |
-| Security Posture | 99 | No security surface changed. The staging finding is a security-adjacent honesty win: the release ceremony has been verifying against an origin five days older than the tree being promoted, and that is now a number on a public-safe artifact rather than an anecdote in a handoff. |
-| Ecosystem Integration | 99 | The new gate derives entirely from `config/route-consolidation.json` and the git-tracked tree — no new config, no new dependency, no new source of truth (CANON-039). It joins the existing `check-workflow-*` family and its naming. |
-| Capital Efficiency | 100 | Zero new dependencies, zero paid calls, zero new scheduled workflows. Two extra bounded GETs per staging-parity run buy complete surface coverage in place of a three-route sample. |
-| Automation Coverage | 100 | Every fix ships a self-test, and two of them ship the test that would have PREVENTED the defect: a fixed-point round-trip case that names no field, and a route gate that names no route. Both were proven able to fail. |
-
-**Top win:** The red cron was a symptom, and the board had the wrong fix for it. `uptime-probe` was failing on `build-deploy-currency --check` after a `--probe`, which reads like an ordering race, and the board proposed reordering the check. Reproducing it locally showed the round trip itself was lossy: three fields added to the receipt in S336 were never restored by the reader, so every non-probe re-derive dropped them. That is not just a drifted receipt — `classify()` reads `contentLagHours`, so the content ceiling S336 built specifically to catch a whole release stranded in production had been **silently disabled on `build:check`, the content lane and every local build ever since**. A gate that cannot fire is indistinguishable from a gate that passes, and this one had been passing for two sessions.
-
-**Second win:** Lighthouse CI had been red for 15 consecutive runs across ~27 hours, and the site's performance gate had produced no verdict in that entire window without anything saying so. The cause was a route merge finishing incompletely: `/ranks/` was retired behind a `_redirects` 301, and three CI audit-target lists still named it — including the one that audits the local preview server, which has no edge layer at all, so the redirect that makes production correct cannot apply. The fix removes the stranded targets; the durable part is a gate that derives the forbidden set from `config/route-consolidation.json`, so the next merge protects itself.
-
-**Third win, found by the gate rather than by the audit:** converging `build:check` surfaced a fourth defect of the same family. `build-news-visual-receipts` records a `pageSha256` per story and ran at position 7 of `postbuild`, while `build-shell-assets` rewrites every page's fingerprinted script tags at position 9 — so on any build that rotated a shell hash the receipt was bound to pre-rotation bytes and was stale **by construction**. Its own error message says "rebuild after news pages", which is a workaround for an ordering bug; the 22 news pages were all current. Moved after every page rewriter and immediately before the seal, and proven by a full build leaving `--check` at exit 0 with no hand-run. It is the same defect S335 fixed for `_headers` in the same file, and it also removes a confound from the standing build-to-build churn investigation (D-S338.4).
-
-**Top gap:** Staging is refreshed by something nobody has identified, and it stopped five days ago. S338 turned that from an anecdote about one route into a bounded measurement — 23 advertised routes missing, `94e78e93` from 2026-08-28 — but did not fix it, and deliberately did not gate on it. Until staging is refreshed, the release ceremony's browser matrix verifies against a tree older than the one it is clearing for promotion, which is CANON-007 running backwards.
-
-**Honesty ledger:** The `surfaceParity` dimension is reported with `gating: false` — it is an observation, not yet an enforcement, and it says so on the artifact. The 23-route figure compares advertised sitemaps, which proves staging does not claim those routes; it is not a per-route HTTP probe of each one. The uptime cron is fixed at its root but its next scheduled run is the proof, and that run had not occurred at closeout. An S300 fixed-point self-test with the right shape already existed in `build-deploy-currency.mjs` and stayed green through the entire defect window because its fixtures omitted the dropped fields — the new case is wider, but the same fixture-coverage hazard now applies to it and is recorded on the board rather than assumed away. No UI changed this session, so CANON-053's rendered-pixel obligation was not triggered — but the visual and mobile receipts were still recaptured, because they bind the candidate manifest sha rather than any appearance, and every rebuild reseals it. I initially deferred that capture on the "no UI changed" reasoning and `check-receipt-ordering` was right to reject it (D-S338.5).
-
-**Intent outcome:** Achieved. The arc ran end to end, three verified items shipped with proofs in both directions, and the full production deploy was authorized, executed and verified live.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S338][DEPLOY/P1] Refresh staging, then flip `surfaceParity.gating` to true so CANON-007 stops running backwards (D-S338.3).
-2. [S338][OBS/P2] Audit every other generator that reads its own receipt back for the D-S338.1 class, with fully-populated fixtures — the existing tests may be green for the same wrong reason this one was.
-3. [S338][BUILD/P2] Walk the rest of `postbuild` for the D-S338.4 class — does this step hash rendered pages, and does anything after it rewrite them? — and re-check whether the standing build-to-build churn is the same defect rather than a clock-relative window.
-
-## 2026-09-02 — Session 340 (the E2E suite had been dead 17h on a route merge that reached a second consumer · the preview was never taught `_redirects` · the postbuild instrument two sessions deferred found a 125-page tug-of-war) | Total: 994/1000 (v3.0) | Velocity: 3 | Debt: ↓
-Avgs — 3: 992.7 | 5: 992.4 | 10: 991.3 | 25: 988.3 (carried, spans archive) | all: 984.0 (carried, spans archive)
-Sparkline (last 5): █████ · 989, 987, 991, 993, 994
-
-| Category | Score | Notes |
-|---|---:|---|
-| Dev Health | 100 | A workflow that had been red on eight consecutive pushes is green at its root, proven locally end to end: the smoke went 12 checks to 26 with zero failures, and all eight specs it had been masking pass (26 passed / 0 failed). Three gates ship with proofs: `check-workflow-audit-targets` 29/29 (+11) and reproduced against the real files in both directions, `check-postbuild-ordering` 11/11 (new), `check-build-gate-reachability` verified 252/252 live. Every exit code read directly, never through a pipe. |
-| Creative Alignment | 99 | No creative surface authored. The one creative question on the board (D-S340.7) was resolved by finding that a prior decision already governed it rather than by inventing a new aesthetic position. |
-| Momentum | 100 | Five ranked items closed, two of them carried twice before. One was closed by evidence in minutes because it was verified against live code before being worked. The two highest-value findings — a 17-hour CI blackout and a 125-page every-build tug-of-war — were on no board at all. |
-| Engagement | 97 | No engagement surface built. The indirect win is that the E2E and compliance suites protecting every reader-facing page produce verdicts again after 17 hours of silence, and eight specs that had been asserting nothing now assert something true. |
-| Process Quality | 100 | Every fix proven in the failing direction first: the CI defect reproduced locally before it was touched, the widened gate re-run against a restored `/ranks/` literal and made to name the exact defect, then cleared. Two items were deliberately NOT shipped with the reasons published (D-S340.5, D-S340.7) rather than half-built next to a production deploy. The instrument's own first result was rejected as too broad and refined twice before its output was believed. |
-| Cross-Repo Coherence | 100 | No sibling repository written or read for state. studio-ops consulted for canon and protocol only. |
-| Security Posture | 99 | No security surface changed, but one test now asserts a security property it could not before: the investor-portal gate is checked for **zero** password inputs, so an Obelisk-delegated surface growing a local credential form (CANON-045 regression) fails the suite. The old selector named a class that does not exist and could not have caught it. |
-| Ecosystem Integration | 99 | Every new behaviour derives from config already in the repo — `_redirects` for the preview, `config/route-consolidation.json` for the smoke contracts, `package.json` for the postbuild chain. No new config file, no new dependency, no new source of truth (CANON-039). |
-| Capital Efficiency | 100 | Zero new dependencies, zero paid calls, zero new scheduled workflows. The instrument is a 90-line preload with no runtime cost outside its own invocation. |
-| Automation Coverage | 100 | All three gates ship self-tests that were proven able to fail, and two ship the test that would have PREVENTED the defect: the audit-target gate now follows the invocation edge that let this defect through while it was green, and the ordering gate encodes the property as a per-page invariant naming no step. |
-
-**Top win:** The E2E Test Suite had been failing on **every push for over 17 hours**, eight consecutive runs, and nothing surfaced it. Both jobs died on the same pre-gate: `smoke-http.mjs` asserted `/vaultsparked/` and `/ranks/` as `200` carrying the body of stub pages S335 deleted. The assertion had outlived what it asserted. The deeper cause is that `local-preview-server.mjs` deliberately parses `_headers` — its own comment says "matching what the real CDN sends" — and never parsed `_redirects`, so it answers retired routes with 404 where the edge answers 301. That asymmetry cost S338 twenty-seven hours of Lighthouse verdicts; S338 fixed the three workflow lists and left the asymmetry. Teaching the preview `_redirects` resolves every consumer at once and every future merge automatically.
-
-**Second win:** the gate built in S338 for exactly this class stayed green through all seventeen hours. Its subject was absolute URLs and `for` loops inside workflow YAML, and the offending routes were one hop in, inside a script the workflow runs by name. It now follows the invocation edge. Making it real forced two refinements it needed anyway: a declared target expecting a **3xx** is asserting a merge contract rather than auditing a page — without which the gate would have refused this session's own repair alongside the bug — and an entry the runner **skips** asserts nothing, which the gate discovered against itself on its first live run. Reproduced end to end against the real files: restoring `/ranks/` as a `200` literal makes it name the exact defect; removing it clears.
-
-**Third win:** the postbuild ordering question, carried and deferred twice, is answered — by instrument rather than by a third reading. S339 recorded that static classification was wrong in both directions because page writes go through helpers, so `scripts/lib/postbuild-fs-trace.cjs` preloads into each step and watches the real fs calls. Two refinements made the evidence trustworthy: a step that writes back the page it read is transforming rather than observing it, and a write reproducing the bytes already on disk strands nothing. The answer is that **S338's fix holds**. The run then found a defect nobody was hunting: `propagate-nav` strips the `/evidence/` link from 125 pages every build and `generate-evidence-hub` restores it, net-zero in git and therefore invisible to every existing gate.
-
-**Top gap:** the two most interesting findings both ship as diagnoses rather than repairs. The nav tug-of-war (D-S340.5) needs `/evidence/` registered in `config/intelligence-suite.json`, which is read by five consumers, and the cover artwork (D-S340.7) needs every cover regenerated. Both were declined for the same honest reason — a production deploy was authorized for this session and neither belongs next to one — and both are boarded with the reproduction or the decision attached so the next session implements instead of re-deriving.
-
-**Honesty ledger:** The E2E fix is now **verified in CI, not only locally** — run `33705213412` completed success with both jobs green. Getting there cost one more real defect: after the pre-gate fix the `e2e` job went green while `compliance` stayed red on `build-intelligence-budget` artifact drift, which reproduced on the pushed tip. Four publisher races forced four rebases, each resolved by taking one side and regenerating through `resync-derived` — and that artifact is not in its set, so it kept the conflict-resolved value while every local coherence check passed. That is the second wave the pre-gate was masking, and the coverage gap is boarded rather than hand-waved. The postbuild instrument observes reads and content-changing writes; it cannot see whether a reader *retained* anything derived from the bytes, so "observer" is a proxy (reads and does not write back) and the gate reports candidates, not proven staleness — the one conclusion stated as fact, that S338's fix holds, rests on `build-news-visual-receipts` running after every writer, which the trace shows directly. `check-postbuild-ordering --check` is deliberately **not** wired into `build:check`; only its self-test is, because `--check` needs a trace no CI job produces. A gate that can only ever report `unmeasured` in CI is one step from a gate that has never run, so that is boarded rather than left implied. `check-build-gate-reachability` was on the genius list at rank 4 and is a **phantom** — the file it describes no longer exists — which is recorded rather than quietly dropped. On CANON-053: no UI *changed*, but the rendered-pixel pass ran anyway to re-bind the receipt, and it is the only reason the blank captures were found. The receipt now records **8 of 84 manually reviewed** — every route, every theme, both viewports — with 76 explicitly automated-only. That is a smaller claim than the one it replaces and the only one I can support; the 76 have not been looked at.
-
-**Intent outcome:** Achieved. The arc ran end to end under founder authorization; five ranked items closed, two deferrals published with their reasons, and the session committed directly to `main` and fully deployed.
-
-**Brainstorm / committed to TASK_BOARD:**
-1. [S340][BUILD/P1] Register `/evidence/` in `config/intelligence-suite.json` and end the 125-page nav tug-of-war; verify by re-running the instrument and watching the pair disappear (D-S340.5).
-2. [S340][UX/P2] Make the covers art-only and let the tile own all text — direction already decided (D-S340.7), so this is execution plus a reseal and a CANON-053 pass.
-3. [S340][OBS/P3] Decide how `check-postbuild-ordering --check` gets real evidence in CI — a weekly `--instrument` cron, or fold the tracing into `postbuild` so every build produces its own.
-4. [S340][BUILD/P2] Derive `resync-derived`'s set from the artifacts `build:check` actually `--check`s, so a rebase cannot leave a gated artifact stale — found the hard way this session, four races deep.
-
 ## 2026-09-03 — Session 341 (a retry loop that could not recover left the availability surface dark for two cycles · a visual receipt certified 14 blank screenshots · the gate named for the class was measuring its other half · a dead-cron detector with a 4.6-hour window hid a newsletter that has never sent) | Total: 994/1000 (v3.0) | Velocity: 3 | Debt: ↓
 Avgs — 3: 993.7 | 5: 992.2 | 10: 991.9 (carried) | 25: 988.6 (carried, spans archive) | all: 984.1 (carried, spans archive)
 Sparkline (last 5): █████ · 987, 991, 993, 994, 994
@@ -2776,3 +2490,37 @@ Sparkline (last 5): █████ · 993, 994, 977, 982 (4 shown; S339 993)
 2. [S343][BUILD/P1] Gate the class, not the instance: a check that flags calls to `VS.*` / `window.VS*` members that no source defines. This session's headline bug survived 388 steps because nothing looks for it.
 3. [S343][SEC/P0] Ark cargo to studio-ops for per-project Supabase key names — one shared slot cannot serve two projects, and the audit calls the mismatch READY.
 4. [S343][VOICE/P1] Give the homepage IGNIS chip the `publicNote` treatment the sibling surfaces already have.
+
+## 2026-09-07 — Session 344 (a skipped step read as a successful step, four guards deep, and only two accidents held the unattended publish path shut · the chore filter was dead code and its own test could never have caught it) | Total: 986/1000 (v3.0) | Velocity: +4 | Debt: ↓
+Avgs — 3: 981.7 | 5: 986.6 | 10: 988.0 (carried) | 25: 988.0 (carried, spans archive) | all: 984.0 (carried, spans archive)
+Sparkline (last 5): █████ · 994, 994, 977, 982, 986
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Every touched surface self-tested green: `generate-news-art` 5/5 · `build-commit-map` 5/5 · `build-changelog-narrative` 9/9 · `check-workflow-step-guards` 10/10 · `check-workflow-yaml-validity` 29 clean · `check-build-gate-reachability` 253/253 · doctor blockingFailing 0. Deduction: the two headline fixes are proven by self-test, negative control and local regeneration — not yet by a live scheduled run. |
+| Creative Alignment | 99 | The audience-facing change serves SOUL directly: a returning visitor's welcome-back line was a status report on our CI plumbing, and the feed went 24 → 8 with every survivor naming something a visitor can see. Voice, not vocabulary — the fix is structural rather than a word blocklist. |
+| Momentum | 99 | Closed a latent unattended-publish path into a public editorial surface and a live voice leak on the homepage, both in one arc. Deduction: The Desk is still stale, by an escalation I chose rather than a fix I shipped. |
+| Engagement | 97 | The homepage returning-visitor strip — a retention surface that had **never once rendered** — now works in all seven themes. Against that: the single highest-leverage engagement item on this site — a monthly newsletter that has never once sent to any member — is diagnosed to both root causes and repaired in code, and is **still not sending**. Tooling shipped; execution refused by the sandbox permission classifier. Scored on outcome, not effort. |
+| Process Quality | 96 | Generated an audit candidate blaming the cadence gate, then **disproved it before it shipped** by reading `deriveDeskFreshness` — it tolerates a one-day-old edition, so the morning slot passes on a healthy day. Shipping it would have weakened the one alarm honestly reporting the real defect. Ran the new gate against the pre-fix file as a negative control (7/7) rather than trusting a green on the fixed tree, and refused to route around a permission denial. Deductions, and there are three of them, all mine: my leak-detector regex matched the word "resync" inside a legitimate sentence and I reported `leak left? true` before checking what it had matched; my first strip probe used a selector (`[class*="returning-signal"]`) that does not match the element's actual class; and my contrast walk bottomed out at white for every theme, reporting a comfortable pass for the broken light theme. Three wrong readings before I stopped inferring from computed styles and sampled the painted pixels. Every one was caught before it reached a surface, but the pattern is the pattern. |
+| Cross-Repo Coherence | 100 | No sibling repo written. The Supabase gateway half remains studio-ops' via the S344 Ark cargo; the newsletter repair is pinned to this project's own ref precisely so it cannot reach into a sibling tenant. |
+| Security Posture | 99 | The headline fix is a security fix: four guards deep, a slot that drafted nothing could rebuild, gate and cascade the public Desk, and was one ordinary-looking bugfix away from committing and pushing it unattended. Separately, `projectRef()`'s resolution through the D-S344.1 mismatched slot would have deployed this site's member newsletter into another project's tenant — the ref is pinned and the script refuses to act if the token cannot see this exact project. A freshly minted secret is never printed or written to the repo. |
+| Ecosystem Integration | 99 | Reused rather than invented: `deploy-desk-dispatch.mjs`'s proven Management-API multipart recipe, the existing `config.toml` posture already pinned for this function since July, and the commit map's existing producer/reader contract as the place to put the new classification. No new dependency, no new config surface. |
+| Capital Efficiency | 100 | Zero new dependencies. One `git log` call gained `--name-only` rather than adding a per-commit `git show`. |
+| Automation Coverage | 98 | `check-workflow-step-guards.mjs` is wired into `build:check` and confirmed reachable (253/253), and it replays correctly against real history. Deductions: it covers `if:` conditions only, so the same empty-string coercion in a `${{ }}` expression elsewhere is still uncovered; and nothing gates the class D-S344.6 exposed — a surface that never renders is invisible to the theme matrix and the visual receipt alike, so its defects accumulate unseen. |
+
+**Top win:** A skipped step was reading as a successful step. `news-publish.yml` chained on `if: steps.<X>.outputs.status == '0'`; a SKIPPED step writes no output, GitHub coerces `''` and `'0'` to the same number, and the guard passes for a step that never ran. Run `34063581495` shows it four guards deep: `prepare` exited 1, `author` was correctly skipped, and the art renderer, the full Desk rebuild, the editorial gates and the public-feed cascade all executed on a slot that had drafted nothing.
+
+**The interlock is the real lesson.** What kept an unattended `git commit` + push of a non-edition from happening was not a gate — it was an unhandled `ENOENT` crash and the cadence gate failing one step earlier. Both look exactly like bugs worth tidying, and fixing **either one alone** would have opened the path. A defect can be load-bearing; check what a bug is currently preventing before you repair it.
+
+**Second win — a filter that had never fired, guarded by a test that could never have caught it.** `MOVE_VERB[commit.move] || MOVE_VERB[commit.type]` made `chore: null` unreachable, because every chore commit is mapped to move `Tended` → truthy `'Refined'`. **13 of 24 sentences on the live public feed were chore commits.** The self-test had a passing case named `chore filtered` whose fixture set `move: null` — a shape the producer never emits.
+
+**Second gap — the one with three data points.** I reported `any publisher-race leak left? true` from a regex of my own writing that had matched the word "resync" inside a legitimate sentence about shipped work, and only then went back to see what it had actually matched. The check was one step from being a false alarm I acted on. A detector I write to verify my own fix deserves the same scrutiny as the code it is checking — I verified the fix carefully and the verifier not at all.
+
+**Honesty ledger:** The newsletter is **not deployed** and will fail again on 2026-10-02 unless the founder clears the permission; nothing about that is fixed by the code I wrote. The Desk is **still stale** and stays stale until the cadence/novelty decision is made — I chose escalation over a unilateral retune, which is the right call but is not a fix. Neither headline fix has been observed in a live scheduled run; the next Desk slot is the first real proof, and until then they are verified by self-test, negative control and local regeneration only. The newsletter function has **no dry-run**, so `--verify` deliberately stops at the 404→401 boundary — proving a 200 would mean mailing every opted-in member, which is not mine to do. The three S344 items carried in from the prior session (the gateway slot, `check-secrets` reporting READY for a credential it knows is failing, the shared-box data plane) are untouched.
+
+**Intent outcome:** Achieved. Four of five audit items shipped or correctly refused; the fifth was disproved before it could do harm, which is the outcome I most want from an audit.
+
+**Brainstorm / committed to TASK_BOARD:**
+0. [S344][BUILD/P1] Gate the D-S344.6 class: a surface that renders for nobody is invisible to every gate that inspects rendered output. Something should notice a shipped ambient module whose render path is unreachable.
+1. [S344][ENG/P0] Founder authorises the member-newsletter deploy — the tooling is written, self-tested and blocked only on a permission.
+2. [S344][DESK/P1] Founder picks the cadence lever: widen radar yield, shorten the novelty window, or reduce slots. The measurement is attached.

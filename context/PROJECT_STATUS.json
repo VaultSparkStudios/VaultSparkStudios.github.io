@@ -12,24 +12,25 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Phase 0-2 of the finalization plan shipped and verified live at 57e69bfcd: registration works again (an undefined VS.kitSubscribe had failed every signup while creating the account), a taken handle no longer reads as success, /login serves browsers a page instead of JSON, the funnel separates bots from people, and subscriptions have a working cancel path. Next: the human signup walkthrough that is the plan's actual Phase 0 gate, then Phases 3-7 (adaptive front door, activation instrumentation, welcome email, the three divergent rank ladders).",
-  "publicNote": "Corrected a long-standing false entry on the public release page. A cross-project dependency was being reported as outstanding because the tracker watched for a message that had since expired, rather than checking whether the work itself was done -- it had been done for months. The check now verifies the real thing directly against the login provider, including a deliberate negative test to prove the check can still fail, and it expires after two weeks so it cannot vouch for something indefinitely. The remaining sign-in work is unchanged and still pending a person completing it, and that restriction was left in place on purpose.",
-  "nextMilestone": "A human completes a signup in a clean browser profile with the subscribe box checked and lands on the dashboard - the only evidence that closes Phase 0.",
+  "currentFocus": "S344 closed a latent unattended-publish path into the public Desk: every downstream guard in news-publish.yml passed when its upstream step was SKIPPED (GitHub coerces an empty output and '0' to the same number), so a slot that drafted nothing ran the art renderer, the full Desk rebuild, the editorial gates and the public-feed cascade — held back from committing only by an ENOENT crash and the cadence gate, either of which a maintainer would have \"fixed\". Also ended a live homepage voice leak: the changelog's chore filter was dead code and 13 of 24 public sentences came from routine bookkeeping changes. Next: the founder clears the newsletter deploy permission, and picks the Desk cadence lever.",
+  "publicNote": "The studio's news publisher could run its publishing steps even when the step before them had been skipped, because a skipped step reports nothing and the check treated nothing as success. Nothing incorrect was ever published — two unrelated faults happened to stop it in time, and either one looked like a small bug worth tidying up, which would have removed the protection. The check now tests for a value that cannot be mistaken for silence, and a new automated rule stops the pattern returning anywhere in the project. Separately, the short \"what changed\" line shown to returning visitors was carrying notes about our own build system rather than anything they could see; it now only mentions work that touched something on the site.",
+  "nextMilestone": "The member newsletter sends for the first time — the function deployed, the shared secret set on both sides, and a founder-observed dispatch confirming delivery.",
   "blockers": [
-    "[QA/P0] The Phase 0 gate is a human walkthrough and has not been run. The registration fix is verified by build:check 388/388, mobile 215/215, worker 57/57 and by reading the SERVED bundle - but not by a person creating an account.",
-    "[SEC/P0] The gateway's Supabase service-role key is scoped to a different project (ref ckwtolofoqzrqouqkmvs; this site ships fjnpzjjyhnpmunfoycrp). It 401s on first use while check-secrets reports READY 2/2. This is a second, independent reason the Obelisk provider ceremony would fail - after the founder completes the passkey flow. Fix belongs in studio-ops via Ark cargo (CANON-018).",
-    "[AUTH/P0] The Obelisk provider journey remains unobserved. Use --watch, not --live.",
-    "[VOICE/P1] The homepage IGNIS chip published 'The studio keeps resync after publisher race' to strangers - CI jargon as the first sentence under the studio name."
+    "[ENG/P0] The Monthly Member Newsletter has never sent. Both faults are proven (function not deployed; NEWSLETTER_SECRET absent from Actions) and the repair is written and self-tested in scripts/deploy-member-newsletter.mjs. Execution was refused by the sandbox permission classifier — a permissions gap, not a missing credential. The function has no dry-run, so the first real send must be a founder-observed workflow_dispatch.",
+    "[DESK/P1] The Desk has published nothing since 2026-09-04 and public cadence has degraded to periodic. Measured: radar queues 4 topics against 211 rejected, while 4 slots/day against a 14-day novelty window needs ~56 stories. Escalated rather than retuned — cadence and novelty are a published promise (D-S344.5).",
+    "[QA/P0] The Phase 0 gate is a human walkthrough and has still not been run.",
+    "[SEC/P0] The gateway Supabase service-role slot remains scoped to a different project (ckwtolofoqzrqouqkmvs vs this site fjnpzjjyhnpmunfoycrp) while check-secrets reports READY 2/2. Fix belongs in studio-ops via the S344 Ark cargo (CANON-018).",
+    "[AUTH/P0] The Obelisk provider journey remains unobserved. Use --watch, not --live."
   ],
-  "lastUpdated": "2026-09-06",
-  "currentSession": 343,
+  "lastUpdated": "2026-09-07",
+  "currentSession": 344,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-09-03",
-  "silScore": 982,
-  "silAvg3": 984.3,
-  "silVelocity": 5,
+  "truthAuditLastRun": "2026-09-07",
+  "silScore": 986,
+  "silAvg3": 981.7,
+  "silVelocity": 4,
   "silDebt": "down",
-  "silLastSession": 343,
+  "silLastSession": 344,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -84,20 +85,20 @@
   "silMax": 1000,
   "silCategoriesV3": {
     "devHealth": 99,
-    "creativeAlignment": 97,
-    "momentum": 100,
-    "engagement": 99,
-    "processQuality": 92,
+    "creativeAlignment": 99,
+    "momentum": 99,
+    "engagement": 97,
+    "processQuality": 96,
     "crossRepoCoherence": 100,
     "securityPosture": 99,
     "ecosystemIntegration": 99,
     "capitalEfficiency": 100,
-    "automationCoverage": 97
+    "automationCoverage": 98
   },
   "silCategoriesUpdatedSession": 343,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-09-06",
+    "date": "2026-09-07",
     "passing": 13,
     "warning": 2,
     "failing": 1,
@@ -247,5 +248,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "55be7c5c55915da045afa456",
   "testsSourceFingerprint": "0e4fb817a5f7a069b5ba07bd",
-  "lastSessionSummary": "S340 -- E2E suite dead 17h on a route merge reaching a second consumer; root-caused to the local preview never applying _redirects, fixed at the preview, smoke contracts derived from config (12 checks to 26), the S338 gate widened to follow the workflow-to-script invocation edge (29/29), and the twice-deferred postbuild ordering instrument built and run -- which found propagate-nav and generate-evidence-hub fighting over 125 pages every build. Closed out, pushed directly to main and FULLY DEPLOYED (run 33703048618, ceremony passed unrejected, production serving 9ebae05f0 which contains all S340 work, 12 routes 200 and 5 consolidated routes 301). The E2E suite is verified GREEN in CI on both jobs (run 33705213412) after 17+ hours and eight consecutive red runs."
+  "lastSessionSummary": "S344 -- every downstream guard in the Desk publisher passed when its upstream step was SKIPPED (GitHub coerces an empty output and '0' to the same number), so a slot that drafted nothing ran the art renderer, the full Desk rebuild, the editorial gates and the public-feed cascade, four guards deep; only an ENOENT crash and the cadence gate held the unattended commit path shut, and fixing either alone would have opened it. Fixed with a non-numeric sentinel plus a structural gate replayed against the pre-fix file (7/7). Also ended a live homepage voice leak: the changelog chore filter was dead code and 13 of 24 public sentences were chore commits, its own test passing on a fixture shape the producer never emits. Newsletter repair written but execution blocked on a sandbox permission; Desk cadence escalated with the measurement attached."
 }

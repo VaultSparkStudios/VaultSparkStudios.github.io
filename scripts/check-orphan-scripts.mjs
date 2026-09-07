@@ -76,6 +76,12 @@ const ALLOWLIST = {
   'generate-membership-access.mjs':
     'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
     'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',
+  'deploy-member-newsletter.mjs':
+    'Operator tool (S344): deploys supabase/functions/send-member-newsletter and sets NEWSLETTER_SECRET on '
+    + 'both the function and the GitHub Actions store. Deliberately NOT wired into build:check for the same reason '
+    + 'as deploy-desk-dispatch below — --deploy and --secret mutate production. It carries NO flag that can send: '
+    + 'the function has no dry-run, so an authorised POST mails every opted-in member, and --verify stops at the '
+    + '404->401 boundary instead. Must stay operator-invoked.',
   'deploy-desk-dispatch.mjs':
     'Operator tool (S308): provisions Supabase secrets, deploys supabase/functions/subscribe-desk-dispatch, ' +
     'and live-probes it. Deliberately NOT wired into build:check — --deploy mutates production and --verify ' +

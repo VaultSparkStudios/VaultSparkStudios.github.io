@@ -1,0 +1,69 @@
+{
+  "session": "S344",
+  "date": "2026-09-07",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "A skipped step read as a successful step four guards deep, and only two accidents held the unattended publish path shut.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "skipped-step-guards-read-as-success",
+      "title": "Every downstream guard in the Desk publisher passed when its upstream step was SKIPPED",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "GitHub coerces an empty output and '0' to the same number, so `if: steps.X.outputs.status == '0'` is TRUE for a step that never ran. Run 34063581495 shows the art renderer, the full Desk rebuild, the editorial gates and the public-feed cascade all executing on a slot that drafted nothing. What stopped an unattended commit of a non-edition was an ENOENT crash and the cadence gate -- both look like ordinary bugs, and fixing either alone would have opened the path.",
+      "evidence": ".github/workflows/news-publish.yml · scripts/check-workflow-step-guards.mjs (10/10 self-test, 7/7 negative control on the pre-fix file, 29 workflows clean)"
+    },
+    {
+      "id": "#2",
+      "slug": "news-art-enoent-dropped-slot",
+      "title": "generate-news-art crashed with a raw stack on the normal dropped slot",
+      "axis": "organization",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "Unguarded readdirSync on a cache dir that does not exist after a dropped slot. Shipped in the SAME change as #1 and never alone, because it was one of only two things holding the publish path shut. Exit code deliberately unchanged so promotion stays gated.",
+      "evidence": "scripts/generate-news-art.mjs · self-test 5/5"
+    },
+    {
+      "id": "#3",
+      "slug": "changelog-chore-filter-dead-code",
+      "title": "The chore filter had never fired: 13 of 24 live public sentences were chore commits",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "`MOVE_VERB[commit.move] || MOVE_VERB[commit.type]` made the explicit `chore: null` unreachable, because chore maps to move `Tended` -> truthy `Refined`. Its own self-test passed on a `move: null` fixture the producer never emits -- the test covered a path production never took. Fixed the precedence and added a structural `visitorFacing` classification a token blocklist could never provide. Feed 24 -> 8.",
+      "evidence": "scripts/build-changelog-narrative.mjs (9/9) · scripts/build-commit-map.mjs (5/5) · api/changelog-narrative.json"
+    },
+    {
+      "id": "#4",
+      "slug": "returning-strip-never-rendered",
+      "title": "The homepage strip I fixed had never rendered, and two theme defects were hiding behind it",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The digest loads first and stamps vs_last_visit_ts to now before the strip reads the same key, so no entry was ever newer than \"last visit\". Proved with a control blocking only the digest. Underneath: --vs-text is defined nowhere so every theme took a near-white fallback, and brand gold measured 1.31:1 on cream. 7/7 themes now clear WCAG AA, measured from painted pixels after two computed-style readings were wrong.",
+      "evidence": "assets/returning-signal-strip.js · assets/returning-visitor-digest.js · docs/visual-qa/LATEST.json (84 hash-bound captures)"
+    },
+    {
+      "id": "#5",
+      "slug": "member-newsletter-two-faults",
+      "title": "The member newsletter has never sent; both faults proven, execution blocked on a permission",
+      "axis": "engagement",
+      "projectImpact": 9,
+      "ecosystemImpact": 5,
+      "insight": "Function not deployed (project-scoped 200 lists 29 functions, this one absent) AND NEWSLETTER_SECRET absent from Actions so the cron sends a bare Bearer. Fixing either alone moves 404 to 401. The repair pins the project ref rather than resolving it through the D-S344.1 mismatched slot, which would have deployed this site's newsletter into a sibling tenant.",
+      "evidence": "scripts/deploy-member-newsletter.mjs (5/5 self-test) · gh run 33618640518"
+    }
+  ],
+  "followUps": [
+    "Founder authorises the member-newsletter deploy — tooling written and self-tested, blocked only on a sandbox permission.",
+    "Founder picks the Desk cadence lever: radar queues 4 topics against 211 rejected, while 4 slots/day x 14-day novelty needs ~56 stories.",
+    "Gate the D-S344.6 class: a surface that renders for nobody is invisible to every gate that inspects rendered output."
+  ],
+  "blockers": [
+    "The Monthly Member Newsletter is still not deployed and will fail again on 2026-10-02.",
+    "The Desk has published nothing since 2026-09-04; cadence is an escalation, not a fix.",
+    "Neither headline fix has been observed in a live scheduled run — the next Desk slot is the first real proof."
+  ]
+}

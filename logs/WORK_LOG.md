@@ -1148,3 +1148,100 @@ carries this session's largest change, is absent from the theme matrix entirely 
 covered by the mobile suite instead. Phases 3–7 of the plan are untouched: the adaptive
 front door, the three competing intent taxonomies, activation instrumentation, the welcome
 email, the three divergent rank ladders, and surfacing `/how-we-build/` and `/evidence/`.
+
+## S344 — 2026-09-07 · full arc (/start → /audit → /implement → /closeout)
+
+**Audit: 5 items, 1 disproved before shipping.** Every premise was verified against a live
+run log or live code first. The disproof is the load-bearing one: a candidate held that
+`build-news-freshness.mjs --check --require-daily` must fire a false red on the 06:00 slot
+of every healthy day. Reading the script showed `deriveDeskFreshness` treats a one-day-old
+edition as state `daily`, so the morning slot passes on any day whose predecessor
+published. Had it shipped, it would have weakened the one alarm honestly reporting that
+The Desk has published nothing since 2026-09-04.
+
+**The finding of the session.** `news-publish.yml` chained its stages on
+`if: steps.<X>.outputs.status == '0'`. A SKIPPED step writes nothing to `$GITHUB_OUTPUT`,
+GitHub coerces `''` and `'0'` to the same number, and the guard passes for a step that
+never ran. Run `34063581495` proves it: `prepare` exited 1, `author` was correctly
+skipped, and the art renderer, the full Desk rebuild, the editorial gates and the
+public-feed cascade **all ran** on a slot that had drafted nothing —
+`author-news-edition.mjs` never appears in that log while its dependents executed.
+
+The interlock is what makes this worth the session. What stopped an unattended
+`git commit` + `publish-push.sh` of a non-edition was not a gate: it was an unhandled
+`ENOENT` crash in `generate-news-art.mjs` and the cadence gate failing one step earlier.
+Both look exactly like ordinary bugs a maintainer would tidy up, and **fixing either one
+alone opens the publish path** — so both shipped in a single change, and the ENOENT fix
+deliberately leaves the exit code non-zero. `check-workflow-step-guards.mjs` (10/10
+self-test, wired into `build:check`) makes the class unrepeatable; replayed against the
+pre-fix file as a negative control it caught all 7 historical guards, and all 29
+workflows are clean.
+
+**A filter that had never fired, and a test that could never have caught it.**
+`build-changelog-narrative.mjs` resolved `MOVE_VERB[commit.move] || MOVE_VERB[commit.type]`,
+so the explicit `chore: null, // filtered out from public narrative` was unreachable —
+`build-commit-map` maps every chore commit to move `Tended`, and `MOVE_VERB.Tended` is the
+truthy `'Refined'`. **13 of the 24 sentences on the live public feed were chore commits**,
+including `"Refined resync after publisher race (attempt 1)."` on the homepage
+returning-visitor strip. The self-test had a passing case literally named `chore filtered`
+whose fixture set `move: null` — a shape the producer never emits. Beyond the precedence
+repair, shipped the structural fix the token-level jargon strip could not provide:
+`visitorFacing`, computed once in the producer from the commit's changed paths and
+consumed by the reader, both ends in one change, an absent field treated as
+not-publishable rather than defaulting open. Feed 24 → 8; every survivor names something
+a visitor can see.
+
+**Newsletter: both faults proven, execution blocked on a permission.** Six consecutive
+monthly failures and not one email ever sent. `send-member-newsletter` is not deployed
+(project-scoped `200` listing 29 functions on `fjnpzjjyhnpmunfoycrp`, this one absent —
+`config.toml` has said so since 2026-07-12) **and** `NEWSLETTER_SECRET` is absent from
+Actions, so the cron sends a bare `Bearer `. Fixing either alone moves 404 → 401.
+`scripts/deploy-member-newsletter.mjs` (5/5) pins the project ref rather than resolving it
+through `getSecret('SUPABASE_URL')` — the slot D-S344.1 proved is scoped to a sibling
+project, which would have deployed this site's member newsletter into the wrong tenant.
+The sandbox permission classifier refused `--deploy` and `--secret`; escalated to the
+founder rather than routed around.
+
+**Deferred with the number attached.** The Desk's queue: radar queues **4** topics against
+**211** rejected, while 4 slots/day against a 14-day novelty window needs ~56 distinct
+stories. Novelty held 13 of 14 candidates and the survivor's only source returned HTTP 403.
+Not retuned in-session: slot cadence and the novelty window are a published promise about
+how often the studio speaks, and `AGENTS.md` says escalate before changing public promises.
+
+**Verification.** `generate-news-art` 5/5 · `build-commit-map` 5/5 ·
+`build-changelog-narrative` 9/9 · `check-workflow-step-guards` 10/10 + negative control
+7/7 · `check-workflow-yaml-validity` 29 clean · `check-build-gate-reachability` 253/253 ·
+doctor blockingFailing 0.
+
+**Not proven.** Neither the guard fix nor the narrative fix has been observed in a real
+scheduled run — the next Desk slot is the first live proof. The newsletter remains
+undeployed and will fail again on 2026-10-02 unless the permission is cleared.
+
+**Late finding — the surface I had just fixed had never rendered.** Doing the CANON-053
+pixel check on the changelog fix meant looking at the returning-visitor strip. It would not
+appear. `returning-visitor-digest.js` and `returning-signal-strip.js` both need "when was
+the previous visit", but only the digest advances it, and `ambient-loader.js` registers the
+digest first — it stamps `vs_last_visit_ts` to `now` before the strip reads the same key,
+so `fresh.length >= 1` was never true. A control blocking only the digest makes the strip
+render immediately with the baseline intact. It has **never** rendered in production. Same
+class as the S343 `vs_visit_count` fix, in the same pair of files, on the neighbouring key.
+Fixed with a one-writer handoff (`vs_prev_visit_ts`), absent key = bail rather than fall
+back to the broken read.
+
+Underneath it, two defects nobody could have seen: `.vs-signal-strip__entry` used
+`var(--vs-text, #e8e8e8)` and `--vs-text` is defined **nowhere** on this site, so every
+theme took the near-white fallback — invisible on the light ground — and the brand gold
+measured **1.31:1** on cream, with no `--gold` override in the light theme to lean on. Now
+on `--text`, gold kept for the six dark themes and darkened to `#8a6a00` (4.72:1) where the
+ground is light. **7/7 themes clear WCAG AA on all four elements.**
+
+The class is worth naming: a surface that never renders is invisible to every gate that
+inspects rendered output — the theme matrix, the visual receipt, the accessibility pass —
+so its defects accumulate silently and surface together the moment it starts working.
+
+**Three of my own measurements were wrong first.** A leak-detector regex that matched
+"resync" inside a legitimate sentence; a selector that did not match the element's class;
+and a computed-style walk for the effective background that bottomed out at white for every
+theme — agreeing with the working dark theme while giving the broken light theme a
+comfortable pass. Only sampling painted pixels out of an element screenshot produced
+numbers that matched the images.

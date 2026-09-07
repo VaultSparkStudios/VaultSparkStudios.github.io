@@ -87,8 +87,20 @@ async function main() {
   }
   const date = arg('--date');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) throw new Error('--date YYYY-MM-DD is required');
-  const files = fs.readdirSync(DRAFT_DIR).filter((name) => name.startsWith(`${date}--`) && name.endsWith('.json'));
-  if (!files.length) throw new Error(`no drafts for ${date}`);
+  // An ABSENT draft directory is the same fact as an EMPTY one — no drafts for
+  // this date — and must report as that fact rather than as a crash. Until S344
+  // the unguarded readdirSync died with a six-line `ENOENT ... scandir
+  // .cache/news-drafts` stack on every dropped slot, which is the publisher's
+  // most common non-publishing outcome. The exit code is deliberately UNCHANGED
+  // (non-zero, via the same `no drafts` path): downstream promotion is gated on
+  // this step succeeding, so making a draftless run exit 0 would hand `art.ok`
+  // to a slot that authored nothing.
+  const files = (fs.existsSync(DRAFT_DIR) ? fs.readdirSync(DRAFT_DIR) : [])
+    .filter((name) => name.startsWith(`${date}--`) && name.endsWith('.json'));
+  if (!files.length) {
+    console.error(`no drafts for ${date} — nothing to render (dropped slot, not an art failure)`);
+    process.exit(1);
+  }
   fs.mkdirSync(ART_DIR, { recursive: true });
   for (const name of files) {
     const draftPath = path.join(DRAFT_DIR, name);

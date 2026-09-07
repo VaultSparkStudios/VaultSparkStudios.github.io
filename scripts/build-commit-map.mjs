@@ -87,16 +87,56 @@ function isNoise(subject) {
  */
 const SCAN_CEILING = 2000;
 
+/*
+ * S344 — visitor-facing classification.
+ *
+ * The public changelog was publishing "Refined resync after publisher race
+ * (attempt 1)." to returning visitors on the homepage. The narrative builder's
+ * jargon strip is TOKEN-level (it removes `S340`, `SIL 981`), so it has a notion
+ * of internal VOCABULARY and none of internal SUBJECT MATTER: a commit that
+ * changed nothing a visitor can see still earned a public sentence.
+ *
+ * A word blocklist would need a new entry for every future leak. The structural
+ * fact is cheaper and total: did this commit touch anything a visitor can
+ * perceive? That is computable from the changed paths, so it is computed ONCE
+ * here in the producer and consumed downstream. Feeds derived from the site
+ * (api/, data/, stats.json) are deliberately NOT visitor-facing: a commit that
+ * only re-derives them is bookkeeping, and any change a visitor could attribute
+ * to the studio moves a page, an asset, or a runtime surface alongside them.
+ */
+const VISITOR_FACING = [
+  /(^|\/)[^/]+\.html$/i,        // any page, at any depth
+  /^assets\//,                  // css, js, images, fonts, social art
+  /^cloudflare\//,              // the edge worker — /login and friends
+  /^supabase\/functions\//,     // runtime endpoints a visitor's browser hits
+  /^sw\.js$/,                   // the service worker
+];
+
+export function isVisitorFacing(files) {
+  return (files || []).some((f) => VISITOR_FACING.some((re) => re.test(f)));
+}
+
 function recentCommits(max = SCAN_CEILING) {
   try {
+    // --name-only in the SAME call: one git invocation, and every entry can be
+    // classified without a per-commit `git show`.
     const out = execSync(
-      `git log --pretty=format:"%H|%ct|%s" --max-count=${max}`,
-      { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }
+      `git log --pretty=format:"__VSC__%H|%ct|%s" --name-only --max-count=${max}`,
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, windowsHide: true }
     );
-    return out.split('\n').filter(Boolean).map((line) => {
-      const [sha, ts, ...rest] = line.split('|');
-      return { sha: sha.slice(0, 8), ts: Number(ts) * 1000, subject: rest.join('|') };
-    });
+    const commits = [];
+    let current = null;
+    for (const line of out.split('\n')) {
+      if (line.startsWith('__VSC__')) {
+        if (current) commits.push(current);
+        const [sha, ts, ...rest] = line.slice(7).split('|');
+        current = { sha: sha.slice(0, 8), ts: Number(ts) * 1000, subject: rest.join('|'), files: [] };
+      } else if (current && line.trim()) {
+        current.files.push(line.trim());
+      }
+    }
+    if (current) commits.push(current);
+    return commits;
   } catch { return []; }
 }
 
@@ -118,6 +158,11 @@ function build() {
       move: move.label,
       tone: move.tone,
       summary: clean.length > 120 ? clean.slice(0, 117) + '…' : clean,
+      // Consumed by build-changelog-narrative.mjs. Written for EVERY entry on
+      // every run (this map is regenerated wholesale from git), so a missing
+      // field downstream means the producer did not run — which readers must
+      // treat as not-publishable rather than defaulting open.
+      visitorFacing: isVisitorFacing(c.files),
     });
     if (entries.length >= MAX_ENTRIES) break;
   }

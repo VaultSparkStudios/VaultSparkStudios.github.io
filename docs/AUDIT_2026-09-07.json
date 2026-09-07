@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "2.1",
+  "generatedAt": "2026-09-07",
+  "session": 344,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "sample": "Live-evidence audit. Sources: gh run logs for the two workflows the doctor reports as dead crons (The Desk - Scheduled Publish 34063581495; Monthly Member Newsletter 33618640518), .github/workflows/news-publish.yml, scripts/generate-news-art.mjs, scripts/build-news-freshness.mjs, scripts/build-changelog-narrative.mjs, api/changelog-narrative.json, assets/returning-signal-strip.js, gh secret list, supabase/functions/.",
+  "notes": "Every premise below was verified against a live run log or live code before inclusion. One candidate was generated and then DISPROVED - see skipped[0] - which is why the cadence gate is untouched by this plan.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "skipped-step-guards-read-as-success",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 2,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 45,
+      "title": "Every downstream guard in the Desk publisher passes when its upstream step was SKIPPED - an unattended commit path is held shut only by two accidents",
+      "why": "PRE-VERIFIED IN RUN 34063581495. news-publish.yml chains its steps with `if: steps.<X>.outputs.status == '0'`. A skipped step writes no output, so the expression compares the empty string to '0' and GitHub Actions evaluates that TRUE. Observed, not theorised: in that run `prepare` exited 1 and `author` was correctly skipped - and then `generate-news-art`, `Rebuild the Desk and render pages`, `Desk gates - the decision surface`, and `Cascade the derived public feeds` ALL RAN, four guards deep, on a slot that had drafted nothing. author-news-edition.mjs never appears in the log; its dependents ran anyway. The guard cannot tell 'succeeded' from 'never ran'. Two accidents - not one gate - are what stopped this run from reaching `git commit` and publish-push.sh: an unhandled ENOENT crash in generate-news-art.mjs (item 2) and the cadence gate failing one step earlier. Both look exactly like bugs a maintainer would fix in isolation, and fixing EITHER one alone opens an unattended publish of a non-edition to production. Outcome for a reader: the public Desk can be rebuilt, gated and cascaded - and on the next such slot, committed - from an empty draft directory.",
+      "recipe": "Stop comparing a step output to a numeric literal, because an empty string impersonates one. Have each tolerant step emit a non-numeric sentinel (ok=yes / ok=no) alongside the existing status, and guard every dependent on steps.<X>.outputs.ok == 'yes' - a value the empty string cannot coerce into. Keep status for the slot summary. Then make the class unrepeatable: add a gate that parses .github/workflows/*.yml and fails on any `if:` that compares a steps.*.outputs.* to a numeric literal, with a negative control proving it still catches a reintroduced == '0'.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Switch the five guards in news-publish.yml to the ok sentinel."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Also ship the structural gate over every workflow, wired into build:check."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Audit every other workflow for the same coercion and fix what it finds."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-07",
+          "session": 344,
+          "note": "Shipped S344. 7 guards moved to a non-numeric ok=yes/no sentinel; check-workflow-step-guards.mjs added (10/10 self-test, wired into build:check, 29 workflows clean) and run against the pre-fix file as a negative control — caught all 7 historical guards."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "news-art-crashes-on-the-normal-dropped-slot",
+      "tier": "🔥",
+      "axis": "devHealth",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 4,
+      "priority": 21,
+      "title": "generate-news-art.mjs throws an unhandled ENOENT on a dropped slot - the normal outcome, printed as a stack trace",
+      "why": "PRE-VERIFIED. scripts/generate-news-art.mjs:90 calls fs.readdirSync(DRAFT_DIR) unguarded. When a slot drafts nothing, .cache/news-drafts does not exist and the script dies with `ENOENT: no such file or directory, scandir .../.cache/news-drafts` plus a six-line stack - visible in run 34063581495. A dropped slot is a documented normal state ('A rejected or unauthorable edition is dropped for that slot'), so the publisher's most common non-publishing outcome is reported as a crash. That noise is what hides a REAL art failure. Critically, this defect is currently load-bearing: per item 1 it is one of only two things preventing an unattended commit of a non-edition, so it MUST be fixed in the same change as item 1 and never on its own.",
+      "recipe": "Treat an absent draft directory as the no-drafts case the code already handles one line later: if DRAFT_DIR does not exist, take the same path as `no drafts for <date>`. Keep a genuine art/pixel-inspection failure loud. Ship together with item 1.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Guard the readdirSync."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Distinguish no-drafts (benign) from art-failed (loud) in the exit code, and assert it in the self-test."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Sweep every scheduled script for unguarded readdirSync on a cache path."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-07",
+          "session": 344,
+          "note": "Shipped S344 in the SAME change as item 1, never alone. readdirSync guarded; exit code deliberately unchanged so promotion stays gated."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "member-newsletter-has-never-sent",
+      "tier": "🔥",
+      "axis": "engagement",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 5,
+      "priority": 28.1,
+      "title": "The Monthly Member Newsletter has never sent - the function is undeployed and the Action's bearer token is empty",
+      "why": "PRE-VERIFIED, TWO INDEPENDENT FAULTS. Run 33618640518 (2026-09-02) and the two before it are identical: `HTTP status: 404`, `{\"code\":\"NOT_FOUND\",\"message\":\"Requested function was not found\"}`. supabase/functions/send-member-newsletter/index.ts EXISTS in this repo - it was written and never deployed. Separately, the run log renders the header as `-H \"Authorization: Bearer \"` with nothing after it, while the URL is masked as ***: the secret NEWSLETTER_SECRET is absent, confirmed against `gh secret list` (DIGEST_SECRET is present; NEWSLETTER_SECRET is not) and the function reads it at index.ts:20. So even once deployed the call would be rejected. Six consecutive monthly failures. Outcome for a reader: a Vault Member who joined for the studio's monthly dispatch has never received one, against SOUL non-negotiable 2 ('membership must feel real - never ship half-baked portal features').",
+      "recipe": "Fix both faults or neither helps. Deploy the function via the Supabase management API using SUPABASE_ACCESS_TOKEN (the project-scoped agent deploy path; note the service-role slot is the known-mismatched one from D-S344.1 and is NOT the credential to use here). Mint a NEWSLETTER_SECRET, set it on both sides - `gh secret set NEWSLETTER_SECRET` and the function's env - then prove it end to end with a real workflow_dispatch, reading the response body rather than the workflow conclusion. If either half cannot be completed by an agent path, say which and leave the cron honestly red rather than green.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Deploy the function; confirm the 404 becomes a 401."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Also set the secret on both sides and prove a 200 with a real dispatch."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Add a monthly canary that verifies the endpoint answers before the send window, so the next breakage surfaces in hours not a month."
+        }
+      },
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-09-07",
+          "session": 344,
+          "note": "BLOCKED S344 — not by a credential. Tooling shipped and self-tested (scripts/deploy-member-newsletter.mjs, 5/5), both faults confirmed live against a project-scoped 200. The deploy/secret calls were refused by the sandbox permission classifier; escalated to the founder rather than worked around."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "homepage-publishes-ci-jargon-to-returning-visitors",
+      "tier": "⚡",
+      "axis": "ux",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 35,
+      "title": "The first sentence a returning visitor reads under the studio name is CI jargon about our own build race",
+      "why": "PRE-VERIFIED ON THE LIVE FEED. api/changelog-narrative.json carries \"Refined resync after publisher race (attempt 1).\" three times, and assets/returning-signal-strip.js renders that feed on the homepage for every visitor with vs_visit_count >= 2. scripts/build-changelog-narrative.mjs has a jargon strip, but it is TOKEN-level: STRIP_RE removes session markers (S340, SIL 981, 981/1000) and MOVE_VERB drops chore/test. This sentence passes both - its move is `Tended` (mapped to `Refined`) and its summary contains no session token. The filter has a notion of internal VOCABULARY and no notion of internal SUBJECT MATTER, so a commit that changed nothing a visitor can see still earns a public sentence. The leaked retry counter `(attempt 1)` is the second tell. Outcome for a reader: a returning visitor's welcome-back line is a status report on our CI plumbing.",
+      "recipe": "Classify structurally, not by blocklist - a word list would need a new entry for every future leak. A commit that touches no visitor-facing path has no public sentence, whatever its move type. Compute that once in the producer (build-commit-map.mjs writes a per-entry surface classification from the commit's changed paths) and filter on it in build-changelog-narrative.mjs. Ship BOTH ends in the same change: a reader keyed on a field its producer never writes silently publishes everything. Since the map is regenerated wholesale from git each run, an absent field means the producer did not run - so the reader must treat it as not-publishable rather than defaulting open. Cover the leaked retry counter in the token strip as well, and pin this exact sentence in the self-test.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Strip (attempt N) and drop Tended from the public verb map."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Ship the structural visitor-facing classification across producer and reader, with the live sentence pinned as a regression test."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Apply the same classification to every public narrative feed, not just the changelog."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-07",
+          "session": 344,
+          "note": "Shipped S344. Found a second, deeper bug than the audit predicted: the chore:null filter was dead code (13/24 live sentences were chore commits) because its own self-test used a fixture shape the producer never emits. Precedence fixed + structural visitorFacing classification across producer and reader + (attempt N) stripped + the live sentence pinned. Feed 24 -> 8."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "desk-queue-starves-on-a-single-blocked-host",
+      "tier": "⚡",
+      "axis": "featureDepth",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 21.5,
+      "title": "The Desk has published nothing since 2026-09-04 because a 14-day novelty hold plus one 403 empties the queue",
+      "why": "PRE-VERIFIED IN THE RUN LOG. `novelty: 13 story/stories published in the last 14 days are held against the queue`, then `skipped research-acceleration-the-view-inside-openai - no readable source: HTTP 403`, then `no draftable topic yielded a readable source after 1 attempt(s) - refusing to draft from nothing`. The attempt budget was not exhausted - only ONE candidate survived the novelty hold, and its single source was blocked. The refusal itself is correct behaviour (drafting from nothing is the worse outcome), and the cadence gate reporting this as red is honest. But the queue is one blocked host wide, so the public cadence has degraded to `periodic` and the site's daily promise is unmet for a third day. Outcome for a reader: The Desk, the studio's public editorial surface, is visibly stale.",
+      "recipe": "Widen the eligible pool rather than loosening the refusal. Diagnose whether the radar is queueing too few topics or the novelty window is too wide for the current intake rate, and fix the binding one - do not lower the novelty bar to manufacture a publish. Verify by a real dispatch that drafts from a source that is actually readable.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Measure the queue: how many topics survive novelty, and how many have a readable source."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Fix the binding constraint and prove a real edition publishes."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Make queue depth a published health metric so starvation is visible before the cadence breaks."
+        }
+      },
+      "status": "deferred",
+      "executionLog": [
+        {
+          "at": "2026-09-07",
+          "session": 344,
+          "note": "DEFERRED S344 with the measurement attached: radar queues 4 vs 211 rejected; 4 slots/day x 14-day novelty needs ~56 stories. Retuning cadence or the novelty window changes a published promise (AGENTS.md -> escalate), so boarded for the founder rather than decided by a gate."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "cadence-gate-fires-false-red-on-the-first-slot",
+      "reason": "DISPROVED before inclusion, and the disproof is the point. The candidate was that build-news-freshness.mjs --check --require-daily runs on all four slots and must fail on the 06:00 slot of every healthy day, because today's edition does not exist yet. Reading scripts/build-news-freshness.mjs shows deriveDeskFreshness treats a ONE-DAY-OLD edition as state `daily` ('one day old remains inside the daily evidence window', line 22), so the morning slot passes on any day whose predecessor published. The gate is correctly shaped and its four reds are TRUE reds. Had this shipped, it would have weakened the one alarm honestly reporting item 5 - the S325 property that stops a no-op publisher reporting green for nine days. Left untouched deliberately."
+    }
+  ],
+  "totals": {
+    "items": 5,
+    "skipped": 1,
+    "count": 5,
+    "priority": 150.6,
+    "top3": [
+      "skipped-step-guards-read-as-success",
+      "homepage-publishes-ci-jargon-to-returning-visitors",
+      "member-newsletter-has-never-sent"
+    ]
+  }
+}

@@ -1441,3 +1441,134 @@ existing. Boarded: `[S344][INFRA/P1]` to re-evaluate the data plane once
 **Rule:** "self-host when applicable" is a test, not a default. Applicable means it beats
 the alternative on the axes the canon names — cost, control, ownership — and a free
 global CDN is not beaten by one box.
+
+## D-S344.3 — A skipped step is not a successful step, and four guards could not tell
+
+`.github/workflows/news-publish.yml` chained its stages with
+`if: steps.<X>.outputs.status == '0'`. A step that is SKIPPED writes nothing to
+`$GITHUB_OUTPUT`, so the expression compares the empty string to `'0'` — and GitHub
+Actions evaluates that TRUE. The guard could not distinguish *succeeded* from
+*never ran*.
+
+Observed in run `34063581495`, not inferred: `prepare` exited 1, `author` was correctly
+skipped, and then the art renderer, the full Desk rebuild, the editorial gates and the
+public-feed cascade **all ran** — four guards deep, on a slot that had drafted nothing.
+`author-news-edition.mjs` never appears in that log; its dependents ran anyway.
+
+What stopped an unattended `git commit` + push of a non-edition was not a gate. It was
+two accidents: an unhandled `ENOENT` crash in `generate-news-art.mjs`, and the cadence
+gate failing one step earlier. Both look exactly like ordinary bugs, and fixing **either
+one alone** would have opened the publish path. That interlock is the reason items 1 and
+2 of the audit shipped as a single change and are recorded here together.
+
+**Rule:** a step guard must compare against a value the empty string cannot impersonate.
+Numeric-looking literals are banned in `steps.*.outputs.*` comparisons; emit a
+non-numeric sentinel (`ok=yes` / `ok=no`). Enforced by
+`scripts/check-workflow-step-guards.mjs` (10/10 self-test, wired into `build:check`),
+which was run against the pre-fix file as a negative control and caught all seven
+historical guards.
+
+**Corollary:** when a defect is holding a door shut, fixing it in isolation opens the
+door. Check what a bug is currently preventing before repairing it.
+
+## D-S344.4 — The chore filter was dead code, and its own test never caught it
+
+`build-changelog-narrative.mjs` resolved its verb as
+`MOVE_VERB[commit.move] || MOVE_VERB[commit.type]`. `build-commit-map.mjs` maps every
+`chore` commit to the move label `Tended`, and `MOVE_VERB.Tended` is the truthy
+`'Refined'` — so the explicit `chore: null, // filtered out from public narrative` was
+never reached. **13 of the 24 sentences on the live public feed were chore commits that
+rule was written to drop**, including `"Refined resync after publisher race (attempt 1)."`
+on the homepage returning-visitor strip (D-S343.5).
+
+The self-test had a case named `chore filtered` and it passed throughout, because its
+fixture set `move: null` — a shape the producer never emits. **The test exercised a path
+production never took.** Both shapes are pinned now, along with the exact leaked sentence.
+
+Two fixes, deliberately different in kind. The precedence bug is a correctness repair.
+The class fix is structural: a commit that touched no visitor-facing path now earns no
+public sentence whatever its type, classified once in the producer from the commit's
+changed paths (`visitorFacing`) and consumed by the reader. A word blocklist would need
+a new entry for every future leak; the structural fact is total. Because the map is
+regenerated wholesale from git, an ABSENT `visitorFacing` means the producer did not run
+— the reader treats that as not-publishable rather than defaulting open.
+
+Effect: the public feed went 24 → 8 sentences, and every survivor names something a
+visitor can see.
+
+**Rule:** when a filter has never fired, suspect the fixture before the rule. A test whose
+input shape the producer cannot emit is not covering the producer.
+
+## D-S344.5 — The Desk's cadence gate is correct; the queue is what is starved
+
+A candidate audit item held that `build-news-freshness.mjs --check --require-daily` must
+fire a false red on the 06:00 slot of every healthy day, since today's edition does not
+exist yet. **Disproved before it shipped:** `deriveDeskFreshness` treats a one-day-old
+edition as state `daily`, so the morning slot passes on any day whose predecessor
+published. The gate is correctly shaped and its four reds are TRUE reds. Weakening it
+would have removed the one alarm honestly reporting the real defect — the S325 property
+that stops a no-op publisher reporting green for nine days. Left untouched deliberately.
+
+The real cause is throughput, and it is quantified: the radar queues **4** topics against
+**211** rejected, while The Desk runs **4 slots/day** against a **14-day novelty window** —
+which needs on the order of 56 distinct stories to stay fed. The Desk covers its own queue
+faster than the radar refills it, so novelty held 13 of 14 candidates and the single
+survivor's only source returned HTTP 403.
+
+**Not fixed in-session, on purpose.** Rebalancing slot cadence, the novelty window, or the
+radar's 98% rejection rate changes a published promise about how often the studio speaks
+(`AGENTS.md` → escalate before changing public promises). Boarded with the measurement
+attached so the decision is the founder's, not a gate's.
+
+**Rule:** an honest deferral with the number attached beats a unilateral retune of a public
+promise.
+
+## D-S344.6 — The strip I fixed had never rendered, and the pixel check is what found it
+
+Fixing the voice leak (D-S344.4) meant the CANON-053 obligation to look at the rendered
+surface. The surface would not render.
+
+`returning-visitor-digest.js` and `returning-signal-strip.js` both need *"when was the
+previous visit"*, but only the digest advances it: it reads `vs_last_visit_ts`, then
+immediately stamps it to `now`. `ambient-loader.js` registers the digest **first**, both
+`idle: true`. So the strip read `now`, no entry was ever newer than it, and
+`fresh.length >= 1` was never true.
+
+**Proved by a control that isolates the dimension, not by reading the source.** With the
+digest present: strip absent, `vs_last_visit_ts` reads now. Blocking *only* that one file:
+the strip renders immediately and the baseline is preserved. The strip has never rendered
+in production.
+
+This is the same class as the S343 `vs_visit_count` fix — *"one writer again instead of two
+with incompatible meanings"* — in the **same pair of files**, on the neighbouring key,
+missed at the time. Fixed the same way: the digest publishes what it consumed under
+`vs_prev_visit_ts`, which nothing else writes, and the strip reads that. An absent handoff
+key makes the strip bail rather than fall back to `vs_last_visit_ts`, which is the read
+that was broken; it self-heals on the next visit.
+
+**Then the pixels showed a second defect underneath.** `.vs-signal-strip__entry` used
+`color: var(--vs-text, #e8e8e8)` — and `--vs-text` is defined **nowhere on this site**, so
+every theme took the near-white fallback. On the light theme that is near-white text on a
+cream ground. Nobody had ever seen it, and the theme matrix could not catch it either:
+CANON-047's AI image test only inspects what renders, and this never rendered. Switched to
+`--text` (the real token: `#162033` light, `#eef2ff` dark).
+
+The brand gold then measured **1.31:1** on the light theme's cream — the light theme does
+not redefine `--gold`, so there was no token to lean on. Kept the gold identity on the six
+dark themes and darkened it to `#8a6a00` (4.72:1) only where the ground is light.
+
+**Measured from painted pixels, after two wrong readings.** A `getComputedStyle` walk for
+the effective background bottomed out at white for every theme (body and html are
+transparent; the page ground is a gradient), reporting a comfortable pass for the dark
+theme *and* the broken light one. Sampling the real pixels out of an element screenshot
+gave readings that match what the images show: 7/7 themes now clear AA on all four
+elements.
+
+**Rule:** a surface that never renders is invisible to every gate that inspects rendered
+output — the theme matrix, the visual receipt, the accessibility pass. Its defects
+accumulate silently and all surface at once the moment it starts working. When you revive
+a dark surface, re-run the rendered-pixel checks against it as if it were new, because for
+those gates it is.
+
+**Corollary:** when a computed-style reading disagrees with the screenshot, believe the
+screenshot.

@@ -12,6 +12,8 @@
 (function () {
   'use strict';
   var LAST_VISIT = 'vs_last_visit_ts';
+  // Written here, read by returning-signal-strip.js. See the S344 note below.
+  var PREV_VISIT = 'vs_prev_visit_ts';
   var VISIT_COUNT = 'vs_visit_count';
   var SESSION_MARK = 'vs_rv_digest_session';
   var MIN_SHIPS = 2;
@@ -33,6 +35,21 @@
   // "since last time" to honor yet.
   if (!prevTs) { lsSet(LAST_VISIT, String(now)); lsSet(VISIT_COUNT, '1'); return; }
   var prev = parseInt(prevTs, 10);
+  // S344 — HAND THE CONSUMED BASELINE ON BEFORE DESTROYING IT.
+  //
+  // This script and returning-signal-strip.js both need "when was the previous
+  // visit", but only this one advances it. The loader registers the digest
+  // FIRST, so it stamped LAST_VISIT to now and the strip — which then reads the
+  // same key — could never find an entry newer than it. Proven by a control
+  // that blocked only this file: with the digest present the strip is absent
+  // and LAST_VISIT reads now; with it blocked the strip renders and LAST_VISIT
+  // is preserved. The strip has therefore never rendered in production.
+  //
+  // Same class as the S343 vs_visit_count fix in this same pair of files: two
+  // readers, one key, incompatible lifecycles. The fix is one writer per key —
+  // this script owns LAST_VISIT and publishes what it consumed under a key
+  // nothing else writes.
+  lsSet(PREV_VISIT, String(prev));
   // Advance the baseline to this visit regardless of whether we render.
   lsSet(LAST_VISIT, String(now));
   lsSet(VISIT_COUNT, String(visitCount + 1));

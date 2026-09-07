@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-06T22:13:09.603Z",
+  "generatedAt": "2026-09-07T04:51:43.297Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Corrected a long-standing false entry on the public release page. A cross-project dependency was being reported as outstanding because the tracker watched for a message that had since expired, rather than checking whether the work itself was done -- it had been done for months. The check now verifies the real thing directly against the login provider, including a deliberate negative test to prove the check can still fail, and it expires after two weeks so it cannot vouch for something indefinitely. The remaining sign-in work is unchanged and still pending a person completing it, and that restriction was left in place on purpose.",
+  "focus": "The studio's news publisher could run its publishing steps even when the step before them had been skipped, because a skipped step reports nothing and the check treated nothing as success. Nothing incorrect was ever published — two unrelated faults happened to stop it in time, and either one looked like a small bug worth tidying up, which would have removed the protection. The check now tests for a value that cannot be mistaken for silence, and a new automated rule stops the pattern returning anywhere in the project. Separately, the short \"what changed\" line shown to returning visitors was carrying notes about our own build system rather than anything they could see; it now only mentions work that touched something on the site.",
   "nextStep": "Tidy how the site builds its navigation, and refresh the game cover artwork.",
   "decisions": [
     {

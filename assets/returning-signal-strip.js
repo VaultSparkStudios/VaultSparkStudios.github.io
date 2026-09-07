@@ -3,7 +3,7 @@
 // "What sparked since your last visit" — a slim, dismissible strip on the
 // homepage for visitors with vs_visit_count ≥ 2. Reads api/changelog-narrative.json
 // (voice-driven byWeek entries, already public), filters to entries newer than
-// vs_last_visit_ts, and renders 1-2 headlines + CTA to /changelog/.
+// vs_prev_visit_ts, and renders 1-2 headlines + CTA to /changelog/.
 //
 // Additive: the existing returning-visitor-digest.js shows a ship COUNT; this
 // shows the editorial NARRATIVE — the two coexist without duplication.
@@ -11,7 +11,9 @@
 // DOM API only — Trusted Types compatible.
 (function () {
   'use strict';
-  var LAST_VISIT = 'vs_last_visit_ts';
+  // Owned + advanced by returning-visitor-digest.js, which publishes the value
+  // it consumed under this key so the strip sees the PREVIOUS visit, not this one.
+  var PREV_VISIT = 'vs_prev_visit_ts';
   var VISIT_COUNT = 'vs_visit_count';
   var SESSION_MARK = 'vs_signal_strip_session';
   var FEED_URL = '/api/changelog-narrative.json';
@@ -33,7 +35,18 @@
   var visitCount = parseInt(lsGet(VISIT_COUNT) || '0', 10);
   if (visitCount < 2) return;
 
-  var prevTs = parseInt(lsGet(LAST_VISIT) || '0', 10);
+  // S344 — READ THE HANDOFF KEY, NOT THE LIVE BASELINE.
+  //
+  // This read LAST_VISIT, which returning-visitor-digest.js stamps to `now`
+  // before this script runs (the loader registers the digest first, both idle).
+  // So prevTs was always "now", no entry was ever newer than it, and this strip
+  // has never rendered in production. A control blocking only the digest makes
+  // it render immediately.
+  //
+  // PREV_VISIT is written by the digest and by nothing else. If it is absent the
+  // digest has not run since this shipped: bail honestly rather than fall back to
+  // LAST_VISIT, which is the read that was broken. Self-heals on the next visit.
+  var prevTs = parseInt(lsGet(PREV_VISIT) || '0', 10);
   if (!prevTs) return;
 
   ssSet(SESSION_MARK, '1');
@@ -49,16 +62,29 @@
       '.vs-signal-strip__label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;',
       'color:#ffd700;white-space:nowrap;padding-top:2px;flex-shrink:0}',
       '.vs-signal-strip__entries{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}',
-      '.vs-signal-strip__entry{color:var(--vs-text,#e8e8e8);overflow:hidden;',
+      // S344 — `--vs-text` is defined NOWHERE on this site, so every theme fell
+      // back to the light #e8e8e8 and the light/high-contrast themes rendered
+      // near-white text on a cream ground (CANON-047). Nobody ever saw it
+      // because the strip never rendered at all, which also kept it out of the
+      // theme matrix. `--text` is the real token: #162033 light, #eef2ff dark.
+      '.vs-signal-strip__entry{color:var(--text,#e8e8e8);overflow:hidden;',
       'text-overflow:ellipsis;white-space:nowrap}',
       '.vs-signal-strip__entry .badge{font-size:11px;margin-right:4px}',
       '.vs-signal-strip__cta{color:#ffd700;text-decoration:none;white-space:nowrap;',
       'flex-shrink:0;padding-top:2px;font-size:12px}',
       '.vs-signal-strip__cta:hover{text-decoration:underline}',
       '.vs-signal-strip__dismiss{position:absolute;top:6px;right:8px;background:none;',
-      'border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:14px;padding:2px 4px;',
+      'border:none;color:var(--muted,rgba(255,255,255,.4));cursor:pointer;font-size:14px;padding:2px 4px;',
       'line-height:1}',
-      '.vs-signal-strip__dismiss:hover{color:#fff}',
+      '.vs-signal-strip__dismiss:hover{color:var(--text,#fff)}',
+      // S344 — the brand gold #ffd700 measures 1.31:1 on the light theme's cream
+      // ground: far below WCAG AA, and invisible in the rendered pixels. The light
+      // theme does not redefine --gold, so there is no token to lean on. Keep the
+      // gold identity on the six dark themes and darken it only where the ground is
+      // light: #8a6a00 measures 4.72:1 on the sampled background. Verified from the
+      // painted pixels of all 7 themes, not from computed styles.
+      'body.light-mode .vs-signal-strip__label,body.light-mode .vs-signal-strip__cta{color:#8a6a00}',
+      'body.light-mode .vs-signal-strip{background:rgba(255,196,0,.10);border-bottom-color:rgba(138,106,0,.28)}',
     ].join('');
     (document.head || document.documentElement).appendChild(s);
   }
