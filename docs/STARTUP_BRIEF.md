@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   390/390 passing  ·  2026-09-07                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         390/390 passing (2026-09-07) · UNVERIFIED (no  ║
+║  ✓  Tests         390/390 passing (2026-09-07)                   ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
@@ -89,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-09-04)                            ║
-║  ✓  Deploy gaps   production matches repo tip (998243a3f766)     ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7345 <   ║
 ╚════════════════════════════════════════════════════════════════╝
