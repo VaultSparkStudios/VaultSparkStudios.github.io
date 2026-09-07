@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-07 (Session 344 closeout) -->
+<!-- generated-at: 2026-09-07 (Session 345 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 344 closeout · 2026-09-07.
+> **Fast-boot brief** — generated at Session 345 closeout · 2026-09-07.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 345 · 2026-09-07 · FOUNDER MODE                         ║
+║  Session 346 · 2026-09-07 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S344) - WHAT SHIPPED ══════════════════════════╗
-║  S344 -- every downstream guard in the Desk publisher passed wh  ║
+╔══ LAST SESSION (S345) - WHAT SHIPPED ══════════════════════════╗
+║  S345 -- resync-derived, the post-rebase repair tool, reported   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,18 +40,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    986/1000   ███████████████████████░   99%                     ║
+║    984/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 991.7  ·  Velocity 2↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄  ↑  (last 1 sessions)                                ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ██▇██▇▇▇ →                ║
-║    Alignment         99    ██████████  ▇▇█▇▇▇▇▇ →                ║
-║    Momentum          99    ██████████  ██▇██▇█▇ →                ║
-║    Engagement        97    ██████████  ▇▇█▇▇▇▇▇ →                ║
-║    Process Qual      96    ██████████  █████▇▇▇ ↓                ║
+║    Dev Health        99    ██████████  █▇██▇▇▇▇ →                ║
+║    Alignment         97    ██████████  ▇█▇▇▇▇▇▇ →                ║
+║    Momentum          98    ██████████  █▇██▇█▇▇ →                ║
+║    Engagement        96    ██████████  ▇█▇▇▇▇▇▇ →                ║
+║    Process Qual      98    ██████████  ████▇▇▇▇ ↓                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
@@ -60,7 +60,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 344 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 345 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    381/381 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   390/390 passing  ·  2026-09-07                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         390/390 passing (2026-09-07)                   ║
+║  ⚠  Tests         381/381 passing (2026-09-02) · UNVERIFIED (no  ║
 ║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        ~12 sessions                                   ║
 ║  ✓  Context age   0d                                             ║
@@ -121,25 +121,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  984/1000  (↓2 vs current 986)                       ║
+║  Projected:  978/1000  (↓6 vs current 984)                       ║
 ║  At-risk:    Momentum Δ-4                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      ESCALATION: The Desk's cadence promise out  ║
-║        ESCALATION: The Desk's cadence promise outruns its queue  ║
+║  100  [VERIFY]       38 byte-checked generators are still outsi  ║
+║        38 byte-checked generators are still outside the evidenc  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      The silent cron verdict is fixture-proven   ║
-║        The silent cron verdict is fixture-proven only. check-sc  ║
+║   95  [VERIFY]       ESCALATION: The Desk's cadence lever is st  ║
+║        ESCALATION: The Desk's cadence lever is still the founde  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Re-evaluate the data plane for the shared   ║
-║        Re-evaluate the data plane for the shared box once STUDI  ║
-║                                                                  ║
-║   81  [PRODUCT]      Make the game covers art-only; the tile ow  ║
+║   84  [PRODUCT]      Make the game covers art-only; the tile ow  ║
 ║        Make the game covers art-only; the tile owns all text. T  ║
+║                                                                  ║
+║   78  [PRODUCT]      Re-evaluate the data plane for the shared   ║
+║        Re-evaluate the data plane for the shared box once STUDI  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 344 closeout · 2026-09-07*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 345 closeout · 2026-09-07*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

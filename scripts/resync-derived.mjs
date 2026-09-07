@@ -28,16 +28,43 @@
  *   node scripts/resync-derived.mjs --changed a,b   # explicit file list (CI / testing)
  *   node scripts/resync-derived.mjs --dry-run       # print the plan, build nothing
  *   node scripts/resync-derived.mjs --verify        # after building, run each node's own --check
+ *   node scripts/resync-derived.mjs --no-sweep     # skip the unmodeled sweep (faster, less honest)
+ *   node scripts/resync-derived.mjs --sweep-repair # rebuild what the sweep finds drifted
+ *
+ * THE SECOND GAP (S345). The graph models 29 of 67 byte-checked generators, and
+ * check-evidence-graph-coverage deliberately keeps that a visible RATCHET rather
+ * than guessing the other 38 nodes' sources — a confidently wrong graph is worse
+ * than an admittedly partial one. But the debt was only visible in a config file,
+ * never at the moment of repair, which is the only moment it costs anything. This
+ * tool printed `0 derived artifact(s) affected` and `N artifact(s) rebuilt` with
+ * no hint that either number was scoped to the subset it can see.
+ *
+ * Measured live, twice. S340: four publisher rebases were each resolved through
+ * this tool, which rebuilt up to 20 artifacts and reported clean — then
+ * build-intelligence-budget --check failed in CI at build:check step 185 of run
+ * 33702593208, because that generator is not in the graph. S341 reproduced it and
+ * found a SECOND member, build-nervous-system. Both were fixed by hand, both are
+ * still unmodeled today.
+ *
+ * So the sweep measures rather than predicts: it runs the UNMODELED generators'
+ * own `--check`, which is read-only and needs no `sources` to be correct. A
+ * `--check` failure is not a guess about what a rebase might have touched — it is
+ * the artifact itself reporting that it no longer matches its inputs. Repair
+ * stays opt-in (`--sweep-repair`) because a repairer that blindly invokes 38
+ * arbitrary builders is the exact hazard the sideEffecting guard above exists to
+ * prevent. Default behaviour is to FAIL, NAMED — turning a ten-minute remote CI
+ * red into an immediate local one.
  *
  * Exit 0 = tree consistent. Non-zero = a builder or a --check failed; the
  * message names the node so the next step is never a guess.
  */
 
 import { execFileSync } from './lib/safe-spawn.mjs';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEvidenceGraph, validateEvidenceGraph, affectedEvidenceNodes } from './lib/evidence-graph.mjs';
+import { coverage } from './check-evidence-graph-coverage.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -101,6 +128,89 @@ export function stagePaths(node) {
   return [node.output, ...(node.alsoStage || [])];
 }
 
+/**
+ * The set of byte-checked generators that build:check gates but the evidence
+ * graph does NOT model. Read from the same two sources the ratchet reads, so the
+ * two can never disagree about what is covered.
+ */
+export function unmodeledCheckedGenerators(root = ROOT) {
+  const steps = JSON.parse(
+    readFileSync(join(root, 'package.json'), 'utf8')).scripts['build:check:steps'];
+  return coverage(steps, loadEvidenceGraph(root)).unmodeled;
+}
+
+/**
+ * Run each unmodeled generator's own `--check`. Read-only by construction: a
+ * `--check` compares bytes against inputs and writes nothing, which is what makes
+ * it safe to run over generators whose sources we deliberately do not model.
+ *
+ * Returns the drifted set. Repair is the caller's decision, never this function's.
+ */
+export function sweepUnmodeled(generators, { repair = false } = {}) {
+  const drifted = [];
+  for (const gen of generators) {
+    const builder = join(ROOT, gen);
+    if (!existsSync(builder)) {
+      // A gated generator that no longer exists is a build:check failure waiting
+      // to happen; name it rather than silently sweeping over it.
+      drifted.push({ gen, reason: 'builder missing' });
+      continue;
+    }
+    try {
+      execFileSync('node', [builder, '--check'], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+    } catch {
+      drifted.push({ gen, reason: 'drifted' });
+    }
+  }
+  if (!repair || !drifted.length) return drifted;
+
+  const stillDrifted = [];
+  for (const entry of drifted) {
+    if (entry.reason === 'builder missing') { stillDrifted.push(entry); continue; }
+    // Same structural guard as the graph path: a repairer must never invoke a
+    // builder that ACTS on the world to make a file look right after a rebase.
+    if (/^(deploy|publish|promote|send|notify)-/.test(entry.gen.split('/').pop())) {
+      console.warn(`  ⊘ ${entry.gen} — SKIPPED, world-acting builder; repair it deliberately`);
+      stillDrifted.push({ ...entry, reason: 'world-acting, not auto-repaired' });
+      continue;
+    }
+    const builder = join(ROOT, entry.gen);
+    try {
+      execFileSync('node', [builder], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      execFileSync('node', [builder, '--check'], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      console.log(`  ✓ ${entry.gen} — rebuilt (sweep)`);
+    } catch {
+      stillDrifted.push({ ...entry, reason: 'still drifted after rebuild' });
+    }
+  }
+  return stillDrifted;
+}
+
+/**
+ * Every success path in main() routes through here. That is the whole point: the
+ * S340 incident exited via `0 derived artifact(s) affected`, so a sweep wired only
+ * into the rebuild path would have missed it.
+ */
+function finish(summary) {
+  if (process.argv.includes('--no-sweep')) {
+    console.log(`${summary} · sweep SKIPPED (--no-sweep) — coverage of unmodeled generators unverified`);
+    process.exit(0);
+  }
+  const unmodeled = unmodeledCheckedGenerators();
+  const repair = process.argv.includes('--sweep-repair');
+  const drifted = sweepUnmodeled(unmodeled, { repair });
+  if (drifted.length) {
+    console.error(`${summary} · sweep found ${drifted.length}/${unmodeled.length} UNMODELED artifact(s) drifted:`);
+    for (const d of drifted) console.error(`  ✗ ${d.gen} — ${d.reason}`);
+    console.error('  these are gated by build:check but absent from the evidence graph, so the');
+    console.error('  graph walk above could not see them. Re-run with --sweep-repair, or rebuild');
+    console.error('  each by hand, then model it in config/evidence-graph.json.');
+    process.exit(1);
+  }
+  console.log(`${summary} · sweep: ${unmodeled.length} unmodeled generator(s) checked, all in sync`);
+  process.exit(0);
+}
+
 function main() {
   const graph = loadEvidenceGraph(ROOT);
   const graphErrors = validateEvidenceGraph(graph);
@@ -126,8 +236,7 @@ function main() {
   }
 
   if (!changed.length) {
-    console.log('resync-derived: no changed files — nothing to resync');
-    process.exit(0);
+    finish('resync-derived: no changed files — nothing to resync');
   }
 
   // A node whose source git does not track can never appear in `git diff`, so
@@ -153,13 +262,21 @@ function main() {
     for (const n of untrackedSourced) console.log(`  ~ ${n.id} — always rebuilt (untracked source, invisible to git diff)`);
   }
   if (!dirty.length) {
-    console.log(`resync-derived: ${changed.length} changed file(s), 0 derived artifact(s) affected`);
-    process.exit(0);
+    // The S340 exit. `0 affected` is true of the graph and says nothing about the
+    // 38 generators outside it, so this path sweeps like every other.
+    finish(`resync-derived: ${changed.length} changed file(s), 0 derived artifact(s) affected`);
   }
 
   console.log(`resync-derived: ${changed.length} changed file(s) → ${dirty.length}/${graph.nodes.length} derived artifact(s) to rebuild`);
   for (const node of dirty) console.log(`  · ${node.id} → ${node.output}`);
-  if (process.argv.includes('--dry-run')) process.exit(0);
+  if (process.argv.includes('--dry-run')) {
+    // A plan that lists only what the graph models is the same half-truth the
+    // sweep exists to end — state the blind spot instead of implying there is none.
+    const blind = process.argv.includes('--no-sweep') ? [] : unmodeledCheckedGenerators();
+    console.log(`  (plan only · ${blind.length} unmodeled byte-checked generator(s) are NOT in this plan; a real run sweeps them)`);
+    process.exitCode = 0;
+    return;
+  }
 
   // A repair tool must never take a real-world action to make a file look right.
   // staging-deploy-receipt declares scripts/deploy-staging.mjs as its builder,
@@ -213,8 +330,7 @@ function main() {
     console.log(`resync-derived --verify: ${runnable.length}/${runnable.length} rebuilt artifact(s) pass their own --check`);
   }
 
-  console.log(`resync-derived: ${runnable.length} artifact(s) rebuilt + staged${skipped.length ? ` · ${skipped.length} skipped (side-effecting)` : ''}`);
-  process.exit(0);
+  finish(`resync-derived: ${runnable.length} artifact(s) rebuilt + staged${skipped.length ? ` · ${skipped.length} skipped (side-effecting)` : ''}`);
 }
 
 function selfTest() {
@@ -290,6 +406,43 @@ function selfTest() {
   const missing = graph.nodes.filter((n) => !existsSync(join(ROOT, n.builder))).map((n) => n.id);
   cases.push([`all ${graph.nodes.length} builders exist${missing.length ? ` (missing: ${missing.join(', ')})` : ''}`,
     missing.length === 0]);
+
+  // ---- S345: the sweep, and the blindness it exists to cover ----
+
+  const unmodeled = unmodeledCheckedGenerators();
+
+  // The gap must be real. If this ever hits zero the graph covers everything and
+  // the sweep is dead weight — but that is a change to celebrate, not to assume.
+  cases.push([`byte-checked generators outside the graph are enumerable (${unmodeled.length})`,
+    Array.isArray(unmodeled)]);
+
+  // NEGATIVE CONTROL — the whole point of this session's fix. The live S340/S341
+  // drifters must be invisible to the graph walk, or the sweep is testing nothing.
+  // If either becomes modeled, this flips to a pass for the right reason and the
+  // assertion below (drift-detectable) still covers it.
+  for (const drifter of ['scripts/build-intelligence-budget.mjs', 'scripts/build-nervous-system.mjs']) {
+    const node = graph.nodes.find((n) => n.builder === drifter);
+    const blind = !node;
+    cases.push([`graph walk cannot see ${drifter.split('/').pop()} (${blind ? 'unmodeled — sweep covers it' : 'now modeled — graph covers it'})`,
+      blind ? unmodeled.includes(drifter) : true]);
+  }
+
+  // A sweep that cannot fail is a sweep that proves nothing: point it at a
+  // generator that does not exist and it must report drift rather than silence.
+  const bogus = sweepUnmodeled(['scripts/build-this-generator-does-not-exist.mjs']);
+  cases.push(['sweep reports a missing builder rather than passing over it',
+    bogus.length === 1 && bogus[0].reason === 'builder missing']);
+
+  // An empty sweep set must not be reported as a failure.
+  cases.push(['sweep over an empty set is clean', sweepUnmodeled([]).length === 0]);
+
+  // STRUCTURAL: every success exit in main() must route through finish(), or a
+  // future exit path silently reintroduces the S340 blindness. Counted from the
+  // source rather than an exit-path list, so a NEW path is caught too.
+  const src = readFileSync(fileURLToPath(import.meta.url), 'utf8');
+  const mainBody = src.slice(src.indexOf('function main() {'), src.indexOf('function selfTest() {'));
+  cases.push(['no success exit in main() bypasses the sweep (no bare process.exit(0))',
+    !/process\.exit\(0\)/.test(mainBody)]);
 
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));

@@ -145,5 +145,11 @@ function selfTest() {
   process.exit(failed.length ? 1 : 0);
 }
 
-if (process.argv.includes('--self-test')) selfTest();
-else run();
+// Import-safe: resync-derived imports checkedGenerators() from this module to
+// learn the boundary of its own knowledge. Without this guard that import would
+// EXECUTE the ratchet (and its process.exit) as a side effect of being read.
+const isDirect = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
+if (isDirect) {
+  if (process.argv.includes('--self-test')) selfTest();
+  else run();
+}

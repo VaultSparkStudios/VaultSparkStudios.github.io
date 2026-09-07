@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-07T05:20:50.274Z",
+  "generatedAt": "2026-09-07T17:27:21.794Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "The studio's news publisher could run its publishing steps even when the step before them had been skipped, because a skipped step reports nothing and the check treated nothing as success. Nothing incorrect was ever published — two unrelated faults happened to stop it in time, and either one looked like a small bug worth tidying up, which would have removed the protection. The check now tests for a value that cannot be mistaken for silence, and a new automated rule stops the pattern returning anywhere in the project. Separately, the short \"what changed\" line shown to returning visitors was carrying notes about our own build system rather than anything they could see; it now only mentions work that touched something on the site.",
-  "nextStep": "Tidy how the site builds its navigation, and refresh the game cover artwork.",
+  "focus": "A tool we use to repair the site after two changes collide had been quietly reporting success over only the part of the site it knew about, which is why a check failed twice after everything local looked fine. It now checks the parts it cannot map as well, and refuses to say \"clean\" when it has not looked. Separately, one of our alarms reported all-clear for a condition it had never actually seen happen; it now says so, so a quiet alarm cannot be mistaken for a tested one. Nothing visitors see changed this session.",
+  "nextStep": "Send the first member newsletter, and decide how often The Desk should publish.",
   "decisions": [
     {
       "surface": "Mobile navigation",

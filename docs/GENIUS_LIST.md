@@ -1,4 +1,4 @@
-# Genius Hit List — Session 344
+# Genius Hit List — Session 345
 
 Generated: 2026-09-07
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **77/100**
 - Health: **yellow**
-- Current SIL: **986/1000**
+- Current SIL: **984/1000**
 - CI health: **check gh run list**
-- Current focus: S344 closed a latent unattended-publish path into the public Desk: every downstream guard in news-publish.yml passed when its upstream step was SKIPPED (GitHub coerces an empty output and '0' to the same number), so a slot that drafted nothing ran the art renderer, the full Desk rebuild, the editorial gates and the public-feed cascade — held back from committing only by an ENOENT crash and the cadence gate, either of which a maintainer would have "fixed". Also ended a live homepage voice leak: the changelog's chore filter was dead code and 13 of 24 public sentences came from routine bookkeeping changes. Next: the founder clears the newsletter deploy permission, and picks the Desk cadence lever.
+- Current focus: S345 closed a five-session carry at the root: resync-derived.mjs, the tool that repairs derived artifacts after a rebase, reported clean over a subset it could not see. Its evidence graph models 29 of 67 byte-checked generators, so it printed "17 artifacts rebuilt + staged" while CI failed ten minutes later on two artifacts outside the graph -- twice, in S340 and S341, both hand-fixed, both still unmodeled. Rather than guess the missing nodes sources (which the ratchet correctly forbids), every success exit now runs the unmodeled generators own --check: a measurement rather than a prediction. Also made check-scheduled-workflow-staleness declare which verdicts it actually exercised, so a fixture-only silent: 0 can no longer read as a verified all-clear. Next: the founder runs the one-command newsletter deploy, and picks the Desk cadence lever.
 
 ## Strategic Read
 
@@ -22,10 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] ESCALATION: The Desk's cadence promise outruns its queue. Nothing has…
-Final score: **96**
-[S344][DESK/P1] ESCALATION: The Desk's cadence promise outruns its queue. Nothing has published since 2026-09-04 and public state has degraded to periodic. Measured: radar queues 4 topics against 211 rejected, while 4 slots/day against a 14-day novelty window needs ~56 distinct stories -- novelty held 13 of 14 candidates and the survivor's only source returned HTTP 403. The cadence gate's reds are HONEST (a candidate claiming otherwise was disproved -- see D-S344.5). Not retuned in-session because slot cadence and the novelty window are a published promise about how often the studio speaks (AGENTS.md -> escalate). Founder picks: widen radar yield, shorten novelty, or reduce slots.
-Why it matters: ESCALATION: The Desk's cadence promise outruns its queue. Nothing has  is open, local, and unblocked — can ship this session.
+#### 1. [VERIFY] 38 byte-checked generators are still outside the evidence graph. The …
+Final score: **100**
+[S345][BUILD/P3] 38 byte-checked generators are still outside the evidence graph. The S345 sweep makes this SAFE (drift is now caught and named at repair time) but not CLOSED: the graph still cannot order these nodes topologically, so --sweep-repair rebuilds them independently and a node whose source is another unmodeled node's output could need two passes. Modeling them requires real sources per node -- the ratchet exists precisely to stop that being guessed. Correct next step is to model them a few at a time, at the moment someone knows the inputs, lowering the baseline each time (now 38/67). Not urgent: the sweep converts what was a silent CI red into a local named failure.
+Why it matters: 38 byte-checked generators are still outside the evidence graph. The S shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,84 +36,86 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] The silent cron verdict is fixture-proven only. check-scheduled-workf…
-Final score: **90**
-[S341][OBS/P3] The silent cron verdict is fixture-proven only. check-scheduled-workflow-staleness gained a verdict for a cron that is not failing because it is not *running*, proven only by fixtures — no live cron is currently silent. Right today, untested tomorrow. Pin it against a real disabled workflow, or record it as fixture-proven.
-Why it matters: The silent cron verdict is fixture-proven only. check-scheduled-workfl is open, local, and unblocked — can ship this session.
+#### 3. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
+Final score: **95**
+[S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED. Re-probed S345: build-news-freshness --check --require-daily now reports daily - latest 2026-09-07 - age 0d, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to periodic') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. What is NOT resolved, and is not claimed to be: the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
+Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu shipped last session — confirm it works in production before piling new work on top.
 
-#### 4. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-Final score: **81**
-[S344][INFRA/P1] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, AGENTS.md requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
-Why it matters: Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is open, local, and unblocked — can ship this session.
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### NEXT
-
-#### 1. [PRODUCT] Make the game covers art-only; the tile owns all text. The direction …
-Final score: **81**
+#### 4. [PRODUCT] Make the game covers art-only; the tile owns all text. The direction …
+Final score: **84**
 [S340][UX/P2] Make the game covers art-only; the tile owns all text. The direction is DECIDED (D-S340.7), so this is execution, not another design round. build-game-covers.mjs rasterizes the genre eyebrow and the game title into every cover while .hero-tile renders its own __kicker and __name over them. D-S339.6 already established the governing principle by removing the baked status word: text baked into an image goes stale against the feed that owns it, and the kicker and title are feed-derived from the same catalog. So the covers lose their text rather than the tiles losing their chrome -- the alternative re-introduces exactly what S339 removed. Deferred from S340 because regenerating every cover is binary churn that invalidates every cover-bound receipt and rotates the home page's LCP asset, which does not belong in a session that must also land a production deploy. Budget a reseal and a CANON-053 capture pass at both tile sizes and both themes. Supersedes [S339][UX/P3].
 Why it matters: Make the game covers art-only; the tile owns all text. The direction i is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] resync-derived.mjs does not cover every --checked derived artifact, a…
-Final score: **77**
-[S340][BUILD/P2] resync-derived.mjs does not cover every --checked derived artifact, and the gap only shows up after a rebase. Found live during the S340 closeout push. Four scheduled-publisher races forced four rebases; each was resolved by taking one side and regenerating through resync-derived, which rebuilt up to 20 artifacts and reported clean. api/intelligence-budget.json is not in its set, so it stayed at the conflict-resolved value and build-intelligence-budget --check failed in CI at build:check step 185 — the compliance job of run 33702593208 — while every local coherence check I ran after the rebase passed. Reproduced locally on the pushed tip, fixed by hand. This is the cascade-width class: a resync is only as wide as its graph, and a rebase is exactly the situation where the uncovered artifact keeps a stale value rather than a regenerated one. Fix: derive resync-derived's set from the artifacts build:check actually --checks (or make check-publish-cascade-coverage assert the two sets match) so an artifact cannot be gated without being resyncable. Verify by rebasing onto a publisher commit, running only resync-derived, and confirming build:check is green with no hand-run. S341 confirmed it again and found a SECOND member. Enumerating all 61 build-*.mjs --check invocations in build:check against the graph: resync-derived --changed <all changed> rebuilt and verified 17 artifacts and reported clean, while build-nervous-system AND build-intelligence-budget were both stale and both absent from its graph. Two hand-rebuilds fixed them. The one-line reproduction of this gap is that enumeration -- run the 61 --checks and diff the failures against the graph's node set.
-Why it matters: resync-derived.mjs does not cover every --checked derived artifact, an is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+### NEXT
 
-First command: `npm run build:check && node scripts/csp-audit.mjs`
+#### 1. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
+Final score: **78**
+[S344][INFRA/P1] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, AGENTS.md requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
+Why it matters: Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] The cover artwork still duplicates the tile's KICKER and TITLE, the s…
-Final score: **75**
+#### 2. [PRODUCT] The cover artwork still duplicates the tile's KICKER and TITLE, the s…
+Final score: **78**
 [S339][UX/P3] The cover artwork still duplicates the tile's KICKER and TITLE, the same way it used to duplicate the status. D-S339.6 removed the baked status word, which was the reported defect and the only one that could go stale against a feed. But build-game-covers.mjs still rasterizes the genre eyebrow and the game title into every cover, and .hero-tile renders its own __kicker and __name over them — so "ACTION COMEDY SHOOTER / Call of Doodie" appears in the artwork behind "Action Comedy / Call of Doodie" in live text. It reads as a deliberate layered lockup at featured size and as a smudge at tile size, which is why it is P3 and not P1. Decide it as a design question with rendered captures at both sizes: either the cover goes art-only and the tile owns all text, or the tile drops its own chrome on covered tiles. Do not split the difference per-breakpoint.
 Why it matters: The cover artwork still duplicates the tile's KICKER and TITLE, the sa is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] <!-- evidence-open: config/intelligence-suite.json and journal/index.…
-Final score: **74**
+#### 3. [VERIFY] <!-- evidence-open: config/intelligence-suite.json and journal/index.…
+Final score: **77**
 <!-- evidence-open: config/intelligence-suite.json and journal/index.html are the config to EDIT and the page to VERIFY AGAINST, not deliverables; the deliverable is the route registered in that config and the instrument showing the writer pair gone --> [S340][BUILD/P1] Register /evidence/ in config/intelligence-suite.json and end the nav tug-of-war. propagate-nav.mjs (postbuild #5) strips the /evidence/ link from the nav AND footer of 125 pages on every build, and generate-evidence-hub.mjs (#13) puts it back. Reproduced directly: journal/index.html has the link, drops to 0 after propagate-nav, returns to 2 after generate-evidence-hub --apply. Net-zero across a full chain, so git status is clean and no surface-vs-surface gate can see it. Root cause: /evidence/ (S334) was never added to the canonical nav source, so the nav is rebuilt without it and a downstream script bolts it back on -- and that script's own comment refuses to gate its re-linking on "the page changed" because that would leave the hub "permanently unlinked on a settled tree", which is a repair built around a remover nobody went looking for. Deferred from S340 only because intelligence-suite.json is read by the nav, the footer, the Studio Pulse tiles, the sitemap expectations and the intelligence-suite builder, and that blast radius does not belong in a deploy session. Verify the fix by re-running check-postbuild-ordering --instrument and watching the pair disappear, then confirm generate-evidence-hub reports 0 pages linked -- it should become defence in depth, not a repair. (D-S340.5)
-Why it matters: <!-- evidence-open: config/intelligence-suite.json and journal/index.h is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: <!-- evidence-open: config/intelligence-suite.json and journal/index.h is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-#### 5. [PRODUCT] <!-- evidence-open: the files named are the churning OUTPUTS and the …
-Final score: **69**
+#### 4. [PRODUCT] <!-- evidence-open: the files named are the churning OUTPUTS and the …
+Final score: **72**
 <!-- evidence-open: the files named are the churning OUTPUTS and the suspect generators, not deliverables; the deliverable is a pinned-clock bisect and fix --> [S335][BUILD/P2] Two identical builds minutes apart still churn 47 files — commit-derived feeds are the source, not timestamps. With no commit between them, build 2 rewrote feed/forge-ledger.{json,xml} (206 lines), api/feedback-provenance.json (a whole theme dropped), api/ship-receipts.json, api/status-proof.json, api/news-visual-receipts.json and the changelog SSR block; a third build would churn again. All derive from api/commit-map.json / the git log through build-parallel-phase.mjs (which runs build-feedback-provenance + build-ship-receipts), so the working theory is a clock-relative selection window in that chain. Bisect: run build-forge-feed.mjs twice with a pinned --now (add the flag if absent) and diff; then the provenance pair. This is the receipt-cascade cost the S334 "vs-yas" item was really measuring. Fixed this session: _headers lagged one build because early-hints ran before the postbuild shell rotation — moved into postbuild after build-shell-assets.
 Why it matters: <!-- evidence-open: the files named are the churning OUTPUTS and the s is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [VERIFY] check-postbuild-ordering --check reports unmeasured in CI and always …
-Final score: **68**
+#### 5. [VERIFY] check-postbuild-ordering --check reports unmeasured in CI and always …
+Final score: **71**
 [S340][OBS/P3] check-postbuild-ordering --check reports unmeasured in CI and always will. Only --self-test is wired into build:check; the --check half needs a trace, and no CI job runs --instrument. That is deliberate for now -- the instrument runs the whole postbuild chain, so wiring it into every build doubles the build -- but a gate that can only ever report unmeasured in CI is one step from a gate that has never run. Decide: either run --instrument on a weekly cron and commit the receipt, or fold the tracing into the real postbuild so every build produces its own evidence for free. The second is better if the preload cost is negligible; measure it before choosing.
-Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: check-postbuild-ordering --check reports unmeasured in CI and always w is a 5-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-Final score: **57**
+### LATER
+
+#### 1. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+Final score: **60**
 [S335][TOKEN/P2] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs shards the handoff. It is the largest file any session can touch (~126K tokens raw). compact-handoff.mjs and rotate-ledger.mjs read the handoff archive, so the shard has to be introduced through those readers, not by moving files. Measure with context-meter.mjs before and after.
 Why it matters: Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs sh lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 3. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-Final score: **56**
+#### 2. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+Final score: **59**
 <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
-Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 9-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 10-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [VERIFY] The release-ceremony receipt truncates a failure message at 500 chara…
+Final score: **55**
+[S337][OBS/P2] The release-ceremony receipt truncates a failure message at 500 characters, so a multi-violation failure names only its first file. The S337 blocking run recorded Received + 6 — six console errors — and api/staging-release-browser.json disclosed exactly one file before the message was cut. Diagnosing it needed the CI artifact downloaded and the test re-run locally; the receipt that exists to make a rejection legible could not. Either raise the cap or, better, record the DISTINCT violating files as a structured array alongside the prose message, so the receipt answers "what is violating" without a round trip.
+Why it matters: The release-ceremony receipt truncates a failure message at 500 charac is a 8-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
 #### 1. [VERIFY] FOUNDER: the website's Supabase slot needs its own scoped entry. Unti…
-Final score: **97**
+Final score: **95**
 [S344][SEC/P0] FOUNDER: the website's Supabase slot needs its own scoped entry. Until studio-ops adopts scoped names, this repo resolves the sibling project's key and every supabase.admin call 401s. The website's own key is still on disk in secrets/supabase.env.2026-08-17.bak (project fjnpzjjyhnpmunfoycrp). One line in the gateway; not an agent path because it writes a sibling repo's secrets tree (CANON-018). This also blocks the Obelisk ceremony — verify-provider-journey --watch gets a non-null key, passes its guard, and fails at the truth reads *after* the passkey flow.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 2. [VERIFY] FOUNDER: authorise the member-newsletter deploy. The Monthly Member N…
+#### 2. [VERIFY] FOUNDER: run the member-newsletter deploy (one command). Re-probed S3…
 Final score: **88**
-[S344][ENG/P0] FOUNDER: authorise the member-newsletter deploy. The Monthly Member Newsletter has failed 6 consecutive runs and has NEVER sent. Two proven faults: send-member-newsletter is not deployed (confirmed against a project-scoped 200 listing 29 functions on fjnpzjjyhnpmunfoycrp -- it is absent; config.toml has said so since 2026-07-12), and NEWSLETTER_SECRET is absent from Actions so the cron sends a bare Bearer . Tooling shipped and self-tested: scripts/deploy-member-newsletter.mjs --status|--deploy|--secret|--verify, ref pinned (NOT read through the D-S344.1 mismatched slot) and refusing to act if the token cannot see this project. Execution blocked by the sandbox classifier, not by a missing credential. Note: the function has no dry-run -- an authorised POST mails every opted-in member -- so --verify deliberately stops at the 404->401 boundary and the first real send should be a founder-observed workflow_dispatch. <!-- evidence-open: the script is the TOOL, not the deliverable — the deliverable is a deployed function plus the secret set on both sides, and the newsletter still sends nothing; its own --status reads NOT DEPLOYED / secret ABSENT against a live project-scoped 200 -->
+[S345][ENG/P0] FOUNDER: run the member-newsletter deploy (one command). Re-probed S345 and both faults are STILL LIVE: --status against a project-scoped 200 reports project fjnpzjjyhnpmunfoycrp (reachable, 29 functions deployed) / function: NOT DEPLOYED / NEWSLETTER_SECRET (GitHub Actions): ABSENT, and gh secret list confirms the secret is absent while SUPABASE_ACCESS_TOKEN is present. So the credential path is OPEN and this is not a phantom blocker (CANON-019) -- --self-test passes 5/5. The agent path is blocked by the Claude Code sandbox permission classifier, which denied --deploy in S344 and again in S345; running the same script through a different shell would be working around the denial rather than clearing it, so it was not attempted. Founder: ! node scripts/deploy-member-newsletter.mjs --deploy then --secret then --verify (verify stops at the 404->401 boundary and mails nobody). The function has no dry-run, so the first real send should stay a founder-observed workflow_dispatch. This is also the sole remaining doctor red (sched-staleness, advisory). <!-- was: [S344][ENG/P0] FOUNDER: authorise the member-newsletter deploy -->
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 3. [VERIFY] The homepage hero is publishing CI jargon to strangers. The IGNIS chi…
-Final score: **86**
+Final score: **81**
 [S343][VOICE/P1] The homepage hero is publishing CI jargon to strangers. The IGNIS chip on / rendered *"The studio keeps resync after publisher race"* — a chore commit about a rebase collision — as the first sentence under the studio name. Same class as public_surface_fed_by_raw_git_leaks; the publicNote/publicNextStep overrides that fixed the sibling surfaces are not consulted by this chip. Found in the CANON-053 pixel review and deliberately left: the tree was frozen under a passing gate with two hash-bound receipts. See D-S343.5.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
@@ -142,18 +146,18 @@ Why it matters: Changes public vocabulary or navigation — requires founder sig
 
 ## Recommended Build Order
 
-1. ESCALATION: The Desk's cadence promise outruns its queue. Nothing has…
+1. 38 byte-checked generators are still outside the evidence graph. The …
 2. Post-push CI confirmation
-3. The silent cron verdict is fixture-proven only. check-scheduled-workf…
-4. Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-5. Make the game covers art-only; the tile owns all text. The direction …
-6. resync-derived.mjs does not cover every --checked derived artifact, a…
-7. The cover artwork still duplicates the tile's KICKER and TITLE, the s…
-8. <!-- evidence-open: config/intelligence-suite.json and journal/index.…
-9. <!-- evidence-open: the files named are the churning OUTPUTS and the …
-10. check-postbuild-ordering --check reports unmeasured in CI and always …
-11. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-12. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+3. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
+4. Make the game covers art-only; the tile owns all text. The direction …
+5. Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
+6. The cover artwork still duplicates the tile's KICKER and TITLE, the s…
+7. <!-- evidence-open: config/intelligence-suite.json and journal/index.…
+8. <!-- evidence-open: the files named are the churning OUTPUTS and the …
+9. check-postbuild-ordering --check reports unmeasured in CI and always …
+10. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
+11. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
+12. The release-ceremony receipt truncates a failure message at 500 chara…
 
 ## Best Immediate Move
 

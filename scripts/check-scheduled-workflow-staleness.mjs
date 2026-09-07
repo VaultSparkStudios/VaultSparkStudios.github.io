@@ -240,6 +240,12 @@ function runSelfTest() {
     'a never-observed cron is unmeasured — neither silent nor healthy');
   assert(c('dead-and-old').broken && !c('dead-and-old').silent, 'a dead cron is reported as dead, not also as silent');
 
+  // S345 — the silent verdict is exercised HERE and, as of this session, nowhere
+  // else: the live repo reports silent: 0. These fixtures are therefore the only
+  // proof the detector works, which is exactly why the run now declares that.
+  assert(c('silent-daily').silent && !c('silent-daily').broken,
+    'the silent verdict is fixture-proven: a silent cron is silent and not broken');
+
   console.log('check-scheduled-workflow-staleness self-test passed (18/18)');
 }
 
@@ -270,6 +276,23 @@ function main() {
   const unmeasured = verdicts.filter((v) => v.unmeasured);
   const unreachable = workflows.length - observed.length;
 
+  // S345 — declare which verdicts this RUN actually exercised against live data.
+  //
+  // The `silent` verdict (a cron that is not failing because it is not running)
+  // has always been proven by fixtures alone: no live cron has ever tripped it.
+  // That is not a defect — it is the healthy state — but it means the code path
+  // is untested in production, and `silent: 0` reads identically whether the
+  // detector works or is quietly broken. So the run reports its own corroboration
+  // rather than leaving a claim in a doc to rot: a 0 here means fixture-proven
+  // only, and says so, instead of being mistaken for a verified all-clear.
+  const liveCorroboration = {
+    broken: broken.length,
+    silent: silent.length,
+    unmeasured: unmeasured.length,
+  };
+  const fixtureOnly = Object.entries(liveCorroboration)
+    .filter(([, n]) => n === 0).map(([k]) => k);
+
   if (JSON_OUT) {
     console.log(JSON.stringify({
       ok: broken.length === 0 && silent.length === 0,
@@ -281,6 +304,10 @@ function main() {
       // scheduled run at all, which is unmeasured, not healthy.
       noData: unmeasured.map((v) => v.name),
       unreachable,
+      liveCorroboration,
+      // Verdict classes with no live instance in THIS run — correct today,
+      // exercised only by --self-test fixtures. Not a failure; a scope statement.
+      fixtureOnlyVerdicts: fixtureOnly,
     }));
     return broken.length === 0 && silent.length === 0 ? 0 : 1;
   }
@@ -293,6 +320,7 @@ function main() {
   if (broken.length === 0 && silent.length === 0) {
     console.log(`scheduled-workflow staleness ✓ (${verdicts.length} scheduled workflows, none red ≥${MIN_CONSECUTIVE} runs, none silent past cadence)${suffix ? ` · ${suffix}` : ''}`);
     if (unmeasured.length) console.log(`  unmeasured (no scheduled run observed): ${unmeasured.map((v) => v.name).join(', ')}`);
+    if (fixtureOnly.length) console.log(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
     return 0;
   }
   if (broken.length) {
@@ -305,6 +333,7 @@ function main() {
       console.error(`  - ${s.name}: last scheduled run ${s.ageHours}h ago, expected every ~${s.intervalHours}h (threshold ${s.silentThresholdHours}h)`);
     }
   }
+  if (fixtureOnly.length) console.error(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
   return 1;
 }
 

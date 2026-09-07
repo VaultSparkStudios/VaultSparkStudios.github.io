@@ -1,3 +1,18 @@
+## S345 A Repair Tool That Reported Clean Over a Subset It Could Not See (2026-09-07)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Additive only. `check-scheduled-workflow-staleness --json` gains `liveCorroboration` and `fixtureOnlyVerdicts`; every existing key, including the historically-named `noData`, is preserved. `resync-derived` gains flags (`--no-sweep`, `--sweep-repair`) and changes no output contract. `config/evidence-graph-coverage.json` moved 39 → 38 along its existing monotonic ratchet. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Public claim accuracy | 5 | No public surface changed this session, and the write-back says so plainly rather than dressing infrastructure repair as visitor-facing progress. |
+| Internal consistency | 5 | The sweep's generator set is read from `check-evidence-graph-coverage`'s own enumeration rather than a second private list, so the repairer and the ratchet cannot drift apart about what is covered — the precise failure mode (two readers, one truth) that this session's headline defect belongs to. |
+| Evidence integrity | 5 | The central claim was proven by **reproducing the original incident**, not by a green on the fixed tree: `api/intelligence-budget.json` was deliberately staled, the pre-fix path exits 0 reporting work done, the post-fix path exits 1 naming the drifter. Exit codes were read directly rather than through a pipe — the first reading was wrong for exactly that reason and is recorded in the SIL rather than quietly corrected. |
+| Credential status honesty | 3 | **Unchanged from S344 and still the worst reading here.** `check-secrets` reports `supabase.admin ✓ READY 2/2` for a key scoped to `ckwtolofoqzrqouqkmvs` while this site ships `fjnpzjjyhnpmunfoycrp`. Not fixed — the fix is a sibling repo's, carried by the S344 Ark cargo (CANON-018). This session did re-probe the *newsletter* credential independently rather than trusting the audit, which is how it confirmed the block is a permission and not a missing secret. |
+| Audience voice integrity | 4 | Unchanged from S344: the leak class is closed structurally, but surviving public sentences are still authored from commit subjects, so the register remains engineer-voice in places. No new public copy shipped this session. |
+| Completion-claim discipline | 5 | The newsletter is recorded everywhere as **not sending**, with the denial named as a permissions gap rather than a credential one. The Desk escalation is **kept open** despite the symptom clearing, because the cause is unmeasured. The 38 unmodeled generators are recorded as *made safe, not closed*, and the sweep is stated as unproven against a live publisher-race rebase — the situation it was built for. A `[S345][BUILD/P3]` row carries the remaining debt rather than leaving the item to read as finished. |
+
+**Net:** the standing truth risk is unchanged — the credential audit still reports READY for a key that cannot authenticate. What this session removed is a subtler one on the same theme: a tool whose true statements had an unstated scope. `0 derived artifact(s) affected` and `N artifact(s) rebuilt` were both accurate about the graph and silent about the 38 generators outside it, and that silence cost two sessions of hand-fixing. The class is now self-declaring in two places — the repairer names what it could not see, and the cron checker names which verdicts it never exercised.
+
 ## S344 A Guard That Could Not Tell Success From Silence, and a Filter That Had Never Fired (2026-09-07)
 
 | Dimension | Score | Evidence |

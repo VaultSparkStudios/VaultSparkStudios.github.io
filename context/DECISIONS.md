@@ -1572,3 +1572,87 @@ those gates it is.
 
 **Corollary:** when a computed-style reading disagrees with the screenshot, believe the
 screenshot.
+
+---
+
+## D-S345.1 — A repair tool must state the scope of its own claim, not just its result
+
+`resync-derived.mjs` walks the evidence graph to repair derived artifacts after a rebase.
+The graph models 29 of the 67 generators that `build:check` byte-checks. So for two
+sessions running, the tool printed `17 artifacts rebuilt + staged` — which reads as
+completeness — and CI then failed ten minutes later on `build-intelligence-budget`
+(S340, run `33702593208` step 185) and on `build-nervous-system` (S341). Both were fixed
+by hand. Both are still unmodeled today.
+
+The obvious fix is to model the other 38 nodes. **Rejected**, and the reasoning already
+lived in `check-evidence-graph-coverage.mjs`: modeling a node requires its real `sources`,
+and guessing them is strictly worse than omitting it — `resync-derived` would rebuild in a
+wrong topological order and the cascade checker would start demanding the wrong things of
+every cron. A confidently wrong graph is the exact failure this family of tools exists to
+prevent. The ratchet is deliberate and correct.
+
+**Decision:** close the other half instead. The debt was visible in a config file and
+nowhere else; it was never visible *at the moment of repair*, which is the only moment it
+costs anything. Every success exit in `main()` now routes through `finish()`, which runs
+the unmodeled generators' own `--check`. That is a **measurement, not a prediction**: a
+`--check` is read-only and needs no `sources` to be correct, so it sidesteps the exact
+thing the ratchet refuses to guess. A failure is not a theory about what a rebase might
+have touched — it is the artifact reporting that it no longer matches its inputs.
+
+Repair stays opt-in (`--sweep-repair`), guarded by the same world-acting-builder prefix
+test the graph path uses, because a repairer that blindly invokes 38 arbitrary builders is
+precisely the hazard the `sideEffecting` rule was written for. Default behaviour is to
+**fail, named** — converting a ten-minute remote CI red into an immediate local one.
+
+**Rule:** a tool that can only see part of its domain must report the boundary, not just
+the verdict. `0 affected` and `N rebuilt` were both true of the graph and silent about the
+38 generators outside it, and a true statement with an unstated scope is how this cost two
+sessions. The corollaries shipped with it: `--no-sweep` announces that coverage is
+unverified, `--dry-run` declares what its plan omits, and a structural self-test asserts
+that no bare `process.exit(0)` can ever bypass the sweep again — so a *future* exit path
+cannot silently reintroduce the blindness.
+
+Verified by reproducing the original incident: with `api/intelligence-budget.json` staled,
+the old path exits 0 saying `5 artifact(s) rebuilt + staged`; the new one exits 1 naming
+the drifter, and `--sweep-repair` exits 0 having rebuilt it. Exit codes were read directly
+rather than through a pipe — the first reading of them was `exit=0` because `$?` had
+reported `tail`'s status, not the tool's.
+
+## D-S345.2 — Where a verdict has no live instance, the run says so rather than a doc
+
+`check-scheduled-workflow-staleness` carries a `silent` verdict for a cron that is not
+failing because it is not *running*. Live measurement this session: `broken: 1` (the
+newsletter), `silent: 0`, `unmeasured: 0`. There is no real silent cron to pin it against,
+and disabling a live workflow to manufacture one would be fabricating evidence to pass a
+test.
+
+The item offered a second branch — "record it as fixture-proven". **Decision:** take it,
+but record it in the *run*, not in a document. A note in a doc rots and nobody re-reads it;
+the number is printed every time the gate executes.
+
+The problem being solved is that `silent: 0` reads identically whether the detector works
+or is quietly broken. The run now computes `liveCorroboration` per verdict class and
+reports `fixtureOnlyVerdicts` on the pass path, the fail path, and in `--json`, so an
+untested-in-production code path is a **declared** one. This distinguishes "no instance"
+from "verified all-clear" (CANON-031).
+
+**Rule:** a healthy zero and an unexercised zero look the same. When a detector's clean
+result is also evidence that it was never exercised, publish that alongside the result.
+
+## D-S345.3 — A blocker sentence is corrected, not carried
+
+The `[S344][DESK/P1]` escalation read "nothing has published since 2026-09-04" and
+"degraded to `periodic`". Re-probed at the start of this session: `daily · latest
+2026-09-07 · age 0d`, with 2 editions published. The sentence was true when written and
+false now.
+
+**Decision:** correct the text in place and keep the escalation open. Two things were
+deliberately *not* done: the row was not closed (2 editions against a 4-slot/day promise is
+a partial recovery, not a met promise), and recovery of the underlying queue-width
+constraint was not claimed — the radar cache is CI-only and absent from a local tree, so
+this session could not measure whether the queue widened or the day was simply lucky. The
+row now says exactly that.
+
+**Rule:** re-probe a carried blocker before repeating it. Carrying a stale sentence forward
+spends founder attention on a problem that may have already moved, and — worse — makes the
+board's other claims harder to trust.

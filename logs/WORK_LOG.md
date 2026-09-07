@@ -1245,3 +1245,88 @@ and a computed-style walk for the effective background that bottomed out at whit
 theme — agreeing with the working dark theme while giving the broken light theme a
 comfortable pass. Only sampling painted pixels out of an element screenshot produced
 numbers that matched the images.
+
+---
+
+## Session 345 — 2026-09-07 — a repair tool that reported clean over a subset it could not see
+
+**Arc:** `/arc` under a founder directive authorising a direct push to `main` and a full deploy.
+
+**Triage.** Not cut off: clean tree, no lock, `writeback-currency` ✓ (2 substantive commits, oldest
+11.0h — inside the window). 32 commits behind `origin/main`, all cron churn; rebased clean.
+
+### What shipped
+
+**1 · `resync-derived.mjs` reported clean over a subset it could not see. (D-S345.1)**
+
+The tool that repairs derived artifacts after a rebase walks an evidence graph modeling **29 of the
+67 generators `build:check` byte-checks**. It printed `17 artifacts rebuilt + staged` — which reads
+as completeness — and CI then failed ten minutes later on an artifact outside the graph:
+`build-intelligence-budget` in S340 (run `33702593208`, step 185) and `build-nervous-system` in
+S341. Both were fixed by hand. Both are still unmodeled today. The item had been open five sessions.
+
+The item asked for the graph to be widened to cover everything `build:check` gates. **Refused**, on
+the reasoning already written into `check-evidence-graph-coverage.mjs`: modeling a node requires its
+real `sources`, and guessing them makes `resync-derived` rebuild in a wrong topological order and
+the cascade checker demand the wrong things of every cron. A confidently wrong graph is the exact
+failure this family of tools exists to prevent — which is why the coverage debt is a deliberate,
+monotonic, *visible* ratchet and not an oversight.
+
+So the fix ran at the other end. The debt was visible in a config file and nowhere else — never at
+the moment of repair, which is the only moment it costs anything. Every success exit in `main()` now
+routes through `finish()`, which runs the **unmodeled** generators' own `--check`. That is a
+measurement rather than a prediction: `--check` is read-only and needs no `sources` to be correct,
+so it sidesteps precisely the information the ratchet withholds. A failure is not a theory about
+what a rebase might have touched — it is the artifact reporting that it no longer matches its inputs.
+
+- Default: **fail, named** (exit 1) — a ten-minute remote CI red becomes an immediate local one.
+- `--sweep-repair`: opt-in rebuild, guarded by the same world-acting-builder prefix test the graph
+  path uses, so the repairer can never invoke a `deploy-`/`publish-`/`promote-`/`send-` script to
+  make a file look right after a rebase.
+- `--no-sweep` announces that coverage is unverified; `--dry-run` declares what its plan omits.
+
+**Verified by reproducing the original incident**, not by a green on the fixed tree. With
+`api/intelligence-budget.json` staled: old path exit **0**, `5 artifact(s) rebuilt + staged`; new
+path exit **1** naming `build-intelligence-budget`; `--sweep-repair` exit **0** having rebuilt it.
+Self-test 16/16, including a *structural* assertion that no bare `process.exit(0)` in `main()` can
+bypass the sweep — so a future exit path cannot silently reintroduce the blindness, which is how
+this survived two sessions. Coverage ratchet lowered 39 → 38.
+
+**2 · A prerequisite nothing had ever tripped.** `check-evidence-graph-coverage.mjs` ran its own
+ratchet on import (`else run()` at module scope, with a `process.exit`). Nothing had imported it
+before, so nothing had noticed. Fixed with the repo's established `isDirect` idiom; direct
+invocation and `--self-test` (7/7) unchanged, import now silent.
+
+**3 · An alarm whose clean result was also evidence it had never been exercised. (D-S345.2)**
+
+`check-scheduled-workflow-staleness` carries a `silent` verdict — a cron that is not failing because
+it is not *running* — proven by fixtures alone. Measured live: `broken: 1` (the newsletter),
+`silent: 0`, `unmeasured: 0`. There is no real silent cron to pin it against, and disabling a live
+workflow to manufacture one would be fabricating evidence to pass a test. The problem is that
+`silent: 0` reads identically whether the detector works or is quietly broken. The run now computes
+`liveCorroboration` per verdict class and prints `fixtureOnlyVerdicts` on the pass path, the fail
+path and in `--json` — recorded in the *run*, not in a document that rots. Self-test 18/18.
+
+**4 · A carried blocker had expired. (D-S345.3)** `[DESK/P1]` read "nothing has published since
+2026-09-04" and "degraded to `periodic`". Re-probed: `daily · latest 2026-09-07 · age 0d`, 2 editions
+published. Corrected in place and **kept open** — 2 editions against a 4-slot/day promise is a
+partial recovery, and the queue-width cause is unmeasured locally because the radar cache is CI-only.
+
+### What did not move
+
+The **member newsletter** deploy was denied by the Claude Code sandbox permission classifier for the
+second session running. Re-probed rather than assumed: `--status` reports the project reachable with
+29 functions and this one absent, `NEWSLETTER_SECRET` absent from `gh secret list`,
+`SUPABASE_ACCESS_TOKEN` present, tooling 5/5. So the credential path is open and this is a
+permissions gap, not a phantom blocker (CANON-019). Running the same script through a different
+shell would be working around the denial rather than clearing it, so it was not attempted.
+Founder: `node scripts/deploy-member-newsletter.mjs --deploy`, then `--secret`, then `--verify`.
+
+### Mistake worth recording
+
+Verifying the negative control I read the exit code through `| tail` and reported `exit=0` for a run
+that had exited **1**. My own notes say never to read a verdict through a pipe. It was caught only
+because the printed output contradicted the code — luck, not method, and the same shape as the
+defect I spent the session fixing: a true-looking result whose scope nobody stated.
+
+**SIL:** 984/1000 (v3.0) · velocity −2 · debt ↓ · doctor blockingFailing 0.
