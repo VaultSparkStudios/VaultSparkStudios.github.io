@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T18:24:34.906Z",
+  "generatedAt": "2026-09-07T18:33:00.710Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 9,
-    "healthy": 9,
-    "unknown": 5,
+    "observed": 8,
+    "healthy": 8,
+    "unknown": 6,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-07T18:22:14Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-07T18:32:02Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34151343811",
       "headSha": "a29785579361f6e4b19747158d39e00edd660067",
       "event": "push"
@@ -56,7 +56,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-09-07T18:22:14Z",
+      "updatedAt": "2026-09-07T18:29:01Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34151343857",
       "headSha": "a29785579361f6e4b19747158d39e00edd660067",
       "event": "push"
@@ -83,7 +83,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 9,
+      "ageHours": 9.14,
       "staleAfterHours": 48
     },
     {
@@ -96,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 11.36,
+      "ageHours": 11.5,
       "staleAfterHours": 48
     },
     {
@@ -120,7 +120,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.93,
+      "ageHours": 11.08,
       "staleAfterHours": 48
     },
     {
@@ -159,14 +159,15 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-07T12:37:21Z",
+      "lastUpdatedAt": "2026-09-07T18:26:25Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.79,
+      "ageHours": 0.11,
       "staleAfterHours": 48
     },
     {
@@ -180,7 +181,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.54,
+      "ageHours": 5.68,
       "staleAfterHours": 48
     },
     {
@@ -195,20 +196,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.88,
+      "ageHours": 2.02,
       "staleAfterHours": 48
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-07T06:54:57Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 11.49,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -223,7 +222,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.18,
+      "ageHours": 0.32,
       "staleAfterHours": 48
     },
     {
@@ -236,7 +235,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.26,
+      "ageHours": 5.4,
       "staleAfterHours": 48
     },
     {
