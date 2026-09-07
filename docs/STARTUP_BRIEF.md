@@ -67,7 +67,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -82,15 +82,15 @@
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         47138 FORGE  ·  13d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
 ║  ✓  Entropy       0.197  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  3d old (2026-09-04)                            ║
+║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7345 <   ║
 ╚════════════════════════════════════════════════════════════════╝
 
