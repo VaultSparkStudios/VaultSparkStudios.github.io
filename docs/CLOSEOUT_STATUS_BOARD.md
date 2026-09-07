@@ -1,48 +1,47 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-09-03 (Session 340 closeout) -->
+<!-- generated-at: 2026-09-07 (Session 345 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S340 ═══════╗
-║  Date: 2026-09-03  ·  SIL: 994/1000  ·  Velocity: 3 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S345 ═══════╗
+║  Date: 2026-09-07  ·  SIL: 984/1000  ·  Velocity: -2 down        ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **The E2E Test Suite had been dead on every push for more th  ║
-║  ✓ **The root cause was an asymmetry S338 fixed around rather t  ║
-║  ✓ **Fixed at the root and proven locally end to end.** The smo  ║
-║  ✓ **The gate built in S338 for exactly this class stayed green  ║
-║  ✓ **The postbuild ordering question — carried and deferred twi  ║
+║  ✓ **The post-rebase repair tool reported clean over a subset i  ║
+║  ✓ **An alarm whose clean result was also evidence it had never  ║
+║  ✓ **A carried blocker had expired, and was corrected rather th  ║
+║  ✓ **The newsletter did not move.** Both faults re-probed and l  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
-║    Dev Health         100  ██████████                            ║
-║    Alignment          99   ██████████                            ║
-║    Momentum           100  ██████████                            ║
-║    Engagement         97   ██████████                            ║
-║    Process Qual       100  ██████████                            ║
+╔══ SCORES · SIL 984/1000 ═══════════════════════════════════════╗
+║    Dev Health         99   ██████████                            ║
+║    Alignment          97   ██████████                            ║
+║    Momentum           98   ██████████                            ║
+║    Engagement         96   ██████████                            ║
+║    Process Qual       98   ██████████                            ║
 ║    Coherence          100  ██████████                            ║
 ║    Security           99   ██████████                            ║
 ║    Ecosystem          99   ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         100  ██████████                            ║
+║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 101 files  ·  M:96 A:0 D:0 ?:5                         ║
-║  Ahead: 0  ·  Behind: 1                                          ║
+║  Changes: 24 files  ·  M:24 A:0 D:0 ?:0                          ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -50,11 +49,11 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/16                                            ║
+║  Doctor:        13/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         381/381                                          ║
+║  Tests:         390/390                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         9d ago                                           ║
+║  IGNIS:         14d ago                                          ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

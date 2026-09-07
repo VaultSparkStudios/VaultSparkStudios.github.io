@@ -37,12 +37,14 @@
     {
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
-      "status": "green"
+      "status": "green",
+      "note": "S345 full production deploy verified: pages-deploy run 34153075898 promoted via the SCOPED path (promotable=true, scoped-disjoint) and production serves HEAD 998243a3f76643c70ece998f7f75c748aa0d1bf2 exactly; Worker run 34153477094 passed the canonical release ceremony and the post-deploy liveness gate with no rollback. Live headers confirm strict CSP, HSTS preload and TT report-only; / /news/ /status/ /membership/ /evidence/ all 200."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
-      "status": "yellow"
+      "status": "green",
+      "note": "S345 operator overlay refreshed staging ahead of promotion (CANON-007): 403 overlays, 26 safe removals, identity untouched, exact-byte verified; parity staging-ahead then promoted."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -215,7 +217,7 @@
       {
         "id": "deploy-currency-live",
         "pass": true,
-        "warn": true,
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       }
@@ -247,6 +249,6 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f87a74b16f354bc01c239083",
-  "testsSourceFingerprint": "063610f9ab6cf88e6b6dfc7e",
+  "testsSourceFingerprint": "6ac9cea434cfcb177fe970a5",
   "lastSessionSummary": "S345 -- resync-derived, the post-rebase repair tool, reported clean over a subset it could not see: its graph models 29 of 67 byte-checked generators, so it printed completeness while CI failed ten minutes later on build-intelligence-budget (S340) and build-nervous-system (S341). Modeling the other 38 was correctly refused -- guessing sources yields a confidently wrong graph -- so the fix runs the unmodeled generators own --check instead, a measurement needing none of the information the ratchet withholds. Default fails named (verified by reproducing the exact S340 incident: old path exit 0, new path exit 1), repair is opt-in and guarded, and a structural self-test stops any future exit path bypassing it. Also gave the cron staleness checker liveCorroboration so a fixture-only silent verdict declares itself. Newsletter deploy denied by the sandbox classifier a second time; Desk blocker sentence corrected rather than carried."
 }
