@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T19:01:29.857Z",
+  "generatedAt": "2026-09-07T19:28:39.722Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,32 +33,32 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-07T18:55:40Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34152995903",
-      "headSha": "998243a3f76643c70ece998f7f75c748aa0d1bf2",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-07T19:26:26Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34155583327",
+      "headSha": "2b79d924c988f4dfbfe2409da7c4155ae1e3de13",
       "event": "push"
     },
     {
       "name": "Accessibility Audit",
-      "status": "failure",
+      "status": "success",
       "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-07T18:48:23Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34152995842",
-      "headSha": "998243a3f76643c70ece998f7f75c748aa0d1bf2",
+      "conclusion": "success",
+      "updatedAt": "2026-09-07T19:27:58Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34155583404",
+      "headSha": "2b79d924c988f4dfbfe2409da7c4155ae1e3de13",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-07T19:00:49Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34152996022",
-      "headSha": "998243a3f76643c70ece998f7f75c748aa0d1bf2",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-07T19:26:26Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34155583355",
+      "headSha": "2b79d924c988f4dfbfe2409da7c4155ae1e3de13",
       "event": "push"
     },
     {
@@ -155,13 +155,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-07T18:26:25Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.58,
+      "ageHours": 1.04,
       "staleAfterHours": 48
     },
     {
@@ -175,7 +174,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.25,
+      "ageHours": 0.7,
       "staleAfterHours": 48
     },
     {
@@ -183,13 +182,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-07T16:31:35Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.5,
+      "ageHours": 2.95,
       "staleAfterHours": 48
     },
     {
@@ -206,7 +204,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-07T18:39:16Z",
+      "lastUpdatedAt": "2026-09-07T19:09:24Z",
       "recentConclusions": [
         "success",
         "success",
@@ -215,7 +213,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.37,
+      "ageHours": 0.32,
       "staleAfterHours": 48
     },
     {
@@ -228,7 +226,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.87,
+      "ageHours": 6.33,
       "staleAfterHours": 48
     },
     {
