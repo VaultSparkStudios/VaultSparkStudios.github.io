@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-07T17:48:29.084Z",
+  "capturedAt": "2026-09-08T03:23:28.450Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "be447fd37f81a9d2381fc0648d26d3af76391a21fa0ad06a31f7280e4044ffd7",
+    "sha256": "8dff0ff4274dd963a85270fcb2b301a906d63a96e1ad9689aaa507d0169e8597",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -54,6 +54,7 @@
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
       "status/index.html",
+      "studio-hub/src/styles/hub.css",
       "tests/attention-surfaces.spec.js",
       "vault-member/portal-auth.js",
       "vault-member/portal-dashboard.js",
@@ -131,7 +132,7 @@
       },
       {
         "path": "assets/style.css",
-        "sha256": "bf10f7005d7087994337c21faad551103301ee3e39b058898c5783dcf730a75d"
+        "sha256": "f52f86adc5200b648658da7e814f629b9c519e0051e057523aa6cde62eb0e2be"
       },
       {
         "path": "assets/vault-genome-strip.js",
@@ -167,7 +168,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "97a9790e58177f7d709cfba1a0fb8b4204ea61a15c83990e2a4f398700810430"
+        "sha256": "c7dfdd57c56b5e0e4cc1fdd92926c024637a2adf0b94e2f142371a00f36e3b1b"
       },
       {
         "path": "membership/index.html",
@@ -212,6 +213,10 @@
       {
         "path": "status/index.html",
         "sha256": "19befbb8c23c713f393349e4badb69fe9de406654deb4a96c1e41e01d2f053cc"
+      },
+      {
+        "path": "studio-hub/src/styles/hub.css",
+        "sha256": "19480a8ccb697545b9ad94d8b6e5b82154200bf848b14563b75949c185319aed"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -287,7 +292,8 @@
     },
     "reviewer": "claude-code S345",
     "findings": [
-      "No UI/UX change shipped this session (script and gate work only), so the CANON-053 working loop was not triggered; captures were re-taken because the reseal rebinds the receipt. Manually inspected 2 of 84: status--high-contrast--mobile (nav, service rows and the operational pill all legible on the dark ground) and status--light--desktop (dark text on cream; the S344 darkened gold reads correctly on the active Status pill and the Join The Vault button). Verified the Supabase Database service label against source after an uncertain pixel read - no typo. No defects found; the remaining 82 are hash-bound but not individually reviewed."
+      "No UI/UX change shipped this session (script and gate work only), so the CANON-053 working loop was not triggered; captures were re-taken because the reseal rebinds the receipt. Manually inspected 2 of 84: status--high-contrast--mobile (nav, service rows and the operational pill all legible on the dark ground) and status--light--desktop (dark text on cream; the S344 darkened gold reads correctly on the active Status pill and the Join The Vault button). Verified the Supabase Database service label against source after an uncertain pixel read - no typo. No defects found; the remaining 82 are hash-bound but not individually reviewed.",
+      "CANON-041 fix (routine/canon-041-dvh-taptarget): Two surfaces manually reviewed at mobile 390x844. (1) assets/style.css — .mobile-nav-github tap target raised 40px→44px. Dark and light themes captured (home--dark--mobile--nav-open.png, home--light--mobile--nav-open.png, stored as supplemental evidence). Drawer is scrollable (overflow-y:auto confirmed), nav links legible, Sign In/Membership/Join CTA buttons correctly sized, theme picker accessible, ×-close button reachable. No visual defects found in either theme. (2) studio-hub/src/styles/hub.css — height:100vh→100dvh on position:fixed mobile sidebar. On Chromium, 100dvh and 100vh render identically (no dynamic chrome in headless); the fix only manifests on iOS Safari where the visible viewport shrinks when the address bar is visible. Source-bound in this receipt. Source binding updated to include studio-hub/src/styles/hub.css and the new assets/style.css SHA. Reviewer: claude-code S349."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": null,
