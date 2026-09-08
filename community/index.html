@@ -817,7 +817,7 @@
           var recentEl=document.getElementById('recent-members-row');
           if(recentEl&&data.length){
             var byDate=data.slice().sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);});
-            var recent=byDate.slice(0,8);
+            var recent=byDate.slice(0,8).filter(function(m){return m.username;});
             recentEl.innerHTML=recent.map(function(m){
               var ri=getRankInfo(m.points);
               var initials=m.username.charAt(0).toUpperCase();
