@@ -798,6 +798,7 @@
           var topTier=RANK_TIERS[RANK_TIERS.length-1];
           setText('stat-sparked',String(data.filter(function(m){return getRankInfo(m.points||0)===topTier;}).length));
 
+          data=data.filter(function(m){return !!m.username;});
           renderRankDist(data,total);
           renderPodium(data);
 
