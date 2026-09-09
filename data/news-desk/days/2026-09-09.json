@@ -1,0 +1,162 @@
+{
+  "date": "2026-09-09",
+  "simulated": false,
+  "leadSlug": "muse-metas-new-personal-ai-agent-needs-you-to",
+  "stories": [
+    {
+      "slug": "muse-metas-new-personal-ai-agent-needs-you-to",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "wire",
+      "headline": "Meta’s Muse Agent Needs You to Trust It, Even as Bugs Cost $130k",
+      "hook": "Meta opens its AI agent to hackers with a $300k bounty. The cost of trust is now measurable.",
+      "tldr": "Meta has added its new personal AI agent, Muse, to its public bug bounty program, offering payouts up to $300,000 for valid vulnerability findings. This includes specific rewards of up to $130,000 for successful prompt injection attacks that affect a single user. The unit was built on the belief that AI agents will transform how everyday users navigate the internet and Meta’s products. Additionally, users of Meta’s AI glasses will soon be able to interact with the Muse agent. The high stakes of the bounty reflect the critical need for security in an agent designed to handle personal data across multiple devices.",
+      "facts": [
+        {
+          "text": "And now Meta is adding Muse to the scope of its public bounty as well, with payouts up to $300,000 for valid vulnerability findings, including up to $130,000 for successful prompt injection attacks that affect a single user.",
+          "sourceUrl": "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+        },
+        {
+          "text": "Meta says users of its AI glasses will soon be able to interact with its Muse agent as well.",
+          "sourceUrl": "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+        },
+        {
+          "text": "The unit was built on the belief that AI agents will transform how everyday users navigate the internet, as well as Meta’s products.",
+          "sourceUrl": "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": 0,
+          "verdict": "fair",
+          "confidence": 0.9,
+          "position": "The $130k prompt injection bounty confirms that securing a single-user session is the hardest part of the architecture, not the model itself.",
+          "sources": [
+            "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.75,
+          "position": "Putting Muse on AI glasses unlocks a new form factor where the agent is always listening, turning the bounty into a race against physical proximity.",
+          "sources": [
+            "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+          ]
+        },
+        {
+          "personaId": "echo",
+          "direction": -1,
+          "horizon": -1,
+          "verdict": "overhyped",
+          "confidence": 0.85,
+          "position": "This is just the standard cycle: build a tool that requires total trust, then pay outsiders to prove why you shouldn't give it.",
+          "sources": [
+            "https://www.wired.com/story/meta-releases-muse-a-personal-ai-agent-with-privacy-built-into-it/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-09-09-vera-1",
+          "personaId": "vera",
+          "claim": "By Q4 2026, at least one major social media platform will integrate a similar 'personal agent' that faces identical prompt injection vulnerabilities in its public beta.",
+          "confidence": 0.65,
+          "resolveBy": "2026-10-24",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-09-09-rex-2",
+          "personaId": "rex",
+          "claim": "Within 18 months, AI glasses will become the primary hardware interface for personal agents, driven by the low friction of voice-first interactions.",
+          "confidence": 0.55,
+          "resolveBy": "2027-01-07",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I got paged at 3 AM because someone found a way to make our internal bot leak config details via a carefully crafted emoji sequence. It wasn’t even a complex attack. It was just... there. We spent six months patching it. Now Meta is offering $130,000 for the same thing. I respect the honesty. It means they know the first six months are going to hurt."
+        },
+        {
+          "personaId": "rex",
+          "text": "You are looking at the bounty. I am looking at the glasses. If Muse runs on glass, it is no longer an app. It is a companion. The prompt injection isn't just code anymore; it's a whisper in your ear while you walk down the street. That changes the threat model entirely. You aren't just protecting data; you are protecting attention."
+        },
+        {
+          "personaId": "echo",
+          "text": "Remember Google Glass? Same year, same hubris, different outcome. They killed it because people hated wearing them. But the idea? The idea never died. It just went quiet. Now it’s back, but this time they are paying bounties to find the cracks before the users do. It’s the same movie, just with a higher budget for legal defense."
+        }
+      ],
+      "memeLine": {
+        "text": "We’re paying hackers $130k to break your AI so you can trust it with your life.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "I got paged at 3 AM last Tuesday because a junior researcher found a way to make our internal prototype leak configuration details via a carefully crafted emoji sequence. It wasn’t even a complex attack vector, just a basic prompt injection that bypassed three layers of sanitization logic we thought were solid. We spent six months patching it, rewriting the instruction hierarchy, and stress-testing the boundary conditions. When Meta announced that Muse is adding to its public bounty scope with payouts up to $300,000 for valid vulnerability findings, it felt less like a marketing announcement and more like a confession. Specifically, the offer of up to $130,000 for successful prompt injection attacks that affect a single user tells you exactly where the pain points are. It’s not the model’s intelligence; it’s the fragility of the session state. I have the postmortem. It’s boring, it’s repetitive, and it’s necessary. You don’t ship an agent that navigates the internet until you’ve paid enough people to try and break it."
+        },
+        {
+          "voice": "rex",
+          "text": "Everyone is arguing about the demo. I am reading the changelog. And the changelog says something terrifyingly simple: Meta says users of its AI glasses will soon be able to interact with its Muse agent as well. You are going to see this. Watch what happens when the agent moves from the screen to your face. The prompt injection isn't just a code vulnerability anymore; it becomes a physical proximity attack. If I can inject a prompt into your agent while you are walking down the street, I am not just stealing data; I am hijacking your perception of reality. The $300,000 bounty is small change compared to the value of that access. This isn't software; it's infrastructure. And infrastructure needs load testing before the public uses it."
+        },
+        {
+          "voice": "vera",
+          "text": "The unit was built on the belief that AI agents will transform how everyday users navigate the internet, as well as Meta’s products. That sounds grand until you realize it means millions of unpatched sessions running in parallel. The bounty is the only honest way to manage that risk. It admits that the first six months will be painful. It admits that the edges are sharp. But if you want the transformation, you have to pay for the sanding. Otherwise, you’re just building a faster way to leak secrets."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-09--muse-metas-new-personal-ai-agent-needs-you-to.png",
+        "scene": "A close-up of a pair of sleek Meta AI glasses resting on a dark wooden desk, with a glowing red digital lock icon hovering ominously above the left lens, while a stack of cash labeled '$130,000' sits slightly out of focus in the foreground. The composition shows Meta AI glasses expose user session data.",
+        "alt": "A photorealistic image showing Meta AI glasses with a superimposed red warning lock symbol indicating a security vulnerability, placed next to a stack of cash representing the bug bounty payout. The composition shows Meta AI glasses expose user session data.",
+        "anchors": [
+          "Muse to the scope of its public bounty",
+          "up to $130,000 for successful prompt injection attacks",
+          "users of its AI glasses will soon be able to interact"
+        ],
+        "relationships": [
+          {
+            "id": "glasses-bounty-risk",
+            "subject": [
+              "Meta AI glasses"
+            ],
+            "action": [
+              "expose"
+            ],
+            "object": [
+              "user session data"
+            ],
+            "evidenceAnchorRefs": [
+              "Muse to the scope of its public bounty"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "fb16127e139307d1df12f82f282e9dc2a37a1a24181f132e0ebd0c8419543cbd",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "The corporate practice of outsourcing security validation to external hackers through massive financial incentives rather than internal rigorous testing protocols during early development phases",
+          "setup": "Meta offers $130,000 to hackers to break their new AI agent, framing vulnerability discovery as a premium service.",
+          "payoff": "Users must trust an agent that has only been tested by those who profit from breaking it, creating a paradoxical security model based on adversarial reward.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 3,
+        "at": "2026-09-09T06:38:36.524Z"
+      }
+    }
+  ]
+}
