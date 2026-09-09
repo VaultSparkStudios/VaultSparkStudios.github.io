@@ -19,7 +19,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S347) - WHAT SHIPPED ══════════════════════════╗
-║  S347 recovered and shipped all 23 audit items. The complete 47  ║
+║  S347 recovered and shipped all 23 audit items. Checkpoint 1720  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -67,7 +67,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 272,000 tok  ·  codex  ·  no ledger/turn/transcript    ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -89,8 +89,8 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  5d old (2026-09-04)                            ║
-║  ⛔  Deploy gaps   production 138 commit(s) behind · 2.1d — past  ║
-║  ⛔  Doctor        12/16 (75%)  ·  3 failing                      ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
 ║  Open current tasks 38 / Human-action entries 8                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7345 <   ║

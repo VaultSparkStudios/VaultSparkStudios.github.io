@@ -12,11 +12,10 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S347 recovered candidate is locally verified: 23 audit items, 477 build checks, and 168 rendered route/state captures. Commit and complete staging-first release.",
+  "currentFocus": "S347 recovered full arc is verified and released: 23 audit items, 477 build checks, 215 mobile cells, 168 rendered route/state captures, and live content currency.",
   "publicNote": "Navigation, Search, community rendering, News controls, evidence integrity, and art-only covers passed final local verification across all themes and desktop/mobile.",
-  "nextMilestone": "Push the recover S347 closeout boundary, verify staging and production currency, then begin S348 from the performance follow-ups.",
+  "nextMilestone": "Begin S348 from the Changelog hydration and repeatable performance-sampling follow-ups, then exhaust the refreshed Unified Genius List.",
   "blockers": [
-    "Production remains stale until the recovered S347 commit is pushed and the staging-first release path completes.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
     "Human signup acceptance, newsletter deployment/arming, and the Desk cadence choice remain unobserved or undecided."
   ],
@@ -99,13 +98,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-09",
-    "passing": 12,
+    "passing": 13,
     "warning": 1,
-    "failing": 3,
-    "blockingFailing": 1,
+    "failing": 2,
+    "blockingFailing": 0,
     "advisoryFailing": 2,
     "total": 16,
-    "score": 75,
+    "score": 81,
     "checks": [
       {
         "id": "manifest",
@@ -214,10 +213,10 @@
       },
       {
         "id": "deploy-currency-live",
-        "pass": false,
-        "warn": false,
+        "pass": true,
+        "warn": true,
         "driftClass": "local-broken",
-        "blocking": true
+        "blocking": false
       }
     ]
   },
@@ -233,7 +232,7 @@
   "testsLastRun": "2026-09-09",
   "testsLabel": "measured build:check steps",
   "publicNextStep": "Promote the verified candidate through staging, then measure Changelog hydration and repeatable performance distributions.",
-  "doctorBlockingFailing": 1,
+  "doctorBlockingFailing": 0,
   "lastAgent": "codex",
   "mobileParity": true,
   "mobileParityAttestedAt": "2026-09-09",
@@ -248,5 +247,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f87a74b16f354bc01c239083",
   "testsSourceFingerprint": "3c56c8a2923cbf97c9affeb0",
-  "lastSessionSummary": "S347 recovered and shipped all 23 audit items. The complete 477-step gate and 84/84 hash-bound normal visual captures passed, with 84 supplemental touched-state captures; release currency remains pending."
+  "lastSessionSummary": "S347 recovered and shipped all 23 audit items. Checkpoint 172073cb7, 477/477 build gate, 215/215 mobile cells, 84/84 reviewed normal captures plus 84 supplemental states, staging receipt bb5016b2a85891bf778e4f87, production run 34412238486, and Doctor blockingFailing 0."
 }

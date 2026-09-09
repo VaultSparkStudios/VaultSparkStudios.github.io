@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **986/1000**
 - CI health: **check gh run list**
-- Current focus: S347 recovered candidate is locally verified: 23 audit items, 477 build checks, and 168 rendered route/state captures. Commit and complete staging-first release.
+- Current focus: S347 recovered full arc is verified and released: 23 audit items, 477 build checks, 215 mobile cells, 168 rendered route/state captures, and live content currency.
 
 ## Strategic Read
 

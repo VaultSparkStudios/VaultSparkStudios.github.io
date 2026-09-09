@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T10:31:43.458Z",
+  "generatedAt": "2026-09-09T22:26:18.508Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,7 +10,7 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1212
+      "durationMs": 341
     },
     {
       "id": "redirect-readiness",
@@ -24,13 +24,13 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 537
+      "durationMs": 101
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 56988
+      "durationMs": 49659
     },
     {
       "id": "staging-browser-receipt",
@@ -53,13 +53,13 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 89122
+      "durationMs": 84566
     },
     {
       "id": "attention-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 2,
       "passed": 15,
       "expected": 15,
       "skipped": 0,
@@ -70,7 +70,7 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 503
+      "durationMs": 98
     },
     {
       "id": "promotion-ready",
@@ -79,7 +79,8 @@
       "durationMs": 2,
       "releaseState": "hold",
       "reasonCodes": [
-        "real-provider-e2e-pending"
+        "real-provider-e2e-pending",
+        "supabase-control-plane-partial"
       ],
       "promotionMode": "scoped",
       "scopeReason": "scoped-disjoint",
@@ -95,22 +96,22 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2336,
+      "durationMs": 1153,
       "blockingFailing": 1,
       "exemptedBlocking": 1,
       "reason": "expected-pre-deploy-staleness",
-      "stagingReceiptId": "3822cf612d7f040cd6feab5a",
-      "stagingBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
-      "stagingArtifactRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
-      "stagingBrowserGeneratedAt": "2026-08-28T10:30:11.231Z",
-      "stagingAttentionGeneratedAt": "2026-08-28T10:31:40.605Z",
-      "observedDate": "2026-08-28"
+      "stagingReceiptId": "bb5016b2a85891bf778e4f87",
+      "stagingBuildSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
+      "stagingArtifactRoot": "a534d8092c680e15b22848cc1042e33eaa33b9674cf563cbcdf4f9bf4bac52f7",
+      "stagingBrowserGeneratedAt": "2026-09-09T22:24:52.676Z",
+      "stagingAttentionGeneratedAt": "2026-09-09T22:26:17.229Z",
+      "observedDate": "2026-09-09"
     }
   ],
-  "evidenceSha256": "3c3af79fa278514f36f5ad78fcd16da7a7f193b5492e4b62c0920c950017a6bd",
-  "contractSha256": "af79ba4cbc5b36cb26d944da2b784dd67a59321757256d49bf744bc07f10d8ed",
+  "evidenceSha256": "4417f0ad869cd55cad952253ba59ccf9dae2713ac992e423427d14cebb7dfad3",
+  "contractSha256": "d04e31f5d5c5b19f94793cf81ed44727a055c0e0639ff68b108253ef075b3408",
   "chain": {
-    "previousReceiptSha256": "69c5de459623af943f15fe79680692f762e74334d33fb01c241d563805627900"
+    "previousReceiptSha256": "51d200d8247d0c82ebf6ee8dbbd0c2520240ceecdc0f0a8e1f2afff464b84019"
   },
   "privacy": {
     "stdoutRetained": false,

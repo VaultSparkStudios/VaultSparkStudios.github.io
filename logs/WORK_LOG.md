@@ -1352,3 +1352,7 @@ Finished all 23 audit items and their finite innovation reserve. The complete bu
 The performance lab found a preview-only duplicate transfer: preloaded fingerprinted shell assets were served `no-store`. Added immutable caching only for generated shell assets, kept HTML/unhashed assets uncached, and pinned the contract with a live child-server test. Fresh six-route reports preserve the remaining simulated LCP/TBT misses as documented exceptions. Doctor before release has one blocker, production staleness, which is expected to clear only after the recovery commit and staging-first promotion.
 
 **SIL:** 986/1000 (v3.0) · velocity 23 · debt ↓ · Doctor blockingFailing 1 before release.
+
+### S347 release addendum
+
+Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner staging (6,490 files; rollback `20260909222156`; attested receipt `bb5016b2a85891bf778e4f87`; lineage depth 59), and passed the canonical ten-step release ceremony. Production content promotion completed in GitHub Actions run `34412238486` with content-purity, reference, capability-slice, liveness, discovery, and exact News gates green. Live deploy currency is `content-current` with matched shell parity; Doctor now reports 13 pass, 1 warning, 2 advisory failures, and `blockingFailing: 0`.

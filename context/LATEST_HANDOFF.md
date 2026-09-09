@@ -1,13 +1,13 @@
 # Latest Handoff — VaultSparkStudios.github.io
 ## Where We Left Off — S347 recovered full arc · 2026-09-09
 
-**Intent achieved locally.** Phase 0 proved S346 was already committed/pushed and S347 had died during final verification with all 23 audit items uncommitted. The recovery validated 96 JSON versions plus 501 JSONL records, found no half-written files or confirmed debris, and confirmed `~/.claude.json` is valid. All S347 work remains one candidate pending the recovery closeout commit.
+**Intent achieved and released.** Phase 0 proved S346 was already committed/pushed and S347 had died during final verification with all 23 audit items uncommitted. The recovery validated 96 JSON versions plus 501 JSONL records, found no half-written files or confirmed debris, and confirmed `~/.claude.json` is valid. The recovered boundary is committed and pushed as `172073cb7` (`recover S347 closeout`).
 
 **Verified candidate:** all 23 audit items are marked shipped; `npm run build:check` completed 477/477. CANON-053 is hash-bound and manually reviewed for 84/84 normal captures (six routes × seven themes × desktop/mobile), with 84 additional state captures covering Search, open navigation, art-only covers, reader signals, and Reader-to-Director honest-empty/fixture states. Fresh lab reports cover all six routes. The preview cache-parity fix eliminates the duplicate fingerprinted-shell transfer without weakening HTML `no-store`.
 
-**Truthful holds:** Doctor is 12 passing, 1 warning, 3 failing, with exactly one blocking failure: production is stale until push/release. Identity/provider acceptance, the scoped credential-owner reconciliation, newsletter deployment/arming, the founder-observed signup walkthrough, and the Desk cadence decision remain independent and unresolved. Local performance exceptions are recorded; no field Core Web Vitals pass is claimed.
+**Release evidence:** full staging deployed 6,490 files with rollback snapshot `20260909222156`, attested receipt `bb5016b2a85891bf778e4f87`, lineage depth 59, and a green ten-step ceremony. Production content promotion completed in Actions run `34412238486`; live currency is content-current with matched shell parity. Doctor is 13 passing, 1 warning, 2 advisory failures, and `blockingFailing: 0`.
 
-**Resume:** commit this boundary as `recover S347 closeout`, push without force, verify staging before production, then rerun Doctor to require `blockingFailing: 0`. After that, begin the next fresh `/start → /audit → /implement → /closeout` arc from the two S348 performance items and the regenerated Unified Genius List.
+**Truthful holds / resume:** identity/provider acceptance, scoped credential-owner reconciliation, newsletter deployment/arming, the founder-observed signup walkthrough, and the Desk cadence decision remain independent and unresolved. Local performance exceptions are recorded; no field Core Web Vitals pass is claimed. Begin S348 with a fresh `/start → /audit → /implement → /closeout` arc from the two performance items and the regenerated Unified Genius List.
 
 ## Where We Left Off — S346 recovery boundary · 2026-09-08
 

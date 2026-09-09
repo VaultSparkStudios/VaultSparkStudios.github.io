@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-09 (S347 recovered and independently verified all 23 shipped audit items, completed the 477-step canonical gate, captured 168 rendered states across routes, themes, viewports, and interactions, and fixed local preview caching so fingerprinted shell assets are transferred once. Production release remains a separate staging-first gate.)
+Last updated: 2026-09-09 (S347 recovered and independently verified all 23 audit items, completed the 477-step canonical gate, captured 168 rendered route/state combinations, and fixed duplicate local shell transfers. Staging-first production promotion is complete; live content currency and shell parity match, with Doctor blockingFailing 0.)
 
 Previous: 2026-09-03 (S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. The receipt I had quoted was eight days old; re-probing found four of five listed blockers already satisfied, including a relying-party registration that had been active with both callbacks for months while a public trust surface published it as `missing` because the tracker keyed on an Ark cargo that had aged out of retention. Fixed by observing the substance at the IdP with an unregistered control redirect that must be denied, fail-closed five ways and on a 14-day clock. The identity hold was preserved deliberately. The one real remaining step is a human completing the sign-in ceremony -- and it is `--watch`, not `--live`.)
 
@@ -54,7 +54,7 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 
 - [x] **[S347 #23] Send member feedback using the verified public feedback schema.** Implemented and focused-tested 6/6; final complete suite and release pending.
 
-- [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **LOCAL CANDIDATE VERIFIED:** 477/477 build steps, 84/84 reviewed normal captures plus 84 supplemental state captures, receipt ordering green, and all changed JSON/JSONL valid. Push and staging-first release execute in closeout; identity, acceptance, cadence, mail-arming, data-policy and traffic decisions remain separate.
+- [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **SHIPPED:** checkpoint `172073cb7`; 477/477 build steps; 84/84 reviewed normal captures plus 84 supplemental states; 215/215 mobile cells; staging receipt `bb5016b2a85891bf778e4f87`; production Actions run `34412238486`; live content-current with matched shell parity; Doctor `blockingFailing: 0`. Identity, acceptance, cadence, mail-arming, data-policy, and traffic decisions remain separate.
 ## Now (next session ready)
 
 - [ ] **[S348][PERF/P1] Defer Changelog reaction hydration below the fold.** The final S347 lab still shows the largest genuine product-side layout/TBT debt on Changelog: a large document and eager per-entry reaction mounting. Use intersection/idle hydration and `content-visibility` with exact regression and rendered-state coverage; do not turn unavailable counts into zero.
