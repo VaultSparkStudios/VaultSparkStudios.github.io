@@ -145,7 +145,7 @@ export function deriveFeed(corpusStories, historyRows) {
         slug: story.slug,
         date: story.date,
         url: story.url,
-        state: row ? row.state : (latest ? 'insufficient' : 'unavailable'),
+        state: row ? row.state : 'unavailable',
         total: row?.total ?? null,
         reactions: row?.reactions ?? null,
         voices: row?.voices ?? null,
@@ -239,6 +239,8 @@ function selfTest() {
   const bounded = probeSlugs(many, new Date('2026-08-16T00:00:00Z'));
 
   const cases = [
+    ['story absent from an observed snapshot remains unavailable', deriveFeed([...stories, {slug:'2026-08-16/unprobed',date:'2026-08-16',url:'/news/2026-08-16/unprobed/'}], [snap]).stories.at(-1).state === 'unavailable'],
+    ['observed below-floor story remains insufficient', rowB.state === 'insufficient' && rowB.total === null],
     ['story reactions and voice votes are separated',
       rowA.reactions['made-me-laugh'] === 4 && rowA.voices.nib === 3 && !('voice:nib' in rowA.reactions)],
     ['the total counts every signal including voices', rowA.total === 9],

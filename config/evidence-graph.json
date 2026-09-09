@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
-  "revisedAt": "2026-09-01",
+  "revisedAt": "2026-09-09",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -378,7 +378,10 @@
         "scripts/build-news-desk.mjs",
         "--check"
       ],
-      "publishCascade": true
+      "publishCascade": true,
+      "builderArgs": [
+        "--rebuild"
+      ]
     },
     {
       "id": "news-desk-stats",
@@ -697,6 +700,9 @@
         "node",
         "scripts/apply-surface-spine.mjs",
         "--check"
+      ],
+      "builderArgs": [
+        "--apply"
       ]
     },
     {
@@ -715,6 +721,91 @@
         "--check"
       ],
       "publishCascade": true
+    },
+    {
+      "id": "ux-decision-ledger",
+      "output": "api/ux-decision-ledger.json",
+      "sources": [
+        "api/nav-sheet-stats.json",
+        "data/rum-summary.json",
+        "api/feedback-provenance.json",
+        "api/funnel-summary.json"
+      ],
+      "builder": "scripts/build-ux-decision-ledger.mjs",
+      "check": [
+        "node",
+        "scripts/build-ux-decision-ledger.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "nervous-system",
+      "output": "api/nervous-system.json",
+      "sources": [
+        "api/public-intelligence.json",
+        "api/feedback-provenance.json",
+        "api/ci-status.json",
+        "api/ignis-roi.json",
+        "api/nav-sheet-stats.json",
+        "api/social-dashboard-public.json",
+        "api/ux-decision-ledger.json",
+        "context/PROJECT_STATUS.json"
+      ],
+      "builder": "scripts/build-nervous-system.mjs",
+      "check": [
+        "node",
+        "scripts/build-nervous-system.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "intelligence-budget",
+      "output": "api/intelligence-budget.json",
+      "sources": [
+        "context/PROJECT_STATUS.json",
+        "api/public-intelligence.json",
+        "data/ignis-search-index.json",
+        "api/site-health.json",
+        "api/feedback-provenance.json",
+        "api/ux-decision-ledger.json",
+        "api/nervous-system.json",
+        "api/ship-receipts.json"
+      ],
+      "builder": "scripts/build-intelligence-budget.mjs",
+      "check": [
+        "node",
+        "scripts/build-intelligence-budget.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "docs/INTELLIGENCE_BUDGET_LEDGER.md"
+      ]
+    },
+    {
+      "id": "analytics-summary",
+      "output": "api/analytics-summary.json",
+      "sources": [
+        "data/rum-history.ndjson"
+      ],
+      "builder": "scripts/build-analytics-summary.mjs",
+      "check": [
+        "node",
+        "scripts/build-analytics-summary.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "early-hints-headers",
+      "output": "_headers",
+      "sources": [
+        "assets/shell-manifest.json"
+      ],
+      "builder": "scripts/build-early-hints-headers.mjs",
+      "check": [
+        "node",
+        "scripts/build-early-hints-headers.mjs",
+        "--check"
+      ]
     }
   ]
 }

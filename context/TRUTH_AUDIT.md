@@ -1111,3 +1111,17 @@ Public-safe summary:
 - **Status:** green. Every correction above is recorded in place with its evidence, and no claim in this session's public-facing surfaces depends on a statement later found false.
 
 S346 final local recovery verification (2026-09-09): full build suite 390/390, mobile runtime 215/215, reviewed theme captures 42/42, and Doctor blockingFailing 0 (two advisory failures). The recovery checkpoint and S347 full arc remain active. Hosted Community accessibility is a distinct known failure; no new production deployment is claimed.
+## S347 recovered full arc (2026-09-09)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Portal feedback now sends only the verified `path` and reaction contract; no schema, row-level security, identity, or tier mutation was made. |
+| Prompt/template alignment | 5 | Audit Markdown is derived from its JSON sidecar; all 23 items carry shipped execution evidence. |
+| Public claim accuracy | 5 | Static News dates, visitor-facing Conduit eligibility, and Reader-to-Director absence language now match observed evidence. Performance misses and unavailable observations remain explicit. |
+| Internal consistency | 5 | Derived builder arguments, dependency ordering, evidence levels, and invocation-mode reachability are governed by shared contracts and the complete 477-step gate. |
+| Evidence integrity | 5 | 84/84 normal rendered captures were manually reviewed and hash-bound; 84 supplemental state captures cover touched interactions. Receipt ordering passes against candidate root `df98b4fb84b4`. |
+| Credential status honesty | 4 | The project-credential mismatch remains named and owner-routed; management authority is not represented as working project REST authority. |
+| Audience voice integrity | 5 | Public change narration excludes operational work and requires a recognized visitor-facing subject. |
+| Completion-claim discipline | 5 | Local implementation is complete; production currency remains red until the staging-first release is actually observed. Identity, newsletter, signup, cadence, and field-performance claims remain unmade. |
+
+**Net:** the interrupted candidate is real and locally green, but deployment and independent identity/provider acceptance remain separate evidence planes.

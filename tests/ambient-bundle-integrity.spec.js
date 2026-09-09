@@ -63,3 +63,70 @@ test.describe('Ambient bundle (S136) — single load + features alive', () => {
     await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
   });
 });
+
+test.describe('Search remains reachable without covering mobile content', () => {
+  for (const width of [360, 390, 430]) {
+    test(`search stays in the header and returns focus at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
+      await page.goto('/changelog/', { waitUntil: 'load' });
+      const trigger = page.getByRole('button', { name: 'Open search palette' });
+      await expect(trigger).toBeVisible();
+      const geometry = await trigger.evaluate(button => {
+        const b = button.getBoundingClientRect();
+        const h = document.querySelector('.site-header').getBoundingClientRect();
+        const menu = document.getElementById('hamburger').getBoundingClientRect();
+        return { inside: b.top >= h.top && b.bottom <= h.bottom, clear: b.right <= menu.left, width: b.width, height: b.height, position: getComputedStyle(button).position };
+      });
+      expect(geometry.inside).toBe(true);
+      expect(geometry.clear).toBe(true);
+      expect(geometry.width).toBeGreaterThanOrEqual(44);
+      expect(geometry.height).toBeGreaterThanOrEqual(44);
+      expect(geometry.position).not.toBe('fixed');
+      await trigger.click();
+      await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
+      const close = page.getByRole('button', { name: 'Close search', exact: true });
+      await expect(close).toBeVisible();
+      expect(await close.evaluate(button => button.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
+      const query = page.getByRole('combobox', { name: 'Search query' });
+      await expect(query).toBeFocused();
+      await expect(page.locator('.vs-palette-results a').first()).toBeVisible();
+      await page.keyboard.press('Shift+Tab');
+      expect(await page.evaluate(() => document.querySelector('.vs-palette-overlay').contains(document.activeElement))).toBe(true);
+      await page.keyboard.press('Tab');
+      await expect(query).toBeFocused();
+      await close.click();
+      await expect(trigger).toBeFocused();
+      expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden');
+      await trigger.click();
+      await close.focus();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('.vs-palette-overlay')).not.toBeVisible();
+      await expect(trigger).toBeFocused();
+      await page.keyboard.press('Control+k');
+      await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
+      await page.keyboard.press('Control+k');
+      await expect(page.locator('.vs-palette-overlay')).not.toBeVisible();
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await expect(trigger).toBeVisible();
+      expect(await trigger.evaluate(button => button.getBoundingClientRect().bottom <= document.querySelector('.site-header').getBoundingClientRect().bottom)).toBe(true);
+    });
+  }
+});
+
+test('Search dialog exposes valid named combobox relationships', async ({ page }) => {
+  const AxeBuilder = require('@axe-core/playwright').default;
+  await page.goto('/changelog/', { waitUntil: 'load' });
+  await page.keyboard.press('Control+k');
+  await expect(page.locator('.vs-palette-results a').first()).toBeVisible();
+  const results = await new AxeBuilder({ page }).include('.vs-palette-overlay').withRules(['aria-required-attr', 'aria-valid-attr', 'aria-valid-attr-value', 'aria-required-children', 'aria-required-parent', 'aria-input-field-name']).analyze();
+  expect(results.violations).toEqual([]);
+  const query = page.getByRole('combobox', { name: 'Search query' });
+  await expect(query).toHaveAttribute('aria-controls', 'vs-palette-results');
+  await expect(query).toHaveAttribute('aria-expanded', 'true');
+  await expect(query).toHaveAttribute('aria-activedescendant', 'vs-palette-option-0');
+  await page.keyboard.press('ArrowDown');
+  await expect(query).toHaveAttribute('aria-activedescendant', 'vs-palette-option-1');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.vs-palette-input')).toHaveAttribute('aria-expanded', 'false');
+});

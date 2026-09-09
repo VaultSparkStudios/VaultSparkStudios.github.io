@@ -4,7 +4,7 @@
    The win: the games grid is the #1 conversion surface and every card was a bare
    radial-gradient blur behind text — uniform and impersonal, the opposite of
    "studio-owned, not generic" (SOUL). This generates one branded SVG→PNG cover tile
-   per game (per-game accent palette + serif title lockup + genre eyebrow + a faint
+   per game (per-game accent palette + a faint
    vault grid texture) so each card reads as its own world. The cover carries ART
    ONLY — no status word; see D-S339.6 on renderCoverSvg. ZERO new deps —
    sharp@0.34.5 is already a trusted devDependency (S196 OG-card pattern reused).
@@ -55,14 +55,7 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// Title auto-fits: shrink font for long names so it never clips the tile.
-function titleSize(title) {
-  const n = title.length;
-  if (n <= 9) return 92;
-  if (n <= 13) return 74;
-  if (n <= 18) return 58;
-  return 46;
-}
+// D-S340.7: the live tile owns all text; artwork carries only palette and geometry.
 
 /**
  * S339 (D-S339.6) — the cover carries ART, never STATUS.
@@ -85,8 +78,7 @@ function titleSize(title) {
  * the feed: the live chrome already states it correctly, and the only reliable
  * way for an image not to go stale about a fact is not to assert the fact.
  */
-export function renderCoverSvg({ title, eyebrow, hi, lo }) {
-  const ts = titleSize(title);
+export function renderCoverSvg({ hi, lo }) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <radialGradient id="glow" cx="28%" cy="34%" r="85%">
@@ -106,10 +98,6 @@ export function renderCoverSvg({ title, eyebrow, hi, lo }) {
   <rect width="${W}" height="${H}" fill="url(#glow)"/>
   <rect width="${W}" height="${H}" fill="url(#grid)"/>
   <rect width="${W}" height="${H}" fill="url(#legibility)"/>
-  <text x="44" y="${H - 96}" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="600"
-        letter-spacing="1.5" fill="#c8d2ec" opacity="0.92">${esc(eyebrow.toUpperCase())}</text>
-  <text x="42" y="${H - 36}" font-family="Georgia, 'Times New Roman', serif" font-size="${ts}" font-weight="700"
-        letter-spacing="-1" fill="#ffffff">${esc(title)}</text>
 </svg>`;
 }
 
@@ -151,15 +139,15 @@ async function run({ check } = {}) {
 }
 
 async function selfTest() {
-  let fail = 0;
-  const assert = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } };
+  let fail = 0, checks = 0;
+  const assert = (c, m) => { checks++; if (!c) { console.error('  ✗ ' + m); fail++; } };
   assert(COVERS.length === 10, 'all 8 games + 2 spotlit projects (VEILOS, Vorn) have a cover spec');
   assert(COVERS.some(c => c.cls === 'veilos') && COVERS.some(c => c.cls === 'vorn'), 'S249 spotlight projects have covers');
   assert(COVERS.every(c => c.cls && c.title && c.hi && c.lo), 'every spec has class + title + palette');
   assert(new Set(COVERS.map(c => c.cls)).size === COVERS.length, 'cover classes are unique');
-  assert(titleSize('Franchise Architect Extended') < titleSize('Solara'), 'long titles shrink');
   const svg = renderCoverSvg(COVERS[0]);
-  assert(svg.includes('Call of Doodie'), 'svg carries the title lockup');
+  assert(!/<text\b/.test(svg), 'artwork contains no baked text');
+  assert(COVERS.every(spec => renderCoverSvg(spec) === renderCoverSvg({...spec, title:'A changed title', eyebrow:'Changed genre'})), 'title and genre changes cannot alter artwork');
   // S339 (D-S339.6): the artwork must assert no status. The live tile chrome
   // states it, and a binary cannot follow the feed — asserted for EVERY spec, not
   // just the first, and against every status word rather than the one this fixture
@@ -173,7 +161,7 @@ async function selfTest() {
   const png = await renderCoverPng(COVERS[0]);
   const meta = await sharp(png).metadata();
   assert(meta.width === W && meta.height === H, `cover is ${W}×${H} (got ${meta.width}×${meta.height})`);
-  if (fail === 0) { console.log('✓ build-game-covers --self-test: 6/6 passed'); process.exit(0); }
+  if (fail === 0) { console.log(`✓ build-game-covers --self-test: ${checks}/${checks} passed`); process.exit(0); }
   console.error(`✗ build-game-covers --self-test: ${fail} failed`); process.exit(1);
 }
 

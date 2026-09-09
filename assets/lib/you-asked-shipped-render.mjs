@@ -115,3 +115,43 @@ export function renderYasBox(data, nowMs) {
     '</section>'
   );
 }
+
+/** A response is an editor's explicit declaration, never inferred from counts.
+ * Snapshots must pass the caller's content-hash verification before attribution. */
+export function readerActionReceipts(report, { snapshots = [], verifySnapshot = () => false, routeExists = () => false } = {}) {
+  const receipts = [], errors = [], seen = new Set();
+  const actions = report?.readerActions ?? [];
+  const date = report?.date || '';
+  const validDay = /^\d{4}-\d{2}-\d{2}$/.test(date) && Number.isFinite(Date.parse(date)) && new Date(date).toISOString().slice(0,10) === date;
+  const reportEnd = validDay ? Date.parse(date + 'T00:00:00Z') + 86400000 : NaN;
+  const timestamp = (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0,10) === value.slice(0,10);
+  const safeRoute = (value) => typeof value === 'string' && /^\/[a-z0-9][a-z0-9/_-]*\/$/.test(value) && !value.includes('//') && routeExists(value);
+  if (!Array.isArray(actions)) return { schemaVersion: '1.0', state: 'invalid', reportDate: date, receipts, errors: ['readerActions must be an array'] };
+  for (const action of actions) {
+    const id = action?.id;
+    const matching = snapshots.filter((row) => row.receiptId === action?.sourceReceiptId);
+    const snapshot = matching.length === 1 ? matching[0] : null;
+    const story = snapshot?.stories?.find((row) => row.slug === action?.storySlug);
+    const storyHref = '/news/' + (action?.storySlug || '') + '/';
+    const valid = validDay && typeof id === 'string' && /^[a-z0-9][a-z0-9-]{0,79}$/.test(id) && !seen.has(id)
+      && snapshot && verifySnapshot(snapshot) && timestamp(action.observedAt) && action.observedAt === snapshot.observedAt
+      && timestamp(action.actionAt) && Date.parse(action.actionAt) >= Date.parse(action.observedAt) && Date.parse(action.actionAt) < reportEnd
+      && story?.state === 'sufficient' && Number.isInteger(story.total) && story.total >= Math.max(5, Number(snapshot.minSignals) || 5)
+      && safeRoute(storyHref) && safeRoute(action.actionHref) && typeof action.summary === 'string' && action.summary.trim().length > 0 && action.summary.length <= 500;
+    if (!valid) { errors.push('reader action ' + String(id || '(missing id)').slice(0,80) + ': attribution evidence invalid or unavailable'); continue; }
+    seen.add(id);
+    receipts.push({ id, storySlug: action.storySlug, storyHref, sourceReceiptId: snapshot.receiptId, observedAt: snapshot.observedAt,
+      signals: story.total, actionAt: action.actionAt, actionHref: action.actionHref, summary: action.summary,
+      attribution: 'explicit editorial declaration; signals are not unique readers or a ranking' });
+  }
+  receipts.sort((a,b) => Date.parse(a.actionAt) - Date.parse(b.actionAt) || a.id.localeCompare(b.id));
+  return { schemaVersion: '1.0', state: errors.length ? 'invalid' : receipts.length ? 'recorded' : 'no-recorded-actions', reportDate: date, receipts, errors };
+}
+
+export function renderReaderActions(contract) {
+  if (contract.errors?.length) throw new Error('Reader action contract invalid');
+  const rows = contract.receipts || [];
+  const content = rows.length ? rows.map((row) => '<article class="vs-yas__row"><div class="vs-yas__ships"><p class="vs-yas__ship"><a href="' + esc(row.storyHref) + '">Story signals</a>: ' + row.signals + ' · observed ' + esc(row.observedAt) + '</p><p class="vs-yas__ship">Editor’s recorded response: <a href="' + esc(row.actionHref) + '">' + esc(row.summary) + '</a> · ' + esc(row.actionAt) + '</p><p class="vs-yas__ship-when">Source receipt ' + esc(row.sourceReceiptId) + ' · <a href="/data/news-desk-reactions-history.ndjson">Check the observation history</a></p></div></article>').join('') : '<p class="vs-yas__note">No reader-linked editorial actions are recorded for this report. Reader signals alone do not establish that an editorial change was made in response.</p>';
+  const json = JSON.stringify(contract).replace(/</g, '\\u003c');
+  return YAS_STYLE + '<section class="vs-yas" data-reader-editorial-actions><h2 class="vs-yas__title">Reader signals → editorial responses</h2><p class="vs-yas__note">Dated observations and the editor’s recorded actions. Counts describe voluntary signals, not unique readers or writer rankings.</p>' + content + '</section><script type="application/json" data-reader-action-receipts>' + json + '</script>';
+}

@@ -74,8 +74,10 @@
     'body.light-mode .vs-palette{background:rgba(255,253,247,0.99);border-color:rgba(20,28,52,0.12);}',
     '.vs-palette-input-wrap{padding:0.85rem 1rem;display:flex;align-items:center;gap:0.6rem;border-bottom:1px solid rgba(255,255,255,0.08);}',
     'body.light-mode .vs-palette-input-wrap{border-color:rgba(20,28,52,0.1);}',
-    '.vs-palette-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:1rem;font-family:inherit;min-height:32px;}',
+    '.vs-palette-input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:var(--text);font-size:1rem;font-family:inherit;min-height:32px;}',
     '.vs-palette-input::placeholder{color:var(--text-muted,#889);}',
+    '.vs-palette-close{flex-shrink:0;min-width:44px;min-height:44px;border:1px solid currentColor;border-radius:8px;background:transparent;color:inherit;font:inherit;cursor:pointer;}',
+    '.vs-palette-close:focus-visible{outline:2px solid var(--gold,#d4af37);outline-offset:2px;}',
     '.vs-palette-hint{font-size:0.7rem;color:var(--text-muted,#889);font-family:Georgia,serif;letter-spacing:0.04em;white-space:nowrap;}',
     '.vs-palette-hint kbd{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:0.05rem 0.35rem;font-size:0.7rem;font-family:inherit;}',
     '.vs-palette-results{max-height:50vh;overflow-y:auto;padding:0.4rem 0;}',
@@ -92,9 +94,9 @@
     '.vs-palette-ai__source{font-size:0.74rem;color:var(--text);background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);border-radius:999px;padding:0.25rem 0.65rem;text-decoration:none;}',
     '.vs-palette-ai__source:hover{background:rgba(212,175,55,0.2);}',
     '.vs-palette-ai__loading{font-style:italic;color:var(--text-muted,#889);font-size:0.85rem;}',
-    '.vs-palette-trigger{position:fixed;bottom:1rem;right:1rem;z-index:50;padding:0.55rem 0.95rem;background:rgba(13,16,28,0.92);border:1px solid rgba(255,255,255,0.12);border-radius:999px;color:var(--text);font-size:0.8rem;font-family:Georgia,serif;cursor:pointer;backdrop-filter:blur(8px);min-height:44px;display:none;align-items:center;gap:0.45rem;}',
+    '.vs-palette-trigger{position:relative;flex-shrink:0;padding:0.55rem 0.95rem;background:rgba(13,16,28,0.92);border:1px solid rgba(255,255,255,0.12);border-radius:999px;color:var(--text);font-size:0.8rem;font-family:Georgia,serif;cursor:pointer;backdrop-filter:blur(8px);min-height:44px;display:none;align-items:center;gap:0.45rem;}',
     'body.light-mode .vs-palette-trigger{background:rgba(255,253,247,0.95);border-color:rgba(20,28,52,0.15);}',
-    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100vh;display:flex;flex-direction:column;}.vs-palette-results{flex:1;max-height:none;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint kbd{display:none;}}',
+    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100dvh;display:flex;flex-direction:column;}.vs-palette-results{flex:1;max-height:none;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint{display:none;}}',
     '@media (prefers-reduced-motion: reduce){.vs-palette-overlay{animation:none;}}',
   ].join('\n');
 
@@ -223,13 +225,14 @@
     overlay.setAttribute('aria-label', 'Site search');
     overlay.dataset.open = 'false';
     overlay.innerHTML = [
-      '<div class="vs-palette" role="combobox" aria-haspopup="listbox" aria-expanded="true">',
+      '<div class="vs-palette">',
         '<div class="vs-palette-input-wrap">',
           '<span aria-hidden="true">⌕</span>',
-          '<input class="vs-palette-input" type="text" placeholder="Search games, projects, pages — or ask IGNIS…" aria-label="Search query" autocomplete="off" />',
+          '<input class="vs-palette-input" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="vs-palette-results" type="text" placeholder="Search games, projects, pages — or ask IGNIS…" aria-label="Search query" autocomplete="off" />',
           '<span class="vs-palette-hint"><kbd>↑↓</kbd> nav · <kbd>↵</kbd> open · <kbd>⌘↵</kbd> ask</span>',
+          '<button class="vs-palette-close" type="button" aria-label="Close search">✕</button>',
         '</div>',
-        '<div class="vs-palette-results" role="listbox" aria-label="Search results"></div>',
+        '<div class="vs-palette-results" id="vs-palette-results" role="listbox" aria-label="Search results"></div>',
         '<div class="vs-palette-ai" hidden></div>',
       '</div>',
     ].join('');
@@ -244,14 +247,31 @@
 
     refs.input.addEventListener('input', onInput);
     refs.input.addEventListener('keydown', onKey);
+    overlay.querySelector('.vs-palette-close').addEventListener('click', close);
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      var controls = Array.from(overlay.querySelectorAll('input, button, a[href], [tabindex="0"]')).filter(function (el) { return !el.disabled && el.getClientRects().length > 0; });
+      var first = controls[0], last = controls[controls.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
 
     return refs;
   }
 
+  var returnFocus = null;
+  var previousOverflow = null;
   function open() {
+    if (refs && refs.overlay.dataset.open === 'true') return;
+    var active = document.activeElement;
+    returnFocus = active && active !== document.body && active !== document.documentElement ? active : document.querySelector('.vs-palette-trigger');
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     if (!refs) refs = build();
     refs.overlay.dataset.open = 'true';
+    refs.input.setAttribute('aria-expanded', 'true');
     refs.input.value = '';
     refs.input.focus();
     refs.ai.hidden = true;
@@ -259,8 +279,14 @@
   }
 
   function close() {
-    if (!refs) return;
+    if (!refs || refs.overlay.dataset.open !== 'true') return;
+    document.body.style.overflow = previousOverflow || '';
+    previousOverflow = null;
     refs.overlay.dataset.open = 'false';
+    refs.input.setAttribute('aria-expanded', 'false');
+    var target = returnFocus && returnFocus.isConnected ? returnFocus : document.querySelector('.vs-palette-trigger');
+    if (target && typeof target.focus === 'function') target.focus();
+    returnFocus = null;
   }
 
   async function onInput() {
@@ -273,6 +299,7 @@
     lastResults = search(q, items);
     selectedIdx = 0;
     renderResults(lastResults, q);
+    syncActiveOption();
     maybeInlineIgnis(q);
   }
 
@@ -325,7 +352,7 @@
       if (recent.length) {
         var recentHtml = '<div class="vs-palette-section">Recent searches</div>'
           + recent.map(function (q) {
-              return '<button class="vs-palette-item" type="button" data-recent="' + escape(q) + '">'
+              return '<button class="vs-palette-item" role="option" aria-selected="false" type="button" data-recent="' + escape(q) + '">'
                 + '<span class="vs-palette-item__kind">recent</span>'
                 + '<span class="vs-palette-item__name">' + escape(q) + '</span>'
                 + '<span class="vs-palette-item__hint">↵ search · ⌘↵ ask</span>'
@@ -378,7 +405,7 @@
         var index = flat.length;
         var sel = (index === selectedIdx) ? 'true' : 'false';
         html.push([
-          '<a class="vs-palette-item" role="option" aria-selected="', sel, '" data-idx="', index, '" href="', escape(r.href), '">',
+          '<a class="vs-palette-item" role="option" id="vs-palette-option-', index, '" aria-selected="', sel, '" data-idx="', index, '" href="', escape(r.href), '">',
             '<span class="vs-palette-item__kind">', escape(k), '</span>',
             '<span class="vs-palette-item__name">', escape(r.name), '</span>',
             '<span class="vs-palette-item__hint">', escape(r.href), '</span>',
@@ -390,12 +417,19 @@
     return { html: html.join(''), flat: flat };
   }
 
+  function syncActiveOption() {
+    var selected = refs.results.querySelector('[role="option"][aria-selected="true"]');
+    if (selected && selected.id) refs.input.setAttribute('aria-activedescendant', selected.id);
+    else refs.input.removeAttribute('aria-activedescendant');
+  }
+
   function moveSelection(delta) {
     var max = lastResults.length - 1;
     if (max < 0) return;
     selectedIdx = Math.max(0, Math.min(max, selectedIdx + delta));
-    var items = refs.results.querySelectorAll('[role="option"]');
+    var items = refs.results.querySelectorAll('[role="option"][data-idx]');
     items.forEach(function (el, i) { el.setAttribute('aria-selected', i === selectedIdx ? 'true' : 'false'); });
+    syncActiveOption();
     var sel = items[selectedIdx];
     if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest' });
   }
@@ -480,7 +514,10 @@
     btn.setAttribute('aria-label', 'Open search palette');
     btn.innerHTML = '⌕ <span>Search</span>';
     btn.addEventListener('click', open);
-    document.body.appendChild(btn);
+    // Keep search beside navigation, in document flow, so it cannot cover page content.
+    var menuButton = document.getElementById('hamburger');
+    if (menuButton && menuButton.parentNode) menuButton.parentNode.insertBefore(btn, menuButton);
+    else (document.querySelector('.site-header .nav') || document.body).appendChild(btn);
   }
 
   function init() {

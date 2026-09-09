@@ -1660,3 +1660,51 @@ board's other claims harder to trust.
 ## D-S346.1 — S346 recovery boundary (2026-09-08)
 
 Classify the interruption as startup-only from the lock, full diff, and committed history. Preserve S345 historical records and all open product work. Record new verification results independently. Reserve S347 for the full continuation arc so the recovery commit forms a distinct boundary. No identity policy, public promise, or membership-tier decision is changed.
+
+## D-S347.1 — Verification evidence belongs to its complete invocation (2026-09-09)
+
+The build runner acquires an exclusive, token-owned verification lock only after read-only modes have returned. A child self-test or diagnostics check cannot replace or release its parent’s lock. Scheduled-workflow observations retain execution errors and incomplete coverage; unavailable observations are never measured health. The producer’s total deadline remains below the Doctor timeout.
+
+Postbuild runs its declared chain once and binds the receipt to that invocation, command sequence, source fingerprint and trace digest. Ordinary HTML reads and successful no-op writes remain visible. Blocking ordering evidence is limited to finalized hashes that consumed exact full-file HTML read bytes before a content-changing write, including the same-step case. Partial/chunked streams, Hash.copy, WebCrypto and arbitrary dataflow remain unmeasured. This narrower claim replaces an unsupported inference from every read to a dependency.
+
+## D-S347.2 — Derived repair preserves execution and evidence semantics (2026-09-09)
+
+Repair uses explicit builder arguments, refuses undeclared or outward-acting modes, and resolves tracked files and directory descendants from one Git inventory. The derived phase declares producer dependencies while retaining independent parallel work. Five additional graph nodes cover their actual inputs and companion outputs. Coverage distinguishes source-bound reviewed drift comparisons, shape-only checks and unclassified checks; a successful shape check cannot certify unchanged bytes.
+
+## D-S347.3 — Canonical navigation and accessible search own their surfaces (2026-09-09)
+
+The canonical navigation configuration owns Evidence links. The Evidence generator retains the shared intelligence navigation and theme picker without becoming a second header/footer writer. Game cover artwork omits baked titles and genres, following D-S340.7; live tile text owns those labels. Community entries with absent or blank handles use neutral, non-link member labels. Search occupies the mobile header, includes a visible close control, contains keyboard focus while open and restores focus and body scrolling on exit. These are implementation decisions; final rendered-pixel and release evidence is recorded separately.
+
+## D-S347.4 — Public reports disclose only supported observations (2026-09-09)
+
+The homepage Conduit consumes explicitly visitor-facing changes and rejects operational descriptions before rendering public copy. Static News labels use publication dates instead of build-time relative freshness; cadence policy and the dated freshness API are unchanged. Visual diversity compares declared composition dimensions and abstains when those declarations are insufficient; it does not claim pixel similarity. Commit-map scans distinguish the display quota from exhausted local history, and reject Git failures or an exhausted scan ceiling before replacing existing evidence.
+
+Release failure receipts retain bounded, sanitized file references before prose truncation and report evidence truncation explicitly. The newsletter operator passes credentials through stdin and recognizes only its function’s exact unauthenticated rejection as guard evidence. S347 does not authorize mail dispatch or arm the monthly send. Fresh provider checks verify registration while the separate credential-project mismatch remains an owner task, routed through Ark as 01K22H17HM5F6D2952E9B84165; no identity hold is cleared by a static-content release.
+
+## D-S347.5 — Reader responses require explicit, dated attribution (2026-09-09)
+
+The Director’s Report uses the shared feedback renderer and its existing page generator. Optional editorial-action declarations must reference an intact committed observation snapshot, a qualifying story count, an observation timestamp, a later action timestamp within the report’s date, and existing local candidate routes. No keyword match, count change or chronology alone establishes causation. Rows are ordered by action time, not signal count. The current historical report has no declarations and therefore displays an explicit no-recorded-actions state; no historical action was invented. Missing stories in an observed reaction snapshot remain unavailable rather than being relabelled as below the sample floor.
+
+## D-S347.6 — Invocation coverage distinguishes modes and lifecycle ownership (2026-09-09)
+
+A script being mentioned or imported does not prove its self-test or check mode ran. Coverage inventories explicit self-test dispatches under scripts and its libraries, follows executable invocation edges, and distinguishes lifecycle-specific checks from the build denominator. Reviewed equivalent in-process tests require source-bound evidence. Pure omitted fixture modes are wired through the existing verification runner; lifecycle annotations describe actual ownership and cannot substitute for a self-test invocation. The cache self-test uses failing assertions, with cleanup retained, so a broken assertion cannot end in a successful 3/3 claim.
+
+## D-S347.7 — Portal feedback follows the verified live table contract (2026-09-09)
+
+A read-only catalog query through the project-scoped management API verified that page_feedback accepts path/reaction and optional aggregate metadata; the portal was sending four nonexistent columns. The client now preserves its intended /vault-member/ path and fixed-choice question, maps Somewhat from mixed to ok, and validates the choice before sending path/reaction. The vote joins the existing aggregate feedback semantics; no unsupported question field is claimed to have been stored. The correction changes no database schema, row-level security, account flow or membership logic. Browser tests use a schema-validating stub with network requests aborted; no member vote or message was sent during verification.
+
+## D-S347.8 — Rendered mobile narratives retain their full meaning (2026-09-09)
+
+Final pixel review found the corrected homepage change sentence reduced to "Fixed th…" beside its metadata at 390px. At widths up to 640px the existing ticker now places metadata on its first row and lets the sentence wrap below. Desktop layout and public wording stay under their existing owners. The clipped before image and corrected render are retained as visual evidence; final matrix review follows stylesheet fingerprint regeneration.
+
+## D-S347.9 — Generated News chrome includes working visitor controls (2026-09-09)
+
+Final image review found that News rendered forced themes but offered no desktop picker. A browser regression confirmed the missing controller, then exposed the missing mobile navigation controller. The shared News footer now emits both manifest-addressed scripts before the optional navigation sheet. Six browser cases select Light through visible desktop or mobile controls on the hub, Director and article pages and verify persistence after reload; all passed after the repair. No forced stored theme substitutes for this interaction evidence.
+
+## D-S347.10 — Report performance shortfalls without manufacturing conformance (2026-09-09)
+
+The S347 mobile lab measurements retain all six routes and the first Community outlier alongside its justified repeat. Home, News and Changelog missed the 90-point profile target; News, Changelog and Community missed the 1.8-second simulated largest-contentful-paint target. The website arc permits a documented profile exception; these results do not establish field performance or waive independent release gates. No causal improvement is attributed to the unchanged-source Community repeat. The News and Director measurements precede the final controller restoration and require refreshed measurements before being represented as the final candidate. See docs/performance/S347_LAB_MEASUREMENTS.md for exact results and limitations.
+
+## D-S347.11 — Preview caching must preserve preload reuse without weakening HTML freshness (2026-09-09)
+
+The final lab exposed every route fetching the same content-addressed shell stylesheet twice: `_headers` emitted a preload, then the local preview answered that immutable asset with `Cache-Control: no-store`, preventing reuse when the page stylesheet link resolved. The preview now gives only generated `/assets/*.shell-<10hex>.css|js` files long-lived immutable caching. HTML and every unhashed asset remain `no-store`. A real child-server unit test pins both halves. This repairs measurement fidelity and production parity; it does not convert local lab scores into field performance evidence.

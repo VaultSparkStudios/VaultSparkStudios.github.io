@@ -6,13 +6,12 @@
     });
   }
   async function submit(answer, status) {
+    if (['useful', 'mixed', 'not_useful'].indexOf(answer) === -1) throw new Error('Invalid feedback choice.');
     var sb = window.VSSupabase;
     if (!sb || typeof sb.from !== 'function') throw new Error('Feedback service unavailable.');
     var result = await sb.from('page_feedback').insert([{
-      page_path: '/vault-member/',
-      question: 'member_studio_direction',
-      answer: answer,
-      session_id: null
+      path: '/vault-member/',
+      reaction: answer === 'mixed' ? 'ok' : answer
     }]);
     if (result.error) throw result.error;
     status.textContent = 'Signal received. This fixed-choice vote is anonymous and contains no account identifier.';

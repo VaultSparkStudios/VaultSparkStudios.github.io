@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-09T20:30:45.940Z",
+  "generatedAt": "2026-09-09T21:55:50.625Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
     "path": "api/ecosystem-state.json",
     "generatedBy": "scripts/build-public-ecosystem.mjs",
-    "digest": "294a89fdbbd452fe3e22150feacc3be509bdc1f2e5f579e76be9d1ac98887b36"
+    "digest": "c73cd2eacc6858772ac3201883b754c328ce7efe52b1580a6f5effb92d4dfe91"
   },
   "sampling": {
     "deterministic": true,
@@ -20,7 +20,7 @@
     "passed": 10,
     "failed": 0,
     "unknown": 2,
-    "longestUnknownStreak": 68,
+    "longestUnknownStreak": 69,
     "neverKnownGood": 2
   },
   "results": [
@@ -38,7 +38,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +55,41 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "hashmark",
+      "destination": "https://hashmark.football/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "living-protocol",
+      "destination": "https://thelivingprotocol.life/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +106,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +123,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -100,7 +134,7 @@
       "attemptCount": 2,
       "attempts": [
         {
-          "status": 403,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         },
@@ -110,7 +144,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 68,
+      "unknownStreak": 69,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
@@ -128,7 +162,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -145,7 +179,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -162,7 +196,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -179,7 +213,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
+      "lastKnownGoodAt": "2026-09-09T21:55:50.625Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -200,43 +234,9 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 68,
+      "unknownStreak": 69,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
-    },
-    {
-      "slug": "veilos",
-      "destination": "https://veilos.io/",
-      "verdict": "passed",
-      "reason": "response-reached",
-      "attemptCount": 1,
-      "attempts": [
-        {
-          "status": 200,
-          "redirected": false,
-          "outcome": "reachable"
-        }
-      ],
-      "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
-      "lastKnownGoodAgeHours": 0
-    },
-    {
-      "slug": "velaxis",
-      "destination": "https://velaxis.markets/",
-      "verdict": "passed",
-      "reason": "response-reached",
-      "attemptCount": 1,
-      "attempts": [
-        {
-          "status": 206,
-          "redirected": false,
-          "outcome": "reachable"
-        }
-      ],
-      "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-09T20:30:45.940Z",
-      "lastKnownGoodAgeHours": 0
     }
   ],
   "note": "A failed verdict requires two 404/410 responses. Timeouts, access blocks, rate limits, and server errors remain unknown rather than being mislabeled dead. unknownStreak counts consecutive inconclusive runs and lastKnownGoodAt records the last confirmed reach; neither converts an unknown into a pass or a failure."

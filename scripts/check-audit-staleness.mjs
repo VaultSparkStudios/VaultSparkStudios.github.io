@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope audit — candidate pre-score advisory, not a build artifact check.
 // check-audit-staleness.mjs — pre-score guard for /audit.
 //
 // On a long-lived codebase the single biggest audit failure mode is scoring a

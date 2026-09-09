@@ -13,6 +13,7 @@
  */
 
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { parseScheduledProbe } from './lib/scheduled-probe-result.mjs';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -347,15 +348,8 @@ const CHECKS = [
     id:    'sched-staleness',
     label: 'Scheduled CI freshness',
     cmd:   ['scripts/check-scheduled-workflow-staleness.mjs', '--json'],
-    parse: (out, code) => {
-      try {
-        const d = JSON.parse(firstLine(out));
-        if (d.skipped) return { pass: true, detail: `unverified (${d.reason})` };
-        if (d.ok) return { pass: true, detail: `${d.checked} scheduled workflows green` };
-        const names = (d.broken || []).map((b) => `${b.name} (${b.streak}×)`).join(', ');
-        return { pass: false, detail: `dead cron: ${names}` };
-      } catch { return { pass: code === 0, detail: 'parse error' }; }
-    },
+    stdoutOnly: true,
+    parse: parseScheduledProbe,
   },
   {
     // S300. CANON-036 says "production must not silently lag main". The matrix
@@ -405,7 +399,7 @@ function runChecks() {
       result = {
         id: check.id,
         label: check.label,
-        ...check.parse(output, res.status ?? 1),
+        ...check.parse(check.stdoutOnly ? (res.stdout ?? '') : output, check.stdoutOnly ? res.status : (res.status ?? 1), { error: res.error, signal: res.signal }),
       };
     }
     const meta = DRIFT_META[check.id] ?? { driftClass: 'local-broken', blocking: true };

@@ -71,5 +71,8 @@ function main() {
   console.log('build-intelligence-suite: ' + (CHECK ? 'check passed' : 'rendered ' + CONFIG.routes.length + ' routes'));
 }
 
-if (SELF_TEST) selfTest();
-else main();
+const isDirect = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isDirect) {
+  if (SELF_TEST) selfTest();
+  else main();
+}

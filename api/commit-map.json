@@ -6,7 +6,29 @@
   "label": "The forge ledger",
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
+  "scan": {
+    "scope": "locally available Git history; not remote-history completeness",
+    "ceiling": 2000,
+    "fetched": 2001,
+    "inspected": 474,
+    "target": 24,
+    "selected": 24,
+    "quotaSatisfied": true,
+    "moreHistoryBeyondWindow": true,
+    "state": "quota-satisfied"
+  },
   "entries": [
+    {
+      "sha": "13724523",
+      "ts": "2026-09-09T21:32:34.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "recover S347 closeout",
+      "visitorFacing": true
+    },
     {
       "sha": "4c7cb57e",
       "ts": "2026-09-09T05:10:36.000Z",
@@ -259,17 +281,6 @@
       "tone": "sparked",
       "summary": "the uptime publisher retried four times and could only ever have succeeded once",
       "visitorFacing": true
-    },
-    {
-      "sha": "d17f7380",
-      "ts": "2026-09-03T02:20:37.000Z",
-      "type": "chore",
-      "scope": "S340",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "resync after publisher race (attempt 1)",
-      "visitorFacing": false
     }
   ]
 }

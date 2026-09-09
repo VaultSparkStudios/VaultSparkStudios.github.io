@@ -2580,3 +2580,28 @@ Recovery assessment, not a claim that the interrupted arc completed. S345 remain
 **Brainstorm committed to TASK_BOARD:** preserve verification-lock ownership; make Doctor retain unavailable scheduled-workflow evidence.
 
 **Intent outcome:** recovered startup records; the full arc remains active in S347.
+
+## 2026-09-09 — Session 347 (recovered full arc) | Total: 986/1000 (v3.0) | Velocity: 23 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 98 | Complete 477-step gate passed; integrity and receipt ordering are green. |
+| Creative Alignment | 98 | Art-only covers, News controls, Evidence navigation, and accessible Search preserve the site’s identity across all themes. |
+| Momentum | 99 | Recovered and shipped all 23 admitted audit items plus the finite innovation reserve. |
+| Engagement | 97 | Feedback and Reader-to-Director contracts improved, while real adoption outcomes remain unmeasured. |
+| Process Quality | 97 | Recovery refused phantom-green evidence; repeated stale derived outputs and local lab variance cost points. |
+| Cross-Repo Coherence | 100 | No sibling tree was edited; owner work moved through the Ark. |
+| Security Posture | 99 | Secret handling narrowed, identity holds preserved, and no credential was exposed. |
+| Ecosystem Integration | 99 | Existing evidence graphs, runners, receipts, and Canon gates were extended rather than duplicated. |
+| Capital Efficiency | 100 | No dependency, paid service, or runtime AI cost was added. |
+| Automation Coverage | 99 | Exact invocation modes, postbuild ordering, cache parity, and 168 visual states are now evidenced. |
+
+**Top win:** transformed an interrupted, mixed-index candidate into a fully measured 23-item release boundary without losing upstream publisher observations.
+
+**Gap:** Changelog still carries the clearest genuine layout/TBT debt, and local performance sampling remains host-sensitive.
+
+**Honesty ledger:** the release has not occurred at this write-back point; Doctor’s production-staleness blocker remains real. Local lab exceptions do not prove field Core Web Vitals, and identity/provider, newsletter, signup, cadence, and credential-owner work remain separate.
+
+**Brainstorm committed to TASK_BOARD:** defer Changelog reaction hydration below the fold; replace single local performance scores with isolated multi-run distributions.
+
+**Intent outcome:** achieved locally; staging-first deployment and final Doctor zero-blocker proof complete during closeout autopilot.

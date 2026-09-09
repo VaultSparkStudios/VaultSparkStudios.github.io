@@ -1874,3 +1874,21 @@ holds these as a flat list, which is why its repair suggestion is a no-op here (
 - [x] **[S318][OBS/P1] Receipt-bound status projection.** Legacy SIL/test aliases removed, public status fields derive from current receipts, and scheduled unknown/stale CI poisons green.
 - [x] **[S318][STAGING/P0] Exact committed candidate deployed and verified on Hetzner.** Pushed candidate commit `29be0bd8d`; receipt `8aa1f9f42262b96d5e8ea5b4`; 5,007/5,007 files; candidate/deployed SHA and artifact roots match; staging browser 6/6; chain depth 39; rollback `20260817172802`.
 - [x] **[S318][RELEASE/P0] Production hold preserved.** Independent app-release verdict is NO-GO and the authoritative ceremony is 7/8. No production deploy command ran; `real-provider-e2e-pending` remains the only rejected ceremony step.
+
+
+<!-- rotated 2026-09-09 · sessions < 320 · 1 block(s) -->
+
+## Done (Session 319 — reproducible candidate · scoped hold · scheduled Desk)
+
+- [x] **[S319][RELEASE/P0] The promotion candidate is reproducible.** The hourly cron rewrote 5 of 31 hashed leaves and, in the same commit, the manifest and release-proof that judge them; three roots were observed for one unchanged source. Split into commit-derived `root` + observed `observedRoot`, with declared wall-clock stamps canonicalised out. Proven on the real tree. Self-tests 18/18.
+- [x] **[S319][RELEASE/P0] The production hold has a blast radius (D-S319.2).** `hold`/`releaseState`/`reasons` unchanged; resolution added. Fails closed on an undeclared radius, an intersecting leaf, an unclassifiable leaf, or an empty candidate. Wired into BOTH the ceremony and the promotion gate — the first pass wired only the ceremony, and the failed dispatch exposed it. Self-tests 25/25 + 23/23.
+- [x] **[S319][EFF/P0] Structural gate over the non-reproducible-input class.** Immediately found a second cron (`cloudflare-analytics-pull`) writing two more hashed leaves that the point fix had missed. Exemptions must carry a reason. 20/20.
+- [x] **[S319][OBS/P1] One declared shape for `api/build-sha.json`.** It had FOUR producers and three shapes. Mutation-tested after a first assertion passed while two producers were still wrong.
+- [x] **[S319][NEWS/P0] The Desk publishes automatically (founder-requested).** `news:publish` was referenced by zero workflows. Four editions daily, authored on free self-hosted inference that writes voice and never fact; a failed edition drops and retries rather than parking for a human.
+- [x] **[S319][UX/P0] The Desk is on the homepage (founder-requested).** Previously only a nav dropdown entry and a footer link. Server-rendered, text-only, cadence read from the freshness receipt. 22→24 self-tests after the staging gate caught 338 light-theme contrast violations from theme-blind colour fallbacks.
+- [x] **[S319][CI/P0] The ceremony could never pass in CI.** The step named "Install release-ceremony browser dependencies" installed npm packages but no Playwright browsers, so the gate failed in six seconds and read as a quality failure.
+- [x] **[S319][CI/P1] deploy-currency published `unverified` for want of an env line.** Credentials that already existed as repository secrets were never passed to the step; a missing wiring was reading as an unknowable production state. Quorum now agrees on two vantages: `stale`, 731 commits / 13.2 days.
+- [x] **[S319][BUG/P0] `news-draft-edition` ran its CLI on import**, setting `exitCode 2` — every successful scheduled edition would have reported failure. RUN_DIRECT guard added and pinned by a test.
+- [x] **[S319][AUTH/P0] Diagnosed the production /login outage to one line.** Cloudflare 1101 from an unhandled throw; upstream discovery serves HTML. Guard committed, Ark cargo shipped. Deployment blocked — see Now.
+- [x] **[S319][EFF/P1] Modeling `index.html` in the evidence graph exposed a real strand:** `refresh-live-data` updates the Desk feeds the homepage renders but never re-rendered the homepage.
+- [x] **[S319][HYGIENE/P1] Removed `recover-news-desk.mjs`.** The review-held recovery policy it served was retired by founder decision; the orphan gate caught it immediately.

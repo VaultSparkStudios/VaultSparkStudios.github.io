@@ -1,21 +1,23 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
-  "generatedAt": "2026-09-01",
-  "contractSha256": "a29aa3a40a2bd1e2ff68461fc2dee66931af09c8ecc5dde2c70e331254387f3f",
+  "generatedAt": "2026-09-09",
+  "contractSha256": "43ea57e22a94558e432bb38044897894176be8c624a6e2313478b8d7e7576e86",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 41,
+  "nodeCount": 46,
   "cascadeNodeCount": 27,
   "buildOrder": [
+    "analytics-summary",
     "attention-pressure",
     "cache-evidence-classification",
     "canonical-destination-reachability",
     "changelog-narrative",
     "cta-readiness",
+    "early-hints-headers",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "evidence-hub",
@@ -37,11 +39,14 @@
     "security-posture",
     "surface-spine",
     "tt-summary",
+    "ux-decision-ledger",
     "worker-route-history",
     "you-asked-shipped",
     "home-desk-module",
+    "nervous-system",
     "news-pages",
     "public-status",
+    "intelligence-budget",
     "launch-age",
     "candidate-artifact-manifest",
     "deploy-currency",
@@ -54,6 +59,20 @@
     "stats-surface"
   ],
   "nodes": [
+    {
+      "id": "analytics-summary",
+      "output": "api/analytics-summary.json",
+      "builder": "scripts/build-analytics-summary.mjs",
+      "verify": "node scripts/build-analytics-summary.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "data/stats-surface.json"
+      ],
+      "externalSources": [
+        "data/rum-history.ndjson"
+      ]
+    },
     {
       "id": "attention-pressure",
       "output": "api/attention-pressure.json",
@@ -189,6 +208,18 @@
       ]
     },
     {
+      "id": "early-hints-headers",
+      "output": "_headers",
+      "builder": "scripts/build-early-hints-headers.mjs",
+      "verify": "node scripts/build-early-hints-headers.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "assets/shell-manifest.json"
+      ]
+    },
+    {
       "id": "evidence-graph-agent",
       "output": "api/evidence-graph.json",
       "builder": "scripts/build-evidence-projection.mjs",
@@ -270,6 +301,29 @@
       "externalSources": []
     },
     {
+      "id": "intelligence-budget",
+      "output": "api/intelligence-budget.json",
+      "builder": "scripts/build-intelligence-budget.mjs",
+      "verify": "node scripts/build-intelligence-budget.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "docs/INTELLIGENCE_BUDGET_LEDGER.md"
+      ],
+      "dependsOn": [
+        "api/nervous-system.json",
+        "api/public-intelligence.json",
+        "api/ux-decision-ledger.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/feedback-provenance.json",
+        "api/ship-receipts.json",
+        "api/site-health.json",
+        "context/PROJECT_STATUS.json",
+        "data/ignis-search-index.json"
+      ]
+    },
+    {
       "id": "intent-map",
       "output": "api/intent-map.json",
       "builder": "scripts/build-intent-map.mjs",
@@ -317,6 +371,28 @@
         "assets/og/",
         "assets/og/news/",
         "data/news-desk/art/"
+      ]
+    },
+    {
+      "id": "nervous-system",
+      "output": "api/nervous-system.json",
+      "builder": "scripts/build-nervous-system.mjs",
+      "verify": "node scripts/build-nervous-system.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/public-intelligence.json",
+        "api/ux-decision-ledger.json"
+      ],
+      "feeds": [
+        "api/intelligence-budget.json"
+      ],
+      "externalSources": [
+        "api/ci-status.json",
+        "api/feedback-provenance.json",
+        "api/ignis-roi.json",
+        "api/nav-sheet-stats.json",
+        "api/social-dashboard-public.json",
+        "context/PROJECT_STATUS.json"
       ]
     },
     {
@@ -501,7 +577,9 @@
       "feeds": [
         "api/candidate-artifact-manifest.json",
         "api/citation.json",
+        "api/intelligence-budget.json",
         "api/intent-map.json",
+        "api/nervous-system.json",
         "api/public-status.json"
       ],
       "externalSources": [
@@ -640,13 +718,13 @@
         "stats.json"
       ],
       "dependsOn": [
+        "api/analytics-summary.json",
         "api/news-desk-stats.json",
         "api/public-status.json",
         "api/status-proof.json"
       ],
       "feeds": [],
       "externalSources": [
-        "api/analytics-summary.json",
         "api/ecosystem-analytics.json",
         "api/ecosystem-state.json",
         "data/rum-summary.json"
@@ -709,6 +787,24 @@
       "feeds": [],
       "externalSources": [
         "data/tt-export.json"
+      ]
+    },
+    {
+      "id": "ux-decision-ledger",
+      "output": "api/ux-decision-ledger.json",
+      "builder": "scripts/build-ux-decision-ledger.mjs",
+      "verify": "node scripts/build-ux-decision-ledger.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/intelligence-budget.json",
+        "api/nervous-system.json"
+      ],
+      "externalSources": [
+        "api/feedback-provenance.json",
+        "api/funnel-summary.json",
+        "api/nav-sheet-stats.json",
+        "data/rum-summary.json"
       ]
     },
     {

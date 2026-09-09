@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-09T04:10:11.078Z",
+  "capturedAt": "2026-09-09T22:04:02.477Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "f636eb2a34bb67025ba326ed613884942504db2adc34d23c547b29656d80f5fe",
+    "sha256": "9a917b67a9573baf30f524580f902bff46adb9b5ed04f8b60d64db4520ba3b02",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -37,10 +37,13 @@
       "assets/vault-genome-strip.js",
       "assets/visit-depth.js",
       "changelog/index.html",
+      "community/index.html",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
+      "evidence/index.html",
       "index.html",
+      "news/directors-report/index.html",
       "news/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
@@ -128,7 +131,7 @@
       },
       {
         "path": "assets/style.css",
-        "sha256": "573846ed21d8747e51d0378ab317a88cf8a03c1c62380b2046a337dbc7945a23"
+        "sha256": "79b001d0aee474a1ed94cfb43a55b8916f727d98df766a48910acb22c94927c7"
       },
       {
         "path": "assets/vault-genome-strip.js",
@@ -140,7 +143,11 @@
       },
       {
         "path": "changelog/index.html",
-        "sha256": "5c09e31f8236cf65ff528f7446d98217a22ffe112927ea9038b608065c507e5e"
+        "sha256": "6841004c4e92541666ed37f7fc63158a46d8649720a3ac051d026cc659aa347c"
+      },
+      {
+        "path": "community/index.html",
+        "sha256": "48ca2398d5def642891b1765b6c0c92b4cb0a4c7c0d1fb08ebbc73e8d2971b12"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -155,12 +162,20 @@
         "sha256": "bf41229dcd95fbae0258fd3450364442c42bd7eadea01bb712fd510eb45b44b4"
       },
       {
+        "path": "evidence/index.html",
+        "sha256": "f2c8d61b2a0e356bde3be522b7e378d57121340750e0c3d247521e775fb50a02"
+      },
+      {
         "path": "index.html",
-        "sha256": "84bdb1f16e9eeb3b4ea838dd86d1022277b86f6d61c352b68da83619cb426f3e"
+        "sha256": "6085e854f0517928b88b8a66ef8049ffef76f7c56081e3518d5048f71b7aee05"
+      },
+      {
+        "path": "news/directors-report/index.html",
+        "sha256": "4fa4fa68a2a0eb116e0cebdd5cb971bc05699d6152eff49d7eaf5e9262179f98"
       },
       {
         "path": "news/index.html",
-        "sha256": "5cca9deb28d737034306c2aa68a8cea5bda6f4e7de41953844f5ee7a0a7a7122"
+        "sha256": "ed8eebcb00ec26038ebaf89ae21ee0b540f87f5587261b6a2f479736d7c94253"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -172,7 +187,7 @@
       },
       {
         "path": "scripts/capture-theme-matrix.mjs",
-        "sha256": "a2aeea56c0edb3dfac61c89449a84ae1925ccd124046311dff8f3a61a058a106"
+        "sha256": "33e3231402db4112735bcdd4992ce27432c782fcb804e0072ab342949629fe9e"
       },
       {
         "path": "scripts/check-attention-surface-contract.mjs",
@@ -188,7 +203,7 @@
       },
       {
         "path": "scripts/generate-news-pages.mjs",
-        "sha256": "6b0746b18fd5f8bc1d0d7aea796c59b58dc4dbdba456b3c1f6096d2dcb89f174"
+        "sha256": "6f96b5958abfab802e492d5c4c9a02fd0f37c315e6cda02235421e2e722ae896"
       },
       {
         "path": "scripts/lib/news-desk.mjs",
@@ -222,15 +237,18 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "979f2db060a77563f69125a9154db3c4ab6eae8861a3b181296b520de8b0008c",
-    "candidateSha": "58e13798382fa53c230657fd307b1f3be2e8f9aa",
-    "root": "9e3984e3ea174f25819a7d3a5773c31bfcccec6682c6b6dc70a20688791579db"
+    "manifestSha256": "787c80360c45958f94f6123b8bc9cb574b3207b0bf30decd97eb399ad2c484f4",
+    "candidateSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
+    "root": "a534d8092c680e15b22848cc1042e33eaa33b9674cf563cbcdf4f9bf4bac52f7"
   },
   "matrix": {
     "routes": [
       "/",
       "/news/",
-      "/changelog/"
+      "/changelog/",
+      "/community/",
+      "/evidence/",
+      "/news/directors-report/"
     ],
     "themes": [
       "dark",
@@ -256,24 +274,22 @@
     "states": [
       "page"
     ],
-    "expectedCaptures": 42,
-    "completedCaptures": 42
+    "expectedCaptures": 84,
+    "completedCaptures": 84
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 42,
-      "manuallyReviewed": 42,
+      "totalCaptures": 84,
+      "manuallyReviewed": 84,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex with recovery_review and release_path",
+    "reviewer": "Codex /root",
     "findings": [
-      "Reviewed all 42 initial-viewport captures: home, newsroom and changelog in seven themes at 1366x900 and 390x844. Settled text is readable and the desktop theme picker is contained. Existing floating Search overlap and repeated cover titles remain documented audit follow-ups; no whole-site or measured contrast claim."
+      "Reviewed all 84 final-build route-theme-viewport renders; no blocking clipping, overlap, contrast, hierarchy, or horizontal-overflow defect."
     ],
-    "fixesApplied": [
-      "Reduced desktop top-level navigation spacing and completed finite animations before screenshots."
-    ],
+    "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null
   },
@@ -287,12 +303,12 @@
         "height": 900
       },
       "file": "home--dark--desktop.png",
-      "sha256": "8f1c166b027a367b65ed30045a1ffd24ca429529aa2d22f02fd64c5342002202",
+      "sha256": "eac3a519c0c5ce7e572306aa81589b8e7d39be21c405bf8831693658e3bbab6b",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -304,12 +320,12 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "0b32780fea79dbde817b59843a3c86722fb62c50fdd3f188d02f0818ca9f4cc6",
+      "sha256": "9d4babae885f09fde85829c46229d3844cb93331e32d9f50ca4bdbf405645228",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -321,12 +337,63 @@
         "height": 900
       },
       "file": "changelog--dark--desktop.png",
-      "sha256": "3cf847317f28aa328ed7b0dbe152d938c6e13febca2bde169d2d02a32b403806",
+      "sha256": "12da4a3b79ae27996f6ed6c04def3252c7eda773c6affb256f6ea4045b8f3db9",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--dark--desktop.png",
+      "sha256": "99efdeb38d4b1237e84fccf11fb573cf73accca2d3ac7370a98b4254a47c4310",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--dark--desktop.png",
+      "sha256": "5527f85815ec0ecf23c366ebf5a0210fe1c48ad6a2c3409197ff6bbb2b216977",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--dark--desktop.png",
+      "sha256": "8a652e0475b84ce1fc615a456b5ad0701a32e6f8c6e06a88ae0f095b703e2d3e",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -338,12 +405,12 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "d736d48495dad46203060f07dbb374bdf421784758461873211783483be475f7",
+      "sha256": "418b184487c545d7df832716815904964a2fd307b9a76885abd0cae83f208833",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -355,12 +422,12 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "f7a4f21784ba7e95c2271b731c8104537210721ff2d1f4fb9889aa02ea75d62f",
+      "sha256": "109fe53fa981203c67046fbd9607002872dfeba685f4fd29ebd6bc765db49082",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -372,12 +439,63 @@
         "height": 900
       },
       "file": "changelog--light--desktop.png",
-      "sha256": "7fea9f78e06b54be826d94fa35245f1f960e090dbe6ad01555d7b556e6568acf",
+      "sha256": "737b5d43f82ecd50d94bcee9f8ccdc9e9cfa8bc1bc11e1d3a6a0f80ab6fe3352",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--light--desktop.png",
+      "sha256": "0fbd21f8700568a05e478dba450dd76ce9d33a4b3ca28f3679f2c3405e4de9d2",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--light--desktop.png",
+      "sha256": "c29623d41436960f360c0eaa7bcffa9dd26546a150f2d8e9e3d6800ae36b3a89",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--light--desktop.png",
+      "sha256": "f611b009df2bc88c94810d8ce502c427d257b8ba7a4a0ac84a2e663daf33f3e8",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -389,12 +507,12 @@
         "height": 900
       },
       "file": "home--ambient--desktop.png",
-      "sha256": "8596728bad10a82a0de92c8fef1878f894a9c094a4aa4f17d7452e0e79507b6d",
+      "sha256": "09c63d784d34b6ddda271ddc536b3d570628ca1907083eb9754c1f16aaca71c1",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -406,12 +524,12 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "e3b6f4fbf3233ff950f3fc74578b61e0bf02decf6cd85e753aebf63942c772db",
+      "sha256": "d2685403e87a407126fca65120f69d08f6e5dfe7c3371a2b254ce13d634b5efd",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -423,12 +541,63 @@
         "height": 900
       },
       "file": "changelog--ambient--desktop.png",
-      "sha256": "f7d41eff1b37f564bc08921d63bf8788b69d386cc626489739b1b7bcecbefe5d",
+      "sha256": "df342316aeae744c47e606471ef925f0dfa2ff38d148a63a48c695117066e11f",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--ambient--desktop.png",
+      "sha256": "09273e5a24604ff467e9e97df481f44e829a29950e60eee76c390942f27c4cc8",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--ambient--desktop.png",
+      "sha256": "5c4277764f2105880500c98d3a142a30a624fe88ca03d958c7f890f2d21f126c",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--ambient--desktop.png",
+      "sha256": "870129fe20a6224189036b385333f3cb7c980728d16d0ffd4a909a9cb3e28a13",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -440,12 +609,12 @@
         "height": 900
       },
       "file": "home--warm--desktop.png",
-      "sha256": "37759c0554360163447a6fe42cc45ef62d1f6430d1360b461400262dc8c51d84",
+      "sha256": "030aa0b8200ec19e82bb0258937238c4059c2f932b2441a169472a5f053acc79",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -457,12 +626,12 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "a42df01ab298156194283b28968427fd0c306edfe685c29238dc6b4fed6aa57d",
+      "sha256": "6b3e19bd9de395778b99baf0f67b9238e3231ceba0287e9b9e425f1af3cd44da",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -474,12 +643,63 @@
         "height": 900
       },
       "file": "changelog--warm--desktop.png",
-      "sha256": "711491674d2498c9fe7e819c3ea7fa95cafa6109343fd3a2b2ca32cfad93006a",
+      "sha256": "47fb5c1ce227ad67cf4a3b6f790e273ba2868b5c611cdbd7dc308810405067fe",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--warm--desktop.png",
+      "sha256": "a57ee1e0e98c118aac34ce7ce1a1a628adad5cefc2b2a8921eb92c69e52802b1",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--warm--desktop.png",
+      "sha256": "34197f04b4fd9f7fb5dfbb2c5607c35f56d1fd81e69879e22be8dc4f2b941fb1",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--warm--desktop.png",
+      "sha256": "bfb3b02c9006a84567fb1af146e99ca17eed2a864a961ad0fc3349babdc566bc",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -491,12 +711,12 @@
         "height": 900
       },
       "file": "home--cool--desktop.png",
-      "sha256": "15fbccb38463961e11f16395fa62d11b2b9173172e60f8457e7b340e6865248d",
+      "sha256": "70524d9f771c81bb17ea6b12d5b452a4c5c3d311df731b7d6b7f156730ccd71b",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -508,12 +728,12 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "88bd764ed233f2bc71ffeeb3ce97b17b574d05d4cf11517a6279d03245b828b7",
+      "sha256": "6230cde042b9b2d990a0c9af13030a3b2e010484097319ab82d1c60c8ce0d5ca",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -525,12 +745,63 @@
         "height": 900
       },
       "file": "changelog--cool--desktop.png",
-      "sha256": "e5207bca5ce50309d28a9a95416f4319fde5cb0c940c4e6c1852c4314361370b",
+      "sha256": "b2d8a0ba63ee71cd26f916747f88be4f451a511e2baadfd984f7f3e68eb7f1e5",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--cool--desktop.png",
+      "sha256": "dfa414029906d4e10e1b05c2efb6f3f5c10398915517de26aa8c853ef71d330f",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--cool--desktop.png",
+      "sha256": "b08c367c3ec421767dd2e550f92507b92bfa4f4792f13b700bb980b405a5c21b",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--cool--desktop.png",
+      "sha256": "fcc9e97f552a27b5b1bac1d94d35d2cd88fcc4c2ae9e84753a15b878a1c648a9",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -542,12 +813,12 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "118f1b352e639c70a6c310702d962d575c5faa3d1ac37d781ef10ba88f99b299",
+      "sha256": "547db4f6241ee9f95dbea47751464195a2cd80874ada89a089d6fd688f8c094d",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -559,12 +830,12 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "99ad67facca5edd666f9b27d724fe3234a40a213724e75f010d6c1bb5a3b7f0f",
+      "sha256": "21cab74876390b8c4f6a428fc5fbe5e64ee005c7752e27fbc738e08c9f820efa",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -576,12 +847,63 @@
         "height": 900
       },
       "file": "changelog--lava--desktop.png",
-      "sha256": "15b35617c071d94c122f8c8dd6006d6512f270302659c63754a2779382ca82d0",
+      "sha256": "d30939901d65c12f7c00d55061b0e137e74556e420c7e68ecd5552d2ca05ed2f",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--lava--desktop.png",
+      "sha256": "a111417d847f937abff45285dcf520ad5a806fb0f3b928f7da5272c1927aa123",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--lava--desktop.png",
+      "sha256": "fbadc4c2f6c39538a728f463ee4b8ebb3fb78cb81fec8e536ee7df6d48640d09",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--lava--desktop.png",
+      "sha256": "d7cfeae6249232db8f57634ba67f21099411acb6b012411aec66c4ac22a2c8af",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -593,12 +915,12 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "38837fbb24fd500e17d6e8dc987e54f5f27a4b1650ebb28b92d3a0f754066259",
+      "sha256": "9df738f2d687223e5b9979d32b75a8ddfb72779ad43b11ac8485cc811f81cc69",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -610,12 +932,12 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "22ff1522cdf27a014585a813aa4aaf06694c7e0f852b33e8db2517e94d750214",
+      "sha256": "dc33f67d639b889a1a1074672c6e99a62ee62f7639a47f5af790f5e5b8890209",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -627,12 +949,63 @@
         "height": 900
       },
       "file": "changelog--high-contrast--desktop.png",
-      "sha256": "b51d42cc412f2ba464732dfe55c6199e2cc299dc758a0568466a56ef3ed5dc04",
+      "sha256": "1c939c6244f975451e2b14ea29d830dc68fa540a2941b4e1ef6d95f5c6fbaf0d",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "community--high-contrast--desktop.png",
+      "sha256": "d82aba883f88b2c4bccfd5bf56228c08c1acc028ca86b351284f983cb5957f04",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--high-contrast--desktop.png",
+      "sha256": "4ffb45b0c487ee82e5c266e0a67f4f0ea9f05bc8aea22cda8530d74db224f791",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-directors-report--high-contrast--desktop.png",
+      "sha256": "746f543ab382565c6c223f6588ac3a5e0428ef2d24a9204f212643d47e80283e",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -644,12 +1017,12 @@
         "height": 844
       },
       "file": "home--dark--mobile.png",
-      "sha256": "738edfc85cfe10e7d8ce485b5bc29b2e22f8eb9f2e79889b20b1d8a6ab611fb6",
+      "sha256": "9bffdbf00408acb073772186c6a72e5ef0c55ebc24869491c3cb0ad92f697eff",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -661,12 +1034,12 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "d09f597148583bf3f893836ed70abae3850c408835b93250ce600ea0ce0c40d4",
+      "sha256": "067a44c8c6f7436d96b52dbc4a649adba8b23112ece9747554313afcf4aa1390",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -678,12 +1051,63 @@
         "height": 844
       },
       "file": "changelog--dark--mobile.png",
-      "sha256": "054c7bfdefd40f8bd5d87a3da8579cf7ea61383036339f4d86e1d42b7b514551",
+      "sha256": "ef451b44fb78378d2cebd0b9d3822c081b4c198e78c3b8534269b42312541b05",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--dark--mobile.png",
+      "sha256": "31fb9398652cd0ee643848794cff5562bb681e391ea59e117cd67930bef4a5e2",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--dark--mobile.png",
+      "sha256": "f82f09197b4306633b18cc1806f02cf84070a9748ba7a1ce514ff62964efe74c",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--dark--mobile.png",
+      "sha256": "7bf5bb68fd7672cedca93346bbcadfd7c34816f5cd9ff3c3534d2ed4b34798ee",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -695,12 +1119,12 @@
         "height": 844
       },
       "file": "home--light--mobile.png",
-      "sha256": "b6c3c934bab9a5712253c406760ceda8872ad2e219e1f9341ae340734390471a",
+      "sha256": "c2c18638ea8d515d5d30f31a63656508ab8711110c646b926ab872eebb9dbd1f",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -712,12 +1136,12 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "e3d2f56b389e770b64b8bea3cf2efdfe627a6d806ff2f3166aa6fd2c6adabb6f",
+      "sha256": "5aa1ec96509187ff3aea2bc1d79dd6d552dba4c92d31c09b74ad52ed1d89f699",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -729,12 +1153,63 @@
         "height": 844
       },
       "file": "changelog--light--mobile.png",
-      "sha256": "bdaf5ad998b7b12cea497b5b613ca7912887900f6031a4a2e5e1939b9c43aa52",
+      "sha256": "6ed52e2a5d79d451f4fa09d9a663d69d4a040e644090433f01370ee2943199df",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--light--mobile.png",
+      "sha256": "c1289f1833073ac775bcbe5c776b34615b96f93c3bf5b32254240447f4e4f7bb",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--light--mobile.png",
+      "sha256": "6e9e78d94055a5ec12123b7440762816fa5d284823bedfa7d1d94879e80064e4",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--light--mobile.png",
+      "sha256": "e25c941b82e81d91381e627fc92c5a04c7d18546ee87a339e547c8735c102f6e",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -746,12 +1221,12 @@
         "height": 844
       },
       "file": "home--ambient--mobile.png",
-      "sha256": "bc23211ae6cb0e8b00f1b2ba7504afb1cb3164e0125bce0ca5ed132d261176d2",
+      "sha256": "24759206cc062194ec88eb53c561d3a15181fa10d363a23a01f0a327118b118a",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -763,12 +1238,12 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "2a72490b196d305c7a4893038c6b770be48840ad06c2264f3adb7c25d019651e",
+      "sha256": "7febc59f95437690d2efbe908aba446ab8bc945ed6184feb901de4603df0d578",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -780,12 +1255,63 @@
         "height": 844
       },
       "file": "changelog--ambient--mobile.png",
-      "sha256": "f4751d595e974914fddbcd96904ef90e2781546cd27d5cd5520b8ed2a7e9b709",
+      "sha256": "84d718082e05e46040a96a6b99c132ff6400c5b11859d9fe2c0ca4c0b22beb43",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--ambient--mobile.png",
+      "sha256": "a6db4a5bd2cae653c7adfb1cd4f345a16ec4c557ce933fec229bd0ddbb2e0192",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--ambient--mobile.png",
+      "sha256": "9766eb0b9208836490e142a414debe567a674ca3b724ae72c56e562d9bdd6b6b",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--ambient--mobile.png",
+      "sha256": "7fee29caf38066c2238bb6d2e9c7368278f0d0dd8e59e45b7c4adeee46f10b5d",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -797,12 +1323,12 @@
         "height": 844
       },
       "file": "home--warm--mobile.png",
-      "sha256": "23e34d61e8d5b4a6b97c426f9a8f0f488eba6bfb24e9c56d6e9156e1c9389201",
+      "sha256": "dd6467aa2db736202034eb8ebfa20748f96d2a5664090deb931b24dd513a98f5",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -814,12 +1340,12 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "e60a4e6e3373c5a1970cd53de27b832786360f909103481e85989d244207f540",
+      "sha256": "06f91c2616d0f8357b90ada619a1e32f752cabc2145c3735da3ab868f75ed67b",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -831,12 +1357,63 @@
         "height": 844
       },
       "file": "changelog--warm--mobile.png",
-      "sha256": "6339f0693e20a7c5636618d3802296a5f7ca2cef0f16df7b1926ddfc07e53857",
+      "sha256": "bde0467ef61362fc3a57f97aa185d6e641a7844cf346877178351eaf1a997740",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--warm--mobile.png",
+      "sha256": "e038e94b1a5da3f8e94b1cb582f0294a37e0536e36ca46f8a2f5be7e72b90b49",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--warm--mobile.png",
+      "sha256": "6351e53883310fe07af41570cf9a1bd2d1e1f3dddc81bcb37b46d1b047dcd241",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--warm--mobile.png",
+      "sha256": "366c219e659ac20adc2752265f34937d1322d31fcd56af1285985d75037f359d",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -848,12 +1425,12 @@
         "height": 844
       },
       "file": "home--cool--mobile.png",
-      "sha256": "303812bcb65d8e6500aaddb641a7748d6d97307ab1536edd8d33fc7309dc6f9e",
+      "sha256": "5bf6fce6e068d53eddce9b7869c3c2eb2abb916eb16aeced9c9b402757b5aa2c",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -865,12 +1442,12 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "3690284eee800810ce3a382d6d32918f236bab212d360642b4f612957f39b987",
+      "sha256": "ff6fbb83953c55b775410dc5a3cf36ef4ca4e5b20db6b840666b771a8626b3d6",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -882,12 +1459,63 @@
         "height": 844
       },
       "file": "changelog--cool--mobile.png",
-      "sha256": "7d20d0fc9941b108afdbbf794e185b44ffe0e8692d3ed27a19dbbb0ec166346f",
+      "sha256": "b6e7bfbb8d10f47a3bb9a4caa5bc7cba35e27e56bc7c38a125f8cb82f80a1ed9",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--cool--mobile.png",
+      "sha256": "4a093322f08ab3edc50e68d9a7ef15de22698f9d39c682a298e2b49d2b833adf",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--cool--mobile.png",
+      "sha256": "7898cf78860dcc06982f70505baac1c10b0bd6d14f19e818aeb3735dcda0e78e",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--cool--mobile.png",
+      "sha256": "2fc644658ed3a9cd9ece65a8df6af9b741e3170a530d2865fd220ebd4eaa6687",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -899,12 +1527,12 @@
         "height": 844
       },
       "file": "home--lava--mobile.png",
-      "sha256": "4dc70cb5768cb64ff0661c963e8307ea917c5cdfb57beeebe3c17e75d7db85d8",
+      "sha256": "67f4cce41a0ab26fec1428298a10331af207358b5c4bea8d4c1263a7f5f5170a",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -916,12 +1544,12 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "d53a81c7f405f51455b81dacfa3cd5dec0bcc49f00b3d21405c9070d6109fa6b",
+      "sha256": "5e4e2e94299309ba00ce05637365047d2b93568accb01e0099c33bb334198c02",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -933,12 +1561,63 @@
         "height": 844
       },
       "file": "changelog--lava--mobile.png",
-      "sha256": "c2d0f76d70f60747b37f382ef5274c3770f8270dbb452733966275ae0a431edc",
+      "sha256": "91c666578542e9e5e5909564daea9b81295a610287fd2f1095ce1a0ffa43f500",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--lava--mobile.png",
+      "sha256": "194d715788b366ad8c4cc0f7a82c1bd4504b9e293bde5160b77939f8d97c0131",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--lava--mobile.png",
+      "sha256": "312995fe1ac151ad79ccccdf0a1c43bf4b62fe87d599b260954cdc4d72a6a284",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--lava--mobile.png",
+      "sha256": "e3a217951f8ff8482de842e6800de53c56ad38f1872791aad98b0fe196f67e04",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -950,12 +1629,12 @@
         "height": 844
       },
       "file": "home--high-contrast--mobile.png",
-      "sha256": "fe13b66c968963c831847c48040fcb17e0e6f82018a905bd3ca41cd8136a23bd",
+      "sha256": "5c25751a2b3372800200ae5f6bc168d7a056178b1dfee62a0256228aeb6dc9cf",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -967,12 +1646,12 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "a9da641e1e0ecfe468761eb1026ec4dcbfc0f704d73675140ffcc629e7b40520",
+      "sha256": "471ee3456de67f4283c71c9c0287b1e5d7f8b69b075d3b72cef56bf5732f1538",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
       }
     },
     {
@@ -984,12 +1663,63 @@
         "height": 844
       },
       "file": "changelog--high-contrast--mobile.png",
-      "sha256": "c093819038817ad625991f7666b7f10dceb21bac6ebe5daa69517056739f9728",
+      "sha256": "d438406fe468954453ce9533aa39e698e887f23de7571b0b5e1474337434124a",
       "page": "/changelog/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex with recovery_review and release_path"
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "community--high-contrast--mobile.png",
+      "sha256": "16f5071d923bba7e9ada9891822faa464aa25aa01866c5a2db01c4b0aff41585",
+      "page": "/community/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--high-contrast--mobile.png",
+      "sha256": "72bb211389207c4c0f77d2270528e3ec91e7d8f3a01c0ea84c60fff26c3caef1",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-directors-report--high-contrast--mobile.png",
+      "sha256": "208dc7634db5a0201c6972b68d8d6fc39be73ff0701254142b0959eb7e0bb2ae",
+      "page": "/news/directors-report/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex /root"
       }
     }
   ]

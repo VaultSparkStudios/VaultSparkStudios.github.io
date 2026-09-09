@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+/** @verification-scope content-release
+ * Conditional content preflight may exit before this gate; its --warn-only
+ * build invocation cannot certify ordinary gate execution or success.
+ */
 /**
  * Is this promotion candidate PURELY static content — nothing that could move
  * auth, data, or edge behaviour?

@@ -39,6 +39,10 @@ export function validateEvidenceGraph(graph) {
     }
     if (!Array.isArray(node.sources) || !node.sources.length) errors.push(`${node.id}: sources missing`);
     if (!Array.isArray(node.check) || node.check.length < 2) errors.push(`${node.id}: check command missing`);
+    if (node.builderArgs !== undefined && (!Array.isArray(node.builderArgs)
+      || node.builderArgs.some((arg) => typeof arg !== 'string' || !arg.trim()))) {
+      errors.push(node.id + ': builderArgs must be an array of non-empty strings');
+    }
     // alsoStage: sibling paths the builder writes alongside its output (e.g. the
     // append-only ledger a derived feed is computed from). Optional, but when
     // present every entry must be a real path string — a publisher that commits

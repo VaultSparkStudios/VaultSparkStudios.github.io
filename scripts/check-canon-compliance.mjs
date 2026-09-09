@@ -16,13 +16,6 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
-const { loadRegistry } = await import('./lib/load-registry.mjs');
-const { registry, path: registryPath } = loadRegistry(root);
-if (!registryPath) {
-  console.log('PROJECT_REGISTRY.json not found in local portfolio/ or sibling vaultspark-studio-ops/portfolio/ — skipping canon compliance.');
-  process.exit(0);
-}
-
 const args = process.argv.slice(2);
 const jsonOut = args.includes('--json');
 const strictMode = args.includes('--strict');
@@ -51,6 +44,13 @@ if (args.includes('--self-test')) {
     ? `check-canon-compliance self-test ✓  ${cases.length}/${cases.length}`
     : `check-canon-compliance self-test ✗  ${failed}/${cases.length} failing`);
   process.exit(failed === 0 ? 0 : 1);
+}
+
+const { loadRegistry } = await import('./lib/load-registry.mjs');
+const { registry, path: registryPath } = loadRegistry(root);
+if (!registryPath) {
+  console.log('PROJECT_REGISTRY.json not found in local portfolio/ or sibling vaultspark-studio-ops/portfolio/ — skipping canon compliance.');
+  process.exit(0);
 }
 
 const PUBLIC_AUDIENCES = new Set(['public-live', 'public-unlaunched', 'public-traction']);

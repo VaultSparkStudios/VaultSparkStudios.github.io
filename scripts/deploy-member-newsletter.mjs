@@ -132,6 +132,18 @@ async function deploy() {
   return true;
 }
 
+/** Keep secrets out of process arguments and inherited stderr. */
+function writeActionsSecret(value, run = execFileSync) {
+  return run('gh', ['secret', 'set', 'NEWSLETTER_SECRET'], {
+    cwd: ROOT, input: value, stdio: ['pipe', 'ignore', 'pipe'], windowsHide: true,
+  });
+}
+
+/** The function's own unauthenticated rejection, not an arbitrary edge error. */
+function isGuardRejection(status, body) {
+  return status === 401 && String(body).trim() === 'Unauthorized';
+}
+
 async function setSecret() {
   await assertProject();
   // A fresh 32-byte secret. Minted here so the value exists in exactly two
@@ -145,17 +157,17 @@ async function setSecret() {
     body: JSON.stringify([{ name: 'NEWSLETTER_SECRET', value }]),
   });
   if (!res.ok) {
-    console.error(redact(`✗ function secret: ${res.status} ${res.text.slice(0, 200)}`));
+    console.error(redact(`✗ function secret: ${res.status} ${res.text.split(value).join('[redacted]').slice(0, 200)}`));
     process.exitCode = 1;
     return false;
   }
   console.log(`✓ function secret: NEWSLETTER_SECRET set on ${PROJECT_REF}`);
 
   try {
-    execFileSync('gh', ['secret', 'set', 'NEWSLETTER_SECRET', '--body', value], { cwd: ROOT, stdio: ['ignore', 'ignore', 'pipe'], windowsHide: true });
+    writeActionsSecret(value);
     console.log('✓ Actions secret: NEWSLETTER_SECRET set on the repository');
   } catch (err) {
-    console.error(redact(`✗ Actions secret: ${err.message.slice(0, 200)}`));
+    console.error('✗ Actions secret update failed; provider output is withheld because it may contain the secret.');
     console.error('  Both sides must hold the SAME value; the function side is already set.');
     process.exitCode = 1;
     return false;
@@ -186,12 +198,23 @@ async function verify() {
     process.exitCode = 1;
     return false;
   }
-  console.log(`✓ deployed and guarded (${res.status}) — endpoint exists, unauthorised callers refused, no mail sent`);
+  if (!isGuardRejection(res.status, body)) {
+    console.error('✗ endpoint did not return the function’s expected unauthenticated rejection; guard verification is inconclusive');
+    process.exitCode = 1;
+    return false;
+  }
+  console.log(`✓ function returned its expected unauthenticated rejection (${res.status}); no authorised send was requested`);
   return true;
 }
 
 function selfTest() {
+  let secretInvocation = null;
+  const fixtureSecret = 'fixture-secret-never-a-real-credential';
+  writeActionsSecret(fixtureSecret, (...call) => { secretInvocation = call; });
   const checks = [
+    ['secret travels through stdin, never command arguments', secretInvocation[2].input === fixtureSecret && !secretInvocation[1].includes(fixtureSecret) && secretInvocation[2].stdio[0] === 'pipe'],
+    ['function rejection is recognized', isGuardRejection(401, 'Unauthorized')],
+    ['server, gateway and successful responses cannot prove the guard', [200, 204, 302, 403, 404, 429, 500, 503].every(status => !isGuardRejection(status, 'Unauthorized')) && !isGuardRejection(401, '{"message":"JWT rejected"}')],
     ['project ref is pinned to this site, not the shared slot', PROJECT_REF === 'fjnpzjjyhnpmunfoycrp'],
     ['entrypoint exists', fs.existsSync(path.join(ROOT, ENTRYPOINT))],
     ['config.toml pins verify_jwt=false for this slug',

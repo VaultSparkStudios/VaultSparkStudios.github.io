@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — alarms on committed production observation age independently of candidate builds.
 /**
  * CANON-036 alarm: does production serve what this repo built — and do we KNOW?
  *

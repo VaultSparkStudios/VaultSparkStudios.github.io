@@ -82,6 +82,8 @@ if (process.argv.includes('--self-test')) { runSelfTest(); process.exit(0); }
 // posture feeds first, then the manifest that bundles them, then the gate that
 // proves none of them is a hand-seed.
 const STEPS = [
+  ['build-ecosystem-stats-page.mjs', ['--check']],
+  ['check-deploy-parity.mjs', ['--local']],
   ['build-public-status.mjs', ['--self-test']],
   ['build-public-status.mjs', ['--check']],
   ['build-security-posture.mjs', ['--self-test']],

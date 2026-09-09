@@ -114,3 +114,46 @@ export function extractCurrentSessionIntent(markdown) {
   if (!match) return '';
   return match[1].trim().replace(/\r?\n+/g, ' ');
 }
+
+/** Current checkbox inventory; unchecked does not imply execution authorization. */
+export function parseCurrentTaskInventory(markdown) {
+  const tasks = [];
+  let section = null;
+  let current = null;
+  let currentSectionPresent = false;
+  const lines = String(markdown || '').replace(/<!--[^]*?-->/g, comment => comment.replace(/[^\r\n]/g, '')).split(/\r?\n/);
+  for (const [index, line] of lines.entries()) {
+    const heading = line.match(/^##\s+(.+?)\s*$/);
+    if (heading) {
+      section = /^Now(?:\s*\([^)]*\))?$/i.test(heading[1]) ? 'now'
+        : /^Human Action Required$/i.test(heading[1]) ? 'human' : null;
+      currentSectionPresent ||= section === 'now';
+      current = null;
+      continue;
+    }
+    if (!section) continue;
+    const checkbox = line.match(/^\s*-\s+\[([ xX])\]\s*(.*)$/);
+    if (checkbox) {
+      current = null;
+      if (checkbox[1] !== ' ') continue;
+      const rawItem = checkbox[2].trim();
+      const title = (rawItem.match(/\*\*(.+?)\*\*/)?.[1] || rawItem).replace(/\*\*/g, '').trim();
+      current = { section, line: index + 1, title, rawItem };
+      tasks.push(current);
+    } else if (current && /^\s+\S/.test(line)) {
+      current.rawItem += '\n' + line.trim();
+    } else if (line.trim()) {
+      current = null;
+    }
+  }
+  return { format: currentSectionPresent ? 'checkbox' : 'absent', tasks,
+    current: tasks.filter(task => task.section === 'now'),
+    human: tasks.filter(task => task.section === 'human') };
+}
+
+export function currentTaskInventoryLabel(markdown) {
+  const inventory = parseCurrentTaskInventory(markdown);
+  return inventory.format === 'checkbox'
+    ? `Open current tasks ${inventory.current.length} / Human-action entries ${inventory.human.length}`
+    : 'Current task inventory unavailable';
+}

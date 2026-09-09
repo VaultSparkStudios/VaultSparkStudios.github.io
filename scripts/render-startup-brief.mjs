@@ -19,7 +19,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { renderTitleHeader, renderLastCompleted, renderTestItNow } from './lib/brief-blocks.mjs';
-import { parseUnifiedItems } from './lib/task-board.mjs';
+import { parseUnifiedItems, currentTaskInventoryLabel } from './lib/task-board.mjs';
 import { loadPortfolioTaskBoards } from './lib/cross-repo-tasks.mjs';
 import { loadIgnisInsight } from './lib/ignis-insight.mjs';
 import { contextWindowForAgent } from './lib/model-router.mjs';
@@ -469,6 +469,7 @@ function autonomyCue(item) {
 
 // ── Parse TASK_BOARD ──────────────────────────────────────────────────────────
 const unifiedItems   = parseUnifiedItems(taskBoard);
+const inventoryLabel = unifiedItems.length ? null : currentTaskInventoryLabel(taskBoard);
 const openNow        = unifiedItems.filter((item) => item.status === 'unblocked');
 const openNext       = openNow.slice(3);
 const openBlocked    = unifiedItems.filter((item) =>
@@ -1303,6 +1304,7 @@ const lines = [
   row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})` : 'not found'}${revenueFreshness.stale ? '  ⚠ stale' : ''}`),
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
+  ...(inventoryLabel ? [row(inventoryLabel), row('Unchecked tasks require task-level triage.')] : []),
   row(`${sigCost}  Cost          ${costDetail}`),
   bot(),
   ``,
@@ -1418,7 +1420,7 @@ try {
 } catch { /* budget enforcement is advisory at render time */ }
 fs.writeFileSync(outputPath, briefBody, 'utf8');
 console.log(`✓ Startup brief → docs/STARTUP_BRIEF.md  (v3.2)`);
-console.log(`  Session ${currentSession} · SIL ${silTotal}/${silMax} · ${pct} · Unblocked ${openNow.length} / Blocked ${openBlocked.length}`);
+console.log(`  Session ${currentSession} · SIL ${silTotal}/${silMax} · ${pct} · ${inventoryLabel ?? (`Unblocked ${openNow.length} / Blocked ${openBlocked.length}`)}`);
 console.log(`  Signals: tests ${sigTests}  velocity ${sigVel}  runway ${sigRun}  genome ${sigGenome}  entropy ${sigEntropy}  cdr ${sigCdr}  patterns ${sigPatterns}  templates ${sigVer}  revenue ${sigRev}`);
 
 // ── R-H15 (S118 G4): record skill cost telemetry on every /start render ──────

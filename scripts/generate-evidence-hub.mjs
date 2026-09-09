@@ -38,6 +38,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
+import { injectSuite } from './build-intelligence-suite.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -259,7 +260,7 @@ function buildJsonLd(lanes) {
 
 export function buildPage(lanes, chrome) {
   const depth = '../';
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
+  return injectSuite(`<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb()}</script>
 <script type="application/ld+json">${buildJsonLd(lanes)}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
@@ -280,70 +281,36 @@ ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main conten
       </div>
     </div>
   </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section>${buildVerifySection()}</main>${chrome.footer}  ${chrome.ambient}
-${chrome.navSheet}<script src="${chrome.proofVerify}" defer></script>${HUB_SCRIPT}
+${chrome.navSheet}<script src="${chrome.themeToggle}" defer></script><script src="${chrome.proofVerify}" defer></script>${HUB_SCRIPT}
 </body></html>
-`;
+`, '/evidence/');
 }
 
 const NAV_LABEL = '<span class="dropdown-label dropdown-status-intel">Live Intelligence</span>';
-const NAV_LINK = '<a href="/evidence/" class="dropdown-link-intel">Evidence</a>';
-
-/**
- * Put the hub at the head of the nav group it is the front door to.
- *
- * The Studio > Live Intelligence group already lists Pulse, Oracle, IGNIS,
- * Atlas, Status, Stats and Proof — the exact surfaces this hub routes between —
- * so Evidence belongs first in that list, not as an eighth peer.
- *
- * Injected here rather than by propagate-nav.mjs, which is a documented
- * landmine: its hand-maintained NAV_GAMES/NAV_PROJECTS arrays are stale against
- * the registry-driven pages, and running it bare clobbered 126 pages in S329.
- * This is a single anchored, idempotent insertion that touches nothing else.
- */
-export function injectNavLink(html) {
-  if (html.includes(NAV_LINK)) return null;          // already present
-  if (!html.includes(NAV_LABEL)) return null;        // page has no such group
-  return html.replace(NAV_LABEL, NAV_LABEL + NAV_LINK);
+// Shared chrome is owned by propagate-nav.mjs and its route catalogs.
+// Validation never repairs another page, even in --apply mode.
+export function navHasEvidenceFirst(html) {
+  const nav = html.match(/<nav\b[^>]*class="nav-center"[^>]*>[\s\S]*?<\/nav>/)?.[0];
+  if (!nav || !nav.includes(NAV_LABEL)) return true; // utility page, no group
+  const group = nav.slice(nav.indexOf(NAV_LABEL) + NAV_LABEL.length).split('<div class="dropdown-divider">')[0];
+  const hrefs = [...group.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map((m) => m[1]);
+  return hrefs[0] === '/evidence/' && hrefs.filter((href) => href === '/evidence/').length === 1;
 }
 
-const FOOTER_ANCHOR = '<a href="/status/">Status</a>';
-const FOOTER_LINK = '<a href="/evidence/">Evidence</a>';
-
-function footerSpan(html) {
-  const start = html.indexOf('<footer class="site-footer"');
-  if (start < 0) return null;
-  const end = html.indexOf('</footer>', start);
-  return end < 0 ? null : { start, end };
-}
-
-/**
- * The header/footer contract (check-footer-contract, derived from index.html)
- * requires every header link to be reachable from the footer too — a reader who
- * scrolled past the nav must still be able to get anywhere the nav offered.
- * Adding Evidence to the Live Intelligence dropdown without the footer entry
- * correctly failed that gate.
- *
- * Scoped to the <footer> element on purpose: `<a href="/status/">Status</a>`
- * also occurs in the header nav, so an unscoped replace() hit the HEADER's first
- * match and left the footer untouched — producing a duplicate header link and
- * the identical gate failure it was meant to fix.
- */
-export function injectFooterLink(html) {
-  const span = footerSpan(html);
-  if (!span) return null;
-  const footer = html.slice(span.start, span.end);
-  if (footer.includes(FOOTER_LINK)) return null;
-  if (!footer.includes(FOOTER_ANCHOR)) return null;
-  const patched = footer.replace(FOOTER_ANCHOR, `${FOOTER_LINK}\n          ${FOOTER_ANCHOR}`);
-  return html.slice(0, span.start) + patched + html.slice(span.end);
-}
-
-/** Does the FOOTER — not the whole document — already satisfy the contract? */
+/** Check only the canonical Studio footer column, never a header lookalike. */
 export function footerHasLink(html) {
-  const span = footerSpan(html);
-  if (!span) return true;                            // no footer to satisfy
-  const footer = html.slice(span.start, span.end);
-  return !footer.includes(FOOTER_ANCHOR) || footer.includes(FOOTER_LINK);
+  const footer = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
+  return !footer || !footer.includes('<a href="/status/">Status</a>') || footer.includes('<a href="/evidence/">Evidence</a>');
+}
+
+export function validateChrome(chrome) {
+  if (!chrome.nav.includes('nav-item') || !chrome.nav.includes(NAV_LABEL) || !navHasEvidenceFirst(chrome.nav)) {
+    throw new Error('canonical nav missing Evidence first; run scripts/propagate-nav.mjs before generate-evidence-hub');
+  }
+  if (!chrome.footer.includes('<a href="/evidence/">Evidence</a>')) {
+    throw new Error('canonical footer missing Evidence; run scripts/propagate-nav.mjs before generate-evidence-hub');
+  }
+  return chrome;
 }
 
 /** Harvest shared chrome from a page this generator does not write (S305). */
@@ -369,8 +336,10 @@ function readChrome() {
   // fall back to the source name, which build-shell-assets rewrites.
   const manifestPath = join(ROOT, 'assets/shell-manifest.json');
   const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : { assets: {} };
+  const themeToggle = manifest.assets?.themeToggle?.path ? `/${manifest.assets.themeToggle.path}` : '/assets/theme-toggle.js';
   const proofVerify = manifest.assets?.proofVerify?.path ? `/${manifest.assets.proofVerify.path}` : '/assets/proof-verify.js';
-  return {
+  return validateChrome({
+    themeToggle,
     proofVerify,
     nav,
     footer: between('<footer class="site-footer"', '</footer>').replaceAll('../assets/', '../assets/'),
@@ -379,7 +348,7 @@ function readChrome() {
     themeBoot,
     style: (sample.match(/href="(?:\.\.\/)*(assets\/style\.shell-[a-f0-9]+\.css)"/) || [])[1] || 'assets/style.css',
     navSheet: (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0-9]+\.js" defer><\/script>/) || [''])[0],
-  };
+  });
 }
 
 function selfTest() {
@@ -411,7 +380,7 @@ function selfTest() {
   t('the verifier keeps the ids proof-verify.js looks up',
     ['proof-tiles', 'proof-run', 'proof-summary', 'proof-checks'].every((id) => verify.includes(`id="${id}"`)));
   t('the verify section is rendered inside main, before the footer', (() => {
-    const page = buildPage([], { style: 's', speculation: '', themeBoot: '', nav: '', footer: '<footer class="site-footer"></footer>', ambient: '', navSheet: '', proofVerify: '/assets/proof-verify.js' });
+    const page = buildPage([], { style: 's', speculation: '', themeBoot: '', nav: '', footer: '<footer class="site-footer"></footer>', ambient: '', navSheet: '', themeToggle: '/assets/theme-toggle.js', proofVerify: '/assets/proof-verify.js' });
     return page.indexOf('id="verify"') < page.indexOf('</main>') && page.includes('<script src="/assets/proof-verify.js" defer></script>');
   })());
 
@@ -423,18 +392,28 @@ function selfTest() {
   t('a week renders as days', describeAge('2026-08-25T12:00:00Z', now) === '7d ago');
   t('escaping is applied to lane text', buildCard({ id: 'x', label: 'L', question: '<b>q</b>', blurb: 'b', href: '/a/', linkLabel: 'go', feed: '/f.json' }).includes('&lt;b&gt;q&lt;/b&gt;'));
 
-  // The footer link must land in the FOOTER even though the same anchor text
-  // appears earlier in the header — the first version of this replaced the
-  // header's match, added a duplicate nav link, and left the gate failing.
-  const dual = '<header><a href="/status/">Status</a></header><footer class="site-footer"><a href="/status/">Status</a></footer>';
-  const injected = injectFooterLink(dual);
-  t('the footer link lands in the footer, not the header',
-    injected.indexOf(FOOTER_LINK) > injected.indexOf('<footer'));
-  t('the header copy is left untouched',
-    (injected.match(/<a href="\/evidence\/">Evidence<\/a>/g) || []).length === 1);
-  t('a page whose footer already has it is a no-op', injectFooterLink(injected) === null);
-  t('footerHasLink is judged on the footer alone',
-    footerHasLink('<header><a href="/evidence/">Evidence</a></header><footer class="site-footer"><a href="/status/">Status</a></footer>') === false);
+  const nav = '<nav class="nav-center"><div class="nav-item">' + NAV_LABEL + '<a href="/evidence/" class="active" aria-current="page">Evidence</a><a href="/status/">Status</a><div class="dropdown-divider"></div></div></nav>';
+  const footer = '<footer class="site-footer"><a href="/evidence/">Evidence</a><a href="/status/">Status</a></footer>';
+  t('canonical active Evidence link is accepted first', navHasEvidenceFirst(nav));
+  t('missing Evidence nav is rejected', !navHasEvidenceFirst(nav.replace('/evidence/', '/other/')));
+  t('duplicate Evidence nav is rejected', !navHasEvidenceFirst(nav.replace('/status/', '/evidence/')));
+  t('footer lookalike cannot satisfy nav', !navHasEvidenceFirst(nav.replace('/evidence/', '/other/') + footer));
+  t('Evidence after another link is rejected', !navHasEvidenceFirst(nav.replace(NAV_LABEL, NAV_LABEL + '<a href="/oracle/">Oracle</a>')));
+  t('canonical chrome remains unchanged across repeated validation', (() => {
+    const chrome = { nav, footer }; const before = JSON.stringify(chrome);
+    return validateChrome(validateChrome(chrome)) === chrome && JSON.stringify(chrome) === before;
+  })());
+  t('new page refuses missing canonical nav', (() => { try { validateChrome({nav: '', footer}); return false; } catch { return true; } })());
+  t('new page refuses missing canonical footer', (() => { try { validateChrome({nav, footer: ''}); return false; } catch { return true; } })());
+  t('footer link is required despite header lookalike', !footerHasLink(nav + footer.replace('/evidence/', '/other/')));
+  t('utility pages without shared chrome are unaffected', navHasEvidenceFirst('<main>utility</main>') && footerHasLink('<main>utility</main>'));
+  const shellFixture = { nav, footer, themeBoot: '', style: 'assets/style.css', speculation: '', ambient: '', navSheet: '', themeToggle: '/assets/theme-toggle.shell-test.js', proofVerify: '/assets/proof-verify.js' };
+  const page = buildPage([], shellFixture);
+  t('Evidence page reuses canonical secondary nav idempotently', injectSuite(page, '/evidence/') === page);
+  t('secondary nav marks Evidence as current', page.includes('<a href="/evidence/" aria-current="page"><span>Evidence</span>'));
+  t('theme picker uses canonical manifest-resolved shell exactly once', page.split('src="' + shellFixture.themeToggle + '"').length === 2);
+  const catalog = JSON.parse(readFileSync(join(ROOT, 'config/intelligence-suite.json'), 'utf8'));
+  t('canonical route catalog owns Evidence exactly once and first', catalog.routes[0].href === '/evidence/' && catalog.routes.filter((r) => r.href === '/evidence/').length === 1);
 
   const failed = results.filter(([, ok]) => !ok);
   for (const [n, ok] of results) console.log(`  ${ok ? '✓' : '⛔'} ${n}`);
@@ -454,39 +433,22 @@ if (problems.length) {
   process.exit(1);
 }
 
-/* Nav injection is judged independently of the page: a hub that is current must
-   still be reachable, so gating this on "the page changed" would leave it
-   permanently unlinked on a settled tree. */
+// Validate shared chrome before ANY output write. Repair belongs solely to
+// propagate-nav, including default/dry-run invocations of this generator.
 const navTargets = execFileSync('git', ['ls-files', '*.html'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
   .split('\n').map((s) => s.trim())
   .filter((f) => f && !f.startsWith('docs/') && !f.startsWith('lighthouse-results/') && !f.startsWith('.cache/'));
-let navLinked = 0;
-let footerLinked = 0;
-const navMissing = [];
-const footerMissing = [];
+const chromeMissing = [];
 for (const rel of navTargets) {
   const file = join(ROOT, rel);
   if (!existsSync(file)) continue;
-  let body = readFileSync(file, 'utf8');
-  let dirty = false;
-
-  if (body.includes(NAV_LABEL) && !body.includes(NAV_LINK)) {
-    if (CHECK) navMissing.push(rel);
-    else { const next = injectNavLink(body); if (next) { body = next; dirty = true; navLinked += 1; } }
-  }
-  // Header and footer travel together — the contract requires both.
-  if (!footerHasLink(body)) {
-    if (CHECK) footerMissing.push(rel);
-    else { const next = injectFooterLink(body); if (next) { body = next; dirty = true; footerLinked += 1; } }
-  }
-  if (dirty) writeFileSync(file, body, 'utf8');
+  const body = readFileSync(file, 'utf8');
+  if (!navHasEvidenceFirst(body) || !footerHasLink(body)) chromeMissing.push(rel);
 }
-if (navLinked) console.log(`[generate-evidence-hub] linked /evidence/ into the Live Intelligence nav on ${navLinked} page(s)`);
-if (footerLinked) console.log(`[generate-evidence-hub] linked /evidence/ into the Studio footer column on ${footerLinked} page(s)`);
-if (CHECK && (navMissing.length || footerMissing.length)) {
-  if (navMissing.length) console.error(`[generate-evidence-hub] --check: ${navMissing.length} page(s) have the Live Intelligence nav group but no /evidence/ link`);
-  if (footerMissing.length) console.error(`[generate-evidence-hub] --check: ${footerMissing.length} page(s) have the Studio footer column but no /evidence/ link`);
-  process.exitCode = 1;
+if (chromeMissing.length) {
+  console.error('[generate-evidence-hub] canonical Evidence navigation/footer missing or duplicated; run scripts/propagate-nav.mjs first:');
+  for (const rel of chromeMissing) console.error('  - ' + rel);
+  process.exit(1);
 }
 
 const html = buildPage(lanes, readChrome());

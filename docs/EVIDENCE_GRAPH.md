@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**41 nodes** · **27** participate in the publish cascade ·
+**46 nodes** · **27** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -47,6 +47,7 @@ flowchart LR
     n_status_["status/"]
     n_studio_pulse_["studio-pulse/"]
   end
+  n_api_analytics_summary_json["api/analytics-summary.json"]
   n_api_attention_pressure_json[["api/attention-pressure.json"]]
   n_config_cache_evidence_classification_json["config/cache-evidence-classification.json"]
   n_api_candidate_artifact_manifest_json[["api/candidate-artifact-manifest.json"]]
@@ -55,15 +56,18 @@ flowchart LR
   n_api_citation_json[["api/citation.json"]]
   n__cache_cta_readiness_json[[".cache/cta-readiness.json"]]
   n_api_deploy_currency_json[["api/deploy-currency.json"]]
+  n__headers["_headers"]
   n_api_evidence_graph_json[["api/evidence-graph.json"]]
   n_docs_EVIDENCE_GRAPH_md[["docs/EVIDENCE_GRAPH.md"]]
   n_evidence_index_html["evidence/index.html"]
   n_api_founder_presence_json["api/founder-presence.json"]
   n_api_heartbeat_json["api/heartbeat.json"]
   n_index_html[["index.html"]]
+  n_api_intelligence_budget_json["api/intelligence-budget.json"]
   n_api_intent_map_json[["api/intent-map.json"]]
   n_index_html["index.html"]
   n_data_lqip_map_json[["data/lqip-map.json"]]
+  n_api_nervous_system_json["api/nervous-system.json"]
   n_api_news_desk_json[["api/news-desk.json"]]
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
   n_api_news_desk_freshness_json[["api/news-desk-freshness.json"]]
@@ -86,6 +90,7 @@ flowchart LR
   n_api_status_proof_json[["api/status-proof.json"]]
   n_membership_index_html["membership/index.html"]
   n_api_tt_summary_json["api/tt-summary.json"]
+  n_api_ux_decision_ledger_json["api/ux-decision-ledger.json"]
   n_api_worker_route_history_json[["api/worker-route-history.json"]]
   n_changelog_index_html[["changelog/index.html"]]
   n__git_ --> n_api_ecosystem_velocity_json
@@ -100,7 +105,9 @@ flowchart LR
   n_api_ --> n_api_canonical_destination_reachability_json
   n_api_ --> n_api_changelog_narrative_json
   n_api_ --> n_api_deploy_currency_json
+  n_api_ --> n_api_intelligence_budget_json
   n_api_ --> n_api_intent_map_json
+  n_api_ --> n_api_nervous_system_json
   n_api_ --> n_api_newsroom_run_json
   n_api_ --> n_api_proof_aware_projects_json
   n_api_ --> n_api_public_status_json
@@ -108,9 +115,11 @@ flowchart LR
   n_api_ --> n_api_security_posture_json
   n_api_ --> n_api_staging_deploy_receipt_json
   n_api_ --> n_api_status_proof_json
+  n_api_ --> n_api_ux_decision_ledger_json
   n_api_ --> n_api_worker_route_history_json
   n_api_ --> n_changelog_index_html
   n_api_ --> n_data_stats_surface_json
+  n_api_analytics_summary_json --> n_data_stats_surface_json
   n_api_attention_pressure_json --> n_api_status_proof_json
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
   n_api_candidate_artifact_manifest_json --> n_api_staging_deploy_receipt_json
@@ -120,6 +129,7 @@ flowchart LR
   n_api_deploy_currency_json --> n_api_status_proof_json
   n_api_deploy_currency_json --> n_docs_STARTUP_BRIEF_md
   n_api_heartbeat_json --> n_api_public_status_json
+  n_api_nervous_system_json --> n_api_intelligence_budget_json
   n_api_news_desk_engagement_json --> n_news_index_html
   n_api_news_desk_freshness_json --> n_index_html
   n_api_news_desk_freshness_json --> n_news_index_html
@@ -131,7 +141,9 @@ flowchart LR
   n_api_newsroom_run_json --> n_api_status_proof_json
   n_api_public_intelligence_json --> n_api_candidate_artifact_manifest_json
   n_api_public_intelligence_json --> n_api_citation_json
+  n_api_public_intelligence_json --> n_api_intelligence_budget_json
   n_api_public_intelligence_json --> n_api_intent_map_json
+  n_api_public_intelligence_json --> n_api_nervous_system_json
   n_api_public_intelligence_json --> n_api_public_status_json
   n_api_public_status_json --> n_api_intent_map_json
   n_api_public_status_json --> n_api_status_proof_json
@@ -141,7 +153,10 @@ flowchart LR
   n_api_staging_deploy_receipt_json --> n_api_release_proof_json
   n_api_status_proof_json --> n_api_citation_json
   n_api_status_proof_json --> n_data_stats_surface_json
+  n_api_ux_decision_ledger_json --> n_api_intelligence_budget_json
+  n_api_ux_decision_ledger_json --> n_api_nervous_system_json
   n_api_worker_route_history_json --> n_api_public_status_json
+  n_assets_ --> n__headers
   n_assets_ --> n_api_candidate_artifact_manifest_json
   n_assets_ --> n_api_security_posture_json
   n_assets_ --> n_data_lqip_map_json
@@ -152,10 +167,14 @@ flowchart LR
   n_config_ --> n_docs_EVIDENCE_GRAPH_md
   n_context_ --> n_api_founder_presence_json
   n_context_ --> n_api_heartbeat_json
+  n_context_ --> n_api_intelligence_budget_json
+  n_context_ --> n_api_nervous_system_json
   n_context_ --> n_api_public_intelligence_json
   n_context_ --> n_api_release_proof_json
   n_context_ --> n_api_security_posture_json
   n_context_ --> n_docs_STARTUP_BRIEF_md
+  n_data_ --> n_api_analytics_summary_json
+  n_data_ --> n_api_intelligence_budget_json
   n_data_ --> n_api_news_desk_engagement_json
   n_data_ --> n_api_news_desk_freshness_json
   n_data_ --> n_api_news_desk_json
@@ -166,6 +185,7 @@ flowchart LR
   n_data_ --> n_api_release_proof_json
   n_data_ --> n_api_staging_deploy_receipt_json
   n_data_ --> n_api_tt_summary_json
+  n_data_ --> n_api_ux_decision_ledger_json
   n_data_ --> n_api_worker_route_history_json
   n_data_ --> n_data_lqip_map_json
   n_data_ --> n_data_stats_surface_json
@@ -191,6 +211,7 @@ flowchart LR
 
 | Node | Output | Cascade | Depends on | Feeds |
 |---|---|:--:|---|---|
+| `analytics-summary` | `api/analytics-summary.json` | — | — | `data/stats-surface.json` |
 | `attention-pressure` | `api/attention-pressure.json` | yes | — | `api/status-proof.json` |
 | `cache-evidence-classification` | `config/cache-evidence-classification.json` | — | — | — |
 | `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json`<br>`index.html`<br>`membership/index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
@@ -199,15 +220,18 @@ flowchart LR
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
 | `cta-readiness` | `.cache/cta-readiness.json` | yes | — | — |
 | `deploy-currency` | `api/deploy-currency.json` | yes | `index.html` | `api/intent-map.json`<br>`api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
+| `early-hints-headers` | `_headers` | — | — | — |
 | `evidence-graph-agent` | `api/evidence-graph.json` | yes | — | — |
 | `evidence-graph-doc` | `docs/EVIDENCE_GRAPH.md` | yes | — | — |
 | `evidence-hub` | `evidence/index.html` | — | — | — |
 | `founder-presence` | `api/founder-presence.json` | — | — | — |
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `home-desk-module` | `index.html` | yes | `api/news-desk-freshness.json`<br>`api/news-desk.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
+| `intelligence-budget` | `api/intelligence-budget.json` | — | `api/nervous-system.json`<br>`api/public-intelligence.json`<br>`api/ux-decision-ledger.json` | — |
 | `intent-map` | `api/intent-map.json` | yes | `api/deploy-currency.json`<br>`api/news-desk.json`<br>`api/public-intelligence.json`<br>`api/public-status.json` | — |
 | `launch-age` | `index.html` | — | `api/public-status.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
 | `lqip-map` | `data/lqip-map.json` | yes | — | — |
+| `nervous-system` | `api/nervous-system.json` | — | `api/public-intelligence.json`<br>`api/ux-decision-ledger.json` | `api/intelligence-budget.json` |
 | `news-desk` | `api/news-desk.json` | yes | — | `api/intent-map.json`<br>`index.html` |
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
 | `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `index.html`<br>`news/index.html` |
@@ -219,17 +243,18 @@ flowchart LR
 | `oracle-velocity-public` | `api/ecosystem-velocity.json` | — | — | — |
 | `pathways-pages` | `pathways/builders/index.html` | — | — | — |
 | `proof-aware-projects` | `api/proof-aware-projects.json` | — | — | — |
-| `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/intent-map.json`<br>`api/public-status.json` |
+| `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/intelligence-budget.json`<br>`api/intent-map.json`<br>`api/nervous-system.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/intent-map.json`<br>`api/status-proof.json`<br>`data/stats-surface.json`<br>`index.html` |
 | `rank-climbers` | `api/rank-climbers.json` | — | — | — |
 | `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json`<br>`api/staging-deploy-receipt.json` | — |
 | `security-posture` | `api/security-posture.json` | yes | — | `api/status-proof.json` |
 | `staging-deploy-receipt` | `api/staging-deploy-receipt.json` | — | `api/candidate-artifact-manifest.json` | `api/release-proof.json` |
 | `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
-| `stats-surface` | `data/stats-surface.json` | yes | `api/news-desk-stats.json`<br>`api/public-status.json`<br>`api/status-proof.json` | — |
+| `stats-surface` | `data/stats-surface.json` | yes | `api/analytics-summary.json`<br>`api/news-desk-stats.json`<br>`api/public-status.json`<br>`api/status-proof.json` | — |
 | `status-proof` | `api/status-proof.json` | yes | `api/attention-pressure.json`<br>`api/canonical-destination-reachability.json`<br>`api/deploy-currency.json`<br>`api/newsroom-run.json`<br>`api/public-status.json`<br>`api/security-posture.json` | `api/citation.json`<br>`data/stats-surface.json` |
 | `surface-spine` | `membership/index.html` | — | — | `api/candidate-artifact-manifest.json` |
 | `tt-summary` | `api/tt-summary.json` | — | — | — |
+| `ux-decision-ledger` | `api/ux-decision-ledger.json` | — | — | `api/intelligence-budget.json`<br>`api/nervous-system.json` |
 | `worker-route-history` | `api/worker-route-history.json` | yes | — | `api/public-status.json` |
 | `you-asked-shipped` | `changelog/index.html` | yes | — | — |
 
@@ -237,6 +262,7 @@ flowchart LR
 
 | Node | Builder | Verify |
 |---|---|---|
+| `analytics-summary` | `scripts/build-analytics-summary.mjs` | `node scripts/build-analytics-summary.mjs --check` |
 | `attention-pressure` | `scripts/build-attention-pressure.mjs` | `node scripts/build-attention-pressure.mjs --check` |
 | `cache-evidence-classification` | `scripts/check-cache-evidence-classification.mjs` | `node scripts/check-cache-evidence-classification.mjs` |
 | `candidate-artifact-manifest` | `scripts/build-candidate-artifact-manifest.mjs` | `node scripts/build-candidate-artifact-manifest.mjs --check` |
@@ -245,15 +271,18 @@ flowchart LR
 | `citation` | `scripts/build-citation.mjs` | `node scripts/build-citation.mjs --check` |
 | `cta-readiness` | `scripts/check-cta-readiness.mjs` | `node scripts/check-cta-readiness.mjs --check` |
 | `deploy-currency` | `scripts/build-deploy-currency.mjs` | `node scripts/build-deploy-currency.mjs --check` |
+| `early-hints-headers` | `scripts/build-early-hints-headers.mjs` | `node scripts/build-early-hints-headers.mjs --check` |
 | `evidence-graph-agent` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
 | `evidence-graph-doc` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
 | `evidence-hub` | `scripts/generate-evidence-hub.mjs` | `node scripts/generate-evidence-hub.mjs --check` |
 | `founder-presence` | `scripts/generate-founder-presence.mjs` | `node scripts/generate-founder-presence.mjs --check` |
 | `heartbeat` | `scripts/generate-heartbeat.mjs` | `node scripts/generate-heartbeat.mjs --check` |
 | `home-desk-module` | `scripts/build-home-desk-module.mjs` | `node scripts/build-home-desk-module.mjs --check` |
+| `intelligence-budget` | `scripts/build-intelligence-budget.mjs` | `node scripts/build-intelligence-budget.mjs --check` |
 | `intent-map` | `scripts/build-intent-map.mjs` | `node scripts/build-intent-map.mjs --check` |
 | `launch-age` | `scripts/build-launch-age.mjs` | `node scripts/build-launch-age.mjs --check` |
 | `lqip-map` | `scripts/build-lqip-map.mjs` | `node scripts/build-lqip-map.mjs --check` |
+| `nervous-system` | `scripts/build-nervous-system.mjs` | `node scripts/build-nervous-system.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
 | `news-desk-freshness` | `scripts/build-news-freshness.mjs` | `node scripts/build-news-freshness.mjs --check` |
@@ -276,6 +305,7 @@ flowchart LR
 | `status-proof` | `scripts/build-status-proof.mjs` | `node scripts/build-status-proof.mjs --check --check-content` |
 | `surface-spine` | `scripts/apply-surface-spine.mjs` | `node scripts/apply-surface-spine.mjs --check` |
 | `tt-summary` | `scripts/build-tt-summary.mjs` | `node scripts/build-tt-summary.mjs --check` |
+| `ux-decision-ledger` | `scripts/build-ux-decision-ledger.mjs` | `node scripts/build-ux-decision-ledger.mjs --check` |
 | `worker-route-history` | `scripts/build-worker-route-history.mjs` | `node scripts/build-worker-route-history.mjs --check` |
 | `you-asked-shipped` | `scripts/build-you-asked-shipped.mjs` | `node scripts/build-you-asked-shipped.mjs --check` |
 
@@ -285,12 +315,12 @@ flowchart LR
 - `.github/` → `newsroom-run`, `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `attention-pressure`, `candidate-artifact-manifest`, `canonical-destination-reachability`, `changelog-narrative`, `cta-readiness`, `deploy-currency`, `intent-map`, `newsroom-run`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `worker-route-history`, `you-asked-shipped`
-- `assets/` → `candidate-artifact-manifest`, `lqip-map`, `pathways-pages`, `security-posture`
+- `api/` → `attention-pressure`, `candidate-artifact-manifest`, `canonical-destination-reachability`, `changelog-narrative`, `cta-readiness`, `deploy-currency`, `intelligence-budget`, `intent-map`, `nervous-system`, `newsroom-run`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`, `worker-route-history`, `you-asked-shipped`
+- `assets/` → `candidate-artifact-manifest`, `early-hints-headers`, `lqip-map`, `pathways-pages`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
-- `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `evidence-hub`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `pathways-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `worker-route-history`
+- `context/` → `founder-presence`, `heartbeat`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
+- `data/` → `analytics-summary`, `evidence-hub`, `intelligence-budget`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `pathways-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
 - `journal/` → `evidence-hub`, `pathways-pages`
 - `news/` → `news-visual-receipts`
 - `package.json` → `security-posture`
@@ -300,44 +330,49 @@ flowchart LR
 
 ## Build order
 
-1. `attention-pressure`
-2. `cache-evidence-classification`
-3. `canonical-destination-reachability`
-4. `changelog-narrative`
-5. `cta-readiness`
-6. `evidence-graph-agent`
-7. `evidence-graph-doc`
-8. `evidence-hub`
-9. `founder-presence`
-10. `heartbeat`
-11. `lqip-map`
-12. `news-desk`
-13. `news-desk-engagement`
-14. `news-desk-freshness`
-15. `news-desk-reactions`
-16. `news-desk-stats`
-17. `news-visual-receipts`
-18. `newsroom-run`
-19. `oracle-velocity-public`
-20. `pathways-pages`
-21. `proof-aware-projects`
-22. `public-intelligence`
-23. `rank-climbers`
-24. `security-posture`
-25. `surface-spine`
-26. `tt-summary`
-27. `worker-route-history`
-28. `you-asked-shipped`
-29. `home-desk-module`
-30. `news-pages`
-31. `public-status`
-32. `launch-age`
-33. `candidate-artifact-manifest`
-34. `deploy-currency`
-35. `intent-map`
-36. `staging-deploy-receipt`
-37. `startup-brief`
-38. `status-proof`
-39. `citation`
-40. `release-proof`
-41. `stats-surface`
+1. `analytics-summary`
+2. `attention-pressure`
+3. `cache-evidence-classification`
+4. `canonical-destination-reachability`
+5. `changelog-narrative`
+6. `cta-readiness`
+7. `early-hints-headers`
+8. `evidence-graph-agent`
+9. `evidence-graph-doc`
+10. `evidence-hub`
+11. `founder-presence`
+12. `heartbeat`
+13. `lqip-map`
+14. `news-desk`
+15. `news-desk-engagement`
+16. `news-desk-freshness`
+17. `news-desk-reactions`
+18. `news-desk-stats`
+19. `news-visual-receipts`
+20. `newsroom-run`
+21. `oracle-velocity-public`
+22. `pathways-pages`
+23. `proof-aware-projects`
+24. `public-intelligence`
+25. `rank-climbers`
+26. `security-posture`
+27. `surface-spine`
+28. `tt-summary`
+29. `ux-decision-ledger`
+30. `worker-route-history`
+31. `you-asked-shipped`
+32. `home-desk-module`
+33. `nervous-system`
+34. `news-pages`
+35. `public-status`
+36. `intelligence-budget`
+37. `launch-age`
+38. `candidate-artifact-manifest`
+39. `deploy-currency`
+40. `intent-map`
+41. `staging-deploy-receipt`
+42. `startup-brief`
+43. `status-proof`
+44. `citation`
+45. `release-proof`
+46. `stats-surface`

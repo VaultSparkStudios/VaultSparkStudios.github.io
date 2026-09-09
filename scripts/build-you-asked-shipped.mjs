@@ -20,9 +20,11 @@
  *   node scripts/build-you-asked-shipped.mjs --self-test
  */
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import path from 'node:path';
 import url from 'node:url';
-import { renderYasBox } from '../assets/lib/you-asked-shipped-render.mjs';
+import { renderYasBox, readerActionReceipts, renderReaderActions } from '../assets/lib/you-asked-shipped-render.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -103,6 +105,39 @@ if (SELF_TEST) {
   cases.push(['honest-dark collapses markers', emptied.includes(`${START}${END}`) && !emptied.includes('data-yas-ssr')]);
   cases.push(['re-fill after empty restores box', injectBox(emptied, box).includes('data-yas-ssr')]);
   cases.push(['no mount → null', injectBox('<div>nothing here</div>', box) === null]);
+
+  const snapshotPayload = { observedAt:'2026-08-08T12:00:00Z', minSignals:5, stories:[{slug:'2026-08-07/story',state:'sufficient',total:5}] };
+  const hash = (payload) => createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0,20);
+  const snapshot = {...snapshotPayload, receiptId:hash(snapshotPayload)};
+  const verifySnapshot = ({receiptId, ...payload}) => hash(payload) === receiptId;
+  const action = {id:'response-one',storySlug:'2026-08-07/story',sourceReceiptId:snapshot.receiptId,observedAt:snapshot.observedAt,actionAt:'2026-08-09T10:00:00Z',summary:'Filed a clearer <explanation>',actionHref:'/news/directors-report/'};
+  const options = {snapshots:[snapshot],verifySnapshot,routeExists:(href)=>['/news/2026-08-07/story/','/news/directors-report/'].includes(href)};
+  const contract = (patch={}, opts={}) => readerActionReceipts({date:'2026-08-09',readerActions:[{...action,...patch}]},{...options,...opts});
+  const valid = contract();
+  cases.push(['explicit action requires a hash-bound sufficient observation', valid.receipts.length===1 && valid.receipts[0].signals===5]);
+  cases.push(['absent declarations produce honest empty rather than inferred action', renderReaderActions(readerActionReceipts({date:'2026-08-09'},options)).includes('No reader-linked editorial actions')]);
+  for (const [name, patch] of Object.entries({ future:{actionAt:'2026-08-10T00:00:00Z'}, beforeObservation:{actionAt:'2026-08-07T00:00:00Z'}, invalidDate:{actionAt:'2026-02-30T00:00:00Z'}, mismatchedReceipt:{sourceReceiptId:'other'}, mismatchedObservation:{observedAt:'2026-08-08T13:00:00Z'}, missingAction:{summary:''}, unsafeRoute:{actionHref:'//evil.example/'}, missingRoute:{actionHref:'/news/missing/'} })) {
+    cases.push(['reader action rejects '+name,contract(patch).errors.length===1]);
+  }
+  const tinyPayload = {...snapshotPayload,stories:[{...snapshotPayload.stories[0],total:4}]};
+  const tiny = {...tinyPayload,receiptId:hash(tinyPayload)};
+  cases.push(['tiny counts never buy causal attribution',contract({sourceReceiptId:tiny.receiptId},{snapshots:[tiny]}).errors.length===1]);
+  cases.push(['tampered snapshot with unchanged receipt ID is rejected',contract({}, {snapshots:[{...snapshot,stories:[{...snapshot.stories[0],total:50}]}]}).errors.length===1]);
+  cases.push(['later observation cannot backfill an older report',readerActionReceipts({date:'2026-08-07',readerActions:[action]},options).errors.length===1]);
+  cases.push(['duplicate declarations cannot multiply one response',readerActionReceipts({date:'2026-08-09',readerActions:[action,action]},options).errors.length===1]);
+  const rendered = renderReaderActions(valid);
+  cases.push(['labels escaped and structured receipt cannot inject script', rendered.includes('&lt;explanation&gt;') && !rendered.includes('<explanation>') && rendered.includes('data-reader-action-receipts')]);
+  cases.push(['signals never masquerade as reader totals or ranks', rendered.includes('not unique readers or writer rankings')]);
+  cases.push(['rendering is deterministic',rendered===renderReaderActions(valid)]);
+  const malicious = contract({summary:'</script><x> & "quoted" \\ literal'});
+  const htmlReceipt = renderReaderActions(malicious);
+  const embedded = htmlReceipt.match(/<script type="application\/json" data-reader-action-receipts>([\s\S]*?)<\/script>/)?.[1];
+  cases.push(['embedded JSON round-trips malicious action text exactly', typeof embedded === 'string' && isDeepStrictEqual(JSON.parse(embedded), malicious)]);
+  cases.push(['embedded receipt contains no raw script terminator or opening tag', !embedded.includes('</script>') && !embedded.includes('<x>') && !htmlReceipt.includes('</script><x>')]);
+
+
+  const chronological = readerActionReceipts({date:'2026-08-09',readerActions:[{...action,id:'fractional',actionAt:'2026-08-09T10:00:00.100Z'},{...action,id:'whole-second',actionAt:'2026-08-09T10:00:00Z'}]},options);
+  cases.push(['mixed fractional and whole seconds sort chronologically',chronological.errors.length===0 && chronological.receipts.map((r)=>r.id).join(',')==='whole-second,fractional']);
 
   let ok = true;
   for (const [name, pass] of cases) {

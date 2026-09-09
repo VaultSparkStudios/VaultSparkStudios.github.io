@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+/** @verification-scope content-release
+ * Conditional content preflight may exit before this gate; its --warn-only
+ * build invocation cannot certify ordinary gate execution or success.
+ */
 /**
  * Can these specific files be promoted to production WITHOUT releasing the
  * fail-closed identity/Supabase promotion hold?

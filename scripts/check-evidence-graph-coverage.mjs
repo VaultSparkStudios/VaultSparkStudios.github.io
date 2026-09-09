@@ -2,7 +2,7 @@
 /**
  * check-evidence-graph-coverage.mjs  (S309)
  *
- * Ratchets the evidence graph toward covering every byte-checked generator.
+ * Ratchets the evidence graph toward covering every --check-gated generator.
  *
  * WHY THIS EXISTS. `resync-derived.mjs` repairs derived artifacts after a rebase
  * by walking the evidence graph. `check-publish-cascade-coverage.mjs` catches
@@ -12,7 +12,7 @@
  * "resync-derived: 9 artifacts rebuilt + staged" reads like completeness.
  *
  * Measured at introduction: 51 generators run with `--check` in build:check,
- * meaning 51 artifacts are byte-compared against their inputs on every run. The
+ * meaning 51 artifacts are checked against their inputs on every run. The
  * graph modeled 12. `proof-aware-projects` and `cta-readiness` both drifted in
  * S309 in exactly the way resync-derived exists to fix, and it was silent on
  * both, because neither was modeled.
@@ -36,6 +36,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { loadEvidenceGraph } from './lib/evidence-graph.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -43,9 +44,9 @@ const ROOT = resolve(__dirname, '..');
 const BASELINE = join(ROOT, 'config', 'evidence-graph-coverage.json');
 
 /**
- * A generator invoked with `--check` byte-compares its output against its
- * inputs, which is exactly the property that makes staleness matter after a
- * rebase. `check-*` scripts are excluded: they validate someone else's output
+ * A generator invoked with `--check` validates its output against its
+ * declared contract. Some contracts only validate shape or presence; the CLI
+ * flag alone does not prove an input/output drift comparison. `check-*` scripts are excluded: they validate someone else's output
  * rather than owning one, so they are not graph nodes.
  */
 export function checkedGenerators(stepsString) {
@@ -63,6 +64,32 @@ export function coverage(stepsString, graph) {
   return { generators, unmodeled, modeled: generators.length - unmodeled.length };
 }
 
+// These are reviewed contracts, not deductions from a --check flag. A changed
+// producer automatically loses its classification until its check is re-read.
+export function sourceFingerprint(source) {
+  return createHash('sha256').update(String(source).replace(/\r\n/g, '\n')).digest('hex');
+}
+
+export function evidenceLevels(generators, { root = ROOT, contracts, readSource = (gen) => readFileSync(join(root, gen), 'utf8') } = {}) {
+  if (!contracts) {
+    try { contracts = JSON.parse(readFileSync(join(root, 'config/evidence-graph-coverage.json'), 'utf8')).checkContracts || {}; }
+    catch { contracts = {}; }
+  }
+  return generators.map((generator) => {
+    const declared = contracts[generator];
+    let source;
+    try { source = readSource(generator); } catch {}
+    const valid = declared && ['shape-only', 'drift-comparing'].includes(declared.level) && typeof declared.scope === 'string' && declared.scope.length > 0 && source !== undefined && declared.sourceSha256 === sourceFingerprint(source);
+    return { generator, level: valid ? declared.level : 'unclassified', scope: valid ? declared.scope : null,
+      reason: valid ? 'reviewed source matches' : declared ? 'classification stale, invalid, or source unavailable' : 'check contract not reviewed' };
+  });
+}
+
+export function evidenceSummary(rows) {
+  const count = (level) => rows.filter((row) => row.level === level).length;
+  return count('drift-comparing') + ' drift-comparing / ' + count('shape-only') + ' shape-only / ' + count('unclassified') + ' unclassified; shape-only and unclassified success do not prove absence of drift';
+}
+
 function loadBaseline() {
   if (!existsSync(BASELINE)) return { unmodeled: Number.POSITIVE_INFINITY, note: 'no baseline yet' };
   return JSON.parse(readFileSync(BASELINE, 'utf8'));
@@ -73,17 +100,20 @@ function run() {
   const graph = loadEvidenceGraph(ROOT);
   const { generators, unmodeled, modeled } = coverage(steps, graph);
   const baseline = loadBaseline();
+  const levels = evidenceLevels(generators);
+  console.log('check evidence: ' + evidenceSummary(levels));
 
   if (process.argv.includes('--list')) {
-    console.log(`evidence-graph coverage: ${modeled}/${generators.length} byte-checked generator(s) modeled`);
-    for (const g of unmodeled) console.log(`  ⊘ ${g}`);
+    console.log(`evidence-graph coverage: ${modeled}/${generators.length} --check-gated generator(s) modeled`);
+    for (const row of levels) console.log('  ' + row.generator + ' [' + row.level + '] ' + (row.scope || row.reason));
     process.exit(0);
   }
 
   if (process.argv.includes('--update')) {
     writeFileSync(BASELINE, `${JSON.stringify({
+      ...baseline,
       schemaVersion: '1.0',
-      note: 'Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a byte-checked generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.',
+      note: 'Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a --check-gated generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.',
       unmodeled: unmodeled.length,
       total: generators.length,
       unmodeledGenerators: unmodeled,
@@ -96,7 +126,7 @@ function run() {
     const added = unmodeled.filter((g) => !(baseline.unmodeledGenerators || []).includes(g));
     console.error(`✗ check-evidence-graph-coverage: unmodeled generators rose ${baseline.unmodeled} → ${unmodeled.length}`);
     for (const g of added) console.error(`  ✗ ${g} runs with --check but is not in config/evidence-graph.json`);
-    console.error('  A byte-checked artifact outside the graph is invisible to resync-derived AND to');
+    console.error('  A --check-gated artifact outside the graph is invisible to resync-derived AND to');
     console.error('  check-publish-cascade-coverage — both will report success over the subset they know.');
     console.error('  fix: add a node with its REAL sources (read the generator; do not guess), then');
     console.error('       node scripts/check-evidence-graph-coverage.mjs --update');
@@ -109,7 +139,7 @@ function run() {
     process.exit(0);
   }
 
-  console.log(`evidence-graph coverage: ${modeled}/${generators.length} modeled · ${unmodeled.length} unmodeled (at baseline, tracked debt)`);
+  console.log(`evidence-graph coverage: ${modeled}/${generators.length} modeled · ${unmodeled.length} unmodeled (at baseline, tracked debt; --check contracts vary from shape to drift)`);
   process.exit(0);
 }
 
@@ -127,7 +157,7 @@ function selfTest() {
   // is not a graph node and must not inflate the debt into permanent noise.
   cases.push(['check-* scripts are not graph nodes', !c.generators.some((g) => g.includes('check-gamma'))]);
   // --self-test is not a byte comparison, so it implies nothing about staleness.
-  cases.push(['--self-test alone does not make a generator byte-checked', !c.generators.some((g) => g.includes('build-delta'))]);
+  cases.push(['--self-test alone does not make a generator --check-gated', !c.generators.some((g) => g.includes('build-delta'))]);
 
   // The live repo must actually satisfy its own ratchet.
   const liveSteps = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).scripts['build:check:steps'];
@@ -138,6 +168,21 @@ function selfTest() {
   // The drifter that motivated this gate must be modeled, or the fix rotted.
   cases.push(['proof-aware-projects is modeled (the S309 drifter)',
     !live.unmodeled.includes('scripts/build-proof-aware-projects.mjs')]);
+
+  const fixtureSource = 'if(check)compare(output,input);\n';
+  const fixtureContracts = {
+    drift: { level: 'drift-comparing', scope: 'output excluding timestamp', sourceSha256: sourceFingerprint(fixtureSource) },
+    shape: { level: 'shape-only', scope: 'presence and parseability', sourceSha256: sourceFingerprint(fixtureSource) },
+    stale: { level: 'drift-comparing', scope: 'output', sourceSha256: sourceFingerprint('old source') },
+    malformed: { level: 'clean', scope: 'output', sourceSha256: sourceFingerprint(fixtureSource) },
+  };
+  const classified = evidenceLevels(['drift','shape','unknown','stale','malformed','missing'], { contracts: fixtureContracts, readSource: (g) => { if(g === 'missing') throw new Error('absent'); return fixtureSource; } });
+  cases.push(['reviewed comparison and shape remain distinct', classified[0].level === 'drift-comparing' && classified[1].level === 'shape-only']);
+  cases.push(['unknown, stale, malformed and missing remain unclassified', classified.slice(2).every((r) => r.level === 'unclassified')]);
+  cases.push(['line ending changes preserve reviewed source identity', sourceFingerprint(fixtureSource) === sourceFingerprint(fixtureSource.replace(/\n/g, '\r\n'))]);
+  cases.push(['shape success is explicitly not drift evidence', evidenceSummary([classified[1]]).includes('0 drift-comparing / 1 shape-only / 0 unclassified') && evidenceSummary([classified[1]]).includes('do not prove absence of drift')]);
+  const reviewed = evidenceLevels(Object.keys(baseline.checkContracts || {}));
+  cases.push(['live reviewed contracts remain source-bound', reviewed.length >= 9 && reviewed.every((r) => r.level !== 'unclassified')]);
 
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));

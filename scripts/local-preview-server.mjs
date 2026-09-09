@@ -18,7 +18,8 @@ function parseHeadersFile() {
   for (const raw of fs.readFileSync(headersPath, 'utf8').split('\n')) {
     const line = raw.trim();
     if (!line || line.startsWith('#')) continue;
-    if (!line.startsWith(' ') && !line.startsWith('\t')) {
+    // Indentation belongs to the raw line; trimming first erases the header marker.
+    if (!/^[ \t]/.test(raw)) {
       currentPattern = line;
       rules[currentPattern] = [];
     } else if (currentPattern) {
@@ -169,9 +170,12 @@ const server = http.createServer((req, res) => {
   const canGzip = COMPRESSIBLE.has(ext) && acceptEncoding.includes('gzip');
 
   const pathname = new URL(req.url || '/', `http://${host}:${port}`).pathname;
+  // Mirror production caching for generated, content-addressed shell assets.
+  // They are preloaded by `_headers`; `no-store` forces a duplicate transfer.
+  const contentAddressedShell = /^\/assets\/[^/]+\.shell-[a-f0-9]{10}\.(?:css|js)$/i.test(pathname);
   const headers = {
     'Content-Type': contentType,
-    'Cache-Control': 'no-store',
+    'Cache-Control': contentAddressedShell ? 'public, max-age=31536000, immutable' : 'no-store',
   };
   if (canGzip) headers['Content-Encoding'] = 'gzip';
   if (canGzip) headers['Vary'] = 'Accept-Encoding';

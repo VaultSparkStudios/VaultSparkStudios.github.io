@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope deploy — live provider identity-link readiness observation.
 /**
  * Read-only pre-flight for Obelisk → Supabase identity linking.
  *

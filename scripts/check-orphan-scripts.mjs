@@ -48,10 +48,6 @@ const ALLOWLIST = {
     'Manual CANON-053 News proof: launches Chromium across 3 changed News routes, 7 themes, and desktop/mobile viewports, ' +
     'then checks visible copy, overflow, and non-blank pixels. Run during News visual changes; the hash-bound release receipt ' +
     'lives in docs/visual-qa/LATEST.json, so this browser-heavy proof is intentionally not duplicated inside build:check.',
-  'pre-push-scan.mjs':
-    'Invoked by the local .git/hooks/pre-push (hook v3), which is untracked and absent on CI. ' +
-    'The hook dependency is real but unscannable; documented here per gate contract.',
-
   // ── Session-protocol gates (S316). Delivered by studio-ops propagation. Their
   //    callers are the SKILL.md protocol files under ~/.claude/skills and
   //    ~/.agents/skills, which live OUTSIDE this repo and so are unscannable —
@@ -61,10 +57,6 @@ const ALLOWLIST = {
   //    skill?), not repository code, so a build-time verdict would be meaningless
   //    mid-session. Removing them instead would delete gates the arc protocol
   //    actively calls. ─────────────────────────────────────────────────────────
-  'check-writeback-currency.mjs':
-    'Session-lifecycle gate invoked by /start (arc §2 signal F7) and by the closeout completion assertion. ' +
-    'Detects a prior session that committed and pushed its work but never wrote back — the one cut-off shape ' +
-    'a clean working tree cannot reveal. Used live in S316 triage.',
   'check-protocol-skill-parity.mjs':
     'Structural parity gate invoked by /start, and named as the enforcement mechanism in studio-start SKILL.md ' +
     '("Parity with docs/SESSION_PROTOCOL.md §1 is enforced by ..."). Compares the protocol document against the ' +
@@ -76,12 +68,6 @@ const ALLOWLIST = {
   'generate-membership-access.mjs':
     'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
     'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',
-  'deploy-member-newsletter.mjs':
-    'Operator tool (S344): deploys supabase/functions/send-member-newsletter and sets NEWSLETTER_SECRET on '
-    + 'both the function and the GitHub Actions store. Deliberately NOT wired into build:check for the same reason '
-    + 'as deploy-desk-dispatch below — --deploy and --secret mutate production. It carries NO flag that can send: '
-    + 'the function has no dry-run, so an authorised POST mails every opted-in member, and --verify stops at the '
-    + '404->401 boundary instead. Must stay operator-invoked.',
   'deploy-desk-dispatch.mjs':
     'Operator tool (S308): provisions Supabase secrets, deploys supabase/functions/subscribe-desk-dispatch, ' +
     'and live-probes it. Deliberately NOT wired into build:check — --deploy mutates production and --verify ' +
@@ -98,9 +84,6 @@ const ALLOWLIST = {
     'Manual mobile-audit renderer — captures per-page mobile screenshots to docs/. Run on demand during UX passes.',
   'vision-truth-audit.mjs':
     'Manual max-plan vision audit — screenshots + canonical-truth manifests per page. Run on demand; heavy, never in build.',
-  'export-perf-history.mjs':
-    'Manual perf-history CSV exporter (S158). Run on demand to hand analysts a spreadsheet of the trend ledger.',
-
   // ── Operator actions / kill-switches / intake (privileged, human-initiated). ──
   'paste-credential.mjs':
     'Manual .txt→.env credential intake wrapper (secrets gateway). Human-initiated; never automated.',
@@ -108,13 +91,8 @@ const ALLOWLIST = {
     'Manual IGNIS global kill-switch (IGNIS_GLOBAL_PAUSE). Operator-only; invoked in an incident, never by CI.',
   'push-dispatch.mjs':
     'Manual VAPID test-push sender (S205). Run on demand to verify the web-push stack end-to-end.',
-  'check-deploy-tip.mjs':
-    'Deploy-strand guard (S184) invoked by the local pre-push hook (untracked, absent on CI). Also run manually before a push.',
   'check-cloudflare-web-analytics.mjs':
     'Manual Cloudflare Web Analytics configuration probe. It requires live Account Settings Read authority, which the scheduled analytics token intentionally does not have; run on demand after that narrow capability is provisioned, never in the offline build.',
-  'inject-game-push-cta.mjs':
-    'Manual injector (S216) — adds the push-CTA block to a new game page. Run once per new game, never in build.',
-
   // ── Periodic / event-driven ops (scheduled or triggered outside the build). ───
   'check-ignis-spend.mjs':
     'Reads today\'s IGNIS spend from Supabase (ignis_spend_today view). Periodic ops probe; needs live Supabase creds, not a build gate.',
@@ -122,8 +100,6 @@ const ALLOWLIST = {
     'Post-deploy production verification wave (S207). Run after a prod deploy; hits live URLs, not part of the offline build.',
   'sync-staging-headers.mjs':
     'Staging header-parity sync (S174) — run when _headers changes to mirror onto the Hetzner staging box.',
-  'check-nav-sheet-canary.mjs':
-    'Nav-sheet canary readout (S174). Run on demand when auditing the mobile nav-sheet flag cohort.',
   'check-obelisk-posture.mjs':
     'CANON-021 Obelisk posture inventory. Periodic posture snapshot; strategic review cadence, not a per-build gate.',
   'watch-registry-changes.mjs':

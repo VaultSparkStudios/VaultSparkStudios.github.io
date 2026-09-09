@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — local disk headroom and operator cleanup report.
 /**
  * Reports local disk headroom and project-local generated cleanup candidates.
  * It does not delete anything.

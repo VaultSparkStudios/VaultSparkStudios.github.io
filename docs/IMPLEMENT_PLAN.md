@@ -1,22 +1,53 @@
-# Implement Plan — S334 (2026-09-01)
+# S347 implementation plan
 
-Source: `docs/AUDIT_2026-08-31.json` (14 items). Re-sorted for EFFICIENCY, not priority:
-same-axis grouped, small 🔥 first, foundations before facades, token-cost item placed where
-its measurement lane can run, consolidations last.
+Source of truth: [AUDIT_2026-09-09.json](AUDIT_2026-09-09.json). Recovery boundary: 4c7cb57ee. The ranked audit score is separate from this dependency order. Default L2, then execute the finite L3 innovation reserve while the context meter permits.
 
-| Wave | Items | Rung | Why here |
-|---|---|---|---|
-| 1 — correctness + security | 6, 1, 7, 12 | L2 / L1 | Smallest verifiable fixes; builds the orphan/tombstone machinery waves 2 reuses |
-| 2 — structural wins | 2, 5, 10 | L1 / L2 | Consumes wave-1 tombstone machinery; deletes 6 pages, joins the .ai layer |
-| 3 — token | 4 | L2 | Standalone file, offline self-test, pays out every scheduled run |
-| 4 — perf | 8, 14 | L2 / L1 | Both need the CANON-053 rendered-pixel loop — batch the browser work |
-| 5 — consolidation | 3, 9, 13 | L1 | Largest; benefits from waves 1–2 having removed the noise |
-| 6 — flagship | 11 | L1 | Depends on item 5 making the .ai corpus discoverable |
+1. **verification-lock-ownership** — Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner. Test competing acquisitions, malformed and replaced locks, read-only diagnostics success/failure, and nested self-test preservation. Bind the outer suite receipt to an uninterrupted lock lifetime; exercise the real nested child mode in a temporary root.
 
-## Fork resolved (audit item 2)
+2. **scheduled-observation-truth** — Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout. Test clean, broken, silent, partial, skipped, malformed, contradictory, timeout and signal results; report names and coverage honestly. Inject a clock and request function to prove the deadline emits partial evidence without one further provider call.
 
-The audit flagged a founder fork: collapse all six Pathways, or keep `investors` + `press` as
-real guided routes. Resolved to **collapse all six to `/pathways/#anchor`** for this session.
-Rationale: reversible, zero content lost, and the current 530-byte pages convert nothing — a
-real investor/press route is a content commitment, not a refactor, so it belongs in a session
-with founder copy input. Recorded in DECISIONS.
+3. **current-task-inventory** — Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering. Test Now and Human Action Required bullets, comments, CRLF, continuations, checked rows, historical exclusion and legacy tables. Reconcile superseded current rows against committed decisions and render unsupported-format and needs-triage states explicitly.
+
+4. **resync-builder-arguments** — Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply. Test required arguments, unknown or malformed command declarations, dependency ordering and continued refusal of side-effecting builders. Use temporary fixture builders to prove a rebase repair rebuilds intended bytes and fails before staging on a bad command.
+
+5. **five-evidence-graph-nodes** — Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts. Test nav statistics to UX to nervous-system to budget ordering, CI propagation, shell-manifest to headers, cycles and declared companion Markdown staging. Verify each node using its real check; lower the coverage ratchet only by the measured added coverage and preserve publisher ownership.
+
+6. **parallel-build-dependencies** — Declare the actual dependent chain: commit map before feedback provenance, feedback before ship receipts and open-graph summary, then canonical AI output; retain independent parallel work. Use delayed fixture producers to prove consumers cannot run early and failed prerequisites stop dependent execution. Measure the representative phase and verify deterministic outputs on repeated unchanged inputs.
+
+7. **batched-tracked-inventory** — Measure Git subprocess count and elapsed time, then read tracked paths once; preserve exact-file and directory-descendant membership plus always-dirty untracked semantics. Test tracked files, directory prefixes, untracked paths, absent paths, globs and unusual filenames. Report measured before/after calls and time on the same graph; keep errors distinct and do not invent transcript token savings.
+
+8. **coverage-evidence-levels** — Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified. Test shape-only, drift-comparing and unclassified fixtures; ensure a successful shape check cannot certify unchanged output bytes. Carry the distinction into repair summaries and coverage documentation with measured current counts and conservative default classification.
+
+9. **postbuild-observation-lifecycle** — Run the actual postbuild chain once through the existing tracer; fail on incomplete execution or a finalized hash consuming exact complete HTML readFile bytes before a later content-changing write. Retain ordinary reads and no-op writes as evidence without inferring unmeasured dependencies. Bind invocation, complete command chain, source fingerprint and trace digest; test real failure propagation, byte/hash provenance, duplicate steps, missing/partial/corrupt evidence and same-step hash consumption before mutation. Test no-op transforms, plain analysis, unfinalized hashes, encoded reads and partial bytes; expose the exact failing pairs. Partial/chunked streams, Hash.copy, WebCrypto and arbitrary dataflow remain unmeasured. Identical full-file bytes conservatively associate every matching read path.
+
+10. **canonical-evidence-navigation** — Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator. Run both generators in normal order and twice; assert one link, no removal/readdition churn and current target routes. Inspect desktop and mobile navigation in all themes and verify keyboard and touch reachability of Evidence.
+
+11. **art-only-game-covers** — Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork. Test SVG output has no visible text lockups, regenerate all cover formats and preserve live tile labels. Inspect both featured and small tiles at desktop/mobile in every theme; verify image dimensions and loading behavior after asset rotation.
+
+12. **community-empty-member-link** — Normalize the display name and member identifier; render useful non-link text when no usable identifier is present. Exercise empty, whitespace, missing, normal and escaped names through real rendering; assert no empty links or invalid member targets. Run the actual Community accessibility case and inspect loading, populated and unnamed states at desktop/mobile in every theme.
+
+13. **mobile-search-clearance** — Remove the floating mobile obstruction while preserving reachable Search; provide close/Escape behavior, focus containment/restoration and a named input combobox linked to its result list and active option. Test loader-to-dialog reachability, keyboard cycles, close/reopen behavior and opened-dialog accessibility relationships. Inspect open/closed Search at desktop/mobile in every theme, verify content clearance and touch targets, and prove the old ARIA structure fails the actual axe regression.
+
+Freeze all source changes before full verification. Run focused tests first, then the full source-derived suite and Doctor, actual browser accessibility and theme/state matrix. Regenerate evidence only from observed results. Keep production release readiness distinct from a scoped static-content release and re-check staging/served receipts before promotion.
+
+Completion records must name actual changed files, tests, limitations and commits. A source fix may make its original baseline premise false; that is expected evidence of remediation, not permission to mark it shipped without tests. Historical owner decisions remain on TASK_BOARD and are reconciled without fabricated acceptance, credentials or traffic. No mail dispatch is authorized.
+
+Second-order discovery: **local-preview-header-parity** — fix raw indentation parsing; prove duplicate/scoped Link headers with an actual HTTP fixture and observe the corrected website response before collecting browser/performance evidence. Preserve the existing Link-only local contract.
+
+Second-order discovery: **conduit-public-narrative-eligibility** — Use a realistic public-file-touching chore negative control to prove the guard fails when removed; regenerate and inspect the returning homepage narrative in all themes and both widths. Preserve the existing cadence and explicit eligibility contract.
+
+Second-order discovery: **release-failure-file-evidence** — Exercise each real classifier with six failures and retain all bounded actionable references while preserving five prose records; distinguish truncation explicitly and regenerate the actual release receipt when its browser evidence is available.
+
+Second-wave implementation: **static-news-publication-dates** — Render a stable latest publication date and Latest editions heading; link to the dated cadence API instead of baking current age/cadence into cached HTML. Test a throwing clock, changed edition, empty/simulated data and unsafe dates; keep API freshness thresholds unchanged. Rebuild and inspect the News surface in all themes and widths; prove a day rollover alone cannot stale the HTML.
+
+Second-wave implementation: **declared-news-visual-diversity** — Compare at least three common normalized declared dimensions including scene archetype or focal arrangement; retain exact-scene comparisons and abstain on insufficient descriptors. Test different hashes with repeated declared shorthand, actual changed dimensions, missing/placeholders, composition requirements and deterministic input preservation. Surface declared comparison warnings and abstention counts in the existing visual receipt and promotion gate; do not claim pixel similarity or safe-zone measurement.
+
+Second-wave implementation: **commit-map-scan-honesty** — Use a 2001-record sentinel around the existing 2000-record ceiling and publish quota-satisfied, available-history-exhausted or scan-ceiling-reached states; Git errors and insufficient ceiling scans fail before overwrite. Test a 2050-automation window, exact ceiling, short local history, command failure and preserved existing output files. Regenerate from the synchronized candidate and verify scope is explicitly local available history, never a claim about all remote history.
+
+Second-wave implementation: **newsletter-operator-verification** — Pass the repository secret through gh stdin and suppress secret-bearing errors; accept only exact 401 Unauthorized as proof of the unauthenticated function guard. Test that success, redirects, gateway errors, rate limiting and other authentication bodies cannot prove the function guard; retain deployment and sending as separate operations. Run scoped status/verification only when authorized prerequisites are satisfied; do not deploy, update a secret or send mail as a side effect of these tests.
+
+Second-wave implementation: **reader-director-response-evidence** — Add optional report readerActions linked to a content-verified observation receipt, exact story/time, sufficient signal floor, chronological action and existing safe local candidate route. Render through the existing page writer. Test missing/insufficient observations, forged receipt hashes, duplicate IDs, chronological ordering, safe routes and embedded JSON terminators; keep absent observed stories unavailable. Inspect populated and honest empty action states; current real reports have no qualifying declared response, so publish no-recorded-actions rather than invent causality or rankings.
+
+Final admitted implementation: **mode-aware-verification-reachability** — Run the additions-only fixture aggregate, the mode-aware checker and mutation fixtures; prove the cache negative control fails. Keep this aggregate distinct from the final complete synchronized-candidate suite.
+
+Final verified-contract implementation: **member-feedback-payload-contract** — Corroborate the schema using a read-only catalog query on the intended project, keep existing UI/auth/RLS unchanged, and include the isolated browser regression in final candidate verification without inserting a real member signal.

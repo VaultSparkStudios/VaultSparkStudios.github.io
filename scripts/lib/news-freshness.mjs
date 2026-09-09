@@ -31,3 +31,15 @@ export function deriveDeskFreshness(days, { now = new Date(), dailyWindowDays = 
     publicationPolicy: 'Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot.',
   };
 }
+
+/** Static publication evidence has no wall-clock claim. Current cadence remains
+ * owned by the dated public freshness feed, never inferred from cached HTML. */
+export function staticDeskEvidence(days) {
+  const latestEditionDate = (days || []).filter((day) => day?.simulated !== true && /^\d{4}-\d{2}-\d{2}$/.test(day?.date || '')).map((day) => day.date).sort().at(-1) || null;
+  return { latestEditionDate, state: latestEditionDate ? 'published' : 'unavailable' };
+}
+
+export function renderStaticDeskEvidence(days) {
+  const evidence = staticDeskEvidence(days);
+  return '<div class="desk-panel" data-desk-freshness="' + evidence.state + '" style="padding:.85rem 1.1rem;margin:1rem 0;color:var(--desk-muted)"><strong style="color:var(--text)">Latest published evidence</strong> · ' + (evidence.latestEditionDate || 'not yet available') + ' · <a href="/api/news-desk-freshness.json" style="color:var(--gold)">Check the dated cadence report →</a></div>';
+}

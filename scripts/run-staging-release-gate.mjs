@@ -7,6 +7,7 @@
  * bounded test titles/messages; raw browser output is never persisted.
  */
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { compactBrowserFailures, summarizeBrowserFailures, runBrowserFailureEvidenceSelfTest } from './lib/browser-failure-evidence.mjs';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -132,27 +133,12 @@ export function classify({ exitCode, stats = {}, errors = [], held = [], heldSur
     heldSurfaces: [...heldSurfaces],
     reasons,
     failures: errors.slice(0, 5),
+    failureEvidence: summarizeBrowserFailures(errors),
   };
 }
 
 function compactErrors(report) {
-  const failures = [];
-  function visit(suite) {
-    for (const spec of suite?.specs || []) {
-      for (const test of spec.tests || []) {
-        const bad = (test.results || []).find((result) => result.status === 'failed' || result.status === 'timedOut');
-        if (!bad) continue;
-        failures.push({
-          title: String(spec.title || 'unnamed test').slice(0, 160),
-          project: String(test.projectName || 'unknown').slice(0, 40),
-          message: String(bad.error?.message || bad.status || 'failed').replace(/\x1b\[[0-9;]*m/g, '').slice(0, 500),
-        });
-      }
-    }
-    for (const child of suite?.suites || []) visit(child);
-  }
-  for (const suite of report?.suites || []) visit(suite);
-  return failures;
+  return compactBrowserFailures(report, { projectRoot: ROOT, allowedOrigins: [origin] });
 }
 
 function parseReport(stdout) {
@@ -174,6 +160,10 @@ function validateReceipt(receipt) {
 }
 
 function selfTest() {
+  const evidenceFailures = Array.from({ length: 6 }, (_, index) => ({ title: `failure ${index}`, project: 'chromium', message: 'x'.repeat(500), files: [`assets/failure-${index}.js`] }));
+  const evidenceReceipt = classify({ exitCode: 1, stats: { unexpected: 6 }, errors: evidenceFailures });
+  if (evidenceReceipt.failures.length !== 5 || evidenceReceipt.failureEvidence.files.length !== 6 || evidenceReceipt.failureEvidence.tests.length !== 6 || evidenceReceipt.state !== 'rejected') throw new Error('failure evidence was truncated with prose');
+  console.log('browser failure evidence: ' + runBrowserFailureEvidenceSelfTest() + '/4 fixture groups passed');
   const green = classify({ exitCode: 0, stats: { expected: 6, unexpected: 0, flaky: 0, skipped: 0 } });
   if (green.state !== 'passed') throw new Error('green fixture rejected');
   const skipped = classify({ exitCode: 0, stats: { expected: 5, skipped: 1 } });

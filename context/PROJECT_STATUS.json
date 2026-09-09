@@ -12,23 +12,23 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S346 recovery verified locally: 390 build checks, 215 mobile checks, and 42 reviewed theme captures. Create the recovery checkpoint, then continue the S347 full arc.",
-  "publicNote": "Maintenance recovery checks passed. Desktop navigation now accommodates every theme label; remaining accessibility and identity evidence work is tracked separately.",
-  "nextMilestone": "Checkpoint the verified recovery and complete the S347 audit, implementation, staging verification, and closeout.",
+  "currentFocus": "S347 recovered candidate is locally verified: 23 audit items, 477 build checks, and 168 rendered route/state captures. Commit and complete staging-first release.",
+  "publicNote": "Navigation, Search, community rendering, News controls, evidence integrity, and art-only covers passed final local verification across all themes and desktop/mobile.",
+  "nextMilestone": "Push the recover S347 closeout boundary, verify staging and production currency, then begin S348 from the performance follow-ups.",
   "blockers": [
-    "Community accessibility CI reports an empty member link; correction and fresh hosted evidence remain required before release.",
-    "Identity migration and real provider-journey evidence remain incomplete; the existing identity release hold remains in place.",
-    "Human signup acceptance remains unobserved. Editorial cadence remains an existing owner decision."
+    "Production remains stale until the recovered S347 commit is pushed and the staging-first release path completes.",
+    "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
+    "Human signup acceptance, newsletter deployment/arming, and the Desk cadence choice remain unobserved or undecided."
   ],
   "lastUpdated": "2026-09-09",
-  "currentSession": 346,
+  "currentSession": 347,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-09",
-  "silScore": 980,
+  "silScore": 986,
   "silAvg3": 983.3333333333334,
-  "silVelocity": 0,
-  "silDebt": "up",
-  "silLastSession": 346,
+  "silVelocity": 23,
+  "silDebt": "down",
+  "silLastSession": 347,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -60,16 +60,16 @@
       "status": "green"
     },
     {
-      "command": "npm run build:check",
-      "type": "tests",
-      "status": "green",
-      "note": "S346 recovery: complete measured build verification 390/390, mobile runtime 215/215, and 42/42 rendered theme captures reviewed. Local evidence; hosted accessibility has a separate known failure."
-    },
-    {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
       "note": "S332 exact candidate root 1cb71fc2a094… verified in receipt 3822cf612d7f040cd6feab5a: 6,953 files, continuity depth 58, ceremony 10/10."
+    },
+    {
+      "command": "npm run build:check",
+      "type": "tests",
+      "status": "green",
+      "note": "S347 recovered final candidate: complete measured 477/477 build verification. CANON-053 receipt 84/84 manually reviewed plus 84 supplemental touched-state captures."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -84,28 +84,28 @@
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 96,
-    "creativeAlignment": 97,
-    "momentum": 98,
-    "engagement": 96,
+    "devHealth": 98,
+    "creativeAlignment": 98,
+    "momentum": 99,
+    "engagement": 97,
     "processQuality": 97,
     "crossRepoCoherence": 100,
     "securityPosture": 99,
     "ecosystemIntegration": 99,
     "capitalEfficiency": 100,
-    "automationCoverage": 98
+    "automationCoverage": 99
   },
-  "silCategoriesUpdatedSession": 346,
+  "silCategoriesUpdatedSession": 347,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-09",
-    "passing": 13,
+    "passing": 12,
     "warning": 1,
-    "failing": 2,
-    "blockingFailing": 0,
+    "failing": 3,
+    "blockingFailing": 1,
     "advisoryFailing": 2,
     "total": 16,
-    "score": 81,
+    "score": 75,
     "checks": [
       {
         "id": "manifest",
@@ -214,10 +214,10 @@
       },
       {
         "id": "deploy-currency-live",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "local-broken",
-        "blocking": false
+        "blocking": true
       }
     ]
   },
@@ -228,25 +228,25 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 390,
-  "testsPassing": 390,
+  "testsTotal": 477,
+  "testsPassing": 477,
   "testsLastRun": "2026-09-09",
   "testsLabel": "measured build:check steps",
-  "publicNextStep": "Send the first member newsletter, and decide how often The Desk should publish.",
-  "doctorBlockingFailing": 0,
-  "lastAgent": "claude-code",
+  "publicNextStep": "Promote the verified candidate through staging, then measure Changelog hydration and repeatable performance distributions.",
+  "doctorBlockingFailing": 1,
+  "lastAgent": "codex",
   "mobileParity": true,
-  "mobileParityAttestedAt": "2026-08-27",
+  "mobileParityAttestedAt": "2026-09-09",
   "mobileParityEvidence": [
-    "blocking runtime contract 235/235 across 47 routes and five mobile viewports",
-    "CANON-053 status receipt 14/14 manually reviewed captures across seven themes, desktop and 390px mobile",
-    "canonical staging release browser 6/6",
-    "node scripts/check-mobile-runtime-contract.mjs"
+    "CANON-053 final receipt: 84/84 manually reviewed normal captures across six routes, seven themes, desktop and 390px mobile",
+    "84 supplemental state captures: Search, open navigation, changed covers, reader signals, and Reader-to-Director actual/fixture states",
+    "focused browser checks for mobile Search and News theme persistence; complete 477-step build gate",
+    "docs/visual-qa/LATEST.json"
   ],
   "truthGenome": "25/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f87a74b16f354bc01c239083",
   "testsSourceFingerprint": "3c56c8a2923cbf97c9affeb0",
-  "lastSessionSummary": "S345 -- resync-derived, the post-rebase repair tool, reported clean over a subset it could not see: its graph models 29 of 67 byte-checked generators, so it printed completeness while CI failed ten minutes later on build-intelligence-budget (S340) and build-nervous-system (S341). Modeling the other 38 was correctly refused -- guessing sources yields a confidently wrong graph -- so the fix runs the unmodeled generators own --check instead, a measurement needing none of the information the ratchet withholds. Default fails named (verified by reproducing the exact S340 incident: old path exit 0, new path exit 1), repair is opt-in and guarded, and a structural self-test stops any future exit path bypassing it. Also gave the cron staleness checker liveCorroboration so a fixture-only silent verdict declares itself. Newsletter deploy denied by the sandbox classifier a second time; Desk blocker sentence corrected rather than carried."
+  "lastSessionSummary": "S347 recovered and shipped all 23 audit items. The complete 477-step gate and 84/84 hash-bound normal visual captures passed, with 84 supplemental touched-state captures; release currency remains pending."
 }

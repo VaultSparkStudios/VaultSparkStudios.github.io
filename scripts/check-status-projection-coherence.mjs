@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope closeout — validates the completed build receipt and scored session projection.
 /** Receipt-bound PROJECT_STATUS projection and coherence gate. */
 import fs from 'node:fs';
 import path from 'node:path';

@@ -1,136 +1,229 @@
 {
-  "drainedAt": "2026-09-08T03:12:48.048Z",
+  "drainedAt": "2026-09-09T05:13:39.189Z",
   "slug": "vaultsparkstudios-website",
-  "count": 8,
+  "count": 12,
   "cargo": [
     {
-      "id": "01K1UI35EJE559A5EBA6E47441",
+      "id": "01K1VMBDE2BF427AE376D5CDF6",
       "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T18:29:08.179Z",
+      "from": "statvault",
+      "shippedAt": "2026-09-08T05:02:47.235Z",
       "payload": {
-        "pattern": "A detector bound that was never sized against a real specimen is a confident GREEN over the exact thing it was built to catch",
-        "solution": "studio-ops scan-secrets.mjs had a HIGH-confidence Supabase Service Role rule requiring a JWT payload of {100,} characters. A self-hosted Supabase key omits the cloud-only ref claim: real payloads measure 88 (anon) and 99 (service_role). The full RLS-bypass credential missed the detector BY ONE CHARACTER, and a git-tracked file holding SERVICE_ROLE_KEY + JWT_SECRET + POSTGRES_PASSWORD was reported clean for five months while the same scanner emitted [low] noise on npm lockfile integrity hashes. Fix: make detection STRUCTURAL — match the JWT shape, decode header+payload, and let the claims set name and severity — never a length proxy. Two further lessons. (1) The FIRST test for any new matcher must fire it at a real specimen, plus a test asserting the PRE-FIX version misses that specimen, so the fixture cannot quietly stop reproducing the defect. (2) A second sweep (the infra-debt audit) had already found the same file and graded it stale-scripts — right file, wrong axis. Two instruments agreeing is not corroboration when they measure different things. Related: a module that scans-and-exits on import cannot be unit-tested, which is why this rule was never exercised at all — add a CLI main-guard.",
+        "pattern": "a-probe-that-is-an-actuator",
+        "context": "Any repo with a deploy/ops script that takes flags and whose no-flag default DOES something. Measured live in statvault S301.",
+        "problem": "scripts/deploy-hetzner-frontend.mjs parsed only --dry and --step and REJECTED NOTHING ELSE, while main() defaults to running all thirteen steps — ending in an edge-config rewrite and a Cloudflare DNS upsert. An agent invoked `--check` believing it a read-only probe (the flag belongs to a different script) and it ran a real production deploy through the build step. The unknown flag was not an error; it was a deploy.",
+        "solution": "Parse argv in a PURE exported function and refuse what you do not understand — unknown flags, unknown step names, a bare --step, and a read-only flag combined with a mutating selector — exiting BEFORE credentials are resolved, so an invocation you cannot parse never reaches a secret. Then add the read-only probe the operator wanted, and exclude it from the default order so a probe can never be a deploy stage. Test the REFUSALS: a suite that only asserts valid input parses passes against the defective parser unchanged.",
+        "generalisation": "A script that touches production should be inert by default, or refuse an argv it does not understand, and ideally both. Corollary found the same session: the SIBLING script (deploy-hetzner-backend.mjs) already had the allowlist, on the less dangerous pipeline of the two — nothing compares scripts that do the same KIND of thing, so the asymmetry was invisible. Census across 13 box-touching scripts in one repo: 2 validate argv, 11 do not.",
         "tags": [
-          "security",
-          "secret-scanning",
-          "detector-calibration",
-          "supabase",
-          "jwt",
-          "unsized-bounds",
-          "prove-it-fires"
+          "deploy-safety",
+          "argv",
+          "cli",
+          "production",
+          "cross-project"
         ]
       }
     },
     {
-      "id": "01K1UJ9GAP2A10A6BEEC2FAC82",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T18:50:04.505Z",
-      "payload": {
-        "session": "S329",
-        "project": "studio-ops",
-        "headline": "A detector whose bound was never sized against a real specimen is a confident GREEN over the thing it was built to catch",
-        "lessons": [
-          "A high-confidence credential rule required a JWT payload of {100,} characters. Self-hosted Supabase keys omit the cloud-only ref claim and measure 88 (anon) / 99 (service_role), so a full RLS-bypass key missed the detector BY ONE CHARACTER and a tracked file holding it was reported clean for five months. Make detection STRUCTURAL — decode and classify by claims — never a length proxy, and make the FIRST test for any matcher fire it at a real specimen plus assert the pre-fix version misses it.",
-          "A workflow that calls itself nightly is making a claim nothing checks. Removing schedule: from 55 workflows for cost was correct and silently converted a data-protection lane into a no-op: the only live cloud Supabase database went eight weeks unbacked while the file still said nightly. Two probes each reported an honest half (no lane / 14 failures) and nothing joined them to the conclusion.",
-          "A byte digest that crosses a host boundary is platform-dependent. A Linux lane writing LF and a Windows checkout reading CRLF produced two hashes for identical source, so three artifacts were permanently red and whoever ran last reddened the other. Normalize text before hashing; keep binary raw.",
-          "When a checker offers --fix, ask what the red is CARRYING before clearing it. Four stale sibling locks were the only remaining evidence that three sessions ended without closeout; the documented remedy would have deleted that signal and unblocked nothing.",
-          "A classifier with N-1 states maps the missing one onto a worse neighbour — and I rebuilt that bug inside the probe written in its spirit, grading a lane inert while its own receipt showed a success an hour earlier. Check a counter-example you know the answer to before believing your own output."
-        ],
-        "shipped": 6,
-        "tests": "4187/4187 assertions, 592/594 files, exit 0",
-        "doctor": "blockingFailing 0, overallPass true",
-        "sil": {
-          "total": 993,
-          "previous": 994,
-          "delta": -1
-        },
-        "deploy": "console staging + production both deployed and VERIFIED (401 Obelisk wall enforced)",
-        "asksUpstream": "vorn: VERCEL_TOKEN is the single credential gating a 7-day P0 signup outage; the Turnstile site key is already READY in the studio-ops gateway, domain-bound to joinvorn.com"
-      }
-    },
-    {
-      "id": "01K1UJN68D829BCA14469EAEA5",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T18:57:32.941Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 329,
-        "sil": 993,
-        "prevSil": 994,
-        "delta": -1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 19,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-07T18:57:32.671Z"
-      }
-    },
-    {
-      "id": "01K1UJTU3M70B506BDA9E8A94E",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T19:01:13.974Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 329,
-        "sil": 993,
-        "prevSil": 994,
-        "delta": -1,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 62,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-07T19:01:13.427Z"
-      }
-    },
-    {
-      "id": "01K1UK0SHC875C28B5D33B94C5",
+      "id": "01K1VMBDLQ459E15ABED69B136",
       "type": "pattern-share",
       "from": "statvault",
-      "shippedAt": "2026-09-07T19:02:50.668Z",
+      "shippedAt": "2026-09-08T05:02:47.482Z",
       "payload": {
-        "pattern": "A founder blocker is a claim about the secrets gateway, and a carry is not a re-check. StatVault carried [S295.H1] five sessions as needs credentials not in the gateway while check-secrets reported the capability READY the whole time; nobody re-ran the check because the premise arrived already written.",
-        "solution": "Before keeping ANY Human Action Required item at closeout, re-run check-secrets --for <capability> and paste the line into the carry. CANON-019: READY means agent work — provision through a gateway-backed repo script (env over ssh STDIN never argv, units from the promoted tree, one synchronous run, receipt read back). Also: measure the target on the box (container name, db user) before trusting a script written against a guess.",
+        "pattern": "a-gates-green-line-is-a-claim-about-what-its-matcher-can-see",
+        "context": "Any coverage/census gate that finds subjects by matching file names or code shapes.",
+        "problem": "statvault's check:og-coverage matched share cards ONLY as opengraph-image.tsx files. Next.js supports a second notation (generateMetadata returning openGraph.images), and the one route that could only use the second — a per-id receipt page whose card must be built from the id — was therefore reported as having no card. It was then EXEMPTED, with a reopen trigger asking for the card it already had. The gate then read 50 of 50: complete, and blind.",
+        "solution": "Enumerate every notation the framework supports before declaring a population, report WHICH notation covered each subject so a blind spot is visible in the green line, and treat an exemption written for an absence as a claim to re-verify rather than a settled fact.",
+        "generalisation": "Second finding from the same gate: its printed ratio compared a numerator that INCLUDED exempt subjects against a denominator that subtracted them. It read coherently only by coincidence (50 of 50) until one exempt subject gained a card and it printed '52 of 50'. Check that a ratio's two halves count the same population — and that the ratchet moves on the same number the failure compares against.",
+        "tags": [
+          "gates",
+          "coverage",
+          "matcher",
+          "population",
+          "cross-project"
+        ]
+      }
+    },
+    {
+      "id": "01K1VR3JQJD0355ADA391A3559",
+      "type": "pattern-share",
+      "from": "obelisk",
+      "shippedAt": "2026-09-08T06:25:54.516Z",
+      "payload": {
+        "pattern": "reuse-registry-consumer-regex-is-an-unanchored-suffix-match",
+        "context": "scripts/check-internal-tools-coverage.mjs (propagated to every repo). scanModules() counts a primitive's cross-group consumers with: new RegExp(`from\\\\s+['\\\"][^'\\\"]*${base}['\\\"]`) where base is the module's basename, e.g. cache.js. The `[^'\\\"]*` prefix is unanchored, so ANY specifier merely ENDING in the basename counts as a consumer.",
+        "solution": "Require the prefix to end at a path separator: new RegExp(`from\\\\s+['\\\"](?:[^'\\\"]*/)?${base}['\\\"]`). A module is an IDENTITY, not a string suffix. Verified in obelisk at S297: adding an unrelated packages/console/src/artifact-cache.js took packages/receipts/src/cache.js from 1 cross-group consumer to 3 — because `from \"./artifact-cache.js\"` matched `cache.js` — and produced a strict-mode registry finding about a file nobody had touched. After the fix: 432 candidates scanned, strict exit 0, and the false consumers are gone. Regression test: tests/s297-exemption-classes.test.js #16.",
+        "impact": "Any repo with two modules whose basenames are suffixes of one another (cache.js / artifact-cache.js, index.js excluded, verify.js / saml-verify.js, store.js / key-store.js) gets inflated consumer counts and can be handed a strict-mode CI failure naming the WRONG module. The error direction is over-counting, so it demands more registration rather than less — noisy, not silent — but the attribution is wrong, which is worse than a plain false positive because it sends the reader to a file that did not change.",
+        "tags": [
+          "propagated-script",
+          "recogniser-keyed-on-a-spelling",
+          "false-attribution",
+          "canon-023-adjacent",
+          "S297"
+        ],
+        "originRepo": "obelisk",
+        "originSession": 297,
+        "file": "scripts/check-internal-tools-coverage.mjs",
+        "diverged": "obelisk is AHEAD of the control plane on this file; propagating the control-plane copy down would overwrite the fix."
+      }
+    },
+    {
+      "id": "01K1VUS26Q25907CBF92FE69C6",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-09-08T07:31:41.403Z",
+      "payload": {
+        "session": 301,
+        "project": "statvault",
+        "date": "2026-09-08",
+        "sil": {
+          "total": 985,
+          "previous": 989,
+          "delta": -4,
+          "velocity": 7
+        },
+        "headline": "An unrecognised flag on the production deploy script was not an error — it was a full deploy. Found by making the mistake, fixed before credentials resolve, and the read-only probe it forced into existence is what let a carried cross-team blocker be re-asked instead of carried.",
+        "delivered": "7 ranked · 6 shipped · 1 deferred with a measurement that changed its subject · 0 blocked",
+        "verification": "TypeScript 0 · Jest 346/346 suites, 2,230 tests · node cores 3,236/0 (+47) · lint 0 errors / 87 warnings at an unchanged cap of 88 · gate-efficacy 182/182 proven-rejecting (floor 181→182) · production build green across 316 routes · doctor 187/187 blockingFailing 0 · pushed to main with the pre-push hook intact",
+        "portableLessons": [
+          "A script that touches production should be inert by default, or refuse an argv it does not understand, and ideally both — an unknown flag must not be an invocation.",
+          "Nothing compares sibling scripts that do the same KIND of thing: the missing allowlist already existed in the sibling deploy script, on the LESS dangerous pipeline.",
+          "A gate's green line is a claim about what its MATCHER can see. Three gates here were wrong about their own subject — one knew one of two file-naming notations, one compared a ratio's halves across different populations, one read a docblock as a call site.",
+          "A delegated helper's population is its CALLERS, cross-file ones included; grading only same-file call sites lets a fenced caller launder a write through an unfenced helper.",
+          "A propagated script is a capability shipped to every repo at once — grade propagated scripts for write-boundary at the control plane, not only where they land.",
+          "Capture $? into a file: a harness reported a FAILING test lane as 'exit code 0' (the pipeline's status, not the command's), and an ssh exit 255 with empty output is a transport failure, not the remote command failing.",
+          "Four sessions deferred an item on an adjective; one build measured it and the subject changed — the page was rank 2 of 316 and ~92% of its bundle was a shared baseline every route carries."
+        ],
+        "honesty": "The session's central finding was produced by its own mistake: an unverified flag was fired at a production script. Process Quality scored down 3. check:sil-discrimination then caught this session's own SIL entry holding a category flat past its declared review horizon; the declaration was discharged rather than renewed and the category discriminated, taking the total 986 → 985. The pre-push hook caught a missing closeout record and an untrustworthy published doctorScore; both were fixed at source rather than pushed past with --no-verify.",
+        "openUpstream": [
+          "01K1VMBCSO2A1ECF832B4B0F83 — the shared-host caddy blocker is TWO files, correcting 01K1UQS85S7798793ECB3E01D1",
+          "01K1VQRR28A28FBD14CB5700F5 — take the CANON-018 fence into the propagated compute-entropy.mjs",
+          "01K1L1AS3RA0A2E2A2C90F949A — unanswered since S293"
+        ],
+        "tags": [
+          "session-impact",
+          "statvault",
+          "S301",
+          "deploy-safety",
+          "gates"
+        ]
+      }
+    },
+    {
+      "id": "01K1VVCMT962858C0E79DAD75A",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-09-08T07:40:46.889Z",
+      "payload": {
+        "session": 297,
+        "repo": "obelisk",
+        "date": "2026-09-08",
+        "headline": "An exemption is a claim with an expiry condition, and every condition but time was left unstated.",
+        "shipped": 4,
+        "testsBefore": 5978,
+        "testsAfter": 6011,
+        "silScore": 964,
+        "silDelta": 3,
+        "rulesCommitted": [
+          "An exemption is a claim with an expiry CONDITION — name the EVENT that would falsify it, not a date. A review date is the weakest possible trigger: it fires when nothing has changed and is silent when everything has. Four kinds found in one file: never-withdraw, dormant-until-a-switch, cheap-until-cost-rises, covered-by-a-named-neighbour.",
+          "A state meaning 'I could not measure this' must never sit at the TOP of a severity ranking, or it silently disables every comparison that ranks against it. `unclassified` at max rank made 31 of 56 rows permanently undetectable by the drift check built to watch them."
+        ],
+        "crossRepoRelevant": [
+          "check-internal-tools-coverage.mjs (PROPAGATED): consumer regex was an unanchored suffix match — `from './artifact-cache.js'` counted as a consumer of `cache.js`. Fix shipped separately as cargo 01K1VR3JQJD0355ADA391A3559.",
+          "Any two-stage stat-then-content cache: a stat stamp {mtimeMs,size} may only be believed once the file has SETTLED. Two same-size writes inside one mtime tick give an identical stamp, and the platform with the COARSER clock (ext4 ~1ms) is the one production runs on, while local dev on NTFS (100ns) will never reproduce it. Caught by CI, not by any local run."
+        ],
+        "deploy": "staging VERIFIED 12/12 on cfbd3b4f7f99 (exact-head CI 34199543171); production promotion NOT performed — refused by a tooling permission boundary, not by a gate"
+      }
+    },
+    {
+      "id": "01K20139H5A91D0A7D4D8E8C5D",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-09-08T08:10:35.429Z",
+      "payload": {
+        "session": "S320",
+        "project": "veilos",
+        "headline": "The scan's blind spot was published for three sessions and the money was inside it",
+        "keystone": "A proof form that only works where the answer is already known is not a proof form. The durable-population scan proved a receiver when the callable body wrote an ALREADY-DECLARED collection, which is self-sealing: a collection is invisible precisely because it is the only durable thing that function touches. It published receiverUnproven 366 for three sessions while three completeness claims were built on top of it. A bite that is published and compared to nothing is a bound whose absence is indistinguishable from its presence.",
+        "transferable_lessons": [
+          "A label with no reader is the inert class (S270) - and check it against your OWN output, not only the code you are auditing. Four sessions of findings were all two published numbers nobody compared.",
+          "Pseudonymisation is not anonymisation. A per-person digest still singles out one person, and an export is built for a subject whose id you already hold, so you compute the digest and select their rows.",
+          "A false claim that no instrument can refute is strictly worse than one production refutes in four minutes.",
+          "Reaching a writer MODULE is not reaching the KEY. Coverage granularity and claim granularity must fail in opposite directions.",
+          "A roster built by N conditions may not be checked by an instrument that knows N-1; relaxing the assertion deletes the backward check.",
+          "An enumerator's self-test: ask the coverage question of the NEW instrument, not only of the old one. The census witness's first draft compared only numbers and arrays, so the gate boolean it existed to protect fell outside its own loop."
+        ],
+        "numbers": {
+          "population": 175,
+          "subject_bearing": 21,
+          "organism_only": 22,
+          "unplaced": 132,
+          "suite": "5183/5183",
+          "mutations": "26/26",
+          "sil": 996
+        },
+        "shipped": [
+          "one-hop call-site proof form (population 165->176)",
+          "PSEUDONYMOUS_SUBJECT_BEARING second authority",
+          "V8 writer-reach measurement",
+          "undeclared-durable-keys refusal",
+          "scripts/census-edge-witness.mjs"
+        ],
+        "not_done": "Production NOT written: the S256 standing rule makes the founder's word sufficient but never permanent, and the S320 instruction did not contain it. release-readiness agrees via founder_session_authorization_current false.",
+        "cargo_shipped_this_session": [
+          "01K1VM64A23A39F90BC918BCDA (audit sidecar renderer)",
+          "01K1VMHP5J9AD52CD64DBF2509 (IGNIS auto-rescore cannot score its own repo)"
+        ]
+      }
+    },
+    {
+      "id": "01K21C3NC1BA088C7C070D6E83",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-08T20:42:18.369Z",
+      "payload": {
+        "session": 331,
+        "repo": "studio-ops",
+        "theme": "A blocker that named the right credential and drew the wrong conclusion: pg_dump needed the dashboard-only password, the backup did not.",
+        "findings": [
+          "A transport is not a capability. When a blocker names a MISSING credential, ask what it is needed FOR and whether another READY capability reaches the same target by a different route. Three sessions of an unbacked production database sat behind a capability the gateway had reported READY throughout.",
+          "human-blocked asserts that no agent path exists — that is a claim requiring evidence, not a default for work a session did not do. Keep harness-gated and ungranted-this-session as separate states.",
+          "A declaration is not evidence, at any layer. Any registry mapping a subject to an owner (backup lanes, deploy targets, propagation lanes, healers) reports false coverage until it requires a dated artifact naming that subject. Report attributed-unproven LOUDER than unattributed: the state that buys false confidence is the dangerous one.",
+          "A checker scope is part of its guarantee. Our follow-through gate read only its registration map and could see 4 of 66 non-green probes while ten more printed a runnable command in their own detail line. Publish verdictScope on every run.",
+          "For a reflex, memory is not a mechanism. We moved the phantom-filename check into the PreToolUse hook and it caught its author three times in the same session."
+        ],
         "tags": [
           "canon-019",
           "phantom-blocker",
-          "secrets-gateway",
-          "closeout"
-        ],
-        "from": "statvault",
-        "session": 300,
-        "decision": "D-S300.1"
+          "disaster-recovery",
+          "observability-honesty",
+          "scope"
+        ]
       }
     },
     {
-      "id": "01K1UK0T8G55F2F4AD1F2CAF4F",
-      "type": "pattern-share",
-      "from": "statvault",
-      "shippedAt": "2026-09-07T19:02:51.409Z",
+      "id": "01K21G1LC959F1EE774BA43A91",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-08T21:51:05.098Z",
       "payload": {
-        "pattern": "An identity gate must be two-sided, and internal validation is not identity. A shared year guard accepted a namesake whose career began within six years of the rookie year and ran a decade past the known span; the season-sum check then proved the grid was self-consistent — for someone else. Five contaminated profiles reached main before the coherence gate ran.",
-        "solution": "Require a candidate span to sit INSIDE the known span (±1 year of slack), not merely to start near it; reject-prove on the live contaminations AND the genuine fills from the same pass; run the coherence gate BEFORE the commit, not after the push; and never run a widening-only repair after a backfill — it legitimizes the contamination.",
-        "tags": [
-          "identity",
-          "ingest",
-          "data-integrity",
-          "reject-proof"
-        ],
-        "from": "statvault",
-        "session": 300,
-        "decision": "D-S300.4"
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 331,
+        "sil": 995,
+        "prevSil": 994,
+        "delta": 1,
+        "topWin": "the headline finding came from **refusing to inherit a blocker**. Three sessions had recorded the cloud backup as waiting on a dashboard-only password. The credential name was accurate and the conclusion drawn from it was false: `pg_dump` needs that password, the *backup* does not. Asking what the credential was needed **for**, instead of accepting what it was **named**, turned a P0 that had been called founder-blocked since S329 into an agent-executable one — and the capability that closes it had been reporting READY in the gateway the whole time.",
+        "topGap": "the exposure is still open. The transport is built, tested, CI-wired and dry-run-proven, and the run was declined at the permission gate. I recorded that as `agent-executable, permission not granted` rather than `human-blocked`, which is the honest label — but an honest label over an unbacked production database is still an unbacked production database, and this is the second consecutive session that ends with the same two live databases holding zero restorable copies.",
+        "shippedFiles": 50,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-08T21:51:04.685Z"
       }
     },
     {
-      "id": "01K1UK1U4Q5FFB7A4FCA9E70E0",
+      "id": "01K21G537V34042CCEADF60827",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-09-07T19:03:25.083Z",
+      "shippedAt": "2026-09-08T21:52:57.599Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
@@ -143,19 +236,56 @@
       }
     },
     {
-      "id": "01K1UNJU8Q618556C1D485BDF9",
+      "id": "01K21GBMMG649BD05694D35654",
       "type": "session-impact-summary",
-      "from": "the-living-protocol",
-      "shippedAt": "2026-09-07T20:05:40.762Z",
+      "from": "statvault",
+      "shippedAt": "2026-09-08T21:56:34.129Z",
       "payload": {
-        "repo": "the-living-protocol",
-        "session": "S332",
-        "headline": "Release truth is now source-bound from local evidence through exact-SHA production readback",
-        "shipped": 8,
-        "sil": 966,
-        "tests": "3333/3333 product assertions plus 231 script test files; lint, typecheck, build, contracts, RLS and security green",
-        "deploy": "production API and web serve application SHA cf687362; main 336f80b6 is an evidence-only tail; CI 34156224268, staging 34156224273, API 34156979163, web 34157257717, verification 34157573484 all green",
-        "pattern": "Treat application source and audit receipts as distinct release classes, require every blocking local gate to name a server-side enforcement locus, and bind suite receipts to the exact worktree rather than merely HEAD."
+        "shipped": "4/4",
+        "delta": 1,
+        "session": 302,
+        "headline": "The 574 KB shared First Load JS floor is ~500 KB framework — retired [SIL S301.a] by measurement and fenced it with check:first-load-js (S301's prose reopen triggers as assertions). One shared strict-argv parser; every hetzner.ssh script refuses unknown argv before the first secret resolves; the release trigger that acted on ANY invocation is inert by default; check:capability-argv-posture derives the siblings from the tree. writeback-currency no longer counts the closeout's own receipts as debt.",
+        "sil": 986,
+        "lessons": [
+          "A caller's argv is part of the contract, and the doctor is a caller: a stricter parser starved three gates before it protected anything (D-S302.6).",
+          "A commit that only writes the record is not work the record has missed: receipts, record-only commits and same-session closeout tails (label AND surface) are not write-back debt (D-S302.3).",
+          "Siblings sharing a capability must share a posture, and the pair is derived from the tree, never listed (D-S302.1).",
+          "Set-Content -NoNewline on an array collapses a file to one line; read the diff stat of every mechanical edit (D-S302.5)."
+        ],
+        "commit": "065db55cab"
+      }
+    },
+    {
+      "id": "01K21GBN4I858332726A1AFA1E",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-09-08T21:56:34.578Z",
+      "payload": {
+        "solution": "One pure parser (flags · valued options · requireOneOf for inert-by-default; never exits) and a gate that DERIVES every script naming a guarded capability from the tree, grades strict/none/permissive from comment-stripped code, ceilings permissive shrink-only, and hard-fails a no-argv script carrying a remote-mutation marker. Enumerate what callers already send (the doctor's --update-json) BEFORE refusing unknown argv. Files: scripts/lib/strict-argv.mjs, scripts/lib/capability-argv-posture-core.mjs, scripts/check-capability-argv-posture.mjs (statvault 065db55cab).",
+        "pattern": "strict-argv + capability-argv-posture",
+        "tags": [
+          "argv",
+          "production-safety",
+          "gate-population",
+          "CANON-019"
+        ]
+      }
+    },
+    {
+      "id": "01K21R24AN748D0ED2199EFBF8",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-09-09T01:03:34.743Z",
+      "payload": {
+        "session": "S303",
+        "candidate": "20200ba3a3b3450b66e06b166a704c7cadcaff3a",
+        "outcomes": [
+          "Exact candidate deployed to isolated staging and private-beta production with Pattern-B 7/7 and connected proof graphs 10/10",
+          "Founder-approved single staging Claude Haiku 4.5 replay proved MISS then byte-equivalent HIT with exactly one provider call and successful cleanup",
+          "Cross-environment generated Next.js output can contaminate environment-binding proof; verify and clear .next/.open-next between environment builds until cache isolation ships",
+          "Staging-only paid proof must not be relabeled as production proof without a sanctioned same-candidate promotion receipt"
+        ],
+        "boundary": "Formal SPARKED/public launch remains 10/12 NO-GO on canonical cost authority and missing production-promotion receipt; no second paid call was made."
       }
     }
   ],

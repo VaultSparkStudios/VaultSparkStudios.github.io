@@ -10,6 +10,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, rmSync } from 'node
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { randomUUID } from 'node:crypto';
 import { fingerprintCommands, receiptIdFor, runBuildCheckEvidenceSelfTest, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 
@@ -35,32 +36,28 @@ function verificationLockPath(root) {
   return resolve(root, '.cache', 'verification.lock');
 }
 
-function acquireVerificationLock(root) {
+export function acquireVerificationLock(root) {
   const lock = verificationLockPath(root);
+  const token = randomUUID();
+  mkdirSync(dirname(lock), { recursive: true });
   try {
-    mkdirSync(dirname(lock), { recursive: true });
-    if (existsSync(lock)) {
-      const prior = JSON.parse(readFileSync(lock, 'utf8'));
-      const ageMin = Math.round((Date.now() - Date.parse(prior.startedAt)) / 60000);
-      console.warn(`⚠ a verification lock is already present (started ${ageMin} min ago, pid ${prior.pid}).`);
-      console.warn('  Either another run is in flight, or a previous run died. Overwriting.');
-    }
-    writeFileSync(lock, `${JSON.stringify({ startedAt: new Date().toISOString(), pid: process.pid }, null, 2)}\n`, 'utf8');
-    console.log('🔒 tree frozen for verification — do not edit tracked files until this run reports.');
-  } catch { /* advisory only: never fail a build over the lock */ }
-  return lock;
+    writeFileSync(lock, `${JSON.stringify({ startedAt: new Date().toISOString(), pid: process.pid, token }, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
+  } catch (error) {
+    if (error.code === 'EEXIST') throw new Error('Verification lock already exists; wait for its owner or verify it is stale before clearing it.');
+    throw error;
+  }
+  return { path: lock, token };
 }
 
-function releaseVerificationLock(lock) {
+export function releaseVerificationLock(owner) {
   try {
-    if (!lock || !existsSync(lock)) return;
-    // Only clear our OWN lock. A stale process exiting must not unlock a run
-    // that is still going — that turns the guard off at the worst moment.
-    const held = JSON.parse(readFileSync(lock, 'utf8'));
-    if (held?.pid && held.pid !== process.pid) return;
-    rmSync(lock);
-  } catch { /* advisory */ }
+    if (!owner || !existsSync(owner.path)) return;
+    const held = JSON.parse(readFileSync(owner.path, 'utf8'));
+    if (held?.pid !== process.pid || held?.token !== owner.token) return;
+    rmSync(owner.path);
+  } catch { /* Never remove an unreadable or foreign lock. */ }
 }
+
 const ROOT = resolve(__dirname, '..');
 const DIAG_JSON = resolve(ROOT, 'api', 'build-check-diagnostics.json');
 const DIAG_MD = resolve(ROOT, 'docs', 'BUILD_CHECK_DIAGNOSTICS.md');
@@ -252,6 +249,9 @@ function main() {
     return;
   }
 
+  const lock = acquireVerificationLock(ROOT);
+  process.on('exit', () => releaseVerificationLock(lock));
+  console.log('Tree frozen for verification; do not edit tracked files until this run reports.');
   const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
   const entrypointHealth = buildEntrypointHealth(pkg);
   if (!entrypointHealth.ok) throw new Error(entrypointHealth.reason);
@@ -320,8 +320,6 @@ if (isDirect) {
   // Hold the lock for the whole run, including the failure paths — main()
   // exits via process.exit() on a failed step, so release must also run on
   // 'exit' or a red run would leave the tree looking permanently frozen.
-  const lock = acquireVerificationLock(ROOT);
-  process.on('exit', () => releaseVerificationLock(lock));
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => process.exit(130));
   main();
 }

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — validates sibling Canon ownership against Doctor registries.
 /**
  * Does every canon that names an owner actually HAVE that owner?
  *

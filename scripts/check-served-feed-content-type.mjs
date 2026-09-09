@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope post-deploy — network observation of served production feed content types.
 /**
  * Does every public JSON feed actually SERVE JSON — or does it serve a page?
  *

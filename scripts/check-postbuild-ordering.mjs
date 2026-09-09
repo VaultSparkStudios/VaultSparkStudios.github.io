@@ -1,274 +1,763 @@
 #!/usr/bin/env node
-/**
- * check-postbuild-ordering.mjs — S340
- *
- * THE LIVE S338 CASE. `build-news-visual-receipts` hashes each news story's
- * rendered page. It ran at postbuild position 7; `build-shell-assets` rewrites
- * every page's fingerprinted script tags at position 9. On any build that
- * rotated a shell hash the receipt was bound to pre-rotation bytes and was stale
- * BY CONSTRUCTION — and its own error message ("rebuild after news pages") was a
- * workaround for the ordering rather than a fix. Same defect S335 had fixed for
- * `_headers`. Two instances of one class, both found by accident.
- *
- * S339 tried to close the class by classifying the steps from source and was
- * wrong in BOTH directions: page writes go through helpers, so a grep cannot
- * tell a writer from a reader. That is the whole reason this gate is empirical.
- *
- * THE PROPERTY, which names no step and no page:
- *
- *   For every postbuild step S that OBSERVES a rendered page P, no step running
- *   AFTER S may WRITE P.
- *
- * A step OBSERVES P when it reads P and does NOT write P back. That distinction
- * is the whole gate. A page rewriter — `propagate-nav`, `build-shell-assets` —
- * reads every page and writes it straight back; its read is transient and a
- * later rewrite of the same page costs it nothing. An OBSERVER derives something
- * durable from those bytes and keeps it: a hash, a receipt, a manifest. Only the
- * observer can be left holding a value for bytes that no longer exist. Measured
- * live, dropping this distinction reports seven violations of which six are
- * ordinary pipeline transforms.
- *
- * Stated per-page rather than as a global "last writer before first reader", so
- * two steps touching disjoint page sets never accuse each other. Evidence comes
- * from `scripts/lib/postbuild-fs-trace.cjs`, preloaded into each step, which
- * observes the actual fs calls — helper indirection, dynamic paths and all.
- *
- *   node scripts/check-postbuild-ordering.mjs --instrument   # run the chain, record evidence
- *   node scripts/check-postbuild-ordering.mjs --check        # assert the property
- *   node scripts/check-postbuild-ordering.mjs --self-test
- *
- * `--check` on an ABSENT trace reports `unmeasured` and exits 0: this gate must
- * not turn a clean checkout red for never having run the instrument. It reports
- * that it has no evidence rather than that there is no defect — different
- * claims, and a gate must not conflate them.
+/** @verification-scope postbuild — npm postbuild runs --run and validates this exact lifecycle.
+ * Run and verify the actual postbuild lifecycle. A receipt certifies one complete
+ * invocation, its exact command sequence, source fingerprint, and trace bytes.
+ * The tracer retains successful HTML reads, changed/no-op writes and finalized
+ * exact-full-file hash consumption. Only measured hash-before-write dependencies
+ * block; other dataflow and unsupported APIs remain explicitly unmeasured.
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-// Routed through lib/safe-spawn.mjs, which forces windowsHide on every call.
-// A direct child_process import pops a console window per spawn on Windows and
-// is refused by check-windows-hide — which caught this file on its first run,
-// while it was already passing `windowsHide: true` by hand. Setting the flag is
-// not the contract; going through the one place that cannot forget it is.
-import { spawnSync } from './lib/safe-spawn.mjs';
+import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { createHash, randomUUID } from "node:crypto";
+import { spawnSync } from "./lib/safe-spawn.mjs";
+const OBSERVATION_CONTRACT = {
+  blocking:
+    "finalized crypto hash consuming exact bytes of a successful complete HTML readFile",
+  measured: [
+    "read",
+    "content-changing-write",
+    "successful-no-op-write",
+    "exact-full-file-hash",
+  ],
+  limitations: [
+    "partial/chunked stream hashing, Hash.copy, WebCrypto and arbitrary dataflow are unmeasured",
+    "identical file bytes conservatively associate every matching read path",
+    "only observed successful high-level filesystem APIs are covered",
+  ],
+};
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const digest = (x) => createHash("sha256").update(x).digest("hex");
+const paths = (root) => ({
+  trace: path.join(root, ".cache", "postbuild-fs-trace.ndjson"),
+  receipt: path.join(root, ".cache", "postbuild-ordering.json"),
+});
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
-const TRACE_FILE = path.join(ROOT, '.cache', 'postbuild-fs-trace.ndjson');
-const RECEIPT = path.join(ROOT, '.cache', 'postbuild-ordering.json');
-
-const args = process.argv.slice(2);
-const INSTRUMENT = args.includes('--instrument');
-const SELF_TEST = args.includes('--self-test');
-
-/** The postbuild chain, in order, as package.json actually declares it. */
+/** Strict argv parsing for the supported node-script chain; never invoke a shell.
+ * Unsupported operators, substitutions and malformed quoting are errors rather
+ * than silently omitted commands. Quoted argument whitespace remains intact. */
 export function postbuildSteps(pkg) {
-  const raw = pkg?.scripts?.postbuild || '';
-  return raw
-    .split('&&')
-    .map((s) => s.trim())
-    .map((s) => s.match(/^node\s+(?:--[^\s]+\s+)*scripts\/([a-z0-9][a-z0-9.-]*\.mjs)(.*)$/i))
-    .filter(Boolean)
-    .map((m) => ({ script: m[1], argv: m[2].trim() }));
-}
-
-/**
- * The ordering property. `events` are {step, op, page}; `order` is the step list
- * in execution order.
- */
-export function violations(order, events) {
-  const idx = new Map();
-  order.forEach((s, i) => { if (!idx.has(s)) idx.set(s, i); });
-
-  const readsBy = new Map();   // page -> [stepIndex]
-  const writesBy = new Map();  // page -> [stepIndex]
-  for (const e of events) {
-    const i = idx.get(e.step);
-    if (i === undefined) continue;
-    const bucket = e.op === 'write' ? writesBy : readsBy;
-    if (!bucket.has(e.page)) bucket.set(e.page, []);
-    bucket.get(e.page).push(i);
-  }
-
-  const found = [];
-  for (const [page, readers] of readsBy) {
-    const writers = writesBy.get(page) || [];
-    for (const r of readers) {
-      // A step that writes back the page it read is transforming it, not
-      // observing it. Nothing durable of its survives the read, so a later
-      // rewrite cannot strand it.
-      if (writers.includes(r)) continue;
-      const later = writers.filter((w) => w > r);
-      if (!later.length) continue;
-      const w = Math.min(...later);
-      found.push({ page, reader: order[r], readerIndex: r, writer: order[w], writerIndex: w });
+  const raw = pkg?.scripts?.["postbuild:steps"] ?? pkg?.scripts?.postbuild;
+  if (typeof raw !== "string" || !raw.trim())
+    throw new Error("Missing postbuild:steps command chain");
+  const commands = [];
+  let tokens = [],
+    token = "",
+    started = false,
+    quote = null;
+  function word() {
+    if (started) {
+      tokens.push(token);
+      token = "";
+      started = false;
     }
   }
-  // One row per (reader, writer) pair — a shell rotation touches 137 pages and
-  // the operator needs the pair, not 137 copies of it.
-  const byPair = new Map();
-  for (const v of found) {
-    const key = `${v.reader}|${v.writer}`;
-    if (!byPair.has(key)) byPair.set(key, { ...v, pages: 0, sample: v.page });
-    byPair.get(key).pages += 1;
+  function command() {
+    word();
+    if (!tokens.length) throw new Error("Empty postbuild command");
+    commands.push(tokens);
+    tokens = [];
   }
-  return [...byPair.values()].sort((a, b) => b.pages - a.pages);
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (quote) {
+      if (c === quote) {
+        quote = null;
+        started = true;
+      } else {
+        token += c;
+        started = true;
+      }
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      quote = c;
+      started = true;
+      continue;
+    }
+    if (/\s/.test(c)) {
+      word();
+      continue;
+    }
+    if (c === "&" && raw[i + 1] === "&") {
+      command();
+      i++;
+      continue;
+    }
+    if (/[;&|<>`$\r\n]/.test(c))
+      throw new Error("Unsupported shell syntax in postbuild command");
+    token += c;
+    started = true;
+  }
+  if (quote) throw new Error("Unclosed postbuild argument quote");
+  command();
+  return commands.map((argv, i) => {
+    if (
+      argv[0] !== "node" ||
+      !/^scripts\/[a-z0-9][a-z0-9./-]*\.mjs$/i.test(argv[1] || "") ||
+      argv[1].split("/").includes("..")
+    )
+      throw new Error(`Unsupported postbuild command ${i + 1}`);
+    if (argv[1] === "scripts/check-postbuild-ordering.mjs")
+      throw new Error(
+        "Recursive postbuild runner; move the original chain to postbuild:steps",
+      );
+    return {
+      id: `${i + 1}:${argv[1].slice(8)}`,
+      script: argv[1].slice(8),
+      argv: argv.slice(2),
+    };
+  });
 }
 
-function readTrace() {
-  if (!fs.existsSync(TRACE_FILE)) return null;
-  const out = [];
-  for (const line of fs.readFileSync(TRACE_FILE, 'utf8').split('\n')) {
-    if (!line.trim()) continue;
-    try { out.push(JSON.parse(line)); } catch { /* a torn last line is not a defect */ }
+export function sourceFingerprint(root, steps) {
+  const hash = createHash("sha256");
+  hash.update(JSON.stringify(steps));
+  // Script dependencies can be indirect; cover the whole local scripts tree.
+  function walk(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const e of fs
+      .readdirSync(dir, { withFileTypes: true })
+      .sort((a, b) => a.name.localeCompare(b.name))) {
+      if (["node_modules", ".cache", ".git"].includes(e.name)) continue;
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.isFile() && /\.(?:mjs|cjs|js|json)$/.test(e.name)) {
+        hash.update(path.relative(root, p).replaceAll("\\", "/") + "\0");
+        hash.update(fs.readFileSync(p));
+      }
+    }
   }
-  return out;
+  walk(path.join(root, "scripts"));
+  return hash.digest("hex");
 }
 
-function instrument() {
-  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-  const steps = postbuildSteps(pkg);
-  fs.mkdirSync(path.dirname(TRACE_FILE), { recursive: true });
-  fs.writeFileSync(TRACE_FILE, '');
+export function validateObservation(
+  receipt,
+  traceBytes,
+  { steps, sourceHash } = {},
+) {
+  const errors = [];
+  let events = [];
+  if (!receipt || receipt.schemaVersion !== "3.0")
+    errors.push("missing or unsupported receipt");
+  if (
+    JSON.stringify(receipt?.observationContract) !==
+    JSON.stringify(OBSERVATION_CONTRACT)
+  )
+    errors.push("observation coverage contract changed");
+  if (receipt?.status !== "complete")
+    errors.push("invocation did not complete");
+  if (typeof receipt?.invocationId !== "string" || !receipt.invocationId)
+    errors.push("missing invocation identity");
+  if (JSON.stringify(receipt?.steps) !== JSON.stringify(steps))
+    errors.push("command chain changed");
+  if (receipt?.sourceHash !== sourceHash)
+    errors.push("source fingerprint changed");
+  if (
+    !Array.isArray(receipt?.results) ||
+    receipt.results.length !== steps.length ||
+    receipt.results.some(
+      (r, i) => r.id !== steps[i].id || r.status !== 0 || r.signal || r.error,
+    )
+  )
+    errors.push("step coverage incomplete or failed");
+  if (receipt?.traceSha256 !== digest(traceBytes))
+    errors.push("trace digest mismatch");
+  try {
+    events = String(traceBytes)
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((line) => JSON.parse(line));
+  } catch {
+    errors.push("trace contains malformed JSON");
+  }
+  const ids = new Set(steps.map((s) => s.id));
+  if (
+    events.some(
+      (e) =>
+        !e ||
+        e.invocationId !== receipt?.invocationId ||
+        !ids.has(e.step) ||
+        !["read", "write", "write-noop", "hash-observe"].includes(e.op) ||
+        !Number.isInteger(e.sequence) ||
+        e.sequence < 1 ||
+        typeof e.page !== "string" ||
+        !e.page.endsWith(".html") ||
+        path.isAbsolute(e.page) ||
+        e.page.split(/[\\/]/).includes(".."),
+    )
+  )
+    errors.push("trace event outside invocation contract");
+  if (receipt?.eventCount !== events.length)
+    errors.push("trace event count mismatch");
+  return { errors, events };
+}
 
-  const preload = path.join(ROOT, 'scripts', 'lib', 'postbuild-fs-trace.cjs');
-  console.log(`> instrumenting ${steps.length} postbuild steps`);
-  const order = [];
-  for (const [i, step] of steps.entries()) {
-    order.push(step.script);
-    const argv = step.argv ? step.argv.split(/\s+/).filter(Boolean) : [];
-    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', step.script), ...argv], {
-      cwd: ROOT,
-      encoding: 'utf8',
-      windowsHide: true,
-      env: {
-        ...process.env,
-        NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} --require ${JSON.stringify(preload)}`.trim(),
-        VS_FS_TRACE: TRACE_FILE,
-        VS_FS_TRACE_STEP: step.script,
-        VS_FS_TRACE_ROOT: ROOT,
-      },
+export function runPipeline(
+  root = ROOT,
+  { spawn = spawnSync, quiet = false } = {},
+) {
+  const steps = postbuildSteps(
+    JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")),
+  );
+  const { trace, receipt } = paths(root),
+    invocationId = randomUUID(),
+    sourceHash = sourceFingerprint(root, steps),
+    startedAt = new Date().toISOString();
+  fs.mkdirSync(path.dirname(trace), { recursive: true });
+  fs.writeFileSync(trace, "");
+  const proof = {
+    schemaVersion: "3.0",
+    generatedBy: "scripts/check-postbuild-ordering.mjs --run",
+    invocationId,
+    startedAt,
+    status: "running",
+    observationContract: OBSERVATION_CONTRACT,
+    steps,
+    sourceHash,
+    results: [],
+  };
+  const save = () => {
+    const bytes = fs.readFileSync(trace);
+    proof.traceSha256 = digest(bytes);
+    proof.eventCount = String(bytes).split(/\r?\n/).filter(Boolean).length;
+    fs.writeFileSync(receipt, JSON.stringify(proof, null, 2) + "\n");
+  };
+  save();
+  const preload = path.join(root, "scripts", "lib", "postbuild-fs-trace.cjs");
+  for (const step of steps) {
+    let r;
+    try {
+      r = spawn(
+        process.execPath,
+        [
+          "--require",
+          preload,
+          path.join(root, "scripts", step.script),
+          ...step.argv,
+        ],
+        {
+          cwd: root,
+          encoding: "utf8",
+          windowsHide: true,
+          env: {
+            ...process.env,
+            VS_FS_TRACE: trace,
+            VS_FS_TRACE_STEP: step.id,
+            VS_FS_TRACE_ROOT: root,
+            VS_FS_TRACE_INVOCATION: invocationId,
+          },
+          maxBuffer: 16 * 1024 * 1024,
+        },
+      );
+    } catch (error) {
+      r = { status: null, error };
+    }
+    proof.results.push({
+      id: step.id,
+      status: r.status ?? null,
+      signal: r.signal ?? null,
+      error: r.error?.message ?? null,
     });
-    const mark = r.status === 0 ? 'ok  ' : 'FAIL';
-    console.log(`  ${mark} ${String(i + 1).padStart(2)}. ${step.script}${r.status === 0 ? '' : `  (exit ${r.status})`}`);
-    if (r.status !== 0) {
-      console.error(`       ${(r.stderr || '').trim().split('\n').slice(-3).join('\n       ')}`);
+    if (!quiet) {
+      if (r.stdout) process.stdout.write(r.stdout);
+      if (r.stderr) process.stderr.write(r.stderr);
+      console.log(`${r.status === 0 ? "ok" : "FAIL"} postbuild ${step.id}`);
+    }
+    if (r.status !== 0 || r.error || r.signal) {
+      proof.status = "failed";
+      proof.completedAt = new Date().toISOString();
+      save();
+      return { code: 1, proof };
     }
   }
-  fs.writeFileSync(RECEIPT, JSON.stringify({
-    schemaVersion: '1.0',
-    generatedBy: 'scripts/check-postbuild-ordering.mjs --instrument',
-    generatedAt: new Date().toISOString(),
-    order,
-  }, null, 2) + '\n');
-  console.log(`\ntrace -> ${path.relative(ROOT, TRACE_FILE)}`);
+  if (sourceFingerprint(root, steps) !== sourceHash) {
+    proof.status = "source-changed";
+    save();
+    return { code: 1, proof };
+  }
+  proof.status = "complete";
+  proof.completedAt = new Date().toISOString();
+  save();
+  const checked = inspectPipeline(root);
+  if (checked.code) {
+    proof.status = "invalid-evidence";
+    proof.validationErrors = checked.errors;
+    save();
+  }
+  return { code: checked.code, proof };
 }
 
-function check() {
-  const events = readTrace();
-  if (!events || !fs.existsSync(RECEIPT)) {
-    console.log('. check-postbuild-ordering: unmeasured — no trace in this tree.');
-    console.log('  evidence: node scripts/check-postbuild-ordering.mjs --instrument');
-    return 0;
+export function inspectPipeline(root = ROOT) {
+  try {
+    const { trace, receipt } = paths(root);
+    if (!fs.existsSync(trace) || !fs.existsSync(receipt))
+      return {
+        code: 1,
+        errors: ["unmeasured: missing postbuild receipt or trace"],
+      };
+    const steps = postbuildSteps(
+        JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")),
+      ),
+      proof = JSON.parse(fs.readFileSync(receipt, "utf8"));
+    const { errors, events } = validateObservation(
+      proof,
+      fs.readFileSync(trace),
+      { steps, sourceHash: sourceFingerprint(root, steps) },
+    );
+    if (errors.length)
+      return {
+        code: 1,
+        errors: [
+          ...errors,
+          ...(Array.isArray(proof.validationErrors)
+            ? proof.validationErrors
+            : []),
+        ],
+      };
+    const bad = violations(
+      steps.map((s) => s.id),
+      events,
+    );
+    return {
+      code: bad.length ? 1 : 0,
+      errors: bad.map(
+        (v) =>
+          `${v.reader} observes ${v.pages} page(s) before ${v.writer} changes them; e.g. ${v.sample}`,
+      ),
+      steps: steps.length,
+      eventCount: events.length,
+    };
+  } catch (error) {
+    return {
+      code: 1,
+      errors: [`invalid postbuild evidence: ${error.message}`],
+    };
   }
-  const { order } = JSON.parse(fs.readFileSync(RECEIPT, 'utf8'));
-  const bad = violations(order, events);
-  const pages = new Set(events.map((e) => e.page)).size;
-  const readers = new Set(events.filter((e) => e.op === 'read').map((e) => e.step)).size;
-  const writers = new Set(events.filter((e) => e.op === 'write').map((e) => e.step)).size;
+}
 
-  if (bad.length) {
-    console.error('x check-postbuild-ordering: a step reads rendered pages that a LATER step rewrites.');
-    console.error('  Anything it derived from those bytes is stale by construction, on every build');
-    console.error('  that changes them — and it reads exactly like a receipt that passed.');
-    for (const v of bad) {
-      console.error(`    · ${v.reader} (#${v.readerIndex + 1}) reads ${v.pages} page(s) that ${v.writer} (#${v.writerIndex + 1}) rewrites`);
-      console.error(`      e.g. ${v.sample}`);
-    }
-    console.error('  fix: move the reader after the last writer in package.json postbuild.');
-    return 1;
+export function violations(order, events) {
+  const index = new Map(order.map((step, i) => [step, i]));
+  const hashes = events.filter(
+    (e) => e.op === "hash-observe" && index.has(e.step),
+  );
+  const writes = events.filter((e) => e.op === "write" && index.has(e.step));
+  const pairs = new Map();
+  for (const read of hashes) {
+    const readerIndex = index.get(read.step);
+    const later = writes.find(
+      (write) =>
+        write.page === read.page &&
+        (index.get(write.step) > readerIndex ||
+          (write.step === read.step && write.sequence > read.sequence)),
+    );
+    if (!later) continue;
+    const key = read.step + "|" + later.step;
+    if (!pairs.has(key))
+      pairs.set(key, {
+        reader: read.step,
+        writer: later.step,
+        readerIndex,
+        writerIndex: index.get(later.step),
+        sample: read.page,
+        pages: new Set(),
+      });
+    pairs.get(key).pages.add(read.page);
   }
-  console.log(`✓ check-postbuild-ordering: ${order.length} steps · ${pages} rendered pages observed · ${writers} writer(s), ${readers} reader(s) · no reader precedes a later writer`);
-  return 0;
+  return [...pairs.values()]
+    .map((pair) => ({ ...pair, pages: pair.pages.size }))
+    .sort((a, b) => b.pages - a.pages);
 }
 
 function selfTest() {
   const cases = [];
-  const order = ['a.mjs', 'b.mjs', 'c.mjs'];
-
-  // The live D-S338.4 shape: a reader at 0, a writer at 2.
-  let v = violations(order, [
-    { step: 'a.mjs', op: 'read', page: 'news/x/index.html' },
-    { step: 'c.mjs', op: 'write', page: 'news/x/index.html' },
+  const order = ["a.mjs", "b.mjs", "c.mjs"];
+  const event = (step, op, page = "index.html", sequence = 1) => ({
+    step,
+    op,
+    page,
+    sequence,
+  });
+  cases.push([
+    "hash before later changed writer fails",
+    violations(order, [event("a.mjs", "hash-observe"), event("c.mjs", "write")])
+      .length === 1,
   ]);
-  cases.push(['reader before a later writer is a violation', v.length === 1 && v[0].reader === 'a.mjs' && v[0].writer === 'c.mjs']);
-
-  // Correct order: writer first, reader last.
-  v = violations(order, [
-    { step: 'a.mjs', op: 'write', page: 'p/index.html' },
-    { step: 'c.mjs', op: 'read', page: 'p/index.html' },
+  cases.push([
+    "plain analysis read does not claim byte-hash observation",
+    violations(order, [event("a.mjs", "read"), event("c.mjs", "write")])
+      .length === 0,
   ]);
-  cases.push(['reader after the writer is clean', v.length === 0]);
-
-  // Disjoint page sets must never accuse each other.
-  v = violations(order, [
-    { step: 'a.mjs', op: 'read', page: 'one/index.html' },
-    { step: 'c.mjs', op: 'write', page: 'two/index.html' },
+  cases.push([
+    "no-op transform read is not a hash observer",
+    violations(order, [
+      event("a.mjs", "read"),
+      event("a.mjs", "write-noop"),
+      event("c.mjs", "write"),
+    ]).length === 0,
   ]);
-  cases.push(['disjoint pages do not collide', v.length === 0]);
-
-  // A step that rewrites what it read is not a violation of itself.
-  v = violations(order, [
-    { step: 'b.mjs', op: 'read', page: 'p/index.html' },
-    { step: 'b.mjs', op: 'write', page: 'p/index.html' },
+  cases.push([
+    "hash observer that also transforms still fails",
+    violations(order, [
+      event("a.mjs", "hash-observe"),
+      event("a.mjs", "write", "index.html", 2),
+      event("c.mjs", "write"),
+    ]).length === 1,
   ]);
-  cases.push(['a step rewriting what it read is not a violation', v.length === 0]);
-
-  // THE TRANSFORM EXCLUSION, and the reason it must be per-page. A rewriter
-  // reads and writes P; a LATER step also writes P. That is an ordinary
-  // pipeline, not a stranded receipt.
-  v = violations(order, [
-    { step: 'a.mjs', op: 'read', page: 'p/index.html' },
-    { step: 'a.mjs', op: 'write', page: 'p/index.html' },
-    { step: 'c.mjs', op: 'write', page: 'p/index.html' },
+  cases.push([
+    "hash consumption before same-step mutation is ordered",
+    violations(order, [
+      event("a.mjs", "write", "index.html", 2),
+      event("a.mjs", "hash-observe", "index.html", 1),
+    ]).length === 1,
   ]);
-  cases.push(['a transform followed by a later rewriter is clean', v.length === 0]);
-
-  // ...but the exclusion must not launder a real observer. Same shape, except
-  // the reader writes a DIFFERENT page, so it kept something derived from P.
-  v = violations(order, [
-    { step: 'a.mjs', op: 'read', page: 'p/index.html' },
-    { step: 'a.mjs', op: 'write', page: 'other/index.html' },
-    { step: 'c.mjs', op: 'write', page: 'p/index.html' },
+  cases.push([
+    "hash after writer and disjoint pages are clean",
+    violations(order, [
+      event("a.mjs", "write"),
+      event("c.mjs", "hash-observe"),
+      event("c.mjs", "write", "other.html"),
+    ]).length === 0,
   ]);
-  cases.push(['writing a different page does not excuse observing P', v.length === 1 && v[0].sample === 'p/index.html']);
-
-  // A shell rotation touches many pages; the operator gets one row per pair.
-  v = violations(order, [
-    ...Array.from({ length: 137 }, (_, i) => ({ step: 'a.mjs', op: 'read', page: `p${i}/index.html` })),
-    ...Array.from({ length: 137 }, (_, i) => ({ step: 'c.mjs', op: 'write', page: `p${i}/index.html` })),
+  cases.push([
+    "unknown step cannot create ordering evidence",
+    violations(order, [
+      event("ghost.mjs", "hash-observe"),
+      event("c.mjs", "write"),
+    ]).length === 0,
   ]);
-  cases.push(['many pages collapse to one pair row with a count', v.length === 1 && v[0].pages === 137]);
-
-  // Events naming a step outside the recorded order are ignored, not crashed on.
-  v = violations(order, [{ step: 'ghost.mjs', op: 'read', page: 'p/index.html' }]);
-  cases.push(['unknown step is ignored', v.length === 0]);
-
-  // The chain parser must read package.json's real shape, flags and all.
-  const steps = postbuildSteps({ scripts: { postbuild: 'node scripts/one.mjs && node scripts/two.mjs --apply && echo hi' } });
-  cases.push(['chain parses scripts in order', steps.length === 2 && steps[0].script === 'one.mjs' && steps[1].script === 'two.mjs']);
-  cases.push(['chain preserves step argv', steps[1].argv === '--apply']);
-  cases.push(['a non-node step is not treated as a step', steps.every((s) => s.script.endsWith('.mjs'))]);
-
+  function rejects(fn) {
+    try {
+      fn();
+      return false;
+    } catch {
+      return true;
+    }
+  }
+  const parsed = postbuildSteps({
+    scripts: {
+      "postbuild:steps":
+        'node scripts/one.mjs --label "two words" && node scripts/one.mjs --apply',
+    },
+  });
+  cases.push([
+    "quoted argv and duplicate command identities survive",
+    parsed[0].argv[1] === "two words" && parsed[0].id !== parsed[1].id,
+  ]);
+  for (const chain of [
+    "node scripts/a.mjs && echo hi",
+    "node scripts/a.mjs || node scripts/b.mjs",
+    "node scripts/a.mjs &&",
+    'node scripts/a.mjs "unterminated',
+    "node scripts/check-postbuild-ordering.mjs --run",
+    "node scripts/../outside.mjs",
+  ])
+    cases.push([
+      `unsupported chain refused: ${chain}`,
+      rejects(() => postbuildSteps({ scripts: { postbuild: chain } })),
+    ]);
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), "vs-postbuild-"));
+  try {
+    fs.mkdirSync(path.join(temp, "scripts", "lib"), { recursive: true });
+    fs.copyFileSync(
+      path.join(ROOT, "scripts", "lib", "postbuild-fs-trace.cjs"),
+      path.join(temp, "scripts", "lib", "postbuild-fs-trace.cjs"),
+    );
+    const put = (name, body) =>
+      fs.writeFileSync(path.join(temp, "scripts", name), body);
+    const pkg = (chain) =>
+      fs.writeFileSync(
+        path.join(temp, "package.json"),
+        JSON.stringify({ scripts: { "postbuild:steps": chain } }),
+      );
+    put(
+      "write.mjs",
+      "import fs from 'node:fs';fs.writeFileSync('index.html','new');",
+    );
+    put(
+      "read.mjs",
+      "import {readFileSync} from 'node:fs';import {createHash} from 'node:crypto';createHash('sha256').update(readFileSync('index.html')).digest('hex');",
+    );
+    put("fail.mjs", "process.exit(7);");
+    put(
+      "later.mjs",
+      "import fs from 'node:fs';fs.writeFileSync('later.txt','ran');",
+    );
+    pkg("node scripts/write.mjs && node scripts/read.mjs");
+    cases.push([
+      "missing evidence fails as unmeasured",
+      inspectPipeline(temp).code === 1,
+    ]);
+    let run = runPipeline(temp, { quiet: true });
+    cases.push([
+      "actual complete lifecycle has valid bound receipt",
+      run.code === 0 &&
+        inspectPipeline(temp).code === 0 &&
+        run.proof.results.length === 2,
+    ]);
+    const proofPath = paths(temp).receipt,
+      tracePath = paths(temp).trace,
+      proofBytes = fs.readFileSync(proofPath),
+      traceBytes = fs.readFileSync(tracePath);
+    fs.appendFileSync(tracePath, "{broken\n");
+    cases.push(["torn trace fails closed", inspectPipeline(temp).code === 1]);
+    fs.writeFileSync(tracePath, traceBytes);
+    let tampered = JSON.parse(proofBytes);
+    tampered.status = "running";
+    fs.writeFileSync(proofPath, JSON.stringify(tampered));
+    cases.push([
+      "partial lifecycle rejected",
+      inspectPipeline(temp).code === 1,
+    ]);
+    fs.writeFileSync(proofPath, proofBytes);
+    tampered = JSON.parse(proofBytes);
+    tampered.results.pop();
+    fs.writeFileSync(proofPath, JSON.stringify(tampered));
+    cases.push([
+      "missing completed step rejected",
+      inspectPipeline(temp).code === 1,
+    ]);
+    fs.writeFileSync(proofPath, proofBytes);
+    fs.appendFileSync(path.join(temp, "scripts", "read.mjs"), "\n// changed");
+    cases.push([
+      "source drift invalidates receipt",
+      inspectPipeline(temp).code === 1,
+    ]);
+    pkg("node scripts/fail.mjs && node scripts/later.mjs");
+    run = runPipeline(temp, { quiet: true });
+    cases.push([
+      "real failing child stops later steps and leaves failed proof",
+      run.code === 1 &&
+        run.proof.results.length === 1 &&
+        !fs.existsSync(path.join(temp, "later.txt")) &&
+        inspectPipeline(temp).code === 1,
+    ]);
+    pkg("node scripts/read.mjs && node scripts/write.mjs");
+    fs.writeFileSync(path.join(temp, "index.html"), "old");
+    run = runPipeline(temp, { quiet: true });
+    cases.push([
+      "real observer before changed write fails",
+      run.code === 1 && run.proof.status === "invalid-evidence",
+    ]);
+    pkg(
+      "node scripts/write.mjs && node scripts/read.mjs && node scripts/write.mjs",
+    );
+    fs.writeFileSync(path.join(temp, "index.html"), "old");
+    run = runPipeline(temp, { quiet: true });
+    cases.push([
+      "duplicate no-op writer is distinct without false violation",
+      run.code === 0,
+    ]);
+    const scenarios = [
+      [
+        "plain-analysis",
+        "fs.readFileSync('index.html','utf8').includes('class');",
+        0,
+        false,
+      ],
+      [
+        "noop-transform",
+        "const bytes=fs.readFileSync('index.html');fs.writeFileSync('index.html',bytes);",
+        0,
+        false,
+      ],
+      [
+        "unfinished-hash",
+        "crypto.createHash('sha256').update(fs.readFileSync('index.html'));",
+        0,
+        false,
+      ],
+      [
+        "partial-hash",
+        "crypto.createHash('sha256').update(fs.readFileSync('index.html').subarray(0,2)).digest('hex');",
+        0,
+        false,
+      ],
+      [
+        "full-string-hash",
+        "crypto.createHash('sha256').update(fs.readFileSync('index.html','utf8')).digest('hex');",
+        1,
+        true,
+      ],
+      [
+        "promise-full-hash",
+        "crypto.createHash('sha256').update(await fs.promises.readFile('index.html')).digest('hex');",
+        1,
+        true,
+      ],
+      [
+        "callback-full-hash",
+        "await new Promise((resolve,reject)=>fs.readFile('index.html',(error,bytes)=>{if(error)return reject(error);crypto.createHash('sha256').update(bytes).digest('hex');resolve();}));",
+        1,
+        true,
+      ],
+      [
+        "same-step-hash-write",
+        "const h=crypto.createHash('sha256').update(fs.readFileSync('index.html'));fs.writeFileSync('index.html','changed locally');h.digest('hex');",
+        1,
+        true,
+      ],
+      [
+        "encoded-read-is-not-raw-html",
+        "crypto.createHash('sha256').update(fs.readFileSync('index.html','base64')).digest('hex');",
+        0,
+        false,
+      ],
+    ];
+    for (const [name, body, expectedCode, expectedHash] of scenarios) {
+      put(
+        "scenario.mjs",
+        "import fs from 'node:fs';import crypto from 'node:crypto';" + body,
+      );
+      fs.writeFileSync(path.join(temp, "index.html"), "original HTML bytes");
+      pkg("node scripts/scenario.mjs && node scripts/write.mjs");
+      const observed = runPipeline(temp, { quiet: true });
+      const trace = fs
+        .readFileSync(paths(temp).trace, "utf8")
+        .trim()
+        .split("\n")
+        .filter(Boolean)
+        .map(JSON.parse);
+      cases.push([
+        "actual " + name + " follows the declared hash scope",
+        observed.code === expectedCode &&
+          trace.some((e) => e.op === "hash-observe") === expectedHash,
+      ]);
+      if (name === "noop-transform")
+        cases.push([
+          "no-op writes retained as evidence",
+          trace.some((e) => e.op === "write-noop"),
+        ]);
+      if (name === "same-step-hash-write")
+        cases.push([
+          "same-step stale hash remains a concrete failure after saving receipt",
+          inspectPipeline(temp).errors.some(
+            (error) =>
+              error.includes("1:scenario.mjs observes") &&
+              error.includes("before 1:scenario.mjs"),
+          ),
+        ]);
+    }
+    put(
+      "operations.mjs",
+      `import fs from 'node:fs';import fsp from 'node:fs/promises';import {pathToFileURL} from 'node:url';
+try{fs.readFileSync('missing.html')}catch{}
+try{fs.writeFileSync('absent-parent/fail.html','x')}catch{}
+try{await fsp.readFile('missing-async.html')}catch{}
+await new Promise(resolve=>fs.readFile('missing-callback.html',()=>resolve()));
+fs.writeFileSync('url space.html','url');fs.readFileSync(pathToFileURL(process.cwd()+'/url space.html'));
+await fsp.writeFile('promise.html','promise');await fsp.readFile('promise.html');
+await new Promise((resolve,reject)=>fs.writeFile('callback.html','cb',e=>e?reject(e):resolve()));
+await new Promise((resolve,reject)=>fs.readFile('callback.html',e=>e?reject(e):resolve()));
+await new Promise((resolve,reject)=>{const s=fs.createWriteStream('stream.html');s.on('error',reject);s.on('finish',resolve);s.end('stream');});
+await new Promise((resolve,reject)=>{const s=fs.createReadStream('stream.html');s.on('error',reject);s.on('end',resolve);s.resume();});
+`,
+    );
+    pkg("node scripts/operations.mjs");
+    run = runPipeline(temp, { quiet: true });
+    const events = fs
+      .readFileSync(paths(temp).trace, "utf8")
+      .trim()
+      .split("\n")
+      .map(JSON.parse);
+    cases.push([
+      "successful sync promise callback and stream operations recorded",
+      run.code === 0 &&
+        [
+          "url space.html",
+          "promise.html",
+          "callback.html",
+          "stream.html",
+        ].every((page) =>
+          ["read", "write"].every((op) =>
+            events.some((e) => e.page === page && e.op === op),
+          ),
+        ),
+    ]);
+    cases.push([
+      "failed operations produce no observation",
+      !events.some(
+        (e) => e.page.includes("missing") || e.page.includes("fail.html"),
+      ),
+    ]);
+    let event = events[0];
+    event.invocationId = "foreign";
+    fs.writeFileSync(
+      paths(temp).trace,
+      events.map((e) => JSON.stringify(e)).join("\n") + "\n",
+    );
+    cases.push([
+      "tampered invocation or trace rejected",
+      inspectPipeline(temp).code === 1,
+    ]);
+    pkg("node scripts/read.mjs");
+    run = runPipeline(temp, {
+      quiet: true,
+      spawn: () => ({ status: null, signal: "SIGTERM" }),
+    });
+    cases.push([
+      "signal produces failed lifecycle",
+      run.code === 1 && run.proof.status === "failed",
+    ]);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
   let failed = 0;
   for (const [name, ok] of cases) {
     if (!ok) failed++;
-    console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+    console.log(`${ok ? "PASS" : "FAIL"} ${name}`);
   }
-  console.log(`\n${cases.length - failed}/${cases.length} self-tests passing`);
+  console.log(
+    `${cases.length - failed}/${cases.length} postbuild self-tests passing`,
+  );
   return failed ? 1 : 0;
 }
 
-if (SELF_TEST) process.exit(selfTest());
-else if (INSTRUMENT) { instrument(); process.exit(0); }
-else process.exit(check());
+export function main(argv = process.argv.slice(2)) {
+  if (
+    argv.length > 1 ||
+    argv.some(
+      (a) => !["--run", "--instrument", "--check", "--self-test"].includes(a),
+    )
+  ) {
+    console.error("Usage: --run | --instrument | --check | --self-test");
+    return 2;
+  }
+  if (argv[0] === "--self-test") return selfTest();
+  try {
+    if (["--run", "--instrument"].includes(argv[0])) {
+      const result = runPipeline();
+      if (result.code)
+        console.error(
+          "Postbuild lifecycle failed; its receipt cannot certify completion.\n" +
+            (
+              result.proof.validationErrors ||
+              result.proof.results
+                .filter((step) => step.status !== 0)
+                .map(
+                  (step) =>
+                    `${step.id}: exit ${step.status}; ${step.error || step.signal || "failed"}`,
+                )
+            ).join("\n"),
+        );
+      return result.code;
+    }
+    const result = inspectPipeline();
+    if (result.code) console.error(result.errors.join("\n"));
+    else
+      console.log(
+        `postbuild ordering: ${result.steps} completed steps; ${result.eventCount} successful HTML filesystem/hash events; exact-full-file hash ordering verified; partial/chunked/arbitrary dataflow unmeasured; invocation and source bound`,
+      );
+    return result.code;
+  } catch (error) {
+    console.error(`postbuild: ${error.message}`);
+    return 1;
+  }
+}
+if (
+  process.argv[1] &&
+  pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url
+)
+  process.exitCode = main();

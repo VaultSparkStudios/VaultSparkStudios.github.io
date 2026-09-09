@@ -153,18 +153,20 @@ function scheduledWorkflows() {
 // One query per cron instead of one shared window over the whole repo. Slightly
 // more calls, but each cron's window is set by its own history rather than by how
 // busy the repo happened to be, which is the property that failed.
-function fetchRunsFor(wf) {
+function fetchRunsFor(wf, timeout = 24000) {
   const res = spawnSync(
     'gh',
     ['run', 'list', '--workflow', wf.file, '-L', String(RUNS_PER_WORKFLOW),
      '--json', 'conclusion,status,event,createdAt'],
-    { cwd: ROOT, encoding: 'utf8', timeout: 30000 },
+    { cwd: ROOT, encoding: 'utf8', timeout },
   );
   if (res.status !== 0 || !res.stdout) {
     return { ok: false, reason: (res.stderr || res.error?.message || 'gh unavailable').trim().split('\n')[0] };
   }
   try {
-    return { ok: true, runs: JSON.parse(res.stdout) };
+    const runs = JSON.parse(res.stdout);
+    if (!Array.isArray(runs)) throw new Error('workflow runs must be an array');
+    return { ok: true, runs };
   } catch (e) {
     return { ok: false, reason: `parse error: ${e.message}` };
   }
@@ -249,22 +251,41 @@ function runSelfTest() {
   console.log('check-scheduled-workflow-staleness self-test passed (18/18)');
 }
 
+export function collectWorkflowObservations(workflows, { fetch = fetchRunsFor, now = Date.now, budgetMs = 24000 } = {}) {
+  const deadline = now() + budgetMs;
+  const observed = [];
+  const unreachableWorkflows = [];
+  let firstFailure = null;
+  let timedOut = false;
+  for (const wf of workflows) {
+    const remaining = Math.floor(deadline - now());
+    if (remaining <= 0) {
+      timedOut = true;
+      firstFailure ??= 'total observation deadline exhausted';
+      unreachableWorkflows.push(wf.name);
+      continue;
+    }
+    const fetched = fetch(wf, remaining);
+    if (!fetched.ok) {
+      firstFailure ??= fetched.reason;
+      unreachableWorkflows.push(wf.name);
+    } else {
+      observed.push({ ...wf, runs: fetched.runs });
+    }
+  }
+  timedOut ||= now() >= deadline;
+  return { observed, unreachableWorkflows, firstFailure, timedOut };
+}
+
 function main() {
   const workflows = scheduledWorkflows();
-  const observed = [];
-  let firstFailure = null;
-
-  for (const wf of workflows) {
-    const fetched = fetchRunsFor(wf);
-    if (!fetched.ok) { firstFailure ??= fetched.reason; continue; }
-    observed.push({ ...wf, runs: fetched.runs });
-  }
+  const { observed, firstFailure, unreachableWorkflows, timedOut } = collectWorkflowObservations(workflows);
 
   // Only a TOTAL inability to reach CI is a skip. A partial read is reported as
   // what it is, with the unreachable workflows named — not quietly rounded up.
   if (!observed.length) {
     const reason = firstFailure || 'gh unavailable';
-    const payload = { ok: true, skipped: true, reason, scheduledCount: workflows.length };
+    const payload = { ok: true, skipped: true, reason, scheduledCount: workflows.length, unreachableWorkflows, timedOut };
     if (JSON_OUT) { console.log(JSON.stringify(payload)); return 0; }
     console.log(`scheduled-workflow staleness: SKIPPED (${reason}) · ${workflows.length} scheduled workflows known`);
     return 0; // advisory — never false-alarm when CI is unreachable
@@ -304,6 +325,8 @@ function main() {
       // scheduled run at all, which is unmeasured, not healthy.
       noData: unmeasured.map((v) => v.name),
       unreachable,
+      unreachableWorkflows,
+      timedOut,
       liveCorroboration,
       // Verdict classes with no live instance in THIS run — correct today,
       // exercised only by --self-test fixtures. Not a failure; a scope statement.
@@ -337,7 +360,7 @@ function main() {
   return 1;
 }
 
-if (SELF_TEST) {
+if (SELF_TEST && process.argv[1]?.endsWith('check-scheduled-workflow-staleness.mjs')) {
   runSelfTest();
 } else if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('check-scheduled-workflow-staleness.mjs')) {
   process.exit(main());

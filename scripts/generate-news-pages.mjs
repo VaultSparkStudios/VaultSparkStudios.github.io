@@ -20,12 +20,14 @@
  *   node scripts/generate-news-pages.mjs --apply   # write files
  *   node scripts/generate-news-pages.mjs --check   # exit 1 on drift
  */
+import { createHash } from 'node:crypto';
+import { readerActionReceipts, renderReaderActions } from '../assets/lib/you-asked-shipped-render.mjs';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance, factReceiptFor } from './lib/news-desk.mjs';
 import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
-import { deriveDeskFreshness } from './lib/news-freshness.mjs';
+import { staticDeskEvidence, renderStaticDeskEvidence } from './lib/news-freshness.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -110,6 +112,13 @@ const navSheetTag = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0
 const shellManifest = existsSync(join(ROOT, 'assets/shell-manifest.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'assets/shell-manifest.json'), 'utf8'))
   : { assets: {} };
+// The inline theme boot restores colors; this controller supplies visitor controls.
+const navToggleSrc = shellManifest.assets?.navToggle?.path
+  ? `/${shellManifest.assets.navToggle.path}`
+  : '/assets/nav-toggle.js';
+const themeToggleSrc = shellManifest.assets?.themeToggle?.path
+  ? `/${shellManifest.assets.themeToggle.path}`
+  : '/assets/theme-toggle.js';
 const deskReactionsSrc = shellManifest.assets?.deskReactions?.path
   ? `/${shellManifest.assets.deskReactions.path}`
   : '/assets/desk-reactions.js';
@@ -185,7 +194,7 @@ const atDepth = (html, depth) => String(html).replace(/(?:\.\.\/)+assets\//g, `$
 
 const chromeFoot = (depth) => {
   if (!depth) throw new Error('chromeFoot(depth) requires the page depth — harvested chrome must be re-based per page');
-  return `${atDepth(footerBlock, depth)}  ${atDepth(deskAmbientBlock, depth)}\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
+  return `${atDepth(footerBlock, depth)}  ${atDepth(deskAmbientBlock, depth)}\n<script src="${themeToggleSrc}" defer></script>\n<script src="${navToggleSrc}" defer></script>\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
 };
 
 const PREVIEW_BANNER = `<div style="background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.4);border-radius:12px;padding:.8rem 1.1rem;margin:1.2rem 0;font-size:.9rem;color:var(--text)"><strong>Preview dry-run.</strong> This content is simulated pipeline output used to prove the publishing system — it is <em>not</em> real reporting. The Desk goes live after its dark-run period.</div>`;
@@ -703,7 +712,7 @@ function buildHubPage() {
     : null;
   const ogImage = newest && lead ? `${PROD}/assets/og/news/${newest.date}--${lead.slug}.png` : `${PROD}/assets/og-image.png`;
   const records = personaTrackRecords(ledger);
-  const freshness = deriveDeskFreshness(days);
+  const freshness = staticDeskEvidence(days);
   const standing = personaForm(ledger);
   const head = chromeHead({
     title: 'The Desk — AI news, argued on the record · VaultSpark Studios',
@@ -718,7 +727,7 @@ function buildHubPage() {
       '@type': 'CollectionPage',
       name: 'The Desk — VaultSpark AI Signal',
       url: `${PROD}/news/`,
-      description: `${freshness.cadenceLabel} AI news argued by named AI personas with public, hash-verifiable prediction track records. Latest evidence: ${freshness.latestEditionDate || 'none'}.`,
+      description: `AI news argued by named AI personas with public, hash-verifiable prediction track records. Latest evidence: ${freshness.latestEditionDate || 'none'}.`,
     }),
   });
   const cast = PERSONAS.map((p) => {
@@ -766,10 +775,10 @@ function buildHubPage() {
   <p class="desk-deck">AI news with teeth: ${CAST_WORD} fictional correspondents investigate the day’s real sources, argue in character, draw the joke, and leave every prediction on a public scorecard. Read the brief, enjoy the hit, then check the receipts.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
-  <div class="desk-panel" data-desk-freshness="${freshness.state}" style="padding:.85rem 1.1rem;margin:1rem 0;color:var(--desk-muted)"><strong style="color:var(--text)">${freshness.cadenceLabel} cadence</strong> · latest published evidence ${escapeHtml(freshness.latestEditionDate || 'not yet available')}${freshness.overdue ? ` · ${freshness.ageDays} days old. The Desk is not claiming a daily edition while overdue.` : ' · inside the daily evidence window.'} <a href="/api/news-desk-freshness.json" style="color:var(--gold)">Check freshness →</a></div>
+  ${renderStaticDeskEvidence(days)}
   ${deskStatsPanel()}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>${freshness.state === 'daily' ? 'Today' : 'Latest editions'}</h2><p>${freshness.state === 'daily' ? 'What actually happened, and what the desk makes of it.' : 'Published work remains available. The next scheduled edition publishes as soon as it clears the standards desk.'}</p></div>
+  <div class="desk-section-head"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
@@ -856,11 +865,12 @@ function buildSubscribedPage() {
  */
 function readerSignalSection() {
   const rows = (reactionsFeed.stories || []).filter((s) => s.state === 'sufficient');
-  const pending = (reactionsFeed.stories || []).length - rows.length;
+  const pending = (reactionsFeed.stories || []).filter((s) => s.state === 'insufficient').length;
+  const unavailable = (reactionsFeed.stories || []).filter((s) => s.state === 'unavailable').length;
   const resets = (reactionsFeed.stories || []).filter((s) => s.state === 'reset').length;
 
   if (!rows.length) {
-    return `<div class="desk-section-head"><h2>What readers signalled</h2><p>Not enough reader signals yet. A story publishes a total once ${MIN_SIGNALS_COPY} readers have reacted — until then it shows nothing rather than a number too small to mean anything.</p></div>`;
+    return `<div class="desk-section-head"><h2>What readers signalled</h2><p>No qualifying reader observations are published yet. A story total is shown only after ${MIN_SIGNALS_COPY} voluntary signals. Stories without observations remain unavailable.${resets ? ` ${resets} counter reset${resets === 1 ? '' : 's'} reported.` : ''} <a href="/api/news-desk-reactions.json">Check the dated observations</a>.</p></div>`;
   }
   const ranked = [...rows].sort((a, b) => b.total - a.total).map((row) => {
     const top = Object.entries(row.reactions || {}).sort((a, b) => b[1] - a[1])[0];
@@ -871,7 +881,7 @@ function readerSignalSection() {
       <span class="desk-signal-d">${top ? escapeHtml(`most sent: ${top[0]} (${top[1]})`) : 'no story reaction'}${voices ? escapeHtml(` · top voice: ${personaById(voices[0])?.name || voices[0]} (${voices[1]})`) : ''}</span>
     </li>`;
   }).join('\n');
-  return `<div class="desk-section-head"><h2>What readers signalled</h2><p>Voluntary reactions, self-selected — not a rating and not a poll. ${pending} story${pending === 1 ? '' : 'ies'} below the ${MIN_SIGNALS_COPY}-signal floor ${pending === 1 ? 'is' : 'are'} withheld.${resets ? ` ${resets} counter reset detected and reported rather than smoothed.` : ''} <a href="/api/news-desk-reactions.json">Check the feed</a>.</p></div>
+  return `<div class="desk-section-head"><h2>What readers signalled</h2><p>Voluntary reactions, self-selected — not a rating and not a poll. ${pending} story${pending === 1 ? '' : 'ies'} below the ${MIN_SIGNALS_COPY}-signal floor ${pending === 1 ? 'is' : 'are'} withheld.${unavailable ? ` ${unavailable} stor${unavailable === 1 ? 'y has' : 'ies have'} no available observation.` : ''}${resets ? ` ${resets} counter reset detected and reported rather than smoothed.` : ''} <a href="/api/news-desk-reactions.json">Check the feed</a>.</p></div>
   <ul class="desk-signal-list">${ranked}</ul>`;
 }
 
@@ -880,6 +890,17 @@ const MIN_SIGNALS_COPY = 5;
 function buildDirectorsReportPage() {
   const report = directorsReports[0];
   if (!report) return null;
+  const historyPath = join(ROOT, 'data/news-desk-reactions-history.ndjson');
+  const snapshots = existsSync(historyPath) ? readFileSync(historyPath, 'utf8').split(/\r?\n/).filter((line) => line.trim()).map((line) => JSON.parse(line)) : [];
+  const responseContract = readerActionReceipts(report, {
+    snapshots,
+    verifySnapshot: (snapshot) => {
+      const { receiptId, ...payload } = snapshot;
+      return createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0,20) === receiptId;
+    },
+    routeExists: (href) => existsSync(join(ROOT, href.slice(1), 'index.html')),
+  });
+  if (responseContract.errors.length) throw new Error(responseContract.errors.join('; '));
   const orson = roleById('orson');
   // Scoped to the report's own date: a review of opening week reports opening
   // week, and stays true as later work lands (S309).
@@ -931,6 +952,7 @@ function buildDirectorsReportPage() {
     <p>${escapeHtml(report.assignmentNote)}</p>
   </div>
   ${readerSignalSection()}
+  ${renderReaderActions(responseContract)}
   <div class="desk-section-head"><h2>The writers</h2><p>Ranked. Every one of them gets something to work on, including the one at the top.</p></div>
   <div class="desk-reviews">${rows}</div>
   <div class="desk-body" style="margin-top:2rem"><p>${escapeHtml(report.closing)}</p>

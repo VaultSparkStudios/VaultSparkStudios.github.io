@@ -42,6 +42,7 @@
   }
 
   function onKey(e) {
+    if (loaded()) return; // the loaded palette owns the toggle from here
     if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
       e.preventDefault();
       openPalette();
@@ -52,7 +53,7 @@
     if (document.querySelector('[data-vs-palette-loader-trigger]')) return;
     var style = document.createElement('style');
     style.textContent = [
-      '.vs-palette-loader-trigger{position:fixed;bottom:1rem;right:1rem;z-index:50;padding:.55rem .95rem;background:rgba(13,16,28,.92);border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--text);font-size:.8rem;font-family:Georgia,serif;cursor:pointer;min-height:44px;display:none;align-items:center;gap:.45rem}',
+      '.vs-palette-loader-trigger{position:relative;flex-shrink:0;padding:.55rem .95rem;background:rgba(13,16,28,.92);border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--text);font-size:.8rem;font-family:Georgia,serif;cursor:pointer;min-height:44px;display:none;align-items:center;gap:.45rem}',
       'body.light-mode .vs-palette-loader-trigger{background:rgba(255,253,247,.95);border-color:rgba(20,28,52,.15)}',
       '@media(max-width:720px){.vs-palette-loader-trigger{display:inline-flex}}'
     ].join('');
@@ -68,7 +69,10 @@
     btnLabel.textContent = 'Search';
     btn.appendChild(btnLabel);
     btn.addEventListener('click', openPalette);
-    document.body.appendChild(btn);
+    // Keep search beside navigation, in document flow, so it cannot cover page content.
+    var menuButton = document.getElementById('hamburger');
+    if (menuButton && menuButton.parentNode) menuButton.parentNode.insertBefore(btn, menuButton);
+    else (document.querySelector('.site-header .nav') || document.body).appendChild(btn);
   }
 
   function init() {

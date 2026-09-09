@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "note": "Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a byte-checked generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.",
-  "unmodeled": 38,
+  "note": "Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a --check-gated generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.",
+  "unmodeled": 33,
   "total": 67,
   "unmodeledGenerators": [
     "scripts/build-agents-json.mjs",
@@ -9,12 +9,10 @@
     "scripts/build-ai-discovery-health.mjs",
     "scripts/build-ambient-bundle.mjs",
     "scripts/build-ambient-ledger.mjs",
-    "scripts/build-analytics-summary.mjs",
     "scripts/build-ark-signature-dossier.mjs",
     "scripts/build-brand-assets.mjs",
     "scripts/build-changelog-live.mjs",
     "scripts/build-commit-map.mjs",
-    "scripts/build-early-hints-headers.mjs",
     "scripts/build-entity-graph.mjs",
     "scripts/build-favicon.mjs",
     "scripts/build-feedback-provenance.mjs",
@@ -28,10 +26,8 @@
     "scripts/build-ignis-roi.mjs",
     "scripts/build-ignis-search-index.mjs",
     "scripts/build-inp-soak-verdicts.mjs",
-    "scripts/build-intelligence-budget.mjs",
     "scripts/build-llms-full-shards.mjs",
     "scripts/build-nav-sheet-stats.mjs",
-    "scripts/build-nervous-system.mjs",
     "scripts/build-oracle-query-clusters.mjs",
     "scripts/build-promotion-receipt.mjs",
     "scripts/build-public-ecosystem.mjs",
@@ -40,7 +36,53 @@
     "scripts/build-site-health.mjs",
     "scripts/build-staging-deploy-continuity.mjs",
     "scripts/build-tt-readiness.mjs",
-    "scripts/build-ux-decision-ledger.mjs",
     "scripts/build-worker-route-provenance.mjs"
-  ]
+  ],
+  "checkContracts": {
+    "scripts/build-intelligence-budget.mjs": {
+      "level": "drift-comparing",
+      "scope": "JSON payload comparison excluding generatedAt; Markdown ledger existence only",
+      "sourceSha256": "ea9c67076720b59d8a6be85f13bf4001213bec72a4ba201f3b1def3c015bff82"
+    },
+    "scripts/build-nervous-system.mjs": {
+      "level": "drift-comparing",
+      "scope": "Recomputed serialized artifact excluding generatedAt",
+      "sourceSha256": "601717022047ee2fb4c674fcaa8aa1e25b43ad71a83c37fce40195a2978f56fa"
+    },
+    "scripts/build-ux-decision-ledger.mjs": {
+      "level": "drift-comparing",
+      "scope": "Recomputed serialized artifact excluding generatedAt; clock contract asserted",
+      "sourceSha256": "12167ef255d02d8783f9b9dcb9dbec236ca0a1e92ad38df7dbe5938199eb7b81"
+    },
+    "scripts/build-analytics-summary.mjs": {
+      "level": "drift-comparing",
+      "scope": "Recomputed JSON excluding generatedAt using committed artifact date; does not prove current-day freshness",
+      "sourceSha256": "9ef6d0678c15e052e515170484e30453430f23aa008557bb5f7ac2fc497c3029"
+    },
+    "scripts/build-early-hints-headers.mjs": {
+      "level": "drift-comparing",
+      "scope": "Exact _headers bytes recomputed from shell manifest",
+      "sourceSha256": "f2a1e4595876754cc06ec5ddf5bcfa43bf5f69f71455993cc4efb3c74a4599ee"
+    },
+    "scripts/build-nav-sheet-stats.mjs": {
+      "level": "shape-only",
+      "scope": "Output existence, JSON parse, schemaVersion and readiness field",
+      "sourceSha256": "c0575384027aa59878555c7289259ac5d78f6fad472c6568b6c09fd6d1dcf993"
+    },
+    "scripts/build-feedback-provenance.mjs": {
+      "level": "shape-only",
+      "scope": "Output existence and JSON parse; no comparison to recomputed themes",
+      "sourceSha256": "4ee476a090713559b71cd267ec87a318c8cd3e3d7f123e3dafb18b846ccfcc9f"
+    },
+    "scripts/build-site-health.mjs": {
+      "level": "shape-only",
+      "scope": "Output existence, JSON parse, publicSafe and fieldReady types",
+      "sourceSha256": "86108ea029ad76d7360bd0f4b49c9c9e7178439616290c0d4c57b531ed8387ca"
+    },
+    "scripts/build-ignis-roi.mjs": {
+      "level": "shape-only",
+      "scope": "Output existence and JSON parse; no ledger-derived drift comparison",
+      "sourceSha256": "13af3d72029ed5dce5d653bde252910300c0907a5a371d26d218d10e0fc98acc"
+    }
+  }
 }

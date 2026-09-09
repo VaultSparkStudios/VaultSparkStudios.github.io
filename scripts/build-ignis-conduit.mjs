@@ -2,9 +2,8 @@
 /**
  * build-ignis-conduit.mjs — generate api/ignis-conduit.json from real signals.
  *
- * Replaces the S160 seed data. Reads the last 24h of git commits, the most
- * recent closeout session number from PROJECT_STATUS.json, and the latest
- * audit JSON; synthesizes IGNIS-voice sentences from a template; writes the
+ * Replaces the S160 seed data. Reads the last 7d of classified commit-map entries, the most
+ * recent closeout session number from PROJECT_STATUS.json, synthesizes IGNIS-voice sentences from a template; writes the
  * 3 freshest to api/ignis-conduit.json. The website's hero ticker rotates
  * through them with the "IGNIS is reading the studio" label.
  *
@@ -14,17 +13,19 @@
  *
  * Usage:
  *   node scripts/build-ignis-conduit.mjs           # write
- *   node scripts/build-ignis-conduit.mjs --check   # parseable + non-empty
+ *   node scripts/build-ignis-conduit.mjs --check   # eligible narration matches commit-map
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
-import { execSync } from './lib/safe-spawn.mjs';
+import assert from 'node:assert/strict';
+import os from 'node:os';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'api', 'ignis-conduit.json');
 const STATUS = path.join(ROOT, 'context', 'PROJECT_STATUS.json');
+const COMMIT_MAP = path.join(ROOT, 'api', 'commit-map.json');
 const CHECK = process.argv.includes('--check');
 
 // CANON-022: IGNIS narration is studio-ops-owned (Designer). The public website
@@ -33,11 +34,6 @@ const CHECK = process.argv.includes('--check');
 // cron writes to this same endpoint, and (b) only fills the template when the file
 // is template-sourced or stale. resolveCapability is consulted purely for
 // observability — to log whether the upstream LLM upgrade is provisioned yet.
-let resolveCapability = () => ({ ready: false });
-try {
-  ({ resolveCapability } = await import('./lib/secrets.mjs'));
-} catch { /* lib absent in CI minimal env — observability degrades, narration unaffected */ }
-
 // True when api/ignis-conduit.json was last written by an LLM narrator (studio-ops
 // cron stamps source/narrator) and is still fresh for today — don't clobber it.
 function isCronLlmNarration() {
@@ -48,42 +44,6 @@ function isCronLlmNarration() {
     // (Don't substring-match prose: the template's own source mentions "LLM".)
     return cur.narrator === 'ignis-llm' && cur.generatedAt === today;
   } catch { return false; }
-}
-
-// Automated bookkeeping commits the studio shouldn't narrate as creative moves.
-const NARRATION_NOISE = [
-  /\[skip ci\]/i,
-  /update CI status beacon/i,
-  /auto-update sitemap/i,
-  /refresh vault narrative/i,
-  /post-closeout events/i,
-  /contracts reconcile/i,
-];
-
-// Look back far enough to find real moves even when the most recent commits are
-// all CI beacons. We filter noise, then take the freshest real commits.
-//
-// S333: the fetch ceiling was 40, which truncated BEFORE the noise filter below
-// and so contradicted the intent stated directly above. Measured on this repo:
-// 452 commits in the 168h window, 61 of them human — but the newest 40 carried
-// only 10 human commits, so 51 real moves (84%) were invisible. The scheduled
-// publishers commit several times an hour, so any fixed count small enough to be
-// "cheap" is smaller than a day of churn.
-//
-// The `--since` window is the real bound, and the caller already slices the
-// output to 3 entries, so a larger fetch cannot grow the artifact — it only
-// widens the pool those 3 are chosen from. Sized to the window, not to a count
-// a cron can outrun.
-const SCAN_CEILING = 2000;
-
-function recentCommits(limitHours = 168, max = SCAN_CEILING) {
-  try {
-    const out = execSync(`git log --since="${limitHours} hours ago" --pretty=format:"%H|%ct|%s" --max-count=${max}`, { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-    return out.split('\n').filter(Boolean).map((line) => {
-      const [sha, ts, ...subjectParts] = line.split('|');
-      return { sha: sha.slice(0, 8), ts: Number(ts) * 1000, subject: subjectParts.join('|') };
-    }).filter((c) => !NARRATION_NOISE.some((re) => re.test(c.subject)));
-  } catch { return []; }
 }
 
 function readSession() {
@@ -97,23 +57,6 @@ function projectFromSubject(subject) {
   if (scope) return scope[1];
   return 'vaultsparkstudios';
 }
-
-// Type-aware verb pools — the studio's IGNIS voice. Present tense, observational,
-// no hype. Picking by commit type (not a flat list) keeps the narration honest:
-// a `fix` reads as a fix, a `feat` reads as a ship.
-const VERB_POOLS = {
-  feat:     ['ships', 'opens', 'lands'],
-  fix:      ['steadies', 'closes', 'untangles'],
-  perf:     ['tightens', 'sheds weight from', 'quickens'],
-  refactor: ['rewires', 'redraws', 'recomposes'],
-  rebrand:  ['renames', 'reforges', 'recomposes'],
-  style:    ['polishes', 'settles'],
-  chore:    ['tends', 'keeps'],
-  docs:     ['records', 'annotates'],
-  test:     ['hardens', 'pins down'],
-  build:    ['assembles', 'wires'],
-  default:  ['moves', 'shifts'],
-};
 
 // Proper nouns whose casing must survive narration (never lower-cased at sentence start).
 const PROPER_NOUNS = [
@@ -147,57 +90,80 @@ function sanitizeSubject(subject) {
   return s.trim();
 }
 
-function preserveCase(s) {
-  if (!s) return s;
-  const fw = s.split(/\s/)[0];
-  if (PROPER_NOUNS.some((pn) => s.startsWith(pn))) return s; // known proper noun
-  if (/[a-z][A-Z]/.test(fw) || /^[A-Z]{2,}/.test(fw)) return s; // camelCase / acronym
-  return s.charAt(0).toLowerCase() + s.slice(1);
-}
+// A changed public file is necessary evidence of scope, not evidence that the
+// commit's own subject is public copy. Reject operational topics before cleanup.
+const INTERNAL_SUBJECT = /\b(?:workflow|pipeline|publisher|rebase|bookkeeping|credential|diagnostics?|supabase|cloudflare|lighthouse|compiler|generator|manifest|artifact|cron|guard|guards|debug)\b|\b(?:skipped|successful|failed)\s+(?:step|job)\b|\bCI\b/i;
+const PUBLIC_SUBJECT = /^(?:(?:a|an|the)\s+)?(?:(?:clearer|faster|better|new|accessible|improved)\s+){0,2}(?:signup|registration|sign[- ]in|navigation|homepage|home page|project gallery|game catalog|games?|catalog|membership|member portal|search|accessibility)\b/i;
+// Reuse the established product casing vocabulary, excluding infrastructure names.
+const PUBLIC_PRODUCTS = PROPER_NOUNS.filter(name => !['Cloudflare', 'Supabase', 'Lighthouse', 'Obelisk'].includes(name));
+const ACTIONS = [
+  [/^(?:adds?|added|introduces?|introduced|creates?|created)\s+/i, 'Added'],
+  [/^(?:fix(?:es|ed)?|repairs?|repaired|restores?|restored)\s+/i, 'Fixed'],
+  [/^(?:improves?|improved|quickens?|quickened|speeds?\s+up)\s+/i, 'Improved'],
+  [/^(?:renames?|renamed|rebrands?|rebranded)\s+/i, 'Renamed'],
+  [/^(?:removes?|removed)\s+/i, 'Removed'],
+];
+const TYPE_ACTION = { feat: 'Added', fix: 'Fixed', perf: 'Improved', style: 'Improved', rebrand: 'Renamed' };
 
-// Returns a clean audience-safe sentence, or null if the commit shouldn't be narrated publicly.
-function narrateCommit(commit) {
+export function narrateCommit(commit) {
+  if (commit.visitorFacing !== true || commit.type === 'chore') return null;
   const raw = commit.subject.replace(/\s+\[skip ci\]\s*$/, '');
   const m = raw.match(/^(\w+)(?:\(([^)]+)\))?(!)?:\s*(.+)$/);
   const type = m ? m[1].toLowerCase() : 'default';
-  const subject = sanitizeSubject((m ? m[4] : raw).trim());
-  if (!subject || subject.length < 4) return null;
-  if (DEVISH.some((re) => re.test(subject))) return null;
-  const pool = VERB_POOLS[type] || VERB_POOLS.default;
-  // Deterministic pick from the sha so the same commit always narrates the same.
-  const verb = pool[Number('0x' + commit.sha.slice(0, 2)) % pool.length];
-  const trimmed = subject.length > 96 ? subject.slice(0, 93).replace(/\s\S*$/, '') + '…' : subject;
-  return `The studio ${verb} ${preserveCase(trimmed)}.`;
+  if (!TYPE_ACTION[type]) return null;
+  let subject = (m ? m[4] : raw).trim();
+  if (INTERNAL_SUBJECT.test(subject) || DEVISH.some(re => re.test(subject))) return null;
+  let action = TYPE_ACTION[type];
+  for (const [pattern, verb] of ACTIONS) {
+    if (pattern.test(subject)) { action = verb; subject = subject.replace(pattern, ''); break; }
+  }
+  subject = sanitizeSubject(subject).replace(/[.!?]+$/, '');
+  if (!subject || subject.length > 120) return null;
+  // Preserve the recorded failure's meaning without promising a new live outcome.
+  if (action === 'Fixed' && /^(?:the\s+)?(?:signup|registration)\s+(?:path|flow|form)\s+(?:that was\s+)?(?:failing every registration|preventing registration)$/i.test(subject)) {
+    return 'Fixed the signup error that prevented registration.';
+  }
+  if (!PUBLIC_SUBJECT.test(subject) && !PUBLIC_PRODUCTS.some(name => subject.startsWith(name))) return null;
+  // Unknown leftover imperative verbs are not noun phrases to prepend a verb to.
+  if (ACTIONS.some(([pattern]) => pattern.test(subject))) return null;
+  return `${action} ${subject}.`;
 }
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-function build() {
-  const commits = recentCommits();
-  const session = readSession();
-  const entries = commits
-    .map((c) => {
-      const title = narrateCommit(c);
-      return title ? {
-        id: `ignis-S${session || '?'}-${c.sha}`,
-        ts: new Date(c.ts).toISOString(),
-        voice: 'ignis',
-        title,
-        project: projectFromSubject(c.subject),
-        commit: c.sha,
-      } : null;
-    })
-    .filter(Boolean)
-    .slice(0, 3);
-
+export function buildConduit(commitMap, session, now = new Date()) {
+  if (!commitMap || !Array.isArray(commitMap.entries)) throw new Error('commit-map input unavailable or malformed; existing narration preserved');
+  const cutoff = now.getTime() - 168 * 3600000;
+  const commits = commitMap.entries.map(entry => {
+    if (!entry || typeof entry.sha !== 'string' || !/^[a-f0-9]{8,40}$/i.test(entry.sha)
+      || typeof entry.summary !== 'string' || typeof entry.type !== 'string'
+      || !Number.isFinite(Date.parse(entry.ts))) throw new Error('commit-map entry malformed; existing narration preserved');
+    return { ...entry, subject: `${entry.type}${entry.scope ? `(${entry.scope})` : ''}: ${entry.summary}` };
+  }).filter(entry => Date.parse(entry.ts) >= cutoff && Date.parse(entry.ts) <= now.getTime())
+    .sort((a, b) => Date.parse(b.ts) - Date.parse(a.ts));
+  const entries = commits.map(c => {
+    const title = narrateCommit(c);
+    return title ? {
+      id: `ignis-S${session || '?'}-${c.sha}`,
+      ts: new Date(c.ts).toISOString(), voice: 'ignis', title,
+      project: projectFromSubject(c.subject), commit: c.sha,
+    } : null;
+  }).filter(Boolean).slice(0, 3);
   return {
-    generatedAt: new Date().toISOString().slice(0, 10),
+    generatedAt: now.toISOString().slice(0, 10),
     generatedBy: 'scripts/build-ignis-conduit.mjs',
-    source: 'git log (7d window, noise-filtered), template narration (LLM upgrade pending studio-ops cron)',
-    kind: 'ignis-conduit',
-    label: 'IGNIS is reading the studio',
-    entries,
+    source: 'api/commit-map.json (7d window, visitor-facing non-chore entries), template narration',
+    kind: 'ignis-conduit', label: 'IGNIS is reading the studio', entries,
   };
+}
+
+export function writeTemplateConduit(inputPath, outputPath, session, now = new Date()) {
+  // Read/validate first. An unavailable input must neither erase history nor report success.
+  const map = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+  const payload = buildConduit(map, session, now);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify(payload, null, 2) + '\n');
+  return payload;
 }
 
 function selfTest() {
@@ -205,12 +171,11 @@ function selfTest() {
     // [commit subject, sha, expectation]
     ['rebrand(phase 1): VaultSpark Football GM → Franchise Architect (name) + tombstone', 'aa000000',
       (t) => t && /VaultSpark Football GM to Franchise Architect/.test(t) && !/\(name\)|\+|→|tombstone/.test(t)],
-    ['feat: add Obelisk Passport scaffold', 'bb000000',
-      (t) => t && /Obelisk Passport scaffold/.test(t) && !/\badd\b/.test(t)],
+    ['feat: add Obelisk Passport scaffold', 'bb000000', (t) => t === null],
     ['recover S283 closeout — verify 6 shipped fixes REAL, fix 1 regression', 'cc000000',
       (t) => t === null], // dev-facing (S283, ratios) → dropped
     ['perf: quicken the homepage first paint', 'dd000000',
-      (t) => t && /^The studio /.test(t) && /homepage first paint/.test(t)],
+      (t) => t === 'Improved the homepage first paint.'],
     ['fix: tests/oracle-extra.spec.js networkidle trap', 'ee000000',
       (t) => t === null], // file path → dropped
     ['chore: update CI status beacon [skip ci]', 'ff000000',
@@ -218,51 +183,77 @@ function selfTest() {
   ];
   let pass = 0;
   for (const [subject, sha, check] of cases) {
-    const out = narrateCommit({ subject, sha });
+    const out = narrateCommit({ subject, sha, visitorFacing: true });
     const ok = check(out);
     console.log(`  ${ok ? '✓' : '✗'} ${JSON.stringify(subject).slice(0, 52)} → ${JSON.stringify(out)}`);
     if (ok) pass++;
   }
-  const okAll = pass === cases.length;
-  console.log(`build-ignis-conduit --self-test: ${pass}/${cases.length}`);
-  process.exit(okAll ? 0 : 1);
+  const now = new Date('2026-09-09T12:00:00Z');
+  const feature = { sha: 'bb000000', ts: '2026-09-08T12:00:00Z', type: 'feat', scope: 'home', summary: 'add a clearer project gallery', visitorFacing: true };
+  const chore = { ...feature, sha: '2b79d924', type: 'chore', scope: 'S345', summary: 're-derive after publisher race (attempt 1)' };
+  const fixtures = [
+    ['actual chore touching public files is refused', () => assert.equal(buildConduit({ entries: [chore] }, 347, now).entries.length, 0)],
+    ['actual nonvisitor chore is refused', () => assert.equal(buildConduit({ entries: [{ ...chore, visitorFacing: false }] }, 347, now).entries.length, 0)],
+    ['ordinary visitor feature is accepted', () => assert.match(buildConduit({ entries: [feature] }, 347, now).entries[0].title, /clearer project gallery/)],
+    ['absent visitor classification is refused', () => assert.equal(buildConduit({ entries: [{ ...feature, visitorFacing: undefined }] }, 347, now).entries.length, 0)],
+    ['nonvisitor feature is refused', () => assert.equal(buildConduit({ entries: [{ ...feature, visitorFacing: false }] }, 347, now).entries.length, 0)],
+    ['old and future entries are excluded', () => assert.equal(buildConduit({ entries: [{ ...feature, ts: '2026-08-01' }, { ...feature, ts: '2026-10-01' }] }, 347, now).entries.length, 0)],
+    ['observed skipped-step narration is not public copy', () => assert.equal(buildConduit({ entries: [{ ...feature, summary: 'a skipped step read as a successful step, four guards deep' }] }, 347, now).entries.length, 0)],
+    ['observed provider mismatch diagnosis is not public copy', () => assert.equal(buildConduit({ entries: [{ ...feature, type: 'fix', summary: 'name the Supabase project mismatch instead of blaming the provider' }] }, 347, now).entries.length, 0)],
+    ['observed signup failure becomes one factual grammatical sentence', () => assert.equal(buildConduit({ entries: [{ ...feature, type: 'fix', summary: 'repair the signup path that was failing every registration' }] }, 347, now).entries[0].title, 'Fixed the signup error that prevented registration.')],
+    ['incidental visitor topic cannot launder internal diagnostics', () => assert.equal(buildConduit({ entries: [{ ...feature, summary: 'add homepage diagnostics for the failed workflow step' }] }, 347, now).entries.length, 0)],
+    ['unknown topic is omitted instead of prefixed', () => assert.equal(buildConduit({ entries: [{ ...feature, summary: 'add an opaque contraption' }] }, 347, now).entries.length, 0)],
+    ['unknown envelope throws', () => assert.throws(() => buildConduit({}, 347, now), /unavailable/)],
+    ['measured empty replaces leak while missing input preserves history', () => {
+      const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'vs-conduit-test-'));
+      try {
+        const input = path.join(temp, 'input.json'); const output = path.join(temp, 'output.json');
+        fs.writeFileSync(output, 'useful prior history');
+        assert.throws(() => writeTemplateConduit(input, output, 347, now));
+        assert.equal(fs.readFileSync(output, 'utf8'), 'useful prior history');
+        fs.writeFileSync(input, '{torn');
+        assert.throws(() => writeTemplateConduit(input, output, 347, now));
+        assert.equal(fs.readFileSync(output, 'utf8'), 'useful prior history');
+        fs.writeFileSync(input, JSON.stringify({ entries: [chore] }));
+        writeTemplateConduit(input, output, 347, now);
+        assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')).entries, []);
+      } finally {
+        assert.equal(path.dirname(path.resolve(temp)), path.resolve(os.tmpdir()));
+        assert.ok(path.basename(temp).startsWith('vs-conduit-test-'));
+        fs.rmSync(temp, { recursive: true, force: true });
+      }
+    }],
+  ];
+  for (const [name, check] of fixtures) { check(); pass++; console.log(`  ok ${name}`); }
+  const total = cases.length + fixtures.length;
+  console.log(`build-ignis-conduit --self-test: ${pass}/${total}`);
+  process.exit(pass === total ? 0 : 1);
 }
 
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
-  const payload = build();
-  const json = JSON.stringify(payload, null, 2);
-
-  if (CHECK) {
-    let existing = '';
-    try { existing = fs.readFileSync(OUT, 'utf8'); } catch {}
-    if (!existing) { console.error('build-ignis-conduit --check: api/ignis-conduit.json missing'); process.exit(1); }
-    try { const parsed = JSON.parse(existing); if (!Array.isArray(parsed.entries)) throw 0; }
-    catch { console.error('build-ignis-conduit --check: invalid JSON or missing entries'); process.exit(1); }
-    console.log('build-ignis-conduit --check: present and parseable');
-    return;
-  }
-
-  // CANON-022: never clobber LLM-narrated lines a studio-ops cron wrote today.
+  // The upstream narrator remains authoritative when explicitly marked fresh.
   if (isCronLlmNarration()) {
-    console.log('build-ignis-conduit: studio-ops LLM narration is fresh — leaving it untouched');
+    console.log('build-ignis-conduit: fresh studio-ops narration preserved');
     return;
   }
-
-  // If git produced no commits in the window, leave the existing file alone.
-  if (!payload.entries.length) {
-    console.log('build-ignis-conduit: no commits in last 24h — keeping existing seed');
+  if (CHECK) {
+    const parsed = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    if (!Array.isArray(parsed.entries)) throw new Error('invalid conduit entries');
+    const map = JSON.parse(fs.readFileSync(COMMIT_MAP, 'utf8'));
+    const expected = buildConduit(map, readSession(), new Date());
+    // Session labels and generation dates are bookkeeping; public sentences and
+    // their source commits must match the currently measured eligible subset.
+    const comparable = entries => entries.map(({ id, ...entry }) => entry);
+    if (JSON.stringify(comparable(parsed.entries)) !== JSON.stringify(comparable(expected.entries))) {
+      throw new Error('conduit visitor-facing narration drift; regenerate after commit-map');
+    }
+    console.log('build-ignis-conduit --check: visitor-facing narration verified');
     return;
   }
-
-  // Observability only — log whether the upstream LLM upgrade is provisioned.
-  // The website never makes the call itself (CANON-015 + CANON-022).
-  const narrateReady = !!resolveCapability('ignis.narrate').ready;
-  console.log(`build-ignis-conduit: ignis.narrate capability ${narrateReady ? 'READY (studio-ops cron may upgrade these lines)' : 'not provisioned — using template narration'}`);
-
-  fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.writeFileSync(OUT, json + '\n');
-  console.log(`build-ignis-conduit: wrote ${payload.entries.length} entries → api/ignis-conduit.json`);
+  const payload = writeTemplateConduit(COMMIT_MAP, OUT, readSession());
+  console.log(`build-ignis-conduit: wrote ${payload.entries.length} measured entries`);
 }
 
-main();
+const isDirect = process.argv[1] && path.resolve(process.argv[1]) === url.fileURLToPath(import.meta.url);
+if (isDirect) main();

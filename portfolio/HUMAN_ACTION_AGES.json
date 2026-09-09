@@ -1,8 +1,4 @@
 {
-  "Complete the real-provider passkey ceremony. Run `node scripts/verify-provider-journey.mjs --live` and complete the hardware-key step in the opened browser; CANON-019 reserves passkey enrollment for the founder. This is the only remaining identity leg holding full-site production promotion and is unrelated to the now-live Desk content lane.": {
-    "firstSeen": "2026-08-23",
-    "session": null
-  },
   "Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable `main`.": {
     "firstSeen": "2026-08-23",
     "session": null
@@ -11,23 +7,11 @@
     "firstSeen": "2026-08-23",
     "session": null
   },
-  "[S321][FOUNDER/P0] Run the real-provider sign-in ceremony": {
-    "firstSeen": "2026-08-23",
-    "session": null
-  },
   "[S323][ARK] Ship a `pattern-share` to studio-ops on two launch-ready latent bugs. The registry's canonical live-URL field is `runtimeUrl`, not `liveUrl`; and case-sensitive `vaultStatus === 'SPARKED'` comparisons silently disable SPARKED enforcement portfolio-wide. Both are latent in any sibling that copied the launch-ready / compliance pattern.": {
     "firstSeen": "2026-08-23",
     "session": null
   },
   "[S323][ADVISORY] Surfaced, studio-ops-owned (CANON-018): `mindframe` registry `deployedUrl` drift (local `steadfast-determination-production.up.railway.app` ≠ canonical `usemindframe.com`) and `franchise-architect` portfolio-coherence drift. Resolve upstream, not from here.": {
-    "firstSeen": "2026-08-23",
-    "session": null
-  },
-  "[S318][ROLLBACK/P0] Founder decision: authorize or decline migration of the GitHub Pages warm rollback origin away from mutable `main`. D-S303 makes this provider architecture founder-scoped. Unchanged from S318.": {
-    "firstSeen": "2026-08-23",
-    "session": null
-  },
-  "[SIL][NEWS/P1] Complete Reader-signal → Director's Report closure. Deferred from S319 rather than half-shipped. The rollup exists (`api/news-desk-reactions.json`, per-story and per-voice, reset-guarded); the public \"You asked → The Desk changed/filed\" receipt is unbuilt. Reuse `build-you-asked-shipped.mjs` + `assets/lib/you-asked-shipped-render.mjs`. No ranking may use absent or tiny data. <!-- evidence-open: api/news-desk-reactions.json and assets/lib/you-asked-shipped-render.mjs are named as EXISTING inputs to REUSE, not as this task deliverable. The Desk-variant \"You asked -> The Desk changed/filed\" receipt itself is unbuilt. -->": {
     "firstSeen": "2026-08-23",
     "session": null
   },
@@ -43,16 +27,8 @@
     "firstSeen": "2026-08-23",
     "session": null
   },
-  "[S319][OBS/P1] Confirm RUM history begins accruing. `/v/rum` accepted its first writes in production on 2026-08-18 after an extended outage. Verify `data/news-desk-engagement-history.ndjson` gains its first row, and that Desk floors then cross honestly rather than being lowered.": {
-    "firstSeen": "2026-08-23",
-    "session": null
-  },
   "[S329] Activate Cloudflare Web Analytics for the production hostname. `data/stats-surface.json → human-page-loads-30d` reads `available: false` (\"Cloudflare Web Analytics has not observed this production hostname\") and `performance-samples-7d` is 0": {
     "firstSeen": "2026-08-25",
-    "session": null
-  },
-  "[S330][AUTH/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony. `obelisk.identity.verify` is missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; release dependency `obelisk-staging-registration` is also missing. After registration/configuration, run `node scripts/verify-provider-journey.mjs --live`, complete the hardware-key step, and regenerate identity/release receipts. The S332 public release is live and passes 15/15 attention cases; this task remains the separate auth-surface hold and must not be inferred from deployment success.": {
-    "firstSeen": "2026-08-28",
     "session": null
   }
 }

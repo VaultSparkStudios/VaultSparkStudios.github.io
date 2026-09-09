@@ -35,9 +35,9 @@
     }
   },
   "totals": {
-    "publicProjects": 19,
+    "publicProjects": 21,
     "audienceMeasuredProjects": 5,
-    "edgeMeasuredProjects": 14,
+    "edgeMeasuredProjects": 16,
     "humanPageLoads30": {
       "estimate": 3850,
       "lower": 1667,
@@ -66,9 +66,9 @@
     "unmappedHosts30": [],
     "activeZonesAccessible": 29,
     "registryComplete": true,
-    "publicProjects": 19,
-    "audienceProjectCoveragePct": 26,
-    "edgeProjectCoveragePct": 74,
+    "publicProjects": 21,
+    "audienceProjectCoveragePct": 24,
+    "edgeProjectCoveragePct": 76,
     "feedCoverageNote": "Project-specific Analytica Feed v1 coverage is independent from Cloudflare audience and edge coverage and must not be merged into one flattering percentage."
   },
   "projects": [
@@ -399,6 +399,31 @@
       }
     },
     {
+      "slug": "living-protocol",
+      "name": "The Living Protocol",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green for deployed infrastructure and enforcement honesty; public launch remains gated on physical-device, Apple, cohort, and database-authority evidence",
+      "liveUrl": "https://thelivingprotocol.life",
+      "measurementState": "edge-only",
+      "zones": [
+        "thelivingprotocol.life"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 40513,
+        "htmlPageViews": 4886,
+        "cachedRequests": 3740,
+        "bytes": 322924887,
+        "threats": 467
+      }
+    },
+    {
       "slug": "seamline",
       "name": "Seamline",
       "medium": "app",
@@ -466,6 +491,31 @@
       "infrastructure30": {
         "available": false,
         "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "hashmark",
+      "name": "Hashmark",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "yellow",
+      "liveUrl": "https://hashmark.football",
+      "measurementState": "edge-only",
+      "zones": [
+        "hashmark.football"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 46391,
+        "htmlPageViews": 4524,
+        "cachedRequests": 1314,
+        "bytes": 236180235,
+        "threats": 1298
       }
     },
     {

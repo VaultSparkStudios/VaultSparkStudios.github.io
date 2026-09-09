@@ -128,6 +128,8 @@ async function main() {
             await page.waitForTimeout(200);
           }
           const changedSelector = {
+            '/': '.hero-showcase',
+            '/news/directors-report/': '[data-reader-editorial-actions]',
             '/vault-member/': '.auth-card',
             '/studio/': '#roadmap .two-col',
             '/press/': '.press-grid',

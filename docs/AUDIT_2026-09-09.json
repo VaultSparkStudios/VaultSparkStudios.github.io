@@ -1,0 +1,1764 @@
+{
+  "schemaVersion": "2.1",
+  "session": 347,
+  "generatedAt": "2026-09-09T05:28:10.874Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "verification-lock-ownership",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 5,
+      "priority": 22.5,
+      "title": "Keep the verification freeze owned by its full-suite process",
+      "why": "Trustworthy release verification protects visitors from changes certified against a moving source tree.",
+      "recipe": "Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/run-build-check.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/run-build-check.mjs",
+          "pattern": "const lock = acquireVerificationLock(ROOT);",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner. Test competing acquisitions, malformed and replaced locks, read-only diagnostics success/failure, and nested self-test preservation."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Move acquisition after read-only modes; create exclusively with an ownership token and release only the matching owner. Test competing acquisitions, malformed and replaced locks, read-only diagnostics success/failure, and nested self-test preservation. Bind the outer suite receipt to an uninterrupted lock lifetime; exercise the real nested child mode in a temporary root."
+        }
+      },
+      "successBar": [
+        "Trustworthy release verification protects visitors from changes certified against a moving source tree.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 2,
+      "slug": "scheduled-observation-truth",
+      "axis": "observability-honesty",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 20.67,
+      "title": "Distinguish scheduled workflow failures from unavailable observations",
+      "why": "Public service information remains credible when unavailable evidence cannot appear green.",
+      "recipe": "Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/run-doctor.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/run-doctor.mjs",
+          "pattern": "JSON.parse(firstLine(out))",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout. Test clean, broken, silent, partial, skipped, malformed, contradictory, timeout and signal results; report names and coverage honestly."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Parse the complete structured result and execution metadata; give the producer a total deadline below the Doctor timeout. Test clean, broken, silent, partial, skipped, malformed, contradictory, timeout and signal results; report names and coverage honestly. Inject a clock and request function to prove the deadline emits partial evidence without one further provider call."
+        }
+      },
+      "successBar": [
+        "Public service information remains credible when unavailable evidence cannot appear green.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 3,
+      "slug": "current-task-inventory",
+      "axis": "sil-debt",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 20,
+      "title": "Show current bullet tasks without claiming an empty backlog",
+      "why": "Accurate work selection makes the next information-finding fixes visible rather than losing them in historical records.",
+      "recipe": "Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/lib/task-board.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/lib/task-board.mjs",
+          "pattern": "extractSection(markdown, 'Unified Genius List')",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering. Test Now and Human Action Required bullets, comments, CRLF, continuations, checked rows, historical exclusion and legacy tables."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Add a current-section inventory parser alongside the existing numeric-table parser; use it in startup rendering. Test Now and Human Action Required bullets, comments, CRLF, continuations, checked rows, historical exclusion and legacy tables. Reconcile superseded current rows against committed decisions and render unsupported-format and needs-triage states explicitly."
+        }
+      },
+      "successBar": [
+        "Accurate work selection makes the next information-finding fixes visible rather than losing them in historical records.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 4,
+      "slug": "canonical-evidence-navigation",
+      "axis": "features-depth",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 30,
+      "title": "Give Evidence one canonical navigation owner",
+      "why": "Visitors can reliably find the records supporting the studio claims.",
+      "recipe": "Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline config/intelligence-suite.json does not contain the audited source marker.",
+          "adapter": "file-content",
+          "target": "config/intelligence-suite.json",
+          "pattern": "/evidence/",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator. Run both generators in normal order and twice; assert one link, no removal/readdition churn and current target routes."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Add Evidence to the canonical route configuration and remove competing nav insertion ownership from the evidence generator. Run both generators in normal order and twice; assert one link, no removal/readdition churn and current target routes. Inspect desktop and mobile navigation in all themes and verify keyboard and touch reachability of Evidence."
+        }
+      },
+      "successBar": [
+        "Visitors can reliably find the records supporting the studio claims.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 5,
+      "slug": "art-only-game-covers",
+      "axis": "gamification-immersion",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 16,
+      "title": "Let live tile text own game names and genres",
+      "why": "Readable game identities improve project discovery without stale duplicated lettering.",
+      "recipe": "Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/build-game-covers.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/build-game-covers.mjs",
+          "pattern": "${esc(eyebrow.toUpperCase())}</text>",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork. Test SVG output has no visible text lockups, regenerate all cover formats and preserve live tile labels."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Follow D-S340.7: remove rasterized title and eyebrow while preserving each product palette and artwork. Test SVG output has no visible text lockups, regenerate all cover formats and preserve live tile labels. Inspect both featured and small tiles at desktop/mobile in every theme; verify image dimensions and loading behavior after asset rotation."
+        }
+      },
+      "successBar": [
+        "Readable game identities improve project discovery without stale duplicated lettering.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 6,
+      "slug": "community-empty-member-link",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 4,
+      "priority": 49.8,
+      "title": "Render unnamed community entries accessibly",
+      "why": "Visitors can identify community entries and follow meaningful profile links.",
+      "recipe": "Normalize the display name and member identifier; render useful non-link text when no usable identifier is present.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline community/index.html contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "community/index.html",
+          "pattern": "encodeURIComponent(m.username)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Normalize the display name and member identifier; render useful non-link text when no usable identifier is present.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Normalize the display name and member identifier; render useful non-link text when no usable identifier is present."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Normalize the display name and member identifier; render useful non-link text when no usable identifier is present. Exercise empty, whitespace, missing, normal and escaped names through real rendering; assert no empty links or invalid member targets."
+        },
+        "L3": {
+          "effortHours": 2.25,
+          "recipe": "Normalize the display name and member identifier; render useful non-link text when no usable identifier is present. Exercise empty, whitespace, missing, normal and escaped names through real rendering; assert no empty links or invalid member targets. Run the actual Community accessibility case and inspect loading, populated and unnamed states at desktop/mobile in every theme."
+        }
+      },
+      "successBar": [
+        "Visitors can identify community entries and follow meaningful profile links.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 7,
+      "slug": "mobile-search-clearance",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 60,
+      "title": "Keep Search reachable, unobscured and accessible as a dialog",
+      "why": "Readers can see the end of changelog rows while still finding Search.",
+      "recipe": "Remove the floating mobile obstruction while preserving reachable Search; provide close/Escape behavior, focus containment/restoration and a named input combobox linked to its result list and active option.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery baseline injects a floating Search trigger fixed one rem from the bottom and right viewport edges.",
+          "adapter": "file-content",
+          "target": "assets/command-palette-loader.js",
+          "pattern": ".vs-palette-loader-trigger{position:fixed;bottom:1rem;right:1rem",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Reproduce the floating Search overlap on changelog and home using the recovered before captures; measure existing menu Search reachability.",
+        "limitations": "Source existence is structural only; the overlap is supported by the Phase 0 inspected before matrix, and must be reproduced before choosing treatment.",
+        "focusedValidation": "Root reports eight Search behavior cases passed and one opened-dialog ARIA regression passed after a failing old-structure negative control. Final post-build browser matrix remains required."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Reproduce the floating Search overlap on changelog and home using the recovered before captures; measure existing menu Search reachability."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Remove the floating mobile obstruction while preserving reachable Search; provide close/Escape behavior, focus containment/restoration and a named input combobox linked to its result list and active option. Test loader-to-dialog reachability, keyboard cycles, close/reopen behavior and opened-dialog accessibility relationships."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Remove the floating mobile obstruction while preserving reachable Search; provide close/Escape behavior, focus containment/restoration and a named input combobox linked to its result list and active option. Test loader-to-dialog reachability, keyboard cycles, close/reopen behavior and opened-dialog accessibility relationships. Inspect open/closed Search at desktop/mobile in every theme, verify content clearance and touch targets, and prove the old ARIA structure fails the actual axe regression."
+        }
+      },
+      "successBar": [
+        "Readers can see the end of changelog rows while still finding Search.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 8,
+      "slug": "resync-builder-arguments",
+      "axis": "speed-organization-efficiency",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 46.51,
+      "title": "Execute each derived builder with its declared write arguments",
+      "why": "Reliable rebuilds keep published evidence and navigation synchronized with the intended source.",
+      "recipe": "Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/resync-derived.mjs",
+          "pattern": "execFileSync('node', [builder],",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply. Test required arguments, unknown or malformed command declarations, dependency ordering and continued refusal of side-effecting builders."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Extend existing graph execution metadata to preserve explicit argv such as news --rebuild and generated pages --apply. Test required arguments, unknown or malformed command declarations, dependency ordering and continued refusal of side-effecting builders. Use temporary fixture builders to prove a rebase repair rebuilds intended bytes and fails before staging on a bad command."
+        }
+      },
+      "successBar": [
+        "Reliable rebuilds keep published evidence and navigation synchronized with the intended source.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 9,
+      "slug": "five-evidence-graph-nodes",
+      "axis": "ai-intelligence",
+      "tier": "⚡",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 17.23,
+      "title": "Model five real derived evidence dependencies",
+      "why": "Machine consumers and people reading evidence receive mutually consistent numbers and preload metadata.",
+      "recipe": "Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline config/evidence-graph.json does not contain the audited source marker.",
+          "adapter": "file-content",
+          "target": "config/evidence-graph.json",
+          "pattern": "\"id\": \"intelligence-budget\"",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts. Test nav statistics to UX to nervous-system to budget ordering, CI propagation, shell-manifest to headers, cycles and declared companion Markdown staging."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Add intelligence-budget, nervous-system, ux-decision-ledger, analytics-summary and early-hints-headers with their actual inputs and builder scripts. Test nav statistics to UX to nervous-system to budget ordering, CI propagation, shell-manifest to headers, cycles and declared companion Markdown staging. Verify each node using its real check; lower the coverage ratchet only by the measured added coverage and preserve publisher ownership."
+        }
+      },
+      "successBar": [
+        "Machine consumers and people reading evidence receive mutually consistent numbers and preload metadata.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 10,
+      "slug": "parallel-build-dependencies",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 35.41,
+      "title": "Order the derived build chain behind its actual prerequisites",
+      "why": "Feedback pages attribute changes to the correct current commits.",
+      "recipe": "Declare the actual dependent chain: commit map before feedback provenance, feedback before ship receipts and open-graph summary, then canonical AI output; retain independent parallel work.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/build-parallel-phase.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/build-parallel-phase.mjs",
+          "pattern": "'build-feedback-provenance.mjs'",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Move the dependent feedback builder behind the commit-map completion while retaining parallel execution of independent builders.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Move the dependent feedback builder behind the commit-map completion while retaining parallel execution of independent builders."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Declare the actual dependent chain: commit map before feedback provenance, feedback before ship receipts and open-graph summary, then canonical AI output; retain independent parallel work. Use delayed fixture producers to prove consumers cannot run early and failed prerequisites stop dependent execution."
+        },
+        "L3": {
+          "effortHours": 2.25,
+          "recipe": "Declare the actual dependent chain: commit map before feedback provenance, feedback before ship receipts and open-graph summary, then canonical AI output; retain independent parallel work. Use delayed fixture producers to prove consumers cannot run early and failed prerequisites stop dependent execution. Measure the representative phase and verify deterministic outputs on repeated unchanged inputs."
+        }
+      },
+      "successBar": [
+        "Feedback pages attribute changes to the correct current commits.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 11,
+      "slug": "postbuild-observation-lifecycle",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 22.44,
+      "title": "Bind real postbuild execution and measured HTML hash ordering",
+      "why": "Rendered evidence cannot be stamped fresh by an incomplete or unrelated build.",
+      "recipe": "Run the actual postbuild chain once through the existing tracer; fail on incomplete execution or a finalized hash consuming exact complete HTML readFile bytes before a later content-changing write. Retain ordinary reads and no-op writes as evidence without inferring unmeasured dependencies.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/check-postbuild-ordering.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/check-postbuild-ordering.mjs",
+          "pattern": "const raw = pkg?.scripts?.postbuild || '';",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Reuse the existing checker and filesystem tracer as the actual postbuild runner, with strict argv and immediate failure propagation.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder.",
+        "observationScope": "Finalized exact-full-file hash consumption through instrumented createHash and readFile APIs, with sequence-aware writes. The earlier read-only heuristic was disproved by a real full-build trace and replaced; old trace receipts cannot certify the new schema."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 2.5,
+          "recipe": "Run the actual postbuild chain once through the existing tracer; fail on incomplete execution or a finalized hash consuming exact complete HTML readFile bytes before a later content-changing write. Retain ordinary reads and no-op writes as evidence without inferring unmeasured dependencies."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Run the actual postbuild chain once through the existing tracer; fail on incomplete execution or a finalized hash consuming exact complete HTML readFile bytes before a later content-changing write. Retain ordinary reads and no-op writes as evidence without inferring unmeasured dependencies. Bind invocation, complete command chain, source fingerprint and trace digest; test real failure propagation, byte/hash provenance, duplicate steps, missing/partial/corrupt evidence and same-step hash consumption before mutation."
+        },
+        "L3": {
+          "effortHours": 7.5,
+          "recipe": "Run the actual postbuild chain once through the existing tracer; fail on incomplete execution or a finalized hash consuming exact complete HTML readFile bytes before a later content-changing write. Retain ordinary reads and no-op writes as evidence without inferring unmeasured dependencies. Bind invocation, complete command chain, source fingerprint and trace digest; test real failure propagation, byte/hash provenance, duplicate steps, missing/partial/corrupt evidence and same-step hash consumption before mutation. Test no-op transforms, plain analysis, unfinalized hashes, encoded reads and partial bytes; expose the exact failing pairs. Partial/chunked streams, Hash.copy, WebCrypto and arbitrary dataflow remain unmeasured. Identical full-file bytes conservatively associate every matching read path."
+        }
+      },
+      "successBar": [
+        "Rendered evidence cannot be stamped fresh by an incomplete or unrelated build.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 12,
+      "slug": "batched-tracked-inventory",
+      "axis": "token-cost",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 24.5,
+      "title": "Replace repeated Git membership probes with one measured inventory",
+      "why": "Less repetitive verification output and waiting leaves more review capacity for visitor-facing defects.",
+      "recipe": "Measure Git subprocess count and elapsed time, then read tracked paths once; preserve exact-file and directory-descendant membership plus always-dirty untracked semantics.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/resync-derived.mjs",
+          "pattern": "git(['ls-files', '--error-unmatch', '--', s])",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Measure current Git subprocess count and elapsed time, then read tracked paths once and use exact membership for graph sources.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Measure Git subprocess count and elapsed time, then read tracked paths once; preserve exact-file and directory-descendant membership plus always-dirty untracked semantics."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Measure Git subprocess count and elapsed time, then read tracked paths once; preserve exact-file and directory-descendant membership plus always-dirty untracked semantics. Test tracked files, directory prefixes, untracked paths, absent paths, globs and unusual filenames."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Measure Git subprocess count and elapsed time, then read tracked paths once; preserve exact-file and directory-descendant membership plus always-dirty untracked semantics. Test tracked files, directory prefixes, untracked paths, absent paths, globs and unusual filenames. Report measured before/after calls and time on the same graph; keep errors distinct and do not invent transcript token savings."
+        }
+      },
+      "successBar": [
+        "Less repetitive verification output and waiting leaves more review capacity for visitor-facing defects.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 13,
+      "slug": "coverage-evidence-levels",
+      "axis": "ai-intelligence",
+      "tier": "⚡",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 24.12,
+      "title": "Separate modeled checks from demonstrated drift comparisons",
+      "why": "People and agents can tell whether a published artifact was compared with its sources or merely parsed.",
+      "recipe": "Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Recovery baseline scripts/check-evidence-graph-coverage.mjs contains the audited source marker.",
+          "adapter": "file-content",
+          "target": "scripts/check-evidence-graph-coverage.mjs",
+          "pattern": "byte-checked generator(s) modeled",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "interpretation": "Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified.",
+        "limitations": "Source-marker premise establishes the inspected implementation shape; the causal finding is supported by the recovery investigation and must be tested by the ladder."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified. Test shape-only, drift-comparing and unclassified fixtures; ensure a successful shape check cannot certify unchanged output bytes."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Replace the blanket byte-checked label with evidence levels supported by each checker contract; keep unknown checks explicitly unclassified. Test shape-only, drift-comparing and unclassified fixtures; ensure a successful shape check cannot certify unchanged output bytes. Carry the distinction into repair summaries and coverage documentation with measured current counts and conservative default classification."
+        }
+      },
+      "successBar": [
+        "People and agents can tell whether a published artifact was compared with its sources or merely parsed.",
+        "Relevant focused tests pass; visual changes require actual rendered desktop/mobile review in every supported theme."
+      ],
+      "internalFirst": "Reuse the named existing repository component and the canonical audit/evidence libraries; no installation, external service or new paid capability is needed."
+    },
+    {
+      "id": 14,
+      "slug": "local-preview-header-parity",
+      "axis": "observability-honesty",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 22.13,
+      "title": "Preserve indentation when parsing local preview Link headers",
+      "why": "Local browser and performance verification must receive the declared preload hints so information-finding evidence describes the intended loading behavior.",
+      "recipe": "Check indentation on the raw _headers line before trimming its header name and value; retain the existing Link-only preview behavior.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The committed recovery preview parser tests indentation on the already-trimmed line.",
+          "adapter": "file-content",
+          "target": "scripts/local-preview-server.mjs",
+          "pattern": "if (!line.startsWith(' ') && !line.startsWith('\\t'))",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Correct the raw-line indentation test and preserve colon splitting after the header name."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add a real child-server HTTP fixture for CRLF, spaces, tabs, duplicate Link values, URL colons and exact-path scoping."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Verify actual served Link headers from the corrected website preview before collecting browser/performance evidence, while preserving no-store and redirect behavior."
+        }
+      },
+      "successBar": [
+        "Information-finding and performance evidence receives the intended preload metadata.",
+        "Actual local HTTP fixture passes; observe the served website header before final visual/performance verification."
+      ],
+      "internalFirst": "Reuse scripts/local-preview-server.mjs and existing node:test / safe-spawn facilities; no dependency or new service.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "limitations": "This fixes declared Link-header parity only. It does not claim the local server reproduces all production security or edge behavior."
+      }
+    },
+    {
+      "id": 15,
+      "slug": "conduit-public-narrative-eligibility",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 50,
+      "title": "Use public change eligibility for the homepage Conduit narrative",
+      "why": "Returning visitors need understandable changes they can see, rather than internal publisher retry descriptions.",
+      "recipe": "Reuse commit-map visitorFacing classification, exclude chore and operational diagnostics, require a recognized public subject, and render one grammatical action sentence. Preserve the existing seven-day/newest-three cadence and eligible fresh upstream narration.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline Conduit source has no visitorFacing eligibility reference.",
+          "adapter": "grep-count",
+          "target": "scripts/build-ignis-conduit.mjs",
+          "pattern": "visitorFacing",
+          "operator": "eq",
+          "expected": 0,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Consume the existing commit map with explicit visitorFacing eligibility and chore exclusion instead of unclassified raw Git history."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Reuse commit-map visitorFacing classification, exclude chore and operational diagnostics, require a recognized public subject, and render one grammatical action sentence. Preserve the existing seven-day/newest-three cadence and eligible fresh upstream narration. Test missing/malformed input, measured empty results, public-file-touching infrastructure descriptions, real signup fixes and preserved eligible narrative."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Use a realistic public-file-touching chore negative control to prove the guard fails when removed; regenerate and inspect the returning homepage narrative in all themes and both widths."
+        }
+      },
+      "successBar": [
+        "Visitors see meaningful public changes in the returning homepage narrative.",
+        "Focused producer tests, a guard-removal negative control and actual rendered after-state evidence support completion."
+      ],
+      "internalFirst": "Reuse api/commit-map.json eligibility and the existing Conduit builder. No new classifier, model call or dependency.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "sourceFinding": "Conduit used raw recent Git commits without file eligibility and its chore verb pool included keeps. The root observed the operational sentence in actual homepage pixels.",
+        "focusedValidation": "Implementation lane reports 19/19 producer self-tests. An isolated guard-removal control fails the realistic public-touched chore case. Generated-feed and rendered after-state verification remain separately required.",
+        "limitations": "No new cadence or public promise is introduced. A source correction is not yet proof of regenerated or served content."
+      }
+    },
+    {
+      "id": 16,
+      "slug": "release-failure-file-evidence",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24,
+      "title": "Preserve bounded actionable file evidence from every browser failure",
+      "why": "A failed release check should identify the files and tests needing repair even when its readable summary is shortened, so visitor-facing failures can be resolved accurately.",
+      "recipe": "Extract bounded distinct projects, tests and allowlisted local file paths from every failed browser result before shortening prose to five records and 500 characters. Keep gate verdicts and thresholds unchanged.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
+          "adapter": "grep-count",
+          "target": "scripts/run-staging-release-gate.mjs",
+          "pattern": "\\.slice\\(0,\\s*500\\)",
+          "operator": "eq",
+          "expected": 1,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
+          "adapter": "grep-count",
+          "target": "scripts/run-attention-release-gate.mjs",
+          "pattern": "\\.slice\\(0,\\s*500\\)",
+          "operator": "eq",
+          "expected": 1,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Extract structured repair references before prose truncation without changing release verdicts."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Share the bounded extractor across both existing producers; test references after character 500 and in a sixth failure, duplicate references, ANSI, query strings and private absolute paths."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Exercise each real classifier with six failures and retain all bounded actionable references while preserving five prose records; distinguish truncation explicitly and regenerate the actual release receipt when its browser evidence is available."
+        }
+      },
+      "successBar": [
+        "Complete bounded repair evidence speeds resolution of browser defects affecting information finding.",
+        "Both existing producer self-tests exercise the shared extractor and actual six-failure classifier path; sensitive or unrelated paths are excluded."
+      ],
+      "internalFirst": "Reuse existing release receipt producers and one shared pure extractor; no new service, package or gate.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "Implementation lane reports both producer self-tests exit zero, with four shared fixture groups and an actual six-failure classifier fixture each.",
+        "limitations": "Structured extraction is bounded and allowlisted; it does not claim to preserve entire logs or prove a release passed."
+      }
+    },
+    {
+      "id": 17,
+      "slug": "static-news-publication-dates",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 20,
+      "title": "Use absolute publication evidence in static News pages",
+      "why": "Readers can distinguish a publication date from currently measured publication cadence.",
+      "recipe": "Render a stable latest publication date and Latest editions heading; link to the dated cadence API instead of baking current age/cadence into cached HTML.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline scripts/generate-news-pages.mjs contains the inspected source marker.",
+          "adapter": "file-content",
+          "target": "scripts/generate-news-pages.mjs",
+          "pattern": "deriveDeskFreshness(days)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Render a stable latest publication date and Latest editions heading; link to the dated cadence API instead of baking current age/cadence into cached HTML."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Render a stable latest publication date and Latest editions heading; link to the dated cadence API instead of baking current age/cadence into cached HTML. Test a throwing clock, changed edition, empty/simulated data and unsafe dates; keep API freshness thresholds unchanged."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Render a stable latest publication date and Latest editions heading; link to the dated cadence API instead of baking current age/cadence into cached HTML. Test a throwing clock, changed edition, empty/simulated data and unsafe dates; keep API freshness thresholds unchanged. Rebuild and inspect the News surface in all themes and widths; prove a day rollover alone cannot stale the HTML."
+        }
+      },
+      "successBar": [
+        "Readers can distinguish a publication date from currently measured publication cadence.",
+        "Focused tests support implementation; full candidate verification and applicable rendered/served evidence remain separate completion gates."
+      ],
+      "internalFirst": "Extend the named existing producer and shared repository validators; no package, service, model spend or policy change.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "13/13 news freshness self-tests reported by the implementation lane.",
+        "limitations": "Rebuild and inspect the News surface in all themes and widths; prove a day rollover alone cannot stale the HTML."
+      }
+    },
+    {
+      "id": 18,
+      "slug": "declared-news-visual-diversity",
+      "axis": "gamification-immersion",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 17.5,
+      "title": "Compare explicitly declared News composition metadata",
+      "why": "Declared repetition becomes reviewable without pretending missing metadata proves visual variety.",
+      "recipe": "Compare at least three common normalized declared dimensions including scene archetype or focal arrangement; retain exact-scene comparisons and abstain on insufficient descriptors.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline scripts/build-news-visual-receipts.mjs does not contain the inspected source marker.",
+          "adapter": "file-content",
+          "target": "scripts/build-news-visual-receipts.mjs",
+          "pattern": "declaredDiversity",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Compare at least three common normalized declared dimensions including scene archetype or focal arrangement; retain exact-scene comparisons and abstain on insufficient descriptors."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Compare at least three common normalized declared dimensions including scene archetype or focal arrangement; retain exact-scene comparisons and abstain on insufficient descriptors. Test different hashes with repeated declared shorthand, actual changed dimensions, missing/placeholders, composition requirements and deterministic input preservation."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Compare at least three common normalized declared dimensions including scene archetype or focal arrangement; retain exact-scene comparisons and abstain on insufficient descriptors. Test different hashes with repeated declared shorthand, actual changed dimensions, missing/placeholders, composition requirements and deterministic input preservation. Surface declared comparison warnings and abstention counts in the existing visual receipt and promotion gate; do not claim pixel similarity or safe-zone measurement."
+        }
+      },
+      "successBar": [
+        "Declared repetition becomes reviewable without pretending missing metadata proves visual variety.",
+        "Focused tests support implementation; full candidate verification and applicable rendered/served evidence remain separate completion gates."
+      ],
+      "internalFirst": "Extend the named existing producer and shared repository validators; no package, service, model spend or policy change.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "10/10 visual-receipt self-tests reported by the implementation lane.",
+        "limitations": "Surface declared comparison warnings and abstention counts in the existing visual receipt and promotion gate; do not claim pixel similarity or safe-zone measurement."
+      }
+    },
+    {
+      "id": 19,
+      "slug": "commit-map-scan-honesty",
+      "axis": "observability-honesty",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24,
+      "title": "Distinguish local history exhaustion from Git failure and scan ceilings",
+      "why": "Visitors receive an honest change inventory rather than a false empty result after an observation failed.",
+      "recipe": "Use a 2001-record sentinel around the existing 2000-record ceiling and publish quota-satisfied, available-history-exhausted or scan-ceiling-reached states; Git errors and insufficient ceiling scans fail before overwrite.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline scripts/build-commit-map.mjs does not contain the inspected source marker.",
+          "adapter": "file-content",
+          "target": "scripts/build-commit-map.mjs",
+          "pattern": "scan-ceiling-reached",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Use a 2001-record sentinel around the existing 2000-record ceiling and publish quota-satisfied, available-history-exhausted or scan-ceiling-reached states; Git errors and insufficient ceiling scans fail before overwrite."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Use a 2001-record sentinel around the existing 2000-record ceiling and publish quota-satisfied, available-history-exhausted or scan-ceiling-reached states; Git errors and insufficient ceiling scans fail before overwrite. Test a 2050-automation window, exact ceiling, short local history, command failure and preserved existing output files."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Use a 2001-record sentinel around the existing 2000-record ceiling and publish quota-satisfied, available-history-exhausted or scan-ceiling-reached states; Git errors and insufficient ceiling scans fail before overwrite. Test a 2050-automation window, exact ceiling, short local history, command failure and preserved existing output files. Regenerate from the synchronized candidate and verify scope is explicitly local available history, never a claim about all remote history."
+        }
+      },
+      "successBar": [
+        "Visitors receive an honest change inventory rather than a false empty result after an observation failed.",
+        "Focused tests support implementation; full candidate verification and applicable rendered/served evidence remain separate completion gates."
+      ],
+      "internalFirst": "Extend the named existing producer and shared repository validators; no package, service, model spend or policy change.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "12/12 commit-map self-tests reported by the implementation lane.",
+        "limitations": "Regenerate from the synchronized candidate and verify scope is explicitly local available history, never a claim about all remote history."
+      }
+    },
+    {
+      "id": 20,
+      "slug": "newsletter-operator-verification",
+      "axis": "security",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 22.13,
+      "title": "Keep newsletter secret handling and guard verification precise",
+      "why": "Release operators cannot mistake an unrelated error for a verified guard or expose a secret through process arguments.",
+      "recipe": "Pass the repository secret through gh stdin and suppress secret-bearing errors; accept only exact 401 Unauthorized as proof of the unauthenticated function guard.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline scripts/deploy-member-newsletter.mjs contains the inspected source marker.",
+          "adapter": "file-content",
+          "target": "scripts/deploy-member-newsletter.mjs",
+          "pattern": "--body",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Pass the repository secret through gh stdin and suppress secret-bearing errors; accept only exact 401 Unauthorized as proof of the unauthenticated function guard."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Pass the repository secret through gh stdin and suppress secret-bearing errors; accept only exact 401 Unauthorized as proof of the unauthenticated function guard. Test that success, redirects, gateway errors, rate limiting and other authentication bodies cannot prove the function guard; retain deployment and sending as separate operations."
+        },
+        "L3": {
+          "effortHours": 2.25,
+          "recipe": "Pass the repository secret through gh stdin and suppress secret-bearing errors; accept only exact 401 Unauthorized as proof of the unauthenticated function guard. Test that success, redirects, gateway errors, rate limiting and other authentication bodies cannot prove the function guard; retain deployment and sending as separate operations. Run scoped status/verification only when authorized prerequisites are satisfied; do not deploy, update a secret or send mail as a side effect of these tests."
+        }
+      },
+      "successBar": [
+        "Release operators cannot mistake an unrelated error for a verified guard or expose a secret through process arguments.",
+        "Focused tests support implementation; full candidate verification and applicable rendered/served evidence remain separate completion gates."
+      ],
+      "internalFirst": "Extend the named existing producer and shared repository validators; no package, service, model spend or policy change.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "8/8 operator self-tests reported by root; no deploy, secret update or send occurred.",
+        "limitations": "Run scoped status/verification only when authorized prerequisites are satisfied; do not deploy, update a secret or send mail as a side effect of these tests."
+      }
+    },
+    {
+      "id": 21,
+      "slug": "reader-director-response-evidence",
+      "axis": "features-depth",
+      "tier": "⚡",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 31.01,
+      "title": "Publish explicitly attributed Reader-to-Director response evidence",
+      "why": "Readers can see which explicit editorial response cites their aggregate signals, with absence and attribution limits visible.",
+      "recipe": "Add optional report readerActions linked to a content-verified observation receipt, exact story/time, sufficient signal floor, chronological action and existing safe local candidate route. Render through the existing page writer.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline scripts/generate-news-pages.mjs does not contain the inspected source marker.",
+          "adapter": "file-content",
+          "target": "scripts/generate-news-pages.mjs",
+          "pattern": "readerActions",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Add optional report readerActions linked to a content-verified observation receipt, exact story/time, sufficient signal floor, chronological action and existing safe local candidate route. Render through the existing page writer."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Add optional report readerActions linked to a content-verified observation receipt, exact story/time, sufficient signal floor, chronological action and existing safe local candidate route. Render through the existing page writer. Test missing/insufficient observations, forged receipt hashes, duplicate IDs, chronological ordering, safe routes and embedded JSON terminators; keep absent observed stories unavailable."
+        },
+        "L3": {
+          "effortHours": 4.5,
+          "recipe": "Add optional report readerActions linked to a content-verified observation receipt, exact story/time, sufficient signal floor, chronological action and existing safe local candidate route. Render through the existing page writer. Test missing/insufficient observations, forged receipt hashes, duplicate IDs, chronological ordering, safe routes and embedded JSON terminators; keep absent observed stories unavailable. Inspect populated and honest empty action states; current real reports have no qualifying declared response, so publish no-recorded-actions rather than invent causality or rankings."
+        }
+      },
+      "successBar": [
+        "Readers can see which explicit editorial response cites their aggregate signals, with absence and attribution limits visible.",
+        "Focused tests support implementation; full candidate verification and applicable rendered/served evidence remain separate completion gates."
+      ],
+      "internalFirst": "Extend the named existing producer and shared repository validators; no package, service, model spend or policy change.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": "Reader builder 29/29 and reaction builder 12/12 reported by the implementation lane.",
+        "limitations": "Inspect populated and honest empty action states; current real reports have no qualifying declared response, so publish no-recorded-actions rather than invent causality or rankings."
+      }
+    },
+    {
+      "id": 22,
+      "slug": "mode-aware-verification-reachability",
+      "axis": "sil-debt",
+      "tier": "🔥",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 24.37,
+      "title": "Require the actual verification mode to be reachable from the runner",
+      "why": "A green verification summary must include the tests it claims to cover, so visitor-facing regressions cannot hide behind an unexecuted fixture branch.",
+      "recipe": "Extend the existing gate to preserve relative script paths and explicit modes across the runner graph; classify the complete self-test CLI corpus, distinguish lifecycle-scoped checks, and require source-bound evidence for reviewed mode equivalences.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline verification checker has no explicit self-test census mode.",
+          "adapter": "file-content",
+          "target": "scripts/check-build-gate-reachability.mjs",
+          "pattern": "--self-test-census",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The recovery-baseline cache fixture source uses console.assert, which does not itself set a failing exit status.",
+          "adapter": "file-content",
+          "target": "scripts/lib/build-cache.mjs",
+          "pattern": "console.assert",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Preserve script path and invocation mode identity; a --check call cannot satisfy a --self-test dispatch."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Wire the 83 missing fixture modes as independent package.json build:check:steps and the two local checks in the proof runner; document factual lifecycle scopes and validate exact-source mode equivalences. Make cache fixture assertions propagate failure with cleanup."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Run the additions-only fixture aggregate, the mode-aware checker and mutation fixtures; prove the cache negative control fails. Keep this aggregate distinct from the final complete synchronized-candidate suite."
+        }
+      },
+      "successBar": [
+        "Verification coverage names actually reached modes rather than basenames or comment mentions.",
+        "Focused mode/mutation tests and the 83-addition aggregate pass; final full-suite proof remains independently required."
+      ],
+      "internalFirst": "Reuse check-build-gate-reachability, the proof runner, existing script fixtures and source-local scope markers; no new test service or dependency.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "focusedValidation": {
+          "aggregatePassed": 83,
+          "aggregateFailed": 0,
+          "runnerSkips": 0,
+          "timeouts": 0,
+          "durationMs": 255070,
+          "negativeControlPassed": true,
+          "negativeControl": "Deliberately wrong first build-cache hit assertion exits 1; positive fixture passed aggregate.",
+          "focusedReachability": "35/35 passed; regression fixtures reject uncalled function-body coverage and flag substrings inside argv values",
+          "checkModes": "244/244 exact build-scope modes; two declared dry-runs; 46 lifecycle-scoped",
+          "selfTestModes": "307 explicit CLI invocations out of 308 plus one exact-source in-process equivalent",
+          "wiring": "All 83 fixture invocations are independent package.json build:check:steps; proof runner adds only ecosystem-stats --check and deploy-parity --local. Final plan includes 477 build-check commands, not yet executed as a complete suite; plan-build-check and run-impacted-checks self-tests are explicitly wired.",
+          "sourceEquivalences": "invocation-modes via build-order failing predicate; journey self-test also executes its ordinary source check",
+          "scopeAnnotations": 11,
+          "limitation": "Focused aggregate preceded final full synchronized-candidate suite; no full-suite or release claim.",
+          "finalReview": "Three conditional content-preflight checks have explicit content-release scope; advisory --warn-only execution cannot certify mandatory build coverage."
+        },
+        "limitations": "A reachable invocation proves coverage plumbing, not the current success of the complete suite or any production release. Lifecycle-scoped checks retain their own required execution paths."
+      }
+    },
+    {
+      "id": 23,
+      "slug": "member-feedback-payload-contract",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 50.47,
+      "title": "Send member feedback using the verified public feedback schema",
+      "why": "A member choosing a fixed feedback option should be able to submit that signal instead of receiving an avoidable schema error.",
+      "recipe": "Validate the existing fixed choice before calling Supabase and insert only path and reaction; preserve /vault-member/ and map mixed to the schema-supported ok value.",
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-09-09T21:09:01.608Z",
+          "status": "shipped",
+          "note": "Recovered S347 candidate verified by the complete 477-step build gate, focused browser/unit coverage, and applicable hash-bound rendered-pixel evidence. Release/deployment claims remain separate."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The recovery-baseline member feedback client sends page_path rather than the checked-in path column.",
+          "adapter": "file-content",
+          "target": "vault-member/portal-feedback.js",
+          "pattern": "page_path: '/vault-member/'",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The recovery-baseline feedback migration declares a required text path column.",
+          "adapter": "grep",
+          "target": "supabase/migrations/supabase-page-feedback.sql",
+          "pattern": "\\bpath\\s+text\\s+not null",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Send only path and the allowed reaction enum; reject an unknown choice before the provider call."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Run the real client in Chromium with all network aborted and a schema-validating provider stub; exercise all three choices, old-payload rejection, invalid-choice refusal and retry after failure."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Corroborate the schema using a read-only catalog query on the intended project, keep existing UI/auth/RLS unchanged, and include the isolated browser regression in final candidate verification without inserting a real member signal."
+        }
+      },
+      "successBar": [
+        "Each existing member feedback choice maps to a valid aggregate reaction contract.",
+        "Six isolated actual-browser cases pass; no real feedback submission, authentication change or schema mutation is performed."
+      ],
+      "internalFirst": "Reuse the existing member feedback client, existing page_feedback contract and installed Chromium; no package, service or new data model.",
+      "evidence": {
+        "baselineCommit": "4c7cb57ee",
+        "liveObservation": "Implementation lane reports a successful read-only catalog SELECT on the intended project corroborating id/path/reaction/visit_depth_bucket/ua_kind/created_at and useful|ok|not_useful. HTTP success is evidence of the schema read only, not an insert or end-to-end member write.",
+        "focusedValidation": "tests/portal-feedback.spec.js: 6/6 native Playwright Chromium cases (10.3 seconds) with all network aborted; three choices, old payload rejected, invalid choice makes no provider call, failed request can retry.",
+        "limitations": "No real member/provider insert, deployment or mail send. UI text/styles, auth, RLS and schema are unchanged; final full candidate verification remains pending."
+      }
+    }
+  ],
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [
+        "canonical-evidence-navigation",
+        "reader-director-response-evidence"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "new-account-journey",
+          "premise": "Replace the account flow while repairing navigation.",
+          "evidence": "SOUL protects security; Obelisk identity changes and human acceptance remain separately tracked. No new account feature is admitted."
+        }
+      ],
+      "considered": 3
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "community-empty-member-link",
+        "mobile-search-clearance",
+        "conduit-public-narrative-eligibility",
+        "member-feedback-payload-contract"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "redesign-desktop-navigation",
+          "premise": "Desktop picker clipping still needs the recovery CSS fix.",
+          "evidence": "Recovery commit already includes the verified spacing fix; only new regressions measured during this arc warrant work."
+        }
+      ],
+      "considered": 5
+    },
+    "gamification-immersion": {
+      "surviving": [
+        "art-only-game-covers",
+        "declared-news-visual-diversity"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "change-rank-economy",
+          "premise": "A new rank mechanic is needed for immersion.",
+          "evidence": "SOUL calls the existing nine-tier economy load-bearing; no observed mechanic defect or owner authorization supports changing it."
+        }
+      ],
+      "considered": 3
+    },
+    "ai-intelligence": {
+      "surviving": [
+        "five-evidence-graph-nodes",
+        "coverage-evidence-levels"
+      ],
+      "rejectedOnVerify": [],
+      "considered": 2
+    },
+    "security": {
+      "surviving": [
+        "verification-lock-ownership",
+        "newsletter-operator-verification"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-project-auth",
+          "premise": "Release architecture uncertainty proves a local authentication implementation is needed.",
+          "evidence": "Startup has zero ABSOLUTE gaps but two STRONG checker parse errors; unavailable evidence is not permission to replace Obelisk or weaken security."
+        }
+      ],
+      "considered": 3
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "resync-builder-arguments",
+        "parallel-build-dependencies"
+      ],
+      "rejectedOnVerify": [],
+      "considered": 2
+    },
+    "token-cost": {
+      "surviving": [
+        "batched-tracked-inventory"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "claim-transcript-savings",
+          "premise": "The context meter proves a quantified token reduction target.",
+          "evidence": "Current context-meter output is unmeasured. Admit Git process/time measurements, not fabricated transcript savings."
+        }
+      ],
+      "considered": 2
+    },
+    "observability-honesty": {
+      "surviving": [
+        "scheduled-observation-truth",
+        "postbuild-observation-lifecycle",
+        "local-preview-header-parity",
+        "release-failure-file-evidence",
+        "static-news-publication-dates",
+        "commit-map-scan-honesty"
+      ],
+      "rejectedOnVerify": [],
+      "considered": 6
+    },
+    "sil-debt": {
+      "surviving": [
+        "current-task-inventory",
+        "mode-aware-verification-reachability"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "repeat-recovery-closeout",
+          "premise": "S346 recovery remains uncommitted.",
+          "evidence": "Recovery checkpoint 1db952520 and follow-up reconciliation 4c7cb57ee were safely pushed before S347. Do not repeat completed writeback."
+        }
+      ],
+      "considered": 3
+    }
+  },
+  "totals": {
+    "count": 23,
+    "priority": 674.79,
+    "top3": [
+      "mobile-search-clearance",
+      "member-feedback-payload-contract",
+      "conduit-public-narrative-eligibility"
+    ]
+  },
+  "innovationReserve": [
+    "postbuild-observation-lifecycle",
+    "batched-tracked-inventory",
+    "coverage-evidence-levels",
+    "local-preview-header-parity",
+    "conduit-public-narrative-eligibility",
+    "release-failure-file-evidence",
+    "static-news-publication-dates",
+    "declared-news-visual-diversity",
+    "commit-map-scan-honesty",
+    "newsletter-operator-verification",
+    "reader-director-response-evidence",
+    "mode-aware-verification-reachability",
+    "member-feedback-payload-contract"
+  ],
+  "skipped": [],
+  "scope": "S347 continuation after independently committed S346 recovery. Improve information finding and evidence reliability; preserve identity, pricing, membership, mail-dispatch and public cadence decisions.",
+  "novelty": "Three second-order candidates are new combinations discovered in recovery: invocation-bound real lifecycle traces, measured batched Git membership preserving untracked semantics, and explicit check evidence levels. These are locally novel engineering improvements, not claims of worldwide novelty; innovation is conservatively capped at 7.",
+  "limitations": [
+    "390/390 suite, 215/215 mobile tests and 42 inspected captures belong to pre-rebase recovery evidence. This arc requires fresh verification.",
+    "Release architecture parse errors remain unknown and do not constitute full release approval.",
+    "Historical owner decisions and external acceptance evidence remain separately tracked; they are not invented implementation blockers."
+  ],
+  "premiseVerification": {
+    "at": "2026-09-09T08:04:29.936Z",
+    "baselineCommit": "4c7cb57ee",
+    "method": "Canonical pure evaluateAuditPremises with file contents read by git show from the committed recovery boundary. Concurrent source edits cannot rewrite the audited baseline.",
+    "results": [
+      {
+        "itemId": 1,
+        "slug": "verification-lock-ownership",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/run-build-check.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 2,
+        "slug": "scheduled-observation-truth",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/run-doctor.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 3,
+        "slug": "current-task-inventory",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/lib/task-board.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 4,
+        "slug": "canonical-evidence-navigation",
+        "status": "verified",
+        "claim": "Recovery baseline config/intelligence-suite.json does not contain the audited source marker.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 5,
+        "slug": "art-only-game-covers",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/build-game-covers.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 6,
+        "slug": "community-empty-member-link",
+        "status": "verified",
+        "claim": "Recovery baseline community/index.html contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 7,
+        "slug": "mobile-search-clearance",
+        "status": "verified",
+        "claim": "The recovery baseline injects a floating Search trigger fixed one rem from the bottom and right viewport edges.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 8,
+        "slug": "resync-builder-arguments",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 9,
+        "slug": "five-evidence-graph-nodes",
+        "status": "verified",
+        "claim": "Recovery baseline config/evidence-graph.json does not contain the audited source marker.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 10,
+        "slug": "parallel-build-dependencies",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/build-parallel-phase.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 11,
+        "slug": "postbuild-observation-lifecycle",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/check-postbuild-ordering.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 12,
+        "slug": "batched-tracked-inventory",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 13,
+        "slug": "coverage-evidence-levels",
+        "status": "verified",
+        "claim": "Recovery baseline scripts/check-evidence-graph-coverage.mjs contains the audited source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 14,
+        "slug": "local-preview-header-parity",
+        "status": "verified",
+        "claim": "The committed recovery preview parser tests indentation on the already-trimmed line.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 15,
+        "slug": "conduit-public-narrative-eligibility",
+        "status": "verified",
+        "claim": "The recovery-baseline Conduit source has no visitorFacing eligibility reference.",
+        "actual": 0,
+        "expected": 0,
+        "reason": "evidence supports the claim (0 eq 0)"
+      },
+      {
+        "itemId": 16,
+        "slug": "release-failure-file-evidence",
+        "status": "verified",
+        "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
+        "actual": 1,
+        "expected": 1,
+        "reason": "evidence supports the claim (1 eq 1)"
+      },
+      {
+        "itemId": 16,
+        "slug": "release-failure-file-evidence",
+        "status": "verified",
+        "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
+        "actual": 1,
+        "expected": 1,
+        "reason": "evidence supports the claim (1 eq 1)"
+      },
+      {
+        "itemId": 17,
+        "slug": "static-news-publication-dates",
+        "status": "verified",
+        "claim": "The recovery-baseline scripts/generate-news-pages.mjs contains the inspected source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 18,
+        "slug": "declared-news-visual-diversity",
+        "status": "verified",
+        "claim": "The recovery-baseline scripts/build-news-visual-receipts.mjs does not contain the inspected source marker.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 19,
+        "slug": "commit-map-scan-honesty",
+        "status": "verified",
+        "claim": "The recovery-baseline scripts/build-commit-map.mjs does not contain the inspected source marker.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 20,
+        "slug": "newsletter-operator-verification",
+        "status": "verified",
+        "claim": "The recovery-baseline scripts/deploy-member-newsletter.mjs contains the inspected source marker.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 21,
+        "slug": "reader-director-response-evidence",
+        "status": "verified",
+        "claim": "The recovery-baseline scripts/generate-news-pages.mjs does not contain the inspected source marker.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 22,
+        "slug": "mode-aware-verification-reachability",
+        "status": "verified",
+        "claim": "The recovery-baseline verification checker has no explicit self-test census mode.",
+        "actual": false,
+        "expected": false,
+        "reason": "evidence supports the claim (false eq false)"
+      },
+      {
+        "itemId": 22,
+        "slug": "mode-aware-verification-reachability",
+        "status": "verified",
+        "claim": "The recovery-baseline cache fixture source uses console.assert, which does not itself set a failing exit status.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 23,
+        "slug": "member-feedback-payload-contract",
+        "status": "verified",
+        "claim": "The recovery-baseline member feedback client sends page_path rather than the checked-in path column.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      },
+      {
+        "itemId": 23,
+        "slug": "member-feedback-payload-contract",
+        "status": "verified",
+        "claim": "The recovery-baseline feedback migration declares a required text path column.",
+        "actual": true,
+        "expected": true,
+        "reason": "evidence supports the claim (true eq true)"
+      }
+    ]
+  },
+  "completedAt": "2026-09-09T21:09:01.608Z",
+  "executionSummary": {
+    "status": "shipped",
+    "itemsShipped": 23,
+    "fullBuildCheck": {
+      "steps": 477,
+      "passed": 477,
+      "failed": 0
+    },
+    "visualReview": {
+      "captures": 84,
+      "manuallyReviewed": 84,
+      "blockingDefectsOpen": 0
+    },
+    "limitations": [
+      "Local lab performance exceptions remain documented in docs/performance/S347_LAB_MEASUREMENTS.json.",
+      "Full identity/provider promotion remains held independently; no audit item is credited with resolving it."
+    ]
+  }
+}

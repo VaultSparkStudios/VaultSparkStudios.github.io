@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+/** @verification-scope content-release
+ * Conditional content preflight may exit before this gate; its --warn-only
+ * build invocation cannot certify ordinary gate execution or success.
+ */
 /**
  * Prevent a content-only release from promoting a browser caller while its
  * Worker callee is absent from production. The input is the exact promotable

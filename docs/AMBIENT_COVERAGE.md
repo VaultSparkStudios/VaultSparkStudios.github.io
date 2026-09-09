@@ -8,9 +8,9 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **77.0 KB** (raw)
+- Sources: **17**  ·  Total: **77.3 KB** (raw)
 - Guarded (conditional): **14** modules · **66.5 KB** — split candidates
-- Always-on: **3** modules · **10.5 KB**
+- Always-on: **3** modules · **10.9 KB**
 
 ## By size (split candidates flagged)
 
@@ -24,8 +24,8 @@
 | `native-feel.js` | 4.6 KB | 🔶 guarded | viewport gated, capability gated |
 | `page-sigil.js` | 4.5 KB | 🔶 guarded | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
+| `command-palette-loader.js` | 3.4 KB | always | — |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
-| `command-palette-loader.js` | 3.0 KB | always | — |
 | `rum-beacon.js` | 3.0 KB | 🔶 guarded | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `founder-presence-handle.js` | 2.1 KB | 🔶 guarded | — |

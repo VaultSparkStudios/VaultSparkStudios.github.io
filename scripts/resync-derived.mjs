@@ -31,7 +31,7 @@
  *   node scripts/resync-derived.mjs --no-sweep     # skip the unmodeled sweep (faster, less honest)
  *   node scripts/resync-derived.mjs --sweep-repair # rebuild what the sweep finds drifted
  *
- * THE SECOND GAP (S345). The graph models 29 of 67 byte-checked generators, and
+ * THE SECOND GAP (S345). The graph models 29 of 67 --check-gated generators, and
  * check-evidence-graph-coverage deliberately keeps that a visible RATCHET rather
  * than guessing the other 38 nodes' sources — a confidently wrong graph is worse
  * than an admittedly partial one. But the debt was only visible in a config file,
@@ -44,18 +44,19 @@
  * build-intelligence-budget --check failed in CI at build:check step 185 of run
  * 33702593208, because that generator is not in the graph. S341 reproduced it and
  * found a SECOND member, build-nervous-system. Both were fixed by hand, both are
- * still unmodeled today.
+ * now modeled alongside their actual upstream inputs (S347).
  *
  * So the sweep measures rather than predicts: it runs the UNMODELED generators'
- * own `--check`, which is read-only and needs no `sources` to be correct. A
- * `--check` failure is not a guess about what a rebase might have touched — it is
- * the artifact itself reporting that it no longer matches its inputs. Repair
+ * own `--check`, which needs no graph `sources`. A failure is a measured
+ * contract failure, not a prediction of rebase effects. Some checks validate
+ * only shape/presence, so a passing sweep is not universal byte-drift proof. Repair
  * stays opt-in (`--sweep-repair`) because a repairer that blindly invokes 38
  * arbitrary builders is the exact hazard the sideEffecting guard above exists to
  * prevent. Default behaviour is to FAIL, NAMED — turning a ten-minute remote CI
  * red into an immediate local one.
  *
- * Exit 0 = tree consistent. Non-zero = a builder or a --check failed; the
+ * Exit 0 = selected builder/check contracts passed (some check shape only).
+ * Non-zero = a builder or a --check failed; the
  * message names the node so the next step is never a guess.
  */
 
@@ -64,7 +65,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEvidenceGraph, validateEvidenceGraph, affectedEvidenceNodes } from './lib/evidence-graph.mjs';
-import { coverage } from './check-evidence-graph-coverage.mjs';
+import { coverage, evidenceLevels, evidenceSummary } from './check-evidence-graph-coverage.mjs';
+import { repairInvocation } from './lib/repair-invocation.mjs';
+import { trackedInventory, untrackedSourceNodes } from './lib/tracked-inventory.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -129,7 +132,7 @@ export function stagePaths(node) {
 }
 
 /**
- * The set of byte-checked generators that build:check gates but the evidence
+ * The set of --check-gated generators that build:check gates but the evidence
  * graph does NOT model. Read from the same two sources the ratchet reads, so the
  * two can never disagree about what is covered.
  */
@@ -140,16 +143,16 @@ export function unmodeledCheckedGenerators(root = ROOT) {
 }
 
 /**
- * Run each unmodeled generator's own `--check`. Read-only by construction: a
- * `--check` compares bytes against inputs and writes nothing, which is what makes
- * it safe to run over generators whose sources we deliberately do not model.
+ * Run each unmodeled generator's own verification mode. These contracts vary
+ * from presence/shape validation to byte-drift comparisons. No build is invoked
+ * unless repair was requested; a passing check does not strengthen its contract.
  *
  * Returns the drifted set. Repair is the caller's decision, never this function's.
  */
-export function sweepUnmodeled(generators, { repair = false } = {}) {
+export function sweepUnmodeled(generators, { repair = false, root = ROOT, graph = loadEvidenceGraph(root), execute = execFileSync, profiles } = {}) {
   const drifted = [];
   for (const gen of generators) {
-    const builder = join(ROOT, gen);
+    const builder = join(root, gen);
     if (!existsSync(builder)) {
       // A gated generator that no longer exists is a build:check failure waiting
       // to happen; name it rather than silently sweeping over it.
@@ -157,9 +160,9 @@ export function sweepUnmodeled(generators, { repair = false } = {}) {
       continue;
     }
     try {
-      execFileSync('node', [builder, '--check'], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      execute(process.execPath, [builder, '--check'], { cwd: root, stdio: 'pipe', windowsHide: true });
     } catch {
-      drifted.push({ gen, reason: 'drifted' });
+      drifted.push({ gen, reason: 'declared check failed' });
     }
   }
   if (!repair || !drifted.length) return drifted;
@@ -174,13 +177,15 @@ export function sweepUnmodeled(generators, { repair = false } = {}) {
       stillDrifted.push({ ...entry, reason: 'world-acting, not auto-repaired' });
       continue;
     }
-    const builder = join(ROOT, entry.gen);
+    const builder = join(root, entry.gen);
     try {
-      execFileSync('node', [builder], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
-      execFileSync('node', [builder, '--check'], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      const node = graph.nodes.find(item => item.builder === entry.gen) || { builder: entry.gen };
+      const invocation = repairInvocation(node, { root, profiles });
+      execute(process.execPath, invocation, { cwd: root, stdio: 'pipe', windowsHide: true });
+      execute(process.execPath, [builder, '--check'], { cwd: root, stdio: 'pipe', windowsHide: true });
       console.log(`  ✓ ${entry.gen} — rebuilt (sweep)`);
-    } catch {
-      stillDrifted.push({ ...entry, reason: 'still drifted after rebuild' });
+    } catch (error) {
+      stillDrifted.push({ ...entry, reason: 'repair failed: ' + String(error.message).slice(0, 180) });
     }
   }
   return stillDrifted;
@@ -200,20 +205,25 @@ function finish(summary) {
   const repair = process.argv.includes('--sweep-repair');
   const drifted = sweepUnmodeled(unmodeled, { repair });
   if (drifted.length) {
-    console.error(`${summary} · sweep found ${drifted.length}/${unmodeled.length} UNMODELED artifact(s) drifted:`);
+    console.error(`${summary} · sweep found ${drifted.length}/${unmodeled.length} UNMODELED artifact check(s) failed:`);
     for (const d of drifted) console.error(`  ✗ ${d.gen} — ${d.reason}`);
     console.error('  these are gated by build:check but absent from the evidence graph, so the');
     console.error('  graph walk above could not see them. Re-run with --sweep-repair, or rebuild');
     console.error('  each by hand, then model it in config/evidence-graph.json.');
     process.exit(1);
   }
-  console.log(`${summary} · sweep: ${unmodeled.length} unmodeled generator(s) checked, all in sync`);
+  console.log(`${summary} · sweep: ${unmodeled.length} unmodeled generator(s), declared checks passed`);
+  console.log('  check evidence: ' + evidenceSummary(evidenceLevels(unmodeled)));
   process.exit(0);
 }
 
 function main() {
   const graph = loadEvidenceGraph(ROOT);
   const graphErrors = validateEvidenceGraph(graph);
+  for (const node of graph.nodes.filter(item => !item.sideEffecting)) {
+    try { repairInvocation(node, { root: ROOT }); }
+    catch (error) { graphErrors.push(node.id + ': ' + error.message); }
+  }
   if (graphErrors.length) {
     for (const e of graphErrors) console.error(`resync-derived: evidence graph invalid — ${e}`);
     process.exit(1);
@@ -247,15 +257,9 @@ function main() {
   // while leaving it stale (S309, caught by the pre-push coherence hook).
   // Treat any node with an untracked, non-glob source as always dirty: cheap,
   // and the alternative is a repairer that is quietly wrong once per session.
-  const untrackedSourced = graph.nodes.filter((n) => n.sources.some((s) => {
-    if (s.includes('*')) return false;
-    try {
-      git(['ls-files', '--error-unmatch', '--', s]);
-      return false;
-    } catch {
-      return true;
-    }
-  }));
+  const inventory = trackedInventory(git);
+  const untrackedSourced = untrackedSourceNodes(graph, inventory);
+  console.log('resync-derived: tracked inventory ' + inventory.trackedFiles + ' files · ' + inventory.commands + ' Git command · ' + inventory.durationMs + 'ms');
   const seeds = [...new Set([...changed, ...untrackedSourced.map((n) => n.output)])];
   const dirty = topoOrder(affectedEvidenceNodes(graph, seeds), graph);
   if (untrackedSourced.length) {
@@ -273,7 +277,7 @@ function main() {
     // A plan that lists only what the graph models is the same half-truth the
     // sweep exists to end — state the blind spot instead of implying there is none.
     const blind = process.argv.includes('--no-sweep') ? [] : unmodeledCheckedGenerators();
-    console.log(`  (plan only · ${blind.length} unmodeled byte-checked generator(s) are NOT in this plan; a real run sweeps them)`);
+    console.log(`  (plan only · ${blind.length} unmodeled --check-gated generator(s) are NOT in this plan; a real run sweeps them)`);
     process.exitCode = 0;
     return;
   }
@@ -299,7 +303,8 @@ function main() {
       process.exit(1);
     }
     try {
-      execFileSync('node', [builder], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      const invocation = repairInvocation(node, { root: ROOT });
+      execFileSync(process.execPath, invocation, { cwd: ROOT, stdio: 'pipe', windowsHide: true });
     } catch (err) {
       console.error(`resync-derived: builder FAILED for ${node.id} (${node.builder})`);
       console.error(String(err.stderr || err.stdout || err.message).slice(0, 600));
@@ -387,13 +392,9 @@ function selfTest() {
 
   // A node reading an untracked file must be rebuilt unconditionally — git diff
   // cannot see that file change, so closure alone leaves it stale every time.
-  const untracked = graph.nodes.filter((n) => n.sources.some((s) => {
-    if (s.includes('*')) return false;
-    try {
-      execFileSync('git', ['ls-files', '--error-unmatch', '--', s], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
-      return false;
-    } catch { return true; }
-  })).map((n) => n.id);
+  const inventory = trackedInventory(git);
+  const untracked = untrackedSourceNodes(graph, inventory).map(node => node.id);
+  console.log('tracked inventory measurement: ' + inventory.commands + ' Git invocation · ' + inventory.trackedFiles + ' files · ' + inventory.durationMs + 'ms');
   cases.push([`untracked-source nodes are known and force-rebuilt${untracked.length ? ` (${untracked.join(', ')})` : ' (none)'}`,
     Array.isArray(untracked)]);
   // founder-presence is the live instance: it reads context/.session-lock, which
@@ -413,7 +414,7 @@ function selfTest() {
 
   // The gap must be real. If this ever hits zero the graph covers everything and
   // the sweep is dead weight — but that is a change to celebrate, not to assume.
-  cases.push([`byte-checked generators outside the graph are enumerable (${unmodeled.length})`,
+  cases.push([`--check-gated generators outside the graph are enumerable (${unmodeled.length})`,
     Array.isArray(unmodeled)]);
 
   // NEGATIVE CONTROL — the whole point of this session's fix. The live S340/S341
@@ -450,5 +451,8 @@ function selfTest() {
   process.exit(failed.length ? 1 : 0);
 }
 
-if (process.argv.includes('--self-test')) selfTest();
-else main();
+const isDirect = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isDirect) {
+  if (process.argv.includes('--self-test')) selfTest();
+  else main();
+}

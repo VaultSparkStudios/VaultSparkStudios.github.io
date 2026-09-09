@@ -1,95 +1,180 @@
-/**
- * postbuild-fs-trace.cjs — the instrument S339 said this question needed.
- *
- * Two sessions tried to answer "which postbuild steps write rendered pages, and
- * which hash them?" by reading source, and both were wrong in both directions:
- * page writes go through helpers, so a grep cannot tell a writer from a reader.
- *
- * This does not read source. It is preloaded into each postbuild step with
- * `--require` and patches the fs entry points, so every read and write of a
- * rendered page is observed as it actually happens — helper indirection,
- * dynamic paths and all. The step's own code is untouched and unaware.
- *
- * Emits one NDJSON line per distinct (step, op, path) to VS_FS_TRACE.
+/** Successful high-level filesystem observations for one postbuild invocation.
+ * Direct file descriptors and native addons are outside this tracer's coverage.
  */
-const fs = require('node:fs');
-const fsp = require('node:fs/promises');
-const path = require('node:path');
-
-const TRACE = process.env.VS_FS_TRACE;
-const STEP = process.env.VS_FS_TRACE_STEP || 'unknown';
-const ROOT = process.env.VS_FS_TRACE_ROOT || process.cwd();
+const fs = require("node:fs");
+const fsp = require("node:fs/promises");
+const path = require("node:path");
+const crypto = require("node:crypto");
+const createHash = crypto.createHash.bind(crypto);
+const htmlReads = new Map();
+let sequence = 0;
+const { fileURLToPath } = require("node:url");
+const { syncBuiltinESMExports } = require("node:module");
+const TRACE = process.env.VS_FS_TRACE,
+  STEP = process.env.VS_FS_TRACE_STEP,
+  ROOT = path.resolve(process.env.VS_FS_TRACE_ROOT || process.cwd()),
+  INVOCATION = process.env.VS_FS_TRACE_INVOCATION;
 if (!TRACE) return;
-
-const seen = new Set();
-const realWrite = fs.appendFileSync.bind(fs);
-const realRead = fs.readFileSync.bind(fs);
-
-/** A rendered page is an .html file inside the site tree — never node_modules. */
+if (!STEP || !INVOCATION)
+  throw new Error("Postbuild tracer requires step and invocation identity");
+const seen = new Set(),
+  append = fs.appendFileSync.bind(fs),
+  read = fs.readFileSync.bind(fs);
+function absolute(p) {
+  if (p instanceof URL) return fileURLToPath(p);
+  if (typeof p === "string" || Buffer.isBuffer(p))
+    return path.resolve(String(p));
+  return null;
+}
 function classify(p) {
-  if (typeof p !== 'string' && !Buffer.isBuffer(p) && !(p instanceof URL)) return null;
-  let s = p instanceof URL ? p.pathname : String(p);
-  if (!s.endsWith('.html')) return null;
-  const abs = path.resolve(ROOT, s);
-  if (!abs.startsWith(ROOT)) return null;
-  const rel = path.relative(ROOT, abs).split(path.sep).join('/');
-  if (rel.startsWith('node_modules/') || rel.startsWith('.git/')) return null;
+  const abs = absolute(p);
+  if (!abs) return null;
+  const rel = path.relative(ROOT, abs).replaceAll("\\", "/");
+  if (
+    !rel ||
+    rel === ".." ||
+    rel.startsWith("../") ||
+    path.isAbsolute(rel) ||
+    !rel.endsWith(".html") ||
+    /^(node_modules|\.git|\.cache)\//.test(rel)
+  )
+    return null;
   return rel;
 }
-
-function record(op, p) {
-  const rel = classify(p);
-  if (!rel) return;
-  const key = `${STEP}|${op}|${rel}`;
-  if (seen.has(key)) return;
+function record(op, p, observedSequence = null) {
+  const page = classify(p);
+  if (!page) return;
+  const key = `${op}|${page}`;
+  if (["read", "write-noop"].includes(op) && seen.has(key)) return;
+  append(
+    TRACE,
+    JSON.stringify({
+      invocationId: INVOCATION,
+      step: STEP,
+      op,
+      page,
+      sequence: observedSequence ?? ++sequence,
+    }) + "\n",
+  );
   seen.add(key);
-  try { realWrite(TRACE, JSON.stringify({ step: STEP, op, page: rel }) + '\n'); } catch { /* never break a build step */ }
 }
-
-/**
- * A write that reproduces the bytes already on disk strands nothing — the page
- * a later reader observed is the page that is still there. Recording it as a
- * write turns every idempotent rewriter into an accusation. So a `write` event
- * means the CONTENT CHANGED, and the check is done here, at the call, where the
- * old bytes and the new bytes are both in hand.
- */
-function changesContent(p, data) {
-  if (data === undefined || data === null) return true;
+function contents(p) {
   try {
-    const abs = path.resolve(ROOT, p instanceof URL ? p.pathname : String(p));
-    if (!fs.existsSync(abs)) return true;
-    const next = Buffer.isBuffer(data) ? data : Buffer.from(String(data));
-    return !realRead(abs).equals(next);
+    const abs = absolute(p);
+    return abs ? read(abs) : null;
   } catch {
-    return true; // cannot prove it is a no-op, so treat it as a change
+    return null;
   }
 }
-
-function wrap(obj, name, op, argIndex = 0, dataIndex = null) {
-  const orig = obj[name];
-  if (typeof orig !== 'function') return;
+function same(a, b) {
+  return a !== null && b !== null && a.equals(b);
+}
+function wrap(obj, name, op, index = 0) {
+  const original = obj[name];
+  if (typeof original !== "function") return;
   obj[name] = function (...args) {
-    if (op === 'write' && dataIndex !== null && !changesContent(args[argIndex], args[dataIndex])) {
-      return orig.apply(this, args);
+    const p = args[index],
+      tracked = classify(p);
+    if (!tracked) return original.apply(this, args);
+    const before = op === "write" ? contents(p) : null;
+    const done = (value) => {
+      if (op === "read") {
+        record(op, p);
+        // Only complete readFile results establish byte provenance. Streams,
+        // file descriptors and arbitrary transformed data remain unmeasured.
+        if (name === "readFile" || name === "readFileSync") {
+          const encoding =
+            typeof args[1] === "string" ? args[1] : args[1]?.encoding || "utf8";
+          const bytes = Buffer.isBuffer(value)
+            ? Buffer.from(value)
+            : typeof value === "string"
+              ? Buffer.from(value, encoding)
+              : null;
+          if (bytes) {
+            const page = classify(p),
+              versions = htmlReads.get(page) || [];
+            if (!versions.some((previous) => previous.equals(bytes)))
+              versions.push(bytes);
+            htmlReads.set(page, versions);
+          }
+        }
+      } else record(same(before, contents(p)) ? "write-noop" : "write", p);
+    };
+    if (name === "createReadStream" || name === "createWriteStream") {
+      const stream = original.apply(this, args);
+      stream.once(op === "read" ? "end" : "finish", done);
+      return stream;
     }
-    record(op, args[argIndex]);
-    return orig.apply(this, args);
+    if (typeof args.at(-1) === "function") {
+      const callback = args.at(-1);
+      args[args.length - 1] = function (error, ...values) {
+        if (!error) done(values[0]);
+        return callback.call(this, error, ...values);
+      };
+      return original.apply(this, args);
+    }
+    const result = original.apply(this, args);
+    if (result && typeof result.then === "function")
+      return result.then((value) => {
+        done(value);
+        return value;
+      });
+    done(result);
+    return result;
   };
 }
-
-for (const m of [fs, fs.promises, fsp]) {
-  if (!m) continue;
-  wrap(m, 'readFileSync', 'read');
-  wrap(m, 'readFile', 'read');
-  wrap(m, 'writeFileSync', 'write', 0, 1);
-  wrap(m, 'writeFile', 'write', 0, 1);
-  wrap(m, 'appendFileSync', 'write');
-  wrap(m, 'appendFile', 'write');
-  wrap(m, 'createReadStream', 'read');
-  wrap(m, 'createWriteStream', 'write');
-  // A rename/copy into a page path is a write of that page.
-  wrap(m, 'renameSync', 'write', 1);
-  wrap(m, 'rename', 'write', 1);
-  wrap(m, 'copyFileSync', 'write', 1);
-  wrap(m, 'copyFile', 'write', 1);
+for (const obj of new Set([fs, fs.promises, fsp])) {
+  for (const name of ["readFileSync", "readFile", "createReadStream"])
+    wrap(obj, name, "read");
+  for (const name of [
+    "writeFileSync",
+    "writeFile",
+    "appendFileSync",
+    "appendFile",
+    "createWriteStream",
+  ])
+    wrap(obj, name, "write");
+  for (const name of ["renameSync", "rename", "copyFileSync", "copyFile"])
+    wrap(obj, name, "write", 1);
+  for (const name of ["unlinkSync", "unlink", "rmSync", "rm"])
+    wrap(obj, name, "write");
 }
+// A finalized hash that consumed exact full-file HTML bytes is a measured
+// observer. Equal byte content across several files is conservatively associated
+// with every matching path; this is byte provenance, not arbitrary JS dataflow.
+crypto.createHash = function (...args) {
+  const hash = createHash(...args),
+    update = hash.update,
+    digest = hash.digest;
+  const observations = new Map();
+  hash.update = function (data, encoding) {
+    const result = update.call(this, data, encoding);
+    const bytes =
+      typeof data === "string"
+        ? Buffer.from(data, encoding || "utf8")
+        : Buffer.isBuffer(data)
+          ? data
+          : ArrayBuffer.isView(data)
+            ? Buffer.from(data.buffer, data.byteOffset, data.byteLength)
+            : null;
+    if (bytes)
+      for (const [page, versions] of htmlReads) {
+        if (
+          versions.some((original) => bytes.equals(original)) &&
+          !observations.has(page)
+        )
+          observations.set(page, ++sequence);
+      }
+    return result;
+  };
+  hash.digest = function (...args) {
+    const result = digest.apply(this, args);
+    for (const [page, observedAt] of observations)
+      record("hash-observe", path.join(ROOT, page), observedAt);
+    return result;
+  };
+  return hash;
+};
+
+// Named ESM imports must observe the same patched methods as the CJS object.
+syncBuiltinESMExports();

@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { deriveDeskFreshness } from './lib/news-freshness.mjs';
+import { deriveDeskFreshness, staticDeskEvidence, renderStaticDeskEvidence } from './lib/news-freshness.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DAYS = path.join(ROOT, 'data', 'news-desk', 'days');
@@ -26,6 +26,20 @@ function selfTest() {
     ['daily evidence satisfies the publisher postcondition', cadenceSatisfied(daily)],
     ['periodic and paused evidence fail the publisher postcondition', !cadenceSatisfied(periodic) && !cadenceSatisfied(paused)],
   ];
+  const corpus = [day('2026-08-15')];
+  const before = renderStaticDeskEvidence(corpus);
+  const oldDate = globalThis.Date;
+  let after;
+  try {
+    globalThis.Date = class { constructor() { throw new Error('static HTML must not read the clock'); } static now() { throw new Error('static HTML must not read the clock'); } };
+    after = renderStaticDeskEvidence(corpus);
+  } finally { globalThis.Date = oldDate; }
+  cases.push(['static evidence is independent of runtime clock', before === after]);
+  cases.push(['new published edition changes static evidence', before !== renderStaticDeskEvidence([...corpus, day('2026-08-16')])]);
+  cases.push(['simulated edition cannot refresh static evidence', before === renderStaticDeskEvidence([...corpus, {date:'2026-08-16', simulated:true}])]);
+  cases.push(['empty corpus remains unavailable, never daily', staticDeskEvidence([]).state === 'unavailable' && renderStaticDeskEvidence([]).includes('not yet available')]);
+  cases.push(['unsafe date cannot enter markup', !renderStaticDeskEvidence([{date:'<script>'}]).includes('<script>')]);
+  cases.push(['static report makes no relative-age or current-cadence claim', !before.includes('days old') && !before.includes('Daily cadence') && before.includes('/api/news-desk-freshness.json')]);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));
   if (cases.some(([, ok]) => !ok)) process.exit(1);
   console.log(`build-news-freshness --self-test: ${cases.length}/${cases.length} passed`);

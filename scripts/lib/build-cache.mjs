@@ -61,25 +61,28 @@ export function saveHash(key, hash) {
 const isMain = process.argv[1] && process.argv[1].endsWith('build-cache.mjs');
 if (isMain && process.argv.includes('--self-test')) {
   const os = await import('node:os');
+  const { default: assert } = await import('node:assert/strict');
   const tmpDir = fs.mkdtempSync(path.join(os.default.tmpdir(), 'vs-build-cache-'));
   const tmpFile = path.join(tmpDir, 'test.txt');
   const KEY = '_self-test-' + process.pid;
 
+  try {
   fs.writeFileSync(tmpFile, 'hello');
   const r1 = checkHash(KEY, [tmpFile]);
-  console.assert(!r1.hit, 'first check: miss expected');
+  assert(!r1.hit, 'first check: miss expected');
   saveHash(KEY, r1.hash);
 
   const r2 = checkHash(KEY, [tmpFile]);
-  console.assert(r2.hit, 'second check: hit expected after save');
+  assert(r2.hit, 'second check: hit expected after save');
 
   fs.writeFileSync(tmpFile, 'world');
   const r3 = checkHash(KEY, [tmpFile]);
-  console.assert(!r3.hit, 'after file change: miss expected');
+  assert(!r3.hit, 'after file change: miss expected');
 
-  // cleanup
+  } finally {
   try { fs.unlinkSync(cachePath(KEY)); } catch {}
   fs.rmSync(tmpDir, { recursive: true });
+  }
 
   console.log('build-cache --self-test: 3/3 passed');
   process.exit(0);

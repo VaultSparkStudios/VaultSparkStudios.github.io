@@ -1338,3 +1338,17 @@ S346 stopped during startup. S345 implementation and closeout are committed in 7
 Recovery inspected the full diff and the closeout surfaces, validated all six initially changed JSON files and the user configuration, and found no confirmed debris. Fresh suite failures were preserved: stale startup context (step 61) and launch-age drift (step 140). Startup smoke passes 60/60 after regeneration. Doctor exits 0 with blockingFailing 0; advisory failures and unavailable scheduled evidence remain explicitly distinct from passing checks. Final verification and checkpoint evidence will be appended to the recovery ledger.
 
 S346 final local recovery verification (2026-09-09): full build suite 390/390, mobile runtime 215/215, reviewed theme captures 42/42, and Doctor blockingFailing 0 (two advisory failures). The recovery checkpoint and S347 full arc remain active. Hosted Community accessibility is a distinct known failure; no new production deployment is claimed.
+
+## S347 — 2026-09-09 — Full arc after recovery
+
+Intent: complete the website audit and implementation after the separately committed S346 recovery, verify the resulting site and build pipeline, then close out the session. Recovery is pushed through 4c7cb57ee; S347 implementation is in progress. Current focus: truthful verification, ordered derived builds, accessible navigation and community rendering, and clear homepage content. Production promotion remains subject to staging and measured release evidence.
+
+## Session 347 — 2026-09-09 — recovered full arc, local candidate complete
+
+Reconstructed the cut-off S347 session from the handoff, work log, closeout brief, history, and full staged/unstaged diff. S346 was already safely committed/pushed; S347 had completed implementation but died in final verification. Validated every changed JSON/JSONL version (96 JSON versions, 501 JSONL rows), confirmed the user configuration is valid, found no half-written file or confirmed debris, and preserved staged/unstaged ownership until convergence.
+
+Finished all 23 audit items and their finite innovation reserve. The complete build gate passed 477/477 after canonical regeneration exposed and repaired three stale-governance edges: visual-retention output, entity-graph output, and redundant orphan-script allowlisting. Fresh pixel evidence covers 84/84 normal route/theme/viewport captures plus 84 supplemental touched-state captures. Focused browser/unit checks passed; a single earlier News theme timeout passed immediately in isolated rerun.
+
+The performance lab found a preview-only duplicate transfer: preloaded fingerprinted shell assets were served `no-store`. Added immutable caching only for generated shell assets, kept HTML/unhashed assets uncached, and pinned the contract with a live child-server test. Fresh six-route reports preserve the remaining simulated LCP/TBT misses as documented exceptions. Doctor before release has one blocker, production staleness, which is expected to clear only after the recovery commit and staging-first promotion.
+
+**SIL:** 986/1000 (v3.0) · velocity 23 · debt ↓ · Doctor blockingFailing 1 before release.
