@@ -1,5 +1,30 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — Scheduled CI Monitor · 2026-09-09
+
+**PR #121 — CANON-041 mobile nav tap target (40px → 44px)**
+
+Three sequential compliance failures driven by the shell CSS refinger cascade were fixed across four commits:
+
+- `6ec7d63` — CSS fix: `.mobile-nav-github { min-height: 44px }` in `@media (max-width: 1024px)`
+- `77b6329` — shell assets rebuilt via `build-shell-assets.mjs` (fingerprint `bf10f7005d` → `f52f86adc5`)
+- `660dde5` — `candidate-artifact-manifest` rebuilt (step 46 drift after shell leaf set changed)
+- `172ad8b` — `_headers` Early Hints rebuilt (step 67 drift: old fingerprint in preload `Link` header)
+- `17395be` — `api/release-proof.json` rebuilt (step 73 drift: `build.shellVersion` still referenced old fingerprint)
+
+All three build:check steps (46, 67, 73) verified passing locally. CI did NOT trigger on `17395be` via `pull_request` event (only `pull_request_target` auto-merge fired). Workflow dispatch returned 403. This commit triggers CI.
+
+**Standing-down items (pre-existing, not caused by this PR):**
+- `playwright-axe /community/` — EN-9.2.4.4 / EN-9.4.1.2 axe violations on live production; comment posted on PR
+- Visual Regression snapshots — stale baselines (Sep 5) vs current production; 7–28% pixel delta on membership/vault-member/journal/oracle unrelated to 4px hidden-element change; comment posted on PR
+- Lighthouse news article perf 0.88 < 0.90 — lab volatility (0.94→0.88), not caused by this PR; comment posted on PR
+
+**Compliance (step 73) should now pass.** The other three failures (axe, VR, lighthouse) require human action or will self-resolve on next baseline update.
+
+**Codex review:** completed on `6ec7d63`, no findings.
+
+**Founder action required:** Update Visual Regression baselines via `gh workflow run "Visual Regression (mobile)" -f update_baselines=true` and commit the updated snapshots to the PR branch.
+
 ## Where We Left Off — S345 · 2026-09-07
 
 - **The post-rebase repair tool reported clean over a subset it could not see — for two sessions and two hand-fixes.** `resync-derived.mjs` walks an evidence graph modeling **29 of 67** byte-checked generators and printed `17 artifacts rebuilt + staged`, which reads as completeness. CI then failed ten minutes later on `build-intelligence-budget` (S340, run `33702593208` step 185) and on `build-nervous-system` (S341). Both hand-fixed; both still unmodeled today. Modeling the missing 38 was **refused on the ratchet's own reasoning** — guessing `sources` yields a confidently wrong graph, which is worse than an admittedly partial one. Instead every success exit now runs the unmodeled generators' own `--check`: a *measurement*, not a prediction, needing none of the information the ratchet withholds. Default fails named; `--sweep-repair` is opt-in and guarded by the same world-acting-builder test. Proven by reproducing the original incident — old path exit 0, new path exit **1** naming the drifter. (D-S345.1)

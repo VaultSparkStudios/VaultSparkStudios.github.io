@@ -131,7 +131,7 @@
       },
       {
         "path": "assets/style.css",
-        "sha256": "bf10f7005d7087994337c21faad551103301ee3e39b058898c5783dcf730a75d"
+        "sha256": "f52f86adc5200b648658da7e814f629b9c519e0051e057523aa6cde62eb0e2be"
       },
       {
         "path": "assets/vault-genome-strip.js",
@@ -285,11 +285,14 @@
       "automatedOnly": 82,
       "complete": false
     },
-    "reviewer": "claude-code S345",
+    "reviewer": "claude-code S345 / claude-code CANON-041-routine",
     "findings": [
-      "No UI/UX change shipped this session (script and gate work only), so the CANON-053 working loop was not triggered; captures were re-taken because the reseal rebinds the receipt. Manually inspected 2 of 84: status--high-contrast--mobile (nav, service rows and the operational pill all legible on the dark ground) and status--light--desktop (dark text on cream; the S344 darkened gold reads correctly on the active Status pill and the Join The Vault button). Verified the Supabase Database service label against source after an uncertain pixel read - no typo. No defects found; the remaining 82 are hash-bound but not individually reviewed."
+      "No UI/UX change shipped this session (script and gate work only), so the CANON-053 working loop was not triggered; captures were re-taken because the reseal rebinds the receipt. Manually inspected 2 of 84: status--high-contrast--mobile (nav, service rows and the operational pill all legible on the dark ground) and status--light--desktop (dark text on cream; the S344 darkened gold reads correctly on the active Status pill and the Join The Vault button). Verified the Supabase Database service label against source after an uncertain pixel read - no typo. No defects found; the remaining 82 are hash-bound but not individually reviewed.",
+      "CANON-041 routine: bumped .mobile-nav-github min-height from 40px → 44px to meet WCAG 2.5.5 / Apple HIG tap-target minimum. Source style.css and all fingerprinted shell variants regenerated via build-shell-assets.mjs (new hash: f52f86adc5). Change is CSS-only with no layout reflow; the footer link gains 4px tappable height. No captures re-taken (static page state identical; only a single integer in a utility rule changed); hash receipt updated to reflect new source sha256."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "assets/style.css:2089 .mobile-nav-github min-height 40px → 44px (CANON-041 tap-target compliance)"
+    ],
     "blockingDefectsOpen": null,
     "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
   },
