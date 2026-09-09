@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-09T22:34:47.161Z",
+  "generatedAt": "2026-09-09T23:09:44.017Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,19 +13,24 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
     "deployedBuildSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "a534d8092c680e15b22848cc1042e33eaa33b9674cf563cbcdf4f9bf4bac52f7",
+      "candidateRoot": "e40e7c4537deb3a30520a38cdc55f12deda71b190340224802bb716e8f042938",
       "candidateLeafCount": 29,
       "stagingRoot": "a534d8092c680e15b22848cc1042e33eaa33b9674cf563cbcdf4f9bf4bac52f7",
       "stagingLeafCount": 29,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -65,13 +70,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 2,
-    "ageHours": 0.2,
-    "observedAt": "2026-09-09T22:34:47.161Z",
+    "commitsBehind": 8,
+    "ageHours": 0.5,
+    "observedAt": "2026-09-09T23:09:44.017Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-09T22:34:47.161Z",
+      "observedAt": "2026-09-09T23:09:44.017Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
@@ -157,9 +162,9 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -173,6 +178,8 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
