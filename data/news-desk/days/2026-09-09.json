@@ -1,7 +1,7 @@
 {
   "date": "2026-09-09",
   "simulated": false,
-  "leadSlug": "worried-anthropic-researchers-warn-that-ai-8216-could-kill",
+  "leadSlug": "hackers-are-stealing-claude-tokens-from-subscribers",
   "stories": [
     {
       "slug": "muse-metas-new-personal-ai-agent-needs-you-to",
@@ -326,6 +326,146 @@
         "fellBack": false,
         "attempt": 2,
         "at": "2026-09-09T12:35:03.092Z"
+      }
+    },
+    {
+      "slug": "hackers-are-stealing-claude-tokens-from-subscribers",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "close",
+      "headline": "Claude tokens stolen, refunds issued, but the malware isn't from the app",
+      "hook": "Hackers stole Claude tokens. The company says it wasn't the app's fault.",
+      "tldr": "Security researchers have identified a campaign where attackers are stealing API tokens from subscribers of the AI service Claude. The company confirmed the theft and took action to secure affected accounts, including invalidating sessions and issuing partial refunds for impacted users. However, they also clarified that the malware facilitating these thefts did not originate from using Claude itself, shifting the blame away from their core product interface while acknowledging the significant inconvenience and financial loss suffered by those whose credentials were compromised.",
+      "facts": [
+        {
+          "text": "The company also said the malware didn&#8217;t come from using Claude itself.",
+          "sourceUrl": "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers/"
+        },
+        {
+          "text": "De Swardt&#8217;s Claude account was reinstated after about two weeks.",
+          "sourceUrl": "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers/"
+        },
+        {
+          "text": "It suspended his paid account, invalidated all of his sessions and server-side Claude Code tokens, and issued him a partial refund of £44.49 for the remaining time on his $200-per-month subscription.",
+          "sourceUrl": "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "juno",
+          "direction": 0,
+          "horizon": -1,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "The real cost isn't the refund; it's the two weeks of lost access for a developer whose livelihood depends on that session.",
+          "sources": [
+            "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers/"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "A £200 monthly subscription reduced to a £44.49 refund after two weeks of downtime is a net loss of value.",
+          "sources": [
+            "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-09-09-juno-1",
+          "personaId": "juno",
+          "claim": "By Q4 2026, at least one major enterprise will ban external API token usage due to this incident.",
+          "confidence": 0.75,
+          "resolveBy": "2026-10-24",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-09-09-dot-2",
+          "personaId": "dot",
+          "claim": "Within 30 days, the average refund amount for token theft incidents will exceed £50.",
+          "confidence": 0.65,
+          "resolveBy": "2027-01-07",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "juno",
+          "text": "De Swardt lost his account for two weeks. That’s not a glitch; that’s a fortnight of silence for a writer who needs to file."
+        },
+        {
+          "personaId": "dot",
+          "text": "He got £44.49 back. He paid £200. The math doesn't care about his deadline."
+        }
+      ],
+      "memeLine": {
+        "text": "Your token is safe until it isn't, then you get £44.49 back.",
+        "personaId": "juno"
+      },
+      "body": [
+        {
+          "voice": "juno",
+          "text": "For De Swardt, the Tuesday started like any other: a $200-a-month subscription to Claude, a steady stream of work, and the assumption that the digital door was locked. It wasn’t. Hackers had slipped in, not through a flaw in the conversation window, but through a piece of malware that sat quietly on his machine, siphoning off the keys that kept his account alive. When he tried to write, he found himself locked out. For two weeks, he was a subscriber without a service, watching his credits burn in the void while support tickets piled up. When he finally got back in, the damage was done. His sessions were invalidated, his server-side tokens wiped clean, and the only tangible evidence of the breach was a partial refund of £44.49 for the remaining time on his monthly plan."
+        },
+        {
+          "voice": "dot",
+          "text": "Let’s look at the ledger. The subscription costs $200 per month. The refund was £44.49. Even if we ignore the conversion rate, the value returned is less than a quarter of what was paid. But the real cost isn't the currency; it's the time. Two weeks of reinstatement is fourteen days of zero productivity. For a professional relying on this tool, that’s not a billing error; it’s a business interruption. The company claims the malware didn’t come from using Claude itself, which is technically true but functionally irrelevant. If the key to your house is stolen because you left it in a parked car, the lock manufacturer isn’t liable, but you’re still locked out."
+        },
+        {
+          "voice": "juno",
+          "text": "The distinction between 'using Claude' and 'having Claude installed' is a comfort for lawyers, not for writers. De Swardt’s experience highlights a growing friction in the AI economy: as tools become more integrated into our daily workflows, the cost of failure rises. A broken word processor is an annoyance; a compromised AI account with active tokens is a security nightmare. The fact that his account was reinstated after two weeks suggests a functional recovery process, but the initial silence was deafening. The refund is a gesture, a small bandage on a wound that required a full reboot of trust."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-09--hackers-are-stealing-claude-tokens-from-subscribers.png",
+        "scene": "A cluttered home office desk at night with a laptop screen displaying a 'Session Invalidated' error message next to a printed bank statement showing a £44.49 credit against a £200 charge. The composition shows laptop displaying error message.",
+        "alt": "Close-up shot of a laptop keyboard with a sticky note reading 'Token Stolen' placed over the trackpad, while the monitor shows a red alert dialog box. In the background, a blurred coffee mug sits next to a calculator displaying numbers. The composition shows laptop displaying error message.",
+        "anchors": [
+          "malware didn&#8217;t come from using Claude itself",
+          "reinstated after about two weeks",
+          "partial refund of £44.49"
+        ],
+        "relationships": [
+          {
+            "id": "laptop-displaying-error",
+            "subject": [
+              "laptop"
+            ],
+            "action": [
+              "displaying"
+            ],
+            "object": [
+              "error message"
+            ],
+            "evidenceAnchorRefs": [
+              "malware didn&#8217;t come from using Claude itself"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "5dfac8b4577567dd2e6c31aa6db17b8e3e83f3e4b7227860bfbde312d557ff6c",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "Corporate Customer Support Refund Policies",
+          "setup": "A customer loses two weeks of work and thousands of dollars in potential revenue due to a token theft facilitated by third-party malware.",
+          "payoff": "The corporation issues a polite email confirming the invalidation of sessions and tacks on a £44.49 refund, treating a catastrophic workflow collapse as a simple accounting discrepancy.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-09-09T18:28:18.556Z"
       }
     }
   ]
