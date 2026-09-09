@@ -1858,3 +1858,19 @@ holds these as a flat list, which is why its repair suggestion is a no-op here (
 - [x] **[S59] Wire achievement SVG icons to portal** — ACHIEVEMENT_DEFS updated in portal-core.js (genesis_vault_member, vaultsparked, forge_master); async relational fetch wired in portal-auth.js showDashboard (S59)
 - [x] **[S60] VaultSparked CSP violations cleared** — all 3 blocked scripts resolved: externalized Stripe/checkout/phase/gift IIFE (260 lines) to `/vaultsparked/vaultsparked-checkout.js`; removed inline `onmouseover`/`onmouseout` from gift button (replaced with addEventListener); billing-toggle.js already external (S59). Zero inline scripts on the page. (S60)
 - [x] **[S60] Homepage circular element fix** — replaced hard-edged energy arc circles (the "weird circular addition") with blur-filtered diffuse `.hero-glow` spots; removed body radial gradient blobs; added gold `text-shadow` on "Is Sparked." for visible impact. (S60)
+
+
+<!-- rotated 2026-09-08 · sessions < 319 · 1 block(s) -->
+
+## Done (Session 318 — release-safe truth surfaces)
+
+- [x] **[S318][RELEASE/P0] One production gate for local and CI paths.** `deploy-worker.mjs` now requires an explicit production confirmation and internally runs the promotion gate plus fresh ceremony; a flag alone is never authority. The ceremony-local Doctor classification closes the pre-deploy circularity without weakening the ordinary Doctor.
+- [x] **[S318][RELEASE/P0] Capability-slice content promotion.** Changed hash-named callers are bound to their literal `/v/*` routes and require fresh production provenance. S317 Desk mutation shapes are pinned. Self-tests: 7/7 capability slice, 4/4 deploy entrypoint, 14/14 promotion gate, 5/5 content preflight.
+- [x] **[S318][SECURITY/P0] Push subscription storage bounded and validated.** Same-origin Origin, HTTPS vendor allowlist, exact p256dh/auth shapes, bounded body, per-IP and global caps, dedupe/key refresh, corrupt-row quarantine, active-dispatch validation, and fan-out cap. Worker units 48/48.
+- [x] **[S318][MOBILE/P0] Blocking runtime mobile contract.** Rank Projector containment, shared target sizing, 47 real routes × 5 viewports, zero P0/P1, 235/235 runtime checks. Touch checks fail by default and CI requires completion.
+- [x] **[S318][CANON-053/P0] Source-bound rendered proof.** 63/63 captures manually inspected for membership, membership-value, and vaultsparked across seven themes and 360/390/430 widths; receipt binds source, route, viewport, theme, state, and screenshot hash.
+- [x] **[S318][AI/P1] Coherent crawler policy.** Training opt-out remains explicit while OAI search/user retrieval can reach the advertised public discovery corpus; the validator parses every named group.
+- [x] **[S318][NEWS/P1] Freshness honesty and fact-complete claims.** Overdue Desk copy renders “periodic,” a review-held recovery packet exists, and the agent claim ledger contains all 21 sourced facts with stable anchors/receipts (37 total rows).
+- [x] **[S318][OBS/P1] Receipt-bound status projection.** Legacy SIL/test aliases removed, public status fields derive from current receipts, and scheduled unknown/stale CI poisons green.
+- [x] **[S318][STAGING/P0] Exact committed candidate deployed and verified on Hetzner.** Pushed candidate commit `29be0bd8d`; receipt `8aa1f9f42262b96d5e8ea5b4`; 5,007/5,007 files; candidate/deployed SHA and artifact roots match; staging browser 6/6; chain depth 39; rollback `20260817172802`.
+- [x] **[S318][RELEASE/P0] Production hold preserved.** Independent app-release verdict is NO-GO and the authoritative ceremony is 7/8. No production deploy command ran; `real-provider-e2e-pending` remains the only rejected ceremony step.

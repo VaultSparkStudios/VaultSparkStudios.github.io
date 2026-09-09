@@ -150,9 +150,9 @@ async function main() {
           }
           const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
-          if (FOCUS_FOOTER) await page.locator('footer.site-footer').screenshot({ path: path.join(OUT_DIR, file) });
-          else if (focusSelector) await page.locator(focusSelector).screenshot({ path: path.join(OUT_DIR, file) });
-          else await page.screenshot({ path: path.join(OUT_DIR, file) });
+          if (FOCUS_FOOTER) await page.locator('footer.site-footer').screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
+          else if (focusSelector) await page.locator(focusSelector).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
+          else await page.screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
           manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {

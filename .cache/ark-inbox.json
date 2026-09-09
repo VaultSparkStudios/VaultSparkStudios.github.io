@@ -1,574 +1,136 @@
 {
-  "drainedAt": "2026-09-07T16:26:18.825Z",
+  "drainedAt": "2026-09-08T03:12:48.048Z",
   "slug": "vaultsparkstudios-website",
-  "count": 29,
+  "count": 8,
   "cargo": [
     {
-      "id": "01K1ITPATACF5CEE646A8D79CB",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T06:02:35.818Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 322,
-        "sil": 994,
-        "prevSil": 992,
-        "delta": 2,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 39,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T06:02:35.622Z"
-      }
-    },
-    {
-      "id": "01K1ITS90PFB442304F4113217",
+      "id": "01K1UI35EJE559A5EBA6E47441",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-09-03T06:04:12.185Z",
+      "shippedAt": "2026-09-07T18:29:08.179Z",
       "payload": {
-        "pattern": "skill-outcome",
+        "pattern": "A detector bound that was never sized against a real specimen is a confident GREEN over the exact thing it was built to catch",
+        "solution": "studio-ops scan-secrets.mjs had a HIGH-confidence Supabase Service Role rule requiring a JWT payload of {100,} characters. A self-hosted Supabase key omits the cloud-only ref claim: real payloads measure 88 (anon) and 99 (service_role). The full RLS-bypass credential missed the detector BY ONE CHARACTER, and a git-tracked file holding SERVICE_ROLE_KEY + JWT_SECRET + POSTGRES_PASSWORD was reported clean for five months while the same scanner emitted [low] noise on npm lockfile integrity hashes. Fix: make detection STRUCTURAL — match the JWT shape, decode header+payload, and let the claims set name and severity — never a length proxy. Two further lessons. (1) The FIRST test for any new matcher must fire it at a real specimen, plus a test asserting the PRE-FIX version misses that specimen, so the fixture cannot quietly stop reproducing the defect. (2) A second sweep (the infra-debt audit) had already found the same file and graded it stale-scripts — right file, wrong axis. Two instruments agreeing is not corroboration when they measure different things. Related: a module that scans-and-exits on import cannot be unit-tested, which is why this rule was never exercised at all — add a CLI main-guard.",
         "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1J1A3GU47E6BF185DE38FE6",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-09-03T07:04:11.038Z",
-      "payload": {
-        "session": "S343",
-        "project": "mindframe",
-        "outcome": "Six-item audit implemented; web and API deployed staging-first to production; immutable release b1d74ddf verified; final evidence head ca95f2d5 synchronized with green exact-head CI and zero blocking Doctor findings.",
-        "patterns": [
-          "decision-first primary actions",
-          "generated-only release evidence tails",
-          "production baseline bound to immutable deployment evidence"
-        ],
-        "next": "S344 action ranking; public launch remains founder-gated."
-      }
-    },
-    {
-      "id": "01K1J6H4AKFC87CF98223ED8AB",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T08:35:24.116Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 323,
-        "sil": 982,
-        "prevSil": 972,
-        "delta": 10,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 89,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T08:35:23.872Z"
-      }
-    },
-    {
-      "id": "01K1J6O41SC744FA87620E12A3",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T08:39:13.212Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1JAJE9VA88871204E9E5DEF",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-09-03T09:46:34.175Z",
-      "payload": {
-        "project": "atlas",
-        "session": "S133",
-        "headline": "Two live security holes closed, three guards that proved nothing made falsifiable, one unstyled component found only by looking",
-        "silDelta": "993 -> 993 (structural)",
-        "suite": "215/215",
-        "pattern": "A guard must prove it can OBSERVE the violation, not merely pass. Three ATLAS guards were green while measuring nothing: a SOUL-invariant proof that compared a pure function against itself, an assertion checking for a string no renderer had ever emitted, and a propagation contract whose hand-typed regex matched the very text it was meant to reject. Proving the red once at commit time only proves that day. Build the falsifiability check INTO the test: a deliberately-violating control, asserted to move before the real subject is asserted not to, so it re-proves itself every run.",
-        "secondPattern": "A coverage set that does not derive from the thing it covers will be complete and wrong. The visual court reported a complete matrix while omitting the one route the session changed, because its page list is hand-maintained. Same shape as hand-registered root tests and a hand-maintained blocker taxonomy.",
-        "replyTo": "atlas"
-      }
-    },
-    {
-      "id": "01K1JVBCJ550C1AE802EDB83EC",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T15:49:10.373Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 324,
-        "sil": 984,
-        "prevSil": 982,
-        "delta": 2,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 95,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T15:49:10.132Z"
-      }
-    },
-    {
-      "id": "01K1JVF9MJF76B516B7095241B",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T15:51:18.483Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1JVTI0OF6CE35E2B8BD4450",
-      "type": "pattern-share",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-09-03T15:59:05.752Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:app",
-          "outcome:good"
-        ],
-        "context": "franchise-architect-football",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1K1LGSA35CF0C8E1A8624C4",
-      "type": "session-impact-summary",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-09-03T16:29:39.594Z",
-      "payload": {
-        "session": 98,
-        "project": "franchise-architect-football",
-        "summary": "Shipped first-season reckoning, cross-season Trophy Road chronology, and focus-safe responsive tab navigation; exact candidate 3cce0a51e82e78625bdfad82f1cbdb19a31c94aa is live on staging, production Pages, and backend at artifact 6bdc133a478cfee8a8b19321a5684001b65e3322210e1a090b573785240bc7f4. Closeout HEAD bd164ebd4f3e3dd6783166e9caf3ab2433e428f4 is a verified receipt-only descendant. Public launch remains HOLD pending independent evidence gates.",
-        "tags": [
-          "game-loop",
-          "accessibility",
-          "release-authority",
-          "technical-deployment"
+          "security",
+          "secret-scanning",
+          "detector-calibration",
+          "supabase",
+          "jwt",
+          "unsized-bounds",
+          "prove-it-fires"
         ]
       }
     },
     {
-      "id": "01K1K8GH5081DF0DE4B3024654",
+      "id": "01K1UJ9GAP2A10A6BEEC2FAC82",
       "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-09-03T18:29:16.064Z",
-      "payload": {
-        "project": "atlas",
-        "session": "S134",
-        "headline": "Ten surfaces that published something the code did not do; SOUL #3 withholding now enforced and the corpus is fully stale",
-        "sil": 988,
-        "tests": "217/217",
-        "deploy": "staging b8b8f963",
-        "escalations": [
-          "corpus staleness: 8/8 routes publish no confidence number",
-          "E5/E6 carried from S132",
-          "withholding threshold"
-        ]
-      }
-    },
-    {
-      "id": "01K1K957M85E338544389EC133",
-      "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-09-03T18:40:34.504Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 325,
-        "sil": 988,
-        "prevSil": 984,
-        "delta": 4,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 92,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T18:40:33.982Z"
-      }
-    },
-    {
-      "id": "01K1KAD787573C56F2BEFD85CE",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-09-03T19:02:24.775Z",
-      "payload": {
-        "project": "seamline",
-        "session": 282,
-        "intentOutcome": "achieved",
-        "shipped": [
-          "exact-source convergent Core Web Vitals proof",
-          "bounded first-paint rendezvous",
-          "five semantic auth/billing contracts",
-          "official Next analyzer ownership attribution",
-          "deploy rollback-receipt ownership repair",
-          "exact-source three-plane production rollout"
-        ],
-        "verification": {
-          "tests": "2618/2618 remote canonical proof; final local rerun 2559/2560 before shell-receipt refresh",
-          "remoteProof": "14/14",
-          "doctor": "37 pass, 2 advisory warnings, 0 failures",
-          "staging": "13/13 semantics; env 9/9; discovery 5/5; Core Web Vitals pass",
-          "productionSource": "de27e02205200107ea318d0a7060d95e81ca354a",
-          "livePerformance": "2/2"
-        },
-        "publicLaunch": "NO-GO: Analytics, Zoho reply-as, Obelisk decision, explicit founder approval",
-        "next": [
-          "dual-source analyzer/deployed-worker attribution",
-          "multi-POP performance and retry history"
-        ]
-      }
-    },
-    {
-      "id": "01K1KADNO4D1E87340A429B5F2",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T19:02:41.668Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 325,
-        "sil": 988,
-        "prevSil": 984,
-        "delta": 4,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 98,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T19:02:40.969Z"
-      }
-    },
-    {
-      "id": "01K1KAI3GHB01B9F019466E2FE",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T19:05:04.785Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1KNULLO07ABD78A3CC1E8D8",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T22:59:08.088Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 326,
-        "sil": 991,
-        "prevSil": 988,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 37,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-03T22:59:07.878Z"
-      }
-    },
-    {
-      "id": "01K1KO1PT380BEEDF46A33CBD7",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-03T23:00:50.724Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K1L1AS3RA0A2E2A2C90F949A",
-      "type": "pattern-share",
-      "from": "statvault",
-      "shippedAt": "2026-09-04T01:43:05.083Z",
-      "payload": {
-        "title": "CLOSEOUT_PROMPT.template.md still declares the /500 v2 rubric — the exact seven lines, and the reference implementation that fixes them",
-        "supersedes": "01K0LNGV1SC22ED352A0C5AD11",
-        "openSince": "S284 (twelve sessions)",
-        "severity": "upstream-debt (DOWNGRADED from production-freeze at S296 — see resolvedLocally)",
-        "rootCause": "scripts/sync-studio-os-remote.mjs copies docs/templates/project-system/CLOSEOUT_PROMPT.template.md into prompts/closeout.md in EVERY registry repo. That template still declares the retired /500 v2 rubric, so every sync reverts any repo that has moved to CANON-009 SIL v3 (/1000, ten categories). It has landed seven times in statvault: 75d466899f, 6c4877c5df, 51459fdaa8, 8800476a990f, 3bdb11a44b, c9b6da5eea, 86948fb1f3.",
-        "whyNoLocalFix": "sync-studio-os-remote.mjs accepts --only= (an inclusion filter) and skips only status=archived and no-repo entries. There is no per-repo opt-out marker, so no consuming repo can decline the sync. The fix has to be the template.",
-        "exactLines": {
-          "103": "SIL entry header template declares /500 — should be /1000",
-          "126": "category row 'Ecosystem Contribution | 30' — retired name and a /500-era weight",
-          "160": "category row 'Documentation Coherence | 20' — retired name and a /500-era weight",
-          "173": "score table total declares **/500** — should be **/1000**",
-          "281": "second SIL entry header template declares Total: XXX/500",
-          "292": "second score table total declares **/500**",
-          "477": "'Overall bar: 24-char bar for /500 total'",
-          "496": "ASCII board line 'TOTAL  NNN/500'",
-          "538": "'Score bar guide: /100 -> 20 chars ... /500 -> 24 chars'",
-          "file": "docs/templates/project-system/CLOSEOUT_PROMPT.template.md"
-        },
-        "requiredContract": "Ten categories, each /100, summing to /1000 (CANON-009): devHealth, creativeAlignment, momentum, engagement, processQuality, crossRepoCoherence, securityPosture, ecosystemIntegration, capitalEfficiency, automationCoverage.",
-        "referenceImplementation": {
-          "repo": "statvault",
-          "path": "scripts/repair-closeout-rubric.mjs",
-          "note": "Derives every declaration from SIL_CATEGORIES/SIL_MAX_TOTAL — the same constants the grading gate reads, so repairer and gate cannot drift — and is IDEMPOTENT: on a tree that already agrees it writes zero bytes. It repairs only the declarations the gate asserts and leaves every other byte of the template alone, so a legitimate upstream improvement still lands. Run it against the template and it will produce the corrected file; it is the fix, not just a description of one."
-        },
-        "resolvedLocally": "statvault can no longer be frozen by this. deploy/hetzner/release.sh runs repair-closeout-rubric.mjs at line 170, inside the publish-coherence stage and eight lines before check-post-doctor-coverage --rerun grades it at line 178; pre-push refuses a drifted declaration outright. Verified at S296 on the live lane. What remains upstream is the recurring noise and the fact that every OTHER repo on SIL v3 is still exposed.",
-        "askOfUpstream": "Regenerate those nine declarations in the canonical template from SIL_CATEGORIES/SIL_MAX_TOTAL. Two-minute edit; the reference implementation above already does it.",
-        "session": "S296",
-        "date": "2026-09-03"
-      }
-    },
-    {
-      "id": "01K1L216RBBB9675D3E3494806",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-04T01:55:16.971Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 326,
-        "sil": 991,
-        "prevSil": 988,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 53,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-04T01:55:16.619Z"
-      }
-    },
-    {
-      "id": "01K1L29T9I91EDB983BC5F713E",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-04T02:00:02.098Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 326,
-        "sil": 991,
-        "prevSil": 988,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 55,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-04T02:00:01.745Z"
-      }
-    },
-    {
-      "id": "01K1L2AD6E2A020C79081C0424",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-09-04T02:00:18.382Z",
-      "payload": {
-        "project": "atlas",
-        "session": 76,
-        "headline": "ATLAS made outcome evidence replay-safe and proved clean, topology-aware staging provenance.",
-        "bullets": [
-          "Deterministic idempotency keys now replay the original signed outcome receipt and reject changed-payload reuse.",
-          "Nested-repository path normalization makes clean-source deployment receipts truthful.",
-          "Target-aware Pages smoke proves the staging web edge and its API service binding as one composite surface.",
-          "Startup brief runtime fell from roughly 64.6 seconds to about 2 seconds by suppressing recursive doctor execution."
-        ],
-        "evidence": {
-          "tests": "78/78",
-          "doctor": "8/8, blockingFailing 0",
-          "stagingPages": "0cdd475f",
-          "sourceCommit": "7b0e7fb825d7ce9be31435cf8ddeac6eea450dfc",
-          "sourceDirty": false
-        }
-      }
-    },
-    {
-      "id": "01K1SBJB3VD6537FF7CF9116B1",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-09-06T21:57:09.376Z",
+      "shippedAt": "2026-09-07T18:50:04.505Z",
       "payload": {
         "session": "S329",
-        "repo": "the-living-protocol",
-        "date": "2026-09-06",
-        "headline": "Falsifying an inherited \"Unblocked 0\" found a suite red for three days behind two silent greens.",
-        "itemsShipped": 5,
-        "silDelta": {
-          "previous": 966,
-          "current": 970,
-          "kind": "structural"
-        },
-        "velocity": 5,
-        "keyFindings": [
-          "propagate-templates.sh clobbers repo-owned thin entrypoints on EVERY run by construction (template-version vs prompt-version) — 3 clobbers vs 4 hand-reverts; reverting cannot terminate it",
-          "A propagated validator body removed 2 assertions incl. absence-of-brief-coherent downgraded from failure to pass (absence rendering green, 6th recurrence)",
-          "No live-evidence signal could observe a repo-owned contract, so an 8/11-red parity gate was unrankable for 3 sessions"
+        "project": "studio-ops",
+        "headline": "A detector whose bound was never sized against a real specimen is a confident GREEN over the thing it was built to catch",
+        "lessons": [
+          "A high-confidence credential rule required a JWT payload of {100,} characters. Self-hosted Supabase keys omit the cloud-only ref claim and measure 88 (anon) / 99 (service_role), so a full RLS-bypass key missed the detector BY ONE CHARACTER and a tracked file holding it was reported clean for five months. Make detection STRUCTURAL — decode and classify by claims — never a length proxy, and make the FIRST test for any matcher fire it at a real specimen plus assert the pre-fix version misses it.",
+          "A workflow that calls itself nightly is making a claim nothing checks. Removing schedule: from 55 workflows for cost was correct and silently converted a data-protection lane into a no-op: the only live cloud Supabase database went eight weeks unbacked while the file still said nightly. Two probes each reported an honest half (no lane / 14 failures) and nothing joined them to the conclusion.",
+          "A byte digest that crosses a host boundary is platform-dependent. A Linux lane writing LF and a Windows checkout reading CRLF produced two hashes for identical source, so three artifacts were permanently red and whoever ran last reddened the other. Normalize text before hashing; keep binary raw.",
+          "When a checker offers --fix, ask what the red is CARRYING before clearing it. Four stale sibling locks were the only remaining evidence that three sessions ended without closeout; the documented remedy would have deleted that signal and unblocked nothing.",
+          "A classifier with N-1 states maps the missing one onto a worse neighbour — and I rebuilt that bug inside the probe written in its spirit, grading a lane inert while its own receipt showed a success an hour earlier. Check a counter-example you know the answer to before believing your own output."
         ],
-        "shipped": [
-          ".studio-template-ownership.json ownership boundary + check-template-ownership.mjs (start step 0, pre-push, suite)",
-          "check-repo-contracts.mjs + repo-contract-integrity signal (UNKNOWN on absence, never PASS)",
-          "both gates tested on their refusal path"
-        ],
-        "deployed": {
-          "sha": "bd7b3afa",
-          "staging": "success",
-          "webBundle": "success",
-          "publicLaunch": "NO-GO"
+        "shipped": 6,
+        "tests": "4187/4187 assertions, 592/594 files, exit 0",
+        "doctor": "blockingFailing 0, overallPass true",
+        "sil": {
+          "total": 993,
+          "previous": 994,
+          "delta": -1
         },
+        "deploy": "console staging + production both deployed and VERIFIED (401 Obelisk wall enforced)",
+        "asksUpstream": "vorn: VERCEL_TOKEN is the single credential gating a 7-day P0 signup outage; the Turnstile site key is already READY in the studio-ops gateway, domain-bound to joinvorn.com"
+      }
+    },
+    {
+      "id": "01K1UJN68D829BCA14469EAEA5",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-07T18:57:32.941Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 329,
+        "sil": 993,
+        "prevSil": 994,
+        "delta": -1,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 19,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-07T18:57:32.671Z"
+      }
+    },
+    {
+      "id": "01K1UJTU3M70B506BDA9E8A94E",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-07T19:01:13.974Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 329,
+        "sil": 993,
+        "prevSil": 994,
+        "delta": -1,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 62,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-07T19:01:13.427Z"
+      }
+    },
+    {
+      "id": "01K1UK0SHC875C28B5D33B94C5",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-09-07T19:02:50.668Z",
+      "payload": {
+        "pattern": "A founder blocker is a claim about the secrets gateway, and a carry is not a re-check. StatVault carried [S295.H1] five sessions as needs credentials not in the gateway while check-secrets reported the capability READY the whole time; nobody re-ran the check because the premise arrived already written.",
+        "solution": "Before keeping ANY Human Action Required item at closeout, re-run check-secrets --for <capability> and paste the line into the carry. CANON-019: READY means agent work — provision through a gateway-backed repo script (env over ssh STDIN never argv, units from the promoted tree, one synchronous run, receipt read back). Also: measure the target on the box (container name, db user) before trusting a script written against a guess.",
         "tags": [
-          "propagation",
-          "ownership-boundary",
-          "absence-renders-green",
-          "repo-contract-integrity"
-        ]
-      }
-    },
-    {
-      "id": "01K1SF5G68A6B86FFCC2281096",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-09-06T22:59:30.120Z",
-      "payload": {
-        "session": "S317",
-        "repo": "veilos",
-        "date": "2026-09-06",
-        "headline": "The census gating the data export was counting the wrong row, and the privacy roster already knew.",
-        "lesson": "A completeness claim scoped from the DECLARATIONS that seed a subject rather than from the subject. Three hand-typed rosters described one durable row, each internally consistent, none with a reader that knew the others existed.",
-        "measured": {
-          "population": 165,
-          "censusScoped": 88,
-          "censusBlind": 20,
-          "hardDenyOutside": "15 of 18",
-          "allowlistOutside": "5 of 21"
-        },
-        "transferable": [
-          "Ask which direction your instruments error is CHEAP in, and tune toward that side: under-reporting is expensive when the consumer is a completeness claim.",
-          "A lexical scan must publish its MISS LIST and its REACH; a miss list alone is satisfiable by a scan that finds nothing.",
-          "A dead member on a safety roster is DECLARED, not deleted: removing a deny to settle an accounting staleness pays down bookkeeping with a safety guard.",
-          "Comments do not count as life: scan comment-stripped code, or the comments recording a defect keep its control green."
+          "canon-019",
+          "phantom-blocker",
+          "secrets-gateway",
+          "closeout"
         ],
-        "artifacts": [
-          "tests/helpers/durablePopulationScan.mjs",
-          "tests/s317-durable-population.test.mjs",
-          "src/worker/publicState.mjs HARD_DENY_PHANTOM"
+        "from": "statvault",
+        "session": 300,
+        "decision": "D-S300.1"
+      }
+    },
+    {
+      "id": "01K1UK0T8G55F2F4AD1F2CAF4F",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-09-07T19:02:51.409Z",
+      "payload": {
+        "pattern": "An identity gate must be two-sided, and internal validation is not identity. A shared year guard accepted a namesake whose career began within six years of the rookie year and ran a decade past the known span; the season-sum check then proved the grid was self-consistent — for someone else. Five contaminated profiles reached main before the coherence gate ran.",
+        "solution": "Require a candidate span to sit INSIDE the known span (±1 year of slack), not merely to start near it; reject-prove on the live contaminations AND the genuine fills from the same pass; run the coherence gate BEFORE the commit, not after the push; and never run a widening-only repair after a backfill — it legitimizes the contamination.",
+        "tags": [
+          "identity",
+          "ingest",
+          "data-integrity",
+          "reject-proof"
         ],
-        "suite": "5106/0",
-        "deployed": "1ba88538",
-        "production": "https://veilos.io 200, ready:false on residual_breached alone (by design)"
+        "from": "statvault",
+        "session": 300,
+        "decision": "D-S300.4"
       }
     },
     {
-      "id": "01K1T0S92BDBBCC25525FCE28E",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-09-07T04:09:02.283Z",
-      "payload": {
-        "session": "S330",
-        "project": "living-protocol",
-        "headline": "A gate guarding against an EXTERNAL actor must run server-side, not only in a local pre-push hook.",
-        "shipped": [
-          "repo-contracts CI job enforcing the ownership boundary on push and pull_request",
-          "pnpm test:verified - direct children, inherited stdio, inner exit codes captured verbatim, verdict printed last so a truncating pipe reveals it",
-          "check-propagation-boundary-adoption.mjs - typed ADOPTED/REPORTED-NOT-ADOPTED/UNKNOWN verdict measured from the control plane"
-        ],
-        "finding": "S329 declared an ownership boundary after template propagation clobbered five repo-owned files three times, then wired the guard into .husky/pre-push and nowhere else. ci.yml referenced it zero times. A contract written about an external actor could only fail for the one party that never triggers it.",
-        "generalizable": "When adding a guard, ask who it guards against and where that party commits arrive. If the answer is anyone other than you, it belongs in CI too.",
-        "deployed": "31671911fc1c641466feffec4a75a7953c4e5c01",
-        "silDelta": "970 -> 966"
-      }
-    },
-    {
-      "id": "01K1T28O1H4545C45981CA3519",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T04:33:19.409Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 328,
-        "sil": 994,
-        "prevSil": 991,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 64,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-07T04:33:19.118Z"
-      }
-    },
-    {
-      "id": "01K1T2MP2RC755FA766BF8F660",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T04:40:59.227Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 328,
-        "sil": 994,
-        "prevSil": 991,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 66,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-07T04:40:58.803Z"
-      }
-    },
-    {
-      "id": "01K1T35IC37B528A7BD47A811C",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-07T04:49:03.875Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 328,
-        "sil": 994,
-        "prevSil": 991,
-        "delta": 3,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 68,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-07T04:49:03.637Z"
-      }
-    },
-    {
-      "id": "01K1T390PKA764CEFE6F6FE7D5",
+      "id": "01K1UK1U4Q5FFB7A4FCA9E70E0",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-09-07T04:50:56.948Z",
+      "shippedAt": "2026-09-07T19:03:25.083Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
@@ -581,23 +143,19 @@
       }
     },
     {
-      "id": "01K1T4HG49D82D3DDD547C77DB",
+      "id": "01K1UNJU8Q618556C1D485BDF9",
       "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-09-07T05:13:03.370Z",
+      "from": "the-living-protocol",
+      "shippedAt": "2026-09-07T20:05:40.762Z",
       "payload": {
-        "session": "S294",
-        "project": "obelisk",
-        "headline": "A census scored 62 of 183 dispatch sites and printed unrecorded:0; a release gate read a self-report as verification",
-        "lessons": [
-          "Any census must count its subject TWICE — once with the recogniser it scores by, once with a wider/dumber rule — and report the difference as UNSCORED. Without it, sites-I-can-read and sites-that-exist are the same number by construction, and a new dialect shrinks the denominator while every printed total stays green.",
-          "A verdict section must declare HOW it knows: positive (observed the intended path working), negative (observed the wrong path refused), or self-report (asked the subject about itself, which is not a control). An enforcement claim proven only by a refusal cannot tell a working gate from a shut door — both refuse.",
-          "A defect state measuring two facts with two owners is clearable by neither. Split by owner, and check the registry vocabulary before inventing one.",
-          "Widening a detector without widening its guard analysis converts a silence defect into an over-firing defect — strictly worse, because the silent one gets believed and the noisy one gets switched off."
-        ],
-        "shipped": 4,
-        "tests": "5919/5920 pass, 1 skip",
-        "deploy": "staging + production on afb95f5296bb, both VERIFIED 12/12"
+        "repo": "the-living-protocol",
+        "session": "S332",
+        "headline": "Release truth is now source-bound from local evidence through exact-SHA production readback",
+        "shipped": 8,
+        "sil": 966,
+        "tests": "3333/3333 product assertions plus 231 script test files; lint, typecheck, build, contracts, RLS and security green",
+        "deploy": "production API and web serve application SHA cf687362; main 336f80b6 is an evidence-only tail; CI 34156224268, staging 34156224273, API 34156979163, web 34157257717, verification 34157573484 all green",
+        "pattern": "Treat application source and audit receipts as distinct release classes, require every blocking local gate to name a server-side enforcement locus, and bind suite receipts to the exact worktree rather than merely HEAD."
       }
     }
   ],

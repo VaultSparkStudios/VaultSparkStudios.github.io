@@ -8,13 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 991.7 | 5: 992.0 | 10: 991.0 | 25: 988.1 | all: 983.9
-  └ 3-session: Dev 100.0 | Align 98.3 | Momentum 99.0 | Engage 96.3 | Process 100.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~12 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-09-02 | Session 339 | Total: 993/1000 | Velocity: 2 | protocolVelocity: 0
-─────────────────────────────────────────────────────────────────────
+Sparkline (last 5 totals): ▆▇▇▇▇
+Avgs — 3: 983.3 | 5: 981.8 | 10: 987.2 | 25: 989.5 | all: 983.1
+History scope: 189 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: → | Protocol velocity: → | Debt: ↑
+Last session: 2026-09-08 | Session 346 | Total: 980/1000 | Velocity: 0 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2557,3 +2555,28 @@ Sparkline (last 5): █████ · 994, 977, 982, 986, 984
 **Brainstorm / committed to TASK_BOARD:**
 1. [S345][BUILD/P3] Model the 38 unmodeled generators a few at a time, at the moment someone knows their inputs, lowering the ratchet each time (38/67 today). The sweep makes the gap safe, not closed.
 2. [S345][ENG/P0] Founder runs the newsletter deploy — one command, denied twice to the agent, and the sole remaining doctor red.
+
+## 2026-09-08 — Session 346 (S346 recovery boundary) | Total: 980/1000 (v3.0) | Velocity: 0 | Debt: ↑
+
+Recovery assessment, not a claim that the interrupted arc completed. S345 remains historically scored at 984/1000.
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 96 | Freshness failures prevent reusing historical green claims. |
+| Creative Alignment | 97 | Brand and creative constraints preserved; no new visitor experience claimed. |
+| Momentum | 98 | Recovery separated from the continuing implementation mission. |
+| Engagement | 96 | No new engagement behavior shipped during startup recovery. |
+| Process Quality | 97 | Interrupted startup and a faulty lock require follow-through. |
+| Cross-Repo Coherence | 100 | No sibling tree edited. |
+| Security Posture | 99 | No credentials printed; identity holds preserved. |
+| Ecosystem Integration | 99 | Existing generators and verification contracts reused. |
+| Capital Efficiency | 100 | No new dependencies or paid calls. |
+| Automation Coverage | 98 | Full suite and Doctor rerun; newly discovered observation defects remain explicit. |
+
+**Top win:** recovered the actual startup-only boundary without replaying committed implementation.
+
+**Gap:** fresh verification disproved any assumption that the current checkout remained green.
+
+**Brainstorm committed to TASK_BOARD:** preserve verification-lock ownership; make Doctor retain unavailable scheduled-workflow evidence.
+
+**Intent outcome:** recovered startup records; the full arc remains active in S347.

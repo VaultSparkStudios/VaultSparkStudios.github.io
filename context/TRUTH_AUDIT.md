@@ -1,3 +1,7 @@
+## S346 recovery boundary (2026-09-08)
+
+The S345 implementation, SIL, closeout and later deployment receipts are committed. S346 left startup metadata only. The initial current suite was red on freshness, despite historical 390/390 evidence. Doctor blockingFailing 0 is real, but does not imply all advisory probes passed. No corrupted JSON was found. See the recovery ledger for final verification. The startup queue showing zero tasks is also untrusted: its table-only parser does not read this board's bullet tasks.
+
 ## S345 A Repair Tool That Reported Clean Over a Subset It Could Not See (2026-09-07)
 
 | Dimension | Score | Evidence |
@@ -1105,3 +1109,5 @@ Public-safe summary:
 - **A scheduled run going green was nearly reported as proof it publishes.** The 06:44 cron succeeded only because the cadence postcondition was already satisfied by a dispatched edition; its own `prepare` step failed. The distinction was found by reading the step outputs rather than the run status.
 - **A self-test asserting correct behaviour had been failing undetected.** `publishedSlugs({windowDays:0})` returned a non-empty set from the moment the Desk published, and nothing reported it because the test was in no runner. Now wired.
 - **Status:** green. Every correction above is recorded in place with its evidence, and no claim in this session's public-facing surfaces depends on a statement later found false.
+
+S346 final local recovery verification (2026-09-09): full build suite 390/390, mobile runtime 215/215, reviewed theme captures 42/42, and Doctor blockingFailing 0 (two advisory failures). The recovery checkpoint and S347 full arc remain active. Hosted Community accessibility is a distinct known failure; no new production deployment is claimed.

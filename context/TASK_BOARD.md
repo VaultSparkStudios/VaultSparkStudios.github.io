@@ -18,6 +18,12 @@ Previous: 2026-09-02 (S336 found the deploy path had been refusing since S334 �
 
 Previous: 2026-09-01 (S335 closed a live member-write privilege escalation with a column-scoped grant migration and an atomic gift RPC, discovered that every anonymous public member surface had been rendering empty for want of a read policy and fixed it with a definer view, made the stub deletion stick by turning the generator into a court, deduplicated 16 build invocations, merged four redundant routes into their canonical pages, launched Season 1, and added /how-we-build/.)
 
+## S346 recovery boundary
+
+Startup-only interruption recovered; the full arc continues after its separate checkpoint.
+
+- [ ] **[SIL][S346][BUILD/P1] Preserve the active verification lock during build-runner self-tests and diagnostics.** A nested read-only invocation currently overwrites and deletes its parent lock. Prove lock preservation with a sentinel and ownership tests.
+- [ ] **[SIL][S346][OBS/P1] Preserve scheduled-workflow observation failures in Doctor.** Report process errors and incomplete coverage explicitly; never let malformed or unavailable evidence read as measured health.
 ## Now (next session ready)
 
 - [x] **[S345][DEPLOY/P0] Full production deploy, both lanes, founder-authorised.** **DONE S345.** Staging refreshed first per CANON-007 by the operator overlay (403 overlays, 26 safe removals, identity untouched, exact-byte verified), then promoted through the SCOPED path -- `check-promotion-scope` reported `promotable=true - scoped-disjoint` against BOTH active hold reasons (`real-provider-e2e-pending`, `supabase-control-plane-partial`), and the identity hold was never cleared. Content lane: `pages-deploy` run `34153075898` green; **production serves HEAD `998243a3f76643c70ece998f7f75c748aa0d1bf2` exactly**, not a baseline stamp. Worker lane second (it deadlocks on `deploy-currency-live` otherwise): run `34153477094` passed the canonical release ceremony, deployed, and cleared the post-deploy liveness gate with no rollback. Verified live: strict CSP with the sha allowlist, HSTS preload, TT report-only, and `/ /news/ /status/ /membership/ /evidence/` all 200. `deploy-currency` now reads `production current - 0 commit(s) behind`. Precondition the content lane needs and CI cannot produce: `build-worker-route-provenance --probe` from a residential vantage, matched 7/7.
@@ -207,7 +213,6 @@ Previous: 2026-09-01 (S335 closed a live member-write privilege escalation with 
 - [x] **[S328][INFRA/P2] Fix the play-next suppressor that could never fire.** ✅ It was pinned to `'2026-06-18'` while the live epoch is `'2026-07-02'` — the exact value `check-play-next-impression-contract`'s self-test uses as its wrong-epoch negative control. Both now read `scripts/lib/cta-contract-registry.mjs`. Latent, not user-visible.
 - [ ] **[S328][SIL:1][INFRA/P1] Declare the remaining 17 byte-checked `.cache/` artifacts in the evidence graph.** `cta-readiness` is the precedent, not the cure. Enumerating `build:check:steps` for `--check` gates whose source touches `.cache/` returns 18; one is now modeled. Either declare each remaining artifact or mark it explicitly exempt **in its own source** so the exemption travels with the script rather than rotting in a list. Until then the cascade gate remains blind to that directory for 17 artifacts.
 - [x] **[S328→S332][SIL:1][OBS/P2] Surface evidence age on the CTA readiness row.** ✅ Readiness now distinguishes current/aging/stale/absent evidence and gives stale evidence its own explanation; `/status/` derives the public age tile from committed `asOf`. Wall-clock fields remain excluded from byte comparison while `observedThrough` stays covered. Self-test 15 checks; deterministic check current.
-
 ## Human Action Required
 
 - [ ] **[S330][AUTH/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony.** `obelisk.identity.verify` is missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; release dependency `obelisk-staging-registration` is also missing. After registration/configuration, run `node scripts/verify-provider-journey.mjs --live`, complete the hardware-key step, and regenerate identity/release receipts. The S332 public release is live and passes 15/15 attention cases; this task remains the separate auth-surface hold and must not be inferred from deployment success.
@@ -262,18 +267,6 @@ Previous: 2026-09-01 (S335 closed a live member-write privilege escalation with 
 - [x] **[S319][AUTH/P0] Diagnosed the production /login outage to one line.** Cloudflare 1101 from an unhandled throw; upstream discovery serves HTML. Guard committed, Ark cargo shipped. Deployment blocked — see Now.
 - [x] **[S319][EFF/P1] Modeling `index.html` in the evidence graph exposed a real strand:** `refresh-live-data` updates the Desk feeds the homepage renders but never re-rendered the homepage.
 - [x] **[S319][HYGIENE/P1] Removed `recover-news-desk.mjs`.** The review-held recovery policy it served was retired by founder decision; the orphan gate caught it immediately.
-## Done (Session 318 — release-safe truth surfaces)
-
-- [x] **[S318][RELEASE/P0] One production gate for local and CI paths.** `deploy-worker.mjs` now requires an explicit production confirmation and internally runs the promotion gate plus fresh ceremony; a flag alone is never authority. The ceremony-local Doctor classification closes the pre-deploy circularity without weakening the ordinary Doctor.
-- [x] **[S318][RELEASE/P0] Capability-slice content promotion.** Changed hash-named callers are bound to their literal `/v/*` routes and require fresh production provenance. S317 Desk mutation shapes are pinned. Self-tests: 7/7 capability slice, 4/4 deploy entrypoint, 14/14 promotion gate, 5/5 content preflight.
-- [x] **[S318][SECURITY/P0] Push subscription storage bounded and validated.** Same-origin Origin, HTTPS vendor allowlist, exact p256dh/auth shapes, bounded body, per-IP and global caps, dedupe/key refresh, corrupt-row quarantine, active-dispatch validation, and fan-out cap. Worker units 48/48.
-- [x] **[S318][MOBILE/P0] Blocking runtime mobile contract.** Rank Projector containment, shared target sizing, 47 real routes × 5 viewports, zero P0/P1, 235/235 runtime checks. Touch checks fail by default and CI requires completion.
-- [x] **[S318][CANON-053/P0] Source-bound rendered proof.** 63/63 captures manually inspected for membership, membership-value, and vaultsparked across seven themes and 360/390/430 widths; receipt binds source, route, viewport, theme, state, and screenshot hash.
-- [x] **[S318][AI/P1] Coherent crawler policy.** Training opt-out remains explicit while OAI search/user retrieval can reach the advertised public discovery corpus; the validator parses every named group.
-- [x] **[S318][NEWS/P1] Freshness honesty and fact-complete claims.** Overdue Desk copy renders “periodic,” a review-held recovery packet exists, and the agent claim ledger contains all 21 sourced facts with stable anchors/receipts (37 total rows).
-- [x] **[S318][OBS/P1] Receipt-bound status projection.** Legacy SIL/test aliases removed, public status fields derive from current receipts, and scheduled unknown/stale CI poisons green.
-- [x] **[S318][STAGING/P0] Exact committed candidate deployed and verified on Hetzner.** Pushed candidate commit `29be0bd8d`; receipt `8aa1f9f42262b96d5e8ea5b4`; 5,007/5,007 files; candidate/deployed SHA and artifact roots match; staging browser 6/6; chain depth 39; rollback `20260817172802`.
-- [x] **[S318][RELEASE/P0] Production hold preserved.** Independent app-release verdict is NO-GO and the authoritative ceremony is 7/8. No production deploy command ran; `real-provider-e2e-pending` remains the only rejected ceremony step.
 ## Previous Now (Session 314 — audit saturated and live)
 
 - [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
@@ -329,7 +322,6 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [x] **[DEPTH/P3] Atlas v2 — DONE (S208).** Per-project cover thumbnails on every row (6 bespoke covers via image-set + 5 accent-initial fallbacks). The "moving this week" live strip is **honestly deferred** — no per-project activity data source exists; building it would be a lying surface (CANON-031).
 - [ ] **[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 ## Resolved this session (carries from S188 Now)
-
 ## Historical Runway (Session 189 — carries folded into S190 Now)
 
 - [ ] **[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
@@ -358,14 +350,11 @@ Verification, S281 (do not re-derive):
 - [x] **[SIL] CLOSEOUT-BUILD-ORDER-MODULE — DONE, phantom carry closed S251.** `scripts/lib/build-order.mjs` exists (`DERIVED_BUILD_ORDER` + `runDerivedBuilds()`), imported directly by `scripts/closeout-autopilot.mjs`.
 ## Historical Runway (Session 182)
 ## Historical Runway (Session 177)
-
 ## Historical Runway (Session 176 additions)
-
 ## Previous (historical)
 
 - [ ] **[S97→S98][FOLLOWUP carry]** IGNIS + model fallback, exit-intent timing, Studio Milestones render, changelog live-feed, rank strip highlight.
 ## Previous (historical)
-
 ## Previous (historical)
 
 - [x] **[SIL] Membership rank strip — logged-in tier highlight** — DONE S94: `membership-live-tier.js` queries Supabase session, gets vault_points + plan, highlights active tier in strip with gold glow + scroll-into-view + haptic event.
@@ -394,7 +383,6 @@ Verification, S281 (do not re-derive):
 
 ---
 ## Previous (historical)
-
 
 - [x] **[SIL:2⛔] Theme picker compact mode at 641–980px** — added `.theme-picker-label { display:none }` + `.theme-picker-arrow { display:none }` to `@media (max-width:980px)` block in `assets/style.css` (S57)
 - [x] **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — created `.github/workflows/cloudflare-worker-deploy.yml`; triggers on `cloudflare/**` changes on main push; uses `npx wrangler@3 deploy --env production` with `CF_WORKER_API_TOKEN` secret (S57)

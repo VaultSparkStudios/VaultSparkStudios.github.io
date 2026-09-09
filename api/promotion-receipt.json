@@ -4,12 +4,12 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "38dd4b18ac14e0a5a83da50d6cca1f0205c389cd",
+    "sha": "58e13798382fa53c230657fd307b1f3be2e8f9aa",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "d306c26174523e6409ab138cbce8952b1831493f",
+    "sha": "998243a3f76643c70ece998f7f75c748aa0d1bf2",
     "reachable": true,
     "reconciliation": "behind"
   },
@@ -22,26 +22,69 @@
     "headerName": "content-security-policy"
   },
   "browser": {
-    "captured": false,
-    "target": null,
-    "consoleErrors": null,
-    "signalCardinality": null,
-    "signalEndpoints": [],
-    "routes": []
+    "captured": true,
+    "target": "https://vaultsparkstudios-website.pages.dev",
+    "consoleErrors": 7,
+    "signalCardinality": 6,
+    "signalEndpoints": [
+      "api/ecosystem-state.json",
+      "api/founder-presence.json",
+      "api/ignis-conduit.json",
+      "api/public-intelligence.json",
+      "api/rank-climbers.json",
+      "v/rum"
+    ],
+    "routes": [
+      {
+        "route": "/",
+        "target": "https://vaultsparkstudios-website.pages.dev/",
+        "captured": true,
+        "consoleErrors": 5,
+        "signalCardinality": 5,
+        "signalEndpoints": [
+          "api/founder-presence.json",
+          "api/ignis-conduit.json",
+          "api/public-intelligence.json",
+          "api/rank-climbers.json",
+          "v/rum"
+        ]
+      },
+      {
+        "route": "/vault-member/",
+        "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
+        "captured": true,
+        "consoleErrors": 1,
+        "signalCardinality": 0,
+        "signalEndpoints": []
+      },
+      {
+        "route": "/games/franchise-architect/",
+        "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
+        "captured": true,
+        "consoleErrors": 1,
+        "signalCardinality": 3,
+        "signalEndpoints": [
+          "api/ecosystem-state.json",
+          "api/founder-presence.json",
+          "api/public-intelligence.json"
+        ]
+      }
+    ]
   },
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves d306c261 — OLDER than promoted 38dd4b18 — stranded/stale deploy"
+    "production origin serves 998243a3 — OLDER than promoted 58e13798 — stranded/stale deploy",
+    "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-09-02T00:32:26.893Z",
+  "generatedAt": "2026-09-09T04:31:16.773Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-02T00:32:26.893Z",
-    "currentBehindStreak": 2,
+    "lastStrandedAt": "2026-09-09T04:31:16.773Z",
+    "currentBehindStreak": 4,
     "strandedAlert": true
   }
 }

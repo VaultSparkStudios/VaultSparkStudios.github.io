@@ -1656,3 +1656,7 @@ row now says exactly that.
 **Rule:** re-probe a carried blocker before repeating it. Carrying a stale sentence forward
 spends founder attention on a problem that may have already moved, and — worse — makes the
 board's other claims harder to trust.
+
+## D-S346.1 — S346 recovery boundary (2026-09-08)
+
+Classify the interruption as startup-only from the lock, full diff, and committed history. Preserve S345 historical records and all open product work. Record new verification results independently. Reserve S347 for the full continuation arc so the recovery commit forms a distinct boundary. No identity policy, public promise, or membership-tier decision is changed.

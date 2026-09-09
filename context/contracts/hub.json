@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-07T19:02:19.301Z",
+  "generatedAt": "2026-09-09T04:53:54.131Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,16 +22,14 @@
     }
   },
   "pulse": {
-    "currentSession": 345,
-    "lastUpdated": "2026-09-07",
-    "currentFocus": "S345 closed a five-session carry at the root: resync-derived.mjs, the tool that repairs derived artifacts after a rebase, reported clean over a subset it could not see. Its evidence graph models 29 of 67 byte-checked generators, so it printed \"17 artifacts rebuilt + staged\" while CI failed ten minutes later on two artifacts outside the graph -- twice, in S340 and S341, both hand-fixed, both still unmodeled. Rather than guess the missing nodes sources (which the ratchet correctly forbids), every success exit now runs the unmodeled generators own --check: a measurement rather than a prediction. Also made check-scheduled-workflow-staleness declare which verdicts it actually exercised, so a fixture-only silent: 0 can no longer read as a verified all-clear. Next: the founder runs the one-command newsletter deploy, and picks the Desk cadence lever.",
-    "nextMilestone": "The member newsletter sends for the first time -- the function deployed, the shared secret set on both sides, and a founder-observed dispatch confirming delivery.",
+    "currentSession": 346,
+    "lastUpdated": "2026-09-09",
+    "currentFocus": "S346 recovery verified locally: 390 build checks, 215 mobile checks, and 42 reviewed theme captures. Create the recovery checkpoint, then continue the S347 full arc.",
+    "nextMilestone": "Checkpoint the verified recovery and complete the S347 audit, implementation, staging verification, and closeout.",
     "blockers": [
-      "[ENG/P0] The Monthly Member Newsletter has never sent. Re-probed S345: both faults still live (function NOT DEPLOYED against a project-scoped 200 listing 29 functions; NEWSLETTER_SECRET absent from Actions). The repair is written and self-tested 5/5 in scripts/deploy-member-newsletter.mjs and the credential path is open -- execution was denied by the Claude Code sandbox permission classifier in both S344 and S345. Founder: run node scripts/deploy-member-newsletter.mjs --deploy, then --secret, then --verify (verify stops at the 404->401 boundary and mails nobody). This is also the sole remaining doctor red.",
-      "[DESK/P1] The Desk cadence lever is still the founders pick. The S344 sentence has EXPIRED: freshness now reads daily, latest 2026-09-07, age 0d, with 2 editions published. But 2 against a 4-slot/day promise is a partial recovery, and the queue-width constraint behind the 3-day gap is UNMEASURED locally -- the radar cache is CI-only.",
-      "[QA/P0] The Phase 0 gate is a human walkthrough and has still not been run.",
-      "[SEC/P0] The gateway Supabase service-role slot remains scoped to a different project (ckwtolofoqzrqouqkmvs vs this site fjnpzjjyhnpmunfoycrp) while check-secrets reports READY 2/2. Fix belongs in studio-ops via the S344 Ark cargo (CANON-018).",
-      "[AUTH/P0] The Obelisk provider journey remains unobserved. Use --watch, not --live."
+      "Community accessibility CI reports an empty member link; correction and fresh hosted evidence remain required before release.",
+      "Identity migration and real provider-journey evidence remain incomplete; the existing identity release hold remains in place.",
+      "Human signup acceptance remains unobserved. Editorial cadence remains an existing owner decision."
     ],
     "queues": {
       "now": [

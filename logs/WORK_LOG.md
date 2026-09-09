@@ -1330,3 +1330,11 @@ because the printed output contradicted the code — luck, not method, and the s
 defect I spent the session fixing: a true-looking result whose scope nobody stated.
 
 **SIL:** 984/1000 (v3.0) · velocity −2 · debt ↓ · doctor blockingFailing 0.
+
+## Session 346 — 2026-09-08 — S346 recovery boundary
+
+S346 stopped during startup. S345 implementation and closeout are committed in 776819cdb; deployment verification followed in 5a73b4b12. Initial uncommitted residue was startup metadata, with no application edits. The requested full arc remains the continuation objective.
+
+Recovery inspected the full diff and the closeout surfaces, validated all six initially changed JSON files and the user configuration, and found no confirmed debris. Fresh suite failures were preserved: stale startup context (step 61) and launch-age drift (step 140). Startup smoke passes 60/60 after regeneration. Doctor exits 0 with blockingFailing 0; advisory failures and unavailable scheduled evidence remain explicitly distinct from passing checks. Final verification and checkpoint evidence will be appended to the recovery ledger.
+
+S346 final local recovery verification (2026-09-09): full build suite 390/390, mobile runtime 215/215, reviewed theme captures 42/42, and Doctor blockingFailing 0 (two advisory failures). The recovery checkpoint and S347 full arc remain active. Hosted Community accessibility is a distinct known failure; no new production deployment is claimed.
