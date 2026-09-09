@@ -67,16 +67,16 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 272,000 tok  ·  codex  ·  no ledger/turn/transcript    ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   390/390 passing  ·  2026-09-09                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         390/390 passing (2026-09-09)                   ║
+║  ⚠  Tests         390/390 passing (2026-09-09) · UNVERIFIED (no  ║
 ║  ⛔  Velocity      0 →  ·  Debt: ↑                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
