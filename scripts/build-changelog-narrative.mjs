@@ -2,7 +2,8 @@
 /* build-changelog-narrative.mjs — S205 #18
    Transforms api/commit-map.json entries into SOUL-voice plain-English
    sentences for the public changelog. L1: regex + move-type rules only
-   (no API cost). Output: api/changelog-narrative.json
+   (no API cost). Outputs: api/changelog-narrative.json plus the compact
+   api/recent-ships.json compatibility projection consumed by the hero ticker.
 
    Usage:
      node scripts/build-changelog-narrative.mjs
@@ -16,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const COMMIT_MAP = join(ROOT, 'api', 'commit-map.json');
 const OUT = join(ROOT, 'api', 'changelog-narrative.json');
+const RECENT_SHIPS_OUT = join(ROOT, 'api', 'recent-ships.json');
 
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
@@ -122,6 +124,23 @@ function isoWeek(ts) {
   } catch (_) { return 'unknown'; }
 }
 
+function recentShipsFor(entries) {
+  return {
+    schemaVersion: '1.0',
+    generatedAt: new Date().toISOString().slice(0, 10),
+    generatedBy: 'scripts/build-changelog-narrative.mjs',
+    source: 'api/changelog-narrative.json',
+    ships: entries.slice(0, 12).map(function (entry) {
+      return {
+        sha: entry.sha,
+        date: entry.ts,
+        title: entry.sentence,
+        scope: entry.scope,
+      };
+    }),
+  };
+}
+
 // ── Self-test ─────────────────────────────────────────────────────────────────
 function selfTest() {
   var cases = [
@@ -190,6 +209,7 @@ if (!SELF_TEST && RUN_DIRECT) {
     entries,
     byWeek,
   };
+  const recentShips = recentShipsFor(entries);
 
   if (CHECK) {
     if (!existsSync(OUT)) {
@@ -201,9 +221,19 @@ if (!SELF_TEST && RUN_DIRECT) {
       console.error('build-changelog-narrative --check: drift (' + current.totalEntries + ' → ' + result.totalEntries + ')');
       process.exit(1);
     }
+    if (!existsSync(RECENT_SHIPS_OUT)) {
+      console.error('build-changelog-narrative --check: missing api/recent-ships.json');
+      process.exit(1);
+    }
+    const currentRecentShips = JSON.parse(readFileSync(RECENT_SHIPS_OUT, 'utf8'));
+    if (JSON.stringify(currentRecentShips) !== JSON.stringify(recentShips)) {
+      console.error('build-changelog-narrative --check: recent-ships projection drift');
+      process.exit(1);
+    }
     console.log('build-changelog-narrative --check: ok (' + result.totalEntries + ' narratives)');
   } else {
     writeFileSync(OUT, JSON.stringify(result, null, 2) + '\n');
-    console.log('build-changelog-narrative → api/changelog-narrative.json (' + result.totalEntries + ' entries)');
+    writeFileSync(RECENT_SHIPS_OUT, JSON.stringify(recentShips, null, 2) + '\n');
+    console.log('build-changelog-narrative → api/changelog-narrative.json + api/recent-ships.json (' + result.totalEntries + ' entries)');
   }
 }

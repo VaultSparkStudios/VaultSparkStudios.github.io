@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   479/479 passing  ·  2026-09-10                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         479/479 passing (2026-09-10)                   ║
+║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
 ║  ✓  Velocity      11 →  ·  Debt: ↑                               ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
