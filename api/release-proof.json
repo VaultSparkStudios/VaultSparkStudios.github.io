@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T18:41:16.860Z",
+  "generatedAt": "2026-09-10T19:35:49.105Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -12,7 +12,12 @@
     "status": "yellow",
     "routeCount": 3,
     "reachable": true,
-    "reasonCodes": [],
+    "reasonCodes": [
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
+    ],
     "candidateReady": true,
     "candidateFindings": [],
     "candidateBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
@@ -63,13 +68,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 7,
-    "ageHours": 0.7,
-    "observedAt": "2026-09-10T18:38:49.982Z",
+    "commitsBehind": 18,
+    "ageHours": 1.8,
+    "observedAt": "2026-09-10T19:35:49.105Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-10T18:38:49.982Z",
+      "observedAt": "2026-09-10T19:35:49.105Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
