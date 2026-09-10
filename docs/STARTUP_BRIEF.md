@@ -66,10 +66,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   26% used                          ║
-║     71,424 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~57,152 tok/turn  ·  cache 50%  ·  compact distant           ║
-║     Verdict: CONTINUE                                            ║
+║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗

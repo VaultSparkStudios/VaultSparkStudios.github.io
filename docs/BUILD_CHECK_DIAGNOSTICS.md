@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-10T06:00:55.041Z
-Receipt: `92a931a8dc0f00f53b2158ef` · coverage 73/479 from step 1
+Generated: 2026-09-10T07:08:44.412Z
+Receipt: `b20b5bbe0f1a4f1a1f686d5e` · coverage 479/479 from step 1
 
-Latest: **72/73** passed · failed 1 · total 20.1s
-Concentration: **37.6%** in step 61 · ratchet clear (>30% and ≥45s)
+Latest: **479/479** passed · failed 0 · total 374.8s
+Concentration: **14.4%** in step 142 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 61 | 7.6s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 29 | 1.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 58 | 0.9s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 66 | 0.7s | 0 | `node scripts/build-shell-assets.mjs --check` |
-| 65 | 0.6s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
-| 41 | 0.5s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
-| 23 | 0.4s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 40 | 0.4s | 0 | `node scripts/build-oracle-velocity-public.mjs --self-test` |
-| 42 | 0.2s | 0 | `node scripts/generate-build-sha.mjs --self-test` |
-| 63 | 0.2s | 0 | `node scripts/check-lighthouse-route-tiers.mjs` |
+| 142 | 53.9s | 0 | `node scripts/check-proof-surface.mjs` |
+| 61 | 20.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 98 | 14.7s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 135 | 14.1s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 368 | 14.0s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
+| 95 | 11.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 100 | 8.1s | 0 | `node scripts/validate-module-imports.mjs` |
+| 298 | 7.3s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 379 | 6.1s | 0 | `node scripts/check-build-gate-reachability.mjs` |
+| 247 | 5.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
 
 ## Failures
 
-- Step 73: `node scripts/build-release-proof.mjs --check` exited 1
+- None.

@@ -69,9 +69,17 @@ async function collectDiagnostics(page, viewport) {
       }
       return false;
     }
+    function isDecorativeSubtree(el) {
+      return Boolean(el.closest('[aria-hidden="true"]'));
+    }
     const overflowing = [];
     const all = document.body.querySelectorAll('*');
     for (const el of all) {
+      // Decorative atmosphere is deliberately allowed to bleed beyond the
+      // viewport. It is excluded from the accessibility tree and cannot hide
+      // an interactive/content overflow because only an explicitly
+      // aria-hidden subtree qualifies.
+      if (isDecorativeSubtree(el)) continue;
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
       if (r.right > innerWidth + 1) {
@@ -189,6 +197,7 @@ async function collectDiagnostics(page, viewport) {
     // 6) fixed-width elements (common mobile breaker) — skip if clipped
     const fixedWidth = [];
     for (const el of all) {
+      if (isDecorativeSubtree(el)) continue;
       const cs = getComputedStyle(el);
       const w = cs.width;
       if (w && w.endsWith('px')) {
