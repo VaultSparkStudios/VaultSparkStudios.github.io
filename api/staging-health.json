@@ -1,20 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T07:38:16.739Z",
-  "candidateReady": false,
-  "candidateFindings": [
-    "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch",
-    "/:localShellParity"
-  ],
-  "candidateBuildSha": "fe9b7436e2f4eefbea449c2eb85221b335fc76c4",
+  "generatedAt": "2026-09-10T07:46:40.032Z",
+  "candidateReady": true,
+  "candidateFindings": [],
+  "candidateBuildSha": "6ed6b7fb9c20ad48e89a5527a3db99d40e052854",
   "stagingBuildSha": "6ed6b7fb9c20ad48e89a5527a3db99d40e052854",
   "artifactManifest": {
-    "candidateRoot": "35e2736ebbabe1f597792b0af8331db0ab0e0e18a3cc1ee7a2360abf6267e735",
+    "candidateRoot": "d32192bdc85561231d9233468d31cdbbe5b4b1b414cb1ead78f004393640f0ce",
     "candidateLeafCount": 29,
     "stagingRoot": "d32192bdc85561231d9233468d31cdbbe5b4b1b414cb1ead78f004393640f0ce",
     "stagingLeafCount": 29,
-    "matched": false
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -22,13 +18,13 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "uncomparable",
-    "productionRoutes": null,
+    "state": "matched",
+    "productionRoutes": 146,
     "stagingRoutes": 146,
     "missingOnStaging": [],
-    "missingOnStagingCount": null,
+    "missingOnStagingCount": 0,
     "aheadOnStaging": [],
-    "aheadOnStagingCount": null,
+    "aheadOnStagingCount": 0,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -36,12 +32,24 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
+      "statusParity": true,
       "shellParity": false,
-      "prodShell": [],
+      "prodShell": [
+        "assets/ambient-core.shell-a4349880f3.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/home-idle-loader.shell-6f2bb4fa73.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-79b001d0ae.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "stagingShell": [
         "assets/ambient-core.shell-a4349880f3.js",
         "assets/ambient-feature.shell-ca3b329506.js",
@@ -55,12 +63,12 @@
         "assets/style.shell-79b001d0ae.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "headerParity": false,
+      "headerParity": true,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -73,10 +81,7 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
-        "shell-mismatch",
-        "header-mismatch"
+        "shell-mismatch"
       ]
     },
     {
