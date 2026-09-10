@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T22:24:52.676Z",
+  "generatedAt": "2026-09-10T05:17:31.175Z",
   "publicSafe": true,
   "origin": "https://website.staging.vaultsparkstudios.com",
   "suite": "tests/staging-release.spec.js",
-  "state": "passed",
+  "state": "rejected",
   "expectedTests": 6,
   "observedTests": 6,
   "executedTests": 3,
-  "passed": 3,
-  "failed": 0,
+  "passed": 2,
+  "failed": 1,
   "flaky": 0,
   "skipped": 0,
   "held": 3,
@@ -20,12 +20,30 @@
     "identity",
     "worker:identity"
   ],
-  "reasons": [],
-  "failures": [],
+  "reasons": [
+    "failed-1"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "webkit",
+      "message": "Error: light theme contrast violations\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -   1\n+ Received  + 128\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds\",\n+     \"help\": \"Elements must meet minimum color contrast ratio thresholds\",\n+     \"helpUrl\": \"[URL]\",\n+     \"id\": \"color-contrast\",\n+     \"impact\": \"serious\",\n+     \"nodes\": Array [\n+       Object {\n+ ",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    }
+  ],
   "failureEvidence": {
-    "projects": [],
-    "tests": [],
-    "files": [],
+    "projects": [
+      "webkit"
+    ],
+    "tests": [
+      "mobile drawer and every theme are readable"
+    ],
+    "files": [
+      "tests/staging-release.spec.js"
+    ],
     "truncated": false
   }
 }
