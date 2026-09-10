@@ -1,25 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T05:11:29.847Z",
+  "generatedAt": "2026-09-10T05:36:44.228Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch",
-    "staging-artifact-leaf-count-mismatch",
-    "/:stagingStatus",
-    "/:stagingCanonicalCsp",
-    "/:localShellParity",
-    "/studio-pulse/:stagingStatus",
-    "/studio-pulse/:stagingCanonicalCsp",
-    "/studio-pulse/:localShellParity"
+    "staging-artifact-root-mismatch"
   ],
   "candidateBuildSha": "fe9b7436e2f4eefbea449c2eb85221b335fc76c4",
-  "stagingBuildSha": null,
+  "stagingBuildSha": "6ed6b7fb9c20ad48e89a5527a3db99d40e052854",
   "artifactManifest": {
     "candidateRoot": "35e2736ebbabe1f597792b0af8331db0ab0e0e18a3cc1ee7a2360abf6267e735",
     "candidateLeafCount": 29,
-    "stagingRoot": null,
-    "stagingLeafCount": null,
+    "stagingRoot": "7d8d84b1a0e0c3ca0bb38a67c431565bfdb4adb0a50c59916cf4703e9de4d643",
+    "stagingLeafCount": 29,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -30,7 +23,7 @@
   "surfaceParity": {
     "state": "uncomparable",
     "productionRoutes": null,
-    "stagingRoutes": null,
+    "stagingRoutes": 146,
     "missingOnStaging": [],
     "missingOnStagingCount": null,
     "aheadOnStaging": [],
@@ -43,12 +36,24 @@
     {
       "route": "/",
       "prodStatus": 403,
-      "stagingStatus": 404,
+      "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": false,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/ambient-core.shell-a4349880f3.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/home-idle-loader.shell-6f2bb4fa73.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-79b001d0ae.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "headerParity": false,
       "prodHeaders": {
         "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
@@ -63,22 +68,23 @@
         "referrer": "strict-origin-when-cross-origin"
       },
       "stagingStaticCspSafe": true,
-      "stagingCspMode": "static",
-      "stagingCanonicalCsp": false,
+      "stagingCspMode": "dynamic-worker",
+      "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
         "status-mismatch",
-        "header-mismatch",
-        "staging-canonical-csp-drift"
+        "prod-forbidden",
+        "shell-mismatch",
+        "header-mismatch"
       ]
     },
     {
       "route": "/studio-pulse/",
       "prodStatus": 200,
-      "stagingStatus": 403,
+      "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
-      "shellParity": false,
+      "statusParity": true,
+      "shellParity": true,
       "prodShell": [
         "assets/ambient-core.shell-a4349880f3.js",
         "assets/ambient-feature.shell-ca3b329506.js",
@@ -88,7 +94,15 @@
         "assets/style.shell-79b001d0ae.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/ambient-core.shell-a4349880f3.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/style.shell-79b001d0ae.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "headerParity": true,
       "prodHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -103,14 +117,10 @@
         "referrer": "strict-origin-when-cross-origin"
       },
       "stagingStaticCspSafe": true,
-      "stagingCspMode": "static",
-      "stagingCanonicalCsp": false,
+      "stagingCspMode": "dynamic-worker",
+      "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "status-mismatch",
-        "shell-mismatch",
-        "staging-canonical-csp-drift"
-      ]
+      "reasonCodes": []
     },
     {
       "route": "/membership/",
