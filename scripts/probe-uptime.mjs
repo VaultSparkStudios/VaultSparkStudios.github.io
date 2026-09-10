@@ -786,9 +786,15 @@ const summary = summarize(routeResults, liveness, workerIngest, rumIngestPost, l
 for (const r of routeResults) {
   console.log(`  ${r.ok ? '✓' : '✗'} content ${r.route} ${r.status} ${r.ms}ms  ·  edge ${r.edge.status} (${r.edge.note.split(' ')[0]})`);
 }
-console.log(`  ${liveness.ok ? '✓' : '✗'} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms`);
-console.log(`  ${workerIngest.ok ? '✓' : '✗'} worker-ingest ${workerIngest.endpoint} ${workerIngest.status} ${workerIngest.ms}ms${workerIngest.ok ? '' : '  ← wrong/stale worker build on the route (S275 incident shape)'}`);
-console.log(`  ${rumIngestPost.ok ? '✓' : '✗'} rum-ingest ${rumIngestPost.endpoint} ${rumIngestPost.status} ${rumIngestPost.ms}ms${rumIngestPost.ok ? (rumIngestPost.contractLive ? '' : '  ← no-write contract not live yet (informational)') : `  ← ${rumIngestPost.error || 'real ingest method is not accepting beacons (S319 incident shape)'}`}`);
+// S349: an unobservable leg is rendered as `?`, never `✗`. The first CI run after
+// the verdict was fixed still printed "✗ worker-ingest ... ← wrong/stale worker
+// build on the route (S275 incident shape)" for a leg that was merely challenged —
+// the machine verdict was right and the line a human reads was still an alarm.
+const legMark = (leg) => (leg.observable === false ? '?' : leg.ok ? '✓' : '✗');
+const blindNote = '  ← edge-challenged from CI (cannot observe; not an outage and not a pass)';
+console.log(`  ${legMark(liveness)} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms${liveness.observable === false ? blindNote : ''}`);
+console.log(`  ${legMark(workerIngest)} worker-ingest ${workerIngest.endpoint} ${workerIngest.status} ${workerIngest.ms}ms${workerIngest.observable === false ? blindNote : workerIngest.ok ? '' : '  ← wrong/stale worker build on the route (S275 incident shape)'}`);
+console.log(`  ${legMark(rumIngestPost)} rum-ingest ${rumIngestPost.endpoint} ${rumIngestPost.status} ${rumIngestPost.ms}ms${rumIngestPost.observable === false ? blindNote : rumIngestPost.ok ? (rumIngestPost.contractLive ? '' : '  ← no-write contract not live yet (informational)') : `  ← ${rumIngestPost.error || 'real ingest method is not accepting beacons (S319 incident shape)'}`}`);
 console.log(`  ${login.ok ? '✓' : '✗'} auth-entry ${login.endpoint} ${login.status} ${login.ms}ms  ← ${login.note || login.error || ''}`);
 
 // History: append a compact row so /status/ can show a real availability number.
@@ -868,5 +874,9 @@ if (due.length) {
 // `up` is the only green state. `degraded`/`edge-degraded`/`down` are all real
 // failures (content route or prod-chain). The bot-challenge can never reach here
 // because it is informational and excluded from `overall`.
-process.exit(summary.overall === 'up' ? 0 : 1);
+// S349: `edge-unobservable` exits 0. It is not a failure — it is the absence of an
+// observation, and exiting 1 on it would make every CI run red for a condition we
+// have already decided is not an incident. That is how a probe gets muted, and a
+// muted probe is exactly what let the original defect run for 604 samples.
+process.exit(summary.overall === 'up' || summary.overall === 'edge-unobservable' ? 0 : 1);
 }
