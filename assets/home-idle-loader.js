@@ -21,9 +21,9 @@
     '/assets/recent-ships.js',
     '/assets/ignis-tour.js',
     '/assets/vault-resonance.js',
-    // Version the independently cached module: its edge TTL is seven days and
-    // a successful zone purge is not proof that every cache layer evicted it.
-    '/assets/vault-pulse.js?v=2',
+    // build-shell-assets rewrites this child to its immutable fingerprint before
+    // hashing the parent loader, so both files can ride the content lane together.
+    '/assets/vault-pulse.js',
     // S228: moved from defer → idle (below-fold, non-critical for initial paint)
     '/assets/trust-depth.js',
     '/assets/related-content.js',

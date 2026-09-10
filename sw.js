@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-8764dfdf81faee70';
+const CACHE_NAME = 'vaultspark-shell-7ff9ce06ba26a69e';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -18,7 +18,8 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/nav-sheet.shell-d6938be4eb.js',
   '/assets/supabase-client.shell-c0eeeb2001.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
-  '/assets/home-idle-loader.shell-1f88f335c7.js',
+  '/assets/vault-pulse.shell-8204990170.js',
+  '/assets/home-idle-loader.shell-f30c5192b7.js',
   '/assets/ambient-core.shell-a4349880f3.js',
   '/assets/ambient-feature.shell-ca3b329506.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
@@ -37,6 +38,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/nav-sheet.js',
   '/assets/supabase-client.js',
   '/assets/sentry-init.js',
+  '/assets/vault-pulse.js',
   '/assets/home-idle-loader.js',
   '/assets/ambient-core.bundle.js',
   '/assets/ambient-feature.bundle.js',
@@ -147,7 +149,7 @@ const STATIC_ASSETS = [
   '/assets/rank-projector.js',
   '/assets/changelog-reactions.js',
   '/assets/vault-resonance.js',
-  '/assets/vault-pulse.js',
+  '/assets/vault-pulse.shell-8204990170.js',
   // S105 assets — Eternal credits splash pipeline
   '/assets/eternal-credits.js',
   // S113 (P7 + P3) — sitewide ambient additions

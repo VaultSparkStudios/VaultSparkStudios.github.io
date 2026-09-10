@@ -4,12 +4,12 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "59bade85e6c2c83d9e3ee8faa0666061178450cb",
+    "sha": "6ed6b7fb9c20ad48e89a5527a3db99d40e052854",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "998243a3f76643c70ece998f7f75c748aa0d1bf2",
+    "sha": "7ea9b3c579e5",
     "reachable": true,
     "reconciliation": "behind"
   },
@@ -25,11 +25,10 @@
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
     "consoleErrors": 7,
-    "signalCardinality": 6,
+    "signalCardinality": 5,
     "signalEndpoints": [
       "api/ecosystem-state.json",
       "api/founder-presence.json",
-      "api/ignis-conduit.json",
       "api/public-intelligence.json",
       "api/rank-climbers.json",
       "v/rum"
@@ -40,10 +39,9 @@
         "target": "https://vaultsparkstudios-website.pages.dev/",
         "captured": true,
         "consoleErrors": 5,
-        "signalCardinality": 5,
+        "signalCardinality": 4,
         "signalEndpoints": [
           "api/founder-presence.json",
-          "api/ignis-conduit.json",
           "api/public-intelligence.json",
           "api/rank-climbers.json",
           "v/rum"
@@ -74,17 +72,17 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves 998243a3 — OLDER than promoted 59bade85 — stranded/stale deploy",
+    "production origin serves 7ea9b3c5 — OLDER than promoted 6ed6b7fb — stranded/stale deploy",
     "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-09-10T04:38:21.786Z",
+  "generatedAt": "2026-09-10T07:57:34.528Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-10T04:38:21.786Z",
-    "currentBehindStreak": 7,
+    "lastStrandedAt": "2026-09-10T07:57:34.528Z",
+    "currentBehindStreak": 8,
     "strandedAlert": true
   }
 }

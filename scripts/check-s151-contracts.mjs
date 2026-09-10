@@ -47,6 +47,20 @@ function homeIdleLoaderTag() {
   return /<script\b[^>]*\bsrc=["']\/assets\/home-idle-loader(?:\.shell-[a-f0-9]{10})?\.js["'][^>]*>/i;
 }
 
+function nestedPulseFailures(manifest, loaderSource) {
+  const failures = [];
+  const pulsePath = manifest?.assets?.vaultPulse?.path;
+  if (!/^assets\/vault-pulse\.shell-[a-f0-9]{10}\.js$/.test(pulsePath || '')) {
+    failures.push('assets/shell-manifest.json: missing fingerprinted vaultPulse asset');
+  } else if (!loaderSource.includes('/' + pulsePath)) {
+    failures.push('home-idle-loader shell: does not reference the manifest vaultPulse fingerprint');
+  }
+  if (/\/assets\/vault-pulse\.js(?:\?|['"])/.test(loaderSource)) {
+    failures.push('home-idle-loader shell: mutable vault-pulse.js reference survived generation');
+  }
+  return failures;
+}
+
 // Visible text only: drop <script>/<style> blocks, strip all tags, collapse
 // whitespace. So a label split across tags (`Forge<br>Window`) is rejoined into
 // "Forge Window" — the form a visitor actually reads.
@@ -127,6 +141,14 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
 }
 
 function runSelfTest() {
+  const pulseManifest = { assets: { vaultPulse: { path: 'assets/vault-pulse.shell-aaaaaaaaaa.js' } } };
+  if (nestedPulseFailures(pulseManifest, "'/assets/vault-pulse.shell-aaaaaaaaaa.js'").length) {
+    throw new Error('fingerprinted nested pulse fixture failed');
+  }
+  if (nestedPulseFailures(pulseManifest, "'/assets/vault-pulse.js?v=2'").length < 2) {
+    throw new Error('mutable nested pulse fixture was not rejected');
+  }
+
   const good = collectFailures({
     homeHtml: '<script src="/assets/home-idle-loader.shell-1d24709d88.js" defer></script>',
     paritySource: "import './lib/shell-parity.mjs'; function buildParityReport(){} '--self-test'",
@@ -165,13 +187,19 @@ function runSelfTest() {
 
 function run() {
   const homeHtml = readFileSync(join(ROOT, 'index.html'), 'utf8');
+  const shellManifest = JSON.parse(readFileSync(join(ROOT, 'assets', 'shell-manifest.json'), 'utf8'));
+  const loaderPath = join(ROOT, shellManifest.assets.homeIdleLoader.path);
+  const loaderSource = existsSync(loaderPath) ? readFileSync(loaderPath, 'utf8') : '';
   const parityPath = join(ROOT, 'scripts', 'check-deploy-parity.mjs');
   const paritySource = existsSync(parityPath) ? readFileSync(parityPath, 'utf8') : '';
   const htmlFiles = walkHtml(ROOT).map((file) => ({
     ...file,
     html: readFileSync(file.full, 'utf8'),
   }));
-  const failures = collectFailures({ homeHtml, paritySource, htmlFiles });
+  const failures = [
+    ...collectFailures({ homeHtml, paritySource, htmlFiles }),
+    ...nestedPulseFailures(shellManifest, loaderSource),
+  ];
 
   if (!failures.length) {
     console.log(`S151 contracts ✓ (${htmlFiles.length} HTML pages checked)`);

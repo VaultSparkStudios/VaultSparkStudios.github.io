@@ -16,6 +16,11 @@ const SHELL_ASSETS = [
   // browser or Worker asset cache.
   { key: 'supabaseClient', source: 'assets/supabase-client.js', stem: 'supabase-client.shell', attribute: 'src' },
   { key: 'sentryInit', source: 'assets/sentry-init.js', stem: 'sentry-init.shell', attribute: 'src' },
+  // The homepage idle loader imports this module dynamically. A query-string
+  // revision still shares a mutable cache key at some edge layers and the
+  // content lane withholds plain executable assets. Fingerprint the child
+  // before the loader so both can travel through the safe content lane.
+  { key: 'vaultPulse', source: 'assets/vault-pulse.js', stem: 'vault-pulse.shell', attribute: 'src' },
   { key: 'homeIdleLoader', source: 'assets/home-idle-loader.js', stem: 'home-idle-loader.shell', attribute: 'src' },
   // S136 speed sprint: ambient scripts concatenated into hashed bundles.
   // S175 stable-core split: core (rarely changes - hash survives feature
@@ -72,6 +77,17 @@ function read(filePath) {
 
 function readShellAssetContent(filePath) {
   return Buffer.from(fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n'), 'utf8');
+}
+
+function rewriteNestedShellReferences(asset, content, assets) {
+  if (asset.key !== 'homeIdleLoader') return content;
+  const pulse = assets.vaultPulse;
+  if (!pulse) throw new Error('vaultPulse must be fingerprinted before homeIdleLoader');
+  const next = content.toString('utf8').replace(
+    /\/assets\/vault-pulse(?:\.shell-[a-f0-9]{10})?\.js(?:\?[^'\"]*)?/g,
+    '/' + pulse.path
+  );
+  return Buffer.from(next, 'utf8');
 }
 
 function writeIfChanged(filePath, next) {
@@ -299,7 +315,7 @@ function buildManifest() {
 
   for (const asset of SHELL_ASSETS) {
     const sourcePath = path.join(root, asset.source);
-    const content = readShellAssetContent(sourcePath);
+    const content = rewriteNestedShellReferences(asset, readShellAssetContent(sourcePath), assets);
     const hash = shortHash(content);
     const ext = path.extname(asset.source);
     const generatedName = `${asset.stem}-${hash}${ext}`;
