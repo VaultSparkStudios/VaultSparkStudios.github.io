@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T22:00:19.097Z",
+  "generatedAt": "2026-09-10T22:46:07.336Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,25 +22,27 @@
     }
   },
   "pulse": {
-    "currentSession": 348,
+    "currentSession": 349,
     "lastUpdated": "2026-09-10",
-    "currentFocus": "S348 is released: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed are live through the scoped content lane.",
-    "nextMilestone": "Migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release, then close field-vitals freshness with a real cohort.",
+    "currentFocus": "S349 stopped a public trust surface from lying: /status/ had reported edge-degraded on 604 consecutive samples since 2026-07-13 because Cloudflare began bot-challenging JSON and OPTIONS paths, and the probe read its own challenge as an outage. Unobservable is now a first-class state — neither an outage nor a pass.",
+    "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
     "blockers": [
+      "Edge liveness is honestly UNMEASURED, not fixed: the sampler that can observe it ships dark and has never run. Its presence is not coverage.",
+      "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
       "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
       "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
     ],
     "queues": {
       "now": [
-        "[NEXT][COST/P1] Move the 30-minute uptime sampler off GitHub Actions as a dedicated trust-path migration. Add the Worker `scheduled()` sampler and bounded KV schema, teach the daily job to drain samples into the unchanged public uptime contract, preserve cadence/SLA semantics, and stage/release independently with rollback evidence.",
+        "[S349][OBS/P1] Enable the edge uptime sampler -- its own release, per the original task text. Create the KV namespace, uncomment the binding + `[triggers]` cron in `cloudflare/wrangler.toml`, flip `UPTIME_SAMPLER_ENABLED` to `\"1\"`, deploy, then `node scripts/drain-uptime-kv.mjs --dry-run` to confirm samples land before draining for real. Rollback is a flag flip. Until this runs, edge liveness is honestly reported as `edge-unobservable` and is genuinely unmeasured -- the honest state is not the fixed state.",
+        "[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as `unresolvedLegacyChecks` because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.",
+        "[S349][PERF/P2] Uncancellable client timers keep polling in hidden tabs. Verified this session: `assets/desk-presence.js:114` (`setInterval(refreshPresence, 30000)` on every Desk article) and `:49`, plus `assets/favicon-pulse.js:136` (90s) and `assets/vault-pulse.js:202` (120s) contain no `clearInterval` and no `document.hidden` guard, so a backgrounded tab beacons the Worker indefinitely. `assets/ambient-feature.bundle.js:217` already clears its timer and `presence-badge.js:133` has the start/stop idiom to copy. `vault-pulse.js:191` additionally runs an endless 6-10s DOM rotation off-screen -- gate it on the IntersectionObserver pattern S348 shipped for Changelog hydration.",
+        "[S349][PERF/P3] Ship-time pruning of superseded hashed shell assets. Six `assets/style.shell-*.css` copies plus two stale `nav-sheet`/`ambient-feature` shells are git-tracked and publicly servable while `assets/shell-manifest.json` names only the current three. Have `scripts/build-shell-assets.mjs` remove any `assets/*.shell-*.{js,css}` whose hash is absent from the manifest it just wrote. Confirm nothing pins an old hash first -- only `.cache/` perf JSON and archived docs reference them today.",
+        "[S349][UX/P3] Three public pages skip a heading level (h1 -> h3). `community/index.html`, `journal/index.html`, `contact/index.html`. Demote the first `<h3>` on each to `<h2>`; `assets/style.css` already styles both and no anchor id is attached.",
+        "[S349][COST/P1] Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 added `scheduled()` to the production worker behind `UPTIME_SAMPLER_ENABLED` (committed default `\"0\"`, so the deploy is provably inert -- 5 unit tests assert no KV write and no subrequest while off), a bounded one-key-per-window KV schema with a 7-day TTL, and `scripts/drain-uptime-kv.mjs` (12/12 self-tests) that folds samples into the UNCHANGED uptime contract without ever rewriting a row. Not yet done, and deliberately not claimed: the KV namespace does not exist, the cron trigger is commented out, and the flag is off -- so no sample has ever been written and the Actions cron is still the only producer. The exact four-step enabling sequence is in `cloudflare/wrangler.toml`. Do it as its own release with its own rollback evidence, per the original task text.",
         "[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.",
-        "[S348][PERF/P1] Defer Changelog reaction hydration below the fold. DONE S348. Near-viewport observation, bounded four-island idle fallback, layout containment and unavailable-count semantics shipped; focused mutation coverage plus 14/14 inspected theme/device captures bind the deep-scroll reaction state.",
-        "[S348][PERF/P2] Make local performance sampling repeatable. DONE S348. The harness warms once, defaults to three measured samples, preserves raw runs, reports full distributions and binds host-noise evidence. The measured Changelog run abstained as volatile (LCP p75 1.636s; CLS median 0.0021); it explicitly makes no field Core Web Vitals claim.",
-        "[S348][VERIFY/P1] Make mobile evidence atomic across flaky routes. DONE S348. Process-level retries can no longer restart the single-writer ledger; bounded navigation recovery remains. Clean proof: 215/215 findings, zero failed captures, current candidate/source-bound receipt.",
-        "[S348][BUILD/P1] Make generated provenance byte-deterministic. DONE S348. Forge RSS dates now derive from the newest source commit, feedback provenance inherits its source receipt clock, and both builders' `--check` modes compare exact output bytes. Two consecutive rebuilds produced identical hashes; Forge focused coverage is 9/9.",
-        "[S348][BUILD/P1] Close evidence-graph coverage instead of carrying a permanent blind spot. DONE S348. Every one of 67 `--check`-gated generators is now source-reviewed and modeled (80 graph nodes total after the critique-packet innovation; unmodeled 33 -> 0). The projection, acyclicity/build-order gate, coverage self-test 12/12, reachability self-test 15/15, and all 80 live check/output contracts pass.",
-        "[S348][CI/P1] Close scheduled-publisher cascades exposed by the complete graph. DONE S348. The centralized refresh order now rebuilds all newly visible dependents; both live-data publishers stage every fan-out, including agent discovery, project shards, catalog pages and ledgers. All 29 workflows pass the cascade gate and its widened mutation suite is 21/21."
+        "[S348][PERF/P1] Defer Changelog reaction hydration below the fold. DONE S348. Near-viewport observation, bounded four-island idle fallback, layout containment and unavailable-count semantics shipped; focused mutation coverage plus 14/14 inspected theme/device captures bind the deep-scroll reaction state."
       ],
       "next": [
         "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."

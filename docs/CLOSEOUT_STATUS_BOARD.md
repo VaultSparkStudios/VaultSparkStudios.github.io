@@ -1,47 +1,48 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-09-07 (Session 345 closeout) -->
+<!-- generated-at: 2026-09-10 (Session 349 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S345 ═══════╗
-║  Date: 2026-09-07  ·  SIL: 984/1000  ·  Velocity: -2 down        ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S349 ═══════╗
+║  Date: 2026-09-10  ·  SIL: 991/1000  ·  Velocity: -2 down        ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **The post-rebase repair tool reported clean over a subset i  ║
-║  ✓ **An alarm whose clean result was also evidence it had never  ║
-║  ✓ **A carried blocker had expired, and was corrected rather th  ║
-║  ✓ **The newsletter did not move.** Both faults re-probed and l  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ S349: stop publishing a bot challenge as an outage on /statu  ║
+║  ✓ feat(desk): publish the latenight edition [skip ci]           ║
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ chore: refresh live data feeds [skip ci]                      ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 984/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 991/1000 ═══════════════════════════════════════╗
 ║    Dev Health         99   ██████████                            ║
-║    Alignment          97   ██████████                            ║
-║    Momentum           98   ██████████                            ║
-║    Engagement         96   ██████████                            ║
-║    Process Qual       98   ██████████                            ║
+║    Alignment          99   ██████████                            ║
+║    Momentum           100  ██████████                            ║
+║    Engagement         97   ██████████                            ║
+║    Process Qual       99   ██████████                            ║
 ║    Coherence          100  ██████████                            ║
 ║    Security           99   ██████████                            ║
-║    Ecosystem          99   ██████████                            ║
+║    Ecosystem          100  ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         98   ██████████                            ║
+║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
+║  · context/TASK_BOARD.md                                         ║
 ║  · context/LATEST_HANDOFF.md                                     ║
 ║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 24 files  ·  M:24 A:0 D:0 ?:0                          ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 87 files  ·  M:85 A:0 D:0 ?:2                          ║
+║  Ahead: 1  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -49,11 +50,11 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/16                                            ║
+║  Doctor:        14/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         390/390                                          ║
+║  Tests:         479/479                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         14d ago                                          ║
+║  IGNIS:         2d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

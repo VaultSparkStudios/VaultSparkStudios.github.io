@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-10T22:00:19.099Z",
+  "generatedAt": "2026-09-10T22:46:07.337Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 348,
+    "currentSession": 349,
     "lastUpdated": "2026-09-10",
-    "currentFocus": "S348 is released: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed are live through the scoped content lane.",
-    "nextMilestone": "Migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release, then close field-vitals freshness with a real cohort.",
+    "currentFocus": "S349 stopped a public trust surface from lying: /status/ had reported edge-degraded on 604 consecutive samples since 2026-07-13 because Cloudflare began bot-challenging JSON and OPTIONS paths, and the probe read its own challenge as an outage. Unobservable is now a first-class state — neither an outage nor a pass.",
+    "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 348,
+    "sessionsCompleted": 349,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,18 +144,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 99,
+      "devHealth": 100,
       "alignment": 99,
-      "momentum": 100,
-      "engagement": 97,
-      "process": 99,
+      "momentum": 96,
+      "engagement": 96,
+      "process": 100,
       "coherence": 100,
-      "security": 99,
+      "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 993,
-      "updatedSession": 348
+      "total": 991,
+      "updatedSession": 349
     },
     "sealedNextRevealAt": null
   },

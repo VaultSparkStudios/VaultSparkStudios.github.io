@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-10T22:18:44.519Z
-Receipt: `6ad512a0c27d56a87ee4ce41` · coverage 479/479 from step 1
+Generated: 2026-09-10T22:48:46.138Z
+Receipt: `97265598d75840a86c77e59e` · coverage 480/480 from step 1
 
-Latest: **479/479** passed · failed 0 · total 169.6s
-Concentration: **14.6%** in step 142 · ratchet clear (>30% and ≥45s)
+Latest: **480/480** passed · failed 0 · total 125.1s
+Concentration: **14.4%** in step 142 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 142 | 24.8s | 0 | `node scripts/check-proof-surface.mjs` |
-| 61 | 13.4s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 98 | 8.5s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 368 | 5.6s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 95 | 4.7s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 247 | 4.4s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 259 | 3.6s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 29 | 3.2s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 287 | 1.7s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 65 | 1.6s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
+| 142 | 18.0s | 0 | `node scripts/check-proof-surface.mjs` |
+| 98 | 7.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 61 | 7.3s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 368 | 4.9s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
+| 247 | 3.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 259 | 3.4s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
+| 95 | 2.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 379 | 1.5s | 0 | `node scripts/check-build-gate-reachability.mjs` |
+| 344 | 1.4s | 0 | `node scripts/check-hero-lcp-element.mjs` |
+| 29 | 1.3s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
 
 ## Failures
 

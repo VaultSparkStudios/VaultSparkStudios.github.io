@@ -7,5 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 4 | d14ef377 bind immutable Vault Pulse evidence<br>98bb7c65 content-address Vault Pulse module<br>da041ec3 version cached Vault Pulse module<br>011cb2a2 preserve contrast during live pulse entry | pending |
+| Transparency | 5 | f996aacd stop publishing a bot challenge as an outage on /status/<br>d14ef377 bind immutable Vault Pulse evidence<br>98bb7c65 content-address Vault Pulse module<br>da041ec3 version cached Vault Pulse module<br>011cb2a2 preserve contrast during live pulse entry | pending |
 | Front door | 2 | b95cc483 restore hero ticker feed on staging<br>4c2523ee bind final S348 mobile and visual proof | pending |

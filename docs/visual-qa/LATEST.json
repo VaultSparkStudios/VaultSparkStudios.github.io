@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-10T22:14:27.137Z",
+  "capturedAt": "2026-09-10T22:36:01.914Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "33b4f0390e1b875570ce2fd12f93b4b25525e9877ff6eebfaab76f37b19c49c4",
+    "sha256": "690d5d049a26428a5edf583f9a0c382237e26d1f2196c27e3553a078d35b84be",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -143,7 +143,7 @@
       },
       {
         "path": "changelog/index.html",
-        "sha256": "b0b36b0e9a1eb2988cd65c2861733512889711a42a9041a97ef5a71440c328fe"
+        "sha256": "b34238c5d8a88a893695c9268b7ef44578afa39754fcf63aa4a7cab9a9ca9baf"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -217,9 +217,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "1a18160f6d9d5345d98f864b50e666edb6e874a2b1734a2f7d1d4bd7dbed1f07",
-    "candidateSha": "1e42b35f81ecec3039dfc13f939aa28682e29643",
-    "root": "c14290d49537f64188a953f5d556d50e34c88639901f8bc885362e865f8c8a65"
+    "manifestSha256": "e6b7c7935a7e7f6cb7440cdd1ba420751d3640673036f318c7f77588c08e680d",
+    "candidateSha": "f996aacdd623781ca7d1774cdf5c7dc657478a37",
+    "root": "0e4d3273c9870cb125dd4e83ed1fc76952a11d4a71c27cbef0ee86a8f3203b2c"
   },
   "matrix": {
     "routes": [
@@ -260,9 +260,9 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5 (S349 image review)",
+    "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)",
     "findings": [
-      "Re-captured after the S349 critical-shell change propagated the skip-link focus reveal into all 108 pages, which invalidated the S348 hash binding. All 14 captures inspected directly: heading, body copy and reaction pills legible in every theme at both viewports; no black-on-black, light-on-white or sub-AA text; no clipping or layout shift. Light theme has the lowest-contrast reaction pills, unchanged from S348 and not a regression from this session."
+      "Re-captured and re-inspected after a rebase on upstream publishers (latenight Desk edition + uptime publisher) rewrote changelog/index.html and index.html, invalidating the first S349 seal. All 14 captures inspected directly across seven themes at desktop 1366px and mobile: heading, body copy and reaction pills legible everywhere; no black-on-black, light-on-white or sub-AA text; no clipping or layout shift. Light theme retains the lowest-contrast reaction pills, unchanged from S348 and not a regression from this session."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -283,7 +283,7 @@
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -300,7 +300,7 @@
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -312,12 +312,12 @@
         "height": 900
       },
       "file": "changelog--ambient--desktop--changelog-reactions.png",
-      "sha256": "b562e26ce011fa9c80f7f84a7e2c54ae6b0d5bce507f217041a36d1877ca700b",
+      "sha256": "9b987f4751ad35c9acccb01077748e89ef58f96f29bce589455f614cc68a0693",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -329,12 +329,12 @@
         "height": 900
       },
       "file": "changelog--warm--desktop--changelog-reactions.png",
-      "sha256": "caf198a76527b6727f35b46446dfd780d363e66133e56b4373ce9b8771fa5b72",
+      "sha256": "ab875b5b6f0f64b449da9926bbc1ce33bf1673cd60f3feeaa81a7af35f46c17b",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -346,12 +346,12 @@
         "height": 900
       },
       "file": "changelog--cool--desktop--changelog-reactions.png",
-      "sha256": "d144025bc31ffd9c003e99afb6c9d6283b45c0698f683cbac87ffc6f0d610d10",
+      "sha256": "6b54fc57de900f570689edaaa1a3189b6866ab81fcf7eb6321b21e2167bb347a",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -363,12 +363,12 @@
         "height": 900
       },
       "file": "changelog--lava--desktop--changelog-reactions.png",
-      "sha256": "eef641655d1fbfb668240f7a5d94f30ddb350a8520daa603a0694f3e6cb907e1",
+      "sha256": "7e277e1d77050d05da1e6a3402cbd5a541376c78bc2fd3c1dd80928b3066be8c",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -380,12 +380,12 @@
         "height": 900
       },
       "file": "changelog--high-contrast--desktop--changelog-reactions.png",
-      "sha256": "ba7ca2c5a32f21187b8c4c80943ed348a56f5a8bc57848ac15579b42ac41b340",
+      "sha256": "1c930601b3d99ef0b7f18f3a185f45e1e385e8b7c3820efc13049d7e686323f6",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -397,12 +397,12 @@
         "height": 844
       },
       "file": "changelog--dark--mobile--changelog-reactions.png",
-      "sha256": "332c8cd3bcdec0a216e4da01be203d16ee21d4f5d811d3ae0182ac44b29cbf9f",
+      "sha256": "135e4df2e8acda9ba64b05f743ccc890e446f484c0d3b1010eefd4cd173a1c35",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -414,12 +414,12 @@
         "height": 844
       },
       "file": "changelog--light--mobile--changelog-reactions.png",
-      "sha256": "14b1b78df4d09c83cd9dc24ac744df1cd32bd05e92f377188eaabeeb4b800951",
+      "sha256": "3b6c696b91425fd5e579ad1078fbec4f743ac9fac599a8f6e5d4d51d442a528d",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -431,12 +431,12 @@
         "height": 844
       },
       "file": "changelog--ambient--mobile--changelog-reactions.png",
-      "sha256": "b217aaa086e949ad9772d672905030fd2ddc37e827dd679cbb155a5a0fd1872e",
+      "sha256": "38d567e68a54885b387e04fecb83878c403f2e150ec573dec21916bf096e4898",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -448,12 +448,12 @@
         "height": 844
       },
       "file": "changelog--warm--mobile--changelog-reactions.png",
-      "sha256": "ece99253f1911ee27742dd1ff1edca22121828ecdfdbe320989c546aa227be9d",
+      "sha256": "ad2bd6b0501dc80de9c486aff53686e026d9b9b133eb872c559f82cc4930f013",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -465,12 +465,12 @@
         "height": 844
       },
       "file": "changelog--cool--mobile--changelog-reactions.png",
-      "sha256": "ad2f9a1d990b1b228799e792622e26853a24b475ef3006cbf1f4e7bb1f239318",
+      "sha256": "f7cb67d4e76135ed29de8f626a79e986ebe293485cb2acb95393be4e48d73983",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -482,12 +482,12 @@
         "height": 844
       },
       "file": "changelog--lava--mobile--changelog-reactions.png",
-      "sha256": "396ce002e90cc5bfc677c37afe1ba30a11dcefe84bc724bf1c2ce5a3004ed9bc",
+      "sha256": "a39fd841bd0832d98dde08a0f66654885cd08d5a6f0267a9ea27c8a19d4f3885",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     },
     {
@@ -499,12 +499,12 @@
         "height": 844
       },
       "file": "changelog--high-contrast--mobile--changelog-reactions.png",
-      "sha256": "07d6a2350c15c263bb6d3e2f5630fc4ca2758f65b7237299dced271ff17b605a",
+      "sha256": "1d71f0ed5f31c2c0d69440813e7a7f1290cdc0e49d4134330a014d2bb796f879",
       "page": "/changelog/",
       "state": "changelog-reactions",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review)"
+        "reviewer": "Claude Opus 5 (S349 image review, post-rebase re-seal)"
       }
     }
   ]
