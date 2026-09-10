@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # S316 — build-deploy-currency resolves the deployed sha against repo
           # history. On the default depth-1 shallow clone that lookup always
@@ -23,7 +23,7 @@ jobs:
           # with null commit distance. Full history is required for the probe
           # to tell real divergence from a truncated clone.
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Pull complete-day Cloudflare aggregates

@@ -61,8 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       # Lockfile is gitignored in this repo (.gitignore), so `cache: 'npm'` (which
@@ -85,14 +85,14 @@ jobs:
       - name: Upload new baselines (update_baselines mode)
         if: >-
           always() && github.event.inputs.update_baselines == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-regression-baselines
           path: tests/__snapshots__/
           retention-days: 30
       - name: Upload diff report on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-regression-diffs
           path: |
