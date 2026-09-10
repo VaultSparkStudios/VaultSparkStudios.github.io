@@ -97,7 +97,9 @@ test.describe('Release truth surface', () => {
     await expect(signals).toContainText('Identity migration');
     await expect(signals).toContainText('Staged · held');
     await expect(signals).toContainText('Release authority');
-    await expect(signals).toContainText('4/4 Supabase authority planes verified');
+    await expect(signals).toContainText('Partial');
+    await expect(signals).toContainText('3/4 Supabase authority planes verified');
+    await expect(signals).not.toContainText('4/4 Supabase authority planes verified');
     await expect(signals).toContainText('Production deploy currency');
     // S316 — this assertion used to read /shell fingerprint (drift|matched)/,
     // which matched the two DEGRADED strings but never the healthy one the page

@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **993/1000**
 - CI health: **check gh run list**
-- Current focus: S348 full arc shipped 11 audited improvements: faster Changelog reactions, deterministic evidence, complete 67/67 generator coverage across 80 nodes, closed publisher cascades, and 30 claim/evidence critique packets.
+- Current focus: S348 is released: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed are live through the scoped content lane.
 
 ## Strategic Read
 

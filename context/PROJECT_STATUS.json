@@ -12,8 +12,8 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S348 full arc shipped 11 audited improvements: faster Changelog reactions, deterministic evidence, complete 67/67 generator coverage across 80 nodes, closed publisher cascades, and 30 claim/evidence critique packets.",
-  "publicNote": "Every Desk story now links a deterministic critique packet separating sourced facts, arguments, predictions, and visual evidence; Changelog reactions hydrate progressively without changing unavailable-count semantics.",
+  "currentFocus": "S348 is released: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed are live through the scoped content lane.",
+  "publicNote": "Every Desk story links a deterministic critique packet; Changelog reactions hydrate progressively; the homepage now receives its Vault Pulse and recent-ships feed through immutable, content-safe release artifacts.",
   "nextMilestone": "Migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release, then close field-vitals freshness with a real cohort.",
   "blockers": [
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
@@ -36,13 +36,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S345 full production deploy verified: pages-deploy run 34153075898 promoted via the SCOPED path (promotable=true, scoped-disjoint) and production serves HEAD 998243a3f76643c70ece998f7f75c748aa0d1bf2 exactly; Worker run 34153477094 passed the canonical release ceremony and the post-deploy liveness gate with no rollback. Live headers confirm strict CSP, HSTS preload and TT report-only; / /news/ /status/ /membership/ /evidence/ all 200."
+      "note": "S348 content promotion verified in run 34508529884: production stamp preserves baseline 7ea9b3c579e5 and binds content head 761ebb3ddd536755380f16120034838feb33f79a across 122 promoted paths. Live smoke passed 6/6; Chromium, Firefox, and WebKit passed the seven-theme production readability sweep; the immutable Vault Pulse child and recent-ships feed are live."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S345 operator overlay refreshed staging ahead of promotion (CANON-007): 403 overlays, 26 safe removals, identity untouched, exact-byte verified; parity staging-ahead then promoted."
+      "note": "S348 exact candidate deployed before production: receipt 5d2df635546d213dbd236c80, lineage depth 71, 6,569 files, rollback snapshot 20260910170352, ceremony 10/10, identity surfaces held."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -69,7 +69,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "S348 synchronized-candidate gate is pending final closeout execution; focused checks are green and no prior-session receipt is reused as proof."
+      "note": "S348 synchronized candidate passed 479/479; fresh mobile evidence passed 215/215 with retries disabled; 14/14 release captures were manually reviewed and receipt-ordering passed."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -249,6 +249,6 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
-  "testsSourceFingerprint": "c8c732886378fe8f3f83b358",
+  "testsSourceFingerprint": "03288cb46bc7b23374af224b",
   "lastSessionSummary": "S348 shipped 11 audit outcomes after the independent S347 recovery boundary: progressive hydration, distributional lab evidence, atomic mobile receipts, deterministic provenance, complete evidence coverage and publishers, history safety, hot-state sharding, measured feed probation, task-truth reconciliation, and 30 critique packets. Final release receipts are bound during closeout."
 }

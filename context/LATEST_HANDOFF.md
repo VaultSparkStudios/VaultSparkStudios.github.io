@@ -1,4 +1,14 @@
-# Latest Handoff — VaultSparkStudios.github.io## Where We Left Off — S348 full arc · 2026-09-10
+# Latest Handoff — VaultSparkStudios.github.io
+
+## Where We Left Off — S348 released · 2026-09-10
+
+**Intent achieved and released.** Phase 0 recovered the interrupted S347 work into its own pushed boundary; S348 then completed `/start → /audit → /implement → /closeout`, exhausting all eleven locally actionable audit outcomes plus the release-discovered immutable-module and ticker-feed fixes.
+
+**Final evidence:** repository gate 479/479; mobile matrix 215/215 with retries disabled and zero P0/P1; 14/14 Changelog theme/device captures manually inspected; staging receipt `5d2df635546d213dbd236c80` at intact lineage depth 71; release ceremony 10/10; Doctor `blockingFailing: 0`. Production content workflow `34508529884` succeeded and stamps baseline `7ea9b3c579e5`, content head `761ebb3ddd536755380f16120034838feb33f79a`, and 122 promoted paths. Live smoke passes 6/6; the production theme/readability test passes Chromium, Firefox, and WebKit; the hashed Vault Pulse child and generated recent-ships feed are live. The publisher-generated sitemap now contains 147 indexable routes.
+
+**Next session:** migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release. Close field-vitals freshness only from a genuinely fresh RUM cohort. Identity/provider acceptance, newsletter arming, public-member-data, cadence, and warm-origin decisions remain separate holds.
+
+## Prior closeout — S348 local candidate · 2026-09-10
 
 **Intent achieved locally; release seal in progress.** The recovered S347 boundary remains independently committed at `172073cb7` plus receipt binding `59bade85e`. S348 then shipped eleven audited improvements: progressive Changelog hydration; distributional, host-noise-aware lab measurements; atomic mobile evidence; deterministic Forge/feedback provenance; complete 67/67 checked-generator coverage across 80 evidence nodes; all 29 publisher cascades closed; meaningful Git-history window safety; byte-preserving CURRENT_STATE sharding; measured Desk feed probation; stale umbrella-task truth reconciliation; and 30 public claim/evidence critique packets with a hash manifest.
 

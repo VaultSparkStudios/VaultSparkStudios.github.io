@@ -1140,3 +1140,9 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 | Completion-claim discipline | 5 | Final release evidence is withheld until synchronized tests, rendered pixels, staging, production, and post-push CI complete. |
 
 **Net: 40/40 — green local truth posture.** Production currency remains a separate closeout observation until the S348 release is served.
+# S348 Release Truth Addendum (2026-09-10)
+
+- Production serves the immutable Vault Pulse module and its fingerprinted parent loader; the live keyframe is transform-only and the compatibility ticker feed returns HTTP 200.
+- The production build stamp truthfully separates baseline `7ea9b3c579e5` from content-lane head `761ebb3ddd536755380f16120034838feb33f79a` and workflow `34508529884`.
+- Staging lineage is intact at depth 71 and the release ceremony passed 10/10. Mobile and visual receipts bind the final rebased source rather than a pre-rebase tree.
+- The first push CI run found real sitemap drift after a concurrent publisher rebase. The sitemap was regenerated to 147 indexable routes and the canonical publisher landed the identical fix; the corrected E2E run is the authoritative CI observation.

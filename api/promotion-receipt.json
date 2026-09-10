@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "6ed6b7fb9c20ad48e89a5527a3db99d40e052854",
+    "sha": "e6c547c6bdf7d97bfb9e079fa0b83f6ff5bcec9c",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -25,12 +25,14 @@
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
     "consoleErrors": 7,
-    "signalCardinality": 5,
+    "signalCardinality": 7,
     "signalEndpoints": [
       "api/ecosystem-state.json",
       "api/founder-presence.json",
+      "api/ignis-conduit.json",
       "api/public-intelligence.json",
       "api/rank-climbers.json",
+      "api/recent-ships.json",
       "v/rum"
     ],
     "routes": [
@@ -39,11 +41,13 @@
         "target": "https://vaultsparkstudios-website.pages.dev/",
         "captured": true,
         "consoleErrors": 5,
-        "signalCardinality": 4,
+        "signalCardinality": 6,
         "signalEndpoints": [
           "api/founder-presence.json",
+          "api/ignis-conduit.json",
           "api/public-intelligence.json",
           "api/rank-climbers.json",
+          "api/recent-ships.json",
           "v/rum"
         ]
       },
@@ -72,17 +76,17 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves 7ea9b3c5 — OLDER than promoted 6ed6b7fb — stranded/stale deploy",
+    "production origin serves 7ea9b3c5 — OLDER than promoted e6c547c6 — stranded/stale deploy",
     "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-09-10T07:57:34.528Z",
+  "generatedAt": "2026-09-10T18:15:25.872Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-10T07:57:34.528Z",
-    "currentBehindStreak": 8,
+    "lastStrandedAt": "2026-09-10T18:15:25.872Z",
+    "currentBehindStreak": 9,
     "strandedAlert": true
   }
 }

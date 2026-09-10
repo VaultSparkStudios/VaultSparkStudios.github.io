@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-10 (S348 full arc shipped 11 audited improvements: progressive hydration, distributional lab evidence, atomic mobile receipts, deterministic provenance, complete 67/67 generator coverage across 80 evidence nodes, closed publisher cascades, history-window safety, hot-state sharding, measured feed probation, truth reconciliation, and 30 claim/evidence critique packets. Final release seal is in progress.)
+Last updated: 2026-09-10 (S348 full arc and release complete: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed; 479/479 build gate, 215/215 mobile cells, 14/14 reviewed release captures, staging ceremony 10/10, and production content promotion run 34508529884.)
 
 Previous: 2026-09-03 (S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. The receipt I had quoted was eight days old; re-probing found four of five listed blockers already satisfied, including a relying-party registration that had been active with both callbacks for months while a public trust surface published it as `missing` because the tracker keyed on an Ark cargo that had aged out of retention. Fixed by observing the substance at the IdP with an unregistered control redirect that must be denied, fail-closed five ways and on a 14-day clock. The identity hold was preserved deliberately. The one real remaining step is a human completing the sign-in ceremony -- and it is `--watch`, not `--live`.)
 

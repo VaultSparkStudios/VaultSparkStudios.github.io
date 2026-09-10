@@ -2632,3 +2632,7 @@ Recovery assessment, not a claim that the interrupted arc completed. S345 remain
 **Brainstorm committed to TASK_BOARD:** (1) migrate uptime sampling to a Worker scheduled handler plus daily KV drain as a dedicated trust release; (2) bind field-vitals freshness to observed-through age and release SHA only after a real cohort exists.
 
 **Intent outcome:** achieved. Phase 0 recovered and checkpointed S347; S348 completed the full arc and exhausted the locally actionable Genius queue within the context gate.
+
+### S348 release verification addendum
+
+The 993/1000 score remains unchanged: release execution strengthened Dev Health and Process evidence but did not create fresh stakeholder engagement or field Core Web Vitals. The release found and closed two real gaps—a mutable dynamically imported module behind an immutable loader, and two retired ticker endpoints that produced staging 404s. Final authority is 479/479 build steps, 215/215 retry-free mobile cells, 14/14 manually reviewed release captures, staging ceremony 10/10, production content run `34508529884`, and live smoke 6/6. One post-push CI run correctly exposed sitemap drift introduced by a concurrent publisher rebase; the 147-route sitemap is now regenerated and the corrected E2E run is the authoritative observation.

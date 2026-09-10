@@ -1365,3 +1365,10 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 - Preserved evidence honesty: the Changelog lab verdict abstained as volatile (LCP p75 1.636s, CLS median 0.0021); visual review, mobile evidence, full build, Doctor, staging, production, and post-push CI are recorded only after their final closeout gates complete.
 - No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
 - Final local authority is non-phantom green: `npm run build:check` passed 479/479 from step one after fixing each discovered drift class; mobile runtime passed 215/215 with zero P0/P1 findings; 28/28 final touched-state captures were manually reviewed; Doctor exits 0 with `blockingFailing: 0`.
+
+### Release addendum
+
+- Found a real production release gap after the first content promotion: the fingerprinted idle loader still imported mutable `vault-pulse.js`, so production retained the opacity-fading version. Added content addressing for the child module, rewrote the generated parent reference, and pinned the relationship in the S151 contract.
+- Root-caused staging ceremony 404s to retired hero-ticker fallbacks. Added deterministic `api/recent-ships.json` generation from the public Changelog narrative; staging then emitted zero resource 404s.
+- Resolved repeated scheduled-publisher races only with `pull --rebase`; generated collisions preserved upstream truth and were regenerated afterward. No reset-hard, force push, or hook bypass occurred.
+- Final release evidence: 479/479 build steps; 215/215 retry-free mobile cells; 14/14 manually reviewed Changelog captures; ceremony 10/10; staging receipt `5d2df635546d213dbd236c80`, lineage depth 71; production workflow `34508529884`; live smoke 6/6; production theme sweep 3/3 engines.
