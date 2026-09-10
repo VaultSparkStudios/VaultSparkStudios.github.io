@@ -972,6 +972,82 @@ const worker = {
    * error before answering, so the failure stays observable in Workers logs rather
    * than being absorbed into a tidy 503.
    */
+  /**
+   * S349 — uptime sampling from INSIDE the edge.
+   *
+   * Why this exists. The GitHub Actions uptime probe cannot observe our edge at
+   * all: Cloudflare bot-challenges every datacenter client, so each apex leg
+   * (JSON liveness, OPTIONS ingest, POST ingest) returns 403 from CI. Measured
+   * 2026-09-10, /api/founder-presence.json answers 200 from a residential IP and
+   * 403 from Actions. The probe was reporting that challenge as an outage, which
+   * is how /status/ published `edge-degraded` for 604 consecutive samples while
+   * the site served every real visitor. probe-uptime.mjs now reports that state
+   * honestly as `edge-unobservable` — but honest blindness is still blindness.
+   * A Cloudflare cron runs inside Cloudflare and is never challenged, so it is
+   * the only vantage from which edge liveness can actually be measured.
+   *
+   * Two hard constraints, both learned from prior outages:
+   *
+   *  1. NO SELF-LOOP. This handler must never fetch a URL that routes back into
+   *     this Worker — that is the S179 apex self-loop shape that took the edge
+   *     down. It samples the Pages origin (a distinct hostname, not on our
+   *     routes) and reports its own liveness by the fact that it ran at all.
+   *  2. NO WRITE-PER-REQUEST. A KV write on every request is what exhausted the
+   *     free-tier quota and took sign-in down (S319). This writes at most one
+   *     fixed key per sample, on a 30-minute cron — 48 writes/day, bounded, with
+   *     a TTL so the namespace cannot grow without limit.
+   *
+   * Ships DARK: with UPTIME_SAMPLER_ENABLED unset or "0" (the committed default)
+   * this returns immediately and a deploy changes nothing. Enabling it is a
+   * separate release; rollback is a flag flip, not a redeploy.
+   */
+  async scheduled(event, env, ctx) {
+    if (env?.UPTIME_SAMPLER_ENABLED !== '1') return;
+    if (!env.UPTIME_SAMPLES) {
+      console.error('uptime-sampler: enabled but UPTIME_SAMPLES KV binding is absent — no sample written');
+      return;
+    }
+    ctx.waitUntil((async () => {
+      const at = new Date().toISOString();
+      const origin = env.PAGES_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
+      const routes = ['/', '/games/', '/vault-member/', '/membership/', '/status/'];
+      const results = [];
+      for (const route of routes) {
+        const t0 = Date.now();
+        try {
+          const res = await fetch(`${origin}${route}`, {
+            headers: { 'user-agent': 'VSEdgeSampler/1.0 (+scheduled)' },
+            signal: AbortSignal.timeout(8000),
+          });
+          results.push({ route, status: res.status, ms: Date.now() - t0, ok: res.status === 200 });
+        } catch (e) {
+          results.push({ route, status: 0, ms: Date.now() - t0, ok: false, error: String(e?.message || e).slice(0, 120) });
+        }
+      }
+      const sample = {
+        at,
+        vantage: 'cloudflare-scheduled',
+        cron: event?.cron || null,
+        // The edge is observable BY CONSTRUCTION here: this code is the edge, and
+        // it ran. That is the whole reason the cron vantage exists — it is not an
+        // assumption, it is the execution itself.
+        edgeObservable: true,
+        contentOk: results.every((r) => r.ok),
+        down: results.filter((r) => !r.ok).length,
+        routes: results,
+      };
+      // One fixed key per sample window, never per request. The key is the sample
+      // minute so a retried cron overwrites rather than accumulating, and the TTL
+      // bounds the namespace even if the drain job stops running entirely.
+      const key = `uptime:${at.slice(0, 16).replace(/[:T-]/g, '')}`;
+      try {
+        await env.UPTIME_SAMPLES.put(key, JSON.stringify(sample), { expirationTtl: 7 * 24 * 60 * 60 });
+      } catch (e) {
+        console.error('uptime-sampler: KV put failed', String(e?.message || e).slice(0, 200));
+      }
+    })());
+  },
+
   async fetch(request, env, ctx) {
     ttEnforceMode = env?.TT_ENFORCE_ENABLED === '1';
     try {

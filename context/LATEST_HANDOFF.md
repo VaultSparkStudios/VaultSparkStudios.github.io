@@ -1,6 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-## Where We Left Off — S348 released · 2026-09-10
+## Where We Left Off — S349 · 2026-09-10
+
+**Full arc completed in one session.** `/start` → `/audit` (3 items, every premise pre-verified against live code and a live network probe) → `/implement` (all 3 shipped, plus 2 verified findings from a parallel read-only sweep) → `/closeout`.
+
+**The headline was found by measurement, not from the board.** `/status/` had been publishing `edge-degraded` to visitors on 604 consecutive samples since 2026-07-13 while the site served every one of them. Cloudflare widened bot challenges to JSON and OPTIONS paths, expiring the stated premise the uptime probe was rewritten on. Each API leg read its own challenge as an outage. The fix makes "unobservable" a first-class state — explicitly not an outage and explicitly not a pass — and carries it to every consumer in the same session: the contract gate's `STATES`, the public tile, the rollup denominators, and the history row shape.
+
+**Final evidence:** 479/479 build steps exit 0 from a frozen tree; 119/119 unit tests (5 new asserting the sampler is inert while flagged off); 62/62 probe self-tests (was ~43); 12/12 drain self-tests; 215/215 mobile cells retry-free against a LOCAL preview — production would have measured the pre-change pages; 14/14 Changelog theme/device captures re-captured after the sitewide shell change invalidated the S348 binding, and directly inspected across all seven themes at both viewports; Doctor `blockingFailing: 0` (one advisory: the deliberately unarmed Monthly Member Newsletter, D-S341.4).
+
+**Read this before touching uptime again.** The edge is now honestly reported as UNMEASURED, not fixed. Nothing has yet observed our edge. The Worker `scheduled()` sampler that can — a Cloudflare cron is never bot-challenged — is committed but dark (`UPTIME_SAMPLER_ENABLED = "0"`, no KV binding, cron commented out). Do not treat its presence as coverage.
+
+**Next session — the top item is the sampler's enabling release**, four steps documented inline in `cloudflare/wrangler.toml`: create the KV namespace, uncomment the binding and `[triggers]`, flip the flag to `"1"`, deploy, then `node scripts/drain-uptime-kv.mjs --dry-run` before draining for real. Rollback is a flag flip. After that: visibility-gated teardown for the four uncancellable client polling timers verified this session (`desk-presence.js:114` and `:49`, `favicon-pulse.js:136`, `vault-pulse.js:202`), then the stale hashed-shell prune and the three h1→h3 heading skips.
+
+**Unchanged holds:** identity/provider acceptance, newsletter arming and first send, Desk cadence, public-member-data policy, and the immutable warm-origin decision all remain founder-gated and were not touched.
+
+## Prior closeout — S348 released · 2026-09-10
+
 
 **Intent achieved and released.** Phase 0 recovered the interrupted S347 work into its own pushed boundary; S348 then completed `/start → /audit → /implement → /closeout`, exhausting all eleven locally actionable audit outcomes plus the release-discovered immutable-module and ticker-feed fixes.
 

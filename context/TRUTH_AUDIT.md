@@ -1,3 +1,21 @@
+## S349 A Public Availability Number That Only Ever Reported One Answer (2026-09-10)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Additive only. `api/uptime.json` gains `shape`/`observable` per API leg and `fullStackObservedChecks`/`unobservableChecks`/`unresolvedLegacyChecks` in the rollup; every existing key keeps its meaning. `ok` deliberately still means "the expected status was returned", so no existing caller changes behaviour. History rows gain `livenessObservable`/`workerIngestObservable`/`cv`; rows without them are read as observed, which is what they were understood to be when written. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Public claim accuracy | 5 | This is the session's subject. `/status/` published `edge-degraded` on 604 consecutive samples — 100% of the retained non-`up` rows, every one with `contentOk: true` and `down: 0` — from 2026-07-13 to 2026-09-10, while the site served every visitor. The claim is now correct in both directions: a challenge is not reported as an outage, and it is equally not reported as a pass. |
+| Internal consistency | 5 | The new state was carried to every consumer in the same session rather than left for a reader to discover: `check-uptime-contract`'s `STATES`, the `/status/` tile, the rollup denominators, the alert path, and the history row shape. The producer-only version of this change would have failed the contract gate immediately, and did — the gate caught the rollup drift before anything was committed. |
+| Evidence freshness | 5 | The root cause was established by probing the live network during the session (200 residential vs 403 CI at 127ms), not by reading the 59-day-old code comment that asserted the opposite. |
+
+**What was true and is no longer:** the file header stating "JSON/API paths are not bot-challenged, so a 200 proves the DNS + Cloudflare + Worker chain is alive", and the `probeWorkerIngest` comment stating "OPTIONS is not bot-challenged, so this reads truthfully from CI". Both were correct when written in S177/S275 and were falsified by a Cloudflare policy change outside this repo. Both are now corrected in place with the measurement that disproved them, rather than carried.
+
+**What is NOT resolved, and is not claimed to be:** the edge is now honestly reported as unmeasured, which is not the same as measured. No sample has ever been written by the Worker sampler — it ships behind a flag that is off, with no KV namespace and no cron trigger. Any future reader should treat `edge-unobservable` as a genuine gap in the record, not as a soft green.
+
+**What cannot now be recovered:** the 604 legacy rows carry the challenge footprint but not the challenge shape, so they cannot be told apart from a real edge outage after the fact. They are published as `unresolvedLegacyChecks` and left alone. Re-scoring them would improve a public availability figure using a judgement the data does not support.
+
+**Second-order finding:** `edgeHtmlBroken` guarded on `!liveness.ok`, which was permanently true for the whole challenged window. The one apex-HTML failure shape the probe exists to page on therefore could not have fired once since Cloudflare widened challenges — an alarm that was structurally incapable of firing, discovered only because the liveness leg was being repaired.
+
 ## S346 recovery boundary (2026-09-08)
 
 The S345 implementation, SIL, closeout and later deployment receipts are committed. S346 left startup metadata only. The initial current suite was red on freshness, despite historical 390/390 evidence. Doctor blockingFailing 0 is real, but does not imply all advisory probes passed. No corrupted JSON was found. See the recovery ledger for final verification. The startup queue showing zero tasks is also untrusted: its table-only parser does not read this board's bullet tasks.

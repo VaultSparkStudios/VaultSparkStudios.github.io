@@ -67,7 +67,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -131,9 +131,6 @@
 ║  100  [COHESION]     Move the 30-minute uptime sampler off GitH  ║
 ║        Move the 30-minute uptime sampler off GitHub Actions as   ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Close field-vitals freshness only with rea  ║
 ║        Close field-vitals freshness only with real evidence. Su  ║
 ║                                                                  ║
@@ -142,6 +139,9 @@
 ║                                                                  ║
 ║   75  [PRODUCT]      Authorize or decline immutable warm-origin  ║
 ║        Authorize or decline immutable warm-origin migration. D-  ║
+║                                                                  ║
+║   72  [PRODUCT]      Re-evaluate the data plane for the shared   ║
+║        Re-evaluate the data plane for the shared box once STUDI  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

@@ -81,12 +81,18 @@ function render(rows) {
     // how a typo becomes a "human-blocked" label — the phantom blocker
     // CANON-019 forbids. Restored S316 after an inbound propagation delivered a
     // newer CLI that had never carried this distinction.
+    // S349: a credential that is PRESENT but whose last real probe FAILED is its
+    // own state. Collapsing it into READY is how the gateway told agents a
+    // capability was usable while holding the proof that it was not.
     const status = r.known === false ? '✗ UNKNOWN '
-      : r.ok ? '✓ READY   '
-        : r.required.length === 0 ? '◦ EXTERNAL'
-          : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
+      : r.ok && r.probeFailing ? '⚠ FAILING '
+        : r.ok ? '✓ READY   '
+          : r.required.length === 0 ? '◦ EXTERNAL'
+            : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
     const keys = r.known === false
       ? (r.suggestions?.length ? `no such capability — did you mean ${r.suggestions.slice(0, 3).join(', ')}?` : 'no such capability in CAPABILITY_MAP.json')
+      : r.ok && r.probeFailing
+        ? `present but last probe: ${r.lastProbeStatus}${r.lastProbeAt ? ` (${String(r.lastProbeAt).slice(0, 10)})` : ''}`
       : r.ok
         ? `${r.found.length}/${r.required.length} all present`
         : r.required.length === 0
@@ -106,7 +112,12 @@ function render(rows) {
     console.log(`${unknown} unrecognised capability name(s) — this is a caller error, NOT a missing credential. Fix the name and retry before labelling anything human-blocked.`);
   }
   const knownRows = rows.filter(r => r.known !== false);
-  const ready = knownRows.filter(r => r.ok).length;
+  const failing = knownRows.filter(r => r.ok && r.probeFailing);
+  if (failing.length) {
+    console.log(`${failing.length} capability(ies) are PRESENT but their last action probe FAILED: ${failing.map(r => `${r.capability} (${r.lastProbeStatus})`).join(', ')}.`);
+    console.log('Presence is not health — do not treat these as usable without re-probing (`--for <cap> --probe --refresh`).');
+  }
+  const ready = knownRows.filter(r => r.ok && !r.probeFailing).length;
   console.log(`${ready}/${knownRows.length} known capabilities ready. Missing → see docs/STUDIO_CANON.md + TASK_BOARD Human Action Required.`);
   console.log('');
 }

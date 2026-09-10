@@ -83,9 +83,14 @@ async function probeOnce(target, accept, timeoutMs) {
       redirect: 'follow',
       signal: AbortSignal.timeout(timeoutMs),
     });
-    return { status: res.status, ms: Date.now() - t0, ok: res.status === 200 };
+    // S349: the body is read so the API legs can classify a Cloudflare challenge
+    // by SHAPE, exactly as the edge-HTML leg already does. Without it a challenge
+    // is indistinguishable from a real 403 and every leg reads as an outage.
+    let body = '';
+    try { body = (await res.text()).slice(0, 4096); } catch { /* body unreadable */ }
+    return { status: res.status, ms: Date.now() - t0, ok: res.status === 200, body };
   } catch (e) {
-    return { status: 0, ms: Date.now() - t0, ok: false, error: String(e.message || e).slice(0, 120) };
+    return { status: 0, ms: Date.now() - t0, ok: false, body: '', error: String(e.message || e).slice(0, 120) };
   }
 }
 
@@ -147,13 +152,74 @@ export function classifyEdge(status, body = '') {
   return 'other';
 }
 
+// S349 — the API legs need the same shape discipline the HTML leg has had since
+// S183, because the premise this file was rewritten on has EXPIRED. The header
+// above states "JSON/API paths are not bot-challenged, so a 200 proves the DNS +
+// Cloudflare + Worker chain is alive". Measured 2026-09-10:
+//   GET /api/founder-presence.json  → 200 application/json from a residential IP
+//   GET /api/founder-presence.json  → 403 in 127ms from GitHub Actions
+// Cloudflare widened challenges to JSON and OPTIONS paths. Every API leg then
+// read its own challenge as an outage, and `/status/` published `edge-degraded`
+// for 100% of the 1488 retained samples going back to 2026-07-13 — a public
+// trust surface reporting our own edge as broken while it served every visitor.
+//
+// The fix is NOT to call a challenge `ok`. A challenged leg is UNOBSERVABLE from
+// this vantage: we learn nothing, neither up nor down. Collapsing that into a
+// green would be the same lie with the opposite sign, and would blind the probe
+// to the real outage it exists to catch. So a challenged leg is marked
+// `observable: false`, it is excluded from rollup denominators rather than
+// counted as a pass, and `overall` reports `edge-unobservable` — honest dark.
+//
+// `expected` is the leg's success status (200 liveness, 204 OPTIONS, 202 POST):
+// only that exact status counts as observed-healthy, so this can never widen
+// into "any non-challenge response is fine".
+export function classifyApi(status, body = '', expected = 200) {
+  if (status === 0) return 'unreachable';
+  if (CHALLENGE_MARKERS.test(body)) return 'challenged';
+  if (status === 403) return 'challenged';            // CF challenge with empty/unreadable body
+  if (status === expected) return 'served';
+  if (status >= 500) return 'error';                  // real 5xx without challenge markers
+  return 'other';
+}
+
+// Wrap a raw API-leg result with its shape and whether this vantage could observe
+// it at all. `ok` keeps its original meaning (the expected status was returned);
+// `observable` is the new, separate question. The two are deliberately distinct:
+// ok=false observable=false means "we could not see", NOT "it is down".
+export function withObservability(leg, rawBody, expected) {
+  const shape = classifyApi(leg.status, rawBody, expected);
+  const observable = shape !== 'challenged' && shape !== 'unreachable';
+  const { body: _drop, ...rest } = leg;
+  return {
+    ...rest,
+    shape,
+    observable,
+    ...(observable ? {} : {
+      note: shape === 'challenged'
+        ? 'edge-challenged from CI (informational; real browsers pass) — not an outage and not a pass'
+        : 'no response (challenge-hang or down; ambiguous from datacenter)',
+    }),
+  };
+}
+
+// A leg counts against availability only when we could actually see it fail.
+export const legDown = (leg) => Boolean(leg) && leg.observable !== false && !leg.ok;
+// True when content is healthy but no edge leg could be observed at all.
+export const edgeUnobservable = (legs) => legs.filter(Boolean).length > 0
+  && legs.filter(Boolean).every((l) => l.observable === false);
+
 // True only for the narrow blind-spot the apex HTML probe exists to catch: the
 // edge HTML path returns a genuine error while origin content AND edge liveness
 // (the same Worker's JSON path) are both healthy — i.e. the Worker's HTML
 // processing alone is broken (the S179 shape). A challenge/unreachable never
 // trips this, so datacenter false-positives can't reach the founder.
 export function edgeHtmlBroken(routes, liveness) {
-  if (!liveness.ok) return false;                     // a dead prod chain is already 'edge-degraded'
+  // S349: the guard is "liveness is observably DOWN", not "liveness is not ok".
+  // While the liveness leg was challenged, `!liveness.ok` was permanently true,
+  // so this returned false on every run and the S179 apex-HTML shape — the exact
+  // failure this function exists to catch — could not have been detected once
+  // since Cloudflare began challenging JSON paths.
+  if (legDown(liveness)) return false;                // a dead prod chain is already 'edge-degraded'
   if (routes.some((r) => !r.ok)) return false;        // content problems are already 'degraded'/'down'
   return routes.some((r) => r.edge && r.edge.shape === 'error');
 }
@@ -161,18 +227,23 @@ export function edgeHtmlBroken(routes, liveness) {
 export function summarize(routes, liveness, workerIngest = null, rumIngestPost = null, login = null) {
   const contentDown = routes.filter((r) => !r.ok).length;
   const htmlBroken = edgeHtmlBroken(routes, liveness);
+  // S349: an unobservable leg is evidence of nothing. It must not page (the old
+  // bug) and must not pass (the tempting inverse bug) — it is excluded from the
+  // verdict, and its absence is reported instead of being papered over.
+  const livenessDown = legDown(liveness);
+  const unobservable = edgeUnobservable([liveness, workerIngest, rumIngestPost]);
   let overall;
-  if (!liveness.ok && contentDown === routes.length) overall = 'down';
-  else if (!liveness.ok) overall = 'edge-degraded';      // origin serves content, prod chain does not
+  if (livenessDown && contentDown === routes.length) overall = 'down';
+  else if (livenessDown) overall = 'edge-degraded';      // origin serves content, prod chain does not
   else if (contentDown === routes.length) overall = 'down';
   else if (contentDown > 0) overall = 'degraded';
   else if (htmlBroken) overall = 'edge-degraded';        // S183: API+content alive, apex HTML 5xxing
-  else if (workerIngest && !workerIngest.ok) overall = 'edge-degraded'; // S275: wrong/stale worker build on the route
+  else if (legDown(workerIngest)) overall = 'edge-degraded'; // S275: wrong/stale worker build on the route
   // S320: a crashing auth entry point is the most expensive failure on the site —
   // the whole conversion path is dead — so it pages rather than merely degrading.
   else if (login && login.crashed) overall = 'down';
   // S320: ingest that rejects the REAL method is the telemetry outage shape.
-  else if (rumIngestPost && !rumIngestPost.ok) overall = 'edge-degraded';
+  else if (legDown(rumIngestPost)) overall = 'edge-degraded';
   // S321: the no-write contract is now a HARD assertion. It was left informational
   // in S320 (D-S320.4) purely so the probe would not page during the Worker's
   // rollout window — an explicitly temporary tolerance, and the code said so
@@ -182,7 +253,11 @@ export function summarize(routes, liveness, workerIngest = null, rumIngestPost =
   // drops the contract silently resumes writing a KV row per probe run — the exact
   // per-request write pattern that exhausted the free-tier quota and took sign-in
   // down. Losing it must fail the probe rather than read green.
-  else if (rumIngestPost && rumIngestPost.contractLive === false) overall = 'edge-degraded';
+  else if (rumIngestPost && rumIngestPost.observable !== false && rumIngestPost.contractLive === false) overall = 'edge-degraded';
+  // S349: content is healthy and nothing observable is failing, but no edge leg
+  // could be seen from here. That is NOT `up` — claiming it would resurrect the
+  // same dishonesty in the opposite direction. Report the blind spot by name.
+  else if (unobservable) overall = 'edge-unobservable';
   else overall = 'up';
   return {
     schemaVersion: '2.0',
@@ -225,20 +300,39 @@ export function rollup(rows) {
     workerIngestPct: null, workerIngestChecks: 0,
     lastIncidentAt: null, lastIncidentState: null,
   };
-  const up = rows.filter((r) => r.overall === 'up').length;
-  const incidents = rows.filter((r) => r.overall !== 'up');
+  // S349: `edge-unobservable` is not an incident and not a pass — it is a row in
+  // which this vantage saw nothing. Counting it either way corrupts the public
+  // number, so it is removed from the DENOMINATOR and its count published beside
+  // the percentage. A percentage over an empty observed sample stays null rather
+  // than becoming a confident 0% or 100%.
+  const observedRows = rows.filter((r) => r.overall !== 'edge-unobservable');
+  const up = observedRows.filter((r) => r.overall === 'up').length;
+  const incidents = observedRows.filter((r) => r.overall !== 'up');
   const last = incidents[incidents.length - 1] || null;
   const contentRows = rows.filter((r) => typeof r.contentOk === 'boolean' || Number.isFinite(r.down));
-  const livenessRows = rows.filter((r) => typeof r.livenessOk === 'boolean');
-  const ingestRows = rows.filter((r) => typeof r.workerIngestOk === 'boolean');
+  // Only rows whose leg was actually observed carry information about that leg.
+  // Legacy rows predate the flag and are treated as observed, which is what they
+  // were understood to be when written.
+  const livenessRows = rows.filter((r) => typeof r.livenessOk === 'boolean' && r.livenessObservable !== false);
+  const ingestRows = rows.filter((r) => typeof r.workerIngestOk === 'boolean' && r.workerIngestObservable !== false);
   const pct = (sample, pass) => sample.length ? Math.round((sample.filter(pass).length / sample.length) * 1000) / 10 : null;
-  const fullStackPct = Math.round((up / checks) * 1000) / 10;
+  const fullStackPct = observedRows.length ? Math.round((up / observedRows.length) * 1000) / 10 : null;
   return {
     checks,
     // `upPct` is a compatibility field: it remains the strict full-stack
     // composite used since schema 2.0. Consumers should name the dimension.
     upPct: fullStackPct,
     fullStackPct,
+    // The denominator the composite was actually computed over, so a reader can
+    // see how much of the window this vantage could observe at all.
+    fullStackObservedChecks: observedRows.length,
+    unobservableChecks: checks - observedRows.length,
+    // Non-`up` rows written before the S349 classifier. Each one is a sample in
+    // which content was healthy and only the edge legs "failed" — the exact
+    // footprint a Cloudflare challenge leaves — but the shape was not recorded,
+    // so it cannot now be told apart from a real edge outage. Published rather
+    // than rewritten: the window is not re-scored to flatter the number.
+    unresolvedLegacyChecks: rows.filter((r) => r.cv === undefined && r.overall !== 'up').length,
     originContentPct: pct(contentRows, (r) => typeof r.contentOk === 'boolean' ? r.contentOk : r.down === 0),
     originContentChecks: contentRows.length,
     edgeLivenessPct: pct(livenessRows, (r) => r.livenessOk),
@@ -254,7 +348,10 @@ export function rollup(rows) {
 // The informational edge-HTML challenge state is deliberately excluded.
 export function dueAlerts(routes, liveness, sent, now = Date.now()) {
   const signals = [];
-  if (!liveness.ok) signals.push({ key: `liveness:${liveness.status}`, label: `edge liveness ${LIVENESS_PATH}`, status: liveness.status, ms: liveness.ms, error: liveness.error });
+  // S349: page on an OBSERVED liveness failure only. A challenge is not a failure,
+  // and a probe that pages on one gets muted — after which the real outage it
+  // exists to catch arrives in a channel nobody reads any more.
+  if (legDown(liveness)) signals.push({ key: `liveness:${liveness.status}`, label: `edge liveness ${LIVENESS_PATH}`, status: liveness.status, ms: liveness.ms, error: liveness.error });
   for (const r of routes) {
     if (r.ok) continue;
     signals.push({ key: `origin:${r.route}:${r.status}`, label: `content ${r.route}`, status: r.status, ms: r.ms, error: r.origin?.error });
@@ -366,6 +463,71 @@ function selfTest() {
     ['classifyEdge: no response → unreachable', classifyEdge(0, '') === 'unreachable'],
     ['edgeHtmlBroken: true only when content+liveness ok but edge errors', edgeHtmlBroken([{ ok: true, edge: { shape: 'error' } }], liveOk) === true],
     ['edgeHtmlBroken: false when edge merely challenged', edgeHtmlBroken([{ ok: true, edge: { shape: 'challenged' } }], liveOk) === false],
+
+    // ---- S349: challenge-aware API legs (the /status/ honesty defect) ----
+    ['classifyApi: CF challenge body → challenged', classifyApi(403, '<title>Just a moment...</title>', 200) === 'challenged'],
+    ['classifyApi: bare 403 → challenged (empty challenge body)', classifyApi(403, '', 200) === 'challenged'],
+    ['classifyApi: expected status → served', classifyApi(204, '', 204) === 'served'],
+    ['classifyApi: a real 5xx is NOT a challenge', classifyApi(500, 'boom', 200) === 'error'],
+    ['classifyApi: wrong-but-not-challenged status → other', classifyApi(405, 'nope', 204) === 'other'],
+    ['classifyApi: no response → unreachable', classifyApi(0, '', 200) === 'unreachable'],
+    // A challenged leg must be neither an outage nor a pass.
+    ['withObservability: challenged leg is unobservable', withObservability({ ok: false, status: 403 }, '', 200).observable === false],
+    ['withObservability: challenged leg is NOT promoted to ok', withObservability({ ok: false, status: 403 }, '', 200).ok === false],
+    ['withObservability: served leg stays observable', withObservability({ ok: true, status: 200 }, '{}', 200).observable === true],
+    ['legDown: challenged leg does not count as down', legDown(withObservability({ ok: false, status: 403 }, '', 200)) === false],
+    ['legDown: observed 500 DOES count as down', legDown(withObservability({ ok: false, status: 500 }, 'boom', 200)) === true],
+    // The whole point: a fully challenged run must stop publishing edge-degraded…
+    ['summarize: all legs challenged → edge-unobservable, not edge-degraded', (() => {
+      const ch = (expected) => withObservability({ ok: false, status: 403 }, '', expected);
+      return summarize(allUp, ch(200), ch(204), ch(202)).overall === 'edge-unobservable';
+    })()],
+    // …and must NOT be laundered into a green either.
+    ['summarize: all legs challenged is not reported as up', (() => {
+      const ch = (expected) => withObservability({ ok: false, status: 403 }, '', expected);
+      return summarize(allUp, ch(200), ch(204), ch(202)).overall !== 'up';
+    })()],
+    ['summarize: an OBSERVED liveness failure still pages as edge-degraded', (() => {
+      const down = withObservability({ ok: false, status: 500 }, 'boom', 200);
+      return summarize(allUp, down).overall === 'edge-degraded';
+    })()],
+    ['dueAlerts: a challenged liveness leg raises no alert', dueAlerts(allUp, withObservability({ ok: false, status: 403 }, '', 200), {}).length === 0],
+    ['dueAlerts: an observed liveness 500 still alerts', dueAlerts(allUp, withObservability({ ok: false, status: 500 }, 'boom', 200), {}).length > 0],
+    // Rollup must exclude blind rows from the denominator rather than score them.
+    ['rollup: unobservable rows leave the denominator', (() => {
+      const r = rollup([{ overall: 'up' }, { overall: 'edge-unobservable' }, { overall: 'edge-unobservable' }]);
+      return r.fullStackPct === 100 && r.fullStackObservedChecks === 1 && r.unobservableChecks === 2;
+    })()],
+    ['rollup: an all-blind window reports null, never 0% or 100%', (() => {
+      const r = rollup([{ overall: 'edge-unobservable' }, { overall: 'edge-unobservable' }]);
+      return r.fullStackPct === null && r.fullStackObservedChecks === 0;
+    })()],
+    ['rollup: challenged liveness samples leave the liveness denominator', (() => {
+      const r = rollup([
+        { overall: 'up', livenessOk: true, livenessObservable: true },
+        { overall: 'edge-unobservable', livenessOk: false, livenessObservable: false },
+      ]);
+      return r.edgeLivenessPct === 100 && r.edgeLivenessChecks === 1;
+    })()],
+    ['rollup: legacy rows without the flag stay counted (no silent history rewrite)', (() => {
+      const r = rollup([{ overall: 'up', livenessOk: true }, { overall: 'edge-degraded', livenessOk: false }]);
+      return r.edgeLivenessChecks === 2 && r.edgeLivenessPct === 50;
+    })()],
+    ['rollup: pre-S349 non-up rows are labelled unresolved, not re-scored', (() => {
+      const r = rollup([
+        { overall: 'up', cv: 349 },
+        { overall: 'edge-degraded' },          // legacy: shape unknown
+        { overall: 'edge-degraded', cv: 349 }, // post-fix: genuinely observed
+      ]);
+      return r.unresolvedLegacyChecks === 1 && r.fullStackObservedChecks === 3;
+    })()],
+    // Negative control: if the challenge path were ever removed, these states would
+    // stop being reachable and this assertion — not a green suite — is what says so.
+    ['negative control: the challenge path is genuinely exercised, not dead code', (() => {
+      const ch = withObservability({ ok: false, status: 403 }, '', 200);
+      const real = withObservability({ ok: false, status: 500 }, 'boom', 200);
+      return ch.observable === false && real.observable === true && ch.shape !== real.shape;
+    })()],
     ['edgeHtmlBroken: false when liveness down (already edge-degraded)', edgeHtmlBroken([{ ok: true, edge: { shape: 'error' } }], liveBad) === false],
     ['edgeHtmlBroken: false when content also down (already degraded)', edgeHtmlBroken([{ ok: false, edge: { shape: 'error' } }], liveOk) === false],
     ['summarize: apex HTML error (content+liveness ok) → edge-degraded', summarize([{ route: '/', ok: true, edge: { shape: 'error' } }], liveOk).overall === 'edge-degraded'],
@@ -474,7 +636,11 @@ for (const route of ROUTES) {
 }
 
 const liveRaw = await probeReal(`${PROD}${LIVENESS_PATH}`, 'application/json', LIVENESS_TIMEOUT_MS);
-const liveness = { endpoint: LIVENESS_PATH, status: liveRaw.status, ms: liveRaw.ms, ok: liveRaw.ok, ...(liveRaw.error ? { error: liveRaw.error } : {}) };
+const liveness = withObservability(
+  { endpoint: LIVENESS_PATH, status: liveRaw.status, ms: liveRaw.ms, ok: liveRaw.ok, ...(liveRaw.error ? { error: liveRaw.error } : {}) },
+  liveRaw.body || '',
+  200,
+);
 
 // S275 worker-ingest currency probe. On 2026-07-03 an out-of-band deploy
 // replaced the production worker with a build MISSING the /v/rum, /v/tt-report
@@ -494,9 +660,22 @@ async function probeWorkerIngest() {
       headers: { 'user-agent': UA },
       signal: AbortSignal.timeout(LIVENESS_TIMEOUT_MS),
     });
-    return { endpoint: '/v/rum (OPTIONS)', status: res.status, ms: Date.now() - t0, ok: res.status === 204 };
+    // S349: the comment above claims "OPTIONS is not bot-challenged, so this reads
+    // truthfully from CI". Measured 2026-09-10, OPTIONS /v/rum returns 403 in 79ms
+    // from Actions — that premise expired with the JSON one. Classify the shape.
+    let body = '';
+    try { body = (await res.text()).slice(0, 4096); } catch { /* body unreadable */ }
+    return withObservability(
+      { endpoint: '/v/rum (OPTIONS)', status: res.status, ms: Date.now() - t0, ok: res.status === 204 },
+      body,
+      204,
+    );
   } catch (e) {
-    return { endpoint: '/v/rum (OPTIONS)', status: 0, ms: Date.now() - t0, ok: false, error: String(e.message || e).slice(0, 120) };
+    return withObservability(
+      { endpoint: '/v/rum (OPTIONS)', status: 0, ms: Date.now() - t0, ok: false, error: String(e.message || e).slice(0, 120) },
+      '',
+      204,
+    );
   }
 }
 // S320 real-method ingest probe. probeWorkerIngest above proves the ROUTE is the
@@ -526,15 +705,20 @@ async function probeRumIngestPost() {
       body: JSON.stringify({ synthetic: true, route: '/__synthetic-uptime-probe', vitals: {}, context: {} }),
       signal: AbortSignal.timeout(LIVENESS_TIMEOUT_MS),
     });
+    // S349: read the body ONCE as text — it is needed both to detect a Cloudflare
+    // challenge by shape and to read the no-write contract flag. res.json() would
+    // consume the stream and leave the classifier with nothing to look at.
+    let raw = '';
+    try { raw = (await res.text()).slice(0, 4096); } catch { raw = ''; }
     let contractLive = false;
-    try { contractLive = (await res.json())?.synthetic === true; } catch { contractLive = false; }
+    try { contractLive = JSON.parse(raw)?.synthetic === true; } catch { contractLive = false; }
     // `ok` asserts ONLY what the outage actually looked like: the real method
     // returning something other than 202. The no-write contract is reported
     // separately and deliberately does NOT flip `ok` — a probe that pages because
     // the callee half of its own change has not rolled out yet is a false alarm,
     // and false alarms are how probes get muted. Tighten once contractLive holds.
     const ok = res.status === 202;
-    return {
+    return withObservability({
       endpoint,
       status: res.status,
       ms: Date.now() - t0,
@@ -543,9 +727,13 @@ async function probeRumIngestPost() {
       ...(ok && !contractLive
         ? { note: 'ingest healthy; deployed worker predates the synthetic no-write contract, so this probe still stores one inert row per run' }
         : {}),
-    };
+    }, raw, 202);
   } catch (e) {
-    return { endpoint, status: 0, ms: Date.now() - t0, ok: false, contractLive: false, error: String(e.message || e).slice(0, 120) };
+    return withObservability(
+      { endpoint, status: 0, ms: Date.now() - t0, ok: false, contractLive: false, error: String(e.message || e).slice(0, 120) },
+      '',
+      202,
+    );
   }
 }
 
@@ -615,7 +803,10 @@ const last = prevHistory[prevHistory.length - 1] || null;
 const hourBucket = summary.generatedAt.slice(0, 13); // YYYY-MM-DDTHH
 const newHourBucket = !last || (last.t || '').slice(0, 13) !== hourBucket;
 const stateChanged = !last || last.overall !== summary.overall;
-const isIncident = summary.overall !== 'up';
+// S349: `edge-unobservable` is a blind spot, not an incident. Treating it as one
+// forced a history row and a commit on all 48 runs a day — which is precisely how
+// the retained window came to hold 1488 consecutive non-`up` rows and nothing else.
+const isIncident = summary.overall !== 'up' && summary.overall !== 'edge-unobservable';
 const shouldRecord = newHourBucket || stateChanged || isIncident;
 
 let history = prevHistory;
@@ -628,6 +819,17 @@ if (shouldRecord) {
     contentOk: routeResults.every((r) => r.ok),
     livenessOk: Boolean(liveness.ok),
     workerIngestOk: Boolean(workerIngest.ok),
+    // S349: without these the rollup cannot tell "observed a failure" from "saw
+    // nothing", and every challenged sample would keep dragging the public
+    // availability number down exactly as it has since 2026-07-13.
+    livenessObservable: liveness.observable !== false,
+    workerIngestObservable: workerIngest.observable !== false,
+    // Provenance, so a later reader can tell which classifier produced this row.
+    // Rows without it predate S349 and their non-`up` states are UNRESOLVABLE:
+    // the challenge shape was not recorded, and a challenge and a real edge
+    // outage leave an identical footprint once it is gone. They are neither
+    // rewritten nor quietly dropped — they are counted and labelled.
+    cv: 349,
   };
   history = [...prevHistory, row].slice(-HISTORY_CAP);
 }

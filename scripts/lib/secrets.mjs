@@ -289,8 +289,20 @@ export function resolveCapability(capability) {
   }
   const ok = known && required.length > 0 && missing.length === 0;
   const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(catalogue));
+  // S349 — presence is not health. The map records the outcome of the last real
+  // action probe, and this resolver held that field without ever reading it: the
+  // gateway printed `✓ READY 2/2 all present` for supabase.admin while the very
+  // same entry recorded `lastProbeStatus: "auth-error"`. This is the surface an
+  // agent checks before declaring itself blocked (CANON-019), so a READY that
+  // contradicts our own stored disproof sends the next session down a dead path.
+  // `ok` deliberately keeps its meaning — presence — so no existing caller changes
+  // behaviour; the probe verdict is reported ALONGSIDE it and rendered distinctly.
+  const entry = catalogue[capability] || {};
+  const lastProbeStatus = entry.lastProbeStatus ?? null;
+  const lastProbeAt = entry.lastProbeAt ?? null;
+  const probeFailing = Boolean(lastProbeStatus) && lastProbeStatus !== 'ok';
   audit({ capability, action: 'resolveCapability', ok, known, missing });
-  return { ok, known, required, missing, found, suggestions };
+  return { ok, known, required, missing, found, suggestions, lastProbeStatus, lastProbeAt, probeFailing };
 }
 
 /**

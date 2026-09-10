@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "2.0",
+  "session": 349,
+  "generatedAt": "2026-09-10T21:37:54.579Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "axes": [
+    "security",
+    "infrastructure",
+    "ux",
+    "speed",
+    "featureDepth"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "uptime-challenge-aware-api-legs",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 8,
+      "title": "Stop publishing a Cloudflare bot challenge as an outage on /status/",
+      "why": "The public availability surface has reported edge-degraded for 100% of the 1488 retained samples since 2026-07-13. Visitors reading /status/ are told our own edge is degraded while it is serving them fine, which is a CANON-031 observability-honesty failure on a public trust surface.",
+      "recipe": "Give the liveness, workerIngest and rumIngestPost legs the same challenge-shape classification the login leg already has: a CF challenge is UNOBSERVABLE from CI, not an outage. Never convert unobservable to ok:true — publish observable:false, exclude unobserved rows from rollup denominators, and let overall report edge-unobservable rather than edge-degraded or a fake up.",
+      "premises": [
+        {
+          "claim": "The liveness leg reads raw ok and never classifies challenge shape.",
+          "adapter": "file-content",
+          "target": "scripts/probe-uptime.mjs",
+          "pattern": "const liveness = { endpoint: LIVENESS_PATH, status: liveRaw.status, ms: liveRaw.ms, ok: liveRaw.ok",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "A challenge-shape classifier already exists in the same file.",
+          "adapter": "grep",
+          "target": "scripts/probe-uptime.mjs",
+          "pattern": "export function classifyEdge",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The published availability artifact currently reports a degraded overall.",
+          "adapter": "file-content",
+          "target": "api/uptime.json",
+          "pattern": "\"overall\": \"edge-degraded\"",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "Probed live during the audit: GET https://vaultsparkstudios.com/api/founder-presence.json returns 200 application/json from a residential IP and 403 at 127ms from CI. The file header asserts \"JSON/API paths are not bot-challenged\" - that premise expired when Cloudflare widened challenges to JSON paths.",
+        "limitations": "Residential-vs-CI asymmetry is the diagnosis; it does not by itself prove the edge is healthy, which is exactly why the fix must publish unobservable rather than up."
+      },
+      "priority": 34.45,
+      "status": "pending",
+      "executionLog": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Give the liveness, workerIngest and rumIngestPost legs the same challenge-shape classification the login leg already has: a CF challenge is UNOBSERVABLE from CI, not an outage. Never convert unobservable to ok:true — publish observable:false, exclude unobserved rows from rollup denominators, and let overall report edge-unobservable rather than edge-degraded or a fake up."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Give the liveness, workerIngest and rumIngestPost legs the same challenge-shape classification the login leg already has: a CF challenge is UNOBSERVABLE from CI, not an outage. Never convert unobservable to ok:true — publish observable:false, exclude unobserved rows from rollup denominators, and let overall report edge-unobservable rather than edge-degraded or a fake up. Add self-tests covering the new states."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Give the liveness, workerIngest and rumIngestPost legs the same challenge-shape classification the login leg already has: a CF challenge is UNOBSERVABLE from CI, not an outage. Never convert unobservable to ok:true — publish observable:false, exclude unobserved rows from rollup denominators, and let overall report edge-unobservable rather than edge-degraded or a fake up. Add self-tests plus a negative control that fails if the new state is never exercised."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "worker-scheduled-uptime-sampler",
+      "axis": "infrastructure",
+      "tier": "🔥",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 9,
+      "title": "Observe the edge from inside the edge: Worker scheduled() sampler with bounded KV",
+      "why": "Edge liveness is structurally unobservable from GitHub Actions because every datacenter request to the apex is challenged. A Cloudflare cron runs inside Cloudflare, so it can observe apex health without passing a challenge - it is the only way to make item 1 report a real green instead of an honest unobservable.",
+      "recipe": "Add scheduled() to the production worker behind UPTIME_SAMPLER_ENABLED (default 0, so a deploy changes nothing), write bounded fixed-key KV samples with TTL, and add a drain script that folds samples into the unchanged uptime history contract. Rollback is a flag flip, not a redeploy.",
+      "premises": [
+        {
+          "claim": "The production worker has no scheduled handler.",
+          "adapter": "grep",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "async scheduled",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        },
+        {
+          "claim": "wrangler.toml declares no cron triggers.",
+          "adapter": "grep",
+          "target": "cloudflare/wrangler.toml",
+          "pattern": "[triggers]",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "Genius list rank 1 (score 100) and the recorded nextMilestone. Shipping it dark this session keeps the trust-path release independent, as the task text requires.",
+        "limitations": "The flag stays 0 this session; enabling it is a separate release with its own rollback evidence. A KV write per request is what exhausted free quota before, so the schema is one fixed key per sample window with TTL, never per-request."
+      },
+      "priority": 31.34,
+      "status": "pending",
+      "executionLog": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Add scheduled() to the production worker behind UPTIME_SAMPLER_ENABLED (default 0, so a deploy changes nothing), write bounded fixed-key KV samples with TTL, and add a drain script that folds samples into the unchanged uptime history contract. Rollback is a flag flip, not a redeploy."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Add scheduled() to the production worker behind UPTIME_SAMPLER_ENABLED (default 0, so a deploy changes nothing), write bounded fixed-key KV samples with TTL, and add a drain script that folds samples into the unchanged uptime history contract. Rollback is a flag flip, not a redeploy. Add self-tests covering the new states."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Add scheduled() to the production worker behind UPTIME_SAMPLER_ENABLED (default 0, so a deploy changes nothing), write bounded fixed-key KV samples with TTL, and add a drain script that folds samples into the unchanged uptime history contract. Rollback is a flag flip, not a redeploy. Add self-tests plus a negative control that fails if the new state is never exercised."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "slug": "check-secrets-consults-probe-status",
+      "axis": "security",
+      "tier": "⚡",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 6,
+      "title": "check-secrets must consult the disproof it already holds",
+      "why": "The gateway prints READY for a capability whose own CAPABILITY_MAP entry records lastProbeStatus auth-error. This is the surface an agent checks before declaring itself blocked (CANON-019), so a false READY sends the next session down a dead path.",
+      "recipe": "Read lastProbeStatus alongside presence and report a third state - present-but-failing - instead of collapsing it into READY. Presence is not scope.",
+      "premises": [
+        {
+          "claim": "check-secrets never reads lastProbeStatus.",
+          "adapter": "grep",
+          "target": "scripts/check-secrets.mjs",
+          "pattern": "lastProbeStatus",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "Recorded as an open S344 OBS/P1 item; the script is local to this repo so the fix is in scope here.",
+        "limitations": "The CAPABILITY_MAP itself is studio-ops owned; only the reader is fixed here."
+      },
+      "priority": 26.5,
+      "status": "pending",
+      "executionLog": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Read lastProbeStatus alongside presence and report a third state - present-but-failing - instead of collapsing it into READY. Presence is not scope."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Read lastProbeStatus alongside presence and report a third state - present-but-failing - instead of collapsing it into READY. Presence is not scope. Add self-tests covering the new states."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Read lastProbeStatus alongside presence and report a third state - present-but-failing - instead of collapsing it into READY. Presence is not scope. Add self-tests plus a negative control that fails if the new state is never exercised."
+        }
+      }
+    }
+  ],
+  "axisCoverage": {
+    "security": 2,
+    "infrastructure": 1
+  },
+  "totals": {
+    "count": 3,
+    "priority": 92.29,
+    "top3": [
+      "uptime-challenge-aware-api-legs",
+      "worker-scheduled-uptime-sampler",
+      "check-secrets-consults-probe-status"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [],
+  "scope": "Website S349 arc audit. Premises verified against live code and a live network probe before inclusion.",
+  "novelty": "Items 1 and 2 converge: the Worker cron is the only vantage from which the signal item 1 makes honest can ever be observed.",
+  "limitations": "RUM/field-vitals freshness is externally starved (needs real traffic plus a founder-only Cloudflare dashboard toggle) and is honestly deferred, not skipped silently.",
+  "premiseVerification": "pre-verified"
+}

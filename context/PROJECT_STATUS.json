@@ -12,23 +12,25 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S348 is released: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed are live through the scoped content lane.",
-  "publicNote": "Every Desk story links a deterministic critique packet; Changelog reactions hydrate progressively; the homepage now receives its Vault Pulse and recent-ships feed through immutable, content-safe release artifacts.",
-  "nextMilestone": "Migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release, then close field-vitals freshness with a real cohort.",
+  "currentFocus": "S349 stopped a public trust surface from lying: /status/ had reported edge-degraded on 604 consecutive samples since 2026-07-13 because Cloudflare began bot-challenging JSON and OPTIONS paths, and the probe read its own challenge as an outage. Unobservable is now a first-class state — neither an outage nor a pass.",
+  "publicNote": "The status page now distinguishes \"our probe cannot see the edge from here\" from \"the edge is down\", and states the denominator it measured over instead of implying more coverage than it has.",
+  "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
   "blockers": [
+    "Edge liveness is honestly UNMEASURED, not fixed: the sampler that can observe it ships dark and has never run. Its presence is not coverage.",
+    "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
     "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
   ],
   "lastUpdated": "2026-09-10",
-  "currentSession": 348,
+  "currentSession": 349,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-09",
-  "silScore": 993,
-  "silAvg3": 986.3333333333334,
-  "silVelocity": 11,
+  "silScore": 991,
+  "silAvg3": 990,
+  "silVelocity": -2,
   "silDebt": "down",
-  "silLastSession": 348,
+  "silLastSession": 349,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -250,5 +252,17 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
   "testsSourceFingerprint": "03288cb46bc7b23374af224b",
-  "lastSessionSummary": "S348 shipped 11 audit outcomes after the independent S347 recovery boundary: progressive hydration, distributional lab evidence, atomic mobile receipts, deterministic provenance, complete evidence coverage and publishers, history safety, hot-state sharding, measured feed probation, task-truth reconciliation, and 30 critique packets. Final release receipts are bound during closeout."
+  "lastSessionSummary": "S348 shipped 11 audit outcomes after the independent S347 recovery boundary: progressive hydration, distributional lab evidence, atomic mobile receipts, deterministic provenance, complete evidence coverage and publishers, history safety, hot-state sharding, measured feed probation, task-truth reconciliation, and 30 critique packets. Final release receipts are bound during closeout.",
+  "silCategories": [
+    100,
+    99,
+    96,
+    96,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ]
 }

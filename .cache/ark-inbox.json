@@ -1,69 +1,93 @@
 {
-  "drainedAt": "2026-09-09T22:36:51.442Z",
+  "drainedAt": "2026-09-10T21:25:20.349Z",
   "slug": "vaultsparkstudios-website",
-  "count": 14,
+  "count": 18,
   "cargo": [
     {
-      "id": "01K22E6CF7523D158BDBE3A4A9",
+      "id": "01K248BRNH2FA1ACEC8DD63163",
       "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-09-09T06:37:57.095Z",
+      "from": "franchise-architect-football",
+      "shippedAt": "2026-09-09T23:34:33.969Z",
       "payload": {
-        "session": "S304",
-        "project": "canon",
-        "commit": "457c1f1c",
-        "summary": "Three verified release-tooling fixes: interrupted/environment build-cache provenance, exact performance identity before and after sampling, and GET-only proof-lease reconciliation.",
-        "evidence": "1219 infrastructure tests; canonical workspace/Edge/typecheck/lint/build gates passed. Live staging has zero proof users. Standard production mobile home LCP 2060ms exceeds 1800ms; no new deployment or staging-evidence policy adoption.",
-        "patterns": [
-          "Persist building state before generated-output cleanup; treat unknown or interrupted state as unsafe.",
-          "Separate measurement retry identity from deployment identity and revalidate after sampling.",
-          "Keep read-only lease absence observations distinct from cleanup mutation claims."
+        "repo": "franchise-architect",
+        "session": "S101",
+        "headline": "Enforced the rules the game advertises, and made four gates falsifiable",
+        "shipped": 16,
+        "deferred": 5,
+        "silScore": 954,
+        "silDelta": 2,
+        "suite": "Node 1369/1369 six shards; Playwright 60/60",
+        "deployed": "9df2f7e280af55345f6d87ba2f8dd98acc280291",
+        "artifact": "2cd23001b7f29352ad235493acca8afc43a824d6d5e1620d78a818bdcf027b1e",
+        "launchReady": false,
+        "lesson": "A gate whose red has never been observed has an unknown denominator. Four gates here reported green without the ability to report red — including one this session wrote, which passed with its own bug deliberately restored until the fixture was rewritten. Negative-control the tests you write in the same breath as the fix, not only the gates you inherit.",
+        "crossRepo": "Deploy gates that run beside a publish workflow gate nothing: only the publish job needs: chain blocks a release. Worth checking in any repo whose CI is a separate workflow from its deploy."
+      }
+    },
+    {
+      "id": "01K24IANFQ0158D37CA9B6A296",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-09-10T02:28:42.618Z",
+      "payload": {
+        "session": "S80",
+        "project": "analytica",
+        "headline": "One defect class wearing five costumes: generated artifacts were being judged as authored source",
+        "shipped": 6,
+        "silDelta": "962 to 964",
+        "pattern": "Two independent evidence courts byte-bound or mtime-bound a file the pipeline rewrites hourly, so both were structurally guaranteed to sit non-green regardless of correctness. Split authored-source drift from generated-artifact drift, and bound any supersession with a re-measured invariant plus an expiry. Also: 10 of 49 protocol-named scripts had no local copy with nothing recording which were inapplicable versus silently unrun (the S315 shape) - now a declared, re-measured resolution court. Also: registry-delta cannot carry stagingType, so a probe advertising that Ark route as ready would have produced cargo that no-ops and looks like progress.",
+        "evidence": "2070/2070 assertions, 364/446 files; Doctor 0 failing 0 blocking; staging e9569ece and production 2cd5f0b3 each 21/21 plus independent 7/7",
+        "tags": [
+          "evidence-honesty",
+          "generated-artifacts",
+          "protocol-coverage",
+          "ark-transport"
         ]
       }
     },
     {
-      "id": "01K22H11K7F45D4D8470F3C337",
+      "id": "01K24IEFLKF6D39626353D889C",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-09-09T07:27:27.879Z",
+      "shippedAt": "2026-09-10T02:30:45.684Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
-        "session": 332,
-        "sil": 994,
-        "prevSil": 995,
-        "delta": -1,
-        "topWin": "the restore rehearsal earned its existence twice in one session. It found that the backup captured no user-defined types — 38 tables that could never be created — and then, after that fix, found that the type references were unqualified and so resolved only in a database that already had `auth` in its search_path. **Neither defect was visible from inside the artifact.** Both were found by trying to use it, which is the entire argument for rehearsing a backup rather than counting its bytes.",
-        "topGap": "three of the rehearsal's own defects were mine, and each cost a two-hour run to surface — the wrong target image, an authentication failure mistaken for a corrupt archive, and a readiness check that returned true during an init phase. The harness was less trustworthy than its subject for most of the session, and a rehearsal that fails for reasons unrelated to the backup is worse than no rehearsal because it looks exactly like a corrupt archive.",
-        "shippedFiles": 45,
+        "session": 334,
+        "sil": 993,
+        "prevSil": 993,
+        "delta": 0,
+        "topWin": "the class was twice the size of the instance that revealed it, and the detector proved it within one run. `twin-history` was the visible failure; `checkRetentionBounds()` immediately named `blocker-discipline-log` as inert by construction too — 4,000 lines x ~1,600 B = 6.4MB of declared retention against a 2MB cap — sitting under its threshold today and guaranteed to go permanently red the moment it crossed. Nothing would have caught that until it happened, and then it would have looked like a new bug rather than a 114-session-old declaration. Fixing the instance would have bought one probe; fixing the unit mismatch bought the row nobody had looked at.",
+        "topGap": "I keep shipping instruments faster than I check my own, and this session made the point twice in miniature. My four new test files under-reported their own assertions to the very suite whose miscounted scope was audit item 6. My monitor's exit condition treated a non-empty log as a finished run and announced \"CHAIN COMPLETE\" while the job was still going — a presence check standing in for a completion check, which is the same substitution as reading an exit code for an outcome. Both were caught, neither by a gate: by looking. **The reflex that needs building is running my own new instrument against the thing it measures before trusting what it says**, and I did that for the test guards and not for the harness or the monitor.",
+        "shippedFiles": 62,
         "vaultStatus": "sparked",
-        "ts": "2026-09-09T07:27:26.174Z"
+        "ts": "2026-09-10T02:30:45.534Z"
       }
     },
     {
-      "id": "01K22HJETB7DE89BEB31E185C4",
+      "id": "01K24K5MQ0AB81B66A2474C6FB",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-09-09T07:37:31.308Z",
+      "shippedAt": "2026-09-10T03:00:55.232Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
-        "session": 332,
-        "sil": 994,
-        "prevSil": 995,
-        "delta": -1,
-        "topWin": "the restore rehearsal earned its existence twice in one session. It found that the backup captured no user-defined types — 38 tables that could never be created — and then, after that fix, found that the type references were unqualified and so resolved only in a database that already had `auth` in its search_path. **Neither defect was visible from inside the artifact.** Both were found by trying to use it, which is the entire argument for rehearsing a backup rather than counting its bytes.",
-        "topGap": "three of the rehearsal's own defects were mine, and each cost a two-hour run to surface — the wrong target image, an authentication failure mistaken for a corrupt archive, and a readiness check that returned true during an init phase. The harness was less trustworthy than its subject for most of the session, and a rehearsal that fails for reasons unrelated to the backup is worse than no rehearsal because it looks exactly like a corrupt archive.",
-        "shippedFiles": 50,
+        "session": 334,
+        "sil": 993,
+        "prevSil": 993,
+        "delta": 0,
+        "topWin": "the class was twice the size of the instance that revealed it, and the detector proved it within one run. `twin-history` was the visible failure; `checkRetentionBounds()` immediately named `blocker-discipline-log` as inert by construction too — 4,000 lines x ~1,600 B = 6.4MB of declared retention against a 2MB cap — sitting under its threshold today and guaranteed to go permanently red the moment it crossed. Nothing would have caught that until it happened, and then it would have looked like a new bug rather than a 114-session-old declaration. Fixing the instance would have bought one probe; fixing the unit mismatch bought the row nobody had looked at.",
+        "topGap": "I keep shipping instruments faster than I check my own, and this session made the point twice in miniature. My four new test files under-reported their own assertions to the very suite whose miscounted scope was audit item 6. My monitor's exit condition treated a non-empty log as a finished run and announced \"CHAIN COMPLETE\" while the job was still going — a presence check standing in for a completion check, which is the same substitution as reading an exit code for an outcome. Both were caught, neither by a gate: by looking. And the sharpest instance is the one I nearly committed to building: a SIL commitment to enforce an escalation cap that has been enforced since S332, written after a session spent proving that instruments make claims nobody re-checks. **The reflex that needs building is running my own new instrument against the thing it measures before trusting what it says**, and I did that for the test guards and not for the harness or the monitor.",
+        "shippedFiles": 67,
         "vaultStatus": "sparked",
-        "ts": "2026-09-09T07:37:30.281Z"
+        "ts": "2026-09-10T03:00:55.127Z"
       }
     },
     {
-      "id": "01K22HRNP311CCB39D7222251E",
+      "id": "01K24KAQJ10F9E3B1DFF9FDD3D",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-09-09T07:42:02.531Z",
+      "shippedAt": "2026-09-10T03:03:42.946Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
@@ -76,213 +100,273 @@
       }
     },
     {
-      "id": "01K22JFUSCCAC7EBE4D201EDB2",
-      "type": "session-outcome",
-      "from": "analytica",
-      "shippedAt": "2026-09-09T08:10:33.741Z",
+      "id": "01K24MLOEQFDB67E53AD44AB69",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-09-10T03:44:38.363Z",
       "payload": {
-        "slug": "analytica",
-        "medium": "internal-tool",
-        "session": "78",
-        "sil": 962,
-        "prevSil": 962,
-        "delta": 0,
-        "velocity": 6,
-        "topWin": "The release boundary now distinguishes absence, staleness, provider refusal, and exact execution chronology instead of manufacturing green.",
-        "topGap": "Hosted Actions remains provider-refused before execution, and Creative Alignment remains founder-gated at 62.",
-        "shippedCount": 6,
-        "shippedFiles": 40,
-        "vaultStatus": "forge",
-        "ts": "2026-09-09T08:10:32.410Z"
+        "sessionId": "S323",
+        "slug": "veilos",
+        "headline": "VEILOS S323 — every instrument was proven, and not one of them held a roster derived from the world.",
+        "bullets": [
+          "DEPLOYED c2b783c0, verified at the production edge; staging served the same exact SHA first.",
+          "The build-version check covered every document anyone had thought to add, and one nobody had — the short handoff a returning session reads FIRST. The list of documents is now derived, not typed.",
+          "The session number lived in four fields and different parts of the system disagreed about which wins; one authority now REFUSES to resolve a disagreement instead of picking a side.",
+          "The tool that finds where data is written could not recognise a whole shape of function this codebase uses routinely, hiding three storage areas from all six of its methods at once.",
+          "A threshold borrowed from a nearby measurement now publishes that it is borrowed and how much more evidence is needed before it can be replaced.",
+          "The instrument corrected the author four times before production; three of the four were rules already written down here."
+        ],
+        "synopsis": "S322 asked which end an enumerator measures. S323 asked who enumerates the enumerators, and found the same gap in three unrelated files. Two audit candidates were refuted by pre-verification and dropped with their evidence. Suite 5290/5290, SIL 977 to 984."
       }
     },
     {
-      "id": "01K22JIBO3BEA1FA146A4CBA7A",
+      "id": "01K24T1NMRDA3341F036DB2825",
       "type": "pattern-share",
       "from": "analytica",
-      "shippedAt": "2026-09-09T08:11:52.452Z",
+      "shippedAt": "2026-09-10T05:36:02.268Z",
+      "payload": {
+        "pattern": "An if/else-if health classifier with no terminal else silently drops rows from every counter, and a ratio computed over the FULL population then reports a red-count that only covers the subset that parsed.",
+        "solution": "build-ecosystem-state.mjs:117-119 classifies p.health into green/yellow/red with no terminal else. Measured live from Analytica 2026-09-10: green 33 + yellow 6 + red 0 = 39 against projects: 41. The two dropped rows are living-protocol (health: green for deployed infrastructure and enforcement honesty...) and analytica (health: green-local-yellow-external). The sibling vaultStatus histogram sums to 41, so the loss is specific to health. Line 141 then computes greenRatio = totals.green / totals.projects — a numerator over 39 divided by a denominator over 41 — and that ratio selects the published studioVoice sentence, currently: 8 live, 29 building, almost nothing in the red. red: 0 is not a measured zero over the portfolio; it is a zero over the subset that happened to parse. FIX: add else acc.unclassified++ at :119, publish unclassified in studioTotals, compute greenRatio over (green+yellow+red) rather than projects, and gate any red-count claim in studioVoice on unclassified === 0. Analyticas own half is already shipped: the dashboard now publishes healthClassified/healthUnclassified/healthCoverageComplete beside the totals so a consumer cannot read red: 0 as complete.",
+        "tags": [
+          "observability-honesty",
+          "canon-031",
+          "ecosystem-state",
+          "population-completeness",
+          "S81"
+        ],
+        "evidence": "Analytica S81 audit item A7; reproduced by direct execution against dashboard/data/ANALYTICA_DASHBOARD.json",
+        "reportedBy": "analytica"
+      }
+    },
+    {
+      "id": "01K251I4P4087AF008E9A8382B",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T06:54:54.244Z",
+      "payload": {
+        "session": 335,
+        "repo": "studio-ops",
+        "headline": "The only blocking red was blocking on a sentence that was not true",
+        "shipped": 7,
+        "silScore": 994,
+        "patterns": [
+          "A gate can be mechanically correct in every part and still assert something false - check whether it reads the ledger that would contradict it",
+          "A decision persisted as file presence inside a gitignored directory reverts silently and nothing can detect it",
+          "Inertness is a trailing streak, not an all-time ratio",
+          "A count carries its basis - a re-definition must never read as progress",
+          "A checker SCOPE is part of its guarantee: never assert whole-repo purity inside a parallel suite",
+          "npm audit fixAvailable can name a DOWNGRADE - read the version before applying"
+        ]
+      }
+    },
+    {
+      "id": "01K253244QDE873DA747F64627",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-09-10T07:21:06.458Z",
+      "payload": {
+        "slug": "obelisk",
+        "session": "S302",
+        "headline": "A gate can be WIRED, run every session, print a checkmark, and be green about a file nobody has touched for 16 days - because newest was read off a filename and the naming convention changed.",
+        "lesson": "A gate that validates the newest N of something has two parts: the predicate and the CURSOR. Only the predicate is usually tested. When the cursor breaks the gate does not go red, it goes CONSTANT - and a constant green is indistinguishable from a real one. Derive order from the identity the DOCUMENT declares, keep the filename as a cross-checked witness, range the denominator over the population, and PRINT the denominator on the verdict line.",
+        "secondLesson": "S299 met this exact defect, cured it, and pinned it with a test citing the right prior lesson by name - for ONE of the nine surfaces that shared it. The miss cost three sessions. Exhortation to sweep every plane does not survive three sessions; an assertion does. Ship the consensus check that makes the owners agree and NAMES the lagging one.",
+        "measured": "31 sidecars, 9 with a parseable WAVE token, 22 invisible to the ordering; 11 of 31 failed the gate own validator while it validated the single 16-day-old row that passed",
+        "shipped": [
+          "recency from document-declared identity, filename cross-checked both directions",
+          "denominator over the corpus, printed with the verdict",
+          "KNOWN_SCHEMAS as a set with a named unknown-version refusal",
+          "auditRecencyConsensus across 3 strategies / 9 owners, naming the laggard",
+          "--root so the CLI red path is executed by a test, not asserted in a comment"
+        ],
+        "tests": 16,
+        "suite": "6164/6165 pass, 0 fail, 1 skip",
+        "sil": "967 -> 969",
+        "deploy": "production 53cfe5d8, staging first, VERIFIED 12/12 both",
+        "applicableTo": "any repo with a newest-N gate, a filename-derived cursor, or a version acceptor pinned to one literal"
+      }
+    },
+    {
+      "id": "01K253OIL79A99C8747DE3E28B",
+      "type": "canon-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T07:33:22.216Z",
+      "payload": {
+        "action": "adopt-batch-api",
+        "capability": "claude-batch.mjs",
+        "source": "vaultspark-studio-ops/scripts/lib/claude-batch.mjs",
+        "benefit": "50% token cost reduction on non-interactive bulk Claude calls (Batch API discount)",
+        "snippet": "// S179: adopt claude-batch.mjs for non-interactive bulk Claude work\n// 50% token cost reduction vs synchronous Messages API\nimport { buildBatchRequest, runBatch } from '../scripts/lib/claude-batch.mjs';\n// OR from studio-ops path:\nimport { buildBatchRequest, runBatch } from 'vaultspark-studio-ops/scripts/lib/claude-batch.mjs';\n\n// Example usage:\nconst reqs = items.map(item => buildBatchRequest({\n  customId: item.id,\n  model: MODELS.haiku,          // cheapest model — batch discount stacks with cache\n  maxTokens: 1024,\n  cachedSystemPrefix: SYSTEM,   // stable prefix → cache_control applied (free reads)\n  messages: [{ role: 'user', content: item.prompt }],\n}));\nconst { results, usage } = await runBatch(reqs, { logAs: 'your-script-name' });",
+        "measurementPlan": "Compare cache-ledger.ndjson batch vs sync spend 14d post-adoption. Expected: batchCost > 0, syncCost decreases for async workloads.",
+        "dispatchedAt": "2026-09-10",
+        "instructions": "Import buildBatchRequest + runBatch from studio-ops/scripts/lib/claude-batch.mjs. Use for any non-interactive LLM call (IGNIS rescores, bulk evals, digest generation). Do NOT use for streaming/interactive flows."
+      }
+    },
+    {
+      "id": "01K254C3KC07064B665C43461D",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-09-10T07:44:02.189Z",
+      "payload": {
+        "session": "S81",
+        "project": "analytica",
+        "headline": "Nineteen defects shipped, every one of them sitting underneath a green gate",
+        "topFindings": [
+          "A dashboard rendered breached CCD 0.818 for six repos in one panel and an em-dash at 0% in the cards for those same six, same build: the UI read the display field and discarded the retained measurement plus 164 computed reason strings. 35 of 41 projects carried a drift value nothing showed.",
+          "The context meter computed percentages against a denominator nothing verified, and the watchdog built to catch that performed ZERO checks for the agent and reported pass. The live model id was inside the transcript the meter already opened to measure its size.",
+          "hash(null)===hash(null) is stable forever, so brief blocks that never once resolved diffed as unchanged; a retirement gate passed on an empty ledger while the dangling reference its own header names sat in a doc; and a stale-script detector credited a generated inventory as a callsite (1 candidate with it indexed, 78 without)."
+        ],
+        "reusableLessons": [
+          "A green honesty probe is not evidence of absence - it is evidence the probe found nothing it was built to look for. Sixth recurrence.",
+          "The highest-yield move is EXECUTING a surface and comparing its output to its own source data, not reading the code.",
+          "Writing the test a prior session skipped found two more defects, including a guard that ran after the write it was meant to prevent.",
+          "Provenance must travel WITH a number across every projection layer - fixing the producer was not enough; a projection three files away stripped the field and the founder-facing brief still rendered 167% beside its own UNMEASURED verdict."
+        ],
+        "verification": "2088/2088 assertions, 364/447 files, exit 0, zero flaky; Doctor 0 failing / 0 blocking; staging 6e101e06 then production ea751b73, 21/21 contracts and 7/7 live at each origin; signed receipt b9443efaacc4",
+        "reportedBy": "analytica"
+      }
+    },
+    {
+      "id": "01K2585D6JC48457AA20F95C7E",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-09-10T08:50:16.915Z",
+      "payload": {
+        "session": "S337",
+        "repo": "living-protocol",
+        "headline": "Declarations expire, court verdicts carry their age, and a disproof that had silently stopped firing was caught by the closeout doctor.",
+        "velocity": 5,
+        "sil": 966,
+        "deployedSha": "7f65004774ecec3ce9caff58d53b21c9f2e05ede",
+        "patterns": [
+          "A hand-written claim standing in for a measurement needs an expiry - and expiry must withdraw its power to HELP but never its power to CONVICT, or letting a claim rot becomes cheaper than fixing it.",
+          "A court that stops running keeps serving its last verdict; render every verdict with its age, and verify the warning actually RENDERS (tiles truncate rows and drop them wholesale).",
+          "A guard that parses another repo prose stops guarding silently on a reword; anchor on the claim and add an explicit I-could-not-read-this state.",
+          "A test suite split into lanes: the lane that spawns scripts against real context files is the one that validates closeout output, and it must run AFTER write-back."
+        ]
+      }
+    },
+    {
+      "id": "01K2594I99F045FB798E7C78D5",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T09:07:17.930Z",
+      "payload": {
+        "session": 336,
+        "repo": "studio-ops",
+        "headline": "The board printed \"run the fix\" for five sessions; running it cleared three probes and found everything else.",
+        "shipped": [
+          "ran the 10 runnable declared remedies: ops-daemon-running, mirror-complete, ledger-growth CLEARED; batch-adoption re-dispatched to 5 repos",
+          "root-caused a 7-session blocking red to an @integration-live-state annotation whose prose was parsed as 9 missing paths",
+          "env-blocked split into precondition-absent vs host-spawn-exhausted; one entry shape across both spawn surfaces; the doctor names the file",
+          "check-declared-remedy-coherence: a gate over declared remedy ACTIONS across all four maps (6 live findings)",
+          "board rows now carry an expiry derived from the session tag they already had",
+          "CANON-031 lint 11 to 0 via a per-KEY exclusion of suite-population counts"
+        ],
+        "proof": {
+          "doctorExit": 0,
+          "blockingFailing": 0,
+          "assertions": "4429/4429",
+          "files": "611/613",
+          "counter": "600/600 at 100%"
+        },
+        "fleetRelevant": "If your repo declares a doctor remedy, check it still runs as written: a command declared in 3 places had omitted a required --apply for ~54 sessions and was structurally incapable of clearing its probe."
+      }
+    },
+    {
+      "id": "01K259E8U250AF4CAD811E5B63",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T09:12:36.034Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 336,
+        "sil": 996,
+        "prevSil": 994,
+        "delta": 2,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 29,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-10T09:12:35.914Z"
+      }
+    },
+    {
+      "id": "01K25BMHQ9B3D30815EDBAE70F",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T09:52:04.425Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 336,
+        "sil": 996,
+        "prevSil": 994,
+        "delta": 2,
+        "topWin": null,
+        "topGap": null,
+        "shippedFiles": 44,
+        "vaultStatus": "sparked",
+        "ts": "2026-09-10T09:52:04.301Z"
+      }
+    },
+    {
+      "id": "01K25BOSG4EED7CEA7E197505C",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-09-10T09:53:20.900Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
           "skill:closeout",
-          "type:internal-tool",
+          "type:infra",
           "outcome:good"
         ],
-        "context": "analytica",
+        "context": "studio-ops",
         "solution": "closeout completed cleanly"
       }
     },
     {
-      "id": "01K22P0ASM0E572B2CD190C248",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-09-09T09:46:53.206Z",
-      "payload": {
-        "session": 321,
-        "summary": "Seven scoped participant-data proof improvements deployed and independently verified.",
-        "sourceCommit": "79baef0ab3fcbd43e1d2ff47a144bc6b03701633",
-        "tests": {
-          "pass": 5230,
-          "fail": 0
-        },
-        "sil": 970,
-        "items": [
-          "Lexical durable proof",
-          "Independent request-source classification",
-          "Expanded writer exercises",
-          "Nine-key provenance",
-          "Digest candidate inventory",
-          "Bounded same-source census witness",
-          "Bounded release archives"
-        ],
-        "limits": [
-          "Export refused: ringByteCensus and signals undeclared",
-          "135 unplaced empty-row members, 124 live",
-          "44 unresolved digest sinks",
-          "Health residual_breached; no readiness claim"
-        ],
-        "pattern": "Validate exact authorization schema with productionDeployAuthorization before hash-bound doctor/test proofs; consumed grants never permit a second deployment."
-      }
-    },
-    {
-      "id": "01K22P5SJQ6162743080C0F449",
-      "type": "session-impact-summary",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-09-09T09:49:55.195Z",
-      "payload": {
-        "sessionId": "S100",
-        "slug": "franchise-architect-football",
-        "headline": "Franchise Architect now dismisses feedback safely and celebrates real player milestones; the release is live.",
-        "bullets": [
-          "Optional feedback survives unavailable browser storage without false save confirmations.",
-          "Canonical season-stat crossings produce persistent, deduplicated milestone headlines in the visible ticker.",
-          "All 1327 Node checks passed with explicit rerun history; hosted browser gate passed 60/60.",
-          "Stable staging, production Pages and backend verified at d0fea099ea9c177e724d958755d1d47a93770a3b."
-        ],
-        "synopsis": "Four audit findings are complete, with reviewed desktop/mobile dark/light evidence. Exact-candidate CI and both deployment workflows passed. Public launch and genuine player-outcome evidence remain separate."
-      }
-    },
-    {
-      "id": "01K22Q2EJPF44CA09D720C6D0C",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-09-09T10:05:31.129Z",
-      "payload": {
-        "session": "S334",
-        "project": "living-protocol",
-        "headline": "13 of 78 gates ran from no automated entry point; the ratchet marked DONE at S309 had never once executed",
-        "pattern": "A locus checker asks whether every blocking gate is ALSO enforced server-side, so it can only ask that of gates already in a hook. It is structurally blind to a gate in no hook at all.",
-        "solution": "Measure reachability transitively from real entry points, reading edges from CODE not comments; a gate reachable only from another dead gate is equally dead; absence renders UNMEASURED, never green.",
-        "evidence": "scripts/check-gate-reachability.mjs; enforcement-locus 12/12 to 15/15; deployed at 82d6add1",
-        "tags": [
-          "enforcement",
-          "observability-honesty",
-          "CANON-031"
-        ]
-      }
-    },
-    {
-      "id": "01K23RHUIV129C7F2DB6823DED",
-      "type": "pattern-share",
-      "from": "analytica",
-      "shippedAt": "2026-09-09T19:50:42.016Z",
-      "payload": {
-        "pattern": "A canonical-asset sync that overwrites a whole file silently reverts locally-shipped contracts inside it, and the resulting suite red can sit undiagnosed for days",
-        "solution": "Two layers. (1) The existing outbound guard compares NAMED EXPORTS only, so any contract expressed as an option parameter, call site, or gating expression is invisible to it - widen it, or accept that it is only half a guard. (2) Each downstream repo declares an inbound manifest (docs/SYNC_PROTECTED_CONTRACTS.json) naming the contract at whatever granularity it actually exists, asserted by a test-suite checker that is itself proved against the real historical clobber commit rather than against a lookalike fixture. Measured live in analytica: validate-brief-format.mjs lost criticalTruncation and checkSourceFingerprint to a sync on 2026-08-24, was restored 2026-08-26, and lost both again on 2026-09-01; the suite then sat red for 8 days while the startup brief displayed Tests-red every session. Requesting the two contracts be carried in the canonical studio-ops copy so the manifest entries can retire.",
-        "tags": [
-          "canonical-asset-sync",
-          "regression",
-          "validators",
-          "CANON-016",
-          "brief-format"
-        ]
-      }
-    },
-    {
-      "id": "01K23T3N9MDAEC37A0C15C4D68",
-      "type": "ignis-score",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-09-09T20:17:52.950Z",
-      "payload": {
-        "slug": "vaultsparkstudios-website",
-        "ignisScore": 46492,
-        "ignisGrade": "FORGE",
-        "ignisLastComputed": "2026-09-09"
-      }
-    },
-    {
-      "id": "01K2404QCN327CC82A373FFEA0",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-09-09T21:10:54.616Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 333,
-        "sil": 993,
-        "prevSil": 994,
-        "delta": -1,
-        "topWin": "the executor earned its existence on its first run, in both directions at once. `rescore-ignis --stale` **exited 1 and CLEARED its probe**; `rotate-ledgers --apply` **exited 0 and moved twin-history 5.2MB to 5.1MB with the probe still red**. Neither fact is visible from an exit code, and the second is a broken promise that had been reading as a clean run for two sessions. A gate that records *what changed about the thing the remedy claimed to fix* is worth more than one that records whether a command succeeded — and this one found the distinction the day it was switched on.",
-        "topGap": "I keep building instruments whose own path I have not watched execute. The serial-retry fix went into `run-doctor.mjs`, the next full run had a quiet host, `0/219 probes could not run`, and the recovery path never ran — I would have shipped it on the strength of two probes going green for an unrelated reason. Extracting it and driving it directly was the fix, but the reflex that needed correcting is the one that matters: **a surrounding number turning green is not evidence that my change is what turned it.** The same reflex is why the `tests` probe is still red at session end — the failing assertion is fixed and the guard is 47/47 standalone, and I have no measured full-suite number to put behind that.",
-        "shippedFiles": 50,
-        "vaultStatus": "sparked",
-        "ts": "2026-09-09T21:10:54.168Z"
-      }
-    },
-    {
-      "id": "01K240PJDF46C344775827AB44",
+      "id": "01K26ANA308B973B868DCB9540",
       "type": "session-impact-summary",
       "from": "analytica",
-      "shippedAt": "2026-09-09T21:22:15.601Z",
+      "shippedAt": "2026-09-10T18:54:15.136Z",
       "payload": {
-        "session": "S79",
-        "repo": "analytica",
-        "headline": "Six defects fixed after reproducing every one against the original code; two had silently disabled a gate.",
-        "shipped": 6,
-        "suite": "2041/2041 assertions · 361/443 files · 0 failures",
-        "doctor": "83 pass / 5 advisory / 0 fail / 0 blocking",
-        "release": "staging df9daca8 → exact main efa6d314 → production 19deb87e, 21/21 + independent 7/7 at every origin",
-        "topFinding": "A canonical-asset sync had deleted two brief safety contracts for the second time; the suite sat red for eight days while the startup brief displayed the signal at every session start. Restored plus an inbound ratchet proved against the real clobber commit.",
-        "secondFinding": "check-release-gate.mjs was exiting on a TypeError before its first verdict — one sibling object-shaped testingSurfaces field had taken the studio-wide gate offline for all 40 registry projects.",
-        "honestNonGreen": [
-          "hosted Actions provider-refused (actions-budget)",
-          "visual-qa-evidence stale-by-data, deliberately not rebound without pixel inspection"
-        ]
-      }
-    },
-    {
-      "id": "01K244O0SAA948A6F52DD7FB5F",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-09-09T22:31:18.154Z",
-      "payload": {
-        "session": "S335",
-        "repo": "living-protocol",
-        "headline": "The doctor can no longer call advisory what the pre-push hook refuses; provenance ownership is measured; Next.js 15.5.24 security patch deployed",
-        "shipped": [
-          "advisory-versus-declared-court",
-          "probe-subject-locality-prover",
-          "degraded-upstream-unmeasured-exit",
-          "registry-truth-ark-cargo",
-          "next-15.5.24-security-patch"
-        ],
-        "deployedSha": "8c20deff375d5426b88eeea651d55ca731b398f4",
-        "runs": {
-          "ci": 34411025950,
-          "staging": 34411026307,
-          "productionApi": 34411796142,
-          "webPreview": 34411937804,
-          "webProduction": 34412145277,
-          "verification": 34412554228
-        },
+        "session": "S82",
+        "project": "analytica",
+        "shipped": 28,
+        "headline": "A gate can be self-poisoning: the CANON-031 linter drew 70% of its tripwire values from an append-only telemetry ledger that /start itself writes to, so the repo turned its own suite red 87 seconds into the session with no code changed. Seven prior sessions each patched one instance and each correctly described the general pattern in a comment.",
         "patterns": [
-          "a gate must declare its severity once, shared by CLI and doctor probe",
-          "ownership by measurement: only here-and-not-upstream proves self; shared artifacts settle nothing",
-          "UNMEASURED is its own exit code (3), never green and never a false violation",
-          "a suite receipt that refuses must name the path that moved"
+          "A detector whose comparison set includes a stream this session writes to has a finding set that is a function of session count, not of the code.",
+          "Seven correct in-code diagnoses across seven sessions are not a fix — the third narrow exemption in one function is the signal that the abstraction is wrong.",
+          "Wiring an ignored signal into a consumer exposes defects in the signal own plumbing that could not previously fire.",
+          "A founder-blocker label outlives the condition that created it: re-probe at source before repeating it (Obelisk RP registration had been done for 16 days)."
         ],
-        "silScore": 966,
-        "velocity": 4,
+        "verification": "2180/2180 assertions across 378/461 files, Doctor 0 blocking, canon 0 GAP/0 ABSOLUTE, visual-QA PASS with all four rendered images reviewed, staging ea433c5b then production 0a509140 both verified 21/21 + 7/7 live."
+      }
+    },
+    {
+      "id": "01K26CNBU4CB94BB21F5D426A8",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-09-10T19:29:14.180Z",
+      "payload": {
+        "sourceSha": "d1242ff329149033663399b18edd4bb4caf58710",
+        "session": 338,
+        "headline": "Perishable declarations and alarm-conserving briefs deployed",
+        "outcomes": [
+          "shared ten-session declaration contract across four operational courts",
+          "brief trimming refuses alarm loss and validates alarms preserved K/N",
+          "convention-aware innovation truth filters contradicted missing-test candidates"
+        ],
+        "release": {
+          "ci": 34517647982,
+          "verification": 34519789705,
+          "staging": 34517647762,
+          "status": "deployed",
+          "productionApi": 34518779715,
+          "productionWeb": 34519301026
+        },
         "publicLaunch": "NO-GO"
       }
     }

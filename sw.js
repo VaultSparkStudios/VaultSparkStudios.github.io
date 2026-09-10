@@ -9,6 +9,15 @@ const CACHE_NAME = 'vaultspark-shell-7ff9ce06ba26a69e';
 // PORTAL_GATE flow is bounded: new entries are fetched on-demand when first
 // requested, they're just not available offline until the cache rotates.
 const MAX_PAGE_ENTRIES = 60;
+// S349 — navigations get their own cache, separate from the install precache.
+// Both used to share CACHE_NAME, and the LRU eviction deletes `keys[0]`, which in
+// an insertion-ordered cache is the FIRST entry ever written: '/' from
+// STATIC_ASSETS. So once a visitor passed 60 total entries, each new navigation
+// evicted a precached shell asset in order — '/', then the shell CSS, then
+// shell-health — quietly dismantling the offline experience the precache exists
+// to provide. The 30+ static entries were also consuming the 60-page budget.
+// Separate caches make the page LRU incapable of touching the precache.
+const PAGE_CACHE = CACHE_NAME + '-pages';
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/style.shell-79b001d0ae.css',
@@ -173,7 +182,12 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+      // S349: keep every cache belonging to THIS version — the precache, the page
+      // cache and the API cache all derive from CACHE_NAME. The old exact-match
+      // test kept only the precache, so `-api` (and now `-pages`) were destroyed on
+      // every single activation. CACHE_NAME carries a build hash, so caches from a
+      // previous version have a different prefix and are still collected.
+      Promise.all(keys.filter((k) => k !== CACHE_NAME && !k.startsWith(CACHE_NAME + '-')).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
@@ -274,7 +288,7 @@ self.addEventListener('fetch', (e) => {
       fetch(request)
         .then(async (res) => {
           if (res.ok) {
-            const cache = await caches.open(CACHE_NAME);
+            const cache = await caches.open(PAGE_CACHE);
             const headers = new Headers(res.headers);
             headers.set('x-cached-at', String(Date.now()));
             const stamped = new Response(await res.clone().arrayBuffer(), { status: res.status, headers });
@@ -285,7 +299,7 @@ self.addEventListener('fetch', (e) => {
           return res;
         })
         .catch(async () => {
-          const cache = await caches.open(CACHE_NAME);
+          const cache = await caches.open(PAGE_CACHE);
           const cached = await cache.match(request);
           if (cached) {
             const cachedAt = cached.headers.get('x-cached-at');

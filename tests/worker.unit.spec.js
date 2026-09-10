@@ -877,3 +877,92 @@ test('looksLikeBot: a missing user-agent is not a browser', async () => {
   const { looksLikeBot } = await import('../cloudflare/worker-lib.mjs');
   for (const v of ['', '   ', null, undefined, 42, {}]) assert.equal(looksLikeBot(v), true);
 });
+
+// ---------------------------------------------------------------------------
+// S349 — the uptime sampler must ship DARK.
+//
+// A flag default is a claim until something asserts it. These tests are the
+// difference between "we set it to 0" and "a deploy provably changes nothing":
+// with the flag off the handler must not touch KV and must not make a single
+// subrequest, so shipping the code is inert until its own enabling release.
+// ---------------------------------------------------------------------------
+test('S349: scheduled() is inert when the sampler flag is off', async () => {
+  let puts = 0;
+  const waits = [];
+  const env = { UPTIME_SAMPLES: { put: async () => { puts += 1; } } };
+  await worker.scheduled({ cron: '*/30 * * * *' }, env, { waitUntil: (p) => waits.push(p) });
+  await Promise.all(waits);
+  assert.equal(puts, 0, 'a disabled sampler must not write to KV');
+  assert.equal(waits.length, 0, 'a disabled sampler must not schedule any work');
+});
+
+test('S349: scheduled() is inert when the flag is explicitly "0"', async () => {
+  let puts = 0;
+  const env = { UPTIME_SAMPLER_ENABLED: '0', UPTIME_SAMPLES: { put: async () => { puts += 1; } } };
+  await worker.scheduled({}, env, { waitUntil: () => { throw new Error('must not schedule work'); } });
+  assert.equal(puts, 0);
+});
+
+test('S349: an enabled sampler without its KV binding degrades honestly, it does not throw', async () => {
+  // The edge must never take an exception on a cron path just because a binding
+  // is missing — that is a silent scheduled-handler failure, the hardest kind to
+  // notice, since nobody is watching a response code.
+  await assert.doesNotReject(
+    worker.scheduled({}, { UPTIME_SAMPLER_ENABLED: '1' }, { waitUntil: () => {} }),
+  );
+});
+
+test('S349: an enabled sampler writes exactly one bounded, TTL-capped KV entry', async () => {
+  // One fixed key per sample window, never one per request: a KV write per
+  // request is what exhausted the free-tier quota and took sign-in down (S319).
+  const puts = [];
+  const waits = [];
+  const env = {
+    UPTIME_SAMPLER_ENABLED: '1',
+    PAGES_ORIGIN: 'https://origin.invalid',
+    UPTIME_SAMPLES: { put: async (k, v, o) => { puts.push({ k, v, o }); } },
+  };
+  const realFetch = globalThis.fetch;
+  const seen = [];
+  globalThis.fetch = async (u) => { seen.push(String(u)); return new Response('ok', { status: 200 }); };
+  try {
+    await worker.scheduled({ cron: '*/30 * * * *' }, env, { waitUntil: (p) => waits.push(p) });
+    await Promise.all(waits);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+  assert.equal(puts.length, 1, 'exactly one KV write per sample window');
+  assert.ok(puts[0].o?.expirationTtl > 0, 'the entry must carry a TTL so the namespace cannot grow without bound');
+  const sample = JSON.parse(puts[0].v);
+  assert.equal(sample.vantage, 'cloudflare-scheduled');
+  assert.equal(sample.edgeObservable, true, 'the edge is observable by construction from inside the edge');
+  assert.equal(sample.contentOk, true);
+  // The self-loop guard (S179): every subrequest must go to the Pages origin,
+  // never to a hostname that routes back into this Worker.
+  assert.ok(seen.length > 0, 'the sampler must actually probe something');
+  assert.ok(
+    seen.every((u) => u.startsWith('https://origin.invalid')),
+    'the sampler must never fetch a URL served by our own routes (S179 self-loop)',
+  );
+});
+
+test('S349: a failing origin is recorded as down rather than thrown away', async () => {
+  const puts = [];
+  const waits = [];
+  const env = {
+    UPTIME_SAMPLER_ENABLED: '1',
+    PAGES_ORIGIN: 'https://origin.invalid',
+    UPTIME_SAMPLES: { put: async (k, v, o) => { puts.push({ k, v, o }); } },
+  };
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('boom', { status: 503 });
+  try {
+    await worker.scheduled({}, env, { waitUntil: (p) => waits.push(p) });
+    await Promise.all(waits);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+  const sample = JSON.parse(puts[0].v);
+  assert.equal(sample.contentOk, false);
+  assert.ok(sample.down > 0, 'a 503 from every route must be counted, not swallowed');
+});

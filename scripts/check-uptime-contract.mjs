@@ -29,7 +29,11 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'api', 'uptime.json');
 const HISTORY = path.join(ROOT, 'data', 'uptime-history.ndjson');
 const WORKFLOW = path.join(ROOT, '.github', 'workflows', 'uptime-probe.yml');
-const STATES = ['up', 'degraded', 'edge-degraded', 'down'];
+// S349: `edge-unobservable` is a first-class state, not a degradation. It means
+// every edge leg was bot-challenged from the CI vantage, so this run learned
+// nothing about the edge — neither up nor down. It exists because collapsing that
+// case into `edge-degraded` made /status/ publish a false outage for 604 samples.
+const STATES = ['up', 'degraded', 'edge-degraded', 'edge-unobservable', 'down'];
 
 function readHistory() {
   try {

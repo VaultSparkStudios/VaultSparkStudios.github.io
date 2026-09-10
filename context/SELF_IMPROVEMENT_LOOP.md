@@ -2636,3 +2636,30 @@ Recovery assessment, not a claim that the interrupted arc completed. S345 remain
 ### S348 release verification addendum
 
 The 993/1000 score remains unchanged: release execution strengthened Dev Health and Process evidence but did not create fresh stakeholder engagement or field Core Web Vitals. The release found and closed two real gaps—a mutable dynamically imported module behind an immutable loader, and two retired ticker endpoints that produced staging 404s. Final authority is 479/479 build steps, 215/215 retry-free mobile cells, 14/14 manually reviewed release captures, staging ceremony 10/10, production content run `34508529884`, and live smoke 6/6. One post-push CI run correctly exposed sitemap drift introduced by a concurrent publisher rebase; the 147-route sitemap is now regenerated and the corrected E2E run is the authoritative observation.
+
+## 2026-09-10 — Session 349 (full arc) | Total: 991/1000 (v3.0) | Velocity: -2 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | 479/479 build steps from a frozen tree, 119/119 unit tests (5 new), 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells retry-free, Doctor `blockingFailing: 0`. |
+| Creative Alignment | 99 | A public trust surface stopped contradicting the visitor's own experience; the honesty is stated in the reader's language, not ours. |
+| Momentum | 96 | Three audited items plus two verified subagent findings shipped; the enabling half of the sampler release is deliberately still owed. |
+| Engagement | 96 | `/status/` now reads truthfully, but no new visitor-facing capability was added and adoption remains unmeasured. |
+| Process Quality | 100 | The root cause was found by probing the live network rather than trusting a 59-day-old code comment; history was labelled rather than re-scored. |
+| Cross-Repo Coherence | 100 | No sibling repo was edited. The `CAPABILITY_MAP` itself is studio-ops-owned; only this repo's reader was changed. |
+| Security Posture | 100 | No auth, pricing, privacy or secret scope widened. The gateway now refuses to overstate a credential's health, and the worker ships flag-off. |
+| Ecosystem Integration | 100 | The new state was carried to every consumer in the same session — contract gate, public page, rollup denominators and history rows. |
+| Capital Efficiency | 100 | No dependency, paid call or runtime spend. The KV schema is one write per 30-minute window, not per request. |
+| Automation Coverage | 100 | Every new state is asserted, including a negative control that fails if the challenge path ever becomes dead code. |
+
+**Rolling averages:** 3-run 989.3 · 5-run 986.8 (9 entries after this append). **Sparkline:** █ █ █ █ █ (recent totals: 984, 980, 986, 993, 991).
+
+**Top win:** discovered by direct measurement — not from any board item — that `/status/` had told every visitor our edge was degraded through 604 consecutive samples while it served them perfectly. Cloudflare had widened bot challenges to JSON and OPTIONS paths, silently expiring the stated premise the probe was rewritten on ("JSON/API paths are not bot-challenged"). The same expired premise had also disabled `edgeHtmlBroken` entirely, so the one apex-HTML failure shape the probe exists to catch could not have fired once in that window.
+
+**Gap:** the edge is now honestly reported as unmeasured rather than falsely reported as broken — and honest blindness is still blindness. Nothing has yet observed our edge; that requires the sampler's enabling release. The 604 legacy rows remain unresolvable and will only age out.
+
+**Honesty ledger:** refused the tempting inverse bug — a challenged leg is NOT promoted to `ok`, because that would be the same lie with the opposite sign and would blind the probe to the real outage it exists to catch; `edge-unobservable` is neither a pass nor a failure. Refused to re-score 604 historical rows to improve a public number, publishing `unresolvedLegacyChecks` instead. Refused to flip the sampler flag on in the same session that ships it, because the task text asked for an independent release. Refused to change `check-secrets` exit codes, because relabelling a failing probe as an absent credential is the phantom blocker CANON-019 forbids. Did not claim the worker `scheduled()` path works in production — it has never run.
+
+**Brainstorm committed to TASK_BOARD:** (1) the sampler enabling release with its own rollback evidence; (2) visibility-gated teardown for the four uncancellable client polling timers found this session.
+
+**Intent outcome:** achieved. Full `/start` → `/audit` → `/implement` → `/closeout` arc completed in one session; every audit item shipped and verified from a frozen tree.

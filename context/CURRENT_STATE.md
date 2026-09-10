@@ -1,8 +1,26 @@
 # Current State
 
-Last updated: 2026-09-10
+Last updated: 2026-09-10 (S349)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S349 uptime observability honesty + edge-vantage sampler (2026-09-10)
+
+**Shipped behaviour change on a public surface.** `/status/` no longer reports a Cloudflare bot challenge as an outage. Between 2026-07-13 and this session it published `edge-degraded` on 604 consecutive samples — every one with content healthy and zero routes down — because Cloudflare widened bot challenges to JSON and OPTIONS paths, expiring the premise the probe was rewritten on in S177 ("JSON/API paths are not bot-challenged"). Measured live: `/api/founder-presence.json` answers 200 from a residential IP and 403 in 127ms from CI.
+
+`observable` is now a question separate from `ok`. A challenged leg is neither an outage nor a pass: `overall` reports the new `edge-unobservable` state, such rows leave the rollup denominators (`fullStackObservedChecks`, `unobservableChecks` are published beside the percentage), the alert path no longer pages on a challenge, and the `/status/` tile reads "Not observable" with the reason rather than a false red or a laundered green. Pre-S349 rows are preserved exactly and published as `unresolvedLegacyChecks` — a challenge and a real edge outage are indistinguishable in them now that the shape is gone, so they are labelled rather than re-scored, and they age out of the retained window naturally.
+
+A silent consequence was fixed at the same time: `edgeHtmlBroken` guarded on `!liveness.ok`, which was permanently true while challenged, so the S179 apex-HTML failure shape that function exists to catch could not have fired once in the entire window.
+
+**The edge is now honestly unmeasured rather than falsely broken, which is not the same as fixed.** The Worker `scheduled()` sampler that can actually observe it — a Cloudflare cron is never challenged — ships this session but ships DARK: `UPTIME_SAMPLER_ENABLED = "0"`, no KV binding, cron trigger commented out. Five unit tests assert it performs no KV write and no subrequest while off, so the deploy is provably inert. Enabling it is its own release (four steps documented in `cloudflare/wrangler.toml`) with a flag-flip rollback. `scripts/drain-uptime-kv.mjs` is ready and folds samples into the unchanged uptime contract, append-only and never rewriting a row.
+
+**Service worker.** Navigations moved to their own `PAGE_CACHE`. They had shared `CACHE_NAME` with the install precache, and the LRU deletes `keys[0]` — the first entry ever written, i.e. `/` from `STATIC_ASSETS` — so past 60 entries every navigation evicted a precached shell asset in order, quietly dismantling the offline experience. `activate` also kept only an exact `CACHE_NAME` match, destroying the API cache on every activation; it now keeps the whole version-prefixed family.
+
+**Accessibility.** `.skip-link:focus{top:0}` lived only in the async-loaded stylesheet, so a keyboard user tabbing before the swap focused a link parked at `top:-100%` (WCAG 2.4.7). Fixed in the critical-shell generator and propagated: 108/108 pages carry it, 0 remain unpatched.
+
+**Secrets gateway.** `resolveCapability` now returns `lastProbeStatus`/`lastProbeAt`/`probeFailing`, and `check-secrets` renders a distinct FAILING state instead of printing READY for a credential whose own map entry records `auth-error`. It immediately surfaced a second unknown failure (`openai.api` unreachable). Honest ready count is 44/72, not 46/72. Exit codes are unchanged so a failing probe cannot be folded into a human-blocked label.
+
+Verification: 479/479 build steps exit 0 from a frozen tree, 119/119 unit tests, 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells against a local preview, 14/14 theme captures re-captured and directly inspected, Doctor `blockingFailing: 0`. Identity/provider acceptance, newsletter arming, cadence, public-member-data and warm-origin decisions remain untouched holds.
 
 ## S347 recovered full arc — 2026-09-09
 

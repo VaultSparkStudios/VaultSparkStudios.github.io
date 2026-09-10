@@ -40,6 +40,36 @@ TT_REPORT_TTL_SEC     = "2592000"
 # back without a code deploy. Founder-approved S335; held on the readiness receipt.
 TT_ENFORCE_ENABLED = "0"
 
+# S349: uptime sampling from inside the edge. The GitHub Actions probe cannot see
+# our edge at all — Cloudflare challenges every datacenter client, so all three
+# apex legs 403 from CI and /status/ published a false `edge-degraded` for 604
+# consecutive samples. A Cloudflare cron is never challenged, so it is the only
+# vantage that can actually measure edge liveness.
+#
+# Ships DARK at "0": the scheduled() handler returns immediately, so deploying it
+# changes nothing. Flip to "1" as its own release once the KV namespace below is
+# created and bound; rollback is a flag flip, not a redeploy. The handler samples
+# the Pages origin only — never a URL on our own routes — so it cannot self-loop.
+UPTIME_SAMPLER_ENABLED = "0"
+
+# Enabling release (deliberately NOT applied here, so this deploy is inert):
+#   1. wrangler kv namespace create UPTIME_SAMPLES --env production
+#   2. uncomment the binding + trigger below with the returned id
+#   3. flip UPTIME_SAMPLER_ENABLED to "1" and deploy
+#   4. node scripts/drain-uptime-kv.mjs --dry-run   (confirm samples are landing)
+# The trigger is commented out with the flag off on purpose: a declared cron would
+# invoke scheduled() every 30 minutes to do nothing, burning invocations for no
+# signal. Binding a namespace that does not exist yet would fail the deploy
+# outright, which is why neither is declared before step 1.
+#
+# [[env.production.kv_namespaces]]
+# binding = "UPTIME_SAMPLES"
+# id = "<from step 1>"
+#
+# [triggers]
+# crons = ["*/30 * * * *"]
+
+
 # Hub subdomain migration flag. When "1", the worker:
 #   1) serves auth + proxy for hub.vaultsparkstudios.com (requires HUB_* secrets)
 #   2) 301 redirects legacy /studio-hub/* to https://hub.vaultsparkstudios.com/*
