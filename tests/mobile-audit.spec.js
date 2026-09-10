@@ -10,10 +10,12 @@ const FINDINGS_PATH = path.join(OUT_DIR, 'findings.jsonl');
 
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 if ((process.env.TEST_WORKER_INDEX === undefined || process.env.TEST_WORKER_INDEX === '0') && fs.existsSync(FINDINGS_PATH)) fs.rmSync(FINDINGS_PATH);
-// Keep a single worker for deterministic append order, but do not use serial
-// mode: serial mode skips the rest of the matrix after one failure and would
-// make the exact-completion receipt impossible to diagnose.
-test.describe.configure({ mode: 'default', retries: 1 });
+// Keep a single durable worker for deterministic append order. A Playwright
+// worker retry re-evaluates this module and clears findings.jsonl above, so a
+// transient setup timeout could pass on retry while leaving an incomplete
+// matrix receipt. Retry navigation inside the test instead; never restart the
+// owner of the exact-completion ledger.
+test.describe.configure({ mode: 'default', retries: 0, timeout: 120000 });
 
 const routeFilter = new Set((process.env.MOBILE_AUDIT_ROUTES || '').split(',').filter(Boolean));
 const viewportFilter = new Set((process.env.MOBILE_AUDIT_VIEWPORTS || '').split(',').filter(Boolean));
@@ -241,7 +243,14 @@ for (const vp of VIEWPORTS) {
         page.on('pageerror', e => errors.push(String(e)));
         page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
-        const resp = await page.goto(BASE + p.url, { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(e => { errors.push(`nav: ${e.message}`); return null; });
+        let resp = null;
+        for (let attempt = 0; attempt < 2 && !(resp && resp.ok()); attempt += 1) {
+          resp = await page.goto(BASE + p.url, { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(e => {
+            errors.push(`nav attempt ${attempt + 1}: ${e.message}`);
+            return null;
+          });
+          if (!(resp && resp.ok()) && attempt === 0) await page.waitForTimeout(250);
+        }
 
         if (!resp || !resp.ok()) {
           const record = {
@@ -251,9 +260,6 @@ for (const vp of VIEWPORTS) {
             console: errors.slice(0, 10),
           };
           appendFinding(record);
-          // Make the declared retry policy effective for transient navigation
-          // failures. The successful retry replaces this matrix cell via
-          // appendFinding(), while a repeated failure remains release-blocking.
           expect(resp && resp.ok(), `${p.url} must load at ${vp.name}`).toBeTruthy();
           return;
         }

@@ -1708,3 +1708,19 @@ The S347 mobile lab measurements retain all six routes and the first Community o
 ## D-S347.11 — Preview caching must preserve preload reuse without weakening HTML freshness (2026-09-09)
 
 The final lab exposed every route fetching the same content-addressed shell stylesheet twice: `_headers` emitted a preload, then the local preview answered that immutable asset with `Cache-Control: no-store`, preventing reuse when the page stylesheet link resolved. The preview now gives only generated `/assets/*.shell-<10hex>.css|js` files long-lived immutable caching. HTML and every unhashed asset remain `no-store`. A real child-server unit test pins both halves. This repairs measurement fidelity and production parity; it does not convert local lab scores into field performance evidence.
+
+## D-S348.1 — Deterministic evidence clocks are source clocks, never rebuild clocks
+
+Generated Forge and feedback artifacts now inherit time from their newest committed source receipt and compare exact output bytes in `--check`. A scheduled rebuild with unchanged sources must produce identical bytes; wall-clock-only churn is not evidence of freshness.
+
+## D-S348.2 — Evidence-graph completeness requires source review and publisher closure
+
+The coverage ratchet moved to 0 only after every one of 67 checked generators was inspected for real inputs, outputs, fan-out, and world-acting behavior. The graph now has 80 acyclic nodes, every declared check/output is reachable, and all 29 scheduled publishers regenerate and stage affected descendants. New checked generators must enter this graph in the same change.
+
+## D-S348.3 — Argument maps distinguish evidence from interpretation
+
+Desk critique packets treat fact receipts as sourced evidence, stances as arguments, predictions as falsifiable claims, and empty `factRefs` as `unlinked`. The packet may help a human or agent critique a story, but it never upgrades a stance into fact or claims that a visual review proves an argument true.
+
+## D-S348.4 — Uptime migration remains a dedicated trust-path release
+
+Moving the 30-minute uptime sampler from GitHub Actions into a Worker `scheduled()` handler is approved as the next local engineering item, but not as a rider on S348 closeout. It changes the producer of a public SLA surface and therefore must preserve sample cadence, route semantics, daily KV drainage, rollback, and staging proof in its own synchronized candidate.

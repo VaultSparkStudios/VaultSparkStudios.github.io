@@ -2,28 +2,41 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "43ea57e22a94558e432bb38044897894176be8c624a6e2313478b8d7e7576e86",
+  "contractSha256": "542680b052f82c3b8726f132c42b59ce83ecaa04355dd22cf15366fff76d91f5",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 46,
-  "cascadeNodeCount": 27,
+  "nodeCount": 80,
+  "cascadeNodeCount": 38,
   "buildOrder": [
+    "ai-canonical-pages",
+    "ambient-bundles",
+    "ambient-ledger",
     "analytics-summary",
+    "ark-signature-dossier",
     "attention-pressure",
+    "brand-assets",
     "cache-evidence-classification",
-    "canonical-destination-reachability",
-    "changelog-narrative",
+    "commit-map",
     "cta-readiness",
-    "early-hints-headers",
+    "entity-graph",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "evidence-hub",
+    "favicon",
+    "field-win-proof",
+    "flight-director",
     "founder-presence",
+    "geo-vitals",
     "heartbeat",
+    "identity-migration-receipt",
+    "ignis-platform-status",
+    "ignis-roi",
+    "inp-soak-verdicts",
     "lqip-map",
+    "nav-sheet-stats",
     "news-desk",
     "news-desk-engagement",
     "news-desk-freshness",
@@ -32,33 +45,164 @@
     "news-visual-receipts",
     "newsroom-run",
     "oracle-velocity-public",
-    "pathways-pages",
-    "proof-aware-projects",
+    "promotion-receipt",
     "public-intelligence",
     "rank-climbers",
-    "security-posture",
+    "site-health",
     "surface-spine",
+    "tt-readiness",
     "tt-summary",
-    "ux-decision-ledger",
-    "worker-route-history",
-    "you-asked-shipped",
+    "worker-route-provenance",
+    "changelog-live",
+    "changelog-narrative",
+    "feedback-provenance",
+    "forge-feed",
     "home-desk-module",
-    "nervous-system",
+    "ignis-conduit",
+    "news-critique-packets",
     "news-pages",
+    "proof-aware-projects",
+    "public-ecosystem",
+    "security-posture",
+    "shell-assets",
+    "worker-route-history",
+    "canonical-destination-reachability",
+    "early-hints-headers",
+    "ignis-search-index",
+    "llms-full-shards",
+    "pathways-pages",
     "public-status",
-    "intelligence-budget",
+    "ship-receipts",
+    "ux-decision-ledger",
+    "agents-json",
     "launch-age",
+    "nervous-system",
+    "oracle-query-clusters",
+    "you-asked-shipped",
+    "ai-discovery-health",
     "candidate-artifact-manifest",
     "deploy-currency",
+    "intelligence-budget",
     "intent-map",
     "staging-deploy-receipt",
     "startup-brief",
     "status-proof",
     "citation",
     "release-proof",
+    "staging-deploy-continuity",
     "stats-surface"
   ],
   "nodes": [
+    {
+      "id": "agents-json",
+      "output": "agents.json",
+      "builder": "scripts/build-agents-json.mjs",
+      "verify": "node scripts/build-agents-json.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        ".well-known/llms.txt",
+        "api/ecosystem-state.json"
+      ],
+      "feeds": [
+        "api/ai-discovery-health.json",
+        "api/candidate-artifact-manifest.json"
+      ],
+      "externalSources": [
+        "repo-structure:public-project-routes"
+      ]
+    },
+    {
+      "id": "ai-canonical-pages",
+      "output": "projects/vorn/.ai/index.html",
+      "builder": "scripts/build-ai-canonical-pages.mjs",
+      "verify": "node scripts/build-ai-canonical-pages.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "games/*/.ai/index.html",
+        "games/*/index.html",
+        "projects/*/.ai/index.html",
+        "projects/*/index.html",
+        "universe/*/index.html"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json",
+        "games/*/index.html",
+        "projects/*/index.html",
+        "universe/*/index.html"
+      ]
+    },
+    {
+      "id": "ai-discovery-health",
+      "output": "api/ai-discovery-health.json",
+      "builder": "scripts/build-ai-discovery-health.mjs",
+      "verify": "node scripts/build-ai-discovery-health.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        ".well-known/llms.txt",
+        "_headers",
+        "agents.json"
+      ],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "games/**",
+        "projects/**",
+        "universe/**"
+      ]
+    },
+    {
+      "id": "ambient-bundles",
+      "output": "assets/ambient-core.bundle.js",
+      "builder": "scripts/build-ambient-bundle.mjs",
+      "verify": "node scripts/build-ambient-bundle.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "assets/ambient-feature.bundle.js"
+      ],
+      "dependsOn": [],
+      "feeds": [
+        "assets/shell-manifest.json"
+      ],
+      "externalSources": [
+        "assets/account-chip-loader.js",
+        "assets/adaptive-speculation.js",
+        "assets/ambient-loader.js",
+        "assets/breadcrumb-render.js",
+        "assets/command-palette-loader.js",
+        "assets/edge-swipe-nav.js",
+        "assets/founder-presence-handle.js",
+        "assets/hover-prefetch.js",
+        "assets/journey-conductor.js",
+        "assets/native-feel.js",
+        "assets/page-sigil.js",
+        "assets/pointerdown-warm.js",
+        "assets/rum-beacon.js",
+        "assets/scroll-depth.js",
+        "assets/scroll-reveal.js",
+        "assets/signed-in-state.js",
+        "assets/tt-default-policy.js",
+        "assets/vault-atlas.js"
+      ]
+    },
+    {
+      "id": "ambient-ledger",
+      "output": "context/ambient-ledger.json",
+      "builder": "scripts/build-ambient-ledger.mjs",
+      "verify": "node scripts/build-ambient-ledger.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "docs/AMBIENT_LEDGER.md"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        ".cache/ambient-split-candidates.json",
+        "scripts/build-ambient-bundle.mjs"
+      ]
+    },
     {
       "id": "analytics-summary",
       "output": "api/analytics-summary.json",
@@ -74,6 +218,18 @@
       ]
     },
     {
+      "id": "ark-signature-dossier",
+      "output": "docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md",
+      "builder": "scripts/build-ark-signature-dossier.mjs",
+      "verify": "node scripts/build-ark-signature-dossier.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        ".cache/ark-inbox.json"
+      ]
+    },
+    {
       "id": "attention-pressure",
       "output": "api/attention-pressure.json",
       "builder": "scripts/build-attention-pressure.mjs",
@@ -85,6 +241,22 @@
       ],
       "externalSources": [
         "api/funnel-summary.json"
+      ]
+    },
+    {
+      "id": "brand-assets",
+      "output": "brand/assets.json",
+      "builder": "scripts/build-brand-assets.mjs",
+      "verify": "node scripts/build-brand-assets.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "assets/brand/*.png",
+        "assets/brand/*.webp"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "external:founder-brand-masters"
       ]
     },
     {
@@ -113,7 +285,11 @@
       "verify": "node scripts/build-candidate-artifact-manifest.mjs --check",
       "publishCascade": true,
       "dependsOn": [
+        ".well-known/llms.txt",
+        "agents.json",
         "api/public-intelligence.json",
+        "api/worker-route-provenance.json",
+        "assets/shell-manifest.json",
         "index.html",
         "membership/index.html"
       ],
@@ -122,17 +298,13 @@
         "api/staging-deploy-receipt.json"
       ],
       "externalSources": [
-        ".well-known/llms.txt",
-        "agents.json",
         "api/build-sha.json",
         "api/uptime.json",
-        "api/worker-route-provenance.json",
         "assets/*.shell-*.css",
         "assets/*.shell-*.js",
         "assets/proof-card.js",
         "assets/proof-conversion-line.js",
         "assets/security-posture.js",
-        "assets/shell-manifest.json",
         "status/index.html",
         "studio-pulse/index.html"
       ]
@@ -143,13 +315,25 @@
       "builder": "scripts/probe-canonical-destinations.mjs",
       "verify": "node scripts/probe-canonical-destinations.mjs --check",
       "publishCascade": true,
-      "dependsOn": [],
+      "dependsOn": [
+        "api/ecosystem-state.json"
+      ],
       "feeds": [
         "api/status-proof.json"
       ],
-      "externalSources": [
-        "api/ecosystem-state.json"
-      ]
+      "externalSources": []
+    },
+    {
+      "id": "changelog-live",
+      "output": "changelog/index.html",
+      "builder": "scripts/build-changelog-live.mjs",
+      "verify": "node scripts/build-changelog-live.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/public-intelligence.json"
+      ],
+      "feeds": [],
+      "externalSources": []
     },
     {
       "id": "changelog-narrative",
@@ -157,11 +341,11 @@
       "builder": "scripts/build-changelog-narrative.mjs",
       "verify": "node scripts/build-changelog-narrative.mjs --check",
       "publishCascade": false,
-      "dependsOn": [],
-      "feeds": [],
-      "externalSources": [
+      "dependsOn": [
         "api/commit-map.json"
-      ]
+      ],
+      "feeds": [],
+      "externalSources": []
     },
     {
       "id": "citation",
@@ -175,6 +359,27 @@
       ],
       "feeds": [],
       "externalSources": []
+    },
+    {
+      "id": "commit-map",
+      "output": "api/commit-map.json",
+      "builder": "scripts/build-commit-map.mjs",
+      "verify": "node scripts/build-commit-map.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/changelog-narrative.json",
+        "api/feedback-provenance.json",
+        "api/ignis-conduit.json",
+        "api/proof-aware-projects.json",
+        "api/public-status.json",
+        "api/ship-receipts.json",
+        "feed/forge-ledger.json"
+      ],
+      "externalSources": [
+        ".git/HEAD",
+        ".git/refs/heads/**"
+      ]
     },
     {
       "id": "cta-readiness",
@@ -213,10 +418,24 @@
       "builder": "scripts/build-early-hints-headers.mjs",
       "verify": "node scripts/build-early-hints-headers.mjs --check",
       "publishCascade": false,
+      "dependsOn": [
+        "assets/shell-manifest.json"
+      ],
+      "feeds": [
+        "api/ai-discovery-health.json"
+      ],
+      "externalSources": []
+    },
+    {
+      "id": "entity-graph",
+      "output": ".well-known/entity-graph.json",
+      "builder": "scripts/build-entity-graph.mjs",
+      "verify": "node scripts/build-entity-graph.mjs --check",
+      "publishCascade": false,
       "dependsOn": [],
       "feeds": [],
       "externalSources": [
-        "assets/shell-manifest.json"
+        "../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json"
       ]
     },
     {
@@ -257,6 +476,88 @@
       ]
     },
     {
+      "id": "favicon",
+      "output": "favicon.ico",
+      "builder": "scripts/build-favicon.mjs",
+      "verify": "node scripts/build-favicon.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "assets/icon-256.png"
+      ]
+    },
+    {
+      "id": "feedback-provenance",
+      "output": "api/feedback-provenance.json",
+      "builder": "scripts/build-feedback-provenance.mjs",
+      "verify": "node scripts/build-feedback-provenance.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/commit-map.json"
+      ],
+      "feeds": [
+        "api/intelligence-budget.json",
+        "api/nervous-system.json",
+        "api/ship-receipts.json",
+        "api/ux-decision-ledger.json",
+        "data/ignis-search-index.json"
+      ],
+      "externalSources": [
+        "data/rum-ux-history.ndjson"
+      ]
+    },
+    {
+      "id": "field-win-proof",
+      "output": "api/field-win.json",
+      "builder": "scripts/build-field-win-proof.mjs",
+      "verify": "node scripts/build-field-win-proof.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/proof-aware-projects.json",
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "data/field-verdicts.json"
+      ]
+    },
+    {
+      "id": "flight-director",
+      "output": "membership/index.html",
+      "builder": "scripts/build-flight-director.mjs",
+      "verify": "node scripts/build-flight-director.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "games/index.html",
+        "studio-pulse/index.html",
+        "universe/index.html"
+      ],
+      "dependsOn": [],
+      "feeds": [
+        "api/candidate-artifact-manifest.json",
+        "data/ignis-search-index.json"
+      ],
+      "externalSources": [
+        "data/intent-graph.json"
+      ]
+    },
+    {
+      "id": "forge-feed",
+      "output": "feed/forge-ledger.json",
+      "builder": "scripts/build-forge-feed.mjs",
+      "verify": "node scripts/build-forge-feed.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "feed/forge-ledger.xml"
+      ],
+      "dependsOn": [
+        "api/commit-map.json"
+      ],
+      "feeds": [],
+      "externalSources": []
+    },
+    {
       "id": "founder-presence",
       "output": "api/founder-presence.json",
       "builder": "scripts/generate-founder-presence.mjs",
@@ -267,6 +568,21 @@
       "externalSources": [
         "context/.session-lock",
         "context/PROJECT_STATUS.json"
+      ]
+    },
+    {
+      "id": "geo-vitals",
+      "output": "api/geo-vitals.json",
+      "builder": "scripts/build-geo-vitals.mjs",
+      "verify": "node scripts/build-geo-vitals.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        ".cache/probe-colo-supplement.ndjson",
+        ".cache/rum-raw/**"
       ]
     },
     {
@@ -301,6 +617,111 @@
       "externalSources": []
     },
     {
+      "id": "identity-migration-receipt",
+      "output": "api/identity-migration-receipt.json",
+      "builder": "scripts/build-identity-migration-receipt.mjs",
+      "verify": "node scripts/build-identity-migration-receipt.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/intent-map.json",
+        "api/release-proof.json",
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/supabase-control-plane.json",
+        "cloudflare/obelisk-auth.js",
+        "cloudflare/wrangler.toml",
+        "context/IDENTITY_MIGRATION_EVIDENCE.json",
+        "supabase/functions/**",
+        "supabase/migrations/**"
+      ]
+    },
+    {
+      "id": "ignis-conduit",
+      "output": "api/ignis-conduit.json",
+      "builder": "scripts/build-ignis-conduit.mjs",
+      "verify": "node scripts/build-ignis-conduit.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/commit-map.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "context/PROJECT_STATUS.json"
+      ]
+    },
+    {
+      "id": "ignis-platform-status",
+      "output": "api/ignis-platform-status.json",
+      "builder": "scripts/build-ignis-platform-status.mjs",
+      "verify": "node scripts/build-ignis-platform-status.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "../vaultspark-ignis/context/PROJECT_STATUS.json",
+        "../vaultspark-ignis/ignis/output/ignis-platform-public.json"
+      ]
+    },
+    {
+      "id": "ignis-roi",
+      "output": "api/ignis-roi.json",
+      "builder": "scripts/build-ignis-roi.mjs",
+      "verify": "node scripts/build-ignis-roi.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/nervous-system.json"
+      ],
+      "externalSources": [
+        "docs/AUDIT_*.json",
+        "docs/cache-ledger.ndjson"
+      ]
+    },
+    {
+      "id": "ignis-search-index",
+      "output": "data/ignis-search-index.json",
+      "builder": "scripts/build-ignis-search-index.mjs",
+      "verify": "node scripts/build-ignis-search-index.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/feedback-provenance.json",
+        "api/public-intelligence.json",
+        "api/security-posture.json",
+        "membership/index.html"
+      ],
+      "feeds": [
+        "api/intelligence-budget.json",
+        "api/oracle-insights.json"
+      ],
+      "externalSources": [
+        "data/game-registry.json",
+        "games/index.html",
+        "llms-full.txt",
+        "oracle/index.html",
+        "privacy/index.html",
+        "rights/index.html",
+        "terms/index.html",
+        "universe/index.html"
+      ]
+    },
+    {
+      "id": "inp-soak-verdicts",
+      "output": "data/inp-soak-verdicts.json",
+      "builder": "scripts/build-inp-soak-verdicts.mjs",
+      "verify": "node scripts/build-inp-soak-verdicts.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "api/inp-soak-verdicts.json"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/inp-breakdown.json"
+      ]
+    },
+    {
       "id": "intelligence-budget",
       "output": "api/intelligence-budget.json",
       "builder": "scripts/build-intelligence-budget.mjs",
@@ -310,17 +731,17 @@
         "docs/INTELLIGENCE_BUDGET_LEDGER.md"
       ],
       "dependsOn": [
+        "api/feedback-provenance.json",
         "api/nervous-system.json",
         "api/public-intelligence.json",
-        "api/ux-decision-ledger.json"
+        "api/ship-receipts.json",
+        "api/site-health.json",
+        "api/ux-decision-ledger.json",
+        "data/ignis-search-index.json"
       ],
       "feeds": [],
       "externalSources": [
-        "api/feedback-provenance.json",
-        "api/ship-receipts.json",
-        "api/site-health.json",
-        "context/PROJECT_STATUS.json",
-        "data/ignis-search-index.json"
+        "context/PROJECT_STATUS.json"
       ]
     },
     {
@@ -331,16 +752,16 @@
       "publishCascade": true,
       "dependsOn": [
         "api/deploy-currency.json",
+        "api/identity-migration-receipt.json",
         "api/news-desk.json",
         "api/public-intelligence.json",
-        "api/public-status.json"
+        "api/public-status.json",
+        "api/worker-route-provenance.json"
       ],
       "feeds": [],
       "externalSources": [
-        "api/identity-migration-receipt.json",
         "api/membership-tiers.json",
-        "api/og-coverage.json",
-        "api/worker-route-provenance.json"
+        "api/og-coverage.json"
       ]
     },
     {
@@ -359,6 +780,29 @@
       "externalSources": []
     },
     {
+      "id": "llms-full-shards",
+      "output": ".well-known/llms.txt",
+      "builder": "scripts/build-llms-full-shards.mjs",
+      "verify": "node scripts/build-llms-full-shards.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "games/*/llms-full.txt",
+        "llms-full.txt",
+        "projects/*/llms-full.txt"
+      ],
+      "dependsOn": [
+        "api/ecosystem-state.json"
+      ],
+      "feeds": [
+        "agents.json",
+        "api/ai-discovery-health.json",
+        "api/candidate-artifact-manifest.json"
+      ],
+      "externalSources": [
+        "repo-structure:public-project-routes"
+      ]
+    },
+    {
       "id": "lqip-map",
       "output": "data/lqip-map.json",
       "builder": "scripts/build-lqip-map.mjs",
@@ -374,12 +818,30 @@
       ]
     },
     {
+      "id": "nav-sheet-stats",
+      "output": "api/nav-sheet-stats.json",
+      "builder": "scripts/build-nav-sheet-stats.mjs",
+      "verify": "node scripts/build-nav-sheet-stats.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/nervous-system.json",
+        "api/ux-decision-ledger.json"
+      ],
+      "externalSources": [
+        ".cache/rum-raw/**"
+      ]
+    },
+    {
       "id": "nervous-system",
       "output": "api/nervous-system.json",
       "builder": "scripts/build-nervous-system.mjs",
       "verify": "node scripts/build-nervous-system.mjs --check",
       "publishCascade": false,
       "dependsOn": [
+        "api/feedback-provenance.json",
+        "api/ignis-roi.json",
+        "api/nav-sheet-stats.json",
         "api/public-intelligence.json",
         "api/ux-decision-ledger.json"
       ],
@@ -388,11 +850,25 @@
       ],
       "externalSources": [
         "api/ci-status.json",
-        "api/feedback-provenance.json",
-        "api/ignis-roi.json",
-        "api/nav-sheet-stats.json",
         "api/social-dashboard-public.json",
         "context/PROJECT_STATUS.json"
+      ]
+    },
+    {
+      "id": "news-critique-packets",
+      "output": "api/news-critique-packets.json",
+      "builder": "scripts/build-news-critique-packets.mjs",
+      "verify": "node scripts/build-news-critique-packets.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "news/**/critique.json"
+      ],
+      "dependsOn": [
+        "api/news-visual-receipts.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/news-desk-claims.ndjson"
       ]
     },
     {
@@ -496,7 +972,9 @@
       "verify": "node scripts/build-news-visual-receipts.mjs --check",
       "publishCascade": true,
       "dependsOn": [],
-      "feeds": [],
+      "feeds": [
+        "api/news-critique-packets.json"
+      ],
       "externalSources": [
         "data/news-desk/art/*.png",
         "data/news-desk/days/*.json",
@@ -517,6 +995,23 @@
         ".github/workflows/news-publish.yml",
         "api/ci-status.json",
         "api/news-desk-feed.json"
+      ]
+    },
+    {
+      "id": "oracle-query-clusters",
+      "output": "api/oracle-insights.json",
+      "builder": "scripts/build-oracle-query-clusters.mjs",
+      "verify": "node scripts/build-oracle-query-clusters.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/public-intelligence.json",
+        "data/ignis-search-index.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/leaderboard/v1/all.json",
+        "api/oracle-queries.json",
+        "data/oracle-feedback.ndjson"
       ]
     },
     {
@@ -544,12 +1039,34 @@
         "pathways/press/index.html",
         "pathways/supporters/index.html"
       ],
-      "dependsOn": [],
+      "dependsOn": [
+        "assets/shell-manifest.json"
+      ],
       "feeds": [],
       "externalSources": [
-        "assets/shell-manifest.json",
         "data/pathways.json",
         "journal/index.html"
+      ]
+    },
+    {
+      "id": "promotion-receipt",
+      "output": "api/promotion-receipt.json",
+      "builder": "scripts/build-promotion-receipt.mjs",
+      "verify": "node scripts/build-promotion-receipt.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "data/promotion-history.ndjson"
+      ],
+      "dependsOn": [],
+      "feeds": [
+        "api/release-proof.json",
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/build-sha.json",
+        "data/promotion-history.ndjson",
+        "external:production-apex",
+        "external:production-pages"
       ]
     },
     {
@@ -558,13 +1075,33 @@
       "builder": "scripts/build-proof-aware-projects.mjs",
       "verify": "node scripts/build-proof-aware-projects.mjs --check",
       "publishCascade": false,
-      "dependsOn": [],
+      "dependsOn": [
+        "api/commit-map.json",
+        "api/field-win.json"
+      ],
       "feeds": [],
       "externalSources": [
-        "api/commit-map.json",
-        "api/field-win.json",
         "data/game-affinity.json",
         "data/game-registry.json"
+      ]
+    },
+    {
+      "id": "public-ecosystem",
+      "output": "api/ecosystem-state.json",
+      "builder": "scripts/build-public-ecosystem.mjs",
+      "verify": "node scripts/build-public-ecosystem.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/public-intelligence.json"
+      ],
+      "feeds": [
+        ".well-known/llms.txt",
+        "agents.json",
+        "api/canonical-destination-reachability.json",
+        "data/stats-surface.json"
+      ],
+      "externalSources": [
+        "ignis/output/ecosystem-state.json"
       ]
     },
     {
@@ -577,10 +1114,14 @@
       "feeds": [
         "api/candidate-artifact-manifest.json",
         "api/citation.json",
+        "api/ecosystem-state.json",
         "api/intelligence-budget.json",
         "api/intent-map.json",
         "api/nervous-system.json",
-        "api/public-status.json"
+        "api/oracle-insights.json",
+        "api/public-status.json",
+        "changelog/index.html",
+        "data/ignis-search-index.json"
       ],
       "externalSources": [
         "context/CURRENT_STATE.md",
@@ -599,6 +1140,7 @@
       "verify": "node scripts/build-public-status.mjs --check",
       "publishCascade": true,
       "dependsOn": [
+        "api/commit-map.json",
         "api/heartbeat.json",
         "api/public-intelligence.json",
         "api/worker-route-history.json"
@@ -609,9 +1151,7 @@
         "data/stats-surface.json",
         "index.html"
       ],
-      "externalSources": [
-        "api/commit-map.json"
-      ]
+      "externalSources": []
     },
     {
       "id": "rank-climbers",
@@ -634,16 +1174,16 @@
       "dependsOn": [
         "api/candidate-artifact-manifest.json",
         "api/deploy-currency.json",
-        "api/staging-deploy-receipt.json"
+        "api/identity-migration-receipt.json",
+        "api/promotion-receipt.json",
+        "api/staging-deploy-receipt.json",
+        "api/worker-route-provenance.json"
       ],
       "feeds": [],
       "externalSources": [
         ".github/workflows/cloudflare-worker-deploy.yml",
-        "api/identity-migration-receipt.json",
-        "api/promotion-receipt.json",
         "api/staging-health.json",
         "api/supabase-control-plane.json",
-        "api/worker-route-provenance.json",
         "context/PRODUCTION_PROMOTION.json",
         "data/staging-deploy-history.ndjson"
       ]
@@ -654,18 +1194,112 @@
       "builder": "scripts/build-security-posture.mjs",
       "verify": "node scripts/build-security-posture.mjs --check",
       "publishCascade": true,
-      "dependsOn": [],
+      "dependsOn": [
+        "api/worker-route-provenance.json"
+      ],
       "feeds": [
-        "api/status-proof.json"
+        "api/status-proof.json",
+        "data/ignis-search-index.json"
       ],
       "externalSources": [
         ".well-known/security.txt",
-        "api/worker-route-provenance.json",
         "assets/tt-default-policy.js",
         "cloudflare/security-headers-worker.js",
         "config/csp-policy.mjs",
         "context/OBELISK_ADOPTION.md",
         "package.json"
+      ]
+    },
+    {
+      "id": "shell-assets",
+      "output": "assets/shell-manifest.json",
+      "builder": "scripts/build-shell-assets.mjs",
+      "verify": "node scripts/build-shell-assets.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "**/index.html",
+        "assets/*.shell-*.css",
+        "assets/*.shell-*.js"
+      ],
+      "dependsOn": [
+        "assets/ambient-core.bundle.js"
+      ],
+      "feeds": [
+        "_headers",
+        "api/candidate-artifact-manifest.json",
+        "pathways/builders/index.html"
+      ],
+      "externalSources": [
+        "**/index.html",
+        "assets/ambient-feature.bundle.js",
+        "assets/desk-presence.js",
+        "assets/desk-reactions.js",
+        "assets/ecosystem-stats.js",
+        "assets/hero-choice-tracking.js",
+        "assets/home-idle-loader.js",
+        "assets/journey-conductor.js",
+        "assets/nav-sheet.js",
+        "assets/nav-toggle.js",
+        "assets/proof-verify.js",
+        "assets/sentry-init.js",
+        "assets/shell-health.js",
+        "assets/stats-surface.js",
+        "assets/style.css",
+        "assets/supabase-client.js",
+        "assets/theme-toggle.js",
+        "config/route-consolidation.json"
+      ]
+    },
+    {
+      "id": "ship-receipts",
+      "output": "api/ship-receipts.json",
+      "builder": "scripts/build-ship-receipts.mjs",
+      "verify": "node scripts/build-ship-receipts.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "docs/SHIP_RECEIPTS.md"
+      ],
+      "dependsOn": [
+        "api/commit-map.json",
+        "api/feedback-provenance.json"
+      ],
+      "feeds": [
+        "api/intelligence-budget.json",
+        "changelog/index.html"
+      ],
+      "externalSources": [
+        "data/field-verdicts.json",
+        "docs/visual-proof/*/manifest.json"
+      ]
+    },
+    {
+      "id": "site-health",
+      "output": "api/site-health.json",
+      "builder": "scripts/build-site-health.mjs",
+      "verify": "node scripts/build-site-health.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/intelligence-budget.json",
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/funnel-summary.json",
+        "data/rum-summary.json"
+      ]
+    },
+    {
+      "id": "staging-deploy-continuity",
+      "output": "api/staging-deploy-continuity.json",
+      "builder": "scripts/build-staging-deploy-continuity.mjs",
+      "verify": "node scripts/build-staging-deploy-continuity.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/staging-deploy-receipt.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "data/staging-deploy-history.ndjson"
       ]
     },
     {
@@ -681,7 +1315,8 @@
         "api/candidate-artifact-manifest.json"
       ],
       "feeds": [
-        "api/release-proof.json"
+        "api/release-proof.json",
+        "api/staging-deploy-continuity.json"
       ],
       "externalSources": [
         "api/build-sha.json",
@@ -719,6 +1354,7 @@
       ],
       "dependsOn": [
         "api/analytics-summary.json",
+        "api/ecosystem-state.json",
         "api/news-desk-stats.json",
         "api/public-status.json",
         "api/status-proof.json"
@@ -726,7 +1362,6 @@
       "feeds": [],
       "externalSources": [
         "api/ecosystem-analytics.json",
-        "api/ecosystem-state.json",
         "data/rum-summary.json"
       ]
     },
@@ -737,30 +1372,30 @@
       "verify": "node scripts/build-status-proof.mjs --check --check-content",
       "publishCascade": true,
       "dependsOn": [
+        "api/ai-discovery-health.json",
         "api/attention-pressure.json",
         "api/canonical-destination-reachability.json",
         "api/deploy-currency.json",
+        "api/field-win.json",
+        "api/geo-vitals.json",
+        "api/identity-migration-receipt.json",
         "api/newsroom-run.json",
+        "api/promotion-receipt.json",
         "api/public-status.json",
-        "api/security-posture.json"
+        "api/security-posture.json",
+        "api/site-health.json",
+        "api/worker-route-provenance.json"
       ],
       "feeds": [
         "api/citation.json",
         "data/stats-surface.json"
       ],
       "externalSources": [
-        "api/ai-discovery-health.json",
         "api/ci-status.json",
-        "api/field-win.json",
         "api/funnel-summary.json",
-        "api/geo-vitals.json",
-        "api/identity-migration-receipt.json",
-        "api/promotion-receipt.json",
-        "api/site-health.json",
         "api/staging-health.json",
         "api/supabase-control-plane.json",
-        "api/uptime.json",
-        "api/worker-route-provenance.json"
+        "api/uptime.json"
       ]
     },
     {
@@ -771,10 +1406,23 @@
       "publishCascade": false,
       "dependsOn": [],
       "feeds": [
-        "api/candidate-artifact-manifest.json"
+        "api/candidate-artifact-manifest.json",
+        "data/ignis-search-index.json"
       ],
       "externalSources": [
         "data/surface-spine.json"
+      ]
+    },
+    {
+      "id": "tt-readiness",
+      "output": "api/tt-readiness.json",
+      "builder": "scripts/build-tt-readiness.mjs",
+      "verify": "node scripts/build-tt-readiness.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        ".cache/tt-active-local-sinks.json"
       ]
     },
     {
@@ -795,15 +1443,16 @@
       "builder": "scripts/build-ux-decision-ledger.mjs",
       "verify": "node scripts/build-ux-decision-ledger.mjs --check",
       "publishCascade": false,
-      "dependsOn": [],
+      "dependsOn": [
+        "api/feedback-provenance.json",
+        "api/nav-sheet-stats.json"
+      ],
       "feeds": [
         "api/intelligence-budget.json",
         "api/nervous-system.json"
       ],
       "externalSources": [
-        "api/feedback-provenance.json",
         "api/funnel-summary.json",
-        "api/nav-sheet-stats.json",
         "data/rum-summary.json"
       ]
     },
@@ -816,15 +1465,37 @@
       "alsoStage": [
         "data/worker-route-history.ndjson"
       ],
-      "dependsOn": [],
+      "dependsOn": [
+        "api/worker-route-provenance.json"
+      ],
       "feeds": [
         "api/public-status.json"
       ],
       "externalSources": [
-        "api/worker-route-provenance.json",
         "data/rum-history.ndjson",
         "data/uptime-history.ndjson",
         "data/worker-route-history.ndjson"
+      ]
+    },
+    {
+      "id": "worker-route-provenance",
+      "output": "api/worker-route-provenance.json",
+      "builder": "scripts/build-worker-route-provenance.mjs",
+      "verify": "node scripts/build-worker-route-provenance.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/candidate-artifact-manifest.json",
+        "api/intent-map.json",
+        "api/release-proof.json",
+        "api/security-posture.json",
+        "api/status-proof.json",
+        "api/worker-route-history.json"
+      ],
+      "externalSources": [
+        "cloudflare/security-headers-worker.js",
+        "external:build-vantage-worker-routes",
+        "external:production-worker-routes"
       ]
     },
     {
@@ -833,11 +1504,11 @@
       "builder": "scripts/build-you-asked-shipped.mjs",
       "verify": "node scripts/build-you-asked-shipped.mjs --check",
       "publishCascade": true,
-      "dependsOn": [],
-      "feeds": [],
-      "externalSources": [
+      "dependsOn": [
         "api/ship-receipts.json"
-      ]
+      ],
+      "feeds": [],
+      "externalSources": []
     }
   ]
 }

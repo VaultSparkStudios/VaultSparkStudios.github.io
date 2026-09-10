@@ -1125,3 +1125,18 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 | Completion-claim discipline | 5 | Local implementation is complete; production currency remains red until the staging-first release is actually observed. Identity, newsletter, signup, cadence, and field-performance claims remain unmade. |
 
 **Net:** the interrupted candidate is real and locally green, but deployment and independent identity/provider acceptance remain separate evidence planes.
+
+## S348 evidence-completeness and argument-map correction (2026-09-10)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | All 67 checked generators are represented by 80 validated graph nodes; critique packets use stable fact ids and explicit linked/unlinked status. |
+| Prompt/template alignment | 5 | Build order, evidence projection, reachability checks, and 29 publisher workflows regenerate the same declared fan-out. |
+| Public claim accuracy | 5 | Volatile lab performance abstains; unsupported predictions stay unlinked; source-feed retention reflects published outcomes. |
+| Internal consistency | 5 | Source-derived clocks are byte-stable, Git history windows disclose ceilings, and the hot CURRENT_STATE links its exact archive. |
+| Evidence integrity | 5 | Critique manifest hashes all 30 story packets; visual evidence retains page/art hashes and review state. |
+| Credential status honesty | 5 | No credential, identity, auth, privacy, or newsletter gate was relabeled or cleared. |
+| Audience voice integrity | 5 | The Desk exposes inspectable evidence without replacing its fictional correspondents' arguments with system verdicts. |
+| Completion-claim discipline | 5 | Final release evidence is withheld until synchronized tests, rendered pixels, staging, production, and post-push CI complete. |
+
+**Net: 40/40 — green local truth posture.** Production currency remains a separate closeout observation until the S348 release is served.

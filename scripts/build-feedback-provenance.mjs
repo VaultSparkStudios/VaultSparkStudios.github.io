@@ -23,7 +23,7 @@
  *
  * Usage:
  *   node scripts/build-feedback-provenance.mjs            # write
- *   node scripts/build-feedback-provenance.mjs --check     # present + parseable
+ *   node scripts/build-feedback-provenance.mjs --check     # exact source-derived drift check
  *   node scripts/build-feedback-provenance.mjs --self-test # classifier checks
  */
 import fs from 'node:fs';
@@ -143,7 +143,9 @@ const commitMap = JSON.parse(fs.readFileSync(COMMIT_MAP, 'utf8'));
 const themes = build(commitMap);
 const decisionSampler = buildDecisionSampler(fs.existsSync(RUM_HISTORY) ? fs.readFileSync(RUM_HISTORY, 'utf8') : '');
 const payload = {
-  generatedAt: new Date().toISOString().slice(0, 10),
+  // A wall-clock date made an unchanged commit corpus churn at midnight.
+  // commit-map already carries a source-derived date, so bind to that.
+  generatedAt: commitMap.generatedAt || null,
   generatedBy: 'scripts/build-feedback-provenance.mjs',
   source: 'api/commit-map.json (theme-classified, public commit subjects only)',
   kind: 'feedback-provenance',
@@ -159,11 +161,15 @@ if (CHECK) {
     process.exit(1);
   }
   try {
-    JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    const current = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    if (JSON.stringify(current) !== JSON.stringify(payload)) {
+      console.error('build-feedback-provenance --check: artifact drift; run without --check');
+      process.exit(1);
+    }
     console.log(`build-feedback-provenance --check: ok (${themes.length} themes)`);
     process.exit(0);
   } catch {
-    console.error('build-feedback-provenance --check: output is not valid JSON');
+    console.error('build-feedback-provenance --check: output is invalid or stale');
     process.exit(1);
   }
 }

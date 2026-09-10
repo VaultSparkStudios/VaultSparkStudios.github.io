@@ -191,7 +191,7 @@ function selfTest() {
   // it is derived from api/funnel-summary.json, which a broad `api/` add covers —
   // so a workflow staging `api/` must now stage it too. Same widening shape as
   // index.html above; the mutation below proves it still bites.
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson data/stats-surface.json stats.json .cache/cta-readiness.json`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt\n  git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
   // Mutation the other way: dropping index.html must FAIL, or the widening above
   // would be indistinguishable from having quietly disabled the check.

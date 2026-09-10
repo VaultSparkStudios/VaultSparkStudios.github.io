@@ -1,16 +1,16 @@
-# Genius Hit List — Session 347
+# Genius Hit List — Session 348
 
-Generated: 2026-09-09
+Generated: 2026-09-10
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **73/100**
+- Overall opportunity pressure: **76/100**
 - Health: **yellow**
-- Current SIL: **986/1000**
+- Current SIL: **993/1000**
 - CI health: **check gh run list**
-- Current focus: S347 recovered full arc is verified and released: 23 audit items, 477 build checks, 215 mobile cells, 168 rendered route/state captures, and live content currency.
+- Current focus: S348 full arc shipped 11 audited improvements: faster Changelog reactions, deterministic evidence, complete 67/67 generator coverage across 80 nodes, closed publisher cascades, and 30 claim/evidence critique packets.
 
 ## Strategic Read
 
@@ -22,81 +22,81 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Post-push CI confirmation
+#### 1. [COHESION] Move the 30-minute uptime sampler off GitHub Actions as a dedicated t…
+Final score: **100**
+[NEXT][COST/P1] Move the 30-minute uptime sampler off GitHub Actions as a dedicated trust-path migration. Add the Worker scheduled() sampler and bounded KV schema, teach the daily job to drain samples into the unchanged public uptime contract, preserve cadence/SLA semantics, and stage/release independently with rollback evidence.
+Why it matters: Move the 30-minute uptime sampler off GitHub Actions as a dedicated tr is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 2. [PRODUCT] Make local performance sampling repeatable. Isolate host load, record…
+#### 3. [PRODUCT] Close field-vitals freshness only with real evidence. Surface observe…
 Final score: **93**
-[S348][PERF/P2] Make local performance sampling repeatable. Isolate host load, record multiple runs, and report a distribution instead of one score. Keep simulated and observed largest-contentful-paint distinct and never promote a local lab result to field Core Web Vitals.
-Why it matters: Make local performance sampling repeatable. Isolate host load, record  is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Evidence-graph coverage debt remains explicit. Five source-verified n…
-Final score: **90**
-[S345→S347][BUILD/P3] Evidence-graph coverage debt remains explicit. Five source-verified nodes were implemented and focused-tested in S347. Current ratchet: 33 unmodeled of 67 --check-gated generators. Check presence does not imply byte-drift comparison. Future modeling requires actual dependency evidence; no blanket graph-complete claim.
-Why it matters: Evidence-graph coverage debt remains explicit. Five source-verified no is open, local, and unblocked — can ship this session.
+[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.
+Why it matters: Close field-vitals freshness only with real evidence. Surface observed is open, local, and unblocked — can ship this session.
 
 #### 4. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
-Final score: **81**
+Final score: **77**
 [S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED. Re-probed S345: build-news-freshness --check --require-daily now reports daily - latest 2026-09-07 - age 0d, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to periodic') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. What is NOT resolved, and is not claimed to be: the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
-Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] <!-- evidence-open: the files named are the churning OUTPUTS and the …
-Final score: **78**
-<!-- evidence-open: the files named are the churning OUTPUTS and the suspect generators, not deliverables; the deliverable is a pinned-clock bisect and fix --> [S335][BUILD/P2] Two identical builds minutes apart still churn 47 files — commit-derived feeds are the source, not timestamps. With no commit between them, build 2 rewrote feed/forge-ledger.{json,xml} (206 lines), api/feedback-provenance.json (a whole theme dropped), api/ship-receipts.json, api/status-proof.json, api/news-visual-receipts.json and the changelog SSR block; a third build would churn again. All derive from api/commit-map.json / the git log through build-parallel-phase.mjs (which runs build-feedback-provenance + build-ship-receipts), so the working theory is a clock-relative selection window in that chain. Bisect: run build-forge-feed.mjs twice with a pinned --now (add the flag if absent) and diff; then the provenance pair. This is the receipt-cascade cost the S334 "vs-yas" item was really measuring. Fixed this session: _headers lagged one build because early-hints ran before the postbuild shell rotation — moved into postbuild after build-shell-assets.
-Why it matters: <!-- evidence-open: the files named are the churning OUTPUTS and the s is open, local, and unblocked — can ship this session.
+#### 1. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
+Final score: **75**
+Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
+Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
 #### 2. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-Final score: **69**
+Final score: **72**
 [S344][INFRA/P1] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, AGENTS.md requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
 Why it matters: Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is open, local, and unblocked — can ship this session.
 
-#### 3. [SECURITY] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-Final score: **66**
-[S335][TOKEN/P2] Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs shards the handoff. It is the largest file any session can touch (~126K tokens raw). compact-handoff.mjs and rotate-ledger.mjs read the handoff archive, so the shard has to be introduced through those readers, not by moving files. Measure with context-meter.mjs before and after.
-Why it matters: Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs sh lowers operational risk and is entirely local — no external dependencies block it.
+#### 3. [REVENUE] Annual Stripe activation once keys exist
+Final score: **71**
+[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.
+Why it matters: Annual Stripe activation once keys exist is on the direct checkout path; unblocking it can activate income without building new features.
 
-First command: `node scripts/lint-repo.mjs`
+#### 4. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+Final score: **69**
+[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
+Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
-Final score: **65**
-[S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate. S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
-Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 347-session-old carry-forward; verify or close it so it stops polluting the hit list.
+#### 5. [INTELLIGENCE] Extend proof/depth beyond the three core pages
+Final score: **69**
+[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
+Why it matters: Extend proof/depth beyond the three core pages keeps the ranked audit current so later sessions don't iterate on stale signal.
 
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 5. [VERIFY] <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-Final score: **65**
-<!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are named as context; the deliverable is the Worker scheduled handler + KV drain, which do not exist yet --> [S335][COST/P2] Move the 30-minute uptime probe off GitHub Actions. uptime-probe.yml is 48 runs and 48 [skip ci] commits a day (71% of all scheduled runs) and is the churn that buried the forge ledger in S333. Design: a Worker scheduled() handler probes the same route list and writes samples to KV under uptime:<ts>; the Actions job runs once daily, drains KV into api/uptime.json + geo-vitals + staging parity, and commits once. probe-uptime.mjs must learn to consume KV samples instead of producing them; check-uptime-contract.mjs defines the sample cadence the public SLA promises — keep it. Not done in S335 because it rewrites a public trust surface's data path; the same-cron pair (linkcheck + member-seo) was merged into weekly-maintenance.yml instead.
-Why it matters: <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are na is a 12-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
+First command: `node scripts/generate-genius-list.mjs`
 
 ### LATER
 
-#### 1. [SECURITY] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
-Final score: **63**
-[S333][NEWS/P1] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08-31 edition proves the pipeline works, but it was manually dispatched under observation. The cron itself has not gone green unattended since 2026-08-29. Check the 06:07 / 12:07 / 18:07 / 22:07 UTC slots; if they still drop while a dispatch succeeds, the difference is environmental (scheduler context, token scope, or queue freshness), not the selection or model logic this session fixed.
-Why it matters: Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08 lowers operational risk and is entirely local — no external dependencies block it.
+#### 1. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
+Final score: **68**
+[S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate. S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
+Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 348-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
-First command: `node scripts/lint-repo.mjs`
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [PRODUCT] The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+#### 2. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+Final score: **62**
+[SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
+Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 348-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
+
+#### 3. [PRODUCT] CF Worker automation unblock
 Final score: **60**
-[S333][NEWS/P0] The Desk's binding constraint is now topic ACCEPTANCE, and it currently queues nothing. Measured across four runs on 2026-08-31: 03:19 queued 3, 04:10 queued 2 (one became the published edition), the 06:44 scheduled run queued 0 of 177, and a local news-trend-radar.mjs --scan reproduces 0 queued / 176 rejected deterministically. Selection and the authoring model are both fixed and proven; the pipeline now starves upstream instead. Prediction to check first: today's edition ages to 1 day old on 2026-09-01, at which point build-news-freshness --check --require-daily fails again and the Desk returns to red — not from the defects fixed in S333, but from an empty queue. Investigate the rejection thresholds (corroboration count, recency window, published-slug dedupe from S329, vendor filter) and establish what acceptance rate a 4-slot daily cadence actually requires.
-Why it matters: The Desk's binding constraint is now topic ACCEPTANCE, and it currentl is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Fact extraction accepts advertising copy as a sourced fact. The 2026-…
-Final score: **55**
-[S334][NEWS/P2] Fact extraction accepts advertising copy as a sourced fact. The 2026-08-31 edition's first fact reads "Scott Gilbertson Top Shark Promo Codes for August 2026 Shark makes some seriously powerful vacuums..." sourced to the Wired article. factCandidates() scores for digits, proper nouns and reporting verbs and penalises marketing pronouns, but a syndicated promo block passes every filter. This is a public-surface truth issue, not a cosmetic one: it is rendered as a cited fact under a real publisher URL. Consider penalising sentences whose entities do not appear in the headline or topic title.
-Why it matters: Fact extraction accepts advertising copy as a sourced fact. The 2026-0 is open, local, and unblocked — can ship this session.
+[OPS] CF Worker automation unblock — add CF_WORKER_API_TOKEN so Worker deploys stop depending on local Wrangler auth.
+Why it matters: CF Worker automation unblock is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -142,18 +142,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Post-push CI confirmation
-2. Make local performance sampling repeatable. Isolate host load, record…
-3. Evidence-graph coverage debt remains explicit. Five source-verified n…
+1. Move the 30-minute uptime sampler off GitHub Actions as a dedicated t…
+2. Post-push CI confirmation
+3. Close field-vitals freshness only with real evidence. Surface observe…
 4. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
-5. <!-- evidence-open: the files named are the churning OUTPUTS and the …
+5. Authorize or decline immutable warm-origin migration. D-S303 reserves…
 6. Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-7. Shard context/CURRENT_STATE.md (503 KB) the way compact-handoff.mjs s…
-8. Member-newsletter deployment and explicit arming decision remain sepa…
-9. <!-- evidence-open: weekly-maintenance.yml and uptime-probe.yml are n…
-10. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
-11. The Desk's binding constraint is now topic ACCEPTANCE, and it current…
-12. Fact extraction accepts advertising copy as a sourced fact. The 2026-…
+7. Annual Stripe activation once keys exist
+8. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+9. Extend proof/depth beyond the three core pages
+10. Member-newsletter deployment and explicit arming decision remain sepa…
+11. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+12. CF Worker automation unblock
 
 ## Best Immediate Move
 

@@ -33,6 +33,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { auditHistoryWindows } from './check-history-window-safety.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -213,6 +214,13 @@ const RUN_DIRECT = process.argv[1]
 function main() {
 
 if (args.has('--self-test')) process.exit(selfTest() ? 0 : 1);
+
+const unsafeWindows = auditHistoryWindows(ROOT);
+if (unsafeWindows.length) {
+  console.error('check-workflow-git-depth: fixed history window could hide meaningful work behind automation churn —');
+  for (const finding of unsafeWindows) console.error(`  ✗ ${finding}`);
+  if (args.has('--check')) process.exit(1);
+}
 
 const scriptsDir = path.join(ROOT, 'scripts');
 const historyGens = findHistoryGenerators(

@@ -32,6 +32,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 const MANIFEST = [
+  { file: 'context/CURRENT_STATE.md', tag: 'CURRENT_STATE', kind: 'current-state', capKB: 120 },
   { file: 'context/SELF_IMPROVEMENT_LOOP.md', tag: 'SIL', kind: 'dated', capKB: 300, keepRecent: 12 },
   { file: 'logs/WORK_LOG.md', tag: 'WORK_LOG', kind: 'dated', capKB: 250, keepRecent: 12 },
   { file: 'context/DECISIONS.md', tag: 'DECISIONS', kind: 'dated', capKB: 250, keepRecent: 20 },
@@ -73,6 +74,32 @@ export function parseBlocks(text) {
 export function quarterOf(dateStr) {
   const [y, m] = dateStr.split('-').map(Number);
   return `${y}Q${Math.ceil(m / 3)}`;
+}
+
+function sessionFromHeader(header) {
+  const values = [...String(header || '').matchAll(/(?:\bS|Session\s+)(\d{1,5})\b/gi)]
+    .map((match) => Number(match[1]))
+    .filter(Number.isFinite);
+  return values.length ? Math.max(...values) : null;
+}
+
+export function planCurrentStateRotation(text, { targetBytes }) {
+  const { blocks } = parseBlocks(text);
+  const tagged = blocks.map((block) => ({ block, session: sessionFromHeader(block.header) }));
+  const latestSession = Math.max(...tagged.map((entry) => entry.session ?? -1));
+  if (latestSession < 0) return { keptText: text, latestSession: null, rotated: false, overCap: Buffer.byteLength(text, 'utf8') > targetBytes };
+  const kept = tagged.filter((entry) => entry.session === latestSession).map((entry) => entry.block);
+  const stamp = new Date().toISOString().slice(0, 10);
+  const keptText = [
+    '# Current State',
+    '',
+    `Last updated: ${stamp}`,
+    '',
+    `> Historical state through Session ${latestSession - 1} is preserved verbatim in \`context/archive/CURRENT_STATE_through_S${latestSession}.md\`. This hot file retains the newest shipped-session state only.`,
+    '',
+    ...kept.flatMap((block) => block.lines),
+  ].join('\n').replace(/\n*$/, '\n');
+  return { keptText, latestSession, rotated: kept.length < blocks.length, overCap: Buffer.byteLength(keptText, 'utf8') > targetBytes };
 }
 
 // Plan a dated rotation: move oldest dated blocks (keeping keepRecent newest
@@ -166,6 +193,13 @@ intro
   const roomy = planDatedRotation(many, { targetBytes: 10_000_000, keepRecent: 12 });
   ok(roomy.floorYielded === false && roomy.moved.length === 0, 'no yield when the cap is satisfied');
 
+  const state = '# State\n\n## S9 old\nold\n## Snapshot\nstable\n## S10 current\nnew\n## S10 release\nlive\n';
+  const compactState = planCurrentStateRotation(state, { targetBytes: 10_000 });
+  ok(compactState.latestSession === 10, 'current-state rotation discovers the newest session from headings');
+  ok(compactState.keptText.includes('S10 current') && compactState.keptText.includes('S10 release'), 'all newest-session blocks stay hot');
+  ok(!compactState.keptText.includes('S9 old') && !compactState.keptText.includes('## Snapshot'), 'historical and unversioned blocks move to the verbatim archive');
+  ok(compactState.rotated && !compactState.overCap, 'current-state compaction reports a bounded successful rotation');
+
   console.log(`rotate-ledger --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }
@@ -187,7 +221,21 @@ function run() {
     }
     if (size <= cap) continue;
     const text = fs.readFileSync(full, 'utf8');
-    if (entry.kind === 'dated') {
+    if (entry.kind === 'current-state') {
+      const plan = planCurrentStateRotation(text, { targetBytes: cap * ROTATE_TO });
+      if (!plan.rotated) continue;
+      const archive = path.join(ARCHIVE_DIR, `CURRENT_STATE_through_S${plan.latestSession}.md`);
+      console.log(`${DRY ? '[dry-run] ' : ''}${entry.file}: archiving exact preimage -> ${path.relative(ROOT, archive)}; retaining S${plan.latestSession}`);
+      if (DRY) continue;
+      fs.mkdirSync(ARCHIVE_DIR, { recursive: true });
+      if (fs.existsSync(archive) && fs.readFileSync(archive, 'utf8') !== text) {
+        console.error(`  ⛔ ${path.relative(ROOT, archive)} already exists with different bytes; refusing overwrite`);
+        process.exit(1);
+      }
+      if (!fs.existsSync(archive)) fs.writeFileSync(archive, text, 'utf8');
+      fs.writeFileSync(full, plan.keptText, 'utf8');
+      rotated++;
+    } else if (entry.kind === 'dated') {
       const plan = planDatedRotation(text, { targetBytes: cap * ROTATE_TO, keepRecent: entry.keepRecent });
       if (!plan.moved.length) continue;
       // group moved blocks by quarter, oldest shards first

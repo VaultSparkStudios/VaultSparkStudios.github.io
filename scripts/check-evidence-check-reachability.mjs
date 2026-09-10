@@ -89,6 +89,21 @@ function gitTracked(relPath) {
   }
 }
 
+function isGlobPath(relPath) {
+  return /[*?[\]]/.test(relPath);
+}
+
+function gitTrackedMatches(pathspec) {
+  try {
+    return execFileSync('git', ['ls-files', '--', pathspec], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+      .split(/\r?\n/)
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 function selfTest() {
   const pkg = {
     scripts: {
@@ -116,6 +131,8 @@ function selfTest() {
     ['a flagless nested check is reachable by name', isReachable({ script: 'coherence.mjs', flags: [] }, steps, noFlagWrapper).reachable === true],
     ['an uninvoked script is not reachable', isReachable({ script: 'ghost.mjs', flags: [] }, steps, goodWrapper).reachable === false],
     ['reachability names its route', isReachable({ script: 'build-b.mjs', flags: ['--check'] }, steps, goodWrapper).via.startsWith('nested in')],
+    ['glob path is recognized', isGlobPath('projects/*/.ai/index.html') === true],
+    ['literal path is not treated as glob', isGlobPath('api/citation.json') === false],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -146,8 +163,13 @@ function main() {
     }
     if (!fs.existsSync(path.join(ROOT, node.output))) findings.push(`${node.id}: declared output ${node.output} does not exist`);
     for (const sibling of node.alsoStage || []) {
-      if (!fs.existsSync(path.join(ROOT, sibling))) findings.push(`${node.id}: alsoStage path ${sibling} does not exist`);
-      else if (!gitTracked(sibling)) findings.push(`${node.id}: alsoStage path ${sibling} is not git-tracked — a publisher can never stage it`);
+      if (isGlobPath(sibling)) {
+        if (!gitTrackedMatches(sibling).length) findings.push(`${node.id}: alsoStage glob ${sibling} matches no git-tracked path — a publisher can never stage it`);
+      } else if (!fs.existsSync(path.join(ROOT, sibling))) {
+        findings.push(`${node.id}: alsoStage path ${sibling} does not exist`);
+      } else if (!gitTracked(sibling)) {
+        findings.push(`${node.id}: alsoStage path ${sibling} is not git-tracked — a publisher can never stage it`);
+      }
     }
   }
 

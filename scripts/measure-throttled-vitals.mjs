@@ -43,6 +43,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
+import crypto from 'node:crypto';
 import { spawn } from './lib/safe-spawn.mjs';
 import { chromium } from '@playwright/test';
 
@@ -74,7 +76,9 @@ const DEFAULT_ROUTES = ['/ranks/', '/', '/join/', '/community/', '/games/'];
 const routes = (valueFor('--routes') || DEFAULT_ROUTES.join(','))
   .split(',').map((r) => r.trim()).filter(Boolean);
 const settleMs = Number(valueFor('--settle', '5000'));
-const runs = Math.max(1, Number(valueFor('--runs', '1')));
+const runs = Math.max(1, Number(valueFor('--runs', '3')));
+const warmupRuns = Math.max(0, Number(valueFor('--warmup', '1')));
+const hostLagBudgetMs = Math.max(1, Number(valueFor('--host-lag-budget', '40')));
 const clsBudget = valueFor('--cls-budget') != null ? Number(valueFor('--cls-budget')) : null;
 const outPath = valueFor('--out');
 const host = process.env.LOCAL_PREVIEW_HOST || '127.0.0.1';
@@ -93,6 +97,13 @@ function runSelfTest() {
   // median helper correctness
   t('median of [0.81,0.78,0.82] = 0.81', median([0.81, 0.78, 0.82]) === 0.81);
   t('median of [1,2] = 1.5', median([1, 2]) === 1.5);
+  t('p75 nearest-rank of [1,2,3,4] = 3', percentile([1, 2, 3, 4], 0.75) === 3);
+  const stable = distribution([100, 105, 110]);
+  t('distribution preserves sample count', stable.samples === 3 && stable.median === 105);
+  t('three close samples are stable', stable.stability === 'stable');
+  t('one sample abstains from stability', distribution([100]).stability === 'insufficient');
+  t('host contamination forces abstention', evidenceVerdict({ contaminated: true, summary: { cls: stable, lcp: stable, fcp: stable } }) === 'abstain-host-noise');
+  t('insufficient samples force abstention', evidenceVerdict({ contaminated: false, summary: { cls: distribution([0]), lcp: distribution([100]), fcp: distribution([80]) } }) === 'abstain-insufficient');
   // CLS verdict math
   t('cls 0.29 breaches 0.10 budget', 0.291 >= 0.10);
   t('cls 0.0006 clears 0.10 budget', 0.0006 < 0.10);
@@ -106,6 +117,47 @@ function median(nums) {
   const s = [...nums].sort((a, b) => a - b);
   const m = Math.floor(s.length / 2);
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+function percentile(nums, p) {
+  const s = [...nums].sort((a, b) => a - b);
+  if (!s.length) return null;
+  return s[Math.min(s.length - 1, Math.max(0, Math.ceil(s.length * p) - 1))];
+}
+
+function distribution(nums) {
+  const clean = nums.filter(Number.isFinite);
+  if (!clean.length) return { samples: 0, min: null, p25: null, median: null, p75: null, max: null, spreadPct: null, stability: 'insufficient' };
+  const med = median(clean);
+  const spreadPct = med === 0 ? (Math.max(...clean) === 0 ? 0 : null) : Number((((Math.max(...clean) - Math.min(...clean)) / med) * 100).toFixed(1));
+  return {
+    samples: clean.length,
+    min: Math.min(...clean),
+    p25: percentile(clean, 0.25),
+    median: med,
+    p75: percentile(clean, 0.75),
+    max: Math.max(...clean),
+    spreadPct,
+    stability: clean.length < 3 ? 'insufficient' : (spreadPct != null && spreadPct <= 20 ? 'stable' : 'volatile'),
+  };
+}
+
+function evidenceVerdict(result) {
+  if (result.contaminated) return 'abstain-host-noise';
+  const states = [result.summary.cls, result.summary.lcp, result.summary.fcp].map((value) => value.stability);
+  if (states.includes('insufficient')) return 'abstain-insufficient';
+  if (states.includes('volatile')) return 'abstain-volatile';
+  return 'measured-stable';
+}
+
+async function measureHostLag() {
+  const samples = [];
+  for (let i = 0; i < 5; i++) {
+    const start = performance.now();
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    samples.push(Math.max(0, performance.now() - start - 20));
+  }
+  return Number(percentile(samples, 0.75).toFixed(1));
 }
 
 if (selfTest) runSelfTest();
@@ -201,6 +253,12 @@ async function measureRoute(browser, base, route) {
   };
 }
 
+async function warmRoute(browser, base, route) {
+  const page = await browser.newPage({ viewport: { width: 412, height: 823 } });
+  try { await page.goto(base + route, { waitUntil: 'load', timeout: 45_000 }); }
+  finally { await page.close(); }
+}
+
 async function main() {
   const server = spawn(process.execPath, ['scripts/local-preview-server.mjs'], {
     cwd: ROOT,
@@ -215,41 +273,57 @@ async function main() {
     console.error('✘ ' + e.message);
     process.exit(2);
   }
-  console.log(`measure-throttled-vitals · ${base} · CPU ${THROTTLE.cpuRate}× · slow-4G · ${runs} run(s)\n`);
+  console.log(`measure-throttled-vitals · ${base} · CPU ${THROTTLE.cpuRate}× · slow-4G · ${runs} measured + ${warmupRuns} warm-up run(s)\n`);
   const browser = await chromium.launch();
   const results = [];
   try {
     for (const route of routes) {
+      for (let i = 0; i < warmupRuns; i++) await warmRoute(browser, base, route);
       const perRun = [];
-      for (let i = 0; i < runs; i++) perRun.push(await measureRoute(browser, base, route));
-      // median run by CLS (the metric this harness exists to catch)
+      const hostLagMs = [];
+      for (let i = 0; i < runs; i++) {
+        hostLagMs.push(await measureHostLag());
+        perRun.push(await measureRoute(browser, base, route));
+      }
       const ok = perRun.filter((r) => !r.error);
-      const pick = ok.length
-        ? ok.sort((a, b) => a.cls - b.cls)[Math.floor(ok.length / 2)]
-        : perRun[0];
-      results.push(pick);
+      const summary = {
+        cls: distribution(ok.map((r) => r.cls)),
+        lcp: distribution(ok.map((r) => r.lcp)),
+        fcp: distribution(ok.map((r) => r.fcp)),
+        hostLagMs: distribution(hostLagMs),
+      };
+      const row = { route, status: ok[0]?.status || 0, runs: perRun, summary,
+        contaminated: summary.hostLagMs.p75 > hostLagBudgetMs,
+        error: ok.length ? null : perRun[0]?.error || 'all runs failed' };
+      row.evidenceVerdict = evidenceVerdict(row);
+      results.push(row);
     }
   } finally {
     await browser.close();
     server.kill();
   }
 
-  console.log('  Route'.padEnd(20) + 'CLS'.padEnd(10) + 'LCP'.padEnd(10) + 'FCP'.padEnd(10) + 'LCP element');
+  console.log('  Route'.padEnd(20) + 'CLS median'.padEnd(14) + 'LCP p50/p75'.padEnd(18) + 'FCP p50/p75'.padEnd(18) + 'Stability');
   console.log('  ' + '─'.repeat(72));
   let breaches = 0;
   for (const r of results) {
     if (r.error) { console.log(`  ${r.route.padEnd(18)} ERROR: ${r.error}`); continue; }
-    const el = r.lcpEl ? `${r.lcpEl.tag}${r.lcpEl.id ? '#' + r.lcpEl.id : ''}${r.lcpEl.cls ? '.' + r.lcpEl.cls.split(' ')[0] : ''}` : '';
-    const flag = clsBudget != null && r.cls >= clsBudget ? ' ⛔' : '';
-    if (clsBudget != null && r.cls >= clsBudget) breaches++;
-    console.log(`  ${r.route.padEnd(18)}${String(r.cls).padEnd(10)}${(r.lcp + 'ms').padEnd(10)}${(r.fcp + 'ms').padEnd(10)}${el}${flag}`);
-    for (const s of r.sources) {
-      const n = s.nodes[0];
-      console.log(`      ↳ shift ${s.value} @${s.at}ms  ${n ? n.tag + (n.id ? '#' + n.id : '') + (n.cls ? '.' + n.cls.split(' ')[0] : '') : ''}`);
-    }
+    const flag = clsBudget != null && r.summary.cls.p75 >= clsBudget ? ' ⛔' : '';
+    if (clsBudget != null && r.summary.cls.p75 >= clsBudget) breaches++;
+    const stability = [r.summary.cls.stability, r.summary.lcp.stability, r.contaminated ? 'host-noisy' : 'host-ok'].join('/');
+    console.log(`  ${r.route.padEnd(18)}${String(r.summary.cls.median).padEnd(14)}${(`${r.summary.lcp.median}/${r.summary.lcp.p75}ms`).padEnd(18)}${(`${r.summary.fcp.median}/${r.summary.fcp.p75}ms`).padEnd(18)}${stability} · ${r.evidenceVerdict}${flag}`);
   }
   if (outPath) {
-    fs.writeFileSync(path.join(ROOT, outPath), JSON.stringify({ base, throttle: THROTTLE, results }, null, 2));
+    fs.writeFileSync(path.join(ROOT, outPath), JSON.stringify({
+      schemaVersion: '2.0',
+      evidenceType: 'local-applied-throttle-lab',
+      fieldCoreWebVitalsClaim: false,
+      generatedAt: new Date().toISOString(),
+      gitSha: process.env.GITHUB_SHA || null,
+      sourceSha256: crypto.createHash('sha256').update(fs.readFileSync(new URL(import.meta.url))).digest('hex'),
+      host: { platform: process.platform, arch: process.arch, cpus: os.cpus().length, lagBudgetMs: hostLagBudgetMs },
+      base, throttle: THROTTLE, warmupRuns, measuredRuns: runs, results,
+    }, null, 2));
     console.log(`\n  → ${outPath}`);
   }
   if (clsBudget != null && breaches > 0) {

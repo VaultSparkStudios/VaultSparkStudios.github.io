@@ -82,12 +82,14 @@ const FEEDS = [
   // either — its supply is long-tailed (top 12 unreadable outlets were only 21%
   // of items) and dominated by crypto/finance sites irrelevant to this desk.
   //
-  // These four were probed live before being added: reachable, parseable, AI
-  // scoped, and carrying items inside the radar's 72h freshness window.
+  // S348 probation result, measured over eight days of committed editions:
+  // the-decoder and MarkTechPost each supplied a story that actually published.
+  // ZDNet was unreachable in the latest unattended scan and neither ZDNet nor
+  // The Register supplied a published story during the probation window, so
+  // they are removed instead of inflating item/topic counts. Reachability at
+  // intake is not retained value; publication contribution is.
   { url: 'https://the-decoder.com/feed/', primary: false },
   { url: 'https://www.marktechpost.com/feed/', primary: false },
-  { url: 'https://www.zdnet.com/topic/artificial-intelligence/rss.xml', primary: false },
-  { url: 'https://www.theregister.com/software/ai_ml/headlines.atom', primary: false },
   { url: 'https://news.google.com/rss/search?q=artificial+intelligence+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=AI+agents+OR+%22AI+regulation%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=Anthropic+OR+Claude+AI+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },

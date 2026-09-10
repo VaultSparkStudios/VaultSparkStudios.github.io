@@ -15,7 +15,7 @@
  *
  * Usage:
  *   node scripts/build-forge-feed.mjs            # write both feeds
- *   node scripts/build-forge-feed.mjs --check     # present + parseable
+ *   node scripts/build-forge-feed.mjs --check     # exact deterministic drift check
  *   node scripts/build-forge-feed.mjs --self-test
  */
 import fs from 'node:fs';
@@ -75,8 +75,15 @@ function buildJsonFeed(items) {
   };
 }
 
+function newestItemDate(items) {
+  const epochs = items.map((item) => Date.parse(item.date_published || '')).filter(Number.isFinite);
+  return new Date(epochs.length ? Math.max(...epochs) : 0).toUTCString();
+}
+
 function buildRss(items) {
-  const lastBuild = new Date().toUTCString();
+  // Feed metadata is evidence, not an observation clock. Derive it from the
+  // newest source commit so identical inputs always produce identical bytes.
+  const lastBuild = newestItemDate(items);
   const body = items.map((it) => [
     '    <item>',
     `      <title>${xmlEscape(it.title)}</title>`,
@@ -111,6 +118,7 @@ if (SELF_TEST) {
   ].map(toItem);
   const json = buildJsonFeed(sample);
   const rss = buildRss(sample);
+  const rssAgain = buildRss(sample);
   const cases = [
     ['json feed version is 1.1', json.version === 'https://jsonfeed.org/version/1.1'],
     ['json item title includes move', json.items[0].title.startsWith('Shipped:')],
@@ -118,6 +126,8 @@ if (SELF_TEST) {
     ['invalid date omitted (no date_published key)', !('date_published' in json.items[1])],
     ['rss escapes ampersand/angle', rss.includes('&lt;ampersand&gt;') && !rss.includes('<ampersand>')],
     ['rss has channel + items', rss.includes('<channel>') && (rss.match(/<item>/g) || []).length === 2],
+    ['rss lastBuildDate derives from newest valid source item', rss.includes('<lastBuildDate>Mon, 25 May 2026 01:00:00 GMT</lastBuildDate>')],
+    ['identical inputs produce byte-identical RSS', rss === rssAgain],
     ['json parseable round-trip', (() => { try { JSON.parse(JSON.stringify(json)); return true; } catch { return false; } })()],
   ];
   let pass = 0, fail = 0;
@@ -136,9 +146,16 @@ const items = (Array.isArray(map.entries) ? map.entries : []).map(toItem);
 
 if (CHECK) {
   let ok = true;
-  for (const [f, kind] of [[JSON_OUT, 'json'], [XML_OUT, 'xml']]) {
+  const expected = new Map([
+    [JSON_OUT, `${JSON.stringify(buildJsonFeed(items), null, 2)}\n`],
+    [XML_OUT, buildRss(items)],
+  ]);
+  for (const [f, content] of expected) {
     if (!fs.existsSync(f)) { console.error(`build-forge-feed --check: ${path.relative(ROOT, f)} missing`); ok = false; continue; }
-    if (kind === 'json') { try { JSON.parse(fs.readFileSync(f, 'utf8')); } catch { console.error('build-forge-feed --check: forge-ledger.json invalid'); ok = false; } }
+    if (fs.readFileSync(f, 'utf8') !== content) {
+      console.error(`build-forge-feed --check: ${path.relative(ROOT, f)} drifted`);
+      ok = false;
+    }
   }
   if (!ok) process.exit(1);
   console.log(`build-forge-feed --check: ok (${items.length} items)`);

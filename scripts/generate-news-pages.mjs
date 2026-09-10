@@ -682,6 +682,7 @@ ${supersededUrl ? `  <div class="desk-panel" style="padding:.85rem 1.1rem;margin
   ${memePanel(story, day)}
   <p class="desk-label">Where this came from</p>
   <ul class="desk-panel desk-facts">${facts}</ul>
+  <p class="desk-critique-link" style="color:var(--muted);font-size:.9rem;margin:.35rem 0 1.25rem"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json" style="color:var(--gold)">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
   <p class="desk-label">Where they are coming from</p>
   ${story.stances.map(stanceCard).join('\n')}
 ${/* Only the formats that make a claim about the future carry this section. A

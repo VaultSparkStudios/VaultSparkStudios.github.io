@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-08-10/two-million-rows-and-the-engineer-nobody-named",
+    "url": "https://vaultsparkstudios.com/news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-01-dd34fe350387",
+      "hash": "dd34fe350387a336573bb710757cb9b01d91d95bb1fb3637b06fdf55a36c09d4",
+      "text": "The maintainer of the DataTalks.Club course platform published a first-person account of an incident in which, after he failed to migrate a Terraform state file between computers, the agent proposed and he approved a terraform destroy that removed the production database, VPC, ECS cluster, load balancers, bastion host and automated snapshots.",
+      "sourceUrl": "https://alexeyondata.substack.com/p/how-i-dropped-our-production-database",
+      "sourceHost": "alexeyondata.substack.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/#fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-01-dd34fe350387"
+    },
+    {
+      "id": "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-02-08e74ce1a55c",
+      "hash": "08e74ce1a55cd7c74da3543cb8aa4a9289b577e22a9db5ca1272e026179d1deb",
+      "text": "The restored database held 1,943,200 rows in the courses_answer table alone — 2.5 years of homework, projects and leaderboard entries. The outage ran roughly 24 hours, from about 10:00 PM on February 26 to about 10:00 PM on February 27.",
+      "sourceUrl": "https://alexeyondata.substack.com/p/how-i-dropped-our-production-database",
+      "sourceHost": "alexeyondata.substack.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/#fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-02-08e74ce1a55c"
+    },
+    {
+      "id": "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-03-2bffc05c6d33",
+      "hash": "2bffc05c6d33e3ba33258eb7bca1507665013a6816cdd048a56a34d0c12f1302",
+      "text": "Recovery came from AWS Business Support, which located a snapshot that was not available in the author's own console and restored it inside the 24-hour window. No data was permanently lost. The author now pays roughly 10% more per month for the faster support tier.",
+      "sourceUrl": "https://alexeyondata.substack.com/p/how-i-dropped-our-production-database",
+      "sourceHost": "alexeyondata.substack.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/#fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-03-2bffc05c6d33"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "juno:underhyped",
+      "persona": "juno",
+      "text": "It got written up as 2.5 years of student work destroyed. It was not. A support engineer found a snapshot the console would not show, and the homework was back inside a day.",
+      "confidence": 0.7,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-01-dd34fe350387",
+        "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-02-08e74ce1a55c",
+        "fact-2026-08-10-two-million-rows-and-the-engineer-nobody-named-03-2bffc05c6d33"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-08-10--two-million-rows-and-the-engineer-nobody-named.png",
+    "artSha256": "f50d0a11de16b8e37f90f4136b5f9c528507c3eec9e4f276e030e6591de2b08a",
+    "pageSha256": "3f2805b5cd88753af90e94901553381f8c35ca5cb7433765f9a04d66a64978a5",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "codex image-capable editorial review"
+    },
+    "sceneFingerprint": "e2343a63130cd05d9d536758841e8e5f60c08a3993505ffb7f6178586113997b",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

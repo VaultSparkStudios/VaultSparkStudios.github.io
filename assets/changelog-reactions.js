@@ -21,6 +21,9 @@
   ];
   var LS_KEY = 'vs_cl_reactions_v1';
   var STYLE_INJECTED = false;
+  var observer = null;
+  var queuedFallback = [];
+  var fallbackPending = false;
 
   var STYLE = [
     '.vs-cr{display:flex;align-items:center;gap:0.35rem;margin-top:0.85rem;flex-wrap:wrap;}',
@@ -81,11 +84,16 @@
 
   // ── Load aggregate counts from Supabase (best-effort) ────────────────────
   function loadCounts(eid, countsEl) {
+    countsEl.setAttribute('data-count-state', 'unavailable');
     fetch(SB_URL + '/rest/v1/page_feedback?page_path=eq./changelog/&question=eq.changelog_reaction&answer=like.' + encodeURIComponent(eid + ':%'), {
       headers: { 'apikey': SB_ANON, 'Prefer': 'count=exact', 'Range': '0-0' },
     }).then(function (r) {
+      if (!r.ok) return;
       var count = parseInt(r.headers.get('Content-Range')?.split('/')[1] || '0', 10) || 0;
-      if (count > 0 && countsEl) countsEl.textContent = count + ' reaction' + (count === 1 ? '' : 's');
+      if (count > 0 && countsEl) {
+        countsEl.setAttribute('data-count-state', 'available');
+        countsEl.textContent = count + ' reaction' + (count === 1 ? '' : 's');
+      }
     }).catch(function () {});
   }
 
@@ -153,19 +161,68 @@
     else article.appendChild(bar);
   }
 
+  function drainFallback(ledger, deadline) {
+    fallbackPending = false;
+    var mounted = 0;
+    while (queuedFallback.length && mounted < 4 && (!deadline || deadline.timeRemaining() > 2 || deadline.didTimeout)) {
+      mountArticle(queuedFallback.shift(), ledger);
+      mounted += 1;
+    }
+    if (queuedFallback.length) scheduleFallback(ledger);
+  }
+
+  function scheduleFallback(ledger) {
+    if (fallbackPending) return;
+    fallbackPending = true;
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(function (deadline) { drainFallback(ledger, deadline); }, { timeout: 1200 });
+    } else {
+      window.setTimeout(function () { drainFallback(ledger, null); }, 40);
+    }
+  }
+
+  function scheduleArticles(articles, ledger) {
+    var pending = Array.prototype.filter.call(articles, function (article) {
+      return !article.querySelector('.vs-cr') && article.getAttribute('data-reaction-hydration') !== 'queued';
+    });
+    if (!pending.length) return;
+
+    if ('IntersectionObserver' in window) {
+      if (!observer) {
+        observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+            entry.target.removeAttribute('data-reaction-hydration');
+            mountArticle(entry.target, ledger);
+          });
+        }, { rootMargin: '600px 0px' });
+      }
+      pending.forEach(function (article) {
+        article.setAttribute('data-reaction-hydration', 'queued');
+        observer.observe(article);
+      });
+      return;
+    }
+
+    pending.forEach(function (article) {
+      article.setAttribute('data-reaction-hydration', 'queued');
+      queuedFallback.push(article);
+    });
+    scheduleFallback(ledger);
+  }
+
   function init() {
     injectStyle();
     var ledger = loadLedger();
 
-    function mountAll() {
-      document.querySelectorAll('.cl-phase').forEach(function (a) {
-        mountArticle(a, ledger);
-      });
+    function scheduleAll() {
+      scheduleArticles(document.querySelectorAll('.cl-phase'), ledger);
     }
 
-    mountAll();
+    scheduleAll();
     // Also mount on entries added by changelog-live.js after the event fires.
-    document.addEventListener('vs:changelog-live-rendered', mountAll);
+    document.addEventListener('vs:changelog-live-rendered', scheduleAll);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

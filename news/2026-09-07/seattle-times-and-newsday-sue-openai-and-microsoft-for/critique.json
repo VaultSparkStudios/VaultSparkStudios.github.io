@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-07T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for",
+    "url": "https://vaultsparkstudios.com/news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-01-ea7527c1be98",
+      "hash": "ea7527c1be98881906c72ae365c6cb2750dde6375d95b61387535ee77c32c8d6",
+      "text": "The Seattle Times and Newsday are just the latest plaintiffs to take OpenAI to court, alleging copyright infringement .",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/990932/seattle-times-newsday-lawsuit-openai-microsoft",
+      "sourceHost": "theverge.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/#fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-01-ea7527c1be98"
+    },
+    {
+      "id": "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-02-c5a11f294107",
+      "hash": "c5a11f294107628caba09b0f1ee38233609c7019c2d372839c0df18edc28fb82",
+      "text": "The Seattle Times and Newsday also named Microsoft as a defendant in the suit, since Copilot is built on OpenAI’s technology.",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/990932/seattle-times-newsday-lawsuit-openai-microsoft",
+      "sourceHost": "theverge.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/#fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-02-c5a11f294107"
+    },
+    {
+      "id": "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-03-3da992d9f8c3",
+      "hash": "3da992d9f8c3fa3c28c8fa49b41d159f94ec2de1591a3775140214b7a1350d2d",
+      "text": "This is similar to lawsuits filed by The New York Times , Ziff Davis , Merriam-Webster, and Encyclopedia Britannica against OpenAI.",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/990932/seattle-times-newsday-lawsuit-openai-microsoft",
+      "sourceHost": "theverge.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/#fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-03-3da992d9f8c3"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "mara:fair",
+      "persona": "mara",
+      "text": "The lawsuit correctly identifies Microsoft as a liable party due to its integration of OpenAI's models into Copilot, proving that the incentive structure rewards extraction over licensing.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-01-ea7527c1be98",
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-02-c5a11f294107",
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-03-3da992d9f8c3"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Naming Microsoft alongside OpenAI signals that the ecosystem is consolidating liability, forcing a reckoning with the supply chain rather than just the model layer.",
+      "confidence": 0.75,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-01-ea7527c1be98",
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-02-c5a11f294107",
+        "fact-2026-09-07-seattle-times-and-newsday-sue-openai-and-microsoft-for-03-3da992d9f8c3"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-07-mara-1",
+      "persona": "mara",
+      "text": "By Q4 2026, at least one major tech partner will settle with a news organization for access to licensed data, establishing a precedent for paid training sets.",
+      "confidence": 0.6,
+      "resolveBy": "2026-10-22",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-07-rex-2",
+      "persona": "rex",
+      "text": "Within 18 months, Microsoft will integrate explicit content attribution tags into Copilot responses sourced from licensed partners like The Seattle Times.",
+      "confidence": 0.55,
+      "resolveBy": "2027-01-05",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-07--seattle-times-and-newsday-sue-openai-and-microsoft-for.png",
+    "artSha256": "613d2427e0cad8fa86f92fbccb0ff786345c1bba032a7b9912786ef53f0dda25",
+    "pageSha256": "fee746d0f0f0879f2cd1f76ba7f2147829cf8948c25f3592c5b768aae2aa8503",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review"
+    },
+    "sceneFingerprint": "892b3bee1362e99a959e0a1ce0505cafd79d3aedafecca653958e41e175ca64d",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

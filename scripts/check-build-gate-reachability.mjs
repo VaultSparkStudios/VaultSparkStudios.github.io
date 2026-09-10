@@ -29,7 +29,7 @@ const SCOPE_RE = /^\s*(?:(?:\/\*+|\/\/|\*)\s*)?@verification-scope\s+([a-z][a-z0
 // A changed implementation invalidates its disposition; an import alone never
 // proves an exported fixture function was called or that its failure propagated.
 const MODE_EQUIVALENTS = {
-  'lib/invocation-modes.mjs': { required: '--self-test', sourceSha256: '6f308e808479afe9ebca18966989e748c56ade07bbadb8ccc7bbdf76ad6cc263', via: 'lib/build-order.mjs', viaMode: '--self-test', viaSha256: '9021154d7027fd15f409a643ac2ad040a8ac09de469104a5dbb22415be90a77d', reason: 'build-order directly calls invocationModesSelfTest() as a failing cases-array predicate.' },
+  'lib/invocation-modes.mjs': { required: '--self-test', sourceSha256: '6f308e808479afe9ebca18966989e748c56ade07bbadb8ccc7bbdf76ad6cc263', via: 'lib/build-order.mjs', viaMode: '--self-test', viaSha256: 'dba899481f862e0f5e551af52c238d4d93abb359bd15db585fa71cdc6fc80409', reason: 'build-order directly calls invocationModesSelfTest() as a failing cases-array predicate.' },
   'check-journey-conductor-contract.mjs': { required: 'check', sourceSha256: '736037e4a9412185fa4766e287f99661185eed7fa367f2f8138341ae9fe8deee', via: 'check-journey-conductor-contract.mjs', viaMode: '--self-test', viaSha256: '736037e4a9412185fa4766e287f99661185eed7fa367f2f8138341ae9fe8deee', reason: 'The self-test mode adds negative fixtures and unconditionally evaluates the real source contract.' },
 };
 const sourceHash = source => createHash('sha256').update(source).digest('hex');
@@ -396,6 +396,25 @@ if (process.argv.includes('--check-mode-census')) {
   const checkRows = classify({ scripts: trackedVerificationScripts(), readSource: read, invocations: reachableModes(steps, read) });
   console.log(JSON.stringify(checkRows.filter(row => row.verdict === 'unreachable'), null, 2));
   process.exit(0);
+}
+
+// New gate CLIs enter through one explicit, executed table so both their
+// ordinary checks and mutation fixtures are part of the authoritative graph.
+// Keeping this table here avoids hiding coverage behind a parent --check mode,
+// which reachableModes intentionally treats as a leaf.
+const DIRECT_GATES = [
+  ['build-news-critique-packets.mjs', ['--self-test']],
+  ['build-news-critique-packets.mjs', ['--check']],
+  ['check-history-window-safety.mjs', ['--self-test']],
+  ['check-history-window-safety.mjs', []],
+];
+for (const [script, flags] of DIRECT_GATES) {
+  execFileSync(process.execPath, [join(ROOT, 'scripts', script), ...flags], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    windowsHide: true,
+    stdio: 'inherit',
+  });
 }
 const invocations = reachableModes(steps, read);
 const rows = classify({ scripts: trackedVerificationScripts(), readSource: read, invocations });

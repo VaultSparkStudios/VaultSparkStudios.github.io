@@ -181,7 +181,13 @@ function parseShippedFromGitLog() {
   // meaningful commits on the current branch so the closeout board never
   // shows the placeholder. Skip auto-generated noise (genius cache refreshes,
   // protocol-sync bots, merge commits) so the surface stays signal-dense.
-  const r = sh('git log -n 30 --pretty=format:"%s"');
+  // Do not bound BEFORE filtering. Scheduled [skip ci] publishers can emit more
+  // than 30 noise commits between human sessions; the old window then returned
+  // an empty "what shipped" row even though meaningful commits existed just
+  // beyond it. Git streams newest-first and this loop stops after five unique
+  // meaningful subjects, so the semantic quota bounds retained work while the
+  // available history—not an arbitrary raw count—bounds discovery.
+  const r = sh('git log --pretty=format:"%s"');
   if (r.code !== 0 || !r.out.trim()) return [];
   const NOISE_PATTERNS = [
     /^Merge\b/i,

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-25T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-08-25/mtia-300-meta-8217-s-first-training-chip-with",
+    "url": "https://vaultsparkstudios.com/news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-01-81953d05ada5",
+      "hash": "81953d05ada5901d4158896b71b2f96f3885c9a302129e939f959fea7b6fe406",
+      "text": "On a 150-billion-parameter production-recommendation model running across 40 accelerators, MTIA 300&#8217;s total communication time is 3.9 times faster than the equivalent GPU cluster.",
+      "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/",
+      "sourceHost": "engineering.fb.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/#fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-01-81953d05ada5"
+    },
+    {
+      "id": "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-02-94e5eff6844e",
+      "hash": "94e5eff6844effdc7f9e8dfbcae394aff7d55af267507f3c1fad11a376d87885",
+      "text": "Integrating the Network Directly on the Chip With MTIA 300, the network interface lives inside the chip package itself (see Figure 1).",
+      "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/",
+      "sourceHost": "engineering.fb.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/#fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-02-94e5eff6844e"
+    },
+    {
+      "id": "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-03-1ee9343c9ae8",
+      "hash": "1ee9343c9ae8165cf5ad19eed22d5b991e747b9076fc7a7cfaad3693083bbc3a",
+      "text": "This compiled model integrates naturally with PyTorch’s c10d and torchcomms interfaces.",
+      "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/",
+      "sourceHost": "engineering.fb.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/#fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-03-1ee9343c9ae8"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "dot:underhyped",
+      "persona": "dot",
+      "text": "The math doesn't lie: 3.9x faster comms means less money burned on idle waiting. This is pure cost arbitrage disguised as engineering.",
+      "confidence": 0.95,
+      "verdict": "underhyped",
+      "direction": 2,
+      "factRefs": [
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-01-81953d05ada5",
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-02-94e5eff6844e",
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-03-1ee9343c9ae8"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "You are going to see this change how we build recommendation engines. By removing the network interface from the equation, Meta unlocks a new tier of efficiency that GPUs simply cannot touch.",
+      "confidence": 0.9,
+      "verdict": "underhyped",
+      "direction": 2,
+      "factRefs": [
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-01-81953d05ada5",
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-02-94e5eff6844e",
+        "fact-2026-08-25-mtia-300-meta-8217-s-first-training-chip-with-03-1ee9343c9ae8"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-08-25--mtia-300-meta-8217-s-first-training-chip-with.png",
+    "artSha256": "6c35cfaf6b4061657d111df834126c89b8c5a058b0525f63fece968287d7d308",
+    "pageSha256": "e3fb31994177552846707425b8984e1ecc68c9c3f31ba4d03d2a64cf638771af",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review"
+    },
+    "sceneFingerprint": "09727c80626b3bf8f739061e45cd3563b9e2d781f1146bb4c152cbee3ead4b3c",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

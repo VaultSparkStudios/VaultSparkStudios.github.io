@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deriveClaimsFeed } from './lib/news-desk.mjs';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DAYS = path.join(ROOT, 'data', 'news-desk', 'days');
@@ -76,6 +77,11 @@ function main() {
   if (errors.length) {
     errors.forEach((error) => console.error(`✗ ${error}`));
     process.exit(1);
+  }
+  const packetCheck = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'build-news-critique-packets.mjs'), '--check'], { cwd: ROOT, encoding: 'utf8' });
+  if (packetCheck.status !== 0) {
+    process.stderr.write(packetCheck.stderr || packetCheck.stdout || 'critique packet check failed\n');
+    process.exit(packetCheck.status || 1);
   }
   console.log('check-news-claim-parity: corpus, claims feed, factRefs, and article receipts are exact');
 }

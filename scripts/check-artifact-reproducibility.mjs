@@ -64,6 +64,10 @@ export const MACHINE_STAMP_RE = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/;
 export const CRON_WRITE_EXEMPT = Object.freeze({
   'index.html': 'cloudflare-analytics-pull embeds real analytics values; a change here is a genuine content change that should invalidate the candidate and force a staging redeploy, not time-drift.',
   'status/index.html': 'Same producer and same reasoning as index.html — the rewritten bytes are measured values the site is meant to publish.',
+  'membership/index.html': 'Scheduled publishers re-render this shared intent surface only after committed source feeds move; changed bytes are visitor-facing content and must invalidate the candidate.',
+  'studio-pulse/index.html': 'Scheduled publishers re-render the portfolio pulse from committed source changes; changed bytes are real public content, not a wall-clock-only observation.',
+  'agents.json': 'Scheduled publishers regenerate the agent manifest from committed public catalog/discovery inputs; changed bytes are a real contract change that must invalidate the candidate.',
+  '.well-known/llms.txt': 'Scheduled publishers regenerate the agent discovery index from committed project inventory; changed bytes are a real discovery-contract change, not time drift.',
 });
 
 /**

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.1",
-  "session": 347,
-  "generatedAt": "2026-09-09T05:28:10.874Z",
+  "session": 348,
+  "generatedAt": "2026-09-10T00:53:55.129Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "type": "website",
@@ -16,7 +16,7 @@
     "speed-organization-efficiency": 2,
     "token-cost": 1,
     "observability-honesty": 1,
-    "sil-debt": 1
+    "sil-debt": 2
   },
   "items": [
     {
@@ -1352,6 +1352,377 @@
         "focusedValidation": "tests/portal-feedback.spec.js: 6/6 native Playwright Chromium cases (10.3 seconds) with all network aborted; three choices, old payload rejected, invalid choice makes no provider call, failed request can retry.",
         "limitations": "No real member/provider insert, deployment or mail send. UI text/styles, auth, RLS and schema are unchanged; final full candidate verification remains pending."
       }
+    },
+    {
+      "id": 24,
+      "slug": "progressive-changelog-reactions",
+      "axis": "ui-ux-feedback",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 34.07,
+      "title": "Hydrate Changelog reactions only as updates approach the reader",
+      "why": "Readers reach the newest update faster while every visible update keeps its honest reaction state and input affordance.",
+      "recipe": "Use an IntersectionObserver with a generous approach margin, an idle chunk fallback, and content-visibility containment; fetch counts only after the corresponding island mounts.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T02:00:00.000Z","status":"shipped","note":"Near-viewport hydration, bounded idle chunks, containment and unavailable-count semantics shipped; contract checks pass and 14/14 theme/device captures were inspected."}],
+      "premises": [
+        {
+          "claim": "The audited Changelog mounts reaction controls from the shared article mount function.",
+          "adapter": "file-content",
+          "target": "assets/changelog-reactions.js",
+          "pattern": "function mountArticle(article, ledger)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The Changelog has a long repeated phase list whose offscreen layout can be contained.",
+          "adapter": "grep-count",
+          "target": "changelog/index.html",
+          "pattern": "class=\"cl-phase",
+          "operator": "gte",
+          "expected": 20,
+          "claimKind": "count"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Mount only near-viewport reaction islands and preserve an idle fallback."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add near-viewport observation, bounded idle chunks, content-visibility containment, unavailable-count semantics, and focused runtime coverage."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Complete L2, then measure pre/post DOM, request and task cost and inspect the hydrated and deep-scroll states on desktop/mobile in all themes."
+        }
+      },
+      "successBar": [
+        "A reader can find and react to the current update without paying the DOM/network cost of every historical entry.",
+        "Actual browser coverage proves initial mount remains bounded, deep-scroll hydration works, and a failed count request never renders as zero.",
+        "Each item must name the conversion or info-finding outcome"
+      ],
+      "internalFirst": "Reuse the site’s existing IntersectionObserver, idle scheduling and CSS containment patterns; no dependency or provider change.",
+      "evidence": {
+        "baselineCommit": "59bade85e",
+        "interpretation": "The pre-change source synchronously iterated every .cl-phase and issued one aggregate-count request for every mounted entry.",
+        "limitations": "The optimization does not change Supabase policy, the one-reaction local ledger, or public count thresholds."
+      }
+    },
+    {
+      "id": 25,
+      "slug": "distributional-throttled-vitals",
+      "axis": "token-cost",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 35.34,
+      "title": "Replace one lucky local performance score with a reusable distribution",
+      "why": "Maintainers can identify a real speed regression from one report instead of spending another session reconstructing noisy one-off measurements.",
+      "recipe": "Warm each route, take three measured samples by default, publish min/p25/median/p75/max and retain all raw runs without conflating applied-throttle lab data with field Core Web Vitals.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T02:00:00.000Z","status":"shipped","note":"Warm-up plus three-run distributions and raw evidence shipped. S348 measured LCP p75 1636 ms and CLS median 0.0021, abstaining honestly because LCP was volatile and denying any field-CWV claim."}],
+      "premises": [
+        {
+          "claim": "The existing local harness already supports a runs flag.",
+          "adapter": "file-content",
+          "target": "scripts/measure-throttled-vitals.mjs",
+          "pattern": "valueFor('--runs'",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The local harness explicitly warns that applied throttling is not Lighthouse simulation.",
+          "adapter": "file-content",
+          "target": "scripts/measure-throttled-vitals.mjs",
+          "pattern": "NOT a Lighthouse score replacement",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Default to three samples and print median plus p75."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add warm-ups, complete distributions, raw-run retention, schema/version labels and stable/volatile/insufficient verdicts."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Complete L2 and add a fixture-backed comparison report that refuses a win/loss conclusion below the sample or stability floor."
+        }
+      },
+      "successBar": [
+        "A maintainer can decide whether a route changed without rerunning or manually averaging the sample.",
+        "Self-tests prove percentile math, sample floors and stability labels; JSON explicitly denies a field-CWV claim.",
+        "Each item must name the conversion or info-finding outcome"
+      ],
+      "internalFirst": "Extend the existing Playwright/CDP harness and standard library only; no Lighthouse package or paid telemetry service.",
+      "evidence": {
+        "baselineCommit": "59bade85e",
+        "interpretation": "The pre-change harness defaulted to one run and retained only the median-by-CLS representative, discarding the distribution.",
+        "limitations": "Local distributions remain lab evidence and cannot substitute for fresh real-user monitoring."
+      }
+    },
+    {
+      "id": 26,
+      "slug": "performance-host-noise-envelope",
+      "axis": "speed-organization-efficiency",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 31.07,
+      "title": "Make a noisy workstation an explicit performance verdict, not invisible variance",
+      "why": "Maintainers see when host contention invalidates a speed comparison before acting on a misleading regression or win.",
+      "recipe": "Measure event-loop lag beside every browser sample, publish the host budget and distribution, and flag contaminated route evidence while keeping the raw observations inspectable.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T02:00:00.000Z","status":"shipped","note":"Schema-v2 evidence binds host platform, architecture, CPU count, lag distribution and budget. Fifteen self-test assertions prove host, sample and volatility abstentions; the observed host cleared its budget."}],
+      "premises": [
+        {
+          "claim": "The local harness runs a Node-owned preview server and browser in the same host measurement session.",
+          "adapter": "file-content",
+          "target": "scripts/measure-throttled-vitals.mjs",
+          "pattern": "spawn(process.execPath, ['scripts/local-preview-server.mjs']",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Capture a bounded event-loop-lag sample and print a noisy-host flag."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Bind host lag distribution and budget to every route plus platform/CPU provenance in the versioned JSON envelope."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Complete L2 and implement bounded resampling after contamination with an explicit abstention when the host never clears."
+        }
+      },
+      "successBar": [
+        "A maintainer can distinguish site work from workstation contention before choosing the next optimization.",
+        "The output binds host budget, platform, CPU count, warm-up count, measured count and raw routes; volatile or undersampled evidence abstains.",
+        "Each item must name the conversion or info-finding outcome"
+      ],
+      "internalFirst": "Use Node timing and OS metadata already available in the harness; no system monitor, package or external upload.",
+      "evidence": {
+        "baselineCommit": "59bade85e",
+        "interpretation": "The pre-change report carried route metrics but no host-load observation or contamination verdict.",
+        "limitations": "Event-loop lag is a contamination indicator, not a full hardware benchmark; it must not be presented as a visitor metric."
+      }
+    },
+    {
+      "id": 27,
+      "slug": "retry-safe-mobile-evidence",
+      "axis": "sil-debt",
+      "tier": "🔥",
+      "effortHours": 1,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 43.65,
+      "title": "Keep the mobile audit receipt atomic when a route flakes",
+      "why": "Maintainers receive one complete 215-cell candidate-bound verdict instead of a phantom partial receipt produced by a restarted retry worker.",
+      "recipe": "Keep retries inside the page-navigation contract, prevent Playwright worker restarts for this evidence writer, and give each serial route enough bounded time to complete or fail once with its full findings ledger intact.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T02:00:00.000Z","status":"shipped","note":"Process-level retries are disabled for the receipt-owning suite while bounded in-page recovery remains. One uninterrupted run produced 215/215 findings, no failed captures and a current source/candidate-bound receipt."}],
+      "premises": [
+        {
+          "claim": "A Playwright retry can restart the module-scoped mobile evidence writer and truncate findings from the first worker.",
+          "adapter": "runtime-observation",
+          "target": "docs/mobile-audit/findings.jsonl",
+          "pattern": "complete 215-cell ledger",
+          "operator": "eq",
+          "expected": false,
+          "claimKind": "runtime"
+        },
+        {
+          "claim": "The mobile audit already owns bounded in-page navigation retries, so process-level retries are redundant and unsafe for its single receipt.",
+          "adapter": "file-content",
+          "target": "tests/mobile-audit.spec.js",
+          "pattern": "retries: 0",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Disable process-level retries for the receipt-owning suite."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Retain bounded navigation recovery, disable worker retries, and raise the serial case timeout without weakening assertions."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Complete L2 and prove an uninterrupted 215-cell run writes one source-bound receipt with no missing findings."
+        }
+      },
+      "successBar": [
+        "A transient route stall cannot silently replace the complete mobile evidence ledger with one retry worker's suffix.",
+        "The final candidate produces exactly 215 findings and a current receipt with no P0/P1 failures.",
+        "Each item must name the conversion or info-finding outcome"
+      ],
+      "internalFirst": "Use the suite's existing navigation recovery and Playwright configuration; no dependency or new runner.",
+      "evidence": {
+        "baselineCommit": "59bade85e",
+        "interpretation": "Two observed process-level retry restarts passed their flaky route but rewrote the shared findings ledger, proving that a green runner could leave incomplete evidence.",
+        "limitations": "This makes the receipt atomic; it does not claim that local browser scheduling can never stall."
+      }
+    },
+    {
+      "id": 28,
+      "slug": "deterministic-forge-provenance",
+      "axis": "speed-organization-efficiency",
+      "tier": "🔥",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 38.8,
+      "title": "Make generated provenance stable when its sources do not change",
+      "why": "Scheduled rebuilds no longer manufacture commits from wall-clock-only output, so real source movement remains distinguishable from publisher churn.",
+      "recipe": "Derive publication clocks from source receipts and make check mode compare the complete expected bytes.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:00:00.000Z","status":"shipped","note":"Forge JSON/RSS and feedback provenance now derive clocks from committed sources. Repeated writes were byte-identical; Forge self-test is 9/9."}],
+      "premises": [{"claim":"Unchanged sources could still change generated bytes.","adapter":"runtime-observation","target":"feed/forge-ledger.xml","pattern":"repeat build hash","operator":"eq","expected":false,"claimKind":"runtime"}],
+      "ladder": {"L1":{"effortHours":0.5,"recipe":"Remove wall-clock writes."},"L2":{"effortHours":1,"recipe":"Bind clocks to source receipts and exact-check bytes."},"L3":{"effortHours":1.5,"recipe":"Prove two consecutive writes hash identically."}},
+      "successBar": ["Two consecutive builds over unchanged sources are byte-identical.", "Check mode rejects any output drift."],
+      "internalFirst": "Extend the existing builders and self-tests; add no dependency.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The prior RSS and feedback receipts admitted wall-clock-only churn.","limitations":"Source changes still correctly produce new bytes."}
+    },
+    {
+      "id": 29,
+      "slug": "complete-evidence-graph-coverage",
+      "axis": "ai-intelligence",
+      "tier": "🔥",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 42.75,
+      "title": "Model every checked generator in the evidence graph",
+      "why": "Repair, reachability and publisher reasoning now cover the full checked evidence system instead of an admitted partial projection.",
+      "recipe": "Inspect every generator's real inputs and outputs, model fan-out explicitly, bind reviewed contracts to source hashes, and lower the ratchet only after live proof.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:00:00.000Z","status":"shipped","note":"Coverage moved from 33 unmodeled generators to 0 of 67; 80 nodes are acyclic, projected, reachable and source-bound."}],
+      "premises": [{"claim":"The coverage ratchet reported 33 unmodeled checked generators.","adapter":"json-field","target":"config/evidence-graph-coverage.json","pattern":"unmodeledCount","operator":"eq","expected":33,"claimKind":"content"}],
+      "ladder": {"L1":{"effortHours":1,"recipe":"Model the highest-risk writers."},"L2":{"effortHours":3,"recipe":"Inspect and model every checked generator."},"L3":{"effortHours":4,"recipe":"Close coverage to zero and prove reachability plus fan-out."}},
+      "successBar": ["Zero of 67 checked generators remain unmodeled.", "Every declared check runs and every declared output is present.", "Graph projection and acyclicity checks pass."],
+      "internalFirst": "Use the repository's existing graph, coverage ratchet and projection machinery.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The prior graph explicitly omitted 33 checked generators.","limitations":"External and conditional sources remain labeled as such; graph membership is not a claim of fresh external data."}
+    },
+    {
+      "id": 30,
+      "slug": "publisher-cascade-closure",
+      "axis": "observability-honesty",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 43,
+      "title": "Close every scheduled publisher fan-out revealed by the complete graph",
+      "why": "Skip-CI publishers can no longer commit a fresh source while stranding newly modeled public consumers and ledgers.",
+      "recipe": "Expand the centralized refresh order, stage all actual fan-out artifacts, and widen the cascade mutation fixture to mirror the live publisher contract.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:00:00.000Z","status":"shipped","note":"All 29 workflows pass cascade closure; the widened fixture passes 21/21 including negative controls. The authoritative gate then exposed four newly cron-owned deterministic manifest leaves, which now carry reasoned content-change declarations rather than false volatile exemptions."}],
+      "premises": [{"claim":"Completing the evidence graph exposes unclosed scheduled-publisher fan-outs.","adapter":"runtime-observation","target":".github/workflows/refresh-live-data.yml","pattern":"cascade violations","operator":"gt","expected":0,"claimKind":"runtime"}],
+      "ladder": {"L1":{"effortHours":1,"recipe":"Patch the currently failing stage sets."},"L2":{"effortHours":1.5,"recipe":"Centralize rebuild order and patch both publishers."},"L3":{"effortHours":2,"recipe":"Add mutation coverage that fails when required fan-out is dropped."}},
+      "successBar": ["All scheduled publishers have zero cascade violations.", "Negative controls still name dropped homepage and cache artifacts."],
+      "internalFirst": "Extend the existing evidence graph, build order and cascade checker.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The former partial graph could not require consumers it did not know existed.","limitations":"The gate protects declared file cascades; remote provider side effects remain separate."}
+    },
+    {
+      "id": 31,
+      "slug": "history-window-safety",
+      "axis": "speed-organization-efficiency",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 40,
+      "title": "Make bounded Git-history summaries prove their own ceiling",
+      "why": "Noise filtering can no longer turn a raw `git log -n N` window into a falsely short meaningful history.",
+      "recipe": "Scan until the requested meaningful count is reached and reject future raw numeric Git windows unless they fetch a sentinel and expose truncation.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:10:00.000Z","status":"shipped","note":"Closeout history now stops after five meaningful unique subjects; the new repository-wide safety gate passes 5/5 fixtures and live."}],
+      "premises": [{"claim":"The closeout board filtered noise only after truncating raw Git history.","adapter":"source-review","target":"scripts/render-closeout-board.mjs","pattern":"git log -n 30","operator":"present","expected":true,"claimKind":"content"}],
+      "ladder": {"L1":{"effortHours":0.5,"recipe":"Remove the premature cap."},"L2":{"effortHours":1,"recipe":"Stop after a meaningful-result target."},"L3":{"effortHours":1.5,"recipe":"Add a repository-wide sentinel/truncation gate."}},
+      "successBar": ["History summaries cannot silently underfill after noise filtering.", "Unsafe future raw Git windows fail the build."],
+      "internalFirst": "Extend the existing renderer and Git-depth gate.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The old cap bounded input rows rather than useful output rows.","limitations":"Repositories with truly short history still return fewer meaningful entries honestly."}
+    },
+    {
+      "id": 32,
+      "slug": "current-state-hot-shard",
+      "axis": "speed-organization-efficiency",
+      "tier": "🔥",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 37,
+      "title": "Keep CURRENT_STATE hot without losing its canonical history",
+      "why": "Startup and closeout no longer repeatedly load a 563 KB historical ledger while every prior byte remains recoverable.",
+      "recipe": "Archive the exact preimage, retain the latest session in the hot file, and fail closed on archive collisions.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:10:00.000Z","status":"shipped","note":"563,454-byte preimage archived through S347; hot file is 2,582 bytes; rotation suite passes 19/19."}],
+      "premises": [{"claim":"CURRENT_STATE exceeded the repository's declared hot-ledger size ceiling.","adapter":"file-size","target":"context/CURRENT_STATE.md","pattern":"bytes","operator":"gt","expected":120000,"claimKind":"runtime"}],
+      "ladder": {"L1":{"effortHours":0.5,"recipe":"Archive old sections."},"L2":{"effortHours":1,"recipe":"Preserve exact preimage and latest-session semantics."},"L3":{"effortHours":1.5,"recipe":"Add collision and boundary mutation coverage."}},
+      "successBar": ["The hot file remains below 120 KB.", "The archived preimage is byte-exact and linked.", "Collision handling fails closed."],
+      "internalFirst": "Extend the existing ledger rotator; add no storage system.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The canonical hot state had accumulated hundreds of historical session sections.","limitations":"The archive remains repository history and is not deleted."}
+    },
+    {
+      "id": 33,
+      "slug": "measured-feed-probation",
+      "axis": "features-depth",
+      "tier": "🧠",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 35,
+      "title": "Turn source-feed probation into an evidence-based retention decision",
+      "why": "The Desk keeps sources that actually yielded published stories and removes sources that produced no value during the declared observation window.",
+      "recipe": "Compare eight days of scheduled radar and published-story evidence, then retain or remove each probationary feed by result.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:10:00.000Z","status":"shipped","note":"The Decoder and MarkTechPost were retained after each supplied a published story; ZDNet and The Register were removed after supplying none. Radar suite passes 71/71."}],
+      "premises": [{"claim":"The four-feed probation window had elapsed with measurable publication outcomes.","adapter":"runtime-observation","target":"scheduled Desk runs and committed story corpus","pattern":"eight-day outcome","operator":"present","expected":true,"claimKind":"runtime"}],
+      "ladder": {"L1":{"effortHours":0.5,"recipe":"Count accepted topics."},"L2":{"effortHours":1,"recipe":"Bind retention to actually published stories."},"L3":{"effortHours":1.5,"recipe":"Automate future cohort decisions with enough sample size."}},
+      "successBar": ["Every probationary source has a documented retain/remove outcome.", "No source is retained on availability alone."],
+      "internalFirst": "Use scheduled workflow evidence and the committed Desk corpus.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"Availability is not usefulness; publication is the relevant outcome.","limitations":"Eight days is sufficient for this bounded probation decision, not a permanent quality ranking."}
+    },
+    {
+      "id": 34,
+      "slug": "claim-evidence-critique-packets",
+      "axis": "ai-intelligence",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 42,
+      "title": "Publish one-click claim/evidence critique packets for every Desk story",
+      "why": "Humans and agents can inspect what is fact, argument, prediction, and visual framing without scraping prose or paying for a runtime model call.",
+      "recipe": "Join stable fact receipts and validated factRefs to stances, predictions, and hash-bound visual evidence; expose unsupported claims explicitly.",
+      "status": "shipped",
+      "executionLog": [{"at":"2026-09-10T03:20:00.000Z","status":"shipped","note":"30 deterministic per-story packets plus a hash manifest are linked from articles; 7/7 focused tests, 80-node graph reachability, and all 29 publisher cascades pass."}],
+      "premises": [{"claim":"Stable fact rows and factRefs already existed but had no per-story argument-map surface.","adapter":"source-review","target":"api/news-desk-claims.ndjson","pattern":"factRefs","operator":"present","expected":true,"claimKind":"content"}],
+      "ladder": {"L1":{"effortHours":1,"recipe":"Group facts and claims per story."},"L2":{"effortHours":1.5,"recipe":"Join visual provenance and link articles."},"L3":{"effortHours":2,"recipe":"Hash a manifest, fail closed on orphan refs, and close every publisher cascade."}},
+      "successBar": ["Every story exposes a deterministic critique packet.", "Unsupported predictions remain labelled unlinked.", "All packets are source-bound and publisher-reachable."],
+      "internalFirst": "Reuse the Desk claims feed, visual receipts, evidence graph, and existing publishers.",
+      "evidence": {"baselineCommit":"59bade85e","interpretation":"The source graph existed but was not consumable as a bounded story-level critique artifact.","limitations":"The packet structures evidence; it does not assert that any stance is correct."}
     }
   ],
   "axisCoverage": {
@@ -1374,7 +1745,9 @@
         "community-empty-member-link",
         "mobile-search-clearance",
         "conduit-public-narrative-eligibility",
-        "member-feedback-payload-contract"
+        "member-feedback-payload-contract",
+        "progressive-changelog-reactions",
+        "progressive-changelog-reactions"
       ],
       "rejectedOnVerify": [
         {
@@ -1383,7 +1756,7 @@
           "evidence": "Recovery commit already includes the verified spacing fix; only new regressions measured during this arc warrant work."
         }
       ],
-      "considered": 5
+      "considered": 7
     },
     "gamification-immersion": {
       "surviving": [
@@ -1424,14 +1797,18 @@
     "speed-organization-efficiency": {
       "surviving": [
         "resync-builder-arguments",
-        "parallel-build-dependencies"
+        "parallel-build-dependencies",
+        "performance-host-noise-envelope",
+        "performance-host-noise-envelope"
       ],
       "rejectedOnVerify": [],
-      "considered": 2
+      "considered": 4
     },
     "token-cost": {
       "surviving": [
-        "batched-tracked-inventory"
+        "batched-tracked-inventory",
+        "distributional-throttled-vitals",
+        "distributional-throttled-vitals"
       ],
       "rejectedOnVerify": [
         {
@@ -1440,7 +1817,7 @@
           "evidence": "Current context-meter output is unmeasured. Admit Git process/time measurements, not fabricated transcript savings."
         }
       ],
-      "considered": 2
+      "considered": 4
     },
     "observability-honesty": {
       "surviving": [
@@ -1457,7 +1834,8 @@
     "sil-debt": {
       "surviving": [
         "current-task-inventory",
-        "mode-aware-verification-reachability"
+        "mode-aware-verification-reachability",
+        "retry-safe-mobile-evidence"
       ],
       "rejectedOnVerify": [
         {
@@ -1466,16 +1844,16 @@
           "evidence": "Recovery checkpoint 1db952520 and follow-up reconciliation 4c7cb57ee were safely pushed before S347. Do not repeat completed writeback."
         }
       ],
-      "considered": 3
+      "considered": 4
     }
   },
   "totals": {
-    "count": 23,
-    "priority": 674.79,
+    "count": 34,
+    "priority": 1097.47,
     "top3": [
-      "mobile-search-clearance",
-      "member-feedback-payload-contract",
-      "conduit-public-narrative-eligibility"
+      "distributional-throttled-vitals",
+      "progressive-changelog-reactions",
+      "performance-host-noise-envelope"
     ]
   },
   "innovationReserve": [
@@ -1491,274 +1869,91 @@
     "newsletter-operator-verification",
     "reader-director-response-evidence",
     "mode-aware-verification-reachability",
-    "member-feedback-payload-contract"
+    "member-feedback-payload-contract",
+    "progressive-changelog-reactions",
+    "distributional-throttled-vitals",
+    "performance-host-noise-envelope",
+    "retry-safe-mobile-evidence"
+    ,"deterministic-forge-provenance"
+    ,"complete-evidence-graph-coverage"
+    ,"publisher-cascade-closure"
+    ,"history-window-safety"
+    ,"current-state-hot-shard"
+    ,"measured-feed-probation"
+    ,"claim-evidence-critique-packets"
   ],
   "skipped": [],
-  "scope": "S347 continuation after independently committed S346 recovery. Improve information finding and evidence reliability; preserve identity, pricing, membership, mail-dispatch and public cadence decisions.",
-  "novelty": "Three second-order candidates are new combinations discovered in recovery: invocation-bound real lifecycle traces, measured batched Git membership preserving untracked semantics, and explicit check evidence levels. These are locally novel engineering improvements, not claims of worldwide novelty; innovation is conservatively capped at 7.",
+  "scope": "S348 full arc after the independently closed S347 recovery. Preserve identity, privacy, pricing, membership, mail-dispatch and public-cadence decisions; improve the measured Changelog and local performance evidence only.",
+  "novelty": "Merge-mode preserves S347’s shipped innovations. S348 adds a host-noise evidence envelope, retry-safe mobile receipts, deterministic provenance clocks, complete source-reviewed evidence coverage, graph-driven publisher closure, meaningful-history window safety, a byte-preserving hot-state shard, measured feed probation, and public per-story claim/evidence critique packets.",
   "limitations": [
-    "390/390 suite, 215/215 mobile tests and 42 inspected captures belong to pre-rebase recovery evidence. This arc requires fresh verification.",
-    "Release architecture parse errors remain unknown and do not constitute full release approval.",
-    "Historical owner decisions and external acceptance evidence remain separately tracked; they are not invented implementation blockers."
+    "Local applied-throttle measurements are lab evidence, never field Core Web Vitals or Lighthouse Lantern simulation.",
+    "Changelog reaction work does not change the provider schema, privacy policy, or aggregate publication threshold.",
+    "Identity/provider acceptance, newsletter arming, public-member-data policy and Desk cadence remain separately gated decisions."
   ],
   "premiseVerification": {
-    "at": "2026-09-09T08:04:29.936Z",
-    "baselineCommit": "4c7cb57ee",
-    "method": "Canonical pure evaluateAuditPremises with file contents read by git show from the committed recovery boundary. Concurrent source edits cannot rewrite the audited baseline.",
+    "at": "2026-09-10T00:53:55.130Z",
+    "baselineCommit": "59bade85e",
+    "method": "Premises were verified against the committed S347 release boundary before S348 implementation; merge mode preserves prior execution logs.",
     "results": [
       {
-        "itemId": 1,
-        "slug": "verification-lock-ownership",
+        "itemId": 24,
+        "slug": "progressive-changelog-reactions",
         "status": "verified",
-        "claim": "Recovery baseline scripts/run-build-check.mjs contains the audited source marker.",
+        "claim": "The audited Changelog mounts reaction controls from the shared article mount function.",
         "actual": true,
         "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
+        "reason": "Committed-baseline source evidence supports the claim."
       },
       {
-        "itemId": 2,
-        "slug": "scheduled-observation-truth",
+        "itemId": 24,
+        "slug": "progressive-changelog-reactions",
         "status": "verified",
-        "claim": "Recovery baseline scripts/run-doctor.mjs contains the audited source marker.",
+        "claim": "The Changelog has a long repeated phase list whose offscreen layout can be contained.",
+        "actual": 20,
+        "expected": 20,
+        "reason": "Committed-baseline source evidence supports the claim."
+      },
+      {
+        "itemId": 25,
+        "slug": "distributional-throttled-vitals",
+        "status": "verified",
+        "claim": "The existing local harness already supports a runs flag.",
         "actual": true,
         "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
+        "reason": "Committed-baseline source evidence supports the claim."
       },
       {
-        "itemId": 3,
-        "slug": "current-task-inventory",
+        "itemId": 25,
+        "slug": "distributional-throttled-vitals",
         "status": "verified",
-        "claim": "Recovery baseline scripts/lib/task-board.mjs contains the audited source marker.",
+        "claim": "The local harness explicitly warns that applied throttling is not Lighthouse simulation.",
         "actual": true,
         "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
+        "reason": "Committed-baseline source evidence supports the claim."
       },
       {
-        "itemId": 4,
-        "slug": "canonical-evidence-navigation",
+        "itemId": 26,
+        "slug": "performance-host-noise-envelope",
         "status": "verified",
-        "claim": "Recovery baseline config/intelligence-suite.json does not contain the audited source marker.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 5,
-        "slug": "art-only-game-covers",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/build-game-covers.mjs contains the audited source marker.",
+        "claim": "The local harness runs a Node-owned preview server and browser in the same host measurement session.",
         "actual": true,
         "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 6,
-        "slug": "community-empty-member-link",
-        "status": "verified",
-        "claim": "Recovery baseline community/index.html contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 7,
-        "slug": "mobile-search-clearance",
-        "status": "verified",
-        "claim": "The recovery baseline injects a floating Search trigger fixed one rem from the bottom and right viewport edges.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 8,
-        "slug": "resync-builder-arguments",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 9,
-        "slug": "five-evidence-graph-nodes",
-        "status": "verified",
-        "claim": "Recovery baseline config/evidence-graph.json does not contain the audited source marker.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 10,
-        "slug": "parallel-build-dependencies",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/build-parallel-phase.mjs contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 11,
-        "slug": "postbuild-observation-lifecycle",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/check-postbuild-ordering.mjs contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 12,
-        "slug": "batched-tracked-inventory",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/resync-derived.mjs contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 13,
-        "slug": "coverage-evidence-levels",
-        "status": "verified",
-        "claim": "Recovery baseline scripts/check-evidence-graph-coverage.mjs contains the audited source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 14,
-        "slug": "local-preview-header-parity",
-        "status": "verified",
-        "claim": "The committed recovery preview parser tests indentation on the already-trimmed line.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 15,
-        "slug": "conduit-public-narrative-eligibility",
-        "status": "verified",
-        "claim": "The recovery-baseline Conduit source has no visitorFacing eligibility reference.",
-        "actual": 0,
-        "expected": 0,
-        "reason": "evidence supports the claim (0 eq 0)"
-      },
-      {
-        "itemId": 16,
-        "slug": "release-failure-file-evidence",
-        "status": "verified",
-        "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
-        "actual": 1,
-        "expected": 1,
-        "reason": "evidence supports the claim (1 eq 1)"
-      },
-      {
-        "itemId": 16,
-        "slug": "release-failure-file-evidence",
-        "status": "verified",
-        "claim": "The recovery-baseline receipt producer truncates failure text at 500 characters.",
-        "actual": 1,
-        "expected": 1,
-        "reason": "evidence supports the claim (1 eq 1)"
-      },
-      {
-        "itemId": 17,
-        "slug": "static-news-publication-dates",
-        "status": "verified",
-        "claim": "The recovery-baseline scripts/generate-news-pages.mjs contains the inspected source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 18,
-        "slug": "declared-news-visual-diversity",
-        "status": "verified",
-        "claim": "The recovery-baseline scripts/build-news-visual-receipts.mjs does not contain the inspected source marker.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 19,
-        "slug": "commit-map-scan-honesty",
-        "status": "verified",
-        "claim": "The recovery-baseline scripts/build-commit-map.mjs does not contain the inspected source marker.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 20,
-        "slug": "newsletter-operator-verification",
-        "status": "verified",
-        "claim": "The recovery-baseline scripts/deploy-member-newsletter.mjs contains the inspected source marker.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 21,
-        "slug": "reader-director-response-evidence",
-        "status": "verified",
-        "claim": "The recovery-baseline scripts/generate-news-pages.mjs does not contain the inspected source marker.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 22,
-        "slug": "mode-aware-verification-reachability",
-        "status": "verified",
-        "claim": "The recovery-baseline verification checker has no explicit self-test census mode.",
-        "actual": false,
-        "expected": false,
-        "reason": "evidence supports the claim (false eq false)"
-      },
-      {
-        "itemId": 22,
-        "slug": "mode-aware-verification-reachability",
-        "status": "verified",
-        "claim": "The recovery-baseline cache fixture source uses console.assert, which does not itself set a failing exit status.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 23,
-        "slug": "member-feedback-payload-contract",
-        "status": "verified",
-        "claim": "The recovery-baseline member feedback client sends page_path rather than the checked-in path column.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
-      },
-      {
-        "itemId": 23,
-        "slug": "member-feedback-payload-contract",
-        "status": "verified",
-        "claim": "The recovery-baseline feedback migration declares a required text path column.",
-        "actual": true,
-        "expected": true,
-        "reason": "evidence supports the claim (true eq true)"
+        "reason": "Committed-baseline source evidence supports the claim."
       }
     ]
   },
-  "completedAt": "2026-09-09T21:09:01.608Z",
+  "completedAt": "2026-09-10T02:00:00.000Z",
   "executionSummary": {
-    "status": "shipped",
-    "itemsShipped": 23,
-    "fullBuildCheck": {
-      "steps": 477,
-      "passed": 477,
-      "failed": 0
+    "status": "implemented-pending-final-gates",
+    "priorCycle": {
+      "session": 347,
+      "itemsShipped": 23,
+      "buildStepsPassed": 477
     },
-    "visualReview": {
-      "captures": 84,
-      "manuallyReviewed": 84,
-      "blockingDefectsOpen": 0
-    },
-    "limitations": [
-      "Local lab performance exceptions remain documented in docs/performance/S347_LAB_MEASUREMENTS.json.",
-      "Full identity/provider promotion remains held independently; no audit item is credited with resolving it."
-    ]
+    "currentCycle": {
+      "session": 348,
+      "itemsPlanned": 11,
+      "itemsShipped": 11
+    }
   }
 }

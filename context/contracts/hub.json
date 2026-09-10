@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-09T22:33:43.797Z",
+  "generatedAt": "2026-09-10T04:43:24.823Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,35 +22,35 @@
     }
   },
   "pulse": {
-    "currentSession": 347,
-    "lastUpdated": "2026-09-09",
-    "currentFocus": "S347 recovered full arc is verified and released: 23 audit items, 477 build checks, 215 mobile cells, 168 rendered route/state captures, and live content currency.",
-    "nextMilestone": "Begin S348 from the Changelog hydration and repeatable performance-sampling follow-ups, then exhaust the refreshed Unified Genius List.",
+    "currentSession": 348,
+    "lastUpdated": "2026-09-10",
+    "currentFocus": "S348 full arc shipped 11 audited improvements: faster Changelog reactions, deterministic evidence, complete 67/67 generator coverage across 80 nodes, closed publisher cascades, and 30 claim/evidence critique packets.",
+    "nextMilestone": "Migrate the 30-minute uptime sampler to a Worker scheduled handler plus daily KV drain as a dedicated trust-path release, then close field-vitals freshness with a real cohort.",
     "blockers": [
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
-      "Human signup acceptance, newsletter deployment/arming, and the Desk cadence choice remain unobserved or undecided."
+      "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
+      "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
     ],
     "queues": {
       "now": [
-        "[S348][PERF/P1] Defer Changelog reaction hydration below the fold. The final S347 lab still shows the largest genuine product-side layout/TBT debt on Changelog: a large document and eager per-entry reaction mounting. Use intersection/idle hydration and `content-visibility` with exact regression and rendered-state coverage; do not turn unavailable counts into zero.",
-        "[S348][PERF/P2] Make local performance sampling repeatable. Isolate host load, record multiple runs, and report a distribution instead of one score. Keep simulated and observed largest-contentful-paint distinct and never promote a local lab result to field Core Web Vitals.",
-        "[S345][DEPLOY/P0] Full production deploy, both lanes, founder-authorised. DONE S345. Staging refreshed first per CANON-007 by the operator overlay (403 overlays, 26 safe removals, identity untouched, exact-byte verified), then promoted through the SCOPED path -- `check-promotion-scope` reported `promotable=true - scoped-disjoint` against BOTH active hold reasons (`real-provider-e2e-pending`, `supabase-control-plane-partial`), and the identity hold was never cleared. Content lane: `pages-deploy` run `34153075898` green; production serves HEAD `998243a3f76643c70ece998f7f75c748aa0d1bf2` exactly, not a baseline stamp. Worker lane second (it deadlocks on `deploy-currency-live` otherwise): run `34153477094` passed the canonical release ceremony, deployed, and cleared the post-deploy liveness gate with no rollback. Verified live: strict CSP with the sha allowlist, HSTS preload, TT report-only, and `/ /news/ /status/ /membership/ /evidence/` all 200. `deploy-currency` now reads `production current - 0 commit(s) behind`. Precondition the content lane needs and CI cannot produce: `build-worker-route-provenance --probe` from a residential vantage, matched 7/7.",
-        "[S345][BUILD/P1] `check-evidence-graph-coverage.mjs` executed its own ratchet when imported. DONE S345. `else run()` at module scope meant any consumer that imported `checkedGenerators`/`coverage` would run the gate and hit its `process.exit`. Found by needing the import for the sweep above, not by a gate -- nothing imported it before. Fixed with the repo's established `isDirect` guard; both direct invocation and `--self-test` (7/7) unchanged, and the import is now silent.",
-        "[S345→S347][BUILD/P3] Evidence-graph coverage debt remains explicit. Five source-verified nodes were implemented and focused-tested in S347. Current ratchet: 33 unmodeled of 67 --check-gated generators. Check presence does not imply byte-drift comparison. Future modeling requires actual dependency evidence; no blanket graph-complete claim.",
-        "[S344][UX/P0] The homepage returning-visitor strip had never rendered, and two theme defects were hiding behind that. DONE S344. Found by doing the CANON-053 pixel check on the surface fixed above — it would not render. `returning-visitor-digest.js` loads first (`ambient-loader.js`, both `idle`) and stamps `vs_last_visit_ts` to `now` before `returning-signal-strip.js` reads the same key, so no entry was ever newer than \"last visit\". Proved with a control blocking only the digest: strip renders, baseline preserved. Same class as the S343 `vs_visit_count` fix, same two files, neighbouring key. Fixed with a one-writer handoff key `vs_prev_visit_ts` (absent = bail, self-heals next visit). Underneath it: `--vs-text` is defined nowhere so every theme used a near-white fallback (invisible on light), and brand gold measured 1.31:1 on cream. Now `--text` plus a light-only `#8a6a00` (4.72:1). 7/7 themes clear WCAG AA on all four elements, measured from painted pixels after two computed-style readings were wrong. See D-S344.6.",
-        "[S344][CI/P0] A skipped step read as a successful step, four guards deep. DONE S344. `news-publish.yml` chained on `if: steps.<X>.outputs.status == '0'`; a SKIPPED step writes no output and GitHub coerces `''` and `'0'` to the same number, so the guard passed for a step that never ran. In run `34063581495` the art renderer, Desk rebuild, editorial gates and public-feed cascade all executed on a slot that drafted nothing. Fixed with a non-numeric `ok=yes/no` sentinel across all 7 guards, plus `check-workflow-step-guards.mjs` (10/10 self-test, in `build:check`, 29 workflows clean) run against the pre-fix file as a negative control -- it caught all 7. See D-S344.3.",
-        "[S344][CI/P0] `generate-news-art.mjs` crashed with a raw ENOENT stack on the normal dropped slot. DONE S344. Unguarded `readdirSync('.cache/news-drafts')`. Shipped in the SAME change as the guard fix and never alone: this crash was one of only two things preventing an unattended commit of a non-edition. Exit code deliberately unchanged (still non-zero) so promotion stays gated."
+        "[NEXT][COST/P1] Move the 30-minute uptime sampler off GitHub Actions as a dedicated trust-path migration. Add the Worker `scheduled()` sampler and bounded KV schema, teach the daily job to drain samples into the unchanged public uptime contract, preserve cadence/SLA semantics, and stage/release independently with rollback evidence.",
+        "[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.",
+        "[S348][PERF/P1] Defer Changelog reaction hydration below the fold. DONE S348. Near-viewport observation, bounded four-island idle fallback, layout containment and unavailable-count semantics shipped; focused mutation coverage plus 14/14 inspected theme/device captures bind the deep-scroll reaction state.",
+        "[S348][PERF/P2] Make local performance sampling repeatable. DONE S348. The harness warms once, defaults to three measured samples, preserves raw runs, reports full distributions and binds host-noise evidence. The measured Changelog run abstained as volatile (LCP p75 1.636s; CLS median 0.0021); it explicitly makes no field Core Web Vitals claim.",
+        "[S348][VERIFY/P1] Make mobile evidence atomic across flaky routes. DONE S348. Process-level retries can no longer restart the single-writer ledger; bounded navigation recovery remains. Clean proof: 215/215 findings, zero failed captures, current candidate/source-bound receipt.",
+        "[S348][BUILD/P1] Make generated provenance byte-deterministic. DONE S348. Forge RSS dates now derive from the newest source commit, feedback provenance inherits its source receipt clock, and both builders' `--check` modes compare exact output bytes. Two consecutive rebuilds produced identical hashes; Forge focused coverage is 9/9.",
+        "[S348][BUILD/P1] Close evidence-graph coverage instead of carrying a permanent blind spot. DONE S348. Every one of 67 `--check`-gated generators is now source-reviewed and modeled (80 graph nodes total after the critique-packet innovation; unmodeled 33 -> 0). The projection, acyclicity/build-order gate, coverage self-test 12/12, reachability self-test 15/15, and all 80 live check/output contracts pass.",
+        "[S348][CI/P1] Close scheduled-publisher cascades exposed by the complete graph. DONE S348. The centralized refresh order now rebuilds all newly visible dependents; both live-data publishers stage every fan-out, including agent discovery, project shards, catalog pages and ledgers. All 29 workflows pass the cascade gate and its widened mutation suite is 21/21."
       ],
       "next": [
-        "[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.",
-        "[NEXT][SIL][OBS/P1] Field-vitals freshness closure. Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence."
+        "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."
       ],
       "shipped": []
     },
     "ignis": {
-      "score": 47138,
+      "score": 46492,
       "grade": "FORGE",
-      "lastComputed": "2026-08-25"
+      "lastComputed": "2026-09-09"
     },
     "stats": {
       "liveCatalogItems": 6,

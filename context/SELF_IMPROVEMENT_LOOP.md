@@ -2605,3 +2605,30 @@ Recovery assessment, not a claim that the interrupted arc completed. S345 remain
 **Brainstorm committed to TASK_BOARD:** defer Changelog reaction hydration below the fold; replace single local performance scores with isolated multi-run distributions.
 
 **Intent outcome:** achieved locally; staging-first deployment and final Doctor zero-blocker proof complete during closeout autopilot.
+
+## 2026-09-10 — Session 348 (full arc saturation) | Total: 993/1000 (v3.0) | Velocity: 11 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Checked-generator coverage is 67/67, the evidence graph is acyclic/reachable, and publisher cascades are closed; final synchronized suite remains the release gate. |
+| Creative Alignment | 99 | Changelog behavior stays quiet until useful, and Desk critique surfaces strengthen the sourced-argument identity without flattening its voices. |
+| Momentum | 100 | Eleven audited outcomes shipped after independently closing the recovered S347 boundary. |
+| Engagement | 97 | Reaction delivery and critique affordances improved, but real adoption and field-traffic floors remain honestly unmeasured. |
+| Process Quality | 99 | Recovery separated committed from uncommitted truth; volatile lab evidence abstained; stale task claims were reconciled from live evidence. |
+| Cross-Repo Coherence | 100 | No sibling repo was edited directly; Canon and Ark boundaries were preserved. |
+| Security Posture | 99 | No auth, identity, pricing, privacy, or secret scope was broadened; unsupported claims fail closed. |
+| Ecosystem Integration | 100 | The complete evidence graph, build order, agent-facing packets, and 29 publisher workflows agree on one dependency model. |
+| Capital Efficiency | 100 | No dependency, paid API call, or runtime model spend was introduced; two non-performing feeds were removed. |
+| Automation Coverage | 100 | New mutation tests cover retry atomicity, deterministic bytes, history ceilings, critique references, and publisher reachability. |
+
+**Rolling averages (available v3 headings):** 3-run 986.3 · 5-run 985.8 · 10/25/all available 985.3 (8 entries after this append). **Sparkline:** █ █ █ █ █ (recent totals: 986, 984, 980, 986, 993).
+
+**Top win:** replaced partial evidence confidence with a complete, source-reviewed 80-node graph and then used it to close every scheduled publisher fan-out.
+
+**Gap:** the 30-minute uptime sampler still creates 48 Actions runs/commits per day; changing that public trust producer correctly needs its own staged migration. Fresh field-vitals evidence also cannot be manufactured locally.
+
+**Honesty ledger:** refused to call a volatile local performance run a field Core Web Vitals pass; removed feeds by published outcome rather than item-count optics; left unsupported prediction links explicit; did not compress the uptime migration into a closeout rider; preserved all founder-gated identity, privacy, cadence, newsletter, and warm-origin decisions.
+
+**Brainstorm committed to TASK_BOARD:** (1) migrate uptime sampling to a Worker scheduled handler plus daily KV drain as a dedicated trust release; (2) bind field-vitals freshness to observed-through age and release SHA only after a real cohort exists.
+
+**Intent outcome:** achieved. Phase 0 recovered and checkpointed S347; S348 completed the full arc and exhausted the locally actionable Genius queue within the context gate.

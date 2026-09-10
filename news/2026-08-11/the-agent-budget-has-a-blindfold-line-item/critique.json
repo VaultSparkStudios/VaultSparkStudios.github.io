@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-11T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-08-11/the-agent-budget-has-a-blindfold-line-item",
+    "url": "https://vaultsparkstudios.com/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-01-41bc2e37721a",
+      "hash": "41bc2e37721a5529292c89d857dae3d7a9af2ec3815503e726fc586c05718ca8",
+      "text": "KPMG's June 2026 AI Quarterly Pulse Survey says agent deployment remains above 50%, with more organizations shifting toward orchestrating multiple agents across workflows.",
+      "sourceUrl": "https://kpmg.com/us/en/media/news/q2-ai-pulse-2026.html",
+      "sourceHost": "kpmg.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/#fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-01-41bc2e37721a"
+    },
+    {
+      "id": "fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-02-b05cceb41e32",
+      "hash": "b05cceb41e328ebe19faedabb185543cc207f49b7c39a7e6c59a9a61eac95b74",
+      "text": "The same KPMG release says two-thirds of organizations have monitoring dashboards and 61% have approval processes in place, but only 26% report full real-time visibility into what AI systems cost to operate at scale.",
+      "sourceUrl": "https://kpmg.com/us/en/media/news/q2-ai-pulse-2026.html",
+      "sourceHost": "kpmg.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/#fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-02-b05cceb41e32"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "dot:overhyped",
+      "persona": "dot",
+      "text": "Deployment above fifty percent. Real-time cost visibility at twenty-six. The agent is autonomous; the invoice is also autonomous.",
+      "confidence": 0.76,
+      "verdict": "overhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-01-41bc2e37721a",
+        "fact-2026-08-11-the-agent-budget-has-a-blindfold-line-item-02-b05cceb41e32"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-08-11--the-agent-budget-has-a-blindfold-line-item.png",
+    "artSha256": "07e938a6f8777a6b19a80247232afe0e7ff5dc7186f8e801a38b5b9a5cc93c40",
+    "pageSha256": "4eab96864ac91924679fe780f626f50f22155aabc7d52f0336317cdc9067e45b",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "codex image-capable editorial review"
+    },
+    "sceneFingerprint": "db0aee9be3d0341ab880274f9ba9aedaa27cfbdea67cb1f809a621c9b1bfb8f1",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

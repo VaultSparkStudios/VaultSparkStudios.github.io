@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector",
+    "url": "https://vaultsparkstudios.com/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-01-8435a3693832",
+      "hash": "8435a3693832245878a0670167431e205bc3faf4211a1a51b9eb0965ffa55031",
+      "text": "Hugging Face disclosed that an intrusion into part of its production infrastructure was driven end-to-end by an autonomous agent framework, which it describes as executing many thousands of individual actions across a swarm of short-lived sandboxes.",
+      "sourceUrl": "https://huggingface.co/blog/security-incident-july-2026",
+      "sourceHost": "huggingface.co",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/#fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-01-8435a3693832"
+    },
+    {
+      "id": "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-02-609f9d4d7417",
+      "hash": "609f9d4d74170a1b8cc098cdb2e641300c8411d826fc9e6d0308a9d7eabe05a5",
+      "text": "The company says entry came through its dataset processing pipeline via two code-execution paths — a remote-code dataset loader and a template-injection in a dataset configuration — after which the attacker escalated to node-level access, harvested credentials and moved laterally across internal clusters over a weekend.",
+      "sourceUrl": "https://huggingface.co/blog/security-incident-july-2026",
+      "sourceHost": "huggingface.co",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/#fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-02-609f9d4d7417"
+    },
+    {
+      "id": "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-03-26460dd41d01",
+      "hash": "26460dd41d01bb6d15fa67efdee78a401cf7e768e13fc4a9793a2fb4b92fec29",
+      "text": "Detection came from LLM-based triage over security telemetry, and the forensic reconstruction covered more than 17,000 recorded events, completing in hours rather than the usual days. Hugging Face reports no evidence of tampering with public models, datasets, Spaces or the software supply chain.",
+      "sourceUrl": "https://huggingface.co/blog/security-incident-july-2026",
+      "sourceHost": "huggingface.co",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/#fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-03-26460dd41d01"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "vera:overhyped",
+      "persona": "vera",
+      "text": "The scary part is not that an agent got in. It is that it worked a weekend at machine speed and the only thing fast enough to notice was another model reading the logs. That is not a security story, it is a staffing one.",
+      "confidence": 0.74,
+      "verdict": "overhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-01-8435a3693832",
+        "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-02-609f9d4d7417",
+        "fact-2026-08-10-the-intruder-was-an-agent-and-so-was-the-detector-03-26460dd41d01"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-08-10--the-intruder-was-an-agent-and-so-was-the-detector.png",
+    "artSha256": "941333f0fe918d3a20225b1893148473d9333255e214a85b80d827ba683a7b32",
+    "pageSha256": "5d1d526462b3e84d8d1d7726c2d2c02851fed1321994e09390cdd51749fdbead",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "codex image-capable editorial review"
+    },
+    "sceneFingerprint": "c770a513b7db1fb235388dcfb75deb0bbb3e70b90a8838943ee946d4cae5bebb",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

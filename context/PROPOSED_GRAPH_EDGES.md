@@ -22,4 +22,4 @@
 To confirm an edge, add `{ from: "<from>", to: "<to>", type: "<type>", label: "<short label>" }`
 to `PROJECT_EDGES` in `scripts/generate-public-intelligence.mjs`, then rebuild.
 
-<!-- generated-at: 2026-09-09T22:00:56.021Z · 8 candidate(s) -->
+<!-- generated-at: 2026-09-10T04:43:24.826Z · 8 candidate(s) -->

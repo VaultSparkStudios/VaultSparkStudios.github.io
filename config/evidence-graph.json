@@ -358,6 +358,7 @@
         "api/ship-receipts.json"
       ],
       "builder": "scripts/build-you-asked-shipped.mjs",
+      "sharedOutput": true,
       "check": [
         "node",
         "scripts/build-you-asked-shipped.mjs",
@@ -639,6 +640,25 @@
       "note": "Per-story source/page/art hashes, safe-zone contract, exact review state, and recent scene-diversity memory. --promote additionally blocks unreviewed or repeated latest art."
     },
     {
+      "id": "news-critique-packets",
+      "output": "api/news-critique-packets.json",
+      "sources": [
+        "api/news-desk-claims.ndjson",
+        "api/news-visual-receipts.json"
+      ],
+      "builder": "scripts/build-news-critique-packets.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-critique-packets.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "news/**/critique.json"
+      ],
+      "publishCascade": true,
+      "note": "S348: deterministic per-story argument maps join stable fact receipts to stances, predictions, and hash-bound visual review evidence; unsupported claims remain explicitly unlinked."
+    },
+    {
       "id": "oracle-velocity-public",
       "output": "api/ecosystem-velocity.json",
       "sources": [
@@ -692,6 +712,7 @@
     {
       "id": "surface-spine",
       "output": "membership/index.html",
+      "sharedOutput": true,
       "sources": [
         "data/surface-spine.json"
       ],
@@ -806,6 +827,268 @@
         "scripts/build-early-hints-headers.mjs",
         "--check"
       ]
+    },
+    {
+      "id": "agents-json",
+      "output": "agents.json",
+      "sources": ["api/ecosystem-state.json", ".well-known/llms.txt", "repo-structure:public-project-routes"],
+      "builder": "scripts/build-agents-json.mjs",
+      "check": ["node", "scripts/build-agents-json.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "ai-discovery-health",
+      "output": "api/ai-discovery-health.json",
+      "sources": ["agents.json", ".well-known/llms.txt", "_headers", "projects/**", "games/**", "universe/**"],
+      "builder": "scripts/build-ai-discovery-health.mjs",
+      "check": ["node", "scripts/build-ai-discovery-health.mjs", "--check"]
+    },
+    {
+      "id": "ambient-bundles",
+      "output": "assets/ambient-core.bundle.js",
+      "sources": [
+        "assets/tt-default-policy.js", "assets/native-feel.js", "assets/scroll-reveal.js", "assets/scroll-depth.js",
+        "assets/breadcrumb-render.js", "assets/signed-in-state.js", "assets/account-chip-loader.js", "assets/ambient-loader.js",
+        "assets/hover-prefetch.js", "assets/edge-swipe-nav.js", "assets/pointerdown-warm.js", "assets/command-palette-loader.js",
+        "assets/adaptive-speculation.js", "assets/rum-beacon.js", "assets/page-sigil.js", "assets/vault-atlas.js",
+        "assets/founder-presence-handle.js", "assets/journey-conductor.js"
+      ],
+      "builder": "scripts/build-ambient-bundle.mjs",
+      "check": ["node", "scripts/build-ambient-bundle.mjs", "--check"],
+      "alsoStage": ["assets/ambient-feature.bundle.js"]
+    },
+    {
+      "id": "ambient-ledger",
+      "output": "context/ambient-ledger.json",
+      "sources": ["scripts/build-ambient-bundle.mjs", ".cache/ambient-split-candidates.json"],
+      "builder": "scripts/build-ambient-ledger.mjs",
+      "check": ["node", "scripts/build-ambient-ledger.mjs", "--check"],
+      "alsoStage": ["docs/AMBIENT_LEDGER.md"]
+    },
+    {
+      "id": "ark-signature-dossier",
+      "output": "docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md",
+      "sources": [".cache/ark-inbox.json"],
+      "builder": "scripts/build-ark-signature-dossier.mjs",
+      "check": ["node", "scripts/build-ark-signature-dossier.mjs", "--check"]
+    },
+    {
+      "id": "changelog-live",
+      "output": "changelog/index.html",
+      "sharedOutput": true,
+      "sources": ["api/public-intelligence.json"],
+      "builder": "scripts/build-changelog-live.mjs",
+      "check": ["node", "scripts/build-changelog-live.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "commit-map",
+      "output": "api/commit-map.json",
+      "sources": [".git/HEAD", ".git/refs/heads/**"],
+      "builder": "scripts/build-commit-map.mjs",
+      "check": ["node", "scripts/build-commit-map.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "entity-graph",
+      "output": ".well-known/entity-graph.json",
+      "sources": ["../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json"],
+      "builder": "scripts/build-entity-graph.mjs",
+      "check": ["node", "scripts/build-entity-graph.mjs", "--check"]
+    },
+    {
+      "id": "favicon",
+      "output": "favicon.ico",
+      "sources": ["assets/icon-256.png"],
+      "builder": "scripts/build-favicon.mjs",
+      "check": ["node", "scripts/build-favicon.mjs", "--check"]
+    },
+    {
+      "id": "feedback-provenance",
+      "output": "api/feedback-provenance.json",
+      "sources": ["api/commit-map.json", "data/rum-ux-history.ndjson"],
+      "builder": "scripts/build-feedback-provenance.mjs",
+      "check": ["node", "scripts/build-feedback-provenance.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "field-win-proof",
+      "output": "api/field-win.json",
+      "sources": ["data/field-verdicts.json"],
+      "builder": "scripts/build-field-win-proof.mjs",
+      "check": ["node", "scripts/build-field-win-proof.mjs", "--check"]
+    },
+    {
+      "id": "forge-feed",
+      "output": "feed/forge-ledger.json",
+      "sources": ["api/commit-map.json"],
+      "builder": "scripts/build-forge-feed.mjs",
+      "check": ["node", "scripts/build-forge-feed.mjs", "--check"],
+      "alsoStage": ["feed/forge-ledger.xml"],
+      "publishCascade": true
+    },
+    {
+      "id": "ai-canonical-pages",
+      "output": "projects/vorn/.ai/index.html",
+      "sources": ["../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json", "projects/*/index.html", "games/*/index.html", "universe/*/index.html"],
+      "builder": "scripts/build-ai-canonical-pages.mjs",
+      "check": ["node", "scripts/build-ai-canonical-pages.mjs", "--check"],
+      "alsoStage": ["projects/*/.ai/index.html", "games/*/.ai/index.html", "projects/*/index.html", "games/*/index.html", "universe/*/index.html"]
+    },
+    {
+      "id": "brand-assets",
+      "output": "brand/assets.json",
+      "sources": ["external:founder-brand-masters"],
+      "builder": "scripts/build-brand-assets.mjs",
+      "check": ["node", "scripts/build-brand-assets.mjs", "--check"],
+      "alsoStage": ["assets/brand/*.png", "assets/brand/*.webp"]
+    },
+    {
+      "id": "flight-director",
+      "output": "membership/index.html",
+      "sharedOutput": true,
+      "sources": ["data/intent-graph.json"],
+      "builder": "scripts/build-flight-director.mjs",
+      "check": ["node", "scripts/build-flight-director.mjs", "--check"],
+      "alsoStage": ["games/index.html", "studio-pulse/index.html", "universe/index.html"],
+      "publishCascade": true
+    },
+    {
+      "id": "geo-vitals",
+      "output": "api/geo-vitals.json",
+      "sources": [".cache/rum-raw/**", ".cache/probe-colo-supplement.ndjson"],
+      "builder": "scripts/build-geo-vitals.mjs",
+      "check": ["node", "scripts/build-geo-vitals.mjs", "--check"]
+    },
+    {
+      "id": "identity-migration-receipt",
+      "output": "api/identity-migration-receipt.json",
+      "sources": ["context/IDENTITY_MIGRATION_EVIDENCE.json", "api/supabase-control-plane.json", "cloudflare/wrangler.toml", "cloudflare/obelisk-auth.js", "supabase/migrations/**", "supabase/functions/**"],
+      "builder": "scripts/build-identity-migration-receipt.mjs",
+      "check": ["node", "scripts/build-identity-migration-receipt.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "ignis-conduit",
+      "output": "api/ignis-conduit.json",
+      "sources": ["api/commit-map.json", "context/PROJECT_STATUS.json"],
+      "builder": "scripts/build-ignis-conduit.mjs",
+      "check": ["node", "scripts/build-ignis-conduit.mjs", "--check"]
+    },
+    {
+      "id": "ignis-platform-status",
+      "output": "api/ignis-platform-status.json",
+      "sources": ["../vaultspark-ignis/ignis/output/ignis-platform-public.json", "../vaultspark-ignis/context/PROJECT_STATUS.json"],
+      "builder": "scripts/build-ignis-platform-status.mjs",
+      "check": ["node", "scripts/build-ignis-platform-status.mjs", "--check"]
+    },
+    {
+      "id": "ignis-roi",
+      "output": "api/ignis-roi.json",
+      "sources": ["docs/cache-ledger.ndjson", "docs/AUDIT_*.json"],
+      "builder": "scripts/build-ignis-roi.mjs",
+      "check": ["node", "scripts/build-ignis-roi.mjs", "--check"]
+    },
+    {
+      "id": "ignis-search-index",
+      "output": "data/ignis-search-index.json",
+      "sources": ["api/public-intelligence.json", "api/feedback-provenance.json", "api/security-posture.json", "data/game-registry.json", "llms-full.txt", "privacy/index.html", "terms/index.html", "rights/index.html", "membership/index.html", "games/index.html", "universe/index.html", "oracle/index.html"],
+      "builder": "scripts/build-ignis-search-index.mjs",
+      "check": ["node", "scripts/build-ignis-search-index.mjs", "--check"]
+    },
+    {
+      "id": "inp-soak-verdicts",
+      "output": "data/inp-soak-verdicts.json",
+      "sources": ["data/inp-breakdown.json"],
+      "builder": "scripts/build-inp-soak-verdicts.mjs",
+      "check": ["node", "scripts/build-inp-soak-verdicts.mjs", "--check"],
+      "alsoStage": ["api/inp-soak-verdicts.json"]
+    },
+    {
+      "id": "llms-full-shards",
+      "output": ".well-known/llms.txt",
+      "sources": ["api/ecosystem-state.json", "repo-structure:public-project-routes"],
+      "builder": "scripts/build-llms-full-shards.mjs",
+      "check": ["node", "scripts/build-llms-full-shards.mjs", "--check"],
+      "alsoStage": ["llms-full.txt", "projects/*/llms-full.txt", "games/*/llms-full.txt"],
+      "publishCascade": true
+    },
+    {
+      "id": "nav-sheet-stats",
+      "output": "api/nav-sheet-stats.json",
+      "sources": [".cache/rum-raw/**"],
+      "builder": "scripts/build-nav-sheet-stats.mjs",
+      "check": ["node", "scripts/build-nav-sheet-stats.mjs", "--check"]
+    },
+    {
+      "id": "oracle-query-clusters",
+      "output": "api/oracle-insights.json",
+      "sources": ["api/oracle-queries.json", "data/ignis-search-index.json", "data/oracle-feedback.ndjson", "api/public-intelligence.json", "api/leaderboard/v1/all.json"],
+      "builder": "scripts/build-oracle-query-clusters.mjs",
+      "check": ["node", "scripts/build-oracle-query-clusters.mjs", "--check"]
+    },
+    {
+      "id": "promotion-receipt",
+      "output": "api/promotion-receipt.json",
+      "sources": ["api/build-sha.json", "data/promotion-history.ndjson", "external:production-pages", "external:production-apex"],
+      "builder": "scripts/build-promotion-receipt.mjs",
+      "check": ["node", "scripts/build-promotion-receipt.mjs", "--check"],
+      "sideEffecting": true,
+      "sideEffectingReason": "Emitting this receipt probes production and appends promotion history; repair tools must verify it but never regenerate it implicitly.",
+      "alsoStage": ["data/promotion-history.ndjson"]
+    },
+    {
+      "id": "public-ecosystem",
+      "output": "api/ecosystem-state.json",
+      "sources": ["ignis/output/ecosystem-state.json", "api/public-intelligence.json"],
+      "builder": "scripts/build-public-ecosystem.mjs",
+      "check": ["node", "scripts/build-public-ecosystem.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "shell-assets",
+      "output": "assets/shell-manifest.json",
+      "sources": ["assets/style.css", "assets/theme-toggle.js", "assets/nav-toggle.js", "assets/shell-health.js", "assets/nav-sheet.js", "assets/supabase-client.js", "assets/sentry-init.js", "assets/home-idle-loader.js", "assets/ambient-core.bundle.js", "assets/ambient-feature.bundle.js", "assets/proof-verify.js", "assets/desk-reactions.js", "assets/desk-presence.js", "assets/stats-surface.js", "assets/ecosystem-stats.js", "assets/hero-choice-tracking.js", "assets/journey-conductor.js", "config/route-consolidation.json", "**/index.html"],
+      "builder": "scripts/build-shell-assets.mjs",
+      "check": ["node", "scripts/build-shell-assets.mjs", "--check"],
+      "alsoStage": ["assets/*.shell-*.css", "assets/*.shell-*.js", "**/index.html"]
+    },
+    {
+      "id": "ship-receipts",
+      "output": "api/ship-receipts.json",
+      "sources": ["api/feedback-provenance.json", "api/commit-map.json", "docs/visual-proof/*/manifest.json", "data/field-verdicts.json"],
+      "builder": "scripts/build-ship-receipts.mjs",
+      "check": ["node", "scripts/build-ship-receipts.mjs", "--check"],
+      "alsoStage": ["docs/SHIP_RECEIPTS.md"]
+    },
+    {
+      "id": "site-health",
+      "output": "api/site-health.json",
+      "sources": ["data/rum-summary.json", "api/funnel-summary.json"],
+      "builder": "scripts/build-site-health.mjs",
+      "check": ["node", "scripts/build-site-health.mjs", "--check"]
+    },
+    {
+      "id": "staging-deploy-continuity",
+      "output": "api/staging-deploy-continuity.json",
+      "sources": ["api/staging-deploy-receipt.json", "data/staging-deploy-history.ndjson"],
+      "builder": "scripts/build-staging-deploy-continuity.mjs",
+      "check": ["node", "scripts/build-staging-deploy-continuity.mjs", "--check"]
+    },
+    {
+      "id": "tt-readiness",
+      "output": "api/tt-readiness.json",
+      "sources": [".cache/tt-active-local-sinks.json"],
+      "builder": "scripts/build-tt-readiness.mjs",
+      "check": ["node", "scripts/build-tt-readiness.mjs", "--check"]
+    },
+    {
+      "id": "worker-route-provenance",
+      "output": "api/worker-route-provenance.json",
+      "sources": ["cloudflare/security-headers-worker.js", "external:production-worker-routes", "external:build-vantage-worker-routes"],
+      "builder": "scripts/build-worker-route-provenance.mjs",
+      "check": ["node", "scripts/build-worker-route-provenance.mjs", "--check"],
+      "publishCascade": true
     }
   ]
 }

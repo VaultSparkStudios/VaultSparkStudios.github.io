@@ -54,6 +54,7 @@ const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(v
 const OPEN_NAV = argv.includes('--open-nav');
 const FOCUS_CHANGED = argv.includes('--focus-changed');
 const FOCUS_FOOTER = argv.includes('--footer');
+const FOCUS_CHANGELOG_REACTIONS = argv.includes('--changelog-reactions');
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'], ['.css', 'text/css; charset=utf-8'],
@@ -127,6 +128,19 @@ async function main() {
             await footer.scrollIntoViewIfNeeded();
             await page.waitForTimeout(200);
           }
+          if (FOCUS_CHANGELOG_REACTIONS) {
+            if (route !== '/changelog/') throw new Error('--changelog-reactions requires /changelog/');
+            const phases = page.locator('.cl-phase');
+            const phaseCount = await phases.count();
+            const initialMounted = await page.locator('.cl-phase .vs-cr').count();
+            if (initialMounted >= phaseCount) {
+              throw new Error(`reaction hydration not bounded at first viewport (${initialMounted}/${phaseCount} mounted)`);
+            }
+            const target = phases.nth(Math.max(0, Math.min(8, (await phases.count()) - 1)));
+            await target.scrollIntoViewIfNeeded();
+            await target.locator('.vs-cr').waitFor({ state: 'visible', timeout: 5000 });
+            await page.waitForTimeout(200);
+          }
           const changedSelector = {
             '/': '.hero-showcase',
             '/news/directors-report/': '[data-reader-editorial-actions]',
@@ -136,7 +150,7 @@ async function main() {
             '/ignis/': '.ignis-caps-grid',
             '/status/': '#liveSignalsGrid',
             '/news/': '.desk-story-card[href="/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"]',
-          }[route] || (route.startsWith('/news/') ? '.desk-meme' : null);
+          }[route] || (route.startsWith('/news/') ? '.desk-critique-link' : null);
           const focusSelector = FOCUS_CHANGED ? changedSelector : null;
           if (focusSelector) {
             const focus = page.locator(focusSelector);
@@ -150,12 +164,13 @@ async function main() {
               });
             }
           }
-          const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : focusSelector ? '--changed-surface' : '';
+          const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : FOCUS_CHANGELOG_REACTIONS ? '--changelog-reactions' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
           if (FOCUS_FOOTER) await page.locator('footer.site-footer').screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
+          else if (FOCUS_CHANGELOG_REACTIONS) await page.locator('.cl-phase').nth(Math.max(0, Math.min(8, (await page.locator('.cl-phase').count()) - 1))).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
           else if (focusSelector) await page.locator(focusSelector).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
           else await page.screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : focusSelector ? 'changed-surface' : 'page', file });
+          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           // S341: count it. A skipped capture used to shrink the receipt silently,
@@ -236,7 +251,7 @@ function writeCanonReceipt(manifest) {
     'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
     'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
-    'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js',
+    'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js', 'assets/changelog-reactions.js',
     'assets/exit-intent.js', 'assets/visit-depth.js', 'assets/returning-visitor-digest.js',
     'assets/journey-conductor.js', 'vault-member/portal-auth.js',
     'vault-member/portal-dashboard.js', 'vault-member/portal-init.js',

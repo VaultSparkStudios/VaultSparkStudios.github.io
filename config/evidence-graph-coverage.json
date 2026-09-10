@@ -1,43 +1,9 @@
 {
   "schemaVersion": "1.0",
   "note": "Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a --check-gated generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.",
-  "unmodeled": 33,
+  "unmodeled": 0,
   "total": 67,
-  "unmodeledGenerators": [
-    "scripts/build-agents-json.mjs",
-    "scripts/build-ai-canonical-pages.mjs",
-    "scripts/build-ai-discovery-health.mjs",
-    "scripts/build-ambient-bundle.mjs",
-    "scripts/build-ambient-ledger.mjs",
-    "scripts/build-ark-signature-dossier.mjs",
-    "scripts/build-brand-assets.mjs",
-    "scripts/build-changelog-live.mjs",
-    "scripts/build-commit-map.mjs",
-    "scripts/build-entity-graph.mjs",
-    "scripts/build-favicon.mjs",
-    "scripts/build-feedback-provenance.mjs",
-    "scripts/build-field-win-proof.mjs",
-    "scripts/build-flight-director.mjs",
-    "scripts/build-forge-feed.mjs",
-    "scripts/build-geo-vitals.mjs",
-    "scripts/build-identity-migration-receipt.mjs",
-    "scripts/build-ignis-conduit.mjs",
-    "scripts/build-ignis-platform-status.mjs",
-    "scripts/build-ignis-roi.mjs",
-    "scripts/build-ignis-search-index.mjs",
-    "scripts/build-inp-soak-verdicts.mjs",
-    "scripts/build-llms-full-shards.mjs",
-    "scripts/build-nav-sheet-stats.mjs",
-    "scripts/build-oracle-query-clusters.mjs",
-    "scripts/build-promotion-receipt.mjs",
-    "scripts/build-public-ecosystem.mjs",
-    "scripts/build-shell-assets.mjs",
-    "scripts/build-ship-receipts.mjs",
-    "scripts/build-site-health.mjs",
-    "scripts/build-staging-deploy-continuity.mjs",
-    "scripts/build-tt-readiness.mjs",
-    "scripts/build-worker-route-provenance.mjs"
-  ],
+  "unmodeledGenerators": [],
   "checkContracts": {
     "scripts/build-intelligence-budget.mjs": {
       "level": "drift-comparing",
@@ -70,9 +36,9 @@
       "sourceSha256": "c0575384027aa59878555c7289259ac5d78f6fad472c6568b6c09fd6d1dcf993"
     },
     "scripts/build-feedback-provenance.mjs": {
-      "level": "shape-only",
-      "scope": "Output existence and JSON parse; no comparison to recomputed themes",
-      "sourceSha256": "4ee476a090713559b71cd267ec87a318c8cd3e3d7f123e3dafb18b846ccfcc9f"
+      "level": "drift-comparing",
+      "scope": "Exact source-derived JSON comparison, including commit-map date and privacy-thresholded decision sampler",
+      "sourceSha256": "5ea9f02499bf807ed5d0e01f5ccfb4c2e98ff09ad9becc585bacf6c1c843f960"
     },
     "scripts/build-site-health.mjs": {
       "level": "shape-only",
@@ -83,6 +49,11 @@
       "level": "shape-only",
       "scope": "Output existence and JSON parse; no ledger-derived drift comparison",
       "sourceSha256": "13af3d72029ed5dce5d653bde252910300c0907a5a371d26d218d10e0fc98acc"
+    },
+    "scripts/build-forge-feed.mjs": {
+      "level": "drift-comparing",
+      "scope": "Exact JSON Feed and RSS byte comparison; RSS lastBuildDate derives from newest valid source commit",
+      "sourceSha256": "b77801118273c9d462a8fea66dd7c9450026f3e74c5a171f72ca66bb79e9940a"
     }
   }
 }

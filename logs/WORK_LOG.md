@@ -1356,3 +1356,12 @@ The performance lab found a preview-only duplicate transfer: preloaded fingerpri
 ### S347 release addendum
 
 Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner staging (6,490 files; rollback `20260909222156`; attested receipt `bb5016b2a85891bf778e4f87`; lineage depth 59), and passed the canonical ten-step release ceremony. Production content promotion completed in GitHub Actions run `34412238486` with content-purity, reference, capability-slice, liveness, discovery, and exact News gates green. Live deploy currency is `content-current` with matched shell parity; Doctor now reports 13 pass, 1 warning, 2 advisory failures, and `blockingFailing: 0`.
+
+## 2026-09-10 — Session 348 · recovered arc saturation and release closeout
+
+- Continued from the independently recovered/pushed S347 boundary (`172073cb7`, receipt follow-up `59bade85e`) and completed the founder-requested uninterrupted `/start → /audit → /implement → /closeout` arc.
+- Shipped 11 S348 audit outcomes: progressive Changelog hydration; multi-run, host-noise-aware performance evidence; atomic mobile receipts; deterministic Forge/feedback provenance; complete 67/67 checked-generator evidence coverage; closure of all 29 publisher cascades; meaningful Git-history window safety; byte-preserving CURRENT_STATE sharding; measured Desk feed probation; stale-task truth reconciliation; and per-story claim/evidence critique packets.
+- Generated 30 deterministic `critique.json` packets plus a SHA-256 manifest. Stable `factRefs` join facts to stances and predictions; unsupported claims remain explicitly `unlinked`; article pages link the packet; the build graph and scheduled publishers regenerate and stage the complete fan-out.
+- Preserved evidence honesty: the Changelog lab verdict abstained as volatile (LCP p75 1.636s, CLS median 0.0021); visual review, mobile evidence, full build, Doctor, staging, production, and post-push CI are recorded only after their final closeout gates complete.
+- No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
+- Final local authority is non-phantom green: `npm run build:check` passed 479/479 from step one after fixing each discovered drift class; mobile runtime passed 215/215 with zero P0/P1 findings; 28/28 final touched-state captures were manually reviewed; Doctor exits 0 with `blockingFailing: 0`.

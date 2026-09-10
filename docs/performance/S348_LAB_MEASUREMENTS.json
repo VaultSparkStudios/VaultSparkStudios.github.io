@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "2.0",
+  "evidenceType": "local-applied-throttle-lab",
+  "fieldCoreWebVitalsClaim": false,
+  "generatedAt": "2026-09-10T01:05:48.261Z",
+  "gitSha": null,
+  "sourceSha256": "09a0ab857c96ca94b7ee7744938096d8b407fb2a5e9cf45cd6bafc558b8ef12e",
+  "host": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 16,
+    "lagBudgetMs": 40
+  },
+  "base": "http://127.0.0.1:4900",
+  "throttle": {
+    "cpuRate": 4,
+    "net": {
+      "downloadThroughput": 209715,
+      "uploadThroughput": 86400,
+      "latency": 150
+    }
+  },
+  "warmupRuns": 1,
+  "measuredRuns": 3,
+  "results": [
+    {
+      "route": "/changelog/",
+      "status": 200,
+      "runs": [
+        {
+          "route": "/changelog/",
+          "status": 200,
+          "lcp": 1324,
+          "fcp": 1324,
+          "cls": 0.0021,
+          "lcpEl": {
+            "tag": "P",
+            "id": "",
+            "cls": "",
+            "size": 27158
+          },
+          "sources": []
+        },
+        {
+          "route": "/changelog/",
+          "status": 200,
+          "lcp": 1316,
+          "fcp": 1316,
+          "cls": 0.0021,
+          "lcpEl": {
+            "tag": "P",
+            "id": "",
+            "cls": "",
+            "size": 27158
+          },
+          "sources": []
+        },
+        {
+          "route": "/changelog/",
+          "status": 200,
+          "lcp": 1636,
+          "fcp": 1028,
+          "cls": 0.0021,
+          "lcpEl": {
+            "tag": "P",
+            "id": "",
+            "cls": "",
+            "size": 27158
+          },
+          "sources": []
+        }
+      ],
+      "summary": {
+        "cls": {
+          "samples": 3,
+          "min": 0.0021,
+          "p25": 0.0021,
+          "median": 0.0021,
+          "p75": 0.0021,
+          "max": 0.0021,
+          "spreadPct": 0,
+          "stability": "stable"
+        },
+        "lcp": {
+          "samples": 3,
+          "min": 1316,
+          "p25": 1316,
+          "median": 1324,
+          "p75": 1636,
+          "max": 1636,
+          "spreadPct": 24.2,
+          "stability": "volatile"
+        },
+        "fcp": {
+          "samples": 3,
+          "min": 1028,
+          "p25": 1028,
+          "median": 1316,
+          "p75": 1324,
+          "max": 1324,
+          "spreadPct": 22.5,
+          "stability": "volatile"
+        },
+        "hostLagMs": {
+          "samples": 3,
+          "min": 11,
+          "p25": 11,
+          "median": 11.4,
+          "p75": 11.6,
+          "max": 11.6,
+          "spreadPct": 5.3,
+          "stability": "stable"
+        }
+      },
+      "contaminated": false,
+      "error": null,
+      "evidenceVerdict": "abstain-volatile"
+    }
+  ]
+}
