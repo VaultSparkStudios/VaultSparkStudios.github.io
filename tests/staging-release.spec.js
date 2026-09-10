@@ -65,6 +65,9 @@ test.describe('explicit staging release evidence', () => {
     await page.evaluate(async () => {
       if (document.fonts?.ready) await document.fonts.ready;
     });
+    await page.addStyleTag({
+      content: '*,*::before,*::after{transition:none!important;animation:none!important}',
+    });
     await expect(page.locator('h1')).toBeVisible();
 
     const hamburger = page.locator('#hamburger');
@@ -101,6 +104,9 @@ test.describe('explicit staging release evidence', () => {
       await expect(pill).toBeVisible();
       await pill.click();
       await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
+      await page.evaluate(() => new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }));
 
       const axe = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
