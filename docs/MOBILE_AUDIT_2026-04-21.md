@@ -22,11 +22,11 @@ Screenshots live in `docs/mobile-audit/`. Raw findings in `docs/mobile-audit/fin
 
 <details><summary>Sample offenders</summary>
 
-- `home` @ iphone-se — 14 text block(s) under 13px
+- `home` @ iphone-se — 13 text block(s) under 13px
   - `{"tag":"button","fs":12.8,"text":"⌕\nSearch"}`
-  - `{"tag":"a","fs":12.5,"text":"IN THE FORGE RIGHT NOW\nLive in the forge on Vorn\n·"}`
-  - `{"tag":"span","fs":10.4,"text":"IN THE FORGE RIGHT NOW"}`
-  - `{"tag":"span","fs":12.5,"text":"Live in the forge on Vorn"}`
+  - `{"tag":"a","fs":12.5,"text":"LATEST FROM THE FORGE\nRefined stop publishing a bo"}`
+  - `{"tag":"span","fs":10.4,"text":"LATEST FROM THE FORGE"}`
+  - `{"tag":"span","fs":12.5,"text":"Refined stop publishing a bot challenge as an outa"}`
 - `games-landing` @ iphone-se — 25 text block(s) under 13px
   - `{"tag":"button","fs":12.8,"text":"⌕\nSearch"}`
   - `{"tag":"span","fs":12,"text":"🔥 SPARKED"}`
