@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T04:45:30.966Z",
+  "generatedAt": "2026-09-10T05:11:29.932Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,22 +14,30 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
       "shell-mismatch",
+      "staging-canonical-csp-drift",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-artifact-root-mismatch"
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch",
+      "staging-artifact-leaf-count-mismatch",
+      "/:stagingStatus",
+      "/:stagingCanonicalCsp",
+      "/:localShellParity",
+      "/studio-pulse/:stagingStatus",
+      "/studio-pulse/:stagingCanonicalCsp",
+      "/studio-pulse/:localShellParity"
     ],
-    "candidateBuildSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
-    "deployedBuildSha": "137245237d8a3ad80cb90c5e0d4598710f7e97e0",
-    "candidateShaBound": true,
+    "candidateBuildSha": "fe9b7436e2f4eefbea449c2eb85221b335fc76c4",
+    "deployedBuildSha": null,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "131e3a74e23084a8aa7d9982d1c51e21cf25b485ecf38f4a2042bf8630564c29",
+      "candidateRoot": "35e2736ebbabe1f597792b0af8331db0ab0e0e18a3cc1ee7a2360abf6267e735",
       "candidateLeafCount": 29,
-      "stagingRoot": "a534d8092c680e15b22848cc1042e33eaa33b9674cf563cbcdf4f9bf4bac52f7",
-      "stagingLeafCount": 29,
+      "stagingRoot": null,
+      "stagingLeafCount": null,
       "matched": false
     },
     "productionParity": false,
@@ -70,13 +78,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 20,
-    "ageHours": 6.2,
-    "observedAt": "2026-09-10T04:39:48.991Z",
+    "commitsBehind": 26,
+    "ageHours": 6.8,
+    "observedAt": "2026-09-10T05:11:29.932Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-10T04:39:48.991Z",
+      "observedAt": "2026-09-10T05:11:29.932Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
@@ -163,7 +171,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -179,6 +187,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
