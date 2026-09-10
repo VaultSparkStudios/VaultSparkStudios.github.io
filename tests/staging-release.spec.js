@@ -30,7 +30,14 @@ test.describe('explicit staging release evidence', () => {
   // Firefox does not implement Playwright's `isMobile` context option. The
   // responsive contract under test is viewport + touch behavior, which all
   // three engines support.
-  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
+  // Axe evaluates effective colors, so keep continuously arriving live-pulse
+  // rows from being sampled halfway through their opacity entrance animation.
+  // Motion behavior is covered elsewhere; this gate measures stable palettes.
+  test.use({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  });
 
   test('mobile drawer and every theme are readable', async ({ page }) => {
     // S321 — this test does substantially more work than the 30s suite default:
@@ -51,7 +58,13 @@ test.describe('explicit staging release evidence', () => {
     const pageErrors = [];
     page.on('pageerror', (error) => pageErrors.push(String(error)));
 
-    await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+    // WebKit can expose the DOM before the theme stylesheet has finished
+    // applying. Axe must inspect rendered styles, not the transient unstyled
+    // document, or it reports a large false-positive contrast burst.
+    await page.goto(BASE + '/', { waitUntil: 'load' });
+    await page.evaluate(async () => {
+      if (document.fonts?.ready) await document.fonts.ready;
+    });
     await expect(page.locator('h1')).toBeVisible();
 
     const hamburger = page.locator('#hamburger');

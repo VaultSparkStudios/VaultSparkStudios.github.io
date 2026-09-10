@@ -57,7 +57,9 @@
       '.vp-when{font-size:0.72rem;color:var(--dim);white-space:nowrap;flex-shrink:0;}',
       '.vp-foot{font-size:0.72rem;color:var(--dim);margin-top:0.75rem;line-height:1.5;}',
       '.vp-foot a{color:var(--gold);}',
-      '@keyframes vp-slide-in{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}',
+      // Keep text fully opaque throughout entry: opacity fades create a real,
+      // transient WCAG contrast failure while live rows arrive.
+      '@keyframes vp-slide-in{from{transform:translateY(-6px);}to{transform:none;}}',
       '@media(prefers-reduced-motion:reduce){.vp-row{animation:none;}}'
     ].join('\n');
     document.head.appendChild(sty);
