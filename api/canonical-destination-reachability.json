@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-11T01:01:58.947Z",
+  "generatedAt": "2026-09-11T04:35:16.347Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
@@ -17,10 +17,10 @@
   },
   "counts": {
     "total": 12,
-    "passed": 10,
+    "passed": 9,
     "failed": 0,
-    "unknown": 2,
-    "longestUnknownStreak": 85,
+    "unknown": 3,
+    "longestUnknownStreak": 87,
     "neverKnownGood": 2
   },
   "results": [
@@ -38,7 +38,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +55,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +72,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +89,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -106,7 +106,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -123,7 +123,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -144,7 +144,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 85,
+      "unknownStreak": 87,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
@@ -162,7 +162,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -179,7 +179,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -196,25 +196,30 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
+      "lastKnownGoodAt": "2026-09-11T04:35:16.347Z",
       "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "syntha",
       "destination": "https://syntha.music/",
-      "verdict": "passed",
-      "reason": "response-reached",
-      "attemptCount": 1,
+      "verdict": "unknown",
+      "reason": "transient-or-blocked",
+      "attemptCount": 2,
       "attempts": [
         {
-          "status": 200,
+          "status": null,
           "redirected": false,
-          "outcome": "reachable"
+          "outcome": "unknown"
+        },
+        {
+          "status": null,
+          "redirected": false,
+          "outcome": "unknown"
         }
       ],
-      "unknownStreak": 0,
+      "unknownStreak": 2,
       "lastKnownGoodAt": "2026-09-11T01:01:58.947Z",
-      "lastKnownGoodAgeHours": 0
+      "lastKnownGoodAgeHours": 3.6
     },
     {
       "slug": "vaultfront",
@@ -234,7 +239,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 85,
+      "unknownStreak": 87,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     }
