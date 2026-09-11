@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-10T22:50:16.131Z",
+  "generatedAt": "2026-09-11T21:04:53.669Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -37,6 +37,32 @@
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "1f6c2a31",
+          "summary": "fix a dead shell cleanup, stop hidden-tab polling, restore contact input height",
+          "ts": "2026-09-11T21:03:47.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -74.9,
+        "confidence": "high"
+      }
     },
     {
       "theme": "frontdoor",
