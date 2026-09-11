@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-10T22:51:21.306Z",
+  "capturedAt": "2026-09-11T20:42:06.246Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "690d5d049a26428a5edf583f9a0c382237e26d1f2196c27e3553a078d35b84be",
+    "sha256": "c63d4c0ff095371534ac7325065be5e3778dc7c35c1768ff4c7f6776aab71934",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -37,10 +37,12 @@
       "assets/style.css",
       "assets/vault-genome-strip.js",
       "assets/visit-depth.js",
-      "changelog/index.html",
+      "community/index.html",
+      "contact/index.html",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
+      "journal/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -71,7 +73,7 @@
       },
       {
         "path": "assets/desk-presence.js",
-        "sha256": "8e69ca15669d5fafadde2afb6a57c7aeede27db37f7ee2edd0d6c432edc58f7a"
+        "sha256": "3dc76e3a40c308d8605d4a29b9767d3937e2a12102807494bfa74322f599eb2f"
       },
       {
         "path": "assets/exit-intent.js",
@@ -142,8 +144,12 @@
         "sha256": "a38df720d1d72356469962a43fe61f9750cc2defc7417a44f8a0016f9c72a765"
       },
       {
-        "path": "changelog/index.html",
-        "sha256": "b34238c5d8a88a893695c9268b7ef44578afa39754fcf63aa4a7cab9a9ca9baf"
+        "path": "community/index.html",
+        "sha256": "819c8adbd5a516ee84aa5bbf48ef07e8dcfee695b64af097aef151a47ba53874"
+      },
+      {
+        "path": "contact/index.html",
+        "sha256": "9c24fc6a24946aee39d54107523b857193e8fa94d16546e4136030b24ecf7c05"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -156,6 +162,10 @@
       {
         "path": "data/news-desk/days/2026-08-23.json",
         "sha256": "bf41229dcd95fbae0258fd3450364442c42bd7eadea01bb712fd510eb45b44b4"
+      },
+      {
+        "path": "journal/index.html",
+        "sha256": "d1a85b44870e3e1cd74ec0c3f05bf5aa298c4e1d869821264c8cd7ea10a539c7"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -217,13 +227,15 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "270210aea523eb289da3c438fbab09789df492e2ff74750bfe0d74aa7ea512e1",
-    "candidateSha": "34e35e863ea0b60957c15cf517fe6adada3050e3",
-    "root": "6ab82befcb4ae4598ee83ffd3008be362897f5bc7917acea30a6d13ab3117227"
+    "manifestSha256": "594baf4378c7ebe67802a5c231e9098bed14492c85ae5af2003c9a838c629986",
+    "candidateSha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
+    "root": "71b72da41a839e7e4ee12ec36d24496f344c33c58bb96d0674e5e20f36a1a28a"
   },
   "matrix": {
     "routes": [
-      "/changelog/"
+      "/community/",
+      "/journal/",
+      "/contact/"
     ],
     "themes": [
       "dark",
@@ -247,22 +259,23 @@
       }
     ],
     "states": [
-      "changelog-reactions"
+      "page"
     ],
-    "expectedCaptures": 14,
-    "completedCaptures": 14
+    "expectedCaptures": 42,
+    "completedCaptures": 42
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 14,
-      "manuallyReviewed": 14,
+      "totalCaptures": 42,
+      "manuallyReviewed": 42,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)",
+    "reviewer": "Claude Opus 5 (S350)",
     "findings": [
-      "Receipt re-bound to the final candidate manifest after regenerating the derived graph post-rebase. The 14 PNGs are byte-identical to the set inspected earlier this session (git reports no modification) and every bound source file is unchanged, so the review carries forward rather than being re-asserted over new pixels: all seven themes legible at desktop 1366px and mobile, no black-on-black, light-on-white, sub-AA text, clipping or layout shift."
+      "Demoted h2 headings keep their prior sans look; Contact inputs now 48px (were 22px) with centred placeholders; no contrast or overlap defects in dark, light, lava, high-contrast or cool.",
+      "All 42 captures opened (3 routes x 7 themes x desktop/mobile). Demoted h2 headings keep their prior sans look in every theme; Contact inputs render at 48px (were 22px) with centred placeholders; no contrast, clipping or overlap defects. One capture-timing anomaly: community dark desktop shows the stats placeholder dash before the counts load; the same page shows 7/0 in the other six themes."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -277,13 +290,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--dark--desktop--changelog-reactions.png",
-      "sha256": "6909b96702e7df50433859d2412389661667306b55809e198d1b1b6895f8042e",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--dark--desktop.png",
+      "sha256": "7318c50abeae2c6cc5e7a78334e8930ba409dcacf521117bbd1f51d1ca30e5db",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--dark--desktop.png",
+      "sha256": "26e88d8866ef22759113b787b2da807ec21cbe1544d3361f633b4f5158cef9b4",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--dark--desktop.png",
+      "sha256": "581bca6c274b0e89b97ac36ce3323d4a7a93bf38bbb8b2bbe870ffa53d1327e8",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -294,13 +341,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--light--desktop--changelog-reactions.png",
-      "sha256": "6e2cada26d20909f71cf452280a47d641bba681ebaa05c11f8da6b8cf92e4e7d",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--light--desktop.png",
+      "sha256": "ff34911eefeabd5362cb291dbf9c4c591ce5321499a1db32bfb4e84c8e6d5edc",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--light--desktop.png",
+      "sha256": "fad36588444b02985f55142e393ff431151d3a0641780c225054ab5f4ed68408",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--light--desktop.png",
+      "sha256": "864666893f2b6ef71ac9d6b484ada3a2babf84fc662b6abeca6fe432018918ce",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -311,13 +392,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--ambient--desktop--changelog-reactions.png",
-      "sha256": "9b987f4751ad35c9acccb01077748e89ef58f96f29bce589455f614cc68a0693",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--ambient--desktop.png",
+      "sha256": "f0322e19aaea3841599f31518dd1b1d673e0dabd6a449a3b51848a17eadb19cf",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--ambient--desktop.png",
+      "sha256": "77f0327d2d535454d04730a5da4730e310c519f56fe2f720666a15d8e7282834",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--ambient--desktop.png",
+      "sha256": "850b2f1f1da3079135ac1a433a5500b725e921e88dffc8a0df9219ca44cfdf7f",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -328,13 +443,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--warm--desktop--changelog-reactions.png",
-      "sha256": "ab875b5b6f0f64b449da9926bbc1ce33bf1673cd60f3feeaa81a7af35f46c17b",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--warm--desktop.png",
+      "sha256": "322dbdce38393a3ed6f0c58bc372354f5df8b1ed6a4cdde4dcf861438a5244c1",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--warm--desktop.png",
+      "sha256": "01dbe034696c9c41d255b4ccd2655b224ee8bc30f876c5707900aa907e31347f",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--warm--desktop.png",
+      "sha256": "08059377851ce7041f4d45631e55e34200b2f21d80c1bf26a6cc491b6cd1a68d",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -345,13 +494,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--cool--desktop--changelog-reactions.png",
-      "sha256": "6b54fc57de900f570689edaaa1a3189b6866ab81fcf7eb6321b21e2167bb347a",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--cool--desktop.png",
+      "sha256": "03a2b68065508f18ac4fdc24dbeef3fed9df24bce288e69811be0e284fac2c91",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--cool--desktop.png",
+      "sha256": "cc80dc372f355841f81dd26c242f6c0c1e19e05554e3535a1400aba5db087061",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--cool--desktop.png",
+      "sha256": "bbb37ed80dc1405ba0c3284a7cc8b1db7b5689113fc0ae99d21c0e0c21ae1fab",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -362,13 +545,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--lava--desktop--changelog-reactions.png",
-      "sha256": "7e277e1d77050d05da1e6a3402cbd5a541376c78bc2fd3c1dd80928b3066be8c",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--lava--desktop.png",
+      "sha256": "e04c1012da87e2ca66502ba31eb3a0f04482753762492951c0e3ca19cc0f65b0",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--lava--desktop.png",
+      "sha256": "79a1cb6a2c57ee939aa410c0f6df5d3d56a8d1719e9361f48f2b239b1098f7da",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--lava--desktop.png",
+      "sha256": "a96aea93ad6ea537264c21e6396f14ba56b447a4923b396ced51f7aa85e0665a",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -379,13 +596,47 @@
         "width": 1366,
         "height": 900
       },
-      "file": "changelog--high-contrast--desktop--changelog-reactions.png",
-      "sha256": "1c930601b3d99ef0b7f18f3a185f45e1e385e8b7c3820efc13049d7e686323f6",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--high-contrast--desktop.png",
+      "sha256": "8a3e710db97ca6c3f5233c60ce1808f5df64382e176fb84d4573697d3c60e9d8",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journal--high-contrast--desktop.png",
+      "sha256": "adc8de70a73e0c27617fb01b5f358819e0120bf8b0bdcf696596787bc853b7b9",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "contact--high-contrast--desktop.png",
+      "sha256": "ccd5f0d474487f1559ad482b2eb2bcd666792ec137454008a03001af4a20f356",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -396,13 +647,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--dark--mobile--changelog-reactions.png",
-      "sha256": "135e4df2e8acda9ba64b05f743ccc890e446f484c0d3b1010eefd4cd173a1c35",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--dark--mobile.png",
+      "sha256": "99d4469cdc7947a1321ae0f07d40012c3daa1b4cd6867a81f6502f9c95f1071c",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--dark--mobile.png",
+      "sha256": "904ccc3a49f67a3284767f72e2de08576964755e875ff6f0fafe51ccd3e416c3",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--dark--mobile.png",
+      "sha256": "eb0f02eea6fe0659cf952108b0b65869d863e7044f51667692eb8cb9a15b75e4",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -413,13 +698,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--light--mobile--changelog-reactions.png",
-      "sha256": "3b6c696b91425fd5e579ad1078fbec4f743ac9fac599a8f6e5d4d51d442a528d",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--light--mobile.png",
+      "sha256": "b3c4a7858d7c9761ff2472fd08e928be8fd8866cf9933906e3a474bc84aac9dc",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--light--mobile.png",
+      "sha256": "a20bb02229ca92cdce12c0c61d45f6d0d2452510788d94b61c64154bf515e950",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--light--mobile.png",
+      "sha256": "40c03d8144decc4eb2dd64606b131499b07084cd391f483b6361fecd1c205479",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -430,13 +749,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--ambient--mobile--changelog-reactions.png",
-      "sha256": "38d567e68a54885b387e04fecb83878c403f2e150ec573dec21916bf096e4898",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--ambient--mobile.png",
+      "sha256": "a6db4a5bd2cae653c7adfb1cd4f345a16ec4c557ce933fec229bd0ddbb2e0192",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--ambient--mobile.png",
+      "sha256": "6bfb3d05ec9ab03c0fcc3fc2a852973b6482d69d24927444a3769e02e49f4628",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--ambient--mobile.png",
+      "sha256": "95b2c53371534cf3d031e6d0a9e6925cc77b1104092aae5a2ffd92423ef5b4fc",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -447,13 +800,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--warm--mobile--changelog-reactions.png",
-      "sha256": "ad2bd6b0501dc80de9c486aff53686e026d9b9b133eb872c559f82cc4930f013",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--warm--mobile.png",
+      "sha256": "bbb1380defb83d75d922be2f970dd26a9c9e57161b17512abe4e0f5a01ade121",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--warm--mobile.png",
+      "sha256": "96ea4c40cf2e224f97fa0677d624776ca91d46c6d438a8780b576d1922fdc469",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--warm--mobile.png",
+      "sha256": "ee4e5175919370bc41762b092109ce0f4832943fffb71c06c7fb76921ac0914b",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -464,13 +851,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--cool--mobile--changelog-reactions.png",
-      "sha256": "f7cb67d4e76135ed29de8f626a79e986ebe293485cb2acb95393be4e48d73983",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--cool--mobile.png",
+      "sha256": "588c5188eb81b545e43e822d5bc9db73e9454925a2ba3a641c61e1e57add14fc",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--cool--mobile.png",
+      "sha256": "7e1a0ff3ae795add2d63dc96f87acd69b6908ade19eb34d34e7966dcada230f2",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--cool--mobile.png",
+      "sha256": "e5d31069575aa22b2be39f0fdc1ab486c852cc134edf59c3caaf984c28d1cf4a",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -481,13 +902,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--lava--mobile--changelog-reactions.png",
-      "sha256": "a39fd841bd0832d98dde08a0f66654885cd08d5a6f0267a9ea27c8a19d4f3885",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--lava--mobile.png",
+      "sha256": "07268aa6c54fae3f5ffeecb083a8d7b47e95e5e47bd9089c19bc4683b62556d9",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--lava--mobile.png",
+      "sha256": "3ddc831bbeb0ae42c92bb28ee3d8f0936c34955824ac1f85d85abaa8ac9ecdaa",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--lava--mobile.png",
+      "sha256": "ca9eca669b67ee7c28d542d12a9a1fa44ceb60d6a6e168841c8892fdf428a70a",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     },
     {
@@ -498,13 +953,47 @@
         "width": 390,
         "height": 844
       },
-      "file": "changelog--high-contrast--mobile--changelog-reactions.png",
-      "sha256": "1d71f0ed5f31c2c0d69440813e7a7f1290cdc0e49d4134330a014d2bb796f879",
-      "page": "/changelog/",
-      "state": "changelog-reactions",
+      "file": "community--high-contrast--mobile.png",
+      "sha256": "cf1626b8f2ed03dc8629372073f05ad175188c1c40ba55588e0c9535a2db4543",
+      "page": "/community/",
+      "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S349 image review, re-bound to final candidate)"
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "journal--high-contrast--mobile.png",
+      "sha256": "430f7a4631faa7fec5d10e0c3c38ecfbc9904b85ccccc4911c42feccfd664b4a",
+      "page": "/journal/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "contact--high-contrast--mobile.png",
+      "sha256": "ad82c5de539f874d2d67f56e0a5fb95d70bd01f43fd591b31c113b72bd2d1f74",
+      "page": "/contact/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Opus 5 (S350)"
       }
     }
   ]

@@ -1,8 +1,22 @@
 # Current State
 
-Last updated: 2026-09-10 (S349)
+Last updated: 2026-09-11 (S350)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S350 hidden-tab polling, shell pruning, heading order (2026-09-11)
+
+**Background tabs stop spending requests.** `favicon-pulse.js` no longer polls founder presence while the tab is hidden, and `vault-pulse.js` neither rotates ticker rows nor refetches its pool off-screen. All three presence/ticker scripts refresh once when the reader returns, so what they see is current on sight rather than up to one interval stale.
+
+**Superseded hashed shells are pruned at build time.** `build-shell-assets.mjs` always had `cleanupOldFingerprintedFiles`, but its pattern ended in `\\${ext...}`: the backslash escaped the `$`, the extension was never interpolated, and the pattern matched no file. Every rotation left its old shell tracked and publicly servable. Root-fixed; eight stale shells (six style, one nav-sheet, one ambient-feature) are gone.
+
+**Heading order.** Community, Journal and Contact no longer jump from h1 to h3. The demoted headings keep their exact look via `font-family: inherit` (the critical shell CSS gives h2 Georgia).
+
+**Contact form inputs render at their designed height.** Found during the rendered-pixel pass, not from the board: `.input-field` carries `flex: 1` for horizontal email rows, and inside Contact's column-flex `.form-group` that zero flex-basis overrode `height: 48px`. The name, email and subject inputs measured 22px in every theme, with placeholder text crowding the borders on the studio's main inbound form. Scoped fix on the Contact page only (`flex: none`); it is the only page that nests `.input-field` in `.form-group`.
+
+**Recovered record.** `50f13941` (S349 follow-up: an unobservable uptime leg renders `?` and exits 0 instead of reading as an outage) landed without a write-back; it is recorded in this session.
+
+**Not changed:** the edge uptime sampler is still dark. Creating its KV namespace was blocked by the agent permission layer; see TASK_BOARD.
 
 ## S349 uptime observability honesty + edge-vantage sampler (2026-09-10)
 

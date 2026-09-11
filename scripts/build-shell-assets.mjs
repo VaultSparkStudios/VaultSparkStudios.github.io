@@ -299,7 +299,11 @@ function updateServiceWorker(swSource, manifest) {
 function cleanupOldFingerprintedFiles(asset, keepBasename) {
   const assetDir = path.join(root, path.dirname(asset.source));
   const ext = path.extname(asset.source);
-  const stemPattern = new RegExp(`^${asset.stem.replace('.', '\\.')}\\-[a-f0-9]{10}\\${ext.replace('.', '\\.')}$`);
+  // S350: this was `\\${ext...}` — the backslash escaped the `$`, so the extension
+  // was never interpolated and the pattern matched no file on disk. Every rotation
+  // since the cleanup was written left its superseded shell tracked and servable.
+  const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const stemPattern = new RegExp(`^${escape(asset.stem)}-[a-f0-9]{10}${escape(ext)}$`);
 
   for (const entry of fs.readdirSync(assetDir)) {
     if (!stemPattern.test(entry)) continue;

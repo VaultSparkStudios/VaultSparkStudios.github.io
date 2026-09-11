@@ -188,9 +188,11 @@
       while (ul.children.length > MAX_VISIBLE) ul.removeChild(ul.lastChild);
     }
 
+    // S350: a hidden tab neither rotates rows nobody sees nor refetches the pool.
+    // Returning to the tab refreshes once, so the ticker is current on sight.
     function schedule() {
       timer = setTimeout(function () {
-        rotateNext();
+        if (!document.hidden) rotateNext();
         schedule();
       }, rand(ROTATE_MIN, ROTATE_MAX));
     }
@@ -199,7 +201,10 @@
       if (!ok) return;
       renderInitial();
       schedule();
-      setInterval(refreshPool, REFRESH_INTERVAL);
+      setInterval(function () { if (!document.hidden) refreshPool(); }, REFRESH_INTERVAL);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) refreshPool();
+      });
     });
   }
 

@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "2.0",
+  "session": "S350",
+  "generatedAt": "2026-09-11",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "axes": [
+    "ux",
+    "speed",
+    "featureDepth",
+    "security",
+    "observability"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "enable-edge-uptime-sampler",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 10,
+      "innovation": 7,
+      "title": "Enable the Worker scheduled() uptime sampler so the edge is measured, not merely reported unmeasured",
+      "why": "Outcome: a /status/ reader finds a real edge-availability number. Since S349 the public status honestly says edge-unobservable, because every CI probe is bot-challenged. The sampler that can see the edge ships dark.",
+      "recipe": "Create the production UPTIME_SAMPLES KV namespace, uncomment the binding and the 30-minute cron in cloudflare/wrangler.toml, flip UPTIME_SAMPLER_ENABLED to \"1\", and let the push-triggered Worker deploy run its promotion gate and release ceremony. Confirm with drain-uptime-kv --dry-run once a sample exists.",
+      "premises": [
+        {
+          "claim": "The sampler flag is committed dark.",
+          "adapter": "file-content",
+          "target": "cloudflare/wrangler.toml",
+          "pattern": "UPTIME_SAMPLER_ENABLED = \"0\"",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "The scheduled handler exists in the Worker.",
+          "adapter": "grep",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "async scheduled(event, env, ctx)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "The gateway deploy token authenticates (wrangler whoami) but lacks KV scope (error 10000 on kv namespace list). The connected Cloudflare MCP on the same account (production-RATE_LIMIT id matches) can list and create namespaces, so this is agent work, not a founder action.",
+        "limitations": "The CI deploy token must be able to bind the new namespace; it already binds RATE_LIMIT."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Create namespace, bind, enable, deploy."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Also drain samples into the history daily from CI."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Multi-region samples through several cron vantages."
+        }
+      },
+      "priority": 20.1,
+      "status": "blocked",
+      "executionLog": [
+        "S350: KV namespace creation denied by agent permission layer; gateway token lacks KV scope."
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "shell-cleanup-regex-root-fix",
+      "axis": "speed",
+      "tier": "⚡",
+      "effortHours": 0.5,
+      "impact": 6,
+      "innovation": 6,
+      "title": "Root-fix the dead cleanup regex that leaves every superseded hashed shell tracked and servable",
+      "why": "Outcome: stale CSS and JS stop being publicly servable and precache-reachable, and the repository stops growing by one shell per rotation. Eight stale shells are tracked today: six style.shell copies, one nav-sheet shell and one ambient-feature shell.",
+      "recipe": "cleanupOldFingerprintedFiles built its pattern with a template literal ending `\\${ext...}`. The backslash escaped the `$`, so the extension was never interpolated and the regex matched nothing. Escape both parts properly, then rerun build-shell-assets to prune.",
+      "premises": [
+        {
+          "claim": "The cleanup pattern escapes the interpolation.",
+          "adapter": "file-content",
+          "target": "scripts/build-shell-assets.mjs",
+          "pattern": "\\\\${ext.replace('.', '\\\\.')}$`",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "A superseded style shell is still tracked.",
+          "adapter": "file-exists",
+          "target": "assets/style.shell-4b3ff55fa2.css",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "presence"
+        }
+      ],
+      "evidence": {
+        "interpretation": "Reproduced in node: the compiled source is `^style.shell-[a-f0-9]{10}${ext.replace('.', '.')}$` and it returns false for style.shell-4b3ff55fa2.css. This replaces the S349 plan of writing a new manifest-diff prune: the prune already existed and had never worked.",
+        "limitations": "Non-.cache references to stale hashes are archived performance traces, a fallback default in generate-pathways.mjs, and a comment in check-content-hotfix-gate.mjs. None loads the file."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Fix the escape and rerun the build."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add a self-test asserting the pattern matches a synthetic stale name."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Have the check mode fail on any unmanifested shell."
+        }
+      },
+      "priority": 14.2,
+      "status": "shipped",
+      "executionLog": [
+        "S350: shipped."
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "hidden-tab-poll-gating",
+      "axis": "speed",
+      "tier": "⚡",
+      "effortHours": 1,
+      "impact": 5,
+      "innovation": 5,
+      "title": "Stop hidden tabs from polling presence and rotating the Vault Pulse ticker; refresh the moment a reader returns",
+      "why": "Outcome: a reader who comes back to the tab sees current presence and ticker rows immediately, and background tabs stop spending requests and battery on things nobody can see.",
+      "recipe": "favicon-pulse tick returns early while document.hidden; vault-pulse skips rotation and pool refresh while hidden; all three scripts refresh once on visibilitychange to visible. desk-presence already skipped its network call while hidden, so it gains only the return-refresh.",
+      "premises": [
+        {
+          "claim": "favicon-pulse polls on a fixed interval without a visibility check.",
+          "adapter": "file-content",
+          "target": "assets/favicon-pulse.js",
+          "pattern": "setInterval(tick, POLL_MS)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "vault-pulse refreshes its pool on a bare interval.",
+          "adapter": "file-content",
+          "target": "assets/vault-pulse.js",
+          "pattern": "setInterval(refreshPool, REFRESH_INTERVAL)",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "S349 listed four uncancellable timers. Premise check: desk-presence refreshPresence already returns when !isReading(), and its 1s tick is deliberate idle accounting with no network. That half of the premise was false, which is a win recorded here.",
+        "limitations": "favicon-pulse leader election stores the leader in sessionStorage, which is per tab, so every tab elects itself. Visibility gating removes most of the cost without redesigning election."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Visibility guards plus return-refresh."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Move leader election to localStorage with a heartbeat."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "One shared presence poller for all widgets."
+        }
+      },
+      "priority": 9.3,
+      "status": "shipped",
+      "executionLog": [
+        "S350: shipped."
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "heading-level-skips",
+      "axis": "ux",
+      "tier": "⚡",
+      "effortHours": 0.5,
+      "impact": 4,
+      "innovation": 3,
+      "title": "Fix h1 to h3 heading skips on Community, Journal and Contact",
+      "why": "Outcome: screen-reader and AI-agent outlines of these pages read as a proper hierarchy, so a user navigating by headings finds the Discord invite, the Dispatch signup and the contact channels.",
+      "recipe": "Demote the skipping h3 elements to h2, and scope their existing per-page rules to h2 with font-family: inherit so the rendered look is unchanged.",
+      "premises": [
+        {
+          "claim": "Community's Discord heading is an h3 directly under the h1.",
+          "adapter": "file-content",
+          "target": "community/index.html",
+          "pattern": "<h3>Join The Discord</h3>",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        },
+        {
+          "claim": "Contact's sidebar opens with an h3.",
+          "adapter": "file-content",
+          "target": "contact/index.html",
+          "pattern": "<h3>Reach The Vault</h3>",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "The critical shell CSS sets h1,h2 to Georgia, so a plain demotion would change the font; inherit preserves it. assets/style.css has no global h2 rule.",
+        "limitations": "Needs the rendered-pixel pass (CANON-053) on the three pages."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Demote and rescope."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add a sitewide heading-order gate."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Generate a heading outline into agents.json."
+        }
+      },
+      "priority": 6.8,
+      "status": "shipped",
+      "executionLog": [
+        "S350: shipped."
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "recover-s349-writeback",
+      "axis": "observability",
+      "tier": "⚡",
+      "effortHours": 0.5,
+      "impact": 5,
+      "innovation": 3,
+      "title": "Recover the un-written-back S349 follow-up commit and close the CANON-055 gap on the record",
+      "why": "Outcome: the session ledger and the surface follow-through check both tell the truth about 50f13941.",
+      "recipe": "Record 50f13941 in the S350 write-back. Its user-facing effect is a CI probe's exit code and console line, not a site surface, so declare the CANON-055 exemption for it in LATEST_HANDOFF.",
+      "premises": [
+        {
+          "claim": "The write-back currency probe exists locally.",
+          "adapter": "file-exists",
+          "target": "scripts/check-writeback-currency.mjs",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "presence"
+        }
+      ],
+      "evidence": {
+        "interpretation": "check-writeback-currency: 1 substantive commit after the last SIL write, 20.7h old. check-surface-followthrough: gap, 11 files, none user-facing.",
+        "limitations": ""
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Write back and declare."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "n/a"
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "n/a"
+        }
+      },
+      "priority": 6.1,
+      "status": "shipped",
+      "executionLog": [
+        "S350: shipped."
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "contact-input-height",
+      "axis": "ux",
+      "tier": "⚡",
+      "effortHours": 0.3,
+      "impact": 6,
+      "innovation": 4,
+      "title": "Contact form inputs collapse to 22px instead of 48px",
+      "why": "Outcome: a visitor filling in the studio contact form gets full-height fields with readable placeholders, on the main inbound conversion path.",
+      "recipe": "Scope flex:none to .contact-form .input-field so the column-flex .form-group stops overriding height.",
+      "premises": [
+        {
+          "claim": ".input-field declares flex: 1 and a 48px height.",
+          "adapter": "file-content",
+          "target": "assets/style.css",
+          "pattern": "  flex: 1;\n  min-width: 200px;\n  height: 48px;",
+          "operator": "eq",
+          "expected": true,
+          "claimKind": "content"
+        }
+      ],
+      "evidence": {
+        "interpretation": "Found during the CANON-053 rendered-pixel pass. Measured with getBoundingClientRect: 22px desktop, 23px mobile, both themes.",
+        "limitations": "Only contact/index.html nests .input-field inside .form-group, so the fix is page-scoped."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Page-scoped flex:none."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Move the flex:1 onto the horizontal row selectors in style.css."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Add a rendered-height assertion for form fields to the mobile audit."
+        }
+      },
+      "priority": 8.2,
+      "status": "shipped",
+      "executionLog": [
+        "S350: found in the pixel pass and shipped."
+      ]
+    }
+  ],
+  "axisCoverage": {
+    "ux": 1,
+    "speed": 2,
+    "security": 1,
+    "observability": 1,
+    "featureDepth": 0
+  },
+  "totals": {
+    "count": 6,
+    "priority": 56.5,
+    "top3": [
+      "enable-edge-uptime-sampler",
+      "shell-cleanup-regex-root-fix",
+      "hidden-tab-poll-gating"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "title": "Retire the 604 unresolved pre-S349 uptime rows",
+      "reason": "Gated on a full 31-day sampler window by design; re-scoring them is explicitly forbidden. Item 1 starts that clock."
+    },
+    {
+      "title": "Visibility-gate the desk-presence network poll",
+      "reason": "False premise: refreshPresence already returns early when the tab is not visible and focused."
+    }
+  ],
+  "scope": "Carried S349 items verified against live code, plus the recovered write-back.",
+  "novelty": "The shell-prune item turned out to be a dead existing cleanup, not missing code.",
+  "limitations": [
+    "Context meter reads UNMEASURED for this agent."
+  ],
+  "premiseVerification": {
+    "method": "live code reads and node reproduction",
+    "verifiedAt": "2026-09-11"
+  }
+}

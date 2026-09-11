@@ -1387,3 +1387,15 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 - Fixed a WCAG 2.4.7 defect on all 108 shell pages: `.skip-link:focus{top:0}` existed only in the async-loaded stylesheet, so a keyboard user tabbing before the swap focused an element parked at `top:-100%`. Fixed in the generator; verified 108/108 pages carry it and 0 remain unpatched.
 - Verification is non-phantom: 479/479 build steps exit 0 from a frozen tree, 119/119 unit, 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells against a LOCAL preview (production would have measured the old pages), 14/14 theme captures re-captured and inspected directly, Doctor `blockingFailing: 0`.
 - No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
+
+## 2026-09-11 — Session 350 · arc: recovery + hidden-tab polling, shell prune, heading order
+
+- `/arc` triage: tree clean and synced after pulling 51 automation commits, but `check-writeback-currency` reported `50f13941` (S349 follow-up) un-written-back at 20.7h. Recorded it here; CANON-055 exemption declared in LATEST_HANDOFF because its only effect is a CI probe's output and exit code.
+- `/audit` (5 items, premises verified against live code): `docs/AUDIT_2026-09-11.md`. Two premises were half-false and are recorded as wins: desk-presence already gated its network call, and the shell prune already existed.
+- Root-fixed `cleanupOldFingerprintedFiles`: its pattern escaped `$` and so matched nothing. Reproduced in node before fixing; the rebuild pruned eight stale shells and re-hashed vault-pulse, desk-presence and the home idle loader that embeds vault-pulse.
+- favicon-pulse and vault-pulse no longer poll or rotate in hidden tabs; all three scripts refresh on return.
+- Community, Journal and Contact h3→h2, with per-page rules rescoped and `font-family: inherit` to keep the look.
+- Sampler enabling held: gateway token has no KV scope (error 10000); the MCP namespace creation was denied by the permission layer. Not routed around.
+- Rendered-pixel pass (CANON-053) found a pre-existing defect on the main inbound form: Contact's name/email/subject inputs measured 22px, not 48px, in every theme. `.input-field`'s `flex: 1` zeroes the flex-basis inside the column-flex `.form-group`, overriding the declared height. Contact is the only page nesting them; fixed there with `flex: none`.
+- Two Git Bash traps hit during verification: MSYS path conversion rewrote `--routes /community/` into `C:/Program Files/Git/community/` (fix: `MSYS_NO_PATHCONV=1`), and a refreshed observed leaf (`worker-route-provenance.json`) changes `observedRoot`, so it does require a reseal even though it is excluded from `root`.
+- Self-inflicted drift, caught by the gate: `resync-derived --sweep-repair` ran `build-brand-assets.mjs`, which on this machine (no source masters) skipped every job and still wrote the manifest, replacing the correct 7-entry `brand/assets.json` with an empty list and staging it. `build:check` step 111 failed on it; restored from HEAD, and the generator bug is carried to next session.

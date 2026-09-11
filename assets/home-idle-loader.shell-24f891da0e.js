@@ -23,7 +23,7 @@
     '/assets/vault-resonance.js',
     // build-shell-assets rewrites this child to its immutable fingerprint before
     // hashing the parent loader, so both files can ride the content lane together.
-    '/assets/vault-pulse.shell-8204990170.js',
+    '/assets/vault-pulse.shell-141c057d30.js',
     // S228: moved from defer → idle (below-fold, non-critical for initial paint)
     '/assets/trust-depth.js',
     '/assets/related-content.js',

@@ -51,7 +51,8 @@
       background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
       border: 1px solid rgba(255,255,255,0.08);
     }
-    .contact-info-block h3 {
+    .contact-info-block h2 {
+      font-family: inherit;
       font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
@@ -118,6 +119,10 @@
       margin-bottom: 1.6rem;
     }
     .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    /* S350: .input-field carries `flex: 1` for horizontal email rows. Inside the
+       column-flex .form-group that sets a zero flex-basis on the vertical axis,
+       which overrides `height: 48px` — measured 22px on every theme. */
+    .contact-form .input-field { flex: none; }
 
     .form-success { display: none; }
 
@@ -306,7 +311,7 @@
           <!-- Sidebar info -->
           <div class="contact-sidebar">
             <div class="contact-info-block">
-              <h3>Reach The Vault</h3>
+              <h2>Reach The Vault</h2>
               <div class="contact-info-row">
                 <div class="contact-info-icon">✉</div>
                 <div>
@@ -331,7 +336,7 @@
             </div>
 
             <div class="contact-info-block">
-              <h3>What To Reach Out About</h3>
+              <h2>What To Reach Out About</h2>
               <div class="contact-info-row">
                 <div class="contact-info-icon">🤝</div>
                 <div>

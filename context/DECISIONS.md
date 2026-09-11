@@ -1756,3 +1756,15 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** a present-but-failing capability still exits 0; only the rendered state and the summary line change.
 
 **Why:** the documented contract is `0 ready · 1 credential genuinely absent (founder) · 3 unknown name (caller)`. A credential that exists but whose probe failed is not absent, and returning 1 would let a wrapper fold it into a human-blocked label — the phantom blocker CANON-019 exists to prevent. The rendering is loud instead, and `probeFailing` is available to any caller that wants to branch on it.
+
+## D-S350.1 — Fix the dead shell cleanup instead of adding a second prune
+
+**Decision:** the S349 task asked for a new manifest-diff prune in `build-shell-assets.mjs`. The prune already existed as `cleanupOldFingerprintedFiles`; its regex had never matched anything because `\${ext...}` escaped the interpolation. The existing function was repaired rather than a parallel mechanism added.
+
+**Why:** two cleanup paths for one invariant would mean the next dead one hides behind the working one. Repairing the original also explains the history: stale shells accumulated because the cleanup never ran, not because nobody wrote one.
+
+## D-S350.2 — The uptime sampler stays dark until a KV-scoped path is allowed
+
+**Decision:** the sampler's enabling release is not attempted with any credential other than the ones its deploy path already declares. The gateway deploy token lacks KV scope, and the agent permission layer refused both further credential probing and a KV namespace creation through the Cloudflare MCP. The founder decides whether to allow the MCP creation.
+
+**Why:** routing around a permission refusal with a different token or a CI workflow would be the exact bypass the refusal exists to stop. The honest state (`edge-unobservable`) stays published, so nothing on a public surface overclaims while it waits.

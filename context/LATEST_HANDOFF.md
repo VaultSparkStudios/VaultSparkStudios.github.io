@@ -1,5 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S350 · 2026-09-11
+
+**Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.
+
+**Recovery first.** `check-writeback-currency` found one substantive commit after the S349 closeout, `50f13941` (an unobservable uptime leg now renders `?` and exits 0 rather than reading as an alarm). It is recorded here. CANON-055 exempt for `50f13941`: its only effect is a CI probe's console line and exit code, which has no user-facing surface.
+
+**Shipped:** hidden-tab gating for favicon-pulse and vault-pulse plus return-refresh on all three polling scripts; a root fix for the shell cleanup regex that had never matched, pruning eight stale shells; h1→h3 skips fixed on Community, Journal and Contact. Audit: `docs/AUDIT_2026-09-11.md`.
+
+**Found by looking at pixels:** the Contact form's name, email and subject inputs rendered 22px tall instead of 48px on every theme (`flex: 1` collapsing height inside a column-flex group). Fixed with a Contact-scoped `flex: none`.
+
+**Self-inflicted and caught:** `resync-derived --sweep-repair` ran `build-brand-assets.mjs`, which skips any job whose source master is absent and then writes the manifest anyway — so it replaced the correct 7-entry `brand/assets.json` with `"assets": []` and staged it. `build:check` step 111 caught it; restored from HEAD. **Next session: file a TASK_BOARD row** to make that generator refuse to write when any job was skipped (not added this session because TASK_BOARD is in the verification fingerprint).
+
+**Premise corrections (wins):** desk-presence already skipped its network call when hidden, so only its return-refresh was new. The shell prune was not missing code: it existed and was dead.
+
+**Held — needs the founder:** the edge uptime sampler. The gateway `cloudflare.deploy` token authenticates but has no KV scope (`kv namespace list` → error 10000). The Cloudflare MCP on the same account can create `production-UPTIME_SAMPLES`, but the agent permission layer denied it as a shared-resource change. Allow that once, then uncomment the binding and cron in `cloudflare/wrangler.toml`, flip the flag, and push (the push-triggered Worker deploy runs the gate and ceremony).
+
 ## Where We Left Off — S349 · 2026-09-10
 
 **Full arc completed in one session.** `/start` → `/audit` (3 items, every premise pre-verified against live code and a live network probe) → `/implement` (all 3 shipped, plus 2 verified findings from a parallel read-only sweep) → `/closeout`.

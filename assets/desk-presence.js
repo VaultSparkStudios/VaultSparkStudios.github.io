@@ -112,5 +112,8 @@
     .then(renderAggregate).catch(function () { renderAggregate(null); });
   refreshPresence();
   setInterval(refreshPresence, 30000);
+  // S350: refreshPresence already skips hidden tabs; without this a returning
+  // reader saw a count up to 30s stale before the next interval caught it up.
+  document.addEventListener('visibilitychange', function () { if (isReading()) refreshPresence(); });
   window.addEventListener('pagehide', sendSummary);
 }());

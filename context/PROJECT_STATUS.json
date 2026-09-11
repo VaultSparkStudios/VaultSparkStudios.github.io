@@ -12,25 +12,25 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S349 stopped a public trust surface from lying: /status/ had reported edge-degraded on 604 consecutive samples since 2026-07-13 because Cloudflare began bot-challenging JSON and OPTIONS paths, and the probe read its own challenge as an outage. Unobservable is now a first-class state — neither an outage nor a pass.",
+  "currentFocus": "S350 recovered the un-written-back S349 follow-up, stopped hidden tabs polling presence and rotating the Vault Pulse ticker, root-fixed a shell cleanup regex that had never matched (pruning eight stale shells), and fixed heading-order skips on three public pages.",
   "publicNote": "The status page now distinguishes \"our probe cannot see the edge from here\" from \"the edge is down\", and states the denominator it measured over instead of implying more coverage than it has.",
   "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
   "blockers": [
-    "Edge liveness is honestly UNMEASURED, not fixed: the sampler that can observe it ships dark and has never run. Its presence is not coverage.",
+    "Edge uptime sampler held: the gateway deploy token has no KV scope and the agent permission layer denied KV namespace creation through the Cloudflare MCP. Needs a founder allow.",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
     "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
   ],
-  "lastUpdated": "2026-09-10",
-  "currentSession": 349,
+  "lastUpdated": "2026-09-11",
+  "currentSession": 350,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-09",
-  "silScore": 991,
-  "silAvg3": 990,
-  "silVelocity": -2,
+  "silScore": 983,
+  "silAvg3": 989,
+  "silVelocity": 4,
   "silDebt": "down",
-  "silLastSession": 349,
+  "silLastSession": 350,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -86,28 +86,28 @@
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 100,
+    "devHealth": 99,
     "creativeAlignment": 99,
-    "momentum": 96,
-    "engagement": 96,
-    "processQuality": 100,
+    "momentum": 93,
+    "engagement": 95,
+    "processQuality": 99,
     "crossRepoCoherence": 100,
     "securityPosture": 100,
-    "ecosystemIntegration": 100,
+    "ecosystemIntegration": 99,
     "capitalEfficiency": 100,
-    "automationCoverage": 100
+    "automationCoverage": 99
   },
-  "silCategoriesUpdatedSession": 348,
+  "silCategoriesUpdatedSession": 350,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-09-10",
-    "passing": 14,
+    "date": "2026-09-11",
+    "passing": 13,
     "warning": 1,
-    "failing": 1,
+    "failing": 2,
     "blockingFailing": 0,
-    "advisoryFailing": 1,
+    "advisoryFailing": 2,
     "total": 16,
-    "score": 88,
+    "score": 81,
     "checks": [
       {
         "id": "manifest",
@@ -167,7 +167,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -252,5 +252,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
   "testsSourceFingerprint": "03288cb46bc7b23374af224b",
-  "lastSessionSummary": "S348 shipped 11 audit outcomes after the independent S347 recovery boundary: progressive hydration, distributional lab evidence, atomic mobile receipts, deterministic provenance, complete evidence coverage and publishers, history safety, hot-state sharding, measured feed probation, task-truth reconciliation, and 30 critique packets. Final release receipts are bound during closeout."
+  "lastSessionSummary": "S350: recovery of 50f13941 plus four of five audit items shipped; the edge uptime sampler stays dark because creating its KV namespace needs a founder permission."
 }

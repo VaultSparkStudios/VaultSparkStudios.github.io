@@ -2663,3 +2663,28 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Brainstorm committed to TASK_BOARD:** (1) the sampler enabling release with its own rollback evidence; (2) visibility-gated teardown for the four uncancellable client polling timers found this session.
 
 **Intent outcome:** achieved. Full `/start` → `/audit` → `/implement` → `/closeout` arc completed in one session; every audit item shipped and verified from a frozen tree.
+
+## 2026-09-11 — Session 350 (recovery + arc) | Total: 983/1000 (v3.0) | Velocity: 4 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Shell check in sync, 0 missing manifest paths; full gate recorded in the closeout brief. |
+| Creative Alignment | 99 | Heading fixes preserve the rendered look exactly; no visual change was traded for the outline fix. |
+| Momentum | 93 | Four of five audit items shipped; the top item (sampler) is held on a founder permission. |
+| Engagement | 95 | Returning readers see current presence and ticker rows immediately; no new capability. |
+| Process Quality | 99 | Two premises corrected by reading live code; the cut-off write-back was recovered before new work. |
+| Cross-Repo Coherence | 100 | No sibling repo edited. |
+| Security Posture | 100 | A permission refusal was honoured rather than routed around with another credential. |
+| Ecosystem Integration | 99 | The recovered commit is on the record; CANON-055 declared with a reason. |
+| Capital Efficiency | 100 | Fewer background requests; no spend. |
+| Automation Coverage | 99 | The cleanup now actually runs on every rotation; no self-test was added for its pattern yet. |
+
+**Top win:** the "missing" shell prune was a dead one. A regex that escaped its own interpolation had silently matched nothing for every rotation since it was written.
+
+**Gap:** the edge is still unmeasured. The sampler needs a KV namespace this agent was not permitted to create.
+
+**Honesty ledger:** did not try other tokens or a CI workaround after the permission refusal. Did not claim desk-presence needed gating; it did not.
+
+**Brainstorm committed to TASK_BOARD:** (1) sampler enabling release, now carrying the exact permission it waits on. (2) [SIL] a self-test asserting the shell cleanup pattern matches a synthetic stale name, so it cannot go dead silently again.
+
+**Intent outcome:** partial until the release addendum records the deploy.

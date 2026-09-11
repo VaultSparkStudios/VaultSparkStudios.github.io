@@ -114,6 +114,9 @@
   }
 
   async function tick() {
+    // S350: a hidden tab cannot see its favicon change, so it must not spend a
+    // request finding out. The visibilitychange listener below catches it up.
+    if (document.hidden) return;
     if (!isLeader()) return;
     try {
       const j = window.VSPublicSignals
@@ -137,4 +140,5 @@
   } else {
     setTimeout(() => { tick(); setInterval(tick, POLL_MS); }, 1500);
   }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
 })();
