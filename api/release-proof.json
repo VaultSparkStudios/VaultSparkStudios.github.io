@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-11T21:15:49.655Z",
+  "generatedAt": "2026-09-11T21:34:45.225Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
@@ -67,19 +70,19 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 61,
-    "ageHours": 21.5,
-    "observedAt": "2026-09-11T21:10:18.074Z",
+    "commitsBehind": 4,
+    "ageHours": 0.3,
+    "observedAt": "2026-09-11T21:34:45.225Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-11T21:10:18.074Z",
+      "observedAt": "2026-09-11T21:34:45.225Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/home-idle-loader.shell-f30c5192b7.js",
+        "assets/home-idle-loader.shell-24f891da0e.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
@@ -92,7 +95,7 @@
         "assets/ambient-core.shell-a4349880f3.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/home-idle-loader.shell-f30c5192b7.js",
+        "assets/home-idle-loader.shell-24f891da0e.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
