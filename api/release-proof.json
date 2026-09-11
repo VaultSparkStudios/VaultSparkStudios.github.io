@@ -1,38 +1,33 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-11T21:10:18.074Z",
+  "generatedAt": "2026-09-11T21:15:49.655Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "34e35e863ea0b60957c15cf517fe6adada3050e3",
-    "shellVersion": "79b001d0ae-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-8204990170-f30c5192b7-a4349880f3-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-b33242e1cc-e6b0b21c77-8dd57eb3a3-a910e120bb"
+    "sha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
+    "shellVersion": "79b001d0ae-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-141c057d30-24f891da0e-a4349880f3-ca3b329506-4b68e2855f-3f177f4c17-3dc76e3a40-b33242e1cc-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
     "status": "yellow",
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "/:localShellParity"
+      "staging-build-sha-mismatch"
     ],
-    "candidateBuildSha": "34e35e863ea0b60957c15cf517fe6adada3050e3",
+    "candidateBuildSha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
     "deployedBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "4f7676b309af5984fbd907076001b1231e412ae29655a33c5e19bc5a3033f0ba",
+      "candidateRoot": "71b72da41a839e7e4ee12ec36d24496f344c33c58bb96d0674e5e20f36a1a28a",
       "candidateLeafCount": 30,
       "stagingRoot": "71b72da41a839e7e4ee12ec36d24496f344c33c58bb96d0674e5e20f36a1a28a",
       "stagingLeafCount": 30,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -67,7 +62,7 @@
     "state": "matched",
     "matched": 7,
     "total": 7,
-    "observedAt": "2026-09-07T05:11:58.387Z",
+    "observedAt": "2026-09-11T20:29:30.333Z",
     "sourceContractSha256": "41c976fb22ed4e9e6fd86dca67633c5a1d73a379f2a4f7163056ec65b0908c58"
   },
   "productionDeploy": {
@@ -166,7 +161,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -182,7 +177,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
