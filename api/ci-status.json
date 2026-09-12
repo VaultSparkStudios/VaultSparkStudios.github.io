@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T02:59:28.431Z",
+  "generatedAt": "2026-09-12T03:04:18.934Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 9 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 9 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -53,20 +53,20 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-12T02:56:57Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-12T03:03:54Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34669039565",
       "headSha": "c29a1b0f57c1a07036757128ce98f0c7f0faf85c",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-12T02:57:50Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-09-12T03:00:29Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34669052231",
       "headSha": "c29a1b0f57c1a07036757128ce98f0c7f0faf85c",
       "event": "workflow_dispatch"
@@ -160,7 +160,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.65,
+      "ageHours": 4.73,
       "staleAfterHours": 48
     },
     {
@@ -173,7 +173,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.87,
+      "ageHours": 1.95,
       "staleAfterHours": 48
     },
     {
@@ -186,7 +186,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.97,
+      "ageHours": 2.05,
       "staleAfterHours": 48
     },
     {
@@ -212,7 +212,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.31,
+      "ageHours": 0.39,
       "staleAfterHours": 48
     },
     {
