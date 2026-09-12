@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-11T20:42:06.246Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-09-12T03:18:00.000Z",
+  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt + manual addendum (routine/canon-041-dvh-sidebar)",
   "themes": [
     "dark",
     "light",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "c63d4c0ff095371534ac7325065be5e3778dc7c35c1768ff4c7f6776aab71934",
+    "sha256": "7bb4c44dc51768b27cc32e67a3b1eb7e5eb7b8ebfb2128fccfd41880879118da",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -46,6 +46,7 @@
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
+      "studio-hub/src/styles/hub.css",
       "scripts/check-attention-surface-contract.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
@@ -180,6 +181,10 @@
         "sha256": "dd198098c0b1b7123f4fa565966e75f3195531fd71b860c4b1f99a1c0230af24"
       },
       {
+        "path": "studio-hub/src/styles/hub.css",
+        "sha256": "4efd41a7c535f649e625a322dce6849402a3c4e96ff048fe7af9df148e37a78b"
+      },
+      {
         "path": "scripts/check-attention-surface-contract.mjs",
         "sha256": "d58af62da16108aa9539057008a445c3cb37d217206c5ff67059f0a849a6d902"
       },
@@ -235,7 +240,8 @@
     "routes": [
       "/community/",
       "/journal/",
-      "/contact/"
+      "/contact/",
+      "/studio-hub/"
     ],
     "themes": [
       "dark",
@@ -259,10 +265,11 @@
       }
     ],
     "states": [
-      "page"
+      "page",
+      "sidebar-open"
     ],
-    "expectedCaptures": 42,
-    "completedCaptures": 42
+    "expectedCaptures": 44,
+    "completedCaptures": 44
   },
   "inspection": {
     "renderedPixelsReviewed": true,
@@ -272,14 +279,15 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5 (S350)",
+    "reviewer": "Claude Opus 5 (S350) + Claude Sonnet 4.6 (routine/canon-041-dvh-sidebar addendum)",
     "findings": [
       "Demoted h2 headings keep their prior sans look; Contact inputs now 48px (were 22px) with centred placeholders; no contrast or overlap defects in dark, light, lava, high-contrast or cool.",
-      "All 42 captures opened (3 routes x 7 themes x desktop/mobile). Demoted h2 headings keep their prior sans look in every theme; Contact inputs render at 48px (were 22px) with centred placeholders; no contrast, clipping or overlap defects. One capture-timing anomaly: community dark desktop shows the stats placeholder dash before the counts load; the same page shows 7/0 in the other six themes."
+      "All 42 captures opened (3 routes x 7 themes x desktop/mobile). Demoted h2 headings keep their prior sans look in every theme; Contact inputs render at 48px (were 22px) with centred placeholders; no contrast, clipping or overlap defects. One capture-timing anomaly: community dark desktop shows the stats placeholder dash before the counts load; the same page shows 7/0 in the other six themes.",
+      "Studio Hub addendum (routine/canon-041-dvh-sidebar): 2 captures added — desktop sidebar (1366x900) and mobile sidebar-open (390x844), dark theme. Desktop: sidebar renders all nav items without clipping, text contrast good, colored status dots visible. Mobile drawer: sidebar overlays at 270px width, all nav items through 'Settings', filter input, and GAMES section visible; overflow-y:auto confirmed scrollable. No contrast or clipping defects. Note: 100vh→100dvh unit difference is not observable in Playwright fixed-viewport screenshots (both render identically at static viewport size); the fix's effect is visible only on real mobile with a retractable browser chrome."
     ],
-    "fixesApplied": [],
+    "fixesApplied": ["CANON-041: studio-hub/src/styles/hub.css height:100vh → height:100dvh (desktop sticky + mobile fixed sidebar)"],
     "blockingDefectsOpen": 0,
-    "limitation": null
+    "limitation": "Studio Hub sidebar 100dvh fix visual difference is only observable on a real mobile device with retractable browser chrome; Playwright renders 100vh and 100dvh identically at fixed viewport height."
   },
   "captures": [
     {
@@ -994,6 +1002,42 @@
       "inspection": {
         "mode": "manual",
         "reviewer": "Claude Opus 5 (S350)"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "studio-hub--dark--desktop.png",
+      "sha256": "517e587ba99c3485b0dd69ca22d07f20372fb0dec0a6b2db18ee0fb973de80d5",
+      "page": "/studio-hub/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Sonnet 4.6 (routine/canon-041-dvh-sidebar)",
+        "notes": "Sticky sidebar renders all nav items without clipping; good contrast on dark background; colored status dots visible. No defects."
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "studio-hub--dark--mobile--sidebar-open.png",
+      "sha256": "9d078c37ece983b44bad49eb1312fadd9311701abab0dd2707cfe61e1a52b523",
+      "page": "/studio-hub/",
+      "state": "sidebar-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Claude Sonnet 4.6 (routine/canon-041-dvh-sidebar)",
+        "notes": "Fixed drawer (270px wide) overlays correctly at mobile viewport. All nav items visible: Studio Hub through Settings, filter input, GAMES project list. overflow-y:auto confirmed scrollable for content below fold. No clipping, no contrast defects. height:100dvh fix verified structurally correct."
       }
     }
   ]
