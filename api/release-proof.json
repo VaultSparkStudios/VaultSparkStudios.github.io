@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-12T02:12:27.372Z",
+  "generatedAt": "2026-09-12T02:40:34.842Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,18 +20,17 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-build-sha-mismatch"
     ],
     "candidateBuildSha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
     "deployedBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "f28fbd16c46394595bcf3fd8bec7019f6ac44b786e984e476b230badcd9a84cf",
+      "candidateRoot": "2abbfcacabbbef986c6752d22c882a501f3f7f50841893067e07b960de05beef",
       "candidateLeafCount": 30,
-      "stagingRoot": "71b72da41a839e7e4ee12ec36d24496f344c33c58bb96d0674e5e20f36a1a28a",
+      "stagingRoot": "2abbfcacabbbef986c6752d22c882a501f3f7f50841893067e07b960de05beef",
       "stagingLeafCount": 30,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -71,13 +70,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 13,
-    "ageHours": 3.8,
-    "observedAt": "2026-09-12T01:40:57.424Z",
+    "commitsBehind": 3,
+    "ageHours": 0.2,
+    "observedAt": "2026-09-12T02:40:34.842Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-12T01:40:57.424Z",
+      "observedAt": "2026-09-12T02:40:34.842Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
@@ -165,7 +164,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -181,7 +180,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
