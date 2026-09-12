@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-12T02:55:36.686Z",
+  "generatedAt": "2026-09-12T04:33:13.131Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -817,8 +817,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 9 consecutive receipts. Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
-    "checkedAt": "2026-09-12T02:27:50.136Z",
+    "summary": "Production deployment is stranded for 9 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-09-12T03:08:29.296Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -830,11 +830,11 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "known_blocked"
+        "status": "success"
       }
     ]
   }
