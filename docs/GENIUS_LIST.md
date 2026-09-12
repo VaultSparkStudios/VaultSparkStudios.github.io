@@ -1,6 +1,6 @@
-# Genius Hit List — Session 350
+# Genius Hit List — Session 351
 
-Generated: 2026-09-11
+Generated: 2026-09-12
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **77/100**
 - Health: **yellow**
-- Current SIL: **983/1000**
+- Current SIL: **987/1000**
 - CI health: **check gh run list**
-- Current focus: S350 recovered the un-written-back S349 follow-up, stopped hidden tabs polling presence and rotating the Vault Pulse ticker, root-fixed a shell cleanup regex that had never matched (pruning eight stale shells), and fixed heading-order skips on three public pages.
+- Current focus: S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
+#### 1. [PRODUCT] Read back the first edge sample
 Final score: **96**
-[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as unresolvedLegacyChecks because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
-Why it matters: Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewrit is open, local, and unblocked — can ship this session.
+[S351][OBS/P0] Read back the first edge sample — the sampler is enabled, not yet observed. scheduled() is armed on a 30-minute cron with a live KV binding, but nothing has been read back. Run node scripts/drain-uptime-kv.mjs --dry-run after the first window, confirm keys exist and parse, then drain for real. Until a sample is read back, /status/ must keep saying the edge is UNMEASURED. Enabling a producer is not the same as having a measurement, and the flag being "1" is not evidence.
+Why it matters: Read back the first edge sample is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,17 +34,15 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [COHESION] Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 …
-Final score: **95**
-[S349][COST/P1] Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 added scheduled() to the production worker behind UPTIME_SAMPLER_ENABLED (committed default "0", so the deploy is provably inert -- 5 unit tests assert no KV write and no subrequest while off), a bounded one-key-per-window KV schema with a 7-day TTL, and scripts/drain-uptime-kv.mjs (12/12 self-tests) that folds samples into the UNCHANGED uptime contract without ever rewriting a row. Not yet done, and deliberately not claimed: the KV namespace does not exist, the cron trigger is commented out, and the flag is off -- so no sample has ever been written and the Actions cron is still the only producer. The exact four-step enabling sequence is in cloudflare/wrangler.toml. Do it as its own release with its own rollback evidence, per the original task text.
-Why it matters: Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 a is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
-
-#### 4. [PRODUCT] Self-test the shell cleanup pattern against a synthetic stale name so…
+#### 3. [PRODUCT] Add a divergence gate for the unit-suite lists. The deliverable is a …
 Final score: **93**
-[S350][SIL][OPS/P3] Self-test the shell cleanup pattern against a synthetic stale name so it cannot go dead silently again.
-Why it matters: Self-test the shell cleanup pattern against a synthetic stale name so  is open, local, and unblocked — can ship this session.
+[S351][QA/P2] Add a divergence gate for the unit-suite lists. The deliverable is a NEW check — nothing in the repo compares the declared unit-spec list against the list the build gate actually executes. S351 found those two lists out of sync (five declared, two executed) and the three orphaned suites invoked by no runner at all; the lists were reconciled by hand, which fixes today and prevents nothing. Write a check that fails when the two sets differ and wire it into build:check:steps, so the next spec file cannot be added to one list and silently omitted from the other.
+Why it matters: Add a divergence gate for the unit-suite lists. The deliverable is a N is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
+Final score: **90**
+[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as unresolvedLegacyChecks because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
+Why it matters: Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewrit is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
@@ -56,7 +54,7 @@ Why it matters: Close field-vitals freshness only with real evidence. Surface ob
 #### 2. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
 Final score: **71**
 [S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED. Re-probed S345: build-news-freshness --check --require-daily now reports daily - latest 2026-09-07 - age 0d, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to periodic') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. What is NOT resolved, and is not claimed to be: the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
-Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 6-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 7-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -92,7 +90,7 @@ First command: `node scripts/generate-genius-list.mjs`
 #### 3. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
 Final score: **62**
 [S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate. S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
-Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 350-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 351-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -103,14 +101,14 @@ Final score: **93**
 [S344→S347][SEC/P0] Scoped website credential owner reconciliation. Fresh S347 preflight still reports credential-project mismatch while management/SQL/function inspection is available. Ark 01K22H17HM5F6D2952E9B84165 requests the studio-ops owner fix without exposing credentials. Owner-pending, not a claim that credentials are absent or that only the founder can act; provider truth reads remain unproven.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 2. [SECURITY] Enable the edge uptime sampler -- its own release, per the original t…
-Final score: **90**
-[S349][OBS/P1] Enable the edge uptime sampler -- its own release, per the original task text. Create the KV namespace, uncomment the binding + [triggers] cron in cloudflare/wrangler.toml, flip UPTIME_SAMPLER_ENABLED to "1", deploy, then node scripts/drain-uptime-kv.mjs --dry-run to confirm samples land before draining for real. Rollback is a flag flip. Until this runs, edge liveness is honestly reported as edge-unobservable and is genuinely unmeasured -- the honest state is not the fixed state. S350: held on permission -- the gateway deploy token lacks KV scope (error 10000); the Cloudflare MCP can create the namespace but the agent permission layer blocked it as a shared-resource change. Needs a founder allow, then steps 2-4.
-Why it matters: Requires missing credential, provider dashboard data, or an external access path.
-
-#### 3. [PRODUCT] The Phase 0 gate is a HUMAN walkthrough and has not been run. The pla…
+#### 2. [PRODUCT] The Phase 0 gate is a HUMAN walkthrough and has not been run. The pla…
 Final score: **90**
 [S343][QA/P0] The Phase 0 gate is a HUMAN walkthrough and has not been run. The plan's own gate is a real signup in a clean browser profile with the subscribe box left checked, landing on the dashboard. The fix is verified by build:check 388/388, mobile 215/215, worker 57/57, and by reading the SERVED bundle — but not by a person actually creating an account. ~3 minutes; do it before any onboarding push.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 3. [VERIFY] The [skip ci] publishers still do not cascade their derived artifacts…
+Final score: **88**
+[S351][CI/P1] The [skip ci] publishers still do not cascade their derived artifacts. b67c283d1 feat(desk): publish the latenight edition [skip ci] added news pages plus art and changed index.html at 22:20Z, then skipped CI — leaving the sitemap stale, five images missing from data/lqip-map.json, the mobile receipt bound to a superseded index.html, and the startup brief disagreeing with the shared revenue resolver. S351 ran that cascade BY HAND (lqip-map, sitemap, news-freshness, home-desk-module, oracle feed sanitizer, oracle answers, candidate manifest, plus a 215-cell mobile re-capture) and the repo was green afterwards. The debt is structural, not one bad commit: any publisher that takes [skip ci] must either run its own cascade or hand the work to a follow-up workflow. Until it does, every session that follows a publisher pays this tax.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 4. [BRAND] The Trusted Types enforce blocker is LOAD ORDER, and it is measured. …
@@ -140,10 +138,10 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
+1. Read back the first edge sample
 2. Post-push CI confirmation
-3. Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 …
-4. Self-test the shell cleanup pattern against a synthetic stale name so…
+3. Add a divergence gate for the unit-suite lists. The deliverable is a …
+4. Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
 5. Close field-vitals freshness only with real evidence. Surface observe…
 6. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
 7. Authorize or decline immutable warm-origin migration. D-S303 reserves…

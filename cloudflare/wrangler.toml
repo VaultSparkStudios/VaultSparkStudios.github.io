@@ -50,24 +50,22 @@ TT_ENFORCE_ENABLED = "0"
 # changes nothing. Flip to "1" as its own release once the KV namespace below is
 # created and bound; rollback is a flag flip, not a redeploy. The handler samples
 # the Pages origin only — never a URL on our own routes — so it cannot self-loop.
-UPTIME_SAMPLER_ENABLED = "0"
+UPTIME_SAMPLER_ENABLED = "1"
 
-# Enabling release (deliberately NOT applied here, so this deploy is inert):
-#   1. wrangler kv namespace create UPTIME_SAMPLES --env production
-#   2. uncomment the binding + trigger below with the returned id
-#   3. flip UPTIME_SAMPLER_ENABLED to "1" and deploy
-#   4. node scripts/drain-uptime-kv.mjs --dry-run   (confirm samples are landing)
-# The trigger is commented out with the flag off on purpose: a declared cron would
-# invoke scheduled() every 30 minutes to do nothing, burning invocations for no
-# signal. Binding a namespace that does not exist yet would fail the deploy
-# outright, which is why neither is declared before step 1.
+# S351 ENABLING RELEASE — the four steps above are now applied.
+# The namespace was created this session via the Cloudflare bindings API after the
+# gateway deploy token was confirmed to lack KV scope (error 10000); that token still
+# cannot create namespaces, so do not expect `wrangler kv namespace create` to work
+# with it. Rollback is a flag flip back to "0" — the binding and cron can stay.
 #
-# [[env.production.kv_namespaces]]
-# binding = "UPTIME_SAMPLES"
-# id = "<from step 1>"
-#
-# [triggers]
-# crons = ["*/30 * * * *"]
+# After deploying, confirm samples are actually landing before trusting the surface:
+#   node scripts/drain-uptime-kv.mjs --dry-run
+# Nothing has ever observed our own edge until the first window writes a key.
+# The binding is declared beside the other production KV namespaces below, and the
+# cron in the top-level [triggers] table at the end of this file. Neither may sit
+# here: a table header between [env.production.vars] and the bare keys that follow
+# it would re-parent HUB_SUBDOMAIN_ENABLED and HUB_SESSION_TTL_SEC out of the vars
+# table and silently turn the hub subdomain off.
 
 
 # Hub subdomain migration flag. When "1", the worker:
@@ -81,6 +79,11 @@ HUB_SESSION_TTL_SEC   = "2592000"
 [[env.production.kv_namespaces]]
 binding = "RATE_LIMIT"
 id = "6fde74ca7f3d462786afbb85c85611e0"
+
+# S351: uptime sampler bucket. One key per 30-minute window, 7-day TTL.
+[[env.production.kv_namespaces]]
+binding = "UPTIME_SAMPLES"
+id = "adfe5ed60c90426ea1286321360138e3"
 
 # S161: RUM bucket now exists. Worker /v/rum writes RUM samples to this bucket.
 [[env.production.r2_buckets]]
@@ -113,3 +116,12 @@ HUB_SUBDOMAIN_ENABLED = "0"
 [[env.staging.kv_namespaces]]
 binding = "RATE_LIMIT"
 id = "a723f2358dc940a495bf0b36bbece25b"
+
+# S351: drives scheduled() every 30 minutes. A Cloudflare cron is never bot-challenged,
+# so it is the only vantage that can actually observe our own edge. Inert unless
+# UPTIME_SAMPLER_ENABLED is "1" — rollback is that flag, not this trigger.
+# Declared on env.production explicitly rather than as a top-level inheritable key:
+# staging must never sample production uptime, and an inherited cron is an assumption
+# about wrangler key inheritance rather than a stated fact about this deploy.
+[env.production.triggers]
+crons = ["*/30 * * * *"]

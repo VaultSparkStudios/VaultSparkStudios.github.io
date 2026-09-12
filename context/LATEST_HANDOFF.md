@@ -1,5 +1,30 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S351 · 2026-09-12
+
+- **Shipped:** 6 improvements across 3 groups — observability (sampler enabling release, drain namespace resolution), generator honesty (brand-assets refusal + placeholder expansion, stale-shell self-test), gate coverage (three ungated unit suites wired in).
+- **Tests:** 481/481 build steps · 215/215 mobile cells · 16 previously-ungated unit tests now executed · delta +16 gated.
+- **Deploy:** pushed to main; Worker deploy is push-triggered on `cloudflare/**`.
+
+**Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy. **Achieved.**
+
+**The blocker was a stale sentence.** The top item had been held since S349 and recorded in S350 as needing a founder allow. Re-probed under CANON-019 it worked immediately — `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`. The sampler is now armed on a 30-minute production cron with the flag at `"1"`.
+
+**Read this before touching uptime again.** The sampler is ENABLED but nothing has been READ BACK. `/status/` still reports the edge as UNMEASURED and that is correct. The next action is `node scripts/drain-uptime-kv.mjs --dry-run` after a window has elapsed: confirm keys exist and parse, then drain for real. Arming a producer is not a measurement, and the flag being `"1"` is not evidence.
+
+**Caught before deploy (would have been a live regression).** The first placement of the KV binding and cron sat between `[env.production.vars]` and the bare keys after it, re-parenting `HUB_SUBDOMAIN_ENABLED` and `HUB_SESSION_TTL_SEC` into `[triggers]` — enabling uptime sampling would have silently turned the hub subdomain off. Wrangler dry-run on both envs is the check that caught it and is worth running on any `wrangler.toml` table edit.
+
+**Two producers that could only ever lie, fixed at the root.** `build-brand-assets.mjs`: `BRAND_ROOT` was the sanitized `<user-home>` literal with nothing expanding it, so every job skipped on every run and the caller wrote an empty manifest anyway and exited 0 — the S350 `--sweep-repair` incident was the only behaviour, not an edge case. `drain-uptime-kv.mjs`: required an env var nothing set, so the documented way to verify this very release would have printed "the sampler has not been enabled yet" and exited 0 while draining nothing.
+
+**Three unit suites had never run.** `test:unit` declared five spec files, `build:check:steps` executed two, and `npm run test:unit` was invoked by no runner anywhere. 16 tests were gated by nothing. They pass — so this armed an alarm rather than fixing a red.
+
+**Inherited debt, paid by hand and filed.** `b67c283d1` (a `[skip ci]` desk publisher) changed `index.html` and added news art at 22:20Z without cascading, leaving the sitemap stale, 5 images missing from the lqip map, the mobile receipt bound to a superseded page, and the startup brief disagreeing with the shared revenue resolver. Both failures reproduced with every S351 change stashed, so neither was inherited silently. The cascade was run manually; the structural fix is a TASK_BOARD row.
+
+**Cost worth remembering:** three mobile re-captures (~21 min) because the first two were taken before the tree was final. Receipts capture AFTER the final build — including after `build-candidate-artifact-manifest.mjs`, which is what rotates the binding.
+
+**Unchanged holds:** identity/provider acceptance, newsletter arming and first send, Desk cadence, public-member-data policy, the immutable warm-origin decision, and Trusted Types enforce all remain founder-gated and were not touched.
+
+
 ## Where We Left Off — S350 · 2026-09-11
 
 **Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.

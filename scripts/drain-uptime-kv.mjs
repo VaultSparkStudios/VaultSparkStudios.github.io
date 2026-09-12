@@ -120,7 +120,31 @@ if (process.argv.includes('--self-test')) {
 // --- live drain -------------------------------------------------------------
 const { getSecret } = await import('./lib/secrets.mjs');
 let accountId, apiToken;
-const namespaceId = process.env.UPTIME_SAMPLES_NAMESPACE_ID || null;
+/**
+ * S351: resolve the namespace from wrangler.toml when the env var is absent.
+ *
+ * The env var was the ONLY source, and nothing sets it — so once the sampler was
+ * enabled this script still printed "the sampler has not been enabled yet" and
+ * exited 0. That is the documented way to verify the enabling release, and it would
+ * have reported success while draining nothing. The binding in wrangler.toml is the
+ * deployed truth; read it, and keep the env var as an override.
+ */
+function namespaceIdFromWrangler() {
+  try {
+    const toml = fs.readFileSync(path.join(ROOT, 'cloudflare', 'wrangler.toml'), 'utf8');
+    const lines = toml.split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      if (!/^\s*binding\s*=\s*['\"]UPTIME_SAMPLES['\"]/.test(lines[i])) continue;
+      for (let j = i + 1; j < Math.min(i + 4, lines.length); j++) {
+        const m = lines[j].match(/^\s*id\s*=\s*['\"]([a-f0-9]{32})['\"]/);
+        if (m) return m[1];
+      }
+    }
+  } catch { /* fall through to the not-enabled path below */ }
+  return null;
+}
+
+const namespaceId = process.env.UPTIME_SAMPLES_NAMESPACE_ID || namespaceIdFromWrangler();
 try {
   accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.kv');
   apiToken = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.kv');
@@ -130,7 +154,7 @@ try {
   process.exit(0);
 }
 if (!namespaceId) {
-  console.log('drain-uptime-kv: UPTIME_SAMPLES_NAMESPACE_ID is not set — the sampler has not been enabled yet (see cloudflare/wrangler.toml). Nothing to drain.');
+  console.log('drain-uptime-kv: no UPTIME_SAMPLES binding in cloudflare/wrangler.toml and no UPTIME_SAMPLES_NAMESPACE_ID override — the sampler is not enabled. Nothing to drain.');
   process.exit(0);
 }
 

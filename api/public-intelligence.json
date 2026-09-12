@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-12T01:01:11.876Z",
+  "generatedAt": "2026-09-12T02:08:37.195Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 350,
-    "lastUpdated": "2026-09-11",
-    "currentFocus": "S350 recovered the un-written-back S349 follow-up, stopped hidden tabs polling presence and rotating the Vault Pulse ticker, root-fixed a shell cleanup regex that had never matched (pruning eight stale shells), and fixed heading-order skips on three public pages.",
-    "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
+    "currentSession": 351,
+    "lastUpdated": "2026-09-12",
+    "currentFocus": "S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.",
+    "nextMilestone": "Read back the first edge sample (node scripts/drain-uptime-kv.mjs --dry-run, then drain for real) so /status/ can move from honestly UNMEASURED to actually measured. Until a sample parses, the sampler is a producer and not a measurement.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 350,
+    "sessionsCompleted": 351,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,18 +144,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 99,
+      "devHealth": 100,
       "alignment": 99,
-      "momentum": 93,
+      "momentum": 98,
       "engagement": 95,
-      "process": 99,
+      "process": 100,
       "coherence": 100,
       "security": 100,
       "ecosystem": 99,
-      "capital": 100,
+      "capital": 97,
       "automation": 99,
-      "total": 983,
-      "updatedSession": 350
+      "total": 987,
+      "updatedSession": 351
     },
     "sealedNextRevealAt": null
   },

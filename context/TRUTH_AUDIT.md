@@ -1164,3 +1164,15 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 - The production build stamp truthfully separates baseline `7ea9b3c579e5` from content-lane head `761ebb3ddd536755380f16120034838feb33f79a` and workflow `34508529884`.
 - Staging lineage is intact at depth 71 and the release ceremony passed 10/10. Mobile and visual receipts bind the final rebased source rather than a pre-rebase tree.
 - The first push CI run found real sitemap drift after a concurrent publisher rebase. The sitemap was regenerated to 147 indexable routes and the canonical publisher landed the identical fix; the corrected E2E run is the authoritative CI observation.
+
+## S351 — 2026-09-12
+
+**Two producers were structurally incapable of telling the truth, and both reported success.**
+
+`scripts/build-brand-assets.mjs` resolved `BRAND_ROOT` from the *sanitized* literal `<user-home>/Documents/VaultSpark Studios/Brand Assets` with nothing expanding the placeholder. Every job therefore skipped on every run, and the caller wrote `brand/assets.json` unconditionally from an empty accumulator and exited 0. The S350 `--sweep-repair` incident (a correct 7-entry manifest replaced by `"assets": []`) was not an edge case — it was the only behaviour the script had. Fixed at both ends: the placeholder expands at runtime so the masters resolve, and the writer refuses and exits 1 when any job was skipped. Verified in both directions — all 7 jobs build and reproduce every committed `.png` byte-identically; a deliberately bad root exits 1 with the manifest byte-preserved.
+
+`scripts/drain-uptime-kv.mjs` read its namespace only from `UPTIME_SAMPLES_NAMESPACE_ID`, which nothing sets. It is the documented way to verify the sampler's enabling release, and it would have printed "the sampler has not been enabled yet" and exited 0 while draining nothing — reporting success for the exact step meant to prove the release worked. It now resolves the namespace from the deployed binding in `cloudflare/wrangler.toml`, with the env var kept as an override.
+
+**Declared coverage that no runner executed.** `package.json` declared `test:unit` over five spec files; `build:check:steps` ran two of them; and `npm run test:unit` was invoked by no runner in the repository — not `run-build-check.mjs`, not any workflow in `.github/workflows/`. `tt-report-only`, `resync-derived` and `local-preview` (16 tests) were gated by nothing. Run directly they pass 16/16, so no red was being hidden; what was missing was the alarm. All five are now in the gate.
+
+**Source-of-truth status:** `yellow` → `yellow`. The uptime surface's honesty is unchanged and deliberately so: the sampler is enabled but no sample has been read back, so `/status/` still reports the edge as UNMEASURED. That statement remains accurate and must not be upgraded until a sample parses.

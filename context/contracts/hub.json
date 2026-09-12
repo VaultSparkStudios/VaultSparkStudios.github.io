@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-11T21:16:10.826Z",
+  "generatedAt": "2026-09-12T02:08:37.191Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,27 +22,22 @@
     }
   },
   "pulse": {
-    "currentSession": 350,
-    "lastUpdated": "2026-09-11",
-    "currentFocus": "S350 recovered the un-written-back S349 follow-up, stopped hidden tabs polling presence and rotating the Vault Pulse ticker, root-fixed a shell cleanup regex that had never matched (pruning eight stale shells), and fixed heading-order skips on three public pages.",
-    "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
+    "currentSession": 351,
+    "lastUpdated": "2026-09-12",
+    "currentFocus": "S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.",
+    "nextMilestone": "Read back the first edge sample (node scripts/drain-uptime-kv.mjs --dry-run, then drain for real) so /status/ can move from honestly UNMEASURED to actually measured. Until a sample parses, the sampler is a producer and not a measurement.",
     "blockers": [
-      "Edge uptime sampler held: the gateway deploy token has no KV scope and the agent permission layer denied KV namespace creation through the Cloudflare MCP. Needs a founder allow.",
+      "Edge uptime is armed but unobserved: the sampler is enabled and bound, yet no sample has been drained. Not a blocker on permission any more — a blocker on elapsed time.",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
+      "[skip ci] publishers do not cascade their derived artifacts, so each one leaves sitemap/lqip/receipt/brief drift for the next session to pay by hand.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
       "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
       "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
     ],
     "queues": {
       "now": [
-        "[S349][OBS/P1] Enable the edge uptime sampler -- its own release, per the original task text. Create the KV namespace, uncomment the binding + `[triggers]` cron in `cloudflare/wrangler.toml`, flip `UPTIME_SAMPLER_ENABLED` to `\"1\"`, deploy, then `node scripts/drain-uptime-kv.mjs --dry-run` to confirm samples land before draining for real. Rollback is a flag flip. Until this runs, edge liveness is honestly reported as `edge-unobservable` and is genuinely unmeasured -- the honest state is not the fixed state. S350: held on permission -- the gateway deploy token lacks KV scope (error 10000); the Cloudflare MCP can create the namespace but the agent permission layer blocked it as a shared-resource change. Needs a founder allow, then steps 2-4.",
-        "[S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as `unresolvedLegacyChecks` because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.",
-        "[S349][PERF/P2] Hidden-tab polling. SHIPPED S350: favicon-pulse and vault-pulse skip poll/rotation while `document.hidden`; all three refresh on return. desk-presence already skipped its network call (premise half-false).",
-        "[S349][PERF/P3] Superseded hashed shells. SHIPPED S350: the existing `cleanupOldFingerprintedFiles` regex never matched (escaped `$`); root-fixed, 8 stale shells pruned.",
-        "[S350][SIL][OPS/P3] Self-test the shell cleanup pattern against a synthetic stale name so it cannot go dead silently again.",
-        "[S349][UX/P3] h1→h3 skips. SHIPPED S350: Community, Journal, Contact demoted to h2, look preserved with `font-family: inherit`.",
-        "[S349][COST/P1] Uptime sampler: code SHIPPED DARK, enabling release still owed. S349 added `scheduled()` to the production worker behind `UPTIME_SAMPLER_ENABLED` (committed default `\"0\"`, so the deploy is provably inert -- 5 unit tests assert no KV write and no subrequest while off), a bounded one-key-per-window KV schema with a 7-day TTL, and `scripts/drain-uptime-kv.mjs` (12/12 self-tests) that folds samples into the UNCHANGED uptime contract without ever rewriting a row. Not yet done, and deliberately not claimed: the KV namespace does not exist, the cron trigger is commented out, and the flag is off -- so no sample has ever been written and the Actions cron is still the only producer. The exact four-step enabling sequence is in `cloudflare/wrangler.toml`. Do it as its own release with its own rollback evidence, per the original task text.",
-        "[NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence."
+        "[S351][OBS/P0] Read back the first edge sample — the sampler is enabled, not yet observed. `scheduled()` is armed on a 30-minute cron with a live KV binding, but nothing has been read back. Run `node scripts/drain-uptime-kv.mjs --dry-run` after the first window, confirm keys exist and parse, then drain for real. Until a sample is read back, `/status/` must keep saying the edge is UNMEASURED. Enabling a producer is not the same as having a measurement, and the flag being `\"1\"` is not evidence.",
+        "[S351][CI/P1] The `[skip ci]` publishers still do not cascade their derived artifacts. `b67c283d1 feat(desk): publish the latenight edition [skip ci]` added news pages plus art and changed `index.html` at 22:20"
       ],
       "next": [
         "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."

@@ -23,8 +23,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import os from 'node:os';
 
-const BRAND_ROOT = '<user-home>/Documents/VaultSpark Studios/Brand Assets';
+/**
+ * S351: the committed literal is the SANITIZED form (the pre-push scan rewrites an
+ * absolute home path to `<user-home>`), so it resolved to a directory that cannot
+ * exist -- every job skipped on every run, and the caller then wrote an empty
+ * manifest over the correct one. Expanding the placeholder back to the real home
+ * directory at runtime completes the sanitization round trip: the repo stays free of
+ * an absolute user path, and the generator can actually find the masters on the
+ * machine that has them. BRAND_ASSETS_ROOT overrides for a non-default location.
+ */
+const BRAND_ROOT = (process.env.BRAND_ASSETS_ROOT || '<user-home>/Documents/VaultSpark Studios/Brand Assets')
+  .replace(/^<user-home>/, () => os.homedir().replace(/\\/g, '/'));
 const OUT_DIR = path.resolve('assets/brand');
 const MANIFEST_OUT = path.resolve('brand/assets.json');
 
@@ -70,9 +81,24 @@ const manifest = {
   assets: [],
 };
 
+/**
+ * S351: every job whose source master is absent is RECORDED, not merely logged.
+ *
+ * buildVariant() used to skip a missing-source job with a console line and return,
+ * and the caller then wrote the manifest unconditionally from whatever happened to
+ * accumulate. A run with every master absent therefore replaced a correct 7-entry
+ * brand/assets.json with an empty asset list and exited 0 -- which is what
+ * `resync-derived --sweep-repair` did in S350, caught one step short of a commit by
+ * the separate --check drift gate. A generator must not be able to present a partial
+ * manifest as a complete one; --check catching the damage afterwards is not the same
+ * as the writer refusing to cause it.
+ */
+const skipped = [];
+
 async function buildVariant(job, { signatureOnly = false } = {}) {
   if (!fs.existsSync(job.src)) {
     console.log(`  ⊘ skip (missing source): ${job.src}`);
+    skipped.push({ slug: job.slug, src: job.src });
     return;
   }
   const pngOut = path.join(OUT_DIR, `${job.slug}.png`);
@@ -112,6 +138,20 @@ if (CHECK_MODE) {
   console.log('Building brand asset derivatives…\n');
   for (const j of JOBS) await buildVariant(j);
   for (const j of SIGNATURE_JOBS) await buildVariant(j, { signatureOnly: true });
+
+  if (skipped.length) {
+    console.error(
+      `\n✗ build-brand-assets: ${skipped.length} job(s) skipped for a missing source master — ` +
+      `REFUSING to write ${path.relative(process.cwd(), MANIFEST_OUT)}.`
+    );
+    for (const { slug, src } of skipped) console.error(`    ${slug} ← ${src}`);
+    console.error(
+      '\nThe existing manifest is left untouched. A manifest written from a partial run ' +
+      'silently drops every skipped asset and still exits 0. Restore the missing source ' +
+      'master(s) above, then rerun.'
+    );
+    process.exit(1);
+  }
 
   fs.writeFileSync(MANIFEST_OUT, JSON.stringify(manifest, null, 2) + '\n');
   console.log(`\n✓ Manifest → ${path.relative(process.cwd(), MANIFEST_OUT)}`);

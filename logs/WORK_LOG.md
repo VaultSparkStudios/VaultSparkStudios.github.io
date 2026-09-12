@@ -1399,3 +1399,27 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 - Rendered-pixel pass (CANON-053) found a pre-existing defect on the main inbound form: Contact's name/email/subject inputs measured 22px, not 48px, in every theme. `.input-field`'s `flex: 1` zeroes the flex-basis inside the column-flex `.form-group`, overriding the declared height. Contact is the only page nesting them; fixed there with `flex: none`.
 - Two Git Bash traps hit during verification: MSYS path conversion rewrote `--routes /community/` into `C:/Program Files/Git/community/` (fix: `MSYS_NO_PATHCONV=1`), and a refreshed observed leaf (`worker-route-provenance.json`) changes `observedRoot`, so it does require a reseal even though it is excluded from `root`.
 - Self-inflicted drift, caught by the gate: `resync-derived --sweep-repair` ran `build-brand-assets.mjs`, which on this machine (no source masters) skipped every job and still wrote the manifest, replacing the correct 7-entry `brand/assets.json` with an empty list and staging it. `build:check` step 111 failed on it; restored from HEAD, and the generator bug is carried to next session.
+
+## Session 351 — 2026-09-12 — the edge sampler is armed; two silent producers made honest
+
+**Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy. **Achieved.**
+
+**Triage:** not cut off. Tree clean, no lock, `check-writeback-currency` showed only 1.9h-old automation churn. Synced 8 automation commits from origin before starting.
+
+**The headline came from re-probing a blocker, not from the board.** The top-ranked item had been held since S349 and recorded in S350 as needing a founder allow for KV namespace creation. Re-run under CANON-019, it simply worked: `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`. All four enabling steps applied and the sampler is live on a 30-minute production cron. **Deliberately not claimed:** nothing has been read back, so the edge remains UNMEASURED on `/status/` until a sample drains.
+
+**Shipped (6):**
+1. Uptime sampler enabling release — namespace, binding, `[env.production.triggers]` cron, flag `"1"`.
+2. `drain-uptime-kv.mjs` resolves the namespace from `wrangler.toml` (the env var it required was set by nothing, so the documented verification step would have exited 0 having drained nothing).
+3. `build-brand-assets.mjs` — `<user-home>` placeholder expands at runtime; refuses to write a partial manifest.
+4. All five unit spec files wired into `build:check:steps` (three, 16 tests, had been gated by no runner anywhere).
+5. `clean-stale-shells.mjs` — exported pure predicate, live path routed through it, 8-case `--self-test` wired into the gate.
+6. Publisher cascade paid by hand (lqip-map, sitemap, news freshness, home desk module, oracle sanitizer + answers, candidate manifest).
+
+**Caught before deploy:** the first `wrangler.toml` placement re-parented `HUB_SUBDOMAIN_ENABLED` and `HUB_SESSION_TTL_SEC` out of `[env.production.vars]` into `[triggers]`, which would have turned the hub subdomain off as a side effect of enabling uptime sampling. Verified back in place at `"1"`/`"2592000"` via wrangler dry-run on both envs.
+
+**Two pre-existing gate failures diagnosed, not inherited:** `startup-revenue-agreement` and the stale mobile receipt both reproduced with every S351 change stashed. Both trace to a `[skip ci]` desk publisher commit at 22:20Z that changed `index.html` and added news art without cascading. Filed as structural CI debt.
+
+**Evidence:** `npm run build:check` 481/481, real exit 0 read directly (a background wrapper reported "exit code 0" over a genuine exit 1 earlier in the session — the verdict was taken from the captured code, never the wrapper). Mobile 215/215 retry-free against a LOCAL preview, captured after the tree settled. `check-receipt-ordering` passes with both receipts bound to the final tree and candidate. Doctor `blockingFailing: 0`, 2 known advisories (the deliberately unarmed newsletter per D-S341.4; deploy currency).
+
+**Cost paid honestly:** three mobile re-captures (~21 min). The first two were captured before the tree was final and were invalidated by later regeneration — the standing rule is receipts capture after the final build, and it was learned again here.

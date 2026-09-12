@@ -1,8 +1,24 @@
 # Current State
 
-Last updated: 2026-09-11 (S350)
+Last updated: 2026-09-12 (S351)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S351 the edge is now sampled from inside the edge (2026-09-12)
+
+**The uptime sampler is ENABLED.** S349 shipped `scheduled()` dark and S350 recorded it as founder-held. S351 re-probed the hold instead of carrying it and found it gone: the Cloudflare bindings API created `production-UPTIME_SAMPLES` (`adfe5ed60c90426ea1286321360138e3`) with no founder action. The binding is declared beside the other production KV namespaces, the cron is declared as `[env.production.triggers]`, and `UPTIME_SAMPLER_ENABLED` is `"1"`. A wrangler dry-run confirms binding + flag on production and their absence on staging.
+
+**This is a producer, not yet a measurement.** Nothing has been read back. `/status/` continues to report the edge as UNMEASURED, and must, until `drain-uptime-kv.mjs` reads a real sample. Arming a producer is not observation.
+
+**A near-miss caught before deploy.** The first placement of the new table headers sat between `[env.production.vars]` and the bare keys following it, which silently re-parents `HUB_SUBDOMAIN_ENABLED` and `HUB_SESSION_TTL_SEC` into `[triggers]` — turning the hub subdomain off as a side effect of enabling uptime sampling. Both keys are verified back in `env.production.vars`.
+
+**`build-brand-assets.mjs` could only ever destroy its own manifest.** `BRAND_ROOT` was the *sanitized* literal `<user-home>/Documents/...` with nothing expanding it, so every job skipped on every run — and the caller wrote the manifest anyway. The failure mode S350 hit under `--sweep-repair` (a correct 7-entry `brand/assets.json` replaced by `"assets": []`, exit 0) was not an edge case; it was the only behaviour. Now the placeholder expands to the real home directory at runtime (`BRAND_ASSETS_ROOT` overrides) so the generator finds the masters, and it REFUSES to write a manifest when any job was skipped, naming each missing source. Verified both ways: all 7 jobs build and reproduce every committed `.png` byte-identically, and a deliberately bad root exits 1 with the manifest byte-preserved.
+
+**Three unit suites were coverage that never ran.** `test:unit` declared five spec files; `build:check:steps` executed two; and `npm run test:unit` was invoked by nothing — not the runner, not any workflow. `tt-report-only`, `resync-derived` and `local-preview` (16 tests) were gated by no runner at all. They pass, so this armed an alarm rather than fixing a red; the gate now runs all five.
+
+**The stale-shell matcher can no longer go dead silently.** S350 root-fixed a regex here that had never matched anything. The predicate is now exported, the live path routes through it, and `--self-test` (8 cases, wired into `build:check`) asserts a known-stale fixture classifies as stale — the one thing that distinguishes a working cleaner from a dead pattern, since both print "no stale shell files found".
+
+**Publisher cascade debt, paid by hand.** A `[skip ci]` desk publisher had changed `index.html` and added news art without regenerating anything downstream. S351 ran the cascade (lqip-map, sitemap, news freshness, home desk module, oracle sanitizer + answers, candidate manifest) and re-captured the 215-cell mobile receipt against the settled tree. Recorded as structural debt in TASK_BOARD, not as a one-off.
 
 ## S350 hidden-tab polling, shell pruning, heading order (2026-09-11)
 

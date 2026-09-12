@@ -2688,3 +2688,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Brainstorm committed to TASK_BOARD:** (1) sampler enabling release, now carrying the exact permission it waits on. (2) [SIL] a self-test asserting the shell cleanup pattern matches a synthetic stale name, so it cannot go dead silently again.
 
 **Intent outcome:** partial until the release addendum records the deploy.
+
+## 2026-09-12 — Session 351 (arc + full deploy) | Total: 987/1000 (v3.0) | Velocity: 4 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | 481/481 build steps, real exit 0 read from the captured code; doctor `blockingFailing: 0`; both hash-bound receipts match the final tree. |
+| Creative Alignment | 99 | No UI was changed; the one page edit corrects a public claim ("today" → "yesterday") rather than restyling anything. SOUL #3 held — security flows untouched. |
+| Momentum | 98 | The item held across two sessions shipped, plus three root fixes and two inherited failures cleared. |
+| Engagement | 95 | No reader-facing capability added; the cadence line no longer misstates the edition age. |
+| Process Quality | 100 | Both pre-existing failures were reproduced with every change stashed before being called pre-existing; a background wrapper's "exit code 0" over a genuine exit 1 was caught by reading the captured code. |
+| Cross-Repo Coherence | 100 | No sibling repo edited; the studio-ops-owned brief-renderer issue stays upstream. |
+| Security Posture | 100 | A near-miss that would have disabled the hub subdomain was caught pre-deploy by parsing the config, not by trusting the edit. Credentials still resolve only through the gateway. |
+| Ecosystem Integration | 99 | Sampler armed studio-wide-visible; the publisher cascade debt is filed rather than absorbed. |
+| Capital Efficiency | 97 | Three mobile re-captures (~21 min) spent because receipts were taken before the tree was final — avoidable, and the rule is restated in the handoff. |
+| Automation Coverage | 99 | 16 previously-ungated tests now execute; the stale-shell predicate has a self-test wired into the gate. The declared-vs-executed divergence has no check of its own yet. |
+
+**Top win:** the top-ranked item was not blocked. A blocker sentence written in S350 was re-run instead of carried, and the permission it described was simply gone — the namespace created on the first attempt. Two sessions of the studio's most important observability work were waiting on a claim nobody had re-tested.
+
+**Runner-up:** two producers that could only ever lie. `build-brand-assets.mjs` skipped every job on every run (its `<user-home>` root never expanded) and wrote an empty manifest anyway at exit 0; `drain-uptime-kv.mjs` required an env var nothing set, so the documented verification of this very release would have reported success having drained nothing. Both now resolve their inputs and refuse when they cannot.
+
+**Gap:** the edge is armed but still UNMEASURED. No sample has been read back, and `/status/` correctly still says so. Enabling a producer is not observation — the next session's first action is the drain.
+
+**Honesty ledger:** did not claim the sampler works in production; it has been deployed, not yet observed. Did not call two gate failures "pre-existing" until both reproduced with every change stashed. Did not accept a background task's "exit code 0" as a suite verdict — the real exit was 1. Reverted a full-build regeneration that would have rotated the shell and forced a 42-capture visual reseal to re-assert something no reader can perceive, keeping only the regeneration that corrects a public claim. Did not re-score the 604 legacy uptime rows. Did not arm the newsletter.
+
+**Brainstorm committed to TASK_BOARD:** (1) read back the first edge sample before any uptime claim changes; (2) [SIL] a check that fails when the declared unit-test set and the executed unit-test set diverge; (3) make `[skip ci]` publishers cascade their own derived artifacts instead of taxing the next session.
+
+**Intent outcome:** achieved — `/arc` run end to end, all four audit items plus two discovered fixes shipped, gate green from a frozen tree, pushed to main and deployed.

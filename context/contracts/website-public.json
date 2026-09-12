@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-11T21:16:10.826Z",
+  "generatedAt": "2026-09-12T02:08:37.191Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 350,
-    "currentFocus": "S350 recovered the un-written-back S349 follow-up, stopped hidden tabs polling presence and rotating the Vault Pulse ticker, root-fixed a shell cleanup regex that had never matched (pruning eight stale shells), and fixed heading-order skips on three public pages.",
-    "nextMilestone": "Enable the Worker scheduled() uptime sampler as its own release (create the KV namespace, uncomment the binding and cron trigger, flip UPTIME_SAMPLER_ENABLED to 1, verify with drain-uptime-kv --dry-run), so the edge is genuinely observed rather than honestly unmeasured.",
+    "currentSession": 351,
+    "currentFocus": "S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.",
+    "nextMilestone": "Read back the first edge sample (node scripts/drain-uptime-kv.mjs --dry-run, then drain for real) so /status/ can move from honestly UNMEASURED to actually measured. Until a sample parses, the sampler is a producer and not a measurement.",
     "pulseKeys": [
       "now",
       "next",

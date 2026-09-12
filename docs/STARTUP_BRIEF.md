@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-11 (Session 350 closeout) -->
+<!-- generated-at: 2026-09-11 (Session 351 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 350 closeout · 2026-09-11.
+> **Fast-boot brief** — generated at Session 351 closeout · 2026-09-11.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 351 · 2026-09-11 · FOUNDER MODE                         ║
+║  Session 352 · 2026-09-11 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S350) - WHAT SHIPPED ══════════════════════════╗
-║  S350: recovery of 50f13941 plus four of five audit items shipp  ║
-║  Tests  -                                                        ║
-║  Deploy -                                                        ║
+╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
+║  Expected S351; PROJECT_STATUS summary says S350.                ║
+║  S351 enabled the edge uptime sampler by re-probing a two-sessi  ║
+║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -40,43 +40,43 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    983/1000   ███████████████████████░   98%                     ║
+║    987/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 983.3  ·  Velocity 4→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄▇█▁▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ▇▇▇▇▇▇█▇ →                ║
+║    Dev Health       100    ██████████  ▇▇▇▇▇█▇█ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          93    █████████░  █▇▇▇▇█▇▇ →                ║
+║    Momentum          98    ██████████  ▇▇▇▇█▇▇▇ →                ║
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇▇▇▇▇▇█▇ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇▇█▇█ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
-║    Capital          100    ██████████  ········ →                ║
+║    Capital           97    ██████████  ········ →                ║
 ║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 350 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 351 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    479/479 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   481/481 passing  ·  2026-09-12                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
+║  ✓  Tests         481/481 passing (2026-09-12)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: ↑                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
@@ -88,9 +88,9 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  7d old (2026-09-04)  ⚠ stale                   ║
+║  ✓  Revenue sig.  0d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  Open current tasks 25 / Human-action entries 8                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
@@ -98,8 +98,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    19d · Authorize or decline immutable warm-origin migrati      ║
-║    19d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    20d · Authorize or decline immutable warm-origin migrati      ║
+║    20d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -123,22 +123,22 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  975/1000  (↓8 vs current 983)                       ║
+║  Projected:  986/1000  (↓1 vs current 987)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
-║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
+║   96  [PRODUCT]      Read back the first edge sample             ║
+║        Read back the first edge sample is open, local, and unbl  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   95  [COHESION]     Uptime sampler: code SHIPPED DARK, enablin  ║
-║        Uptime sampler: code SHIPPED DARK, enabling release stil  ║
+║   93  [PRODUCT]      Add a divergence gate for the unit-suite l  ║
+║        Add a divergence gate for the unit-suite lists. The deli  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Self-test the shell cleanup pattern agains  ║
-║        Self-test the shell cleanup pattern against a synthetic   ║
+║   90  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
+║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Close field-vitals freshness only with rea  ║
 ║        Close field-vitals freshness only with real evidence. Su  ║
@@ -149,5 +149,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 350 closeout · 2026-09-11*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 351 closeout · 2026-09-11*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

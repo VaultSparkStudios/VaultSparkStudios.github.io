@@ -85,6 +85,34 @@ function trackedShellReferencingJs() {
     .filter((p) => existsSync(p));
 }
 
+/**
+ * Pure: every shell hash referenced by a blob of source text.
+ *
+ * S351: extracted from liveHashes() so the matcher can be asserted against a
+ * synthetic fixture. S350 root-fixed a regex in this file that had never matched
+ * anything -- the cleaner reported "no stale shell files found" and was believed,
+ * because a cleaner that matches nothing and a repo with nothing to clean print an
+ * identical line. Only a known-stale fixture tells those two apart, so the predicate
+ * must be reachable without touching the filesystem.
+ */
+export function extractShellHashes(src) {
+  const set = new Set();
+  const pat = /shell-([a-f0-9]+)\.js/g;
+  let m;
+  while ((m = pat.exec(src)) !== null) set.add(m[1]);
+  return set;
+}
+
+/**
+ * Pure: is this assets/ filename a shell whose hash nothing references?
+ * A name that is not a hashed shell at all is never stale -- it is not ours to delete.
+ */
+export function isStaleShellName(name, live) {
+  const m = name.match(/shell-([a-f0-9]+)\.js$/);
+  if (!m) return false;
+  return !live.has(m[1]);
+}
+
 /** Collect every hash that appears in any git-tracked HTML file or referencing JS. */
 function liveHashes() {
   const htmlFiles = [...trackedHtmlFiles(), ...trackedShellReferencingJs()];
@@ -109,16 +137,47 @@ function shellFiles() {
 const isMain = process.argv[1] &&
   process.argv[1].replace(/\\/g, '/').endsWith('scripts/clean-stale-shells.mjs');
 
+/**
+ * Assert the matcher against synthetic names. Scans no filesystem and deletes
+ * nothing, so it is safe inside build:check -- and it proves the predicate is alive:
+ * a stale fixture MUST classify as stale, or the cleaner's reassuring
+ * 'no stale shell files found' is indistinguishable from a dead pattern.
+ */
+function selfTest() {
+  const live = extractShellHashes(
+    '<script src="/assets/app.shell-abc123.js"></script>' +
+    'import("/assets/journey.shell-def456.js")'
+  );
+  const cases = [
+    ['references are extracted from HTML and JS alike', live.has('abc123') && live.has('def456')],
+    ['an unreferenced hash is stale', isStaleShellName('app.shell-999999.js', live) === true],
+    ['a referenced hash is live', isStaleShellName('app.shell-abc123.js', live) === false],
+    ['a hash referenced only from JS is live', isStaleShellName('journey.shell-def456.js', live) === false],
+    ['a non-shell asset is never stale', isStaleShellName('ambient-core.bundle.js', live) === false],
+    ['a non-hex suffix is not treated as a shell', isStaleShellName('app.shell-ZZZ.js', live) === false],
+    ['no references means every shell is stale', isStaleShellName('app.shell-abc123.js', new Set()) === true],
+    ['empty input yields no live hashes', extractShellHashes('').size === 0],
+  ];
+  let failed = 0;
+  for (const [label, ok] of cases) {
+    console.log(`  ${ok ? '✓' : '✗'} ${label}`);
+    if (!ok) failed++;
+  }
+  if (failed) {
+    console.error(`✗ clean-stale-shells --self-test: ${failed}/${cases.length} failed`);
+    process.exit(1);
+  }
+  console.log(`clean-stale-shells --self-test: ${cases.length}/${cases.length} passed`);
+}
+
 if (isMain) {
   const args = process.argv.slice(2);
+  if (args.includes('--self-test')) { selfTest(); process.exit(0); }
   const check  = args.includes('--check');
   const dryRun = args.includes('--dry-run') || (!args.includes('--apply') && !check);
 
   const live = liveHashes();
-  const stale = shellFiles().filter(({ name }) => {
-    const m = name.match(/shell-([a-f0-9]+)\.js$/);
-    return m && !live.has(m[1]);
-  });
+  const stale = shellFiles().filter(({ name }) => isStaleShellName(name, live));
 
   if (stale.length === 0) {
     console.log('clean-stale-shells → no stale shell files found.');
