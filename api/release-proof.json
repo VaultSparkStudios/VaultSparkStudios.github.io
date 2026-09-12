@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-12T06:49:12.567Z",
+  "generatedAt": "2026-09-12T07:10:53.690Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -9,28 +9,46 @@
     "shellVersion": "79b001d0ae-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-141c057d30-24f891da0e-a4349880f3-ca3b329506-4b68e2855f-3f177f4c17-3dc76e3a40-b33242e1cc-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
-    "status": "yellow",
+    "status": "staging-unreachable",
     "routeCount": 3,
-    "reachable": true,
+    "reachable": false,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
       "shell-mismatch",
+      "staging-canonical-csp-drift",
+      "staging-security-header-baseline",
+      "staging-unreachable",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-artifact-root-mismatch",
+      "staging-artifact-leaf-count-mismatch",
+      "/:stagingReachable",
+      "/:stagingStatus",
+      "/:stagingCanonicalCsp",
+      "/:stagingSecurityHeaders",
+      "/:localShellParity",
+      "/studio-pulse/:stagingReachable",
+      "/studio-pulse/:stagingStatus",
+      "/studio-pulse/:stagingCanonicalCsp",
+      "/studio-pulse/:stagingSecurityHeaders",
+      "/studio-pulse/:localShellParity",
+      "/membership/:stagingReachable",
+      "/membership/:stagingStatus",
+      "/membership/:stagingCanonicalCsp",
+      "/membership/:stagingSecurityHeaders",
+      "/membership/:localShellParity"
     ],
     "candidateBuildSha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
-    "deployedBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
+    "deployedBuildSha": null,
     "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "b999c4b2f84a130e48a86b19400f6d2376c464815c1519512a9d73c90fccbaba",
       "candidateLeafCount": 30,
-      "stagingRoot": "2abbfcacabbbef986c6752d22c882a501f3f7f50841893067e07b960de05beef",
-      "stagingLeafCount": 30,
+      "stagingRoot": null,
+      "stagingLeafCount": null,
       "matched": false
     },
     "productionParity": false,
@@ -71,13 +89,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 18,
-    "ageHours": 4.3,
-    "observedAt": "2026-09-12T06:44:37.299Z",
+    "commitsBehind": 20,
+    "ageHours": 4.6,
+    "observedAt": "2026-09-12T07:10:53.690Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-12T06:44:37.299Z",
+      "observedAt": "2026-09-12T07:10:53.690Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-a4349880f3.js",
@@ -162,7 +180,7 @@
   },
   "checks": {
     "canonicalFavicon": true,
-    "stagingReachable": true,
+    "stagingReachable": false,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
@@ -179,6 +197,7 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingReachable",
     "stagingCandidateReady",
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
