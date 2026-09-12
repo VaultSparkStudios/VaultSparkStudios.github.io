@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-12T02:11:59.484Z",
+  "generatedAt": "2026-09-12T02:54:07.055Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 351,
     "lastUpdated": "2026-09-12",
-    "currentFocus": "S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.",
-    "nextMilestone": "Read back the first edge sample (node scripts/drain-uptime-kv.mjs --dry-run, then drain for real) so /status/ can move from honestly UNMEASURED to actually measured. Until a sample parses, the sampler is a producer and not a measurement.",
+    "currentFocus": "S351 fully deployed content, staging and the Worker, and took the edge uptime sampler from \"held on a permission nobody re-tested\" to one blocked line: the KV namespace and binding are live in production, but the cron was refused because all 5 Workers Free cron slots belong to other projects.",
+    "nextMilestone": "A founder frees one of the five account cron slots or moves the account to Workers Paid; then enabling the sampler is a flag flip plus two uncommented lines, followed by drain-uptime-kv --dry-run to confirm samples land.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -146,7 +146,7 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 99,
-      "momentum": 98,
+      "momentum": 94,
       "engagement": 95,
       "process": 100,
       "coherence": 100,
@@ -154,7 +154,7 @@
       "ecosystem": 99,
       "capital": 97,
       "automation": 99,
-      "total": 987,
+      "total": 983,
       "updatedSession": 351
     },
     "sealedNextRevealAt": null
@@ -817,12 +817,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 9 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-11T21:32:49.204Z",
+    "summary": "Production deployment is stranded for 9 consecutive receipts. Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
+    "checkedAt": "2026-09-12T02:27:50.136Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -834,7 +834,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "known_blocked"
       }
     ]
   }

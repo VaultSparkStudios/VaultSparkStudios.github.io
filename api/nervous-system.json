@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-12T02:12:43.462Z",
+  "generatedAt": "2026-09-12T02:54:48.145Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "The site now samples its own edge liveness from inside Cloudflare every 30 minutes. Nothing has been read back yet, so the public status page continues to report edge availability as unmeasured rather than implying coverage it does not have.",
+  "focus": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
   "nextStep": "Complete the staging-first release, then migrate uptime sampling without changing the public service-level agreement.",
   "decisions": [
     {

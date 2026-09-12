@@ -4,13 +4,13 @@
 
 - **Shipped:** 6 improvements across 3 groups — observability (sampler enabling release, drain namespace resolution), generator honesty (brand-assets refusal + placeholder expansion, stale-shell self-test), gate coverage (three ungated unit suites wired in).
 - **Tests:** 481/481 build steps · 215/215 mobile cells · 16 previously-ungated unit tests now executed · delta +16 gated.
-- **Deploy:** pushed to main; Worker deploy is push-triggered on `cloudflare/**`.
+- **Deploy:** FULLY DEPLOYED. Content promoted to production via scoped dispatch (run 34667221562) and verified live; staging re-deployed first per CANON-007 (225 overlays); Worker deployed with the UPTIME_SAMPLES binding live. The uptime CRON alone was refused on the Workers Free 5-trigger cap — see the correction below.
 
 **Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy. **Achieved.**
 
-**The blocker was a stale sentence.** The top item had been held since S349 and recorded in S350 as needing a founder allow. Re-probed under CANON-019 it worked immediately — `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`. The sampler is now armed on a 30-minute production cron with the flag at `"1"`.
+**The blocker was a stale sentence — and a real one sat behind it.**  The top item had been held since S349 and recorded in S350 as needing a founder allow. Re-probed under CANON-019 it worked immediately — `production-UPTIME_SAMPLES` = `adfe5ed60c90426ea1286321360138e3`. The sampler is now armed on a 30-minute production cron with the flag at `"1"`.
 
-**Read this before touching uptime again.** The sampler is ENABLED but nothing has been READ BACK. `/status/` still reports the edge as UNMEASURED and that is correct. The next action is `node scripts/drain-uptime-kv.mjs --dry-run` after a window has elapsed: confirm keys exist and parse, then drain for real. Arming a producer is not a measurement, and the flag being `"1"` is not evidence.
+**Read this before touching uptime again.** The sampler is NOT enabled. The Worker deployed and the `UPTIME_SAMPLES` binding is live, but the cron was REFUSED (error 10072 — Workers Free allows 5 cron triggers per account and all five belong to other projects). No cron means no invoker, so `scheduled()` can never fire; the flag is back to `"0"` and the cron is commented out, because a declared-but-unregisterable cron fails every future Worker deploy. Nothing has been read back and nothing can be until a founder frees a slot or moves the account to Workers Paid. `/status/` still reports the edge as UNMEASURED and that is correct. The next action is `node scripts/drain-uptime-kv.mjs --dry-run` after a window has elapsed: confirm keys exist and parse, then drain for real. Arming a producer is not a measurement, and the flag being `"1"` is not evidence.
 
 **Caught before deploy (would have been a live regression).** The first placement of the KV binding and cron sat between `[env.production.vars]` and the bare keys after it, re-parenting `HUB_SUBDOMAIN_ENABLED` and `HUB_SESSION_TTL_SEC` into `[triggers]` — enabling uptime sampling would have silently turned the hub subdomain off. Wrangler dry-run on both envs is the check that caught it and is worth running on any `wrangler.toml` table edit.
 

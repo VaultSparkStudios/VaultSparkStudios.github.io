@@ -50,7 +50,7 @@ TT_ENFORCE_ENABLED = "0"
 # changes nothing. Flip to "1" as its own release once the KV namespace below is
 # created and bound; rollback is a flag flip, not a redeploy. The handler samples
 # the Pages origin only — never a URL on our own routes — so it cannot self-loop.
-UPTIME_SAMPLER_ENABLED = "1"
+UPTIME_SAMPLER_ENABLED = "0"
 
 # S351 ENABLING RELEASE — the four steps above are now applied.
 # The namespace was created this session via the Cloudflare bindings API after the
@@ -58,14 +58,19 @@ UPTIME_SAMPLER_ENABLED = "1"
 # cannot create namespaces, so do not expect `wrangler kv namespace create` to work
 # with it. Rollback is a flag flip back to "0" — the binding and cron can stay.
 #
-# After deploying, confirm samples are actually landing before trusting the surface:
+# S351 STATUS: the namespace exists and the binding below is LIVE in production, but
+# the 30-minute cron could NOT be registered (Workers Free caps the account at 5 cron
+# triggers and all five belong to other projects — see the block further down). With
+# no cron there is no invoker, so scheduled() never runs and the flag stays "0".
+# Nothing has ever observed our own edge, and /status/ correctly still says so.
+# Once a slot is freed: flip the flag, uncomment the cron, deploy, then confirm with
 #   node scripts/drain-uptime-kv.mjs --dry-run
-# Nothing has ever observed our own edge until the first window writes a key.
 # The binding is declared beside the other production KV namespaces below, and the
-# cron in the top-level [triggers] table at the end of this file. Neither may sit
-# here: a table header between [env.production.vars] and the bare keys that follow
-# it would re-parent HUB_SUBDOMAIN_ENABLED and HUB_SESSION_TTL_SEC out of the vars
-# table and silently turn the hub subdomain off.
+# cron at the end of this file. Neither may sit HERE: a table header between
+# [env.production.vars] and the bare keys that follow it re-parents
+# HUB_SUBDOMAIN_ENABLED and HUB_SESSION_TTL_SEC out of the vars table and silently
+# turns the hub subdomain off. That was caught by a wrangler dry-run, not by reading
+# the edit — dry-run both envs after any table move in this file.
 
 
 # Hub subdomain migration flag. When "1", the worker:
@@ -117,11 +122,28 @@ HUB_SUBDOMAIN_ENABLED = "0"
 binding = "RATE_LIMIT"
 id = "a723f2358dc940a495bf0b36bbece25b"
 
-# S351: drives scheduled() every 30 minutes. A Cloudflare cron is never bot-challenged,
-# so it is the only vantage that can actually observe our own edge. Inert unless
-# UPTIME_SAMPLER_ENABLED is "1" — rollback is that flag, not this trigger.
-# Declared on env.production explicitly rather than as a top-level inheritable key:
-# staging must never sample production uptime, and an inherited cron is an assumption
-# about wrangler key inheritance rather than a stated fact about this deploy.
-[env.production.triggers]
-crons = ["*/30 * * * *"]
+# S351: this WOULD drive scheduled() every 30 minutes. A Cloudflare cron is never
+# bot-challenged, so it is the only vantage that can actually observe our own edge.
+# Scoped to env.production deliberately rather than left as a top-level inheritable
+# key: staging must never sample production, and inheritance is an assumption rather
+# than a stated fact about this deploy.
+# S351 BLOCKED — the cron is declared below but COMMENTED OUT, and the flag above is
+# back to "0". Deploying it returned Cloudflare error 10072:
+#
+#   This account has reached the Workers Free limit of 5 cron triggers per account.
+#
+# All five slots belong to OTHER projects (seamline */5, studio-ops-cron */30,
+# veilos hourly, velaxis-proxy x2). The Worker itself deployed fine and the
+# UPTIME_SAMPLES binding is LIVE — only the schedule was refused. Wrangler does not
+# roll back the successful part, so a Worker carrying a cron it cannot register
+# fails EVERY subsequent deploy at the trigger step. That is why this is commented
+# out rather than left declared and permanently red.
+#
+# To enable, a founder decides ONE of:
+#   (a) free a cron slot by retiring one of the five above — a live change to a
+#       different project, so it is not this repo to make; or
+#   (b) move the account to Workers Paid, raising the limit to 1,000.
+# Then uncomment the two lines below and flip the flag above back to "1".
+#
+# [env.production.triggers]
+# crons = ["*/30 * * * *"]

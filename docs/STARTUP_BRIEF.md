@@ -20,7 +20,7 @@
 
 ╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
 ║  Expected S351; PROJECT_STATUS summary says S350.                ║
-║  S351 enabled the edge uptime sampler by re-probing a two-sessi  ║
+║  S351 fully deployed content, staging and the Worker, and took   ║
 ║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -40,7 +40,7 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    987/1000   ███████████████████████░   99%                     ║
+║    983/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 983.3  ·  Velocity 4→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄▇█▁▄  →  (last 5 sessions)                            ║
@@ -49,7 +49,7 @@
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health       100    ██████████  ▇▇▇▇▇█▇█ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          98    ██████████  ▇▇▇▇█▇▇▇ →                ║
+║    Momentum          94    █████████░  ▇▇▇▇█▇▇▇ →                ║
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Process Qual     100    ██████████  ▇▇▇▇▇█▇█ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   481/481 passing  ·  2026-09-12                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
+║  ✓  Tests         481/481 passing (2026-09-12)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: ↑                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
@@ -91,7 +91,7 @@
 ║  ✓  Revenue sig.  0d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
-║  Open current tasks 25 / Human-action entries 8                  ║
+║  Open current tasks 26 / Human-action entries 8                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -123,25 +123,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  986/1000  (↓1 vs current 987)                       ║
+║  Projected:  981/1000  (↓2 vs current 983)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Read back the first edge sample             ║
-║        Read back the first edge sample is open, local, and unbl  ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      Add a divergence gate for the unit-suite l  ║
+║   96  [PRODUCT]      Add a divergence gate for the unit-suite l  ║
 ║        Add a divergence gate for the unit-suite lists. The deli  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
+║   93  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
 ║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Close field-vitals freshness only with rea  ║
+║   90  [PRODUCT]      Close field-vitals freshness only with rea  ║
 ║        Close field-vitals freshness only with real evidence. Su  ║
+║                                                                  ║
+║   74  [VERIFY]       ESCALATION: The Desk's cadence lever is st  ║
+║        ESCALATION: The Desk's cadence lever is still the founde  ║
+║                                                                  ║
+║   72  [PRODUCT]      Authorize or decline immutable warm-origin  ║
+║        Authorize or decline immutable warm-origin migration. D-  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-12T02:11:59.483Z",
+  "generatedAt": "2026-09-12T02:54:07.052Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,10 +24,10 @@
   "pulse": {
     "currentSession": 351,
     "lastUpdated": "2026-09-12",
-    "currentFocus": "S351 enabled the edge uptime sampler by re-probing a two-session-old blocker that had already lapsed (KV namespace created on the first attempt), root-fixed two producers that could only ever report success while doing nothing, and wired 16 unit tests that no runner had ever executed into the build gate.",
-    "nextMilestone": "Read back the first edge sample (node scripts/drain-uptime-kv.mjs --dry-run, then drain for real) so /status/ can move from honestly UNMEASURED to actually measured. Until a sample parses, the sampler is a producer and not a measurement.",
+    "currentFocus": "S351 fully deployed content, staging and the Worker, and took the edge uptime sampler from \"held on a permission nobody re-tested\" to one blocked line: the KV namespace and binding are live in production, but the cron was refused because all 5 Workers Free cron slots belong to other projects.",
+    "nextMilestone": "A founder frees one of the five account cron slots or moves the account to Workers Paid; then enabling the sampler is a flag flip plus two uncommented lines, followed by drain-uptime-kv --dry-run to confirm samples land.",
     "blockers": [
-      "Edge uptime is armed but unobserved: the sampler is enabled and bound, yet no sample has been drained. Not a blocker on permission any more — a blocker on elapsed time.",
+      "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
       "[skip ci] publishers do not cascade their derived artifacts, so each one leaves sitemap/lqip/receipt/brief drift for the next session to pay by hand.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
@@ -36,7 +36,7 @@
     ],
     "queues": {
       "now": [
-        "[S351][OBS/P0] Read back the first edge sample — the sampler is enabled, not yet observed. `scheduled()` is armed on a 30-minute cron with a live KV binding, but nothing has been read back. Run `node scripts/drain-uptime-kv.mjs --dry-run` after the first window, confirm keys exist and parse, then drain for real. Until a sample is read back, `/status/` must keep saying the edge is UNMEASURED. Enabling a producer is not the same as having a measurement, and the flag being `\"1\"` is not evidence.",
+        "[S351][OBS/P0 · FOUNDER DECISION] Free a cron slot, or move the account to Workers Paid. This is the single thing standing between the studio and ever observing its own edge, and it is now a one-sentence decision rather than an investigation. Five of five free-plan cron triggers are in use by other projects. Retiring one is a live change to that project (founder call); Workers Paid raises the cap to 1,000 and is a billing action reserved to a human under CANON-019. Everything downstream is already built, deployed and verified — namespace, binding, handler, drain, 12/12 drain self-tests.",
         "[S351][CI/P1] The `[skip ci]` publishers still do not cascade their derived artifacts. `b67c283d1 feat(desk): publish the latenight edition [skip ci]` added news pages plus art and changed `index.html` at 22:20"
       ],
       "next": [

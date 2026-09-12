@@ -3,17 +3,17 @@
   "date": "2026-09-12",
   "agent": "claude-code",
   "repo": "VaultSparkStudios.github.io",
-  "headline": "The edge uptime sampler is armed — the blocker holding it for two sessions had already lapsed, and nobody had re-probed it.",
+  "headline": "Fully deployed content, staging and the Worker — and turned the uptime sampler from a permission nobody had re-tested into one named, quoted provider limit.",
   "items": [
     {
       "id": "#1",
       "slug": "uptime-sampler-enabled",
-      "title": "Edge uptime sampler enabling release",
+      "title": "Edge uptime sampler: namespace + binding LIVE, cron REFUSED",
       "axis": "observability",
-      "projectImpact": 9,
+      "projectImpact": 7,
       "ecosystemImpact": 7,
-      "insight": "S350 recorded this as needing a founder allow for KV namespace creation. Re-run under CANON-019 it worked on the first attempt: production-UPTIME_SAMPLES created, binding declared, cron scoped to env.production, flag flipped to 1. Nothing has been read back yet, so /status/ still reports the edge UNMEASURED and must.",
-      "evidence": "cloudflare/wrangler.toml; KV adfe5ed60c90426ea1286321360138e3; wrangler dry-run both envs"
+      "insight": "S350 held this on a founder allow that had already lapsed, and the KV namespace created on the first re-probe. The Worker deployed with UPTIME_SAMPLES bound live in production, then Cloudflare refused the cron with error 10072 because all five Workers Free account slots belong to other projects. No cron means no invoker, so the flag is back to 0 and the cron is commented out rather than left declared and failing every future deploy.",
+      "evidence": "deployed script bindings via CF API; run 34667777146; error 10072"
     },
     {
       "id": "#2",
@@ -64,15 +64,26 @@
       "ecosystemImpact": 5,
       "insight": "The first placement of the KV binding and cron sat between [env.production.vars] and the bare keys after it, re-parenting HUB_SUBDOMAIN_ENABLED and HUB_SESSION_TTL_SEC into [triggers]. Parsing the config caught what reading the edit did not.",
       "evidence": "wrangler dry-run: HUB_SUBDOMAIN_ENABLED=1, HUB_SESSION_TTL_SEC=2592000 in env.production.vars"
+    },
+    {
+      "id": "#7",
+      "slug": "green-run-deployed-nothing",
+      "title": "A green workflow run that deployed nothing",
+      "axis": "truth",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Both production workflows evaluate the promotion interlock on push, take a Promotion held branch that skips every deploy step, and still conclude success. The live apex was serving the previous content after a green run. Promotion was then done on the SCOPED path by explicit dispatch, staging first, and verified against served bytes rather than the run conclusion.",
+      "evidence": "pages-deploy 34667065915 all deploy steps skipped; dispatch 34667221562 green; live days-since-launch 191 to 192"
     }
   ],
   "followUps": [
-    "Read back the first edge sample (drain-uptime-kv --dry-run) before any uptime claim changes — the sampler is a producer, not yet a measurement.",
+    "Founder decision: free one of the five account cron slots, or move to Workers Paid — everything downstream of it is built, deployed and verified.",
     "Add a divergence gate for the declared vs executed unit-suite lists.",
-    "Make [skip ci] publishers cascade their own derived artifacts instead of taxing the next session."
+    "Make [skip ci] publishers cascade their own derived artifacts instead of taxing the next session.",
+    "Treat a green Actions run as necessary but never sufficient evidence of a deploy; assert served bytes."
   ],
   "blockers": [
-    "Edge uptime armed but unobserved — blocked on elapsed time, no longer on permission.",
+    "Uptime sampler has no invoker: Workers Free 5-cron account cap, all five held by other projects (Cloudflare 10072). Founder frees a slot or moves to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable and age out naturally; never re-scored.",
     "Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data and warm-origin remain founder-gated."
   ]

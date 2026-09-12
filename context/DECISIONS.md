@@ -1788,3 +1788,19 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** `build-brand-assets.mjs` now exits 1 without writing when any job was skipped for a missing source master, and its `<user-home>` placeholder expands at runtime so the masters actually resolve.
 
 **Why:** the previous shape had two independent defects that hid each other — the root never resolved, so every job always skipped; and the writer never consulted the skip list, so it always wrote an empty manifest and exited 0. A `--check` drift gate caught the damage one step before a commit in S350, but a gate catching destruction afterwards is not the same as a writer refusing to cause it. The general rule: when a producer knows its output is incomplete, silence plus exit 0 is the one response it must not have.
+
+## D-S351.4 — A cron that cannot register is commented out, not left declared
+
+**Decision:** the uptime sampler's `[env.production.triggers]` cron is committed COMMENTED OUT and `UPTIME_SAMPLER_ENABLED` is back to `"0"`, after Cloudflare refused the schedule with error 10072 (Workers Free allows 5 cron triggers per account; all five belong to other projects). The `UPTIME_SAMPLES` KV binding is deliberately KEPT and is live in production.
+
+**Why comment it rather than leave it declared:** wrangler deployed the script and its routes, failed only on the schedule, and explicitly reported "Successful trigger changes were not rolled back". A Worker carrying a cron it cannot register therefore fails at the trigger step on EVERY subsequent deploy — it would have left the entire Worker lane permanently red for an unrelated reason. Keeping the binding costs nothing and means enabling is later a flag flip plus two uncommented lines.
+
+**Why the flag goes back to `"0"`:** with no cron there is no invoker, so `scheduled()` cannot run. Leaving the flag at `"1"` would read as "sampling is on" to anyone inspecting the deployed Worker while nothing was being sampled. The flag now states the true condition.
+
+**What this does NOT do:** it does not restore the S350 phantom. The blocker is no longer "an agent could not create a KV namespace" — that was re-probed and was gone. It is a specific, quoted provider limit with an error code and a named list of the five occupied slots, and it resolves by a founder either freeing a slot (a live change to another project, so not this repo's call under CANON-018) or moving the account to Workers Paid (billing, founder-reserved under CANON-019).
+
+## D-S351.5 — Production promotion for this session used the SCOPED path, dispatched explicitly
+
+**Decision:** content and Worker were promoted by `workflow_dispatch` with `confirm_production=true`, on the SCOPED path (`promotable=true · scoped-disjoint`), with staging redeployed first.
+
+**Why it needed saying:** the push-triggered runs of both workflows reported **success while deploying nothing** — they evaluate the promotion interlock, take the "Promotion held — no production mutation" branch, and skip every deploy step. A green check on a push is not evidence that anything reached production. Verification here was the served bytes (`days-since-launch` 191 → 192 on the live apex) and the deployed Worker's own binding list, never the workflow's conclusion.

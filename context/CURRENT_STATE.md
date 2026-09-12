@@ -20,6 +20,29 @@ Last updated: 2026-09-12 (S351)
 
 **Publisher cascade debt, paid by hand.** A `[skip ci]` desk publisher had changed `index.html` and added news art without regenerating anything downstream. S351 ran the cascade (lqip-map, sitemap, news freshness, home desk module, oracle sanitizer + answers, candidate manifest) and re-captured the 215-cell mobile receipt against the settled tree. Recorded as structural debt in TASK_BOARD, not as a one-off.
 
+## S351 CORRECTION — the sampler is NOT armed; the cron could not be registered
+
+Written after the deploy, replacing the claim above it. The production Worker deployed
+and the `UPTIME_SAMPLES` binding is LIVE (verified against the deployed script, not the
+repo). The **cron trigger was refused**: Cloudflare error 10072 — Workers Free caps the
+account at 5 cron triggers, and all five belong to other projects (seamline `*/5`,
+studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2).
+
+With no cron there is no invoker, so `scheduled()` can never run. `UPTIME_SAMPLER_ENABLED`
+is back to `"0"` and the cron is commented out — left declared it would fail EVERY future
+Worker deploy at the trigger step, because wrangler does not roll back the part that
+succeeded.
+
+**What is genuinely done:** the KV namespace exists, the binding is live in production,
+the drain resolves its namespace from the config, and the enabling step is now two lines.
+**What is not:** nothing has observed our edge. `/status/` still reports UNMEASURED and
+that remains correct.
+
+**Founder decision required** — one of: (a) free a cron slot by retiring one of the five,
+which is a live change to a different project and so not this repo's call; or (b) move the
+account to Workers Paid, raising the limit to 1,000. Option (b) is billing and is founder-
+reserved under CANON-019.
+
 ## S350 hidden-tab polling, shell pruning, heading order (2026-09-11)
 
 **Background tabs stop spending requests.** `favicon-pulse.js` no longer polls founder presence while the tab is hidden, and `vault-pulse.js` neither rotates ticker rows nor refetches its pool off-screen. All three presence/ticker scripts refresh once when the reader returns, so what they see is current on sight rather than up to one interval stale.

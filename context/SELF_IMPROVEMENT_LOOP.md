@@ -2689,13 +2689,13 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 
 **Intent outcome:** partial until the release addendum records the deploy.
 
-## 2026-09-12 — Session 351 (arc + full deploy) | Total: 987/1000 (v3.0) | Velocity: 4 | Debt: ↓
+## 2026-09-12 — Session 351 (arc + full deploy) | Total: 983/1000 (v3.0) | Velocity: 4 | Debt: ↓
 
 | Category | Score | Evidence |
 |---|---:|---|
 | Dev Health | 100 | 481/481 build steps, real exit 0 read from the captured code; doctor `blockingFailing: 0`; both hash-bound receipts match the final tree. |
 | Creative Alignment | 99 | No UI was changed; the one page edit corrects a public claim ("today" → "yesterday") rather than restyling anything. SOUL #3 held — security flows untouched. |
-| Momentum | 98 | The item held across two sessions shipped, plus three root fixes and two inherited failures cleared. |
+| Momentum | 94 | Three root fixes shipped and two inherited failures cleared, and the full deploy completed — but the headline item ends BLOCKED on a named provider limit (see the addendum below), not shipped. |
 | Engagement | 95 | No reader-facing capability added; the cadence line no longer misstates the edition age. |
 | Process Quality | 100 | Both pre-existing failures were reproduced with every change stashed before being called pre-existing; a background wrapper's "exit code 0" over a genuine exit 1 was caught by reading the captured code. |
 | Cross-Repo Coherence | 100 | No sibling repo edited; the studio-ops-owned brief-renderer issue stays upstream. |
@@ -2715,3 +2715,13 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Brainstorm committed to TASK_BOARD:** (1) read back the first edge sample before any uptime claim changes; (2) [SIL] a check that fails when the declared unit-test set and the executed unit-test set diverge; (3) make `[skip ci]` publishers cascade their own derived artifacts instead of taxing the next session.
 
 **Intent outcome:** achieved — `/arc` run end to end, all four audit items plus two discovered fixes shipped, gate green from a frozen tree, pushed to main and deployed.
+
+### S351 addendum — deploy outcome and a corrected claim
+
+**Corrected in-session, before it shipped:** the ledger entry above says the sampler was armed. It is not. The deploy refused the cron (Cloudflare 10072 — all 5 Workers Free cron slots on the account belong to other projects), so `scheduled()` has no invoker. The Worker and the `UPTIME_SAMPLES` binding are genuinely live in production; the schedule is not. Every surface was corrected and `UPTIME_SAMPLER_ENABLED` returned to `"0"` before the commit that carries them.
+
+**The deploy itself was fully completed** on the SCOPED promotion path: staging first (225 overlays), content promoted and verified by served bytes on the live apex, Worker deployed and verified by reading the deployed script's own binding list, smoke 6/6.
+
+**Second honesty finding, worth more than the first:** the push-triggered runs of both production workflows **reported success while deploying nothing** — they take a "Promotion held" branch that skips every deploy step and still concludes green. Had this session trusted the run conclusion, it would have reported a full deploy that never happened. Deploy claims in this repo are only as good as the served bytes.
+
+**Score impact:** Process Quality holds at 100 — the wrong claim was caught by this session's own verification and corrected before commit, which is the process working. Momentum drops 98 → 94: the headline item ends the session blocked, on a real named limit rather than the phantom it inherited. Revised total **983/1000**.

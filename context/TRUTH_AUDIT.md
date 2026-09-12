@@ -1176,3 +1176,11 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 **Declared coverage that no runner executed.** `package.json` declared `test:unit` over five spec files; `build:check:steps` ran two of them; and `npm run test:unit` was invoked by no runner in the repository — not `run-build-check.mjs`, not any workflow in `.github/workflows/`. `tt-report-only`, `resync-derived` and `local-preview` (16 tests) were gated by nothing. Run directly they pass 16/16, so no red was being hidden; what was missing was the alarm. All five are now in the gate.
 
 **Source-of-truth status:** `yellow` → `yellow`. The uptime surface's honesty is unchanged and deliberately so: the sampler is enabled but no sample has been read back, so `/status/` still reports the edge as UNMEASURED. That statement remains accurate and must not be upgraded until a sample parses.
+
+### S351 addendum — "armed" was corrected to "not enabled" before it shipped
+
+The first S351 write-back stated the uptime sampler was armed on a 30-minute cron. The deploy then refused the schedule (Cloudflare 10072 — the account's 5 Workers Free cron slots are all held by other projects). The Worker and its `UPTIME_SAMPLES` binding are genuinely live; the invoker is not, so `scheduled()` cannot run at all.
+
+Every surface carrying the "armed" claim was corrected before commit, and `UPTIME_SAMPLER_ENABLED` was returned to `"0"` so the deployed Worker does not read as sampling when nothing can invoke it. Source-of-truth status stays `yellow`: the edge is UNMEASURED, `/status/` says so, and that is now backed by a named provider limit rather than an untested permission sentence.
+
+A second, more general finding: **a green GitHub Actions run is not deploy evidence in this repo.** Both production workflows can take a "Promotion held — no production mutation" branch that skips every deploy step and still concludes `success`. Deploy claims must be verified against served bytes or the deployed Worker's own configuration.

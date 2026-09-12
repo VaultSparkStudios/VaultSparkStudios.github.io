@@ -5,24 +5,35 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    The edge uptime sampler is armed — the blocker holding it for two sessions had already     ║
-║    lapsed, and nobody had re-probed it.                                                       ║
+║    Fully deployed content, staging and the Worker — and turned the uptime sampler from a      ║
+║    permission nobody had re-tested into one named, quoted provider limit.                     ║
 ║                                                                                               ║
-║  PROJECT IMPACT     ███████▌░░   75/100                                                       ║
-║  ECOSYSTEM IMPACT   ██████░░░░   60/100                                                       ║
+║  PROJECT IMPACT     ███████░░░   74/100                                                       ║
+║  ECOSYSTEM IMPACT   ██████░░░░   63/100                                                       ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
   ITEMS                                                       (sorted: left × right)
   ───────────────────────────────────────────────────────────────────────────────────────────
 
-  [#1]  uptime-sampler-enabled                                    PROJ 9  ·  ECOS 7
+  [#7]  green-run-deployed-nothing                                PROJ 9  ·  ECOS 8
+         ── truth ───────────────────────────────────────────────────────────────────────────
+         Both production workflows evaluate the promotion interlock on push, take a Promotion
+         held branch that skips every deploy step, and still conclude success. The live apex
+         was serving the previous content after a green run. Promotion was then done on the
+         SCOPED path by explicit dispatch, staging first, and verified against served bytes
+         rather than the run conclusion.
+         → pages-deploy 34667065915 all deploy steps skipped; dispatch 34667221562 green; live days-since-launch 191 to 192
+
+  [#1]  uptime-sampler-enabled                                    PROJ 7  ·  ECOS 7
          ── observability ───────────────────────────────────────────────────────────────────
-         S350 recorded this as needing a founder allow for KV namespace creation. Re-run
-         under CANON-019 it worked on the first attempt: production-UPTIME_SAMPLES created,
-         binding declared, cron scoped to env.production, flag flipped to 1. Nothing has been
-         read back yet, so /status/ still reports the edge UNMEASURED and must.
-         → cloudflare/wrangler.toml; KV adfe5ed60c90426ea1286321360138e3; wrangler dry-run both envs
+         S350 held this on a founder allow that had already lapsed, and the KV namespace
+         created on the first re-probe. The Worker deployed with UPTIME_SAMPLES bound live in
+         production, then Cloudflare refused the cron with error 10072 because all five
+         Workers Free account slots belong to other projects. No cron means no invoker, so
+         the flag is back to 0 and the cron is commented out rather than left declared and
+         failing every future deploy.
+         → deployed script bindings via CF API; run 34667777146; error 10072
 
   [#3]  ungated-unit-suites                                       PROJ 7  ·  ECOS 7
          ── coverage ────────────────────────────────────────────────────────────────────────
@@ -64,17 +75,18 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Read back the first edge sample (drain-uptime-kv --dry-run) before any uptime claim changes — the sampler is a producer, not yet a measurement.
+    • Founder decision: free one of the five account cron slots, or move to Workers Paid — everything downstream of it is built, deployed and verified.
     • Add a divergence gate for the declared vs executed unit-suite lists.
     • Make [skip ci] publishers cascade their own derived artifacts instead of taxing the next session.
+    • Treat a green Actions run as necessary but never sufficient evidence of a deploy; assert served bytes.
 
   BLOCKERS
-    • Edge uptime armed but unobserved — blocked on elapsed time, no longer on permission.
+    • Uptime sampler has no invoker: Workers Free 5-cron account cap, all five held by other projects (Cloudflare 10072). Founder frees a slot or moves to Workers Paid (billing, CANON-019).
     • 604 pre-S349 uptime rows remain unresolvable and age out naturally; never re-scored.
     • Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data and warm-origin remain founder-gated.
 
   ACTION GATE
-    6 items shipped · ready to commit & push? [y/N]
+    7 items shipped · ready to commit & push? [y/N]
 
 ```
 

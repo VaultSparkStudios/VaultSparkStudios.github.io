@@ -1423,3 +1423,17 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Evidence:** `npm run build:check` 481/481, real exit 0 read directly (a background wrapper reported "exit code 0" over a genuine exit 1 earlier in the session — the verdict was taken from the captured code, never the wrapper). Mobile 215/215 retry-free against a LOCAL preview, captured after the tree settled. `check-receipt-ordering` passes with both receipts bound to the final tree and candidate. Doctor `blockingFailing: 0`, 2 known advisories (the deliberately unarmed newsletter per D-S341.4; deploy currency).
 
 **Cost paid honestly:** three mobile re-captures (~21 min). The first two were captured before the tree was final and were invalidated by later regeneration — the standing rule is receipts capture after the final build, and it was learned again here.
+
+### S351 deploy addendum — what actually reached production
+
+**The push-triggered workflows deployed nothing and reported success.** Both `pages-deploy` and `cloudflare-worker-deploy` evaluate the production promotion interlock on push, take the "Promotion held — no production mutation" branch, and skip every deploy step while the run concludes green. Verified by reading the live apex, which still served the previous content after a "successful" run.
+
+**Promotion was then done properly, on the SCOPED path.** `check-promotion-scope` resolved `promotable=true · scoped-disjoint` (the candidate does not touch the held `auth/**`, `identity`, `worker:identity` surfaces), which authorises promotion by explicit dispatch:
+1. Staging first (CANON-007): `deploy-staging-content.mjs --baseline 222037112782aae3428e7d17563b8dce7ca1b830` — 225 overlays, 11 safe removals, identity untouched; staging confirmed serving the candidate.
+2. Content: dispatch run `34667221562` — ceremony, Pages deploy, cache purge, post-purge liveness, served-feed contract, live News freshness all green. Live apex verified: `days-since-launch` 191 → 192, cadence "today" → "yesterday".
+3. Worker: dispatch run `34667777146` — ceremony 10/10, script and routes uploaded, `UPTIME_SAMPLES` binding live, `HUB_SUBDOMAIN_ENABLED`/`HUB_SESSION_TTL_SEC` verified intact at `"1"`/`"2592000"` on the DEPLOYED script (the near-miss fix, confirmed in production).
+4. Smoke: `smoke-live` 6/6 healthy.
+
+**The one thing that did not land, and why.** The cron trigger was refused — Cloudflare error 10072: Workers Free allows 5 cron triggers per account, and all five are taken by other projects (seamline `*/5`, studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2). Enumerated directly from the account, not inferred. Wrangler does not roll back the part that succeeded, so a declared-but-unregisterable cron would fail every future Worker deploy at the trigger step; the cron is therefore committed commented out and the flag returned to `"0"`, with the KV binding kept live. Recorded as D-S351.4.
+
+**Correction issued in-session:** the earlier write-back said the sampler was "armed". It is not, and the claim was corrected across CURRENT_STATE, LATEST_HANDOFF, TASK_BOARD, PROJECT_STATUS and TRUTH_AUDIT before the commit that carries it. The edge remains UNMEASURED and `/status/` still says so.
