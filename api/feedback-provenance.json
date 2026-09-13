@@ -4,61 +4,47 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 3,
+  "themeCount": 2,
   "themes": [
+    {
+      "key": "conversion",
+      "label": "Conversion",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "3db9f1d1",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "add labVolatile to analytics lighthouse tier",
+          "ts": "2026-09-13T04:54:25.000Z"
+        }
+      ]
+    },
     {
       "key": "transparency",
       "label": "Transparency",
       "count": 3,
       "commits": [
         {
-          "sha": "6294ddc2",
+          "sha": "585c50bb",
           "move": "Tended",
           "tone": "muted",
-          "summary": "stop publishing a bot challenge as an outage on /status/",
-          "ts": "2026-09-10T22:49:30.000Z"
+          "summary": "rebuild oracle answers index",
+          "ts": "2026-09-13T04:45:30.000Z"
         },
         {
-          "sha": "d14ef377",
+          "sha": "d2563f07",
           "move": "Tended",
           "tone": "muted",
-          "summary": "bind immutable Vault Pulse evidence",
-          "ts": "2026-09-10T17:27:55.000Z"
+          "summary": "rebuild candidate artifact manifest after heartbeat + index.html changes",
+          "ts": "2026-09-13T04:37:06.000Z"
         },
         {
-          "sha": "98bb7c65",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "content-address Vault Pulse module",
-          "ts": "2026-09-10T17:27:55.000Z"
-        }
-      ]
-    },
-    {
-      "key": "speed",
-      "label": "Speed",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "51fb8ef6",
+          "sha": "32a30cec",
           "move": "Tended",
           "tone": "muted",
-          "summary": "fix a dead shell cleanup, stop hidden-tab polling, restore contact input height",
-          "ts": "2026-09-11T21:14:38.000Z"
-        }
-      ]
-    },
-    {
-      "key": "frontdoor",
-      "label": "Front door",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "b95cc483",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "restore hero ticker feed on staging",
-          "ts": "2026-09-10T17:27:55.000Z"
+          "summary": "regenerate heartbeat to resolve drift-preflight CI failure",
+          "ts": "2026-09-13T04:20:53.000Z"
         }
       ]
     }
