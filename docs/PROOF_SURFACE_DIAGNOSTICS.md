@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-12T02:51:05.896Z
-Receipt: `199339b3afdff4f10f9bae36` · coverage 109/109
+Generated: 2026-09-13T06:34:45.398Z
+Receipt: `97a1dde1e7a849b041e4eb83` · coverage 88/109
 
-Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 20.3s
+Latest: **87/88** passed · blocking 87/88 · advisory findings 0/0 · total 5.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 49 | blocking | 0.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 106 | advisory | 0.5s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 37 | blocking | 0.4s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 78 | blocking | 0.4s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 14 | blocking | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 35 | blocking | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 46 | blocking | 0.3s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 18 | blocking | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 82 | blocking | 0.3s | 0 | `node scripts/build-route-consolidation.mjs --check` |
-| 24 | blocking | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 14 | blocking | 0.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 37 | blocking | 0.3s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 78 | blocking | 0.3s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 49 | blocking | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 38 | blocking | 0.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 46 | blocking | 0.1s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 73 | blocking | 0.1s | 0 | `node scripts/check-phantom-carries.mjs` |
+| 71 | blocking | 0.1s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 36 | blocking | 0.1s | 0 | `node scripts/build-news-desk.mjs --self-test` |
+| 35 | blocking | 0.1s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 
 ## Failures
 
-- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
+- Step 88 [blocking]: `node scripts/check-receipt-ordering.mjs` exited 1 — self/contract
