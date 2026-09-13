@@ -459,11 +459,11 @@ async function rasterizeDispatchCard({ refreshArt = false } = {}) {
  * The Director's Report card. ORSON's review is a standalone public page and a
  * shared link to it should carry the week's actual verdict.
  *
- * It has to live HERE rather than in build-og-cards (S309). That promoter does
- * rewrite generic cards automatically — but it reads og:title to pick the
- * headline, and the Desk's chromeHead deliberately emits none, so it skips
- * every news page silently. The report therefore shipped pointing at the
- * generic site card: a page presenting itself as the studio in general rather
+ * It has to live HERE rather than in build-og-cards (S309). That promoter
+ * skips the news/ path entirely (SKIP_PATH), so it will never overwrite
+ * article-specific OG images with generic studio cards. The report therefore
+ * needs its own rasterizer to carry the week's actual verdict rather than
+ * presenting itself as the studio in general rather
  * than as the week's review.
  */
 async function rasterizeDirectorsCard({ refreshArt = false } = {}) {

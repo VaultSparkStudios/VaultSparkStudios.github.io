@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-12T02:52:17.999Z
-Receipt: `63c425e50c9b9b93c7fce982` · coverage 481/481 from step 1
+Generated: 2026-09-13T05:41:54.129Z
+Receipt: `750d2df798978f218a7384ff` · coverage 11/481 from step 1
 
-Latest: **481/481** passed · failed 0 · total 141.7s
-Concentration: **14.4%** in step 143 · ratchet clear (>30% and ≥45s)
+Latest: **10/11** passed · failed 1 · total 0.6s
+Concentration: **10.9%** in step 8 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 143 | 20.5s | 0 | `node scripts/check-proof-surface.mjs` |
-| 61 | 8.1s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 99 | 7.8s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 369 | 5.1s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 248 | 3.8s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 260 | 3.7s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 95 | 3.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 136 | 2.1s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 299 | 2.0s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 29 | 1.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 8 | 0.1s | 0 | `node scripts/build-proof-aware-projects.mjs --check` |
+| 1 | 0.1s | 0 | `node scripts/manage-forge-editorial.mjs --self-test` |
+| 2 | 0.1s | 0 | `node scripts/manage-forge-editorial.mjs --check` |
+| 11 | 0.1s | 1 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
+| 5 | 0.1s | 0 | `node scripts/check-startup-context-budget.mjs` |
+| 7 | 0.1s | 0 | `node scripts/build-proof-aware-projects.mjs --self-test` |
+| 9 | 0.1s | 0 | `node scripts/check-theme-boot-contract.mjs --self-test` |
+| 3 | 0.1s | 0 | `node scripts/check-journey-conductor-contract.mjs --self-test` |
+| 10 | 0.1s | 0 | `node scripts/check-theme-boot-contract.mjs` |
+| 4 | 0.1s | 0 | `node scripts/check-startup-context-budget.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 11: `node scripts/check-proof-verifier-contract.mjs --self-test` exited 1

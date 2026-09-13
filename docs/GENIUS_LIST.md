@@ -1,15 +1,15 @@
 # Genius Hit List — Session 351
 
-Generated: 2026-09-12
+Generated: 2026-09-13
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **73/100**
+- Overall opportunity pressure: **76/100**
 - Health: **yellow**
 - Current SIL: **983/1000**
-- CI health: **all-green ✓**
+- CI health: **check gh run list**
 - Current focus: S351 fully deployed content, staging and the Worker, and took the edge uptime sampler from "held on a permission nobody re-tested" to one blocked line: the KV namespace and binding are live in production, but the cron was refused because all 5 Workers Free cron slots belong to other projects.
 
 ## Strategic Read
@@ -27,72 +27,74 @@ Final score: **96**
 [S351][QA/P2] Add a divergence gate for the unit-suite lists. The deliverable is a NEW check — nothing in the repo compares the declared unit-spec list against the list the build gate actually executes. S351 found those two lists out of sync (five declared, two executed) and the three orphaned suites invoked by no runner at all; the lists were reconciled by hand, which fixes today and prevents nothing. Write a check that fails when the two sets differ and wire it into build:check:steps, so the next spec file cannot be added to one list and silently omitted from the other.
 Why it matters: Add a divergence gate for the unit-suite lists. The deliverable is a N is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
 Final score: **93**
 [S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as unresolvedLegacyChecks because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
 Why it matters: Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewrit is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Close field-vitals freshness only with real evidence. Surface observe…
+#### 4. [PRODUCT] Close field-vitals freshness only with real evidence. Surface observe…
 Final score: **90**
 [NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.
 Why it matters: Close field-vitals freshness only with real evidence. Surface observed is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
+### NEXT
+
+#### 1. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
 Final score: **74**
 [S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED. Re-probed S345: build-news-freshness --check --require-daily now reports daily - latest 2026-09-07 - age 0d, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to periodic') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. What is NOT resolved, and is not claimed to be: the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
 Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 7-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### NEXT
-
-#### 1. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
+#### 2. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
 Final score: **72**
 Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
 Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
+#### 3. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
 Final score: **69**
 [S344][INFRA/P1] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, AGENTS.md requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
 Why it matters: Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is open, local, and unblocked — can ship this session.
 
-#### 3. [REVENUE] Annual Stripe activation once keys exist
+#### 4. [REVENUE] Annual Stripe activation once keys exist
 Final score: **68**
 [OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.
 Why it matters: Annual Stripe activation once keys exist is on the direct checkout path; unblocking it can activate income without building new features.
 
-#### 4. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+#### 5. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
 Final score: **66**
 [NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
 Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
-#### 5. [INTELLIGENCE] Extend proof/depth beyond the three core pages
+### LATER
+
+#### 1. [INTELLIGENCE] Extend proof/depth beyond the three core pages
 Final score: **66**
 [GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
 Why it matters: Extend proof/depth beyond the three core pages keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### LATER
-
-#### 1. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
+#### 2. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
 Final score: **65**
 [S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate. S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
 Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 351-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+#### 3. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 Final score: **59**
 [SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
 Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 351-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
-
-#### 3. [PRODUCT] CF Worker automation unblock
-Final score: **57**
-[OPS] CF Worker automation unblock — add CF_WORKER_API_TOKEN so Worker deploys stop depending on local Wrangler auth.
-Why it matters: CF Worker automation unblock is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -139,18 +141,18 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 ## Recommended Build Order
 
 1. Add a divergence gate for the unit-suite lists. The deliverable is a …
-2. Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
-3. Close field-vitals freshness only with real evidence. Surface observe…
-4. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
-5. Authorize or decline immutable warm-origin migration. D-S303 reserves…
-6. Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-7. Annual Stripe activation once keys exist
-8. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
-9. Extend proof/depth beyond the three core pages
-10. Member-newsletter deployment and explicit arming decision remain sepa…
-11. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
-12. CF Worker automation unblock
+2. Post-push CI confirmation
+3. Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
+4. Close field-vitals freshness only with real evidence. Surface observe…
+5. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
+6. Authorize or decline immutable warm-origin migration. D-S303 reserves…
+7. Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
+8. Annual Stripe activation once keys exist
+9. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+10. Extend proof/depth beyond the three core pages
+11. Member-newsletter deployment and explicit arming decision remain sepa…
+12. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 
 ## Best Immediate Move
 
-Release browser gates are green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.
