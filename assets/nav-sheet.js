@@ -96,7 +96,7 @@
     close.type = 'button';
     close.className = 'vs-nav-sheet-close';
     close.setAttribute('aria-label', 'Close navigation');
-    close.textContent = '\xD7';
+    close.textContent = '×';
     head.appendChild(eyebrow);
     head.appendChild(close);
     var body = document.createElement('nav');
