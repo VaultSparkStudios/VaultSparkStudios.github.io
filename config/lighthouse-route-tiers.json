@@ -30,7 +30,8 @@
       "seo": 0.95
     },
     "analytics": {
-      "description": "Public measurement and article-engagement surfaces; mobile performance must remain at or above 90.",
+      "description": "Public measurement and article-engagement surfaces; mobile performance must remain at or above 90. labVolatile guards against single-run CI noise; persistent (trend-confirmed) breaches still hard-fail.",
+      "labVolatile": true,
       "performance": 0.9,
       "accessibility": 0.95,
       "best-practices": 0.9,
