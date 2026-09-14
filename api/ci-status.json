@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-14T03:14:36.502Z",
+  "generatedAt": "2026-09-14T03:17:25.398Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 9 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 9 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -53,10 +53,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-14T03:09:22Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-09-14T03:16:54Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34801214550",
       "headSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
       "event": "push"
@@ -161,7 +161,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 4.91,
+      "ageHours": 4.96,
       "staleAfterHours": 48
     },
     {
@@ -175,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.98,
+      "ageHours": 2.03,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +190,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.09,
+      "ageHours": 2.13,
       "staleAfterHours": 48
     },
     {
@@ -206,17 +206,17 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-14T03:14:33Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-09-14T03:16:29Z",
       "recentConclusions": [
-        "success",
+        "failure",
         "success",
         "success"
       ],
       "dead": false,
-      "streak": 0,
+      "streak": 1,
       "state": "healthy",
-      "ageHours": 0,
+      "ageHours": 0.02,
       "staleAfterHours": 48
     },
     {
