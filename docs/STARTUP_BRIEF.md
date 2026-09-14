@@ -82,13 +82,13 @@
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         46492 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  3d old (2026-09-11)                            ║
+║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  Open current tasks 29 / Human-action entries 7                  ║
@@ -131,6 +131,9 @@
 ║   98  [VERIFY]       Verify the first Vault Narrative run after  ║
 ║        Verify the first Vault Narrative run after the S353 fix   ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
 ║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
 ║                                                                  ║
@@ -139,9 +142,6 @@
 ║                                                                  ║
 ║   74  [VERIFY]       ESCALATION: The Desk's cadence lever is st  ║
 ║        ESCALATION: The Desk's cadence lever is still the founde  ║
-║                                                                  ║
-║   72  [PRODUCT]      Authorize or decline immutable warm-origin  ║
-║        Authorize or decline immutable warm-origin migration. D-  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
