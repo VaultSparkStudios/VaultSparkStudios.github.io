@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-14T02:44:29.278Z",
+  "capturedAt": "2026-09-14T04:37:24.299Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "561dc1835b6847d11681e062a76a75fb00f5f8fcd28e574a5056b62f0f2e02de",
+    "sha256": "02326c6d9c7114e354510516cb9702a873eb47ec24b15a484fe5b0dd240651b4",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -184,7 +184,7 @@
       },
       {
         "path": "scripts/build-news-desk.mjs",
-        "sha256": "a9f06ea964f30afd4297a0d9acc2fde0a55fce94dae52b2206b08f00aa9a25db"
+        "sha256": "e6f2e497ceb730bd8bee1748ac2e174c6c08b7312e748479d90507eca34a1421"
       },
       {
         "path": "scripts/capture-theme-matrix.mjs",
@@ -204,7 +204,7 @@
       },
       {
         "path": "scripts/generate-news-pages.mjs",
-        "sha256": "3f8b73d66887f6e1b0ecf214efb5642d0dce23ce3f2a3d672bdc2f3f56ae9263"
+        "sha256": "65961c062f36d1034d6e1e93514234055aff54a25351bb78c360dde3699bcb9c"
       },
       {
         "path": "scripts/lib/news-desk.mjs",
@@ -242,7 +242,7 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "ae8bc9e57dca000d7b1f8518c07dd7ab47a645718094dd92dda374b6b1ae09c1",
+    "manifestSha256": "310b4548f1b77303e7aad5c176adcecc191aa01b2a00ade94c4b9042a64b158c",
     "candidateSha": "50a4791c547c6fbdd9b23362d94a944d9a7a5574",
     "root": "dc959012ce20356ba652ae880ebd68ee7e3afa0530df7c6f286bbe3853cc3af6"
   },
@@ -283,20 +283,18 @@
     "completedCaptures": 84
   },
   "inspection": {
-    "renderedPixelsReviewed": true,
+    "renderedPixelsReviewed": false,
     "coverage": {
       "totalCaptures": 84,
-      "manuallyReviewed": 84,
-      "automatedOnly": 0,
-      "complete": true
+      "manuallyReviewed": 0,
+      "automatedOnly": 84,
+      "complete": false
     },
-    "reviewer": "claude-code S352",
-    "findings": [
-      "No UI changed in S352 (tooling, workflows, sitemap only). Inspected home light desktop, home dark mobile, status high-contrast desktop, membership lava mobile, evidence light mobile, games warm desktop, atlas cool mobile: text legible on every theme, no black-on-black or light-on-light, header/nav intact, no overlap or collapsed layout; only truncation is the intended hero forge-line ellipsis."
-    ],
+    "reviewer": null,
+    "findings": [],
     "fixesApplied": [],
-    "blockingDefectsOpen": 0,
-    "limitation": null
+    "blockingDefectsOpen": null,
+    "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
   },
   "captures": [
     {
@@ -312,8 +310,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -329,8 +326,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -346,8 +342,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -363,8 +358,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -380,8 +374,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -397,8 +390,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -414,8 +406,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -431,8 +422,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -448,8 +438,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -465,8 +454,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -482,8 +470,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -499,8 +486,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -516,8 +502,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -533,8 +518,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -550,8 +534,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -567,8 +550,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -584,8 +566,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -601,8 +582,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -618,8 +598,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -635,8 +614,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -652,8 +630,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -669,8 +646,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -686,8 +662,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -703,8 +678,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -720,8 +694,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -737,8 +710,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -754,8 +726,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -771,8 +742,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -788,8 +758,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -805,8 +774,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -822,8 +790,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -839,8 +806,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -856,8 +822,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -873,8 +838,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -890,8 +854,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -907,8 +870,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -924,8 +886,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -941,8 +902,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -958,8 +918,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -975,8 +934,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -992,8 +950,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1009,8 +966,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1026,8 +982,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1043,8 +998,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1060,8 +1014,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1077,8 +1030,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1094,8 +1046,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1111,8 +1062,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1128,8 +1078,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1145,8 +1094,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1162,8 +1110,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1179,8 +1126,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1196,8 +1142,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1213,8 +1158,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1230,8 +1174,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1247,8 +1190,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1264,8 +1206,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1281,8 +1222,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1298,8 +1238,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1315,8 +1254,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1332,8 +1270,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1349,8 +1286,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1366,8 +1302,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1383,8 +1318,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1400,8 +1334,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1417,8 +1350,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1434,8 +1366,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1451,8 +1382,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1468,8 +1398,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1485,8 +1414,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1502,8 +1430,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1519,8 +1446,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1536,8 +1462,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1553,8 +1478,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1570,8 +1494,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1587,8 +1510,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1604,8 +1526,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1621,8 +1542,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1638,8 +1558,7 @@
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1655,8 +1574,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1672,8 +1590,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1689,8 +1606,7 @@
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1706,8 +1622,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     },
     {
@@ -1723,8 +1638,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "claude-code S352"
+        "mode": "automated-only"
       }
     }
   ]
