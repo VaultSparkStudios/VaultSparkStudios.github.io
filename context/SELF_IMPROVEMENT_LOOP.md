@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 984.0 | 5: 982.4 | 10: 987.0 | 25: 989.4 | all: 983.1
-History scope: 190 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-13 | Session 352 | Total: 986/1000 | Velocity: 3 | protocolVelocity: 0
+Avgs — 3: 985.7 | 5: 986.2 | 10: 986.0 | 25: — | all: 983.1
+History scope: 191 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
+Last session: 2026-09-14 | Session 353 | Total: 988/1000 | Velocity: 6 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2752,3 +2752,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Committed to TASK_BOARD:** [SIL] staged-but-unmodeled output gate · [SIL] sampler RPC entrypoint on Ark acceptance.
 
 **Intent outcome:** see the S352 release addendum for push and deploy. Audit and implement are complete: 4 of 5 audit items shipped, and the fifth (sampler) was routed by Ark and deferred on its merits.
+
+## 2026-09-14 — Session 353 (arc + full deploy) | Total: 988/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | Two red scheduled workflows fixed at root, each new gate proven against the pre-fix workflow from `HEAD` (both fail by name) and green on the fixed tree. |
+| Creative Alignment | 99 | No UI changed. The narrative voice guidance is unchanged; only what it may claim is tightened. |
+| Momentum | 96 | Six board-external items shipped plus the S352 `[SIL]` row closed. The sampler is still waiting on studio-ops. |
+| Engagement | 95 | `/journal/dispatches/` and its RSS can grow again, but no reader-visible dispatch has been published by the fixed workflow yet. |
+| Process Quality | 100 | Every item came from run logs, and every hypothesis was reproduced live before a fix: three real model answers, rerun through the new code before being called fixed. |
+| Cross-Repo Coherence | 100 | No sibling repo touched; the studio-ops handoff was checked, not re-sent. |
+| Security Posture | 100 | Worker, auth and secrets untouched; inference credentials resolved only through the gateway. |
+| Ecosystem Integration | 100 | Both new gates are generic to any repo with workflows and a gitignored lockfile. |
+| Capital Efficiency | 98 | Six live inference calls spent to prove a hypothesis before and after the fix, instead of a day's cron cycle per attempt. |
+| Automation Coverage | 100 | Two CI failure classes are now gated, and the coverage ratchet measures the universe the runner actually executes. |
+
+**Top win:** the narrative publisher. Its workflow said success on 13 consecutive days while it published nothing, then failure on 4 while it committed nothing. The live rerun showed truthful answers being rejected by a validator that disagreed with its own prompt.
+
+**Top gap:** 20 byte-checked generators are now visible as debt but still unmodeled, so the cascade gate stays blind to them until each is read and added.
+
+**Honesty ledger:** did not lower the freshness limit to turn the new step green; it fails today at 446.8h and says so. Did not keep the runtime-dependency gate's first finding (CI beacon) as a real defect after reading the try-guarded import. Did not call the coverage baseline rise a regression, and did not call it modeled. Did not publish a dispatch by hand to make the archive look alive.
+
+**Brainstorm:** (1) a doctor probe that reads a scheduled workflow's own outcome markers (a held or preserved line) instead of its conclusion; (2) model the 20 proof-surface generators, starting with the one a cron stages; (3) retire or re-mount `assets/vault-narrative.js`, which no page references.
+
+**Committed to TASK_BOARD:** [SIL] model the 20 proof-surface generators · [SIL] verify the first fixed Vault Narrative run.
+
+**Intent outcome:** see the S353 release addendum for push and deploy.

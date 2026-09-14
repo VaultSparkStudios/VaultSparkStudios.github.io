@@ -1,0 +1,88 @@
+{
+  "session": "S353",
+  "date": "2026-09-14",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Found three scheduled publishers that could not do their job, one of which reported success for 13 days while publishing nothing, fixed each at root, and gated both CI failure classes.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "narrative-install",
+      "title": "Vault Narrative never installed its dependencies",
+      "axis": "reliability",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "The refresh-live-data profile reaches build-news-desk --rebuild, which imports sharp. With no install step the job failed from 2026-09-10 and committed nothing for four days. The job now installs first.",
+      "evidence": "gh run 34758908862: Cannot find package sharp; .github/workflows/vault-narrative.yml install step"
+    },
+    {
+      "id": "#2",
+      "slug": "weekly-pathspec",
+      "title": "Weekly Maintenance died on an empty glob",
+      "axis": "reliability",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "git add member/*/index.html matched nothing because the anonymous member read returns 0 rows, so git exited 128 before staging the Obelisk probe the job refreshes. It now stages the directory.",
+      "evidence": "gh run 34090005000: pathspec did not match any files; weekly-maintenance.yml git add -A -- member"
+    },
+    {
+      "id": "#3",
+      "slug": "narrative-grounding",
+      "title": "The narrative validator rejected truthful answers",
+      "axis": "truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Prompt and validator disagreed on what counts as concrete, so every dispatch from 2026-08-27 was rejected while the run stayed green. Both now read one anchor list, and counts are verified in digits or words. Three real rejected answers are fixtures that now pass on merit.",
+      "evidence": "generate-vault-narrative --self-test 15/15; live rerun accepted 2 of 3 through the new code"
+    },
+    {
+      "id": "#4",
+      "slug": "held-publisher-signal",
+      "title": "A held publisher now reads red",
+      "axis": "observability",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "Preserving the old dispatch stays the visitor fallback, but a warning annotation marks it and a post-commit --check-fresh step fails the run past 48h. Today it fails at 446.8h, which is true.",
+      "evidence": "generate-vault-narrative --check-fresh exit 1 at 446.8h; vault-narrative.yml final step"
+    },
+    {
+      "id": "#5",
+      "slug": "runtime-dependency-gate",
+      "title": "Jobs that need packages must install them",
+      "axis": "coverage",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "The existing install gate forbade npm ci but never asked whether an install was needed. The new gate follows node invocations, derived-build profiles and npm run into local imports per job; try-guarded optional imports are exempt.",
+      "evidence": "check-workflow-runtime-dependencies --self-test 10/10; negative control on HEAD names sharp"
+    },
+    {
+      "id": "#6",
+      "slug": "pathspec-gate",
+      "title": "Unguarded zero-match git add globs fail the build",
+      "axis": "coverage",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "Any glob in a workflow git add must match a tracked file unless the command tolerates failure.",
+      "evidence": "check-workflow-git-add-pathspecs --self-test 8/8; negative control on HEAD names member/*/index.html"
+    },
+    {
+      "id": "#7",
+      "slug": "coverage-universe",
+      "title": "The coverage ratchet measured a subset",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "\"67/67 modeled\" read only build:check:steps. 25 generator checks run inside check-proof-surface and 20 were unmodeled. Coverage now parses that list: 72/92, baseline 20, may only fall. Closes the S352 SIL row.",
+      "evidence": "check-evidence-graph-coverage --self-test 17/17; negative control against the old baseline named all 20"
+    }
+  ],
+  "followUps": [
+    "Read the next Vault Narrative run: expect a published dispatch and --check-fresh green.",
+    "Model the 20 proof-surface generators, starting with build-release-dependencies.",
+    "Retire or re-mount assets/vault-narrative.js, which no page references."
+  ],
+  "blockers": [
+    "Edge sampler still has no invoker; the studio-ops cron-reuse handoff was drained, not answered.",
+    "Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data and warm-origin remain founder-gated."
+  ]
+}

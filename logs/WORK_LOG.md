@@ -1470,3 +1470,22 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Post-push CI on `3c5347478`:** E2E, Lighthouse, Accessibility, Secret Lint, Generate Sitemap, Minify, Cache Purge and Sentry Release all green.
 
 **Self-inflicted and corrected:** `build:check` failed twice before going green. Step 116 flagged a new `[SIL]` row as already shipped because it named an existing file; it now carries an `evidence-open` annotation. Step 380 caught my new script importing `node:child_process` directly; it now uses `./lib/safe-spawn.mjs`. A post-deploy currency probe and a staging-parity probe each rewrote a feed in the tree. Both were restored rather than committed alone, since committing a source without its cascade strands the derived feeds.
+
+## S353 · 2026-09-14 · arc + full deploy
+
+**Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.
+
+**Triage:** not cut off (clean tree, write-back current, 5 automation commits behind). Doctor 14/16, `blockingFailing: 0`.
+
+**Audit source:** doctor's `sched-staleness` advisory, followed into the run logs of 20 Vault Narrative runs and the last Weekly Maintenance run.
+
+**Shipped (7):**
+1. `vault-narrative.yml` installs dependencies. It had failed since 2026-09-10 on `Cannot find package 'sharp'`, reached through the `refresh-live-data` profile.
+2. `weekly-maintenance.yml` stages `member` as a directory. `git add member/*/index.html` exited 128 with 0 member profiles.
+3. `generate-vault-narrative.mjs`: one `groundingAnchors()` vocabulary for prompt and validator, and count claims verified in digits or words. Self-test 15/15 including the three live answers the old validator rejected. A live rerun accepted 2 of 3 and rejected 1 for a real miscount-shaped read, which led to the session-label lookbehind.
+4. Held publishers are visible: a `::warning::` annotation on preserve, and a post-commit `--check-fresh` step (48h). It reads 446.8h today.
+5. `scripts/check-workflow-runtime-dependencies.mjs` (10/10): per job, following helper profiles and `npm run` into local imports. Negative control on HEAD's workflow names `sharp`; the first live run's one finding (CI beacon, try-guarded Playwright) was a false positive fixed with a same-statement guard rule.
+6. `scripts/check-workflow-git-add-pathspecs.mjs` (8/8). Negative control on HEAD's workflow names `member/*/index.html`.
+7. `check-evidence-graph-coverage` parses `check-proof-surface`'s generator checks: 72/92 modeled, baseline 0 → 20 (negative control named all 20). Closes the S352 `[SIL]` row. `resync-derived` unchanged (16/16).
+
+**Evidence:** adjacent gates green (orphan scripts, unit parity, cascade coverage, install consistency, publisher resilience, YAML validity). Release evidence in the handoff addendum.

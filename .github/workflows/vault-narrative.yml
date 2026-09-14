@@ -17,6 +17,15 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Install project dependencies
+        # S353: the refresh-live-data profile runs build-news-desk.mjs --rebuild,
+        # which imports `sharp`. With no install step that import threw, the profile
+        # reported `build-news-desk.mjs:warn`, and this whole workflow went red on
+        # 2026-09-10 and stayed red, so nothing below was committed for four days.
+        # The lockfile is gitignored (check-workflow-install-consistency), so npm ci
+        # is unavailable; check-workflow-runtime-dependencies now gates this class.
+        run: npm install --no-audit --no-fund
+
       - name: Refresh public intelligence snapshot
         # Feeds /oracle/, /studio-pulse/, and the homepage Studio Spine. The
         # commit step below MUST stage api/public-intelligence.json or this
@@ -80,3 +89,11 @@ jobs:
           else
             echo "Vault narrative unchanged, skipping commit"
           fi
+
+      - name: Fail when the dispatch is being held, not published
+        # S353: the generator preserves the previous dispatch when inference is down
+        # or an answer is rejected, and exits 0 so the refreshed feeds above still
+        # commit. That kept this workflow green for 19 days while every answer was
+        # rejected and /journal/dispatches/ stopped growing. Runs after the commit so
+        # the refresh still lands, then reports the held publisher honestly.
+        run: node scripts/generate-vault-narrative.mjs --check-fresh

@@ -69,7 +69,11 @@ jobs:
           # old probedAt and the freshness clock never actually advances.
           node scripts/build-release-dependencies.mjs
           node scripts/build-release-dependencies.mjs --check
-          git add member/*/index.html member-sitemap.xml .cache/obelisk-registration-probe.json api/release-dependencies.json
+          # S353: this was `git add member/*/index.html …`. The anonymous member read
+          # currently returns 0 rows, so the glob matched nothing and git exited 128
+          # ("pathspec did not match"), failing the job before anything was staged.
+          # A directory add cannot miss, and -A also stages removed profiles.
+          git add -A -- member member-sitemap.xml .cache/obelisk-registration-probe.json api/release-dependencies.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: regenerate member SEO pages [skip ci]"
             bash scripts/ci/publish-push.sh "member SEO pages"

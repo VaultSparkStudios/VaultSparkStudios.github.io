@@ -1,3 +1,17 @@
+## S353 Green Runs That Published Nothing, and Gates That Measured a Subset (2026-09-14)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No feed schema changed. `api/vault-narrative.json` keeps its fields; `config/evidence-graph-coverage.json` keeps its shape with a truthful `unmodeled: 20` of 92. |
+| Prompt/template alignment | 5 | The narrative prompt and its validator now share one anchor list, asserted by a self-test that every accepted anchor appears in the prompt. |
+| Public claim accuracy | 5 | `/journal/dispatches/` and its RSS had stopped at 2026-08-26 with no signal. Dispatches must now name a real anchor and state correct counts; a wrong count is rejected, not published. |
+| Internal consistency | 5 | A workflow conclusion now agrees with its outcome: a held narrative fails `--check-fresh`, a missing package fails a gate before the runner does. |
+| Evidence freshness | 5 | Every claim came from run logs of the last 20 runs and a live model rerun during the session, not from board prose. |
+
+**What was true and is no longer:** "evidence-graph coverage: 67/67 modeled" was printed and true only of the steps string; the executed universe was 72/92. "Generate Vault Narrative: success" was printed on 13 runs that published nothing.
+
+**What is NOT resolved:** the 20 unmodeled generators are visible debt, not modeled nodes. No dispatch has yet been published by the fixed workflow; that is next session's first read.
+
 ## S352 A Gate That Reported Closed Over an Edge It Could Not See (2026-09-13)
 
 | Dimension | Score | Evidence |

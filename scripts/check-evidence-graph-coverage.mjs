@@ -57,8 +57,32 @@ export function checkedGenerators(stepsString) {
   return [...found].sort();
 }
 
-export function coverage(stepsString, graph) {
-  const generators = checkedGenerators(stepsString);
+/**
+ * S353: `check-proof-surface.mjs` runs its own ~100 sub-checks, 28 of them a
+ * generator's `--check`, and 25 of those appear nowhere in build:check:steps.
+ * The regex above therefore measured a SUBSET, and "67/67 modeled" was true of
+ * that subset only: 20 byte-checked generators were outside the graph with no
+ * ratchet seeing them (e.g. build-release-dependencies, whose output the weekly
+ * maintenance cron stages). Their entries are parsed from the real STEPS array,
+ * not re-listed here, so a sub-check added there joins this universe on its own.
+ */
+export function proofSurfaceCheckedGenerators(proofSurfaceSource) {
+  const found = new Set();
+  for (const m of String(proofSurfaceSource).matchAll(/\[\s*'((?:build|generate)-[a-z0-9-]+\.mjs)'\s*,\s*\[[^\]]*'--check'/g)) {
+    found.add(`scripts/${m[1]}`);
+  }
+  return [...found].sort();
+}
+
+export function readProofSurfaceGenerators(root = ROOT) {
+  try { return proofSurfaceCheckedGenerators(readFileSync(join(root, 'scripts', 'check-proof-surface.mjs'), 'utf8')); }
+  catch { return []; }
+}
+
+// `extraGenerators` is opt-in so resync-derived, which imports coverage() to
+// learn its own sweep boundary, keeps exactly the behaviour it had.
+export function coverage(stepsString, graph, { extraGenerators = [] } = {}) {
+  const generators = [...new Set([...checkedGenerators(stepsString), ...extraGenerators])].sort();
   const builders = new Set(graph.nodes.map((n) => n.builder));
   const unmodeled = generators.filter((g) => !builders.has(g));
   return { generators, unmodeled, modeled: generators.length - unmodeled.length };
@@ -98,7 +122,7 @@ function loadBaseline() {
 function run() {
   const steps = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).scripts['build:check:steps'];
   const graph = loadEvidenceGraph(ROOT);
-  const { generators, unmodeled, modeled } = coverage(steps, graph);
+  const { generators, unmodeled, modeled } = coverage(steps, graph, { extraGenerators: readProofSurfaceGenerators() });
   const baseline = loadBaseline();
   const levels = evidenceLevels(generators);
   console.log('check evidence: ' + evidenceSummary(levels));
@@ -161,7 +185,16 @@ function selfTest() {
 
   // The live repo must actually satisfy its own ratchet.
   const liveSteps = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).scripts['build:check:steps'];
-  const live = coverage(liveSteps, loadEvidenceGraph(ROOT));
+  const live = coverage(liveSteps, loadEvidenceGraph(ROOT), { extraGenerators: readProofSurfaceGenerators() });
+  // S353 widening, in both directions: proof-surface sub-checks are parsed, and a
+  // caller that does not opt in (resync-derived) sees the unwidened universe.
+  const proofFixture = "const STEPS = [\n  ['build-epsilon.mjs', ['--check']],\n  ['build-zeta.mjs', ['--self-test']],\n  ['check-eta.mjs', ['--check']],\n  ['generate-theta.mjs', ['--check', '--strict']],\n];";
+  const parsed = proofSurfaceCheckedGenerators(proofFixture);
+  cases.push(['proof-surface --check generators are parsed (build- and generate-)', parsed.join() === 'scripts/build-epsilon.mjs,scripts/generate-theta.mjs']);
+  cases.push(['widened coverage counts a proof-surface generator the graph lacks', coverage(steps, graph, { extraGenerators: parsed }).unmodeled.includes('scripts/generate-theta.mjs')]);
+  cases.push(['coverage without the opt-in is unchanged for resync-derived', coverage(steps, graph).generators.length === 2]);
+  cases.push(['the live proof surface actually contributes generators', readProofSurfaceGenerators().length >= 20]);
+  cases.push(['build-release-dependencies (staged by weekly-maintenance) is inside the widened universe', live.generators.includes('scripts/build-release-dependencies.mjs')]);
   const baseline = loadBaseline();
   cases.push([`live coverage is at or below baseline (${live.unmodeled.length} vs ${baseline.unmodeled})`,
     live.unmodeled.length <= baseline.unmodeled]);

@@ -1,8 +1,20 @@
 # Current State
 
-Last updated: 2026-09-13 (S352)
+Last updated: 2026-09-14 (S353)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S353 three scheduled publishers that could not do their job, and one that said it had (2026-09-14)
+
+**Vault Narrative had been red since 2026-09-10 and committed nothing.** The workflow never ran `npm install`. Its `refresh-live-data` profile reaches `build-news-desk.mjs --rebuild`, which imports `sharp`, so the profile reported `build-news-desk.mjs:warn` and the job failed before its commit step. The job now installs first. `check-workflow-runtime-dependencies` (new, in `build:check`) follows `node scripts/…`, derived-build profiles and `npm run` into local imports per job, and fails when a declared package is needed without an install. Against the pre-fix workflow it names `sharp`; a try-guarded optional import (the CI beacon's Playwright path) is exempt.
+
+**Before that, the same workflow was green for 13 days while publishing no dispatch.** Every run from 2026-08-27 either timed out or rejected the model's answer as ungrounded, kept the 2026-08-26 dispatch, and exited 0. The validator and the prompt disagreed on what "concrete" meant. Both now read `groundingAnchors()`, and count claims are checked against the snapshot. Three real answers from a live rerun are self-test fixtures that pass on merit (15/15), and a fresh live run through the new code accepted two of three, rejecting one for a real error. A held publisher now shows a GitHub warning, and a final `--check-fresh` step fails the run past 48h. It currently fails at 446.8h, which is true.
+
+**Weekly Maintenance failed on an empty glob.** `git add member/*/index.html` matched nothing because the anonymous member read returns 0 rows, so git exited 128 before staging the Obelisk registration probe the job exists to refresh. It now stages the directory. `check-workflow-git-add-pathspecs` (new, in `build:check`) fails any unguarded glob matching no tracked file, and names this line against the pre-fix workflow.
+
+**The coverage ratchet was measuring a subset.** `check-evidence-graph-coverage` read only `build:check:steps`; 25 generator checks run inside `check-proof-surface`, and 20 of those are unmodeled. Coverage is now 72/92, baseline 20. This closes the S352 staged-but-unmodeled row by making the debt visible, not by modeling it.
+
+**Unchanged:** no page, style or Worker changed. The edge sampler still waits on studio-ops (the handoff was drained, not answered).
 
 ## S352 a publisher that staged the sitemap and never rebuilt it (2026-09-13)
 

@@ -1822,3 +1822,21 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** the website does not yet ship a sampler RPC entrypoint. An Ark `agent-handoff` asks studio-ops to invoke the sampler from `studio-ops-cron`'s existing `*/30` trigger via a service binding. This repo ships its half only when studio-ops accepts.
 
 **Why:** the cron cap was recorded as founder-only (retire another project's cron, or pay). A third option, reusing a trigger that already exists, needs no billing and no new slot, but it crosses into another repo, so under CANON-018 it goes as cargo. Shipping the entrypoint now would add Worker surface nothing calls, and would force a `cloudflare:workers` import shim into the node-run unit tests with nothing gained.
+
+## D-S353.1 — A publisher that preserves instead of publishing must read red
+
+**Decision:** `generate-vault-narrative.mjs` still preserves the previous dispatch when inference is down or an answer is rejected, and still exits 0 so the refreshed feeds commit. A new final step, `--check-fresh`, runs after the commit and fails the workflow once the newest dispatch is older than 48h.
+
+**Why:** from 2026-08-27 to 2026-09-09 every run rejected the model's answer, kept the 2026-08-26 dispatch, and reported success. Nobody could see it: the run was green, `/journal/dispatches/` quietly stopped growing, and the homepage widget self-hides past 72h. Preserving is the right fallback for visitors and the wrong signal for operators; the check separates the two without losing the commit.
+
+## D-S353.2 — The grounding prompt and its validator read one vocabulary
+
+**Decision:** `groundingAnchors()` produces the anchor list the prompt shows and the only phrases the validator accepts: catalog names, heatmap names, pulse item titles and the session label. Counts are checked for correctness, in digits or words, not just spotted.
+
+**Why:** the validator accepted catalog names the prompt never listed, digit strings the brand voice writes as words, and a shipped list that is empty. A live rerun on 2026-09-14 had three truthful answers rejected (they named Session 352, Studio Pulse and the real counts). A first cut of the count check then read "Session 352 sealed" as 352 sealed projects; the lookbehind for session and build labels came from that live answer, not from theory.
+
+## D-S353.3 — Coverage gates measure the universe the runner executes, not the one the steps string lists
+
+**Decision:** `check-evidence-graph-coverage` now also parses the generator `--check` entries inside `check-proof-surface.mjs`. The baseline was raised once, from 0 to 20, to record debt that already existed, and may only fall from here. `check-workflow-runtime-dependencies` likewise follows derived-build profiles and `npm run` into local imports, per job.
+
+**Why:** both S353 CI failures and the S352 sitemap strand passed a gate that measured a subset: "67/67 modeled" excluded 25 proof-surface checks, and the install gate never asked whether a job needed packages at all. Raising a ratchet baseline normally signals a regression; here it is the first honest reading, and the negative control against the old baseline named all 20 generators. `resync-derived` keeps its prior boundary because the widening is opt-in.

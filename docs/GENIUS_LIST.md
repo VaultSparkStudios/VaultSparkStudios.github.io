@@ -1,4 +1,4 @@
-# Genius Hit List — Session 352
+# Genius Hit List — Session 353
 
 Generated: 2026-09-14
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **77/100**
+- Overall opportunity pressure: **74/100**
 - Health: **yellow**
-- Current SIL: **986/1000**
+- Current SIL: **988/1000**
 - CI health: **check gh run list**
-- Current focus: S352 closed a publisher cascade the cascade gate could not see (sitemap.xml was staged by the Desk publisher and never rebuilt), stopped the write-back probe from reporting regeneration commits as skipped closeouts, and gated unit-suite list parity; the edge sampler is routed to studio-ops via Ark to reuse its existing */30 cron.
+- Current focus: S353 fixed two scheduled publishers that failed on missing prerequisites (Vault Narrative never installed sharp; Weekly Maintenance staged an empty glob), made the narrative publisher publish grounded dispatches instead of preserving a 19-day-old one while reporting success, and gated both CI classes plus the proof-surface coverage gap.
 
 ## Strategic Read
 
@@ -22,79 +22,79 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Gate staged-but-unmodeled outputs. <!-- evidence-open: config/evidenc…
+#### 1. [VERIFY] Model the 20 proof-surface generators, highest-risk first. Start with…
 Final score: **100**
-[S352][SIL][CI/P2] Gate staged-but-unmodeled outputs. <!-- evidence-open: config/evidence-graph.json is the input the new gate reads, not the gate itself --> Fail when a workflow git adds the output of a --check-gated generator that config/evidence-graph.json does not model. That is the class that hid the sitemap strand from the cascade gate.
-Why it matters: Gate staged-but-unmodeled outputs. <!-- evidence-open: config/evidence shipped last session — confirm it works in production before piling new work on top.
+[S353][SIL][CI/P2] Model the 20 proof-surface generators, highest-risk first. Start with build-release-dependencies (weekly-maintenance stages its output). Read each generator for REAL sources, add the node, --update to lower the baseline.
+Why it matters: Model the 20 proof-surface generators, highest-risk first. Start with  shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+#### 2. [VERIFY] Verify the first Vault Narrative run after the S353 fix publishes a d…
+Final score: **97**
+[S353][SIL][OBS/P2] Verify the first Vault Narrative run after the S353 fix publishes a dispatch. Expect [vault-narrative] wrote … (anchor:…) and --check-fresh green; if it rejects, the log now prints the rejected text.
+Why it matters: Verify the first Vault Narrative run after the S353 fix publishes a di shipped last session — confirm it works in production before piling new work on top.
 
-First command: `gh run list --limit 10`
+First command: `npm run build:check`
 
 #### 3. [PRODUCT] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
-Final score: **93**
+Final score: **90**
 [S349][OBS/P2] Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewriting them. They are published as unresolvedLegacyChecks because a challenge and a real edge outage leave an identical footprint once the shape is gone, so they cannot now be told apart. Once the edge sampler has produced a full 31-day window, the retained history ages them out naturally and the public number becomes fully classifier-current. Do NOT re-score them to improve the figure.
 Why it matters: Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewrit is open, local, and unblocked — can ship this session.
 
 #### 4. [PRODUCT] Close field-vitals freshness only with real evidence. Surface observe…
-Final score: **90**
+Final score: **87**
 [NEXT][SIL][OBS/P1] Close field-vitals freshness only with real evidence. Surface observed-through/stale-days, obtain a genuinely fresh post-S262 RUM cohort, and bind cohort verdicts to a release SHA so a fresh generated clock can never imply fresh field evidence.
 Why it matters: Close field-vitals freshness only with real evidence. Surface observed is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
 #### 1. [VERIFY] ESCALATION: The Desk's cadence lever is still the founder's pick -- b…
-Final score: **74**
+Final score: **71**
 [S344][DESK/P1] ESCALATION: The Desk's cadence lever is still the founder's pick -- but the S344 symptom sentence has EXPIRED. Re-probed S345: build-news-freshness --check --require-daily now reports daily - latest 2026-09-07 - age 0d, and 2 editions published on 2026-09-07. The S344 text ('nothing has published since 2026-09-04', 'degraded to periodic') was true when written and is false now; it is corrected here rather than carried, because a blocker sentence is a claim with an expiry. What is NOT resolved, and is not claimed to be: the queue-width constraint that caused the 3-day gap is UNMEASURED locally -- the radar cache is CI-only and absent from a local tree, so this session could not confirm whether the queue widened or the day was simply lucky. 2 editions against a 4-slot/day promise is a partial recovery, not a met promise. The founder's pick (widen radar yield, shorten novelty, or reduce slots) stands, and the cadence gate's reds remain HONEST (D-S344.5).
-Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 8-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: ESCALATION: The Desk's cadence lever is still the founder's pick -- bu is a 9-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 2. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
-Final score: **72**
+Final score: **69**
 Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
 Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
 #### 3. [PRODUCT] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_UR…
-Final score: **69**
+Final score: **66**
 [S344][INFRA/P1] Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is vaulted. CANON-038 makes self-hosted Postgres first choice and cloud-managed the justified exception; D-S344.2 records the justification. The shared cluster's admin DSN is ABSENT, which CANON-038 itself names as its remaining founder-aware step, so there is currently nothing to migrate to. When it exists: this is an escalation, not a task — it moves live member accounts and the sign-in path onto a single box, AGENTS.md requires escalation before changing auth flows, and the cost saving is ~zero because the Supabase free tier is already cost-neutral (CANON-029). The static site is deliberately excluded: a free global CDN is not beaten by one box.
 Why it matters: Re-evaluate the data plane for the shared box once STUDIO_PG_ADMIN_URL is open, local, and unblocked — can ship this session.
 
 #### 4. [REVENUE] Annual Stripe activation once keys exist
-Final score: **68**
+Final score: **65**
 [OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.
 Why it matters: Annual Stripe activation once keys exist is on the direct checkout path; unblocking it can activate income without building new features.
 
 #### 5. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
-Final score: **66**
+Final score: **63**
 [NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
 Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
 ### LATER
 
 #### 1. [INTELLIGENCE] Extend proof/depth beyond the three core pages
-Final score: **66**
+Final score: **63**
 [GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
 Why it matters: Extend proof/depth beyond the three core pages keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
 #### 2. [VERIFY] Member-newsletter deployment and explicit arming decision remain sepa…
-Final score: **65**
+Final score: **62**
 [S345→S347][ENG/P0] Member-newsletter deployment and explicit arming decision remain separate. S347 hardened the existing operator (8/8 focused tests); no deploy, secret update or send occurred. Management/function inspection is agent-capable; prior-session sandbox refusals are historical, not fresh human-only proof. Preserve D-S341.4 and the separate arming/first-send decision; verify the exact unauthenticated 401 guard before any approved send.
-Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 352-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Member-newsletter deployment and explicit arming decision remain separ is a 353-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 3. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
-Final score: **59**
+Final score: **56**
 [SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
-Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 352-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 353-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
@@ -121,7 +121,7 @@ Final score: **81**
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 5. [VERIFY] The [skip ci] publishers still do not cascade their derived artifacts…
-Final score: **80**
+Final score: **75**
 [S351][CI/P1] The [skip ci] publishers still do not cascade their derived artifacts. b67c283d1 feat(desk): publish the latenight edition [skip ci] added news pages plus art and changed index.html at 22:20Z, then skipped CI — leaving the sitemap stale, five images missing from data/lqip-map.json, the mobile receipt bound to a superseded index.html, and the startup brief disagreeing with the shared revenue resolver. S351 ran that cascade BY HAND (lqip-map, sitemap, news-freshness, home-desk-module, oracle feed sanitizer, oracle answers, candidate manifest, plus a 215-cell mobile re-capture) and the repo was green afterwards. The debt is structural, not one bad commit: any publisher that takes [skip ci] must either run its own cascade or hand the work to a follow-up workflow. Until it does, every session that follows a publisher pays this tax. S352: the sitemap strand is closed structurally (graph node sitemap <- news/, 4 publishers fixed); the general class stays open, see the [SIL] row.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
@@ -142,8 +142,8 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 
 ## Recommended Build Order
 
-1. Gate staged-but-unmodeled outputs. <!-- evidence-open: config/evidenc…
-2. Post-push CI confirmation
+1. Model the 20 proof-surface generators, highest-risk first. Start with…
+2. Verify the first Vault Narrative run after the S353 fix publishes a d…
 3. Retire the 604 unresolved pre-S349 uptime rows on merit, not by rewri…
 4. Close field-vitals freshness only with real evidence. Surface observe…
 5. ESCALATION: The Desk's cadence lever is still the founder's pick -- b…

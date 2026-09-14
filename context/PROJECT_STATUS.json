@@ -12,26 +12,26 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S352 closed a publisher cascade the cascade gate could not see (sitemap.xml was staged by the Desk publisher and never rebuilt), stopped the write-back probe from reporting regeneration commits as skipped closeouts, and gated unit-suite list parity; the edge sampler is routed to studio-ops via Ark to reuse its existing */30 cron.",
+  "currentFocus": "S353 fixed two scheduled publishers that failed on missing prerequisites (Vault Narrative never installed sharp; Weekly Maintenance staged an empty glob), made the narrative publisher publish grounded dispatches instead of preserving a 19-day-old one while reporting success, and gated both CI classes plus the proof-surface coverage gap.",
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
-  "nextMilestone": "Studio-ops answers Ark 01K2EQ77M9F29A0EC9619EA4BC: on accept, ship the sampler RPC entrypoint here while studio-ops adds the service binding, then drain and read back the first edge sample. Founder alternatives (free a cron slot, Workers Paid) remain.",
+  "nextMilestone": "The next Vault Narrative run publishes a grounded dispatch and passes --check-fresh; then model the 20 proof-surface generators, starting with build-release-dependencies. The edge sampler still waits on studio-ops answering Ark 01K2EQ77M9F29A0EC9619EA4BC.",
   "blockers": [
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
-    "[skip ci] publishers do not cascade their derived artifacts, so each one leaves sitemap/lqip/receipt/brief drift for the next session to pay by hand.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
     "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
-    "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
+    "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
+    "[skip ci] publishers still do not cascade every derived artifact: 20 proof-surface generators are outside the evidence graph (tracked as coverage baseline 20), so the cascade gate cannot see them yet."
   ],
   "lastUpdated": "2026-09-14",
-  "currentSession": 352,
+  "currentSession": 353,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-09-12",
-  "silScore": 986,
-  "silAvg3": 984,
-  "silVelocity": 3,
+  "truthAuditLastRun": "2026-09-14",
+  "silScore": 988,
+  "silAvg3": 986,
+  "silVelocity": 6,
   "silDebt": "down",
-  "silLastSession": 352,
+  "silLastSession": 353,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -89,16 +89,16 @@
   "silCategoriesV3": {
     "devHealth": 100,
     "creativeAlignment": 99,
-    "momentum": 95,
+    "momentum": 96,
     "engagement": 95,
     "processQuality": 100,
     "crossRepoCoherence": 100,
     "securityPosture": 100,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 98,
-    "automationCoverage": 99
+    "automationCoverage": 100
   },
-  "silCategoriesUpdatedSession": 352,
+  "silCategoriesUpdatedSession": 353,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-14",
@@ -237,7 +237,7 @@
   "testsLabel": "measured build:check steps",
   "publicNextStep": "Complete the staging-first release, then migrate uptime sampling without changing the public service-level agreement.",
   "doctorBlockingFailing": 0,
-  "lastAgent": "codex",
+  "lastAgent": "claude-code",
   "mobileParity": true,
   "mobileParityAttestedAt": "2026-09-09",
   "mobileParityEvidence": [
@@ -253,5 +253,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
   "testsSourceFingerprint": "03288cb46bc7b23374af224b",
-  "lastSessionSummary": "S352: sitemap strand closed structurally across 4 publishers via an evidence-graph node; write-back probe reads generated paths from the graph; unit-suite parity gated; sampler cron-reuse proposed to studio-ops via Ark."
+  "lastSessionSummary": "S353: Vault Narrative install + grounded dispatches + --check-fresh; Weekly Maintenance pathspec; new runtime-dependency and git-add-pathspec gates; coverage ratchet widened to check-proof-surface (72/92)."
 }

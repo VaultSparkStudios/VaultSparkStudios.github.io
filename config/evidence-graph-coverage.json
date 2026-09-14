@@ -1,9 +1,30 @@
 {
   "schemaVersion": "1.0",
   "note": "Ratchet baseline for evidence-graph coverage. This number may only DECREASE. Raising it means a --check-gated generator was added without modeling it, which makes resync-derived and check-publish-cascade-coverage silently blind to it.",
-  "unmodeled": 0,
-  "total": 67,
-  "unmodeledGenerators": [],
+  "unmodeled": 20,
+  "total": 92,
+  "unmodeledGenerators": [
+    "scripts/build-atlas.mjs",
+    "scripts/build-constellation-activity.mjs",
+    "scripts/build-cta-state.mjs",
+    "scripts/build-ecosystem-stats-page.mjs",
+    "scripts/build-forge-project-pages.mjs",
+    "scripts/build-hero-portfolio.mjs",
+    "scripts/build-intelligence-suite.mjs",
+    "scripts/build-leaderboard-subpages.mjs",
+    "scripts/build-og-coverage.mjs",
+    "scripts/build-oracle-answers.mjs",
+    "scripts/build-oracle-feedback-themes.mjs",
+    "scripts/build-oracle-query-insights.mjs",
+    "scripts/build-portfolio-counts.mjs",
+    "scripts/build-projects-catalog.mjs",
+    "scripts/build-proposed-edges.mjs",
+    "scripts/build-release-dependencies.mjs",
+    "scripts/build-route-consolidation.mjs",
+    "scripts/build-vault-momentum.mjs",
+    "scripts/build-velocity-series.mjs",
+    "scripts/generate-build-sha.mjs"
+  ],
   "checkContracts": {
     "scripts/build-intelligence-budget.mjs": {
       "level": "drift-comparing",

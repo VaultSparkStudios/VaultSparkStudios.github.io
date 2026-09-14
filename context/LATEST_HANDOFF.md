@@ -1,5 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S353 · 2026-09-14
+
+- **Shipped:** 7 improvements across 3 groups: publisher repair (Vault Narrative install, Weekly Maintenance pathspec), publisher honesty (shared grounding vocabulary with verified counts, held-publisher warning plus `--check-fresh`), gate coverage (runtime-dependency gate, zero-match pathspec gate, coverage ratchet widened to the proof surface).
+- **Tests:** build:check result in the S353 release addendum below · self-tests: narrative 15/15 (new), runtime deps 10/10 (new), pathspecs 8/8 (new), coverage 17/17 (+5).
+- **Deploy:** see the S353 release addendum. Staging first, then SCOPED promotion.
+
+**Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.
+
+**Triage:** not cut off. Tree clean, write-back current, 5 automation commits behind. Doctor `blockingFailing: 0`; its `sched-staleness` line (Vault Narrative 4 failures, Weekly Maintenance silent) became this session's audit.
+
+**Every S353 item came from reading run logs, not the board.** A scheduled workflow's conclusion is not its outcome: Vault Narrative was green for 13 days while it published nothing, then red for 4 while it committed nothing. Read the step output (`gh run view <id> --log`) before believing either colour.
+
+**First thing next session:** read the next Vault Narrative run (13:00 UTC). It should log `wrote api/vault-narrative.json (anchor:…)` and pass `--check-fresh`. If it rejects again, the log now prints the rejected text; fix the vocabulary, never the freshness limit.
+
+**Unchanged holds:** the edge sampler waits on studio-ops (Ark `01K2EQ77M9F29A0EC9619EA4BC` was drained, not answered). Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data policy, the warm-origin decision and Trusted Types enforce remain with the founder. The member SEO job now succeeds with 0 profiles; which member data is public is still the S336 founder decision.
+
 ## Where We Left Off — S352 · 2026-09-13
 
 - **Shipped:** 4 improvements across 3 groups: publisher cascades (sitemap node in the evidence graph, 4 publishers closed), probe honesty (the write-back check reads generated paths from the graph), gate coverage (unit-suite parity check).
