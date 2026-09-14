@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-14T01:09:09.524Z",
+  "generatedAt": "2026-09-14T02:59:52.718Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 351,
-    "lastUpdated": "2026-09-12",
-    "currentFocus": "S351 fully deployed content, staging and the Worker, and took the edge uptime sampler from \"held on a permission nobody re-tested\" to one blocked line: the KV namespace and binding are live in production, but the cron was refused because all 5 Workers Free cron slots belong to other projects.",
-    "nextMilestone": "A founder frees one of the five account cron slots or moves the account to Workers Paid; then enabling the sampler is a flag flip plus two uncommented lines, followed by drain-uptime-kv --dry-run to confirm samples land.",
+    "currentSession": 352,
+    "lastUpdated": "2026-09-14",
+    "currentFocus": "S352 closed a publisher cascade the cascade gate could not see (sitemap.xml was staged by the Desk publisher and never rebuilt), stopped the write-back probe from reporting regeneration commits as skipped closeouts, and gated unit-suite list parity; the edge sampler is routed to studio-ops via Ark to reuse its existing */30 cron.",
+    "nextMilestone": "Studio-ops answers Ark 01K2EQ77M9F29A0EC9619EA4BC: on accept, ship the sampler RPC entrypoint here while studio-ops adds the service binding, then drain and read back the first edge sample. Founder alternatives (free a cron slot, Workers Paid) remain.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 351,
+    "sessionsCompleted": 352,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -146,16 +146,16 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 99,
-      "momentum": 94,
+      "momentum": 95,
       "engagement": 95,
       "process": 100,
       "coherence": 100,
       "security": 100,
-      "ecosystem": 99,
-      "capital": 97,
+      "ecosystem": 100,
+      "capital": 98,
       "automation": 99,
-      "total": 983,
-      "updatedSession": 351
+      "total": 986,
+      "updatedSession": 352
     },
     "sealedNextRevealAt": null
   },

@@ -72,7 +72,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt
+          git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt
           git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh vault narrative [skip ci]"

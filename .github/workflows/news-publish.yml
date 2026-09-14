@@ -282,6 +282,12 @@ jobs:
           node scripts/build-newsroom-run.mjs
           node scripts/build-status-proof.mjs
           node scripts/build-citation.mjs
+          # S352 cascade-resync: this step always staged sitemap.xml but never
+          # rebuilt it, so every new story reached production absent from the
+          # sitemap until a human session regenerated it (midday 2026-09-12 was
+          # the observed strand). The evidence graph now models sitemap <- news/.
+          node scripts/generate-sitemap.mjs
+          node scripts/generate-sitemap.mjs --check
           # S324 cascade-resync: this cron commits api/news-desk-stats.json,
           # api/status-proof.json and api/news-desk.json — sources of the CANON-054
           # public stats surface and the CANON-048 intent map. Re-derive both here

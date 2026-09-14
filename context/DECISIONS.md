@@ -1804,3 +1804,21 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** content and Worker were promoted by `workflow_dispatch` with `confirm_production=true`, on the SCOPED path (`promotable=true · scoped-disjoint`), with staging redeployed first.
 
 **Why it needed saying:** the push-triggered runs of both workflows reported **success while deploying nothing** — they evaluate the promotion interlock, take the "Promotion held — no production mutation" branch, and skip every deploy step. A green check on a push is not evidence that anything reached production. Verification here was the served bytes (`days-since-launch` 191 → 192 on the live apex) and the deployed Worker's own binding list, never the workflow's conclusion.
+
+## D-S352.1 — A publisher's derived page is modeled in the graph, not fixed in one workflow
+
+**Decision:** the stale sitemap was fixed by adding `sitemap <- news/` to `config/evidence-graph.json` and letting `check-publish-cascade-coverage` name every publisher that strands it, not by adding one line to `news-publish.yml`. The gate was run against the unedited workflows first, and it named four.
+
+**Why:** a one-line fix would have repaired the publisher that was seen and left three unseen ones (`refresh-live-data`, `rum-pull`, `vault-narrative`) able to strand the same file. The cascade gate reported "all closed" only because the graph had no edge to check. Modeling the edge makes every current and future publisher answer to it.
+
+## D-S352.2 — Generated paths come from the evidence graph, with two exclusions
+
+**Decision:** `check-writeback-currency` treats a path as generated when it matches the existing receipt patterns, is under `.cache/`, or is a non-HTML, non-`sharedOutput` evidence-graph output. An unreadable graph yields an empty set.
+
+**Why:** the regex list is a second copy of knowledge the graph already holds, and it went stale the way copies do (S320 subject lists, now S352 paths). HTML pages and shared outputs are excluded because a person also edits them; counting `index.html` as generated would hide real homepage work. If the graph fails to load, the check reports debt rather than hiding it.
+
+## D-S352.3 — The edge sampler is routed through an existing cron by proposal, not shipped dark
+
+**Decision:** the website does not yet ship a sampler RPC entrypoint. An Ark `agent-handoff` asks studio-ops to invoke the sampler from `studio-ops-cron`'s existing `*/30` trigger via a service binding. This repo ships its half only when studio-ops accepts.
+
+**Why:** the cron cap was recorded as founder-only (retire another project's cron, or pay). A third option, reusing a trigger that already exists, needs no billing and no new slot, but it crosses into another repo, so under CANON-018 it goes as cargo. Shipping the entrypoint now would add Worker surface nothing calls, and would force a `cloudflare:workers` import shim into the node-run unit tests with nothing gained.

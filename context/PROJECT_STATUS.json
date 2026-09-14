@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S351 fully deployed content, staging and the Worker, and took the edge uptime sampler from \"held on a permission nobody re-tested\" to one blocked line: the KV namespace and binding are live in production, but the cron was refused because all 5 Workers Free cron slots belong to other projects.",
+  "currentFocus": "S352 closed a publisher cascade the cascade gate could not see (sitemap.xml was staged by the Desk publisher and never rebuilt), stopped the write-back probe from reporting regeneration commits as skipped closeouts, and gated unit-suite list parity; the edge sampler is routed to studio-ops via Ark to reuse its existing */30 cron.",
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
-  "nextMilestone": "A founder frees one of the five account cron slots or moves the account to Workers Paid; then enabling the sampler is a flag flip plus two uncommented lines, followed by drain-uptime-kv --dry-run to confirm samples land.",
+  "nextMilestone": "Studio-ops answers Ark 01K2EQ77M9F29A0EC9619EA4BC: on accept, ship the sampler RPC entrypoint here while studio-ops adds the service binding, then drain and read back the first edge sample. Founder alternatives (free a cron slot, Workers Paid) remain.",
   "blockers": [
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
@@ -23,15 +23,15 @@
     "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
   ],
-  "lastUpdated": "2026-09-12",
-  "currentSession": 351,
+  "lastUpdated": "2026-09-14",
+  "currentSession": 352,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-12",
-  "silScore": 983,
-  "silAvg3": 983,
-  "silVelocity": 4,
+  "silScore": 986,
+  "silAvg3": 984,
+  "silVelocity": 3,
   "silDebt": "down",
-  "silLastSession": 351,
+  "silLastSession": 352,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -89,19 +89,19 @@
   "silCategoriesV3": {
     "devHealth": 100,
     "creativeAlignment": 99,
-    "momentum": 94,
+    "momentum": 95,
     "engagement": 95,
     "processQuality": 100,
     "crossRepoCoherence": 100,
     "securityPosture": 100,
-    "ecosystemIntegration": 99,
-    "capitalEfficiency": 97,
+    "ecosystemIntegration": 100,
+    "capitalEfficiency": 98,
     "automationCoverage": 99
   },
-  "silCategoriesUpdatedSession": 350,
+  "silCategoriesUpdatedSession": 352,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-09-12",
+    "date": "2026-09-14",
     "passing": 14,
     "warning": 1,
     "failing": 1,
@@ -253,5 +253,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
   "testsSourceFingerprint": "03288cb46bc7b23374af224b",
-  "lastSessionSummary": "S350: recovery of 50f13941 plus four of five audit items shipped; the edge uptime sampler stays dark because creating its KV namespace needs a founder permission."
+  "lastSessionSummary": "S352: sitemap strand closed structurally across 4 publishers via an evidence-graph node; write-back probe reads generated paths from the graph; unit-suite parity gated; sampler cron-reuse proposed to studio-ops via Ark."
 }

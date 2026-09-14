@@ -107,11 +107,48 @@ export const GENERATED_PATH_RES = [
   /^docs\/FRONTIER_CAPABILITY_RADAR\.md$/i,
   /^docs\/CLOSEOUT_CHECKLIST\.md$/i,
   /\.lock$/i,
+  // S352: tool-written session telemetry (context-meter, skill-costs, triggers).
+  /^\.cache\//i,
 ];
 
-export function isGeneratedPath(file = '') {
+/**
+ * S352 (found live): the regex list above is an enumeration, and it failed the
+ * way enumerations do. `c29a1b0f chore(release): regenerate derived artifacts
+ * after second publisher rebase` touched 35 files, every one written by a
+ * generator, and was reported as WRITE-BACK DEBT because brand/assets.json,
+ * data/stats-surface.json, feed/forge-ledger.* and stats.json matched no pattern.
+ *
+ * The evidence graph already declares what every generator writes, so read the
+ * answer from it rather than growing the list. Two exclusions keep it from
+ * laundering real work: HTML pages (a generator writes a fragment of a page a
+ * person also edits) and any `sharedOutput` (more than one writer). If the graph
+ * cannot be read the set is empty, which errs toward reporting debt.
+ */
+export function graphGeneratedOutputs(graph) {
+  const out = new Set();
+  for (const node of Array.isArray(graph?.nodes) ? graph.nodes : []) {
+    if (node.sharedOutput === true) continue;
+    for (const p of [node.output, ...(node.alsoStage || [])]) {
+      if (typeof p === 'string' && p && !/\.html?$/i.test(p)) out.add(p.replace(/\\/g, '/'));
+    }
+  }
+  return out;
+}
+
+let graphOutputsCache = null;
+function repoGraphOutputs() {
+  if (graphOutputsCache) return graphOutputsCache;
+  try {
+    graphOutputsCache = graphGeneratedOutputs(JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'evidence-graph.json'), 'utf8')));
+  } catch {
+    graphOutputsCache = new Set();
+  }
+  return graphOutputsCache;
+}
+
+export function isGeneratedPath(file = '', graphOutputs = repoGraphOutputs()) {
   const p = String(file).replace(/\\/g, '/');
-  return GENERATED_PATH_RES.some((re) => re.test(p));
+  return GENERATED_PATH_RES.some((re) => re.test(p)) || graphOutputs.has(p);
 }
 
 /**
@@ -318,6 +355,28 @@ export function selfTest() {
     ['a receipt commit that ALSO touches source stays substantive',
       () => isSubstantiveCommit({ sha: 'r2', isoDate: old, subject: 'chore: bind staging release receipts',
         files: ['api/status-proof.json', 'assets/app.js'] }) === true],
+    // S352 regression: the real file list of c29a1b0f, a regeneration-only commit
+    // the regex enumeration reported as write-back debt.
+    ['a regeneration-only commit is churn via the evidence graph (c29a1b0f)',
+      () => isSubstantiveCommit({ sha: 'c29a1b0f', isoDate: old, subject: 'chore(release): regenerate derived artifacts after second publisher rebase',
+        files: ['.cache/context-meter.json', 'api/status-proof.json', 'assets/shell-manifest.json', 'brand/assets.json',
+          'context/ambient-ledger.json', 'data/stats-surface.json', 'docs/STARTUP_BRIEF.md', 'feed/forge-ledger.json', 'feed/forge-ledger.xml', 'stats.json'] }) === false],
+    // Fail direction: without the graph the same commit must count as debt, so an
+    // unreadable graph can only over-report, never launder.
+    ['with no graph the same commit is substantive (errs toward debt)',
+      () => ['brand/assets.json', 'feed/forge-ledger.xml', 'stats.json'].some((f) => isGeneratedPath(f, new Set()) === false)],
+    ['graph outputs exclude HTML pages and shared outputs',
+      () => {
+        const g = graphGeneratedOutputs({ nodes: [
+          { output: 'data/x.json', alsoStage: ['data/x.ndjson'] },
+          { output: 'evidence/index.html' },
+          { output: 'membership/index.html', sharedOutput: true },
+          { output: 'sitemap.xml' },
+        ] });
+        return g.has('data/x.json') && g.has('data/x.ndjson') && g.has('sitemap.xml') && !g.has('evidence/index.html') && !g.has('membership/index.html');
+      }],
+    ['a homepage edit stays substantive even though a generator writes into it',
+      () => isSubstantiveCommit({ sha: 'h1', isoDate: old, subject: 'fix(home): hero copy', files: ['index.html', 'api/status-proof.json'] }) === true],
     ['hand-written write-back surfaces under context/ are NOT treated as generated',
       () => isGeneratedPath('context/CURRENT_STATE.md') === false && isGeneratedPath('context/contracts/hub.json') === true],
     // The regression this fix exists for. Before S320 this returned ok:true.

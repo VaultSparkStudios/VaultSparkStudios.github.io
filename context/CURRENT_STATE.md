@@ -1,8 +1,20 @@
 # Current State
 
-Last updated: 2026-09-12 (S351)
+Last updated: 2026-09-13 (S352)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S352 a publisher that staged the sitemap and never rebuilt it (2026-09-13)
+
+**New stories were reaching production missing from `sitemap.xml`.** `news-publish.yml` listed `sitemap.xml` in its `git add` but its cascade step never ran `generate-sitemap.mjs`. The midday edition of 2026-09-12 published `/news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/` and the sitemap did not list it. `generate-sitemap --check` was red on a freshly pulled `origin/main`. The publisher now rebuilds and checks the sitemap in the same commit.
+
+**Why the cascade gate said "all closed".** `check-publish-cascade-coverage` reads its edges from `config/evidence-graph.json`, and the graph had no sitemap node, so there was nothing for it to check. The graph now models `sitemap <- news/` (81 nodes). With the graph fixed and no workflow edited yet, the gate named four publishers, and all four are now closed: `news-publish` and `rum-pull` never rebuilt the sitemap, while `refresh-live-data`, `rum-pull` and `vault-narrative` staged `news/` without staging it. The self-test fixture was widened the same way as S319/S328, and two new mutation cases show it still fails when it should (23/23).
+
+**The write-back check no longer reports regeneration as unfinished work.** It flagged `c29a1b0f`, a regeneration-only commit, because its hand-written generated-path list did not match `brand/assets.json`, `data/stats-surface.json`, `feed/forge-ledger.*`, `stats.json` or `.cache/*`. It now takes the generated set from the evidence graph, excluding HTML pages and `sharedOutput` nodes so a homepage edit still counts as work. If the graph is unreadable the set is empty, so the error goes toward reporting debt. Self-test 15/15, including the real `c29a1b0f` file list.
+
+**Unit-suite lists are now gated.** `scripts/check-unit-suite-parity.mjs` requires `test:unit` specs = specs run by `build:check` = git-tracked `tests/*.unit.spec.js`. It runs in `build:check:steps` right before `node --test`, and exits 3 when it cannot measure. Self-test 9/9. A live mutation (one spec removed from `test:unit`) fails and names the file.
+
+**Edge sampler: an agent path around the cron cap, sent and not yet shipped.** `studio-ops-cron` already fires every 30 minutes. An Ark `agent-handoff` to studio-ops proposes it call the website Worker through a service-binding RPC entrypoint, so no new trigger is needed. Nothing in this repo changed for it: an entrypoint with no caller does nothing yet. The sampler stays dark and `/status/` still reports the edge as UNMEASURED.
 
 ## S351 the edge is now sampled from inside the edge (2026-09-12)
 

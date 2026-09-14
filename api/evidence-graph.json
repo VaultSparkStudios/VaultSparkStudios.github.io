@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "542680b052f82c3b8726f132c42b59ce83ecaa04355dd22cf15366fff76d91f5",
+  "contractSha256": "96ee18855e5e1258c0975293805211a8ddd3086969d4ce76aed3ab4a61531d0d",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 80,
-  "cascadeNodeCount": 38,
+  "nodeCount": 81,
+  "cascadeNodeCount": 39,
   "buildOrder": [
     "ai-canonical-pages",
     "ambient-bundles",
@@ -49,6 +49,7 @@
     "public-intelligence",
     "rank-climbers",
     "site-health",
+    "sitemap",
     "surface-spine",
     "tt-readiness",
     "tt-summary",
@@ -1286,6 +1287,18 @@
       "externalSources": [
         "api/funnel-summary.json",
         "data/rum-summary.json"
+      ]
+    },
+    {
+      "id": "sitemap",
+      "output": "sitemap.xml",
+      "builder": "scripts/generate-sitemap.mjs",
+      "verify": "node scripts/generate-sitemap.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "news/"
       ]
     },
     {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-11T20:42:06.246Z",
+  "capturedAt": "2026-09-14T02:44:29.278Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "c63d4c0ff095371534ac7325065be5e3778dc7c35c1768ff4c7f6776aab71934",
+    "sha256": "561dc1835b6847d11681e062a76a75fb00f5f8fcd28e574a5056b62f0f2e02de",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -37,12 +37,14 @@
       "assets/style.css",
       "assets/vault-genome-strip.js",
       "assets/visit-depth.js",
-      "community/index.html",
-      "contact/index.html",
+      "atlas/index.html",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "journal/index.html",
+      "evidence/index.html",
+      "games/index.html",
+      "index.html",
+      "membership/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -52,6 +54,7 @@
       "scripts/generate-news-pages.mjs",
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
+      "status/index.html",
       "tests/attention-surfaces.spec.js",
       "vault-member/portal-auth.js",
       "vault-member/portal-dashboard.js",
@@ -144,12 +147,8 @@
         "sha256": "a38df720d1d72356469962a43fe61f9750cc2defc7417a44f8a0016f9c72a765"
       },
       {
-        "path": "community/index.html",
-        "sha256": "819c8adbd5a516ee84aa5bbf48ef07e8dcfee695b64af097aef151a47ba53874"
-      },
-      {
-        "path": "contact/index.html",
-        "sha256": "9c24fc6a24946aee39d54107523b857193e8fa94d16546e4136030b24ecf7c05"
+        "path": "atlas/index.html",
+        "sha256": "41ee2ee4d9318259759426dbe0a2ed8700da945e2f347ff70801c8c3a9170ab7"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -164,8 +163,20 @@
         "sha256": "bf41229dcd95fbae0258fd3450364442c42bd7eadea01bb712fd510eb45b44b4"
       },
       {
-        "path": "journal/index.html",
-        "sha256": "d1a85b44870e3e1cd74ec0c3f05bf5aa298c4e1d869821264c8cd7ea10a539c7"
+        "path": "evidence/index.html",
+        "sha256": "f2c8d61b2a0e356bde3be522b7e378d57121340750e0c3d247521e775fb50a02"
+      },
+      {
+        "path": "games/index.html",
+        "sha256": "06ec5631f654dd3694db9abe5d73ff73a53838a84ef670c56842b21986074a2c"
+      },
+      {
+        "path": "index.html",
+        "sha256": "255969efb92bed05a41cd846af8d9c3ccc3aa2d1648c083bdafe19562bf70c18"
+      },
+      {
+        "path": "membership/index.html",
+        "sha256": "11dfbb9726d8c4bc32e5e36ad091f506b0216fbcfd0e2cd4f70544365ab3364d"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -204,6 +215,10 @@
         "sha256": "083ef07527f0279e6e34d1e7cc821385ebb27830ae4bafcb5eabf292dd0df01f"
       },
       {
+        "path": "status/index.html",
+        "sha256": "4dbb75ac0eb2ef6d425199a18069db9b03fbf83bdb66db1e3e214907a949d4e5"
+      },
+      {
         "path": "tests/attention-surfaces.spec.js",
         "sha256": "e793143a236358e72625f5a046e16148f4d08102b3787c9af1b0e3233101e8d7"
       },
@@ -227,15 +242,18 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "594baf4378c7ebe67802a5c231e9098bed14492c85ae5af2003c9a838c629986",
-    "candidateSha": "ef7a3673f26cfb1ce8a6af4f7106a46c88a4ab8d",
-    "root": "71b72da41a839e7e4ee12ec36d24496f344c33c58bb96d0674e5e20f36a1a28a"
+    "manifestSha256": "ae8bc9e57dca000d7b1f8518c07dd7ab47a645718094dd92dda374b6b1ae09c1",
+    "candidateSha": "50a4791c547c6fbdd9b23362d94a944d9a7a5574",
+    "root": "dc959012ce20356ba652ae880ebd68ee7e3afa0530df7c6f286bbe3853cc3af6"
   },
   "matrix": {
     "routes": [
-      "/community/",
-      "/journal/",
-      "/contact/"
+      "/",
+      "/games/",
+      "/membership/",
+      "/status/",
+      "/evidence/",
+      "/atlas/"
     ],
     "themes": [
       "dark",
@@ -261,21 +279,20 @@
     "states": [
       "page"
     ],
-    "expectedCaptures": 42,
-    "completedCaptures": 42
+    "expectedCaptures": 84,
+    "completedCaptures": 84
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 42,
-      "manuallyReviewed": 42,
+      "totalCaptures": 84,
+      "manuallyReviewed": 84,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5 (S350)",
+    "reviewer": "claude-code S352",
     "findings": [
-      "Demoted h2 headings keep their prior sans look; Contact inputs now 48px (were 22px) with centred placeholders; no contrast or overlap defects in dark, light, lava, high-contrast or cool.",
-      "All 42 captures opened (3 routes x 7 themes x desktop/mobile). Demoted h2 headings keep their prior sans look in every theme; Contact inputs render at 48px (were 22px) with centred placeholders; no contrast, clipping or overlap defects. One capture-timing anomaly: community dark desktop shows the stats placeholder dash before the counts load; the same page shows 7/0 in the other six themes."
+      "No UI changed in S352 (tooling, workflows, sitemap only). Inspected home light desktop, home dark mobile, status high-contrast desktop, membership lava mobile, evidence light mobile, games warm desktop, atlas cool mobile: text legible on every theme, no black-on-black or light-on-light, header/nav intact, no overlap or collapsed layout; only truncation is the intended hero forge-line ellipsis."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -290,13 +307,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--dark--desktop.png",
-      "sha256": "7318c50abeae2c6cc5e7a78334e8930ba409dcacf521117bbd1f51d1ca30e5db",
-      "page": "/community/",
+      "file": "home--dark--desktop.png",
+      "sha256": "91465617c3b74e83c450a30ea9e033bbb23d29b21de245f9c9d544489e4e9050",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -307,13 +324,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--dark--desktop.png",
-      "sha256": "26e88d8866ef22759113b787b2da807ec21cbe1544d3361f633b4f5158cef9b4",
-      "page": "/journal/",
+      "file": "games--dark--desktop.png",
+      "sha256": "b241767a38c2a517ef79d98a53a065e38f323d5ca0e90fcbf7c30c81d5d4d4f8",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -324,13 +341,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--dark--desktop.png",
-      "sha256": "581bca6c274b0e89b97ac36ce3323d4a7a93bf38bbb8b2bbe870ffa53d1327e8",
-      "page": "/contact/",
+      "file": "membership--dark--desktop.png",
+      "sha256": "b968972a3ce4f6c3198ca9fc75038e119b140c2e3e18ee0f591934308f9d0584",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--dark--desktop.png",
+      "sha256": "a70bd59d4772d8573cad91ef8627da8e6dcffb285c63dea2d64e4242c097410c",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--dark--desktop.png",
+      "sha256": "0dcae281f0735d1544347629e30a7a0a3d986b1d3faf39bdfc2d9046d01a2aa6",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--dark--desktop.png",
+      "sha256": "8ed08b00ec90be7c1d61d72775f1cf766abc5b67f52be308dfab48a38207c414",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -341,13 +409,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--light--desktop.png",
-      "sha256": "ff34911eefeabd5362cb291dbf9c4c591ce5321499a1db32bfb4e84c8e6d5edc",
-      "page": "/community/",
+      "file": "home--light--desktop.png",
+      "sha256": "0490bd898bfdb7c0c9da6fb3cd86dc31a7bdb1b5fff994e2c849cdc54a04c239",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -358,13 +426,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--light--desktop.png",
-      "sha256": "fad36588444b02985f55142e393ff431151d3a0641780c225054ab5f4ed68408",
-      "page": "/journal/",
+      "file": "games--light--desktop.png",
+      "sha256": "387d7b6daa41508e8ff7bd15380efcca5a5802ba52fc9a47e9e6d7ad139a1ec2",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -375,13 +443,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--light--desktop.png",
-      "sha256": "864666893f2b6ef71ac9d6b484ada3a2babf84fc662b6abeca6fe432018918ce",
-      "page": "/contact/",
+      "file": "membership--light--desktop.png",
+      "sha256": "5ffc75088257ddcd3781c4cb255b6ff475324424e56b91579868d5ec70529b54",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--light--desktop.png",
+      "sha256": "bdb46d0cf9c173dbe214b57f6b2da25b414d53884ec1e33b716ddaa8f2589352",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--light--desktop.png",
+      "sha256": "c29623d41436960f360c0eaa7bcffa9dd26546a150f2d8e9e3d6800ae36b3a89",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--light--desktop.png",
+      "sha256": "24114d8b29dd43e031e7f754afa4340e7eaaad1dc99311fa9f74b4524c1c827a",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -392,13 +511,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--ambient--desktop.png",
-      "sha256": "f0322e19aaea3841599f31518dd1b1d673e0dabd6a449a3b51848a17eadb19cf",
-      "page": "/community/",
+      "file": "home--ambient--desktop.png",
+      "sha256": "c1534547d87ff03fe4ab7d900a3df2d38b38604f5967df2dd831856d3e8afa06",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -409,13 +528,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--ambient--desktop.png",
-      "sha256": "77f0327d2d535454d04730a5da4730e310c519f56fe2f720666a15d8e7282834",
-      "page": "/journal/",
+      "file": "games--ambient--desktop.png",
+      "sha256": "cc1050255d36b4b006a74c8efc92104fc5a3bb57a287b5661f54302af433973f",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -426,13 +545,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--ambient--desktop.png",
-      "sha256": "850b2f1f1da3079135ac1a433a5500b725e921e88dffc8a0df9219ca44cfdf7f",
-      "page": "/contact/",
+      "file": "membership--ambient--desktop.png",
+      "sha256": "a0790a72e24197bb5071276a2858c11fce9cd68e174a4fbc601807ca123159ce",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--ambient--desktop.png",
+      "sha256": "711070b7eb2b60b170443411f539e3b110693a0a4fa46f1d5dc295197a45d7b6",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--ambient--desktop.png",
+      "sha256": "02477daae845e2b15ade05d61d0310bfca51de9d70a984f381c5684a96bcab26",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--ambient--desktop.png",
+      "sha256": "709282b6a404e8530645d31b6d00fba3dc1820549062927760159d2750a8b8f8",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -443,13 +613,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--warm--desktop.png",
-      "sha256": "322dbdce38393a3ed6f0c58bc372354f5df8b1ed6a4cdde4dcf861438a5244c1",
-      "page": "/community/",
+      "file": "home--warm--desktop.png",
+      "sha256": "8867a5f2439912c5854342dbd991a8cf8316f0e7c10df6611c903809758af184",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -460,13 +630,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--warm--desktop.png",
-      "sha256": "01dbe034696c9c41d255b4ccd2655b224ee8bc30f876c5707900aa907e31347f",
-      "page": "/journal/",
+      "file": "games--warm--desktop.png",
+      "sha256": "d4633013d0fdbd225c9d0c9c642ec5494a664fad97929d0aefc472cc8d732a85",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -477,13 +647,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--warm--desktop.png",
-      "sha256": "08059377851ce7041f4d45631e55e34200b2f21d80c1bf26a6cc491b6cd1a68d",
-      "page": "/contact/",
+      "file": "membership--warm--desktop.png",
+      "sha256": "35b1b96d1debc2a2b3dce667ab5a14b02d77f7ee464c7d24dfe09a5da7663504",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--warm--desktop.png",
+      "sha256": "c766422ed6174c643f6c58638ab22c5c34fb89490aa0cc286c96e5e78de1ac98",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--warm--desktop.png",
+      "sha256": "34197f04b4fd9f7fb5dfbb2c5607c35f56d1fd81e69879e22be8dc4f2b941fb1",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--warm--desktop.png",
+      "sha256": "40a0567a573e814c811758ebf121cb82a63a4b99f5bf11d363cb23dd37f8f3f6",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -494,13 +715,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--cool--desktop.png",
-      "sha256": "03a2b68065508f18ac4fdc24dbeef3fed9df24bce288e69811be0e284fac2c91",
-      "page": "/community/",
+      "file": "home--cool--desktop.png",
+      "sha256": "5b5c7370326ee9553848c5c932fcda61e4e5826190014b505b65b1376b8f2ab5",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -511,13 +732,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--cool--desktop.png",
-      "sha256": "cc80dc372f355841f81dd26c242f6c0c1e19e05554e3535a1400aba5db087061",
-      "page": "/journal/",
+      "file": "games--cool--desktop.png",
+      "sha256": "e9ceb096a297a059f0eaaaf01c2ff73120e343bfb9b68b2ad12ff38b05bf6a8f",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -528,13 +749,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--cool--desktop.png",
-      "sha256": "bbb37ed80dc1405ba0c3284a7cc8b1db7b5689113fc0ae99d21c0e0c21ae1fab",
-      "page": "/contact/",
+      "file": "membership--cool--desktop.png",
+      "sha256": "ed4ad885197d334fec1015e70c99c96fbc1970ed37cdad0daaabc3ff7d105ee3",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--cool--desktop.png",
+      "sha256": "1ec7523c56679f6f66e8a84f39ddc187f55f33c1540fc635b656e20ca041019f",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--cool--desktop.png",
+      "sha256": "b08c367c3ec421767dd2e550f92507b92bfa4f4792f13b700bb980b405a5c21b",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--cool--desktop.png",
+      "sha256": "26a287c4e0a85dc1720753abe47e0919952d487940487929c858192890bc5801",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -545,13 +817,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--lava--desktop.png",
-      "sha256": "e04c1012da87e2ca66502ba31eb3a0f04482753762492951c0e3ca19cc0f65b0",
-      "page": "/community/",
+      "file": "home--lava--desktop.png",
+      "sha256": "51627f1ecca5f64b1e8417c5745ebb81384b47cf5586f9651138c12466467867",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -562,13 +834,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--lava--desktop.png",
-      "sha256": "79a1cb6a2c57ee939aa410c0f6df5d3d56a8d1719e9361f48f2b239b1098f7da",
-      "page": "/journal/",
+      "file": "games--lava--desktop.png",
+      "sha256": "38683fbb7652104082875d51a954e5ff57e6bd250dc6fa762296b99b0d508ebd",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -579,13 +851,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--lava--desktop.png",
-      "sha256": "a96aea93ad6ea537264c21e6396f14ba56b447a4923b396ced51f7aa85e0665a",
-      "page": "/contact/",
+      "file": "membership--lava--desktop.png",
+      "sha256": "bd894d82326823d3b3d92bcdd65fbc275c0b8ee8eac159f9b5679a6f18402d72",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--lava--desktop.png",
+      "sha256": "d59f67aac1f034debc449516ce3f69eee75f7252bbf771cef7d3eb2e54542565",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--lava--desktop.png",
+      "sha256": "d27fe393d5870c1678c98be7664b03f9e0b47169ddcee8d2debfdfdcb71ed1c6",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--lava--desktop.png",
+      "sha256": "a1427a9ab6f90d83b7b4998db5ed497cd842b9d05840c4baafdc13d64cb2f629",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -596,13 +919,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "community--high-contrast--desktop.png",
-      "sha256": "8a3e710db97ca6c3f5233c60ce1808f5df64382e176fb84d4573697d3c60e9d8",
-      "page": "/community/",
+      "file": "home--high-contrast--desktop.png",
+      "sha256": "ee01ed21f90b9dda639974b8677b4a4a3bb2012824d67ecd8a1ab220448832b5",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -613,13 +936,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journal--high-contrast--desktop.png",
-      "sha256": "adc8de70a73e0c27617fb01b5f358819e0120bf8b0bdcf696596787bc853b7b9",
-      "page": "/journal/",
+      "file": "games--high-contrast--desktop.png",
+      "sha256": "a7b2e6279af9e6f7e54cd24cb14c228bbbedb2215ac6b333ee0f929750d40e27",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -630,13 +953,64 @@
         "width": 1366,
         "height": 900
       },
-      "file": "contact--high-contrast--desktop.png",
-      "sha256": "ccd5f0d474487f1559ad482b2eb2bcd666792ec137454008a03001af4a20f356",
-      "page": "/contact/",
+      "file": "membership--high-contrast--desktop.png",
+      "sha256": "76a2151ce3654fc08ee1fc176995f4b09068ee19e7f4519ff94fc3d2357c40d6",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--high-contrast--desktop.png",
+      "sha256": "352d9b34f569fa8d050b0333774c4ba0db9e1f7c3e3b964723250061ef4241fe",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "evidence--high-contrast--desktop.png",
+      "sha256": "4ffb45b0c487ee82e5c266e0a67f4f0ea9f05bc8aea22cda8530d74db224f791",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--high-contrast--desktop.png",
+      "sha256": "ba70ee693afd165b3091ddf247311471d82d043e169161fea0adca92ddd311a5",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -647,13 +1021,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--dark--mobile.png",
-      "sha256": "99d4469cdc7947a1321ae0f07d40012c3daa1b4cd6867a81f6502f9c95f1071c",
-      "page": "/community/",
+      "file": "home--dark--mobile.png",
+      "sha256": "a2d874231f43d6059511ab0f1944fb6a19a09ba4b5197180b99ee798f1d56a55",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -664,13 +1038,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--dark--mobile.png",
-      "sha256": "904ccc3a49f67a3284767f72e2de08576964755e875ff6f0fafe51ccd3e416c3",
-      "page": "/journal/",
+      "file": "games--dark--mobile.png",
+      "sha256": "3466b58162c732d1a0c584e1a69d1d5aa02c5543c4601c3f435f43b4aabd645c",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -681,13 +1055,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--dark--mobile.png",
-      "sha256": "eb0f02eea6fe0659cf952108b0b65869d863e7044f51667692eb8cb9a15b75e4",
-      "page": "/contact/",
+      "file": "membership--dark--mobile.png",
+      "sha256": "bfebe7709dbf42e4d65d6de1f16bbb0a7cb9988955b3a3b4c8e6190faf027371",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--dark--mobile.png",
+      "sha256": "174a91f1f909640a317e57e412e5202271b594a0ac082466c45a65b519b00b8a",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--dark--mobile.png",
+      "sha256": "f82f09197b4306633b18cc1806f02cf84070a9748ba7a1ce514ff62964efe74c",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--dark--mobile.png",
+      "sha256": "b4c93ef9557dd750e1b08b7348d3b2501f8a1c485249c34e96854cdb3bd4878b",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -698,13 +1123,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--light--mobile.png",
-      "sha256": "b3c4a7858d7c9761ff2472fd08e928be8fd8866cf9933906e3a474bc84aac9dc",
-      "page": "/community/",
+      "file": "home--light--mobile.png",
+      "sha256": "a7edc0fadb3ab4d979606f077a8938e2110692b39e181412fe55a12a1b12a793",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -715,13 +1140,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--light--mobile.png",
-      "sha256": "a20bb02229ca92cdce12c0c61d45f6d0d2452510788d94b61c64154bf515e950",
-      "page": "/journal/",
+      "file": "games--light--mobile.png",
+      "sha256": "7c37a754c919545ff4be03b89f5dcc2abb87bb75576e255a5702de13ce2e0949",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -732,13 +1157,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--light--mobile.png",
-      "sha256": "40c03d8144decc4eb2dd64606b131499b07084cd391f483b6361fecd1c205479",
-      "page": "/contact/",
+      "file": "membership--light--mobile.png",
+      "sha256": "6b8e0474691d93ea0b6be02e92efe7e73c15a0d39d2c7a3931d313bf3afcaff6",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--light--mobile.png",
+      "sha256": "b56f118bfb8662c7b9ff66e183ae7020caf4a1dff695b6ffc690f136944fba96",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--light--mobile.png",
+      "sha256": "6e9e78d94055a5ec12123b7440762816fa5d284823bedfa7d1d94879e80064e4",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--light--mobile.png",
+      "sha256": "bba27d3d5ff9f5a09bab8e0d8a9759c1318368aa74b5cd598940b4d784e58da7",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -749,13 +1225,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--ambient--mobile.png",
-      "sha256": "a6db4a5bd2cae653c7adfb1cd4f345a16ec4c557ce933fec229bd0ddbb2e0192",
-      "page": "/community/",
+      "file": "home--ambient--mobile.png",
+      "sha256": "15531d81808e718f6ac84c642869cf60626a51f1b612daadf437a3d7c21d862e",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -766,13 +1242,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--ambient--mobile.png",
-      "sha256": "6bfb3d05ec9ab03c0fcc3fc2a852973b6482d69d24927444a3769e02e49f4628",
-      "page": "/journal/",
+      "file": "games--ambient--mobile.png",
+      "sha256": "8cd953014d28c404759f6044db2b7ccf010d2b1aabc09ef6f3918513931d9ca7",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -783,13 +1259,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--ambient--mobile.png",
-      "sha256": "95b2c53371534cf3d031e6d0a9e6925cc77b1104092aae5a2ffd92423ef5b4fc",
-      "page": "/contact/",
+      "file": "membership--ambient--mobile.png",
+      "sha256": "832705e7500469bb25c67e76f8a9681fedf4376b2e839e2c824c848ad8db7700",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--ambient--mobile.png",
+      "sha256": "3c909567d70512aaf3421eeaa7b943b9a7ff4521fe82d146b6e154d73cc7adb5",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--ambient--mobile.png",
+      "sha256": "9766eb0b9208836490e142a414debe567a674ca3b724ae72c56e562d9bdd6b6b",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--ambient--mobile.png",
+      "sha256": "986565d3892024e0e6c44ec3dbd98e08e127b05dacaa4a05d8d468ec392476d1",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -800,13 +1327,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--warm--mobile.png",
-      "sha256": "bbb1380defb83d75d922be2f970dd26a9c9e57161b17512abe4e0f5a01ade121",
-      "page": "/community/",
+      "file": "home--warm--mobile.png",
+      "sha256": "262a53bd6ac2882bfb6616d12598e58be9c4a616198af6bdc764c26a239e635b",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -817,13 +1344,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--warm--mobile.png",
-      "sha256": "96ea4c40cf2e224f97fa0677d624776ca91d46c6d438a8780b576d1922fdc469",
-      "page": "/journal/",
+      "file": "games--warm--mobile.png",
+      "sha256": "b8f34431cb8aae08f3394cf8f5b540a388d1dd9ea585c1836a13eaf8b0549737",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -834,13 +1361,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--warm--mobile.png",
-      "sha256": "ee4e5175919370bc41762b092109ce0f4832943fffb71c06c7fb76921ac0914b",
-      "page": "/contact/",
+      "file": "membership--warm--mobile.png",
+      "sha256": "143cebb1e9a1ffad1dc23e7eefc25b48e39607c7176bf2e3a76d67c768b16228",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--warm--mobile.png",
+      "sha256": "c20934723acc78d03a60b0659f5c33662cba63803804281688a389f1f629b18f",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--warm--mobile.png",
+      "sha256": "b3224badaa0b04d36503678a27c8f44b7c8e638be7e43adb8619ed72f74863e9",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--warm--mobile.png",
+      "sha256": "b7094a72eb9db52398bfe2a028f1b6dcd836f3a775bb5221d10967080f42ac60",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -851,13 +1429,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--cool--mobile.png",
-      "sha256": "588c5188eb81b545e43e822d5bc9db73e9454925a2ba3a641c61e1e57add14fc",
-      "page": "/community/",
+      "file": "home--cool--mobile.png",
+      "sha256": "3fce621a57d5f697510e0f444335935e9375b3ed786b55a848e0b9d9c8d9408f",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -868,13 +1446,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--cool--mobile.png",
-      "sha256": "7e1a0ff3ae795add2d63dc96f87acd69b6908ade19eb34d34e7966dcada230f2",
-      "page": "/journal/",
+      "file": "games--cool--mobile.png",
+      "sha256": "290f93ce98804f512f4b0db76cb664aaa85b79214cab94b4e1dde415cf7ae8ad",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -885,13 +1463,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--cool--mobile.png",
-      "sha256": "e5d31069575aa22b2be39f0fdc1ab486c852cc134edf59c3caaf984c28d1cf4a",
-      "page": "/contact/",
+      "file": "membership--cool--mobile.png",
+      "sha256": "9f942dbc00ab93f6cc91c1dc2c5edcb4f346d2d32d15f39a96d5808869e67e91",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--cool--mobile.png",
+      "sha256": "db4367834097232cc1c79b64f3ec49c716e01cd01106243b0a3c3210d34711cb",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--cool--mobile.png",
+      "sha256": "c6f3ca8dbb8c2245c508e4d0011f70be205860d62508e9b00b084aa1ed7300ae",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--cool--mobile.png",
+      "sha256": "2c339784c45e28b405b085d6356cc95010af410d1c3d59b16a3f47ff239a9796",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -902,13 +1531,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--lava--mobile.png",
-      "sha256": "07268aa6c54fae3f5ffeecb083a8d7b47e95e5e47bd9089c19bc4683b62556d9",
-      "page": "/community/",
+      "file": "home--lava--mobile.png",
+      "sha256": "bc06a9bd4c30130d7010951228cbfd2fadb171c47dc5e09cf1d57ce024a2f768",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -919,13 +1548,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--lava--mobile.png",
-      "sha256": "3ddc831bbeb0ae42c92bb28ee3d8f0936c34955824ac1f85d85abaa8ac9ecdaa",
-      "page": "/journal/",
+      "file": "games--lava--mobile.png",
+      "sha256": "4ae2fdd534a9c5c3caa0e14339ebbe61f0b6fb46a59945c7d0469a0345caf685",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -936,13 +1565,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--lava--mobile.png",
-      "sha256": "ca9eca669b67ee7c28d542d12a9a1fa44ceb60d6a6e168841c8892fdf428a70a",
-      "page": "/contact/",
+      "file": "membership--lava--mobile.png",
+      "sha256": "28f180c80dbfa1a221ba0cc35bfa40c34fce71fad5488891688917af3e208597",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--lava--mobile.png",
+      "sha256": "323fb3319de3d8722a5c72796836a42fbeb368be8f6f932aacefa98207cc211a",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--lava--mobile.png",
+      "sha256": "584bae2e27788baec1a7c38ba0f35923816f06139034933091a9449edd20ad25",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--lava--mobile.png",
+      "sha256": "0b3dcb4aae82dfe9c6feef770ab850054894f6f73c46f9d411dc4442058693e4",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -953,13 +1633,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "community--high-contrast--mobile.png",
-      "sha256": "cf1626b8f2ed03dc8629372073f05ad175188c1c40ba55588e0c9535a2db4543",
-      "page": "/community/",
+      "file": "home--high-contrast--mobile.png",
+      "sha256": "c356c3efe25d79a663a1bb9588bb9cf03dd6d24aac272ea2a9dcac7e1c83c27f",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -970,13 +1650,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "journal--high-contrast--mobile.png",
-      "sha256": "430f7a4631faa7fec5d10e0c3c38ecfbc9904b85ccccc4911c42feccfd664b4a",
-      "page": "/journal/",
+      "file": "games--high-contrast--mobile.png",
+      "sha256": "50542da75647627ecb0ef6dce509d145373a7b0aeec408317b947347d8c00f73",
+      "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
       }
     },
     {
@@ -987,13 +1667,64 @@
         "width": 390,
         "height": 844
       },
-      "file": "contact--high-contrast--mobile.png",
-      "sha256": "ad82c5de539f874d2d67f56e0a5fb95d70bd01f43fd591b31c113b72bd2d1f74",
-      "page": "/contact/",
+      "file": "membership--high-contrast--mobile.png",
+      "sha256": "df429bacb4a4e6426fb89c8640757eee9c9cd894907d5249589550404d02f074",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S350)"
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--high-contrast--mobile.png",
+      "sha256": "967b01c9a08c1e4878ab0f57a6e3e9fdd0631ee41846d5b3181081f62c3819ec",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "evidence--high-contrast--mobile.png",
+      "sha256": "8ee361006e832b072074150cb77024f63e48746fa47c4b2606901cc6cd9b6bcb",
+      "page": "/evidence/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--high-contrast--mobile.png",
+      "sha256": "705511840a8b67360619cc1fe1d59347980f228f180e704f982678620f06b58e",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code S352"
       }
     }
   ]

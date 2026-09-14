@@ -1437,3 +1437,19 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **The one thing that did not land, and why.** The cron trigger was refused — Cloudflare error 10072: Workers Free allows 5 cron triggers per account, and all five are taken by other projects (seamline `*/5`, studio-ops-cron `*/30`, veilos hourly, velaxis-proxy ×2). Enumerated directly from the account, not inferred. Wrangler does not roll back the part that succeeded, so a declared-but-unregisterable cron would fail every future Worker deploy at the trigger step; the cron is therefore committed commented out and the flag returned to `"0"`, with the KV binding kept live. Recorded as D-S351.4.
 
 **Correction issued in-session:** the earlier write-back said the sampler was "armed". It is not, and the claim was corrected across CURRENT_STATE, LATEST_HANDOFF, TASK_BOARD, PROJECT_STATUS and TRUTH_AUDIT before the commit that carries it. The edge remains UNMEASURED and `/status/` still says so.
+
+## Session 352 — 2026-09-13 — the sitemap strand, a false write-back alarm, and unit-suite parity
+
+**Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.
+
+**Triage:** not cut off. `check-writeback-currency` flagged `c29a1b0f`, S351's own regeneration commit (all 35 files generator output), so it was a probe defect, not skipped closeout. Pulled 108 automation commits. Doctor 14/15, `blockingFailing: 0`.
+
+**Shipped (4):**
+1. `config/evidence-graph.json` models `sitemap <- news/`. With the graph changed and no workflow edited, the cascade gate named 4 publishers. `news-publish` and `rum-pull` now rebuild the sitemap, and `refresh-live-data`, `rum-pull` and `vault-narrative` now stage it. Fixture widened, +2 mutation cases (23/23).
+2. `check-writeback-currency` reads generated paths from the graph (non-HTML, non-shared) plus `.cache/`, erring toward debt. Self-test 15/15 with the real `c29a1b0f` file list.
+3. `scripts/check-unit-suite-parity.mjs` requires declared = executed = tracked, wired into `build:check:steps`. Self-test 9/9, live mutation control fails by name.
+4. Sitemap regenerated for the 2026-09-12 midday story.
+
+**Routed, not shipped:** Ark `agent-handoff` `01K2EQ77M9F29A0EC9619EA4BC` proposes that `studio-ops-cron` (`*/30`) invoke the edge sampler through a service-binding RPC entrypoint. studio-ops had a live session lock, so nothing was committed or pushed there. Ark wrote only its own log entry into the studio-ops tree, which is how Ark delivers cargo.
+
+**Evidence:** evidence-graph 81 nodes, acyclic; coverage 67/67; check reachability 81/81; build-gate reachability 247/247; all 29 publish cascades closed; the 4 edited workflows parse as YAML; step-guard gate clean.

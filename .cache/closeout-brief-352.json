@@ -1,0 +1,58 @@
+{
+  "session": "S352",
+  "date": "2026-09-13",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Found a stale sitemap on main behind a cascade gate that reported all publishers closed, and fixed the missing graph node it could not see across four publishers.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "sitemap-graph-node",
+      "title": "The Desk publisher staged sitemap.xml and never rebuilt it",
+      "axis": "truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "generate-sitemap --check was red on a freshly pulled main; the 2026-09-12 midday story was absent from the sitemap. The cascade gate said all closed because the evidence graph had no sitemap node. With the node added and no workflow edited, the gate named four publishers, not one.",
+      "evidence": "config/evidence-graph.json sitemap <- news/; cascade gate 29/29 closed; self-test 23/23 with 2 new mutation cases"
+    },
+    {
+      "id": "#2",
+      "slug": "writeback-graph-classifier",
+      "title": "The write-back check reported a regeneration commit as a skipped closeout",
+      "axis": "observability",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "c29a1b0f touched 35 generator outputs and was reported as WRITE-BACK DEBT because a hand-written path list missed brand/assets.json, stats.json, feed/* and .cache/*. Generated paths now come from the evidence graph, with HTML and shared outputs excluded, and an unreadable graph errs toward debt.",
+      "evidence": "scripts/check-writeback-currency.mjs --self-test 15/15 including the real c29a1b0f file list"
+    },
+    {
+      "id": "#3",
+      "slug": "unit-suite-parity",
+      "title": "Unit-suite list parity is now a gate, not a hand reconciliation",
+      "axis": "coverage",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "S351 found five unit specs declared and two executed. A new check requires declared = executed = git-tracked and runs before node --test in build:check, so the next spec cannot be added to one list and silently left out of the other.",
+      "evidence": "scripts/check-unit-suite-parity.mjs --self-test 9/9; live mutation fails naming the dropped spec"
+    },
+    {
+      "id": "#4",
+      "slug": "sampler-cron-reuse",
+      "title": "An agent path around the cron cap, routed through Ark",
+      "axis": "ecosystem",
+      "projectImpact": 6,
+      "ecosystemImpact": 8,
+      "insight": "The sampler was blocked on a founder billing decision. studio-ops-cron already fires every 30 minutes, the exact cadence needed. A service-binding RPC entrypoint would reuse it with no new trigger and no public route. The website half ships only on acceptance, since an entrypoint with no caller does nothing.",
+      "evidence": "Ark agent-handoff 01K2EQ77M9F29A0EC9619EA4BC to vaultspark-studio-ops"
+    }
+  ],
+  "followUps": [
+    "Gate staged-but-unmodeled outputs: a workflow git-adding the output of a --check-gated generator the evidence graph does not model.",
+    "Ship the sampler RPC entrypoint with a node-side cloudflare:workers shim when studio-ops accepts the Ark handoff.",
+    "Read back the first edge sample before any uptime claim changes."
+  ],
+  "blockers": [
+    "Edge sampler still has no invoker until studio-ops accepts the cron-reuse handoff, or a founder frees a slot or moves to Workers Paid.",
+    "Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data and warm-origin remain founder-gated."
+  ]
+}

@@ -1,3 +1,17 @@
+## S352 A Gate That Reported Closed Over an Edge It Could Not See (2026-09-13)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Additive only. One evidence-graph node (`sitemap`), no field changes. `check-writeback-currency` keeps every export and exit code; `isGeneratedPath` gains an optional second argument. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Public claim accuracy | 5 | `sitemap.xml`, the file machines read to find pages, left out a published story until a human session rebuilt it. Now every publisher that stages `news/` rebuilds it in the same commit. |
+| Internal consistency | 5 | The write-back check and the cascade gate now read the same evidence graph, so what counts as generated has one source. |
+| Evidence freshness | 5 | Both defects were found by running probes on a freshly pulled tree this session, not by reading prior prose. |
+
+**What was true and is no longer:** "check-publish-cascade-coverage: all publish cascades closed" was literally printed and was false for `sitemap.xml`, which the graph did not model. S351's "write-back debt" for `c29a1b0f` was likewise a real probe output describing no skipped work.
+
+**What is NOT resolved:** the general class. A `--check`-gated output that a publisher stages but the graph does not model can still strand unseen. It is committed as a `[SIL]` gate, not claimed closed.
+
 ## S349 A Public Availability Number That Only Ever Reported One Answer (2026-09-10)
 
 | Dimension | Score | Evidence |

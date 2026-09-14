@@ -1,5 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S352 · 2026-09-13
+
+- **Shipped:** 4 improvements across 3 groups: publisher cascades (sitemap node in the evidence graph, 4 publishers closed), probe honesty (the write-back check reads generated paths from the graph), gate coverage (unit-suite parity check).
+- **Tests:** build:check result in the S352 release addendum below · self-tests: cascade 23/23 (+2), write-back 15/15 (+4), unit parity 9/9 (new).
+- **Deploy:** see the S352 release addendum. Staging first, then SCOPED promotion.
+
+**Session Intent:** founder-directed `/arc`, then commit and push directly to main and fully deploy.
+
+**Triage:** not cut off. The write-back check flagged `c29a1b0f`, but that is S351's own post-rebase regeneration commit, which is a false positive and is fixed at its root this session. Pulled 108 automation commits before starting.
+
+**The sitemap was stale on main, and a gate said everything was fine.** The Desk publisher staged `sitemap.xml` without regenerating it. The cascade gate reads its edges from the evidence graph, which had no sitemap node, so it had nothing to check. The rule to keep: a gate built on a graph can only see what the graph models. Add the node first, run the gate against unchanged workflows (it must fail), then fix what it names.
+
+**Read before touching uptime.** Nothing about the sampler changed in production. An Ark `agent-handoff` to studio-ops proposes routing the sampler through `studio-ops-cron`'s existing `*/30` trigger with a service-binding RPC entrypoint. That needs no founder billing and frees no slot. If studio-ops accepts, this repo ships the entrypoint (the Worker unit tests import the worker under node, so `cloudflare:workers` needs a shim) in the same window as their binding. The founder alternatives still stand.
+
+**Unchanged holds:** identity/provider acceptance, newsletter arming and first send, Desk cadence, public-member-data policy, the immutable warm-origin decision, the signup walkthrough and Trusted Types enforce all remain with the founder and were not touched.
+
 ## Where We Left Off — S351 · 2026-09-12
 
 - **Shipped:** 6 improvements across 3 groups — observability (sampler enabling release, drain namespace resolution), generator honesty (brand-assets refusal + placeholder expansion, stale-shell self-test), gate coverage (three ungated unit suites wired in).

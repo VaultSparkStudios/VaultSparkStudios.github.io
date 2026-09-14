@@ -744,6 +744,20 @@
       "publishCascade": true
     },
     {
+      "id": "sitemap",
+      "output": "sitemap.xml",
+      "sources": [
+        "news/"
+      ],
+      "builder": "scripts/generate-sitemap.mjs",
+      "check": [
+        "node",
+        "scripts/generate-sitemap.mjs",
+        "--check"
+      ],
+      "publishCascade": true
+    },
+    {
       "id": "ux-decision-ledger",
       "output": "api/ux-decision-ledger.json",
       "sources": [

@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▇▇▇
-Avgs — 3: 983.3 | 5: 981.8 | 10: 987.2 | 25: 989.5 | all: 983.1
-History scope: 189 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: → | Protocol velocity: → | Debt: ↑
-Last session: 2026-09-08 | Session 346 | Total: 980/1000 | Velocity: 0 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇▇▇▇
+Avgs — 3: 984.0 | 5: 982.4 | 10: 987.0 | 25: 989.4 | all: 983.1
+History scope: 190 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: → | Protocol velocity: → | Debt: ↓
+Last session: 2026-09-13 | Session 352 | Total: 986/1000 | Velocity: 3 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2725,3 +2725,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Second honesty finding, worth more than the first:** the push-triggered runs of both production workflows **reported success while deploying nothing** — they take a "Promotion held" branch that skips every deploy step and still concludes green. Had this session trusted the run conclusion, it would have reported a full deploy that never happened. Deploy claims in this repo are only as good as the served bytes.
 
 **Score impact:** Process Quality holds at 100 — the wrong claim was caught by this session's own verification and corrected before commit, which is the process working. Momentum drops 98 → 94: the headline item ends the session blocked, on a real named limit rather than the phantom it inherited. Revised total **983/1000**.
+
+## 2026-09-13 — Session 352 (arc + full deploy) | Total: 986/1000 (v3.0) | Velocity: 3 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | Three gates changed, each shown to fail on bad input before and pass on good input after: the cascade gate named 4 real strands against the unedited workflows, the write-back check classifies the real `c29a1b0f` file list correctly, and a live parity mutation fails by name. |
+| Creative Alignment | 99 | No UI changed. The one public effect is that each new Desk story reaches the sitemap in its own commit. |
+| Momentum | 95 | The S351 `[QA/P2]` row closed, the sitemap part of `[CI/P1]` closed across all publishers, and a false write-back alarm was fixed. The sampler is still blocked, with a new agent path proposed. |
+| Engagement | 95 | Crawlers and AI search now find new stories when they publish, not when the next session happens to rebuild the sitemap. |
+| Process Quality | 100 | Both measurement-found items came from running probes, not from the board. Each fix was checked against its negative control before being called fixed. |
+| Cross-Repo Coherence | 100 | The sampler proposal went to studio-ops as Ark cargo after a lock check; no sibling repo was touched. |
+| Security Posture | 100 | Worker and auth untouched; the proposed RPC entrypoint deliberately adds no public route and no shared secret. |
+| Ecosystem Integration | 100 | The cron-reuse proposal turns a founder-only billing block into a studio-internal handoff. |
+| Capital Efficiency | 98 | The Workers Paid decision is off the critical path if studio-ops accepts; the gate order from memory was followed to avoid repeat full runs. |
+| Automation Coverage | 99 | Unit-suite parity is gated. The general class, a publisher staging a gated output the graph does not model, still has no gate (committed as `[SIL]`). |
+
+**Top win:** `generate-sitemap --check` was red on a fresh `origin/main` while the cascade gate reported everything closed. The fix was the missing graph node, and the gate then found three more publishers nobody had looked at.
+
+**Gap:** the class is still open. Any `--check`-gated output a publisher stages that the evidence graph does not model can strand the same way, and this gate cannot see it.
+
+**Honesty ledger:** did not call the S351 write-back flag a cut-off (it was a regeneration commit) and did not hide it by editing the probe's subject list either. The fix reads generated paths from the graph and errs toward debt. Did not ship a dark RPC entrypoint for a caller that does not exist. Did not claim the sampler moved.
+
+**Brainstorm:** (1) a gate that fails when any workflow `git add`s a path that is the output of a `--check`-gated generator missing from the evidence graph, which covers the whole sitemap class; (2) ship the sampler RPC entrypoint with a node-side `cloudflare:workers` shim once studio-ops accepts; (3) make `generate-heartbeat` drift a sessionless publisher's job so `/start` never begins red on a clock.
+
+**Committed to TASK_BOARD:** [SIL] staged-but-unmodeled output gate · [SIL] sampler RPC entrypoint on Ark acceptance.
+
+**Intent outcome:** see the S352 release addendum for push and deploy. Audit and implement are complete: 4 of 5 audit items shipped, and the fifth (sampler) was routed by Ark and deferred on its merits.

@@ -191,7 +191,7 @@ function selfTest() {
   // it is derived from api/funnel-summary.json, which a broad `api/` add covers —
   // so a workflow staging `api/` must now stage it too. Same widening shape as
   // index.html above; the mutation below proves it still bites.
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt\n  git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt\n  git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
   // Mutation the other way: dropping index.html must FAIL, or the widening above
   // would be indistinguishable from having quietly disabled the check.
@@ -204,6 +204,13 @@ function selfTest() {
   const cacheStranding = broad.replace(' .cache/cta-readiness.json', '');
   cases.push(['dropping .cache/cta-readiness.json from a broad add is flagged',
     checkWorkflow('broad.yml', cacheStranding).some((v) => v.includes('.cache/cta-readiness.json'))]);
+  // S352: sitemap.xml joined the graph as derived from news/. The Desk publisher
+  // had always staged sitemap.xml without rebuilding it, so each new story
+  // reached production missing from the sitemap. Same widening shape as above.
+  cases.push(['dropping sitemap.xml from a broad add that stages news/ is flagged',
+    checkWorkflow('broad.yml', broad.replace(' sitemap.xml', '')).some((v) => v.includes('sitemap.xml'))]);
+  cases.push(['staging news/ without regenerating the sitemap is flagged',
+    checkWorkflow('desk.yml', 'run: |\n  git add news/ sitemap.xml').some((v) => v.includes('generate-sitemap.mjs'))]);
   cases.push(['declared derived-build profile counts as real regeneration',
     rebuiltBuilders('node scripts/run-derived-builds.mjs --profile refresh-live-data').has('build-citation.mjs')]);
 
