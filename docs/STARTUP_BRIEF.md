@@ -67,7 +67,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -82,15 +82,15 @@
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         46492 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  3d old (2026-09-11)                            ║
+║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  Open current tasks 31 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
@@ -131,6 +131,9 @@
 ║   96  [PRODUCT]      Mount the narrative on /journal/. Deferred  ║
 ║        Mount the narrative on /journal/. Deferred: a UI change   ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Enable Worker observability for staging. D  ║
 ║        Enable Worker observability for staging. Deferred: needs  ║
 ║                                                                  ║
@@ -139,9 +142,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
 ║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
-║                                                                  ║
-║   84  [PRODUCT]      Close field-vitals freshness only with rea  ║
-║        Close field-vitals freshness only with real evidence. Su  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
