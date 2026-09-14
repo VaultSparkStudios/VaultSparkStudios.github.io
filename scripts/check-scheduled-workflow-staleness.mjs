@@ -127,6 +127,83 @@ export function evaluateStaleness(workflows, now = Date.now()) {
 }
 
 // ── workflow discovery ──────────────────────────────────────────────────────
+/**
+ * S355: a scheduled publisher can PRESERVE instead of publishing and still conclude
+ * success. Vault Narrative did that for 13 days (S353). Since S353 it emits a
+ * `::warning title=Vault narrative held::` annotation when it holds, so a held run is
+ * observable: a warning-level annotation whose title says "held" on the newest
+ * completed scheduled run that concluded success. Runtime warnings such as the
+ * Node 20 deprecation notice carry an empty title and never match.
+ *
+ * Advisory by design: held is reported by name but never changes `ok` or the exit
+ * code, which scripts/lib/scheduled-probe-result.mjs pins as broken + silent only.
+ */
+export function isHeldAnnotation(annotation) {
+  return Boolean(annotation) && annotation.annotation_level === 'warning' && /held/i.test(String(annotation.title || ''));
+}
+
+const HELD_MARKER = 'held::';
+/** True when the workflow, or a script it runs directly, can emit a held annotation. */
+export function canEmitHeldMarker(workflowSource, readScript = (rel) => readFileSync(join(ROOT, rel), 'utf8')) {
+  const src = String(workflowSource || '');
+  if (src.includes('title=') && src.includes(HELD_MARKER)) return true;
+  const scripts = new Set();
+  for (const line of src.split('\n')) {
+    const code = line.split(' #')[0];
+    if (code.trim().startsWith('#')) continue;
+    let at = code.indexOf('node scripts/');
+    while (at >= 0) {
+      const rest = code.slice(at + 'node '.length);
+      const end = rest.search(/[\s"'`;|&]/);
+      scripts.add(end < 0 ? rest : rest.slice(0, end));
+      at = code.indexOf('node scripts/', at + 1);
+    }
+  }
+  for (const rel of scripts) {
+    // The observer is not an emitter: this probe's own comments and fixtures quote the marker.
+    if (rel.endsWith('check-scheduled-workflow-staleness.mjs')) continue;
+    let body = '';
+    try { body = readScript(rel); } catch { continue; }
+    if (body.includes('title=') && body.includes(HELD_MARKER)) return true;
+  }
+  return false;
+}
+
+export function heldVerdicts(observed, annotationsFor, { now = Date.now, budgetMs = 12000 } = {}) {
+  const deadline = now() + budgetMs;
+  const held = [];
+  let unmeasured = 0;
+  for (const wf of observed) {
+    const newest = (wf.runs || []).find(
+      (r) => r.event === 'schedule' && (r.status ? r.status === 'completed' : true) && r.conclusion,
+    );
+    if (wf.emitsHeldMarker === false) continue;
+    if (!newest || newest.conclusion !== 'success' || !newest.databaseId) continue;
+    if (now() >= deadline) { unmeasured += 1; continue; }
+    const result = annotationsFor(newest.databaseId, Math.max(1000, Math.floor(deadline - now())));
+    if (!result || !result.ok) { unmeasured += 1; continue; }
+    const marker = (result.annotations || []).find(isHeldAnnotation);
+    if (marker) held.push({ name: wf.name, runId: newest.databaseId, title: String(marker.title) });
+  }
+  return { held, unmeasured };
+}
+
+function fetchRunAnnotations(runId, timeout = 8000) {
+  const opts = { cwd: ROOT, encoding: 'utf8', timeout };
+  const jobs = spawnSync('gh', ['api', `repos/{owner}/{repo}/actions/runs/${runId}/jobs`, '--jq', '[.jobs[].id]'], opts);
+  if (jobs.status !== 0 || !jobs.stdout) return { ok: false };
+  let ids;
+  try { ids = JSON.parse(jobs.stdout); } catch { return { ok: false }; }
+  if (!Array.isArray(ids)) return { ok: false };
+  const annotations = [];
+  for (const id of ids) {
+    const res = spawnSync('gh', ['api', `repos/{owner}/{repo}/check-runs/${id}/annotations`], opts);
+    if (res.status !== 0 || !res.stdout) return { ok: false };
+    try { annotations.push(...JSON.parse(res.stdout)); } catch { return { ok: false }; }
+  }
+  return { ok: true, annotations };
+}
+
 function scheduledWorkflows() {
   if (!existsSync(WF_DIR)) return [];
   const out = [];
@@ -144,6 +221,7 @@ function scheduledWorkflows() {
       // gh keys runs by the workflow's `name:`; the FILE is the stable query key.
       name: m ? m[1].replace(/^["']|["']$/g, '') : file.replace(/\.ya?ml$/, ''),
       intervalHours,
+      emitsHeldMarker: canEmitHeldMarker(src),
     });
   }
   return out;
@@ -157,7 +235,7 @@ function fetchRunsFor(wf, timeout = 24000) {
   const res = spawnSync(
     'gh',
     ['run', 'list', '--workflow', wf.file, '-L', String(RUNS_PER_WORKFLOW),
-     '--json', 'conclusion,status,event,createdAt'],
+     '--json', 'databaseId,conclusion,status,event,createdAt'],
     { cwd: ROOT, encoding: 'utf8', timeout },
   );
   if (res.status !== 0 || !res.stdout) {
@@ -248,7 +326,46 @@ function runSelfTest() {
   assert(c('silent-daily').silent && !c('silent-daily').broken,
     'the silent verdict is fixture-proven: a silent cron is silent and not broken');
 
-  console.log('check-scheduled-workflow-staleness self-test passed (18/18)');
+  // ── S355: held publishers (advisory) ─────────────────────────────────────
+  const heldRun = { event: 'schedule', status: 'completed', conclusion: 'success', databaseId: 101 };
+  const annotations = {
+    101: { ok: true, annotations: [{ annotation_level: 'warning', title: 'Vault narrative held', message: 'kept previous' }] },
+    102: { ok: true, annotations: [{ annotation_level: 'warning', title: '', message: 'Node.js 20 is deprecated' }] },
+    103: { ok: false },
+  };
+  const heldResult = heldVerdicts([
+    { name: 'held-publisher', runs: [heldRun] },
+    { name: 'runtime-warning-only', runs: [{ ...heldRun, databaseId: 102 }] },
+    { name: 'annotations-unreadable', runs: [{ ...heldRun, databaseId: 103 }] },
+    { name: 'failed-newest', runs: [{ ...heldRun, databaseId: 101, conclusion: 'failure' }] },
+  ], (id) => annotations[id]);
+  assert(heldResult.held.length === 1 && heldResult.held[0].name === 'held-publisher' && heldResult.held[0].runId === 101,
+    'a success run with a warning titled "held" is reported as held, by name and run');
+  assert(!heldResult.held.some((h) => h.name === 'runtime-warning-only'),
+    'an untitled runtime warning (Node 20 deprecation) is not a held marker');
+  assert(heldResult.unmeasured === 1 && !heldResult.held.some((h) => h.name === 'annotations-unreadable'),
+    'unreadable annotations are counted unmeasured, never held');
+  assert(!heldResult.held.some((h) => h.name === 'failed-newest'),
+    'a failed newest run is the broken verdict\'s business, not held');
+  let clock = 0;
+  const exhausted = heldVerdicts([{ name: 'late', runs: [heldRun] }], () => { throw new Error('must not fetch'); },
+    { now: () => clock, budgetMs: 0 });
+  assert(exhausted.unmeasured === 1 && exhausted.held.length === 0, 'an exhausted budget skips fetching and counts unmeasured');
+
+  const skipped = heldVerdicts([{ name: 'cannot-hold', emitsHeldMarker: false, runs: [heldRun] }],
+    () => { throw new Error('must not fetch a workflow that cannot emit a held marker'); });
+  assert(skipped.held.length === 0 && skipped.unmeasured === 0, 'a workflow that cannot emit a held marker is skipped, not unmeasured');
+  assert(canEmitHeldMarker('run: node scripts/fx.mjs', () => 'console.log("::warning title=Fx held::kept")'),
+    'a workflow whose script emits a titled held annotation can hold');
+  assert(!canEmitHeldMarker('run: node scripts/fx.mjs', () => 'console.log("plain output")'),
+    'a workflow whose scripts never emit a held marker cannot hold');
+  assert(!canEmitHeldMarker('run: node scripts/check-scheduled-workflow-staleness.mjs --json'),
+    'a workflow that only runs this probe cannot hold (the probe quotes the marker, it does not emit it)');
+  const narrative = join(ROOT, '.github', 'workflows', 'vault-narrative.yml');
+  assert(!existsSync(narrative) || canEmitHeldMarker(readFileSync(narrative, 'utf8')),
+    'the live Vault Narrative workflow is recognised as able to hold');
+
+  console.log('check-scheduled-workflow-staleness self-test passed (28/28)');
 }
 
 export function collectWorkflowObservations(workflows, { fetch = fetchRunsFor, now = Date.now, budgetMs = 24000 } = {}) {
@@ -292,6 +409,7 @@ function main() {
   }
 
   const verdicts = evaluateStaleness(observed);
+  const { held, unmeasured: heldUnmeasured } = heldVerdicts(observed, fetchRunAnnotations);
   const broken = verdicts.filter((v) => v.broken);
   const silent = verdicts.filter((v) => v.silent);
   const unmeasured = verdicts.filter((v) => v.unmeasured);
@@ -320,6 +438,9 @@ function main() {
       broken,
       silent: silent.map((v) => ({ name: v.name, ageHours: v.ageHours, expectEveryHours: v.intervalHours, thresholdHours: v.silentThresholdHours })),
       checked: verdicts.length,
+      // S355 advisory: success runs that logged a held marker. Not part of ok/exit.
+      held,
+      heldUnmeasured,
       // Retained under its historical key for existing readers, but it is no
       // longer a synonym for "fine": these are workflows with no observed
       // scheduled run at all, which is unmeasured, not healthy.
@@ -343,6 +464,7 @@ function main() {
   if (broken.length === 0 && silent.length === 0) {
     console.log(`scheduled-workflow staleness ✓ (${verdicts.length} scheduled workflows, none red ≥${MIN_CONSECUTIVE} runs, none silent past cadence)${suffix ? ` · ${suffix}` : ''}`);
     if (unmeasured.length) console.log(`  unmeasured (no scheduled run observed): ${unmeasured.map((v) => v.name).join(', ')}`);
+    if (held.length) console.log(`  ⚠ held (concluded success but held instead of publishing): ${held.map((h) => `${h.name} · run ${h.runId}`).join(', ')}`);
     if (fixtureOnly.length) console.log(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
     return 0;
   }
@@ -356,6 +478,7 @@ function main() {
       console.error(`  - ${s.name}: last scheduled run ${s.ageHours}h ago, expected every ~${s.intervalHours}h (threshold ${s.silentThresholdHours}h)`);
     }
   }
+  if (held.length) console.error(`  ⚠ held (concluded success but held instead of publishing): ${held.map((h) => `${h.name} · run ${h.runId}`).join(', ')}`);
   if (fixtureOnly.length) console.error(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
   return 1;
 }

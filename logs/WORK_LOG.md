@@ -1526,3 +1526,18 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Promotion attempts:** `34823347676` rejected (ceremony: flaky Chromium drawer test after CI-only staging 503s; local 6/6; staging Worker has no observability, source unknown) · `34824034218` cancelled by refresh-live-data's held no-op dispatch through `cancel-in-progress` · `34824371781` success.
 
 **Wave 2 findings recorded:** Pages concurrency lets held runs cancel confirmed promotions; founder-presence `--check` makes this repo's gates depend on other repos' session state.
+
+## S355 · 2026-09-14 · agent-owned items, wave 2
+
+**Intent:** founder directive continued: defer founder items, work every agent-owned item.
+
+**Shipped (7):**
+1. `pages-deploy.yml` concurrency: `cancel-in-progress` only for confirmed dispatches (D-S355.1).
+2. `--resync` on refresh-live-data, leaderboard-api, weekly-maintenance; `scripts/check-publisher-resync.mjs` self-test 11/11 with negative controls on the real workflows, live 12 publishers / 9 staging graph sources, wired into build:check.
+3. `generate-founder-presence.mjs`: `--check` validates shape, invariants and sourceDigest; `--check-live` strict; `--self-test` 11/11, wired. The old payload failed the new check (negative control) until regenerated.
+4. `scripts/lib/news-html.mjs` shared by `generate-news-pages` and `check-news-claim-parity`; pages unchanged 39/39; claim parity 5/5 with quoted-fact fixtures; live exact.
+5. sched-staleness held-run advisory: run IDs, `heldVerdicts`, `canEmitHeldMarker` (skips its own quoting), parser and contract (20/20). Live: 14 checked, held [], heldUnmeasured 0.
+6. `scripts/check-desk-model-servability.mjs`: chatOnce per declared model, 12s each, `process.exitCode` (process.exit aborted with a libuv assertion on Windows); self-test 13/13; live 2/2 servable; doctor advisory wired (doctor self-test 6/6).
+7. `tests/mobile-audit.spec.js` refuses the production host without `MOBILE_AUDIT_ALLOW_PRODUCTION=1` (the local env files set BASE_URL to production); proven three ways with --list.
+
+**Findings:** the staging Worker has no observability block, so the S354 staging 503s cannot be sourced; gh api calls take 5-10s each on this machine.

@@ -20,6 +20,9 @@ export function parseScheduledProbe(out, code, execution = {}) {
       || !d.silent.every(v => v && typeof v.name === 'string')
       || !d.noData.every(v => typeof v === 'string')
       || d.broken.length + d.silent.length + d.noData.length > d.checked) throw new Error('invalid observations');
+    // S355: held is optional and advisory. Validated when present; never part of ok/exit.
+    if (d.held !== undefined && (!Array.isArray(d.held) || !d.held.every(v => v && typeof v.name === 'string'))) throw new Error('invalid held');
+    const heldNames = (d.held || []).map(v => `${v.name} (held)`);
     const failures = d.broken.length + d.silent.length;
     if (d.ok !== (failures === 0) || code !== (failures ? 1 : 0)) throw new Error('contradictory outcome');
     const scope = `${d.checked} checked; ${d.noData.length} unmeasured; ${d.unreachable} unreachable`;
@@ -27,10 +30,12 @@ export function parseScheduledProbe(out, code, execution = {}) {
       const names = [
         ...d.broken.map(v => `${v.name} (${v.streak} failures)`),
         ...d.silent.map(v => `${v.name} (silent)`),
+        ...heldNames,
       ];
       return { pass: false, detail: `${names.join(', ')}; ${scope}` };
     }
     if (!d.checked || d.noData.length || d.unreachable || d.timedOut) return unavailable(scope);
+    if (heldNames.length) return { pass: true, warn: true, detail: `${d.checked} scheduled workflows checked; none broken or silent; ${heldNames.join(', ')}` };
     return { pass: true, detail: `${d.checked} scheduled workflows checked; none broken or silent` };
   } catch {
     return unavailable('scheduled observation invalid or missing; not evaluated');

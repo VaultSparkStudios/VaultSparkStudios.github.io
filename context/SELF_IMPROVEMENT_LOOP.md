@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 986.0 | 5: 984.8 | 10: 985.8 | 25: — | all: 983.1
-History scope: 193 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-14 | Session 354 | Total: 984/1000 | Velocity: 5 | protocolVelocity: 0
+Avgs — 3: 986.7 | 5: 985.8 | 10: 986.2 | 25: — | all: 983.1
+History scope: 194 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
+Last session: 2026-09-14 | Session 355 | Total: 988/1000 | Velocity: 7 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2826,3 +2826,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Honesty ledger:** did not re-run until green without reading the receipt, which showed a flaky pass rather than a failure. Did not call the unobservable 503s transient-and-harmless; recorded them as unexplained. Did not report "deployed" from the first two runs: the served `build-sha.json` still read `ea6cd1c9f` until the third.
 
 **Intent outcome:** achieved for wave 1. Wave 2 (agent-owned items plus the two structural findings above) follows.
+
+## 2026-09-14 — Session 355 (agent-owned items, wave 2) | Total: 988/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | Every fix proven against its real failure first: HEAD workflows for resync, the old presence payload, a quoted-fact fixture, live held and servability runs. |
+| Creative Alignment | 99 | No page changed; the Desk now publishes what its standards desk actually approved. |
+| Momentum | 97 | Seven agent items shipped; six deferred with explicit reasons rather than batched into an unverifiable release. |
+| Engagement | 95 | A refused Desk edition class is fixed; no reader-facing capability added. |
+| Process Quality | 99 | The mobile guard's first version did not fire under Playwright; testing it three ways found the env-file default before it shipped as a false fix. |
+| Cross-Repo Coherence | 100 | This repo's gates no longer fail on other repos' session state. |
+| Security Posture | 100 | No credential or Worker change; the servability probe reads inference credentials only through the gateway. |
+| Ecosystem Integration | 100 | The concurrency and resync patterns apply to any repo with scheduled publishers. |
+| Capital Efficiency | 98 | Two tiny inference calls per servability probe; held checks scoped to workflows that can hold. |
+| Automation Coverage | 100 | Three new gates or probes in build:check or doctor, each with self-tests and negative controls. |
+
+**Top win:** a production promotion could be cancelled by a publisher's no-op dispatch, and a Desk edition could be refused by its own verifier's escaping. Both were found by reading run logs, and both are closed at the root.
+
+**Top gap:** the S354 staging 503s remain unsourced; the staging Worker logs nothing.
+
+**Honesty ledger:** did not ship the first mobile guard after it listed 215 tests without BASE_URL. Did not count the Desk cadence refusal as a bug. Did not keep a held classifier that matched its own comments. Did not change the scanner exit code the autopilot depends on.
+
+**Brainstorm:** (1) a release-ceremony check that fails when a confirmed promotion is cancelled by a same-group run; (2) enable Worker Logs on staging only, after a cost check; (3) share one escape library across every generator/verifier pair, not just the Desk.
+
+**Committed to TASK_BOARD:** [S355] /journal/ mount · [S355] staging Worker observability.
+
+**Intent outcome:** see the S355 release addendum.

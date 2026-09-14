@@ -81,7 +81,7 @@ jobs:
           git add -A -- member member-sitemap.xml .cache/obelisk-registration-probe.json api/release-dependencies.json api/release-proof.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: regenerate member SEO pages [skip ci]"
-            bash scripts/ci/publish-push.sh "member SEO pages"
+            bash scripts/ci/publish-push.sh "member SEO pages" --resync
           else
             echo "No changes, skipping commit"
           fi

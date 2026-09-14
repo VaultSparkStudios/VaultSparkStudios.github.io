@@ -1,8 +1,24 @@
 # Current State
 
-Last updated: 2026-09-14 (S354)
+Last updated: 2026-09-14 (S355)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S355 seven agent-owned fixes to publishing, gates and observability (2026-09-14)
+
+**Promotions can no longer be cancelled by a no-op.** `pages-deploy.yml` cancels an in-flight run only for a dispatch confirming production or content, so publisher dispatches that take "Promotion held" queue instead of killing a real deploy.
+
+**Publishers re-derive after the push-time rebase.** refresh-live-data (84 graph sources), leaderboard-api and weekly-maintenance now push with `--resync`. `check-publisher-resync` (in build:check) fails any `[skip ci]` publisher that stages a graph source without it; 12 publishers, 9 staging graph sources, all compliant.
+
+**This repo's gates stop depending on other repos' sessions.** Founder presence `--check` validates the committed payload against a `sourceDigest` of its own generator, slug library and registry instead of today's studio-wide sessions; `--check-live` keeps the strict comparison.
+
+**A Desk edition refusal that was the gate's own bug.** `check-news-claim-parity` escaped `& < >` while the renderer also escaped `"`, so a quoted fact read as absent and the 2026-09-13 latenight edition was refused. Both share `scripts/lib/news-html.mjs`; pages unchanged (39/39).
+
+**More observable publishing.** The scheduled-staleness probe reports runs that concluded success while logging a held marker (advisory, checked only for workflows that can emit one). `check-desk-model-servability` asks each declared authoring model for one completion with no failover and is a doctor advisory; both models are servable today.
+
+**The mobile audit cannot silently measure production.** `.env.playwright.local*` sets BASE_URL to production for the credentialed specs; the audit now refuses that host unless `MOBILE_AUDIT_ALLOW_PRODUCTION=1`.
+
+**Deferred with reasons:** the /journal/ narrative mount, staging Worker observability, Desk source breadth, the S336 visual review, the Trusted Types hoist and /atlas/ (D-S355.5).
 
 ## S354 analytics that was delivered all along, and a release proof no job rebuilt (2026-09-14)
 

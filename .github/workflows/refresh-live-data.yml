@@ -56,7 +56,7 @@ jobs:
             echo "Live data unchanged — nothing to deploy."
           else
             git commit -m "chore: refresh live data feeds [skip ci]"
-            bash scripts/ci/publish-push.sh "live data feeds"
+            bash scripts/ci/publish-push.sh "live data feeds" --resync
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 

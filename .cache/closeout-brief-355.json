@@ -1,0 +1,88 @@
+{
+  "session": "S355",
+  "date": "2026-09-14",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Closed a deploy a no-op could cancel, a Desk refusal caused by the verifier, and a gate that failed on other repos' sessions; added held-run and model-servability observability.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "pages-concurrency",
+      "title": "Held Pages runs no longer cancel confirmed promotions",
+      "axis": "reliability",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "refresh-live-data dispatched pages-deploy with no inputs and cancelled a confirmed promotion. Only runs that can deploy may now cancel in-flight runs.",
+      "evidence": "S354 run 34824034218 cancelled by 34824092060; pages-deploy.yml concurrency expression"
+    },
+    {
+      "id": "#2",
+      "slug": "publisher-resync-gate",
+      "title": "Publishers staging graph sources push with --resync",
+      "axis": "coverage",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "Three publishers could push stale derived artifacts after a rebase. Fixed and gated.",
+      "evidence": "check-publisher-resync 11/11 with negative controls; live 9/9 compliant"
+    },
+    {
+      "id": "#3",
+      "slug": "founder-presence-gate",
+      "title": "Gates stop failing on other repos' sessions",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "Presence --check now verifies the payload against its own sources; code or registry drift still fails.",
+      "evidence": "self-test 11/11; old payload failed; regenerated payload passes"
+    },
+    {
+      "id": "#4",
+      "slug": "claim-parity-escape",
+      "title": "Desk verifier escaped differently from the renderer",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "A quoted fact rendered correctly and read as absent, refusing an edition. One shared escape function now.",
+      "evidence": "run 34786386279; claim parity 5/5; pages 39/39 unchanged"
+    },
+    {
+      "id": "#5",
+      "slug": "held-run-advisory",
+      "title": "Held publishers are visible",
+      "axis": "observability",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "Runs that concluded success but held are reported by name, advisory only.",
+      "evidence": "sched-staleness 28/28; contract 20/20; live held [] heldUnmeasured 0"
+    },
+    {
+      "id": "#6",
+      "slug": "model-servability",
+      "title": "A dead Desk model cannot hide behind its standby",
+      "axis": "observability",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "One completion per declared model with no failover, as a doctor advisory.",
+      "evidence": "self-test 13/13; live 2/2 servable; exit 0"
+    },
+    {
+      "id": "#7",
+      "slug": "mobile-production-guard",
+      "title": "Mobile audit cannot silently measure production",
+      "axis": "truth",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "Local env files set BASE_URL to production; the audit now refuses that host without an explicit opt-in.",
+      "evidence": "playwright --list refuses / lists / lists across the three cases"
+    }
+  ],
+  "followUps": [
+    "Mount the narrative on /journal/ with its own receipts.",
+    "Enable staging Worker observability after a cost check.",
+    "Model the remaining 19 proof-surface generators."
+  ],
+  "blockers": [
+    "Founder-owned items deferred by directive.",
+    "Edge sampler still waiting on studio-ops."
+  ]
+}

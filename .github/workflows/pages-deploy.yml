@@ -59,7 +59,12 @@ on:
 
 concurrency:
   group: pages-deploy
-  cancel-in-progress: true
+  # S355: only a run that can actually deploy may cancel the one in flight.
+  # refresh-live-data and cloudflare-worker-deploy dispatch this workflow with no
+  # inputs; those runs take "Promotion held" and deploy nothing, yet with a plain
+  # `true` one cancelled confirmed promotion 34824034218 41 seconds in (S354).
+  # github.event.inputs is empty on push and schedule, so those now queue as well.
+  cancel-in-progress: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.confirm_production == 'true' || github.event.inputs.confirm_content == 'true') }}
 
 jobs:
   deploy:

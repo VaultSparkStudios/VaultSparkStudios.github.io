@@ -1860,3 +1860,33 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** `api/release-dependencies.json` is modeled from its generator's real inputs, and the edge `build-release-proof` already read is declared. Weekly Maintenance now rebuilds and stages the release proof in the same commit.
 
 **Why:** with the edge added and no workflow changed, the cascade gate named Weekly Maintenance, which committed a fresh dependency receipt while leaving the proof built from it stale. The coverage baseline falls 20 → 19.
+
+## D-S355.1 — Only a run that can deploy may cancel the Pages run in flight
+
+**Decision:** `pages-deploy.yml` sets `cancel-in-progress` to true only for a `workflow_dispatch` with `confirm_production` or `confirm_content` set, read via `github.event.inputs`. Push, schedule and input-less publisher dispatches queue instead.
+
+**Why:** in S354 refresh-live-data dispatched this workflow with no inputs, the run took "Promotion held" and deployed nothing, and `cancel-in-progress: true` let it kill confirmed promotion `34824034218`. GitHub's docs confirm expressions are allowed and that queued runs replace older pending ones; they do not say what `inputs` is on push, so the expression avoids relying on it.
+
+## D-S355.2 — A publisher that stages an evidence-graph source must push with --resync
+
+**Decision:** `check-publisher-resync` fails any `[skip ci]` workflow whose `git add` covers a graph source without `publish-push.sh --resync`; three publishers were fixed.
+
+**Why:** the cascade gate checks a workflow rebuilds and stages what it derives, not that it re-derives after the push-time rebase. A full resync run was measured to need no npm packages (38 rebuilt nodes, 19 swept generators), so no install step was added.
+
+## D-S355.3 — Founder presence is verified against its own sources, not against live sessions elsewhere
+
+**Decision:** `generate-founder-presence --check` validates the committed payload's shape, invariants and a `sourceDigest` over this repo's generator, slug library and project registry. `--check-live` keeps the strict regenerate-and-compare.
+
+**Why:** the payload mirrors the freshest session in any repo via studio-ops' ACTIVE_SESSIONS.json, so the old check failed build:check and the pre-push hook whenever another repo started or ended a session (twice in S354). Liveness is refreshed by publishers; the gate's job is to catch code or registry drift, which the digest still does.
+
+## D-S355.4 — Renderer and verifier share one HTML escape
+
+**Decision:** `scripts/lib/news-html.mjs` exports the escape the Desk renderer already used; the renderer aliases it and `check-news-claim-parity` uses it. Generated pages are byte-identical.
+
+**Why:** the gate escaped `& < >` while the renderer also escaped `"`, so a quoted fact read as absent and a cleanly authored edition was refused (run `34786386279`). The other Desk refusal (`34814843409`, a visual anchor not in the corpus, then cadence) was a correct gate and is unchanged.
+
+## D-S355.5 — Deferred with reasons
+
+**Decision:** not done this session: mounting the narrative on `/journal/` (UI change, own receipt cycle), staging Worker observability (Worker deploy plus a CANON-029 free-tier check), Desk readable-source breadth, the S336 surfaces' visual review, the Trusted Types load-order hoist (own session), `/atlas/` retirement (site-wide nav and footer), and 19 unmodeled generators (ongoing).
+
+**Why:** each either changes rendered pages, needing its own visual-receipt cycle, or touches a production surface whose risk deserves a dedicated release. Batching them into a gate-and-CI-only release would have made every receipt invalid at once.

@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deriveClaimsFeed } from './lib/news-desk.mjs';
+import { escapeNewsHtml } from './lib/news-html.mjs';
 import { spawnSync } from './lib/safe-spawn.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -40,7 +41,8 @@ export function validateClaimParity({ days, claimsText, pageFor }) {
     const html = pageFor(fact.date, fact.story);
     if (!html) { errors.push(`${fact.id}: rendered article missing`); continue; }
     if (!html.includes(`id="${fact.id}"`) || !html.includes(`data-fact-hash="${fact.hash}"`)) errors.push(`${fact.id}: receipt absent from rendered article`);
-    if (!html.includes(fact.factText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'))) errors.push(`${fact.id}: fact text absent from rendered article`);
+    // S355: escape exactly as the renderer does (it also escapes "), or a quoted fact reads as absent.
+    if (!html.includes(escapeNewsHtml(fact.factText))) errors.push(`${fact.id}: fact text absent from rendered article`);
   }
   return errors;
 }
@@ -54,8 +56,19 @@ function selfTest() {
   const duplicate = validateClaimParity({ days, claimsText: claimsText.replace('\n', `\n${JSON.stringify(fact)}\n`), pageFor: () => page });
   const orphanRows = parseLines(claimsText); orphanRows.at(-1).factRefs = ['fact-nope'];
   const orphan = validateClaimParity({ days, claimsText: orphanRows.map(JSON.stringify).join('\n') + '\n', pageFor: () => page });
+  // S355 regression: a fact containing a double quote, rendered with the renderer's escaping.
+  const quotedDays = JSON.parse(JSON.stringify(days));
+  quotedDays[0].stories[0].facts[0].text = 'The CEOs said "slow down" in a joint letter.';
+  const quotedClaims = deriveClaimsFeed(quotedDays);
+  const quotedFact = parseLines(quotedClaims)[0];
+  const quotedPage = `<li id="${quotedFact.id}" data-fact-hash="${quotedFact.hash}">${escapeNewsHtml(quotedFact.factText)}</li>`;
+  const quoted = validateClaimParity({ days: quotedDays, claimsText: quotedClaims, pageFor: () => quotedPage });
+  const quotedMissing = validateClaimParity({ days: quotedDays, claimsText: quotedClaims,
+    pageFor: () => `<li id="${quotedFact.id}" data-fact-hash="${quotedFact.hash}">A different sentence.</li>` });
   const cases = [
     ['exact corpus/feed/page parity passes', clean.length === 0],
+    ['a fact containing a double quote passes when rendered with the renderer escaping', quoted.length === 0],
+    ['a quoted fact that is genuinely absent still fails', quotedMissing.some((e) => /fact text absent/.test(e))],
     ['duplicate fact ids fail', duplicate.some((e) => /duplicate fact id/.test(e))],
     ['orphan factRefs fail', orphan.some((e) => /orphan factRef/.test(e))],
   ];

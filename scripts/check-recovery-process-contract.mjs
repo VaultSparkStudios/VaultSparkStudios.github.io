@@ -56,6 +56,14 @@ test('silent-only and broken failures both retain names', () => {
   const broken = parse({ ...good, ok: false, broken: [{ name: 'monthly', streak: 3 }] }, 1);
   assert.match(broken.detail, /monthly \(3 failures\)/);
 });
+test('held publishers warn by name without changing ok or exit', () => {
+  const held = parse({ ...good, held: [{ name: 'Generate Vault Narrative', runId: 1, title: 'Vault narrative held' }] });
+  assert.equal(held.pass, true); assert.equal(held.warn, true);
+  assert.match(held.detail, /Generate Vault Narrative \(held\)/);
+  assert.equal(parse(good).warn, undefined);
+  warning(parse({ ...good, held: 'not-an-array' }));
+  warning(parse({ ...good, held: [{ runId: 2 }] }));
+});
 test('partial, unmeasured, empty and skipped are never green', () => {
   warning(parse({ ...good, unreachable: 1 }));
   warning(parse({ ...good, noData: ['unknown'] }));

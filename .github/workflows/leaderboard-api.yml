@@ -27,7 +27,7 @@ jobs:
           git add api/leaderboard/v1/*.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: update leaderboard API data [skip ci]"
-            bash scripts/ci/publish-push.sh "leaderboard API"
+            bash scripts/ci/publish-push.sh "leaderboard API" --resync
           else
             echo "No changes to leaderboard data, skipping commit"
           fi

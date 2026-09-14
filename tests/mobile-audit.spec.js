@@ -4,7 +4,19 @@ const path = require('path');
 const crypto = require('crypto');
 const { PAGES: ALL_PAGES, VIEWPORTS: ALL_VIEWPORTS, candidateBinding, sourceBinding, validateRecords } = require('../scripts/lib/mobile-runtime-contract.cjs');
 
-const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+// S355: no silent production default. playwright.config.js loads .env.playwright.local*,
+// which set BASE_URL to the production origin for the credentialed member specs, so this
+// spec always saw production locally. A pass against production measures the PREVIOUS
+// deploy (how an undeployed P1 tap-target reached CI in S334), while the receipt written
+// below binds the LOCAL candidate. Production therefore needs an explicit opt-in.
+if (!process.env.BASE_URL) {
+  throw new Error('mobile-audit: set BASE_URL (e.g. http://127.0.0.1:4173 for a local preview)');
+}
+const BASE_HOST = new URL(process.env.BASE_URL).host.toLowerCase();
+if ((BASE_HOST === 'vaultsparkstudios.com' || BASE_HOST === 'www.vaultsparkstudios.com') && process.env.MOBILE_AUDIT_ALLOW_PRODUCTION !== '1') {
+  throw new Error('mobile-audit: BASE_URL is the production origin (possibly from .env.playwright.local). Audit a local preview with BASE_URL=http://127.0.0.1:4173, or set MOBILE_AUDIT_ALLOW_PRODUCTION=1 to measure production on purpose.');
+}
+const BASE = process.env.BASE_URL;
 const OUT_DIR = path.join(__dirname, '..', 'docs', 'mobile-audit');
 const FINDINGS_PATH = path.join(OUT_DIR, 'findings.jsonl');
 

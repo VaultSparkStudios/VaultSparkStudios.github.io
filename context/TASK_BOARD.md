@@ -1,6 +1,8 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-14 (S354 proved the Web Analytics beacon is delivered and reports, disclosed it on /privacy/, and closed a release-proof strand hidden by an unmodeled graph edge.)
+Last updated: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
+
+Previous: 2026-09-14 (S354 proved the Web Analytics beacon is delivered and reports, disclosed it on /privacy/, and closed a release-proof strand hidden by an unmodeled graph edge.)
 
 Previous: 2026-09-14 (S353 found two scheduled workflows red on missing prerequisites and a narrative publisher green while it published nothing for 19 days; fixed all three and gated both CI classes.)
 
@@ -62,6 +64,14 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 
 - [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **SHIPPED:** checkpoint `172073cb7`; 477/477 build steps; 84/84 reviewed normal captures plus 84 supplemental states; 215/215 mobile cells; staging receipt `bb5016b2a85891bf778e4f87`; production Actions run `34412238486`; live content-current with matched shell parity; Doctor `blockingFailing: 0`. Identity, acceptance, cadence, mail-arming, data-policy, and traffic decisions remain separate.
 ## Now (next session ready)
+
+- [x] **[S355][CI/P1] Held Pages runs no longer cancel confirmed promotions — SHIPPED.** `cancel-in-progress` is true only for a dispatch confirming production or content; refresh-live-data's input-less dispatch cancelled promotion `34824034218` in S354.
+- [x] **[S355][CI/P1] Publishers staging graph sources push with --resync — SHIPPED.** refresh-live-data, leaderboard-api, weekly-maintenance fixed; `check-publisher-resync` (11/11) gates the class.
+- [x] **[S355][OBS/P1] Founder presence no longer fails gates on other repos' sessions — SHIPPED.** `--check` validates shape, invariants and a sourceDigest over generator, slug lib and registry; `--check-live` keeps the strict comparison.
+- [x] **[S355][DESK/P1] Claim-parity gate escaped differently from the renderer — SHIPPED.** A fact containing `"` rendered fine and read as absent, blocking the 2026-09-13 latenight edition; both now use `scripts/lib/news-html.mjs`.
+- [x] **[S355][OBS/P2] Held runs, Desk model servability, mobile audit production guard — SHIPPED.** Advisory held field in sched-staleness; `check-desk-model-servability` in doctor; mobile audit refuses the production host unless `MOBILE_AUDIT_ALLOW_PRODUCTION=1`.
+- [ ] **[S355][UX/P3] Mount the narrative on /journal/.** Deferred: a UI change needs its own theme-matrix receipt cycle; declare the script in page-script scope.
+- [ ] **[S355][OBS/P3] Enable Worker observability for staging.** Deferred: needs a Worker deploy and a Workers Logs free-tier cost check (CANON-029); without it the S354 staging 503s cannot be sourced.
 
 - [ ] **[S354][FOUNDER DIRECTIVE] Founder-owned items deferred.** Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.
 

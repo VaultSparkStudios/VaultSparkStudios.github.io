@@ -1,3 +1,17 @@
+## S355 Gates That Measured the Wrong Thing, and a Deploy a No-Op Could Cancel (2026-09-14)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | `api/founder-presence.json` gains `sourceDigest` (no consumer pins its keys); sched-staleness JSON gains optional `held`/`heldUnmeasured`, validated by the parser and pinned out of ok/exit. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Public claim accuracy | 5 | A Desk edition that was on the page was refused as "fact absent"; renderer and verifier now escape identically. |
+| Internal consistency | 5 | Founder presence gates on this repo's sources, not another repo's sessions; the mobile audit cannot bind a local receipt to production measurements. |
+| Evidence freshness | 5 | Every change was proven against the real failure: HEAD workflows for resync, the old payload for presence, a quoted fixture for claim parity, live runs for held and servability. |
+
+**What was true and is no longer:** "founder-presence drift" named a real mismatch that was not this repo's; "fact text absent" named a fact that was present.
+
+**What is NOT resolved:** the staging 503s from S354 stay unsourced until Worker observability is enabled.
+
 ## S354 A Dashboard Setting Recorded as the Fix, and a Diagnosis That Was Wrong Twice (2026-09-14)
 
 | Dimension | Score | Evidence |

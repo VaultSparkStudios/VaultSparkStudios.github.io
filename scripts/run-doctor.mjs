@@ -44,6 +44,9 @@ const DRIFT_META = {
   genome:                { driftClass: 'local-broken', blocking: true },
   'prompt-ver':          { driftClass: 'local-broken', blocking: true },
   'sched-staleness':     { driftClass: 'derived-stale', blocking: false },
+  // S355: advisory. A dead Desk authoring model is hidden by chat()'s standby failover;
+  // this surfaces it. Provider state is external, so it never blocks a session.
+  'desk-model-servability': { driftClass: 'expected-external', blocking: false },
   // S300: blocking. The whole point of this probe is that a silently-stale
   // production must stop a session, not decorate it with a warning nobody reads.
   'deploy-currency-live': { driftClass: 'local-broken', blocking: true },
@@ -350,6 +353,23 @@ const CHECKS = [
     cmd:   ['scripts/check-scheduled-workflow-staleness.mjs', '--json'],
     stdoutOnly: true,
     parse: parseScheduledProbe,
+  },
+  {
+    // S355: one tiny completion per declared Desk authoring model, no failover.
+    id:    'desk-model-servability',
+    label: 'Desk authoring models servable',
+    cmd:   ['scripts/check-desk-model-servability.mjs', '--json'],
+    stdoutOnly: true,
+    parse: (out, code, execution = {}) => {
+      if (execution.error || execution.signal) return { pass: false, warn: true, detail: 'model servability not observed (probe timed out or failed to run)' };
+      try {
+        const d = JSON.parse(String(out).trim());
+        if (!Array.isArray(d.servable) || !Array.isArray(d.unservable) || !Array.isArray(d.unmeasured) || d.ok !== (d.unservable.length === 0) || code !== (d.ok ? 0 : 1)) throw new Error('invalid');
+        if (d.unservable.length) return { pass: false, detail: `unservable: ${d.unservable.join(', ')}${d.primaryServable ? '' : ' (primary down; standby authoring)'}` };
+        if (d.unmeasured.length) return { pass: false, warn: true, detail: `${d.servable.length}/${d.declared} servable; unmeasured: ${d.unmeasured.join(', ')}` };
+        return { pass: true, detail: `${d.servable.length}/${d.declared} declared models servable` };
+      } catch { return { pass: false, warn: true, detail: 'model servability output invalid; not evaluated' }; }
+    },
   },
   {
     // S300. CANON-036 says "production must not silently lag main". The matrix

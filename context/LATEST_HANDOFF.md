@@ -1,5 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S355 · 2026-09-14
+
+- **Shipped:** 7 improvements across 3 groups: release safety (Pages concurrency, publisher --resync gate), gate truth (founder-presence gate stability, Desk claim-parity escaping, mobile audit production guard), observability (held-run advisory, Desk model servability).
+- **Tests:** build:check result in the S355 release addendum below · publisher-resync 11/11 (new) · founder-presence 11/11 (new) · model servability 13/13 (new) · sched-staleness 28/28 (+10) · recovery contract 20/20 (+1) · claim parity 5/5 (+2).
+- **Deploy:** see the S355 release addendum. No page or Worker change; workflows and scripts reach GitHub on push.
+
+**Session Intent:** founder directive continued: defer founder items, work every agent-owned item.
+
+**Read before dispatching a promotion:** until this commit is on main, an input-less publisher dispatch can still cancel a confirmed promotion. After it, held runs queue. Confirm deployment only from served `build-sha.json`.
+
+**Two Desk refusals, only one was a bug.** Run `34786386279` authored an edition that the claim-parity gate wrongly refused (escaping mismatch, fixed). Run `34814843409` was a correct refusal: a visual anchor absent from the corpus, then the cadence postcondition. Desk cadence remains the founder's decision.
+
+**Still broken on schedule, honestly:** Monthly Member Newsletter (founder-deferred, never armed) and Generate Vault Narrative (pre-fix scheduled failures; clears at its next 13:00 UTC run).
+
+**Deferred with reasons (D-S355.5):** /journal/ mount, staging Worker observability, Desk source breadth, S336 visual review, Trusted Types hoist, /atlas/, 19 generators.
+
 ## Where We Left Off — S354 · 2026-09-14
 
 - **Shipped:** 5 improvements across 3 groups: measurement truth (analytics delivery verified in a real browser, privacy disclosure), gate truth (release-dependencies modeled with its release-proof edge and the Weekly Maintenance strand it exposed; empty secret scan no longer reads clean), tooling resilience (theme-matrix route guard, transient-lock write retry).

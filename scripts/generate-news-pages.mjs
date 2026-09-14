@@ -21,6 +21,7 @@
  *   node scripts/generate-news-pages.mjs --check   # exit 1 on drift
  */
 import { createHash } from 'node:crypto';
+import { escapeNewsHtml } from './lib/news-html.mjs';
 import { readerActionReceipts, renderReaderActions } from '../assets/lib/you-asked-shipped-render.mjs';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -128,9 +129,8 @@ const deskPresenceSrc = shellManifest.assets?.deskPresence?.path
 
 const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage[^<]*<\/script>/) || [''])[0];
 
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+// S355: one escape function shared with check-news-claim-parity.mjs.
+const escapeHtml = escapeNewsHtml;
 const clamp = (s, max) => (String(s).length <= max ? String(s) : `${String(s).slice(0, max - 1)}…`);
 
 // Cast size appears in prose in several places. Hardcoding it is how "three
