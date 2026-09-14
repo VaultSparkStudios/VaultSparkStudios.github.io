@@ -16,6 +16,10 @@ Last updated: 2026-09-14 (S353)
 
 **Unchanged:** no page, style or Worker changed. The edge sampler still waits on studio-ops (the handoff was drained, not answered).
 
+**Found by the live run, fixed the same session: rebased publishers could not push.** Dispatched on the released commit, Vault Narrative wrote its first grounded dispatch since 2026-08-26 and then failed at commit. After a rebase, `resync-derived` forced every node with a source git does not track to rebuild, and `brand-assets`' source is `external:founder-brand-masters`, which no runner has. `build-brand-assets` refused, so the publisher refused to push. Desk edition and uptime publishers had hit the same error since S351. `external:` sources no longer make a node always-dirty (16 → 13 on the live graph); `founder-presence` is still forced.
+
+**Released:** production serves `ea6cd1c9f` (SCOPED dispatch `34807949053`, smoke 6/6), staging first. Weekly Maintenance succeeded live with 0 members.
+
 ## S352 a publisher that staged the sitemap and never rebuilt it (2026-09-13)
 
 **New stories were reaching production missing from `sitemap.xml`.** `news-publish.yml` listed `sitemap.xml` in its `git add` but its cascade step never ran `generate-sitemap.mjs`. The midday edition of 2026-09-12 published `/news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/` and the sitemap did not list it. `generate-sitemap --check` was red on a freshly pulled `origin/main`. The publisher now rebuilds and checks the sitemap in the same commit.

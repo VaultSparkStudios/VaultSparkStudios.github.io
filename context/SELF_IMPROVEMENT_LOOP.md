@@ -2779,3 +2779,13 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Committed to TASK_BOARD:** [SIL] model the 20 proof-surface generators · [SIL] verify the first fixed Vault Narrative run.
 
 **Intent outcome:** see the S353 release addendum for push and deploy.
+
+### S353 addendum — deploy outcome and a defect only the live run could show
+
+**Deploy fully completed** on the SCOPED path: staging first (231 overlays, head verified), production dispatch `34807949053` green, served `build-sha.json` = `ea6cd1c9f`, smoke 6/6. The Worker was unchanged and not redeployed.
+
+**Reading the repaired workflows' real runs, not trusting the local controls, found one more publisher defect.** Vault Narrative generated a grounded dispatch on the runner, then failed at commit. `resync-derived` forced the `external:`-sourced `brand-assets` node to rebuild after every rebase, and that builder can never succeed in CI. The same error had already stopped a Desk edition and an uptime publish. Fixed at the helper, pinned in the self-test (19/19) and unit spec (10/10), and pushed.
+
+**Honesty ledger addition:** did not report the narrative as publishing on the strength of its generate step; its commit failed and the archive has not grown yet. Did not count the first secret scan, which covered an empty index.
+
+**Intent outcome:** achieved. `/arc` ran end to end, pushed directly to main, and was fully deployed (staging, SCOPED production, Worker not due). One follow-up read is left for next session: the re-dispatched narrative run's commit step.

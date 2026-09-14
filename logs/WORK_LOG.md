@@ -1489,3 +1489,13 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 7. `check-evidence-graph-coverage` parses `check-proof-surface`'s generator checks: 72/92 modeled, baseline 0 → 20 (negative control named all 20). Closes the S352 `[SIL]` row. `resync-derived` unchanged (16/16).
 
 **Evidence:** adjacent gates green (orphan scripts, unit parity, cascade coverage, install consistency, publisher resilience, YAML validity). Release evidence in the handoff addendum.
+
+### S353 release addendum — what reached production
+
+**Pushed:** `ea6cd1c9f` (rebased onto 3 publishers; 14 generated-feed conflicts resolved upstream-side and regenerated, converged in 2 rounds; candidate `e959e4c51711` unchanged). Coherence 46/46, staged secret scan clean.
+
+**Verified:** build:check 487/487 · mobile 215/215 · theme matrix 84 inspected · staging overlay 231/11, staging head = `ea6cd1c9f`, parity green · production dispatch `34807949053` success · served `/api/build-sha.json` = `ea6cd1c9f` · smoke-live 6/6 · Worker unchanged since `c29a1b0f5`, not redeployed.
+
+**Live runs:** Weekly Maintenance `34808007739` success with 0 members. Vault Narrative `34808006238` generated a grounded dispatch (`anchor:Studio Pulse live data`), then failed at commit: `resync-derived` forced `brand-assets` (source `external:founder-brand-masters`) dirty after the rebase, and its builder refuses without the masters. The same failure hit Desk edition `34743168203` and uptime `34801923561`.
+
+**Fixed:** `scripts/lib/tracked-inventory.mjs` ignores `external:` sources when deciding always-dirty nodes (old 16 → fixed 13 on the live graph; the three removed are exactly the external-sourced nodes). `resync-derived --self-test` 19/19, `tests/resync-derived.unit.spec.js` 10/10. Scripts and tests are pruned from the served surface, so the push is this fix's deploy; the narrative was re-dispatched on it.

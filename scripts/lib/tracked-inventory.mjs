@@ -16,6 +16,13 @@ export function trackedInventory(runGit) {
     has: source => files.has(normalize(source)) || directories.has(normalize(source)),
   };
 }
+// `external:` sources (founder brand masters, live production probes) are not
+// repo paths git fails to see; they are outside the repo entirely. A rebase
+// cannot change them and a CI runner cannot rebuild from them, so they must not
+// make a node always-dirty. S353: they did, and every rebased publisher then ran
+// build-brand-assets, which refuses without the masters, so the Desk edition,
+// uptime and narrative publishers each refused to push.
+export const isExternalSource = source => /^external:/.test(String(source));
 export function untrackedSourceNodes(graph, inventory) {
-  return graph.nodes.filter(node => node.sources.some(source => !source.includes('*') && !inventory.has(source)));
+  return graph.nodes.filter(node => node.sources.some(source => !isExternalSource(source) && !source.includes('*') && !inventory.has(source)));
 }

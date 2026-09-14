@@ -16,6 +16,28 @@
 
 **Unchanged holds:** the edge sampler waits on studio-ops (Ark `01K2EQ77M9F29A0EC9619EA4BC` was drained, not answered). Identity/provider acceptance, newsletter arming, Desk cadence, public-member-data policy, the warm-origin decision and Trusted Types enforce remain with the founder. The member SEO job now succeeds with 0 profiles; which member data is public is still the S336 founder decision.
 
+### S353 release addendum — what reached production
+
+**Pushed:** `ea6cd1c9f` to main after rebasing onto 3 `[skip ci]` publishers. All 14 conflicts were generated feeds; took the upstream side and regenerated (converged in round 2). The candidate manifest stayed `e959e4c51711`, so both receipts stayed valid. Pre-push coherence 46/46; the staged secret scan was clean. An earlier "clean" scan had covered an empty index and is not counted.
+
+**Gate:** `build:check` 487/487 from a frozen tree, with the exit read from the log. The first run stopped at step 211 because the closeout brief had not been rendered, which was correct. Mobile 215/215 against a local preview. Theme matrix 84 captures, all inspected on six per-route contact sheets plus 4 at full resolution. The first matrix run failed because Git Bash rewrote the route `/` into a Windows path; it now runs with `MSYS_NO_PATHCONV=1`.
+
+**Staging first (CANON-007):** `deploy-staging-content --baseline 222037112782` ran 231 overlays and 11 safe removals, exact-byte verified with identity untouched. Staging `contentLaneHead` = `ea6cd1c9f`; parity green.
+
+**Production, SCOPED path:** `promotable=true · scoped-disjoint`. Dispatch run `34807949053` succeeded, including the ceremony, Pages deploy, purge, post-purge liveness and exact live News freshness. **Served bytes:** `/api/build-sha.json` reports `ea6cd1c9f…`, deployed by `pages-deploy`. `smoke-live` 6/6.
+
+**Worker:** not redeployed. Nothing under `cloudflare/` or `config/csp-policy.mjs` changed since the last dispatched Worker deploy (`34669052231` at `c29a1b0f5`).
+
+**Live runs of the repaired workflows (dispatched on `ea6cd1c9f`):**
+- Weekly Maintenance `34808007739`: **success.** Fetched 0 members, re-probed Obelisk, and got past the `git add` that used to exit 128.
+- Vault Narrative `34808006238`: install, evidence graph and generate all passed. It logged `[vault-narrative] wrote api/vault-narrative.json (anchor:Studio Pulse live data)`, the first grounded dispatch since 2026-08-26. **The commit step then failed**, a new and real defect found only because this workflow reached its commit for the first time since the fix.
+
+**Found live and fixed: every rebased publisher tried to rebuild brand assets.** `resync-derived` treats a node with an untracked, non-glob source as always dirty, a rule built for `context/.session-lock`. `brand-assets`' only source is `external:founder-brand-masters`, outside the repo, so after any rebase `build-brand-assets` ran, correctly refused without the masters, and the publisher refused to push. The same error is in Desk edition `34743168203` (2026-09-13) and uptime `34801923561` (2026-09-14): a class, not one run. `untrackedSourceNodes` now ignores `external:` sources. Against the live graph the old helper forced 16 nodes and the fixed one forces 13, the removed three being exactly the external-sourced ones. `founder-presence` is still forced. `resync-derived --self-test` 19/19 (+3), unit spec 10/10 with an external fixture.
+
+**Decision (recorded here because DECISIONS is in the verification fingerprint):** `external:` sources never make a node always-dirty. A node whose tracked sources or output change still resyncs through normal closure.
+
+**Next session, first read:** the next Vault Narrative run should now commit its dispatch and pass `--check-fresh`. The fix commit also re-dispatched it; read that run's commit step before claiming the archive grows.
+
 ## Where We Left Off — S352 · 2026-09-13
 
 - **Shipped:** 4 improvements across 3 groups: publisher cascades (sitemap node in the evidence graph, 4 publishers closed), probe honesty (the write-back check reads generated paths from the graph), gate coverage (unit-suite parity check).

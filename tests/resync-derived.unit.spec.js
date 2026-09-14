@@ -91,7 +91,9 @@ test('unreadable Git index fails instead of treating every source as untracked',
 
 test('untracked source discovery preserves ignored globs and invisible session lock', () => {
   const inventory = trackedInventory(() => 'data/days/one.json\0');
-  const graph = { nodes: [{ id: 'directory', sources: ['data/days'] }, { id: 'glob', sources: ['data/*.json'] }, { id: 'lock', sources: ['context/.session-lock'] }] };
+  // S353: an external: source (founder masters, live probes) is outside the repo,
+  // not untracked inside it, so it must not force a rebuild on every rebase.
+  const graph = { nodes: [{ id: 'directory', sources: ['data/days'] }, { id: 'glob', sources: ['data/*.json'] }, { id: 'lock', sources: ['context/.session-lock'] }, { id: 'external', sources: ['external:founder-brand-masters'] }] };
   assert.deepEqual(untrackedSourceNodes(graph, inventory).map(node => node.id), ['lock']);
 });
 

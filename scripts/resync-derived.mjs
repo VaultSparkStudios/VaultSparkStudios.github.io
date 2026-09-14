@@ -403,6 +403,22 @@ function selfTest() {
   const fp = graph.nodes.find((n) => n.id === 'founder-presence');
   cases.push(['founder-presence is still recognised as untracked-sourced',
     !fp || untracked.includes('founder-presence')]);
+  // S353: an external: source is outside the repo, not invisible to it. Forcing
+  // those nodes dirty made every rebased CI publisher run build-brand-assets,
+  // which refuses without the founder's masters, and refuse to push.
+  const externalOnly = graph.nodes.filter((n) => n.sources.length && n.sources.every((s) => /^external:/.test(s))).map((n) => n.id);
+  cases.push([`external-only nodes are not force-rebuilt${externalOnly.length ? ` (${externalOnly.join(', ')})` : ''}`,
+    externalOnly.every((id) => !untracked.includes(id))]);
+  cases.push(['brand-assets (founder masters only) is not force-rebuilt by a rebase',
+    !untracked.includes('brand-assets')]);
+  const fixture = { nodes: [
+    { id: 'ext', sources: ['external:masters'] },
+    { id: 'lock', sources: ['context/.session-lock'] },
+    { id: 'mixed', sources: ['external:probe', 'context/.session-lock'] },
+  ] };
+  const none = { has: () => false };
+  const fixtureIds = untrackedSourceNodes(fixture, none).map((n) => n.id).join();
+  cases.push(['fixture: external source alone is not dirty; an untracked repo file still is', fixtureIds === 'lock,mixed']);
 
   const missing = graph.nodes.filter((n) => !existsSync(join(ROOT, n.builder))).map((n) => n.id);
   cases.push([`all ${graph.nodes.length} builders exist${missing.length ? ` (missing: ${missing.join(', ')})` : ''}`,
