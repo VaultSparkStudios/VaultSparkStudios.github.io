@@ -460,11 +460,11 @@ async function rasterizeDispatchCard({ refreshArt = false } = {}) {
  * shared link to it should carry the week's actual verdict.
  *
  * It has to live HERE rather than in build-og-cards (S309). That promoter does
- * rewrite generic cards automatically — but it reads og:title to pick the
- * headline, and the Desk's chromeHead deliberately emits none, so it skips
- * every news page silently. The report therefore shipped pointing at the
- * generic site card: a page presenting itself as the studio in general rather
- * than as the week's review.
+ * rewrite generic cards automatically — but it skips news pages because their
+ * og:image already points to bespoke per-article art (not a generic or
+ * ours-generated card). The report therefore shipped pointing at the generic
+ * site card: a page presenting itself as the studio in general rather than as
+ * the week's review.
  */
 async function rasterizeDirectorsCard({ refreshArt = false } = {}) {
   const dir = path.join(ROOT, 'data', 'news-desk', 'directors-reports');
