@@ -1,18 +1,24 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-14T20:11:47.420Z",
+  "generatedAt": "2026-09-14T20:35:19.398Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch"
+    "staging-artifact-root-mismatch",
+    "staging-artifact-leaf-count-mismatch",
+    "/membership/:stagingReachable",
+    "/membership/:stagingStatus",
+    "/membership/:stagingCanonicalCsp",
+    "/membership/:stagingSecurityHeaders",
+    "/membership/:localShellParity"
   ],
   "candidateBuildSha": "a6ebef977d097bb5b2b0faace1a7215bc6f7bbf8",
   "stagingBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
   "artifactManifest": {
     "candidateRoot": "16b6ca60a5a243bbc3686f4b1121e272d05c1fbc6744cac48ddf0a8d07c7854c",
     "candidateLeafCount": 30,
-    "stagingRoot": "03995683c2ffa0f6a013cfecbeb26f4eaef87107dfc5a0af95f7963d845029b7",
-    "stagingLeafCount": 30,
+    "stagingRoot": null,
+    "stagingLeafCount": null,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -125,10 +131,10 @@
     {
       "route": "/membership/",
       "prodStatus": 200,
-      "stagingStatus": 200,
-      "stagingReachable": true,
-      "statusParity": true,
-      "shellParity": true,
+      "stagingStatus": 0,
+      "stagingReachable": false,
+      "statusParity": false,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-a4349880f3.js",
         "assets/ambient-feature.shell-ca3b329506.js",
@@ -136,31 +142,27 @@
         "assets/style.shell-79b001d0ae.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "stagingShell": [
-        "assets/ambient-core.shell-a4349880f3.js",
-        "assets/ambient-feature.shell-ca3b329506.js",
-        "assets/nav-sheet.shell-d6938be4eb.js",
-        "assets/style.shell-79b001d0ae.css",
-        "assets/theme-toggle.shell-8221605898.js"
-      ],
-      "headerParity": true,
+      "stagingShell": [],
+      "headerParity": false,
       "prodHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
         "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
         "referrer": "strict-origin-when-cross-origin"
       },
-      "stagingHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
-        "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
-      },
+      "stagingHeaders": {},
       "stagingStaticCspSafe": true,
-      "stagingCspMode": "dynamic-worker",
-      "stagingCanonicalCsp": true,
-      "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "stagingCspMode": "static",
+      "stagingCanonicalCsp": false,
+      "stagingSecurityHeaders": false,
+      "reasonCodes": [
+        "staging-unreachable",
+        "status-mismatch",
+        "shell-mismatch",
+        "header-mismatch",
+        "staging-canonical-csp-drift",
+        "staging-security-header-baseline"
+      ]
     }
   ]
 }
