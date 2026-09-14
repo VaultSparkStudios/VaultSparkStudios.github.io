@@ -1453,3 +1453,20 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Routed, not shipped:** Ark `agent-handoff` `01K2EQ77M9F29A0EC9619EA4BC` proposes that `studio-ops-cron` (`*/30`) invoke the edge sampler through a service-binding RPC entrypoint. studio-ops had a live session lock, so nothing was committed or pushed there. Ark wrote only its own log entry into the studio-ops tree, which is how Ark delivers cargo.
 
 **Evidence:** evidence-graph 81 nodes, acyclic; coverage 67/67; check reachability 81/81; build-gate reachability 247/247; all 29 publish cascades closed; the 4 edited workflows parse as YAML; step-guard gate clean.
+
+### S352 release addendum — what reached production
+
+**Pushed:** `3c5347478` to main after rebasing onto 4 `[skip ci]` uptime publishers. The conflicts were all in generated feeds and were resolved by taking one side and regenerating (converged in one round; candidate manifest unchanged at `dc959012ce20`, so both receipts stayed valid). Pre-push coherence 59/59, sanitizer clean, secret scan 0 findings over 102 files.
+
+**Staging first (CANON-007):** `deploy-staging-content --baseline 222037112782` produced 231 overlays and 11 safe removals, exact-byte verified with identity untouched, including the new 2026-09-12 story page.
+
+**Production, SCOPED path:** `check-promotion-scope` returned `promotable=true · scoped-disjoint` (held: `auth/**`, `identity`, `worker:identity`; holds not cleared). The push-triggered `pages-deploy` run `34801214570` again took "Promotion held — no production mutation" and reported success while deploying nothing. Dispatch run `34801275600` was the real promotion.
+- Attempt 1: ceremony, Pages deploy and post-purge liveness all green. "Exact live News freshness" then failed 5/5 with `fetch failed` from the GitHub runner to pages.dev, a transport failure with no byte comparison. The same check run locally passed on both pages.dev and production (37 pages, 111 exact assets).
+- Attempt 2 (`gh run rerun --failed`): fully green, including exact live News freshness. "Finalize durable News release verification" is skipped by design on this path, because it runs only on the content lane. No receipt is missing.
+- **Served bytes:** `/api/build-sha.json` reports `3c53474785d9…`, which is HEAD, not a baseline stamp. `sitemap.xml` lists the 2026-09-12 story and its page returns 200. `smoke-live` 6/6.
+
+**Worker:** not redeployed, because nothing needed it. The last dispatched Worker deploy (`34669052231`) succeeded at `c29a1b0f5`, and no commits touch `cloudflare/` or `config/csp-policy.mjs` since.
+
+**Post-push CI on `3c5347478`:** E2E, Lighthouse, Accessibility, Secret Lint, Generate Sitemap, Minify, Cache Purge and Sentry Release all green.
+
+**Self-inflicted and corrected:** `build:check` failed twice before going green. Step 116 flagged a new `[SIL]` row as already shipped because it named an existing file; it now carries an `evidence-open` annotation. Step 380 caught my new script importing `node:child_process` directly; it now uses `./lib/safe-spawn.mjs`. A post-deploy currency probe and a staging-parity probe each rewrote a feed in the tree. Both were restored rather than committed alone, since committing a source without its cascade strands the derived feeds.
