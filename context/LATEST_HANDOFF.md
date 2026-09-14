@@ -1,5 +1,13 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## S355 release addendum · 2026-09-14
+
+- **Pushed:** `8b7bb4501` (S355) + `a5668648b` (receipts re-bound after rebase: mobile 215/215, visual 98/98, ordering green on candidate `03995683c2ff`). build:check 490/490 on the pre-rebase tree.
+- **Staging:** content lane `8b7bb4501` served and verified (233 overlays, 11 safe removals, identity untouched).
+- **Promotion:** First promotion `34831145405` was REJECTED at the release ceremony (9/10): `staging-browser-receipt` failed "mobile drawer and every theme are readable" on chromium and webkit with 9 console lines "Failed to load resource: 503" at 10:05Z, both attempts. Not reproduced afterwards: 8 routes and a 40-request parallel burst all 200; a settled real-browser probe (themes + drawer) showed 0 failed responses and 0 console errors on staging and production. Same unsourced class as S354; it stays unsourced until staging Worker observability exists ([S355] task). An intermediate CSP-hash lead was a false positive (the Worker authorizes by nonce; production "failed" identically).
+- **Result:** Re-dispatched promotion `34832157155` succeeded. Production verified by served bytes: `/api/build-sha.json` sha `e65eca737` (builtAt 2026-09-14T10:17:34Z) equals origin/main; `/api/founder-presence.json` `sourceDigest` matches the committed file (S355-only field); `smoke-live` exit 0.
+- **Concurrency fix observed live:** push run `34831099401` was cancelled by the confirmed dispatch on the same sha — the intended D-S355.1 behaviour.
+
 ## Where We Left Off — S355 · 2026-09-14
 
 - **Shipped:** 7 improvements across 3 groups: release safety (Pages concurrency, publisher --resync gate), gate truth (founder-presence gate stability, Desk claim-parity escaping, mobile audit production guard), observability (held-run advisory, Desk model servability).
