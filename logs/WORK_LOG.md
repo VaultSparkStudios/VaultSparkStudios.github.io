@@ -1516,3 +1516,13 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Ark:** 3 repo-questions to studio-ops (sampler, brief revenue age, credential owner) and 2 portfolio pattern-shares.
 
 **Not a defect:** one transient Supabase CORS failure on the homepage; three fresh loads were clean.
+
+### S354 release addendum — what reached production
+
+**Pushed:** `d839667cc` · `75dbf0f9b` (receipts re-captured on candidate `6483486d8524`) · `21397ec3c` (gate evidence) · `77f5f4ff1` (founder presence regenerated for the pre-push hook). Coherence 54/54, staged scans clean.
+
+**Verified:** build:check 487/487 (after reds at step 145, retention report, and step 94, founder presence) · mobile 215/215 · theme matrix 98 reviewed · staging overlay 233/11, head `21397ec3c`, parity green · production dispatch `34824371781` success on `a4a40a84a` · served `build-sha.json` = `a4a40a84a`, `/privacy/` section and date live · smoke-live 6/6 · Worker unchanged since `c29a1b0f5` · post-push CI all green including E2E and Lighthouse.
+
+**Promotion attempts:** `34823347676` rejected (ceremony: flaky Chromium drawer test after CI-only staging 503s; local 6/6; staging Worker has no observability, source unknown) · `34824034218` cancelled by refresh-live-data's held no-op dispatch through `cancel-in-progress` · `34824371781` success.
+
+**Wave 2 findings recorded:** Pages concurrency lets held runs cancel confirmed promotions; founder-presence `--check` makes this repo's gates depend on other repos' session state.

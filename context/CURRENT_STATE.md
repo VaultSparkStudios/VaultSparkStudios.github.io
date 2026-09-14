@@ -14,6 +14,8 @@ Last updated: 2026-09-14 (S354)
 
 **Observed, not a defect:** one homepage Supabase request failed CORS once; three fresh loads returned 200/206 with the correct header, consistent with a transient error response that carries no CORS headers.
 
+**Released:** production serves `a4a40a84a` (SCOPED dispatch `34824371781`, smoke 6/6), staging first. Two earlier dispatches did not land: one rejected for a flaky CI-only staging 503, one cancelled by a publisher's held no-op Pages dispatch. Both causes are recorded for wave 2.
+
 **Cross-repo:** five Ark messages (sampler follow-up, brief revenue-age bug, credential-owner status, registry field/case bugs, external-source resync pattern).
 
 ## S353 three scheduled publishers that could not do their job, and one that said it had (2026-09-14)

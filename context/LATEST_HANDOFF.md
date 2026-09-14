@@ -16,6 +16,31 @@
 
 **Agent-owned, still open:** 19 proof-surface generators to model; a gate that every `[skip ci]` publisher pushes through `publish-push.sh --resync`; a doctor probe that reads held-run markers; mobile audit starting its own local preview; mounting the narrative on `/journal/`; model-servability alerts; Desk source breadth; `/atlas/` retirement; the S336 surfaces' visual review; the Trusted Types load-order hoist (own session).
 
+### S354 release addendum — what reached production
+
+**Pushed:** release commits `d839667cc`, `75dbf0f9b`, `21397ec3c`, `77f5f4ff1` on main after two rebases onto publishers. Generated-feed conflicts were resolved by taking upstream and regenerating. The second rebase moved the candidate to `6483486d8524` (LQIP map and build SHA), so both receipts were re-captured: theme matrix 98 captures reviewed, mobile 215/215. The third rebase kept the candidate. Pre-push coherence 54/54.
+
+**Gate:** `build:check` 487/487 from a frozen tree on the final candidate, after two honest reds: step 145 (visual-QA retention report stale after adding `/privacy/` to the receipt; regenerated, not a leaf) and step 94 (founder-presence drift, below).
+
+**Staging first (CANON-007):** `deploy-staging-content --baseline 222037112782` ran 233 overlays and 11 safe removals, identity untouched. Staging `contentLaneHead` = `21397ec3c`; `/privacy/` shows the new section and date; parity green. The first overlay run exited 1 with its output filtered away; the re-run verified cleanly. That first exit is unexplained, not assumed harmless.
+
+**Production, SCOPED path (`promotable=true · scoped-disjoint`), three dispatches:**
+- `34823347676`: **rejected** by the release ceremony (9/10). `staging-browser-receipt` recorded the Chromium drawer-and-themes test as flaky (`passed 2 · failed 0 · flaky 1`): its first attempt collected five `503` console errors from staging, and the retry was clean. The same suite run locally against the same staging passed 6/6. The staging Worker has no `[observability]` block, so its logs recorded no events and cannot name the 503 source. It stays unexplained.
+- `34824034218`: **cancelled** at step 5. `refresh-live-data.yml` dispatches `pages-deploy.yml` with no inputs whenever it commits. That run took "Promotion held — no production mutation", deployed nothing, and `concurrency: pages-deploy` with `cancel-in-progress: true` killed the confirmed promotion 41 seconds in.
+- `34824371781`: **success** on `a4a40a84a`: ceremony, clean dist, stamped SHA, Pages deploy, purge, post-purge liveness, served feed contract and exact live News freshness all green.
+
+**Served bytes (08:51Z):** `/api/build-sha.json` = `a4a40a84ab7d…`, deployed by `pages-deploy`. `/privacy/` serves "Analytics (Cloudflare Web Analytics)" and "Last updated: September 14, 2026", with the beacon present. `smoke-live` 6/6.
+
+**Worker:** not redeployed. Nothing under `cloudflare/` or `config/csp-policy.mjs` changed since `c29a1b0f5` (dispatch `34669052231`).
+
+**Post-push CI on `77f5f4ff1`:** E2E, Lighthouse, Accessibility, Minify, Generate Sitemap, Cache Purge, Sentry Release, Secret Lint and the Pages build all green. The push-triggered Pages Deploy was cancelled by the concurrency group, superseded by the dispatch.
+
+**Proven on a real cron:** today's scheduled Weekly Maintenance (06:15Z) succeeded with 0 members and pushed `b27b535`, the S353 empty-glob fix working unprompted.
+
+**Two structural findings for wave 2, neither fixed yet:**
+1. **A held Pages run can cancel a confirmed promotion.** Fix: `cancel-in-progress` true only when a dispatch sets `confirm_production` or `confirm_content` (via `github.event.inputs`, which is empty on push and schedule), so held runs queue instead of cancelling.
+2. **This repo's gates depend on other repos' sessions.** `generate-founder-presence --check` reads `../vaultspark-studio-ops/portfolio/ACTIVE_SESSIONS.json`, so a session starting or expiring anywhere in the studio failed `build:check` once and the pre-push hook once (StatVault, then VEILOS). Each time the fix was a regenerate, but the class will recur.
+
 ## Where We Left Off — S353 · 2026-09-14
 
 - **Shipped:** 7 improvements across 3 groups: publisher repair (Vault Narrative install, Weekly Maintenance pathspec), publisher honesty (shared grounding vocabulary with verified counts, held-publisher warning plus `--check-fresh`), gate coverage (runtime-dependency gate, zero-match pathspec gate, coverage ratchet widened to the proof surface).

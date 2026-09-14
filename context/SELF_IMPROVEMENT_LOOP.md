@@ -2816,3 +2816,13 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Committed to TASK_BOARD:** [SIL] generator modeling continues (19 left).
 
 **Intent outcome:** see the S354 release addendum.
+
+### S354 addendum — deploy outcome
+
+**Fully deployed** on the SCOPED path: staging first (233 overlays, head verified, parity green), production dispatch `34824371781` green, served `build-sha.json` = `a4a40a84a` with the `/privacy/` section live, smoke 6/6, and post-push CI green including E2E and Lighthouse. The Worker had no changes and was not redeployed.
+
+**It took three dispatches, and both failures are structural, not noise.** The first was rejected because the ceremony rightly refuses a flaky test: CI saw 503s from staging that a local run did not, and with Worker observability off, nothing can name their source. The second was cancelled by the refresh-live-data publisher's own Pages dispatch, a held no-op that `cancel-in-progress` let kill a confirmed promotion. The gates also failed twice on founder presence, which reads other repos' sessions.
+
+**Honesty ledger:** did not re-run until green without reading the receipt, which showed a flaky pass rather than a failure. Did not call the unobservable 503s transient-and-harmless; recorded them as unexplained. Did not report "deployed" from the first two runs: the served `build-sha.json` still read `ea6cd1c9f` until the third.
+
+**Intent outcome:** achieved for wave 1. Wave 2 (agent-owned items plus the two structural findings above) follows.
