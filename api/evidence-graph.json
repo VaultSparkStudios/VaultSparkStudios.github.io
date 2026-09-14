@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "96ee18855e5e1258c0975293805211a8ddd3086969d4ce76aed3ab4a61531d0d",
+  "contractSha256": "757e12bb22f7ac9146decb759f4a5bd01c657db48c0f6720b1dfd29e44d55a44",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 81,
-  "cascadeNodeCount": 39,
+  "nodeCount": 82,
+  "cascadeNodeCount": 40,
   "buildOrder": [
     "ai-canonical-pages",
     "ambient-bundles",
@@ -48,6 +48,7 @@
     "promotion-receipt",
     "public-intelligence",
     "rank-climbers",
+    "release-dependencies",
     "site-health",
     "sitemap",
     "surface-spine",
@@ -1167,6 +1168,22 @@
       ]
     },
     {
+      "id": "release-dependencies",
+      "output": "api/release-dependencies.json",
+      "builder": "scripts/build-release-dependencies.mjs",
+      "verify": "node scripts/build-release-dependencies.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/release-proof.json"
+      ],
+      "externalSources": [
+        ".cache/obelisk-registration-probe.json",
+        "config/release-dependencies.json",
+        "external:studio-ops-ark-log"
+      ]
+    },
+    {
       "id": "release-proof",
       "output": "api/release-proof.json",
       "builder": "scripts/build-release-proof.mjs",
@@ -1177,6 +1194,7 @@
         "api/deploy-currency.json",
         "api/identity-migration-receipt.json",
         "api/promotion-receipt.json",
+        "api/release-dependencies.json",
         "api/staging-deploy-receipt.json",
         "api/worker-route-provenance.json"
       ],

@@ -279,9 +279,16 @@ function run() {
       } catch {}
     }
 
+    // S354: an empty file set is not a clean result. S353 read "✓ Clean — 0
+    // findings" before anything was staged and nearly counted it as a pre-commit
+    // pass. Report what was actually scanned; --require-files makes emptiness fail.
+    const filesScanned = files.filter((file) => !isAllowlistedPath(file)).length;
+    const REQUIRE_FILES = args.includes('--require-files');
+
     if (MODE_JSON) {
-      process.stdout.write(JSON.stringify({ findings, count: findings.length }, null, 2));
-      process.exit(findings.length ? 1 : 0);
+      process.stdout.write(JSON.stringify({ findings, count: findings.length, filesScanned }, null, 2));
+      if (findings.length) process.exit(1);
+      process.exit(filesScanned === 0 && REQUIRE_FILES ? 3 : 0);
     }
 
     // Human-readable output
@@ -291,8 +298,13 @@ function run() {
     const scopeL = '║ ' + `scope: ${scope}`.padEnd(64) + ' ║';
     process.stdout.write([banner, line, scopeL, banner].join('\n') + '\n');
 
+    if (findings.length === 0 && filesScanned === 0) {
+      process.stdout.write(`○ Nothing to scan — 0 files in ${scope} (not a clean result; stage the changes, then scan again)\n`);
+      process.exit(REQUIRE_FILES ? 3 : 0);
+    }
+
     if (findings.length === 0) {
-      process.stdout.write('✓ Clean — 0 findings\n');
+      process.stdout.write(`✓ Clean — 0 findings in ${filesScanned} file(s)\n`);
       process.exit(0);
     }
 

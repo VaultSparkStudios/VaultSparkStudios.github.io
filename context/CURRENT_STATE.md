@@ -1,8 +1,20 @@
 # Current State
 
-Last updated: 2026-09-14 (S353)
+Last updated: 2026-09-14 (S354)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S354 analytics that was delivered all along, and a release proof no job rebuilt (2026-09-14)
+
+**Cloudflare Web Analytics works end to end; the seven-day zero was real traffic.** Enabled with auto-install since 2026-03-04. In a real Chromium visit to production, the page carries one nonce-bound beacon, `beacon.min.js` loads (200), no CSP violation fires, and the page-load report POSTs to same-origin `/cdn-cgi/rum` (204). Four headless test visits then appeared in GraphQL within minutes (bot=1, ChromeHeadless), so ingestion works; before them this site had no rows for seven days while other sites had up to 493. An earlier "zero for every site" reading was a parser bug in my probe, not the query. Two wrong diagnoses were coded and reverted before any build: "no beacon" (a probe without `Accept: text/html`) and "`connect-src` blocks it" (the beacon posts same-origin). `/privacy/` now discloses the measurement, which had been running without mention.
+
+**Release proof strand, found by modeling one generator.** `build-release-proof` reads `api/release-dependencies.json`, an edge the evidence graph lacked. Once modeled, the cascade gate named Weekly Maintenance, which committed the dependency receipt without rebuilding the proof. It now rebuilds and stages both. Coverage 73/92, baseline 19.
+
+**Smaller repairs:** `scan-secrets` no longer calls an empty file set clean; `capture-theme-matrix` refuses routes Git Bash rewrote into Windows paths; `build-og-cards` writes through a helper that retries transient Windows locks.
+
+**Observed, not a defect:** one homepage Supabase request failed CORS once; three fresh loads returned 200/206 with the correct header, consistent with a transient error response that carries no CORS headers.
+
+**Cross-repo:** five Ark messages (sampler follow-up, brief revenue-age bug, credential-owner status, registry field/case bugs, external-source resync pattern).
 
 ## S353 three scheduled publishers that could not do their job, and one that said it had (2026-09-14)
 

@@ -18,3 +18,19 @@ export function writeTextAtomic(filePath, text) {
 export function writeJsonAtomic(filePath, value) {
   writeTextAtomic(filePath, `${JSON.stringify(value, null, 2)}\n`);
 }
+// S354: Windows can briefly lock a file another process just wrote (indexer,
+// antivirus), surfacing as UNKNOWN/EBUSY/EPERM/EACCES on open. One such lock on
+// leaderboards/call-of-doodie/index.html failed a whole `npm run build` in S353
+// though the file opened normally seconds later. Retry only those transient
+// codes, briefly; any other error, or a lock that persists, still throws.
+const TRANSIENT_WRITE_CODES = new Set(['UNKNOWN', 'EBUSY', 'EPERM', 'EACCES']);
+export function writeFileWithRetry(filePath, data, options, { attempts = 5, delayMs = 150, write = fs.writeFileSync } = {}) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return write(filePath, data, options);
+    } catch (error) {
+      if (!TRANSIENT_WRITE_CODES.has(error?.code) || attempt >= attempts) throw error;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, delayMs * attempt);
+    }
+  }
+}

@@ -1,3 +1,17 @@
+## S354 A Dashboard Setting Recorded as the Fix, and a Diagnosis That Was Wrong Twice (2026-09-14)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No feed schema changed. One evidence-graph node and one source edge added; coverage baseline 19 of 92. |
+| Prompt/template alignment | 5 | No prompt or template surface changed. |
+| Public claim accuracy | 5 | `/privacy/` did not mention Cloudflare Web Analytics, which has run on every page since March; it now does. `data/stats-surface.json` still says Web Analytics has not observed the hostname, and that remains literally true. |
+| Internal consistency | 5 | The task board's "enable Web Analytics" founder action described a setting that had been on since March; the row now records what is proven and what is not. |
+| Evidence freshness | 5 | Enablement, served HTML with a browser Accept header, the beacon's own source, a real-browser report round trip, and GraphQL with a control query were all read live. |
+
+**What was true and is no longer:** the board's founder action and this session's own first diagnosis (no beacon; CSP blocks reports). Both were disproved by direct observation and the related code was reverted unshipped.
+
+**Resolved in-session:** four headless test visits were ingested within minutes (bot=1), so the seven-day zero reflected no reported browser visits, not a broken pipeline. `data/stats-surface.json` saying human page loads are unavailable was literally true.
+
 ## S353 Green Runs That Published Nothing, and Gates That Measured a Subset (2026-09-14)
 
 | Dimension | Score | Evidence |

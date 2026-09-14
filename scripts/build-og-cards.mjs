@@ -28,8 +28,10 @@
    build-og-coverage.mjs --check, which IS wired into check-proof-surface.
      node scripts/build-og-cards.mjs --self-test
 */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { execSync } from './lib/safe-spawn.mjs';
+// S354: a transient Windows lock on a just-rewritten page failed a full build in S353.
+import { writeFileWithRetry as writeFileSync } from './lib/evidence-io.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';

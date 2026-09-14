@@ -43,6 +43,15 @@ const THEMES = arg('--themes', 'dark,light,ambient,warm,cool,lava,high-contrast'
 // Third recurrence of the S338/S340 class: a route merge reaching one more consumer.
 // The blank-capture guard below is what makes it non-silent next time.
 const ROUTES = arg('--routes', '/,/games/,/membership/,/status/,/evidence/,/atlas/').split(',');
+// S354: Git Bash rewrites a bare `/` argument into its install path
+// (`C:/Program Files/Git/`), so every home capture navigated to an invalid URL.
+// The blank-capture guard caught it only after 84 captures; refuse up front.
+const badRoutes = ROUTES.filter((route) => !route.startsWith('/') || /^[A-Za-z]:[\\/]/.test(route) || /Program Files/i.test(route));
+if (badRoutes.length) {
+  console.error(`capture-theme-matrix: invalid --routes value(s): ${badRoutes.join(', ')}`);
+  console.error('  every route must be a site path starting with "/". On Git Bash, run with MSYS_NO_PATHCONV=1 so "/" is not rewritten to a Windows path.');
+  process.exit(2);
+}
 const VIEWPORT_PRESETS = [
   { name: 'desktop', width: 1366, height: 900 },
   { name: 'mobile-small', width: 360, height: 640 },

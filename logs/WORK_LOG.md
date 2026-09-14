@@ -1499,3 +1499,20 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Live runs:** Weekly Maintenance `34808007739` success with 0 members. Vault Narrative `34808006238` generated a grounded dispatch (`anchor:Studio Pulse live data`), then failed at commit: `resync-derived` forced `brand-assets` (source `external:founder-brand-masters`) dirty after the rebase, and its builder refuses without the masters. The same failure hit Desk edition `34743168203` and uptime `34801923561`.
 
 **Fixed:** `scripts/lib/tracked-inventory.mjs` ignores `external:` sources when deciding always-dirty nodes (old 16 → fixed 13 on the live graph; the three removed are exactly the external-sourced nodes). `resync-derived --self-test` 19/19, `tests/resync-derived.unit.spec.js` 10/10. Scripts and tests are pruned from the served surface, so the push is this fix's deploy; the narrative was re-dispatched on it.
+
+## S354 · 2026-09-14 · founder-directed agent items (wave 1 release)
+
+**Intent:** founder enabled Web Analytics; defer founder-owned items and work every agent-owned item.
+
+**Analytics investigation:** `rum/site_info` shows Web Analytics enabled with auto-install since 2026-03-04. Two diagnoses were coded and then disproved, and both edits were reverted before any build: (1) "no beacon in served HTML", from a probe without `Accept: text/html`; with one, every page carries one nonce-bound beacon; (2) "`connect-src` blocks reports", but `beacon.min.js` sends versioned configs to same-origin `/cdn-cgi/rum`. Real Chromium: beacon 200, zero CSP violations, report POST 204. GraphQL: four headless test visits ingested within minutes (bot=1, ChromeHeadless), so ingestion works; before them no rows for seven days while other sites had up to 493. An earlier "empty for all 19 sites" reading was my probe parsing `result.data` where the tool returns `result.viewer`.
+
+**Shipped (5):**
+1. `/privacy/` Cloudflare Web Analytics section and updated date (AI disclosure, footer, sitemap checks pass).
+2. `config/evidence-graph.json` `release-dependencies` node plus the `release-proof` edge; negative control named Weekly Maintenance, which now rebuilds and stages `api/release-proof.json`. Coverage 73/92, baseline 19. All 29 cascades closed.
+3. `scan-secrets` reports "Nothing to scan" for an empty set, `filesScanned` in JSON, `--require-files` exit 3.
+4. `capture-theme-matrix` route guard (exit 2 on Git Bash-mangled routes).
+5. `writeFileWithRetry` in `scripts/lib/evidence-io.mjs`, used by `build-og-cards` (3 behaviour checks, self-test 21/21).
+
+**Ark:** 3 repo-questions to studio-ops (sampler, brief revenue age, credential owner) and 2 portfolio pattern-shares.
+
+**Not a defect:** one transient Supabase CORS failure on the homepage; three fresh loads were clean.

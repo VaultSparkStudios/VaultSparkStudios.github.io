@@ -1,0 +1,68 @@
+{
+  "session": "S354",
+  "date": "2026-09-14",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Proved Web Analytics works end to end (reverting two fixes built on wrong premises; the zero was real traffic), disclosed it on /privacy/, and closed a release-proof strand hidden by a missing graph edge.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "analytics-delivery-verified",
+      "title": "Analytics verified end to end in a real browser",
+      "axis": "truth",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "One nonce-bound beacon per page, no CSP violations, report POST to same-origin /cdn-cgi/rum answered 204, and four headless test visits were ingested within minutes (bot=1). The seven-day zero was real. A Worker injection and a connect-src change built on wrong premises were reverted unshipped; the injection would have double-counted.",
+      "evidence": "Chromium network log (beacon 200, /cdn-cgi/rum 204, 0 securitypolicyviolation); GraphQL site tag 5ed6e30f: 4 ChromeHeadless rows after the test, none in the prior 7 days"
+    },
+    {
+      "id": "#2",
+      "slug": "privacy-disclosure",
+      "title": "Privacy page discloses Cloudflare Web Analytics",
+      "axis": "trust",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "The beacon had run on every page since March without mention; the page now says what it collects and how to block it.",
+      "evidence": "privacy/index.html; AI disclosure, footer and sitemap checks pass"
+    },
+    {
+      "id": "#3",
+      "slug": "release-dependencies-edge",
+      "title": "A release-proof strand hidden by a missing graph edge",
+      "axis": "coverage",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "build-release-proof reads api/release-dependencies.json but the graph did not say so. Modeled, the cascade gate named Weekly Maintenance, which now rebuilds and stages the proof.",
+      "evidence": "cascade gate negative control then 29/29 closed; coverage 73/92 baseline 19"
+    },
+    {
+      "id": "#4",
+      "slug": "scan-empty-honesty",
+      "title": "An empty secret scan is not a clean one",
+      "axis": "truth",
+      "projectImpact": 5,
+      "ecosystemImpact": 5,
+      "insight": "The scanner printed Clean over zero staged files. It now says nothing was scanned and can fail on emptiness with --require-files.",
+      "evidence": "scan-secrets: nothing staged exit 0 message, --require-files exit 3, 1 file Clean"
+    },
+    {
+      "id": "#5",
+      "slug": "tooling-resilience",
+      "title": "Route guard and transient-lock retry",
+      "axis": "reliability",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "capture-theme-matrix refuses Git Bash-mangled routes before 84 blank captures; build-og-cards retries transient Windows locks that failed a full build.",
+      "evidence": "theme matrix exit 2 on mangled route; writeFileWithRetry 3 behaviour checks; og-cards self-test 21/21"
+    }
+  ],
+  "followUps": [
+    "Watch human (bot=0) page loads now that the pipeline is proven.",
+    "Model the remaining 19 proof-surface generators.",
+    "Gate that every [skip ci] publisher pushes through publish-push.sh --resync."
+  ],
+  "blockers": [
+    "Founder-owned items deferred by directive.",
+    "Edge sampler still waiting on studio-ops."
+  ]
+}

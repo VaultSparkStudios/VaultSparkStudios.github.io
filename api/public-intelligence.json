@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-14T05:10:15.136Z",
+  "generatedAt": "2026-09-14T08:24:10.274Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 353,
+    "currentSession": 354,
     "lastUpdated": "2026-09-14",
-    "currentFocus": "S353 fixed two scheduled publishers that failed on missing prerequisites (Vault Narrative never installed sharp; Weekly Maintenance staged an empty glob), made the narrative publisher publish grounded dispatches instead of preserving a 19-day-old one while reporting success, and gated both CI classes plus the proof-surface coverage gap.",
-    "nextMilestone": "The next Vault Narrative run publishes a grounded dispatch and passes --check-fresh; then model the 20 proof-surface generators, starting with build-release-dependencies. The edge sampler still waits on studio-ops answering Ark 01K2EQ77M9F29A0EC9619EA4BC.",
+    "currentFocus": "S354 proved Cloudflare Web Analytics works end to end (beacon, report and ingestion verified; the seven-day zero was real traffic; two wrong fixes reverted unshipped), disclosed it on /privacy/, and closed a release-proof strand exposed by modeling one generator.",
+    "nextMilestone": "Continue agent items: 19 generators to model, publisher resync gate, held-run doctor probe, local mobile preview default; watch human page loads now that analytics is proven.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 353,
+    "sessionsCompleted": 354,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -146,16 +146,16 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 99,
-      "momentum": 96,
+      "momentum": 95,
       "engagement": 95,
-      "process": 100,
+      "process": 98,
       "coherence": 100,
       "security": 100,
       "ecosystem": 100,
-      "capital": 98,
+      "capital": 97,
       "automation": 100,
-      "total": 988,
-      "updatedSession": 353
+      "total": 984,
+      "updatedSession": 354
     },
     "sealedNextRevealAt": null
   },
@@ -817,12 +817,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 9 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-09-14T05:00:30.696Z",
+    "summary": "Production deployment is stranded for 9 consecutive receipts. CI gate status is unknown.",
+    "checkedAt": "2026-09-14T05:23:44.942Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -830,7 +830,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",

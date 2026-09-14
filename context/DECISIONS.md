@@ -1840,3 +1840,23 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** `check-evidence-graph-coverage` now also parses the generator `--check` entries inside `check-proof-surface.mjs`. The baseline was raised once, from 0 to 20, to record debt that already existed, and may only fall from here. `check-workflow-runtime-dependencies` likewise follows derived-build profiles and `npm run` into local imports, per job.
 
 **Why:** both S353 CI failures and the S352 sitemap strand passed a gate that measured a subset: "67/67 modeled" excluded 25 proof-surface checks, and the install gate never asked whether a job needed packages at all. Raising a ratchet baseline normally signals a regression; here it is the first honest reading, and the negative control against the old baseline named all 20 generators. `resync-derived` keeps its prior boundary because the widening is opt-in.
+
+## D-S354.1 — Analytics delivery is verified in a real browser before any CSP or injection change
+
+**Decision:** no Worker beacon injection and no `connect-src` change. Cloudflare's automatic setup already delivers the beacon correctly. `/privacy/` now discloses Cloudflare Web Analytics, which had been running on every page without mention.
+
+**Why:** the first diagnosis was wrong twice, and both parts were coded before they were disproved. (1) "No beacon in served HTML" came from a request without a browser `Accept: text/html` header; with one, every page carries exactly one nonce-bound beacon. (2) "`connect-src` blocks the reports" assumed the beacon posts to `cloudflareinsights.com`; its own source sends a config that carries `version` to same-origin `/cdn-cgi/rum`, which `'self'` allows. A real Chromium visit confirmed it: beacon 200, no CSP violations, report POST 204. Both edits were reverted before any build or deploy. The Worker injection would have double-counted every visit.
+
+**Settled by evidence:** four headless test visits appeared in GraphQL within minutes, flagged bot=1, so reporting and ingestion work. Before them the site had no rows for seven days while other sites had up to 493: a real absence of reported browser visits, not a defect. An earlier "zero for every site" reading was a parser bug in my probe, not the query.
+
+## D-S354.2 — An empty scan set is reported as "nothing scanned", never "clean"
+
+**Decision:** `scan-secrets` prints "Nothing to scan — 0 files … (not a clean result)" when its file set is empty and reports `filesScanned` in JSON. Exit stays 0 by default; `--require-files` exits 3.
+
+**Why:** in S353 "✓ Clean — 0 findings" printed over an empty index and nearly counted as a pre-commit pass. The exit code is unchanged because the closeout autopilot calls the scanner in states where nothing staged is normal; the wording is what lied.
+
+## D-S354.3 — `release-dependencies` is a graph node, and `release-proof` declares it as a source
+
+**Decision:** `api/release-dependencies.json` is modeled from its generator's real inputs, and the edge `build-release-proof` already read is declared. Weekly Maintenance now rebuilds and stages the release proof in the same commit.
+
+**Why:** with the edge added and no workflow changed, the cascade gate named Weekly Maintenance, which committed a fresh dependency receipt while leaving the proof built from it stale. The coverage baseline falls 20 → 19.

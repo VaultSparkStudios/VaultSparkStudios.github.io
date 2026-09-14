@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-14T04:54:49.711Z",
+  "generatedAt": "2026-09-14T08:24:10.272Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 353,
+    "currentSession": 354,
     "lastUpdated": "2026-09-14",
-    "currentFocus": "S353 fixed two scheduled publishers that failed on missing prerequisites (Vault Narrative never installed sharp; Weekly Maintenance staged an empty glob), made the narrative publisher publish grounded dispatches instead of preserving a 19-day-old one while reporting success, and gated both CI classes plus the proof-surface coverage gap.",
-    "nextMilestone": "The next Vault Narrative run publishes a grounded dispatch and passes --check-fresh; then model the 20 proof-surface generators, starting with build-release-dependencies. The edge sampler still waits on studio-ops answering Ark 01K2EQ77M9F29A0EC9619EA4BC.",
+    "currentFocus": "S354 proved Cloudflare Web Analytics works end to end (beacon, report and ingestion verified; the seven-day zero was real traffic; two wrong fixes reverted unshipped), disclosed it on /privacy/, and closed a release-proof strand exposed by modeling one generator.",
+    "nextMilestone": "Continue agent items: 19 generators to model, publisher resync gate, held-run doctor probe, local mobile preview default; watch human page loads now that analytics is proven.",
     "blockers": [
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
@@ -36,8 +36,9 @@
     ],
     "queues": {
       "now": [
+        "[S354][FOUNDER DIRECTIVE] Founder-owned items deferred. Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.",
         "[S352][SIL][CI/P2] Gate staged-but-unmodeled outputs — SHIPPED S353. The \"67/67 modeled\" ratchet only read `build:check:steps`; 20 generators checked inside `check-proof-surface` were invisible. Coverage now parses that list too: 72/92 modeled, baseline 20, may only fall.",
-        "[S353][SIL][CI/P2] Model the 20 proof-surface generators, highest-risk first. Start with `build-release-dependencies` (weekly-maintenance stages its output). Read each generator for REAL sources, add the node, `--update` to lower the baseline.",
+        "[S353][SIL:1][CI/P2] Model the proof-surface generators, highest-risk first — 19 left. S354 modeled `build-release-dependencies` (and its missing `release-proof` edge, which exposed a real weekly-maintenance strand, now closed). Start with `build-release-dependencies` (weekly-maintenance stages its output). Read each generator for REAL sources, add the node, `--update` to lower the baseline.",
         "[S353][SIL][OBS/P2] Verify the first Vault Narrative run after the S353 fix publishes a dispatch. Expect `[vault-narrative] wrote … (anchor:…)` and `--check-fresh` green; if it rejects, the log now prints the rejected text.",
         "[S352][SIL][OBS/P1] Ship the sampler RPC entrypoint on Ark acceptance. Ark `01K2EQ77M9F29A0EC9619EA4BC` asks studio-ops to reuse `studio-ops-cron` */30 via a service binding. The website half needs a node-side `cloudflare:workers` shim for the unit tests.",
         "[S351][OBS/P0 · FOUNDER DECISION] Free a cron slot, or move the account to Workers Paid. S352: an agent-side third option went to studio-ops via Ark (row above); this row closes if studio-ops accepts. This is the single thing standing between the studio and ever observing its own edge, and it is now a one-sentence decision rather than an investigation. Five of five free-plan cron triggers are in use by other projects. Retiring one is a live change to that project (founder call); Workers Paid raises the cap to 1,000 and is a billing action reserved to a human under CANON-019. Everything downstream is already built, deployed and verified — namespace, binding, handler, drain, 12/12 drain self-tests.",

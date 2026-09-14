@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 985.7 | 5: 986.2 | 10: 986.0 | 25: — | all: 983.1
-History scope: 191 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-14 | Session 353 | Total: 988/1000 | Velocity: 6 | protocolVelocity: 0
+Avgs — 3: 986.0 | 5: 984.8 | 10: 985.8 | 25: — | all: 983.1
+History scope: 193 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: → | Protocol velocity: → | Debt: ↓
+Last session: 2026-09-14 | Session 354 | Total: 984/1000 | Velocity: 5 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2789,3 +2789,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Honesty ledger addition:** did not report the narrative as publishing on the strength of its generate step; its commit failed and the archive has not grown yet. Did not count the first secret scan, which covered an empty index.
 
 **Intent outcome:** achieved. `/arc` ran end to end, pushed directly to main, and was fully deployed (staging, SCOPED production, Worker not due). One follow-up read is left for next session: the re-dispatched narrative run's commit step.
+
+## 2026-09-14 — Session 354 (founder-directed agent items) | Total: 984/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | Cascade gate failed on the real Weekly Maintenance strand before its fix, then closed 29/29; og-cards 21/21; resync 19/19; scanner and route-guard behaviour checked in both directions. |
+| Creative Alignment | 99 | One visible change: a truthful privacy section in the page's existing style. |
+| Momentum | 95 | Five items and five Ark messages shipped; analytics proven working end to end, though it turned out nothing on the site had been broken. |
+| Engagement | 95 | No reader-facing capability added; the measurement is proven live, and the zero it reports is a traffic fact to act on. |
+| Process Quality | 98 | Two wrong premises were coded before being tested, which is the deduction. Both were disproved by direct observation (beacon source, a real browser round trip, a control query) and reverted before any build. |
+| Cross-Repo Coherence | 100 | Cross-repo work went as cargo; no sibling tree touched. |
+| Security Posture | 100 | An unnecessary `connect-src` widening was reverted unshipped; the CSP is unchanged. |
+| Ecosystem Integration | 100 | Registry-field and external-source patterns shared portfolio-wide. |
+| Capital Efficiency | 97 | A Worker change, CSP change and tests were built for defects that did not exist. |
+| Automation Coverage | 100 | Coverage ratchet 20 → 19 with a real strand closed; an empty secret scan can no longer be read as a pass. |
+
+**Top win:** a publisher strand nobody knew about, found by modeling one generator's real inputs. Weekly Maintenance had been committing a dependency receipt without the release proof built from it.
+
+**Top gap:** three premises in one investigation were stated before being tested (no beacon, CSP block, a query defect that was my own parser). All were caught in-session, but each was first written down as fact.
+
+**Honesty ledger:** reverted a Worker beacon injection that would have double-counted every visit and a CSP change with no effect, both built on premises I had not tested. Did not record analytics as fixed. Did not keep "cause unknown" once four test visits proved ingestion, and did not keep blaming a query filter once the empty result traced to my own parser. Did not call a single CORS failure a defect after three clean reloads.
+
+**Brainstorm:** (1) a telemetry probe that always runs a positive-control query beside the site query and abstains when the control is empty; (2) a real-browser third-party delivery check (script loads, report fires, no CSP violation) in the release ceremony; (3) a doctor probe that parses the Cloudflare API tool shape explicitly and fails on a missing path instead of defaulting to an empty list.
+
+**Committed to TASK_BOARD:** [SIL] generator modeling continues (19 left).
+
+**Intent outcome:** see the S354 release addendum.

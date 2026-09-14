@@ -1,5 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S354 · 2026-09-14
+
+- **Shipped:** 5 improvements across 3 groups: measurement truth (analytics delivery verified in a real browser, privacy disclosure), gate truth (release-dependencies modeled with its release-proof edge and the Weekly Maintenance strand it exposed; empty secret scan no longer reads clean), tooling resilience (theme-matrix route guard, transient-lock write retry).
+- **Tests:** build:check result in the S354 release addendum below · og-cards 21/21 · resync 19/19 · cascade 29/29 closed.
+- **Deploy:** see the S354 release addendum. No Worker change.
+
+**Session Intent:** founder enabled Web Analytics and directed: defer founder-owned items, work on every agent-owned item.
+
+**Analytics works end to end; the zero was real.** Real Chromium on production: one nonce-bound beacon, no CSP violations, report POST to `/cdn-cgi/rum` 204. Four headless test visits appeared in GraphQL (`rumPageloadEventsAdaptiveGroups`, site tag `5ed6e30f31944c8aa5a1aec3ab7ea091`) within minutes as bot=1. Before them: no rows for seven days. **Probe note:** the Cloudflare API tool returns the GraphQL body as `result.viewer`, not `result.data`; reading the wrong path silently yields an empty list. **Read before touching CSP:** I coded a Worker beacon and a `connect-src` change on two wrong premises and reverted both. The injection would have double-counted. Test in a browser first.
+
+**First read next session:** GraphQL for this site tag with `bot: 0`. Human page loads will appear as real visitors arrive; the pipeline is proven, so the number is a traffic measurement, not a health check.
+
+**Deferred by founder directive:** passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid, Dispatch opt-in, Season 1 defaults, nav-sheet device check, devlog drafts.
+
+**Agent-owned, still open:** 19 proof-surface generators to model; a gate that every `[skip ci]` publisher pushes through `publish-push.sh --resync`; a doctor probe that reads held-run markers; mobile audit starting its own local preview; mounting the narrative on `/journal/`; model-servability alerts; Desk source breadth; `/atlas/` retirement; the S336 surfaces' visual review; the Trusted Types load-order hoist (own session).
+
 ## Where We Left Off — S353 · 2026-09-14
 
 - **Shipped:** 7 improvements across 3 groups: publisher repair (Vault Narrative install, Weekly Maintenance pathspec), publisher honesty (shared grounding vocabulary with verified counts, held-publisher warning plus `--check-fresh`), gate coverage (runtime-dependency gate, zero-match pathspec gate, coverage ratchet widened to the proof surface).

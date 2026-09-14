@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-14 (Session 353 closeout) -->
+<!-- generated-at: 2026-09-14 (Session 354 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 353 closeout · 2026-09-14.
+> **Fast-boot brief** — generated at Session 354 closeout · 2026-09-14.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 354 · 2026-09-14 · FOUNDER MODE                         ║
+║  Session 355 · 2026-09-14 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S353) - WHAT SHIPPED ══════════════════════════╗
-║  S353: Vault Narrative install + grounded dispatches + --check-  ║
+╔══ LAST SESSION (S354) - WHAT SHIPPED ══════════════════════════╗
+║  S354: analytics verified end to end (Worker injection and CSP   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    988/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 985.7  ·  Velocity 6↑                      ║
+║    984/1000   ███████████████████████░   98%                     ║
+║    SIL v3.0  ·  Avg3: 986  ·  Velocity 5→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▇█▁▄  ↑  (last 5 sessions)                            ║
+║    Trend  ▄▇█▁▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇▇▇█▇███ →                ║
+║    Dev Health       100    ██████████  ▇▇█▇████ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          96    ██████████  ▇▇█▇▇▇▇▇ →                ║
+║    Momentum          95    ██████████  ▇█▇▇▇▇▇▇ →                ║
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual     100    ██████████  ▇▇▇█▇███ →                ║
+║    Process Qual      98    ██████████  ▇▇█▇███▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
-║    Capital           98    ██████████  ········ →                ║
+║    Capital           97    ██████████  ········ →                ║
 ║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 353 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 354 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    479/479 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,21 +77,21 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
-║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         46492 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
+║  ✓  Revenue sig.  3d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
-║  Open current tasks 28 / Human-action entries 8                  ║
+║  Open current tasks 29 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -117,31 +117,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▇█▁▄  6↑  (last 5 sessions)                        ║
+║  Velocity:   ▄▇█▁▄  5→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  988/1000  (→0 vs current 988)                       ║
+║  Projected:  980/1000  (↓4 vs current 984)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Model the 20 proof-surface generators, hig  ║
-║        Model the 20 proof-surface generators, highest-risk firs  ║
-║                                                                  ║
-║   97  [VERIFY]       Verify the first Vault Narrative run after  ║
+║   98  [VERIFY]       Verify the first Vault Narrative run after  ║
 ║        Verify the first Vault Narrative run after the S353 fix   ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   90  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
+║   93  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
 ║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Close field-vitals freshness only with rea  ║
+║   90  [PRODUCT]      Close field-vitals freshness only with rea  ║
 ║        Close field-vitals freshness only with real evidence. Su  ║
+║                                                                  ║
+║   74  [VERIFY]       ESCALATION: The Desk's cadence lever is st  ║
+║        ESCALATION: The Desk's cadence lever is still the founde  ║
+║                                                                  ║
+║   72  [PRODUCT]      Authorize or decline immutable warm-origin  ║
+║        Authorize or decline immutable warm-origin migration. D-  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -149,5 +149,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 353 closeout · 2026-09-14*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 354 closeout · 2026-09-14*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

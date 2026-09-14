@@ -4,8 +4,51 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 0,
-  "themes": [],
+  "themeCount": 3,
+  "themes": [
+    {
+      "key": "transparency",
+      "label": "Transparency",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "6294ddc2",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "stop publishing a bot challenge as an outage on /status/",
+          "ts": "2026-09-10T22:49:30.000Z"
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "51fb8ef6",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "fix a dead shell cleanup, stop hidden-tab polling, restore contact input height",
+          "ts": "2026-09-11T21:14:38.000Z"
+        }
+      ]
+    },
+    {
+      "key": "frontdoor",
+      "label": "Front door",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "b95cc483",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "restore hero ticker feed on staging",
+          "ts": "2026-09-10T17:27:55.000Z"
+        }
+      ]
+    }
+  ],
   "decisionSampler": {
     "kAnonymityThreshold": 5,
     "observedTotal": 0,
