@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-14T03:17:25.398Z",
+  "generatedAt": "2026-09-14T03:20:13.751Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 9 consecutive receipts. CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 9 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-14T03:14:05Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34801214659",
-      "headSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-14T03:18:21Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34802143298",
+      "headSha": "20176aae687b86b56d1c5def1886b7d3924c95d7",
       "event": "push"
     },
     {
@@ -46,19 +46,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-09-14T03:04:10Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34801214587",
-      "headSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
+      "updatedAt": "2026-09-14T03:19:42Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34802143369",
+      "headSha": "20176aae687b86b56d1c5def1886b7d3924c95d7",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-09-14T03:16:54Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34801214550",
-      "headSha": "3c53474785d94ab7b3ccbaa0c6fd2740b8ee40c8",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-14T03:18:13Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/34802143283",
+      "headSha": "20176aae687b86b56d1c5def1886b7d3924c95d7",
       "event": "push"
     },
     {
@@ -161,7 +161,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 4.96,
+      "ageHours": 5,
       "staleAfterHours": 48
     },
     {
@@ -175,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.03,
+      "ageHours": 2.07,
       "staleAfterHours": 48
     },
     {
@@ -184,13 +184,12 @@
       "lastUpdatedAt": "2026-09-14T01:09:25Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.13,
+      "ageHours": 2.18,
       "staleAfterHours": 48
     },
     {
@@ -216,7 +215,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.02,
+      "ageHours": 0.06,
       "staleAfterHours": 48
     },
     {
