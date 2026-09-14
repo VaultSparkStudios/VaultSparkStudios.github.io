@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-14T07:45:24.132Z
-Receipt: `deb1ae44284e89e122144cb5` · coverage 109/109
+Generated: 2026-09-14T08:19:45.740Z
+Receipt: `c12e4dc4f70ca6493e48e897` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 114.6s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 35.0s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 11 | blocking | 5.9s | 0 | `node scripts/check-og-images.mjs` |
-| 46 | blocking | 5.0s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 49 | blocking | 2.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 24 | blocking | 2.5s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 92 | blocking | 2.3s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 78 | blocking | 2.0s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 35 | blocking | 1.9s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 38 | blocking | 1.8s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 29 | blocking | 1.6s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
-| 39 | blocking | 1.6s | 0 | `node scripts/build-newsroom-run.mjs --self-test` |
+| 78 | blocking | 0.9s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 24 | blocking | 0.7s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 35 | blocking | 0.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 87 | blocking | 0.6s | 0 | `node scripts/check-receipt-ordering.mjs --self-test` |
+| 22 | blocking | 0.6s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 92 | blocking | 0.6s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 46 | blocking | 0.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 49 | blocking | 0.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 106 | advisory | 0.6s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 88 | blocking | 0.5s | 0 | `node scripts/check-receipt-ordering.mjs` |
 
 ## Failures
 
