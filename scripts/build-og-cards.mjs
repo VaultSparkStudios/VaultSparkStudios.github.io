@@ -30,6 +30,7 @@
 */
 import { readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { execSync } from './lib/safe-spawn.mjs';
+import { isInternal } from './prune-served-surface.mjs';
 // S354: a transient Windows lock on a just-rewritten page failed a full build in S353.
 import { writeFileWithRetry as writeFileSync } from './lib/evidence-io.mjs';
 import { join, dirname } from 'node:path';
@@ -196,6 +197,10 @@ function listPages() {
   return execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean)
     .filter((f) => !f.startsWith('docs/'))
+    // S356: never mint a card for, or inject og tags into, a file the deploy prunes.
+    // SKIP_PATH lists public paths we choose not to card; it says nothing about
+    // repo-internal trees, so a test fixture was only spared here by luck.
+    .filter((f) => !isInternal(f))
     .filter((f) => DUPLICATE_CARD_OVERRIDES.has(f.replace(/\\/g, '/')) || !SKIP_PATH.some((s) => f.includes(s)));
 }
 

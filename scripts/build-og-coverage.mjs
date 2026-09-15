@@ -24,7 +24,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isOgDark, metaImage, checkOgUniqueness } from './check-og-images.mjs';
+import { isOgDark, metaImage, checkOgUniqueness, listScannableHtml } from './check-og-images.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -66,8 +66,9 @@ export function buildCoverage({ pages }) {
 }
 
 function scanPages() {
-  const files = execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
-    .split('\n').filter(Boolean).filter((f) => !f.startsWith('docs/'));
+  // S356: one enumerator, shared with the gate — coverage must describe the same
+  // page set the checker judges, or the ratio measures a population nobody ships.
+  const files = listScannableHtml(ROOT);
   return files.map((file) => ({
     file,
     html: readFileSync(join(ROOT, file), 'utf8'),

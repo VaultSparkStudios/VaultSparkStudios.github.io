@@ -24,6 +24,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isInternal } from './prune-served-surface.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -220,9 +221,31 @@ function runSelfTest() {
   console.error('✗ check-og-images --self-test: ' + fail + ' failed'); return 1;
 }
 
+/**
+ * The pages this gate is allowed to judge: tracked HTML that the deploy actually
+ * serves.
+ *
+ * S356: this used to be a bare `git ls-files "*.html"` minus `docs/`, which meant
+ * the gate judged files the website never publishes. `tests/fixtures/desk-comments.html`
+ * — a browser-harness fixture pruned at deploy by INTERNAL_PREFIXES — was reported as
+ * a card-less public page, and `.cache/pathways-diff/propagated.html` was counted as a
+ * second page "sharing" a pathways card. Both were false: an honesty gate must not
+ * invent public pages. `isInternal()` is the same predicate the deploy prunes with
+ * (scripts/prune-served-surface.mjs), so this list can no longer drift from what ships.
+ *
+ * The explicit `docs/` exclusion is kept deliberately. `isInternal()` alone would admit
+ * `docs/visual-proof/` via its KEEP entry, and that page genuinely has no og:image
+ * today — widening coverage to it is real work, not something to smuggle into a
+ * scoping fix.
+ */
+export function listScannableHtml(root = ROOT) {
+  return execSync('git ls-files "*.html"', { cwd: root, encoding: 'utf8' })
+    .split('\n').filter(Boolean)
+    .filter((f) => !f.startsWith('docs/') && !isInternal(f));
+}
+
 function runScan() {
-  const files = execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
-    .split('\n').filter(Boolean).filter((f) => !f.startsWith('docs/'));
+  const files = listScannableHtml();
   const assetExists = (rel) => existsSync(join(ROOT, rel));
   let errors = 0, warns = 0, dark = 0;
   const untriaged = [];
