@@ -23,6 +23,52 @@
     return '#e05b5b';                          // red
   }
 
+  // S357 (audit P0-1): the sigil used to sit at top:2px/right:2px — INSIDE the
+  // header's own hit area. At 390px its 44×44 box covered ~30×29px (~45%) of
+  // button#hamburger on 134 pages, so a tap meant for the nav navigated to
+  // /studio-pulse/ instead. It now anchors below the header and re-verifies
+  // itself against real header geometry, so no width can put it back on top of
+  // a header control.
+  const HEADER_CONTROL_SELECTOR = [
+    '.site-header', '#hamburger', '.hamburger', '.site-header a',
+    '.site-header button', '.site-header input', '.theme-picker', '.vs-account-chip'
+  ].join(',');
+  // S356: clearing the header alone was not enough. On the Studio pages an
+  // intelligence rail is injected at runtime as UNCLASSED <a> chips directly
+  // under the header (measured: header ends 115px, first chip spans 157–201px),
+  // so no selector list could match it and the sigil landed on the rail. Any
+  // interactive element anchored in the top zone counts as a collision now,
+  // which also survives future markup it cannot know about.
+  const TOP_ZONE_INTERACTIVE = 'a,button,[role="button"],input,select';
+  const HEADER_ZONE_PX = 260; // only chrome anchored near the top can collide
+
+  function overlaps(a, b) {
+    return Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0
+        && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0;
+  }
+
+  // Walk the sigil down until it clears every header control. Bounded passes —
+  // a pathological header can never spin this.
+  function place(wrap) {
+    let top = 8;
+    for (let pass = 0; pass < 8; pass++) {
+      wrap.style.top = top + 'px';
+      const me = wrap.getBoundingClientRect();
+      let pushed = false;
+      document.querySelectorAll(HEADER_CONTROL_SELECTOR + ',' + TOP_ZONE_INTERACTIVE).forEach((el) => {
+        if (el === wrap || el.contains(wrap) || wrap.contains(el)) return;
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0 || r.top > HEADER_ZONE_PX) return;
+        if (overlaps(me, r)) {
+          const next = Math.round(r.bottom) + 8;
+          if (next > top) { top = next; pushed = true; }
+        }
+      });
+      if (!pushed) break;
+    }
+    wrap.style.top = top + 'px';
+  }
+
   function mount(days) {
     const wrap = document.createElement('a');
     wrap.href = '/studio-pulse/';
@@ -31,9 +77,11 @@
       `Page last refreshed ${days}d ago — see studio pulse`);
     wrap.title = `Last refreshed ${days}d ago`;
     Object.assign(wrap.style, {
-      position: 'fixed', top: '2px', right: '2px', width: '44px', height: '44px',
+      // top is computed by place() once the header's real box is measurable.
+      position: 'fixed', top: '8px', right: '10px', width: '44px', height: '44px',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      zIndex: '40', opacity: '0.55', textDecoration: 'none',
+      // Below the header (201) and the mobile drawer (200): the nav always wins.
+      zIndex: '30', opacity: '0.55', textDecoration: 'none',
       transition: 'opacity 180ms ease', pointerEvents: 'auto'
     });
     wrap.addEventListener('mouseenter', () => { wrap.style.opacity = '0.95'; });
@@ -66,6 +114,26 @@
     svg.appendChild(circle({ r: '2.4', fill: color }));
     wrap.appendChild(svg);
     document.body.appendChild(wrap);
+    place(wrap);
+    let timer = 0;
+    const replace = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => place(wrap), 120);
+    };
+    window.addEventListener('resize', replace, { passive: true });
+    window.addEventListener('orientationchange', replace, { passive: true });
+    // S356: resize alone was not enough. The Studio pages inject their
+    // intelligence rail AFTER mount, so the one placement pass measured a page
+    // that did not contain the chips yet and the sigil settled on top of them
+    // (measured: sigil top 123, first chip 157–201). Re-place on DOM changes for
+    // a bounded settle window, then stop — this must never become a live
+    // observer on every page.
+    if (typeof MutationObserver === 'function') {
+      const observer = new MutationObserver(replace);
+      observer.observe(document.body, { childList: true, subtree: true });
+      setTimeout(() => { observer.disconnect(); replace(); }, 5000);
+    }
+    window.addEventListener('load', replace, { once: true, passive: true });
   }
 
   function fromMeta() {

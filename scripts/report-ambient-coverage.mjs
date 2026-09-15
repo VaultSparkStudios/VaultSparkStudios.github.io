@@ -38,8 +38,6 @@ const FORBIDDEN_AMBIENT_SOURCES = new Map([
   ['assets/nav-sheet.js', 'Use assets/ambient-loader.js so the mobile sheet is loaded only on mobile or ?nav=sheet.'],
   ['assets/exit-intent.js', 'Use assets/ambient-loader.js so exit intent is loaded after eligible anonymous idle state.'],
   ['assets/visit-depth.js', 'Use assets/ambient-loader.js so visit-depth upsell is loaded after eligible anonymous idle state.'],
-  ['assets/presence-badge.js', 'Use assets/ambient-loader.js so presence UI is loaded after idle capability checks.'],
-  ['assets/favicon-pulse.js', 'Use assets/ambient-loader.js so favicon pulse is loaded after visible-page checks.'],
 ]);
 
 /** Parse the ambient source arrays out of the builder (single source of truth).

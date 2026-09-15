@@ -21,8 +21,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PERSONAS, EDITIONS } from './lib/news-desk.mjs';
+import { PERSONAS, EDITIONS, NOVELTY_WINDOW_DAYS } from './lib/news-desk.mjs';
 import {
+  isPaywalledUrl,
+  isOwnPublisherFeed,
+  PAYWALL_HOSTS,
   classifyBeats,
   clusterItems,
   attachCrossOutletCorroboration,
@@ -90,26 +93,116 @@ const FEEDS = [
   // intake is not retained value; publication contribution is.
   { url: 'https://the-decoder.com/feed/', primary: false },
   { url: 'https://www.marktechpost.com/feed/', primary: false },
+  // S356 readable-supply widening (founder decision: the Desk publishes every
+  // day). Each URL below was live-fetched on 2026-09-14 with this radar's own UA
+  // and returned HTTP 200 with a parseable RSS/Atom item list. Dropped after the
+  // same probe: blogs.microsoft.com/ai/feed (410 — replaced by the Microsoft
+  // Source AI topic feed), anthropic.com/news/rss.xml and anthropic.com/rss.xml
+  // (404 — Anthropic still publishes no feed), mistral.ai/news/rss.xml (404 —
+  // mistral.ai/rss.xml serves it).
+  //
+  // `requireAi` keeps general-tech feeds from flooding the clusterer with phone
+  // accessories and horseracing budgets; `maxItems` bounds high-volume feeds;
+  // arXiv and GitHub releases are corroboration, never a lone primary story.
+  //
+  // Techmeme links its permalink, not the article; `publisherFromDescription`
+  // lifts the first publisher link out of the item body, so it supplies direct
+  // publisher URLs already clustered by a human editor. Its summary text is an
+  // aggregator paraphrase and is never carried as a fact source.
+  { url: 'https://www.techmeme.com/feed.xml', primary: false, publisherFromDescription: true, requireAi: true },
+  { url: 'https://www.technologyreview.com/topic/artificial-intelligence/feed', primary: false },
+  { url: 'https://www.theguardian.com/technology/artificialintelligenceai/rss', primary: false },
+  { url: 'https://www.cnbc.com/id/19854910/device/rss/rss.html', primary: false, requireAi: true },
+  { url: 'https://www.engadget.com/rss.xml', primary: false, requireAi: true },
+  { url: 'https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss', primary: false },
+  { url: 'https://9to5mac.com/feed/', primary: false, requireAi: true, maxItems: 40 },
+  { url: 'https://9to5google.com/feed/', primary: false, requireAi: true, maxItems: 40 },
+  { url: 'https://blogs.nvidia.com/feed/', primary: true },
+  { url: 'https://news.microsoft.com/source/topics/ai/feed/', primary: true },
+  { url: 'https://aws.amazon.com/blogs/machine-learning/feed/', primary: false },
+  { url: 'https://machinelearning.apple.com/rss.xml', primary: true },
+  { url: 'https://mistral.ai/rss.xml', primary: true },
+  { url: 'https://rss.arxiv.org/rss/cs.AI', primary: false, maxItems: 40 },
+  { url: 'https://rss.arxiv.org/rss/cs.CL', primary: false, maxItems: 40 },
+  { url: 'https://www.ftc.gov/feeds/press-release.xml', primary: true, requireAi: true },
+  { url: 'https://github.com/openai/openai-node/releases.atom', primary: false, titlePrefix: 'OpenAI Node SDK' },
+  { url: 'https://github.com/anthropics/anthropic-sdk-typescript/releases.atom', primary: false, titlePrefix: 'Anthropic TypeScript SDK' },
+  { url: 'https://github.com/huggingface/transformers/releases.atom', primary: false, titlePrefix: 'Hugging Face Transformers' },
   { url: 'https://news.google.com/rss/search?q=artificial+intelligence+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=AI+agents+OR+%22AI+regulation%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=Anthropic+OR+Claude+AI+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=OpenAI+OR+%22Google+DeepMind%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
 ];
 
-const HN_ENDPOINT = 'https://hn.algolia.com/api/v1/search_by_date'
-  + '?tags=story&numericFilters=points%3E40&hitsPerPage=60&query=';
-const HN_QUERIES = ['AI', 'LLM', 'agents', 'OpenAI', 'Anthropic'];
+// S356: floor 40 → 25 and broader queries. HN alone is still a single
+// unverified source; these only widen what corroboration can match against.
+export const HN_ENDPOINT = 'https://hn.algolia.com/api/v1/search_by_date'
+  + '?tags=story&numericFilters=points%3E25&hitsPerPage=60&query=';
+export const HN_QUERIES = ['AI', 'LLM', 'agents', 'OpenAI', 'Anthropic', 'Claude', 'Gemini', 'copyright', 'GPU', 'lawsuit'];
+
+/** A general-tech item is kept only when it is plausibly about AI. Deterministic. */
+const AI_RELEVANCE = /\b(ai|a\.i\.|artificial intelligence|machine learning|llms?|chatbots?|generative|openai|anthropic|claude|gemini|chatgpt|copilot|deepmind|nvidia|gpus?|neural|large language models?|agentic|ai agents?)\b/i;
+export const isAiRelevant = (item) => AI_RELEVANCE.test(`${item?.title || ''} ${item?.summary || ''}`);
 
 const UA = 'VaultSparkNewsDesk/1.0 (+https://vaultsparkstudios.com/news/)';
 const FETCH_TIMEOUT_MS = 12_000;
 
-async function getText(url) {
+/**
+ * Response-size ceiling for a scanned source.
+ *
+ * Everything this function reads is an RSS/Atom feed or a 60-hit Algolia JSON
+ * page — tens to hundreds of kilobytes. `await res.text()` placed no ceiling on
+ * that at all, so a misconfigured origin, a redirect into a large asset, or a
+ * hostile response could buffer an unbounded body into the runner's memory
+ * across ~45 concurrent fetches. 8 MiB is roughly two orders of magnitude above
+ * the largest legitimate feed here, so it can only ever fire on something that
+ * is not a feed.
+ */
+export const MAX_RESPONSE_BYTES = 8 * 1024 * 1024;
+
+/**
+ * A capped body read. The cap is enforced on the STREAM, not after the fact:
+ * checking length once the body is already buffered would be a report, not a
+ * limit. A declared over-cap `content-length` is refused before any body is
+ * read; an undeclared one stops mid-stream, and what arrived before the cap is
+ * still parsed (parseFeed is per-entry tolerant, so a truncated tail costs the
+ * last entries rather than the whole feed).
+ */
+export async function getText(url, { fetchImpl = fetch, maxBytes = MAX_RESPONSE_BYTES } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const res = await fetch(url, { headers: { 'user-agent': UA }, signal: controller.signal });
+    const res = await fetchImpl(url, { headers: { 'user-agent': UA }, signal: controller.signal });
     if (!res.ok) return null;
-    return await res.text();
+    const declared = Number(res.headers?.get?.('content-length'));
+    if (Number.isFinite(declared) && declared > maxBytes) {
+      controller.abort();
+      return null;
+    }
+    const reader = res.body?.getReader?.();
+    if (!reader) {
+      const text = await res.text();
+      return text.length > maxBytes ? text.slice(0, maxBytes) : text;
+    }
+    const chunks = [];
+    let received = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = value instanceof Uint8Array ? value : new Uint8Array(value);
+      if (received + chunk.byteLength > maxBytes) {
+        chunks.push(chunk.subarray(0, Math.max(0, maxBytes - received)));
+        received = maxBytes;
+        await reader.cancel().catch(() => {});
+        break;
+      }
+      chunks.push(chunk);
+      received += chunk.byteLength;
+    }
+    const body = new Uint8Array(received);
+    let at = 0;
+    for (const chunk of chunks) { body.set(chunk, at); at += chunk.byteLength; }
+    return new TextDecoder('utf-8').decode(body);
   } catch { return null; } finally { clearTimeout(timer); }
 }
 
@@ -133,7 +226,7 @@ const tag = (block, name) => {
  * entry must never zero out an entire feed (a whole-file parse in a single
  * try/catch is exactly how a feed silently becomes empty).
  */
-export function parseFeed(xml, { primary = false, now = Date.now() } = {}) {
+export function parseFeed(xml, { primary = false, now = Date.now(), feedUrl = null, publisherFromDescription = false } = {}) {
   const out = [];
   const blocks = String(xml || '').match(/<(item|entry)[\s>][\s\S]*?<\/\1>/gi) || [];
   for (const block of blocks) {
@@ -160,6 +253,22 @@ export function parseFeed(xml, { primary = false, now = Date.now() } = {}) {
         }
       }
 
+      // Techmeme-style items: <link> is the aggregator permalink, the article is
+      // the first non-aggregator link in the body, and the title ends with
+      // "(Author/Outlet)". No publisher link → not a usable item.
+      if (publisherFromDescription) {
+        const raw = (block.match(/<description[^>]*>([\s\S]*?)<\/description>/i) || [])[1] || '';
+        const feedHost = feedUrl ? sourceDomain(feedUrl) : null;
+        const publisherUrl = [...raw.matchAll(/href=["']([^"']+)["']/gi)]
+          .map((m) => m[1].replace(/&amp;/g, '&'))
+          .find((href) => /^https?:\/\//i.test(href) && sourceDomain(href) && sourceDomain(href) !== feedHost && sourceDomain(href) !== sourceDomain(url));
+        if (!publisherUrl) continue;
+        url = publisherUrl;
+        outlet = sourceDomain(publisherUrl);
+        title = title.replace(/\s*\([^()]*\)\s*$/, '').trim();
+        if (!title) continue;
+      }
+
       const dateStr = tag(block, 'pubDate') || tag(block, 'updated') || tag(block, 'published');
       const ts = dateStr ? Date.parse(dateStr) : NaN;
       out.push({
@@ -167,6 +276,9 @@ export function parseFeed(xml, { primary = false, now = Date.now() } = {}) {
         url,
         outlet,
         summary: tag(block, 'description') || tag(block, 'summary'),
+        // Which feed said it — so a summary is only ever used as the
+        // publisher's OWN words (isOwnPublisherFeed), never an aggregator's.
+        ...(feedUrl ? { feedUrl } : {}),
         primary,
         engagement: 0,
         hoursAgo: Number.isFinite(ts) ? Math.max(0, (now - ts) / 3.6e6) : 72,
@@ -216,6 +328,9 @@ export function attachDirectPublisherUrls(items, { threshold = 0.34 } = {}) {
       ...item,
       url: best.url,
       summary: best.summary || item.summary,
+      // Provenance follows the text: a publisher summary keeps its own feed,
+      // an aggregator fallback keeps the aggregator's (and stays unusable).
+      feedUrl: best.summary ? best.feedUrl : item.feedUrl,
       primary: Boolean(item.primary || best.primary),
       resolvedFromAggregator: true,
     };
@@ -242,8 +357,16 @@ export function publishedTitles() {
 // similarity gate can miss a re-clustered rerun of the same topic (the
 // 2026-08-21..23 triple-run). Slugs are deterministic — collect every story
 // slug published inside the window so scoreTopic can hard-block exact reruns.
-export function publishedSlugs({ windowDays = 14, today = new Date() } = {}) {
-  if (!fs.existsSync(DAYS_DIR)) return new Set();
+//
+// S356: the window is the shared NOVELTY_WINDOW_DAYS (founder decision 14 → 7),
+// and the memory now keeps each slug's cited source URLs so scoreTopic can let a
+// genuine follow-up (a source the published story never cited) through.
+export function publishedSlugs(options = {}) {
+  return new Set(publishedSlugSources(options).keys());
+}
+
+export function publishedSlugSources({ windowDays = NOVELTY_WINDOW_DAYS, today = new Date() } = {}) {
+  if (!fs.existsSync(DAYS_DIR)) return new Map();
   // A window of zero days contains nothing. Without this the floor lands on
   // today's own date and the `>= floor` comparison keeps an edition published
   // TODAY, so a zero-day window returns a non-empty set.
@@ -255,17 +378,22 @@ export function publishedSlugs({ windowDays = 14, today = new Date() } = {}) {
   // self-test is not wired into any runner (now fixed).
   //
   // Handled as an explicit guard rather than by tightening the comparison to
-  // `> floor`, which would silently move the real 14-day dedupe boundary and
-  // change editorial re-run behaviour.
-  if (windowDays <= 0) return new Set();
+  // `> floor`, which would silently move the real dedupe boundary and change
+  // editorial re-run behaviour.
+  if (windowDays <= 0) return new Map();
   const floor = new Date(today.getTime() - windowDays * 86400000).toISOString().slice(0, 10);
-  const slugs = new Set();
+  const slugs = new Map();
   for (const file of fs.readdirSync(DAYS_DIR)) {
     const m = file.match(/^(\d{4}-\d{2}-\d{2})\.json$/);
     if (!m || m[1] < floor) continue;
     try {
       const day = JSON.parse(fs.readFileSync(path.join(DAYS_DIR, file), 'utf8'));
-      for (const story of day.stories || []) if (story.slug) slugs.add(story.slug);
+      for (const story of day.stories || []) {
+        if (!story.slug) continue;
+        const urls = slugs.get(story.slug) || new Set();
+        for (const fact of story.facts || []) if (fact?.sourceUrl) urls.add(fact.sourceUrl);
+        slugs.set(story.slug, urls);
+      }
     } catch { /* a malformed day must not blind the radar */ }
   }
   return slugs;
@@ -304,8 +432,13 @@ async function scan() {
   const results = await Promise.all(FEEDS.map(async (f) => ({ f, xml: await getText(f.url) })));
   for (const { f, xml } of results) {
     if (!xml) { failed.push(sourceDomain(f.url)); continue; }
-    const parsed = parseFeed(xml, { primary: f.primary, now });
+    let parsed = parseFeed(xml, { primary: f.primary, now, feedUrl: f.url, publisherFromDescription: Boolean(f.publisherFromDescription) });
+    // Reachability is judged on what the feed served, before relevance filtering,
+    // so a quiet AI day on a general feed never reads as an outage.
     if (parsed.length) reached.push(sourceDomain(f.url));
+    if (f.titlePrefix) parsed = parsed.map((item) => ({ ...item, title: `${f.titlePrefix} ${item.title}` }));
+    if (f.requireAi) parsed = parsed.filter(isAiRelevant);
+    if (f.maxItems) parsed = parsed.slice(0, f.maxItems);
     items.push(...parsed);
   }
 
@@ -319,9 +452,10 @@ async function scan() {
   const fresh = directResolution.items.filter((i) => i.hoursAgo <= 72);
   const clusters = attachCrossOutletCorroboration(clusterItems(fresh));
   const titles = publishedTitles();
-  const slugs = publishedSlugs();
+  const slugSources = publishedSlugSources();
+  const slugs = new Set(slugSources.keys());
   const personaBeats = personaBeatMap();
-  const scored = clusters.map((c) => ({ ...c, ...scoreTopic(c, { publishedTitles: titles, publishedSlugs: slugs, personaBeats }) }));
+  const scored = clusters.map((c) => ({ ...c, ...scoreTopic(c, { publishedTitles: titles, publishedSlugs: slugs, publishedSlugSources: slugSources, personaBeats }) }));
 
   // A radar that reports a healthy queue while every source failed is the
   // "absent producer reads as green" trap. Sources are reported explicitly.
@@ -456,7 +590,7 @@ function show() {
 
 /* ── Self-test ─────────────────────────────────────────────────────────── */
 
-function selfTest() {
+async function selfTest() {
   const cases = [];
   const t = (label, ok) => cases.push([label, ok]);
   const personaBeats = personaBeatMap();
@@ -474,6 +608,45 @@ function selfTest() {
   t('stopwords do not create similarity', similarity('the and of to', 'the and of to') === 0);
   t('domain strips subdomains', sourceDomain('https://blog.google/technology/ai/x') === 'blog.google');
   t('bad url yields no domain', sourceDomain('not a url') === null);
+  // S357: co.uk and friends are public suffixes, not publishers.
+  t('a multi-part public suffix keeps the publisher name',
+    sourceDomain('https://www.theguardian.co.uk/tech/x') === 'theguardian.co.uk'
+    && sourceDomain('https://news.bbc.co.uk/x') === 'bbc.co.uk'
+    && sourceDomain('https://www.abc.net.au/news/x') === 'abc.net.au');
+  t('two outlets under one multi-part suffix stay independent sources',
+    sourceDomain('https://theguardian.co.uk/a') !== sourceDomain('https://bbc.co.uk/b'));
+  t('ordinary domains are unchanged by the suffix rule',
+    sourceDomain('https://blog.google/technology/x') === 'blog.google'
+    && sourceDomain('https://news.google.com/rss/x') === 'google.com');
+
+  // S357 — a scanned response has a byte ceiling, enforced on the stream.
+  let cancelled = false;
+  const streamOf = (chunks, headers = {}) => ({
+    ok: true,
+    headers: { get: (key) => headers[String(key).toLowerCase()] ?? null },
+    text: async () => chunks.join(''),
+    body: {
+      getReader: () => {
+        let i = 0;
+        return {
+          read: async () => (i < chunks.length ? { done: false, value: new TextEncoder().encode(chunks[i++]) } : { done: true }),
+          cancel: async () => { cancelled = true; },
+        };
+      },
+    },
+  });
+  t('a normal feed body is read whole',
+    (await getText('https://x.test/feed', { fetchImpl: async () => streamOf(['<rss>', '</rss>']) })) === '<rss></rss>');
+  t('a body past the cap stops at the cap',
+    (await getText('https://x.test/big', { fetchImpl: async () => streamOf(['aaaa', 'bbbb', 'cccc']), maxBytes: 6 })) === 'aaaabb');
+  t('stopping at the cap cancels the stream rather than draining it', cancelled === true);
+  t('a declared over-cap content-length is refused before any body is read',
+    (await getText('https://x.test/huge', { fetchImpl: async () => streamOf(['aaaa'], { 'content-length': String(MAX_RESPONSE_BYTES + 1) }) })) === null);
+  t('a bodyless response is still capped',
+    (await getText('https://x.test/nobody', { fetchImpl: async () => ({ ok: true, headers: { get: () => null }, text: async () => 'abcdef' }), maxBytes: 3 })) === 'abc');
+  t('a non-ok response yields no text',
+    (await getText('https://x.test/404', { fetchImpl: async () => ({ ok: false, headers: { get: () => null } }) })) === null);
+  t('the response cap is far above any real feed', MAX_RESPONSE_BYTES >= 1_000_000);
 
   // feed parsing
   const rss = `<rss><channel>
@@ -661,6 +834,50 @@ function selfTest() {
     publishedSlugs({ windowDays: 36500 }) instanceof Set && publishedSlugs({ windowDays: 0 }).size === 0);
   t('engagement alone cannot carry a topic', rumour.breakdown.engagement <= 15);
 
+  // S356 · follow-ups, shared window, readable supply.
+  t('the radar slug memory uses the shared 7-day novelty window', NOVELTY_WINDOW_DAYS === 7);
+  t('published slug memory keeps cited sources per slug',
+    publishedSlugSources({ windowDays: 36500 }) instanceof Map && publishedSlugSources({ windowDays: 0 }).size === 0);
+  const fuBase = { title: 'From Atari to EVE Online, building on 15 years', slug: 'from-atari-to-eve-online-building-on-15-years', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 1, engagement: 50, beats: ['research', 'models'] };
+  const fuSlugs = new Set([fuBase.slug]);
+  const fuSources = new Map([[fuBase.slug, new Set(['https://deepmind.google/blog/atari'])]]);
+  const followUpScore = scoreTopic({ ...fuBase, sources: [{ url: 'https://deepmind.google/blog/atari' }, { url: 'https://www.reuters.com/tech/eve-follow' }] },
+    { personaBeats, publishedSlugs: fuSlugs, publishedSlugSources: fuSources });
+  t('an exact slug with a new readable source is allowed as a follow-up',
+    followUpScore.eligible && followUpScore.followUpOf === fuBase.slug && !followUpScore.blocked.includes('slug already published'));
+  const rerunScore = scoreTopic({ ...fuBase, sources: [{ url: 'https://deepmind.google/blog/atari' }] },
+    { personaBeats, publishedSlugs: fuSlugs, publishedSlugSources: fuSources });
+  t('an exact slug rerun citing nothing new stays blocked', !rerunScore.eligible && rerunScore.blocked.includes('slug already published') && !rerunScore.followUpOf);
+  t('a new aggregator or paywalled URL is not a follow-up source', !scoreTopic({ ...fuBase, sources: [
+    { url: 'https://deepmind.google/blog/atari' }, { url: 'https://news.google.com/rss/articles/X' }, { url: 'https://www.wsj.com/tech/eve' },
+  ] }, { personaBeats, publishedSlugs: fuSlugs, publishedSlugSources: fuSources }).eligible);
+
+  const techmeme = `<rss><channel><item>
+    <title>Anthropic debuts Claude for Financial Advisors, with connectors to analytics tools (Harshita Mary Varghese/Reuters)</title>
+    <link>https://www.techmeme.com/260914/p34#a260914p34</link>
+    <description><![CDATA[<A HREF="https://www.reuters.com/business/anthropic-claude-advisers-2026-09-14/"><IMG SRC="http://www.techmeme.com/260914/i34.jpg"></A>
+    <P><A HREF="https://www.techmeme.com/260914/p34#a260914p34" TITLE="Techmeme permalink">x</A> AI lab Anthropic on Monday launched tools for financial advisers.</P>]]></description>
+    <pubDate>${new Date().toUTCString()}</pubDate></item></channel></rss>`;
+  const tm = parseFeed(techmeme, { feedUrl: 'https://www.techmeme.com/feed.xml', publisherFromDescription: true });
+  t('a Techmeme item resolves to the direct publisher article', tm.length === 1 && tm[0].url === 'https://www.reuters.com/business/anthropic-claude-advisers-2026-09-14/' && tm[0].outlet === 'reuters.com');
+  t('the Techmeme byline suffix is stripped from the title', tm[0].title === 'Anthropic debuts Claude for Financial Advisors, with connectors to analytics tools');
+  t('a Techmeme summary is never carried as a fact source', clusterItems(tm)[0].sources[0].feedSummary === undefined);
+  const ownFeed = parseFeed('<item><title>Lab ships model</title><link>https://openai.com/index/lab-ships</link><description>OpenAI said the model is available to 5,000 researchers.</description></item>', { feedUrl: 'https://openai.com/blog/rss.xml' });
+  t('a publisher-own feed summary travels with its source', clusterItems(ownFeed)[0].sources[0].feedSummary === 'OpenAI said the model is available to 5,000 researchers.'
+    && clusterItems(ownFeed)[0].sources[0].feedUrl === 'https://openai.com/blog/rss.xml');
+  t('own-feed identity folds feed subdomains', isOwnPublisherFeed('https://arstechnica.com/ai/x', 'https://feeds.arstechnica.com/arstechnica/technology-lab'));
+  t('an aggregator feed is never the publisher feed', !isOwnPublisherFeed('https://reuters.com/x', 'https://news.google.com/rss/search?q=x')
+    && !isOwnPublisherFeed('https://techmeme.com/x', 'https://www.techmeme.com/feed.xml'));
+  t('paywall hosts are recognised', isPaywalledUrl('https://www.ft.com/content/x') && isPaywalledUrl('https://www.bloomberg.com/news/x') && !isPaywalledUrl('https://www.reuters.com/x'));
+  t('a paywalled-only cluster has no readable source but still counts as an outlet', (() => {
+    const c = clusterItems([{ title: 'Chipmaker wins AI order', url: 'https://www.wsj.com/tech/x', hoursAgo: 1 }])[0];
+    return c.readableSourceCount === 0 && c.sourceCount === 1;
+  })());
+  t('general-tech feeds keep AI items only', isAiRelevant({ title: 'Apple releases test of redesigned Siri AI' }) && !isAiRelevant({ title: 'FTC Publishes Proposed 2027 Budget for Horseracing Integrity' }));
+  t('the HN points floor is 25 and the queries are broadened', /points%3E25/.test(HN_ENDPOINT) && ['Claude', 'Gemini', 'copyright', 'GPU', 'lawsuit'].every((q) => HN_QUERIES.includes(q)));
+  t('Techmeme and the S356 publisher feeds are in the source list', FEEDS.some((f) => /techmeme\.com/.test(f.url)) && FEEDS.length >= 35);
+  t('no paywalled host is scanned as a feed', !FEEDS.some((f) => PAYWALL_HOSTS.includes(sourceDomain(f.url))));
+
   // queue
   const scored = [strong, rumour, uncastable].map((s, i) => ({ ...s, slug: `t${i}`, title: `T${i}`, newestHoursAgo: 2 }));
   const queue = deriveTopicQueue(scored, { editions: EDITIONS, generatedAt: '2026-08-08' });
@@ -688,7 +905,7 @@ function selfTest() {
 }
 
 const args = new Set(process.argv.slice(2));
-if (args.has('--self-test')) selfTest();
+if (args.has('--self-test')) await selfTest();
 else if (args.has('--scan')) await scan();
 else if (args.has('--show')) show();
 else {

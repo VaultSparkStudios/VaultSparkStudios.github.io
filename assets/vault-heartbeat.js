@@ -83,27 +83,35 @@
     dot.classList.add('vs-hb-flash');
   }
 
+  // Honest-by-default (S356, CANON-031): the "LIVE" pill is only mounted once a
+  // realtime channel actually reports SUBSCRIBED, and is removed again if the
+  // channel errors. With no client (or no connection) nothing renders — a dead
+  // "LIVE · realtime offline" pill claimed a liveness the page did not have.
+  // /studio-pulse/ no longer loads this file: nothing broadcasts on vault:events.
   function init() {
-    if (!window.VSPublic || typeof window.VSPublic.client !== 'function' && typeof window.VSPublic.channel !== 'function') {
-      // VSPublic is the existing anon client wrapper. If it doesn't expose a channel(), fall back gracefully.
-    }
-    injectStyle();
-    var ui = buildTicker();
-    document.body.appendChild(ui.wrap);
-
     var supabase = window.VSSupabase || (window.VSPublic && window.VSPublic._sb) || null;
-    if (!supabase || !supabase.channel) {
-      ui.msg.textContent = 'Vault is breathing — realtime offline.';
-      return;
+    if (!supabase || !supabase.channel) return;
+
+    var ui = null;
+    function mount() {
+      if (ui) return;
+      injectStyle();
+      ui = buildTicker();
+      document.body.appendChild(ui.wrap);
+    }
+    function unmount() {
+      if (ui && ui.wrap.parentNode) ui.wrap.parentNode.removeChild(ui.wrap);
+      ui = null;
     }
 
     var ch = supabase.channel('vault:events', { config: { presence: { key: 'anon-' + Math.random().toString(36).slice(2, 10) } } });
 
     ch.on('broadcast', { event: 'vault_event' }, function (payload) {
-      flash(ui.dot, ui.msg, eventToText(payload));
+      if (ui) flash(ui.dot, ui.msg, eventToText(payload));
     });
 
     var updatePresence = function () {
+      if (!ui) return;
       var state = ch.presenceState();
       var count = 0;
       for (var k in state) if (Object.prototype.hasOwnProperty.call(state, k)) count += state[k].length;
@@ -121,10 +129,11 @@
 
     ch.subscribe(function (status) {
       if (status === 'SUBSCRIBED') {
+        mount();
         ch.track({ joined_at: new Date().toISOString() });
-        ui.msg.textContent = 'Vault is breathing — listening.';
-      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
-        ui.msg.textContent = 'Vault is breathing — realtime offline.';
+        ui.msg.textContent = 'Listening for vault signals.';
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+        unmount();
       }
     });
 

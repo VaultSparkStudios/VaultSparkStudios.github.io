@@ -36,6 +36,10 @@ import {
   cleanSlug,
   validReaction,
   handleDeskReaction,
+  deskReactionGroup,
+  deskReactionTransition,
+  DESK_STORY_REACTIONS,
+  DESK_PANEL_REACTIONS,
   handleDeskPresence,
   deskPresenceBand,
   resolvePublicOrigin,
@@ -604,26 +608,212 @@ test('reaction POST rejects an unknown reaction before touching storage', async 
   assert.equal(wrote, false, 'a rejected reaction must not write to KV');
 });
 
-test('reaction POST increments a real count and dedupes the second identical vote', async () => {
-  const store = new Map();
-  const env = {
-    RATE_LIMIT: {
-      get: async (k) => (store.has(k) ? store.get(k) : null),
-      put: async (k, v) => { store.set(k, v); },
+/* S356 — one current choice per reader per group. The founder could light
+   every emoji and never un-light one; these pin the replacement contract. */
+function reactionEnv(seed = {}) {
+  const store = new Map(Object.entries(seed));
+  const writes = [];
+  return {
+    store,
+    writes,
+    env: {
+      RATE_LIMIT: {
+        get: async (k) => (store.has(k) ? store.get(k) : null),
+        put: async (k, v) => { writes.push(['put', k]); store.set(k, v); },
+        delete: async (k) => { writes.push(['delete', k]); store.delete(k); },
+      },
     },
   };
-  const req = () => new Request('https://x.test/v/desk-reaction', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.9' },
-    body: JSON.stringify({ slug: '2026-08-10/a-story', reaction: 'changed-my-mind' }),
+}
+const reactionPost = (payload, ip = '203.0.113.9') => new Request('https://x.test/v/desk-reaction', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': ip },
+  body: JSON.stringify({ slug: '2026-08-10/a-story', ...payload }),
+});
+
+test('reaction groups: editorial, voice and panel rows are separate single-choice groups', () => {
+  assert.equal(deskReactionGroup('changed-my-mind'), 'story');
+  assert.equal(deskReactionGroup('voice:vera'), 'voice');
+  assert.equal(deskReactionGroup('panel-100'), 'panel');
+  for (const id of DESK_PANEL_REACTIONS) assert.equal(validReaction(id), id);
+  for (const id of ['panel-think', 'panel-yikes', 'panel-eyes', 'panel-100']) assert.equal(validReaction(id), id);
+});
+
+test('reaction transition: add, retract, switch, noop — counts never go below zero', () => {
+  const add = deskReactionTransition({ counts: { 'knew-this': 2 }, current: null, reaction: 'made-me-laugh' });
+  assert.equal(add.action, 'add');
+  assert.deepEqual(add.counts, { 'knew-this': 2, 'made-me-laugh': 1 });
+  assert.equal(add.choice, 'made-me-laugh');
+
+  const retract = deskReactionTransition({ counts: add.counts, current: 'made-me-laugh', reaction: 'made-me-laugh' });
+  assert.equal(retract.action, 'retract');
+  assert.deepEqual(retract.counts, { 'knew-this': 2 }, 'a zeroed key is dropped, never published as 0');
+  assert.equal(retract.choice, null);
+
+  const sw = deskReactionTransition({ counts: { 'knew-this': 2, 'made-me-laugh': 1 }, current: 'made-me-laugh', reaction: 'knew-this' });
+  assert.equal(sw.action, 'switch');
+  assert.deepEqual(sw.counts, { 'knew-this': 3 });
+  assert.equal(sw.previous, 'made-me-laugh');
+
+  // S357: a retract whose tally is already gone is a REPAIR, not a decrement —
+  // there is nothing of this reader's left in the count to take back.
+  const floor = deskReactionTransition({ counts: {}, current: 'made-me-laugh', reaction: 'made-me-laugh' });
+  assert.equal(floor.action, 'repair');
+  assert.equal(floor.choice, null);
+  assert.deepEqual(floor.counts, {}, 'a missing/corrupt counter cannot go negative');
+
+  const input = { 'knew-this': 1 };
+  deskReactionTransition({ counts: input, current: null, reaction: 'knew-this' });
+  assert.deepEqual(input, { 'knew-this': 1 }, 'the transition must not mutate its input');
+
+  // Explicit intent: a "clear" for a choice the server does not hold is a noop,
+  // never an add — the fingerprint rotates daily, so this happens every day.
+  assert.equal(deskReactionTransition({ counts: {}, current: null, reaction: 'knew-this', on: false }).action, 'noop');
+  assert.equal(deskReactionTransition({ counts: {}, current: 'knew-this', reaction: 'knew-this', on: true }).action, 'noop');
+  assert.equal(deskReactionTransition({ counts: { 'knew-this': 1 }, current: 'knew-this', reaction: 'made-me-laugh', on: false }).choice, 'knew-this');
+});
+
+/* S357 — the tally, the stored choice and the budget are three separate KV puts
+   with no transaction around them, so a concurrent writer can leave the stored
+   choice disagreeing with the tally. The rule pinned here: repair the stale
+   choice, never pay for it out of another reader's vote. */
+test('reaction transition repairs a stale choice instead of decrementing another reader’s vote', () => {
+  // Retract of a reaction whose count is already 0 (someone else's retract
+  // landed between our two reads): clear the choice, touch no counts.
+  const stale = deskReactionTransition({ counts: { 'knew-this': 3 }, current: 'made-me-laugh', reaction: 'made-me-laugh', on: false });
+  assert.equal(stale.action, 'repair');
+  assert.equal(stale.choice, null);
+  assert.equal(stale.repaired, true);
+  assert.deepEqual(stale.counts, { 'knew-this': 3 }, 'another reader’s tally is untouched by our repair');
+
+  // Switch away from a choice that has no tally: add the new pick, but do not
+  // decrement a key whose count now belongs to other readers.
+  const switched = deskReactionTransition({ counts: { 'knew-this': 2 }, current: 'made-me-laugh', reaction: 'want-receipts', on: true });
+  assert.equal(switched.action, 'switch');
+  assert.equal(switched.repaired, true);
+  assert.deepEqual(switched.counts, { 'knew-this': 2, 'want-receipts': 1 });
+
+  // A real retract still decrements, and is not marked repaired.
+  const real = deskReactionTransition({ counts: { 'made-me-laugh': 2 }, current: 'made-me-laugh', reaction: 'made-me-laugh', on: false });
+  assert.equal(real.action, 'retract');
+  assert.equal(real.repaired, false);
+  assert.deepEqual(real.counts, { 'made-me-laugh': 1 });
+
+  // Corrupt stored values can never become a negative or a phantom entry.
+  for (const poison of [-5, 'lots', null, undefined, NaN]) {
+    const out = deskReactionTransition({ counts: { 'knew-this': poison }, current: 'knew-this', reaction: 'knew-this', on: false });
+    assert.equal(out.action, 'repair', `${String(poison)} is not a tally to decrement`);
+    assert.ok(!(Number(out.counts['knew-this']) < 0), 'no negative count');
+  }
+  const grow = deskReactionTransition({ counts: { 'knew-this': -3 }, current: null, reaction: 'knew-this', on: true });
+  assert.deepEqual(grow.counts, { 'knew-this': 1 }, 'a negative stored count floors to zero before the add');
+});
+
+test('reaction POST: a dangling choice is repaired without writing counts or spending budget', async () => {
+  // Discover the fingerprinted choice key, then hand the handler a choice that
+  // the tally does not back up — exactly what a lost update leaves behind.
+  const probe = reactionEnv();
+  await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: true }), probe.env);
+  const choiceKey = [...probe.store.keys()].find((k) => k.startsWith('drx:') && k.endsWith(':story'));
+
+  const { env, store, writes } = reactionEnv({
+    'dr:2026-08-10/a-story': JSON.stringify({ 'knew-this': 4 }),
+    [choiceKey]: 'made-me-laugh',
   });
+  const res = await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: false }), env);
+  const body = await res.json();
+  assert.equal(body.action, 'repair');
+  assert.equal(body.repaired, true);
+  assert.equal(body.mine.story, null);
+  assert.deepEqual(body.counts, { 'knew-this': 4 }, 'the other reaction’s count is left alone');
+  assert.deepEqual(JSON.parse(store.get('dr:2026-08-10/a-story')), { 'knew-this': 4 }, 'stored counts are not rewritten');
+  assert.equal(store.has(choiceKey), false, 'the dangling choice marker is cleared');
+  assert.deepEqual(writes, [['delete', choiceKey]], 'a repair spends exactly one delete: no counts put, no budget put');
+});
 
-  const first = await (await handleDeskReaction(req(), env)).json();
+test('reaction allowlist exactly matches the reaction buttons the news generator renders', async () => {
+  const fs = await import('node:fs');
+  const src = fs.readFileSync(new URL('../scripts/generate-news-pages.mjs', import.meta.url), 'utf8');
+  const idsIn = (name) => {
+    const block = src.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\n\\];`));
+    assert.ok(block, `${name} array not found in generate-news-pages.mjs`);
+    return [...block[1].matchAll(/id: '([^']+)'/g)].map((m) => m[1]).sort();
+  };
+  assert.deepEqual(idsIn('REACTION_BUTTONS'), [...DESK_STORY_REACTIONS].sort());
+  assert.deepEqual(idsIn('PANEL_REACTIONS'), [...DESK_PANEL_REACTIONS].sort());
+});
+
+test('reaction POST: select, retract, switch per group, with counts and choice in the response', async () => {
+  const { env, store } = reactionEnv();
+  const first = await (await handleDeskReaction(reactionPost({ reaction: 'changed-my-mind', on: true }), env)).json();
+  assert.equal(first.action, 'add');
   assert.equal(first.counts['changed-my-mind'], 1);
+  assert.equal(first.mine.story, 'changed-my-mind');
 
-  const second = await (await handleDeskReaction(req(), env)).json();
-  assert.equal(second.alreadyCounted, true);
-  assert.equal(second.counts['changed-my-mind'], 1, 'the same reader must not be able to inflate the count');
+  // A voice vote is a different question and must not retract the story pick.
+  const voice = await (await handleDeskReaction(reactionPost({ reaction: 'voice:vera', on: true }), env)).json();
+  assert.equal(voice.mine.story, 'changed-my-mind');
+  assert.equal(voice.mine.voice, 'voice:vera');
+
+  const sw = await (await handleDeskReaction(reactionPost({ reaction: 'knew-this', on: true }), env)).json();
+  assert.equal(sw.action, 'switch');
+  assert.equal(sw.counts['changed-my-mind'], undefined);
+  assert.equal(sw.counts['knew-this'], 1);
+  assert.equal(sw.mine.story, 'knew-this');
+
+  // Legacy toggle (no `on`): the same reaction again takes it back.
+  const off = await (await handleDeskReaction(reactionPost({ reaction: 'knew-this' }), env)).json();
+  assert.equal(off.action, 'retract');
+  assert.equal(off.counts['knew-this'], undefined);
+  assert.equal(off.mine.story, null);
+  assert.deepEqual(JSON.parse(store.get('dr:2026-08-10/a-story')), { 'voice:vera': 1 });
+
+  // A second reader's votes are independent of the first.
+  const other = await (await handleDeskReaction(reactionPost({ reaction: 'voice:vera', on: true }, '198.51.100.7'), env)).json();
+  assert.equal(other.counts['voice:vera'], 2);
+});
+
+test('reaction POST: a repeated select is a noop that writes nothing and spends no budget', async () => {
+  const { env, writes } = reactionEnv();
+  await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: true }), env);
+  const before = writes.length;
+  const again = await (await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: true }), env)).json();
+  assert.equal(again.action, 'noop');
+  assert.equal(again.alreadyCounted, true);
+  assert.equal(again.counts['made-me-laugh'], 1, 'the same reader must not be able to inflate the count');
+  const clear = await (await handleDeskReaction(reactionPost({ reaction: 'knew-this', on: false }), env)).json();
+  assert.equal(clear.action, 'noop');
+  assert.equal(writes.length, before, 'noops must not consume the KV write quota');
+});
+
+test('reaction POST: the daily budget still caps state changes, including toggles', async () => {
+  const { env } = reactionEnv();
+  let last;
+  for (let i = 0; i < 13; i++) {
+    last = await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh' }), env);
+  }
+  assert.equal(last.status, 429);
+  assert.equal((await last.json()).error, 'rate_limited');
+});
+
+test('reaction POST: a same-day pre-toggle marker is honoured, so the deploy day cannot double count', async () => {
+  // Discover the fingerprinted legacy key by letting the handler write one choice first.
+  const probe = reactionEnv();
+  await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: true }), probe.env);
+  const choiceKey = [...probe.store.keys()].find((k) => k.startsWith('drx:') && k.endsWith(':story'));
+  const fp = choiceKey.split(':')[1];
+
+  const { env, store } = reactionEnv({
+    'dr:2026-08-10/a-story': JSON.stringify({ 'made-me-laugh': 4 }),
+    [`drx:${fp}:made-me-laugh`]: '1',
+  });
+  const again = await (await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: true }), env)).json();
+  assert.equal(again.action, 'noop');
+  assert.equal(again.counts['made-me-laugh'], 4);
+  const off = await (await handleDeskReaction(reactionPost({ reaction: 'made-me-laugh', on: false }), env)).json();
+  assert.equal(off.action, 'retract');
+  assert.equal(off.counts['made-me-laugh'], 3);
+  assert.equal(store.has(`drx:${fp}:made-me-laugh`), false, 'the legacy marker is removed once the choice changes');
 });
 
 test('Desk presence suppresses exact low counts', () => {

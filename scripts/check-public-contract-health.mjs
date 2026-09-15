@@ -18,7 +18,6 @@ const LEGACY_SHAPE_ALLOWLIST = new Set([
   'api/eternal-credits.json',
   'api/feedback-provenance.json',
   'api/feedback-summary.json',
-  'api/founder-presence.json',
   'api/heartbeat.json',
   'api/ignis-conduit.json',
   'api/ignis-roi.json',
@@ -93,7 +92,7 @@ function evaluateDeskEngagementContracts(root = ROOT) {
       const html = fs.readFileSync(path.join(root, story.url.replace(/^\//, ''), 'index.html'), 'utf8');
       if (!html.includes('data-desk-engagement=')) findings.push(story.slug + ': reader activity panel missing');
       if (!html.includes('/panel/editorial-illustration-1')) findings.push(story.slug + ': per-panel reaction scope missing');
-      if ((html.match(/data-reaction="panel-/g) || []).length !== 4) findings.push(story.slug + ': expected four panel reactions');
+      if ((html.match(/data-reaction="panel-/g) || []).length !== 8) findings.push(story.slug + ': expected eight panel reactions');
       if (!html.includes('desk-presence.shell-')) findings.push(story.slug + ': hashed presence client missing');
     }
   } catch (error) {

@@ -1,8 +1,24 @@
 # Current State
 
-Last updated: 2026-09-14 (S355)
+Last updated: 2026-09-15 (S356)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S356 The Desk becomes the flagship, and the studio's public numbers start telling the truth (2026-09-15)
+
+**Real illustrations are back.** 25 stories had shipped a procedural diagram card because the publisher never had an image model. A local worker now generates art on the founder's ChatGPT plan, ingest accepts only reviewed images, and all 25 were regenerated and reviewed one at a time; one was redone because it carried a company mascot.
+
+**Articles are built for readers.** Headline, byline, illustration and a short-version box come first; persona blocks are readable prose instead of monospace; every fact keeps its receipt, folded away. The index is image-led. The Desk now leads the homepage and rides in a site-wide header strip that only says "Live" when the measured cadence is daily.
+
+**Reactions behave.** One pick per bar, tap again to remove, eight panel emoji, and the floating feedback widget no longer covers them.
+
+**Comments are built.** Anyone may post, an automatic filter decides publish/hold/reject, members are badged and featured, reports auto-hold, and moderation runs from a CLI. Not live until the migration and Worker deploy.
+
+**Daily publishing is enforced by evidence.** Authoring now runs the same checks promote runs, anchors are repaired verbatim only when genuinely related, a missed day turns the late-night run red, novelty is 7 days, follow-ups need a new source, and 20 verified feeds widened supply.
+
+**Studio Pulse stopped overstating.** Solara is no longer "right now in the forge" after 93 quiet days, dormancy comes from real activity, the founder presence tile is honest about staleness, a studio-wide timeline reports partial coverage instead of a false total, and the false "stranded deploy" alarm is closed.
+
+**A site-wide crawl (736 loads, 7 themes) found 25 defects; the P0s and most P1s are fixed:** a decorative sigil covered the mobile menu button on 134 pages, floating widgets covered content on 104+ loads (including a service's "Down" state), two links 404'd in production, /invite/ threw on every load, light-theme buttons sat at 2.8:1, and 181 tap targets were under 44px.
 
 ## S355 seven agent-owned fixes to publishing, gates and observability (2026-09-14)
 

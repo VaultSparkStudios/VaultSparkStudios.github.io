@@ -74,7 +74,6 @@ const AMBIENT_FEATURE_SOURCES = [
   // ambient-split wave 2. Each self-mounts only on its own route (/feedback,
   // /social, /membership|/ranks, /security), so it parsed on every cold load just
   // to bail. The predicate mirrors each script's exact mount condition.
-  'assets/founder-presence-handle.js',
 ];
 
 // Combined view — kept for coverage tooling (report-ambient-coverage,
@@ -101,7 +100,7 @@ const BUNDLES = [
  * The loader SOURCE keeps the readable plain path; only the generated bundle
  * carries the hashed one.
  */
-const CONTENT_ADDRESSED_PREDICATE_SRCS = ['assets/journey-conductor.js'];
+const CONTENT_ADDRESSED_PREDICATE_SRCS = ['assets/journey-conductor.js', 'assets/desk-wire.js'];
 
 function shellHash(relPath) {
   const full = join(ROOT, relPath);

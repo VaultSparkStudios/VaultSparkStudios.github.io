@@ -40,6 +40,8 @@ const SKIP_DIRS = new Set([
   'docs', 'context', 'logs', 'supabase', 'config', 'public', 'tests',
   'workers', 'cloudflare', '_og', 'data', 'site', 'build', 'dist',
   '.github', '.cache', 'coverage',
+  // S356: agent worktrees are full repo checkouts. (Mirrors propagate-nav.)
+  '.claude',
   // S193: untracked Obelisk-passport WIP (login/callback) — not in git HEAD, not
   // part of the public shell yet. Exempt until it's finished + committed; whoever
   // ships it should remove this skip so nav-orphan guards it. (Mirrors propagate-nav.)

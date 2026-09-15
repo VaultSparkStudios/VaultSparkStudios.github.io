@@ -31,7 +31,7 @@ const SKIP_PATH_PATTERNS = [
 
 function walk(dir, base = dir, acc = []) {
   for (const entry of fs.readdirSync(dir)) {
-    if (['node_modules', 'playwright-report', 'test-results', '.git'].includes(entry)) continue;
+    if (['node_modules', 'playwright-report', 'test-results', '.git', '.claude'].includes(entry)) continue;
     const full = path.join(dir, entry);
     const rel = path.relative(base, full).replace(/\\/g, '/');
     if (fs.statSync(full).isDirectory()) walk(full, base, acc);

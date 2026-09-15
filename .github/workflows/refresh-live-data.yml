@@ -32,6 +32,11 @@ jobs:
         run: node scripts/probe-canonical-destinations.mjs
 
       - name: Refresh the declared live-data dependency closure
+        # S356: build-studio-timeline reads public repo commits via the GitHub API;
+        # authenticate so shared runner IPs don't hit the unauthenticated rate limit
+        # (without a token that source is reported honestly as unavailable).
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/run-derived-builds.mjs --profile refresh-live-data
 
       - name: Commit refreshed feeds and their rendered consumers

@@ -57,6 +57,33 @@ const WITH_BROWSER = args.includes('--browser');
 const RUN_DIRECT = process.argv[1] &&
   process.argv[1].replace(/\\/g, '/').endsWith('build-promotion-receipt.mjs');
 
+// ── Shell parity evidence ────────────────────────────────────────────────────
+// The SAME evidence build-deploy-currency requires before it will call a served
+// baseline sha "content-current" (classify → shellParityState === 'matched').
+// Produced by that script's shell-parity probe and published in
+// api/deploy-currency.json → shellParity. Read here, never re-derived: a lane
+// head alone cannot tell a promoted content release from a stranded shell.
+export const SHELL_PARITY_STATES = new Set(['matched', 'drift', 'challenged', 'unobserved']);
+// Mirrors build-deploy-currency OBSERVATION_MAX_AGE_HOURS: a retained parity
+// reading that has aged out cannot certify production either.
+export const SHELL_PARITY_MAX_AGE_HOURS = 12;
+
+/** Normalize + age-bound a shell-parity reading. Honest-dark: unknown → unobserved + stale. */
+export function normalizeShellParity(input, { now = Date.now(), maxAgeHours = SHELL_PARITY_MAX_AGE_HOURS } = {}) {
+  const state = SHELL_PARITY_STATES.has(input?.state) ? input.state : 'unobserved';
+  const observedAt = typeof input?.observedAt === 'string' && input.observedAt ? input.observedAt : null;
+  const ts = observedAt ? Date.parse(observedAt) : NaN;
+  const ageHours = Number.isFinite(ts) ? Math.max(0, (now - ts) / 3_600_000) : null;
+  return {
+    state,
+    observedAt,
+    ageHours: ageHours === null ? null : Number(ageHours.toFixed(1)),
+    stale: ageHours === null || ageHours > maxAgeHours,
+    maxAgeHours,
+    source: input?.source || null,
+  };
+}
+
 // ── Pure derive (unit-testable; no I/O) ──────────────────────────────────────
 /**
  * @param {object} i
@@ -78,9 +105,34 @@ export function derivePromotionReceipt(i) {
   const browser = i.browser || { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [] };
   const sourcePolicyMode = i.sourcePolicyMode || 'enforce';
 
+  // Content-lane promotions keep the served build-sha `sha` at the baseline while
+  // `contentLaneHead` advances (see build-deploy-currency classify → content-current).
+  // A served lane head that equals or descends from the promoted sha IS the promoted
+  // content, so a sha-only comparison must not call it 'behind'.
+  const contentLaneHead = /^[0-9a-f]{7,40}$/i.test(String(i.productionContentLaneHead || ''))
+    ? String(i.productionContentLaneHead).toLowerCase() : null;
+  const laneEqualsPromoted = Boolean(contentLaneHead && promotedSha) &&
+    (String(promotedSha).toLowerCase().startsWith(contentLaneHead) || contentLaneHead.startsWith(String(promotedSha).toLowerCase()));
+  const contentLaneCurrent = Boolean(contentLaneHead) && (laneEqualsPromoted || i.contentLaneOrdering === 'ahead');
+
+  // A served lane head is only HALF the evidence. build-deploy-currency grants
+  // `content-current` on exactly this lane geometry ONLY when shell parity is
+  // ALSO observed as `matched`, because a stranded shell/Worker change hides
+  // behind an advanced lane head: the content shipped, the shell did not.
+  // Granting content-lane-match from the lane head alone recorded such a deploy
+  // as 'verified', which reset the behind-streak so the CI beacon never alerted.
+  // Unobserved/stale parity is honest-dark ('unknown'), never a pass; observed
+  // `drift` is positive evidence of a stranded shell and falls through to the
+  // sha ordering, where 'behind' grades degraded.
+  const shellParity = normalizeShellParity(i.shellParity, { now: i.now ?? Date.now() });
+  const parityMatched = shellParity.state === 'matched' && shellParity.stale === false;
+  const parityDrift = shellParity.state === 'drift' && shellParity.stale === false;
+
   let reconciliation;
   if (!i.productionReachable || !productionSha) reconciliation = 'unreachable';
   else if (productionSha === promotedSha) reconciliation = 'match';
+  else if (contentLaneCurrent && parityMatched) reconciliation = 'content-lane-match'; // lane head at/after promoted AND shell parity matched
+  else if (contentLaneCurrent && !parityDrift) reconciliation = 'unknown'; // lane looks current but parity unobserved → honest-dark, never a pass
   else if (i.ordering === 'ahead') reconciliation = 'ahead';   // prod moved on to a newer build — benign
   else if (i.ordering === 'behind') reconciliation = 'behind'; // prod serves an OLDER build than promoted — stale/stranded
   else reconciliation = 'unknown';                             // can't order the two SHAs — honest-dark
@@ -88,7 +140,7 @@ export function derivePromotionReceipt(i) {
   const findings = [];
 
   // Observability gates — can we grade at all? 'unknown'/'unreachable' = honest-dark.
-  const shaObservable = reconciliation === 'match' || reconciliation === 'ahead' || reconciliation === 'behind';
+  const shaObservable = reconciliation === 'match' || reconciliation === 'content-lane-match' || reconciliation === 'ahead' || reconciliation === 'behind';
   const cspObservable = csp.observed === true;
 
   // Real regressions (only assertable when actually observed)
@@ -100,10 +152,13 @@ export function derivePromotionReceipt(i) {
   if (cspRegression) findings.push(`production CSP is '${csp.mode}' but source policy is 'enforce' — enforce header missing at the edge`);
   if (shaBehind) findings.push(`production origin serves ${String(productionSha).slice(0, 8)} — OLDER than promoted ${String(promotedSha).slice(0, 8)} — stranded/stale deploy`);
   if (reconciliation === 'ahead') findings.push(`production serves ${String(productionSha).slice(0, 8)}, newer than the recorded promoted ${String(promotedSha).slice(0, 8)} (benign — a later rebuild moved on)`);
+  if (reconciliation === 'content-lane-match') findings.push(`production build sha ${String(productionSha).slice(0, 8)} is the content-lane baseline; served contentLaneHead ${String(contentLaneHead).slice(0, 8)} is at/after promoted ${String(promotedSha).slice(0, 8)} and shell parity was observed 'matched' at ${shellParity.observedAt} (current)`);
+  if (contentLaneCurrent && !parityMatched && !parityDrift) findings.push(`served contentLaneHead ${String(contentLaneHead).slice(0, 8)} is at/after promoted ${String(promotedSha).slice(0, 8)}, but shell parity was not observed as matched (state '${shellParity.state}'${shellParity.observedAt ? `, observed ${shellParity.ageHours}h ago, max ${shellParity.maxAgeHours}h` : ', never observed'}) — not graded as current (honest-dark)`);
+  if (contentLaneCurrent && parityDrift) findings.push(`shell parity observed as 'drift' at ${shellParity.observedAt} — the served shell does not match the promoted build, so the advanced contentLaneHead does not make production current`);
   if (consoleDirty) findings.push(`${browser.consoleErrors} console error(s) on the promoted artifact`);
 
   // reconciled = production is serving the promoted build or newer (not stale), CSP not regressed, no console errors.
-  const reconciled = (reconciliation === 'match' || reconciliation === 'ahead')
+  const reconciled = (reconciliation === 'match' || reconciliation === 'content-lane-match' || reconciliation === 'ahead')
     && (!cspObservable || (csp.mode !== 'report-only' && csp.mode !== 'absent'))
     && (!browser.captured || Number(browser.consoleErrors) === 0);
 
@@ -125,8 +180,12 @@ export function derivePromotionReceipt(i) {
     production: {
       origin: PAGES_ORIGIN,
       sha: productionSha,
+      contentLaneHead,
       reachable: i.productionReachable === true,
       reconciliation,
+      // The second half of the content-lane evidence, disclosed alongside the
+      // verdict it gates (same signal build-deploy-currency classifies on).
+      shellParity,
     },
     csp: {
       observed: cspObservable,
@@ -188,7 +247,13 @@ function appendHistory(record) {
 }
 
 // Pure: summarize the reconciliation streak over the most recent `window` records.
-export function summarizeHistory(records, window = 20) {
+// Freshness bound: the ledger is appended only when a receipt is emitted (closeout),
+// so its tail can describe production days ago. If the newest GRADABLE record is
+// older than `maxAgeHours` (or its ts is unparseable) the streak is reported but
+// the ledger is `stale` and can never raise a stranded alert — old evidence is
+// "unobserved now", not "stranded now".
+export const HISTORY_MAX_AGE_HOURS = 48;
+export function summarizeHistory(records, window = 20, { now = Date.now(), maxAgeHours = HISTORY_MAX_AGE_HOURS } = {}) {
   const recent = records.slice(-window);
   const gradable = recent.filter((r) => r.receiptState === 'verified' || r.receiptState === 'degraded');
   const reconciled = gradable.filter((r) => r.receiptState === 'verified').length;
@@ -198,6 +263,10 @@ export function summarizeHistory(records, window = 20) {
     if (records[index].reconciliation !== 'behind') break;
     currentBehindStreak += 1;
   }
+  const newestGradable = [...records].reverse().find((r) => r.receiptState === 'verified' || r.receiptState === 'degraded');
+  const newestTs = newestGradable ? Date.parse(newestGradable.ts || '') : NaN;
+  const newestAgeHours = Number.isFinite(newestTs) ? Math.max(0, (now - newestTs) / 3_600_000) : null;
+  const stale = newestAgeHours === null || newestAgeHours > maxAgeHours;
   const strandedAlertThreshold = 2;
   return {
     window: recent.length,
@@ -206,7 +275,11 @@ export function summarizeHistory(records, window = 20) {
     reconciledPct: gradable.length ? Math.round((reconciled / gradable.length) * 100) : null,
     lastStrandedAt: lastStranded ? lastStranded.ts : null,
     currentBehindStreak,
-    strandedAlert: currentBehindStreak >= strandedAlertThreshold,
+    newestGradableAt: newestGradable ? newestGradable.ts ?? null : null,
+    newestAgeHours: newestAgeHours === null ? null : Number(newestAgeHours.toFixed(1)),
+    maxAgeHours,
+    stale,
+    strandedAlert: !stale && currentBehindStreak >= strandedAlertThreshold,
   };
 }
 
@@ -342,20 +415,50 @@ function gitOrdering(promoted, production) {
   return 'unknown';                                       // diverged
 }
 
+// Shell parity is observed by build-deploy-currency's probe (it compares the
+// fingerprinted shell asset paths of the served `/` against the local shell).
+// We read its published observation rather than inventing a second probe, so the
+// promotion receipt and the deploy-currency feed grade content lanes on ONE
+// piece of evidence. Absent/unreadable → honest-dark 'unobserved', never a pass.
+function readShellParityEvidence() {
+  const rel = 'api/deploy-currency.json';
+  try {
+    const feed = JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
+    const parity = feed?.shellParity;
+    if (!parity || typeof parity !== 'object') return { state: 'unobserved', observedAt: null, source: `${rel} (no shellParity)` };
+    return {
+      state: parity.state || 'unobserved',
+      // A retained/challenged reading keeps its ORIGINAL observedAt, so the age
+      // bound below is what stops a stale carry from certifying production.
+      observedAt: parity.observedAt || null,
+      source: `${rel} → shellParity`,
+    };
+  } catch {
+    return { state: 'unobserved', observedAt: null, source: `${rel} (absent or unreadable)` };
+  }
+}
+
 async function emit() {
   const buildSha = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'build-sha.json'), 'utf8')).sha || null; } catch { return null; } })();
   const prodBuild = await fetchJson(`${PAGES_ORIGIN}/api/build-sha.json`);
   const productionSha = prodBuild ? prodBuild.sha || null : null;
+  const laneHeadRaw = prodBuild && typeof prodBuild.contentLaneHead === 'string' ? prodBuild.contentLaneHead.trim() : '';
+  const productionContentLaneHead = /^[0-9a-f]{7,40}$/i.test(laneHeadRaw) ? laneHeadRaw.toLowerCase() : null;
   const csp = await observeCsp();
   const browser = WITH_BROWSER ? await observeBrowser() : { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [] };
+  const shellParity = readShellParityEvidence();
 
   const receipt = derivePromotionReceipt({
     promotedSha: buildSha,
     productionSha,
     productionReachable: Boolean(prodBuild),
     ordering: gitOrdering(buildSha, productionSha),
+    productionContentLaneHead,
+    contentLaneOrdering: productionContentLaneHead && productionSha !== buildSha ? gitOrdering(buildSha, productionContentLaneHead) : 'unknown',
     csp,
     browser,
+    shellParity,
+    now: Date.now(),
     sourcePolicyMode: 'enforce',
   });
   receipt.generatedAt = new Date().toISOString();
@@ -364,12 +467,13 @@ async function emit() {
   appendHistory(historyRecordOf(receipt));
   receipt.history = summarizeHistory(readHistory());
   fs.writeFileSync(OUT, JSON.stringify(receipt, null, 2) + '\n', 'utf8');
-  console.log(`build-promotion-receipt --emit: ${receipt.receiptState} · sha=${receipt.production.reconciliation} · csp=${receipt.csp.mode} · browser=${receipt.browser.captured ? receipt.browser.consoleErrors + ' err' : 'honest-dark'} · streak=${receipt.history.reconciled}/${receipt.history.gradable}`);
+  const parity = receipt.production.shellParity;
+  console.log(`build-promotion-receipt --emit: ${receipt.receiptState} · sha=${receipt.production.reconciliation} · shell=${parity.state}${parity.stale ? '(stale)' : ''} · csp=${receipt.csp.mode} · browser=${receipt.browser.captured ? receipt.browser.consoleErrors + ' err' : 'honest-dark'} · streak=${receipt.history.reconciled}/${receipt.history.gradable}`);
   return receipt;
 }
 
 // ── Structure + invariant check (no re-fetch) ────────────────────────────────
-const ENUM_RECONCILIATION = new Set(['match', 'ahead', 'behind', 'unreachable', 'unknown']);
+const ENUM_RECONCILIATION = new Set(['match', 'content-lane-match', 'ahead', 'behind', 'unreachable', 'unknown']);
 const ENUM_CSP_MODE = new Set(['enforce', 'report-only', 'absent', 'unverified']);
 const ENUM_STATE = new Set(['verified', 'unverified', 'degraded']);
 
@@ -392,6 +496,19 @@ export function validateReceiptShape(r) {
     if (route.captured === false && (route.consoleErrors !== null || route.signalCardinality !== null)) {
       errors.push(`honest-dark violation: route ${route.route} captured=false but numeric fields are non-null`);
     }
+  }
+  // Content-lane reconciliation must carry BOTH halves of its evidence. A receipt
+  // claiming content-lane-match without a fresh `matched` shell parity is exactly
+  // the stranded-shell false-green this field exists to prevent.
+  const parity = r.production?.shellParity;
+  if (parity !== undefined && parity !== null) {
+    if (!SHELL_PARITY_STATES.has(parity.state)) errors.push('production.shellParity.state invalid');
+    if (parity.observedAt === null && (parity.ageHours !== null || parity.stale !== true)) {
+      errors.push('honest-dark violation: shellParity has no observedAt but reports an age/freshness');
+    }
+  }
+  if (r.production?.reconciliation === 'content-lane-match' && !(parity && parity.state === 'matched' && parity.stale === false)) {
+    errors.push("content-lane-match requires shell parity observed as 'matched' and fresh — the same evidence build-deploy-currency requires for content-current");
   }
   // I1 security regression: an OBSERVED report-only/absent enforce CSP in production
   if (r.csp && r.csp.observed === true && (r.csp.mode === 'report-only' || r.csp.mode === 'absent')) {
@@ -418,10 +535,14 @@ function check() {
 
 function selfTest() {
   const cases = [];
+  const NOW = Date.parse('2026-09-14T12:00:00Z');
+  const hoursAgo = (h) => new Date(NOW - h * 3_600_000).toISOString();
   const base = {
     promotedSha: 'a'.repeat(40), productionSha: 'a'.repeat(40), productionReachable: true,
     csp: { observed: true, apexReachable: true, mode: 'enforce', nonce: true, reportOnlyAlso: true, headerName: 'content-security-policy' },
     browser: { captured: true, target: 'x', consoleErrors: 0, signalCardinality: 7, signalEndpoints: ['api/uptime.json'] },
+    shellParity: { state: 'matched', observedAt: hoursAgo(1), source: 'api/deploy-currency.json → shellParity' },
+    now: NOW,
     sourcePolicyMode: 'enforce',
   };
   const healthy = derivePromotionReceipt(base);
@@ -475,10 +596,63 @@ function selfTest() {
   cases.push(['history surfaces last stranded incident', sum.lastStrandedAt === 't2']);
   cases.push(['empty history → null pct, no stranded', summarizeHistory([]).reconciledPct === null && summarizeHistory([]).lastStrandedAt === null]);
   const stranded = summarizeHistory([
+    { ts: hoursAgo(6), receiptState: 'degraded', reconciliation: 'behind' },
+    { ts: hoursAgo(2), receiptState: 'degraded', reconciliation: 'behind' },
+  ], 20, { now: NOW });
+  cases.push(['fresh two consecutive behind records raise stranded alert', stranded.currentBehindStreak === 2 && stranded.strandedAlert && stranded.stale === false]);
+  // THE LIVE CASE (S356): a 9-long behind tail whose newest record is ~90h old.
+  const staleTail = summarizeHistory(Array.from({ length: 9 }, (_, n) => (
+    { ts: hoursAgo(90 + (8 - n)), receiptState: 'degraded', reconciliation: 'behind' }
+  )), 20, { now: NOW });
+  cases.push(['stale behind streak (newest >48h) → stale, NO stranded alert', staleTail.stale === true && staleTail.strandedAlert === false && staleTail.currentBehindStreak === 9 && staleTail.newestAgeHours === 90]);
+  const edge = summarizeHistory([
+    { ts: hoursAgo(49), receiptState: 'degraded', reconciliation: 'behind' },
+    { ts: hoursAgo(47), receiptState: 'degraded', reconciliation: 'behind' },
+  ], 20, { now: NOW });
+  cases.push(['freshness is judged on the NEWEST gradable record (47h → fresh)', edge.stale === false && edge.strandedAlert === true]);
+  const unparseable = summarizeHistory([
     { ts: 't1', receiptState: 'degraded', reconciliation: 'behind' },
     { ts: 't2', receiptState: 'degraded', reconciliation: 'behind' },
-  ]);
-  cases.push(['two consecutive behind records raise stranded alert', stranded.currentBehindStreak === 2 && stranded.strandedAlert]);
+  ], 20, { now: NOW });
+  cases.push(['unparseable timestamps cannot prove freshness → stale, no alert', unparseable.stale === true && unparseable.strandedAlert === false]);
+  const ungradableTail = summarizeHistory([
+    { ts: hoursAgo(100), receiptState: 'degraded', reconciliation: 'behind' },
+    { ts: hoursAgo(1), receiptState: 'unverified', reconciliation: 'behind' },
+  ], 20, { now: NOW });
+  cases.push(['a fresh UNVERIFIED record does not refresh a stale ledger', ungradableTail.stale === true && ungradableTail.strandedAlert === false]);
+
+  // content-lane reconciliation (served sha = baseline, contentLaneHead advanced)
+  const laneEq = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'a'.repeat(40), contentLaneOrdering: 'same' });
+  cases.push(['content-lane head == promoted → content-lane-match, reconciled, not degraded', laneEq.production.reconciliation === 'content-lane-match' && laneEq.reconciled === true && laneEq.receiptState === 'verified' && laneEq.production.contentLaneHead === 'a'.repeat(40)]);
+  const laneShort = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'a'.repeat(12), contentLaneOrdering: 'unknown' });
+  cases.push(['short content-lane head prefix of promoted → content-lane-match', laneShort.production.reconciliation === 'content-lane-match' && laneShort.reconciled === true]);
+  const laneAhead = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'f'.repeat(40), contentLaneOrdering: 'ahead' });
+  cases.push(['content-lane head descends from promoted → content-lane-match', laneAhead.production.reconciliation === 'content-lane-match' && laneAhead.reconciled === true]);
+  const laneBehind = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: '9'.repeat(40), contentLaneOrdering: 'behind' });
+  cases.push(['content-lane head OLDER than promoted stays behind/degraded', laneBehind.production.reconciliation === 'behind' && laneBehind.receiptState === 'degraded']);
+  const laneMalformed = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'not-a-sha', contentLaneOrdering: 'ahead' });
+  cases.push(['malformed content-lane head is ignored (no false reconcile)', laneMalformed.production.reconciliation === 'behind' && laneMalformed.production.contentLaneHead === null]);
+  cases.push(['content-lane-match receipt passes shape validation', validateReceiptShape(laneEq).errors.length === 0]);
+
+  // The stranded-shell false-green: a lane-head match is NOT enough on its own.
+  const laneNoParity = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'a'.repeat(40), contentLaneOrdering: 'same', shellParity: { state: 'unobserved', observedAt: null } });
+  cases.push(['lane-head match WITHOUT matched shell parity does not reconcile (honest-dark unknown)',
+    laneNoParity.production.reconciliation === 'unknown' && laneNoParity.reconciled === false && laneNoParity.receiptState === 'unverified'
+    && laneNoParity.findings.some((f) => /shell parity was not observed as matched/.test(f))]);
+  const laneStaleParity = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'a'.repeat(40), contentLaneOrdering: 'same', shellParity: { state: 'matched', observedAt: hoursAgo(48) } });
+  cases.push(['a STALE matched parity cannot certify a content lane either',
+    laneStaleParity.production.reconciliation === 'unknown' && laneStaleParity.production.shellParity.stale === true && laneStaleParity.receiptState === 'unverified']);
+  const laneDrift = derivePromotionReceipt({ ...base, productionSha: 'e'.repeat(40), ordering: 'behind', productionContentLaneHead: 'a'.repeat(40), contentLaneOrdering: 'same', shellParity: { state: 'drift', observedAt: hoursAgo(1) } });
+  cases.push(['observed shell DRIFT is evidence of a stranded deploy → behind + degraded',
+    laneDrift.production.reconciliation === 'behind' && laneDrift.receiptState === 'degraded' && laneDrift.findings.some((f) => /drift/.test(f))]);
+  cases.push(['a plain sha match is unaffected by parity evidence', derivePromotionReceipt({ ...base, shellParity: { state: 'unobserved', observedAt: null } }).receiptState === 'verified']);
+  const laneNoEvidence = { ...laneEq, production: { ...laneEq.production, shellParity: { state: 'unobserved', observedAt: null, ageHours: null, stale: true, maxAgeHours: 12, source: null } } };
+  cases.push(['content-lane-match without matched parity is a shape error', validateReceiptShape(laneNoEvidence).errors.some((e) => /shell parity/.test(e))]);
+  cases.push(['shellParity honest-dark: unknown state + no timestamp → unobserved, stale, null age',
+    normalizeShellParity(undefined, { now: NOW }).state === 'unobserved' && normalizeShellParity({ state: 'weird', observedAt: null }, { now: NOW }).stale === true && normalizeShellParity(null, { now: NOW }).ageHours === null]);
+  cases.push(['shellParity age is measured, not assumed', normalizeShellParity({ state: 'matched', observedAt: hoursAgo(3) }, { now: NOW }).ageHours === 3]);
+  cases.push(['fabricated parity age without an observedAt is a shape error',
+    validateReceiptShape({ ...healthy, production: { ...healthy.production, shellParity: { state: 'matched', observedAt: null, ageHours: 0, stale: false, maxAgeHours: 12, source: null } } }).errors.some((e) => /honest-dark/.test(e))]);
 
   let fail = 0;
   cases.forEach(([name, ok]) => { console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`); if (!ok) fail++; });

@@ -1,3 +1,17 @@
+## S356 The Public Surfaces Were Overstating, and the Flagship Was Shipping Placeholders (2026-09-15)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Art receipts gained an honest `kind`; fallback art no longer claims it was reviewed or generated; published days unaffected (none carries the field). |
+| Prompt/template alignment | 5 | Authoring prompt now forbids ellipsis anchors and states the stance bounds the gate enforces. |
+| Public claim accuracy | 5 | "Right now in the forge: Solara" (93 days idle), "27 initiatives" (no 27th project), "Production deployment is stranded" (deploy verified), a strip that would say "Live" over a 2-day-old edition, and a typo on the homepage and two feeds — all closed. |
+| Internal consistency | 5 | The timeline reports partial coverage rather than a false total; promotion receipts need matched, fresh shell parity. |
+| Evidence freshness | 5 | Every fix measured before and after from rendered pixels or live runs; 25 illustrations reviewed individually, not sampled. |
+
+**What was true and is no longer:** the Desk's "AI-generated editorial art · source-bound to this article" caption sat on a procedural diagram for 25 stories.
+
+**What is NOT resolved:** the staging 503s stay unsourced until the staging Worker logs; the leaderboard embed still fails contrast; six live game pages still promise content that does not exist.
+
 ## S355 Gates That Measured the Wrong Thing, and a Deploy a No-Op Could Cancel (2026-09-14)
 
 | Dimension | Score | Evidence |

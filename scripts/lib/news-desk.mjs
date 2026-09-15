@@ -768,7 +768,73 @@ export function runStandards(story) {
  * structurally well-formed"; this one asks "should this run at all" — and a
  * story can be perfectly well-formed and still not worth publishing.
  */
-export function editorialReview(story, { publishedHeadlines = [], standards = null } = {}) {
+/**
+ * How far back the desk treats a covered story as "recently covered".
+ *
+ * Founder decision S356: 14 → 7 days. This is the ONE definition — the radar's
+ * exact-slug memory and the drafter's novelty check both read it, so the two
+ * gates cannot silently disagree about what "recent" means.
+ */
+export const NOVELTY_WINDOW_DAYS = 7;
+
+/**
+ * `<original-slug>-update-<YYYY-MM-DD>[-<n>]` — a dated follow-up of a published
+ * story. The optional trailing ordinal exists because the desk publishes FOUR
+ * editions a day: a story can legitimately develop twice between breakfast and
+ * midnight, and each return has to land on its own slug.
+ *
+ * S357: without the ordinal, the second slot of the same day computed the SAME
+ * follow-up slug as the first, so the day artifact's merge-by-slug replaced the
+ * morning's follow-up in place — a published story silently overwritten by a
+ * later one. The ordinal makes "a second follow-up today" expressible, which is
+ * what lets `resolveFollowUps()` refuse the overwrite instead of accepting it.
+ */
+export const FOLLOW_UP_SLUG_RE = /^([a-z0-9]+(?:-[a-z0-9]+)*?)-update-(\d{4}-\d{2}-\d{2})(?:-(\d+))?$/;
+
+/** The original story a (possibly chained) follow-up slug descends from. */
+export function followUpBase(slug) {
+  const match = FOLLOW_UP_SLUG_RE.exec(String(slug || ''));
+  return match ? match[1] : String(slug || '');
+}
+
+/** Which follow-up of its day a slug is: 1 for `…-update-<date>`, n for `…-<n>`. */
+export function followUpOrdinal(slug) {
+  const match = FOLLOW_UP_SLUG_RE.exec(String(slug || ''));
+  return match ? Number(match[3] || 1) : null;
+}
+
+/** The follow-up slug for a prior story; a follow-up of a follow-up keeps the original base. */
+export function followUpSlug(priorSlug, date, ordinal = 1) {
+  const base = followUpBase(priorSlug);
+  const n = Number(ordinal) > 1 ? `-${Number(ordinal)}` : '';
+  return `${base}-update-${date}${n}`;
+}
+
+const normalizedHeadline = (h) => String(h || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+/**
+ * Is `story` a genuine follow-up of `prior`?
+ *
+ * A repeat is journalism only when it brings something the published piece did
+ * not: at least one cited source URL the earlier story never cited. It must
+ * also read as a different piece — an identical headline is a duplicate however
+ * many sources it adds.
+ */
+export function followUpVerdict(story, prior) {
+  if (!prior) return { ok: false, reason: 'the story it follows up was not found in the published corpus' };
+  const priorUrls = new Set((prior.facts || []).map((f) => f?.sourceUrl).filter(Boolean));
+  const newSources = [...new Set((story?.facts || []).map((f) => f?.sourceUrl).filter(Boolean))]
+    .filter((u) => !priorUrls.has(u));
+  if (!newSources.length) {
+    return { ok: false, reason: `cites no source that "${prior.slug}" did not already cite`, newSources };
+  }
+  if (normalizedHeadline(story?.headline) && normalizedHeadline(story?.headline) === normalizedHeadline(prior.headline)) {
+    return { ok: false, reason: `repeats the headline of "${prior.slug}" exactly — a follow-up must read as a new piece`, newSources };
+  }
+  return { ok: true, newSources };
+}
+
+export function editorialReview(story, { publishedHeadlines = [], standards = null, followUpPrior = null } = {}) {
   const findings = [...(standards || runStandards(story))];
 
   const blocking = findings.filter((f) => f.severity === 'block');
@@ -785,7 +851,16 @@ export function editorialReview(story, { publishedHeadlines = [], standards = nu
   if (fmt.requiresDisagreement && heat === 0 && (story?.stances || []).length >= 2) {
     reasons.push('the desk agrees with itself — no disagreement to publish');
   }
-  const dupe = publishedHeadlines.find((h) => similarHeadline(h, story?.headline || ''));
+  // A verified follow-up (≥1 new cited source, different headline) is exempt from
+  // the SIMILARITY check against the one story it follows — similarity to that
+  // story is what a follow-up is. An exact repeat of its headline is still refused,
+  // and every other published headline is still held against it.
+  const followUp = followUpPrior ? followUpVerdict(story, followUpPrior) : null;
+  if (followUp && !followUp.ok) reasons.push(`follow-up refused: ${followUp.reason}`);
+  const dupe = publishedHeadlines.find((h) => {
+    if (followUp?.ok && h === followUpPrior.headline) return normalizedHeadline(h) === normalizedHeadline(story?.headline);
+    return similarHeadline(h, story?.headline || '');
+  });
   if (dupe) reasons.push(`already covered: "${dupe}"`);
 
   if (reasons.length) return { decision: 'spike', reasons, findings, role: 'editor' };
@@ -808,8 +883,11 @@ export function similarHeadline(a, b) {
 }
 
 /** Review a whole day; the edition runs only if every story clears. */
-export function reviewDay(day, { publishedHeadlines = [] } = {}) {
-  const perStory = (day?.stories || []).map((story) => ({ slug: story.slug, ...editorialReview(story, { publishedHeadlines }) }));
+export function reviewDay(day, { publishedHeadlines = [], priorsBySlug = null } = {}) {
+  const perStory = (day?.stories || []).map((story) => ({
+    slug: story.slug,
+    ...editorialReview(story, { publishedHeadlines, followUpPrior: priorsBySlug?.get?.(story.slug) || null }),
+  }));
   const spiked = perStory.filter((r) => r.decision === 'spike');
   return { decision: spiked.length ? 'hold' : 'run', stories: perStory, spiked: spiked.length };
 }
@@ -1071,7 +1149,7 @@ export const STORY_FORMATS = [
 
 export const formatById = (id) => STORY_FORMATS.find((f) => f.id === id) || null;
 
-const normalizeVisualText = (value) => String(value || '')
+export const normalizeVisualText = (value) => String(value || '')
   .toLowerCase()
   .normalize('NFKD')
   .replace(/[^a-z0-9%$]+/g, ' ')
@@ -1133,6 +1211,54 @@ export function scoreVisualRelationships(visual, { story = null } = {}) {
 }
 
 /**
+ * Art-kind honesty for pixelInspection receipts. Mirrors the kind strings that
+ * scripts/generate-news-art.mjs exports (FALLBACK_KIND / SOURCE_RASTER_KIND);
+ * duplicated rather than imported so this lib stays free of the sharp-based art
+ * script.
+ *
+ * - no `kind` (every day published before the kind field existed): legacy rule,
+ *   reviewed true + generatedArt true.
+ * - `source-raster` (a real illustration): reviewed true + generatedArt true, and
+ *   a recorded entropy must not sit in fallback territory (< 4).
+ * - `procedural-fallback` (a placeholder nobody illustrated): only the honest
+ *   pair reviewed false + generatedArt false is accepted. generate-news-art.mjs
+ *   writes exactly that pair for fallbacks; any claim of reviewed/generated
+ *   (including the pre-kind writer's true/true) is rejected.
+ * - any other kind value is rejected.
+ */
+export const VISUAL_ART_KIND_FALLBACK = 'procedural-fallback';
+export const VISUAL_ART_KIND_SOURCE_RASTER = 'source-raster';
+export const VISUAL_SOURCE_RASTER_MIN_ENTROPY = 4;
+
+export function validateArtKindReceipt(visual, at) {
+  const errors = [];
+  const receipt = visual?.pixelInspection;
+  const kind = receipt?.kind;
+  const reviewed = receipt?.reviewed;
+  const generatedArt = visual?.generatedArt;
+  const requireRealArtDisclosure = () => {
+    if (reviewed !== true) errors.push(`${at}: pixelInspection.reviewed must be true after direct raster review`);
+    if (generatedArt !== true) errors.push(`${at}: generatedArt disclosure must be true for generated editorial art`);
+  };
+  if (kind === undefined) {
+    requireRealArtDisclosure();
+  } else if (kind === VISUAL_ART_KIND_SOURCE_RASTER) {
+    requireRealArtDisclosure();
+    const entropy = receipt?.entropy;
+    if (entropy !== undefined && entropy !== null && !(Number.isFinite(entropy) && entropy >= VISUAL_SOURCE_RASTER_MIN_ENTROPY)) {
+      errors.push(`${at}: pixelInspection.kind "source-raster" contradicts entropy ${entropy} (< ${VISUAL_SOURCE_RASTER_MIN_ENTROPY} is procedural-fallback territory)`);
+    }
+  } else if (kind === VISUAL_ART_KIND_FALLBACK) {
+    if (!(reviewed === false && generatedArt === false)) {
+      errors.push(`${at}: procedural fallback art cannot claim reviewed/generated — pixelInspection.kind "procedural-fallback" needs reviewed false + generatedArt false (got reviewed ${JSON.stringify(reviewed)}, generatedArt ${JSON.stringify(generatedArt)})`);
+    }
+  } else {
+    errors.push(`${at}: unknown pixelInspection.kind ${JSON.stringify(kind)} (valid: ${VISUAL_ART_KIND_FALLBACK}, ${VISUAL_ART_KIND_SOURCE_RASTER})`);
+  }
+  return errors;
+}
+
+/**
  * A Desk image is editorial evidence of attention, not factual evidence.
  * Requiring source-bound anchors makes the distinction useful: the scene can
  * be playful, but it must still reveal which specific story it illustrates.
@@ -1158,11 +1284,7 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
   const anchors = Array.isArray(visual?.anchors) ? visual.anchors : [];
   if (anchors.length < 3) errors.push(`${at}: at least three article anchors are required`);
   if (new Set(anchors.map(normalizeVisualText)).size !== anchors.length) errors.push(`${at}: article anchors must be unique`);
-  const corpus = normalizeVisualText([
-    story?.headline, story?.hook, story?.tldr,
-    ...(story?.facts || []).map((fact) => fact.text),
-    ...(story?.body || []).map((paragraph) => paragraph.text),
-  ].join(' '));
+  const corpus = visualAnchorCorpus(story);
   for (const anchor of anchors) {
     const normalized = normalizeVisualText(anchor);
     if (normalized.length < 4 || !corpus.includes(normalized)) {
@@ -1193,10 +1315,9 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
   }
   const receipt = visual?.pixelInspection;
   if (!/^[a-f0-9]{64}$/.test(String(receipt?.sha256 || ''))) errors.push(`${at}: pixelInspection.sha256 must bind the reviewed source raster`);
-  if (receipt?.reviewed !== true) errors.push(`${at}: pixelInspection.reviewed must be true after direct raster review`);
   if (!String(receipt?.reviewer || '').trim()) errors.push(`${at}: pixelInspection.reviewer is required`);
   if (receipt?.semanticVerified !== false) errors.push(`${at}: pixelInspection.semanticVerified must remain false unless an approved vision review exists`);
-  if (visual?.generatedArt !== true) errors.push(`${at}: generatedArt disclosure must be true for generated editorial art`);
+  errors.push(...validateArtKindReceipt(visual, at));
   const satire = visual?.satire || {};
   if (/\b(?:the )?composition shows\b/i.test(String(story?.memeLine?.text || ''))) {
     errors.push(`${at}: meme caption contains visual-contract meta prose`);
@@ -1206,6 +1327,126 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
   }
   if (satire.institutional !== true) errors.push(`${at}: satire must explicitly target an institution/system, never an individual`);
   return errors;
+}
+
+/** The exact corpus validateStoryVisual() searches for anchors. One definition. */
+export const visualAnchorCorpus = (story) => normalizeVisualText([
+  story?.headline, story?.hook, story?.tldr,
+  ...(story?.facts || []).map((fact) => fact.text),
+  ...(story?.body || []).map((paragraph) => paragraph.text),
+].join(' '));
+
+const ANCHOR_STOPWORDS = new Set(['the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'for', 'with', 'at', 'by', 'from', 'as', 'is', 'are', 'was', 'were', 'it', 'its', 'this', 'that', 'be', 'has', 'have', 'had', 'will', 'said']);
+
+/**
+ * S356: repair visual anchors the gate would refuse, WITHOUT loosening the gate.
+ *
+ * On 2026-09-14 06:46Z the model wrote the anchor "Amodei... co-founded
+ * Anthropic in 2021": every word was in a fact, but the ellipsis made it a
+ * non-contiguous phrase, so all three authoring attempts failed the same
+ * verbatim check and the slot was lost. The check is right — an anchor is a
+ * quote, and an elided quote is not one — so the fix is at the source.
+ *
+ * Any anchor not present verbatim in the corpus is replaced by a contiguous
+ * 3–6 word phrase copied from a sourced FACT (never invented, never from the
+ * model's own prose), preferring the window that shares the most words with the
+ * anchor the model meant, then the most distinctive one (names, figures).
+ * A valid anchor is returned untouched. Returns { anchors, replaced } where
+ * `replaced` maps each old anchor to its replacement so relationship evidence
+ * references can follow it.
+ */
+export function repairVisualAnchors(anchors, story, { want = 3 } = {}) {
+  const corpus = visualAnchorCorpus(story);
+  const out = [];
+  const replaced = new Map();
+  const seen = new Set();
+  const keep = (anchor) => {
+    const normalized = normalizeVisualText(anchor);
+    if (normalized.length < 4 || seen.has(normalized)) return false;
+    seen.add(normalized);
+    out.push(anchor);
+    return true;
+  };
+
+  const windows = [];
+  for (const [factIndex, fact] of (story?.facts || []).entries()) {
+    const words = String(fact?.text || '').split(/\s+/).filter(Boolean);
+    for (let size = 3; size <= 6; size += 1) {
+      for (let i = 0; i + size <= words.length; i += 1) {
+        const slice = words.slice(i, i + size);
+        // A window must not straddle a sentence, clause or comma break.
+        if (slice.slice(0, -1).some((w) => /[,.!?;:…]$/.test(w))) continue;
+        const phrase = slice.join(' ').replace(/^[^A-Za-z0-9$]+|[^A-Za-z0-9%$]+$/g, '');
+        const normalized = normalizeVisualText(phrase);
+        if (normalized.length < 4 || !corpus.includes(normalized)) continue;
+        const tokens = normalized.split(' ');
+        // "3–6 words" as the gate reads them ("co-founded" is two words there).
+        if (tokens.length < 3 || tokens.length > 6) continue;
+        if (ANCHOR_STOPWORDS.has(tokens[0]) || ANCHOR_STOPWORDS.has(tokens.at(-1))) continue;
+        const distinctive = slice.filter((w) => /\d|^[A-Z]/.test(w)).length;
+        const content = tokens.filter((t) => t.length >= 3 && !ANCHOR_STOPWORDS.has(t)).length;
+        windows.push({ phrase, normalized, tokens: new Set(tokens), distinctive, content, factIndex, i, size });
+      }
+    }
+  }
+  /**
+   * S357: a repair must stay ABOUT the same thing the anchor was about.
+   *
+   * With no minimum-overlap requirement this scored every candidate window and
+   * always returned one, so an anchor the model invented outright — a claim
+   * nowhere in the piece — was swapped for the most distinctive unrelated fact
+   * phrase in the story, which then passed validateStoryVisual cleanly. The gate
+   * was satisfied and the illustration ended up anchored to a claim the article
+   * never made: worse than the failure it was papering over, because the failure
+   * was visible and this is not.
+   *
+   * `requireOverlap` makes the repair conservative: a replacement is only
+   * offered when it shares at least one content token (≥3 chars, not a
+   * stopword) with the anchor it replaces. An anchor with no content tokens at
+   * all, or none the facts echo, is left alone for the gate to refuse — the
+   * authoring retry loop then rewrites the text, which is the only correct fix
+   * for text the sources do not support.
+   */
+  const pick = (hint, { requireOverlap = false } = {}) => {
+    const hintTokens = new Set(normalizeVisualText(hint).split(' ').filter((t) => t.length >= 3 && !ANCHOR_STOPWORDS.has(t)));
+    if (requireOverlap && hintTokens.size === 0) return null;
+    let best = null;
+    let bestScore = -Infinity;
+    for (const w of windows) {
+      if (seen.has(w.normalized)) continue;
+      let overlap = 0;
+      for (const t of hintTokens) if (w.tokens.has(t)) overlap += 1;
+      if (requireOverlap && overlap === 0) continue;
+      // Deterministic: overlap with the intended anchor, then distinctiveness,
+      // then content density, then earliest position.
+      const score = overlap * 100 + w.distinctive * 10 + w.content * 3 - w.size;
+      if (score > bestScore) { best = w; bestScore = score; }
+    }
+    return best;
+  };
+
+  let unrepaired = 0;
+  for (const raw of Array.isArray(anchors) ? anchors : []) {
+    const anchor = String(raw || '').trim();
+    if (!anchor) continue;
+    const normalized = normalizeVisualText(anchor);
+    if (normalized.length >= 4 && corpus.includes(normalized) && !seen.has(normalized)) { keep(anchor); continue; }
+    const replacement = pick(anchor, { requireOverlap: true });
+    if (replacement && keep(replacement.phrase)) replaced.set(anchor, replacement.phrase);
+    else unrepaired += 1;
+  }
+  // Top-up filler covers a model that supplied FEWER anchors than the gate
+  // wants. It must never cover an anchor this function just declined to repair:
+  // back-filling an unrelated phrase there would launder exactly the ungrounded
+  // anchor the overlap rule above refused, and hand the gate three valid-looking
+  // anchors for a story whose text still needs rewriting.
+  if (!unrepaired) {
+    while (out.length < want) {
+      const filler = pick('');
+      if (!filler || !keep(filler.phrase)) break;
+    }
+  }
+  return { anchors: out.slice(0, Math.max(want, 0) || out.length), replaced };
 }
 /** Legacy days carry no format; they were all the flagship shape. */
 export const formatFor = (story) => formatById(story?.format) || formatById('debate');

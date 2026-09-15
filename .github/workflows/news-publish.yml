@@ -260,6 +260,8 @@ jobs:
 
       - name: Cascade the derived public feeds
         if: steps.promote.outputs.ok == 'yes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # A [skip ci] publisher must resync every byte-checked derived artifact in
         # the SAME commit, or the next --check gate goes red against a feed this
         # run stranded (the S291 cascade class).
@@ -296,6 +298,13 @@ jobs:
           node scripts/build-stats-surface.mjs
           node scripts/build-intent-map.mjs --check
           node scripts/build-stats-surface.mjs --check
+          # S356 cascade-resync: the Pulse timeline merges api/news-desk.json
+          # editions, so every Desk publish staled it until the next refresh cron.
+          # Non-fatal: the GitHub commit source is a live external read, and an
+          # API outage reports that source honestly rather than failing the
+          # edition. --check still gates the committed feed shape when it wrote.
+          node scripts/build-studio-timeline.mjs || echo "::warning::studio-timeline rebuild skipped (GitHub API unavailable); feed left as committed"
+          node scripts/build-studio-timeline.mjs --check
 
       - name: Enforce published cadence
         if: always()
@@ -303,6 +312,16 @@ jobs:
         # its daily promise. This postcondition prevents a no-op publisher from
         # reporting green for nine days as it did before S325.
         run: node scripts/build-news-freshness.mjs --check --require-daily
+
+      - name: Enforce a same-day edition (late-night slot)
+        # S356 founder decision: the Desk publishes EVERY day. --require-daily
+        # tolerates a one-day-old edition, so a missed day only went red the next
+        # morning. The late-night slot (~22:07 UTC) is the last chance to publish
+        # today, so here the stricter same-day postcondition runs: no
+        # non-simulated edition dated today (UTC) fails this run today. Read-only;
+        # it never rewrites the public freshness feed.
+        if: always() && steps.slot.outputs.edition == 'latenight'
+        run: node scripts/build-news-freshness.mjs --require-today
 
       - name: Commit and publish
         if: steps.promote.outputs.ok == 'yes'
@@ -313,7 +332,7 @@ jobs:
           # history file is staged separately: putting a missing path in this
           # command makes git add reject EVERY path while `|| true` paints the
           # edition as "Nothing new to publish."
-          git add index.html data/news-desk/ assets/og/news/ data/lqip-map.json api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/news-visual-receipts.json api/news-critique-packets.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
+          git add index.html data/news-desk/ assets/og/news/ data/lqip-map.json api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/news-visual-receipts.json api/news-critique-packets.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json api/studio-timeline.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
           if [ -e data/news-desk-engagement-history.ndjson ]; then
             git add data/news-desk-engagement-history.ndjson
           fi

@@ -39,6 +39,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results',
   'investor', 'studio-hub', '.git', '.well-known', 'scripts',
+  '.claude', // S356: agent worktrees are full repo checkouts
   'vaultsparked',  // page-specific CSP managed directly — do not overwrite
 ]);
 

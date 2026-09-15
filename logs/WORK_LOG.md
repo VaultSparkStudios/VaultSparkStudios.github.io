@@ -1543,3 +1543,13 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Findings:** the staging Worker has no observability block, so the S354 staging 503s cannot be sourced; gh api calls take 5-10s each on this machine.
 
 **S355 release:** production verified by served bytes · promotion `34832157155` · served `e65eca737`. First promotion `34831145405` was REJECTED at the release ceremony (9/10): `staging-browser-receipt` failed "mobile drawer and every theme are readable" on chromium and webkit with 9 console lines "Failed to load resource: 503" at 10:05Z, both attempts. Not reproduced afterwards: 8 routes and a 40-request parallel burst all 200; a settled real-browser probe (themes + drawer) showed 0 failed responses and 0 console errors on staging and production. Same unsourced class as S354; it stays unsourced until staging Worker observability exists ([S355] task). An intermediate CSP-hash lead was a false positive (the Worker authorizes by nonce; production "failed" identically).
+
+## S356 · 2026-09-15 · The Desk flagship + studio truth + site-wide crawl
+
+**Intent:** founder: fix Desk art/formatting/reach/reactions, add community, make Studio Pulse honest, and keep improving the site in parallel.
+
+**Shipped:** real Desk illustrations (25 backfilled, each reviewed; 1 regenerated for a brand mascot) · reader-first article + index · reactions toggle + 8 emoji · comments backend (open + filtered + member priority) · homepage module + site-wide strip · daily-publish enforcement (evidence, not cron) · Studio Pulse truth + live timeline · newsletter on Brevo with unsubscribe + postal address · 9 new unit specs + Desk copy-quality gate · 18 crawl defects (5 P0).
+
+**Method:** parallel agents with disjoint file ownership; an independent reviewer read every finished diff before release; every visual claim verified from rendered pixels.
+
+**Findings that only showed up in pixels or live runs:** a decorative link covering the menu button on 134 pages; an overlay registry that protected only its listed widgets; a Windows sandbox backend that failed to start and ran unconfined; a "plan-covered" path that would have billed an API key; a claim-release that could double-send email.

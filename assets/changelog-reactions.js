@@ -3,8 +3,9 @@
  *
  * Adds ⚡🔥💎 reaction bars to .cl-phase articles on the changelog page.
  * Reactions are stored in localStorage (no-auth) + submitted to Supabase
- * page_feedback for aggregation. Aggregated counts are loaded from Supabase
- * on page load and displayed as live totals.
+ * page_feedback as { path: '/changelog', reaction: 'useful' } (the table's
+ * live schema). Per-entry counts are not readable from the browser (raw rows
+ * are service_role-only; no entry column), so no live totals are shown.
  *
  * Frequency: one reaction per entry per visitor (localStorage gate).
  * CSP-clean. No inline handlers. Respects prefers-reduced-motion.
@@ -65,7 +66,57 @@
   }
 
   // ── Submit reaction to Supabase page_feedback ─────────────────────────────
-  function submitReaction(eid, value) {
+  // Live schema (supabase/migrations/supabase-page-feedback.sql):
+  //   path text not null · reaction text not null CHECK in ('useful','ok','not_useful')
+  //   · visit_depth_bucket / ua_kind nullable. No per-entry or free-text column exists.
+  // All three changelog reactions are affirmations, so they map to 'useful' (the same
+  // fixed-choice → enum pattern vault-member/portal-feedback.js uses). Path matches
+  // assets/rate-page.js pathKey() so both widgets aggregate on one /changelog row.
+  var REACTION_TO_FEEDBACK = { sparked: 'useful', fire: 'useful', gem: 'useful' };
+  function feedbackRowFor(value) {
+    var reaction = REACTION_TO_FEEDBACK[value];
+    if (!reaction) return null;
+    return { path: '/changelog', reaction: reaction };
+  }
+
+  // ── One page_feedback row per reader per page ──────────────────────────────
+  // page_feedback aggregates by `path` and has NO per-entry column, so posting a
+  // row per ENTRY reaction inflated /changelog and the site-wide useful_pct: a
+  // reader reacting to six entries counted as six 'useful' readers. The widget's
+  // per-entry UI stays local (localStorage ledger above); only the POST is
+  // gated, reusing the persistence shape assets/rate-page.js uses — a
+  // localStorage store keyed by path with the same 24h cooldown.
+  var FEEDBACK_LS_KEY = 'vs_cl_feedback_v1';
+  var FEEDBACK_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+
+  function loadFeedbackStore() {
+    try {
+      var d = JSON.parse(window.localStorage.getItem(FEEDBACK_LS_KEY) || '{}');
+      return (d && typeof d === 'object') ? d : {};
+    } catch { return {}; }
+  }
+  function saveFeedbackStore(store) {
+    try { window.localStorage.setItem(FEEDBACK_LS_KEY, JSON.stringify(store)); } catch {}
+  }
+  function shouldPostFeedback(store, pathKey, now) {
+    var entry = store && store[pathKey];
+    if (!entry || !entry.at) return true;
+    return (now - entry.at) >= FEEDBACK_COOLDOWN_MS;
+  }
+  function recordPosted(store, pathKey, now) {
+    store[pathKey] = { at: now };
+    return store;
+  }
+
+  function submitReaction(_eid, value) {
+    var row = feedbackRowFor(value);
+    if (!row) return;
+    var now = Date.now();
+    var store = loadFeedbackStore();
+    // Already counted this reader on this page — the button still lights up, but
+    // the public number must not move a second time.
+    if (!shouldPostFeedback(store, row.path, now)) return;
+    saveFeedbackStore(recordPosted(store, row.path, now));
     fetch(SB_URL + '/rest/v1/page_feedback', {
       method: 'POST',
       headers: {
@@ -73,28 +124,16 @@
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal',
       },
-      body: JSON.stringify({
-        page_path: '/changelog/',
-        question: 'changelog_reaction',
-        answer: eid + ':' + value,
-        session_id: (window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Math.random().toString(36).slice(2)),
-      }),
+      body: JSON.stringify(row),
     }).catch(function () {});
   }
 
-  // ── Load aggregate counts from Supabase (best-effort) ────────────────────
-  function loadCounts(eid, countsEl) {
+  // ── Aggregate counts ──────────────────────────────────────────────────────
+  // Raw page_feedback rows are service_role-only (RLS) and carry no entry id, so a
+  // per-entry count cannot be read from the browser. Mark honestly unavailable
+  // instead of issuing a request that can only fail.
+  function loadCounts(_eid, countsEl) {
     countsEl.setAttribute('data-count-state', 'unavailable');
-    fetch(SB_URL + '/rest/v1/page_feedback?page_path=eq./changelog/&question=eq.changelog_reaction&answer=like.' + encodeURIComponent(eid + ':%'), {
-      headers: { 'apikey': SB_ANON, 'Prefer': 'count=exact', 'Range': '0-0' },
-    }).then(function (r) {
-      if (!r.ok) return;
-      var count = parseInt(r.headers.get('Content-Range')?.split('/')[1] || '0', 10) || 0;
-      if (count > 0 && countsEl) {
-        countsEl.setAttribute('data-count-state', 'available');
-        countsEl.textContent = count + ' reaction' + (count === 1 ? '' : 's');
-      }
-    }).catch(function () {});
   }
 
   // ── Mount reaction bar on one article ─────────────────────────────────────
@@ -224,6 +263,17 @@
     // Also mount on entries added by changelog-live.js after the event fires.
     document.addEventListener('vs:changelog-live-rendered', scheduleAll);
   }
+
+  // Node self-test hook (no-op in browsers: `module` is undefined there).
+  if (typeof module === 'object' && module && module.exports) {
+    module.exports = {
+      feedbackRowFor: feedbackRowFor,
+      shouldPostFeedback: shouldPostFeedback,
+      recordPosted: recordPosted,
+      FEEDBACK_COOLDOWN_MS: FEEDBACK_COOLDOWN_MS,
+    };
+  }
+  if (typeof document === 'undefined') return;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

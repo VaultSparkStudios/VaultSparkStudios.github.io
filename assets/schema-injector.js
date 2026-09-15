@@ -157,7 +157,7 @@
       ],
       foundingDate: '2024',
       founder: { '@id': origin() + '/#founder' },
-      description: 'Independent game studio building worlds under the VaultSpark banner. Home of Call of Doodie, Gridiron GM, Solara, and 27 initiatives.',
+      description: 'Independent game studio building worlds under the VaultSpark banner. Home of Call of Doodie, Gridiron GM, Solara, and 26 initiatives.',
       contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', url: origin() + '/contact/' }
     };
   }

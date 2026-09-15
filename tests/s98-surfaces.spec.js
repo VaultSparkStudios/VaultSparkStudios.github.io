@@ -1,7 +1,12 @@
 // S98 surfaces — smoke coverage for ambient assets + new public API endpoints.
-// Verifies the homepage hydrates Founder Presence payloads and keeps the
-// retired Portfolio Heartbeat off the public homepage, so future
-// propagator or generator regressions fail the test suite instead of the user.
+// Verifies the homepage serves its ambient shells and keeps the retired
+// Portfolio Heartbeat off the public homepage, so future propagator or
+// generator regressions fail the test suite instead of the user.
+//
+// The founder-presence assertions this file used to carry were removed with
+// the feed itself: publishing whether a private individual is at their desk
+// is a privacy surface, not a feature (CANON-028). The absence guard lives in
+// tests/founder-presence-absent.unit.spec.js.
 const { test, expect } = require('@playwright/test');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
@@ -12,9 +17,6 @@ test('homepage loads S98 ambient assets without retired heartbeat widget', async
   page.on('response', (res) => {
     const u = res.url();
     if (/\/assets\/(ambient-core\.shell-[a-f0-9]+|ambient-feature\.shell-[a-f0-9]+)\.js/.test(u)) {
-      responses.set(new URL(u).pathname, res.status());
-    }
-    if (/\/api\/(founder-presence)\.json/.test(u)) {
       responses.set(new URL(u).pathname, res.status());
     }
   });
@@ -29,25 +31,13 @@ test('homepage loads S98 ambient assets without retired heartbeat widget', async
   // Public homepage heartbeat was retired because its feed was not accurate enough.
   await expect(page.locator('[data-heartbeat]')).toHaveCount(0);
 
-  // Critical ambient shells and founder-presence feed served with 2xx.
+  // Critical ambient shells served with 2xx.
   const shellCodes = Array.from(responses.entries()).filter(([p]) => /^\/assets\/ambient-(core|feature)\.shell-[a-f0-9]+\.js$/.test(p));
   expect(shellCodes.length, 'expected ambient core + feature shell responses').toBeGreaterThanOrEqual(2);
   for (const [p, code] of shellCodes) {
     expect(code, `expected ${p} to return 2xx, got ${code}`).toBeGreaterThanOrEqual(200);
     expect(code, `expected ${p} to return 2xx, got ${code}`).toBeLessThan(400);
   }
-  const presenceCode = responses.get('/api/founder-presence.json');
-  expect(presenceCode, `expected founder-presence feed to return 2xx, got ${presenceCode}`).toBeDefined();
-  expect(presenceCode).toBeGreaterThanOrEqual(200);
-  expect(presenceCode).toBeLessThan(400);});
-
-test('founder-presence endpoint returns canonical shape', async ({ request }) => {
-  const res = await request.get(BASE + '/api/founder-presence.json');
-  expect(res.status()).toBe(200);
-  const body = await res.json();
-  expect(body).toHaveProperty('generatedAt');
-  expect(body).toHaveProperty('live');
-  expect(typeof body.live).toBe('boolean');
 });
 
 test('heartbeat endpoint returns project list with tier + pulses', async ({ request }) => {

@@ -6,7 +6,7 @@
   // localStorage entry. VSPublicIntel remains the compatibility facade.
   var DEFAULT_TTL = 10 * 60 * 1000;
   var nativeFetch = window.fetch.bind(window);
-  var INTERCEPTED = { '/api/public-intelligence.json': DEFAULT_TTL, '/api/founder-presence.json': 90000 };
+  var INTERCEPTED = { '/api/public-intelligence.json': DEFAULT_TTL };
   var memory = Object.create(null);
   var inflight = Object.create(null);
   var enrichers = [];

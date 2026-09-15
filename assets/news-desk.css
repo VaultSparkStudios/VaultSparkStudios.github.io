@@ -152,21 +152,39 @@
 .desk-react:hover{border-color:var(--gold);background:rgba(255,196,0,.08)}
 .desk-react:active{transform:translateY(1px)}
 .desk-react:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.desk-react[data-mine=true]{border-color:var(--gold);background:rgba(255,196,0,.14);font-weight:600}
-.desk-react[aria-busy=true]{opacity:.6}
+.desk-react[data-mine=true],.desk-react[aria-pressed=true]{border-color:var(--gold);background:rgba(255,196,0,.14);font-weight:600}
+.desk-react[aria-pressed=true]{box-shadow:inset 0 0 0 1px var(--gold)}
+/* The pressed state is optimistic, so a pending request must not dim it. */
+.desk-react[aria-busy=true]{cursor:progress}
+.desk-react-e{font-size:1.05rem;line-height:1}
 .desk-react-n{font-family:Georgia,serif;font-weight:700;font-size:.9rem;color:var(--gold)}
 .desk-react-voice{--persona:var(--gold)}
 .desk-react-voice:hover{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 12%,transparent)}
-.desk-react-voice[data-mine=true]{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 18%,transparent)}
+.desk-react-voice[data-mine=true],.desk-react-voice[aria-pressed=true]{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 18%,transparent);box-shadow:inset 0 0 0 1px var(--persona)}
 .desk-react-voice .desk-mini-avatar{background:var(--persona);color:#0c0d12}
 .desk-react-status{min-height:1.25rem;margin:.9rem 0 0;font-size:.8rem;color:var(--desk-muted)}
 .desk-react-status[data-state=submitted],.desk-react-status[data-state=already-counted]{color:var(--gold)}
 .desk-react-status[data-state=retry],.desk-react-status[data-state=unavailable]{color:var(--desk-muted);font-style:italic}
-.desk-panel-reactions{margin:-1.45rem 0 2.35rem;padding:.85rem 1rem;border:1px solid var(--desk-line);border-top:0;border-radius:0 0 14px 14px;background:color-mix(in srgb,var(--desk-paper,#11131a) 94%,var(--gold) 6%)}
+.desk-panel-reactions{margin:-1.45rem 0 2.35rem;padding:.85rem 1rem;border:1px solid var(--desk-line);border-top:0;border-radius:0 0 14px 14px;background:color-mix(in srgb,var(--gold) 6%,var(--desk-panel))}
 .desk-panel-reactions .desk-react-title{margin-bottom:.55rem}
-.desk-panel-react{min-width:78px;justify-content:center}
+.desk-panel-react-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem}
+.desk-panel-react{min-width:0;justify-content:center;padding-inline:.6rem}
 .desk-panel-react>span[aria-hidden]{font-size:1.05rem}
-.desk-engagement{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:2rem 0 1.4rem;padding:1rem;border:1px solid var(--desk-line);border-radius:14px;background:color-mix(in srgb,var(--desk-paper,#11131a) 96%,var(--gold) 4%)}
+.desk-panel-react .desk-react-k{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Phones: eight picks as a 4×2 grid of stacked tiles instead of four rows. */
+@media(max-width:640px){
+  .desk-panel-react-row{gap:.4rem}
+  /* Row-qualified so the later max-width:520px .desk-react padding cannot
+     re-widen the tile padding and squeeze labels into mid-word breaks. */
+  .desk-panel-react-row .desk-panel-react{flex-direction:column;gap:.15rem;min-height:60px;padding:.4rem .15rem;border-radius:14px;font-size:.72rem;line-height:1.15;text-align:center}
+  .desk-panel-react>span[aria-hidden]{font-size:1.2rem}
+  .desk-panel-react .desk-react-k{max-width:100%;white-space:normal;overflow:visible;overflow-wrap:normal;word-break:normal;hyphens:manual}
+  .desk-panel-react .desk-react-n{font-size:.78rem}
+}
+/* Floating page widgets yield while they would cover a reaction bar
+   (flag set by assets/desk-reactions.js). */
+.vs-rate-page[data-desk-yield=true],[data-micro-feedback-root][data-desk-yield=true]{opacity:0;visibility:hidden;pointer-events:none}
+.desk-engagement{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:2rem 0 1.4rem;padding:1rem;border:1px solid var(--desk-line);border-radius:14px;background:color-mix(in srgb,var(--gold) 4%,var(--desk-panel))}
 .desk-engagement>div{display:flex;flex-direction:column;gap:.2rem}
 .desk-engagement-k{color:var(--desk-muted);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
 .desk-engagement strong{font-family:Georgia,serif;font-size:1.08rem;color:var(--desk-ink,#fafafa)}
@@ -178,26 +196,17 @@
    Keyed to the same `memeStyle` each persona uses for its panel, so a voice
    looks like itself in prose and in art. Without this the cast was distinct in
    the writing and identical on the page. */
+/* S356: the registers stay, but as light accents in the article font — the old
+   monospace pager voice read as a code block, not as a writer. */
 .desk-said{position:relative}
-.desk-voice-pager p:not(.desk-said-who){font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.95em;letter-spacing:-.01em}
 .desk-voice-chart p:not(.desk-said-who){font-variant-numeric:tabular-nums}
-.desk-voice-chart p:not(.desk-said-who) strong{font-family:Georgia,serif;font-size:1.15em}
-.desk-voice-receipt{border-left:3px solid var(--persona);padding-left:1rem}
-.desk-voice-receipt p:not(.desk-said-who){font-size:.98em}
-.desk-voice-cartoon p:not(.desk-said-who){font-family:Georgia,serif;font-style:italic}
-.desk-voice-thenNow p:not(.desk-said-who){font-family:Georgia,serif}
-.desk-voice-oneperson p:not(.desk-said-who){font-size:1.06em;line-height:1.72}
-.desk-voice-declare p:not(.desk-said-who){font-weight:500}
-.desk-voice-declare p:not(.desk-said-who)::first-line{letter-spacing:.005em}
+.desk-voice-cartoon p:not(.desk-said-who){font-style:italic}
 
 @media(max-width:520px){
   .desk-react{font-size:.8rem;padding:.5rem .75rem}
   .desk-react-row{gap:.45rem}
-  .desk-panel-react{min-width:calc(50% - .3rem)}
   .desk-engagement{grid-template-columns:1fr}
   .desk-engagement p{grid-column:1}
-  .desk-voice-receipt{padding-left:.7rem}
-  .desk-voice-pager p:not(.desk-said-who){font-size:.88em}
 }
 
 .desk-signal-list{list-style:none;margin:0 0 2rem;padding:0;display:grid;gap:.5rem}
@@ -205,3 +214,185 @@
 .desk-signal-row a{font-family:Georgia,serif;color:var(--desk-ink,#fafafa)}
 .desk-signal-n{color:var(--gold);font-size:.85rem;font-weight:600}
 .desk-signal-d{color:var(--desk-muted);font-size:.74rem}
+
+/* ── S356 reader-first article ───────────────────────────────────────────────
+   Headline, deck, byline and the illustration own the first screen; the short
+   version follows; the machinery (stats, receipts, reader activity) moves below
+   the story it describes. Persona colours are keyed by data attribute so the
+   markup carries no inline styles, and persona-coloured TEXT goes through
+   --persona-ink, which darkens the pastel accents on the light theme (AA). */
+[data-persona=rex],[data-voice=rex]{--persona:#ff6b45}
+[data-persona=mara],[data-voice=mara]{--persona:#72d6ff}
+[data-persona=dot],[data-voice=dot]{--persona:#c9ff68}
+[data-persona=vera],[data-voice=vera]{--persona:#ffd166}
+[data-persona=echo],[data-voice=echo]{--persona:#b28dff}
+[data-persona=juno],[data-voice=juno]{--persona:#5ce2a7}
+[data-persona=nib],[data-voice=nib]{--persona:#e8dcc0}
+[data-persona],[data-voice]{--persona-ink:var(--persona)}
+body.light-mode [data-persona],body.light-mode [data-voice]{--persona-ink:color-mix(in srgb,var(--persona) 34%,#162033)}
+
+.desk-article{width:min(780px,calc(100% - 2rem));padding:3rem 0 5rem}
+.desk-article-head .desk-kicker{display:block;line-height:1.6}
+.desk-article-head .desk-kicker:before{display:inline-block;margin-right:.65rem;vertical-align:middle}
+.desk-kicker-home{color:inherit;text-decoration:none}
+.desk-kicker-home:hover{text-decoration:underline}
+.desk-article h1{max-width:24ch;margin:.55rem 0 .8rem;font:600 clamp(2.1rem,5vw,3.35rem)/1.08 Georgia,'Times New Roman',serif;letter-spacing:-.025em}
+.desk-article-deck{max-width:62ch;margin:0 0 1.1rem;color:var(--desk-muted);font:400 clamp(1.08rem,2vw,1.26rem)/1.55 Georgia,'Times New Roman',serif;font-style:normal}
+.desk-followup{margin:-.3rem 0 1rem;font-size:.9rem;color:var(--desk-muted)}
+.desk-followup span:first-child{font-weight:700;color:var(--desk-ink)}
+.desk-followup a{color:var(--gold,#ffc400)}
+.desk-byline{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-top:1px solid var(--desk-line);border-bottom:1px solid var(--desk-line)}
+.desk-byline-avatars{display:inline-flex;flex:0 0 auto}
+.desk-byline-avatars .desk-mini-avatar{width:2.1rem;height:2.1rem;border:2px solid var(--bg,#07080f);border-radius:50%;background:color-mix(in srgb,var(--persona,#ffc400) 30%,var(--bg,#07080f));color:var(--desk-ink);font-size:.62rem}
+.desk-byline-avatars .desk-mini-avatar+.desk-mini-avatar{margin-left:-.55rem}
+.desk-byline-text{display:flex;flex-direction:column;gap:.15rem;margin:0;font-size:.92rem;line-height:1.4}
+.desk-byline-by strong{color:var(--desk-ink)}
+.desk-byline-meta{color:var(--desk-muted);font-size:.8rem}
+/* S357 (audit P1-17): the pill measured 92×21 on 34 news pages. A real 44px
+   box replaces the negative-inset pseudo-element that faked the hit area (and
+   reached into the neighbouring lines while it did). */
+.desk-ai-pill{position:relative;display:inline-flex;align-items:center;min-height:44px;margin-left:.35rem;padding:.12rem .5rem;border:1px solid color-mix(in srgb,var(--gold,#ffc400) 60%,transparent);border-radius:999px;color:var(--gold,#ffc400);font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;vertical-align:middle}
+.desk-ai-pill:before{content:"";position:absolute;inset:0}
+.desk-ai-pill:hover,.desk-ai-pill:focus-visible{background:color-mix(in srgb,var(--gold,#ffc400) 14%,transparent)}
+.desk-ai-line{margin:.6rem 0 0;color:var(--desk-muted);font-size:.84rem;line-height:1.5}
+.desk-ai-line strong{color:var(--desk-ink)}
+.desk-ai-line a{display:inline-flex;align-items:center;min-height:44px;padding:.35rem 0;color:var(--gold,#ffc400)}
+
+.desk-hero-figure{margin:1.3rem 0 0}
+.desk-hero-figure img{border-radius:12px}
+.desk-meme figcaption{margin-top:.55rem;color:var(--desk-muted);font-size:.8rem;line-height:1.45;letter-spacing:0;text-transform:none}
+.desk-meme figcaption strong{color:var(--desk-ink)}
+.desk-hero-figure.is-pending img{opacity:.8}
+.desk-superseded{margin:1rem 0;padding:.85rem 1.1rem;border:1px solid var(--gold,#ffc400);border-radius:14px;color:var(--desk-muted)}
+.desk-superseded strong{color:var(--desk-ink)}
+.desk-superseded a{color:var(--gold,#ffc400)}
+
+.desk-tldr{margin:1.8rem 0 1.4rem;padding:1.05rem 1.25rem 1.15rem;border:1px solid color-mix(in srgb,var(--gold,#ffc400) 34%,var(--desk-line));border-left:4px solid var(--gold,#ffc400);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--gold,#ffc400) 6%,transparent)}
+.desk-tldr-k{margin:0 0 .4rem;color:var(--gold,#ffc400);font-family:inherit;font-size:.72rem;font-weight:800;line-height:1.2;letter-spacing:.14em;text-transform:uppercase}
+.desk-tldr .desk-standfirst{margin:0;font:400 clamp(1.06rem,2vw,1.18rem)/1.62 Georgia,'Times New Roman',serif;color:var(--desk-ink)}
+
+.desk-toc{margin:0 0 2.2rem;padding:.85rem 1rem;border:1px solid var(--desk-line);border-radius:14px}
+.desk-toc-k{margin:0 0 .5rem;color:var(--desk-muted);font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.desk-toc ol{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
+.desk-toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 .9rem;border:1px solid var(--desk-line);border-radius:999px;color:var(--desk-ink);font-size:.86rem;text-decoration:none}
+.desk-toc a:hover,.desk-toc a:focus-visible{border-color:var(--gold,#ffc400)}
+
+.desk-body{max-width:68ch;font:400 1.14rem/1.7 Georgia,'Times New Roman',serif;color:var(--desk-ink)}
+.desk-body p{margin:0 0 1.35rem}
+.desk-said{margin:2rem 0;padding:0 0 0 1.15rem;border-left:3px solid var(--persona,#ffc400)}
+.desk-said>p:last-child{margin-bottom:0}
+.desk-said-who{flex-wrap:wrap;gap:.5rem;margin:0 0 .55rem!important;font:600 .82rem/1.3 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:0;text-transform:none}
+.desk-said-who strong{color:var(--desk-ink);letter-spacing:.05em}
+.desk-said .desk-mini-avatar{width:1.8rem;height:1.8rem;border-radius:50%;background:color-mix(in srgb,var(--persona,#ffc400) 30%,transparent);color:var(--desk-ink);font-size:.58rem}
+.desk-role-chip{padding:.12rem .55rem;border:1px solid color-mix(in srgb,var(--persona,#ffc400) 50%,var(--desk-line));border-radius:999px;color:var(--desk-muted);font-size:.72rem;font-weight:500}
+.desk-pullquote{margin:2.4rem 0;padding:1.3rem 0 1.1rem;border-top:2px solid var(--persona,#ffc400);border-bottom:1px solid var(--desk-line)}
+.desk-pullquote blockquote{margin:0}
+.desk-pullquote blockquote p{margin:0 0 .6rem;font:italic 500 clamp(1.3rem,3vw,1.65rem)/1.35 Georgia,'Times New Roman',serif;color:var(--desk-ink);text-wrap:balance}
+.desk-pullquote blockquote p:before{content:"\201C";color:var(--persona-ink,var(--gold,#ffc400))}
+.desk-pullquote blockquote p:after{content:"\201D";color:var(--persona-ink,var(--gold,#ffc400))}
+.desk-pullquote figcaption{color:var(--desk-muted);font:600 .78rem/1.4 system-ui,-apple-system,'Segoe UI',sans-serif}
+.desk-how .desk-ai-banner{margin:2.2rem 0}
+
+.desk-h2{margin:3rem 0 .7rem;padding-top:1.4rem;border-top:1px solid var(--desk-line);font:600 clamp(1.4rem,3vw,1.75rem)/1.2 Georgia,'Times New Roman',serif;letter-spacing:-.01em;color:var(--desk-ink)}
+.desk-section-note{margin:0 0 1rem;color:var(--desk-muted);font-size:.92rem;line-height:1.55}
+.desk-section-note a,.desk-critique-link a{color:var(--gold,#ffc400)}
+.desk-facts{margin:0;padding:1.1rem 1.25rem 1.1rem 2.6rem}
+.desk-facts li{margin:0;padding:.8rem 0;border-bottom:1px dashed var(--desk-line);line-height:1.6}
+.desk-facts li:last-child{border-bottom:0}
+.desk-facts li::marker{color:var(--desk-muted);font-size:.85rem}
+.desk-fact-text{font:400 1.04rem/1.6 Georgia,'Times New Roman',serif;color:var(--desk-ink)}
+.desk-fact-src{display:block;margin-top:.35rem;color:var(--desk-muted);font-size:.84rem}
+.desk-fact-src .desk-source{font-size:inherit}
+.desk-receipt summary{display:inline-flex;align-items:center;min-height:44px;color:var(--desk-muted);font-size:.76rem;cursor:pointer}
+.desk-receipt summary:hover{color:var(--desk-ink)}
+.desk-receipt code{display:block;margin:0 0 .3rem;padding:.5rem .65rem;border-radius:8px;background:color-mix(in srgb,var(--desk-ink) 6%,transparent);color:var(--desk-ink);font-size:.72rem;line-height:1.45;overflow-wrap:anywhere}
+.desk-critique-link{margin:.7rem 0 0;color:var(--desk-muted);font-size:.9rem;line-height:1.55}
+.desk-stance-role{color:var(--desk-muted);font-weight:400;font-size:.78rem}
+.desk-stance{border-left-color:var(--desk-line)}
+.desk-stance .desk-stance-name strong{color:var(--desk-ink)}
+.desk-stance .desk-mini-avatar{background:color-mix(in srgb,var(--persona,#ffc400) 30%,transparent);color:var(--desk-ink)}
+.desk-stance .desk-verdict{color:var(--persona-ink,var(--persona))}
+.desk-split-label[data-heat=hot]{color:#ff5a3c}.desk-split-label[data-heat=warm]{color:var(--gold,#ffc400)}.desk-split-label[data-heat=cool]{color:#7ec9ff}
+.desk-predictions{margin:0;padding:0;list-style:none}
+.desk-prediction{margin:.7rem 0;line-height:1.6}
+.desk-prediction-meta{color:var(--desk-muted)}
+.desk-transcript{margin:2rem 0 1rem;padding:.4rem 1.2rem}
+.desk-transcript summary{display:flex;align-items:center;min-height:44px;font-weight:700;cursor:pointer}
+.desk-transcript-turn{margin:.7rem 0;line-height:1.65}
+.desk-transcript-turn strong{color:var(--persona-ink,var(--gold,#ffc400))}
+.desk-activity .desk-audience-summary{margin-top:.4rem}
+.desk-activity .desk-engagement{margin-top:.8rem}
+
+.desk-panel-reactions{margin:2.2rem 0;padding:1rem;border:1px solid var(--desk-line);border-radius:14px}
+.desk-panel-react-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.7rem}
+.desk-panel-react-head .desk-react-title{margin:0}
+.desk-panel-thumb{flex:0 0 92px;display:block;overflow:hidden;border:1px solid var(--desk-line);border-radius:8px;line-height:0}
+.desk-panel-thumb img{display:block;width:100%;height:auto}
+.desk-share{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:1.4rem;padding-top:1rem;border-top:1px dashed var(--desk-line)}
+.desk-share-k{margin-right:.2rem;color:var(--desk-muted);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.desk-share-link{display:inline-flex;align-items:center;min-height:44px;padding:0 .95rem;border:1px solid var(--desk-line);border-radius:999px;color:var(--desk-ink);font-size:.84rem;text-decoration:none}
+.desk-share-link:hover,.desk-share-link:focus-visible{border-color:var(--gold,#ffc400)}
+
+.desk-comments{margin:2.6rem 0 0;padding-top:1.3rem;border-top:1px solid var(--desk-line)}
+.desk-comments>h2{margin:0 0 .6rem;font:600 clamp(1.4rem,3vw,1.75rem)/1.2 Georgia,'Times New Roman',serif;color:var(--desk-ink)}
+.desk-comments-fallback{margin:0;color:var(--desk-muted);font-size:.92rem}
+
+.desk-more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:0;padding:0;list-style:none}
+.desk-more-card{display:flex;flex-direction:column;height:100%;overflow:hidden;border:1px solid var(--desk-line);border-radius:14px;background:var(--desk-panel);color:var(--desk-ink);text-decoration:none;transition:border-color .2s ease}
+.desk-more-card:hover,.desk-more-card:focus-visible{border-color:var(--gold,#ffc400)}
+.desk-more-art{display:block;aspect-ratio:1200/630;overflow:hidden;background:var(--bg,#07080f)}
+.desk-more-art img{display:block;width:100%;height:100%;object-fit:cover}
+.desk-more-copy{display:flex;flex-direction:column;gap:.35rem;padding:.8rem .9rem 1rem}
+.desk-more-meta{color:var(--desk-muted);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.desk-more-title{font:600 1.02rem/1.3 Georgia,'Times New Roman',serif}
+
+/* Fallback art is not an illustration: cards show the headline on the brand
+   gradient instead of showcasing a placeholder raster. */
+.desk-art-pending{display:flex;flex-direction:column;justify-content:flex-end;gap:.4rem;padding:clamp(.8rem,2.4vw,1.4rem);background:linear-gradient(135deg,color-mix(in srgb,var(--gold,#ffc400) 26%,var(--bg,#07080f)),var(--bg,#07080f) 72%);color:var(--desk-ink)}
+.desk-art-pending-k{color:var(--desk-muted);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.desk-art-pending-h{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font:600 clamp(1rem,2.2vw,1.45rem)/1.2 Georgia,'Times New Roman',serif}
+.desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.95rem}
+
+/* ── S356 /news/ index: image-led lead, responsive image grid ─────────────── */
+.desk-edition{margin-top:.4rem}
+.desk-day-head{display:flex;align-items:center;gap:.7rem;margin:2.2rem 0 .9rem;color:var(--desk-muted);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.desk-day-head time{color:var(--desk-ink)}
+.desk-day-head:after{content:"";flex:1;height:1px;background:var(--desk-line)}
+.desk-story-card.desk-lead{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);min-height:0}
+.desk-story-card.desk-lead .desk-story-art{aspect-ratio:auto;height:100%;min-height:320px;min-width:0}
+.desk-story-card.desk-lead .desk-story-copy{min-width:0;padding:clamp(1.2rem,2.6vw,2rem)}
+.desk-story-card.desk-lead h3{max-width:none;font-size:clamp(1.6rem,3vw,2.45rem);line-height:1.1}
+.desk-story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:1rem;margin-top:1rem}
+.desk-story-card.desk-side{grid-column:auto;min-height:0}
+.desk-story-card.desk-side h3{max-width:none;margin:.8rem 0 .5rem;font-size:clamp(1.15rem,1.8vw,1.35rem);line-height:1.22;letter-spacing:-.01em}
+.desk-story-card.desk-side .desk-story-copy{padding:1rem 1.1rem 1.1rem}
+.desk-story-card.desk-side .desk-story-hook{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:.88rem}
+.desk-story-meta{flex-wrap:wrap}
+.desk-story-edition{color:var(--gold,#ffc400)}
+.desk-story-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem .8rem;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--desk-line);color:var(--desk-muted);font-size:.76rem}
+.desk-story-hook+.desk-story-foot{margin-top:1rem}
+.desk-story-by{display:inline-flex;align-items:center;gap:.5rem}
+.desk-story-by .desk-mini-avatar{width:1.7rem;height:1.7rem;font-size:.55rem;border-width:2px}
+.desk-story-split{font-weight:700}
+.desk-story-split[data-heat=hot]{color:#ff5a3c}.desk-story-split[data-heat=warm]{color:var(--gold,#ffc400)}.desk-story-split[data-heat=cool]{color:#7ec9ff}
+body.light-mode .desk-split-label[data-heat=hot],body.light-mode .desk-story-split[data-heat=hot]{color:#b3261e}
+body.light-mode .desk-split-label[data-heat=cool],body.light-mode .desk-story-split[data-heat=cool]{color:#1f5f8b}
+
+@media(max-width:760px){
+  .desk-article{width:calc(100% - 2rem);padding-top:1.4rem}
+  .desk-article h1{font-size:clamp(1.8rem,8.2vw,2.5rem);margin-top:.4rem}
+  .desk-article-deck{font-size:1.04rem;margin-bottom:.9rem}
+  .desk-article-head .desk-kicker{font-size:.64rem;letter-spacing:.12em}
+  .desk-article-head .desk-kicker:before{display:none}
+  .desk-body{font-size:1.07rem}
+  .desk-said{padding-left:.9rem}
+  .desk-facts{padding:.9rem 1rem .9rem 2.1rem}
+  .desk-more-grid{grid-template-columns:1fr}
+  .desk-more-card{display:grid;grid-template-columns:120px minmax(0,1fr);align-items:stretch}
+  .desk-more-art{aspect-ratio:auto;height:100%;min-height:76px}
+  .desk-more-art.desk-art-pending .desk-art-pending-k{display:none}
+  .desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.78rem}
+  .desk-story-card.desk-lead{grid-template-columns:1fr}
+  .desk-story-card.desk-lead .desk-story-art{height:auto;min-height:0;aspect-ratio:1200/630}
+  .desk-panel-thumb{flex-basis:72px}
+}

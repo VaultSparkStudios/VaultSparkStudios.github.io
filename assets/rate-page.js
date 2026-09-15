@@ -176,6 +176,20 @@
     return false;
   }
 
+  // S357 (audit P0-2): at 390px the fixed puck covered body copy on 104+
+  // page-loads — a service row's name and its "Down" state on /status/, the
+  // footer dispatch line elsewhere. Below 600px it now mounts IN THE FLOW at
+  // the end of <main>, where it cannot overlap anything at any scroll
+  // position; above that it stays floating and reserves its own space through
+  // the overlay registry in assets/ambient-loader.js.
+  function mountTarget() {
+    var narrow = window.matchMedia && window.matchMedia('(max-width: 600px)').matches;
+    if (!narrow) return { host: document.body, inline: false };
+    var main = document.querySelector('main');
+    if (!main) return { host: document.body, inline: false };
+    return { host: main, inline: true };
+  }
+
   function ready() {
     if (shouldSkip()) return;
     if (recentlyRated(loadStore())) {
@@ -186,8 +200,17 @@
     if (document.querySelector('.vs-rate-page')) return; // idempotent
 
     var refs = build();
-    document.body.appendChild(refs.box);
+    var target = mountTarget();
+    if (target.inline) refs.box.classList.add('vs-rate-page--inline');
+    target.host.appendChild(refs.box);
     bind(refs);
+
+    if (!target.inline) {
+      if (window.VSFloating && window.VSFloating.register) window.VSFloating.register(refs.box);
+      // Stand down while a blocking overlay (cookie banner, tour, exit panel)
+      // owns the screen — one floating surface at a time.
+      if (document.documentElement.hasAttribute('data-vs-overlay-busy')) refs.box.dataset.collapsed = 'true';
+    }
 
     try {
       if (window.localStorage.getItem('vs_rate_page_collapsed') === '1') {

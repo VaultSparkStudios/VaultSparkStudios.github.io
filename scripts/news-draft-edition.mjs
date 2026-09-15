@@ -42,8 +42,10 @@ import { fileURLToPath } from 'node:url';
 import {
   PERSONAS, personaById, castForStory, personaForm, editionById, EDITIONS, validateDay,
   reviewDay, runStandards, DESK_ROLES, checkHorizonSpread, daysBetween, NEAR_TERM_DAYS,
-  suggestFormat, formatById,
+  suggestFormat, formatById, NOVELTY_WINDOW_DAYS, FOLLOW_UP_SLUG_RE, followUpSlug, followUpVerdict,
+  followUpBase,
 } from './lib/news-desk.mjs';
+import { isPaywalledUrl, isOwnPublisherFeed } from './lib/news-trends.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const QUEUE_PATH = path.join(ROOT, 'data', 'news-desk', 'topic-queue.json');
@@ -160,22 +162,85 @@ export const sourceHost = (url) => {
  */
 const MIN_ARTICLE_CHARS = 900;
 
-async function fetchSource(url, { topicTokens = null } = {}) {
+/**
+ * S356 founder decision — publisher feed-summary fallback.
+ *
+ * When a publisher's article page refuses our honestly-identified fetcher
+ * (non-2xx such as 403, or a body under MIN_ARTICLE_CHARS), the Desk MAY use that
+ * SAME publisher's own RSS/Atom item summary as a fact source:
+ *   · only the publisher's own feed (isOwnPublisherFeed) — never an aggregator
+ *     such as Google News or Techmeme, whose summary is a paraphrase;
+ *   · no user-agent change — the fetch that was refused is not retried disguised;
+ *   · HTML stripped, feed boilerplate and truncated trailing clauses removed;
+ *   · a minimum-length guard, and facts are verbatim summary sentences only;
+ *   · every fact is labelled `sourceKind: "feed-summary"` and cited to the
+ *     publisher article URL, so the page can say what kind of text it quotes.
+ */
+export const MIN_FEED_SUMMARY_CHARS = 140;
+
+export function cleanFeedSummary(text) {
+  let out = extractText(text)
+    .replace(/\s*The post .{0,300}? appeared first on .{0,160}$/i, '')
+    .replace(/\s*(?:Continue reading|Read more)\b.*$/i, '')
+    .replace(/\s*\[(?:…|\.\.\.|&#8230;)\]\s*$/, '')
+    .trim();
+  // A summary cut mid-sentence ends in an unfinished clause; quoting it would put
+  // words in the publisher's mouth. Keep complete sentences only.
+  if (!/[.!?]["”’)]?$/.test(out)) {
+    const cut = Math.max(out.lastIndexOf('. '), out.lastIndexOf('! '), out.lastIndexOf('? '));
+    out = cut > 0 ? out.slice(0, cut + 1) : '';
+  }
+  return out.trim();
+}
+
+export function feedSummarySource(url, feedSummary, { topicTokens = null, reason = 'article refused' } = {}) {
+  if (!feedSummary?.text || !isOwnPublisherFeed(url, feedSummary.feedUrl)) return null;
+  const text = cleanFeedSummary(feedSummary.text);
+  if (text.length < MIN_FEED_SUMMARY_CHARS) return null;
+  let facts = factCandidates(text, { max: 3, topicTokens });
+  if (!facts.length) {
+    facts = text.split(/(?<=[.!?])\s+(?=[A-Z])/).map((s) => s.trim())
+      .filter((s) => s.length >= 60 && s.length <= 260)
+      .filter((s) => !topicTokens?.size || tokenOverlap(titleTokens(s), topicTokens) > 0)
+      .slice(0, 2)
+      .map((s) => ({ text: s, score: 0 }));
+  }
+  if (!facts.length) return null;
+  return {
+    url,
+    ok: true,
+    sourceKind: 'feed-summary',
+    feedUrl: feedSummary.feedUrl,
+    reason: `${reason}; using the publisher's own feed summary`,
+    chars: text.length,
+    facts: facts.map((f) => ({ ...f, sourceKind: 'feed-summary' })),
+  };
+}
+
+export async function fetchSource(url, { topicTokens = null, feedSummary = null, fetchImpl = fetch } = {}) {
   if (isAggregatorLink(url)) {
     return { url, ok: false, reason: 'aggregator-redirect (no article body)', facts: [] };
   }
+  const refused = (reason, extra = {}) => feedSummarySource(url, feedSummary, { topicTokens, reason })
+    || { url, ok: false, reason, facts: [], ...extra };
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 15_000);
   try {
-    const res = await fetch(url, { headers: { 'user-agent': UA }, signal: controller.signal });
-    if (!res.ok) return { url, ok: false, reason: `HTTP ${res.status}`, facts: [] };
+    const res = await fetchImpl(url, { headers: { 'user-agent': UA }, signal: controller.signal });
+    if (!res.ok) return refused(`HTTP ${res.status}`);
     const text = extractText(await res.text());
     const facts = factCandidates(text, { topicTokens });
-    if (text.length < MIN_ARTICLE_CHARS) return { url, ok: false, reason: `thin body (${text.length} chars)`, chars: text.length, facts };
+    if (text.length < MIN_ARTICLE_CHARS) return refused(`thin body (${text.length} chars)`, { chars: text.length, facts });
     if (!facts.length) return { url, ok: false, reason: 'no extractable factual claims', chars: text.length, facts };
     return { url, ok: true, chars: text.length, facts };
   } catch (err) {
-    return { url, ok: false, reason: String(err.name || err).slice(0, 40), facts: [] };
+    // S357: a TRANSPORT failure is exactly the case the publisher feed-summary
+    // fallback exists for — a DNS failure, a reset connection or our own 15s
+    // timeout leaves us just as unable to read the article as a 403 does, and
+    // the publisher's own summary is just as valid a quote either way. This
+    // path returned the bare refusal object, so the fallback was reachable
+    // only for responses that actually arrived.
+    return refused(String(err.name || err).slice(0, 40));
   } finally { clearTimeout(timer); }
 }
 
@@ -186,7 +251,8 @@ async function fetchSource(url, { topicTokens = null } = {}) {
  * an unpublishable draft. Prefer primary-sourced topics, highest score first.
  */
 export function draftableTopics(topics) {
-  return (topics || []).filter((t) => (t.sources || []).some((s) => !isAggregatorLink(s.url)));
+  // S356: a paywalled host is as unreadable as an aggregator redirect.
+  return (topics || []).filter((t) => (t.sources || []).some((s) => !isAggregatorLink(s.url) && !isPaywalledUrl(s.url)));
 }
 
 /**
@@ -197,8 +263,11 @@ export function draftableTopics(topics) {
  */
 export const MAX_TOPIC_ATTEMPTS = 4;
 
-/** How far back the desk remembers what it already covered. */
-export const NOVELTY_WINDOW_DAYS = 14;
+/**
+ * How far back the desk remembers what it already covered. S356: founder
+ * decision 14 → 7, defined ONCE in lib/news-desk.mjs and shared with the radar.
+ */
+export { NOVELTY_WINDOW_DAYS };
 
 /**
  * Words that carry no topical signal, so two headlines are not judged similar
@@ -270,6 +339,7 @@ export function recentlyPublished(dayFiles, readDay, today, windowDays = NOVELTY
       out.push({
         date,
         slug: story.slug,
+        headline: story.headline || null,
         tokens: titleTokens(story.headline || story.slug),
         sourceUrls: new Set((story.facts || []).map((f) => f && f.sourceUrl).filter(Boolean)),
       });
@@ -307,7 +377,10 @@ export function noveltyVerdict(topic, published) {
 
     const fresh = [...urls].filter((u) => !prior.sourceUrls.has(u));
     if (fresh.length) {
-      return { novel: true, followUp: true, priorSlug: prior.slug, priorDate: prior.date, newSources: fresh.length };
+      return {
+        novel: true, followUp: true, priorSlug: prior.slug, priorDate: prior.date, newSources: fresh.length,
+        priorSourceUrls: prior.sourceUrls, priorHeadline: prior.headline || null,
+      };
     }
     return {
       novel: false,
@@ -320,6 +393,37 @@ export function noveltyVerdict(topic, published) {
     };
   }
   return { novel: true, followUp: false };
+}
+
+/**
+ * Every follow-up of `baseSlug` ALREADY published for `date`, newest ordinal
+ * last, with the union of the sources each of them cited.
+ *
+ * S357: the desk runs four editions a day, and the ranked queue is stable
+ * across them, so the same developing story surfaces again at the next slot.
+ * Both memories the drafter holds are consulted because they answer different
+ * questions — `published` is the novelty window (what we said recently) and
+ * `slugHistory` is all-time slug memory (what we ever said under a slug) — and
+ * either one can be the only place today's earlier follow-up appears.
+ */
+export function sameDayFollowUps(baseSlug, date, { published = [], slugHistory = null } = {}) {
+  const found = new Map();
+  const consider = (slug, sourceUrls, headline) => {
+    const match = FOLLOW_UP_SLUG_RE.exec(String(slug || ''));
+    if (!match || match[1] !== baseSlug || match[2] !== date) return;
+    const prev = found.get(slug);
+    found.set(slug, {
+      slug,
+      ordinal: Number(match[3] || 1),
+      headline: headline || prev?.headline || null,
+      sourceUrls: new Set([...(prev?.sourceUrls || []), ...(sourceUrls || [])]),
+    });
+  };
+  for (const entry of published || []) consider(entry?.slug, entry?.sourceUrls, entry?.headline);
+  if (typeof slugHistory?.forEach === 'function') {
+    slugHistory.forEach((entry, slug) => consider(slug, entry?.sourceUrls, entry?.headline));
+  }
+  return [...found.values()].sort((a, b) => a.ordinal - b.ordinal);
 }
 
 /**
@@ -347,11 +451,14 @@ export async function selectDraftableTopic(topics, {
   max = MAX_TOPIC_ATTEMPTS,
   maxSources = 4,
   published = [],
+  slugHistory = null,
+  date = null,
 } = {}) {
   const ranked = draftableTopics(topics);
   const attempts = [];
   const skipped = [];
   const followUps = [];
+  const slugDate = date || new Date().toISOString().slice(0, 10);
   // Blocking is a property of the DOMAIN, not of the story. The queue is ranked
   // by newsworthiness, so one lab's blog can legitimately hold the top four
   // slots — and when that lab answers 403 to our (honestly identified) desk
@@ -373,12 +480,63 @@ export async function selectDraftableTopic(topics, {
       skipped.push({ slug: topic.slug, title: topic.title, reason: novelty.reason });
       continue;
     }
-    if (novelty.followUp) {
-      followUps.push({ slug: topic.slug, priorSlug: novelty.priorSlug, priorDate: novelty.priorDate, newSources: novelty.newSources });
+    const topicUrls = [...new Set((topic.sources || []).map((s) => s && s.url).filter(Boolean))];
+    let prior = novelty.followUp
+      ? { slug: novelty.priorSlug, date: novelty.priorDate, headline: novelty.priorHeadline || null, sourceUrls: novelty.priorSourceUrls || new Set() }
+      : null;
+    // S356: promote refuses a slug published on ANY date, not only inside the
+    // novelty window. Decide that here, for free, rather than after authoring:
+    // nothing new → skip; a new source → publish as a dated follow-up.
+    if (!prior && slugHistory?.has?.(topic.slug)) {
+      const history = slugHistory.get(topic.slug);
+      if (!topicUrls.some((u) => !history.sourceUrls.has(u))) {
+        skipped.push({ slug: topic.slug, title: topic.title, reason: `slug already published ${history.date} and no source has been added since` });
+        continue;
+      }
+      prior = { slug: topic.slug, date: history.date, headline: history.headline || null, sourceUrls: history.sourceUrls };
+    }
+    if (prior) {
+      // S357: a follow-up already published TODAY is a prior too.
+      //
+      // The novelty scan returns the FIRST published story that matches, and it
+      // walks the day files oldest-first, so on the second slot of a day it
+      // matched the ORIGINAL story and never the follow-up published hours
+      // earlier. The topic's new source therefore still looked new — it was new
+      // to the original, and already cited by the morning follow-up — and
+      // `followUpSlug()` computed the very same dated slug, so the draft file,
+      // and then `mergeDayArtifact()`'s merge-by-slug, silently REPLACED a
+      // published story with a different one. Nothing in the run said so.
+      //
+      // So: judge freshness against the union of the original and every
+      // same-day follow-up, and when the desk does have something new to add,
+      // give it its own ordinal slug instead of landing on an occupied one.
+      const base = followUpBase(prior.slug);
+      const sameDay = sameDayFollowUps(base, slugDate, { published, slugHistory });
+      const priorUrls = new Set(prior.sourceUrls);
+      for (const earlier of sameDay) for (const url of earlier.sourceUrls) priorUrls.add(url);
+      if (sameDay.length && !topicUrls.some((u) => !priorUrls.has(u))) {
+        skipped.push({
+          slug: topic.slug,
+          title: topic.title,
+          reason: `a follow-up to "${base}" is already published for ${slugDate} (${sameDay.map((f) => f.slug).join(', ')}) and the queue adds no source it did not cite`,
+        });
+        continue;
+      }
+      prior = {
+        ...prior,
+        sourceUrls: priorUrls,
+        ordinal: sameDay.length ? Math.max(...sameDay.map((f) => f.ordinal)) + 1 : 1,
+      };
+      followUps.push({ slug: topic.slug, priorSlug: prior.slug, priorDate: prior.date, newSources: topicUrls.filter((u) => !prior.sourceUrls.has(u)).length });
     }
 
-    const urls = [...new Set((topic.sources || []).map((s) => s.url))]
-      .filter((u) => !isAggregatorLink(u))
+    // The publisher's own feed summary, when the radar carried one, is the
+    // fallback fact source for an article page that refuses us.
+    const summaries = new Map((topic.sources || [])
+      .filter((s) => s?.url && s.feedSummary)
+      .map((s) => [s.url, { text: s.feedSummary, feedUrl: s.feedUrl }]));
+    const urls = topicUrls
+      .filter((u) => !isAggregatorLink(u) && !isPaywalledUrl(u))
       .slice(0, maxSources);
     const domains = [...new Set(urls.map(sourceHost).filter(Boolean))];
 
@@ -393,9 +551,30 @@ export async function selectDraftableTopic(topics, {
     // The topic's own words are what separate a fact ABOUT this story from
     // syndicated copy that merely shares the page with it.
     const topicTokens = titleTokens(topic.title || topic.slug);
-    const sources = await Promise.all(urls.map((u) => fetcher(u, { topicTokens })));
+    const sources = await Promise.all(urls.map((u) => fetcher(u, { topicTokens, feedSummary: summaries.get(u) || null })));
     const reachable = sources.filter((s) => s.ok);
-    if (reachable.length) return { topic, sources, attempts, skipped, followUps, exhausted: false };
+    if (reachable.length && prior) {
+      // A follow-up is only genuine if a source the earlier story never cited is
+      // actually READABLE — otherwise every fact would restate the old piece.
+      const fresh = reachable.filter((s) => !prior.sourceUrls.has(s.url));
+      if (!fresh.length) {
+        attempts.push({
+          slug: topic.slug,
+          title: topic.title,
+          sources: sources.map((s) => (s.ok ? { ...s, ok: false, reason: 'readable, but already cited by the story this would follow up' } : s)),
+        });
+        continue;
+      }
+      const followUp = {
+        slug: followUpSlug(prior.slug, slugDate, prior.ordinal || 1),
+        priorSlug: prior.slug,
+        priorDate: prior.date,
+        priorHeadline: prior.headline,
+        newSources: fresh.map((s) => s.url),
+      };
+      return { topic, sources, attempts, skipped, followUps, followUp, exhausted: false };
+    }
+    if (reachable.length) return { topic, sources, attempts, skipped, followUps, followUp: null, exhausted: false };
     for (const s of sources) {
       const host = sourceHost(s.url);
       if (host) deadDomains.add(host);
@@ -411,8 +590,119 @@ export async function selectDraftableTopic(topics, {
     attempts,
     skipped,
     followUps,
+    followUp: null,
     exhausted: used >= max && ranked.length > attempts.length + skipped.length,
   };
+}
+
+/**
+ * Every published story by slug, across the given days. A slug that ran on more
+ * than one date (legacy reruns) keeps its latest headline and the UNION of every
+ * source it ever cited — so "new source" is judged against everything the desk
+ * already said under that slug.
+ */
+export function indexPublishedStories(daysWithDates) {
+  const index = new Map();
+  const ordered = [...(daysWithDates || [])].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  for (const { date, day } of ordered) {
+    for (const story of day?.stories || []) {
+      if (!story?.slug) continue;
+      const prev = index.get(story.slug);
+      const facts = [...(prev?.facts || []), ...(story.facts || [])];
+      index.set(story.slug, {
+        slug: story.slug,
+        date,
+        headline: story.headline || prev?.headline || null,
+        facts,
+        sourceUrls: new Set(facts.map((f) => f?.sourceUrl).filter(Boolean)),
+      });
+    }
+  }
+  return index;
+}
+
+const citedSourceUrls = (story) => new Set((story?.facts || []).map((f) => f?.sourceUrl).filter(Boolean));
+const normalizedHeadline = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+/**
+ * Is `incoming` the SAME story being promoted again — a retried slot — rather
+ * than a different story arriving under a slug that is already taken?
+ *
+ * Promotion has to stay idempotent: a publish job that fails after writing the
+ * day artifact is re-run, and re-promoting the identical edition must be a
+ * no-op, not a refusal. But "same slug" alone never meant "same story", and
+ * treating it that way is what let a later story overwrite a published one. The
+ * test is therefore about content: the same headline, and every source the
+ * published copy cited still cited. A story that drops a citation or says
+ * something different is a REPLACEMENT, and replacing published work silently
+ * is the thing being prevented.
+ */
+export function isRepromotion(published, incoming) {
+  const before = normalizedHeadline(published?.headline);
+  if (!before || before !== normalizedHeadline(incoming?.headline)) return false;
+  const after = citedSourceUrls(incoming);
+  return [...citedSourceUrls(published)].every((url) => after.has(url));
+}
+
+/**
+ * Promote-time follow-up verification. A story is a follow-up when it declares
+ * `followUpOf`, or when its slug is `<published-slug>-update-<date>[-<n>]`. It
+ * publishes only if the slug is dated today, derives from its prior, and
+ * followUpVerdict() finds ≥1 new cited source and a headline that is not an
+ * exact repeat. Returns the verified priors (for the editor's headline check)
+ * and refusals.
+ *
+ * S357 adds the once-per-day rule, and it is enforced HERE as well as at
+ * selection because promote is the only funnel every draft passes through — a
+ * hand-made `--prepare --topic` draft never consults the queue's memory at all.
+ * Two things are refused rather than merged:
+ *   · a different story arriving under a follow-up slug already published today
+ *     (the overwrite), with the distinct slug it should use instead named in the
+ *     message;
+ *   · an ordinal follow-up that adds nothing its same-day siblings did not
+ *     already cite — the new-source requirement is judged against the original
+ *     AND every follow-up of it published today, never the original alone.
+ */
+export function resolveFollowUps(stories, storyIndex, date, { sameDayPublished = null } = {}) {
+  const priorsBySlug = new Map();
+  const errors = [];
+  for (const story of stories || []) {
+    const slug = String(story?.slug || '');
+    const match = FOLLOW_UP_SLUG_RE.exec(slug);
+    const declared = story?.followUpOf?.slug || null;
+    if (!declared && !(match && storyIndex.has(match[1]))) continue;
+    if (!match) { errors.push(`${slug} — declares a follow-up of "${declared}" but is not published under <original-slug>-update-<date>`); continue; }
+    if (match[2] !== date) { errors.push(`${slug} — follow-up slug is dated ${match[2]}, not ${date}`); continue; }
+    const ordinal = Number(match[3] || 1);
+    const priorSlug = declared || match[1];
+    if (followUpSlug(priorSlug, date, ordinal) !== slug) { errors.push(`${slug} — slug does not derive from its prior "${priorSlug}"`); continue; }
+    const prior = storyIndex.get(priorSlug);
+
+    const standing = sameDayPublished?.get?.(slug) || null;
+    if (standing && !isRepromotion(standing, story)) {
+      errors.push(`${slug} — a follow-up under this slug is already published for ${date}; a second follow-up the same day must publish under a distinct slug (${followUpSlug(priorSlug, date, ordinal + 1)}) and cite a source neither the original nor that follow-up cited`);
+      continue;
+    }
+
+    const base = followUpBase(slug);
+    const siblings = [];
+    for (const [otherSlug, entry] of storyIndex) {
+      if (otherSlug === slug) continue;
+      const other = FOLLOW_UP_SLUG_RE.exec(otherSlug);
+      if (other && other[1] === base && other[2] === date) siblings.push(entry);
+    }
+    const effectivePrior = prior && siblings.length
+      ? { ...prior, facts: [...(prior.facts || []), ...siblings.flatMap((s) => s.facts || [])] }
+      : prior;
+    const verdict = followUpVerdict(story, effectivePrior);
+    if (!verdict.ok) { errors.push(`${slug} — ${verdict.reason}`); continue; }
+    const siblingRepeat = siblings
+      .map((sibling) => followUpVerdict(story, sibling))
+      .find((v) => !v.ok && /repeats the headline/.test(v.reason));
+    if (siblingRepeat) { errors.push(`${slug} — ${siblingRepeat.reason}`); continue; }
+    priorsBySlug.set(slug, prior);
+  }
+  return { priorsBySlug, errors };
 }
 
 /* ── Draft assembly ────────────────────────────────────────────────────── */
@@ -439,8 +729,10 @@ export function defaultResolveBy(date, index = 0) {
  * judgment field is an explicit empty string so `--status` can report exactly
  * what remains rather than guessing from a partially-shaped object.
  */
-export function buildDraft(topic, { date, edition, standing, sources }) {
+export function buildDraft(topic, { date, edition, standing, sources, followUp = null }) {
   const ed = editionById(edition) || EDITIONS[1];
+  // A follow-up publishes under its dated update slug; the topic keeps its own.
+  const slug = followUp?.slug || topic.slug;
   const provisionalCast = castForStory({ beats: topic.beats, size: Math.min(4, Math.max(2, topic.speakers?.length || 3)) });
   // Match the FORM to the material before seating the desk. A viral misfire
   // gets a roast, a thin single-source item gets a quick take — answering every
@@ -459,14 +751,19 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
     topic: { title: topic.title, slug: topic.slug, score: topic.score, beats: topic.beats, reasons: topic.reasons },
 
     story: {
-      slug: topic.slug,
+      slug,
+      ...(followUp ? { followUpOf: { slug: followUp.priorSlug, date: followUp.priorDate } } : {}),
       format: fmt.id,
       kind: ed.id === 'latenight' ? 'quiet' : 'trending',
       edition: ed.id,
       headline: '',
       hook: '',
       tldr: '',
-      facts: sources.flatMap((s) => s.facts.slice(0, 3).map((f) => ({ text: f.text, sourceUrl: s.url }))),
+      // `sourceKind: "feed-summary"` travels with a fact quoted from the
+      // publisher's own feed summary so the page can label it as such.
+      facts: sources.flatMap((s) => s.facts.slice(0, 3).map((f) => ({
+        text: f.text, sourceUrl: s.url, ...(f.sourceKind ? { sourceKind: f.sourceKind } : {}),
+      }))),
       stances: cast.map((p) => ({
         personaId: p.id, direction: null, horizon: null, verdict: '', confidence: null,
         position: '', sources: sources.filter((s) => s.ok).map((s) => s.url).slice(0, 2),
@@ -480,7 +777,7 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
       memeLine: { text: '', personaId: cast[0].id },
       body: [],
       visual: {
-        artSource: `data/news-desk/art/${date}--${topic.slug}.png`,
+        artSource: `data/news-desk/art/${date}--${slug}.png`,
         scene: '',
         alt: '',
         anchors: [],
@@ -494,6 +791,11 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
     // Everything the authoring step needs, inline — so the session filling this
     // in never has to go hunting for a persona's voice rules or its standing.
     _authoring: {
+      ...(followUp ? {
+        followUp: `This is a FOLLOW-UP to "${followUp.priorHeadline || followUp.priorSlug}" (published ${followUp.priorDate}). `
+          + `Lead with what the new source(s) add: ${followUp.newSources.join(', ')}. `
+          + 'The headline must differ from the earlier headline; do not re-tell the earlier story.',
+      } : {}),
       editionBrief: `${ed.name} (${ed.at}) — ${ed.brief}`,
       formatBrief: `${fmt.name} — ${fmt.brief}`,
       // The bit is the reason a reader comes back for a specific voice. When a
@@ -592,6 +894,8 @@ async function prepare(argv) {
 
   let topic;
   let sources;
+  let followUp = null;
+  const date = arg('--date') || queue.generatedAt || new Date().toISOString().slice(0, 10);
 
   if (wanted) {
     // An explicitly named topic is a human decision. Never silently substitute
@@ -604,7 +908,8 @@ async function prepare(argv) {
     }
     const urls = [...new Set((topic.sources || []).map((s) => s.url))].slice(0, 4);
     const topicTokens = titleTokens(topic.title || topic.slug);
-    sources = await Promise.all(urls.map((u) => fetchSource(u, { topicTokens })));
+    const summaries = new Map((topic.sources || []).filter((s) => s?.feedSummary).map((s) => [s.url, { text: s.feedSummary, feedUrl: s.feedUrl }]));
+    sources = await Promise.all(urls.map((u) => fetchSource(u, { topicTokens, feedSummary: summaries.get(u) || null })));
     if (!sources.some((s) => s.ok)) {
       console.error(`✗ every source for ${wanted} was unreachable — refusing to draft from nothing`);
       for (const s of sources) console.error(`    ${s.url} — ${s.reason}`);
@@ -628,8 +933,10 @@ async function prepare(argv) {
     let dayFiles = [];
     try { dayFiles = fs.readdirSync(DAYS_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)); } catch {}
     const published = recentlyPublished(dayFiles, (f) => readJson(path.join(DAYS_DIR, f)), today);
+    // All-time slug memory: promote refuses any slug already published on any date.
+    const slugHistory = indexPublishedStories(dayFiles.map((f) => ({ date: f.slice(0, 10), day: readJson(path.join(DAYS_DIR, f)) })));
 
-    const picked = await selectDraftableTopic(queue.topics, { published });
+    const picked = await selectDraftableTopic(queue.topics, { published, slugHistory, date });
     if (published.length) {
       console.log(`  · novelty: ${published.length} story/stories published in the last ${NOVELTY_WINDOW_DAYS} days are held against the queue`);
     }
@@ -651,18 +958,18 @@ async function prepare(argv) {
       process.exitCode = 1;
       return;
     }
-    ({ topic, sources } = picked);
+    ({ topic, sources, followUp } = picked);
+    if (followUp) console.log(`  ↻ drafting as follow-up ${followUp.slug} — new source(s): ${followUp.newSources.join(', ')}`);
   }
 
   const reachable = sources.filter((s) => s.ok);
-  const date = arg('--date') || queue.generatedAt || new Date().toISOString().slice(0, 10);
   const edition = arg('--edition') || topic.edition || 'midday';
 
   const standing = personaForm(readJson(LEDGER_PATH, { entries: [] }));
-  const draft = buildDraft(topic, { date, edition, standing, sources });
+  const draft = buildDraft(topic, { date, edition, standing, sources, followUp });
 
   fs.mkdirSync(DRAFT_DIR, { recursive: true });
-  const out = draftPath(date, topic.slug);
+  const out = draftPath(date, draft.story.slug);
   fs.writeFileSync(out, `${JSON.stringify(draft, null, 2)}\n`, 'utf8');
 
   const missing = blankFields(draft);
@@ -671,6 +978,7 @@ async function prepare(argv) {
   console.log(`  edition: ${draft.edition} · cast: ${draft._authoring.cast.map((c) => c.name).join(', ')}`);
   console.log(`  sources: ${reachable.length}/${sources.length} reachable · ${draft.story.facts.length} sourced fact candidate(s)`);
   for (const s of sources.filter((x) => !x.ok)) console.log(`    ⚠ unreachable: ${s.url} (${s.reason})`);
+  for (const s of sources.filter((x) => x.sourceKind === 'feed-summary')) console.log(`    ◐ feed summary: ${s.url} (${s.reason})`);
   console.log(`  ${missing.length} authored field(s) to fill — see _authoring for voice + standing`);
 }
 
@@ -756,13 +1064,30 @@ function promote(argv) {
   // makes autonomous publishing safe rather than merely fast.
   const published = [];
   const publishedSlugDates = new Map();
+  const indexDays = [];
   if (fs.existsSync(DAYS_DIR)) {
     for (const f of fs.readdirSync(DAYS_DIR).filter((x) => /^\d{4}-\d{2}-\d{2}\.json$/.test(x) && x !== `${date}.json`)) {
-      for (const s of readJson(path.join(DAYS_DIR, f), { stories: [] }).stories || []) {
+      const pastDay = readJson(path.join(DAYS_DIR, f), { stories: [] });
+      indexDays.push({ date: f.slice(0, 10), day: pastDay });
+      for (const s of pastDay.stories || []) {
         published.push(s.headline);
         if (s.slug && !s.supersededBy) publishedSlugDates.set(s.slug, f.slice(0, 10));
       }
     }
+  }
+  // S356: a follow-up may follow a story published earlier TODAY, so today's
+  // already-committed stories (minus the ones being re-promoted) are priors too.
+  const incomingSlugs = new Set(stories.map((s) => s.slug));
+  indexDays.push({ date, day: { stories: (existingDay?.stories || []).filter((s) => !incomingSlugs.has(s.slug)) } });
+  // S357: what is ALREADY committed for today, unfiltered — so a story arriving
+  // under an occupied follow-up slug is refused instead of merged over.
+  const sameDayPublished = new Map((existingDay?.stories || []).filter((s) => s?.slug).map((s) => [s.slug, s]));
+  const followUps = resolveFollowUps(stories, indexPublishedStories(indexDays), date, { sameDayPublished });
+  if (followUps.errors.length) {
+    console.error(`✗ ${followUps.errors.length} follow-up(s) could not be verified — refusing to publish a duplicate:`);
+    for (const e of followUps.errors) console.error(`    ${e}`);
+    process.exitCode = 1;
+    return;
   }
   // S329: hard cross-date slug refusal. The radar's slug gate is the first
   // guard; this is the final funnel that also catches manual --topic drafts.
@@ -775,7 +1100,7 @@ function promote(argv) {
     process.exitCode = 1;
     return;
   }
-  const review = reviewDay(day, { publishedHeadlines: published });
+  const review = reviewDay(day, { publishedHeadlines: published, priorsBySlug: followUps.priorsBySlug });
   for (const r of review.stories) {
     const mark = r.decision === 'run' ? '✓' : '⛔';
     console.log(`  ${mark} EDITOR · ${r.slug}: ${r.decision.toUpperCase()}`);
@@ -1024,6 +1349,182 @@ async function selfTest() {
     hostAware.attempts.length === 1 && hostAware.skipped.length === 4);
   t('a host is only presumed dead after it actually refused us',
     hostAware.attempts[0].slug === 'blocked0');
+
+  /* S356 D — novelty window 7, follow-ups under a dated update slug. */
+  t('the novelty window is the shared 7-day constant', NOVELTY_WINDOW_DAYS === 7);
+  t('an 8-day-old story is outside the novelty window',
+    recentlyPublished(['2026-08-15.json'], () => days['2026-08-21.json'], '2026-08-23').length === 0);
+  t('a 6-day-old story is inside the novelty window',
+    recentlyPublished(['2026-08-17.json'], () => days['2026-08-21.json'], '2026-08-23').length === 1);
+
+  const fuFetch = async (url) => ({ url, ok: true, chars: 2000, facts: [{ text: 'A fact.', score: 5 }] });
+  const fuTopic = { slug: 'atari-to-eve', title: 'From Atari to EVE: DeepMind Game Research', sources: [{ url: 'https://deepmind.example/post' }, { url: 'https://regulator.example/filing' }] };
+  const fuPicked = await selectDraftableTopic([fuTopic], { published: pub, fetcher: fuFetch, date: '2026-08-23' });
+  t('a follow-up with a new readable source is drafted under a dated update slug',
+    fuPicked.topic?.slug === 'atari-to-eve' && fuPicked.followUp?.slug === 'atari-to-eve-update-2026-08-23'
+    && fuPicked.followUp.newSources.join() === 'https://regulator.example/filing');
+  const oldOnlyFetch = async (url) => (url === 'https://deepmind.example/post' ? fuFetch(url) : { url, ok: false, reason: 'HTTP 403', facts: [] });
+  t('a follow-up whose only readable source was already cited is not drafted',
+    (await selectDraftableTopic([fuTopic], { published: pub, fetcher: oldOnlyFetch, date: '2026-08-23' })).topic === null);
+  const history = indexPublishedStories([{ date: '2026-07-01', day: days['2026-08-21.json'] }]);
+  const outsideWindowRerun = await selectDraftableTopic(
+    [{ slug: 'atari-to-eve', title: 'Totally reworded thing', sources: [{ url: 'https://deepmind.example/post' }] }],
+    { slugHistory: history, fetcher: fuFetch, date: '2026-08-23' });
+  t('an all-time slug collision citing nothing new is skipped for free',
+    outsideWindowRerun.topic === null && outsideWindowRerun.attempts.length === 0 && outsideWindowRerun.skipped.length === 1);
+  t('an all-time slug collision WITH a new source becomes a follow-up, not a promote refusal',
+    (await selectDraftableTopic([{ ...fuTopic, title: 'Totally reworded thing' }], { slugHistory: history, fetcher: fuFetch, date: '2026-08-23' }))
+      .followUp?.slug === 'atari-to-eve-update-2026-08-23');
+  t('a follow-up of a follow-up keeps the original base slug', followUpSlug('x-update-2026-08-01', '2026-08-09') === 'x-update-2026-08-09');
+
+  const fuDraft = buildDraft(topic, {
+    date: '2026-08-08', edition: 'midday', standing, sources,
+    followUp: { slug: 'lab-ships-agent-control-roadmap-update-2026-08-08', priorSlug: 'lab-ships-agent-control-roadmap', priorDate: '2026-08-01', priorHeadline: 'Old headline', newSources: ['https://a.test/1'] },
+  });
+  t('a follow-up draft publishes under the update slug and binds its art to it',
+    fuDraft.story.slug === 'lab-ships-agent-control-roadmap-update-2026-08-08'
+    && fuDraft.story.visual.artSource === 'data/news-desk/art/2026-08-08--lab-ships-agent-control-roadmap-update-2026-08-08.png'
+    && fuDraft.story.followUpOf?.slug === 'lab-ships-agent-control-roadmap' && fuDraft.topic.slug === topic.slug);
+  t('the follow-up brief tells the author the headline must differ', /headline must differ/.test(fuDraft._authoring.followUp || ''));
+  t('a normal draft carries no follow-up marker', draft.story.followUpOf === undefined && draft._authoring.followUp === undefined);
+
+  const priorPub = { slug: 'lab-ships-agent-control-roadmap', headline: 'Lab ships its agent control roadmap', facts: [{ text: 'a', sourceUrl: 'https://a.test/1' }] };
+  const fuIndex = indexPublishedStories([{ date: '2026-08-01', day: { stories: [priorPub] } }]);
+  const fuStory = {
+    slug: 'lab-ships-agent-control-roadmap-update-2026-08-08', followUpOf: { slug: priorPub.slug, date: '2026-08-01' },
+    headline: 'Lab agent control roadmap draws its first regulator filing',
+    facts: [{ text: 'a', sourceUrl: 'https://a.test/1' }, { text: 'b', sourceUrl: 'https://b.test/2' }], stances: [], predictions: [],
+  };
+  const fuResolved = resolveFollowUps([fuStory], fuIndex, '2026-08-08');
+  t('promote verifies a follow-up that cites a new source', fuResolved.errors.length === 0 && fuResolved.priorsBySlug.has(fuStory.slug));
+  t('without follow-up evidence a similar headline is still spiked as already covered',
+    reviewDay({ stories: [fuStory] }, { publishedHeadlines: [priorPub.headline] }).decision === 'hold');
+  t('a verified follow-up clears the editor headline check',
+    reviewDay({ stories: [fuStory] }, { publishedHeadlines: [priorPub.headline], priorsBySlug: fuResolved.priorsBySlug }).decision === 'run');
+  t('promote refuses a follow-up that cites nothing new',
+    resolveFollowUps([{ ...fuStory, facts: [{ text: 'a', sourceUrl: 'https://a.test/1' }] }], fuIndex, '2026-08-08').errors.some((e) => /cites no source/.test(e)));
+  t('promote refuses an exact headline repeat even with a new source',
+    resolveFollowUps([{ ...fuStory, headline: priorPub.headline }], fuIndex, '2026-08-08').errors.some((e) => /repeats the headline/.test(e)));
+  t('the editor still spikes an exact duplicate headline of a follow-up prior',
+    reviewDay({ stories: [{ ...fuStory, headline: priorPub.headline }] }, { publishedHeadlines: [priorPub.headline], priorsBySlug: new Map([[fuStory.slug, priorPub]]) }).decision === 'hold');
+  t('a follow-up slug dated another day is refused', resolveFollowUps([fuStory], fuIndex, '2026-08-09').errors.length === 1);
+  t('a declared follow-up without the update slug is refused',
+    resolveFollowUps([{ ...fuStory, slug: 'some-other-slug' }], fuIndex, '2026-08-08').errors.length === 1);
+  t('an ordinary story is not treated as a follow-up',
+    (() => { const r = resolveFollowUps([{ slug: 'fresh-story', facts: [] }], fuIndex, '2026-08-08'); return r.errors.length === 0 && r.priorsBySlug.size === 0; })());
+
+  /* S357 — a second slot the same day must never overwrite the earlier follow-up. */
+  const s357Days = {
+    '2026-08-21.json': { stories: [{ slug: 'atari-to-eve', headline: 'From Atari to EVE: DeepMind Game Research', facts: [{ sourceUrl: 'https://deepmind.example/post' }] }] },
+    '2026-08-23.json': { stories: [{ slug: 'atari-to-eve-update-2026-08-23', headline: 'Regulator opens a file on the game-research push', facts: [{ sourceUrl: 'https://deepmind.example/post' }, { sourceUrl: 'https://regulator.example/filing' }] }] },
+  };
+  const s357Pub = recentlyPublished(Object.keys(s357Days), (f) => s357Days[f], '2026-08-23');
+  const s357History = indexPublishedStories(Object.keys(s357Days).map((f) => ({ date: f.slice(0, 10), day: s357Days[f] })));
+  t('today\'s follow-up is found as a prior for the next slot',
+    sameDayFollowUps('atari-to-eve', '2026-08-23', { published: s357Pub, slugHistory: s357History })
+      .map((f) => `${f.slug}#${f.ordinal}`).join() === 'atari-to-eve-update-2026-08-23#1');
+  // The reproduced defect: same topic, same day, second slot, nothing new.
+  const secondSlot = await selectDraftableTopic([fuTopic], { published: s357Pub, slugHistory: s357History, fetcher: fuFetch, date: '2026-08-23' });
+  t('a second same-day follow-up with no new source is refused, not overwritten',
+    secondSlot.topic === null && secondSlot.followUp === null && secondSlot.attempts.length === 0
+    && secondSlot.skipped.some((s) => /already published for 2026-08-23/.test(s.reason)));
+  const s357Fresh = { ...fuTopic, sources: [...fuTopic.sources, { url: 'https://court.example/docket' }] };
+  const secondSlotFresh = await selectDraftableTopic([s357Fresh], { published: s357Pub, slugHistory: s357History, fetcher: fuFetch, date: '2026-08-23' });
+  t('a second same-day follow-up with a genuinely new source drafts under a distinct slug',
+    secondSlotFresh.followUp?.slug === 'atari-to-eve-update-2026-08-23-2'
+    && secondSlotFresh.followUp.newSources.join() === 'https://court.example/docket');
+  t('the distinct slug binds its own art, so nothing overwrites the earlier follow-up',
+    buildDraft(s357Fresh, { date: '2026-08-23', edition: 'midday', standing, sources, followUp: secondSlotFresh.followUp })
+      .story.visual.artSource === 'data/news-desk/art/2026-08-23--atari-to-eve-update-2026-08-23-2.png');
+  t('an unrelated story still drafts normally alongside the refusal',
+    (await selectDraftableTopic(
+      [fuTopic, { slug: 'chip-export-rules', title: 'New Export Rules Reshape Chip Supply', sources: [{ url: 'https://x.example/a' }] }],
+      { published: s357Pub, slugHistory: s357History, fetcher: fuFetch, date: '2026-08-23' },
+    )).topic?.slug === 'chip-export-rules');
+
+  /* S356 E — publisher feed-summary fallback. */
+  const articleUrl = 'https://acme.example/2026/09/model';
+  const summaryText = 'Acme Labs said on Monday it will open its reasoning model to 5,000 university researchers starting in October. '
+    + 'The company confirmed the program includes free compute credits for accepted research teams. '
+    + 'The post Acme opens its model appeared first on Acme News.';
+  const ownSummary = { text: `<p>${summaryText}</p>`, feedUrl: 'https://acme.example/feed/' };
+  const fake403 = async () => ({ ok: false, status: 403, text: async () => '' });
+  const acmeTokens = titleTokens('Acme Labs opens reasoning model to university researchers');
+  const via403 = await fetchSource(articleUrl, { feedSummary: ownSummary, fetchImpl: fake403, topicTokens: acmeTokens });
+  t('403 + own-feed summary yields a usable fact labelled feed-summary',
+    via403.ok === true && via403.sourceKind === 'feed-summary' && via403.facts.length > 0
+    && via403.facts.every((f) => f.sourceKind === 'feed-summary') && /HTTP 403/.test(via403.reason));
+  t('feed-summary facts are verbatim publisher sentences with HTML and boilerplate stripped',
+    via403.facts.every((f) => summaryText.includes(f.text) && !/<|appeared first/.test(f.text)));
+  const viaAggregator = await fetchSource(articleUrl, { feedSummary: { text: summaryText, feedUrl: 'https://news.google.com/rss/search?q=acme' }, fetchImpl: fake403 });
+  t('an aggregator summary is not usable', viaAggregator.ok === false && viaAggregator.reason === 'HTTP 403' && viaAggregator.facts.length === 0);
+  t('a Techmeme summary is not usable',
+    (await fetchSource(articleUrl, { feedSummary: { text: summaryText, feedUrl: 'https://www.techmeme.com/feed.xml' }, fetchImpl: fake403 })).ok === false);
+  t('another publisher\'s feed summary is not usable',
+    (await fetchSource(articleUrl, { feedSummary: { text: summaryText, feedUrl: 'https://other.example/feed/' }, fetchImpl: fake403 })).ok === false);
+  const thinPage = async () => ({ ok: true, status: 200, text: async () => '<p>Subscribe to keep reading.</p>' });
+  t('a thin article body also falls back to the own-feed summary',
+    (await fetchSource(articleUrl, { feedSummary: ownSummary, fetchImpl: thinPage })).sourceKind === 'feed-summary');
+  t('a summary under the minimum length is not usable',
+    (await fetchSource(articleUrl, { feedSummary: { text: 'Acme said a thing today.', feedUrl: ownSummary.feedUrl }, fetchImpl: fake403 })).ok === false);
+  const fullPage = async () => ({ ok: true, status: 200, text: async () => `<article>${prose.repeat(4)}</article>` });
+  const viaArticle = await fetchSource(articleUrl, { feedSummary: ownSummary, fetchImpl: fullPage });
+  t('a readable article never uses the feed summary', viaArticle.ok === true && viaArticle.sourceKind === undefined && viaArticle.facts.every((f) => f.sourceKind === undefined));
+  t('a truncated trailing clause is dropped from a summary', cleanFeedSummary('First full sentence stands here. Second one is cut off mid …') === 'First full sentence stands here.');
+  t('buildDraft carries sourceKind onto a feed-summary fact',
+    buildDraft(topic, { date: '2026-08-08', edition: 'midday', standing, sources: [via403, ...sources] }).story.facts.some((f) => f.sourceKind === 'feed-summary' && f.sourceUrl === articleUrl));
+  let seenSummary = null;
+  await selectDraftableTopic([{ slug: 'acme', title: 'Acme opens model', sources: [{ url: articleUrl, feedSummary: summaryText, feedUrl: ownSummary.feedUrl }] }],
+    { fetcher: async (url, opts) => { seenSummary = opts.feedSummary; return fuFetch(url); } });
+  t('selection hands the publisher\'s own summary to the fetcher', seenSummary?.text === summaryText && seenSummary?.feedUrl === ownSummary.feedUrl);
+  t('a paywalled-only topic is not draftable', draftableTopics([{ slug: 'p', sources: [{ url: 'https://www.wsj.com/tech/x' }] }]).length === 0);
+  t('a paywalled url is never fetched', (await selectDraftableTopic(
+    [{ slug: 'p2', title: 'P2', sources: [{ url: 'https://www.ft.com/content/x' }, { url: liveUrl }] }],
+    { fetcher: async (url) => { if (/ft\.com/.test(url)) throw new Error('fetched a paywall'); return fakeFetch(url); } },
+  )).topic?.slug === 'p2');
+
+  // S357: a TRANSPORT failure leaves us as unable to read the article as a 403
+  // does, so it must reach the same publisher feed-summary fallback.
+  const throwing = async () => { const err = new Error('getaddrinfo ENOTFOUND'); err.name = 'TypeError'; throw err; };
+  const viaTransportError = await fetchSource(articleUrl, { feedSummary: ownSummary, fetchImpl: throwing, topicTokens: acmeTokens });
+  t('a transport error still falls back to the publisher\'s own feed summary',
+    viaTransportError.ok === true && viaTransportError.sourceKind === 'feed-summary' && viaTransportError.facts.length > 0
+    && viaTransportError.facts.every((f) => f.sourceKind === 'feed-summary'));
+  const bareTransportError = await fetchSource(articleUrl, { fetchImpl: throwing });
+  t('a transport error with no own-feed summary is still an honest refusal',
+    bareTransportError.ok === false && /TypeError/.test(bareTransportError.reason) && bareTransportError.facts.length === 0);
+
+  /* S357 — promote is the backstop for a draft that never consulted the queue. */
+  const s357Standing = { ...fuStory };
+  const s357SameDay = new Map([[s357Standing.slug, s357Standing]]);
+  t('promote refuses to overwrite a follow-up already published today',
+    resolveFollowUps([{ ...fuStory, headline: 'An entirely different second-slot story' }], fuIndex, '2026-08-08', { sameDayPublished: s357SameDay })
+      .errors.some((e) => /already published for 2026-08-08/.test(e) && /distinct slug \(lab-ships-agent-control-roadmap-update-2026-08-08-2\)/.test(e)));
+  t('re-promoting the identical story stays idempotent',
+    resolveFollowUps([s357Standing], fuIndex, '2026-08-08', { sameDayPublished: s357SameDay }).errors.length === 0);
+  t('a replacement that drops a citation is not mistaken for a retry',
+    isRepromotion(s357Standing, { ...s357Standing, facts: [{ sourceUrl: 'https://b.test/2' }] }) === false);
+  const s357SiblingIndex = indexPublishedStories([
+    { date: '2026-08-01', day: { stories: [priorPub] } },
+    { date: '2026-08-08', day: { stories: [s357Standing] } },
+  ]);
+  const s357Ordinal = {
+    ...fuStory,
+    slug: 'lab-ships-agent-control-roadmap-update-2026-08-08-2',
+    headline: 'A court docket follows the roadmap filing',
+    facts: [{ text: 'a', sourceUrl: 'https://a.test/1' }, { text: 'b', sourceUrl: 'https://b.test/2' }, { text: 'c', sourceUrl: 'https://c.test/3' }],
+  };
+  t('promote accepts the ordinal follow-up when it cites a source no sibling cited',
+    resolveFollowUps([s357Ordinal], s357SiblingIndex, '2026-08-08', { sameDayPublished: s357SameDay }).errors.length === 0);
+  t('promote refuses an ordinal follow-up that adds nothing the morning follow-up cited',
+    resolveFollowUps([{ ...s357Ordinal, facts: s357Ordinal.facts.slice(0, 2) }], s357SiblingIndex, '2026-08-08', { sameDayPublished: s357SameDay })
+      .errors.some((e) => /cites no source/.test(e)));
+  t('promote refuses an ordinal follow-up that repeats its sibling\'s headline',
+    resolveFollowUps([{ ...s357Ordinal, headline: s357Standing.headline }], s357SiblingIndex, '2026-08-08', { sameDayPublished: s357SameDay })
+      .errors.some((e) => /repeats the headline/.test(e)));
+  t('an ordinal follow-up slug still derives from its prior',
+    followUpSlug('lab-ships-agent-control-roadmap', '2026-08-08', 2) === 'lab-ships-agent-control-roadmap-update-2026-08-08-2'
+    && followUpBase('lab-ships-agent-control-roadmap-update-2026-08-08-2') === 'lab-ships-agent-control-roadmap');
 
 
   const failed = cases.filter(([, ok]) => !ok);

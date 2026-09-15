@@ -101,10 +101,13 @@ if (!bannerMatch) {
 // every occurrence. Two pages are still required carriers so a regex rot that
 // stops matching anything cannot read as a pass.
 const REQUIRED_BANNER_FILES = ['index.html', 'studio-pulse/index.html'];
-// Any "N initiatives" phrasing that should match expected.total:
+// Any portfolio-total phrasing that should match expected.total:
 //   - "N initiatives under the vault banner"  (footer legend, sitewide)
 //   - "N initiatives. One vault."             (homepage teaser heading)
-const extendedBannerRegex = /(\d+)\s+initiatives(?:\s+under\s+the\s+vault\s+banner|\.\s+one\s+vault)/ig;
+//   - "N projects under the vault banner"     (S356: the membership page says
+//     "projects", not "initiatives" — the noun-locked regex never pinned it, so
+//     membership/index.html carried a stale 27 through every clean drift run)
+const extendedBannerRegex = /(\d+)\s+(?:initiatives|projects)(?:\s+under\s+the\s+vault\s+banner|\.\s+one\s+vault)/ig;
 const trackedHtml = execSync('git ls-files "*.html" "**/*.html"', { cwd: repoRoot, encoding: 'utf8' })
   .split(/\r?\n/).filter(Boolean);
 const bannerCarriers = new Set();

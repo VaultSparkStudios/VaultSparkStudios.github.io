@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-14 (Session 355 closeout) -->
+<!-- generated-at: 2026-09-15 (Session 356 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 355 closeout · 2026-09-14.
+> **Fast-boot brief** — generated at Session 356 closeout · 2026-09-15.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 356 · 2026-09-14 · FOUNDER MODE                         ║
+║  Session 357 · 2026-09-15 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S355) - WHAT SHIPPED ══════════════════════════╗
-║  S355: Pages concurrency; publisher --resync gate; founder-pres  ║
+╔══ LAST SESSION (S356) - WHAT SHIPPED ══════════════════════════╗
+║  S356: Desk real art + reader-first redesign + reactions + comm  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    988/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 986.7  ·  Velocity 7↑                      ║
+║    991/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 987.7  ·  Velocity 10↑                     ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄▇█▁▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇█▇█████ →                ║
-║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          97    ██████████  █▇▇▇▇▇▇▇ →                ║
-║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇█▇███▇▇ →                ║
+║    Dev Health        99    ██████████  █▇█████▇ →                ║
+║    Alignment        100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Momentum          99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      98    ██████████  █▇███▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
-║    Security         100    ██████████  ········ →                ║
+║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
-║    Capital           98    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Capital          100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 355 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 356 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    479/479 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,29 +77,29 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
-║  ✓  Velocity      7 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      10 ↑  ·  Debt: ↓                               ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         46492 FORGE  ·  5d old                         ║
+║  ✓  IGNIS         46492 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) ↓ ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
+║  ✓  Revenue sig.  4d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  Open current tasks 31 / Human-action entries 7                  ║
+║  ⛔  Doctor        16/17 (94%)  ·  1 failing                      ║
+║  Open current tasks 35 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    22d · Authorize or decline immutable warm-origin migrati      ║
-║    22d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    23d · Authorize or decline immutable warm-origin migrati      ║
+║    23d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -117,31 +117,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▇█▁▄  7↑  (last 5 sessions)                        ║
+║  Velocity:   ▄▇█▁▄  10↑  (last 5 sessions)                       ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  990/1000  (↑2 vs current 988)                       ║
+║  Projected:  988/1000  (↓3 vs current 991)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Mount the narrative on /journal/. Deferred  ║
-║        Mount the narrative on /journal/. Deferred: a UI change   ║
+║   96  [PRODUCT]      Purge api/founder-presence.json from publi  ║
+║        Purge api/founder-presence.json from public git history.  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Enable Worker observability for staging. D  ║
+║   90  [PRODUCT]      Staging Worker observability. Still the on  ║
+║        Staging Worker observability. Still the only way to sour  ║
+║                                                                  ║
+║   87  [PRODUCT]      Mount the narrative on /journal/. Deferred  ║
+║        Mount the narrative on /journal/. Deferred: a UI change   ║
+║                                                                  ║
+║   84  [PRODUCT]      Enable Worker observability for staging. D  ║
 ║        Enable Worker observability for staging. Deferred: needs  ║
-║                                                                  ║
-║   87  [VERIFY]       Verify the first Vault Narrative run after  ║
-║        Verify the first Vault Narrative run after the S353 fix   ║
-║                                                                  ║
-║   87  [PRODUCT]      Retire the 604 unresolved pre-S349 uptime   ║
-║        Retire the 604 unresolved pre-S349 uptime rows on merit,  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -149,5 +149,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 355 closeout · 2026-09-14*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 356 closeout · 2026-09-15*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

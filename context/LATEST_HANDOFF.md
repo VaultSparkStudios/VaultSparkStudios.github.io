@@ -1,5 +1,17 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S356 · 2026-09-15
+
+- **Shipped:** The Desk rebuilt as the studio's flagship (real art + reader-first articles + reactions + site-wide presence), studio-truth fixes across Pulse and the deploy beacons, 18 crawl defects, the newsletter repaired end to end, and a copy-quality gate.
+- **Built, not yet live:** Desk comments (migration + Worker), the newsletter (functions + secrets + preview to founder@ before any member send).
+- **Deploy:** see the S356 release addendum below.
+
+**Session intent:** founder directive — fix The Desk's art, formatting, reach, reactions and community; make Studio Pulse honest; then keep improving the site while waves ran.
+
+**Order that matters at release:** Worker BEFORE the content lane for reactions (an old Worker treats a retract as an add), and the content lane before the Worker for the unsubscribe proxy page. Re-hash shell assets or the /invite/ fix, the strip and the new reaction client never reach production.
+
+**Open, founder-owned:** "Coming soon"/"TBD" copy on six live game pages; the leaderboard embed's hard-coded greys; staging Worker observability (still the only way to source the S354/S355 staging 503s).
+
 ## S355 release addendum · 2026-09-14
 
 - **Pushed:** `8b7bb4501` (S355) + `a5668648b` (receipts re-bound after rebase: mobile 215/215, visual 98/98, ordering green on candidate `03995683c2ff`). build:check 490/490 on the pre-rebase tree.

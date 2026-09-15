@@ -200,6 +200,48 @@ export function renderMemeSvg({ style, text, motif, date, accent = '#ffc400', th
 export const registerNames = Object.keys(REGISTERS);
 
 /**
+ * Geometry of the editorial type layer, in 1200x630 panel pixels. ONE source of
+ * truth for three consumers: the overlay SVG below, the procedural fallback in
+ * generate-news-art.mjs (which must keep its motif inside `clearBand` so the
+ * overlay never hides it), and the Codex art prompt (which tells the model where
+ * the label bar and caption panel will sit). The numbers are unchanged from the
+ * pre-S356 literals, so rendered overlays stay byte-identical.
+ */
+export const EDITORIAL_OVERLAY_ZONES = Object.freeze({
+  width: W,
+  height: H,
+  topBar: Object.freeze({ x: 0, y: 0, width: W, height: 116 }),
+  captionBox: Object.freeze({ x: 36, y: 338, width: 1128, height: 276 }),
+  /** Vertical band left visible between the label bar and the caption panel. */
+  clearBand: Object.freeze({ top: 116, bottom: 338 }),
+});
+
+/**
+ * Responsive derivative encodings + byte budgets for article art panels. Shared
+ * by build-news-desk.mjs (rasterize + assert) and ingest-news-art.mjs (budget
+ * preflight before a replacement raster is accepted), so a preflight can never
+ * pass an image the real build would then reject.
+ */
+export const EDITORIAL_PANEL_ENCODINGS = Object.freeze({
+  png: Object.freeze({ compressionLevel: 9, palette: true, quality: 90 }),
+  webp: Object.freeze({ quality: 80, smartSubsample: true }),
+  avif: Object.freeze({ quality: 58, effort: 6 }),
+});
+export const EDITORIAL_PANEL_BUDGETS = Object.freeze({ '.png': 650_000, '.webp': 250_000, '.avif': 210_000 });
+
+/** Overlay options for a story's responsive meme panel (one definition for build + ingest preflight). */
+export function storyMemeOverlayOptions({ date, text, persona }) {
+  return {
+    text,
+    eyebrow: `${persona.name} · ${String(persona.bit || 'THE PANEL').toUpperCase()}`,
+    footer: 'AI-GENERATED EDITORIAL ART · SOURCE-BOUND TO THIS ARTICLE',
+    accent: persona.accent,
+    date,
+    fontSize: 46,
+  };
+}
+
+/**
  * Deterministic type layer for article-bound editorial art.
  *
  * The illustration carries the article-specific visual idea; this SVG carries
@@ -229,8 +271,8 @@ export function renderEditorialOverlaySvg({
     </linearGradient>
   </defs>
   <rect width="${W}" height="${H}" fill="url(#desk-art-shade)"/>
-  <rect width="${W}" height="116" fill="#07080f" fill-opacity="0.9"/>
-  <rect x="36" y="338" width="1128" height="276" rx="22" fill="#07080f" fill-opacity="0.92"/>
+  <rect width="${W}" height="${EDITORIAL_OVERLAY_ZONES.topBar.height}" fill="#07080f" fill-opacity="0.9"/>
+  <rect x="${EDITORIAL_OVERLAY_ZONES.captionBox.x}" y="${EDITORIAL_OVERLAY_ZONES.captionBox.y}" width="${EDITORIAL_OVERLAY_ZONES.captionBox.width}" height="${EDITORIAL_OVERLAY_ZONES.captionBox.height}" rx="22" fill="#07080f" fill-opacity="0.92"/>
   <rect x="48" y="42" width="8" height="60" rx="4" fill="${accent}"/>
   <text x="72" y="80" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="4">${escapeXml(eyebrow)}</text>
   <text x="1136" y="80" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff" opacity="0.88">${escapeXml(date)}</text>

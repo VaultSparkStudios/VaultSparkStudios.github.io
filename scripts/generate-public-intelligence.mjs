@@ -3,6 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { buildPublicContracts } from './lib/public-intelligence-contracts.mjs';
 import { matchesProjectSlug, normalizeProjectSlug, readPortfolioEvents } from './lib/public-activity.mjs';
+import { portfolioTotalFromRegistry } from './lib/project-activity.mjs';
 
 const root = process.cwd();
 const projectStatusPath = path.join(root, 'context', 'PROJECT_STATUS.json');
@@ -20,9 +21,12 @@ const outputTargets = [
   path.join(contractsDir, 'social-dashboard.json'),
 ];
 
-// Portfolio scale — total initiatives tracked across the VaultSpark org
-// (public + deep-forge sealed). The delta surfaces as "sealed" slots on the site.
-const PORTFOLIO_TOTAL = 27;
+// Portfolio scale is derived from the in-repo registry mirror
+// (studio-hub/src/data/studioRegistry.js PROJECTS.length) via
+// portfolioTotalFromRegistry() in lib/project-activity.mjs. It used to be a
+// hand-kept literal (27) that could silently drift from the registry. The in-repo
+// mirror is the source, not the sibling studio-ops registry: CI never checks
+// studio-ops out, so reading it here would ship a total `--check` cannot reproduce.
 
 // Public-safe rewrites of registry notes for each listed initiative. Keeps
 // player-facing language aligned even when the registry description is
@@ -119,6 +123,12 @@ async function loadRegistryCatalog() {
   ).href;
   const { PROJECTS } = await import(registryUrl);
   const catalog = [];
+  // PRIVACY (CANON-028): catalog entries carry NO work-recency evidence. They
+  // used to carry lastActivityAt (the newest work-session closeout for that
+  // project) plus a derived active/resting/dormant state, which the Pulse cards
+  // rendered as dated last-touched / quiet-since lines — a public record
+  // of when a private individual was working. Status and progress come from the
+  // registry and carry no timing; keep it that way.
   // IDs that are studio-internal tools — never surface in public constellation.
   // social-dashboard, sparkfunnel, studio-hub, ignis are ops infrastructure;
   // gridiron-gm / gridiron-gm-play are VAULTED with no public deployedUrl.
@@ -258,14 +268,12 @@ function fallbackRouteForSlug(slug) {
 }
 
 function titleForEventType(eventType, projectName) {
-  if (eventType === 'session-closed') return `${projectName} shipped a fresh session closeout`;
   if (eventType === 'onboard-applied') return `${projectName} received a new Studio OS pass`;
   if (eventType === 'runtime-pack-generated') return `${projectName} refreshed its runtime pack`;
   return `${projectName} emitted a fresh studio signal`;
 }
 
 function weightForEventType(eventType) {
-  if (eventType === 'session-closed') return 100;
   if (eventType === 'onboard-applied') return 72;
   if (eventType === 'runtime-pack-generated') return 58;
   return 40;
@@ -283,7 +291,11 @@ function prettyProjectName(projectId) {
 
 function buildNormalizedActivity(registryProjects) {
   const events = readPortfolioEvents(root);
-  const allowedTypes = new Set(['session-closed', 'onboard-applied', 'runtime-pack-generated']);
+  // PRIVACY (CANON-028): work-session closeouts are NOT an allowed public row.
+  // Each row publishes `occurredAt` at minute precision, so admitting closeouts
+  // published exactly when a private individual finished working, per project.
+  // Only studio-automation signals (which carry no human schedule) may appear.
+  const allowedTypes = new Set(['onboard-applied', 'runtime-pack-generated']);
 
   const mapped = events
     .filter((event) => event?.slug && event?.ts && allowedTypes.has(event.type))
@@ -298,7 +310,7 @@ function buildNormalizedActivity(registryProjects) {
       return {
         id: slugifyLabel(`${event.type}-${projectId}-${event.ts}`),
         source: event.source || 'studio-events',
-        type: event.type === 'session-closed' ? 'public_ship' : 'campaign_update',
+        type: 'campaign_update',
         title: titleForEventType(event.type, projectName),
         url: routeForCatalogItem(catalogItem) || fallbackRouteForSlug(projectId),
         occurredAt: event.ts,
@@ -585,10 +597,12 @@ function buildProjectGraph(catalog) {
   return { nodes, edges };
 }
 
-// Activity heatmap — count of session-closed + onboard-applied + runtime-pack
-// events per project, rolling-30 window. Anonymized at the source (events have
-// no actor). Sealed-vault projects (ids in seal list) collapse into a single
-// "sealed" bucket so we never expose codenames.
+// Activity heatmap — a weighted COUNT of ledger events per project over a
+// rolling 30-day window. Anonymized at the source (events have no actor) and
+// deliberately timestamp-free: it publishes how much moved, never when anyone
+// moved it, so it carries no work schedule (CANON-028). Sealed-vault projects
+// (ids in seal list) collapse into a single "sealed" bucket so we never expose
+// codenames.
 const HEATMAP_WINDOW_DAYS = 30;
 const HEATMAP_SEALED_BUCKET = 'sealed-vault';
 const HEATMAP_STUDIO_BUCKET = 'website';
@@ -642,21 +656,27 @@ function buildActivityHeatmap(catalog) {
   return result;
 }
 
-// Public-facing pulse uses human-authored consumer-safe language.
-// TASK_BOARD items are too technical for external audiences — they stay in hub.json.
+// ─── Public pulse ─────────────────────────────────────────────────────────────
+// PRIVACY (CANON-028): `now` is intentionally EMPTY. It used to be derived from
+// the work-session ledger and rendered day-precision lines of the form
+// "<Project> — work-session-closed <Mon D>" onto public surfaces, i.e. a public
+// record of when a private individual was working. There is no other public-safe
+// source in this generator that states "what is happening now" without either a
+// work timestamp (commits, Desk editions) or internal TASK_BOARD text, so the
+// honest value is no claim at all rather than an inferred one. Every consumer
+// (forge-feed studio-queue, showcase-spine Latest Pulse → tagline fallback,
+// build-ignis-search-index → consumerChangelog first, build-oracle-query-clusters
+// → null-guarded, generate-vault-narrative, draft-journal-revival) already
+// handles an empty array. The key stays for the declared pulse contract
+// (`pulseKeys: ['now','next','shipped']`).
+// `next` is likewise empty: no public-safe data source states what is next, and
+// the previous hand-written lines had gone stale (CANON-031).
 const publicPulse = {
-  now: [
-    'Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.',
-    'Feedback UX polish — Signal Feedback now opens from a compact button instead of interrupting the page.',
-    'Social Dashboard activity feed — connecting cross-platform activity into a unified studio presence.',
-  ],
-  next: [
-    'Forge Window naming rollout — public navigation, guidance copy, and activity surfaces now speak one language.',
-    'Expanded intent routing on games and universe hubs.',
-    'Cloudflare security hardening — additional WAF rules for international traffic filtering.',
-  ],
+  now: [],
+  next: [],
   shipped: pulse.shipped,
 };
+const PORTFOLIO_TOTAL = portfolioTotalFromRegistry(registryModule.PROJECTS);
 
 const payload = {
   schemaVersion: '1.2',

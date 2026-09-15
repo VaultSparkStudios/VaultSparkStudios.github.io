@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-14T09:49:12.863Z",
+  "generatedAt": "2026-09-15T04:24:53.656Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
-  "totalSources": 17,
-  "totalBytes": 79173,
+  "totalSources": 16,
+  "totalBytes": 84480,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 21.3,
+      "sizeKb": 27,
       "reasons": [
         "session gated"
       ],
@@ -19,6 +19,15 @@
     },
     {
       "rank": 2,
+      "source": "assets/page-sigil.js",
+      "sizeKb": 6.6,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
+    },
+    {
+      "rank": 3,
       "source": "assets/signed-in-state.js",
       "sizeKb": 6.6,
       "reasons": [
@@ -29,22 +38,13 @@
       "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/signed-in-state.js is lazy-loaded only after session state is known."
     },
     {
-      "rank": 3,
+      "rank": 4,
       "source": "assets/adaptive-speculation.js",
       "sizeKb": 5.5,
       "reasons": [],
       "forbiddenAmbient": false,
       "risk": "low",
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
-    },
-    {
-      "rank": 4,
-      "source": "assets/vault-atlas.js",
-      "sizeKb": 4.6,
-      "reasons": [],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-atlas.js behind a conditional loader."
     },
     {
       "rank": 5,
@@ -60,12 +60,12 @@
     },
     {
       "rank": 6,
-      "source": "assets/page-sigil.js",
-      "sizeKb": 4.5,
+      "source": "assets/vault-atlas.js",
+      "sizeKb": 4.2,
       "reasons": [],
       "forbiddenAmbient": false,
       "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-atlas.js behind a conditional loader."
     }
   ]
 }

@@ -31,6 +31,10 @@ const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results',
   'investor', 'investor-portal', 'studio-hub',
   '.ai', '.git', '.well-known', 'scripts',
+  // S356: agent worktrees (.claude/worktrees/<name>/) are full repo checkouts; a
+  // dry run walked them and would have rewritten 441 pages outside this tree.
+  // (Mirrored in check-nav-orphans + the other root page walkers.)
+  '.claude',
   // S135: legacy /products/ catalog pending architectural decision (Task #5).
   // Has its own design system + 29 duplicate pages of /projects/ + /games/ content.
   'products',
@@ -262,7 +266,21 @@ function buildNav(assetPrefix, activeHref) {
         </button>
       </div>
     </div>
+    <div class="desk-wire" data-desk-wire>
+      <div class="container desk-wire__inner">
+        <a class="desk-wire__link" href="/news/" data-desk-wire-link data-track-event="desk_wire_click">
+          <span class="desk-wire__label"><span class="desk-wire__dot" aria-hidden="true"></span><span data-desk-wire-label>The Desk</span></span>
+          <span class="desk-wire__headline" data-desk-wire-headline>Latest AI signal from the newsroom</span>
+          <span class="desk-wire__cta" aria-hidden="true">Read &rarr;</span>
+        </a>
+      </div>
+    </div>
   </header>`;
+  // S356 — The Desk wire strip (founder: "a separate spot on the top of the
+  // website"). Last child of .site-header, fixed 36px (reserved in the critical
+  // shell + style.css, guarded by check-critical-shell-geometry), hidden at
+  // <=430px. The static link works without JS; assets/desk-wire.js (ambient-loader
+  // predicate) swaps in the newest headline without moving any box.
 }
 
 // ─── Footer social icons row ───────────────────────────
@@ -621,7 +639,6 @@ for (const { full, rel } of files) {
       'scroll-reveal.js',
       'scroll-depth.js',
       'native-feel.js',
-      'presence-badge.js',
       'visit-depth.js',
       // P7 polish — owned by ambient block from S113.
       'breadcrumb-render.js',

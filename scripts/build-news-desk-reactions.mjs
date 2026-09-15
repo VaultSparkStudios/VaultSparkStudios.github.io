@@ -87,12 +87,37 @@ export function splitCounts(counts) {
 }
 
 /**
+ * RETRACTION RULE (S356). Readers can now take a reaction back or switch it,
+ * so a total can legitimately fall between probes. A drop is treated as reader
+ * retractions — NOT a reset — only when it is small:
+ *
+ *   drop <= max(RETRACTION_TOLERANCE_MIN, floor(previousTotal * RETRACTION_TOLERANCE_SHARE))
+ *   and the counter did not fall to zero.
+ *
+ * Anything larger (or a wipe to zero) is still published as `reset` with both
+ * numbers. The asymmetry is deliberate: the probe runs roughly daily, so a
+ * large same-day wave of retractions is implausible, while KV loss typically
+ * drops a counter to zero or near it. Erring toward `reset` over-reports a
+ * storage problem; erring the other way would hide one.
+ */
+export const RETRACTION_TOLERANCE_MIN = 3;
+export const RETRACTION_TOLERANCE_SHARE = 0.25;
+
+export function isExplainableDrop(previousTotal, observedTotal) {
+  const drop = previousTotal - observedTotal;
+  if (drop <= 0) return true;
+  if (observedTotal <= 0) return false;
+  return drop <= Math.max(RETRACTION_TOLERANCE_MIN, Math.floor(previousTotal * RETRACTION_TOLERANCE_SHARE));
+}
+
+/**
  * Derive one story row, comparing against the previous history row so a
- * shrinking counter is reported rather than smoothed.
+ * shrinking counter is reported rather than smoothed — unless the drop is
+ * small enough to be reader retractions (see RETRACTION RULE above).
  */
 export function deriveStoryRow(slug, counts, previousTotal = null) {
   const { reactions, voices, total } = splitCounts(counts);
-  if (previousTotal != null && total < previousTotal) {
+  if (previousTotal != null && total < previousTotal && !isExplainableDrop(previousTotal, total)) {
     return { slug, state: 'reset', total: null, previousTotal, observedTotal: total, reactions: null, voices: null };
   }
   if (total < MIN_SIGNALS) {
@@ -136,7 +161,7 @@ export function deriveFeed(corpusStories, historyRows) {
       isNot: ['a rating', 'a poll', 'representative of readers', 'unique people'],
       privacy: 'Counted per day against a truncated SHA-256 of IP + slug + day, capped at 12 per reader per day. No cookie, account id, raw IP, or durable session id is stored.',
       caveat: 'Only readers who chose to react are counted, so these are self-selected. A story below the floor publishes no total at all.',
-      resetSemantics: 'Edge counters are cumulative; a total that DROPS means storage loss, not reader behaviour, and is published as state "reset" with both numbers rather than smoothed.',
+      resetSemantics: 'Readers may take back or switch one reaction, so a small drop (at most the larger of 3 or 25% of the previous total, never to zero) is treated as retractions. A total that DROPS beyond what readers can explain (a larger drop, or a wipe to zero) means storage loss, and is published as state "reset" with both numbers rather than smoothed.',
       truncationReported: true,
     },
     stories: corpusStories.map((story) => {
@@ -257,7 +282,19 @@ function selfTest() {
       splitCounts({ a: 0, b: -3, c: 5 }).total === 5],
     ['the feed says what a signal is NOT',
       feed.measurement.isNot.includes('representative of readers') && feed.measurement.isNot.includes('a rating')],
-    ['reset semantics are declared on the artifact', /DROPS means storage loss/.test(feed.measurement.resetSemantics)],
+    ['reset semantics are declared on the artifact', /DROPS beyond what readers can explain.*means storage loss/.test(feed.measurement.resetSemantics)],
+    ['a small drop from a retraction is NOT a reset',
+      deriveStoryRow('s', { 'panel-100': 4, 'panel-think': 4 }, 9).state === 'sufficient'],
+    ['a switch (one down, one up) leaves the total unchanged and publishes normally',
+      deriveStoryRow('s', { 'made-me-laugh': 5, 'voice:vera': 4 }, 9).total === 9],
+    ['a drop beyond the tolerance is still a reset',
+      deriveStoryRow('s', { 'made-me-laugh': 5 }, 20).state === 'reset'],
+    ['a wipe to zero is always a reset, never retractions',
+      deriveStoryRow('s', {}, 5).state === 'reset'],
+    ['tolerance boundary: max(3, 25%) of the previous total',
+      isExplainableDrop(9, 6) && !isExplainableDrop(9, 5) && isExplainableDrop(40, 30) && !isExplainableDrop(40, 29)],
+    ['an explainable drop below the floor becomes insufficient, not reset',
+      deriveStoryRow('s', { 'made-me-laugh': 3 }, 5).state === 'insufficient'],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`); if (ok) pass++; }

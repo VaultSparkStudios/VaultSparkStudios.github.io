@@ -27,7 +27,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { matchesProjectSlug, readPortfolioEvents } from './lib/public-activity.mjs';
+import { readPortfolioEvents } from './lib/public-activity.mjs';
+import { deriveProjectPulse } from './lib/project-activity.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 const OUT = path.join(ROOT, 'api', 'heartbeat.json');
@@ -35,7 +36,6 @@ const CHECK = process.argv.includes('--check');
 
 const WINDOW_DAYS = 30;
 const RECENT_DAYS = 7;
-const MS_DAY = 86_400_000;
 
 async function loadRegistry() {
   const reg = path.join(ROOT, 'studio-hub', 'src', 'data', 'studioRegistry.js');
@@ -69,18 +69,9 @@ function main() {
   return (async () => {
     const registry = await loadRegistry();
     const projects = registry.map((p) => {
-      const pulse = events.reduce((acc, ev) => {
-        if (!ev?.slug || !ev?.ts) return acc;
-        if (!matchesProjectSlug(p, ev.slug)) return acc;
-        const ts = Date.parse(ev.ts);
-        if (!Number.isFinite(ts)) return acc;
-        const ageDays = (now - ts) / MS_DAY;
-        if (ageDays > WINDOW_DAYS) return acc;
-        acc.pulses30d += 1;
-        if (ageDays <= RECENT_DAYS) acc.pulses7d += 1;
-        if (ts > acc.lastActivity) acc.lastActivity = ts;
-        return acc;
-      }, { pulses7d: 0, pulses30d: 0, lastActivity: 0 });
+      // Shared derivation (scripts/lib/project-activity.mjs) — all event types,
+      // windowed lastActivity; the public-intelligence catalog reuses the same code.
+      const pulse = deriveProjectPulse(p, events, { now, windowDays: WINDOW_DAYS, recentDays: RECENT_DAYS });
       const sealed = isSealed(p);
       return {
         slug: sealed ? `sealed-${p.id?.slice(0, 6) || 'x'}` : (p.id || p.slug),

@@ -241,27 +241,46 @@ function classify(workflows, scheduledWorkflows) {
   return { allGreen, browserGatesGreen, verifiedBrowserHeadSha, hasDeadCron, hasScheduledUnknown: scheduledUnknown.length > 0, hasScheduledStale: scheduledStale.length > 0, scheduledCoverage, terminalState, knownTerminalBlockers, summary };
 }
 
-export function deploymentReconciliationOf(records) {
-  const history = summarizeHistory(records);
+export function deploymentReconciliationOf(records, now = new Date()) {
+  const history = summarizeHistory(records, 20, { now: now.getTime() });
+  // 'unobserved' = the ledger has records but none gradable within the freshness
+  // bound (it is appended only at closeout) — old evidence never raises an alert.
   const state = history.window === 0
     ? 'unknown'
-    : history.strandedAlert
-      ? 'stranded'
-      : history.currentBehindStreak === 1 ? 'settling' : 'clear';
+    : history.stale
+      ? 'unobserved'
+      : history.strandedAlert
+        ? 'stranded'
+        : history.currentBehindStreak === 1 ? 'settling' : 'clear';
   return { state, threshold: 2, alert: history.strandedAlert, ...history };
+}
+
+function formatAge(hours) {
+  if (hours === null || hours === undefined) return 'of unknown age';
+  return hours >= 48 ? `${Math.floor(hours / 24)} days old` : `${Math.round(hours)}h old`;
+}
+
+export function reconciliationSummaryPrefix(reconciliation) {
+  if (reconciliation.alert) return `Production deployment is stranded for ${reconciliation.currentBehindStreak} consecutive receipts. `;
+  // A stale ledger whose tail WAS behind must say so instead of implying either
+  // "stranded" or "clear": production promotion is simply unobserved right now.
+  if (reconciliation.state === 'unobserved' && reconciliation.currentBehindStreak > 0) {
+    return `Deployment reconciliation ledger is stale (newest receipt ${formatAge(reconciliation.newestAgeHours)}); production promotion state is unobserved, not stranded. `;
+  }
+  return '';
 }
 
 export function buildPayload({ runs, scheduledNames, promotionHistory = [], now = new Date() }) {
   const workflows = latestWatchedRuns(runs);
   const scheduledWorkflows = scheduledStatus(runs, scheduledNames, now);
   const classification = classify(workflows, scheduledWorkflows);
-  const deploymentReconciliation = deploymentReconciliationOf(promotionHistory);
+  const deploymentReconciliation = deploymentReconciliationOf(promotionHistory, now);
   return {
     generatedAt: now.toISOString(),
     generatedBy: 'scripts/build-ci-status-beacon.mjs',
     ...classification,
     deploymentReconciliation,
-    summary: deploymentReconciliation.alert ? `Production deployment is stranded for ${deploymentReconciliation.currentBehindStreak} consecutive receipts. ${classification.summary}` : classification.summary,
+    summary: `${reconciliationSummaryPrefix(deploymentReconciliation)}${classification.summary}`,
     workflows,
     scheduledWorkflows,
   };
@@ -304,16 +323,33 @@ if (SELF_TEST) {
     now,
     scheduledNames: [],
     runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
-    promotionHistory: [{ ts: 't1', receiptState: 'degraded', reconciliation: 'behind' }],
+    promotionHistory: [{ ts: '2026-07-08T10:00:00Z', receiptState: 'degraded', reconciliation: 'behind' }],
   });
   const twoBehind = buildPayload({
     now,
     scheduledNames: [],
     runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
     promotionHistory: [
-      { ts: 't1', receiptState: 'degraded', reconciliation: 'behind' },
-      { ts: 't2', receiptState: 'degraded', reconciliation: 'behind' },
+      { ts: '2026-07-08T09:00:00Z', receiptState: 'degraded', reconciliation: 'behind' },
+      { ts: '2026-07-08T10:00:00Z', receiptState: 'degraded', reconciliation: 'behind' },
     ],
+  });
+  // THE LIVE CASE (S356): nine behind receipts, newest ~90h before the beacon ran.
+  const staleNine = buildPayload({
+    now,
+    scheduledNames: [],
+    runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
+    promotionHistory: Array.from({ length: 9 }, (_, n) => ({
+      ts: new Date(now.getTime() - (90 + (8 - n)) * 3_600_000).toISOString(),
+      receiptState: 'degraded',
+      reconciliation: 'behind',
+    })),
+  });
+  const staleClean = buildPayload({
+    now,
+    scheduledNames: [],
+    runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
+    promotionHistory: [{ ts: '2026-07-01T10:00:00Z', receiptState: 'verified', reconciliation: 'match' }],
   });
   const unknownSchedule = buildPayload({
     now,
@@ -331,7 +367,11 @@ if (SELF_TEST) {
     ['browser gates are separate from Worker blocker', known.browserGatesGreen === true && known.allGreen === false],
     ['verified browser head is recorded only when browser gates agree', known.verifiedBrowserHeadSha === 'abc123' && known.workflows[0].headSha === 'abc123'],
     ['one behind receipt is settling, not an alert', oneBehind.deploymentReconciliation.state === 'settling' && !oneBehind.deploymentReconciliation.alert],
-    ['two consecutive behind receipts raise a stranded alert', twoBehind.deploymentReconciliation.state === 'stranded' && twoBehind.deploymentReconciliation.alert && /stranded/.test(twoBehind.summary)],
+    ['fresh two consecutive behind receipts raise a stranded alert', twoBehind.deploymentReconciliation.state === 'stranded' && twoBehind.deploymentReconciliation.alert && /stranded for 2/.test(twoBehind.summary)],
+    ['stale nine-behind ledger → unobserved, no alert, summary says stale with age (not stranded)',
+      staleNine.deploymentReconciliation.state === 'unobserved' && staleNine.deploymentReconciliation.alert === false
+      && /ledger is stale \(newest receipt 3 days old\)/.test(staleNine.summary) && !/is stranded/.test(staleNine.summary)],
+    ['stale ledger with a clean tail adds no reconciliation sentence', staleClean.deploymentReconciliation.state === 'unobserved' && !/ledger/.test(staleClean.summary) &&!staleClean.deploymentReconciliation.alert],
     ['unknown scheduled coverage poisons green', unknownSchedule.terminalState === 'scheduled_unknown' && unknownSchedule.allGreen === false && unknownSchedule.scheduledCoverage.unknown === 1],
     // Transient-error policy (the S285 beacon-503 fix): GitHub weather degrades, real errors surface.
     ['HTTP 503 is transient (the live failure)', isTransientGhError(ghErr('gh: HTTP 503\n')) === true],

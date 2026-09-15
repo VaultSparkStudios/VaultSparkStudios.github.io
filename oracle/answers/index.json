@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-oracle-answers.mjs",
-  "generatedAt": "2026-09-14",
+  "generatedAt": "2026-09-15",
   "publicSafe": true,
   "runtimeCost": "zero",
   "note": "Deploy-time prebaked Oracle answers derived only from public feeds. Runtime lookup falls back to the client keyword engine when no answer matches.",
@@ -41,7 +41,7 @@
         "new",
         "forge"
       ],
-      "answer": "Latest from the forge: Studio Website shipped a fresh session closeout. Source pages: VaultSpark Studios public memory and Franchise Architect, a searchable changelog, and a clearer homepage.",
+      "answer": "Latest from the forge: Studio Ops received a new Studio OS pass. Source pages: VaultSpark Studios public memory and Franchise Architect, a searchable changelog, and a clearer homepage.",
       "confidence": "source-backed",
       "sources": [
         {
@@ -153,7 +153,7 @@
         "vaultspark",
         "building"
       ],
-      "answer": "Current focus: Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again. Source pages: VaultSpark Studios public memory and VaultSpark Forge.",
+      "answer": "VaultSpark answers this from its public studio feeds.",
       "confidence": "source-backed",
       "sources": [
         {
@@ -231,33 +231,6 @@
       ]
     },
     {
-      "id": "what-should-i-play-first",
-      "query": "What should I play first?",
-      "keywords": [
-        "play",
-        "first"
-      ],
-      "answer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: Franchise Architect. Source pages: VaultSpark Studios public memory and Vorn.",
-      "confidence": "source-backed",
-      "sources": [
-        {
-          "title": "VaultSpark Studios public memory",
-          "url": "/llms-full.txt",
-          "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them."
-        },
-        {
-          "title": "Vorn",
-          "url": "https://joinvorn.com",
-          "summary": "Vorn SPARKED Social-first, agent-native platform. Give your agent a home."
-        },
-        {
-          "title": "Franchise Architect, a searchable changelog, and a clearer homepage",
-          "url": "/changelog/",
-          "summary": "Franchise Architect, a searchable changelog, and a clearer homepage VaultSpark Football GM is now Franchise Architect — a cleaner name built to grow across every sport, with the old links redirecting automatically The changelog is now searc"
-        }
-      ]
-    },
-    {
       "id": "what-game-should-i-speedrun-next",
       "query": "What game should I speedrun next?",
       "keywords": [
@@ -276,6 +249,33 @@
           "title": "Voidfall",
           "url": "/games/voidfall/",
           "summary": "Voidfall FORGE Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world."
+        },
+        {
+          "title": "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "url": "/changelog/",
+          "summary": "Franchise Architect, a searchable changelog, and a clearer homepage VaultSpark Football GM is now Franchise Architect — a cleaner name built to grow across every sport, with the old links redirecting automatically The changelog is now searc"
+        }
+      ]
+    },
+    {
+      "id": "what-should-i-play-first",
+      "query": "What should I play first?",
+      "keywords": [
+        "play",
+        "first"
+      ],
+      "answer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: Franchise Architect. Source pages: VaultSpark Studios public memory and Vorn.",
+      "confidence": "source-backed",
+      "sources": [
+        {
+          "title": "VaultSpark Studios public memory",
+          "url": "/llms-full.txt",
+          "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them."
+        },
+        {
+          "title": "Vorn",
+          "url": "https://joinvorn.com",
+          "summary": "Vorn SPARKED Social-first, agent-native platform. Give your agent a home."
         },
         {
           "title": "Franchise Architect, a searchable changelog, and a clearer homepage",

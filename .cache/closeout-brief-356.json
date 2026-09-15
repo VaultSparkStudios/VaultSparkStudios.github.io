@@ -1,0 +1,99 @@
+{
+  "session": "S356",
+  "date": "2026-09-15",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The Desk became the flagship again — real illustrations, reader-first articles, working reactions, open comments and site-wide presence — while Studio Pulse stopped overstating and 18 crawl defects were closed.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "desk-real-art",
+      "title": "Real illustrations, generated at no extra cost",
+      "axis": "craft",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "The publisher never had an image model; 25 stories shipped a procedural card under an art caption. A local plan-covered worker plus hash-bound operator review restores real art.",
+      "evidence": "25 backfilled + reviewed; 1 regenerated for a brand mascot; ingest self-test 32/32"
+    },
+    {
+      "id": "#2",
+      "slug": "desk-reader-first",
+      "title": "Articles rebuilt for readers",
+      "axis": "craft",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "Machinery outweighed the story; now headline, byline, art and short version come first, with receipts folded per fact.",
+      "evidence": "8 Desk gates pass; layout test added"
+    },
+    {
+      "id": "#3",
+      "slug": "desk-community",
+      "title": "Open comments with automatic filtering",
+      "axis": "reach",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Anyone may post; borderline text is held, members are badged and featured.",
+      "evidence": "unit 25/25, browser 9/9, migration + probe ready"
+    },
+    {
+      "id": "#4",
+      "slug": "desk-reach",
+      "title": "Homepage lead and site-wide strip",
+      "axis": "reach",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "The flagship was 140 lines below the fold; now it leads the homepage and rides the header, claiming \"Live\" only when the cadence is measured daily.",
+      "evidence": "module self-test 41/41, strip geometry gate green, zero CLS"
+    },
+    {
+      "id": "#5",
+      "slug": "studio-truth",
+      "title": "Pulse and deploy beacons stopped overstating",
+      "axis": "truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "Solara read as actively forged after 93 idle days; a stranded-deploy alarm was stale; a one-page commit fetch published an undercount as healthy.",
+      "evidence": "activity 55/55, timeline 47/47, receipt 35/35"
+    },
+    {
+      "id": "#6",
+      "slug": "sitewide-crawl",
+      "title": "736-load crawl: 5 P0 and 13 P1 defects",
+      "axis": "quality",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "A decorative sigil covered the mobile menu button on 134 pages and floating widgets covered content on 104+ loads — invisible to source review.",
+      "evidence": "measured rects, CLS 0.419→0.003, 181 tap targets raised"
+    },
+    {
+      "id": "#7",
+      "slug": "newsletter",
+      "title": "Member newsletter repaired end to end",
+      "axis": "reliability",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "Never deployed since April; now Brevo, working unsubscribe, postal address, and hardened against double sends.",
+      "evidence": "function tests 41/41, unsubscribe 11/11, deploy self-test 21/21"
+    },
+    {
+      "id": "#8",
+      "slug": "qa-coverage",
+      "title": "Tests and a copy gate for public text",
+      "axis": "coverage",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "A typo reached the homepage and two feeds with no spellcheck anywhere; nine core client scripts had no tests at all.",
+      "evidence": "copy gate 41/41 self-test, 56 new unit tests"
+    }
+  ],
+  "followUps": [
+    "Release: build, receipts in 7 themes, build:check, staging, production.",
+    "Deploy comments migration + Worker (Worker before content lane for reactions).",
+    "Newsletter: set secrets, deploy functions, preview to founder@ before any member send.",
+    "Founder copy: \"Coming soon\"/TBD on six live game pages.",
+    "Leaderboard embed contrast; staging Worker observability."
+  ],
+  "blockers": [
+    "Nothing in production yet — the entire S356 release is ahead."
+  ]
+}

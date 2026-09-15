@@ -4,8 +4,15 @@
 
    S190 enhancements:
    - IntersectionObserver count-up animation for sessions figure (800ms ease-out)
-   - "Last session: today / N days ago" recency label
-   - "avg N/day" velocity badge when sessions ≥ 100
+   - "Feeds updated: today / N days ago" freshness label (feed age only,
+     never when a person was last at the desk; CANON-028)
+
+   The session COUNT stays (a total with no timing). What was removed: the
+   last-session-N-days-ago label, which dated the founder's last working day,
+   and the "avg N/day" velocity badge, which published an inferred work cadence
+   for a private individual (and was arithmetically circular besides — its
+   baseline assumed one session per day, so it could only ever print ~1.0/day).
+   Do not reintroduce either (CANON-028).
 
    Honest-dark contract: render only when real counts exist; never fabricate.
    TT-safe (DOM nodes + textContent only). Mounts on [data-vs-traction]. */
@@ -80,7 +87,7 @@
     document.head.appendChild(s);
   }
 
-  function render(root, figs, dateStr, recency, velocityBadge) {
+  function render(root, figs, dateStr, recency) {
     if (figs.length < 2) return;
     styles();
     var wrap = document.createElement('div');
@@ -113,9 +120,7 @@
     if (recency) {
       var line2 = document.createElement('span');
       line2.className = 'vs-traction__velocity';
-      var recencyText = 'Last session: ' + recency;
-      if (velocityBadge) recencyText += ' · ' + velocityBadge;
-      line2.textContent = recencyText;
+      line2.textContent = 'Feeds updated: ' + recency;
       meta.appendChild(line2);
     }
     wrap.appendChild(meta);
@@ -137,19 +142,6 @@
     }
   }
 
-  function velocityLabel(sessions, updatedAt) {
-    if (!sessions || sessions < 10) return null;
-    var d = new Date(updatedAt);
-    if (isNaN(d)) return null;
-    // Assume studio started ~S1 by estimating 1 session per day as base cadence
-    // Show "avg ~1/day" if sessions/days ≥ 0.7
-    var startEst = new Date(d.getTime() - sessions * 86400000);
-    var days = Math.round((d - startEst) / 86400000);
-    var avg = days > 0 ? (sessions / days).toFixed(1) : null;
-    if (!avg || Number(avg) < 0.7) return null;
-    return 'avg ' + avg + '/day';
-  }
-
   function boot() {
     var roots = Array.prototype.slice.call(document.querySelectorAll('[data-vs-traction]'));
     if (!roots.length) return;
@@ -161,9 +153,7 @@
         if (figs.length < 2) return;
         var dateStr = fmtDate(data.generatedAt);
         var recency = daysSince(data.generatedAt);
-        var sessions = n((data.stats || {}).sessionsCompleted);
-        var vBadge = velocityLabel(sessions, data.generatedAt);
-        roots.forEach(function (root) { render(root, figs, dateStr, recency, vBadge); });
+        roots.forEach(function (root) { render(root, figs, dateStr, recency); });
       })
       .catch(function () { /* feed unreachable → render nothing */ });
   }

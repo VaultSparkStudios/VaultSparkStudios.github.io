@@ -198,7 +198,7 @@ function walkHtml(dir, out = []) {
   for (const e of entries) {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
-      if (['node_modules', '.git', 'playwright-report', '.cache', 'dist', 'build', 'logs', 'docs'].includes(e.name)) continue;
+      if (['node_modules', '.git', '.claude', 'playwright-report', '.cache', 'dist', 'build', 'logs', 'docs'].includes(e.name)) continue;
       walkHtml(full, out);
     } else if (e.name.endsWith('.html')) {
       out.push(full);

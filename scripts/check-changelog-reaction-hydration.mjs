@@ -11,7 +11,13 @@ export function inspect(js, html) {
     ['idle fallback', /requestIdleCallback/.test(js) && /mounted < 4/.test(js)],
     ['dynamic entries use scheduler', /vs:changelog-live-rendered['"],\s*scheduleAll/.test(js)],
     ['unavailable is explicit', /data-count-state['"],\s*['"]unavailable/.test(js)],
-    ['available requires positive count', /if \(count > 0/.test(js) && /data-count-state['"],\s*['"]available/.test(js)],
+    // S356: this asserted `if (count > 0` + a 'available' state. That code existed but could
+    // never run: it queried page_feedback on page_path/question/answer, and the LIVE table has
+    // path/reaction/visit_depth_bucket/ua_kind/created_at (verified against production). The
+    // request always failed into a silent .catch(), so 'available' was unreachable. Per-entry
+    // counts are unreadable from the browser anyway (service-role RLS, no entry column), so the
+    // widget now states `unavailable` honestly. Assert THAT, and that no dead count-fetch returns.
+    ['no unreadable count fetch', !/page_path=eq\./.test(js) && !/question=eq\.changelog_reaction/.test(js)],
     ['no eager all-entry mount loop', !/querySelectorAll\(['"]\.cl-phase['"]\)\.forEach/.test(js)],
     ['offscreen layout containment', /\.cl-phase\s*\{[^}]*content-visibility:auto;[^}]*contain-intrinsic-size:auto 240px;/s.test(html)],
   ];

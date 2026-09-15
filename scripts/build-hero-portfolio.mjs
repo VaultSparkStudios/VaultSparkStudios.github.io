@@ -216,6 +216,19 @@ function coverRule(id, key) {
   return base + modern;
 }
 
+// Small-screen guard: the tile is a fixed 16/10 box with a bottom-anchored body
+// and an absolutely positioned status badge at top-left. Below ~600px the tile
+// is only ~110-120px tall, so a two- or three-line kicker ("COGNITIVE
+// CIVILIZATION OS") overflowed the body upward, printed straight over the
+// SPARKED badge, and clipped at the tile edge ("SPORTS SIM"). Letting the tile
+// grow to its content and reserving the badge's band at the top of the body
+// removes the collision at every width from 320px up.
+const RESPONSIVE_TILE_RULES = '@media (max-width:600px){'
+  + '.hero-showcase .hero-tile{aspect-ratio:auto;min-height:150px}'
+  + '.hero-showcase .hero-tile__body{padding-top:2.4rem}'
+  + '.hero-showcase .hero-tile__kicker{font-size:.55rem;letter-spacing:.08em;line-height:1.3}'
+  + '}';
+
 function renderTileStyles(tiles) {
   const rules = tiles.map((t, i) => {
     const accent = t.color || '#ffc400';
@@ -224,7 +237,7 @@ function renderTileStyles(tiles) {
     const cover = (coverKey && i > 0) ? coverRule(t.id, coverKey) : '';
     return `.ht-${t.id}{--tile-accent:${accent}}${cover}`;
   });
-  return `<style data-hero-portfolio-style>${rules.join('')}</style>`;
+  return `<style data-hero-portfolio-style>${rules.join('')}${RESPONSIVE_TILE_RULES}</style>`;
 }
 
 // Enriched ItemList JSON-LD (S220): the hero is the first interface for agents +
@@ -379,6 +392,10 @@ if (SELF_TEST) {
   assert(showcase.includes('hero-tile--featured'), 'featured tile rendered');
   assert(!/ style\s*=\s*["']/.test(showcase), 'NO inline style= attributes (style-contract safe)');
   assert(showcase.includes('/games/call-of-doodie/'), 'on-disk canonical link resolved');
+  // Kicker/badge collision guard (audit P1-13) — the emitted style block must
+  // carry the small-screen rules, or the overlap returns silently.
+  assert(showcase.includes('@media (max-width:600px)'), 'small-screen tile rules emitted');
+  assert(/hero-tile__body\{padding-top/.test(showcase), 'tile body reserves the badge band on small screens');
   assert(showcase.includes('application/ld+json'), 'ItemList JSON-LD emitted (agent-readable)');
   // S226: LCP fix — featured cover uses <picture><img fetchpriority="high">, not CSS background.
   assert(showcase.includes('hero-tile__cover--lcp'), 'featured LCP cover uses picture/img element');

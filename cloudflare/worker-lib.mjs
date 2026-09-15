@@ -412,11 +412,16 @@ function corsJsonResponse(body, init = {}) {
   return new Response(body, { ...init, headers });
 }
 
-const REACTIONS = new Set([
-  'changed-my-mind', 'knew-this', 'want-receipts', 'made-me-laugh',
+// Must equal the set rendered by scripts/generate-news-pages.mjs
+// (REACTION_BUTTONS + PANEL_REACTIONS) — worker.unit.spec.js enforces parity.
+export const DESK_STORY_REACTIONS = Object.freeze(['changed-my-mind', 'knew-this', 'want-receipts', 'made-me-laugh']);
+export const DESK_PANEL_REACTIONS = Object.freeze([
   'panel-like', 'panel-fire', 'panel-laugh', 'panel-wow',
+  'panel-think', 'panel-yikes', 'panel-eyes', 'panel-100',
 ]);
+const REACTIONS = new Set([...DESK_STORY_REACTIONS, ...DESK_PANEL_REACTIONS]);
 const REACTION_VOICE_PREFIX = 'voice:';
+export const DESK_REACTION_GROUPS = Object.freeze(['story', 'voice', 'panel']);
 const REACTION_MAX_PER_DAY = 12;
 const REACTION_DAY_SEC = 86400;
 
@@ -430,6 +435,84 @@ export function validReaction(value) {
     if (/^[a-z]{2,12}$/.test(id)) return v;
   }
   return null;
+}
+
+/**
+ * Which single-choice group a reaction belongs to. A reader holds at most ONE
+ * current choice per group per slug: the editorial row ("story"), the
+ * "whose take landed?" row ("voice"), and the illustration row ("panel").
+ * Voice votes are their own group because they answer a different question —
+ * picking a persona must not silently retract "Changed my mind".
+ */
+export function deskReactionGroup(reaction) {
+  const v = String(reaction || '');
+  if (v.startsWith(REACTION_VOICE_PREFIX)) return 'voice';
+  if (v.startsWith('panel-')) return 'panel';
+  return 'story';
+}
+
+/**
+ * Pure state transition for one reader's choice within one group.
+ *
+ *   current   the reader's recorded choice for this group (or null)
+ *   reaction  the validated reaction id that was clicked
+ *   on        true = "make this my choice", false = "clear this choice",
+ *             undefined = legacy toggle (same → retract, otherwise select)
+ *
+ * Returns fresh counts (never mutating the input), the next choice, and the
+ * action taken. Counts never go below zero and a zeroed key is dropped, so a
+ * retraction cannot manufacture a negative or a phantom "0 readers" entry.
+ * A request that would change nothing is a 'noop' and must write nothing.
+ *
+ * S357 — REPAIR instead of stealing a vote. The tally, the stored choice and
+ * the budget are three separate KV puts with no transaction around them, so a
+ * concurrent writer can land between them and leave the stored choice
+ * disagreeing with the counts it is about to change: a choice key pointing at a
+ * reaction with no tally, or a retract of a reaction whose count is already 0.
+ * Decrementing then would take a vote away from ANOTHER reader. In that case
+ * the stale choice is cleared/repaired and the tally is left alone — the one
+ * number this desk sells is the count, so it is never paid out of someone
+ * else's vote. `repaired: true` marks any transition that took this path.
+ */
+export function deskReactionTransition({ counts = {}, current = null, reaction, on } = {}) {
+  const source = counts && typeof counts === 'object' && !Array.isArray(counts) ? counts : {};
+  // Sanitize on the way IN. A negative, NaN or non-numeric stored value is not a
+  // tally, so it is dropped rather than echoed back or used as the basis of
+  // arithmetic: no response and no write can carry a negative count, even when
+  // storage was already corrupt before this request arrived. (A 'repair' reports
+  // this cleaned view without rewriting storage; the next real vote is the next
+  // time counts are written anyway, and it writes the cleaned map.)
+  const next = {};
+  for (const [id, value] of Object.entries(source)) {
+    const clean = Math.max(0, Math.floor(Number(value) || 0));
+    if (clean > 0) next[id] = clean;
+  }
+  const tally = (id) => Math.max(0, Number(next[id]) || 0);
+  const bump = (id, delta) => {
+    const value = Math.max(0, tally(id) + delta);
+    if (value > 0) next[id] = value; else delete next[id];
+  };
+  const want = on === undefined ? current !== reaction : Boolean(on);
+  if (want) {
+    if (current === reaction) return { counts: next, choice: current, previous: current, action: 'noop' };
+    let repaired = false;
+    if (current) {
+      if (tally(current) > 0) bump(current, -1);
+      // The previous choice has no tally to give back: repair it rather than
+      // decrementing whatever is there now.
+      else repaired = true;
+    }
+    bump(reaction, 1);
+    return { counts: next, choice: reaction, previous: current, action: current ? 'switch' : 'add', repaired };
+  }
+  if (current !== reaction) return { counts: next, choice: current, previous: current, action: 'noop' };
+  if (tally(reaction) <= 0) {
+    // Nothing of this reader's is in the tally, so there is nothing to take
+    // back. Clear the dangling choice; touch no counts.
+    return { counts: next, choice: null, previous: current, action: 'repair', repaired: true };
+  }
+  bump(reaction, -1);
+  return { counts: next, choice: null, previous: current, action: 'retract', repaired: false };
 }
 
 async function reactionFingerprint(ip, slug) {
@@ -473,35 +556,72 @@ export async function handleDeskReaction(request, env) {
     return corsJsonResponse(JSON.stringify({ ok: false, error: 'storage_unavailable' }), { status: 503 });
   }
 
+  // on: true = select, false = clear, absent = legacy toggle. Current clients
+  // always send it so a "clear" can never be misread as an "add" after the
+  // day bucket (and therefore the fingerprint) has rolled over.
+  const on = typeof body?.on === 'boolean' ? body.on : undefined;
+  const group = deskReactionGroup(reaction);
   const ip = request.headers.get('CF-Connecting-IP') || '';
   const fp = await reactionFingerprint(ip, postSlug);
-  const dedupeKey = `drx:${fp}:${reaction}`;
-  if (await env.RATE_LIMIT.get(dedupeKey)) {
-    const raw = await env.RATE_LIMIT.get(`dr:${postSlug}`);
-    let counts = {};
-    try { counts = raw ? JSON.parse(raw) : {}; } catch { counts = {}; }
-    return corsJsonResponse(JSON.stringify({ ok: true, slug: postSlug, counts, alreadyCounted: true }));
+  const choiceKey = (g) => `drx:${fp}:${postSlug}:${g}`;
+  // Pre-toggle builds wrote one `drx:<fp>:<reaction>` marker per reaction.
+  // Honour a same-day legacy marker as the current choice so the deploy day
+  // cannot double count a reader, and remove it when that choice changes.
+  const legacyKey = `drx:${fp}:${reaction}`;
+  const countsKey = `dr:${postSlug}`;
+
+  // Reads only — the free-tier KV write quota is the scarce resource here.
+  const [rawCounts, ...choices] = await Promise.all([
+    env.RATE_LIMIT.get(countsKey),
+    ...DESK_REACTION_GROUPS.map((g) => env.RATE_LIMIT.get(choiceKey(g))),
+  ]);
+  const mine = {};
+  DESK_REACTION_GROUPS.forEach((g, i) => { mine[g] = validReaction(choices[i]) && deskReactionGroup(choices[i]) === g ? choices[i] : null; });
+  let usedLegacy = false;
+  if (!mine[group] && await env.RATE_LIMIT.get(legacyKey)) { mine[group] = reaction; usedLegacy = true; }
+
+  let counts = {};
+  try { counts = rawCounts ? JSON.parse(rawCounts) : {}; } catch { counts = {}; }
+  if (!counts || typeof counts !== 'object' || Array.isArray(counts)) counts = {};
+
+  const result = deskReactionTransition({ counts, current: mine[group], reaction, on });
+  if (result.action === 'noop') {
+    // Nothing changed, so nothing is written and no budget is spent.
+    return corsJsonResponse(JSON.stringify({
+      ok: true, slug: postSlug, counts: result.counts, mine, action: 'noop',
+      alreadyCounted: result.choice === reaction,
+    }));
+  }
+
+  if (result.action === 'repair') {
+    // A dangling choice with no matching tally (S357). Clear the marker so the
+    // reader's UI and the record agree again; write no counts and spend no
+    // budget, because nothing was voted and nothing is being charged for.
+    await env.RATE_LIMIT.delete(choiceKey(group));
+    if (usedLegacy && typeof env.RATE_LIMIT.delete === 'function') await env.RATE_LIMIT.delete(legacyKey);
+    mine[group] = null;
+    return corsJsonResponse(JSON.stringify({
+      ok: true, slug: postSlug, counts: result.counts, mine, action: 'repair', previous: result.previous, repaired: true,
+    }));
   }
 
   const budgetKey = `drb:${fp}`;
   const used = Number(await env.RATE_LIMIT.get(budgetKey)) || 0;
   if (used >= REACTION_MAX_PER_DAY) {
-    return corsJsonResponse(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429 });
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'rate_limited', mine }), { status: 429 });
   }
 
-  const key = `dr:${postSlug}`;
-  let counts = {};
-  try {
-    const raw = await env.RATE_LIMIT.get(key);
-    counts = raw ? JSON.parse(raw) : {};
-  } catch { counts = {}; }
-  counts[reaction] = (Number(counts[reaction]) || 0) + 1;
-
-  await env.RATE_LIMIT.put(key, JSON.stringify(counts));
-  await env.RATE_LIMIT.put(dedupeKey, '1', { expirationTtl: REACTION_DAY_SEC });
+  await env.RATE_LIMIT.put(countsKey, JSON.stringify(result.counts));
+  if (result.choice) await env.RATE_LIMIT.put(choiceKey(group), result.choice, { expirationTtl: REACTION_DAY_SEC });
+  else await env.RATE_LIMIT.delete(choiceKey(group));
+  if (usedLegacy && typeof env.RATE_LIMIT.delete === 'function') await env.RATE_LIMIT.delete(legacyKey);
   await env.RATE_LIMIT.put(budgetKey, String(used + 1), { expirationTtl: REACTION_DAY_SEC });
 
-  return corsJsonResponse(JSON.stringify({ ok: true, slug: postSlug, counts }));
+  mine[group] = result.choice;
+  return corsJsonResponse(JSON.stringify({
+    ok: true, slug: postSlug, counts: result.counts, mine, action: result.action, previous: result.previous,
+    repaired: Boolean(result.repaired),
+  }));
 }
 
 // Privacy-minimized live reader presence + engaged-time summaries for THE DESK.

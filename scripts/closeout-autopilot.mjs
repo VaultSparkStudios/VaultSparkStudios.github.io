@@ -214,13 +214,12 @@ try {
 
 // ── Step 3d: Regenerate derived public contracts ────────────────────────────
 // Prevents S107-class drift where PROJECT_STATUS advanced but api/public-intelligence.json,
-// api/heartbeat.json, api/founder-presence.json, context/contracts/*.json stayed pinned to
+// api/heartbeat.json, context/contracts/*.json stayed pinned to
 // the prior session and failed the next session's build:check on `--check` gates.
 header('Step 3d · Regenerate derived public contracts');
 const derivedGenerators = [
   'generate-public-intelligence.mjs',
   'generate-heartbeat.mjs',
-  'generate-founder-presence.mjs',
 ];
 for (const gen of derivedGenerators) {
   const genPath = path.join(PROJECT_ROOT, 'scripts', gen);
@@ -593,14 +592,14 @@ if (!DRY) {
     if (fs.existsSync(localEventsPath)) {
       console.log('\n── Post-commit reconcile ────────────────────────────────');
       validateProjectEventLedger(PROJECT_ROOT);
-      for (const gen of ['generate-public-intelligence.mjs', 'generate-heartbeat.mjs', 'generate-founder-presence.mjs']) {
+      for (const gen of ['generate-public-intelligence.mjs', 'generate-heartbeat.mjs']) {
         const genPath = path.join(PROJECT_ROOT, 'scripts', gen);
         if (!fs.existsSync(genPath)) continue;
         spawnSync(process.execPath, [genPath], { cwd: PROJECT_ROOT, stdio: 'ignore' });
       }
       const recStatus = sh('git status --short').out.trim();
       if (recStatus) {
-        sh('git add -A portfolio/events.ndjson api/public-intelligence.json api/heartbeat.json api/founder-presence.json context/contracts/');
+        sh('git add -A portfolio/events.ndjson api/public-intelligence.json api/heartbeat.json context/contracts/');
         const rc = sh(`git commit -m "chore: post-closeout events.ndjson + contracts reconcile [skip ci]"`);
         if (rc.code === 0) {
           console.log('  ✓ Reconcile commit landed');

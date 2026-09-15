@@ -1,6 +1,8 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
+Last updated: 2026-09-15 (S356: The Desk rebuilt as the flagship — real art, reader-first articles, comments, site-wide presence; studio truth fixes; 18 crawl defects closed.)
+
+Previous: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
 
 Previous: 2026-09-14 (S354 proved the Web Analytics beacon is delivered and reports, disclosed it on /privacy/, and closed a release-proof strand hidden by an unmodeled graph edge.)
 
@@ -64,6 +66,24 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 
 - [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **SHIPPED:** checkpoint `172073cb7`; 477/477 build steps; 84/84 reviewed normal captures plus 84 supplemental states; 215/215 mobile cells; staging receipt `bb5016b2a85891bf778e4f87`; production Actions run `34412238486`; live content-current with matched shell parity; Doctor `blockingFailing: 0`. Identity, acceptance, cadence, mail-arming, data-policy, and traffic decisions remain separate.
 ## Now (next session ready)
+
+- [x] **[S356][DESK/P1] The Desk publishes real illustrations again — SHIPPED.** The publisher never had an image model — art 08-07..08-23 was hand-made, so 25 stories shipped the procedural card. A local Codex worker (ChatGPT plan, no API key) generates it; ingest takes only reviewed images; 25 backfilled (D-S356.1).
+- [x] **[S356][DESK/P1] Article + index redesigned for readers — SHIPPED.** Headline/byline/illustration/short-version first, readable persona blocks, receipts folded per fact, image-led index, "Illustration pending" when art is a placeholder.
+- [x] **[S356][DESK/P1] Reactions toggle and diversify — SHIPPED.** One pick per bar, tap again to remove, 8 panel emoji, and the floating widget no longer covers the bars.
+- [x] **[S356][DESK/P1] Community comments on every article — BUILT (deploy pending).** Anyone may post, automatic filter, members badged and featured; report + auto-hold; moderation CLI; migration + probe ready (D-S356.2).
+- [x] **[S356][DESK/P1] Desk reaches readers everywhere — SHIPPED.** Flagship homepage module above the fold and a site-wide header strip that only claims "Live" when the measured cadence is daily.
+- [x] **[S356][DESK/P1] Daily publishing defects fixed — SHIPPED.** Authoring runs the checks promote runs, anchors repaired verbatim (with an overlap rule), a missed day fails the late-night run, 7-day novelty, feed-summary facts, 20 verified new sources, same-day follow-up overwrite refused (D-S356.3).
+- [x] **[S356][TRUTH/P1] Studio Pulse tells the truth — SHIPPED.** Dormant projects derived from real activity (Solara is no longer "right now in the forge"), studio-wide 7-day timeline with honest partial states, false "stranded deploy" alarm closed.
+- [x] **[S356][SITE/P0] Site-wide crawl: 5 P0 + 13 P1 defects fixed.** Sigil covering the mobile menu button on 134 pages, floating widgets covering content on 104+ loads, two production 404s, an unhandled error on /invite/, light-theme contrast, 181 undersized tap targets, /faq/ CLS 0.419→0.003.
+- [x] **[S356][EMAIL/P1] Member newsletter fixed and armed — BUILT (deploy pending).** Brevo sender, working unsubscribe (one-click + confirmation page), postal address, claim-before-send hardened against double sends, rate-limit abort, timeouts (D-S356.4).
+- [x] **[S356][QA/P2] Test coverage + copy gate — SHIPPED.** 9 new unit specs over consent/analytics, theme, nav, CSRF, Turnstile, feedback payloads, presence and pure libs; new Desk copy-quality gate (a typo reached the homepage and two feeds with no spellcheck anywhere).
+- [x] **[S356][PRIVACY/P0] Founder presence removed from the website — SHIPPED.** Feed, generator, badge, wordmark handle, favicon pulse, hero/Pulse tiles, Atlas dot, edge allowlist, graph node and all regeneration vectors deleted; session-timing and work-recency removed from public-intelligence, the timeline, Pulse and /oracle/; guard test blocks any return. Agent-invented S98, never requested; ~41h live across 73 days (D-S356.6).
+- [ ] **[S356][PRIVACY/P0] Purge api/founder-presence.json from public git history.** 30 revisions carry live:true with project names and exact start timestamps; founder authorised the purge. Requires crons disabled, filter-repo rewrite, force-push, then regenerating SHA-pinned proof artifacts.
+- [ ] **[S356][SITE/P1] Oracle/IGNIS prompt chips fail contrast in light theme.** `.ignis-chip` (from `assets/ignis-answer-engine.js`, styled at `oracle/index.html:35` / `ignis/index.html:34`) is solid orange with near-black text in light theme on `/oracle/` and `/ignis/` — seen in the S356 matrix, pre-existing. Fix with theme tokens.
+- [ ] **[S356][GATES/P2] Drift preflight scope is narrower than the gate set.** `check-generated-drift-preflight` declares ~7 nodes and reported "current" while `build-news-desk` and `generate-pathways` were stale (both out of scope). Widen it toward the 92-subject sweep, or rename it so green cannot read as whole-tree freshness.
+- [ ] **[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages.** Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
+- [ ] **[S356][SITE/P2] Leaderboard embed hard-codes low-contrast greys.** api/leaderboard/v1/widget.js:22,33 (#555/#666 on #0a0a0a) fails AA in both themes; owned by the embed, not the stylesheet.
+- [ ] **[S356][OBS/P3] Staging Worker observability.** Still the only way to source the S354/S355 staging 503s; needs a Worker deploy and a free-tier cost check.
 
 - [x] **[S355][CI/P1] Held Pages runs no longer cancel confirmed promotions — SHIPPED.** `cancel-in-progress` is true only for a dispatch confirming production or content; refresh-live-data's input-less dispatch cancelled promotion `34824034218` in S354.
 - [x] **[S355][CI/P1] Publishers staging graph sources push with --resync — SHIPPED.** refresh-live-data, leaderboard-api, weekly-maintenance fixed; `check-publisher-resync` (11/11) gates the class.

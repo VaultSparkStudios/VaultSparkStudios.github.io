@@ -19,7 +19,7 @@
     ],
     "privacy": "Counted per day against a truncated SHA-256 of IP + slug + day, capped at 12 per reader per day. No cookie, account id, raw IP, or durable session id is stored.",
     "caveat": "Only readers who chose to react are counted, so these are self-selected. A story below the floor publishes no total at all.",
-    "resetSemantics": "Edge counters are cumulative; a total that DROPS means storage loss, not reader behaviour, and is published as state \"reset\" with both numbers rather than smoothed.",
+    "resetSemantics": "Readers may take back or switch one reaction, so a small drop (at most the larger of 3 or 25% of the previous total, never to zero) is treated as retractions. A total that DROPS beyond what readers can explain (a larger drop, or a wipe to zero) means storage loss, and is published as state \"reset\" with both numbers rather than smoothed.",
     "truncationReported": true
   },
   "stories": [

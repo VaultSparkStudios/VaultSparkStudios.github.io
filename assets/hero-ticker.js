@@ -44,7 +44,7 @@
 
   function tryFetch(url) {
     var source = window.VSPublicSignals
-      ? window.VSPublicSignals.get(url, { ttlMs: url.indexOf('founder-presence') >= 0 ? 90000 : 600000 })
+      ? window.VSPublicSignals.get(url, { ttlMs: 600000 })
       : fetch(url, { credentials: 'same-origin' }).then(function (r) {
           if (!r.ok) throw new Error(String(r.status));
           return r.json();
@@ -88,56 +88,20 @@
     });
   }
 
-  // S126 #2: Studio Living Mode — when founder-twin is in-session, replace
-  // the "latest from the forge" ticker with a live "in the forge right now"
-  // tile. Reads /api/founder-presence.json (generated nightly + on every
-  // active-session change by the studio-ops broadcast). Falls back to the
-  // ticker on idle.
-  function renderForgeLive(root, presence) {
-    var label = presence.label || presence.project || 'in the forge';
-    var minutesAgo = presence.minutesAgo;
-    var freshness = '';
-    if (typeof minutesAgo === 'number' && minutesAgo >= 0) {
-      if (minutesAgo < 1)      freshness = 'just now';
-      else if (minutesAgo < 60) freshness = minutesAgo + 'm ago';
-      else                      freshness = Math.floor(minutesAgo / 60) + 'h ago';
-    }
-    root.classList.add('hero-ticker-live');
-    root.setAttribute('data-forge-live', '1');
-    replaceWithTickerLink(root, '/ignis/', function (link) {
-      appendTickerSpan(link, 'hero-ticker-dot hero-ticker-dot--live', '', true);
-      appendTickerSpan(link, 'hero-ticker-label', 'In the forge right now');
-      appendTickerSpan(link, 'hero-ticker-title', label);
-      if (freshness) appendTickerSpan(link, 'hero-ticker-when', '\u00b7 ' + freshness);
-    });
-  }
-
   function init() {
     var root = document.querySelector('[data-hero-ticker]');
     if (!root) return;
 
-    tryFetch('/api/founder-presence.json')
-      .then(function (presence) {
-        if (presence && presence.live === true) {
-          renderForgeLive(root, presence);
-          return true;
-        }
-        return false;
-      })
-      .catch(function () { return false; })
-      .then(function (handled) {
-        if (handled) return;
-        (function tryNext(i) {
-          if (i >= ENDPOINTS.length) return;
-          tryFetch(ENDPOINTS[i])
-            .then(function (data) {
-              var entry = pickNewest(data);
-              if (entry) render(root, entry, data && data.kind);
-              else tryNext(i + 1);
-            })
-            .catch(function () { tryNext(i + 1); });
-        })(0);
-      });
+    (function tryNext(i) {
+      if (i >= ENDPOINTS.length) return;
+      tryFetch(ENDPOINTS[i])
+        .then(function (data) {
+          var entry = pickNewest(data);
+          if (entry) render(root, entry, data && data.kind);
+          else tryNext(i + 1);
+        })
+        .catch(function () { tryNext(i + 1); });
+    })(0);
   }
 
   if (document.readyState === 'loading') {

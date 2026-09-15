@@ -33,7 +33,9 @@
           entries: eco.projects.map(p => ({
             id: p.slug, name: p.name, health: p.health, vaultStatus: p.vaultStatus,
             currentFocus: p.currentFocus, blockerCount: p.blockerCount,
-            lastUpdated: p.lastUpdated, staleDays: p.staleDays,
+            // No work-recency passthrough: the public feed no longer
+            // emits them, and this widget must not resurrect per-project work
+            // recency from any other source (CANON-028 Founder Identity Privacy).
           })),
         };
         const voices = { voices: Object.fromEntries(eco.projects.filter(p => p.voice).map(p => [p.slug, p.voice])) };
@@ -104,15 +106,10 @@
       .replace(/\b[A-Z][A-Z0-9_-]{2,}\.(?:json|md|mjs|js)\b/gi, 'studio record');
   }
 
-  function ago(dateStr) {
-    if (!dateStr) return '';
-    const then = new Date(dateStr).getTime();
-    if (!Number.isFinite(then)) return '';
-    const days = Math.floor((Date.now() - then) / 86_400_000);
-    if (days < 1) return 'today';
-    if (days === 1) return '1d ago';
-    return days + 'd ago';
-  }
+  // An ago() helper used to live here, turning a per-project `lastUpdated` date
+  // into "today" / "1d ago" / "Nd ago" for the card footer. Both it and the
+  // footer are gone under CANON-028: the date it formatted was the day a private
+  // individual last worked on that project.
 
   function evidenceChips(evidence) {
     if (!evidence) return '';
@@ -148,7 +145,7 @@
 
   // S136: redesigned for public-facing /oracle/ — voice quote is the centerpiece,
   // dev metadata (evidence chips, raw .json sources, version eyebrows, blocker
-  // counts, staleDays numbers) is gone. The card now reads like a curator's
+  // counts, staleness numbers) is gone. The card now reads like a curator's
   // note on a museum wall — status badge, project name, big serif quote, one
   // line of "what's underway right now", and a single primary CTA.
   function appendText(parent, tag, className, text) {
@@ -167,7 +164,6 @@
     const health = healthGlyph(pulseEntry?.health || fallback?.health);
     const status = String(pulseEntry?.vaultStatus || fallback?.vaultStatus || 'forge').toUpperCase();
     const focus = publicText(clipFocus(pulseEntry?.currentFocus || fallback?.focus || 'A new signal is being read…', 140));
-    const updated = ago(pulseEntry?.lastUpdated || fallback?.lastUpdated);
     const _rawFocus = pulseEntry?.currentFocus || fallback?.focus || '';
     const _focusBrief = clipFocus(_rawFocus, 90).replace(/\.$/, '').toLowerCase();
     const _statusUpper = status;
@@ -227,7 +223,9 @@
       link.target = '_blank';
       link.rel = 'noopener';
     }
-    if (updated) appendText(footer, 'span', 'ignis-block-meta', `Touched ${updated}`);
+    // No "Touched <N>d ago" meta line here: it published the day a private
+    // individual last worked on this project (CANON-028). The footer carries the
+    // live link only, and collapses to nothing when there is no link.
     frame.appendChild(footer);
     el.appendChild(frame);
   }
@@ -238,7 +236,8 @@
       health: el.getAttribute('data-health') || 'green',
       vaultStatus: el.getAttribute('data-status') || 'forge',
       focus: el.getAttribute('data-focus') || '',
-      lastUpdated: el.getAttribute('data-updated') || '',
+      // data-updated is deliberately not read: a host page must not be able to
+      // feed per-project work recency back into this card (CANON-028).
       quote: el.getAttribute('data-quote') || '',
     };
 

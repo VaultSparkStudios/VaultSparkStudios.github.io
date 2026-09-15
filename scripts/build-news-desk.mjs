@@ -19,7 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { renderEditorialOverlaySvg } from './lib/news-memes.mjs';
+import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_BUDGETS, storyMemeOverlayOptions } from './lib/news-memes.mjs';
 import {
   PERSONAS,
   personaById,
@@ -206,11 +206,33 @@ export function artworkWritePlan(outputs, { refreshArt = false, exists = fs.exis
   );
 }
 
+/**
+ * `--refresh-art-only <date/slug,...>` (S356): the local Codex art worker
+ * replaces ONE story's source raster at a time. A global --refresh-art would
+ * re-encode every historical panel (libvips output varies by platform), which
+ * is exactly the churn D-S327.2 forbids — so replacement is scoped to the named
+ * stories and everything else stays byte-locked. Accepts `date/slug` or
+ * `date--slug` ids.
+ */
+export function parseRefreshArtOnly(value) {
+  if (value == null || value === '') return null;
+  const ids = String(value).split(',').map((id) => id.trim()).filter(Boolean).map((id) => {
+    const match = /^(\d{4}-\d{2}-\d{2})(?:\/|--)([a-z0-9][a-z0-9-]*)$/.exec(id);
+    if (!match) throw new Error(`--refresh-art-only: "${id}" is not a date/slug story id`);
+    return `${match[1]}/${match[2]}`;
+  });
+  return ids.length ? new Set(ids) : null;
+}
+
+export function storyArtRefresh(day, story, { refreshArt = false, refreshArtOnly = null } = {}) {
+  return refreshArt === true || Boolean(refreshArtOnly?.has(`${day.date}/${story.slug}`));
+}
+
 function assertArticleArtSources(days) {
   const artRoot = path.resolve(ROOT, 'data', 'news-desk', 'art') + path.sep;
   const seen = new Set();
   const seenHashes = new Set();
-  const budgets = { '.png': 650_000, '.webp': 250_000, '.avif': 210_000 };
+  const budgets = EDITORIAL_PANEL_BUDGETS;
   for (const day of days) {
     for (const story of day.stories) {
       const source = articleArtPath(story);
@@ -370,7 +392,7 @@ export function buildNewsFeed(days = loadPublicDays()) {
  * it — a pull quote, not a meme. A reader should recognise WHO made a panel
  * before reading a word of it.
  */
-async function rasterizeMemes(day, { refreshArt = false } = {}) {
+async function rasterizeMemes(day, { refreshArt = false, refreshArtOnly = null } = {}) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
@@ -378,14 +400,7 @@ async function rasterizeMemes(day, { refreshArt = false } = {}) {
   for (const story of day.stories) {
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     if (!persona || !story.memeLine?.text) continue;
-    const overlay = renderEditorialOverlaySvg({
-      text: story.memeLine.text,
-      eyebrow: `${persona.name} · ${String(persona.bit || 'THE PANEL').toUpperCase()}`,
-      footer: 'AI-GENERATED EDITORIAL ART · SOURCE-BOUND TO THIS ARTICLE',
-      accent: persona.accent,
-      date: day.date,
-      fontSize: 46,
-    });
+    const overlay = renderEditorialOverlaySvg(storyMemeOverlayOptions({ date: day.date, text: story.memeLine.text, persona }));
     // On-page images need AVIF/WebP siblings and a <picture> wrapper — the
     // panels are rendered at full width, so a bare PNG is a real payload cost,
     // not a formality.
@@ -396,26 +411,26 @@ async function rasterizeMemes(day, { refreshArt = false } = {}) {
     // re-encode historical art (Sharp/libvips output can vary by platform).
     // Existing art changes require the explicit --refresh-art operator action
     // followed by a fresh rendered-pixel review receipt.
-    if (artworkWritePlan(outputs, { refreshArt }).length === 0) continue;
+    if (artworkWritePlan(outputs, { refreshArt: storyArtRefresh(day, story, { refreshArt, refreshArtOnly }) }).length === 0) continue;
     const panel = sharp(articleArtPath(story))
       .resize(1200, 630, { fit: 'cover', position: 'attention' })
       .composite([{ input: Buffer.from(overlay) }]);
-    await panel.clone().png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(`${base}.png`);
-    await panel.clone().webp({ quality: 80, smartSubsample: true }).toFile(`${base}.webp`);
-    await panel.clone().avif({ quality: 58, effort: 6 }).toFile(`${base}.avif`);
+    await panel.clone().png({ ...EDITORIAL_PANEL_ENCODINGS.png }).toFile(`${base}.png`);
+    await panel.clone().webp({ ...EDITORIAL_PANEL_ENCODINGS.webp }).toFile(`${base}.webp`);
+    await panel.clone().avif({ ...EDITORIAL_PANEL_ENCODINGS.avif }).toFile(`${base}.avif`);
     count += 1;
   }
   return count;
 }
 
-async function rasterizeCards(day, { refreshArt = false } = {}) {
+async function rasterizeCards(day, { refreshArt = false, refreshArtOnly = null } = {}) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
   let count = 0;
   for (const story of day.stories) {
     const output = path.join(outDir, `${day.date}--${story.slug}.png`);
-    if (artworkWritePlan([output], { refreshArt }).length === 0) continue;
+    if (artworkWritePlan([output], { refreshArt: storyArtRefresh(day, story, { refreshArt, refreshArtOnly }) }).length === 0) continue;
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     const overlay = renderEditorialOverlaySvg({
       text: story.headline,
@@ -507,9 +522,16 @@ function simulate() {
   }
 }
 
-async function rebuild({ refreshArt = false } = {}) {
+async function rebuild({ refreshArt = false, refreshArtOnly = null } = {}) {
   const days = loadPublicDays();
   if (days.length === 0) throw new Error('no real news days found; refusing to publish an empty desk');
+  if (refreshArtOnly) {
+    const known = new Set(days.flatMap((day) => day.stories.map((story) => `${day.date}/${story.slug}`)));
+    const unknown = [...refreshArtOnly].filter((id) => !known.has(id));
+    // A typo must fail loudly: a silently-unmatched scoped refresh would leave
+    // stale derivatives bound to a replaced raster and report success.
+    if (unknown.length) throw new Error(`--refresh-art-only names unknown stories: ${unknown.join(', ')}`);
+  }
   for (const day of days) {
     const errors = validateDay(day, { today: day.date });
     if (errors.length) throw new Error(`committed day ${day.date} fails validation:\n  ${errors.join('\n  ')}`);
@@ -534,8 +556,8 @@ async function rebuild({ refreshArt = false } = {}) {
   // responsive derivatives before buildCarouselFromDisk verifies their
   // existence and byte budgets; checking first deadlocked every new article.
   let cardCount = 0;
-  for (const day of days) cardCount += await rasterizeCards(day, { refreshArt });
-  for (const day of days) cardCount += await rasterizeMemes(day, { refreshArt });
+  for (const day of days) cardCount += await rasterizeCards(day, { refreshArt, refreshArtOnly });
+  for (const day of days) cardCount += await rasterizeMemes(day, { refreshArt, refreshArtOnly });
   cardCount += await rasterizeDispatchCard({ refreshArt });
   cardCount += await rasterizeDirectorsCard({ refreshArt });
 
@@ -752,6 +774,13 @@ function selfTest() {
   t('partial reviewed art family fails closed', partialArtFailedClosed);
   t('explicit refresh may replace a complete reviewed art family',
     artworkWritePlan([...presentArt], { exists: artExists, refreshArt: true }).length === 3);
+  t('scoped art refresh parses date/slug and date--slug ids',
+    [...(parseRefreshArtOnly('2026-09-12/a-b, 2026-09-11--c') || [])].join('|') === '2026-09-12/a-b|2026-09-11/c');
+  t('scoped art refresh touches only the named story',
+    storyArtRefresh({ date: '2026-09-12' }, { slug: 'a-b' }, { refreshArtOnly: parseRefreshArtOnly('2026-09-12/a-b') }) === true
+    && storyArtRefresh({ date: '2026-09-12' }, { slug: 'other' }, { refreshArtOnly: parseRefreshArtOnly('2026-09-12/a-b') }) === false);
+  t('scoped art refresh rejects a malformed id',
+    (() => { try { parseRefreshArtOnly('not-an-id'); return false; } catch { return true; } })());
 
   // day validation
   t('fixture day validates clean', validateDay(day, { today: day.date }).length === 0);
@@ -876,6 +905,29 @@ function selfTest() {
   const wrongRelationship = structuredClone(relationshipVisual);
   wrongRelationship.relationships[0].action = ['swims'];
   t('a contradictory relationship mutation is rejected', validateStoryVisual(wrongRelationship, { story: relationshipStory, date: '2026-08-04' }).some((error) => /relationship parity/.test(error)));
+  // ── Art-kind honesty (procedural fallback vs real source raster) ─────────
+  const kindVisual = (receiptPatch, generatedArt) => {
+    const v = structuredClone(relationshipVisual);
+    Object.assign(v.pixelInspection, receiptPatch);
+    if (generatedArt !== undefined) v.generatedArt = generatedArt;
+    // The fixture story carries no article body, so anchor-corpus errors are
+    // constant noise here; these cases isolate the art-kind receipt rules.
+    return validateStoryVisual(v, { story: relationshipStory, date: '2026-08-04' }).filter((e) => !/article corpus/.test(e));
+  };
+  t('legacy receipt without kind still validates (published days unchanged)', kindVisual({}).length === 0);
+  t('legacy receipt without kind still requires reviewed true', kindVisual({ reviewed: false }).some((e) => /reviewed must be true/.test(e)));
+  t('legacy receipt without kind still requires generatedArt true', kindVisual({}, false).some((e) => /generatedArt disclosure/.test(e)));
+  t('an honest procedural fallback (reviewed false, generatedArt false) validates', kindVisual({ kind: 'procedural-fallback', reviewed: false, entropy: 2.1 }, false).length === 0);
+  t('a procedural fallback claiming reviewed + generated (old writer pair) is rejected', kindVisual({ kind: 'procedural-fallback', reviewed: true, entropy: 2.1 }, true).some((e) => /procedural fallback art cannot claim reviewed\/generated/.test(e)));
+  t('a procedural fallback claiming reviewed but not generated is rejected', kindVisual({ kind: 'procedural-fallback', reviewed: true }, false).some((e) => /procedural fallback art cannot claim reviewed\/generated/.test(e)));
+  t('a procedural fallback claiming generatedArt but not reviewed is rejected', kindVisual({ kind: 'procedural-fallback', reviewed: false }, true).some((e) => /procedural fallback art cannot claim reviewed\/generated/.test(e)));
+  t('a reviewed source raster validates', kindVisual({ kind: 'source-raster', entropy: 7.1 }).length === 0);
+  t('a source raster must be reviewed', kindVisual({ kind: 'source-raster', reviewed: false, entropy: 7.1 }).some((e) => /reviewed must be true/.test(e)));
+  t('a source raster must disclose generatedArt', kindVisual({ kind: 'source-raster', entropy: 7.1 }, false).some((e) => /generatedArt disclosure/.test(e)));
+  t('a source raster with fallback-level entropy is a contradiction', kindVisual({ kind: 'source-raster', entropy: 2.1 }).some((e) => /contradicts entropy/.test(e)));
+  t('a source raster without recorded entropy is not penalised', kindVisual({ kind: 'source-raster' }).length === 0);
+  t('an unknown art kind is rejected', kindVisual({ kind: 'ai-maybe' }).some((e) => /unknown pixelInspection\.kind/.test(e)));
+  t('a procedural fallback still needs semanticVerified false', kindVisual({ kind: 'procedural-fallback', reviewed: false, semanticVerified: true }, false).some((e) => /semanticVerified/.test(e)));
 
   // ── Resolutions: the P0 defect and its fix ──────────────────────────────
   const predIndex = new Map([['p-1', { id: 'p-1', personaId: 'rex', date: '2026-01-01' }]]);
@@ -1125,7 +1177,13 @@ function selfTest() {
 const args = new Set(process.argv.slice(2));
 if (args.has('--self-test')) selfTest();
 else if (args.has('--simulate')) simulate();
-else if (args.has('--rebuild')) rebuild({ refreshArt: args.has('--refresh-art') }).catch((error) => {
+else if (args.has('--rebuild')) Promise.resolve().then(() => {
+  const argv = process.argv.slice(2);
+  const onlyIndex = argv.indexOf('--refresh-art-only');
+  const refreshArtOnly = onlyIndex >= 0 ? parseRefreshArtOnly(argv[onlyIndex + 1]) : null;
+  if (onlyIndex >= 0 && !refreshArtOnly) throw new Error('--refresh-art-only requires <date/slug,...>');
+  return rebuild({ refreshArt: args.has('--refresh-art'), refreshArtOnly });
+}).catch((error) => {
   console.error(`✗ rebuild failed: ${error.message}`);
   process.exitCode = 1;
 });
@@ -1133,7 +1191,7 @@ else if (args.has('--check')) check();
 else if (args.has('--resolve')) resolve(process.argv.slice(2));
 else if (args.has('--record')) record();
 else {
-  console.error('Usage: --self-test | --simulate | --rebuild [--refresh-art] | --check | --record');
+  console.error('Usage: --self-test | --simulate | --rebuild [--refresh-art | --refresh-art-only <date/slug,...>] | --check | --record');
   console.error('       --resolve --id <predictionId> --status correct|wrong|void --note "..." [--evidence <url>] [--on YYYY-MM-DD]');
   process.exitCode = 2;
 }

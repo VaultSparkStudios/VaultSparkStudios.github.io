@@ -1,10 +1,10 @@
 /* studio-now.js — the "Studio Now" strip (S195 item 3).
  *
  * Every feed on the site is a snapshot frozen at deploy; this is the one surface
- * that reads as ALIVE. It joins already-published public feeds —
- * founder-presence (is the founder in the forge right now), ship-receipts (what
- * shipped most recently), and vault momentum — into a single honest line. No
- * new endpoint, no per-user cost (CANON-029).
+ * that reads as ALIVE. It joins already-published public feeds — ship-receipts
+ * (what shipped most recently) and vault momentum — into a single honest line.
+ * No new endpoint, no per-user cost (CANON-029). It reports studio OUTPUT only:
+ * it must never publish whether or when a person is at the desk.
  *
  * Honest-dark contract: if nothing resolves, the strip removes itself rather
  * than fabricate aliveness. DOM is built node-by-node (no innerHTML) so it is
@@ -36,12 +36,9 @@
     s.textContent =
       '.vs-studio-now{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:1.1rem auto 0;padding:.6rem .9rem;border:1px solid var(--line,rgba(255,255,255,.08));border-radius:999px;background:rgba(255,255,255,.035);font-size:.82rem;color:var(--muted,#a8b4d0);max-width:max-content}' +
       '.vs-studio-now__dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:#6272a0}' +
-      '.vs-studio-now[data-live="true"] .vs-studio-now__dot{background:var(--gold,#ffc400);box-shadow:0 0 0 0 rgba(255,196,0,.55);animation:vs-studio-now-pulse 2.4s ease-out infinite}' +
       '.vs-studio-now__seg{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}' +
       '.vs-studio-now__sep{opacity:.4}' +
-      '.vs-studio-now__k{color:var(--text,#eef2ff);font-weight:600}' +
-      '@keyframes vs-studio-now-pulse{0%{box-shadow:0 0 0 0 rgba(255,196,0,.5)}70%{box-shadow:0 0 0 7px rgba(255,196,0,0)}100%{box-shadow:0 0 0 0 rgba(255,196,0,0)}}' +
-      '@media (prefers-reduced-motion: reduce){.vs-studio-now[data-live="true"] .vs-studio-now__dot{animation:none}}';
+      '.vs-studio-now__k{color:var(--text,#eef2ff);font-weight:600}';
     document.head.appendChild(s);
   }
 
@@ -71,13 +68,11 @@
   function mount(root) {
     ensureStyles();
     Promise.all([
-      getJSON('/api/founder-presence.json'),
       getJSON('/api/ship-receipts.json'),
       getJSON('/api/vault-momentum.json'),
     ]).then(function (res) {
-      var pres = res[0] || {};
-      var receipts = res[1] || {};
-      var momentum = res[2] || {};
+      var receipts = res[0] || {};
+      var momentum = res[1] || {};
 
       // Most recent shipped commit across all themed receipts.
       var lastCommit = null, lastTs = 0;
@@ -89,16 +84,14 @@
       });
 
 
-      var live = !!pres.live;
-      // Honest-dark: with no presence, no ship, and no momentum, say nothing.
-      if (!live && !lastCommit && !(momentum.label && !momentum.honestDark)) {
+      // Honest-dark: with no ship and no momentum, say nothing.
+      if (!lastCommit && !(momentum.label && !momentum.honestDark)) {
         if (root.parentNode && !root.hasAttribute('data-studio-now-keep')) root.parentNode.removeChild(root);
         return;
       }
 
       var strip = document.createElement('div');
       strip.className = 'vs-studio-now';
-      strip.setAttribute('data-live', live ? 'true' : 'false');
       strip.setAttribute('role', 'status');
       strip.setAttribute('aria-label', 'Current studio activity');
 
@@ -106,13 +99,7 @@
       dot.className = 'vs-studio-now__dot';
       strip.appendChild(dot);
 
-      var presText = live
-        ? ('In the forge' + (pres.label ? ' · ' + pres.label : (pres.project ? ' · ' + pres.project : '')))
-        : 'Studio resting';
-      strip.appendChild(seg(null, presText));
-
       if (lastCommit) {
-        strip.appendChild(sep());
         var when = ago(lastCommit.ts);
         strip.appendChild(seg('Last shipped', when ? when : ''));
       }

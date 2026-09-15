@@ -42,7 +42,7 @@ const ALL_PAGES = [
   },
   {
     slug: 'football-gm',
-    title: 'Franchise Architect Leaderboard — Franchise Architect Rankings',
+    title: 'Franchise Architect Leaderboard',
     h1: 'Franchise Architect Leaderboard',
     description: 'Vault Member rankings for Franchise Architect. Earn points by playing, winning, and contributing to the community.',
     faqQ: 'What is the Franchise Architect Leaderboard?',
@@ -69,7 +69,7 @@ const ALL_PAGES = [
   },
   {
     slug: 'weekly',
-    title: 'Weekly Leaderboard — This Week\'s Top Vault Members',
+    title: 'Weekly Leaderboard — Top Vault Members',
     h1: 'Weekly Leaderboard',
     description: 'A fresh start every week. Compete for the top spots in VaultSpark Studios\' weekly Vault Point rankings and earn special weekly rewards.',
     faqQ: 'What is the Weekly Leaderboard?',

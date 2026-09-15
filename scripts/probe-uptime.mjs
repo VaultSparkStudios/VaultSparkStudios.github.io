@@ -65,7 +65,7 @@ const ORIGIN = process.env.PAGES_ORIGIN || 'https://vaultsparkstudios-website.pa
 // Production custom domain — used for the edge-liveness signal + informational HTML probe.
 const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios.com';
 // JSON path on PROD that is NOT bot-challenged → proves DNS+CF+Worker chain is live.
-const LIVENESS_PATH = process.env.LIVENESS_PATH || '/api/founder-presence.json';
+const LIVENESS_PATH = process.env.LIVENESS_PATH || '/api/build-sha.json';
 
 const ROUTES = ['/', '/games/', '/vault-member/', '/membership/', '/status/'];
 
@@ -156,8 +156,8 @@ export function classifyEdge(status, body = '') {
 // S183, because the premise this file was rewritten on has EXPIRED. The header
 // above states "JSON/API paths are not bot-challenged, so a 200 proves the DNS +
 // Cloudflare + Worker chain is alive". Measured 2026-09-10:
-//   GET /api/founder-presence.json  → 200 application/json from a residential IP
-//   GET /api/founder-presence.json  → 403 in 127ms from GitHub Actions
+//   GET <the JSON liveness path>  → 200 application/json from a residential IP
+//   GET <the JSON liveness path>  → 403 in 127ms from GitHub Actions
 // Cloudflare widened challenges to JSON and OPTIONS paths. Every API leg then
 // read its own challenge as an outage, and `/status/` published `edge-degraded`
 // for 100% of the 1488 retained samples going back to 2026-07-13 — a public

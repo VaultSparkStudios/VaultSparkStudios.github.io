@@ -31,9 +31,7 @@ A studio-ops command that produces `portfolio/ECOSYSTEM_STATE.json` covering **e
     "sparked": 5,
     "forge": 18,
     "vaulted": 6,
-    "blockedTotal": 47,
-    "freshLast7d": 12,
-    "staleOver30d": 3
+    "blockedTotal": 47
   },
   "ignisAggregate": {
     "lastIgnisRunAt": "ISO-8601",
@@ -53,8 +51,6 @@ A studio-ops command that produces `portfolio/ECOSYSTEM_STATE.json` covering **e
       "nextMilestone": "...",
       "blockers": [],
       "blockerCount": 5,
-      "lastUpdated": "2026-05-17",
-      "staleDays": 0,
       "ignisScore": 970,
       "ignisTier": "ignited",
       "voice": {
@@ -72,6 +68,8 @@ A studio-ops command that produces `portfolio/ECOSYSTEM_STATE.json` covering **e
   ]
 }
 ```
+
+> **Not in this contract (CANON-028 · Founder Identity Privacy):** per-project work-recency fields — `lastUpdated`, `staleDays`, and any `freshLast7d` / `staleOver30d` aggregate derived from them — are deliberately never published. They let a reader reconstruct when the founder was working, so no consumer surface may render or derive them.
 
 ### Implementation outline
 
@@ -98,8 +96,6 @@ const projects = REGISTRY.projects.map(p => {
     nextMilestone: status?.nextMilestone || p.nextMilestone,
     blockers: status?.blockers || [],
     blockerCount: (status?.blockers || []).length,
-    lastUpdated: status?.lastUpdated || null,
-    staleDays: status?.lastUpdated ? Math.floor((Date.now() - Date.parse(status.lastUpdated)) / 86_400_000) : null,
     ignisScore: status?.ignisScore || null,
     ignisTier: status?.ignisTier || null,
     voice: voice || null,

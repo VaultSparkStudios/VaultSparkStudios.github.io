@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-14T09:50:29.316Z
-Receipt: `1bf2416bd4e4ecbe72c4f3f8` · coverage 490/490 from step 1
+Generated: 2026-09-15T06:30:19.683Z
+Receipt: `aa4b228f72824947395269f3` · coverage 102/495 from step 1
 
-Latest: **490/490** passed · failed 0 · total 162.0s
-Concentration: **15.2%** in step 146 · ratchet clear (>30% and ≥45s)
+Latest: **101/102** passed · failed 1 · total 49.5s
+Concentration: **22.9%** in step 61 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 146 | 24.6s | 0 | `node scripts/check-proof-surface.mjs` |
-| 61 | 10.7s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 100 | 6.4s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 378 | 6.4s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 96 | 4.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 263 | 4.0s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 251 | 3.7s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 29 | 2.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 105 | 1.8s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js tests/tt-report-only.unit.spec.js tests/resync-derived.unit.spec.js tests/local-preview.unit.spec.js` |
-| 291 | 1.7s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 61 | 11.4s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 98 | 9.2s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 94 | 3.2s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 29 | 1.8s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 58 | 1.6s | 0 | `node scripts/run-build-check.mjs --self-test` |
+| 99 | 1.5s | 0 | `node scripts/lint-repo.mjs` |
+| 65 | 1.5s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
+| 81 | 1.1s | 0 | `node scripts/check-s151-contracts.mjs` |
+| 66 | 0.9s | 0 | `node scripts/build-shell-assets.mjs --check` |
+| 100 | 0.9s | 0 | `node scripts/validate-module-imports.mjs` |
 
 ## Failures
 
-- None.
+- Step 102: `node scripts/check-unit-suite-parity.mjs` exited 1

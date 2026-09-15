@@ -48,6 +48,10 @@ jobs:
         # config/evidence-graph.json; modelling it made the chain checkable.
         # Order mirrors `npm run build`: public-status → manifest → release-proof
         # → status-proof → citation (each consumes the one before it).
+        # S356: the refresh-live-data profile now includes build-studio-timeline,
+        # which reads public repo commits via the GitHub API — authenticate it.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           node scripts/run-derived-builds.mjs --profile refresh-live-data
           node scripts/build-public-status.mjs

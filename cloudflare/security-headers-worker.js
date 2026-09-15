@@ -47,6 +47,15 @@ import {
   isAllowedWebPushEndpoint,
   validatePushSubscription,
 } from './worker-lib.mjs';
+import {
+  handleDeskComments,
+  DESK_COMMENTS_PATH,
+  DESK_COMMENTS_REPORT_PATH,
+} from './desk-comments.mjs';
+import {
+  handleNewsletterUnsubscribeProxy,
+  NEWSLETTER_UNSUBSCRIBE_PATH,
+} from './newsletter-unsubscribe-proxy.mjs';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -73,7 +82,6 @@ const REMOVE_HEADERS = ['x-powered-by', 'server'];
 const JSON_SWR_PATHS = [
   /^\/api\/public-intelligence\.json$/i,
   /^\/api\/heartbeat\.json$/i,
-  /^\/api\/founder-presence\.json$/i,
   /^\/api\/vault-narrative\.json$/i,
   /^\/api\/ci-status\.json$/i,
 ];
@@ -978,7 +986,7 @@ const worker = {
    * Why this exists. The GitHub Actions uptime probe cannot observe our edge at
    * all: Cloudflare bot-challenges every datacenter client, so each apex leg
    * (JSON liveness, OPTIONS ingest, POST ingest) returns 403 from CI. Measured
-   * 2026-09-10, /api/founder-presence.json answers 200 from a residential IP and
+   * 2026-09-10, the JSON liveness path answers 200 from a residential IP and
    * 403 from Actions. The probe was reporting that challenge as an outage, which
    * is how /status/ published `edge-degraded` for 604 consecutive samples while
    * the site served every real visitor. probe-uptime.mjs now reports that state
@@ -1177,6 +1185,35 @@ const worker = {
     // summary per Desk article view. No stable reader identifier is persisted.
     if (url.pathname === '/v/desk-presence') {
       return handleDeskPresence(request, env, ctx);
+    }
+
+    // --- Layer 0: Community comments for The Desk (S356) ---------------------
+    // Terminates before Layer 3's public-form layer, so a comment POST is
+    // CSRF-verified exactly once (inside the handler) and is never double-gated
+    // or silently bypassed. The handler owns Cache-Control — 30s on the public
+    // read, no-store on writes — so it is re-applied after withSecurityHeaders,
+    // which would otherwise force no-store on the cacheable GET.
+    if (url.pathname === DESK_COMMENTS_PATH || url.pathname === DESK_COMMENTS_REPORT_PATH) {
+      const commentsResponse = await handleDeskComments(request, env, {
+        authenticate: authenticateObeliskRequest,
+      });
+      return withSecurityHeaders(commentsResponse, {
+        ttl: 0,
+        csp: WORKER_CSP,
+        extra: { 'Cache-Control': commentsResponse.headers.get('Cache-Control') || 'no-store' },
+      });
+    }
+
+    // --- Layer 0: newsletter unsubscribe proxy (RFC 8058) --------------------
+    // The Supabase function owns this response's headers, including its own
+    // strict per-page CSP, X-Frame-Options: DENY and Referrer-Policy:
+    // no-referrer. It is deliberately NOT wrapped in withSecurityHeaders(),
+    // which would overwrite all three with the softer site-wide values. The
+    // path is likewise absent from RATE_LIMITED_FORM_PATHS: a one-click
+    // unsubscribe POST from a mailbox provider carries neither a CSRF token nor
+    // a Turnstile token, and returning here keeps the form layer from seeing it.
+    if (url.pathname === NEWSLETTER_UNSUBSCRIBE_PATH) {
+      return handleNewsletterUnsubscribeProxy(request, env);
     }
 
     // --- Layer 0: Trusted Types report-only intake --------------------------

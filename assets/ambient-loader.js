@@ -23,9 +23,113 @@
   // Automatic overlays share one attention budget per browser tab. This keeps
   // independently loaded engagement modules from stacking or taking turns
   // nagging a visitor during the same session.
+  //
+  // S357 (audit P0-2 / P1-14 / P2-25): the selector list below was the WHOLE
+  // coordination story, and it only ever gated VSAttention.claim() — which
+  // .vs-rate-page (rate-page.js), .vs-lens (ignis-lens.js) and the cookie
+  // banner never call. Naming a surface here did nothing for it, so three
+  // floating surfaces sat on top of body copy and the footer legend (104+
+  // page-loads measured; on /status/ the rate widget hid a service row and its
+  // "Down" state). VSFloating below makes registration mean something:
+  // registered surfaces reserve real bottom space (--vs-floating-reserve,
+  // consumed by assets/style.css) so nothing is covered at the end of the
+  // document, and lower-priority floats stand down while a blocking overlay is
+  // on screen. BLOCKING_SELECTORS stays the original five — adding the
+  // always-present rate widget to the claim gate would have suppressed every
+  // tour sitewide.
+  const FLOATING_SELECTORS = [
+    '#cookieConsent', '#pwa-install-banner', '.vs-exit-panel', '.vs-vd',
+    '.vs-journey', '.vs-rate-page', '.vs-lens'
+  ];
+  const BLOCKING_SELECTORS = ['#cookieConsent', '#pwa-install-banner', '.vs-exit-panel', '.vs-vd', '.vs-journey'];
+  if (!window.VSFloating) {
+    const registered = new Set();
+    const shown = function (el) {
+      if (!el || !el.isConnected || el.hidden) return false;
+      const cs = window.getComputedStyle ? window.getComputedStyle(el) : null;
+      if (cs && (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity || '1') < 0.05)) return false;
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    };
+    const floats = function (el) {
+      const cs = window.getComputedStyle ? window.getComputedStyle(el) : null;
+      return !!cs && cs.position === 'fixed' && cs.bottom !== 'auto';
+    };
+    let frame = 0;
+    const apply = function () {
+      frame = 0;
+      let reserve = 0;
+      for (const el of Array.from(registered)) {
+        if (!el.isConnected) { registered.delete(el); continue; }
+        if (!shown(el) || !floats(el)) continue;
+        const r = el.getBoundingClientRect();
+        const gap = Math.max(0, window.innerHeight - r.bottom);
+        reserve = Math.max(reserve, Math.ceil(r.height + gap + 12));
+      }
+      let busy = false;
+      for (const sel of BLOCKING_SELECTORS) {
+        const el = document.querySelector(sel);
+        if (el && shown(el)) { busy = true; break; }
+      }
+      document.documentElement.style.setProperty('--vs-floating-reserve', reserve + 'px');
+      if (busy) document.documentElement.setAttribute('data-vs-overlay-busy', '1');
+      else document.documentElement.removeAttribute('data-vs-overlay-busy');
+    };
+    const schedule = function () {
+      if (frame) return;
+      frame = typeof window.requestAnimationFrame === 'function'
+        ? window.requestAnimationFrame(apply)
+        : window.setTimeout(apply, 16);
+    };
+    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(schedule) : null;
+    window.VSFloating = {
+      selectors: FLOATING_SELECTORS,
+      register: function (el) {
+        if (!el || registered.has(el)) return;
+        registered.add(el);
+        if (ro) { try { ro.observe(el); } catch (_) {} }
+        schedule();
+      },
+      release: function (el) { if (registered.delete(el)) schedule(); },
+      refresh: schedule,
+      busy: function () { return document.documentElement.hasAttribute('data-vs-overlay-busy'); },
+      reserved: function () {
+        const raw = window.getComputedStyle(document.documentElement).getPropertyValue('--vs-floating-reserve');
+        return parseFloat(raw) || 0;
+      },
+      tracked: function () { return Array.from(registered); }
+    };
+    // Adopt surfaces this file does not own the moment they enter the DOM, so
+    // the reserve covers every floating surface — not only the opt-ins.
+    const adopt = function (root) {
+      for (const sel of FLOATING_SELECTORS) {
+        if (root.matches && root.matches(sel)) window.VSFloating.register(root);
+        if (root.querySelectorAll) root.querySelectorAll(sel).forEach(function (el) { window.VSFloating.register(el); });
+      }
+    };
+    const start = function () {
+      adopt(document.body);
+      if (typeof MutationObserver === 'function') {
+        new MutationObserver(function (records) {
+          for (const rec of records) {
+            rec.addedNodes.forEach(function (n) { if (n.nodeType === 1) adopt(n); });
+          }
+          schedule();
+        }).observe(document.body, {
+          childList: true, subtree: true, attributes: true,
+          attributeFilter: ['style', 'class', 'hidden', 'data-collapsed']
+        });
+      }
+      window.addEventListener('resize', schedule, { passive: true });
+      window.addEventListener('orientationchange', schedule, { passive: true });
+      window.addEventListener('scroll', schedule, { passive: true });
+    };
+    if (document.body) start();
+    else document.addEventListener('DOMContentLoaded', start, { once: true });
+  }
   if (!window.VSAttention) {
     const attentionKey = 'vs_attention_surface_v1';
-    const selectors = ['#cookieConsent', '#pwa-install-banner', '.vs-exit-panel', '.vs-vd', '.vs-journey'];
+    const selectors = BLOCKING_SELECTORS;
     const visible = function (selector) {
       const el = document.querySelector(selector);
       if (!el) return false;
@@ -67,20 +171,6 @@
       idle: true
     },
     {
-      src: '/assets/presence-badge.js',
-      when: function () {
-        return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      },
-      idle: true
-    },
-    {
-      src: '/assets/favicon-pulse.js',
-      when: function () {
-        return document.visibilityState === 'visible';
-      },
-      idle: true
-    },
-    {
       // Studio-health genome strip — top-of-page SIL mini-bars. Off the cold-cache
       // path (S178 split); skips the same surfaces the script itself does, so it
       // never even fetches on portals/admin/api or [data-no-strip] pages.
@@ -91,6 +181,25 @@
         if (document.documentElement.hasAttribute('data-no-strip')) return false;
         if (document.body && document.body.hasAttribute('data-no-strip')) return false;
         return true;
+      },
+      idle: true
+    },
+    {
+      // S356: The Desk wire strip — swaps the newest Desk headline into the
+      // server-rendered, fixed-height slot at the bottom of .site-header
+      // (propagate-nav buildNav). Skips portals/admin/api, /news/<date>/ article
+      // pages (the reader is already on the Desk), [data-no-strip] pages, pages
+      // without the slot, and <=430px where the strip is display:none — no fetch
+      // for a surface nobody can see. The static fallback link stays everywhere.
+      src: '/assets/desk-wire.js',
+      when: function () {
+        var p = location.pathname || '/';
+        if (/^\/(vault-member|investor-portal|admin|api)\//.test(p)) return false;
+        if (/^\/news\/\d{4}-\d{2}-\d{2}\//.test(p)) return false;
+        if (document.documentElement.hasAttribute('data-no-strip')) return false;
+        if (document.body && document.body.hasAttribute('data-no-strip')) return false;
+        if (!document.querySelector('.site-header [data-desk-wire]')) return false;
+        return !(window.matchMedia && window.matchMedia('(max-width: 430px)').matches);
       },
       idle: true
     },

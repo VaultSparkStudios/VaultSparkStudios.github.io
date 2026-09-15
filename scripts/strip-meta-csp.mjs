@@ -17,6 +17,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 
 const SKIP_DIRS = new Set([
   '.git', 'node_modules', 'playwright-report', 'test-results', 'dist', 'dist-cap',
+  '.claude', // S356: agent worktrees are full repo checkouts
 ]);
 
 function walk(dir, out = []) {

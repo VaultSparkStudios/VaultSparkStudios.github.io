@@ -4,7 +4,7 @@
  * Complements `<script type=speculationrules>` (which prerenders HTML on
  * eagerness=moderate) by pre-fetching the JSON shards that pages hydrate
  * from: api/public-intelligence.json, api/heartbeat.json,
- * api/founder-presence.json, api/vault-narrative.json. Pages that depend on
+ * api/vault-narrative.json. Pages that depend on
  * those shards (Studio Pulse, homepage heartbeat, /journal/dispatches/,
  * /studio-pulse/) become near-instant on first interaction.
  *
@@ -31,7 +31,6 @@
     '/journal/':            ['/api/vault-narrative.json'],
     '/journal/dispatches/': ['/api/vault-narrative-history.json'],
     '/changelog/':          ['/api/public-intelligence.json'],
-    '/community/':          ['/api/founder-presence.json'],
     '/leaderboards/':       ['/api/leaderboard/v1/global.json'],
     '/ranks/':              ['/api/public-intelligence.json'],
   };

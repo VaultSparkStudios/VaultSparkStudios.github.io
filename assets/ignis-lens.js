@@ -12,7 +12,11 @@
 
   var STYLE = [
     '.vs-lens{position:fixed;right:1.1rem;bottom:1.1rem;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem;font-family:inherit;}',
-    '.vs-lens__pill{display:inline-flex;align-items:center;gap:0.45rem;background:rgba(13,16,28,0.92);color:var(--gold,#d4af37);border:1px solid rgba(212,175,55,0.4);border-radius:999px;padding:0.55rem 1rem;font-size:0.82rem;font-family:Georgia,serif;letter-spacing:0.04em;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,0.35);transition:transform 160ms ease,box-shadow 160ms ease;}',
+    // S357: min-height 44px (audit P1-17 — the pill measured 115×35), and the
+    // whole lens stands down while a blocking overlay owns the screen so two
+    // floating surfaces never stack (audit P1-14).
+    'html[data-vs-overlay-busy] .vs-lens{display:none;}',
+    '.vs-lens__pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;gap:0.45rem;background:rgba(13,16,28,0.92);color:var(--gold,#d4af37);border:1px solid rgba(212,175,55,0.4);border-radius:999px;padding:0.55rem 1rem;font-size:0.82rem;font-family:Georgia,serif;letter-spacing:0.04em;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,0.35);transition:transform 160ms ease,box-shadow 160ms ease;}',
     '.vs-lens__pill:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(212,175,55,0.25);}',
     '.vs-lens__pill:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold,#d4af37);box-shadow:0 0 10px var(--gold,#d4af37);animation:vs-lens-pulse 2.6s ease-in-out infinite;}',
     '@keyframes vs-lens-pulse{0%,100%{opacity:0.55;}50%{opacity:1;}}',

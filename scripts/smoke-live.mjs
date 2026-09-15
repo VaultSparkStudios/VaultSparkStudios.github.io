@@ -43,12 +43,12 @@ const EDGE_ONLY = args.includes('--edge-only');
 const ORIGIN = flag('--origin', 'https://vaultsparkstudios-website.pages.dev').replace(/\/$/, '');
 const PROD = flag('--prod', flag('--base', 'https://vaultsparkstudios.com')).replace(/\/$/, '');
 const CONTENT_ROUTES = EDGE_ONLY ? [] : flag('--content-routes', '/,/membership/').split(',').filter(Boolean);
-const EDGE_ROUTES = flag('--edge-routes', '/,/api/founder-presence.json').split(',').filter(Boolean);
+const EDGE_ROUTES = flag('--edge-routes', '/,/api/build-sha.json').split(',').filter(Boolean);
 // JSON artifacts checked against the ORIGIN (Pages) for *validity*, not just a 200.
 // CI runs from a datacenter so the prod edge bot-challenges JSON paths (403) too —
 // we can't assert edge content from CI, but we CAN catch a deploy that shipped
 // malformed JSON (a broken generator) which the HTML-marker check would miss.
-const JSON_ROUTES = EDGE_ONLY ? [] : flag('--json-routes', '/api/founder-presence.json,/api/site-health.json').split(',').filter(Boolean);
+const JSON_ROUTES = EDGE_ONLY ? [] : flag('--json-routes', '/api/build-sha.json,/api/site-health.json').split(',').filter(Boolean);
 const MARKER = flag('--marker', 'VaultSpark');
 const MIN_BYTES = Number(flag('--min-bytes', '1000'));
 const TIMEOUT_MS = EDGE_ONLY ? Number(flag('--timeout-ms', '5000')) : Number(flag('--timeout-ms', '12000'));

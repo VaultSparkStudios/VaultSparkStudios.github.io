@@ -1,31 +1,121 @@
 name: Monthly Member Newsletter
 
 on:
-  # Runs at 10:00 UTC on the 2nd of every month (offset from investor digest)
+  # Runs at 10:00 UTC on the 2nd of every month (offset from investor digest). Always mode=send.
   schedule:
     - cron: '0 10 2 * *'
-  # Allow manual trigger from Actions tab
+  # Manual runs default to a single preview mail, never a member-wide send.
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preview = one mail to preview_to | dry-run = counts only, sends nothing | send = mail every opted-in member'
+        type: choice
+        options:
+          - preview
+          - dry-run
+          - send
+        default: preview
+      preview_to:
+        description: 'Preview recipient (must be on an allowed preview domain)'
+        type: string
+        default: founder@vaultsparkstudios.com
+
+permissions:
+  contents: read
+
+concurrency:
+  group: member-newsletter
+  cancel-in-progress: false
 
 jobs:
   send-newsletter:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-      - name: Trigger member newsletter Edge Function
+      - name: Invoke send-member-newsletter Edge Function
+        env:
+          NEWSLETTER_SECRET: ${{ secrets.NEWSLETTER_SECRET }}
+          FUNCTION_BASE_URL: ${{ secrets.SUPABASE_FUNCTION_BASE_URL }}
+          MODE: ${{ github.event_name == 'schedule' && 'send' || inputs.mode }}
+          PREVIEW_TO: ${{ inputs.preview_to }}
         run: |
-          STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
-            -X POST \
-            -H "Authorization: Bearer ${{ secrets.NEWSLETTER_SECRET }}" \
-            -H "Content-Type: application/json" \
-            "${{ secrets.SUPABASE_FUNCTION_BASE_URL }}/send-member-newsletter")
+          set -euo pipefail
 
-          echo "HTTP status: $STATUS"
-          echo "Response: $(cat /tmp/response.json)"
-
-          if [ "$STATUS" != "200" ]; then
-            echo "::error::Newsletter function returned status $STATUS"
+          if [ -z "${NEWSLETTER_SECRET}" ]; then
+            echo "::error::Repository secret NEWSLETTER_SECRET is not set (the function would reject an empty Bearer)."
+            exit 1
+          fi
+          if [ -z "${FUNCTION_BASE_URL}" ]; then
+            echo "::error::Repository secret SUPABASE_FUNCTION_BASE_URL is not set."
             exit 1
           fi
 
-          SENT=$(cat /tmp/response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('sent',0))" 2>/dev/null || echo "0")
-          echo "::notice::Newsletter sent to $SENT members."
+          case "${MODE}" in
+            preview) BODY=$(jq -cn --arg to "${PREVIEW_TO}" '{previewTo: $to}') ;;
+            dry-run) BODY='{"dryRun":true}' ;;
+            send)    BODY='{"send":true}' ;;
+            *) echo "::error::Unknown mode '${MODE}'"; exit 1 ;;
+          esac
+          echo "Mode: ${MODE}"
+
+          URL="${FUNCTION_BASE_URL%/}/send-member-newsletter"
+          MAX_INVOCATIONS=10
+          TOTAL_SENT=0
+          TOTAL_FAILED=0
+          attempt=1
+
+          while :; do
+            STATUS=$(curl -sS -o /tmp/response.json -w "%{http_code}" --max-time 420 \
+              -X POST \
+              -H "Authorization: Bearer ${NEWSLETTER_SECRET}" \
+              -H "Content-Type: application/json" \
+              --data "${BODY}" \
+              "${URL}") || STATUS="000"
+
+            echo "Invocation ${attempt}: HTTP ${STATUS}"
+            echo "Summary: $(cat /tmp/response.json 2>/dev/null || echo '<no body>')"
+
+            if [ "${STATUS}" != "200" ]; then
+              echo "::error::send-member-newsletter returned HTTP ${STATUS} (mode=${MODE})"
+              exit 1
+            fi
+
+            if [ "${MODE}" = "dry-run" ]; then
+              echo "::notice::Dry run: $(jq -r '"eligible=\(.eligible) wouldSend=\(.wouldSend) alreadySent=\(.alreadySent) optedOut=\(.optedOut) noEmail=\(.noEmail) providerConfigured=\(.providerConfigured)"' /tmp/response.json)"
+              exit 0
+            fi
+
+            if [ "${MODE}" = "preview" ]; then
+              if [ "$(jq -r '.sent' /tmp/response.json)" != "1" ]; then
+                echo "::error::Preview was not accepted by the mail provider."
+                exit 1
+              fi
+              echo "::notice::Preview accepted by Brevo: $(jq -r '.subject' /tmp/response.json)"
+              exit 0
+            fi
+
+            # mode=send — the function stops at its time budget; re-invoke until complete.
+            TOTAL_SENT=$((TOTAL_SENT + $(jq -r '.sent' /tmp/response.json)))
+            TOTAL_FAILED=$((TOTAL_FAILED + $(jq -r '.failed' /tmp/response.json)))
+            COMPLETE=$(jq -r '.complete' /tmp/response.json)
+            ABORTED=$(jq -r '.aborted // empty' /tmp/response.json)
+
+            if [ -n "${ABORTED}" ]; then
+              echo "::error::Send aborted: ${ABORTED} (sent=${TOTAL_SENT} failed=${TOTAL_FAILED})"
+              exit 1
+            fi
+            if [ "${COMPLETE}" = "true" ]; then
+              break
+            fi
+            if [ "${attempt}" -ge "${MAX_INVOCATIONS}" ]; then
+              echo "::error::Send still incomplete after ${MAX_INVOCATIONS} invocations (remaining=$(jq -r '.remaining' /tmp/response.json))"
+              exit 1
+            fi
+            attempt=$((attempt + 1))
+          done
+
+          echo "::notice::Newsletter sent=${TOTAL_SENT} failed=${TOTAL_FAILED}"
+          if [ "${TOTAL_FAILED}" -gt 0 ]; then
+            echo "::error::${TOTAL_FAILED} member send(s) failed; they were released and will retry on the next send run this period."
+            exit 1
+          fi

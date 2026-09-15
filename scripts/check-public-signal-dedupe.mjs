@@ -6,7 +6,7 @@ import path from 'node:path';
 const ROOT = process.cwd();
 const SELF_TEST = process.argv.includes('--self-test');
 const BUS = 'assets/public-intelligence.js';
-const SIGNAL_RE = /\/api\/(?:public-intelligence|founder-presence)\.json/;
+const SIGNAL_RE = /\/api\/public-intelligence\.json/;
 
 function homepageAssetScripts(index) {
   return [...String(index).matchAll(/<script\s+[^>]*src=["']\/?(assets\/[^"']+\.js)["'][^>]*>/gi)]
@@ -20,13 +20,13 @@ export function evaluate(index, sources) {
   if (!/var nativeFetch = window\.fetch\.bind\(window\)/.test(bus) || !/window\.fetch = function/.test(bus)) {
     findings.push('legacy fetch compatibility membrane missing');
   }
-  if (!bus.includes("'/api/public-intelligence.json'") || !bus.includes("'/api/founder-presence.json'")) {
+  if (!bus.includes("'/api/public-intelligence.json'")) {
     findings.push('signal membrane endpoint allowlist incomplete');
   }
 
   const eager = [...String(index).matchAll(/<link\s+[^>]*rel=["']prefetch["'][^>]*href=["']([^"']+)["']/gi)]
     .map((match) => match[1])
-    .filter((href) => ['/api/founder-presence.json', '/vault-member/', '/games/'].includes(href));
+    .filter((href) => ['/vault-member/', '/games/'].includes(href));
   if (eager.length) findings.push(`unconditional prefetches: ${eager.join(', ')}`);
 
   const scripts = homepageAssetScripts(index);
@@ -40,7 +40,7 @@ export function evaluate(index, sources) {
 }
 
 if (SELF_TEST) {
-  const bus = "var nativeFetch = window.fetch.bind(window); window.fetch = function(){}; window.VSPublicSignals = {}; '/api/public-intelligence.json'; '/api/founder-presence.json';";
+  const bus = "var nativeFetch = window.fetch.bind(window); window.fetch = function(){}; window.VSPublicSignals = {}; '/api/public-intelligence.json';";
   const sources = { [BUS]: bus, 'assets/a.js': "fetch('/api/public-intelligence.json')" };
   const good = evaluate('<script src="/assets/public-intelligence.js"></script><script src="/assets/a.js"></script>', sources);
   const badOrder = evaluate('<script src="/assets/a.js"></script><script src="/assets/public-intelligence.js"></script>', sources);

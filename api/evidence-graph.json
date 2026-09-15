@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "757e12bb22f7ac9146decb759f4a5bd01c657db48c0f6720b1dfd29e44d55a44",
+  "contractSha256": "776942f6a8877394446b5a7b9e8aef7b59d321ac5e8cbe7346a6ded0cb7486b6",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
   "nodeCount": 82,
-  "cascadeNodeCount": 40,
+  "cascadeNodeCount": 41,
   "buildOrder": [
     "ai-canonical-pages",
     "ambient-bundles",
@@ -28,7 +28,6 @@
     "favicon",
     "field-win-proof",
     "flight-director",
-    "founder-presence",
     "geo-vitals",
     "heartbeat",
     "identity-migration-receipt",
@@ -67,6 +66,7 @@
     "public-ecosystem",
     "security-posture",
     "shell-assets",
+    "studio-timeline",
     "worker-route-history",
     "canonical-destination-reachability",
     "early-hints-headers",
@@ -175,7 +175,6 @@
         "assets/breadcrumb-render.js",
         "assets/command-palette-loader.js",
         "assets/edge-swipe-nav.js",
-        "assets/founder-presence-handle.js",
         "assets/hover-prefetch.js",
         "assets/journey-conductor.js",
         "assets/native-feel.js",
@@ -560,19 +559,6 @@
       "externalSources": []
     },
     {
-      "id": "founder-presence",
-      "output": "api/founder-presence.json",
-      "builder": "scripts/generate-founder-presence.mjs",
-      "verify": "node scripts/generate-founder-presence.mjs --check",
-      "publishCascade": false,
-      "dependsOn": [],
-      "feeds": [],
-      "externalSources": [
-        "context/.session-lock",
-        "context/PROJECT_STATUS.json"
-      ]
-    },
-    {
       "id": "geo-vitals",
       "output": "api/geo-vitals.json",
       "builder": "scripts/build-geo-vitals.mjs",
@@ -616,7 +602,11 @@
         "api/candidate-artifact-manifest.json",
         "api/deploy-currency.json"
       ],
-      "externalSources": []
+      "externalSources": [
+        "assets/og/news/*--meme.avif",
+        "assets/og/news/*--meme.png",
+        "assets/og/news/*--meme.webp"
+      ]
     },
     {
       "id": "identity-migration-receipt",
@@ -882,6 +872,7 @@
       "dependsOn": [],
       "feeds": [
         "api/intent-map.json",
+        "api/studio-timeline.json",
         "index.html"
       ],
       "externalSources": [
@@ -1122,6 +1113,7 @@
         "api/nervous-system.json",
         "api/oracle-insights.json",
         "api/public-status.json",
+        "api/studio-timeline.json",
         "changelog/index.html",
         "data/ignis-search-index.json"
       ],
@@ -1427,6 +1419,23 @@
         "api/staging-health.json",
         "api/supabase-control-plane.json",
         "api/uptime.json"
+      ]
+    },
+    {
+      "id": "studio-timeline",
+      "output": "api/studio-timeline.json",
+      "builder": "scripts/build-studio-timeline.mjs",
+      "verify": "node scripts/build-studio-timeline.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/news-desk.json",
+        "api/public-intelligence.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "external:github-public-commits",
+        "portfolio/events.ndjson",
+        "studio-hub/src/data/studioRegistry.js"
       ]
     },
     {

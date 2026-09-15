@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 986.7 | 5: 985.8 | 10: 986.2 | 25: — | all: 983.1
-History scope: 194 recorded /1000 entries across the active ledger and preserved SIL archives.
+Sparkline (last 5 totals): ▇▇▇▇█
+Avgs — 3: 987.7 | 5: 987.4 | 10: 987.3 | 25: — | all: 983.1
+History scope: 195 recorded /1000 entries across the active ledger and preserved SIL archives.
 Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-14 | Session 355 | Total: 988/1000 | Velocity: 7 | protocolVelocity: 0
+Last session: 2026-09-15 | Session 356 | Total: 991/1000 | Velocity: 10 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2853,3 +2853,30 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Committed to TASK_BOARD:** [S355] /journal/ mount · [S355] staging Worker observability.
 
 **Intent outcome:** see the S355 release addendum.
+
+## 2026-09-15 — Session 356 (The Desk flagship + studio truth + site-wide crawl) | Total: 991/1000 (v3.0) | Velocity: 10 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Every fix proven against the real failure: 25 illustrations reviewed one at a time, overlaps measured as rectangles, CLS measured before and after, sandbox confinement probed with writes that must fail. |
+| Creative Alignment | 100 | The flagship reads like a newsroom again — real art, headline-first articles, readable persona voices, image-led index. |
+| Momentum | 99 | Ten parallel tracks landed in one session with disjoint file ownership; two agent crashes recovered without losing work. |
+| Engagement | 97 | Comments, working reactions, homepage lead and a site-wide strip — all built, none live yet, so the reader-facing gain is still pending. |
+| Process Quality | 98 | An independent reviewer read every finished diff and found real defects (double-send, false-green timeline, unreviewed art path) that the building agents' own tests had passed. |
+| Cross-Repo Coherence | 100 | Founder presence needs a studio-ops publisher; shipped as Ark cargo instead of a cross-repo edit. |
+| Security Posture | 99 | Comments are service-role only with RLS and no anon grants; the art worker refuses API-key login and an unconfined sandbox; newsletter fail-closed. Leaderboard embed contrast still open. |
+| Ecosystem Integration | 100 | The overlay-registry, sandbox-verification and claim-release lessons generalize to every studio surface. |
+| Capital Efficiency | 100 | Art generation costs nothing extra: it runs on the founder's existing plan, with preflight that refuses a billed path. |
+| Automation Coverage | 99 | New copy-quality gate, 9 unit specs over previously untested client code, timeline wired into the publish cascade. |
+
+**Top win:** the flagship was shipping placeholder diagrams under a caption that claimed source-bound editorial art, and nothing detected it. Now art is generated, reviewed, hash-bound, and honestly labelled when it is a placeholder.
+
+**Top gap:** nothing is in production yet — the whole release (build, receipts, migration, Worker, newsletter) is still ahead, and the staging 503s remain unsourced.
+
+**Honesty ledger:** did not let an agent's own screenshots stand as the visual check. Did not accept "sandbox configured" without a write that had to fail. Did not ship the Hugging Face illustration that carried a brand mascot. Did not change the public portfolio total silently — traced the missing 27th project first. Did not send a single member email.
+
+**Brainstorm:** (1) a gate that fails when any fixed/sticky element's rect intersects an interactive control; (2) a render-time check that a caption's claim matches the artefact's provenance kind; (3) extend the copy-quality gate to every public surface, not just the Desk.
+
+**Committed to TASK_BOARD:** [S356] "Coming soon" copy on six game pages · [S356] leaderboard embed contrast.
+
+**Intent outcome:** see the S356 release addendum.

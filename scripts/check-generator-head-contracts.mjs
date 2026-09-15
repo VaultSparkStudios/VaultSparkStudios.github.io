@@ -26,7 +26,6 @@ const NON_PAGE_GENERATORS = new Set([
   'generate-build-sha.mjs',
   'generate-changelog-entry.mjs',
   'generate-feed.mjs',
-  'generate-founder-presence.mjs',
   'generate-genius-list.mjs',
   'generate-heartbeat.mjs',
   'generate-innovation-pack.mjs',

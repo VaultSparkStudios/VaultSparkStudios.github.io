@@ -89,14 +89,31 @@ function sanitizeProject(p, publicNote) {
     nextMilestone: '',
     ignisScore: p.ignisScore ?? null,
     ignisGrade: p.ignisGrade ?? null,
-    lastUpdated: p.lastUpdated,
-    staleDays: p.staleDays ?? 0,
     voice: '',
     // internal-only fields intentionally dropped: blockers, blockerCount,
     // stagingUrl, internal links, raw currentFocus/voice. blockerCount zeroed.
     blockerCount: 0,
+    // WORK-RECENCY FIELDS ARE DELIBERATELY NOT EMITTED (CANON-028 Founder
+    // Identity Privacy). The upstream row carries `lastUpdated` (day precision)
+    // and `staleDays`; both are derived from PROJECT_STATUS.lastUpdated, which is
+    // stamped at closeout — so publishing either tells the whole internet which
+    // days a private individual was at their desk, per project. That is the same
+    // disclosure as the removed live founder-presence pill, rendered a day late.
+    // Do NOT reintroduce them, and do NOT reintroduce a softened derivative
+    // ("recently active", "freshness", a stale/dormant badge): the claim is the
+    // leak, not the wording. `tests/founder-presence-absent.unit.spec.js` fails
+    // if any row in the published artifact carries them again.
+    //
+    // KEPT, because none of these encode WHEN work happened: vaultStatus + health
+    // (health is not time-derived — the published artifact holds green rows that
+    // are 120 days stale and yellow rows stamped today), ignisScore/ignisGrade
+    // (quality scores; `ignisLastComputed` is dropped), liveUrl, curated
+    // currentFocus copy, and the studio-level counts.
   };
 }
+/* Row keys that republish founder work recency. Shared by the sanitizer's
+   self-test and --check so the producer and the gate police one list. */
+const RECENCY_KEYS = ['lastUpdated', 'staleDays', 'ignisLastComputed', 'lastActivityAt', 'lastCommitAt', 'updatedAt'];
 
 function build(srcJson, publicCatalog) {
   const noteBySlug = new Map((publicCatalog || []).map((c) => [c.id, c.note || '']));
@@ -147,6 +164,17 @@ function runSelfTest() {
   t('build drops internal voice', sample.projects[0].voice === '');
   t('build keeps only public', sample.projects.length === 1 && sample.projects[0].slug === 'a');
   t('build zeroes blockerCount', sample.projects[0].blockerCount === 0);
+  // CANON-028: the sanitizer must strip every work-recency field even when the
+  // upstream row carries them (it does — the IGNIS aggregate stamps both).
+  const recencySample = build({ projects: [{
+    slug: 'r', name: 'R', audience: 'public-live', vaultStatus: 'sparked',
+    lastUpdated: '2026-09-14', staleDays: 0, ignisLastComputed: '2026-09-14T00:00:00Z',
+  }] }, []);
+  for (const key of RECENCY_KEYS) {
+    t(`build drops work-recency field ${key}`,
+      !Object.prototype.hasOwnProperty.call(recencySample.projects[0], key));
+  }
+  t('build keeps non-timing structure alongside', recencySample.projects[0].vaultStatus === 'sparked');
   t('build sanitizes focus', !LEAK.test(sample.projects[0].currentFocus));
   t('build sanitizes studioVoice', !LEAK.test(sample.ignisAggregate.studioVoice));
   console.log(`build-public-ecosystem --self-test: ${pass} passed, ${fail} failed`);
@@ -174,6 +202,11 @@ if (CHECK) {
     if (String(p.vaultStatus || '').toLowerCase() === 'vaulted') errs.push(`sealed/VAULTED project leaked: ${p.slug}`);
     if (p.blockerCount) errs.push(`internal blockerCount leaked: ${p.slug}`);
     if ('blockers' in p || 'stagingUrl' in p) errs.push(`internal field leaked: ${p.slug}`);
+    for (const key of RECENCY_KEYS) {
+      if (Object.prototype.hasOwnProperty.call(p, key)) {
+        errs.push(`founder work-recency field republished (CANON-028): ${p.slug}.${key}`);
+      }
+    }
     if (LEAK.test(p.currentFocus || '') || LEAK.test(p.voice || '') || LEAK.test(p.nextMilestone || '')) errs.push(`voice-leak in ${p.slug}`);
   }
   if (art.ignisAggregate && LEAK.test(art.ignisAggregate.studioVoice || '')) errs.push('voice-leak in studioVoice');

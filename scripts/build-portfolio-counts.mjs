@@ -7,8 +7,11 @@
  * closes the last hand-maintained count surface so the source of truth is singular.
  *
  * Injects (regex, no markers needed) into press/index.html:
- *   - the stat line:  "27 initiatives · 6 sparked · 14 in the forge · 0 vaulted"
+ *   - the stat line:  "26 initiatives · 6 sparked · 14 in the forge · 0 vaulted"
  *   - the prose count words: "Six are sparked …" / "… fourteen more in active forge"
+ *   - the bio prose total: "the studio now spans 26 initiatives across …" (S356 — this
+ *     was the last hand-typed portfolio total on the page; check-press-kit-drift
+ *     pinned it but no generator owned it, so a registry change broke build:check)
  * Project NAMES in the prose are left to the author (not a count, lower churn).
  *
  * Usage: node scripts/build-portfolio-counts.mjs [--check] [--self-test]
@@ -62,6 +65,12 @@ export function injectCounts(html, counts) {
   // 2. Prose count words: "<Word> are sparked" and "with <word> more in active forge".
   out = out.replace(/\b([A-Z][a-z]+)\s+are sparked\b/, `${cap(toWord(counts.sparked))} are sparked`);
   out = out.replace(/\bwith\s+([a-z][a-z-]+)\s+more in active forge\b/, `with ${toWord(counts.forge)} more in active forge`);
+  // 3. Bio prose total: "spans <N|word> initiatives across …" — digits or word-spelled.
+  // check-press-kit-drift.mjs pins this string (bioTotalRegex); this makes it derived.
+  out = out.replace(
+    /\b(\d+|[A-Za-z][a-z-]+)(\s+initiatives\s+across\b)/,
+    `${counts.total}$2`
+  );
   return { html: out, changed: out !== html };
 }
 
@@ -81,6 +90,13 @@ if (SELF_TEST) {
   a(r.html.includes('2 sparked &middot; 1 in the forge'), 'stat line rewritten');
   a(r.html.includes('Two are sparked'), 'prose sparked word rewritten');
   a(r.html.includes('with one more in active forge'), 'prose forge word rewritten');
+  // S356: bio prose total is derived, from either a digit or a word-spelled original.
+  const bioDigits = injectCounts('the studio now spans 27 initiatives across games', { total: 26, sparked: 1, forge: 1, vaulted: 0 });
+  a(bioDigits.html.includes('spans 26 initiatives across'), 'bio total rewritten (digits)');
+  const bioWords = injectCounts('the studio now spans twenty-seven initiatives across games', { total: 26, sparked: 1, forge: 1, vaulted: 0 });
+  a(bioWords.html.includes('spans 26 initiatives across'), 'bio total rewritten (word-spelled)');
+  const bioIdem = injectCounts(bioDigits.html, { total: 26, sparked: 1, forge: 1, vaulted: 0 });
+  a(!bioIdem.changed, 'bio total injection is idempotent');
   console.log(`\nbuild-portfolio-counts self-test: ${fail ? '✗ ' + fail + ' failed' : 'all passed'}`);
   process.exit(fail ? 1 : 0);
 }

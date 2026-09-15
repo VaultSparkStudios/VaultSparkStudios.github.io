@@ -38,20 +38,6 @@
       ]
     },
     {
-      "id": "founder-presence",
-      "output": "api/founder-presence.json",
-      "sources": [
-        "context/PROJECT_STATUS.json",
-        "context/.session-lock"
-      ],
-      "builder": "scripts/generate-founder-presence.mjs",
-      "check": [
-        "node",
-        "scripts/generate-founder-presence.mjs",
-        "--check"
-      ]
-    },
-    {
       "id": "startup-brief",
       "output": "docs/STARTUP_BRIEF.md",
       "sources": [
@@ -403,6 +389,25 @@
       ]
     },
     {
+      "id": "studio-timeline",
+      "output": "api/studio-timeline.json",
+      "sources": [
+        "portfolio/events.ndjson",
+        "api/news-desk.json",
+        "api/public-intelligence.json",
+        "studio-hub/src/data/studioRegistry.js",
+        "external:github-public-commits"
+      ],
+      "builder": "scripts/build-studio-timeline.mjs",
+      "check": [
+        "node",
+        "scripts/build-studio-timeline.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S356: modeled from the generator source (events ledger session-closed rows, Desk cards, the public-intelligence catalog, the hub registry, and PUBLIC VaultSparkStudios org commits read live from the GitHub API). The GitHub feed is a volatile external input, so --check validates shape + public-safety invariants rather than byte-equality."
+    },
+    {
       "id": "news-desk-stats",
       "output": "api/news-desk-stats.json",
       "sources": [
@@ -488,7 +493,10 @@
       "output": "index.html",
       "sources": [
         "api/news-desk.json",
-        "api/news-desk-freshness.json"
+        "api/news-desk-freshness.json",
+        "assets/og/news/*--meme.avif",
+        "assets/og/news/*--meme.webp",
+        "assets/og/news/*--meme.png"
       ],
       "builder": "scripts/build-home-desk-module.mjs",
       "check": [
@@ -914,7 +922,6 @@
         "assets/rum-beacon.js",
         "assets/page-sigil.js",
         "assets/vault-atlas.js",
-        "assets/founder-presence-handle.js",
         "assets/journey-conductor.js"
       ],
       "builder": "scripts/build-ambient-bundle.mjs",

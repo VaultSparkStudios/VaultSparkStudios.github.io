@@ -123,12 +123,38 @@ export function similarity(a, b) {
   return shared / (A.size + B.size - shared);
 }
 
+/**
+ * Second-level public suffixes common in news publishing. Under these, the
+ * registrable name is the THIRD label from the right.
+ *
+ * Without this, `theguardian.co.uk` and `bbc.co.uk` both collapsed to `co.uk`,
+ * so two genuinely independent British outlets counted as one source — and
+ * corroboration, the highest-weighted signal in scoreTopic(), silently
+ * undercounted. It is a fixed list rather than a real public-suffix library
+ * because the Desk's feed set is enumerated in this repo (no dependency is
+ * worth carrying for it) — the limitation is that an unlisted multi-part
+ * suffix still folds to two labels, which over-merges rather than
+ * over-splits, so it can suppress a topic but never invent corroboration.
+ */
+export const SECOND_LEVEL_SUFFIXES = new Set([
+  'co.uk', 'org.uk', 'ac.uk', 'gov.uk', 'me.uk', 'net.uk', 'plc.uk',
+  'com.au', 'net.au', 'org.au', 'gov.au', 'edu.au',
+  'co.jp', 'or.jp', 'ne.jp', 'ac.jp', 'go.jp',
+  'co.nz', 'net.nz', 'org.nz', 'co.za', 'org.za',
+  'co.in', 'net.in', 'org.in', 'co.kr', 'or.kr',
+  'com.br', 'com.mx', 'com.ar', 'com.cn', 'com.hk', 'com.sg',
+  'com.tw', 'com.tr', 'com.my', 'com.ph', 'com.pk', 'com.ua',
+]);
+
 /** Registrable-ish domain, so two URLs from one outlet never look independent. */
 export function sourceDomain(url) {
   try {
     const host = new URL(String(url)).hostname.toLowerCase().replace(/^www\./, '');
     const parts = host.split('.');
-    return parts.length > 2 ? parts.slice(-2).join('.') : host;
+    if (parts.length <= 2) return host;
+    const suffix = parts.slice(-2).join('.');
+    if (SECOND_LEVEL_SUFFIXES.has(suffix) && parts.length >= 3) return parts.slice(-3).join('.');
+    return suffix;
   } catch { return null; }
 }
 
@@ -136,6 +162,31 @@ export function sourceDomain(url) {
  * prose to the standards desk. Keep that distinction in the topic model. */
 export const isAggregatorUrl = (url) =>
   /(^|\/\/)news\.google\.com\//i.test(String(url || ''));
+
+/**
+ * S356: hosts whose article pages answer our honestly-identified fetcher with a
+ * paywall. They still count as independent OUTLETS for corroboration, but they
+ * are never "readable", so the drafter's bounded 4-attempt budget is not spent
+ * being refused by them.
+ */
+export const PAYWALL_HOSTS = ['ft.com', 'bloomberg.com', 'wsj.com', 'nytimes.com'];
+export const isPaywalledUrl = (url) => PAYWALL_HOSTS.includes(sourceDomain(url));
+
+/** Feeds that summarise OTHER publishers' work. Their summary text is never a fact source. */
+export const AGGREGATOR_FEED_HOSTS = ['google.com', 'techmeme.com', 'ycombinator.com', 'algolia.com'];
+
+/**
+ * Is `feedUrl` the article publisher's OWN feed? Only then may its item summary
+ * stand in for an article page that refused us (founder decision S356). An
+ * aggregator's summary is its paraphrase of someone else's reporting, so it is
+ * excluded even when it links the right article.
+ */
+export function isOwnPublisherFeed(articleUrl, feedUrl) {
+  if (!articleUrl || !feedUrl || isAggregatorUrl(articleUrl) || isAggregatorUrl(feedUrl)) return false;
+  const article = sourceDomain(articleUrl);
+  const feed = sourceDomain(feedUrl);
+  return Boolean(article && feed) && !AGGREGATOR_FEED_HOSTS.includes(feed) && article === feed;
+}
 
 /**
  * Outlet identity for corroboration counting.
@@ -205,7 +256,7 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
     const lead = primary || [...c.items].sort((a, b) => (b.engagement || 0) - (a.engagement || 0))[0];
     const domains = [...new Set(c.items.map(itemOutlet).filter(Boolean))].sort();
     const readableSourceCount = new Set(c.items
-      .filter((i) => !isAggregatorUrl(i.url))
+      .filter((i) => !isAggregatorUrl(i.url) && !isPaywalledUrl(i.url))
       .map(itemOutlet)
       .filter(Boolean)).size;
     return {
@@ -221,7 +272,17 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
       engagement: c.items.reduce((n, i) => n + (Number(i.engagement) || 0), 0),
       newestHoursAgo: Math.min(...c.items.map((i) => Number(i.hoursAgo) ?? 999)),
       beats: classifyBeats(`${lead.title} ${lead.summary || ''}`),
-      sources: c.items.map((i) => ({ url: i.url, outlet: itemOutlet(i), primary: Boolean(i.primary) })),
+      // A publisher's own feed summary travels with its source (bounded), so the
+      // drafter can fall back to it when the article page refuses our fetcher.
+      // Aggregator summaries are never carried — they cannot become facts.
+      sources: c.items.map((i) => ({
+        url: i.url,
+        outlet: itemOutlet(i),
+        primary: Boolean(i.primary),
+        ...(i.summary && isOwnPublisherFeed(i.url, i.feedUrl)
+          ? { feedSummary: String(i.summary).slice(0, 1500), feedUrl: i.feedUrl }
+          : {}),
+      })),
       // Every headline in the cluster, not just the lead's.
       //
       // Cross-outlet corroboration compares one cluster against another. With
@@ -332,7 +393,7 @@ const clamp01 = (n) => Math.max(0, Math.min(1, n));
  * `publishedTitles` demotes re-runs; `personaBeats` is the roster's beat map,
  * so castability is computed against the ACTUAL cast rather than a guess.
  */
-export function scoreTopic(topic, { publishedTitles = [], publishedSlugs = [], personaBeats = {}, now = null } = {}) {
+export function scoreTopic(topic, { publishedTitles = [], publishedSlugs = [], publishedSlugSources = null, personaBeats = {}, now = null } = {}) {
   const reasons = [];
 
   const corroboration = topic.hasPrimarySource
@@ -389,8 +450,27 @@ export function scoreTopic(topic, { publishedTitles = [], publishedSlugs = [], p
   // so the same topic re-clustered on a later day can slip under 0.62 (the
   // 2026-08-21..23 triple-run). The topic slug is deterministic — an exact
   // match against published story slugs is a hard disqualification.
+  //
+  // S356: an exact slug match is still a hard block UNLESS the topic carries a
+  // readable source URL the published story never cited — a genuine follow-up.
+  // It is marked `followUpOf` and the drafter publishes it under a dated
+  // `<slug>-update-<date>` slug; a rerun with nothing new stays blocked.
   const slugSet = publishedSlugs instanceof Set ? publishedSlugs : new Set(publishedSlugs);
-  if (slugSet.has(topic.slug || slugify(topic.title))) blocked.push('slug already published');
+  const topicSlug = topic.slug || slugify(topic.title);
+  let followUpOf;
+  if (slugSet.has(topicSlug)) {
+    const priorUrls = publishedSlugSources?.get?.(topicSlug);
+    const fresh = priorUrls
+      ? (topic.sources || []).map((s) => s?.url)
+        .filter((u) => u && !isAggregatorUrl(u) && !isPaywalledUrl(u) && !priorUrls.has(u))
+      : [];
+    if (fresh.length) {
+      followUpOf = topicSlug;
+      reasons.push(`follow-up to "${topicSlug}" — ${fresh.length} new source(s)`);
+    } else {
+      blocked.push('slug already published');
+    }
+  }
   if (!speakers.length) blocked.push('uncastable — no persona beat');
   if (topic.vendor) blocked.push('vendor content, not news');
 
@@ -398,6 +478,7 @@ export function scoreTopic(topic, { publishedTitles = [], publishedSlugs = [], p
     score: Math.round(raw),
     blocked,
     eligible: blocked.length === 0,
+    ...(followUpOf ? { followUpOf } : {}),
     speakers,
     breakdown: {
       corroboration: Math.round(corrobPoints),

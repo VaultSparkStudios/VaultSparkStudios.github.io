@@ -19,10 +19,6 @@ const SELF_TEST = args.includes('--self-test');
 const CHECKS = [
   { id: 'public-intelligence', command: ['node', 'scripts/generate-public-intelligence.mjs', '--check'], fix: 'node scripts/generate-public-intelligence.mjs' },
   { id: 'heartbeat', command: ['node', 'scripts/generate-heartbeat.mjs', '--check'], fix: 'node scripts/generate-heartbeat.mjs' },
-  // autofix: presence mirrors LIVE session-lock state — its "drift" is time
-  // passing (live flips as locks age past MAX_AGE_MIN mid-gate), never an
-  // authoring error. Self-heal instead of failing long sessions (S176).
-  { id: 'founder-presence', command: ['node', 'scripts/generate-founder-presence.mjs', '--check'], fix: 'node scripts/generate-founder-presence.mjs', autofix: true },
   { id: 'rum-summary', command: ['node', 'scripts/pull-rum-summary.mjs', '--check'], fix: 'node scripts/pull-rum-summary.mjs' },
   { id: 'nav-sheet-stats', command: ['node', 'scripts/build-nav-sheet-stats.mjs', '--check'], fix: 'node scripts/build-nav-sheet-stats.mjs' },
   { id: 'llms-full-shards', command: ['node', 'scripts/build-llms-full-shards.mjs', '--check'], fix: 'node scripts/build-llms-full-shards.mjs' },

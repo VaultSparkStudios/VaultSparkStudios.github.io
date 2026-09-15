@@ -71,7 +71,9 @@
 
       var foot = '<p class="security-posture__foot">' +
         'Full machine-readable proof: <a href="/api/status-proof.json">status-proof.json</a> · ' +
-        'Obelisk trust posture: <a href="/obelisk-passport/login.html">passport</a>. ' +
+        // /obelisk-passport/login.html 404s — the _redirects rule covers the
+        // extensionless path only. Link the served destination directly.
+        'Obelisk trust posture: <a href="/login">passport</a>. ' +
         'Post-quantum migration-ready.</p>';
 
       section.innerHTML = head + '<div class="security-posture__grid">' + cards + '</div>' + foot;

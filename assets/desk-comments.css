@@ -1,0 +1,340 @@
+/* ===========================================================================
+   desk-comments.css — The Desk community comments (S356)
+
+   Theme tokens only (--text, --muted, --bg, --bg-soft, --header-border, --gold,
+   --green), so the surface follows all seven themes without a per-theme block.
+   --gold is used for accents, borders and focus rings only, never as text
+   colour. Touch targets are >= 44px. No fixed widths: the whole block reflows
+   at 390px.
+   =========================================================================== */
+
+.desk-comments {
+  /* Faint theme borders are fine for decoration but not for form controls
+     (WCAG 1.4.11), so controls use a muted-derived line with a solid fallback. */
+  --dc-line: var(--header-border);
+  --dc-control-line: var(--muted);
+  margin-block: 2.75rem;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid var(--dc-line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+@supports (color: color-mix(in srgb, red 50%, transparent)) {
+  .desk-comments {
+    --dc-line: color-mix(in srgb, var(--muted) 24%, transparent);
+    --dc-control-line: color-mix(in srgb, var(--muted) 58%, transparent);
+  }
+}
+
+.desk-comments > h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  color: var(--text);
+}
+
+.desk-comments-summary,
+.desk-comments-empty,
+.desk-comments-note,
+.desk-comments-guide,
+.desk-comments-hint,
+.desk-comments-counter {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.desk-comments-status,
+.desk-comments-form-status,
+.desk-comment-report-status,
+.desk-comment-reported {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  min-height: 1.2em;
+}
+
+.desk-comments-status.is-error,
+.desk-comments-form-status.is-error,
+.desk-comment-report-status.is-error {
+  color: var(--text);
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 0.6rem;
+  font-weight: 600;
+}
+
+.desk-comments-form-status.is-ok,
+.desk-comment-reported.is-ok {
+  color: var(--text);
+  border-inline-start: 3px solid var(--green);
+  padding-inline-start: 0.6rem;
+}
+
+.desk-comments-form-status.is-held {
+  color: var(--text);
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 0.6rem;
+}
+
+/* --- thread --------------------------------------------------------------- */
+
+.desk-comments-list,
+.desk-comment-replies {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.desk-comment {
+  border-top: 1px solid var(--dc-line);
+  padding-block: 1rem;
+}
+
+.desk-comment:first-child {
+  border-top: 0;
+}
+
+.desk-comment.is-featured > .desk-comment-card {
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 0.85rem;
+}
+
+.desk-comment-replies {
+  margin-block-start: 0.75rem;
+  margin-inline-start: clamp(0.75rem, 3vw, 1.5rem);
+  border-inline-start: 1px solid var(--dc-line);
+  padding-inline-start: clamp(0.65rem, 2vw, 1rem);
+}
+
+.desk-comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.88rem;
+}
+
+.desk-comment-author {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.desk-comment-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--dc-control-line);
+  border-radius: 999px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.desk-comment-badge.is-member,
+.desk-comment-badge.is-featured {
+  border-color: var(--gold);
+}
+
+.desk-comment-time {
+  color: var(--muted);
+}
+
+.desk-comment-body {
+  margin: 0;
+  color: var(--text);
+}
+
+.desk-comment-body p {
+  margin: 0 0 0.6rem;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.desk-comment-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- controls ------------------------------------------------------------- */
+
+.desk-comments-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.desk-comments-button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--dc-control-line);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.desk-comments-button.is-primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.desk-comments-button.is-quiet {
+  padding-inline: 0.75rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+.desk-comments-button.is-quiet:hover,
+.desk-comments-button.is-quiet:focus-visible {
+  color: var(--text);
+  border-color: var(--dc-control-line);
+}
+
+.desk-comments-button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.desk-comments :is(button, a, textarea, input, select):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* --- composer ------------------------------------------------------------- */
+
+.desk-comments-form {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--dc-line);
+}
+
+.desk-comments-compose-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.desk-comments-replying {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.desk-comments-replying-text {
+  margin: 0;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.desk-comments-identity {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 0.6rem;
+}
+
+.desk-comments-field {
+  margin-bottom: 0.85rem;
+}
+
+.desk-comments-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.desk-comments textarea,
+.desk-comments input[type='text'],
+.desk-comments select {
+  width: 100%;
+  box-sizing: border-box;
+  /* 16px keeps iOS Safari from zooming the page on focus. */
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--dc-control-line);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+}
+
+.desk-comments textarea {
+  min-height: 7rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.desk-comments select {
+  min-height: 44px;
+  max-width: 22rem;
+}
+
+.desk-comments-counter {
+  margin: 0.3rem 0 0;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.desk-comments-counter.is-near {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.desk-comments-nudge {
+  margin: 0 0 0.85rem;
+}
+
+.desk-comments-nudge a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+
+.desk-comments-turnstile:not(:empty) {
+  margin-bottom: 0.85rem;
+}
+
+.desk-comment-report {
+  margin-top: 0.75rem;
+  padding: 0.85rem;
+  border: 1px solid var(--dc-line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+@media (max-width: 30rem) {
+  .desk-comments {
+    padding-inline: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .desk-comments-actions .desk-comments-button.is-primary {
+    flex: 1 1 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-comments * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

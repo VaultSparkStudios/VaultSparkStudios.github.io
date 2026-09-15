@@ -1890,3 +1890,45 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** not done this session: mounting the narrative on `/journal/` (UI change, own receipt cycle), staging Worker observability (Worker deploy plus a CANON-029 free-tier check), Desk readable-source breadth, the S336 surfaces' visual review, the Trusted Types load-order hoist (own session), `/atlas/` retirement (site-wide nav and footer), and 19 unmodeled generators (ongoing).
 
 **Why:** each either changes rendered pages, needing its own visual-receipt cycle, or touches a production surface whose risk deserves a dedicated release. Batching them into a gate-and-CI-only release would have made every receipt invalid at once.
+
+## D-S356.1 — Desk illustrations are generated on the founder's ChatGPT plan, locally, never from a billed API key
+
+**Decision:** `scripts/generate-news-art-codex.mjs` runs Codex CLI (ChatGPT login) on this machine to generate each story's illustration; `scripts/ingest-news-art.mjs` accepts an image only when its id AND pixel hash were operator-reviewed, then rebinds the receipt and rebuilds that story. CI keeps publishing with a text-free procedural placeholder, labelled "Illustration pending", when no real art exists yet.
+
+**Why:** the publisher never had an image model — every drawn image between 2026-08-07 and 08-23 came from a hand-run interactive session, and when those stopped, 25 consecutive stories shipped the diagram card. The founder's ChatGPT plan covers generation; an API key in Actions would be new recurring spend (CANON-015/029). Preflight refuses API-key login and any non-OpenAI provider, and requires a sandbox backend that actually confines (the configured Windows backend failed to start and ran unconfined).
+
+## D-S356.2 — Desk comments are open to everyone, automatically filtered, with members featured
+
+**Decision:** anyone may comment on a Desk article without an account. A deterministic filter publishes, holds or rejects; borderline text is held, never auto-published. Signed-in Vault members are badged, sorted first and may be featured. Reports auto-hold at three. Raw rows are service-role only; the public view exposes no ip_hash, user_id or filter fields.
+
+**Why:** founder decision, 2026-09-14. Open participation is the point of an experimental public newsroom; identity-free reactions already set that precedent. No paid AI moderation: a curated, testable filter plus a human queue is cheaper, auditable and does not add a per-comment vendor call.
+
+## D-S356.3 — Publishing every day is enforced by evidence, not by cron
+
+**Decision:** the late-night slot fails red when no non-simulated edition exists for that slot's own date; the novelty window is 7 days; a follow-up may publish only under a dated slug with a source the original did not cite, and never twice in a day; facts may quote a publisher's own feed summary when that publisher blocks the fetcher, labelled as feed text.
+
+**Why:** four slots a day against a 14-day novelty window starved supply — 110 topics were unreachable because only aggregator links existed. "Success" also hid missed days: most steps are allowed to fail, so a whole empty day stayed green until the next morning. Sources widened by 20 verified feeds instead of loosening any standards rule.
+
+## D-S356.4 — The member newsletter ships through Brevo, with a working unsubscribe and a postal address
+
+**Decision:** sender `news@vaultsparkstudios.com` via Brevo (D-S259.2), one-click unsubscribe (RFC 8058) plus a confirmation page served from vaultsparkstudios.com through a Worker proxy, and the studio's postal address in every issue. A real send refuses while the unsubscribe base is not browser-ready.
+
+**Why:** the function existed but was never deployed — every monthly run since April failed with 404 and an empty secret. Supabase rewrites HTML to plain text on its default host, so the visible unsubscribe link would have been dead. CAN-SPAM requires a physical address in commercial email; the founder supplied it.
+
+## D-S356.5 — Public numbers come from the registry, and placeholders say so
+
+**Decision:** the portfolio total is derived from the project registry (26) instead of a hardcoded 27; Studio Pulse picks its "right now in the forge" project by most recent real activity and marks projects resting or dormant; a truncated commit window is published as `partial`, never as `ok`; a content-lane promotion counts as reconciled only with matched, fresh shell parity.
+
+**Why:** the 27 was a hand-kept literal with no project behind it; Solara showed as actively forged for 93 days because ranking used a static progress number; a one-page GitHub fetch published a large undercount as healthy; and a lane-head-only match could mark a stranded deploy verified, resetting the alarm streak.
+
+## D-S356.6 — Founder presence is removed from the website, permanently
+
+**Decision:** every founder-presence surface is deleted: api/founder-presence.json, its generator, the sitewide presence badge, the wordmark handle, the favicon pulse, the hero-ticker tile, the Studio Pulse tile, the Atlas dot, the edge SWR entry, the evidence-graph node, and every regeneration vector (build step, pre-push autofix, closeout autopilot, cron). Session-timing copy is removed from public-intelligence, the studio timeline and Studio Pulse, and per-project work-recency (lastUpdated/staleDays) is no longer published in api/ecosystem-state.json or rendered on /oracle/. A guard test (tests/founder-presence-absent.unit.spec.js) fails the build if any of it returns.
+
+**Why:** founder directive, S356: "Remove all founder presence info from website. No idea why it was ever there to begin with. It is a threat." Forensics: the feature was agent-invented at S98 (2026-04-22) as a "moonshot" in an agent-authored decision log and extended across ~12 sessions by agent-scored audit items — one justified it as a "subtle ambient parasocial cue". No founder request exists in either repo, and studio-ops had already ruled it out at S341 (D-S341.5) without this repo being told. Measured exposure: 30 revisions carried live:true between 2026-07-03 and 2026-09-14 (~41.2 hours of published presence, longest single window 9h34m), naming seven projects with exact start timestamps; one production promotion (a4a40a84a) is proven to have served it. CANON-028 passed throughout because it was scoped to names and emails — an activity feed contains neither. The privacy engineering that did exist protected unannounced project names, never the person.
+
+## D-S356.7 — Public counts come from the registry, and unannounced work is described as sealed, not vaulted
+
+**Decision:** the portfolio total is registry-derived (26: 8 sparked, 16 forge, 2 vaulted); the press kit sentence is generator-owned; the drift gate now matches "projects" as well as "initiatives"; and press copy says 6 initiatives are unannounced sealed silhouettes instead of "12 additional initiatives are vaulted".
+
+**Why:** the 27 was a hand-kept literal with no 27th project behind it, and 141 pages carried it. The gate missed the membership page for months because its pattern was noun-locked. "Vaulted" means paused or archived on this site, so using it for unannounced work was wrong on the site's own terms, not merely numerically stale.

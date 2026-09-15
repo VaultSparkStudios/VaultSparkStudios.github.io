@@ -19,6 +19,10 @@
  *   member-write-lockdown   proves phase61: points not client-writable,
  *                           profile columns still writable, gift_points
  *                           rejects self / out-of-range, view honours opt-out.
+ *   desk-comments           proves 20260914_desk_comments: both tables exist
+ *                           with RLS on, anon/authenticated hold no table,
+ *                           column or report-function privilege, service_role
+ *                           does, and the slug/body/status checks are present.
  *
  * Never prints a raw secret. Never touches a sibling repo.
  */
@@ -230,6 +234,67 @@ const PROBES = {
 
     return results;
   },
+
+  // S356 — The Desk community comments. Read-only: catalog lookups plus
+  // statements that are expected to fail with permission denied as anon /
+  // authenticated (a denied statement writes nothing).
+  async 'desk-comments'(client) {
+    const results = [];
+    const tables = ['desk_comments', 'desk_comment_reports'];
+    const rows = await client.sql(`select c.relname, c.relrowsecurity
+      from pg_class c join pg_namespace n on n.oid = c.relnamespace
+     where n.nspname = 'public' and c.relkind = 'r' and c.relname in ('desk_comments', 'desk_comment_reports')`);
+    const byName = new Map((Array.isArray(rows) ? rows : []).map((r) => [r.relname, r]));
+    for (const t of tables) {
+      results.push({ name: `${t} exists`, pass: byName.has(t), detail: byName.has(t) ? 'present' : 'missing' });
+      results.push({ name: `${t} has RLS enabled`, pass: byName.get(t)?.relrowsecurity === true, detail: JSON.stringify(byName.get(t) || null) });
+    }
+    if (tables.some((t) => !byName.has(t))) return results;
+
+    // Authoritative privilege check (information_schema only lists grants the
+    // probing role can see; has_*_privilege answers for the named role).
+    let priv = {};
+    try {
+      [priv] = await client.sql(`select
+        has_table_privilege('anon', 'public.desk_comments', 'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') as anon_comments,
+        has_table_privilege('authenticated', 'public.desk_comments', 'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') as authenticated_comments,
+        has_table_privilege('anon', 'public.desk_comment_reports', 'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') as anon_reports,
+        has_table_privilege('authenticated', 'public.desk_comment_reports', 'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') as authenticated_reports,
+        has_any_column_privilege('anon', 'public.desk_comments', 'SELECT,INSERT,UPDATE,REFERENCES') as anon_comment_columns,
+        has_any_column_privilege('authenticated', 'public.desk_comments', 'SELECT,INSERT,UPDATE,REFERENCES') as authenticated_comment_columns,
+        has_function_privilege('anon', 'public.desk_comment_report(uuid,text,text)', 'EXECUTE') as anon_report_fn,
+        has_function_privilege('authenticated', 'public.desk_comment_report(uuid,text,text)', 'EXECUTE') as authenticated_report_fn,
+        has_function_privilege('service_role', 'public.desk_comment_report(uuid,text,text)', 'EXECUTE') as service_report_fn,
+        has_table_privilege('service_role', 'public.desk_comments', 'SELECT,INSERT,UPDATE') as service_comments;`);
+    } catch (e) {
+      results.push({ name: 'privilege catalog readable', pass: false, detail: (e.body || e.message).slice(0, 160) });
+      return results;
+    }
+    for (const key of ['anon_comments', 'authenticated_comments', 'anon_reports', 'authenticated_reports',
+      'anon_comment_columns', 'authenticated_comment_columns', 'anon_report_fn', 'authenticated_report_fn']) {
+      results.push({ name: `no client privilege: ${key}`, pass: priv?.[key] === false, detail: String(priv?.[key]) });
+    }
+    results.push({ name: 'service_role can execute desk_comment_report', pass: priv?.service_report_fn === true, detail: String(priv?.service_report_fn) });
+    results.push({ name: 'service_role can read/write desk_comments', pass: priv?.service_comments === true, detail: String(priv?.service_comments) });
+
+    // Empirical denial as each client role.
+    for (const role of ['anon', 'authenticated']) {
+      let denied = false, detail = '';
+      try {
+        await client.sql(`set local role ${role}; select count(*) from public.desk_comments;`);
+        detail = `select accepted for ${role}`;
+      } catch (e) { denied = /permission denied|42501/i.test(e.body || e.message); detail = (e.body || e.message).slice(0, 160); }
+      results.push({ name: `${role} select on desk_comments is denied`, pass: denied, detail });
+    }
+
+    const checks = await client.sql(`select pg_get_constraintdef(oid) as def from pg_constraint
+      where conrelid = 'public.desk_comments'::regclass and contype = 'c'`);
+    const defs = (Array.isArray(checks) ? checks : []).map((r) => String(r.def)).join('\n');
+    results.push({ name: 'story_slug format check present', pass: /story_slug/.test(defs) && /\{1,120\}/.test(defs), detail: `${(checks || []).length} check constraint(s)` });
+    results.push({ name: 'body length check present', pass: /char_length\(body\)/.test(defs), detail: '' });
+    results.push({ name: 'status vocabulary check present', pass: /published/.test(defs) && /removed/.test(defs), detail: '' });
+    return results;
+  },
 };
 
 /* ------------------------------------------------------------------ *
@@ -255,6 +320,7 @@ create or replace view public.public_leaderboard with (security_invoker = false)
     ['classifyProbe pass', classifyProbe([{ name: 'a', pass: true }]).pass === true],
     ['classifyProbe fail names', classifyProbe([{ name: 'a', pass: false }]).failures.join() === 'a'],
     ['probe registry has member-write-lockdown', typeof PROBES['member-write-lockdown'] === 'function'],
+    ['probe registry has desk-comments', typeof PROBES['desk-comments'] === 'function'],
   ];
   let failed = 0;
   for (const [name, ok] of checks) { console.log(`${ok ? '✓' : '✗'} ${name}`); if (!ok) failed++; }

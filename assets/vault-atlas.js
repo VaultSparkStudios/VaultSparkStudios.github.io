@@ -3,7 +3,6 @@
 // Resources dropdown. Each dot reflects a real surface:
 //   • homepage    — synthetic /api/ci-status.json `homepage.ok`
 //   • pulse       — public-intelligence freshness (≤7d green, ≤30d amber)
-//   • hub         — founder-presence.json `online` flag
 //   • ignis       — ignis_alerts surface (degraded → amber, down → red)
 //   • checkout    — Stripe price endpoint reachability cached server-side
 //
@@ -15,7 +14,6 @@
   const SURFACES = [
     { key: 'homepage', label: 'Homepage' },
     { key: 'pulse',    label: 'Studio Pulse' },
-    { key: 'hub',      label: 'Hub' },
     { key: 'ignis',    label: 'IGNIS' },
     { key: 'checkout', label: 'Checkout' },
   ];
@@ -35,10 +33,9 @@
     for (const s of SURFACES) out[s.key] = 'unknown';
     const safe = async (fn) => { try { return await fn(); } catch { return null; } };
 
-    const [ci, pi, fp] = await Promise.all([
+    const [ci, pi] = await Promise.all([
       safe(() => fetch('/api/ci-status.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
       safe(() => window.VSPublicSignals ? window.VSPublicSignals.get('/api/public-intelligence.json') : fetch('/api/public-intelligence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
-      safe(() => window.VSPublicSignals ? window.VSPublicSignals.get('/api/founder-presence.json', { ttlMs: 90000 }) : fetch('/api/founder-presence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
     ]);
 
     if (ci) out.homepage = ci.ok !== false ? 'up' : 'down';
@@ -49,8 +46,6 @@
         out.pulse = days <= 7 ? 'up' : days <= 30 ? 'degraded' : 'down';
       }
     }
-    if (fp) out.hub = fp.online ? 'up' : 'degraded';
-
     // IGNIS — heuristic: if public-intelligence has ignis block, treat as up
     if (pi && (pi.ignisDailyMeter || pi.ignis)) out.ignis = 'up';
 

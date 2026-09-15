@@ -251,10 +251,11 @@ function main() {
 
   // A node whose source git does not track can never appear in `git diff`, so
   // closure over the changed set silently skips it — forever, not just once.
-  // founder-presence reads context/.session-lock, which is untracked: the lock
-  // is written at session start and cleared at closeout, so its output changes
-  // on exactly the boundary a rebase happens, and this tool reported success
-  // while leaving it stale (S309, caught by the pre-push coherence hook).
+  // The original instance was a node reading context/.session-lock, which is
+  // untracked: the lock is written at session start and cleared at closeout, so
+  // its output changed on exactly the boundary a rebase happens, and this tool
+  // reported success while leaving it stale (S309, caught by the pre-push
+  // coherence hook). That node has since been deleted, but the class remains.
   // Treat any node with an untracked, non-glob source as always dirty: cheap,
   // and the alternative is a repairer that is quietly wrong once per session.
   const inventory = trackedInventory(git);
@@ -397,12 +398,9 @@ function selfTest() {
   console.log('tracked inventory measurement: ' + inventory.commands + ' Git invocation · ' + inventory.trackedFiles + ' files · ' + inventory.durationMs + 'ms');
   cases.push([`untracked-source nodes are known and force-rebuilt${untracked.length ? ` (${untracked.join(', ')})` : ' (none)'}`,
     Array.isArray(untracked)]);
-  // founder-presence is the live instance: it reads context/.session-lock, which
-  // is written at session start and cleared at closeout. If it ever stops being
-  // detected as untracked-sourced, this tool has gone quietly stale again.
-  const fp = graph.nodes.find((n) => n.id === 'founder-presence');
-  cases.push(['founder-presence is still recognised as untracked-sourced',
-    !fp || untracked.includes('founder-presence')]);
+  // Fixture instance (below) proves the untracked-source rule; there is no
+  // live untracked-sourced node in the graph right now, and asserting one
+  // exists would be asserting a coincidence rather than the rule.
   // S353: an external: source is outside the repo, not invisible to it. Forcing
   // those nodes dirty made every rebased CI publisher run build-brand-assets,
   // which refuses without the founder's masters, and refuse to push.

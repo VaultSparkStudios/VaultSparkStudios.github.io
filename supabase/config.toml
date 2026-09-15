@@ -124,6 +124,12 @@ verify_jwt = false
 [functions.send-member-newsletter]
 verify_jwt = false
 
+# newsletter-unsubscribe: RFC 8058 one-click + confirmation page for the member
+# newsletter. Callers are mail clients/mailbox providers, never Supabase users;
+# access is the 128-bit per-member token, validated in-code. GET never mutates.
+[functions.newsletter-unsubscribe]
+verify_jwt = false
+
 # subscribe-desk-dispatch (S308): The Desk's newsletter capture. Deliberately
 # identity-free — /news requires no account, so its signup must not demand a
 # Supabase JWT. Access control is origin allowlist + strict input validation +

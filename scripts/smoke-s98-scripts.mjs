@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
- * smoke-s98-scripts.mjs — Sanity-check the six scripts shipped during S98
- * (hub migration + portfolio heartbeat + founder presence + email capture +
- * meta-description backfill + shared registry loader).
+ * smoke-s98-scripts.mjs — Sanity-check the scripts shipped during S98
+ * (hub migration + portfolio heartbeat + email capture + meta-description
+ * backfill + shared registry loader). The founder-presence generator this
+ * file once covered was deleted: publishing whether a person is at the desk
+ * is a privacy surface, not a feature (CANON-028).
  *
  * Each script gets a critical-path smoke test. Fails loud with exit code 1
  * if any script crashes, produces malformed output, or stops honouring its
@@ -51,19 +53,6 @@ console.log('S98 scripts smoke test');
   const r2 = run(['generate-heartbeat.mjs', '--check']);
   if (r2.status !== 0) fail('generate-heartbeat --check', `exit ${r2.status}: ${r2.stderr || r2.stdout}`);
   else pass('generate-heartbeat --check idempotent');
-}
-
-// 3. generate-founder-presence: default to live=false, kill-switch honoured.
-{
-  const r1 = run(['generate-founder-presence.mjs']);
-  if (r1.status !== 0) fail('generate-founder-presence write', `exit ${r1.status}: ${r1.stderr}`);
-  else pass('generate-founder-presence write');
-  const r2 = run(['generate-founder-presence.mjs', '--check']);
-  if (r2.status !== 0) fail('generate-founder-presence --check', `exit ${r2.status}: ${r2.stderr || r2.stdout}`);
-  else pass('generate-founder-presence --check idempotent');
-  const r3 = run(['generate-founder-presence.mjs'], { env: { ...process.env, FOUNDER_PRESENCE_DISABLED: '1' } });
-  if (r3.status !== 0) fail('generate-founder-presence kill-switch', `exit ${r3.status}`);
-  else pass('generate-founder-presence honours FOUNDER_PRESENCE_DISABLED');
 }
 
 // 4. inject-early-signal: dry-run must not mutate any file.

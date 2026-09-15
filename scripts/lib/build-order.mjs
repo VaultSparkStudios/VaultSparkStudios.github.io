@@ -74,8 +74,13 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-flight-director.mjs', timeout: 30000, why: 'keeps intent-graph SSR synchronized before search indexing and the candidate seal' },
   { script: 'build-ignis-search-index.mjs', timeout: 30000, why: 'indexes refreshed public content' },
   { script: 'build-oracle-query-clusters.mjs', timeout: 30000, why: 'projects refreshed search evidence' },
+  // S356: /studio-pulse/ reads api/nervous-system.json, which only a closeout
+  // rebuilt, so its signal digest sat days behind the 4-hourly public feed.
+  { script: 'build-nervous-system.mjs', timeout: 30000, why: 'reprojects the Pulse signal digest from refreshed public intelligence before the budget reads it' },
   { script: 'build-intelligence-budget.mjs', timeout: 30000, why: 'summarizes refreshed intelligence surfaces' },
   { script: 'build-news-desk.mjs', args: ['--rebuild'], timeout: 30000, why: 'rebuilds the canonical Desk feed before its rendered consumers' },
+  // S356: networked (GitHub REST) and honest-dark per source; writes only on content change.
+  { script: 'build-studio-timeline.mjs', timeout: 90000, why: 'merges public commits, session closeouts, and the rebuilt Desk feed into the Pulse timeline' },
   { script: 'build-news-desk-stats.mjs', timeout: 30000, why: 'refreshes Desk statistics from the canonical corpus' },
   { script: 'build-news-desk-engagement.mjs', timeout: 30000, why: 'projects committed engagement history without a network probe' },
   { script: 'build-news-desk-reactions.mjs', timeout: 30000, why: 'projects committed reaction history without a network probe' },
@@ -174,6 +179,8 @@ function selfTest() {
     ['the invocation-mode detector itself passes', invocationModesSelfTest()],
     ['refresh attention receipt precedes status proof', refresh.indexOf('build-attention-pressure.mjs') < refresh.indexOf('build-status-proof.mjs')],
     ['refresh seal follows all rendered sources', refresh.indexOf('build-home-desk-module.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
+    ['refresh nervous-system follows public intelligence and precedes the budget that reads it', refresh.indexOf('generate-public-intelligence.mjs') < refresh.indexOf('build-nervous-system.mjs') && refresh.indexOf('build-nervous-system.mjs') < refresh.indexOf('build-intelligence-budget.mjs')],
+    ['refresh studio timeline follows its catalog + Desk producers and precedes the candidate seal', refresh.indexOf('generate-public-intelligence.mjs') < refresh.indexOf('build-studio-timeline.mjs') && refresh.indexOf('build-news-desk.mjs') < refresh.indexOf('build-studio-timeline.mjs') && refresh.indexOf('build-studio-timeline.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
     ['refresh profile excludes shell rotation', !refresh.includes('build-shell-assets.mjs')],
     ['refresh profile has no duplicate steps', new Set(refresh).size === refresh.length],
   ];

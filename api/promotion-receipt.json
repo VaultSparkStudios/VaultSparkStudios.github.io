@@ -4,14 +4,23 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "e6c547c6bdf7d97bfb9e079fa0b83f6ff5bcec9c",
+    "sha": "9e84fe27d12891655bcdc918bbcf6cc297bd47a8",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "7ea9b3c579e5",
+    "sha": "e65eca737d7e97a5891f460537b7eb5c279bd6ba",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind"
+    "reconciliation": "behind",
+    "shellParity": {
+      "state": "matched",
+      "observedAt": "2026-09-14T10:11:37.815Z",
+      "ageHours": 18.4,
+      "stale": true,
+      "maxAgeHours": 12,
+      "source": "api/deploy-currency.json → shellParity"
+    }
   },
   "csp": {
     "observed": true,
@@ -76,17 +85,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves 7ea9b3c5 — OLDER than promoted e6c547c6 — stranded/stale deploy",
+    "production origin serves e65eca73 — OLDER than promoted 9e84fe27 — stranded/stale deploy",
     "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-09-10T18:15:25.872Z",
+  "generatedAt": "2026-09-15T04:36:00.874Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-10T18:15:25.872Z",
-    "currentBehindStreak": 9,
+    "lastStrandedAt": "2026-09-15T04:36:00.874Z",
+    "currentBehindStreak": 10,
+    "newestGradableAt": "2026-09-15T04:36:00.874Z",
+    "newestAgeHours": 0,
+    "maxAgeHours": 48,
+    "stale": false,
     "strandedAlert": true
   }
 }

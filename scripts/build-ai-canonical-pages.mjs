@@ -30,15 +30,63 @@ const CHECK = process.argv.includes('--check');
 
 const CATEGORIES = ['projects', 'games', 'universe'];
 
+// Registry slugs that do not match their on-disk directory. Without the alias
+// the sheet is simply skipped, and any sheet generated under the project's
+// former slug is left behind as stale orphan output (games/franchise-architect/
+// .ai was frozen at a pre-rename build, which is why it alone still lacked the
+// og:image and contrast fixes).
+const SLUG_DIR_ALIAS = {
+  'franchise-architect-football': 'franchise-architect',
+};
+
 function findProjectDir(slug) {
-  for (const cat of CATEGORIES) {
-    const p = path.join(ROOT, cat, slug);
-    if (fs.existsSync(p) && fs.statSync(p).isDirectory()) return { cat, dir: p };
+  const candidates = [slug, SLUG_DIR_ALIAS[slug]].filter(Boolean);
+  for (const name of candidates) {
+    for (const cat of CATEGORIES) {
+      const p = path.join(ROOT, cat, name);
+      if (fs.existsSync(p) && fs.statSync(p).isDirectory()) return { cat, dir: p, dirName: name };
+    }
   }
   return null;
 }
 
 function escape(s) { return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+const FALLBACK_OG_IMAGE = 'https://vaultsparkstudios.com/assets/og/og-home.png';
+
+/**
+ * Every fact sheet shipped without an og:image, so any share or agent preview of
+ * the machine-canonical record fell back to a blank card. Reuse the parent
+ * project page's own card — it is already generated, already correct, and keeps
+ * the sheet and the page visually the same entity. Falls back to the studio card
+ * when a parent has none.
+ */
+function parentOgImage(slugPath) {
+  try {
+    const parent = path.join(ROOT, slugPath, 'index.html');
+    const html = fs.readFileSync(parent, 'utf8');
+    const m = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
+    if (m) {
+      const src = m[1].trim();
+      if (/^https?:\/\//i.test(src)) return src;
+      return 'https://vaultsparkstudios.com' + (src.startsWith('/') ? src : '/' + src);
+    }
+  } catch (_) { /* no parent page, or unreadable — use the studio card */ }
+  return FALLBACK_OG_IMAGE;
+}
+
+/**
+ * Registry summaries run to 450 characters; a meta description that long is
+ * truncated by every consumer. Clamp on a word boundary and keep the full text
+ * in the JSON-LD description, which has no length budget.
+ */
+function clampDescription(s, max = 165) {
+  const text = String(s ?? '').replace(/\s+/g, ' ').trim();
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 60 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.—-]+$/, '') + '…';
+}
 
 function differentiators(summary) {
   // Split on " — " / ". " / ";". Trim & cap to 3 short clauses.
@@ -88,30 +136,46 @@ function factSheetJsonLd(p, url, status, diffs) {
 }
 
 function renderHtml(p, slugPath) {
-  const title = `${p.name} — AI-canonical fact sheet | VaultSpark Studios`;
+  // Keep the whole title inside the ~70-char window search results render.
+  // "AI-canonical fact sheet" spent 26 of those characters on a phrase the
+  // og:title and the page's own eyebrow already carry in full.
+  const TITLE_SUFFIX = ' — AI fact sheet | VaultSpark Studios';
+  const titleRoom = 70 - TITLE_SUFFIX.length;
+  const titleName = p.name.length > titleRoom ? p.name.slice(0, titleRoom - 1).trimEnd() + '…' : p.name;
+  const title = `${titleName}${TITLE_SUFFIX}`;
   const url = `https://vaultsparkstudios.com${slugPath}.ai/`;
   const diffs = differentiators(p.summary);
   const status = vaultStatusLabel(p);
   const audience = p.audience || 'public';
   const stack = p.stack || p.medium || '';
+  const ogImage = parentOgImage(slugPath);
+  const metaDescription = clampDescription(p.summary || `${p.name} — VaultSpark Studios.`);
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <title>${escape(title)}</title>
-<meta name="description" content="${escape(p.summary || (p.name + ' — VaultSpark Studios.'))}" />
+<meta name="description" content="${escape(metaDescription)}" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="${escape(url)}" />
 <meta property="og:title" content="${escape(p.name)} (AI fact sheet)" />
+<meta property="og:description" content="${escape(metaDescription)}" />
 <meta property="og:url" content="${escape(url)}" />
 <meta property="og:type" content="article" />
+<meta property="og:image" content="${escape(ogImage)}" />
+<meta property="og:image:alt" content="${escape(p.name)} — VaultSpark Studios" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="${escape(ogImage)}" />
 <script type="application/ld+json">${JSON.stringify(factSheetJsonLd(p, url, status, diffs))}</script>
 <style>
 :root{color-scheme:dark light;font-family:Inter,system-ui,sans-serif;line-height:1.6;max-width:64ch;margin:3rem auto;padding:0 1.25rem;color:#1a1a1f;background:#fafafa}
 @media (prefers-color-scheme:dark){:root{color:#eef2ff;background:#07080f}}
 h1{font:700 1.7rem/1.2 Georgia,serif;margin:.2rem 0 1rem}
-.eyebrow{color:#9ca3af;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+/* #9ca3af on the light ground measured 2.43:1 — below AA for 12.5px text.
+   Each mode now gets an ink that clears 4.5:1 against its own background. */
+.eyebrow{color:#4b5563;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+@media (prefers-color-scheme:dark){.eyebrow{color:#aab2c5}}
 .status{display:inline-block;padding:.18rem .55rem;border:1px solid currentColor;border-radius:999px;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin:.4rem 0 1.5rem;opacity:.85}
 ul{padding-left:1.2rem}
 li{margin:.35rem 0}
@@ -193,7 +257,7 @@ function main() {
   for (const p of projects) {
     const found = findProjectDir(p.slug);
     if (!found) continue;
-    const slugPath = `/${found.cat}/${p.slug}/`;
+    const slugPath = `/${found.cat}/${found.dirName || p.slug}/`;
     targets.push({ p, slugPath, outDir: path.join(found.dir, '.ai'), humanDir: found.dir });
   }
 

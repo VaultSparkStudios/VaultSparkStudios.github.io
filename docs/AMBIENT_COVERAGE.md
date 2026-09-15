@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-09-14 -->
+<!-- generated-at: 2026-09-15 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -8,27 +8,26 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **77.3 KB** (raw)
-- Guarded (conditional): **14** modules · **66.5 KB** — split candidates
+- Sources: **16**  ·  Total: **82.5 KB** (raw)
+- Guarded (conditional): **13** modules · **71.6 KB** — split candidates
 - Always-on: **3** modules · **10.9 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `ambient-loader.js` | 21.3 KB | 🔶 guarded | session gated |
+| `ambient-loader.js` | 27.0 KB | 🔶 guarded | session gated |
+| `page-sigil.js` | 6.6 KB | 🔶 guarded | — |
 | `signed-in-state.js` | 6.6 KB | 🔶 guarded | session gated |
 | `adaptive-speculation.js` | 5.5 KB | 🔶 guarded | — |
 | `breadcrumb-render.js` | 5.5 KB | always | — |
-| `vault-atlas.js` | 4.6 KB | 🔶 guarded | — |
 | `native-feel.js` | 4.6 KB | 🔶 guarded | viewport gated, capability gated |
-| `page-sigil.js` | 4.5 KB | 🔶 guarded | — |
+| `vault-atlas.js` | 4.2 KB | 🔶 guarded | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
 | `command-palette-loader.js` | 3.4 KB | always | — |
-| `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
+| `hover-prefetch.js` | 3.2 KB | 🔶 guarded | viewport gated, session gated, capability gated |
 | `rum-beacon.js` | 3.0 KB | 🔶 guarded | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
-| `founder-presence-handle.js` | 2.1 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 2.0 KB | always | — |
 | `tt-default-policy.js` | 2.0 KB | 🔶 guarded | — |
 | `account-chip-loader.js` | 1.5 KB | 🔶 guarded | session gated |

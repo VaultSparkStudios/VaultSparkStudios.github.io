@@ -79,7 +79,10 @@ export function renderPage(template, p) {
   if (p.sparked) {
     html = html.replace(/Forging/g, 'Sparked');
     html = html.replace(/taking shape in the forge\. Vault Members get first notice when it opens\./g,
-      'live and in daily studio use. Public access hasn’t opened yet — Vault Members get first notice when it does.');
+      // Kept inside the ~155 chars Google renders: the longer "Public access
+      // hasn't opened yet — ..." variant pushed the generated meta description
+      // to 190 and got truncated mid-clause in the SERP.
+      'live and in daily studio use. Vault Members get first notice when it opens.');
     html = html.replace(/Forging at VaultSpark Studios\./g, 'Sparked at VaultSpark Studios.');
     // Display chips/badges/rows — scoped exactly to the template's status
     // surfaces so the footer legend + nav (which describe the WHOLE studio,

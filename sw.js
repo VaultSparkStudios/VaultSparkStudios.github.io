@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-9865a3976ca846a1';
+const CACHE_NAME = 'vaultspark-shell-04c4a4474d10634b';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -20,24 +20,25 @@ const MAX_PAGE_ENTRIES = 60;
 const PAGE_CACHE = CACHE_NAME + '-pages';
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-79b001d0ae.css',
+  '/assets/style.shell-0fa853d549.css',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/nav-sheet.shell-d6938be4eb.js',
-  '/assets/supabase-client.shell-c0eeeb2001.js',
+  '/assets/supabase-client.shell-dfcab21788.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/home-idle-loader.shell-24f891da0e.js',
-  '/assets/ambient-core.shell-a4349880f3.js',
-  '/assets/ambient-feature.shell-ca3b329506.js',
+  '/assets/ambient-core.shell-7ca24aa233.js',
+  '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
-  '/assets/desk-reactions.shell-3f177f4c17.js',
+  '/assets/desk-reactions.shell-523b04a01e.js',
   '/assets/desk-presence.shell-3dc76e3a40.js',
   '/assets/stats-surface.shell-b33242e1cc.js',
   '/assets/ecosystem-stats.shell-e6b0b21c77.js',
   '/assets/hero-choice-tracking.shell-8dd57eb3a3.js',
-  '/assets/journey-conductor.shell-a910e120bb.js',
+  '/assets/journey-conductor.shell-9b61d0c064.js',
+  '/assets/desk-wire.shell-5dbc8ab14d.js',
 ];
 const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/style.css',
@@ -58,13 +59,14 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/ecosystem-stats.js',
   '/assets/hero-choice-tracking.js',
   '/assets/journey-conductor.js',
+  '/assets/desk-wire.js',
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-79b001d0ae.css',
+  '/assets/style.shell-0fa853d549.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-a4349880f3.js',
-  '/assets/ambient-feature.shell-ca3b329506.js',
+  '/assets/ambient-core.shell-7ca24aa233.js',
+  '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/kit.js',
   '/assets/icon-32.png',
   '/assets/icon-256.png',
@@ -147,7 +149,6 @@ const STATIC_ASSETS = [
   '/assets/csrf-token.js',
   // S98 ambient / moonshot assets
   '/assets/heartbeat.js',
-  '/assets/presence-badge.js',
   '/assets/ignis-tour.js',
   '/assets/visit-depth.js',
   '/assets/notify-me.js',

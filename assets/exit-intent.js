@@ -67,16 +67,32 @@
       entries.push({ type: 'exit_intent', answer: answer, page: location.pathname, ts: Date.now() });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
     } catch (_) {}
-    // Best-effort Supabase insert
+    // Best-effort Supabase insert. The previous body ({page,type,answer,referrer})
+    // named columns page_feedback does not have, so every insert was rejected.
     try {
+      var row = feedbackRowFor(answer, location.pathname);
+      if (!row) return;
       var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
       var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
       fetch(SB_URL + '/rest/v1/page_feedback', {
         method: 'POST',
         headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ page: location.pathname, type: 'exit_intent', answer: answer, referrer: document.referrer || null })
+        body: JSON.stringify(row)
       }).catch(function () {});
     } catch (_) {}
+  }
+
+  // Live page_feedback schema (supabase/migrations/supabase-page-feedback.sql):
+  //   path text not null · reaction text not null CHECK in ('useful','ok','not_useful')
+  // "Did you find what you were looking for?" maps onto that usefulness scale:
+  // yes → useful · not sure → ok · no → not_useful. Path uses assets/rate-page.js
+  // pathKey() normalisation so both widgets aggregate on the same row key.
+  // No referrer is sent: the table has no column for it and it is not needed.
+  var ANSWER_TO_FEEDBACK = { yes: 'useful', not_sure: 'ok', no: 'not_useful' };
+  function feedbackRowFor(answer, pathname) {
+    var reaction = ANSWER_TO_FEEDBACK[answer];
+    if (!reaction) return null;
+    return { path: String(pathname || '/').replace(/\/$/, '') || '/', reaction: reaction };
   }
 
   var STYLE = [
@@ -221,6 +237,10 @@
     bindDesktop();
     bindMobile();
   }
+
+  // Node self-test hook (scripts/test-studio-pulse-activity.mjs); no-op in browsers.
+  if (typeof module === 'object' && module && module.exports) module.exports = { feedbackRowFor: feedbackRowFor };
+  if (typeof document === 'undefined') return;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

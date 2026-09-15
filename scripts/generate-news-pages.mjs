@@ -133,6 +133,31 @@ const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage[
 const escapeHtml = escapeNewsHtml;
 const clamp = (s, max) => (String(s).length <= max ? String(s) : `${String(s).slice(0, max - 1)}…`);
 
+/**
+ * Clamp on a WORD boundary, never mid-word, with a real ellipsis character.
+ *
+ * `clamp` above cuts at an arbitrary byte, which is fine for internal strings
+ * but reads as a defect in the two places a human actually sees the text: the
+ * browser tab / SERP title and the SERP snippet. This keeps whole words and
+ * drops any trailing punctuation the cut exposed before appending "…".
+ */
+const clampWords = (s, max) => {
+  const text = String(s);
+  if (text.length <= max) return text;
+  const head = text.slice(0, max - 1);
+  const cut = head.slice(0, head.lastIndexOf(' '));
+  return `${(cut || head).replace(/[\s,;:.!?—-]+$/, '')}…`;
+};
+
+// The <title> is the one Desk surface with a hard external ceiling: Google
+// truncates near 70 characters, and the brand suffix is a fixed 32 of them.
+// So the HEADLINE portion gets 38 — clamped on a word boundary — and the full
+// headline stays intact everywhere it is the actual content: <h1>, og:title,
+// and the NewsArticle JSON-LD headline. Only the SERP/tab string is clamped.
+const TITLE_SUFFIX = ' — The Desk · VaultSpark Studios';
+const HEADLINE_TITLE_MAX = 70 - TITLE_SUFFIX.length;
+const storyTitle = (headline) => `${clampWords(headline, HEADLINE_TITLE_MAX)}${TITLE_SUFFIX}`;
+
 // Cast size appears in prose in several places. Hardcoding it is how "three
 // personas" survives a roster change and quietly becomes a lie on a public
 // page — so every count in copy is derived from the roster itself.
@@ -141,14 +166,17 @@ const COUNT_WORD = (n) => NUMBER_WORDS[n] || String(n);
 const CAST_WORD = COUNT_WORD(PERSONAS.length);
 const CAST_TITLE = CAST_WORD.charAt(0).toUpperCase() + CAST_WORD.slice(1);
 
-/** Meta description must land in the 70–200 char window the gate warns on. */
+/**
+ * Meta description must land in the 70–200 char window the gate warns on, and
+ * inside the ~155 Google actually renders — a snippet cut at 155 by the SERP
+ * instead of by us loses its last clause mid-word. Clamped on a word boundary.
+ */
 function metaDescription(story) {
   const base = `${story.hook} ${story.headline}.`;
   const text = base.length >= 70 ? base : `${base} AI personas debate it on the record at The Desk, VaultSpark's AI signal desk.`;
-  return clamp(text, 200);
+  return clampWords(text, 155);
 }
 
-const heatColor = (heat) => (heat >= 75 ? '#ff5a3c' : heat >= 45 ? '#ffc400' : '#7EC9FF');
 
 /**
  * S317 — the story's place in the day, in words a reader can act on.
@@ -322,25 +350,76 @@ function storyJsonLd(day, story, url, image) {
  * bylined inline so the reader hears WHO is talking mid-piece — the old stance
  * cards made them annotate from outside the story instead of writing it.
  */
-/** The panel, credited to the voice that drew it. */
-function memePanel(story, day) {
+/**
+ * Illustration reactions. One pick per reader; tapping the lit one takes it
+ * back. The id set must equal DESK_PANEL_REACTIONS in cloudflare/worker-lib.mjs
+ * (tests/worker.unit.spec.js enforces it).
+ */
+const PANEL_REACTIONS = [
+  { id: 'panel-like', emoji: '👍', label: 'Like', aria: 'Like this panel' },
+  { id: 'panel-fire', emoji: '🔥', label: 'Fire', aria: 'This panel is fire' },
+  { id: 'panel-laugh', emoji: '😂', label: 'Laugh', aria: 'This panel made me laugh' },
+  { id: 'panel-wow', emoji: '🤯', label: 'Mind-blown', aria: 'This panel blew my mind' },
+  { id: 'panel-think', emoji: '🤔', label: 'Hmm', aria: 'This panel made me think' },
+  { id: 'panel-yikes', emoji: '😬', label: 'Yikes', aria: 'Yikes — this panel is uncomfortable' },
+  { id: 'panel-eyes', emoji: '👀', label: 'Watching', aria: 'Watching where this goes' },
+  { id: 'panel-100', emoji: '💯', label: 'Nailed it', aria: 'This panel nailed it' },
+];
+
+/**
+ * The panel, credited to the voice that drew it.
+ *
+ * S356 reader-first layout: the illustration is the story's hero image, so it
+ * sits directly under the byline and loads eagerly (it is the article LCP).
+ * Its reactions render separately, after the body — eight buttons between the
+ * picture and the short version pushed the story off a phone's first screen.
+ */
+/**
+ * True when the story's art is the procedural fallback rather than a drawn
+ * illustration. `visual.pixelInspection.kind` is written by generate-news-art;
+ * older stories predate it, so a missing kind counts as real art unless the
+ * recorded entropy says the raster is near-flat (< 4).
+ */
+function isFallbackArt(story) {
+  const inspection = story?.visual?.pixelInspection || {};
+  if (inspection.kind) return inspection.kind === 'procedural-fallback';
+  return typeof inspection.entropy === 'number' && inspection.entropy < 4;
+}
+
+/** Text-forward stand-in for fallback art on cards: headline over the brand gradient. */
+function pendingArt(story, className) {
+  return `<span class="${className} desk-art-pending" aria-hidden="true"><span class="desk-art-pending-k">The Desk · illustration pending</span><span class="desk-art-pending-h">${escapeHtml(story.headline)}</span></span>`;
+}
+
+function memeFigure(story, day) {
   const persona = personaById(story.memeLine?.personaId);
   if (!persona || !story.memeLine?.text) return '';
   const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
   const alt = escapeHtml(story.visual.alt);
-  const reactionSlug = `${day.date}/${story.slug}/panel/editorial-illustration-1`;
-  return `<figure class="desk-meme" id="editorial-illustration-1">
+  // Fallback art keeps the image element, anchor and alt (visual-proof and
+  // reaction-scope contracts) but never claims to be a drawn illustration.
+  const caption = isFallbackArt(story)
+    ? `<strong>Illustration pending.</strong> ${escapeHtml(persona.name)}’s panel for this story has not been drawn yet; this placeholder is generated from the story, not an illustration of it.`
+    : `AI-generated editorial illustration, drawn by <strong>${escapeHtml(persona.name)}</strong> (AI persona) · bound to the sourced facts below`;
+  return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
     <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
-    <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
-    <figcaption>Source-bound AI editorial illustration · <strong>${escapeHtml(persona.name)}</strong></figcaption>
-  </figure>
-  <section class="desk-reactions desk-panel-reactions" data-desk-reactions="${escapeHtml(reactionSlug)}" aria-label="React to this AI-generated editorial illustration">
-    <p class="desk-react-title">React to this panel<span>Identity-free · counts appear only after confirmed votes.</span></p>
+    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
+    <figcaption>${caption}</figcaption>
+  </figure>`;
+}
+
+function panelReactions(story, day) {
+  const persona = personaById(story.memeLine?.personaId);
+  if (!persona || !story.memeLine?.text) return '';
+  const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
+  const reactionSlug = `${day.date}/${story.slug}/panel/editorial-illustration-1`;
+  return `<section class="desk-reactions desk-panel-reactions" data-desk-reactions="${escapeHtml(reactionSlug)}" aria-label="React to this AI-generated editorial illustration">
+    <div class="desk-panel-react-head">
+      <a class="desk-panel-thumb" href="#editorial-illustration-1" aria-label="Back to the illustration"><picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp"><img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture></a>
+      <p class="desk-react-title">${isFallbackArt(story) ? 'React to this panel' : `React to ${escapeHtml(persona.name)}’s illustration`}<span>Identity-free · one pick, tap it again to take it back · counts appear only after confirmed votes.</span></p>
+    </div>
     <div class="desk-react-row desk-panel-react-row">
-      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-like" aria-label="Like this panel"><span aria-hidden="true">👍</span><span class="desk-react-k">Like</span><span class="desk-react-n" hidden></span></button>
-      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-fire" aria-label="This panel is fire"><span aria-hidden="true">🔥</span><span class="desk-react-k">Fire</span><span class="desk-react-n" hidden></span></button>
-      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-laugh" aria-label="This panel made me laugh"><span aria-hidden="true">😂</span><span class="desk-react-k">Laugh</span><span class="desk-react-n" hidden></span></button>
-      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-wow" aria-label="This panel surprised me"><span aria-hidden="true">🤯</span><span class="desk-react-k">Wow</span><span class="desk-react-n" hidden></span></button>
+      ${PANEL_REACTIONS.map((r) => `<button type="button" class="desk-react desk-panel-react" data-reaction="${r.id}" aria-pressed="false" aria-label="${escapeHtml(r.aria)}"><span class="desk-react-e" aria-hidden="true">${r.emoji}</span><span class="desk-react-k">${escapeHtml(r.label)}</span><span class="desk-react-n" hidden></span></button>`).join('\n      ')}
     </div>
     <p class="desk-react-status" data-reaction-status data-state="idle" role="status" aria-live="polite"></p>
   </section>`;
@@ -362,17 +441,121 @@ function memePanel(story, day) {
  */
 function bodyHtml(story) {
   let last = null;
-  return (story.body || []).map((b) => {
+  const blocks = (story.body || []).map((b) => {
     const persona = b.voice ? personaById(b.voice) : null;
     if (!persona) return `<p>${escapeHtml(b.text)}</p>`;
     const showByline = persona.id !== last;
     last = persona.id;
+    // S356: persona-attributed prose in the article font. The persona colour is
+    // a left accent keyed by data-voice in news-desk.css (no inline style), and
+    // the chip says "AI persona" at the point of attribution.
     const byline = showByline
-      ? `<p class="desk-said-who"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)}</strong> <span>${escapeHtml(persona.role)}</span></p>`
+      ? `<p class="desk-said-who"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)}</strong><span class="desk-role-chip">AI persona · ${escapeHtml(persona.role)}</span></p>`
       : '';
-    return `<div class="desk-said desk-voice-${escapeHtml(persona.memeStyle || 'declare')}" data-voice="${escapeHtml(persona.id)}" style="--persona:${persona.accent}">${byline}<p>${escapeHtml(b.text)}</p></div>`;
-  }).join('\n');
+    return `<div class="desk-said desk-voice-${escapeHtml(persona.memeStyle || 'declare')}" data-voice="${escapeHtml(persona.id)}">${byline}<p>${escapeHtml(b.text)}</p></div>`;
+  });
+  // The panel's line doubles as the piece's pull quote, set mid-story.
+  const quotePersona = personaById(story.memeLine?.personaId);
+  if (quotePersona && story.memeLine?.text && blocks.length >= 2) {
+    const at = Math.ceil(blocks.length / 2);
+    blocks.splice(at, 0, `<figure class="desk-pullquote" data-persona="${escapeHtml(quotePersona.id)}"><blockquote><p>${escapeHtml(story.memeLine.text)}</p></blockquote><figcaption>${escapeHtml(quotePersona.name)} · AI persona · ${isFallbackArt(story) ? 'the panel line' : 'the line under the illustration'}</figcaption></figure>`);
+  }
+  return blocks.join('\n');
 }
+
+/** Publisher name for a fact's source link: explicit field, else the host. */
+function publisherFor(fact) {
+  const named = String(fact?.publisher || fact?.sourceName || '').trim();
+  if (named) return named;
+  try { return new URL(String(fact?.sourceUrl || '')).hostname.replace(/^www\./, ''); } catch { return 'the source'; }
+}
+
+/**
+ * `story.followUpOf` → the prior story it follows. Accepts "date/slug",
+ * "/news/date/slug/", a bare slug, or { date, slug, headline, url }. Renders
+ * nothing when the prior story cannot be resolved to a published page.
+ */
+function resolveFollowUp(ref) {
+  if (!ref) return null;
+  let date = null;
+  let slug = null;
+  let headline = null;
+  if (typeof ref === 'string') {
+    const m = ref.match(/(\d{4}-\d{2}-\d{2})\/([a-z0-9-]+)/i);
+    if (m) [, date, slug] = m;
+    else slug = ref.trim();
+  } else if (typeof ref === 'object') {
+    date = ref.date || null;
+    slug = ref.slug || null;
+    headline = ref.headline || null;
+    const m = String(ref.url || ref.href || '').match(/(\d{4}-\d{2}-\d{2})\/([a-z0-9-]+)/i);
+    if (m && !slug) [, date, slug] = m;
+  }
+  if (!slug) return null;
+  for (const d of days) {
+    if (date && d.date !== date) continue;
+    const prior = (d.stories || []).find((s) => s.slug === slug);
+    if (prior) return { href: `/news/${d.date}/${prior.slug}/`, headline: prior.headline || headline || slug, date: d.date };
+  }
+  return null;
+}
+
+function followUpLine(story) {
+  const prior = resolveFollowUp(story.followUpOf);
+  if (!prior) return '';
+  return `<p class="desk-followup"><span>Follow-up to</span> <a href="${escapeHtml(prior.href)}">${escapeHtml(prior.headline)}</a> <span class="desk-followup-date">(${escapeHtml(prior.date)})</span></p>`;
+}
+
+const listNames = (names) => (names.length <= 1 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`);
+
+/** Compact byline: persona avatars, names, the AI-written pill, date and read time. */
+function bylineRow(story, day, stats) {
+  const ids = stats.voices.length ? stats.voices : [story.memeLine?.personaId].filter(Boolean);
+  const personas = ids.map((id) => personaById(id)).filter(Boolean);
+  const avatars = personas.map((p) => `<span class="desk-mini-avatar" data-persona="${escapeHtml(p.id)}">${escapeHtml(p.monogram)}</span>`).join('');
+  const names = listNames(personas.map((p) => `<strong>${escapeHtml(p.name)}</strong>`));
+  return `<div class="desk-byline">
+    ${avatars ? `<span class="desk-byline-avatars" aria-hidden="true">${avatars}</span>` : ''}
+    <p class="desk-byline-text"><span class="desk-byline-by">By ${names || '<strong>The Desk</strong>'} <a class="desk-ai-pill" href="#how-this-was-written">AI-written</a></span><span class="desk-byline-meta"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time> · ~${stats.minutes} min read</span></p>
+  </div>
+  <p class="desk-ai-line"><strong>Written by AI personas — no human wrote this.</strong> <a href="#how-this-was-written">How this story was made</a></p>`;
+}
+
+/** "In this story" — only when the piece has at least three sections. */
+function storyToc(sections) {
+  if (sections.length < 3) return '';
+  return `<nav class="desk-toc" aria-label="In this story"><p class="desk-toc-k">In this story</p><ol>${sections.map(([id, label]) => `<li><a href="#${id}">${escapeHtml(label)}</a></li>`).join('')}</ol></nav>`;
+}
+
+/** Community slot. assets/desk-comments.js mounts into this exact contract. */
+function communitySection(story, day) {
+  return `<section class="desk-comments" id="community" data-desk-comments data-slug="${escapeHtml(`${day.date}/${story.slug}`)}" aria-labelledby="desk-comments-title"><h2 id="desk-comments-title">Community</h2><p class="desk-comments-fallback">Comments are loading…</p></section>`;
+}
+
+/** Three recent, listable stories other than this one. */
+function moreFromDesk(currentDay, current) {
+  const picks = [];
+  for (const d of days) {
+    for (const s of d.stories || []) {
+      if (s.supersededBy || s.slug === current.slug) continue;
+      picks.push([d, s]);
+      if (picks.length === 3) break;
+    }
+    if (picks.length === 3) break;
+  }
+  if (!picks.length) return '';
+  const cards = picks.map(([d, s]) => {
+    const art = `/assets/og/news/${d.date}--${s.slug}--meme`;
+    const edition = EDITIONS.find((e) => e.id === s.edition)?.name;
+    return `<li><a class="desk-more-card" href="/news/${d.date}/${s.slug}/">
+      ${isFallbackArt(s) ? pendingArt(s, 'desk-more-art') : `<picture class="desk-more-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture>`}
+      <span class="desk-more-copy"><span class="desk-more-meta">${escapeHtml([edition, d.date].filter(Boolean).join(' · '))}</span><span class="desk-more-title">${escapeHtml(s.headline)}</span></span>
+    </a></li>`;
+  }).join('\n');
+  return `<section class="desk-more" aria-labelledby="desk-more-title"><h2 class="desk-h2" id="desk-more-title">More from The Desk</h2><ul class="desk-more-grid">${cards}</ul></section>`;
+}
+
+const heatBand = (heat) => (heat >= 75 ? 'hot' : heat >= 45 ? 'warm' : 'cool');
 
 /**
  * What a reader actually cares about, in their language.
@@ -441,29 +624,38 @@ function stanceAxis(stats) {
  *
  * Counts render only when the server returns them (see desk-reactions.js).
  */
+// One pick per row; tapping the lit one takes it back. Ids must equal
+// DESK_STORY_REACTIONS in cloudflare/worker-lib.mjs (worker.unit.spec.js).
 const REACTION_BUTTONS = [
-  { id: 'changed-my-mind', label: 'Changed my mind', hint: 'This moved me off my prior' },
-  { id: 'knew-this', label: 'Already knew this', hint: 'Nothing new here for me' },
-  { id: 'want-receipts', label: 'Show more receipts', hint: 'I want this better sourced' },
-  { id: 'made-me-laugh', label: 'Made me laugh', hint: 'The bit landed' },
+  { id: 'changed-my-mind', emoji: '🔄', label: 'Changed my mind', hint: 'This moved me off my prior' },
+  { id: 'knew-this', emoji: '🧠', label: 'Already knew this', hint: 'Nothing new here for me' },
+  { id: 'want-receipts', emoji: '🧾', label: 'Show more receipts', hint: 'I want this better sourced' },
+  { id: 'made-me-laugh', emoji: '😂', label: 'Made me laugh', hint: 'The bit landed' },
 ];
 
 function reactionBar(story, day) {
   const voices = [...new Set((story.body || []).filter((b) => b.voice).map((b) => b.voice))];
   const slug = `${day.date}/${story.slug}`;
-  const buttons = REACTION_BUTTONS.map((r) => `<button type="button" class="desk-react" data-reaction="${r.id}" title="${escapeHtml(r.hint)}"><span class="desk-react-k">${escapeHtml(r.label)}</span><span class="desk-react-n" hidden></span></button>`).join('');
+  const buttons = REACTION_BUTTONS.map((r) => `<button type="button" class="desk-react" data-reaction="${r.id}" aria-pressed="false" title="${escapeHtml(r.hint)}"><span class="desk-react-e" aria-hidden="true">${r.emoji}</span><span class="desk-react-k">${escapeHtml(r.label)}</span><span class="desk-react-n" hidden></span></button>`).join('');
   const voiceButtons = voices.map((v) => {
     const p = personaById(v);
     if (!p) return '';
-    return `<button type="button" class="desk-react desk-react-voice" data-reaction="voice:${escapeHtml(v)}" style="--persona:${p.accent}" title="${escapeHtml(`${p.name} made the strongest case`)}"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(p.monogram)}</span><span class="desk-react-k">${escapeHtml(p.name)}</span><span class="desk-react-n" hidden></span></button>`;
+    return `<button type="button" class="desk-react desk-react-voice" data-reaction="voice:${escapeHtml(v)}" aria-pressed="false" data-persona="${escapeHtml(p.id)}" title="${escapeHtml(`${p.name} made the strongest case`)}"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(p.monogram)}</span><span class="desk-react-k">${escapeHtml(p.name)}</span><span class="desk-react-n" hidden></span></button>`;
   }).join('');
+  const pageUrl = `${PROD}/news/${day.date}/${story.slug}/`;
+  const enc = encodeURIComponent;
+  const shareLinks = [
+    ['Bluesky', `https://bsky.app/intent/compose?text=${enc(`${story.headline} ${pageUrl}`)}`],
+    ['X', `https://x.com/intent/post?text=${enc(story.headline)}&url=${enc(pageUrl)}`],
+    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`],
+    ['Email', `mailto:?subject=${enc(story.headline)}&body=${enc(pageUrl)}`],
+  ].map(([name, href]) => `<a class="desk-share-link" href="${escapeHtml(href)}"${href.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"'}>${name}</a>`).join('');
   return `<section class="desk-reactions" data-desk-reactions="${escapeHtml(slug)}" aria-label="React to this story">
-    <p class="desk-react-title">Was this worth your time?<span>No account, no email. Counts appear only once readers have actually voted.</span></p>
-    <div class="desk-react-row">${buttons}
-      <button type="button" class="desk-react desk-react-share" data-desk-share><span class="desk-react-k">Share this</span></button>
-    </div>
+    <p class="desk-react-title">Was this worth your time?<span>No account, no email. Pick one — tap it again to take it back. Counts appear only once readers have actually voted.</span></p>
+    <div class="desk-react-row">${buttons}</div>
     ${voiceButtons ? `<p class="desk-react-title desk-react-title-sub">Whose take landed?<span>This signal is being collected for a future, sample-gated <a href="/news/directors-report/">Director's Report</a> update. It does not affect the current ranking.</span></p>
     <div class="desk-react-row">${voiceButtons}</div>` : ''}
+    <div class="desk-share" role="group" aria-label="Share this story"><span class="desk-share-k">Share</span><button type="button" class="desk-react desk-react-share" data-desk-share><span class="desk-react-k">Copy link</span></button>${shareLinks}</div>
     <p class="desk-react-status" data-reaction-status data-state="idle" role="status" aria-live="polite"></p>
   </section>`;
 }
@@ -614,7 +806,7 @@ function pulseBar(story, day, heat, stats) {
       ${s.edition ? statChip(EDITIONS.find((e) => e.id === s.edition)?.name || s.edition, 'edition', s.isLead ? 'lead story' : 'inside') : ''}
     </ul>
     <div class="desk-split-read">
-      <strong class="desk-split-label" style="color:${heatColor(heat)}">${escapeHtml(s.label)}</strong>
+      <strong class="desk-split-label" data-heat="${heatBand(heat)}">${escapeHtml(s.label)}</strong>
       ${stanceAxis(s)}
     </div>
   </section>`;
@@ -622,9 +814,9 @@ function pulseBar(story, day, heat, stats) {
 
 function stanceCard(stance) {
   const persona = personaById(stance.personaId);
-  return `<div class="desk-stance" style="--persona:${persona.accent}">
+  return `<div class="desk-stance" data-persona="${escapeHtml(persona.id)}">
     <div class="desk-stance-top">
-      <div class="desk-stance-name"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)} <span style="color:var(--desk-muted);font-weight:400;font-size:.78rem">· AI persona · ${escapeHtml(persona.role)}</span></strong></div>
+      <div class="desk-stance-name"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)} <span class="desk-stance-role">· AI persona · ${escapeHtml(persona.role)}</span></strong></div>
       <span class="desk-verdict">${escapeHtml(stance.verdict)} · ${Math.round(stance.confidence * 100)}% confidence</span>
     </div>
     <blockquote>“${escapeHtml(stance.position)}”</blockquote>
@@ -635,7 +827,7 @@ function predictionRow(p) {
   const persona = personaById(p.personaId);
   const status = p.status || 'open';
   const chip = { open: '⏳ open', correct: '✅ correct', wrong: '❌ wrong', void: '➖ void' }[status];
-  return `<li style="margin:.5rem 0;line-height:1.55"><strong>${persona.emoji} ${escapeHtml(persona.name)}</strong> — ${escapeHtml(p.claim)} <span style="color:var(--dim)">(${Math.round(p.confidence * 100)}% · resolves by ${escapeHtml(p.resolveBy)} · ${chip})</span></li>`;
+  return `<li class="desk-prediction" data-persona="${escapeHtml(persona.id)}"><strong>${persona.emoji} ${escapeHtml(persona.name)}</strong> <span class="desk-ai-tag">AI persona</span> — ${escapeHtml(p.claim)} <span class="desk-prediction-meta">(${Math.round(p.confidence * 100)}% · resolves by ${escapeHtml(p.resolveBy)} · ${chip})</span></li>`;
 }
 
 function buildStoryPage(day, story) {
@@ -647,7 +839,7 @@ function buildStoryPage(day, story) {
   // says so honestly instead of competing with itself in search.
   const supersededUrl = story.supersededBy ? `${PROD}${story.supersededBy}` : null;
   const head = chromeHead({
-    title: `${story.headline} — The Desk · VaultSpark Studios`,
+    title: storyTitle(story.headline),
     description: metaDescription(story),
     canonical: supersededUrl || url,
     ogImage: image,
@@ -660,43 +852,81 @@ function buildStoryPage(day, story) {
     ]),
     jsonLd: storyJsonLd(day, story, url, image),
   });
+  const stats = deriveStoryStats(story, day, { ledger });
   const transcript = (story.transcript || []).map((turn) => {
     const persona = personaById(turn.personaId);
-    return `<p style="margin:.7rem 0"><strong style="color:var(--gold)">${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
+    return `<p class="desk-transcript-turn" data-persona="${escapeHtml(persona.id)}"><strong>${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
   }).join('\n');
+  // Fact text, order, filtering, id and hash are pinned by check-news-claim-parity.
+  // S356 only changes the furniture around them: a readable source line, and the
+  // receipt folded into a per-fact disclosure instead of a hash mid-sentence.
   const facts = story.facts.map((f, index) => {
     const receipt = factReceiptFor(day, story, f, index);
-    return `<li id="${receipt.anchor}" data-fact-id="${receipt.id}" data-fact-hash="${receipt.hash}">${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Read it yourself ↗</a><br><code class="desk-claim-receipt" title="Copyable claim receipt">${receipt.id} · sha256:${receipt.hash}</code></li>`;
+    const publisher = escapeHtml(publisherFor(f));
+    const source = f.sourceKind === 'feed-summary'
+      ? `<a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">From ${publisher}’s feed summary ↗</a>`
+      : `Source: <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">${publisher} ↗</a>`;
+    return `<li id="${receipt.anchor}" data-fact-id="${receipt.id}" data-fact-hash="${receipt.hash}"><span class="desk-fact-text">${escapeHtml(f.text)}</span> <span class="desk-fact-src">${source}</span><details class="desk-receipt"><summary>Receipt</summary><code class="desk-claim-receipt" title="Copyable claim receipt">${receipt.id} · sha256:${receipt.hash}</code></details></li>`;
   }).join('\n');
+  const hasPredictions = (story.predictions || []).length > 0;
+  const hasTranscript = (story.transcript || []).some((t) => t.text);
+  const argumentLabel = (story.stances || []).length === 1 ? 'More from the desk' : 'The rest of the argument';
+  const tocSections = [
+    ['story', 'The story'],
+    ['sources', 'Where this came from'],
+    ['positions', 'Where they are coming from'],
+    ...(hasPredictions ? [['predictions', 'What they are betting on']] : []),
+    ...(hasTranscript ? [['argument', argumentLabel]] : []),
+  ];
+  const edition = story.edition ? (EDITIONS.find((e) => e.id === story.edition)?.name || story.edition) : '';
+  const kickerParts = [edition, day.date, formatFor(story).name, storyBadge(story, day)].filter(Boolean).map((part) => escapeHtml(part));
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
-  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${storyBadge(story, day) ? ` · ${escapeHtml(storyBadge(story, day))}` : ''}</p>
+  <header class="desk-article-head">
+  <p class="desk-kicker"><a href="/news/" class="desk-kicker-home">The Desk</a> · ${kickerParts.join(' · ')}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
-  ${storyAudienceSummary(story, day)}
-${AI_BANNER}
+  ${followUpLine(story)}
+  ${bylineRow(story, day, stats)}
+  </header>
+  ${memeFigure(story, day)}
 ${day.simulated ? PREVIEW_BANNER : ''}
-${supersededUrl ? `  <div class="desk-panel" style="padding:.85rem 1.1rem;margin:1rem 0;border-color:var(--gold);color:var(--desk-muted)"><strong style="color:var(--text)">Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}" style="color:var(--gold)">Read the canonical edition →</a></div>` : ''}
-  ${pulseBar(story, day, heat)}
-  <section class="desk-standfirst">${escapeHtml(story.tldr)}</section>
-  <div class="desk-body">${bodyHtml(story)}</div>
-  ${memePanel(story, day)}
-  <p class="desk-label">Where this came from</p>
-  <ul class="desk-panel desk-facts">${facts}</ul>
-  <p class="desk-critique-link" style="color:var(--muted);font-size:.9rem;margin:.35rem 0 1.25rem"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json" style="color:var(--gold)">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
-  <p class="desk-label">Where they are coming from</p>
+${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
+  <section class="desk-tldr" aria-labelledby="desk-short-title"><h2 class="desk-tldr-k" id="desk-short-title">The short version</h2><p class="desk-standfirst">${escapeHtml(story.tldr)}</p></section>
+  ${storyToc(tocSections)}
+  <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
+  <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
+  ${panelReactions(story, day)}
+  <section class="desk-section" id="sources" aria-labelledby="desk-sources-title">
+  <h2 class="desk-h2" id="desk-sources-title">Where this came from</h2>
+  <p class="desk-section-note">Every factual claim in the piece, linked to the source it came from. Open a receipt to copy its verifiable id and hash.</p>
+  <ol class="desk-panel desk-facts">${facts}</ol>
+  <p class="desk-critique-link"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
+  </section>
+  <section class="desk-section" id="positions" aria-labelledby="desk-positions-title">
+  <h2 class="desk-h2" id="desk-positions-title">Where they are coming from</h2>
+  ${pulseBar(story, day, heat, stats)}
   ${story.stances.map(stanceCard).join('\n')}
+  </section>
 ${/* Only the formats that make a claim about the future carry this section. A
      Quick Take or a Roast has no predictions, and rendering the heading anyway
      printed "What they are betting on" above an empty list — advertising
      accountability content the piece does not contain, which is the same empty-
      scoreboard dishonesty the record state on the hub was written to avoid. */
-  (story.predictions || []).length ? `  <p class="desk-label">What they are betting on</p>
-  <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">They put these on the record so you can hold them to it. <a href="/news/#ledger" style="color:var(--gold)">See the scorecard →</a></p>
-  <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>` : ''}
-${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">${(story.stances || []).length === 1 ? 'More from the desk' : 'The rest of the argument'}</summary>${transcript}</details>` : ''}
+  hasPredictions ? `  <section class="desk-section" id="predictions" aria-labelledby="desk-predictions-title">
+  <h2 class="desk-h2" id="desk-predictions-title">What they are betting on</h2>
+  <p class="desk-section-note">They put these on the record so you can hold them to it. <a href="/news/#ledger">See the scorecard →</a></p>
+  <ul class="desk-predictions">${story.predictions.map(predictionRow).join('\n')}</ul>
+  </section>` : ''}
+${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><summary>${argumentLabel}</summary>${transcript}</details>` : ''}
+  <section class="desk-section desk-activity" aria-labelledby="desk-activity-title">
+  <h2 class="desk-h2" id="desk-activity-title">Reader activity</h2>
+  ${storyAudienceSummary(story, day)}
   ${engagementPanel(story, day)}
+  </section>
   ${reactionBar(story, day)}
+  ${communitySection(story, day)}
   ${dispatchCta('story', { compact: true })}
+  ${moreFromDesk(day, story)}
   ${DISCLOSURE}
 </article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
 }
@@ -754,21 +984,37 @@ function buildHubPage() {
     // first publication) but never compete in the index listing.
     const listable = day.stories.filter((story) => !story.supersededBy);
     if (!listable.length) return '';
-    const stories = listable.map((story, index) => {
+    // S356: the newest edition opens with one big image-led lead card; every
+    // other story is an image card in a responsive grid.
+    const leadFirst = [...listable].sort((a, b) => (a.slug === day.leadSlug ? -1 : b.slug === day.leadSlug ? 1 : 0));
+    const isNewest = day === days.find((d) => d.stories.some((s) => !s.supersededBy));
+    const card = (story, variant) => {
       const heat = computeHeat(story.stances);
       const persona = personaById(story.memeLine?.personaId);
       const art = `/assets/og/news/${day.date}--${story.slug}--meme`;
-      return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
-        <picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>
+      const stats = deriveStoryStats(story, day, { ledger });
+      const edition = story.edition ? (EDITIONS.find((e) => e.id === story.edition)?.name || story.edition) : '';
+      const label = [storyBadge(story, day), edition].filter(Boolean).map((x) => escapeHtml(x)).join(' · ');
+      const voices = (stats.voices.length ? stats.voices : [story.memeLine?.personaId].filter(Boolean)).map((id) => personaById(id)).filter(Boolean);
+      const by = voices.length
+        ? `<span class="desk-story-by"><span class="desk-byline-avatars" aria-hidden="true">${voices.map((p) => `<span class="desk-mini-avatar" data-persona="${escapeHtml(p.id)}">${escapeHtml(p.monogram)}</span>`).join('')}</span><span>${escapeHtml(listNames(voices.map((p) => p.name)))} · AI persona${voices.length === 1 ? '' : 's'}</span></span>`
+        : '';
+      return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${variant}">
+        ${isFallbackArt(story) ? pendingArt(story, 'desk-story-art') : `<picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>`}
         <div class="desk-story-copy">
-          <div class="desk-story-meta"><span>${storyBadge(story, day) ? `${escapeHtml(storyBadge(story, day))} · ` : ''}${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>${cardReach(story, day)}
+          <div class="desk-story-meta"><span class="desk-story-edition">${label || escapeHtml(formatFor(story).name)}</span><span>${escapeHtml(formatFor(story).name)}</span></div>${cardReach(story, day)}
           <h3>${escapeHtml(story.headline)}</h3>
           <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
+          <div class="desk-story-foot">${by}<span class="desk-story-split" data-heat="${heatBand(heat)}">${escapeHtml(stats.label)}</span></div>
           <span class="visually-hidden">Editorial panel by ${persona ? escapeHtml(persona.name) : 'The Desk'}: ${escapeHtml(story.memeLine?.text || '')}</span>
         </div>
       </a>`;
-    }).join('\n');
-    return `<section class="desk-grid" aria-label="Edition ${escapeHtml(day.date)}">${stories}</section>`;
+    };
+    const [first, ...rest] = leadFirst;
+    const cards = isNewest
+      ? `${card(first, 'desk-lead')}${rest.length ? `<div class="desk-story-grid">${rest.map((s) => card(s, 'desk-side')).join('\n')}</div>` : ''}`
+      : `<div class="desk-story-grid">${leadFirst.map((s) => card(s, 'desk-side')).join('\n')}</div>`;
+    return `<section class="desk-edition" aria-label="Edition ${escapeHtml(day.date)}"><p class="desk-day-head"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time><span>${listable.length} ${listable.length === 1 ? 'story' : 'stories'}</span></p>${cards}</section>`;
   }).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>

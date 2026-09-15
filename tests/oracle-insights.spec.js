@@ -239,7 +239,7 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
     };
   }
 
-  test('ship-soon forecast requires shipping language and recent activity', () => {
+  test('ship-soon forecast requires shipping language and repo signal', () => {
     const result = computeForecasts(
       velocity({ vorn: { activeDays: 8, totalCommits: 22 } }),
       ecosystem([
@@ -250,7 +250,6 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
           vaultStatus: 'sparked',
           currentFocus: 'Public beta rollout',
           nextMilestone: 'launch',
-          staleDays: 1,
         },
         {
           slug: 'quiet',
@@ -258,7 +257,6 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
           health: 'green',
           vaultStatus: 'forge',
           currentFocus: 'Polish backlog',
-          staleDays: 1,
         },
       ])
     );
@@ -268,6 +266,33 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
     expect(result.shipSoon[0].body).toMatch(/beta|launch|rollout/i);
   });
 
+  // CANON-028: work recency is not a public signal. The forecasts must neither
+  // gate on it nor narrate it, even when the ecosystem row still carries the
+  // upstream fields (the gitignored IGNIS source does).
+  test('forecasts ignore work-recency fields and never narrate them', () => {
+    const result = computeForecasts(
+      velocity({ vorn: { activeDays: 8, totalCommits: 22, lastMtime: '2026-05-19T12:00:00Z' } }),
+      ecosystem([
+        {
+          slug: 'vorn',
+          name: 'Vorn',
+          health: 'green',
+          vaultStatus: 'sparked',
+          currentFocus: 'Public beta rollout',
+          lastUpdated: '2026-01-01',
+          staleDays: 140,          // would have been filtered out by the old gate
+        },
+      ])
+    );
+
+    // A 140-day-stale row still forecasts: the signal is the ship verb, not the date.
+    expect(result.shipSoon.map((p) => p.slug)).toEqual(['vorn']);
+    expect(result).not.toHaveProperty('awakening');
+    for (const f of [...result.shipSoon, ...result.climbing]) {
+      expect(f.body).not.toMatch(/touched|days ago|quiet for|stale|dormant/i);
+    }
+  });
+
   test('climbing forecast ranks high-intensity active projects', () => {
     const result = computeForecasts(
       velocity({
@@ -275,8 +300,8 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
         slow: { activeDays: 2, totalCommits: 3 },
       }),
       ecosystem([
-        { slug: 'oracle', name: 'Oracle', health: 'yellow', vaultStatus: 'forge', staleDays: 0 },
-        { slug: 'slow', name: 'Slow', health: 'green', vaultStatus: 'forge', staleDays: 0 },
+        { slug: 'oracle', name: 'Oracle', health: 'yellow', vaultStatus: 'forge' },
+        { slug: 'slow', name: 'Slow', health: 'green', vaultStatus: 'forge' },
       ])
     );
 
@@ -285,37 +310,26 @@ test.describe('computeForecasts() — pure Forge Forecast generator', () => {
     expect(result.climbing[0].body).toContain('30');
   });
 
-  test('awakening forecast detects stale official pulse plus fresh filesystem touch', () => {
-    Date.now = () => new Date('2026-05-19T12:00:00Z').getTime();
-    const result = computeForecasts(
-      velocity({
-        solara: { activeDays: 1, totalCommits: 1, lastMtime: '2026-05-18T12:00:00Z' },
-      }),
-      ecosystem([
-        { slug: 'solara', name: 'Solara', health: 'green', vaultStatus: 'forge', staleDays: 45 },
-      ])
-    );
-
-    expect(result.awakening.map((p) => p.slug)).toEqual(['solara']);
-    expect(result.awakening[0].confidence).toBeGreaterThanOrEqual(50);
-    expect(result.awakening[0].body).toMatch(/Something stirred/);
-  });
+  /* An "awakening forecast detects stale official pulse plus fresh filesystem
+     touch" test used to sit here. The forecast it covered was removed under
+     CANON-028 (Founder Identity Privacy): it was computed entirely from
+     staleDays + filesystem mtime and rendered "Quiet for 45 days, then a fresh
+     touch today" — a published record of a private individual's work gaps.
+     Absence is now asserted above and in tests/founder-presence-absent.unit.spec.js. */
 
   test('excludes vaulted and red projects from all forecasts', () => {
-    Date.now = () => new Date('2026-05-19T12:00:00Z').getTime();
     const result = computeForecasts(
       velocity({
-        vaulted: { activeDays: 10, totalCommits: 80, lastMtime: '2026-05-19T12:00:00Z' },
-        red: { activeDays: 10, totalCommits: 80, lastMtime: '2026-05-19T12:00:00Z' },
+        vaulted: { activeDays: 10, totalCommits: 80 },
+        red: { activeDays: 10, totalCommits: 80 },
       }),
       ecosystem([
-        { slug: 'vaulted', name: 'Vaulted', health: 'green', vaultStatus: 'vaulted', currentFocus: 'launch', staleDays: 0 },
-        { slug: 'red', name: 'Red', health: 'red', vaultStatus: 'forge', currentFocus: 'launch', staleDays: 0 },
+        { slug: 'vaulted', name: 'Vaulted', health: 'green', vaultStatus: 'vaulted', currentFocus: 'launch' },
+        { slug: 'red', name: 'Red', health: 'red', vaultStatus: 'forge', currentFocus: 'launch' },
       ])
     );
 
     expect(result.shipSoon).toEqual([]);
     expect(result.climbing).toEqual([]);
-    expect(result.awakening).toEqual([]);
   });
 });

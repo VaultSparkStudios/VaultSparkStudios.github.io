@@ -167,9 +167,11 @@
     // Sort by ignisScore descending — top IGNIS climbers
     const byIgnis = [...projects].filter((p) => typeof p.ignisScore === 'number')
       .sort((a, b) => (b.ignisScore || 0) - (a.ignisScore || 0));
-    // Sort by inverse staleDays — most recently touched
-    const byFresh = [...projects].filter((p) => typeof p.staleDays === 'number')
-      .sort((a, b) => (a.staleDays || 999) - (b.staleDays || 999));
+    // A third mover card used to sit here, ranking projects by the upstream
+    // day-count field and printing that number. Removed under CANON-028: naming
+    // the project a private individual worked on most recently, in days, is a
+    // published work schedule. Not replaced with a softened variant — the claim
+    // is the leak, not the wording.
     // Sort by blockerCount ascending — cleanest pipelines
     const byClean = [...projects].filter((p) => typeof p.blockerCount === 'number')
       .sort((a, b) => (a.blockerCount || 0) - (b.blockerCount || 0));
@@ -186,7 +188,6 @@
 
     mount.innerHTML =
       card('🏆 IGNIS Leader',     '#FFC400', byIgnis[0], 'Score', fmtInt(byIgnis[0]?.ignisScore) + ' · ' + (byIgnis[0]?.ignisGrade || '—')) +
-      card('⚡ Most Recently Touched', '#5ad28d', byFresh[0], 'Days since touch', byFresh[0]?.staleDays ?? '—') +
       card('✓ Cleanest Pipeline', '#7EC9FF', byClean[0], 'Friction points', byClean[0]?.blockerCount ?? 0);
   }
 
@@ -258,8 +259,9 @@
     }
     mount.innerHTML =
       card('🜂 Likely to ship soon', '#FF7A00', forecasts.shipSoon, 'No imminent ships read from current signals.', 'Visit the live build') +
-      card('↑ Climbing fast', '#5ad28d', forecasts.climbing, 'No projects climbing sharply in the window.', 'See it live') +
-      card('◐ Awakening from rest', '#7EC9FF', forecasts.awakening, 'No long-dormant projects stirring right now.', 'See it live');
+      card('↑ Climbing fast', '#5ad28d', forecasts.climbing, 'No projects climbing sharply in the window.', 'See it live');
+    // The third card ("◐ Awakening from rest") is gone with its forecast — it
+    // rendered how long a private individual had been away from a project.
   }
 
   // ─── 7. LAYER 3 CONSTELLATION (S138) ─────────────────────────────────────
@@ -272,13 +274,14 @@
   function projectSignals(project, velocity) {
     const repo = velocity?.perRepo?.[project.slug] || velocity?.perRepo?.[String(project.slug).toLowerCase()] || {};
     const friction = Number(project.blockerCount || 0);
-    const stale = typeof project.staleDays === 'number' ? project.staleDays : null;
     const focus = String(project.currentFocus || project.nextMilestone || '').trim();
+    // No `freshness` key: it turned the upstream day-count field into a
+    // "when was this last worked on" stat tile in the comparison card
+    // (CANON-028). Removed, not softened.
     return {
       signals: Number(repo.totalCommits || 0),
       activeDays: Number(repo.activeDays || 0),
       working: Boolean(repo.workingChanges),
-      freshness: stale === null ? 'unknown' : stale === 0 ? 'today' : stale === 1 ? 'yesterday' : `${stale} days ago`,
       friction: friction === 0 ? 'clear' : friction === 1 ? '1 friction point' : `${friction} friction points`,
       focus: focus ? focus.slice(0, 140) + (focus.length > 140 ? '…' : '') : 'No public focus line recorded yet.',
     };
@@ -296,10 +299,9 @@
     return `<article style="padding:1.2rem 1.3rem;border-radius:14px;background:linear-gradient(140deg,rgba(13,17,28,0.96),rgba(8,17,24,0.92));border:1px solid ${accent}33;border-left:3px solid ${accent};">
       <div class="eyebrow" style="color:${accent};margin-bottom:0.5rem;">${escapeHtml(String(project.vaultStatus || 'forge').toUpperCase())}</div>
       <h3 style="font-family:Georgia,serif;font-size:1.25rem;letter-spacing:-0.02em;margin:0 0 0.5rem;color:var(--text);">${escapeHtml(project.name || project.slug)}</h3>
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.55rem;margin:0 0 0.8rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:0.55rem;margin:0 0 0.8rem;">
         <span style="font-size:0.78rem;color:var(--muted);"><strong style="display:block;color:var(--text);font-size:1.05rem;">${fmtInt(s.signals)}</strong>signals</span>
         <span style="font-size:0.78rem;color:var(--muted);"><strong style="display:block;color:var(--text);font-size:1.05rem;">${fmtInt(s.activeDays)}</strong>active days</span>
-        <span style="font-size:0.78rem;color:var(--muted);"><strong style="display:block;color:var(--text);font-size:1.05rem;">${escapeHtml(s.freshness)}</strong>freshness</span>
         <span style="font-size:0.78rem;color:var(--muted);"><strong style="display:block;color:var(--text);font-size:1.05rem;">${escapeHtml(s.friction)}</strong>friction</span>
       </div>
       <p style="font-size:0.86rem;line-height:1.55;color:var(--muted);margin:0;">${escapeHtml(s.focus)}</p>

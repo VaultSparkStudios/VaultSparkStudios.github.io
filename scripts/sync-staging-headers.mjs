@@ -23,7 +23,7 @@ const PROD = 'https://vaultsparkstudios.com/';
 const SNIPPET_PATH = '/etc/caddy/vaultspark-staging-headers.caddy';
 const CADDYFILE = '/etc/caddy/Caddyfile';
 const ROOT = resolve(import.meta.dirname, '..');
-const SKIP_HTML_DIRS = new Set(['.git', '.cache', '.ops-cache', 'context', 'docs', 'lighthouse-results', 'node_modules', 'output', 'playwright-report', 'scripts', 'test-results', 'tests']);
+const SKIP_HTML_DIRS = new Set(['.git', '.cache', '.claude', '.ops-cache', 'context', 'docs', 'lighthouse-results', 'node_modules', 'output', 'playwright-report', 'scripts', 'test-results', 'tests']);
 
 function collectPublicHtml(dir = ROOT, pages = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

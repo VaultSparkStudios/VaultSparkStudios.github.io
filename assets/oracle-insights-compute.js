@@ -120,9 +120,13 @@
   // ─── Forge Forecast (S136) ────────────────────────────────────────────────
   // Forward-looking probabilistic predictions from ecosystem data. Three
   // distinct forecasts:
-  //   1. LIKELY TO SHIP   — projects with ship-related focus + recent activity
+  //   1. LIKELY TO SHIP   — projects whose public focus copy carries ship verbs
   //   2. CLIMBING FAST    — projects with 2x+ commits in last 7d vs 30d baseline
-  //   3. AWAKENING        — long-dormant projects that just got touched
+  //
+  // A third "awakening from rest" forecast was removed (CANON-028): it was built
+  // entirely from per-project work recency. No forecast here may read the
+  // upstream day-count or last-worked date, or any other
+  // when-did-the-founder-work signal. The public feed no longer carries them.
   //
   // Each forecast carries a confidence percentage derived from signal strength
   // (no fake numbers — they're transparent functions of observed data).
@@ -133,7 +137,7 @@
   const SHIP_VERBS = /\b(launch|launching|launches|ship|shipping|ships|release|releasing|deploy|deploying|beta|public|live|sparked|cutover|rollout|reveal|drop|drops|dropping)\b/i;
 
   function computeForecasts(velocity, ecosystem) {
-    const out = { shipSoon: [], climbing: [], awakening: [] };
+    const out = { shipSoon: [], climbing: [] };
     if (!ecosystem || !Array.isArray(ecosystem.projects)) return out;
     const projects = ecosystem.projects.filter((p) =>
       p && p.slug && (p.health === 'green' || p.health === 'yellow') && p.vaultStatus !== 'vaulted'
@@ -148,20 +152,22 @@
       const milestone = String(p.nextMilestone || '');
       const text = `${focus} ${milestone}`;
       if (!SHIP_VERBS.test(text)) continue;
-      const stale = typeof p.staleDays === 'number' ? p.staleDays : 99;
-      if (stale > 14) continue; // hasn't been touched recently — promise without action
-      // Confidence: stronger signal when (a) focus contains a ship verb,
-      // (b) project is fresh (low stale), (c) per-repo activity is high.
+      // Confidence comes from (a) the ship verb in the public focus copy and
+      // (b) per-repo signal breadth. It deliberately carries NO work-recency
+      // term: the old version gated on the upstream day-count field and printed
+      // a per-project "when was this last worked on" sentence, which published
+      // which days a private individual worked (CANON-028 Founder Identity
+      // Privacy). Do not reintroduce a staleness gate, a recency boost, or
+      // recency-softened copy — the claim is the leak, not the wording.
       const repoStats = perRepo[p.slug] || perRepo[(p.slug || '').toLowerCase()] || null;
       const activeDays = repoStats ? (repoStats.activeDays || 0) : 0;
-      const recencyBoost = stale <= 2 ? 30 : stale <= 7 ? 15 : 0;
-      const activityBoost = Math.min(activeDays * 3, 25);
-      const confidence = Math.min(85, 40 + recencyBoost + activityBoost);
+      const activityBoost = Math.min(activeDays * 5, 40);
+      const confidence = Math.min(85, 45 + activityBoost);
       out.shipSoon.push({
         slug: p.slug,
         name: p.name || p.slug,
         confidence,
-        body: `Recent focus mentions ${matchedVerb(text)}. Last touched ${stale === 0 ? 'today' : stale === 1 ? 'yesterday' : `${stale} days ago`}. Pattern reads pre-launch.`,
+        body: `Recent focus mentions ${matchedVerb(text)}. Pattern reads pre-launch.`,
         liveUrl: p.liveUrl || null,
       });
     }
@@ -189,28 +195,12 @@
     }
     out.climbing.sort((a, b) => b.confidence - a.confidence);
 
-    // 3. AWAKENING — long-dormant project that was just touched
-    for (const p of projects) {
-      const stale = typeof p.staleDays === 'number' ? p.staleDays : null;
-      if (stale === null) continue;
-      const repoStats = perRepo[p.slug] || perRepo[(p.slug || '').toLowerCase()] || null;
-      const lastMtime = repoStats && repoStats.lastMtime ? new Date(repoStats.lastMtime).getTime() : null;
-      const now = Date.now();
-      const mtimeDays = lastMtime ? Math.floor((now - lastMtime) / 86400000) : 999;
-      // "Awakening": recorded stale ≥ 14 days but lastMtime ≤ 3 days
-      // (something just stirred even though the formal pulse hasn't updated).
-      if (stale >= 14 && mtimeDays <= 3) {
-        const confidence = Math.min(75, 35 + (stale > 30 ? 25 : 15) + (mtimeDays === 0 ? 10 : 0));
-        out.awakening.push({
-          slug: p.slug,
-          name: p.name || p.slug,
-          confidence,
-          body: `Quiet for ${stale} days, then a fresh touch ${mtimeDays === 0 ? 'today' : mtimeDays + ' day' + (mtimeDays === 1 ? '' : 's') + ' ago'}. Something stirred. Worth watching.`,
-          liveUrl: p.liveUrl || null,
-        });
-      }
-    }
-    out.awakening.sort((a, b) => b.confidence - a.confidence);
+    // A third "AWAKENING" forecast used to live here, narrating how long a
+    // project had been dormant before it was picked up again. It was removed, not
+    // softened: the whole forecast was a function of the upstream day-count field
+    // plus filesystem mtime, i.e. a published record of the gaps between a
+    // private individual's work days (CANON-028). There is no privacy-safe
+    // version of that card, so the shape is now two forecasts.
 
     return out;
   }

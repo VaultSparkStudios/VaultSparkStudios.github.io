@@ -42,8 +42,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { blankFields } from './news-draft-edition.mjs';
 import {
-  runStandards, personaById, VERDICTS, formatFor, validateBody, validateTldr,
-  validateStoryVisual,
+  runStandards, personaById, VERDICTS, validateStance, validateDay,
+  validateStoryVisual, repairVisualAnchors, normalizeVisualText, visualAnchorCorpus,
 } from './lib/news-desk.mjs';
 import { chat, extractJson, selfTestDeskInference } from './lib/desk-inference.mjs';
 
@@ -70,7 +70,9 @@ const argValue = (flag, fallback = null) => {
 export function buildPrompt(draft) {
   const a = draft._authoring || {};
   const s = draft.story || {};
-  const facts = (s.facts || []).map((f, i) => `  [F${i + 1}] ${f.text}  (source: ${f.sourceUrl})`).join('\n');
+  // A feed-summary fact is the publisher's own RSS/Atom summary (the article page
+  // refused our fetcher). Label it so the author never treats it as full reporting.
+  const facts = (s.facts || []).map((f, i) => `  [F${i + 1}] ${f.text}  (source: ${f.sourceUrl}${f.sourceKind === 'feed-summary' ? ' — publisher feed summary' : ''})`).join('\n');
   const cast = (a.cast || []).map((p) => [
     `  ${p.id} — ${p.name}, ${p.role}`,
     `    creed: ${p.creed}`,
@@ -99,7 +101,11 @@ export function buildPrompt(draft) {
     visual: {
       scene: 'string describing the concrete composition',
       alt: 'string describing what is visibly rendered',
-      anchors: ['exact article phrase 1', 'exact article phrase 2', 'exact article phrase 3'],
+      anchors: [
+        'contiguous 3-6 word phrase copied verbatim from one numbered fact',
+        'a second verbatim 3-6 word fact phrase',
+        'a third verbatim 3-6 word fact phrase',
+      ],
       relationships: [{
         id: 'stable-kebab-case-id',
         subject: ['concrete subject aliases'],
@@ -119,6 +125,11 @@ export function buildPrompt(draft) {
     'a quote, or an event. Every factual assertion must be supported by the numbered facts below.',
     'If a fact you want is not in the list, write around it — do not assert it.',
     '',
+    'VISUAL ANCHORS: copy each anchor verbatim as a contiguous 3–6 word phrase from the facts;',
+    'no ellipses, no paraphrase, no skipped words. The standards desk matches them character-for-character.',
+    '',
+    'STANCE POSITIONS: each position is 20–220 characters. Longer or shorter is refused.',
+    '',
     'Return ONE JSON object and nothing else. No markdown fence, no commentary.',
   ].join('\n');
 
@@ -128,6 +139,7 @@ export function buildPrompt(draft) {
     `TONE: ${a.toneLicence || ''}`,
     '',
     `TOPIC: ${draft.topic?.title || s.slug}`,
+    a.followUp ? `FOLLOW-UP: ${a.followUp}` : '',
     '',
     'SOURCED FACTS — the only facts you may assert:',
     facts || '  (none)',
@@ -227,8 +239,15 @@ export function applyProposal(draft, proposal) {
     for (const key of ['scene', 'alt']) {
       if (typeof visual[key] === 'string') s.visual[key] = visual[key].trim();
     }
+    let replacedAnchors = new Map();
     if (Array.isArray(visual.anchors)) {
-      s.visual.anchors = visual.anchors.slice(0, 3).map((value) => String(value).trim()).filter(Boolean);
+      const proposed = visual.anchors.slice(0, 3).map((value) => String(value).trim()).filter(Boolean);
+      // S356: an anchor the verbatim gate would refuse (ellipsis, paraphrase) is
+      // swapped for a contiguous phrase copied from a sourced fact. Valid anchors
+      // pass through untouched; nothing is invented and the gate is unchanged.
+      const repaired = repairVisualAnchors(proposed, s, { want: 3 });
+      s.visual.anchors = repaired.anchors;
+      replacedAnchors = repaired.replaced;
     }
     if (Array.isArray(visual.relationships)) {
       s.visual.relationships = visual.relationships.slice(0, 3).map((rel) => ({
@@ -236,7 +255,9 @@ export function applyProposal(draft, proposal) {
         subject: (Array.isArray(rel?.subject) ? rel.subject : [rel?.subject]).map(String).map((v) => v.trim()).filter(Boolean),
         action: (Array.isArray(rel?.action) ? rel.action : [rel?.action]).map(String).map((v) => v.trim()).filter(Boolean),
         object: (Array.isArray(rel?.object) ? rel.object : [rel?.object]).map(String).map((v) => v.trim()).filter(Boolean),
-        evidenceAnchorRefs: (Array.isArray(rel?.evidenceAnchorRefs) ? rel.evidenceAnchorRefs : []).map(String).map((v) => v.trim()).filter(Boolean),
+        evidenceAnchorRefs: (Array.isArray(rel?.evidenceAnchorRefs) ? rel.evidenceAnchorRefs : [])
+          .map(String).map((v) => v.trim()).filter(Boolean)
+          .map((ref) => replacedAnchors.get(ref) || ref),
       }));
     }
     for (const key of ['target', 'setup', 'payoff']) {
@@ -278,21 +299,42 @@ export function applyProposal(draft, proposal) {
  */
 export function evaluate(draft) {
   const blanks = blankFields(draft);
-  const findings = runStandards(draft.story) || [];
-  const fmt = formatFor(draft.story);
+  const story = draft.story || {};
+  const findings = runStandards(story) || [];
   const structural = [];
+
+  // S356: authoring must be able to fix whatever PROMOTE refuses. On 2026-09-14
+  // 18:24Z "DevFest is back" authored OK and promote then refused it on a stance
+  // position length — evaluate() had never run per-story stance validation, so
+  // the retry loop could not see (or correct) the defect. Run the exact
+  // validators promote runs, labelled by persona so a retry knows which stance.
+  const sourceUrls = new Set((story.facts || []).map((f) => f.sourceUrl).filter(Boolean));
+  const rawStanceErrors = new Set();
+  for (const stance of story.stances || []) {
+    for (const error of validateStance(stance, { sourceUrls })) {
+      rawStanceErrors.add(error);
+      structural.push(`stance ${stance.personaId}: ${error}`);
+    }
+  }
+
   const fullContract = Boolean(draft._authoring?.constraints?.body);
-  if (fullContract) structural.push(...validateBody(draft.story.body, {
-      range: fmt.bodyWords,
-      personaIds: new Set((draft.story.stances || []).map((st) => st.personaId)),
-    }), ...validateTldr(draft.story.tldr, { range: fmt.tldrRange }));
-  if (fullContract && draft.story.visual) {
-    const inspectable = structuredClone(draft.story.visual);
-    inspectable.pixelInspection = {
-      sha256: 'a'.repeat(64), reviewed: true, reviewer: 'pending raster review', semanticVerified: false,
-    };
-    structural.push(...validateStoryVisual(inspectable, { story: draft.story, date: draft.date })
-      .filter((error) => !/pixelInspection/.test(error)));
+  if (fullContract) {
+    // promote() runs validateDay() over the assembled day; run it over this one
+    // story. The raster receipt is written by the art step AFTER authoring, so
+    // only pixelInspection errors are excused here — promote still enforces them.
+    const candidate = structuredClone(story);
+    if (candidate.visual) {
+      candidate.visual.pixelInspection = {
+        sha256: 'a'.repeat(64), reviewed: true, reviewer: 'pending raster review', semanticVerified: false,
+      };
+    }
+    const at = `story ${story.slug || '?'}: `;
+    structural.push(...validateDay(
+      { date: draft.date, simulated: candidate.visual ? false : true, stories: [candidate] },
+      { today: draft.date },
+    ).filter((error) => !/pixelInspection/.test(error))
+      // Already reported above with the persona named.
+      .filter((error) => !(error.startsWith(at) && rawStanceErrors.has(error.slice(at.length)))));
   }
   const blocks = [
     ...findings.filter((f) => f.severity === 'block'),
@@ -445,7 +487,7 @@ function selfTest() {
   const t = [];
   const add = (name, ok) => t.push([name, ok]);
 
-  const persona = { id: 'x', name: 'X' };
+  const persona = { id: 'rex', name: 'REX' };
   const baseDraft = {
     date: '2026-01-01', edition: 'morning',
     topic: { title: 'A thing happened' },
@@ -455,19 +497,19 @@ function selfTest() {
         { text: 'The lab reported a 42 percent improvement on the benchmark.', sourceUrl: 'https://a.test/1' },
         { text: 'Two hundred researchers contributed to the release.', sourceUrl: 'https://b.test/2' },
       ],
-      stances: [{ personaId: 'x', direction: null, horizon: null, verdict: '', confidence: null, position: '', sources: ['https://a.test/1'] }],
-      predictions: [{ id: 'p-1', personaId: 'x', claim: '', confidence: null, resolveBy: '2026-03-01', status: 'open' }],
-      transcript: [{ personaId: 'x', text: '' }],
-      memeLine: { text: '', personaId: 'x' },
+      stances: [{ personaId: 'rex', direction: null, horizon: null, verdict: '', confidence: null, position: '', sources: ['https://a.test/1'] }],
+      predictions: [{ id: 'p-1', personaId: 'rex', claim: '', confidence: null, resolveBy: '2026-03-01', status: 'open' }],
+      transcript: [{ personaId: 'rex', text: '' }],
+      memeLine: { text: '', personaId: 'rex' },
     },
     _authoring: { cast: [persona], constraints: {}, standardsWillBlock: [] },
   };
 
   const goodProposal = {
     headline: 'A thing happened', hook: 'and it mattered', tldr: 'A paragraph.', memeLine: 'quotable',
-    stances: [{ personaId: 'x', position: 'A 42 percent jump is real.', verdict: 'fair', direction: 1, horizon: 0, confidence: 0.7 }],
+    stances: [{ personaId: 'rex', position: 'A 42 percent jump is real.', verdict: 'fair', direction: 1, horizon: 0, confidence: 0.7 }],
     predictions: [{ id: 'p-1', claim: 'The benchmark still shows a 42 percent gain on 2026-03-01.', confidence: 0.6 }],
-    transcript: [{ personaId: 'x', text: 'Something said.' }],
+    transcript: [{ personaId: 'rex', text: 'Something said.' }],
   };
 
   const applied = applyProposal(baseDraft, goodProposal);
@@ -479,7 +521,7 @@ function selfTest() {
   const hostile = applyProposal(baseDraft, {
     ...goodProposal,
     facts: [{ text: 'invented', sourceUrl: 'https://evil.test' }],
-    stances: [{ personaId: 'x', position: 'ok', verdict: 'v', direction: 1, horizon: 0, confidence: 0.5, sources: ['https://evil.test'] }],
+    stances: [{ personaId: 'rex', position: 'ok', verdict: 'v', direction: 1, horizon: 0, confidence: 0.5, sources: ['https://evil.test'] }],
   });
   add('a proposal cannot add a fact', hostile.story.facts.length === 2 && hostile.story.facts.every((f) => !/evil/.test(f.sourceUrl)));
   add('a proposal cannot add a source to a stance', !hostile.story.stances[0].sources.includes('https://evil.test'));
@@ -490,10 +532,10 @@ function selfTest() {
   })());
 
   // Range discipline.
-  add('direction is clamped to the scale', applyProposal(baseDraft, { stances: [{ personaId: 'x', direction: 99 }] }).story.stances[0].direction === 2);
+  add('direction is clamped to the scale', applyProposal(baseDraft, { stances: [{ personaId: 'rex', direction: 99 }] }).story.stances[0].direction === 2);
   add('a certainty of 1 is refused for a prediction', applyProposal(baseDraft, { predictions: [{ id: 'p-1', confidence: 1 }] }).story.predictions[0].confidence === null);
-  add('a stance confidence of 1 is allowed', applyProposal(baseDraft, { stances: [{ personaId: 'x', confidence: 1 }] }).story.stances[0].confidence === 1);
-  add('a non-numeric confidence does not overwrite', applyProposal(baseDraft, { stances: [{ personaId: 'x', confidence: 'high' }] }).story.stances[0].confidence === null);
+  add('a stance confidence of 1 is allowed', applyProposal(baseDraft, { stances: [{ personaId: 'rex', confidence: 1 }] }).story.stances[0].confidence === 1);
+  add('a non-numeric confidence does not overwrite', applyProposal(baseDraft, { stances: [{ personaId: 'rex', confidence: 'high' }] }).story.stances[0].confidence === null);
 
   // S337 authoring provenance. `chat()` sets `fellBackFrom` only when a standby
   // answered, so these two shapes are the only two the pipeline can produce.
@@ -509,7 +551,7 @@ function selfTest() {
   // The gate that matters: an invented figure must not pass.
   const inventedFigure = applyProposal(baseDraft, {
     ...goodProposal,
-    stances: [{ personaId: 'x', position: 'This is a 99 percent improvement.', verdict: 'v', direction: 1, horizon: 0, confidence: 0.5 }],
+    stances: [{ personaId: 'rex', position: 'This is a 99 percent improvement.', verdict: 'v', direction: 1, horizon: 0, confidence: 0.5 }],
   });
   const inventedVerdict = evaluate(inventedFigure);
   add('an invented figure is blocked by standards', !inventedVerdict.ok && inventedVerdict.blocks.length > 0);
@@ -519,6 +561,104 @@ function selfTest() {
   // An incomplete proposal must fail closed, never publish partially.
   add('an incomplete proposal is not publishable', !evaluate(applyProposal(baseDraft, { headline: 'only this' })).ok);
 
+  // S356 A — authoring must see what promote refuses. "DevFest is back" authored
+  // OK on 2026-09-14 and promote refused its stance position length.
+  const withPosition = (position) => ({ ...goodProposal, stances: [{ ...goodProposal.stances[0], position }] });
+  const positionBlocked = (verdict) => verdict.blocks.some((b) => /stance rex: position must be 20–220 chars/.test(b.detail));
+  const tooLong = evaluate(applyProposal(baseDraft, withPosition(`A real improvement ${'and still going '.repeat(14)}`)));
+  add('a stance position over 220 chars fails evaluate()', !tooLong.ok && positionBlocked(tooLong));
+  const tooShort = evaluate(applyProposal(baseDraft, withPosition('Too short.')));
+  add('a stance position under 20 chars fails evaluate()', !tooShort.ok && positionBlocked(tooShort));
+  add('the stance refusal names the persona so a retry can fix it', /stance rex/.test(retryNote(tooShort)));
+  const fullDraft = structuredClone(baseDraft);
+  fullDraft._authoring.constraints = { body: '180–900 words' };
+  const fullTooLong = evaluate(applyProposal(fullDraft, withPosition(`A real improvement ${'and still going '.repeat(14)}`)));
+  add('the full promote contract (validateDay) also refuses a long stance, reported once',
+    !fullTooLong.ok && fullTooLong.blocks.filter((b) => /position must be 20–220 chars/.test(b.detail)).length === 1);
+  add('the full promote contract reports what promote would refuse beyond stances',
+    fullTooLong.blocks.some((b) => /body/.test(b.detail)));
+
+  // S356 B — an ellipsis anchor ("Amodei... co-founded Anthropic in 2021",
+  // 2026-09-14 06:46Z) is repaired from the facts; the verbatim gate is unchanged.
+  const visualDraft = structuredClone(baseDraft);
+  visualDraft.story.facts = [
+    // The ellipsis in the real anchor stood in for SKIPPED words ("Amodei, who
+    // left OpenAI, co-founded…"). Normalization already drops the dots, so an
+    // ellipsis over adjacent words passes the gate; elided words never do.
+    { text: 'Dario Amodei, who left OpenAI, co-founded Anthropic in 2021 with his sister.', sourceUrl: 'https://a.test/1' },
+    { text: 'The company released its Claude model family to enterprise customers.', sourceUrl: 'https://b.test/2' },
+  ];
+  visualDraft.story.visual = {
+    artSource: 'data/news-desk/art/2026-01-01--a-thing.png', scene: '', alt: '', anchors: [], relationships: [],
+    pixelInspection: { sha256: '', reviewed: false, reviewer: '', semanticVerified: false },
+    generatedArt: true, satire: { target: '', setup: '', payoff: '', institutional: true },
+  };
+  const ellipsisAnchor = 'Amodei... co-founded Anthropic in 2021';
+  const visualApplied = applyProposal(visualDraft, {
+    ...goodProposal,
+    visual: {
+      scene: 'A boardroom whiteboard lists founding dates while a lab bench of model cards spills toward enterprise buyers.',
+      alt: 'Illustration of a whiteboard with founding dates beside a stack of model cards handed to enterprise buyers.',
+      anchors: [ellipsisAnchor, 'Claude model family', 'enterprise customers'],
+      relationships: [{ id: 'lab-ships-models', subject: ['lab'], action: ['ships'], object: ['models'], evidenceAnchorRefs: [ellipsisAnchor] }],
+      satire: {
+        target: 'the enterprise AI procurement machine',
+        setup: 'buyers queue for model cards like concert tickets',
+        payoff: 'the founding date becomes the product differentiator',
+      },
+    },
+  });
+  const repairedAnchors = visualApplied.story.visual.anchors;
+  const inspectable = structuredClone(visualApplied.story.visual);
+  inspectable.pixelInspection = { sha256: 'b'.repeat(64), reviewed: true, reviewer: 'self-test', semanticVerified: false };
+  const visualErrors = validateStoryVisual(inspectable, { story: visualApplied.story, date: visualApplied.date });
+  add('an ellipsis anchor is replaced', repairedAnchors.length === 3 && !repairedAnchors.includes(ellipsisAnchor) && !/\.\.\.|…/.test(repairedAnchors[0]));
+  add('the repaired anchor is a verbatim 3–6 word phrase from a fact', (() => {
+    const words = normalizeVisualText(repairedAnchors[0]).split(' ').length;
+    return words >= 3 && words <= 6
+      && visualApplied.story.facts.some((f) => normalizeVisualText(f.text).includes(normalizeVisualText(repairedAnchors[0])));
+  })());
+  add('the repair keeps what the model meant (shares its words)', /Anthropic|2021/.test(repairedAnchors[0]));
+  add('the repaired visual passes validateStoryVisual', visualErrors.length === 0);
+  add('valid anchors are left untouched', repairedAnchors[1] === 'Claude model family' && repairedAnchors[2] === 'enterprise customers');
+  add('relationship evidence follows the repaired anchor', visualApplied.story.visual.relationships[0].evidenceAnchorRefs[0] === repairedAnchors[0]);
+  add('the gate itself still refuses an ellipsis anchor', (() => {
+    const raw = structuredClone(inspectable);
+    raw.anchors = [ellipsisAnchor, ...raw.anchors.slice(1)];
+    raw.relationships[0].evidenceAnchorRefs = [ellipsisAnchor];
+    return validateStoryVisual(raw, { story: visualApplied.story, date: visualApplied.date }).some((e) => /is not present in the article corpus/.test(e));
+  })());
+  add('an all-valid anchor set is returned unchanged with no replacements', (() => {
+    const r = repairVisualAnchors(['Claude model family', 'enterprise customers', 'co-founded Anthropic in 2021'], visualDraft.story);
+    return r.replaced.size === 0 && r.anchors.join('|') === 'Claude model family|enterprise customers|co-founded Anthropic in 2021';
+  })());
+  add('repair never invents: every anchor lives in the fact corpus', repairedAnchors.every((a) => visualAnchorCorpus({ facts: visualApplied.story.facts }).includes(normalizeVisualText(a))));
+
+  // S357: the repair must not illustrate a claim the story never made. Without a
+  // minimum-overlap requirement, an anchor the model invented outright was
+  // swapped for the most distinctive UNRELATED fact phrase and then passed
+  // validateStoryVisual cleanly — art anchored to a claim nowhere in the piece.
+  const fabricated = 'the merger closed in Brussels last spring';
+  const notRepaired = repairVisualAnchors([fabricated, 'Claude model family', 'enterprise customers'], visualDraft.story);
+  add('a fabricated anchor sharing nothing with the facts is not repaired',
+    notRepaired.replaced.size === 0 && !notRepaired.anchors.includes(fabricated));
+  add('an unrepairable anchor is not quietly back-filled with an unrelated phrase',
+    notRepaired.anchors.join('|') === 'Claude model family|enterprise customers');
+  add('the gate still refuses the story whose anchor could not be repaired', (() => {
+    const unfixed = structuredClone(inspectable);
+    unfixed.anchors = notRepaired.anchors;
+    unfixed.relationships[0].evidenceAnchorRefs = [notRepaired.anchors[0]];
+    return validateStoryVisual(unfixed, { story: visualApplied.story, date: visualApplied.date })
+      .some((e) => /at least three article anchors/.test(e));
+  })());
+  add('an elided anchor whose words DO appear in a fact is still repaired, to a related phrase', (() => {
+    const r = repairVisualAnchors(['Amodei … Anthropic in 2021'], visualDraft.story, { want: 1 });
+    return r.replaced.size === 1 && /Anthropic in 2021/.test(r.anchors[0]);
+  })());
+  add('an anchor already contiguous in a fact is never needlessly rewritten',
+    repairVisualAnchors(['Anthropic in 2021 …'], visualDraft.story, { want: 1 }).replaced.size === 0);
+  add('the prompt forbids ellipsis anchors', /no ellipses, no paraphrase/.test(buildPrompt(baseDraft)[0].content));
+
   // Importing the drafter must not run its CLI. Before the S319 RUN_DIRECT
   // guard this import printed a usage banner and set exitCode 2, which would
   // have made every successful scheduled edition report failure.
@@ -527,7 +667,7 @@ function selfTest() {
   const prompt = buildPrompt(baseDraft);
   add('the prompt carries the sourced facts', /42 percent/.test(prompt[1].content));
   add('the prompt states the invent-nothing rule', /never invent a number/i.test(prompt[0].content));
-  add('the prompt names the seated persona', /\bx\b/.test(prompt[1].content));
+  add('the prompt names the seated persona', /\brex\b/.test(prompt[1].content));
   add('the authoring budget stays inside the provider completion envelope', AUTHOR_MAX_TOKENS === 2048);
 
   for (const [name, ok] of t) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);

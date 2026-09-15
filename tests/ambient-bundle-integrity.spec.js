@@ -34,7 +34,7 @@ test.describe('Ambient bundle (S136) — single load + features alive', () => {
       const sources = Array.from(document.querySelectorAll('script[src]'))
         .map((s) => s.getAttribute('src') || '');
       return sources.filter((s) =>
-        /\/assets\/(ignis-lens|exit-intent|scroll-reveal|scroll-depth|native-feel|presence-badge|visit-depth|breadcrumb-render|rate-page|account-chip|command-palette|hover-prefetch|edge-swipe-nav|pointerdown-warm|page-sigil|vault-atlas|vault-genome-strip|rank-orb)\.js/.test(s)
+        /\/assets\/(ignis-lens|exit-intent|scroll-reveal|scroll-depth|native-feel|visit-depth|breadcrumb-render|rate-page|account-chip|command-palette|hover-prefetch|edge-swipe-nav|pointerdown-warm|page-sigil|vault-atlas|vault-genome-strip|rank-orb)\.js/.test(s)
       );
     });
     expect(legacy, `legacy ambient script tags should be stripped: ${legacy.join(', ')}`).toEqual([]);
