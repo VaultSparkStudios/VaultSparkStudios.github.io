@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big",
+    "url": "https://vaultsparkstudios.com/news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-01-e3a98239d93d",
+      "hash": "e3a98239d93d1e40bc9cab57a090d2fcde7586782b71bc115cea15218963ee1e",
+      "text": "Hassabis sees it coming within a few years, Legg recently said a precursor could arrive by 2028 .",
+      "sourceUrl": "https://the-decoder.com/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-questions-around-agi/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/#fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-01-e3a98239d93d"
+    },
+    {
+      "id": "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-02-f59f00f7cb1c",
+      "hash": "f59f00f7cb1cada2128a407011a8bcc9fbd6e7e433b2299be41b48665b27d687",
+      "text": "The institute brings together researchers from Google Deepmind, Google, and the global scientific community to tackle questions about safety, governance, and risks like cyberattacks or loss of control.",
+      "sourceUrl": "https://the-decoder.com/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-questions-around-agi/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/#fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-02-f59f00f7cb1c"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "mara:fair",
+      "persona": "mara",
+      "text": "The institute formalizes the oversight of safety and governance for AGI, addressing risks like cyberattacks and loss of control through interdisciplinary collaboration.",
+      "confidence": 0.75,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-01-e3a98239d93d",
+        "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-02-f59f00f7cb1c"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "The launch signals that the race for AGI is accelerating, with precursors potentially arriving by 2028, necessitating immediate structural changes to governance.",
+      "confidence": 0.65,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-01-e3a98239d93d",
+        "fact-2026-09-16-google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big-02-f59f00f7cb1c"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-16--google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big.png",
+    "artSha256": "a3f82648fe0afa12277bd1cadc97d068481e825b2a5e02ed4b768455a5bf16f1",
+    "pageSha256": "9bd843fda26c6267f8db9bc1a02295d9cb993d6ed6cf265bd4f8bcaae7c8ef03",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": true,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review"
+    },
+    "sceneFingerprint": "ef8cbc12423b83f4d0343b7551871bb035ab91b05abd4d2692907975c858427b",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
