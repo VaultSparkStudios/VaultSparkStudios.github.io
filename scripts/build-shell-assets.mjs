@@ -39,6 +39,8 @@ const SHELL_ASSETS = [
   // is what lets the pages and their script ship in the same lane.
   { key: 'deskReactions', source: 'assets/desk-reactions.js', stem: 'desk-reactions.shell', attribute: 'src' },
   { key: 'deskPresence', source: 'assets/desk-presence.js', stem: 'desk-presence.shell', attribute: 'src' },
+  { key: 'deskComments', source: 'assets/desk-comments.js', stem: 'desk-comments.shell', attribute: 'src' },
+  { key: 'heroTicker', source: 'assets/hero-ticker.js', stem: 'hero-ticker.shell', attribute: 'src' },
   { key: 'statsSurface', source: 'assets/stats-surface.js', stem: 'stats-surface.shell', attribute: 'src' },
   { key: 'ecosystemStats', source: 'assets/ecosystem-stats.js', stem: 'ecosystem-stats.shell', attribute: 'src' },
   { key: 'heroChoiceTracking', source: 'assets/hero-choice-tracking.js', stem: 'hero-choice-tracking.shell', attribute: 'src' },

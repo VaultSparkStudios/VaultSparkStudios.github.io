@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T02:26:28.386Z",
+  "generatedAt": "2026-09-15T08:03:49.344Z",
   "publicSafe": true,
   "origin": "https://website.staging.vaultsparkstudios.com",
   "suite": "tests/staging-release.spec.js",
-  "state": "passed",
+  "state": "rejected",
   "expectedTests": 6,
   "observedTests": 6,
   "executedTests": 3,
-  "passed": 3,
-  "failed": 0,
+  "passed": 1,
+  "failed": 2,
   "flaky": 0,
   "skipped": 0,
   "held": 3,
@@ -20,12 +20,40 @@
     "identity",
     "worker:identity"
   ],
-  "reasons": [],
-  "failures": [],
+  "reasons": [
+    "failed-2"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "chromium",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 4\n\n- Array []\n+ Array [\n+   \"Failed to load resource: the server responded with a status of 404 ()\",\n+   \"Failed to load resource: the server responded with a status of 404 ()\",\n+ ]",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    },
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "webkit",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 4\n\n- Array []\n+ Array [\n+   \"Failed to load resource: the server responded with a status of 404 ()\",\n+   \"Failed to load resource: the server responded with a status of 404 ()\",\n+ ]",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    }
+  ],
   "failureEvidence": {
-    "projects": [],
-    "tests": [],
-    "files": [],
+    "projects": [
+      "chromium",
+      "webkit"
+    ],
+    "tests": [
+      "mobile drawer and every theme are readable"
+    ],
+    "files": [
+      "tests/staging-release.spec.js"
+    ],
     "truncated": false
   }
 }

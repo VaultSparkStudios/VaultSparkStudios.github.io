@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-15T05:58:50.953Z",
+  "capturedAt": "2026-09-15T07:56:25.148Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "602dc376bb36234f19435a42fdd019517f71faa155f0aea9f67eb29008710765",
+    "sha256": "3b2bca57757dff7a1ed7aeb84520cc248a1c2fe228c160b2ee9d105af70ce914",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -186,7 +186,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "1b36acd30188d2b433c63a52cca206a35a5a6e246ba3dc2d7570ab82e6881a55"
+        "sha256": "d9146fef5d65b45f5af206e1fba30127514ac316c4f6522390e8097957f7623e"
       },
       {
         "path": "membership/index.html",
@@ -194,7 +194,7 @@
       },
       {
         "path": "news/index.html",
-        "sha256": "f59a3ab276116d701f1e89abf4fc884c6cd1316ea32be901d1a617fdb0e3dad5"
+        "sha256": "15868a36d4f296d6293012badc3b95989862cc4d797fcd07ab32b9b4125f7799"
       },
       {
         "path": "oracle/index.html",
@@ -272,9 +272,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "dfa5c43fa45ac37c486f8012424df91e9f75ce675cc7ec63ef690f830e78da1a",
-    "candidateSha": "9e84fe27d12891655bcdc918bbcf6cc297bd47a8",
-    "root": "fc4b85ce2515ed56804dc5e374667cb178e89fb7ed928b577f5796ff4239d2b4"
+    "manifestSha256": "fe96b69eaf2651f0e6e40c3ac289d4b3301bb1576bebe51c7460bdf2b8c2a623",
+    "candidateSha": "0ab420d7fb261144e8e75786abb6b4cf99f818a6",
+    "root": "02d2794d96f4eab4ca4f79b40340a0e5d2cbe416c4785e0cf321acbf50b03a3c"
   },
   "matrix": {
     "routes": [
@@ -326,13 +326,13 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "claude-code (S356)",
+    "reviewer": "Codex recovery visual review",
     "findings": [
-      "Inspected re-captured matrix (12 routes x 7 themes x 2 viewports, 168 captures, root fc4b85ce2515): page sigil now clears the intelligence rail on /studio-pulse/ and /oracle/ (measured 209px desktop, 173px mobile, zero overlapping interactive elements, still 44x44, still clear of #hamburger at 390px); Studio Pulse hero carries no founder-presence pill and states 'Updated 48 min ago'; Desk index and article read correctly with real illustrations; /faq/ skeleton matches hydrated height. Known pre-existing and boarded, not a regression: .ignis-chip prompt buttons on /oracle/ and /ignis/ render orange-on-near-black in light theme (S356 SITE/P1)."
+      "All 168 captured page states inspected as seven-theme route/viewport contact sheets; status light additionally inspected at native size. Open issues: light-theme status labels, Studio Pulse eyebrow, and Oracle placeholder contrast; Studio Pulse CTA alignment. Review completion is not a clean visual verdict."
     ],
     "fixesApplied": [],
-    "blockingDefectsOpen": 0,
-    "limitation": null
+    "blockingDefectsOpen": 3,
+    "limitation": "Viewport page states only; no full-page, article, modal, or menu-open coverage. Three contrast issues remain for repair; complete inspection does not certify a clean release."
   },
   "captures": [
     {
@@ -344,12 +344,12 @@
         "height": 900
       },
       "file": "home--dark--desktop.png",
-      "sha256": "fad2c19bcb07b96cb64404aef599808112058a45a7fd697e900390b3c380434b",
+      "sha256": "1d6494d47379e45d788d269b266eb258e7b49e3c6e460bb1f137d6a46dd3f28b",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -361,12 +361,12 @@
         "height": 900
       },
       "file": "games--dark--desktop.png",
-      "sha256": "68a31d4dec57a5d51188ed8999af10df8382d374fae693af7a39162b6d9b1e2b",
+      "sha256": "9b8f4e651311181b9e68b3be7a47645ae4a518d3bc964e450ebd9be4ebd4edc0",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -378,12 +378,12 @@
         "height": 900
       },
       "file": "membership--dark--desktop.png",
-      "sha256": "62014cc6a06f03386b8b692f47669d93b3b9c9a7ac7ba312487a19ee5a26160a",
+      "sha256": "14b96bc15646444c3975d418ac37527c589cbcd23a25dff377588a47f1081428",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -395,12 +395,12 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "ccf4eed6babb8d925141a9ac9f2c7463b2f07a06a945d6c530126d4c0e27a25c",
+      "sha256": "81ad20eca881346e3c4eabe8224d12299a4b24de7170f58b2b92706d55c4658f",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -417,7 +417,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -434,7 +434,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -451,7 +451,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -463,12 +463,12 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "047e2a5072fbc27ae795aea0d1cb9fcf1077616203d613c5255d0146bb7dccf7",
+      "sha256": "4a0617bcd2f84a64008de56d549573b97bb108f61b6a975e18aa5d78c4fce456",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -480,12 +480,12 @@
         "height": 900
       },
       "file": "studio-pulse--dark--desktop.png",
-      "sha256": "c5c2bc9082e1920426e8c70913fabe06ad6e8d24dd6d06d0ace4cf5bc1f4beab",
+      "sha256": "e4b8388024d304c0e15fc9cac4d49d78249c77eacbed1335d62dce6a49378893",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -497,12 +497,12 @@
         "height": 900
       },
       "file": "oracle--dark--desktop.png",
-      "sha256": "f63ad221eb04744bd345fead61ff401256fa3dd6b9b1aff48d28a7b04664a7dd",
+      "sha256": "f912a46b5f01b1d4538955f160e30c1e8241da28ed741635e54345cd5e05dc18",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -519,7 +519,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -531,12 +531,12 @@
         "height": 900
       },
       "file": "community--dark--desktop.png",
-      "sha256": "a18cfd33d7afbbaf48502a4bdde17ccffd959cbb4afa7bf93a6dcf8245d32835",
+      "sha256": "e8a8787adc149e8cac23913f1315416b58ece18186b34142c006508fa4f15cc0",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -548,12 +548,12 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "cb59dab611ee26a2e56e6e1b93a696fd56f99c0f62f0bbcfcced85a136baefb6",
+      "sha256": "79447c4d23494378b10604001763f8450970abbd9d179f38c48f9d674b6df17e",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -565,12 +565,12 @@
         "height": 900
       },
       "file": "games--light--desktop.png",
-      "sha256": "f0c87887f0953bb266abab448f228f6ce8c4a8e30f7485bfd45430686a048449",
+      "sha256": "3995759b81d20fd2237ce543b16559152fa4610212643cb4c27a9f88e5674b4d",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -582,12 +582,12 @@
         "height": 900
       },
       "file": "membership--light--desktop.png",
-      "sha256": "9719a95caf30ef8d7e5bcada8d699c8f090343a97575426e53b887af6efb5f19",
+      "sha256": "d0f4def75494639e2bd46e08ebbf3c70bdc2d6c4a5ecd3c1e26dadf9d4635562",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -599,12 +599,12 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "4a9eddd3773153ea5c845dd2bf8e87661e79222eba42016d81f714b18eed181f",
+      "sha256": "f827fa35427af96863b212bc526f355599f1441a78ccf92078dfca2c9f28884f",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -621,7 +621,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -638,7 +638,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -650,12 +650,12 @@
         "height": 900
       },
       "file": "privacy--light--desktop.png",
-      "sha256": "73d0d1634a9b607dab1fa2c57787ceabf30f0186c5b50eaa4cb438ad6d4f3777",
+      "sha256": "2b848b2576b2cda8b67b8101a837dabccede8662d8162bde44dd38ad0ef7a7a6",
       "page": "/privacy/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -667,12 +667,12 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "f68651077a93dfc09952d99f104cf74858dfde4f8ddbccf88e4b9a478ea79b5b",
+      "sha256": "e744805c186bae4db0fcea65ea11c5e804db094495637cc0c01ddc819039f6e4",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -684,12 +684,12 @@
         "height": 900
       },
       "file": "studio-pulse--light--desktop.png",
-      "sha256": "4086bf800fb922573162b6f64ae024e6429679e79a541f0bc441953c06ee3a84",
+      "sha256": "5a5acd0aa34a8273009e2425a80f8f6ac4cf312e0f39067731b6ab958e451a48",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -706,7 +706,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -723,7 +723,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -735,12 +735,12 @@
         "height": 900
       },
       "file": "community--light--desktop.png",
-      "sha256": "857b4a4bc7cb1e7d31e3daa603d0b415b9447c17a9650e67cf2be702ebd9d0d7",
+      "sha256": "2856c9bc0519635d5feb71ef0e55e43396f3770cdbbce7f6175e85caec32d951",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -752,12 +752,12 @@
         "height": 900
       },
       "file": "home--ambient--desktop.png",
-      "sha256": "d2ac9c4abbe40ebfe60c267baece75a7200274f508f862a0483788cff1a9c13d",
+      "sha256": "e5b7fd07986a1828629a12ab127b6023a09e437dc43c399d5954676277948a9b",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -774,7 +774,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -791,7 +791,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -803,12 +803,12 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "9dea63b4cf85844535f93e2d1fa8f2af85f1aaad9c7aa881333158e1c0e49eaf",
+      "sha256": "2a71813ccd7e604522c3d0636c3f4a9c73f5ed6bd95ad2b19b1a1d1c673faef8",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -825,7 +825,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -837,12 +837,12 @@
         "height": 900
       },
       "file": "atlas--ambient--desktop.png",
-      "sha256": "2d44613d7468f5237c764ee79724a325edee7f8979f36380832c6a1ea6150894",
+      "sha256": "d8526de69a42357af2faffdac1cb6d67eccca3efd2e76c51becc262620947734",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -859,7 +859,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -871,12 +871,12 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "3284bbce747e7dbece935abd363bc5b8c196b2144ff34fe69045938fed44332d",
+      "sha256": "3600e22ddbc8727ca99bc7842a66a8215656ee2b91cc6dc98b89b7803a12a145",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -888,12 +888,12 @@
         "height": 900
       },
       "file": "studio-pulse--ambient--desktop.png",
-      "sha256": "e820f1c984114e77316e691d229f77aa20e747b401562851e34895c2c4a7891d",
+      "sha256": "8f201ac6172b6ab7d1300fcab7f2bc68869ab88ed88b312698c080c70088f7cc",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -905,12 +905,12 @@
         "height": 900
       },
       "file": "oracle--ambient--desktop.png",
-      "sha256": "af8d02e6c6089bddda24ea21979ca9b2585534c506999a4f06ed37c5f9f2fd9b",
+      "sha256": "7a8e3a9d62601d7e7603586d3672103ef36e317f4fecd409c3331a76a2b4c4a3",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -922,12 +922,12 @@
         "height": 900
       },
       "file": "faq--ambient--desktop.png",
-      "sha256": "88c7d440f0f6b3b6062b69fada5b3f8ad5eeb4f5cbdd6d8a3f2c0f3b6978ab6b",
+      "sha256": "2c64142d9109281aa0b886a3d663f02c41f4d84982140f643bce3eb60f912ed7",
       "page": "/faq/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -939,12 +939,12 @@
         "height": 900
       },
       "file": "community--ambient--desktop.png",
-      "sha256": "59e326fec9759f07b41e5a91f753bfe6e1f9a28c9ee953de0e38d51d2141dad1",
+      "sha256": "5066f47de1ceb0a940dbb82d60948cc534ca57f491179d9198b7a03ce3112a59",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -956,12 +956,12 @@
         "height": 900
       },
       "file": "home--warm--desktop.png",
-      "sha256": "81ec834a9f841963a6e7c426885d05ea7e523b646c85967db8602488ee5cf5b3",
+      "sha256": "357a27a1e6dff5c8dd68b944e168b102be6cfec7b789130a9bdc83377d9abdcc",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -978,7 +978,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -990,12 +990,12 @@
         "height": 900
       },
       "file": "membership--warm--desktop.png",
-      "sha256": "81868795f0e096fefa6478f388f772761142ce69672c9ffc8e911dbf840a3ac9",
+      "sha256": "1eacd19a253c4c98c2eb033e5c0c6ef0c275196309fa8f9d3632fae0a487e681",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1007,12 +1007,12 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "ed2785ab3911cd76697513ffb45bb417d4cff4872c901177b4e2219b8fa02202",
+      "sha256": "eb29f9f51c71859d539f819e8b26def366a42a004ecfce761992186bad037b90",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1024,12 +1024,12 @@
         "height": 900
       },
       "file": "evidence--warm--desktop.png",
-      "sha256": "90b121e8a916b3d8ac3dd766c9c8696ddf8331cfb1248af74cf183c2f58dfc6f",
+      "sha256": "fcef35e535f724184429236580b0837911722d150d5e7da76e643fa94e9cda9e",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1041,12 +1041,12 @@
         "height": 900
       },
       "file": "atlas--warm--desktop.png",
-      "sha256": "7cedc32ec5c6b0eb1df2fad1a02ae192dabf5d54d0b70b5d7e04960088b1572c",
+      "sha256": "41d7039ea116782079098bd0609fca0fb9981e1487c2e61a302aa0b670a5a1fc",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1063,7 +1063,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1075,12 +1075,12 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "ada4fd6d15e22141201b588a5207747e8359975a64fbff48d23061d898088a4b",
+      "sha256": "d89badc8241b3351f808d41b36665ca3eac5907fc6d3698e62ce45dc3ef05c14",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1092,12 +1092,12 @@
         "height": 900
       },
       "file": "studio-pulse--warm--desktop.png",
-      "sha256": "de4152c6ba0919904b0afedc31cac44eaf7fa67624dc1c777d0d3f6429d9f47e",
+      "sha256": "6bef096f6b55f2ae838ddd36d052af64e0ce5783a8460b4c671f0b4178b6c5c7",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1114,7 +1114,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1131,7 +1131,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1143,12 +1143,12 @@
         "height": 900
       },
       "file": "community--warm--desktop.png",
-      "sha256": "fe091592e8118daf11be6508089ac4e3bd9be3d704ad06e4413a24dd622f7397",
+      "sha256": "793804380ad4ab3900fd4105e80b3a2df2f3bea219c0c0a7e468ad60d83e92cc",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1160,12 +1160,12 @@
         "height": 900
       },
       "file": "home--cool--desktop.png",
-      "sha256": "bffa8b178b2609f57db2524b5337ed652fc9e32d4fb4b33d032b59a5cb56af52",
+      "sha256": "60c9c329eb19a9340d9af7f630c4a771e7d358bbaf6b249d6a8cbdba81817c68",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1177,12 +1177,12 @@
         "height": 900
       },
       "file": "games--cool--desktop.png",
-      "sha256": "61e9da9903e9070e3f3b64b6f804e9d8519bf4d87bc2aacab68988239b83c562",
+      "sha256": "da0f789de835cb3c9d0a8a11b5306600a683981f2ffdbcf9a71f9e1c38702d55",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1199,7 +1199,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1211,12 +1211,12 @@
         "height": 900
       },
       "file": "status--cool--desktop.png",
-      "sha256": "a408f4542572c93640910c1d2c295cc02710379b43dd954a5596829ed03c3380",
+      "sha256": "df2295be17fcbff27c800a2df3771c9699329294ccdd7b42c3951a89c56d0d92",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1233,7 +1233,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1245,12 +1245,12 @@
         "height": 900
       },
       "file": "atlas--cool--desktop.png",
-      "sha256": "a73f1e78bcbc1dde7a9af71dfbfac82738558845b36f3e822cc097acf2d27958",
+      "sha256": "f20c0d5e4a28d1a896ca04e663e14b9e56d6f3312f47c8eada1d01678d07a7d7",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1267,7 +1267,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1279,12 +1279,12 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "404fbebfbf1cd275f0ebf238a49742a6184589dd9a76e760b6b7481b433ec0b3",
+      "sha256": "9ffd806af6e04d2e970cf29a7374007015aa5ef5df881ab801d78d126ece84e8",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1296,12 +1296,12 @@
         "height": 900
       },
       "file": "studio-pulse--cool--desktop.png",
-      "sha256": "2e7fb608a21d1bcc1f9757989e54b4d377319dd675887c513318937188a6d12f",
+      "sha256": "8266633c430596adfc8ae545f184b4c63fa905c7f83d14dc3e2da716bede0f26",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1318,7 +1318,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1335,7 +1335,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1347,12 +1347,12 @@
         "height": 900
       },
       "file": "community--cool--desktop.png",
-      "sha256": "93915b700c7751537257b67a9e4f25ca997b2611ee043b5915977964538ad4db",
+      "sha256": "86cb47e5a29013d6a8b28f6786d7eee3b9252e9e7704398153840f02af9e1b88",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1364,12 +1364,12 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "aa4b029f8ab69ffd1c8eb3249020aab809326827a2817d780150b121ae5232aa",
+      "sha256": "e9be713f5f25aa729cf96368b8ecf800add81dc9c18ae4589e51914e97fdd115",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1381,12 +1381,12 @@
         "height": 900
       },
       "file": "games--lava--desktop.png",
-      "sha256": "63d1ab1c3f658854ea2e5e3159ed4823c4d2fa17d75596d120426da6fd6e5fa8",
+      "sha256": "fc3b85397b383057d98b0c7b8046c7061f51b21f99d489a449d312992fbde42a",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1403,7 +1403,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1415,12 +1415,12 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "b1e91b1cab11f858976ac5b2dbbec704043adaf73d59ac0aeac2ec8c37cf7938",
+      "sha256": "aa8c92af0ee6965374358d840211eb01bae864ff0b01d5586debc8cf54d0fc1d",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1437,7 +1437,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1454,7 +1454,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1466,12 +1466,12 @@
         "height": 900
       },
       "file": "privacy--lava--desktop.png",
-      "sha256": "d904f84c6f48d86e86ffac9bc46eb2a9f3a0efe9d931c0df5b8cbcf76069380e",
+      "sha256": "f28efe304579870b786896c50d76a3b83ac259b443144d4efdcb1f47067dfa72",
       "page": "/privacy/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1483,12 +1483,12 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "6c209d674fcc870b6b59dddf9032786d73de947b7efedddd47a3e3e13c6c3691",
+      "sha256": "bca95391c68bd95e99996b82636eb7d11776571c87a2da4407dbb1f670125b19",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1500,12 +1500,12 @@
         "height": 900
       },
       "file": "studio-pulse--lava--desktop.png",
-      "sha256": "c3109565420c2f15c92f2a200839ad44b74e17752e92780404ab4216ff2c9f47",
+      "sha256": "5b3f0ccdaf0fa6c24e8b622ca3547c1a47e629ed5fb7089794fedb6403a0e29c",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1522,7 +1522,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1539,7 +1539,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1556,7 +1556,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1568,12 +1568,12 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "d167f0265cbbfa76960e4a95b05465519bdb90ac1645e231d9ec68dda90dcdab",
+      "sha256": "bca2d69a812445df5998b73ffa6d30764d5ceadf908d24498c083ed67fcf5521",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1590,7 +1590,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1607,7 +1607,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1619,12 +1619,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "ad3982601ea3e78f3c7b9f172e82923a7cae8bcc510d55a393cc040a407f7323",
+      "sha256": "770fca3aecf8e1c1425b2499b4a9c61ca1043451f1bb190fb9fc9610d3009bb8",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1641,7 +1641,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1658,7 +1658,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1675,7 +1675,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1687,12 +1687,12 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "0ec4be76508cacbe5094ef8f0f7657d9a9f8c99de53f8afc989f781b42461782",
+      "sha256": "c8e3b5b3bbee7a112caf436edcd33f460c00e2147b9baa17fa94b2ed915257b0",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1704,12 +1704,12 @@
         "height": 900
       },
       "file": "studio-pulse--high-contrast--desktop.png",
-      "sha256": "251354e20fccc4e218b4bf008824d9fd2d9b6511976a92a7c87848379dfc52fa",
+      "sha256": "72ca2b7552175f266c13f8754d6a51bee14baabc617cdf2ad681c4504508cb92",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1721,12 +1721,12 @@
         "height": 900
       },
       "file": "oracle--high-contrast--desktop.png",
-      "sha256": "367e5cd36fe0a085f4e4e6d0933ffe5ecee970ffedd772524e3339f15bec9140",
+      "sha256": "0ee814a45498df6e4cd5686899b0a70712baab4b6618b6084cd8f0ee7ebbc3b7",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1738,12 +1738,12 @@
         "height": 900
       },
       "file": "faq--high-contrast--desktop.png",
-      "sha256": "151133ab2617382070d6101440aaa62cfe1f43e0205f9daccaeb64d1d725da61",
+      "sha256": "e30ea27d1a3fa2e0f6752286e3175c0275905b4a48aa433acf87c80d18e06a56",
       "page": "/faq/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1755,12 +1755,12 @@
         "height": 900
       },
       "file": "community--high-contrast--desktop.png",
-      "sha256": "8850de4e541e0e320452663ba76bcea3ff74315508fda62d60c9bfc2abd558f8",
+      "sha256": "3e94dbbef382d8884ad9a72371cd75a4282d89f7d8c2ee8f48a085f9d15218d1",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1772,12 +1772,12 @@
         "height": 844
       },
       "file": "home--dark--mobile.png",
-      "sha256": "69c8d79f29af3bc801fb29e59edba5c237ed74fd99de8b8d8ef9ac53d854774f",
+      "sha256": "a217873b27507d33bbc4d16e43bc57588eac3c8c50eee6bdc2ac993f904f2c1c",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1789,12 +1789,12 @@
         "height": 844
       },
       "file": "games--dark--mobile.png",
-      "sha256": "72a0c1cf4c36995fa52be2d4298f1e50de4af47d9e76674b9a62064bf0ff349c",
+      "sha256": "0153f544de09a6c0b787a96483b1a0315dd45f4dc480c24be0740a2354d0f735",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1811,7 +1811,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1823,12 +1823,12 @@
         "height": 844
       },
       "file": "status--dark--mobile.png",
-      "sha256": "4467622393c80d67a181f2a61c5933c86f64f8826558ec4b793632f6730e8df0",
+      "sha256": "93df02958facd8fc34753c5968037f4adc510bf6a439ae43aa94e2224ad42f49",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1840,12 +1840,12 @@
         "height": 844
       },
       "file": "evidence--dark--mobile.png",
-      "sha256": "d903e3c4f509bbf64ba4b74a8fb0633464670ca9b41340212df370cfb86bc016",
+      "sha256": "071bc9a0d656aabb3530a89f20870699f4f9696fc6a6d905e98e66769deaaf37",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1862,7 +1862,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1879,7 +1879,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1891,12 +1891,12 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "b7f0aadc579d487f8ce4fd1ba1eedbf07ebaad64510fb573c4d9c05887dca826",
+      "sha256": "de3413772582be9b419046324c332355ba020918fc7ae97b5a0ee2becf4d2079",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1908,12 +1908,12 @@
         "height": 844
       },
       "file": "studio-pulse--dark--mobile.png",
-      "sha256": "3fcddc4da9589fe49b259cf59e06bd9c86d28e76ff523c3f27326a0b4935c3f1",
+      "sha256": "7221d4355f1648a594f2f2e8698800d36edeb97cb86cc71b4c5cfb6ad630f047",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1925,12 +1925,12 @@
         "height": 844
       },
       "file": "oracle--dark--mobile.png",
-      "sha256": "2e9e329080e399832e090c0dd887663b067fd851c1f91f7bd565701578e9847c",
+      "sha256": "bc8611565278196780811a1906abdbbf161333a5dab0d43e3d85e65327cc7412",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1947,7 +1947,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1959,12 +1959,12 @@
         "height": 844
       },
       "file": "community--dark--mobile.png",
-      "sha256": "4efe3848c325abe199684090c44871132ed9af19e13d20bc10f5f3c568f29c45",
+      "sha256": "93eba2c3c557f2cfb4d2b114384dd1db5f4b63066b8af26520c7503250ae6704",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1976,12 +1976,12 @@
         "height": 844
       },
       "file": "home--light--mobile.png",
-      "sha256": "55daeab81b98b69ddf197d490d0e8ac29534acec80ee0a4bfbd74fbaff2e56b6",
+      "sha256": "a279acec9954fd044fc1da9e2ee2a15ff9bb8fe5d11a98f77a9df86ffaaa595c",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -1993,12 +1993,12 @@
         "height": 844
       },
       "file": "games--light--mobile.png",
-      "sha256": "376fc0409f7a9de245317bf05c3a0d8e34fcd4bf759af5000d3d09201d70fd1c",
+      "sha256": "181bfd3983431fab94fc70ef036e411521caa1343c868cb8630dc2f19710befb",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2015,7 +2015,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2027,12 +2027,12 @@
         "height": 844
       },
       "file": "status--light--mobile.png",
-      "sha256": "db89c334bd7753a4712d6f509d6f248b8074e9e23ccc2e2c9a14356a7b0b7d10",
+      "sha256": "aace8ddff89b3b3aa24940181c8a1472309a626ba51fd4acbddbce2388a5fa35",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2049,7 +2049,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2066,7 +2066,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2083,7 +2083,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2095,12 +2095,12 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "27d5a27ede7ef46694dc478df9fb337d107f867681a5800c6b27dd072ff5dbeb",
+      "sha256": "065607ebc8adb0dfbf3cb8f2c75753c57bbe9873f9511a8226aa8e7ee121a54a",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2112,12 +2112,12 @@
         "height": 844
       },
       "file": "studio-pulse--light--mobile.png",
-      "sha256": "a4436739902da25aba401f8be71ad0fc54d4d452365b8bb064609c12f3140aa1",
+      "sha256": "5fc2da16b9621d7aee59e2d5cf38dda09e27938980e921b618247d60ac1a2a64",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2129,12 +2129,12 @@
         "height": 844
       },
       "file": "oracle--light--mobile.png",
-      "sha256": "668768df17dc221a616a41e29faf3f8afdff5c055caf0dd2935f46e968a22b3c",
+      "sha256": "7a6cc5fb1ce68ca61cb5e15764baeb614bc030b0d5a2ca16c1ef381c674a3517",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2151,7 +2151,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2163,12 +2163,12 @@
         "height": 844
       },
       "file": "community--light--mobile.png",
-      "sha256": "5437b93e9194d4b85bef50b078290f6cfc8c671ab4a2ccad71cc4c98b0325b6f",
+      "sha256": "d56e44f55c7e5e53ff4daa260d0dbd6fd11328a16400a875b333f10cf2b1aca1",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2180,12 +2180,12 @@
         "height": 844
       },
       "file": "home--ambient--mobile.png",
-      "sha256": "068b3bf460dc5538fd5d0408e008af7a565dd6b826c1906158097f10e5765eb5",
+      "sha256": "d8201f66578e5b2771019706354e2eb6e85e9273cb9aa1c391b478334b6c7a59",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2202,7 +2202,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2214,12 +2214,12 @@
         "height": 844
       },
       "file": "membership--ambient--mobile.png",
-      "sha256": "89746551dbb49d63cc1a47e4c77188f17aee8692afcef3da058a3934bac72830",
+      "sha256": "ba75a5082b591c7ef68624e89d5c3f34efa5ff4a56c94bfd725828f2edbd30e9",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2231,12 +2231,12 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "f107dfd33c2f72c40f4e82b267d46ef25889d7fc47ca7c704e21c517db000354",
+      "sha256": "c51e3cc5d0a78fe2fb4e785f739459952469f64edf95157092b46dae739d305c",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2253,7 +2253,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2270,7 +2270,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2282,12 +2282,12 @@
         "height": 844
       },
       "file": "privacy--ambient--mobile.png",
-      "sha256": "4e5d25ec4661493627619fb54f496fcd86896cbe572809182bd580e0a38ee30d",
+      "sha256": "e1e8ab7ccd7cdd14a638d6752a181156f2b4cc75bad78cf0f6d56b95e17d3b1f",
       "page": "/privacy/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2299,12 +2299,12 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "5d6f45065166da584e8b116a85b24be93ef42306d18f486e39633760e6223850",
+      "sha256": "6e9874a9b279e2ca6bd6f5e414834a45d8db1caad6b5449a06866168146eb12d",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2316,12 +2316,12 @@
         "height": 844
       },
       "file": "studio-pulse--ambient--mobile.png",
-      "sha256": "fb74af8ecb166648f35c0670da443284da111bfb5562f8315899f27a02326a8d",
+      "sha256": "dfc9c48d3a8417435460f13c68fa10855119009a79903619dd126eeca9b305be",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2333,12 +2333,12 @@
         "height": 844
       },
       "file": "oracle--ambient--mobile.png",
-      "sha256": "b9860ec8e07f4e48085ebc5826715c60cc97b7fb8d9adf01b2f6a9c6afdbd91d",
+      "sha256": "05cb9e74063134dc053ecc9d1829a360da4927d6a0f29c97617fdea9d286fb99",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2350,12 +2350,12 @@
         "height": 844
       },
       "file": "faq--ambient--mobile.png",
-      "sha256": "56207c8bf6a032a2d3de852c1a17e44dc206fd0a95f5c688beb7c5212e1ccce7",
+      "sha256": "7aaf6e01cd5d1c26ea0ee200ad8ffa8833dd94c34d7e7ab91fca68ab36748357",
       "page": "/faq/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2367,12 +2367,12 @@
         "height": 844
       },
       "file": "community--ambient--mobile.png",
-      "sha256": "bce869c72b7b5d36e5fd99f6874f35406bc69253119975f19d3af135d1ffb444",
+      "sha256": "50fefdcfa2cbad8c0690ed276781a111646ed9389825fe2295c26255c3470f38",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2384,12 +2384,12 @@
         "height": 844
       },
       "file": "home--warm--mobile.png",
-      "sha256": "d675f9619a0ab4b2699948d4899bd3c0b762579895b6cceae32120cd59f37ae7",
+      "sha256": "c29aa7477542422b27aa14b1e8e6b1415569afb8998e2ebac62dd3af880cea21",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2406,7 +2406,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2418,12 +2418,12 @@
         "height": 844
       },
       "file": "membership--warm--mobile.png",
-      "sha256": "a13ff164c0cd6b7dcf17685d4b74b80315b179c8382e291abb584a2524e3ff05",
+      "sha256": "fbaff91d7faf4a14924fee6ec60a5f9737a2a0e207b321c291cbbadcf97b2858",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2435,12 +2435,12 @@
         "height": 844
       },
       "file": "status--warm--mobile.png",
-      "sha256": "78e764d509ff12dd2f79681d3985dd65a5481364e7b54325591a244dc06fde4d",
+      "sha256": "288512c15232315e5b5d429e4862de744b4f08cba86d80561392ce65c30e5723",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2452,12 +2452,12 @@
         "height": 844
       },
       "file": "evidence--warm--mobile.png",
-      "sha256": "e2e4b33a5953866844d31b8d277eff89e5b97f96169f13751661a33b93ef4e4c",
+      "sha256": "ce0fe5d22f50cefebf50a09092cfc3f13a53e0cb37a882d757df7ec171fdb3e9",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2474,7 +2474,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2491,7 +2491,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2503,12 +2503,12 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "4bc5eed5efea895d24bbfe9d3d0737fcfcd3111d912949efe58318ced45fd722",
+      "sha256": "1b38e211933789591e37a546f3bbf44e99f99e5e42ecf2c084d99c5f49346124",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2520,12 +2520,12 @@
         "height": 844
       },
       "file": "studio-pulse--warm--mobile.png",
-      "sha256": "9c5b2e01b412edba1ca5989dc3451c14b42ec2874fbb937424106812b013e92c",
+      "sha256": "bf92eb483447e379307bc6ceeb8e01c4ac33809e15155d03c298c7676a59315a",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2542,7 +2542,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2559,7 +2559,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2576,7 +2576,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2588,12 +2588,12 @@
         "height": 844
       },
       "file": "home--cool--mobile.png",
-      "sha256": "413999c86b35b494bb21ab4e41953182d5cb9bcef6fb57be37961b9e2f7c2547",
+      "sha256": "066006626cbdedea9233cf5207be4fb01d49b01b968aef6fadc3b90334e1c889",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2610,7 +2610,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2627,7 +2627,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2639,12 +2639,12 @@
         "height": 844
       },
       "file": "status--cool--mobile.png",
-      "sha256": "370080eba2cad719406fe55123a1966935d407a6253265263a1747afb06792b0",
+      "sha256": "2fcb8cf6f0b3fc0db254e81c3f03f77beee7d128933f9ed68f46069e3af9f9f4",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2656,12 +2656,12 @@
         "height": 844
       },
       "file": "evidence--cool--mobile.png",
-      "sha256": "dd48fecf64e77cdb99f8f0dd863a0760491ee0e7096efd49db345742be03f3f7",
+      "sha256": "47b6c1f6e5a22188beafcedb08f3098d1eb16b5867d04c5b4dee3b7e7e9bd677",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2673,12 +2673,12 @@
         "height": 844
       },
       "file": "atlas--cool--mobile.png",
-      "sha256": "daa88532949e8dd943e8c2915397ed7a8e56cf45982ba115de60e38ef924acf7",
+      "sha256": "ebf77094b50dd79a29dbfa61a1681be8552631b0b2afd548059a4a49cc557ecb",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2695,7 +2695,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2707,12 +2707,12 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "c7f99b3d0ec2a37e72a4ea65a8294dd3e719bd78709b6195c38f084df92ddb6c",
+      "sha256": "9d4cd88a292f2908d7247d56a1153b2b72c716c76a2197082d56a6ee1f66772c",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2724,12 +2724,12 @@
         "height": 844
       },
       "file": "studio-pulse--cool--mobile.png",
-      "sha256": "743b1b0555f79bc981087f68963bd3be72c2654a1c3346f646021e797ca4e182",
+      "sha256": "f36e5cc2c3708210cd37148afe1b8d070c099e9d190d49460150c65e29f80366",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2746,7 +2746,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2763,7 +2763,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2775,12 +2775,12 @@
         "height": 844
       },
       "file": "community--cool--mobile.png",
-      "sha256": "77b254f854960f01cb9c23f36bbe120f389bf4b80f8724b746730fee094a41e0",
+      "sha256": "8587a8d4bec5b30992d3f31c4e6a4654135dcb0391e697f1e41a25680aecdd4f",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2792,12 +2792,12 @@
         "height": 844
       },
       "file": "home--lava--mobile.png",
-      "sha256": "dc7b73c99c04f16fe57995db6d4ce98b6e7085556087cdfabb0b29bd0e4dcc47",
+      "sha256": "dc0b60c1f73a7fa9a979daee11d77244a9d80a9eb6eda935ef9fb764d0311771",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2814,7 +2814,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2831,7 +2831,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2843,12 +2843,12 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "6abe791785476bc5b33e22159dcad8084ff7db03fb825cc53ef10ab434160738",
+      "sha256": "898a484da56219d571260ed1fece0605c55c4ed39223e8d935906deb3539e963",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2865,7 +2865,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2882,7 +2882,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2899,7 +2899,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2911,12 +2911,12 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "d8941d5b0a65608b88f373d136d8231f9a857bc0202ba13f0cd52a5257ae8c13",
+      "sha256": "84ae742c3d10deb0f7e058da194176d69b1f4a0b3a3eeee47fb18d66f5245e82",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2928,12 +2928,12 @@
         "height": 844
       },
       "file": "studio-pulse--lava--mobile.png",
-      "sha256": "32bc99ff9531ae2fea3120f0bb7dcc55c486ae8f632ecd4a1a45530a78099502",
+      "sha256": "d303a35c05594b0356dd64353b1c491198bf0096bdcc507437611594f2a9307b",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2945,12 +2945,12 @@
         "height": 844
       },
       "file": "oracle--lava--mobile.png",
-      "sha256": "f7b11efab51854300ea6f2d393b7739445a772fd3345a80ad9be78ea18de1440",
+      "sha256": "ab4e4554ee068b2115a7d340ecd5f7bab3566291c323df0fea3f3a52fb0ded22",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2967,7 +2967,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2979,12 +2979,12 @@
         "height": 844
       },
       "file": "community--lava--mobile.png",
-      "sha256": "26c8c92f7cd1ae25596e789a87bdcfc9d4177b58ef7a7d3a88ff8749f5ce0cdd",
+      "sha256": "b52968ff594b2dc8b7bca2821c208b4b0e8f1ee6da5b02fe0e6003a096350d80",
       "page": "/community/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -2996,12 +2996,12 @@
         "height": 844
       },
       "file": "home--high-contrast--mobile.png",
-      "sha256": "1dd12df40ce01afa65db8d1f0d49348b91751a9c550c39b484f595532c52b4d4",
+      "sha256": "cf25ce34a1474b51b393b595d0c413b5df4e6d666735a45643730b8e182c5dc8",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3018,7 +3018,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3030,12 +3030,12 @@
         "height": 844
       },
       "file": "membership--high-contrast--mobile.png",
-      "sha256": "1a86e0aaae684693050ee64c29da5fa1923410f2165a17039155ca52122bcac6",
+      "sha256": "d419d17785c72d91c4f1b81b0d2cc6c60850e018dba74af50017c875c223d855",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3047,12 +3047,12 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "f5040856a776ed5b22617ed59ec8b13c4a9b407227d1100235128d25533df8b6",
+      "sha256": "7fe1b7f4e12ed82b155b512053000794a57bc45846bf5e131ed2caaa6fcf4ca4",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3069,7 +3069,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3081,12 +3081,12 @@
         "height": 844
       },
       "file": "atlas--high-contrast--mobile.png",
-      "sha256": "bb41f895ce624a3f6a86b3448cddab4cb0798ecad3676985a46cac621a728c88",
+      "sha256": "fed0266def2234f74708ffafef2bf683dfb1063171492b531e0eb688be331001",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3103,7 +3103,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3115,12 +3115,12 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "943ce453840dce60d3571c3537a1bece37282ec589aa3607b37425ee4113e1ee",
+      "sha256": "9d57711da80388f893e2185ddb6ff36e18b7f344c3632b158d813e3da4339013",
       "page": "/news/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3132,12 +3132,12 @@
         "height": 844
       },
       "file": "studio-pulse--high-contrast--mobile.png",
-      "sha256": "26bf0a5a48a760e77ff64da76bacae2cf0e736d7455a12235122cdcc5567c772",
+      "sha256": "bb039a44fdd083c633a1d6e2bedec31656dfc2ad8a99573248a898f0c06c5b29",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3149,12 +3149,12 @@
         "height": 844
       },
       "file": "oracle--high-contrast--mobile.png",
-      "sha256": "04422656c08c17af7db30d3b53cf3a133ae64a125741f384a26a910563b878b3",
+      "sha256": "0a6edac5aa8472f0f3c196c34decba5885c1b9800601a119721bb7ec2c7fd9fc",
       "page": "/oracle/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3171,7 +3171,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     },
     {
@@ -3188,7 +3188,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code (S356)"
+        "reviewer": "Codex recovery visual review"
       }
     }
   ]

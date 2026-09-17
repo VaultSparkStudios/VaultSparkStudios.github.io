@@ -91,7 +91,7 @@
 ║  ✓  Revenue sig.  4d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        16/17 (94%)  ·  1 failing                      ║
-║  Open current tasks 35 / Human-action entries 7                  ║
+║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.04 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -128,20 +128,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   97  [AI]           Oracle/IGNIS prompt chips fail contrast in  ║
+║        Oracle/IGNIS prompt chips fail contrast in light theme.   ║
+║                                                                  ║
 ║   96  [PRODUCT]      Purge api/founder-presence.json from publi  ║
 ║        Purge api/founder-presence.json from public git history.  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Staging Worker observability. Still the on  ║
+║   90  [PRODUCT]      Drift preflight scope is narrower than the  ║
+║        Drift preflight scope is narrower than the gate set. che  ║
+║                                                                  ║
+║   84  [PRODUCT]      Staging Worker observability. Still the on  ║
 ║        Staging Worker observability. Still the only way to sour  ║
-║                                                                  ║
-║   87  [PRODUCT]      Mount the narrative on /journal/. Deferred  ║
-║        Mount the narrative on /journal/. Deferred: a UI change   ║
-║                                                                  ║
-║   84  [PRODUCT]      Enable Worker observability for staging. D  ║
-║        Enable Worker observability for staging. Deferred: needs  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

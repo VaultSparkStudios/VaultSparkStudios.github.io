@@ -64,6 +64,9 @@ for (const day of days) {
     const community = `<section class="desk-comments" id="community" data-desk-comments data-slug="${day.date}/${story.slug}" aria-labelledby="desk-comments-title"><h2 id="desk-comments-title">Community</h2><p class="desk-comments-fallback">Comments are loading…</p></section>`;
     if (!article.includes(community)) errors.push(`${rel}: community slot does not match the desk-comments contract`);
 
+    const commentsScript = html.match(/<script src="\/(assets\/desk-comments\.shell-[a-f0-9]{10}\.js)" defer><\/script>/);
+    if (!commentsScript || !existsSync(join(ROOT, commentsScript[1]))) errors.push(`${rel}: fingerprinted comments client missing`);
+    if (!html.includes('<link rel="stylesheet" href="/assets/desk-comments.css">')) errors.push(`${rel}: comments stylesheet missing`);
     const facts = [...article.matchAll(/<li id="(fact-[^"]+)" data-fact-id="[^"]+" data-fact-hash="([a-f0-9]{64})">([\s\S]*?)<\/li>/g)];
     if (facts.length !== (story.facts || []).length) errors.push(`${rel}: ${facts.length} fact rows rendered, ${(story.facts || []).length} in corpus`);
     for (const [, id, hash, body] of facts) {

@@ -123,6 +123,9 @@ const themeToggleSrc = shellManifest.assets?.themeToggle?.path
 const deskReactionsSrc = shellManifest.assets?.deskReactions?.path
   ? `/${shellManifest.assets.deskReactions.path}`
   : '/assets/desk-reactions.js';
+const deskCommentsSrc = shellManifest.assets?.deskComments?.path
+  ? `/${shellManifest.assets.deskComments.path}`
+  : '/assets/desk-comments.js';
 const deskPresenceSrc = shellManifest.assets?.deskPresence?.path
   ? `/${shellManifest.assets.deskPresence.path}`
   : '/assets/desk-presence.js';
@@ -197,9 +200,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, community = false }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${community ? '<link rel="stylesheet" href="/assets/desk-comments.css">' : ''}${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -839,6 +842,7 @@ function buildStoryPage(day, story) {
   // says so honestly instead of competing with itself in search.
   const supersededUrl = story.supersededBy ? `${PROD}${story.supersededBy}` : null;
   const head = chromeHead({
+    community: true,
     title: storyTitle(story.headline),
     description: metaDescription(story),
     canonical: supersededUrl || url,
@@ -928,7 +932,7 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
   ${dispatchCta('story', { compact: true })}
   ${moreFromDesk(day, story)}
   ${DISCLOSURE}
-</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
+</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script><script src="${deskCommentsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */

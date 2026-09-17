@@ -11,7 +11,7 @@
  *
  * Deliberate properties:
  *   - The function OWNS its response headers. This handler passes them through
- *     unchanged — including its strict per-page CSP — and only fills in
+ *     except for the hash-verified gateway CSP repair below, and only fills in
  *     baseline headers the upstream did not set. It must therefore NOT be
  *     wrapped in the Worker's withSecurityHeaders(), which would overwrite
  *     X-Frame-Options: DENY and Referrer-Policy: no-referrer with the softer
@@ -32,6 +32,9 @@ export const NEWSLETTER_UNSUBSCRIBE_PATH = '/api/newsletter/unsubscribe';
 export const NEWSLETTER_UNSUBSCRIBE_UPSTREAM = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/newsletter-unsubscribe';
 export const NEWSLETTER_UNSUBSCRIBE_TIMEOUT_MS = 10000;
 const MAX_BODY_BYTES = 16384;
+// Bound to PAGE_STYLE in the deployed function; the Worker test verifies parity.
+export const NEWSLETTER_PAGE_STYLE_HASH = 'sha256-FYDiNianiLIA+HxunI09dLF/Kq09wSij3SQ3HT/OJZ0=';
+const NEWSLETTER_PAGE_CSP = `default-src 'none'; style-src '${NEWSLETTER_PAGE_STYLE_HASH}'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`;
 
 const ALLOWED_METHODS = ['GET', 'HEAD', 'POST'];
 
@@ -119,6 +122,20 @@ export async function handleNewsletterUnsubscribeProxy(request, env = {}, { fetc
   }
 
   const payload = method === 'HEAD' ? null : await upstream.arrayBuffer();
+
+  // Supabase replaces BOTH content type and CSP. Restore only the known page
+  // from our pinned function, with exactly its known CSS. Unknown styles,
+  // other origins and other policies retain their restrictions.
+  const gatewayPolicy = /^default-src\s+'none'\s*;\s*sandbox\s*;?$/i.test(out.get('content-security-policy') || '');
+  if (payload && gatewayPolicy && upstreamUrl.origin + upstreamUrl.pathname === NEWSLETTER_UNSUBSCRIBE_UPSTREAM) {
+    const html = new TextDecoder().decode(payload);
+    const styles = [...html.matchAll(/<style>([\s\S]*?)<\/style>/gi)];
+    if (/^\s*<!doctype html>/i.test(html) && styles.length === 1) {
+      const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(styles[0][1]));
+      const hash = 'sha256-' + btoa(String.fromCharCode(...new Uint8Array(digest)));
+      if (hash === NEWSLETTER_PAGE_STYLE_HASH) out.set('content-security-policy', NEWSLETTER_PAGE_CSP);
+    }
+  }
 
   // The Supabase gateway can downgrade the function's `text/html` to
   // `text/plain` on GET. Restore it only when the pinned upstream actually

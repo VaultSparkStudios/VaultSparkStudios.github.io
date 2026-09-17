@@ -28,6 +28,8 @@
   <script>!function(){function a(){var s=document.querySelectorAll('link[data-vs-async-css][media="print"]');for(var i=0;i<s.length;i++)s[i].media='all'}'requestAnimationFrame'in window?requestAnimationFrame(a):setTimeout(a,0)}();</script>
   <noscript><link rel="stylesheet" href="/assets/style.shell-0fa853d549.css" /></noscript>
 <style>
+    :root { --status-operational:#10B981; --status-degraded:#FFC400; --status-down:#ef4444; }
+    html[data-theme="light"] { --status-operational:#087451; --status-degraded:#795600; --status-down:#b91c1c; }
     /* ── Status page ── */
     .status-hero { padding: 5rem 0 2.5rem; text-align: center; position: relative; }
     .status-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 60%, rgba(16,185,129,0.08), transparent 45%); }
@@ -57,17 +59,17 @@
     .overall-banner.operational {
       background: rgba(16,185,129,0.1);
       border: 1px solid rgba(16,185,129,0.3);
-      color: #10B981;
+      color: var(--status-operational);
     }
     .overall-banner.degraded {
       background: rgba(255,196,0,0.1);
       border: 1px solid rgba(255,196,0,0.3);
-      color: #FFC400;
+      color: var(--status-degraded);
     }
     .overall-banner.down {
       background: rgba(239,68,68,0.1);
       border: 1px solid rgba(239,68,68,0.3);
-      color: #ef4444;
+      color: var(--status-down);
     }
     .overall-dot {
       width: 12px;
@@ -142,7 +144,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #10B981;
+      background: var(--status-operational);
       flex-shrink: 0;
     }
 
@@ -289,13 +291,13 @@
         <!-- Website -->
         <div class="status-card" id="status-website">
           <div class="status-card-left">
-            <div class="status-dot" id="dot-website" style="background:#10B981;"></div>
+            <div class="status-dot" id="dot-website" style="background:var(--status-operational);"></div>
             <div>
               <div class="status-card-name">Website</div>
               <div class="status-card-msg" id="status-msg-website">Page loaded successfully</div>
             </div>
           </div>
-          <div class="status-card-label" id="status-label-website" style="color:#10B981;">Operational</div>
+          <div class="status-card-label" id="status-label-website" style="color:var(--status-operational);">Operational</div>
         </div>
 
         <!-- Vault Member System -->
@@ -1080,19 +1082,19 @@
         var label = document.getElementById('status-label-' + name);
 
         if (state === 'operational') {
-          if (dot)   dot.style.background = '#10B981';
+          if (dot)   dot.style.background = 'var(--status-operational)';
           if (msg)   msg.textContent = ms > 2000 ? 'Slow response (' + ms + 'ms)' : ms + 'ms response time';
-          if (label) { label.textContent = ms > 2000 ? 'Degraded' : 'Operational'; label.style.color = ms > 2000 ? '#FFC400' : '#10B981'; }
+          if (label) { label.textContent = ms > 2000 ? 'Degraded' : 'Operational'; label.style.color = ms > 2000 ? 'var(--status-degraded)' : 'var(--status-operational)'; }
           results[name] = ms > 2000 ? 'degraded' : 'operational';
         } else if (state === 'degraded') {
-          if (dot)   dot.style.background = '#FFC400';
+          if (dot)   dot.style.background = 'var(--status-degraded)';
           if (msg)   msg.textContent = errorMsg || 'Slow response';
-          if (label) { label.textContent = 'Degraded'; label.style.color = '#FFC400'; }
+          if (label) { label.textContent = 'Degraded'; label.style.color = 'var(--status-degraded)'; }
           results[name] = 'degraded';
         } else {
-          if (dot)   dot.style.background = '#ef4444';
+          if (dot)   dot.style.background = 'var(--status-down)';
           if (msg)   msg.textContent = errorMsg || 'Service unavailable';
-          if (label) { label.textContent = 'Down'; label.style.color = '#ef4444'; }
+          if (label) { label.textContent = 'Down'; label.style.color = 'var(--status-down)'; }
           results[name] = 'down';
         }
         updateOverallBanner();

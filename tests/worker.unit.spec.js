@@ -1156,3 +1156,29 @@ test('S349: a failing origin is recorded as down rather than thrown away', async
   assert.equal(sample.contentOk, false);
   assert.ok(sample.down > 0, 'a 503 from every route must be counted, not swallowed');
 });
+
+test('unsubscribe proxy restores only the pinned stylesheet policy stripped by the gateway', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { createHash } = await import('node:crypto');
+  const { handleNewsletterUnsubscribeProxy, NEWSLETTER_PAGE_STYLE_HASH } = await import('../cloudflare/newsletter-unsubscribe-proxy.mjs');
+  const source = readFileSync(new URL('../supabase/functions/newsletter-unsubscribe/index.ts', import.meta.url), 'utf8');
+  const style = source.match(/export const PAGE_STYLE = `([\s\S]*?)`;/)[1];
+  assert.equal('sha256-' + createHash('sha256').update(style).digest('base64'), NEWSLETTER_PAGE_STYLE_HASH);
+  const request = new Request('https://website.staging.vaultsparkstudios.com/api/newsletter/unsubscribe?token=unknown');
+  const gateway = "default-src 'none'; sandbox";
+  const run = (css, env = {}, policy = gateway) => handleNewsletterUnsubscribeProxy(request, env, {
+    fetchImpl: async () => new Response(`<!doctype html><style>${css}</style><main>Link unavailable</main>`, {
+      status: 404, headers: { 'content-type': 'text/plain', 'content-security-policy': policy },
+    }),
+  });
+  const repaired = await run(style);
+  assert.equal(repaired.status, 404);
+  assert.match(repaired.headers.get('content-type'), /^text\/html/);
+  assert.equal(repaired.headers.get('content-security-policy'), `default-src 'none'; style-src '${NEWSLETTER_PAGE_STYLE_HASH}'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`);
+  assert.equal(repaired.headers.get('x-frame-options'), 'DENY');
+  assert.equal(repaired.headers.get('cache-control'), 'no-store');
+  assert.equal((await run(style + 'body{display:none}')).headers.get('content-security-policy'), gateway);
+  assert.equal((await run(style, { NEWSLETTER_UNSUBSCRIBE_UPSTREAM: 'https://untrusted.invalid/page' })).headers.get('content-security-policy'), gateway);
+  assert.equal((await run(style, {}, "default-src 'none'")).headers.get('content-security-policy'), "default-src 'none'");
+  assert.equal((await run(style + '</style><style>' + style)).headers.get('content-security-policy'), gateway);
+});

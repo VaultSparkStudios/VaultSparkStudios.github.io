@@ -47,7 +47,8 @@
     .forge-live-pill { display:inline-flex; align-items:center; gap:0.5rem; padding:0.35rem 0.9rem;
       background:rgba(255,154,0,0.08); border:1px solid rgba(255,154,0,0.26); border-radius:999px;
       font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#FFB347; }
-    .forge-live-dot { width:8px; height:8px; border-radius:50%; background:#FF9A00; position:relative; }
+    html[data-theme="light"] .forge-live-pill { color:#805000; }
+    .forge-live-dot { width:8px; height:8px; border-radius:50%; background:currentColor; position:relative; }
     @media (prefers-reduced-motion: reduce) { .forge-live-pill .forge-live-dot::after { animation:none; } }
 
       margin:0 0 1.4rem; padding:0.85rem 1.1rem; border-radius:14px; background:var(--panel); border:1px solid var(--line); }
@@ -324,7 +325,7 @@
           <span class="forge-live-text">From the forge floor</span>
         </div>
         <h1 id="pulse-heading" class="forge-h1">Studio<br>Pulse<em>.</em></h1>
-        <p class="forge-lede">A look inside the vault, read from the studio's public feeds. What moved this week, and how fresh every signal is. Nothing pretends to be further along than it is.</p>        </div>
+        <p class="forge-lede">A look inside the vault, read from the studio's public feeds. What moved this week, and how fresh every signal is. Nothing pretends to be further along than it is.</p>
         <div class="forge-hero-actions">
           <a class="button" href="#studio-timeline">See the last 7 days &nbsp;&darr;</a>
           <a class="button-secondary" href="/membership/">Get closer to the forge</a>

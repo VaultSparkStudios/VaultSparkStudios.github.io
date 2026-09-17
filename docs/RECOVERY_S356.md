@@ -43,3 +43,11 @@ The history-purge task requires force-push, which the current recovery instructi
 ## Remaining recovery work
 
 Complete safe remote reconciliation, current build/browser verification, staging and production evidence, release addendum, and the labeled recovery checkpoint. Then execute the new S357 arc.
+
+## Recovery execution receipts
+
+- Checkpoint `2702c3575` was safely rebased to `0ab420d7f`; implementation now `1fb2bc45e`, OG gate fix `e9566d160`. Resolved 24 reviewed conflicts, preserving 1,488 upstream uptime observations plus one unique local observation. No force-push or reset was used.
+- `resync-derived --since 2702c3575 --sweep-repair` rebuilt and staged 58 artifacts; it skipped the actual staging deployment. Its reported sweep covered zero unmodeled generators, so this is not full drift coverage.
+- Comments migration applied (`ac0e6feae92d`); live permission/constraint probe 19/19 passed. Database pre/post-images retained locally.
+- Newsletter token-hardening migration applied (`f6acdafe1236`). Only `newsletter-unsubscribe` deployed; sender undeployed and GitHub sending credential absent. No message or subscription mutation performed.
+- Staging Worker version `baaf8f36-57f7-40af-8db7-604b37382399` deployed. The unsubscribe page exposed a real gateway-CSP replacement defect. A narrow pinned-stylesheet repair passes Worker unit tests 71/71; fresh staging and pixel verification pending.

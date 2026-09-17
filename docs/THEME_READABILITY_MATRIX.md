@@ -45,3 +45,11 @@ node scripts/capture-theme-matrix.mjs --themes light --routes /atlas/   # target
 ```
 
 Review the PNGs (an agent reads them directly; a human opens the folder). Record changes here.
+
+## S356 recovery visual review — 2026-09-15
+
+Re-captured and directly inspected 168 page-state images: the same 12 routes, seven themes, desktop 1366x900 and mobile 390x844. Review used 24 route/viewport contact sheets; the light status mobile capture was also inspected at native size. LATEST.json binds the captures to the recovered source. This is viewport coverage, not whole-page or interaction coverage.
+
+Open contrast repairs: light-theme status operational labels, Studio Pulse orange eyebrow, and Oracle input placeholder. Studio Pulse hero CTAs and metadata also align flush to the viewport rather than the heading container. Complete inspection does not mean a clean release; LATEST records three blocking contrast findings pending repair. Oracle black-on-orange prompt button text is readable in these captures; the prior board selector description should not be treated as proven.
+
+The root agent separately owns and inspected the newsletter unsubscribe before/after evidence in docs/visual-qa/unsubscribe/; that supplementary review is not counted in this 168-image matrix.

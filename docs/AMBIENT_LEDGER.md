@@ -23,7 +23,7 @@
 | `assets/command-palette-loader.js` | core | sitewide-core | — | — | — |
 | `assets/adaptive-speculation.js` | core | sitewide-core | 5.5kb | — | low |
 | `assets/rum-beacon.js` | core | sitewide-core | — | — | — |
-| `assets/page-sigil.js` | feature | feature-bundle | 6.6kb | — | low |
+| `assets/page-sigil.js` | feature | feature-bundle | 7.9kb | — | low |
 | `assets/vault-atlas.js` | feature | feature-bundle | 4.2kb | — | low |
 
 **Reason codes** — `sitewide-core`: shell primitive, must parse every page · `feature-bundle`: rotating engagement/intelligence surface · `split-candidate`: coverage flagged it gated → move to predicate loading next wave.

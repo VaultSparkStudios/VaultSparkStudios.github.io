@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "session": "S356 recovery",
+  "capturedAt": "2026-09-15T07:43:56.6354854Z",
+  "origin": "https://website.staging.vaultsparkstudios.com",
+  "route": "/api/newsletter/unsubscribe",
+  "state": "confirmation with unknown token; no form submitted",
+  "workerVersionBefore": "baaf8f36-57f7-40af-8db7-604b37382399",
+  "workerVersionAfter": "97728860-f797-4768-8020-12b5a60ae77a",
+  "viewports": [
+    {
+      "name": "desktop",
+      "height": 900,
+      "width": 1366
+    },
+    {
+      "name": "mobile",
+      "height": 844,
+      "width": 390
+    }
+  ],
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "sources": [
+    {
+      "file": "cloudflare/newsletter-unsubscribe-proxy.mjs",
+      "sha256": "4a05efb87e30d45f13186386a3c3cb5ac7acb7f93c32edecc30652b940d7f9dc"
+    },
+    {
+      "file": "supabase/functions/newsletter-unsubscribe/index.ts",
+      "sha256": "5fa8e7acdeb555be2d398d13f3073dc2579b618eff5ca61a9033cd0828a98087"
+    }
+  ],
+  "captures": [
+    {
+      "file": "unsubscribe-before-dark-desktop.png",
+      "sha256": "f8b283cec3e345a054c2520f7f570ddf9a6b08736b48716f3cdceb6a238a381b",
+      "phase": "before",
+      "theme": "dark",
+      "viewport": "desktop",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Gateway CSP blocks styling; default browser typography and undersized button."
+      }
+    },
+    {
+      "file": "unsubscribe-before-dark-mobile.png",
+      "sha256": "52b07b7dfada00f3b76d41e4a75277413b8111f4c528f506ebc623fd2f648cbd",
+      "phase": "before",
+      "theme": "dark",
+      "viewport": "mobile",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Gateway CSP blocks styling; default browser typography and undersized button."
+      }
+    },
+    {
+      "file": "unsubscribe-before-light-desktop.png",
+      "sha256": "f8b283cec3e345a054c2520f7f570ddf9a6b08736b48716f3cdceb6a238a381b",
+      "phase": "before",
+      "theme": "light",
+      "viewport": "desktop",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Gateway CSP blocks styling; default browser typography and undersized button."
+      }
+    },
+    {
+      "file": "unsubscribe-before-light-mobile.png",
+      "sha256": "52b07b7dfada00f3b76d41e4a75277413b8111f4c528f506ebc623fd2f648cbd",
+      "phase": "before",
+      "theme": "light",
+      "viewport": "mobile",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Gateway CSP blocks styling; default browser typography and undersized button."
+      }
+    },
+    {
+      "file": "unsubscribe-after-dark-desktop.png",
+      "sha256": "5d7be58858dcf29fd04ed9a952334945353b2ff97a89f6df35ef41bbdea013ae",
+      "phase": "after",
+      "theme": "dark",
+      "viewport": "desktop",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Readable themed card, clear button, no clipping at desktop or mobile."
+      }
+    },
+    {
+      "file": "unsubscribe-after-dark-mobile.png",
+      "sha256": "32fdf3f0795330fb476403324213606a3450cbdcf5d91c84dc7cd43760b14a5d",
+      "phase": "after",
+      "theme": "dark",
+      "viewport": "mobile",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Readable themed card, clear button, no clipping at desktop or mobile."
+      }
+    },
+    {
+      "file": "unsubscribe-after-light-desktop.png",
+      "sha256": "24af628f474f79f440fbd7eceb4b3a92fa7a500a6a4ccc5b7f399ef792879248",
+      "phase": "after",
+      "theme": "light",
+      "viewport": "desktop",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Readable themed card, clear button, no clipping at desktop or mobile."
+      }
+    },
+    {
+      "file": "unsubscribe-after-light-mobile.png",
+      "sha256": "fffc4da433b1c1e36f9e9406b447eabd1f7f47d0c15c6c257d308a9888e4416d",
+      "phase": "after",
+      "theme": "light",
+      "viewport": "mobile",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "codex S356 recovery",
+        "finding": "Readable themed card, clear button, no clipping at desktop or mobile."
+      }
+    }
+  ],
+  "notes": "Supplementary real-staging evidence. Exact style hash verified in live CSP; no email sent and no subscription modified."
+}
