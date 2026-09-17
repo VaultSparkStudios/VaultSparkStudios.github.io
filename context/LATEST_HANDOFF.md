@@ -5,7 +5,8 @@
 - **Recovered:** the cut-off S356 closeout tail. 19 commits reconstructed, rebased over 112 + 16 upstream publisher commits, and pushed. Three stale agent worktrees and nine duplicate cache captures removed.
 - **Shipped:** deploy-truth binding + clock, 32 WCAG AA contrast repairs, four gates that had never run, a public-voice firewall on /changelog/, 83% off the slowest build:check step, the first public changelog entry since 2026-07-16, and two client scripts content-addressed.
 - **Released to staging, verified:** staging serves the exact candidate, zero failed responses, release ceremony 9/10.
-- **NOT in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy, not by any gate.
+- **NOT in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy ("[Production Deploy]"), not by any gate. The founder authorized the release in-session; the refusal is a Claude Code settings-level control, so it needs a permission rule, a mode change, or the two commands run by hand.
+- **Staging is byte-current with `origin/main` at `2f849e50`** (re-synced after 17 automated `[skip ci]` publisher commits, none of which touched code). All nine probed routes green, `/v/desk-comments` 200, `/api/newsletter/unsubscribe` 400 (bad token, correct), and a real mobile browser sweeping all seven themes through the drawer records **zero failed responses**.
 
 **Read this first if you are promoting.** Two steps, in this order:
 1. `node scripts/deploy-worker.mjs --env production --confirm-production` — production currently 404s `/v/desk-comments` and `/api/newsletter/unsubscribe`; staging returns 200 and 400 (bad token) respectively. The old production Worker also treats a reaction retract as an add, so it must go first.
