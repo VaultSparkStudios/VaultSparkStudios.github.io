@@ -272,14 +272,7 @@ ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main conten
         <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
       </a>
       ${chrome.nav}
-      <div class="nav-right">
-        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
-        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
+${chrome.navRight}
   </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section>${buildVerifySection()}</main>${chrome.footer}  ${chrome.ambient}
 ${chrome.navSheet}<script src="${chrome.themeToggle}" defer></script><script src="${chrome.proofVerify}" defer></script>${HUB_SCRIPT}
 </body></html>
@@ -329,6 +322,20 @@ function readChrome() {
     console.error('[generate-evidence-hub] nav harvest failed — refusing to write a page without a primary nav');
     process.exit(1);
   }
+  // The header's right-hand cluster and the S356 Desk wire are owned by
+  // propagate-nav.mjs, but this generator hand-wrote both — so every run dropped
+  // the GitHub icon link and, after S356, the site-wide Desk strip, and the
+  // --check then called a correctly propagated page stale. Harvest them like the
+  // nav, with the same refuse-on-failure rule, so two writers cannot disagree.
+  const navRightStart = sample.indexOf('<div class="nav-right">');
+  const navRightEnd = navRightStart >= 0 ? sample.indexOf('</header>', navRightStart) : -1;
+  const navRight = navRightStart >= 0 && navRightEnd > navRightStart
+    ? sample.slice(sample.lastIndexOf('\n', navRightStart) + 1, navRightEnd).replace(/\s+$/, '')
+    : '';
+  if (!navRight.includes('class="hamburger"') || !navRight.includes('nav-signin')) {
+    console.error('[generate-evidence-hub] nav-right harvest failed — refusing to write a page without the header controls');
+    process.exit(1);
+  }
   const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage\.getItem\('vs_theme'\)[\s\S]*?<\/script>/) || [''])[0];
   // proof-verify.js is a fingerprinted shell asset. Resolve its current hashed
   // name from the manifest (the same way generate-news-pages resolves
@@ -342,6 +349,7 @@ function readChrome() {
     themeToggle,
     proofVerify,
     nav,
+    navRight,
     footer: between('<footer class="site-footer"', '</footer>').replaceAll('../assets/', '../assets/'),
     ambient: between('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->'),
     speculation: between('<!-- vs-speculation:start -->', '<!-- vs-speculation:end -->'),
