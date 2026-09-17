@@ -19,7 +19,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S357) - WHAT SHIPPED ══════════════════════════╗
-║  S357: recovered the cut-off S356 closeout and pushed it; deplo  ║
+║  S357: recovered the cut-off S356 closeout and released it to p  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -89,8 +89,8 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  6d old (2026-09-11)                            ║
-║  ⛔  Deploy gaps   production 267 commit(s) behind · 3.3d — past  ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7409 <   ║
