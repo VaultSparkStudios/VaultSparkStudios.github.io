@@ -9,10 +9,20 @@ const legacyChecks = [
   {
     file: 'assets/hero-ticker.js',
     forbidden: ['root.innerHTML'],
+    // A required literal call site pins this gate to a snapshot of the code, so a
+    // legitimate refactor reads as a regression and the obvious repair is to
+    // delete the line — which silently shrinks coverage. S356 split the ticker's
+    // label and title into separate spans and this check went red on a call that
+    // no longer exists. The durable contract is the mechanism, not the call list:
+    // ticker text is only ever written through textContent, and no HTML sink
+    // appears anywhere in the file.
     required: [
       'function replaceWithTickerLink(root, href, children)',
-      "appendTickerSpan(link, 'hero-ticker-title', title)",
-      "appendTickerSpan(link, 'hero-ticker-title', label)"
+      'function appendTickerSpan(link, className, text, hidden)',
+      'span.textContent = text;'
+    ],
+    forbiddenPattern: [
+      { name: 'an HTML sink', re: /\b(?:innerHTML|outerHTML|insertAdjacentHTML|document\.write)\b/ }
     ]
   },
   {
@@ -72,6 +82,13 @@ function runLegacyChecks() {
     for (const needle of check.required) {
       if (!src.includes(needle)) {
         console.error(`[tt-active-sinks] required DOM-safe marker missing in ${check.file}: ${needle}`);
+        failures += 1;
+      }
+    }
+    for (const rule of check.forbiddenPattern || []) {
+      const hit = src.split(/\r?\n/).findIndex((line) => rule.re.test(line));
+      if (hit >= 0) {
+        console.error(`[tt-active-sinks] ${rule.name} reappeared in ${check.file}:${hit + 1}`);
         failures += 1;
       }
     }
