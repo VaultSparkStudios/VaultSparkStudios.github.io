@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-17T07:09:50.809Z
-Receipt: `32cabd2d52423b636f8aa6dd` · coverage 29/495 from step 1
+Generated: 2026-09-17T07:10:22.626Z
+Receipt: `ec41b7d23f9828f2334c503e` · coverage 33/495 from step 1
 
-Latest: **28/29** passed · failed 1 · total 4.0s
-Concentration: **27.9%** in step 29 · ratchet clear (>30% and ≥45s)
+Latest: **32/33** passed · failed 1 · total 3.8s
+Concentration: **23.6%** in step 29 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 29 | 1.1s | 1 | `node scripts/check-generated-drift-preflight.mjs` |
-| 23 | 0.4s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 8 | 0.1s | 0 | `node scripts/build-proof-aware-projects.mjs --check` |
-| 16 | 0.1s | 0 | `node scripts/probe-supabase-control-plane.mjs --check` |
-| 2 | 0.1s | 0 | `node scripts/manage-forge-editorial.mjs --check` |
+| 29 | 0.9s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 23 | 0.3s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
 | 12 | 0.1s | 0 | `node scripts/check-proof-verifier-contract.mjs` |
+| 18 | 0.1s | 0 | `node scripts/build-identity-migration-receipt.mjs --check` |
+| 26 | 0.1s | 0 | `node scripts/check-production-promotion-gate.mjs --check` |
 | 27 | 0.1s | 0 | `node scripts/check-lighthouse-trend.mjs --self-test` |
-| 19 | 0.1s | 0 | `node scripts/verify-supabase-runtime.mjs --self-test` |
-| 5 | 0.1s | 0 | `node scripts/check-startup-context-budget.mjs` |
-| 10 | 0.1s | 0 | `node scripts/check-theme-boot-contract.mjs` |
+| 14 | 0.1s | 0 | `node scripts/check-shell-parity-contract.mjs` |
+| 11 | 0.1s | 0 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
+| 21 | 0.1s | 0 | `node scripts/check-capability-discovery-contract.mjs --self-test` |
+| 24 | 0.1s | 0 | `node scripts/check-promotion-scope.mjs --self-test` |
 
 ## Failures
 
-- Step 29: `node scripts/check-generated-drift-preflight.mjs` exited 1
+- Step 33: `node scripts/check-uptime-contract.mjs` exited 1
