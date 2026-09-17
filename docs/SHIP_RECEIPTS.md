@@ -9,4 +9,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 |---|---:|---|---|
 | Transparency | 2 | 171e2835 make the /changelog/ ship filter structural, not a word list | pending |
 | Speed | 2 |  | home-lcp-s173 (4) |
-| Front door | 6 |  | pending |
+| Front door | 5 |  | pending |

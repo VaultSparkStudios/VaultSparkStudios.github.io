@@ -103,6 +103,17 @@
     @media (prefers-reduced-motion: reduce) { .cl-live-dot { animation:none; } }
     .cl-phase--live .cl-dot { background:rgba(16,185,129,0.32); border-color:rgba(16,185,129,0.7); box-shadow:0 0 14px rgba(16,185,129,0.35); }
     .cl-phase--live .cl-phase-num { color:#10B981; }
+    /* S357 — CANON-047. Both accents above are dark-theme values applied in every
+       theme, so on the light page they landed on near-white:
+         .cl-phase-title (time-machine active)  #7EC9FF  1.63:1
+         .cl-phase--live .cl-phase-num          #10B981  2.30:1
+       Measured on the deployed staging page, not from the stylesheet, and
+       confirmed by eye: the entry headline was visibly washed out while the body
+       text beneath it stayed crisp. 21.6px at weight 400 is not WCAG "large", so
+       the bar is 4.5:1, and this is the whole changelog timeline rather than one
+       entry. Darkened only for light theme; the six dark themes are untouched. */
+    body.light-mode .cl-phase[data-tm-active] .cl-phase-title { color:#1A6396; }
+    body.light-mode .cl-phase--live .cl-phase-num { color:#0B7A54; }
   </style>
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
