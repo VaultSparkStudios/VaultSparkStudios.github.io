@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-17T18:02:00.680Z",
+  "generatedAt": "2026-09-17T18:14:43.635Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,16 +21,15 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "/membership/:localShellParity"
+      "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "2f849e50432e06bf853460782e60f1538e630284",
-    "deployedBuildSha": "222037112782aae3428e7d17563b8dce7ca1b830",
+    "candidateBuildSha": "ec0231b46d835f4ec2c803830babb109760c22d8",
+    "deployedBuildSha": "0fcc68e7c7f5af590ed2da0e0338c1b0d6f3b488",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "9f0de06848636a01335596f4bde4c591d61f49685868a32f6410448269078418",
+      "candidateRoot": "08a09163b25358fd05c7f0e1568a8b488450471cadb65a44cb8441c2a512c630",
       "candidateLeafCount": 35,
-      "stagingRoot": "76ea7b60f5c50f19cf350721f12bed646ea98aff41fbaa9f5fcaa971f2104877",
+      "stagingRoot": "191176e81b7ab41778afcfaa05f39de2984b3f5d1bcb2819948a9602f5eaf0d8",
       "stagingLeafCount": 35,
       "matched": false
     },
@@ -71,14 +70,14 @@
     "sourceContractSha256": "b41cfaee4aa1567bc67df1f37815c91ec3ffce3fb49ee417da8cd0b363f69b82"
   },
   "productionDeploy": {
-    "state": "stale",
-    "commitsBehind": 267,
-    "ageHours": 78.9,
-    "observedAt": "2026-09-17T17:35:22.487Z",
+    "state": "content-current",
+    "commitsBehind": 3,
+    "ageHours": 0.2,
+    "observedAt": "2026-09-17T18:14:43.635Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-17T17:35:22.487Z",
+      "observedAt": "2026-09-17T18:14:43.635Z",
       "expectedFrom": "a09bf65a3c6df5d1f801e1621fbc5d72a5b0e9fe11734c5da42739ac9ee2e6d8",
       "supersededBy": null,
       "ageHours": 0,
@@ -100,30 +99,22 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-a4349880f3.js",
-        "assets/ambient-feature.shell-ca3b329506.js",
+        "assets/ambient-core.shell-9de9470671.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
         "assets/home-idle-loader.shell-24f891da0e.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-79b001d0ae.css",
+        "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-9de9470671.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
-        "assets/hero-ticker.shell-550971e267.js",
-        "assets/public-intelligence.shell-c86a6ecc39.js",
-        "assets/style.shell-0fa853d549.css"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-a4349880f3.js",
-        "assets/ambient-feature.shell-ca3b329506.js",
-        "assets/style.shell-79b001d0ae.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -187,7 +178,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -200,7 +191,6 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
