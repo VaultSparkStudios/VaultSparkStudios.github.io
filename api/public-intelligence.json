@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-17T09:50:13.700Z",
+  "generatedAt": "2026-09-17T10:01:29.346Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -823,7 +823,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Deployment reconciliation ledger is stale (newest receipt 2 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-17T08:27:56.060Z",
+    "checkedAt": "2026-09-17T09:59:36.522Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -831,15 +831,15 @@
       },
       {
         "name": "Accessibility Audit",
-        "status": "success"
-      },
-      {
-        "name": "Lighthouse CI",
         "status": "failure"
       },
       {
-        "name": "Deploy Cloudflare Worker",
+        "name": "Lighthouse CI",
         "status": "success"
+      },
+      {
+        "name": "Deploy Cloudflare Worker",
+        "status": "unknown"
       }
     ]
   }
