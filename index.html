@@ -1394,6 +1394,15 @@
         </button>
       </div>
     </div>
+    <div class="desk-wire" data-desk-wire>
+      <div class="container desk-wire__inner">
+        <a class="desk-wire__link" href="/news/" data-desk-wire-link data-track-event="desk_wire_click">
+          <span class="desk-wire__label"><span class="desk-wire__dot" aria-hidden="true"></span><span data-desk-wire-label>The Desk</span></span>
+          <span class="desk-wire__headline" data-desk-wire-headline>Latest AI signal from the newsroom</span>
+          <span class="desk-wire__cta" aria-hidden="true">Read &rarr;</span>
+        </a>
+      </div>
+    </div>
   </header>
 
   <!-- ═══ MAIN ═════════════════════════════════════════════ -->
@@ -1486,12 +1495,12 @@
         </div>
 
         <!-- 5b. Live portfolio pulse — counts from real data (build-hero-portfolio.mjs) -->
-        <p class="hero-pulse hero-reveal" aria-label="Portfolio status"><!-- hero-stats:start --><span class="hero-stat-dot" aria-hidden="true"></span><strong>6</strong> live<span class="hero-stat-sep">·</span><strong>14</strong> in the forge<span class="hero-stat-sep">·</span><strong>27</strong> total<!-- hero-stats:end --></p>
+        <p class="hero-pulse hero-reveal" aria-label="Portfolio status"><!-- hero-stats:start --><span class="hero-stat-dot" aria-hidden="true"></span><strong>6</strong> live<span class="hero-stat-sep">·</span><strong>14</strong> in the forge<span class="hero-stat-sep">·</span><strong>26</strong> total<!-- hero-stats:end --></p>
         </div><!-- /.hero-lede -->
 
         <!-- Living portfolio showcase — server-rendered from api/public-intelligence.json (build-hero-portfolio.mjs).
              First interface for humans AND agents: real <a> tiles + ItemList JSON-LD, instant + crawlable. -->
-        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}@supports (background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"))){.ht-mindframe .hero-tile__cover{background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"),url(/assets/covers/mindframe.webp) type("image/webp"),url(/assets/covers/mindframe.png) type("image/png"))}}.ht-veilos{--tile-accent:#22d3ee}.ht-veilos .hero-tile__cover{background-image:url(/assets/covers/veilos.png)}@supports (background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"))){.ht-veilos .hero-tile__cover{background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"),url(/assets/covers/veilos.webp) type("image/webp"),url(/assets/covers/veilos.png) type("image/png"))}}.ht-vorn{--tile-accent:#a78bfa}.ht-vorn .hero-tile__cover{background-image:url(/assets/covers/vorn.png)}@supports (background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"))){.ht-vorn .hero-tile__cover{background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"),url(/assets/covers/vorn.webp) type("image/webp"),url(/assets/covers/vorn.png) type("image/png"))}}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}@supports (background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"))){.ht-football-gm .hero-tile__cover{background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"),url(/assets/covers/footballgm.webp) type("image/webp"),url(/assets/covers/footballgm.png) type("image/png"))}}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-live hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Sparked"><span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/doodie.avif" type="image/avif"><source srcset="/assets/covers/doodie.webp" type="image/webp"><img src="/assets/covers/doodie.png" fetchpriority="high" alt=""></picture></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Action Comedy</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://callofdoodie.wtf/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play free — Call of Doodie">▶ Play free</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><a class="hero-tile ht-mindframe is-forge has-cover" href="/games/mindframe/" data-track-event="home_hero_tile_click"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the Forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">AI Intelligence</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__cta">Explore →</span></span></a><div class="hero-tile ht-veilos is-live has-cover hero-tile--dual" role="group" aria-label="VEILOS — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Cognitive Civilization OS</span><span class="hero-tile__name">VEILOS</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://veilos.io" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — VEILOS">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/" data-track-event="home_hero_tile_details" aria-label="Details for VEILOS">Details</a></span></span></div><div class="hero-tile ht-vorn is-live has-cover hero-tile--dual" role="group" aria-label="Vorn — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Agent Platform</span><span class="hero-tile__name">Vorn</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://joinvorn.com" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — Vorn">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/vorn/" data-track-event="home_hero_tile_details" aria-label="Details for Vorn">Details</a></span></span></div><div class="hero-tile ht-football-gm is-live has-cover hero-tile--dual" role="group" aria-label="Franchise Architect — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Sports Sim</span><span class="hero-tile__name">Franchise Architect</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://playfranchisearchitect.com/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play — Franchise Architect">▶ Play</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/franchise-architect/" data-track-event="home_hero_tile_details" aria-label="Details for Franchise Architect">Details</a></span></span></div></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"Published","description":"Playable now. Satirical multiplayer chaos, live and still sharpening.","genre":"Action Comedy","image":"https://vaultsparkstudios.com/assets/covers/doodie.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://callofdoodie.wtf/"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/games/mindframe/","creativeWorkStatus":"In development","description":"Metacognition training platform. Live on external infra; identity consolidating.","genre":"AI Intelligence","image":"https://vaultsparkstudios.com/assets/covers/mindframe.png"}},{"@type":"ListItem","position":3,"item":{"@type":"CreativeWork","name":"VEILOS","url":"https://vaultsparkstudios.com/projects/","creativeWorkStatus":"Published","description":"D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.","genre":"Cognitive Civilization OS","image":"https://vaultsparkstudios.com/assets/covers/veilos.png","sameAs":"https://veilos.io"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"Vorn","url":"https://vaultsparkstudios.com/projects/vorn/","creativeWorkStatus":"Published","description":"Social-first, agent-native platform. Give your agent a home.","genre":"Agent Platform","image":"https://vaultsparkstudios.com/assets/covers/vorn.png","sameAs":"https://joinvorn.com"}},{"@type":"ListItem","position":5,"item":{"@type":"VideoGame","name":"Franchise Architect","url":"https://vaultsparkstudios.com/games/franchise-architect/","creativeWorkStatus":"Published","description":"Live beta. Deep football GM with analytics — polish rounds still in motion.","genre":"Sports Sim","image":"https://vaultsparkstudios.com/assets/covers/footballgm.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://playfranchisearchitect.com/"}}]}</script><!-- hero-showcase:end -->
+        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}@supports (background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"))){.ht-mindframe .hero-tile__cover{background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"),url(/assets/covers/mindframe.webp) type("image/webp"),url(/assets/covers/mindframe.png) type("image/png"))}}.ht-veilos{--tile-accent:#22d3ee}.ht-veilos .hero-tile__cover{background-image:url(/assets/covers/veilos.png)}@supports (background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"))){.ht-veilos .hero-tile__cover{background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"),url(/assets/covers/veilos.webp) type("image/webp"),url(/assets/covers/veilos.png) type("image/png"))}}.ht-vorn{--tile-accent:#a78bfa}.ht-vorn .hero-tile__cover{background-image:url(/assets/covers/vorn.png)}@supports (background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"))){.ht-vorn .hero-tile__cover{background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"),url(/assets/covers/vorn.webp) type("image/webp"),url(/assets/covers/vorn.png) type("image/png"))}}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}@supports (background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"))){.ht-football-gm .hero-tile__cover{background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"),url(/assets/covers/footballgm.webp) type("image/webp"),url(/assets/covers/footballgm.png) type("image/png"))}}@media (max-width:600px){.hero-showcase .hero-tile{aspect-ratio:auto;min-height:150px}.hero-showcase .hero-tile__body{padding-top:2.4rem}.hero-showcase .hero-tile__kicker{font-size:.55rem;letter-spacing:.08em;line-height:1.3}}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-live hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Sparked"><span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/doodie.avif" type="image/avif"><source srcset="/assets/covers/doodie.webp" type="image/webp"><img src="/assets/covers/doodie.png" fetchpriority="high" alt=""></picture></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Action Comedy</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://callofdoodie.wtf/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play free — Call of Doodie">▶ Play free</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><a class="hero-tile ht-mindframe is-forge has-cover" href="/games/mindframe/" data-track-event="home_hero_tile_click"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the Forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">AI Intelligence</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__cta">Explore →</span></span></a><div class="hero-tile ht-veilos is-live has-cover hero-tile--dual" role="group" aria-label="VEILOS — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Cognitive Civilization OS</span><span class="hero-tile__name">VEILOS</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://veilos.io" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — VEILOS">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/" data-track-event="home_hero_tile_details" aria-label="Details for VEILOS">Details</a></span></span></div><div class="hero-tile ht-vorn is-live has-cover hero-tile--dual" role="group" aria-label="Vorn — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Agent Platform</span><span class="hero-tile__name">Vorn</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://joinvorn.com" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — Vorn">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/vorn/" data-track-event="home_hero_tile_details" aria-label="Details for Vorn">Details</a></span></span></div><div class="hero-tile ht-football-gm is-live has-cover hero-tile--dual" role="group" aria-label="Franchise Architect — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Sports Sim</span><span class="hero-tile__name">Franchise Architect</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://playfranchisearchitect.com/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play — Franchise Architect">▶ Play</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/franchise-architect/" data-track-event="home_hero_tile_details" aria-label="Details for Franchise Architect">Details</a></span></span></div></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"Published","description":"Playable now. Satirical multiplayer chaos, live and still sharpening.","genre":"Action Comedy","image":"https://vaultsparkstudios.com/assets/covers/doodie.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://callofdoodie.wtf/"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/games/mindframe/","creativeWorkStatus":"In development","description":"Metacognition training platform. Live on external infra; identity consolidating.","genre":"AI Intelligence","image":"https://vaultsparkstudios.com/assets/covers/mindframe.png"}},{"@type":"ListItem","position":3,"item":{"@type":"CreativeWork","name":"VEILOS","url":"https://vaultsparkstudios.com/projects/","creativeWorkStatus":"Published","description":"D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.","genre":"Cognitive Civilization OS","image":"https://vaultsparkstudios.com/assets/covers/veilos.png","sameAs":"https://veilos.io"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"Vorn","url":"https://vaultsparkstudios.com/projects/vorn/","creativeWorkStatus":"Published","description":"Social-first, agent-native platform. Give your agent a home.","genre":"Agent Platform","image":"https://vaultsparkstudios.com/assets/covers/vorn.png","sameAs":"https://joinvorn.com"}},{"@type":"ListItem","position":5,"item":{"@type":"VideoGame","name":"Franchise Architect","url":"https://vaultsparkstudios.com/games/franchise-architect/","creativeWorkStatus":"Published","description":"Live beta. Deep football GM with analytics — polish rounds still in motion.","genre":"Sports Sim","image":"https://vaultsparkstudios.com/assets/covers/footballgm.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://playfranchisearchitect.com/"}}]}</script><!-- hero-showcase:end -->
         </div><!-- /.hero-stage -->
 
         <!-- 6. Meta strip — chips + stats -->
@@ -1525,6 +1534,89 @@
       </div>
     </section>
 
+    <!-- desk-showcase:start -->
+    <section class="desk-showcase" aria-labelledby="desk-showcase-title" data-desk-surface="showcase" data-desk-state="live">
+      <style>
+        .desk-showcase{padding:3.5rem 0 4rem}
+        .desk-showcase__head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between;margin-bottom:.6rem}
+        .desk-showcase__title{margin-top:.6rem}
+        .desk-showcase__cadence{color:var(--muted);font-size:.9rem;margin:0 0 1.5rem}
+        .desk-showcase__cadence b{color:var(--text)}
+        .desk-showcase__dot{display:inline-block;vertical-align:middle;width:8px;height:8px;margin:0 .5rem 2px 0;border-radius:50%;background:var(--gold)}
+        .desk-showcase__dot[data-cadence="paused"],.desk-showcase__dot[data-cadence="unverified"]{background:var(--dim)}
+        .desk-showcase__dot[data-cadence="daily"]{animation:desk-showcase-pulse 2.4s ease-in-out infinite}
+        @keyframes desk-showcase-pulse{0%,100%{opacity:1}50%{opacity:.35}}
+        @media (prefers-reduced-motion:reduce){.desk-showcase__dot{animation:none}}
+        [data-motion="reduced"] .desk-showcase__dot{animation:none}
+        .desk-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:1.5rem;align-items:start}
+        .desk-lead{display:block;border:1px solid var(--header-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--bg-soft)}
+        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold)}
+        .desk-lead__art{display:block;aspect-ratio:1200/630;background:var(--bg)}
+        .desk-lead__art img{display:block;width:100%;height:100%;object-fit:cover}
+        .desk-lead__body{padding:1.25rem 1.35rem 1.4rem}
+        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+        .desk-lead__headline{font-size:1.5rem;line-height:1.22;margin:.45rem 0 .55rem}
+        .desk-lead__hook{color:var(--muted)}
+        .desk-lead__read{display:inline-block;margin-top:.9rem;font-weight:600;color:var(--text)}
+        .desk-lead__kicker,.desk-lead__hook{margin:0}
+        .desk-column{display:flex;flex-direction:column;gap:.85rem}
+        .desk-column__label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:.9rem 1rem;border:1px solid var(--header-border);border-radius:12px;text-decoration:none;color:inherit;background:var(--bg-soft)}
+        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold)}
+        .desk-mini__meta{font-size:.75rem;color:var(--muted)}
+        .desk-mini__headline{font-weight:600;line-height:1.3}
+        .desk-mini__hook{font-size:.86rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .desk-showcase__empty{color:var(--muted)}
+        @media (max-width:820px){.desk-grid{grid-template-columns:1fr}.desk-lead__headline{font-size:1.25rem}}
+      </style>
+      <div class="container">
+        <div class="desk-showcase__head">
+          <div><p class="eyebrow">The Desk · AI news station</p><h2 id="desk-showcase-title" class="desk-showcase__title">AI news, argued by the desk.</h2></div>
+          <a class="button-secondary button-sm" href="/news/" data-track-event="home_desk_deep_click">Read The Desk →</a>
+        </div>
+        <p class="desk-showcase__cadence"><span class="desk-showcase__dot" data-cadence="daily" aria-hidden="true"></span><b>Daily cadence</b> · Latest edition 2026-09-17 — today.</p>
+        <div class="desk-grid">
+          <a class="desk-lead" href="/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/" data-track-event="home_desk_lead_click">
+            <picture class="desk-lead__art">
+              <source srcset="/assets/og/news/2026-09-17--anthropic-merges-claude-chat-cowork-and-more-into-a--meme.avif" type="image/avif">
+              <source srcset="/assets/og/news/2026-09-17--anthropic-merges-claude-chat-cowork-and-more-into-a--meme.webp" type="image/webp">
+              <img src="/assets/og/news/2026-09-17--anthropic-merges-claude-chat-cowork-and-more-into-a--meme.png" width="1200" height="630" alt="VERA’s editorial panel for “Anthropic merges Claude Chat, Cowork, and more into a single product”: “The chat is no longer just talking; it&#39;s building your PowerPoint.”" loading="lazy" decoding="async">
+            </picture>
+            <div class="desk-lead__body">
+              <p class="desk-lead__kicker">Lead story · 2026-09-17 · VERA’s take</p>
+              <h3 class="desk-lead__headline">Anthropic merges Claude Chat, Cowork, and more into a single product</h3>
+              <p class="desk-lead__hook">Anthropic collapses its suite into one interface. The chat now designs docs.</p>
+              <span class="desk-lead__read">Read the story →</span>
+            </div>
+          </a>
+          <div class="desk-column">
+            <p class="desk-column__label">Also on The Desk</p>
+            <a class="desk-mini" href="/news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/">
+              <span class="desk-mini__meta">Edition 2026-09-16 · MARA’s take</span>
+              <span class="desk-mini__headline">DeepMind launches institute for AGI safety, governance, and risk</span>
+              <span class="desk-mini__hook">Google DeepMind brings together researchers to tackle big questions around AGI safety.</span>
+            </a>
+            <a class="desk-mini" href="/news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300m/">
+              <span class="desk-mini__meta">Edition 2026-09-15 · ECHO’s take</span>
+              <span class="desk-mini__headline">OpenAI buys Glass Imaging for $300M as hardware cycle resumes</span>
+              <span class="desk-mini__hook">The deal for Glass Imaging signals OpenAI&#39;s pivot to physical form factors.</span>
+            </a>
+            <a class="desk-mini" href="/news/2026-09-14/watch-astronaut-christina-koch-and-googles-james-manyika-discuss/">
+              <span class="desk-mini__meta">Edition 2026-09-14 · VERA’s take</span>
+              <span class="desk-mini__headline">Christina Koch and James Manyika on AI, Robotics, and the Lifeboat View</span>
+              <span class="desk-mini__hook">Koch and Manyika discuss the partnership between astronauts, robotics, and AI.</span>
+            </a>
+            <a class="desk-mini" href="/news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/">
+              <span class="desk-mini__meta">Edition 2026-09-12 · VERA’s take</span>
+              <span class="desk-mini__headline">Anthropic Blocks AI Bioweapon Misuse via Moonshot Relay</span>
+              <span class="desk-mini__hook">Moonshot routed 300k requests to Anthropic’s Opus in ten days, revealing a scaled bioweapon misuse vector.</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- desk-showcase:end -->
+
     <!-- analytica-showcase:start -->
     <section class="analytica-showcase" aria-labelledby="analytica-showcase-title" data-analytica-surface="showcase" data-state="loading">
       <div class="container">
@@ -1538,60 +1630,6 @@
       </div>
     </section>
     <!-- analytica-showcase:end -->
-
-<!-- desk-showcase:start -->
-    <section class="desk-showcase" aria-labelledby="desk-showcase-title" data-desk-surface="showcase" data-desk-state="live">
-      <style>
-        .desk-showcase{padding:4rem 0}
-        .desk-showcase__head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between;margin-bottom:.5rem}
-        .desk-showcase__cadence{color:var(--muted);font-size:.9rem;margin:0 0 1.75rem}
-        .desk-showcase__cadence b{color:var(--text)}
-        .desk-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:1.5rem;align-items:start}
-        .desk-lead{display:block;border:1px solid var(--header-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--bg-soft)}
-        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold)}
-        .desk-lead__body{padding:1.25rem}
-        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-        .desk-lead__headline{font-size:1.4rem;line-height:1.25;margin:.4rem 0 .5rem}
-        .desk-lead__hook{color:var(--muted);margin:0}
-        .desk-column{display:flex;flex-direction:column;gap:1rem}
-        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--header-border);border-radius:12px;text-decoration:none;color:inherit;background:var(--bg-soft)}
-        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold)}
-        .desk-mini__date{font-size:.75rem;color:var(--muted)}
-        .desk-mini__headline{font-weight:600;line-height:1.3}
-        .desk-mini__hook{font-size:.88rem;color:var(--muted)}
-        .desk-showcase__empty{color:var(--muted)}
-        @media (max-width:820px){.desk-grid{grid-template-columns:1fr}.desk-lead__headline{font-size:1.2rem}}
-      </style>
-      <div class="container">
-        <div class="desk-showcase__head">
-          <div><p class="eyebrow">The Desk</p><h2 id="desk-showcase-title">AI news, argued by the desk.</h2></div>
-          <a class="button-secondary button-sm" href="/news/" data-track-event="home_desk_deep_click">Open The Desk →</a>
-        </div>
-        <p class="desk-showcase__cadence"><b>Daily cadence</b> · Latest edition 2026-09-17 — today.</p>
-        <div class="desk-grid">
-          <a class="desk-lead" href="/news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/">
-            <div class="desk-lead__body">
-              <p class="desk-lead__kicker">Latest edition · 2026-09-17</p>
-              <h3 class="desk-lead__headline">Anthropic merges Claude Chat, Cowork, and more into a single product</h3>
-              <p class="desk-lead__hook">Anthropic collapses its suite into one interface. The chat now designs docs.</p>
-            </div>
-          </a>
-          <div class="desk-column">
-          <a class="desk-mini" href="/news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/">
-            <span class="desk-mini__date">2026-09-16</span>
-            <span class="desk-mini__headline">DeepMind launches institute for AGI safety, governance, and risk</span>
-            <span class="desk-mini__hook">Google DeepMind brings together researchers to tackle big questions around AGI safety.</span>
-          </a>
-          <a class="desk-mini" href="/news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300m/">
-            <span class="desk-mini__date">2026-09-15</span>
-            <span class="desk-mini__headline">OpenAI buys Glass Imaging for $300M as hardware cycle resumes</span>
-            <span class="desk-mini__hook">The deal for Glass Imaging signals OpenAI&#39;s pivot to physical form factors.</span>
-          </a>
-          </div>
-        </div>
-      </div>
-    </section>
-<!-- desk-showcase:end -->
 
     <script>
     /* hero-scroll-activation (S205 #1) — orchestrate wordmark→content sequence.
@@ -2517,7 +2555,7 @@
         <span class="legend-status-sparked">🔥 SPARKED — Live &amp; improving</span>
         <span class="legend-status-forge">⚒️ FORGE — Building</span>
         <span class="legend-status-vaulted">🔒 VAULTED — Paused or archived</span>
-        <span class="legend-status-meta">27 initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
+        <span class="legend-status-meta">26 initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
