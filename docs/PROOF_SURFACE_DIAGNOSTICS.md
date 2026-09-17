@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-17T19:33:33.779Z
-Receipt: `3cee0a8598b3d990fc191004` · coverage 88/109
+Generated: 2026-09-17T19:44:34.231Z
+Receipt: `8892fe437f3d6624d1385f93` · coverage 109/109
 
-Latest: **87/88** passed · blocking 87/88 · advisory findings 0/0 · total 32.2s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 20.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 49 | blocking | 1.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 88 | blocking | 0.9s | 1 | `node scripts/check-receipt-ordering.mjs` |
-| 78 | blocking | 0.9s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 46 | blocking | 0.8s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 87 | blocking | 0.7s | 0 | `node scripts/check-receipt-ordering.mjs --self-test` |
-| 82 | blocking | 0.6s | 0 | `node scripts/build-route-consolidation.mjs --check` |
-| 64 | blocking | 0.6s | 0 | `node scripts/check-content-coherence.mjs --self-test` |
-| 35 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 59 | blocking | 0.6s | 0 | `node scripts/check-decision-currency.mjs` |
-| 14 | blocking | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 106 | advisory | 0.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 37 | blocking | 0.5s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 35 | blocking | 0.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 109 | advisory | 0.4s | 0 | `node scripts/build-release-dependencies.mjs --check` |
+| 46 | blocking | 0.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 78 | blocking | 0.4s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 49 | blocking | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 14 | blocking | 0.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 24 | blocking | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 82 | blocking | 0.3s | 0 | `node scripts/build-route-consolidation.mjs --check` |
 
 ## Failures
 
-- Step 88 [blocking]: `node scripts/check-receipt-ordering.mjs` exited 1 — self/contract
+- None.
