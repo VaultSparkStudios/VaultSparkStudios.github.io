@@ -5,8 +5,27 @@
 - **Recovered:** the cut-off S356 closeout tail. 19 commits reconstructed, rebased over 112 + 16 upstream publisher commits, and pushed. Three stale agent worktrees and nine duplicate cache captures removed.
 - **Shipped:** deploy-truth binding + clock, 32 WCAG AA contrast repairs, four gates that had never run, a public-voice firewall on /changelog/, 83% off the slowest build:check step, the first public changelog entry since 2026-07-16, and two client scripts content-addressed.
 - **Released to staging, verified:** staging serves the exact candidate, zero failed responses, release ceremony 9/10.
-- **NOT in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy ("[Production Deploy]"), not by any gate. The founder authorized the release in-session; the refusal is a Claude Code settings-level control, so it needs a permission rule, a mode change, or the two commands run by hand.
-- **Staging is byte-current with `origin/main` at `2f849e50`** (re-synced after 17 automated `[skip ci]` publisher commits, none of which touched code). All nine probed routes green, `/v/desk-comments` 200, `/api/newsletter/unsubscribe` 400 (bad token, correct), and a real mobile browser sweeping all seven themes through the drawer records **zero failed responses**.
+- **RELEASED.** Production Worker version `b19ce12e`; content-lane promotion run `35256380631` succeeded. Production `contentLaneHead` = `949cfacb6` = origin/main exactly. `build-sha.sha` deliberately stays at the baseline — the identity backlog is still held, which is the documented content-lane behaviour.
+
+## S357 release addendum — what reached production
+
+**Two steps, in the order S356 required** (an old Worker treats a reaction retract as an add, so the Worker went first).
+
+**1. Worker.** The local preflight refused twice before it passed, and both refusals were real:
+- `doctor` rejected on `deploy-currency-live`. The ceremony is written to accept that pre-deploy staleness, but only alongside a verified staging candidate — and `candidateReady` is structurally unreachable through a content-lane **overlay**, because the overlay deliberately leaves staging's `build-sha.sha` at the base deployment while only `contentLaneHead` moves. Fixed by doing a **full** staging publish (`scripts/deploy-staging.mjs`, 6893 files, chain depth 75, receipt `38b05c300781`), after which staging served the candidate sha exactly and all four attestations flipped true.
+- `staging-deploy-lineage` rejected: the published continuity summary had drifted from the committed ledger. Rebuilt.
+Ceremony then **10/10** and the Worker deployed. Verified live: `/v/desk-comments` 404 → **200**, `/api/newsletter/unsubscribe` 404 → **400** on a bad token, `/v/desk-reaction` 200.
+
+**2. Content lane.** The first dispatch (`35255812298`) was **BLOCKED**, correctly:
+```
+content-capability-slice: BLOCKED · 10 caller(s) · 3 Worker route(s)
+  - /v/desk-comments: no production route contract exists
+```
+S356 added `/v/desk-comments` and `/v/desk-comments/report` to the Worker and never added them to `ROUTE_CONTRACT`, so provenance recorded 7 routes without them, and the gate refuses to ship a caller for a route whose production contract is unproven. Added both (verified OPTIONS 204 against production), provenance now **matched 9/9** on both vantages, self-test 21/21. Re-dispatch `35256380631` succeeded.
+
+**Verified from served bytes:** changelog entry live · light-theme contrast fix in the served CSS · `ignis-surface` tokens live (9 occurrences) · both fingerprinted clients served · real mobile browser through the drawer and all seven themes: **0 failed responses** · `smoke:live` 6/6.
+
+**The deploy-truth fix proving itself:** `build-deploy-currency --probe` now reports `content-current` with parity `matched`, **0 missing / 0 unexpected**, age 0h, `expectedFrom` bound to this tree, 0 undeployed content commits. This morning it reported the same words with four shell assets missing, no binding and no clock.
 
 **Read this first if you are promoting.** Two steps, in this order:
 1. `node scripts/deploy-worker.mjs --env production --confirm-production` — production currently 404s `/v/desk-comments` and `/api/newsletter/unsubscribe`; staging returns 200 and 400 (bad token) respectively. The old production Worker also treats a reaction retract as an add, so it must go first.

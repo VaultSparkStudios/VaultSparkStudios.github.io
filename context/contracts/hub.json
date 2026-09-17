@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-17T18:01:38.128Z",
+  "generatedAt": "2026-09-17T18:10:18.177Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,10 +24,10 @@
   "pulse": {
     "currentSession": 357,
     "lastUpdated": "2026-09-17",
-    "currentFocus": "S357 recovered the cut-off S356 closeout and released it to staging: the deploy-truth surface no longer certifies a tree it never measured, 32 WCAG contrast failures are repaired, four gates that had never run are wired, and two client scripts that kept calling a retired privacy endpoint are content-addressed. Staging carries the exact candidate with zero failed responses.",
-    "nextMilestone": "Promote S356+S357 to production: deploy the Worker (comments and newsletter-unsubscribe routes are 404 in production today), then dispatch pages-deploy with confirm_content, then verify from served bytes. Both steps are ready and blocked only on founder authorization.",
+    "currentFocus": "S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker b19ce12e plus content-lane run 35256380631. Production contentLaneHead now equals origin/main. The Desk flagship, comments, reader-first articles, the site-wide strip and the first public changelog entry since July are live, alongside the deploy-truth repair, 32 contrast fixes and four gates that had never run.",
+    "nextMilestone": "Fingerprint the remaining 25 unhashed client scripts (the content lane can never update them) and add a served-vs-repo drift gate for lane-held paths, so the class that kept a deleted fetch alive cannot recur.",
     "blockers": [
-      "Production promotion is pending founder authorization: the Worker deploy and the pages-deploy confirm_content dispatch were both refused by the agent session's permission policy. Staging carries the exact candidate (zero failed responses, ceremony 9/10 with only the expected pre-deploy deploy-currency-live staleness).",
+      "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
       "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
