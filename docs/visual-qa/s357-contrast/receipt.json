@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "session": "S357",
+  "capturedAt": "2026-09-17T08:38:35.713Z",
+  "origin": "http://127.0.0.1:4173 (local preview of the release candidate)",
+  "discipline": "CANON-053 — reviewed from rendered pixels, not from the CSS diff",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "sources": [
+    {
+      "file": "ignis/index.html",
+      "sha256": "1539d8a2660fda73208d924510a90414c398ed142d23727a6b61969b3078ed9f"
+    },
+    {
+      "file": "oracle/index.html",
+      "sha256": "2a645808b95fa8ef3ae04d7953a33a3d0e45d854bcd98695317285d1589d8317"
+    }
+  ],
+  "captures": [
+    {
+      "file": "ignis-pillars--light.png",
+      "sha256": "ce6388936b35e731557c941237ba752ba562a754f1943630a35b8d8a7c52d13b",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": ".ignis-pillar .pnum and .pillar-pct measured 1.40:1 before — the worst on the site. Now an opaque dark panel: gold ordinals, white headings, readable muted body, gold percentages."
+      }
+    },
+    {
+      "file": "ignis-pillars--dark.png",
+      "sha256": "b1d2f9c81fceabdb5e079b2d7bdb7165397b171a1046c4ec2cc615f36a3d4d0c",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "Control. Dark theme was already passing at 11.1-12.3:1 and is visually unchanged by the fix."
+      }
+    },
+    {
+      "file": "ignis-tiers--light.png",
+      "sha256": "d657045b69bbebf39dc2d26c23f172b636bb82cf13c46cd6c94ee70ff0802d1d",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "All four .ignis-tier-card labels measured 1.47-2.30:1 before. VAULTED, FORGE, SPARKED and IGNITED are now legible on the dark card with white body copy."
+      }
+    },
+    {
+      "file": "ignis-tiers--dark.png",
+      "sha256": "0aefdc6a3928251e6c79a650147bf87a0b8f6d03b077a23d584a8998ee3f75a2",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "Control. Unchanged."
+      }
+    },
+    {
+      "file": "oracle-chip--light.png",
+      "sha256": "896caf23f8153d22de130d611987b629a92c5aa89bba203c77627aff85cf629c",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": ".ignis-chip label measured 4.22:1 over the hero wash and its border 1.24:1, so the pill outline vanished. Now an opaque pill with a visible border."
+      }
+    },
+    {
+      "file": "oracle-chip--dark.png",
+      "sha256": "7ef2d3c4ea7edadddddf20f9c56602a86dc81eec170c0f0cb8c7fe688136aea8",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "Control. Unchanged."
+      }
+    },
+    {
+      "file": "ignis--light--desktop.png",
+      "sha256": "f383d40b7ac22464880ab027e9aec473ed152c05fcdaf228a12bb04e6c6f8cc8",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "Whole-page light-theme view: gauge, score, tier line and body copy all readable; header, Desk strip and nav unaffected."
+      }
+    },
+    {
+      "file": "ignis--light--mobile.png",
+      "sha256": "0d6822ad0c1b7d54fb3bc20fe90b0ba8733dc8c7d651f6a657d0cc4001eb8adb",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code (S357)",
+        "finding": "390px parity check (CANON-041): no clipping, no horizontal scroll, same repaired surfaces."
+      }
+    }
+  ],
+  "notes": "Light-theme captures are the repaired state; the dark captures are controls proving the six already-passing themes are visually unchanged. Measured ratios are in the commit message; these images are the pixel confirmation."
+}
