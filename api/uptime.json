@@ -135,18 +135,18 @@
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded. S320: `rumIngestPost` (POST /v/rum expecting 202) exercises the REAL ingest method, because the OPTIONS preflight above answers 204 unconditionally and stayed green throughout an outage in which POST returned 500 — it sends `synthetic: true` so the worker validates and replies without writing a row, and requires that flag echoed back so an older worker build cannot pass. `login` (GET /login) exercises the auth entry point, which no probe touched until production sign-in was found 500ing by accident; a named 503 `auth_store_unavailable` is an honest self-restoring degradation, while a 500/1101 crash is our own fault and is judged `down`.",
   "rollup": {
-    "checks": 1488,
+    "checks": 1489,
     "upPct": 66.2,
     "fullStackPct": 66.2,
-    "fullStackObservedChecks": 1335,
+    "fullStackObservedChecks": 1336,
     "unobservableChecks": 153,
     "unresolvedLegacyChecks": 451,
     "originContentPct": 100,
-    "originContentChecks": 1488,
+    "originContentChecks": 1489,
     "edgeLivenessPct": 92.7,
-    "edgeLivenessChecks": 1121,
+    "edgeLivenessChecks": 1122,
     "workerIngestPct": 78.9,
-    "workerIngestChecks": 1121,
+    "workerIngestChecks": 1122,
     "lastIncidentAt": "2026-09-10T22:34:49.204Z",
     "lastIncidentState": "edge-degraded"
   }
