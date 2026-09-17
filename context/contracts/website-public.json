@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-17T18:38:12.780Z",
+  "generatedAt": "2026-09-17T19:05:16.248Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -8,7 +8,7 @@
     "liveUrl": "https://vaultsparkstudios.com/",
     "stagingUrl": "https://website.staging.vaultsparkstudios.com",
     "status": "live",
-    "health": "green",
+    "health": "yellow",
     "vaultStatus": "SPARKED"
   },
   "listingMetadata": {
@@ -52,7 +52,7 @@
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
     "currentSession": 357,
-    "currentFocus": "S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker b19ce12e plus content-lane run 35256380631. Production contentLaneHead now equals origin/main. The Desk flagship, comments, reader-first articles, the site-wide strip and the first public changelog entry since July are live, alongside the deploy-truth repair, 32 contrast fixes and four gates that had never run.",
+    "currentFocus": "S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker 8a856192 plus content-lane run 35256380631, production contentLaneHead = origin/main. The Desk flagship, reader-first articles, reactions, the site-wide strip and the first public changelog entry since July are live. Comments ship but are degraded by a pre-existing Supabase credential mismatch, and now say which of the two possible causes it is.",
     "nextMilestone": "Fingerprint the remaining 25 unhashed client scripts (the content lane can never update them) and add a served-vs-repo drift gate for lane-held paths, so the class that kept a deleted fetch alive cannot recur.",
     "pulseKeys": [
       "now",

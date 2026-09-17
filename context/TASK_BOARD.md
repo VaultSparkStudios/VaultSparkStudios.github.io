@@ -5,6 +5,7 @@ Last updated: 2026-09-17 (S357 recovered and pushed the cut-off S356 closeout, t
 ## Open — S357
 
 - [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
+- [ ] **[S357][ENG/P0 · FOUNDER]** Desk comments are live but every read 503s `comments_upstream_failed` — the Supabase service-role key is rejected ("Invalid API key"). Pre-existing credential-project mismatch (S344), not the release. Reconcile the credential for project `fjnpzjjyhnpmunfoycrp`.
 - [ ] **[S357][ASSETS/P1]** Fingerprint the remaining 25 unhashed client scripts; the content lane can never update them (D-S357.2). Batch with a receipt pass each.
 - [ ] **[S357][GATES/P1]** Served-vs-repo drift gate for lane-held paths — run the measurement that found the 404 every release.
 - [ ] **[S357][CONTENT/P2]** Source the "You asked" lines from `data/consumer-changelog.json`, not git subjects (D-S357.3).

@@ -7,10 +7,10 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 ## Score Summary
 
 - Overall opportunity pressure: **82/100**
-- Health: **green**
+- Health: **yellow**
 - Current SIL: **979/1000**
 - CI health: **check gh run list**
-- Current focus: S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker b19ce12e plus content-lane run 35256380631. Production contentLaneHead now equals origin/main. The Desk flagship, comments, reader-first articles, the site-wide strip and the first public changelog entry since July are live, alongside the deploy-truth repair, 32 contrast fixes and four gates that had never run.
+- Current focus: S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker 8a856192 plus content-lane run 35256380631, production contentLaneHead = origin/main. The Desk flagship, reader-first articles, reactions, the site-wide strip and the first public changelog entry since July are live. Comments ship but are degraded by a pre-existing Supabase credential mismatch, and now say which of the two possible causes it is.
 
 ## Strategic Read
 
@@ -92,45 +92,45 @@ Why it matters: Leaderboard embed hard-codes low-contrast greys. api/leaderboard
 
 ### DEFERRED / GATED
 
-#### 1. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
+#### 1. [PRODUCT] Desk comments are live but every read 503s comments_upstream_failed
 Final score: **96**
+[S357][ENG/P0 · FOUNDER] Desk comments are live but every read 503s comments_upstream_failed — the Supabase service-role key is rejected ("Invalid API key"). Pre-existing credential-project mismatch (S344), not the release. Reconcile the credential for project fjnpzjjyhnpmunfoycrp.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+
+#### 2. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
+Final score: **93**
 [S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages. Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 2. [PRODUCT] Founder-owned items deferred. Passkey sign-in, signup walkthrough, pu…
-Final score: **93**
+#### 3. [PRODUCT] Founder-owned items deferred. Passkey sign-in, signup walkthrough, pu…
+Final score: **90**
 [S354][FOUNDER DIRECTIVE] Founder-owned items deferred. Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 3. [PRODUCT] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A…
-Final score: **87**
+#### 4. [PRODUCT] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A…
+Final score: **84**
 [S352][SIL][OBS/P1] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A0EC9619EA4BC asks studio-ops to reuse studio-ops-cron */30 via a service binding. The website half needs a node-side cloudflare:workers shim for the unit tests.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 4. [PRODUCT] Free a cron slot, or move the account to Workers Paid. S352: an agent…
-Final score: **84**
+#### 5. [PRODUCT] Free a cron slot, or move the account to Workers Paid. S352: an agent…
+Final score: **81**
 [S351][OBS/P0 · FOUNDER DECISION] Free a cron slot, or move the account to Workers Paid. S352: an agent-side third option went to studio-ops via Ark (row above); this row closes if studio-ops accepts. This is the single thing standing between the studio and ever observing its own edge, and it is now a one-sentence decision rather than an investigation. Five of five free-plan cron triggers are in use by other projects. Retiring one is a live change to that project (founder call); Workers Paid raises the cap to 1,000 and is a billing action reserved to a human under CANON-019. Everything downstream is already built, deployed and verified — namespace, binding, handler, drain, 12/12 drain self-tests.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 5. [VERIFY] Model the proof-surface generators, highest-risk first
-Final score: **80**
+#### 6. [VERIFY] Model the proof-surface generators, highest-risk first
+Final score: **77**
 [S353][SIL:1][CI/P2] Model the proof-surface generators, highest-risk first — 19 left. S354 modeled build-release-dependencies (and its missing release-proof edge, which exposed a real weekly-maintenance strand, now closed). Start with build-release-dependencies (weekly-maintenance stages its output). Read each generator for REAL sources, add the node, --update to lower the baseline.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 6. [PRODUCT] Scoped website credential owner reconciliation. Fresh S347 preflight …
-Final score: **75**
+#### 7. [PRODUCT] Scoped website credential owner reconciliation. Fresh S347 preflight …
+Final score: **72**
 [S344→S347][SEC/P0] Scoped website credential owner reconciliation. Fresh S347 preflight still reports credential-project mismatch while management/SQL/function inspection is available. Ark 01K22H17HM5F6D2952E9B84165 requests the studio-ops owner fix without exposing credentials. Owner-pending, not a claim that credentials are absent or that only the founder can act; provider truth reads remain unproven.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 7. [PRODUCT] The Phase 0 gate is a HUMAN walkthrough and has not been run. The pla…
-Final score: **72**
+#### 8. [PRODUCT] The Phase 0 gate is a HUMAN walkthrough and has not been run. The pla…
+Final score: **69**
 [S343][QA/P0] The Phase 0 gate is a HUMAN walkthrough and has not been run. The plan's own gate is a real signup in a clean browser profile with the subscribe box left checked, landing on the dashboard. The fix is verified by build:check 388/388, mobile 215/215, worker 57/57, and by reading the SERVED bundle — but not by a person actually creating an account. ~3 minutes; do it before any onboarding push.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
-
-#### 8. [PRODUCT] Enable the edge uptime sampler
-Final score: **66**
-[S349→S351][OBS/P1] Enable the edge uptime sampler — BLOCKED ON A CRON SLOT, and now precisely. S351 cleared the S350 hold (the KV namespace created on the first attempt: production-UPTIME_SAMPLES = adfe5ed60c90426ea1286321360138e3) and deployed the Worker with the binding LIVE in production. The cron was then REFUSED: Cloudflare error 10072 — Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline */5, studio-ops-cron */30, veilos hourly, velaxis-proxy ×2). No cron = no invoker = scheduled() never runs, so the flag is back to "0" and the cron is commented out; left declared it fails EVERY future Worker deploy at the trigger step, because wrangler does not roll back the successful part. Remaining work is two lines once a founder picks (a) free a slot by retiring one of the five — a live change to a different project, not this repo's call — or (b) Workers Paid, which is billing and founder-reserved under CANON-019.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order
 

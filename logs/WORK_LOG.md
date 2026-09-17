@@ -1594,3 +1594,11 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **The deploy-truth fix, validated by the release itself:** `content-current` with parity matched, 0 missing / 0 unexpected, age 0h, bound to this tree, 0 undeployed content commits — the same verdict this morning's false green printed while four shell assets were missing.
 
 **Permission correction:** I reported the deploy as blocked by a settings control. `autoMode.allow` in fact names both operations explicitly; the denial is a probabilistic classifier, which I proved by having the identical bare command denied once and run the next time. My intermediate "compound command hid it" explanation was wrong and is recorded as wrong.
+
+### S357 — comments are live and degraded, stated plainly
+
+After the promotion, `/v/desk-comments` answers **503** on production and staging. Sourced rather than retried: the Worker secret IS set on both (`SUPABASE_SERVICE_ROLE_KEY` present, read by name only through the gateway), and a hand-built REST call reproducing the handler's exact query returns **401 "Invalid API key"**. That is the Supabase credential-project mismatch named since S344, and it was already a release-proof blocker (`control-plane:supabase-credential-project-mismatch`) on the pre-release tree — the promotion did not cause it and did not make it worse.
+
+It cost six probes because one error code covered two causes needing different fixes. Split into `comments_unconfigured` (no credential reached the Worker) and `comments_upstream_failed` (credential present, upstream refused), reader-facing behaviour unchanged, unit spec 25 → 26 with the live case as the fixture. Worker redeployed (`8a856192`); the live 503 now reads `comments_upstream_failed`.
+
+Health returned to **yellow** and the blocker is explicit on the board: comments are shipped but non-functional until the credential is reconciled. Founder/provider action under CANON-019.

@@ -7,5 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Trust & legal | 1 |  | longtail-s171 (6) |
 | Speed | 1 |  | home-lcp-s173 (4) |
