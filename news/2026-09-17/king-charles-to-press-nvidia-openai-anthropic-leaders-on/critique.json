@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-17T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on",
+    "url": "https://vaultsparkstudios.com/news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-01-9ec2d486e5c2",
+      "hash": "9ec2d486e5c2ec961fb15a20e7d3908451f7b7cec695260e1560692caf2ef0be",
+      "text": "AI minister, Kanishka Narayan, and other attendees convened by the King&#x27;s Trust, the King&#x27;s Foundation and the Sustainable Markets Initiative.",
+      "sourceUrl": "https://www.cnbc.com/2026/09/17/king-charles-nvidia-openai-anthropic-ai.html",
+      "sourceHost": "cnbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/#fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-01-9ec2d486e5c2"
+    },
+    {
+      "id": "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-02-0fdf29d259f8",
+      "hash": "0fdf29d259f8bc947e319565ec25607af0e7349e7b902bb290d8fc60a0acffb4",
+      "text": "In this article NVDA GOOGL META Follow your favorite stocks CREATE FREE ACCOUNT The U.K.&#x27;s King Charles is set to press senior leaders from Nvidia , OpenAI and Anthropic on AI safety at a summit in Scotland.",
+      "sourceUrl": "https://www.cnbc.com/2026/09/17/king-charles-nvidia-openai-anthropic-ai.html",
+      "sourceHost": "cnbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/#fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-02-0fdf29d259f8"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "mara:fair",
+      "persona": "mara",
+      "text": "The King's Trust convenes this summit alongside the Sustainable Markets Initiative, signaling that institutional legitimacy is being leveraged to normalize high-level dialogue on AI safety among top industry players.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-01-9ec2d486e5c2",
+        "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-02-0fdf29d259f8"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Nvidia, OpenAI, and Anthropic are being pressed on safety at a summit in Scotland, which suggests the industry is preparing for regulatory headwinds rather than ignoring them as it did in previous years.",
+      "confidence": 0.75,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-01-9ec2d486e5c2",
+        "fact-2026-09-17-king-charles-to-press-nvidia-openai-anthropic-leaders-on-02-0fdf29d259f8"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-17--king-charles-to-press-nvidia-openai-anthropic-leaders-on.png",
+    "artSha256": "b7e3841f599d0b9ff021a4c4e821aa88f61a764976a9463ad2963be6f3012965",
+    "pageSha256": "974382e4232248dbaba98d74a55df83f068350ce681b473cedd32ae5a926af0b",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "ac1eaf9ef5b2148a3bb6342668fb5ffd0195cf461560df0a10bd020ea6a8f0ff",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
