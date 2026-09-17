@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 216,
+    "inspected": 32,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,105 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "e346fd6d",
+      "ts": "2026-09-17T09:26:13.000Z",
+      "type": "chore",
+      "scope": "gates",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "record the 499/499 build:check diagnostics",
+      "visitorFacing": false
+    },
+    {
+      "sha": "c1b990d5",
+      "ts": "2026-09-17T09:26:13.000Z",
+      "type": "perf",
+      "scope": "desk-art",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "memoize panel derivatives too — 95.9s -> 16.5s",
+      "visitorFacing": false
+    },
+    {
+      "sha": "47dc52eb",
+      "ts": "2026-09-17T09:26:13.000Z",
+      "type": "perf",
+      "scope": "desk-art",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "memoize two pure functions the ingest path calls repeatedly",
+      "visitorFacing": false
+    },
+    {
+      "sha": "272c6ebc",
+      "ts": "2026-09-17T09:26:12.000Z",
+      "type": "chore",
+      "scope": "receipts",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bind visual + mobile proof to candidate ff33386097d7",
+      "visitorFacing": false
+    },
+    {
+      "sha": "015bc2ae",
+      "ts": "2026-09-17T09:26:11.000Z",
+      "type": "fix",
+      "scope": "public-voice",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "stop rendering raw commit subjects to visitors on /changelog/",
+      "visitorFacing": true
+    },
+    {
+      "sha": "a4f42545",
+      "ts": "2026-09-17T09:26:09.000Z",
+      "type": "chore",
+      "scope": "receipts",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bind visual + mobile proof to the S357 candidate a1c97bfa8612",
+      "visitorFacing": false
+    },
+    {
+      "sha": "cca53d70",
+      "ts": "2026-09-17T09:26:09.000Z",
+      "type": "chore",
+      "scope": "build",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "converge the generated surface on the S357 release candidate",
+      "visitorFacing": true
+    },
+    {
+      "sha": "c3f4b9fe",
+      "ts": "2026-09-17T09:26:07.000Z",
+      "type": "docs",
+      "scope": "visual-qa",
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "pixel receipt for the S357 contrast repairs",
+      "visitorFacing": false
+    },
+    {
+      "sha": "90a691c8",
+      "ts": "2026-09-17T09:26:07.000Z",
+      "type": "fix",
+      "scope": "deploy-truth",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "a shell-parity verdict can no longer certify a tree it never measured",
+      "visitorFacing": true
+    },
     {
       "sha": "c629dd66",
       "ts": "2026-09-17T08:12:19.000Z",
@@ -182,105 +281,6 @@
       "tone": "muted",
       "summary": "rebuild the derived graph after the 112-commit rebase",
       "visitorFacing": true
-    },
-    {
-      "sha": "c7586bbc",
-      "ts": "2026-09-17T08:08:49.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "recover S356 closeout tail",
-      "visitorFacing": true
-    },
-    {
-      "sha": "d2cb58e8",
-      "ts": "2026-09-17T08:08:48.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "recover S356 closeout",
-      "visitorFacing": false
-    },
-    {
-      "sha": "5720cba4",
-      "ts": "2026-09-17T08:08:47.000Z",
-      "type": "fix",
-      "scope": "gates",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "scope the og:image gate to the surface the deploy actually serves",
-      "visitorFacing": false
-    },
-    {
-      "sha": "d1e7ef05",
-      "ts": "2026-09-17T08:08:47.000Z",
-      "type": "feat",
-      "scope": "desk,privacy,site",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S356 — Desk flagship, founder-presence removal, site-wide crawl fixes",
-      "visitorFacing": true
-    },
-    {
-      "sha": "9e84fe27",
-      "ts": "2026-09-14T10:19:22.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S355 release addendum — production verified by served bytes",
-      "visitorFacing": false
-    },
-    {
-      "sha": "a5668648",
-      "ts": "2026-09-14T10:01:54.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S355 receipts re-bound to rebased candidate",
-      "visitorFacing": false
-    },
-    {
-      "sha": "8b7bb450",
-      "ts": "2026-09-14T09:52:29.000Z",
-      "type": "fix",
-      "scope": "release,gates,obs",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "S355 — safe Pages concurrency, publisher resync gate, gate truth",
-      "visitorFacing": true
-    },
-    {
-      "sha": "a14feee8",
-      "ts": "2026-09-14T08:54:13.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S354 release addendum — production verified by served bytes",
-      "visitorFacing": false
-    },
-    {
-      "sha": "77f5f4ff",
-      "ts": "2026-09-14T08:32:38.000Z",
-      "type": "chore",
-      "scope": "S354",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "regenerate founder presence for push (studio-wide session state moved)",
-      "visitorFacing": false
     }
   ]
 }

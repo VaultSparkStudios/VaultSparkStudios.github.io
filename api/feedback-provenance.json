@@ -4,33 +4,61 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 2,
+  "themeCount": 3,
   "themes": [
     {
-      "key": "trust",
-      "label": "Trust & legal",
+      "key": "transparency",
+      "label": "Transparency",
       "count": 1,
       "commits": [
         {
-          "sha": "d1e7ef05",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "S356 — Desk flagship, founder-presence removal, site-wide crawl fixes",
-          "ts": "2026-09-17T08:08:47.000Z"
+          "sha": "015bc2ae",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "stop rendering raw commit subjects to visitors on /changelog/",
+          "ts": "2026-09-17T09:26:11.000Z"
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "count": 2,
+      "commits": [
+        {
+          "sha": "c1b990d5",
+          "move": "Sped up",
+          "tone": "perf",
+          "summary": "memoize panel derivatives too — 95.9s -> 16.5s",
+          "ts": "2026-09-17T09:26:13.000Z"
+        },
+        {
+          "sha": "47dc52eb",
+          "move": "Sped up",
+          "tone": "perf",
+          "summary": "memoize two pure functions the ingest path calls repeatedly",
+          "ts": "2026-09-17T09:26:13.000Z"
         }
       ]
     },
     {
       "key": "frontdoor",
       "label": "Front door",
-      "count": 4,
+      "count": 5,
       "commits": [
         {
-          "sha": "ea22ba51",
+          "sha": "272c6ebc",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "bind visual + mobile proof to candidate ff33386097d7",
+          "ts": "2026-09-17T09:26:12.000Z"
+        },
+        {
+          "sha": "a4f42545",
           "move": "Tended",
           "tone": "muted",
           "summary": "bind visual + mobile proof to the S357 candidate a1c97bfa8612",
-          "ts": "2026-09-17T08:49:19.000Z"
+          "ts": "2026-09-17T09:26:09.000Z"
         },
         {
           "sha": "70e740b9",

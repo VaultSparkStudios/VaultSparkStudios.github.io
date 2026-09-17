@@ -1,29 +1,58 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-17T08:55:55.015Z",
+  "generatedAt": "2026-09-17T09:27:16.485Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
   "receipts": [
     {
-      "theme": "trust",
-      "label": "Trust & legal",
+      "theme": "transparency",
+      "label": "Transparency",
       "feedbackSignals": 1,
-      "shippedCommits": [],
+      "shippedCommits": [
+        {
+          "sha": "015bc2ae",
+          "summary": "stop rendering raw commit subjects to visitors on /changelog/",
+          "ts": "2026-09-17T09:26:11.000Z"
+        }
+      ],
+      "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 2,
+      "shippedCommits": [
+        {
+          "sha": "c1b990d5",
+          "summary": "memoize panel derivatives too — 95.9s -> 16.5s",
+          "ts": "2026-09-17T09:26:13.000Z"
+        },
+        {
+          "sha": "47dc52eb",
+          "summary": "memoize two pure functions the ingest path calls repeatedly",
+          "ts": "2026-09-17T09:26:13.000Z"
+        }
+      ],
       "proof": {
-        "set": "longtail-s171",
-        "captures": 6,
+        "set": "home-lcp-s173",
+        "captures": 4,
         "routes": [
-          "/projects/vorn/",
-          "/privacy/",
-          "/journal/community-enters-the-vault/"
+          "/"
         ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -74.9,
+        "confidence": "high"
       }
     },
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 4,
+      "feedbackSignals": 5,
       "shippedCommits": [],
       "proof": null
     }

@@ -102,13 +102,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-17",
-    "passing": 14,
+    "passing": 13,
     "warning": 2,
-    "failing": 1,
-    "blockingFailing": 0,
+    "failing": 2,
+    "blockingFailing": 1,
     "advisoryFailing": 1,
     "total": 17,
-    "score": 82,
+    "score": 76,
     "checks": [
       {
         "id": "manifest",
@@ -224,10 +224,10 @@
       },
       {
         "id": "deploy-currency-live",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "local-broken",
-        "blocking": false
+        "blocking": true
       }
     ]
   },

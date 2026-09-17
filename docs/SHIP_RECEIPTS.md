@@ -7,5 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Trust & legal | 1 |  | longtail-s171 (6) |
-| Front door | 4 |  | pending |
+| Transparency | 1 | 015bc2ae stop rendering raw commit subjects to visitors on /changelog/ | pending |
+| Speed | 2 | c1b990d5 memoize panel derivatives too — 95.9s -> 16.5s<br>47dc52eb memoize two pure functions the ingest path calls repeatedly | home-lcp-s173 (4) |
+| Front door | 5 |  | pending |
