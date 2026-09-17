@@ -201,7 +201,34 @@ export function classifyArtKind({ pixelInspection = null, entropy = null, sha256
  * The exact responsive-panel pipeline build-news-desk.mjs rasterizeMemes uses,
  * returned as buffers so a preflight can measure bytes without writing files.
  */
+/**
+ * S357 — memoized like measureArt, and for the same reason: the ingest path runs
+ * planIngest twice over one batch (--dry-run, then the real pass) and this is
+ * where its budget preflight happens, so every accepted image was encoded to
+ * PNG + WebP + AVIF twice for byte-identical output. AVIF at effort 6 is the
+ * expensive half.
+ *
+ * Keyed on both operands' content — the raster bytes and the overlay SVG — so a
+ * different image or a different caption can never reuse an entry. Small cap:
+ * three encoded buffers per entry is real memory.
+ */
+const derivativeCache = new Map();
+const DERIVATIVE_CACHE_MAX = 32;
+
 export async function renderPanelDerivatives(source, overlaySvg) {
+  const key = Buffer.isBuffer(source)
+    ? crypto.createHash('sha256').update(source).update(' ').update(String(overlaySvg)).digest('hex')
+    : null;
+  if (key && derivativeCache.has(key)) return derivativeCache.get(key);
+  const result = await renderPanelDerivativesUncached(source, overlaySvg);
+  if (key) {
+    if (derivativeCache.size >= DERIVATIVE_CACHE_MAX) derivativeCache.clear();
+    derivativeCache.set(key, result);
+  }
+  return result;
+}
+
+async function renderPanelDerivativesUncached(source, overlaySvg) {
   const panel = sharp(source)
     .resize(PANEL_WIDTH, PANEL_HEIGHT, { fit: 'cover', position: 'attention' })
     .composite([{ input: Buffer.from(overlaySvg) }]);
