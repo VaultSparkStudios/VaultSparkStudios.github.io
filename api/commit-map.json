@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 56,
+    "inspected": 58,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,39 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "2ca10dcb",
+      "ts": "2026-09-17T17:53:34.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "staging lineage + continuity rebuilt for the S357 promotion",
+      "visitorFacing": false
+    },
+    {
+      "sha": "70a5df8b",
+      "ts": "2026-09-17T17:53:28.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "stamp the candidate at 0fcc68e7 for a full staging deploy",
+      "visitorFacing": false
+    },
+    {
+      "sha": "0fcc68e7",
+      "ts": "2026-09-17T16:48:05.000Z",
+      "type": "docs",
+      "scope": "handoff",
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "staging re-synced to the exact promotion candidate 2f849e50",
+      "visitorFacing": true
+    },
     {
       "sha": "7bd9436e",
       "ts": "2026-09-17T11:28:11.000Z",
@@ -248,39 +281,6 @@
       "tone": "muted",
       "summary": "record the release-candidate build:check diagnostics",
       "visitorFacing": false
-    },
-    {
-      "sha": "2e618b8c",
-      "ts": "2026-09-17T09:42:36.000Z",
-      "type": "chore",
-      "scope": "receipts",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "bind visual + mobile proof to release candidate d307a7d2cf92",
-      "visitorFacing": false
-    },
-    {
-      "sha": "171e2835",
-      "ts": "2026-09-17T09:42:35.000Z",
-      "type": "fix",
-      "scope": "public-voice",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "make the /changelog/ ship filter structural, not a word list",
-      "visitorFacing": true
-    },
-    {
-      "sha": "f52b4986",
-      "ts": "2026-09-17T09:42:35.000Z",
-      "type": "chore",
-      "scope": "resync",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "converge the derived surface after rebasing onto the publishers",
-      "visitorFacing": true
     }
   ]
 }

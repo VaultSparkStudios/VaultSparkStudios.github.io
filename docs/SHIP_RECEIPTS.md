@@ -7,7 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 2 | 729af46e the changelog timeline's two accents failed AA in light theme<br>171e2835 make the /changelog/ ship filter structural, not a word list | pending |
+| Transparency | 1 | 729af46e the changelog timeline's two accents failed AA in light theme | pending |
 | Trust & legal | 1 |  | longtail-s171 (6) |
 | Speed | 1 |  | home-lcp-s173 (4) |
-| Front door | 1 |  | pending |
