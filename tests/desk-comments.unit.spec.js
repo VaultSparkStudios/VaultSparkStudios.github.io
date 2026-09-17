@@ -735,3 +735,32 @@ test('hashReader is salted, daily-rotating, and never reversible to the input', 
   const unsalted = await hashReader('203.0.113.7', { DESK_COMMENT_SALT: 'different-salt' }, Date.UTC(2026, 8, 14));
   assert.notEqual(day1, unsalted, 'the salt is a secret input, not decoration');
 });
+
+test('S357: a missing credential and a refused query are DIFFERENT 503 signals', async () => {
+  const url = 'https://vaultsparkstudios.com/v/desk-comments?slug=2026-09-16/a-real-story';
+  const req = () => new Request(url, { method: 'GET' });
+
+  // No service-role credential reached the Worker at all.
+  const unconfigured = await handleDeskComments(req(), {}, {
+    fetchImpl: async () => { throw new Error('must not be called without a credential'); },
+  });
+  assert.equal(unconfigured.status, 503);
+  assert.equal((await unconfigured.json()).error, 'comments_unconfigured');
+
+  // Credential present; Supabase refuses it. This is the live production case:
+  // the service-role key answers "Invalid API key" because of the
+  // credential-project mismatch tracked since S344, and before this split both
+  // causes reported the same opaque `comments_unavailable`, which cost six
+  // probes to tell apart.
+  const refused = await handleDeskComments(req(), { SUPABASE_SERVICE_ROLE_KEY: 'present-but-rejected' }, {
+    fetchImpl: async () => new Response(JSON.stringify({ message: 'Invalid API key' }), {
+      status: 401, headers: { 'Content-Type': 'application/json' },
+    }),
+  });
+  assert.equal(refused.status, 503);
+  assert.equal((await refused.json()).error, 'comments_upstream_failed');
+
+  // The reader-facing contract is unchanged: both are 503, so the client shows
+  // the same honest unavailable state. Only the operator signal differs.
+  assert.notEqual('comments_unconfigured', 'comments_upstream_failed');
+});

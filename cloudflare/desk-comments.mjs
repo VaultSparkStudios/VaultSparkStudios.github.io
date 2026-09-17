@@ -201,6 +201,22 @@ export function threadComments(rows) {
     }));
 }
 
+/**
+ * S357 — why there are two unavailable codes rather than one.
+ *
+ * Every one of these paths used to answer `comments_unavailable` 503, which
+ * covers two causes that need completely different fixes: this Worker has no
+ * usable credential, or it has one and the upstream rejected the query. Sourcing
+ * a live 503 therefore took six probes — Worker secret list, gateway resolve, a
+ * hand-built REST call — to learn that the service-role key was answering
+ * "Invalid API key" (the credential-project mismatch tracked since S344).
+ *
+ *   comments_unconfigured    — no service-role credential reached the Worker
+ *   comments_upstream_failed — credential present, Supabase refused or malformed
+ *
+ * The reader-facing behaviour is unchanged: both are 503 and the client shows
+ * the same honest "comments unavailable" state. Only the operator signal splits.
+ */
 // --- GET -------------------------------------------------------------------
 
 async function handleGet(request, env, { fetchImpl }) {
@@ -208,13 +224,13 @@ async function handleGet(request, env, { fetchImpl }) {
   if (!slug) return json({ ok: false, error: 'bad_slug' }, 400);
 
   const db = supabaseClient(env, fetchImpl);
-  if (!db) return json({ ok: false, error: 'comments_unavailable' }, 503);
+  if (!db) return json({ ok: false, error: 'comments_unconfigured' }, 503);
 
   const query = `/rest/v1/desk_comments?story_slug=eq.${encodeURIComponent(slug)}`
     + `&status=eq.published&select=${PUBLIC_FIELDS}&order=created_at.desc&limit=${THREAD_LIMIT}`;
   const result = await db.call(query);
   if (!result.ok || !Array.isArray(result.data)) {
-    return json({ ok: false, error: 'comments_unavailable' }, 503);
+    return json({ ok: false, error: 'comments_upstream_failed' }, 503);
   }
   const comments = threadComments(result.data);
   const count = comments.reduce((total, c) => total + 1 + c.replies.length, 0);
@@ -298,7 +314,7 @@ async function handlePost(request, env, { fetchImpl, authenticate, now }) {
   if (payload.parentId && !parentId) return json({ ok: false, error: 'bad_parent' }, 400);
 
   const db = supabaseClient(env, fetchImpl);
-  if (!db) return json({ ok: false, error: 'comments_unavailable' }, 503);
+  if (!db) return json({ ok: false, error: 'comments_unconfigured' }, 503);
 
   if (!(await verifyCsrfToken(env, request.headers.get('X-CSRF-Token') || ''))) {
     return json({ ok: false, error: 'csrf_invalid', message: 'Your session timed out. Please try again.' }, 403);
@@ -381,7 +397,7 @@ async function handlePost(request, env, { fetchImpl, authenticate, now }) {
       ip_hash: ipHash,
     }]),
   });
-  if (!insert.ok) return json({ ok: false, error: 'comments_unavailable' }, 503);
+  if (!insert.ok) return json({ ok: false, error: 'comments_upstream_failed' }, 503);
 
   if (verdict.verdict === 'rejected') {
     return json({
@@ -414,7 +430,7 @@ async function handleReport(request, env, { fetchImpl, now }) {
   if (!commentId) return json({ ok: false, error: 'bad_comment_id' }, 400);
 
   const db = supabaseClient(env, fetchImpl);
-  if (!db) return json({ ok: false, error: 'comments_unavailable' }, 503);
+  if (!db) return json({ ok: false, error: 'comments_unconfigured' }, 503);
 
   if (!(await verifyCsrfToken(env, request.headers.get('X-CSRF-Token') || ''))) {
     return json({ ok: false, error: 'csrf_invalid', message: 'Your session timed out. Please try again.' }, 403);
@@ -473,6 +489,6 @@ export async function handleDeskComments(request, env, deps = {}) {
   } catch (error) {
     // Comments must never be able to take the edge down (S321).
     console.error('desk-comments failed', { code: error?.message || 'unknown', path: url.pathname });
-    return json({ ok: false, error: 'comments_unavailable' }, 503);
+    return json({ ok: false, error: 'comments_upstream_failed' }, 503);
   }
 }
