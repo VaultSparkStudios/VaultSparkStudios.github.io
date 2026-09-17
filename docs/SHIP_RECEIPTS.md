@@ -8,3 +8,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
 | Speed | 1 |  | home-lcp-s173 (4) |
+| Front door | 1 |  | pending |

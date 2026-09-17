@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   499/499 passing  ·  2026-09-17                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
+║  ✓  Tests         499/499 passing (2026-09-17)                   ║
 ║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
@@ -128,20 +128,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Fingerprint the remaining 25 unhashed clie  ║
-║        Fingerprint the remaining 25 unhashed client scripts; th  ║
+║  100  [SECURITY]     build-promotion-receipt reports "7 console  ║
+║        build-promotion-receipt reports "7 console error(s) on t  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Served-vs-repo drift gate for lane-held pa  ║
+║   93  [PRODUCT]      The same receipt reports "stranded/stale d  ║
+║        The same receipt reports "stranded/stale deploy" because  ║
+║                                                                  ║
+║   90  [PRODUCT]      Fingerprint the remaining 25 unhashed clie  ║
+║        Fingerprint the remaining 25 unhashed client scripts; th  ║
+║                                                                  ║
+║   87  [PRODUCT]      Served-vs-repo drift gate for lane-held pa  ║
 ║        Served-vs-repo drift gate for lane-held paths is open, l  ║
-║                                                                  ║
-║   90  [PRODUCT]      Source the "You asked" lines from data/con  ║
-║        Source the "You asked" lines from data/consumer-changelo  ║
-║                                                                  ║
-║   87  [PRODUCT]      vault_feedback 404s on production /changel  ║
-║        vault_feedback 404s on production /changelog/ every visi  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
