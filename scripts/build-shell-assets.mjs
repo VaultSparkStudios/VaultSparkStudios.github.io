@@ -53,6 +53,12 @@ const SHELL_ASSETS = [
   // The retired path is deliberately NOT named here: tests/founder-presence-absent
   // forbids it in any tracked shipped file, and it caught this very comment.
   { key: 'publicIntelligence', source: 'assets/public-intelligence.js', stem: 'public-intelligence.shell', attribute: 'src' },
+  // studio-now.js is the ACTUAL caller of the retired endpoint —
+  // public-intelligence.js is only the fetch membrane its call passes through,
+  // which is why a stack trace was needed to find it. Same unhashed staleness,
+  // same fix. Measured at the same time: 27 of 171 unhashed client scripts are
+  // serving pre-S356 bytes on staging, so this class is wider than these two.
+  { key: 'studioNow', source: 'assets/studio-now.js', stem: 'studio-now.shell', attribute: 'src' },
   { key: 'statsSurface', source: 'assets/stats-surface.js', stem: 'stats-surface.shell', attribute: 'src' },
   { key: 'ecosystemStats', source: 'assets/ecosystem-stats.js', stem: 'ecosystem-stats.shell', attribute: 'src' },
   { key: 'heroChoiceTracking', source: 'assets/hero-choice-tracking.js', stem: 'hero-choice-tracking.shell', attribute: 'src' },

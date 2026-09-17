@@ -100,7 +100,30 @@ const BUNDLES = [
  * The loader SOURCE keeps the readable plain path; only the generated bundle
  * carries the hashed one.
  */
-const CONTENT_ADDRESSED_PREDICATE_SRCS = ['assets/journey-conductor.js', 'assets/desk-wire.js'];
+/**
+ * S357 — studio-now and public-intelligence join the list, and the reason is
+ * worth recording because it is the whole point of this mechanism.
+ *
+ * check-content-lane-purity classifies an UNHASHED .js as "sensitive,
+ * executable, or unrecognised type" and HOLDS it, while a fingerprinted shell
+ * asset is promotable. So the content lane structurally cannot update a plain
+ * client script — it only changes on a full deploy. Measured on staging at the
+ * time of this change: 27 of 171 unhashed client scripts were serving
+ * pre-S356 bytes.
+ *
+ * That is how a fetch S356 deleted stayed live. studio-now.js still called a
+ * retired privacy endpoint in the served copy, the release ceremony's browser
+ * gate recorded the 404 on chromium and webkit, and production looked clean only
+ * because it still serves the pre-removal deploy. Content-addressing the loader
+ * predicate is the fix the architecture already provides: new bytes ship under a
+ * new URL, on a path the lane promotes.
+ */
+const CONTENT_ADDRESSED_PREDICATE_SRCS = [
+  'assets/journey-conductor.js',
+  'assets/desk-wire.js',
+  'assets/studio-now.js',
+  'assets/public-intelligence.js',
+];
 
 function shellHash(relPath) {
   const full = join(ROOT, relPath);

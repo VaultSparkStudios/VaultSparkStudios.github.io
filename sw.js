@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-1de2c4afa663d7eb';
+const CACHE_NAME = 'vaultspark-shell-cae627924657eab3';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -29,7 +29,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/home-idle-loader.shell-24f891da0e.js',
-  '/assets/ambient-core.shell-7ca24aa233.js',
+  '/assets/ambient-core.shell-9de9470671.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
@@ -37,6 +37,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/desk-comments.shell-3a3e7af2e8.js',
   '/assets/hero-ticker.shell-550971e267.js',
   '/assets/public-intelligence.shell-c86a6ecc39.js',
+  '/assets/studio-now.shell-fef717e631.js',
   '/assets/stats-surface.shell-b33242e1cc.js',
   '/assets/ecosystem-stats.shell-e6b0b21c77.js',
   '/assets/hero-choice-tracking.shell-8dd57eb3a3.js',
@@ -61,6 +62,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/desk-comments.js',
   '/assets/hero-ticker.js',
   '/assets/public-intelligence.js',
+  '/assets/studio-now.js',
   '/assets/stats-surface.js',
   '/assets/ecosystem-stats.js',
   '/assets/hero-choice-tracking.js',
@@ -71,7 +73,7 @@ const STATIC_ASSETS = [
   '/',
   '/assets/style.shell-0fa853d549.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-7ca24aa233.js',
+  '/assets/ambient-core.shell-9de9470671.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/kit.js',
   '/assets/icon-32.png',

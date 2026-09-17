@@ -1185,7 +1185,7 @@
     {
       // S195: Studio Now — live presence + last-ship + weekly cadence strip.
       // Homepage hero region only (its hook lives there); honest-dark otherwise.
-      src: '/assets/studio-now.js',
+      src: '/assets/studio-now.shell-fef717e631.js',
       when: function () {
         return !!document.querySelector('[data-studio-now]');
       },
