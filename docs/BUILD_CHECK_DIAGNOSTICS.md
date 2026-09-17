@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-17T09:25:30.629Z
-Receipt: `d462573c2d27721be6ad2b87` · coverage 499/499 from step 1
+Generated: 2026-09-17T09:42:06.211Z
+Receipt: `bc943d13f15d60ec2e321508` · coverage 499/499 from step 1
 
-Latest: **499/499** passed · failed 0 · total 177.5s
-Concentration: **11.3%** in step 145 · ratchet clear (>30% and ≥45s)
+Latest: **499/499** passed · failed 0 · total 133.8s
+Concentration: **9.8%** in step 145 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 145 | 20.1s | 0 | `node scripts/check-proof-surface.mjs` |
-| 475 | 14.8s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
-| 104 | 10.5s | 0 | `node --test tests/founder-presence-absent.unit.spec.js tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js tests/tt-report-only.unit.spec.js tests/resync-derived.unit.spec.js tests/local-preview.unit.spec.js tests/studio-pulse.unit.spec.js tests/desk-wire.unit.spec.js tests/desk-comments.unit.spec.js tests/consent-analytics.unit.spec.js tests/theme-toggle.unit.spec.js tests/nav-toggle.unit.spec.js tests/csrf-token.unit.spec.js tests/turnstile.unit.spec.js tests/page-feedback-payload.unit.spec.js tests/desk-presence.unit.spec.js tests/public-contract-libs.unit.spec.js` |
-| 61 | 8.5s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 99 | 6.9s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 250 | 5.1s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 385 | 4.5s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 473 | 4.2s | 0 | `node scripts/generate-news-art.mjs --self-test` |
-| 66 | 3.2s | 0 | `node scripts/build-shell-assets.mjs --check` |
-| 262 | 2.9s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
+| 145 | 13.1s | 0 | `node scripts/check-proof-surface.mjs` |
+| 475 | 12.5s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
+| 104 | 9.6s | 0 | `node --test tests/founder-presence-absent.unit.spec.js tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js tests/tt-report-only.unit.spec.js tests/resync-derived.unit.spec.js tests/local-preview.unit.spec.js tests/studio-pulse.unit.spec.js tests/desk-wire.unit.spec.js tests/desk-comments.unit.spec.js tests/consent-analytics.unit.spec.js tests/theme-toggle.unit.spec.js tests/nav-toggle.unit.spec.js tests/csrf-token.unit.spec.js tests/turnstile.unit.spec.js tests/page-feedback-payload.unit.spec.js tests/desk-presence.unit.spec.js tests/public-contract-libs.unit.spec.js` |
+| 99 | 7.4s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 61 | 6.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 250 | 3.8s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 473 | 3.2s | 0 | `node scripts/generate-news-art.mjs --self-test` |
+| 385 | 3.0s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
+| 95 | 2.4s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 262 | 2.0s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
 
 ## Failures
 
