@@ -89,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  6d old (2026-09-11)                            ║
-║  ⛔  Deploy gaps   production 198 commit(s) behind · 2.9d — past  ║
+║  ⛔  Deploy gaps   production 199 commit(s) behind · 3d — past t  ║
 ║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║

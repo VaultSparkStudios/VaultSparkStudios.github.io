@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 32,
+    "inspected": 33,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -19,8 +19,41 @@
   },
   "entries": [
     {
-      "sha": "e9466d3b",
-      "ts": "2026-09-17T09:28:16.000Z",
+      "sha": "435a0c9c",
+      "ts": "2026-09-17T09:42:36.000Z",
+      "type": "chore",
+      "scope": "gates",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "record the release-candidate build:check diagnostics",
+      "visitorFacing": false
+    },
+    {
+      "sha": "2e618b8c",
+      "ts": "2026-09-17T09:42:36.000Z",
+      "type": "chore",
+      "scope": "receipts",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bind visual + mobile proof to release candidate d307a7d2cf92",
+      "visitorFacing": false
+    },
+    {
+      "sha": "171e2835",
+      "ts": "2026-09-17T09:42:35.000Z",
+      "type": "fix",
+      "scope": "public-voice",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "make the /changelog/ ship filter structural, not a word list",
+      "visitorFacing": true
+    },
+    {
+      "sha": "f52b4986",
+      "ts": "2026-09-17T09:42:35.000Z",
       "type": "chore",
       "scope": "resync",
       "breaking": false,
@@ -30,8 +63,8 @@
       "visitorFacing": true
     },
     {
-      "sha": "e346fd6d",
-      "ts": "2026-09-17T09:26:13.000Z",
+      "sha": "aa99afa9",
+      "ts": "2026-09-17T09:42:34.000Z",
       "type": "chore",
       "scope": "gates",
       "breaking": false,
@@ -41,8 +74,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "c1b990d5",
-      "ts": "2026-09-17T09:26:13.000Z",
+      "sha": "3abd74f1",
+      "ts": "2026-09-17T09:42:34.000Z",
       "type": "perf",
       "scope": "desk-art",
       "breaking": false,
@@ -52,8 +85,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "47dc52eb",
-      "ts": "2026-09-17T09:26:13.000Z",
+      "sha": "0963e362",
+      "ts": "2026-09-17T09:42:33.000Z",
       "type": "perf",
       "scope": "desk-art",
       "breaking": false,
@@ -63,8 +96,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "272c6ebc",
-      "ts": "2026-09-17T09:26:12.000Z",
+      "sha": "06b0acbb",
+      "ts": "2026-09-17T09:42:33.000Z",
       "type": "chore",
       "scope": "receipts",
       "breaking": false,
@@ -74,8 +107,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "015bc2ae",
-      "ts": "2026-09-17T09:26:11.000Z",
+      "sha": "2d10ded6",
+      "ts": "2026-09-17T09:42:33.000Z",
       "type": "fix",
       "scope": "public-voice",
       "breaking": false,
@@ -85,8 +118,8 @@
       "visitorFacing": true
     },
     {
-      "sha": "a4f42545",
-      "ts": "2026-09-17T09:26:09.000Z",
+      "sha": "dbe11200",
+      "ts": "2026-09-17T09:42:32.000Z",
       "type": "chore",
       "scope": "receipts",
       "breaking": false,
@@ -96,8 +129,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "cca53d70",
-      "ts": "2026-09-17T09:26:09.000Z",
+      "sha": "f50605bb",
+      "ts": "2026-09-17T09:42:32.000Z",
       "type": "chore",
       "scope": "build",
       "breaking": false,
@@ -107,8 +140,8 @@
       "visitorFacing": true
     },
     {
-      "sha": "c3f4b9fe",
-      "ts": "2026-09-17T09:26:07.000Z",
+      "sha": "43af6170",
+      "ts": "2026-09-17T09:42:32.000Z",
       "type": "docs",
       "scope": "visual-qa",
       "breaking": false,
@@ -118,8 +151,8 @@
       "visitorFacing": false
     },
     {
-      "sha": "90a691c8",
-      "ts": "2026-09-17T09:26:07.000Z",
+      "sha": "15b90503",
+      "ts": "2026-09-17T09:42:32.000Z",
       "type": "fix",
       "scope": "deploy-truth",
       "breaking": false,
@@ -247,39 +280,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "re-capture visual + mobile proof against candidate b7f213dd4b88",
-      "visitorFacing": false
-    },
-    {
-      "sha": "4c32688f",
-      "ts": "2026-09-17T08:09:36.000Z",
-      "type": "chore",
-      "scope": "build",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "converge the generated surface on the rebased tree",
-      "visitorFacing": true
-    },
-    {
-      "sha": "f1769f15",
-      "ts": "2026-09-17T08:09:16.000Z",
-      "type": "chore",
-      "scope": "uptime",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "recompute the rollup over the rebased history (1488 -> 1489)",
-      "visitorFacing": false
-    },
-    {
-      "sha": "3324e4a3",
-      "ts": "2026-09-17T08:09:10.000Z",
-      "type": "chore",
-      "scope": "resync",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "regenerate public-intelligence and its three contract mirrors",
       "visitorFacing": false
     }
   ]
