@@ -43,15 +43,15 @@
 ║    979/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 987.7  ·  Velocity 9↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▇█▁▄  ↑  (last 5 sessions)                            ║
+║    Trend  ▇▇▆▄  ↑  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ▇█████▇▇ →                ║
-║    Alignment         98    ██████████  ▇▇▇▇▇▇█▇ →                ║
-║    Momentum          96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇███▇▇▇▇ →                ║
+║    Dev Health        99    ██████████  ██▇███▇▇ →                ║
+║    Alignment         98    ██████████  ▇▇█▇▇▇█▇ →                ║
+║    Momentum          96    ██████████  ██▇█▇▇▇▇ →                ║
+║    Engagement        94    █████████░  ▇▇█▇▇▇▇▇ →                ║
+║    Process Qual      99    ██████████  ████▇▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         98    ██████████  ········ →                ║
@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   499/499 passing  ·  2026-09-17                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
+║  ✓  Tests         499/499 passing (2026-09-17)                   ║
 ║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
@@ -89,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  6d old (2026-09-11)                            ║
-║  ⛔  Deploy gaps   production 233 commit(s) behind · 3d — past t  ║
+║  ⛔  Deploy gaps   production 244 commit(s) behind · 3d — past t  ║
 ║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
@@ -117,7 +117,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▇█▁▄  9↑  (last 5 sessions)                        ║
+║  Velocity:   ▇▇▆▄  9↑  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
