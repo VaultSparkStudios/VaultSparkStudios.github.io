@@ -15,12 +15,12 @@
     body{background:#0d0403;color:#ddd;font-family:'Courier New',monospace;min-height:100vh;}
     header{background:linear-gradient(180deg,#1e0a06,#0d0403);border-bottom:2px solid #5a1808;padding:20px 24px;text-align:center;}
     header h1{color:#c8a84e;font-size:22px;letter-spacing:2px;margin-bottom:4px;}
-    header p{color:#666;font-size:12px;margin-bottom:8px;}
+    header p{color:#9aa3b2;font-size:12px;margin-bottom:8px;}
     .sun-bar{background:#120604;border:1px solid #3a1008;border-radius:4px;height:8px;margin:10px auto;max-width:400px;overflow:hidden;}
     .sun-fill{height:100%;background:linear-gradient(90deg,#c8a84e,#f0c040);transition:width 1s;border-radius:4px;}
     .sun-label{color:#888;font-size:11px;text-align:center;margin-bottom:4px;}
     #sun-pct{color:#c8a84e;font-weight:700;}
-    .season-label{color:#7a5090;font-size:11px;text-align:center;margin-bottom:4px;}
+    .season-label{color:#a98cc0;font-size:11px;text-align:center;margin-bottom:4px;}
 
     .page{max-width:960px;margin:0 auto;padding:16px 24px;}
     .section{margin-bottom:28px;}
@@ -30,7 +30,7 @@
     .sun-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
     .stat-card{background:#120605;border:1px solid #2a1008;border-radius:6px;padding:12px;text-align:center;}
     .stat-value{color:#f0c040;font-size:22px;font-weight:700;}
-    .stat-label{color:#555;font-size:10px;margin-top:3px;}
+    .stat-label{color:#9aa3b2;font-size:10px;margin-top:3px;}
 
     /* Runs / echoes grid */
     .runs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
@@ -38,10 +38,10 @@
     .run-rank{color:#7a5020;font-size:9px;font-weight:700;margin-bottom:4px;}
     .run-name{color:#b4a0dc;font-weight:700;font-size:13px;}
     .run-wave{color:#f0c040;font-size:18px;font-weight:900;}
-    .run-meta{color:#555;font-size:10px;line-height:1.6;margin-top:4px;}
+    .run-meta{color:#9aa3b2;font-size:10px;line-height:1.6;margin-top:4px;}
     .faction-sk{color:#f0c040;}
     .faction-ec{color:#8060c0;}
-    .faction-nu{color:#555;}
+    .faction-nu{color:#9aa3b2;}
 
     .echo-card{background:linear-gradient(180deg,#120a1a,#0c0610);border:1px solid #2a1040;border-radius:6px;padding:10px 12px;}
     .echo-kind{color:#c8a0ff;font-size:8px;font-weight:700;letter-spacing:1px;margin-bottom:4px;}
@@ -50,11 +50,11 @@
     .echo-reactions{display:flex;gap:6px;margin-top:6px;}
     .react-badge{color:#8a7aa0;font-size:9px;}
 
-    .empty{color:#444;font-size:12px;text-align:center;padding:24px;grid-column:1/-1;}
-    .loading{color:#555;font-size:12px;text-align:center;padding:24px;grid-column:1/-1;}
+    .empty{color:#9aa3b2;font-size:12px;text-align:center;padding:24px;grid-column:1/-1;}
+    .loading{color:#9aa3b2;font-size:12px;text-align:center;padding:24px;grid-column:1/-1;}
     #no-supabase{background:#1a0606;border:1px solid #4a1010;border-radius:6px;padding:16px;text-align:center;color:#888;font-size:12px;line-height:1.6;grid-column:1/-1;}
 
-    footer{border-top:1px solid #2a1008;padding:16px 24px;text-align:center;color:#333;font-size:10px;margin-top:16px;}
+    footer{border-top:1px solid #2a1008;padding:16px 24px;text-align:center;color:#9aa3b2;font-size:10px;margin-top:16px;}
     footer a{color:#5a3090;text-decoration:none;}
     footer a:hover{color:#c8a84e;}
   </style>
@@ -214,7 +214,7 @@ async function loadTodayRuns() {
   const el = document.getElementById('today-runs');
 
   if (!SB_URL) {
-    el.innerHTML = '<div id="no-supabase">Chronicle requires Supabase to be configured.<br/><a href="/" style="color:#7a5090">← Play the game</a></div>';
+    el.innerHTML = '<div id="no-supabase">Chronicle requires Supabase to be configured.<br/><a href="/" style="color:#a98cc0">← Play the game</a></div>';
     return;
   }
 

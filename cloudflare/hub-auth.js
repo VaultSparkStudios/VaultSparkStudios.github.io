@@ -174,7 +174,7 @@ button:hover{opacity:.92}
 button:active{transform:translateY(1px)}
 button:disabled{opacity:.5;cursor:not-allowed}
 .err{color:#ff7b7b;font-size:13px;margin-top:16px;min-height:18px}
-.brand{color:#5a6b95;font-size:11px;text-align:center;margin-top:24px;letter-spacing:.08em;text-transform:uppercase}
+.brand{color:#8a96b8;font-size:11px;text-align:center;margin-top:24px;letter-spacing:.08em;text-transform:uppercase}
 </style>
 </head>
 <body>

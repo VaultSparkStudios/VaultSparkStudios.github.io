@@ -53,6 +53,49 @@
     .ignis-pillar .pillar-grade { font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.1em 0.4em;border:1px solid rgba(255,255,255,0.12);border-radius:4px; }
     .ignis-pillar .pillar-bar { flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.08);overflow:hidden; }
     .ignis-pillar .pillar-bar-fill { height:100%;border-radius:2px;background:#FFC400;transition:width 0.7s ease; }
+
+    /* ════ IGNIS PANEL SURFACE — theme tokens (CANON-047 / CANON-041) ════
+       Same defect oracle/index.html diagnosed and repaired for its .oracle-*
+       panels, on the surfaces that fix never covered. These panels are
+       deliberately dark instrument chrome: they carry hardcoded rgba()
+       backgrounds while their text resolves var(--text)/var(--muted) from the
+       active theme. In LIGHT theme those tokens go dark and the text lands on
+       what is effectively the cream page, because the rgba() fills are almost
+       transparent. Measured before this block:
+         .ignis-pillar .pnum / .pillar-pct  1.40:1   (worst on the site)
+         .ignis-tier / gauge body copy      1.64:1
+         .ignis-tier-card strong labels     1.47–2.30:1
+       All six dark themes already passed at 6.9–12.3:1, so this is light-theme
+       only. Fix at the surface, not per-colour: pin an opaque dark base under
+       the panels and scope the on-surface text tokens to them, which cascades
+       into the inline color:var(--muted) in the markup without touching it.
+       The four tier labels and the two #FFC400 accents then sit on the same
+       dark ground they were designed for, in every theme. */
+    body.light-mode {
+      --ignis-surface: #10141f;
+      --ignis-surface-text: #f4f7ff;
+      --ignis-surface-muted: #c5d0e4;
+      --ignis-surface-dim: #9fadc6;
+    }
+    body.light-mode .ignis-gauge,
+    body.light-mode .ignis-tier-card,
+    body.light-mode .ignis-pillar,
+    body.light-mode .ignis-chip {
+      background-color: var(--ignis-surface) !important;
+      background-image: none !important;
+      opacity: 1 !important;
+      --text: var(--ignis-surface-text);
+      --muted: var(--ignis-surface-muted);
+      --dim: var(--ignis-surface-dim);
+      color: var(--ignis-surface-text);
+    }
+    /* The chip is the one panel that sits on the hero's orange wash rather than
+       the page, so its label was 4.22:1 even after the sitewide S94 light-gold
+       patch, and its 25%-alpha border read 1.24:1 — the outline simply vanished.
+       An opaque ground restores the label to its designed 7.11:1 and makes the
+       pill visible again. */
+    body.light-mode .ignis-chip { color:#FF7A00; border-color:rgba(255,122,0,0.55); }
+
     /* IGNIS Platform Intelligence Panel */
     .ignis-platform-panel{margin:2.5rem 0;display:none}
     .ignis-platform-panel[aria-hidden="false"]{display:block}

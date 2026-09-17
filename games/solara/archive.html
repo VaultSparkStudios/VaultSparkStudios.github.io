@@ -15,7 +15,7 @@
     body{background:#0d0403;color:#ddd;font-family:'Courier New',monospace;min-height:100vh;}
     header{background:linear-gradient(180deg,#1e0a06,#0d0403);border-bottom:2px solid #5a1808;padding:20px 24px;text-align:center;}
     header h1{color:#c8a84e;font-size:22px;letter-spacing:2px;margin-bottom:4px;}
-    header p{color:#666;font-size:12px;}
+    header p{color:#9aa3b2;font-size:12px;}
     .sun-bar{background:#120604;border:1px solid #3a1008;border-radius:4px;height:8px;margin:12px auto;max-width:400px;overflow:hidden;}
     .sun-fill{height:100%;background:linear-gradient(90deg,#c8a84e,#f0c040);transition:width 1s;border-radius:4px;}
     .sun-label{color:#888;font-size:11px;text-align:center;margin-bottom:16px;}
@@ -24,7 +24,7 @@
     .controls input{background:#1a0804;border:1px solid #5a1808;color:#ddd;padding:6px 10px;border-radius:4px;font-family:'Courier New',monospace;font-size:12px;flex:1;min-width:160px;}
     .controls select{background:#1a0804;border:1px solid #5a1808;color:#ddd;padding:6px 8px;border-radius:4px;font-family:'Courier New',monospace;font-size:12px;}
     .controls label{color:#888;font-size:11px;}
-    #grave-count{color:#555;font-size:11px;margin-left:auto;}
+    #grave-count{color:#9aa3b2;font-size:11px;margin-left:auto;}
     #graves{padding:16px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
     .grave{background:linear-gradient(180deg,#1a0806,#120504);border:1px solid #3a1808;border-radius:6px;padding:12px;position:relative;transition:border-color 0.2s;}
     .grave:hover{border-color:#7a4090;}
@@ -32,19 +32,19 @@
     .grave.landmark{border-color:#c8a84e;box-shadow:0 0 12px rgba(200,168,78,0.15);}
     .grave-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
     .grave-name{color:#b4a0dc;font-weight:700;font-size:13px;}
-    .grave-cross{color:#7a5090;font-size:16px;}
+    .grave-cross{color:#a98cc0;font-size:16px;}
     .grave-epitaph{color:#c8a84e;font-style:italic;font-size:12px;line-height:1.5;margin-bottom:8px;min-height:20px;}
-    .grave-meta{color:#555;font-size:10px;line-height:1.6;}
+    .grave-meta{color:#9aa3b2;font-size:10px;line-height:1.6;}
     .grave-meta span{margin-right:8px;}
-    .grave-offerings{color:#7a5090;font-size:10px;margin-top:4px;}
+    .grave-offerings{color:#a98cc0;font-size:10px;margin-top:4px;}
     .faction-sk{color:#f0c040;}
     .faction-ec{color:#8060c0;}
-    .faction-nu{color:#666;}
-    .empty{text-align:center;color:#444;font-size:13px;padding:40px;grid-column:1/-1;}
-    footer{border-top:1px solid #2a1008;padding:16px 24px;text-align:center;color:#333;font-size:10px;}
+    .faction-nu{color:#9aa3b2;}
+    .empty{text-align:center;color:#9aa3b2;font-size:13px;padding:40px;grid-column:1/-1;}
+    footer{border-top:1px solid #2a1008;padding:16px 24px;text-align:center;color:#9aa3b2;font-size:10px;}
     footer a{color:#5a3090;text-decoration:none;}
     footer a:hover{color:#c8a84e;}
-    .loading{text-align:center;color:#555;padding:40px;grid-column:1/-1;}
+    .loading{text-align:center;color:#9aa3b2;padding:40px;grid-column:1/-1;}
     #no-supabase{background:#1a0606;border:1px solid #4a1010;border-radius:6px;padding:16px;text-align:center;color:#888;font-size:12px;grid-column:1/-1;line-height:1.6;}
   </style>
 </head>
@@ -122,7 +122,7 @@ async function loadGraves() {
   const gravesEl = document.getElementById('graves');
 
   if (!SB_URL) {
-    gravesEl.innerHTML = '<div id="no-supabase">The Archive is offline — Supabase is not yet configured.<br/>Once configured, every grave appears here permanently.<br/><a href="/" style="color:#7a5090">← Play the game</a></div>';
+    gravesEl.innerHTML = '<div id="no-supabase">The Archive is offline — Supabase is not yet configured.<br/>Once configured, every grave appears here permanently.<br/><a href="/" style="color:#a98cc0">← Play the game</a></div>';
     return;
   }
 

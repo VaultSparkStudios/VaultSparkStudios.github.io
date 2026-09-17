@@ -77,7 +77,15 @@ export function evaluate(receipt) {
       // identity backlog. That is a decision, not a defect, so it warns rather
       // than blocking. Blocking here would cry wolf every session and send an
       // operator hunting for content to ship that is already live.
-      return { pass: true, warn: true, state, detail: `content promoted (shell parity matched) · ${behindText} of held non-content work — identity backlog unpromoted by design` };
+      // S357 — say which vantage this was measured from. Shell parity is probed
+      // at the pages.dev origin, deliberately, because that serves the promoted
+      // build artifact without the WAF layer and is therefore not challengeable.
+      // But that vantage cannot see the apex Cloudflare Worker: route
+      // interception, Worker-rewritten HTML, header/CSP transforms and edge
+      // cache are all invisible from it. So a match here licenses "the promoted
+      // artifact is current", never "the served surface is current", and this
+      // string previously read as the latter.
+      return { pass: true, warn: true, state, detail: `promoted artifact matches repo (shell parity at the Pages origin — the apex Worker path is not covered) · ${behindText} of held non-content work — identity backlog unpromoted by design` };
 
     case 'stale': {
       // S336: two independent clocks can produce `stale`, and they call for

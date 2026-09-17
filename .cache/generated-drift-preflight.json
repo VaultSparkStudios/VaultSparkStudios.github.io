@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-09-17T08:26:28.758Z",
+  "ok": true,
+  "sampled": 6,
+  "universe": 94,
+  "subjects": [
+    "scripts/generate-public-intelligence.mjs",
+    "scripts/generate-heartbeat.mjs",
+    "scripts/pull-rum-summary.mjs",
+    "scripts/build-nav-sheet-stats.mjs",
+    "scripts/build-llms-full-shards.mjs",
+    "scripts/build-ecosystem-bridges.mjs"
+  ],
+  "evidence": "0 drift-comparing / 1 shape-only / 5 unclassified; shape-only and unclassified success do not prove absence of drift",
+  "checks": [
+    {
+      "id": "public-intelligence",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/generate-public-intelligence.mjs",
+      "healed": false
+    },
+    {
+      "id": "heartbeat",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/generate-heartbeat.mjs",
+      "healed": false
+    },
+    {
+      "id": "rum-summary",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/pull-rum-summary.mjs",
+      "healed": false
+    },
+    {
+      "id": "nav-sheet-stats",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/build-nav-sheet-stats.mjs",
+      "healed": false
+    },
+    {
+      "id": "llms-full-shards",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/build-llms-full-shards.mjs",
+      "healed": false
+    },
+    {
+      "id": "ecosystem-bridges",
+      "ok": true,
+      "status": 0,
+      "fix": "node scripts/build-ecosystem-bridges.mjs",
+      "healed": false
+    }
+  ],
+  "stale": [],
+  "recommendation": "6 of 94 --check-gated generated artifact(s) sampled — NOT whole-tree freshness; run npm run build:check for the full set"
+}

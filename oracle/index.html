@@ -68,6 +68,20 @@
             touching assets/oracle-extra.js.
        #oracle-feed is intentionally excluded — assets/ignis-project-block.css
        already ships a light-theme frame for those cards. */
+    /* The hero chip is the one piece of instrument chrome that sits on the
+       hero's orange wash rather than on the page, so its 0.73rem label measured
+       4.22:1 in light theme even after the sitewide S94 light-gold patch, and
+       its 25%-alpha border read 1.24:1 — the pill outline vanished entirely.
+       Giving it the same opaque ground as the panels below restores the label to
+       its designed 7.11:1. Identical block in ignis/index.html, which uses the
+       same chip. */
+    body.light-mode .ignis-chip {
+      background-color: #10141f !important;
+      background-image: none !important;
+      opacity: 1 !important;
+      color: #FF7A00;
+      border-color: rgba(255,122,0,0.55);
+    }
     body.light-mode {
       --oracle-surface: #10141f;
       --oracle-surface-text: #f4f7ff;

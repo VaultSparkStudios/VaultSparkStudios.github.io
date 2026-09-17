@@ -36,7 +36,7 @@ import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { compareShellHtml } from './lib/shell-parity.mjs';
+import { compareShellHtml, shellPaths } from './lib/shell-parity.mjs';
 import { getSecret } from './lib/secrets.mjs';
 import { isServed } from './prune-served-surface.mjs';
 
@@ -97,6 +97,32 @@ export const CHALLENGE_STATUSES = Object.freeze([401, 403, 429]);
  * invites fixing the vantage. Past this ceiling the verdict becomes `unverified`.
  */
 export const OBSERVATION_MAX_AGE_HOURS = 12;
+
+/**
+ * S357 — a clock on the SHELL-PARITY reading itself.
+ *
+ * `classify()` short-circuits to `content-current` on `shellParityState ===
+ * 'matched'` before either the 48h `BLOCK_HOURS` clock or the 12h
+ * `CONTENT_BLOCK_HOURS` clock is consulted, and until now nothing bounded the
+ * AGE of that parity reading. `OBSERVATION_MAX_AGE_HOURS` looks like it covers
+ * this and does not: `mergeObservation()` decides `usable` purely from the
+ * build-sha quorum sub-probe, and a usable quorum resets `retainedForHours` to
+ * null — while `mergeShellParity()` independently carries an arbitrarily old
+ * `matched` across a challenge.
+ *
+ * That is not hypothetical. This file's own S294 note records the exact
+ * condition: Cloudflare challenges the CI runner on `/` with 401/403/429 while
+ * `/api/build-sha.json` still reads. Every run after that is `usable`, so the
+ * 12h ceiling can never fire, and a month-old `matched` keeps returning
+ * `content-current` over arbitrarily stale production — which
+ * check-deploy-currency-gate maps to pass.
+ *
+ * An aged parity is a snapshot, not a measurement. Past this bound it stops
+ * short-circuiting and the real clocks are read instead. Falling through rather
+ * than returning `unverified` is deliberate: the quorum reading is still live,
+ * so `stale`/`behind` is the truthful verdict rather than an absence of one.
+ */
+export const SHELL_PARITY_MAX_AGE_HOURS = 12;
 
 export function isChallengeError(error) {
   if (!error) return false;
@@ -171,7 +197,7 @@ export function mergeShellParity(previous, fresh) {
   };
 }
 
-export function classify({ found, commitsBehind, ageHours, contentLagHours, retainedForHours, shellParityState, historyComplete }) {
+export function classify({ found, commitsBehind, ageHours, contentLagHours, retainedForHours, shellParityState, shellParityAgeHours, historyComplete }) {
   if (found === false) {
     // S316 — `diverged` is a claim about the FULL history: this sha exists
     // nowhere in the repo. In a truncated clone the lookup fails for every
@@ -200,7 +226,14 @@ export function classify({ found, commitsBehind, ageHours, contentLagHours, reta
   // live. The residual gap is the HELD work, which is a decision, not a defect.
   // Measured evidence decides this — shell parity — not an assumption about
   // which lane ran.
-  if (shellParityState === 'matched') return 'content-current';
+  // SHELL_PARITY_MAX_AGE_HOURS — an aged `matched` is a snapshot, not a
+  // measurement, so past the bound it stops short-circuiting and the clocks
+  // below are read instead. An unknown age is treated as aged: a parity reading
+  // that cannot say when it was taken cannot certify anything.
+  const parityFresh = shellParityState === 'matched'
+    && Number.isFinite(shellParityAgeHours)
+    && shellParityAgeHours < SHELL_PARITY_MAX_AGE_HOURS;
+  if (parityFresh) return 'content-current';
   if (Number.isFinite(ageHours) && ageHours >= BLOCK_HOURS) return 'stale';
   // S336 second clock. Hand-authored content that nobody promoted is stale on a
   // much tighter ceiling than repo churn, and is measured from the OLDEST such
@@ -210,9 +243,34 @@ export function classify({ found, commitsBehind, ageHours, contentLagHours, reta
 }
 
 export function deriveCurrency(observation) {
-  const o = observation || {};
+  let o = observation || {};
   const hasObservation = Boolean(o.observedAt && o.deployedSha);
-  const state = hasObservation ? classify({ ...o, shellParityState: o.shellParity?.state }) : 'unobserved';
+  // The parity clock is read against the observation's own time, not wall clock:
+  // a re-emit hours later must not age a reading that was fresh when taken.
+  const shellParityAgeHours = retainedAgeHours(o.shellParity?.observedAt, o.observedAt);
+  // S357 — a verdict measured against a different index.html is superseded, not
+  // carried. `superseded` is deliberately NOT `matched`, so classify() stops
+  // short-circuiting and the real clocks decide. Only a verdict that HAS a
+  // binding can be superseded: an older receipt without one is left alone and
+  // ages out through SHELL_PARITY_MAX_AGE_HOURS instead.
+  // The binding works retroactively, because the local operand was ALWAYS in the
+  // receipt: `expected[]` is that exact shell-path list. Nobody ever compared it.
+  // So `expectedFrom` is the explicit binding a fresh probe writes, and hashing
+  // `expected[]` recovers the same value from every receipt written before this
+  // field existed — no migration, and the incident cannot hide in old receipts.
+  const localFingerprint = currentShellFingerprint();
+  const measuredAgainst = o.shellParity?.expectedFrom
+    || (Array.isArray(o.shellParity?.expected) && o.shellParity.expected.length
+      ? sha256(o.shellParity.expected.join('|'))
+      : null);
+  if (o.shellParity && measuredAgainst && localFingerprint
+      && measuredAgainst !== localFingerprint
+      && ['matched', 'drift'].includes(o.shellParity.state)) {
+    o = { ...o, shellParity: { ...o.shellParity, state: 'superseded', supersededBy: localFingerprint } };
+  }
+  const state = hasObservation
+    ? classify({ ...o, shellParityState: o.shellParity?.state, shellParityAgeHours })
+    : 'unobserved';
   const ageHours = Number.isFinite(o.ageHours) ? Math.round(o.ageHours * 10) / 10 : null;
   const shellParity = o.shellParity || null;
   return {
@@ -258,6 +316,14 @@ export function deriveCurrency(observation) {
       state: shellParity.state || 'unobserved',
       route: shellParity.route || SHELL_ROUTE,
       observedAt: shellParity.observedAt || null,
+      expectedFrom: shellParity.expectedFrom || null,
+      supersededBy: shellParity.supersededBy || null,
+      // Published so /status/ can say "content parity last seen 31h ago" rather
+      // than "content-current". The age was always derivable from observedAt;
+      // nothing read it, which is exactly how the stale green survived.
+      ageHours: Number.isFinite(shellParityAgeHours) ? Math.round(shellParityAgeHours * 10) / 10 : null,
+      stale: shellParity.state === 'matched'
+        && !(Number.isFinite(shellParityAgeHours) && shellParityAgeHours < SHELL_PARITY_MAX_AGE_HOURS),
       observedOrigin: shellParity.observedOrigin || null,
       expected: Array.isArray(shellParity.expected) ? shellParity.expected : [],
       actual: Array.isArray(shellParity.actual) ? shellParity.actual : [],
@@ -266,7 +332,12 @@ export function deriveCurrency(observation) {
       challengedAt: shellParity.challengedAt || null,
       challengeError: shellParity.challengedAt ? String(shellParity.challengeError || '').slice(0, 120) || null : null,
     } : {
-      state: 'unobserved', route: SHELL_ROUTE, observedAt: null, observedOrigin: null,
+      // Must carry the SAME field set as the branch above, or the receipt stops
+      // being a fixed point and `--check` drifts forever on an unobserved
+      // vantage. The structural round-trip case in selfTest() caught exactly
+      // that when ageHours/stale were added here late — which is the fourth
+      // time a field-by-field list has failed in this file.
+      state: 'unobserved', route: SHELL_ROUTE, observedAt: null, expectedFrom: null, supersededBy: null, ageHours: null, stale: false, observedOrigin: null,
       expected: [], actual: [], missing: [], unexpected: [], challengedAt: null, challengeError: null,
     },
     honesty: {
@@ -608,6 +679,34 @@ function localShellHtml() {
   return fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 }
 
+/**
+ * S357 — the identity of the LOCAL operand of the parity comparison.
+ *
+ * shellParity is a comparison between two operands, but the receipt recorded
+ * only one of them as data: `actual` (production) was evidence, while
+ * `expected` (the prober's own index.html) had no binding to the tree it came
+ * from — no sha, no hash, nothing. observationFromReceipt then carried the
+ * verdict faithfully across every non-probe re-emit.
+ *
+ * So a receipt produced on tree A survived being rebased into tree B and kept
+ * asserting `matched` about a tree it had never seen. Measured live: a CI probe
+ * at 07:39:41Z compared origin/main's index.html (11 shell paths) against
+ * production and honestly reported matched; the local rotation commit adding a
+ * 12th path was then rebased ON TOP of that publisher, inheriting the receipt.
+ * The published artifact read content-current while production was genuinely
+ * 4 assets behind.
+ *
+ * config/evidence-graph.json already declares index.html as a source of this
+ * node. The check was reachable and simply never opened it. This is that hole.
+ */
+export function currentShellFingerprint() {
+  try { return shellFingerprint(localShellHtml()); } catch { return null; }
+}
+
+export function shellFingerprint(html) {
+  return sha256(shellPaths(html).join('|'));
+}
+
 async function probeShellParity(observedAt) {
   try {
     const response = await fetch(new URL(SHELL_ROUTE, PROD), {
@@ -620,11 +719,14 @@ async function probeShellParity(observedAt) {
       const error = `shell route HTTP ${response.status}`;
       return { state: isChallengeError(error) ? 'challenged' : 'unobserved', route: SHELL_ROUTE, observedAt, observedOrigin: new URL(PROD).origin, error };
     }
-    const parity = compareShellHtml(localShellHtml(), await response.text());
+    const localHtml = localShellHtml();
+    const parity = compareShellHtml(localHtml, await response.text());
     return {
       state: parity.ok ? 'matched' : 'drift',
       route: SHELL_ROUTE,
       observedAt,
+      // Binds the verdict to the tree it was measured against.
+      expectedFrom: shellFingerprint(localHtml),
       observedOrigin: new URL(PROD).origin,
       expected: parity.expected,
       actual: parity.actual,
@@ -719,7 +821,12 @@ function selfTest() {
   const diverged = deriveCurrency({ ...base, found: false, commitsBehind: null, ageHours: null });
   const dark = deriveCurrency(null);
   const errored = deriveCurrency({ observedAt: '2026-07-26T00:00:00.000Z', error: 'HTTP 503' });
-  const shellDrift = { state: 'drift', route: '/', observedAt: base.observedAt, observedOrigin: base.observedOrigin, expected: ['assets/a.shell-aaaaaaaaaa.js'], actual: [], missing: ['assets/a.shell-aaaaaaaaaa.js'], unexpected: [] };
+  // expectedFrom pins this synthetic fixture to the CURRENT tree, so the S357
+  // supersede rule treats it as a real measurement of this tree rather than a
+  // verdict carried in from another one — which is what it was always meant to
+  // model. Without the pin its invented shell path reads as a foreign tree and
+  // the case would silently become a test of the supersede rule instead.
+  const shellDrift = { state: 'drift', route: '/', observedAt: base.observedAt, observedOrigin: base.observedOrigin, expectedFrom: currentShellFingerprint(), expected: ['assets/a.shell-aaaaaaaaaa.js'], actual: [], missing: ['assets/a.shell-aaaaaaaaaa.js'], unexpected: [] };
   const withShellDrift = deriveCurrency({ ...base, commitsBehind: 0, ageHours: 0, shellParity: shellDrift });
 
   const cases = [
@@ -769,7 +876,7 @@ function selfTest() {
     // The held identity backlog must never be able to trip this alarm: a
     // promoted content lane reports matched shell parity and returns first.
     ['a promoted content lane outranks any content lag',
-      classify({ found: true, commitsBehind: 448, ageHours: 99, contentLagHours: 999, shellParityState: 'matched' }) === 'content-current'],
+      classify({ found: true, commitsBehind: 448, ageHours: 99, contentLagHours: 999, shellParityState: 'matched', shellParityAgeHours: 0.2 }) === 'content-current'],
     ['an unverified vantage still outranks the content clock',
       classify({ found: true, commitsBehind: 5, ageHours: 1, contentLagHours: 999, retainedForHours: OBSERVATION_MAX_AGE_HOURS }) === 'unverified'],
     ['current still wins — zero behind is never stale',
@@ -904,7 +1011,59 @@ function selfTest() {
     })()],
     // S300 content lane: the deployed COMMIT and the served CONTENT came apart.
     ['THE LIVE CASE: behind-but-shell-matched is content-current, not stale',
-      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'matched' }) === 'content-current'],
+      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'matched', shellParityAgeHours: 0.2 }) === 'content-current'],
+    // S357 REGRESSION FIXTURE — the real incident, replayed. This is the exact
+    // expected[] from the receipt committed at c629dd66c: origin/main's
+    // index.html at publisher b36021138, onto which the local shell-rotation
+    // commit was later rebased. The receipt then asserted 'matched' about a tree
+    // it had never measured, and the artifact published 'content-current' while
+    // production was four shell assets behind. It has no expectedFrom field,
+    // which is the point: the fix recovers the binding by hashing expected[].
+    ['THE INCIDENT: a parity measured against another tree is superseded, not carried', (() => {
+      const foreign = [
+        'assets/ambient-core.shell-a4349880f3.js', 'assets/ambient-feature.shell-ca3b329506.js',
+        'assets/hero-choice-tracking.shell-8dd57eb3a3.js', 'assets/home-idle-loader.shell-24f891da0e.js',
+        'assets/nav-sheet.shell-d6938be4eb.js', 'assets/nav-toggle.shell-8c1f2155b5.js',
+        'assets/sentry-init.shell-8b1d92d92b.js', 'assets/shell-health.shell-0995bd7945.js',
+        'assets/stats-surface.shell-b33242e1cc.js', 'assets/style.shell-79b001d0ae.css',
+        'assets/theme-toggle.shell-8221605898.js',
+      ];
+      const derived = deriveCurrency({
+        found: true, deployedSha: 'e'.repeat(40), observedAt: '2026-09-17T07:39:41.420Z',
+        commitsBehind: 191, ageHours: 69, contentLagHours: 67.7, retainedForHours: null,
+        shellParity: { state: 'matched', observedAt: '2026-09-17T07:39:41.420Z', expected: foreign, actual: foreign, missing: [], unexpected: [] },
+      });
+      return derived.state === 'stale' && derived.shellParity.state === 'superseded';
+    })()],
+    ['a parity measured against THIS tree still certifies content-current', (() => {
+      const here = shellPaths(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'));
+      const derived = deriveCurrency({
+        found: true, deployedSha: 'e'.repeat(40), observedAt: '2026-09-17T07:39:41.420Z',
+        commitsBehind: 191, ageHours: 69, contentLagHours: 67.7, retainedForHours: null,
+        shellParity: { state: 'matched', observedAt: '2026-09-17T07:30:00.000Z', expected: here, actual: here, missing: [], unexpected: [] },
+      });
+      return derived.state === 'content-current' && derived.shellParity.state === 'matched';
+    })()],
+    // S357 NEGATIVE CONTROLS — the aged-parity path. Before the
+    // SHELL_PARITY_MAX_AGE_HOURS bound both of these returned 'content-current'
+    // over arbitrarily stale production, and no test could tell.
+    ['an AGED matched parity no longer outranks the clocks',
+      classify({ found: true, commitsBehind: 900, ageHours: 9999, contentLagHours: 9999, retainedForHours: null, shellParityState: 'matched', shellParityAgeHours: 400 }) === 'stale'],
+    ['a matched parity with NO age is treated as aged, not as fresh',
+      classify({ found: true, commitsBehind: 900, ageHours: 9999, contentLagHours: 9999, retainedForHours: null, shellParityState: 'matched' }) === 'stale'],
+    ['the bound is a boundary, not a vibe',
+      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'matched', shellParityAgeHours: SHELL_PARITY_MAX_AGE_HOURS - 0.1 }) === 'content-current'
+      && classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'matched', shellParityAgeHours: SHELL_PARITY_MAX_AGE_HOURS }) === 'stale'],
+    // The merge shape that actually reproduces it: a usable build-sha quorum
+    // resets retainedForHours to null while mergeShellParity carries a
+    // month-old 'matched' across a challenge on '/'.
+    ['a challenged / with a readable build-sha feed cannot publish content-current',
+      deriveCurrency(mergeObservation(
+        { deployedSha: 'a'.repeat(40), observedAt: '2026-09-01T00:00:00.000Z', commitsBehind: 900, ageHours: 9999, contentLagHours: 9999, found: true,
+          shellParity: { state: 'matched', observedAt: '2026-09-01T00:00:00.000Z', expected: [], actual: [], missing: [], unexpected: [] } },
+        { deployedSha: 'b'.repeat(40), observedAt: '2026-09-17T00:00:00.000Z', commitsBehind: 900, ageHours: 9999, contentLagHours: 9999, found: true,
+          shellParity: { state: 'challenged', observedAt: '2026-09-17T00:00:00.000Z', error: 'shell route HTTP 403' } },
+      )).state !== 'content-current'],
     ['behind WITH shell drift is still stale',
       classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'drift' }) === 'stale'],
     ['an unobserved shell cannot upgrade a stale verdict',
@@ -912,9 +1071,9 @@ function selfTest() {
     ['a matched shell does not mask a diverged sha',
       classify({ found: false, commitsBehind: null, shellParityState: 'matched' }) === 'diverged'],
     ['a matched shell does not mask an aged-out reading',
-      classify({ found: true, commitsBehind: 5, ageHours: 1, retainedForHours: 99, shellParityState: 'matched' }) === 'unverified'],
+      classify({ found: true, commitsBehind: 5, ageHours: 1, retainedForHours: 99, shellParityState: 'matched', shellParityAgeHours: 0.2 }) === 'unverified'],
     ['zero-behind is still plain current, not content-current',
-      classify({ found: true, commitsBehind: 0, ageHours: 0, shellParityState: 'matched' }) === 'current'],
+      classify({ found: true, commitsBehind: 0, ageHours: 0, shellParityState: 'matched', shellParityAgeHours: 0.2 }) === 'current'],
     ['content-current derives from the receipt shellParity, not a separate arg', (() => {
       const r = deriveCurrency({ ...base, commitsBehind: 448, ageHours: 175, deployedCommitAt: '2026-07-24T00:00:00.000Z',
         shellParity: { state: 'matched', route: '/', observedAt: base.observedAt, expected: [], actual: [], missing: [], unexpected: [] } });
