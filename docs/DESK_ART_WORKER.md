@@ -173,7 +173,8 @@ profile, so the task must run as you, only while you're logged on. This example 
 is documentation only, so create the task yourself if you want one:
 
 ```powershell
-$repo = "C:\Users\<you>\documents\development\vaultsparkstudios.github.io"
+# Run this from a shell already sitting in the repo, so the path is never hardcoded.
+$repo = (Resolve-Path .).Path
 $cmd  = "Set-Location '$repo'; node scripts/generate-news-art-codex.mjs --since (Get-Date).AddDays(-3).ToString('yyyy-MM-dd') *>> .cache\desk-art-staging\nightly.log"
 # conhost --headless keeps the console fully hidden on Windows 11 (no flash);
 # on older builds use: powershell.exe -NoProfile -WindowStyle Hidden -Command $cmd
