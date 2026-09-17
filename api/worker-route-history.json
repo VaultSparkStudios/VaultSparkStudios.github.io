@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-history.mjs",
-  "generatedAt": "2026-08-15T23:51:05.125Z",
+  "generatedAt": "2026-09-17T17:59:22.088Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -19,11 +19,11 @@
     ]
   },
   "state": "matched",
-  "asOf": "2026-08-15T23:51:05.125Z",
+  "asOf": "2026-09-17T17:59:22.088Z",
   "observationWindow": {
     "firstObservedAt": "2026-07-26T07:10:42.158Z",
-    "lastObservedAt": "2026-08-15T23:51:05.125Z",
-    "semanticChanges": 4
+    "lastObservedAt": "2026-09-17T17:59:22.088Z",
+    "semanticChanges": 5
   },
   "honesty": {
     "observationBounded": true,
@@ -72,12 +72,12 @@
   },
   "current": {
     "openIncidents": 0,
-    "totalRoutes": 7,
+    "totalRoutes": 9,
     "onsetNotLaterThan": "2026-09-15T05:13:10.586Z",
     "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
-    "degradedForMs": 0,
-    "degradedForHours": 0,
-    "degradedForDays": 0
+    "degradedForMs": 218771502,
+    "degradedForHours": 60.8,
+    "degradedForDays": 2.5
   },
   "incidents": [
     {
@@ -226,6 +226,15 @@
       "changed": [
         "desk-presence",
         "desk-reaction"
+      ]
+    },
+    {
+      "observedAt": "2026-09-17T17:59:22.088Z",
+      "state": "matched",
+      "transition": "change",
+      "changed": [
+        "desk-comments",
+        "desk-comments-report"
       ]
     }
   ]

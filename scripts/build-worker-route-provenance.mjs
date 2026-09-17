@@ -35,6 +35,14 @@ export const ROUTE_CONTRACT = Object.freeze([
   { id: 'rum-ingest', method: 'OPTIONS', path: '/v/rum', status: 204 },
   { id: 'desk-reaction', method: 'OPTIONS', path: '/v/desk-reaction', status: 204 },
   { id: 'desk-presence', method: 'OPTIONS', path: '/v/desk-presence', status: 204 },
+  // S357 — S356 added these Worker routes and never added them here, so the
+  // production route provenance recorded 7 routes that did not include them.
+  // check-content-capability-slice then BLOCKED the content-lane promotion with
+  // "/v/desk-comments: no production route contract exists" — correctly: it
+  // refuses to ship a caller for a route whose production contract is unproven.
+  // Verified against production after the Worker deploy: both answer OPTIONS 204.
+  { id: 'desk-comments', method: 'OPTIONS', path: '/v/desk-comments', status: 204 },
+  { id: 'desk-comments-report', method: 'OPTIONS', path: '/v/desk-comments/report', status: 204 },
   { id: 'trusted-types-intake', method: 'OPTIONS', path: '/v/tt-report', status: 204 },
   { id: 'csp-intake', method: 'OPTIONS', path: '/v/csp-report', status: 204 },
 ]);

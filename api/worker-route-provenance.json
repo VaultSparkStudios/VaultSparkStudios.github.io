@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-09-14T02:13:50.877Z",
+  "generatedAt": "2026-09-17T17:59:22.088Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -17,13 +17,13 @@
   "sourceContract": {
     "path": "cloudflare/security-headers-worker.js",
     "sha256": "b41cfaee4aa1567bc67df1f37815c91ec3ffce3fb49ee417da8cd0b363f69b82",
-    "expectedRoutes": 7
+    "expectedRoutes": 9
   },
   "state": "matched",
   "summary": {
-    "matched": 7,
-    "total": 7,
-    "reachable": 7
+    "matched": 9,
+    "total": 9,
+    "reachable": 9
   },
   "routes": [
     {
@@ -34,7 +34,7 @@
       "observedStatus": 200,
       "expectedContentType": "application/json",
       "observedContentType": "application/json; charset=utf-8",
-      "elapsedMs": 295,
+      "elapsedMs": 272,
       "matched": true
     },
     {
@@ -45,7 +45,7 @@
       "observedStatus": 200,
       "expectedContentType": "application/json",
       "observedContentType": "application/json; charset=utf-8",
-      "elapsedMs": 209,
+      "elapsedMs": 191,
       "matched": true
     },
     {
@@ -54,7 +54,7 @@
       "path": "/v/rum",
       "expectedStatus": 204,
       "observedStatus": 204,
-      "elapsedMs": 194,
+      "elapsedMs": 176,
       "matched": true
     },
     {
@@ -63,7 +63,7 @@
       "path": "/v/desk-reaction",
       "expectedStatus": 204,
       "observedStatus": 204,
-      "elapsedMs": 189,
+      "elapsedMs": 192,
       "matched": true
     },
     {
@@ -72,7 +72,25 @@
       "path": "/v/desk-presence",
       "expectedStatus": 204,
       "observedStatus": 204,
-      "elapsedMs": 193,
+      "elapsedMs": 187,
+      "matched": true
+    },
+    {
+      "id": "desk-comments",
+      "method": "OPTIONS",
+      "path": "/v/desk-comments",
+      "expectedStatus": 204,
+      "observedStatus": 204,
+      "elapsedMs": 170,
+      "matched": true
+    },
+    {
+      "id": "desk-comments-report",
+      "method": "OPTIONS",
+      "path": "/v/desk-comments/report",
+      "expectedStatus": 204,
+      "observedStatus": 204,
+      "elapsedMs": 178,
       "matched": true
     },
     {
@@ -81,7 +99,7 @@
       "path": "/v/tt-report",
       "expectedStatus": 204,
       "observedStatus": 204,
-      "elapsedMs": 196,
+      "elapsedMs": 171,
       "matched": true
     },
     {
@@ -90,20 +108,20 @@
       "path": "/v/csp-report",
       "expectedStatus": 204,
       "observedStatus": 204,
-      "elapsedMs": 191,
+      "elapsedMs": 204,
       "matched": true
     }
   ],
   "buildVantage": {
-    "generatedAt": "2026-09-17T17:35:24.175Z",
+    "generatedAt": "2026-09-17T17:59:22.285Z",
     "observedOrigin": "https://vaultspark-security-headers-staging.founder-d73.workers.dev",
     "attests": "build",
     "sourceSha256": "b41cfaee4aa1567bc67df1f37815c91ec3ffce3fb49ee417da8cd0b363f69b82",
     "state": "matched",
     "summary": {
-      "matched": 7,
-      "total": 7,
-      "reachable": 7
+      "matched": 9,
+      "total": 9,
+      "reachable": 9
     }
   }
 }
