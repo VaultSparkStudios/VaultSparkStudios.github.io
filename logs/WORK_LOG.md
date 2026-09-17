@@ -1602,3 +1602,13 @@ After the promotion, `/v/desk-comments` answers **503** on production and stagin
 It cost six probes because one error code covered two causes needing different fixes. Split into `comments_unconfigured` (no credential reached the Worker) and `comments_upstream_failed` (credential present, upstream refused), reader-facing behaviour unchanged, unit spec 25 → 26 with the live case as the fixture. Worker redeployed (`8a856192`); the live 503 now reads `comments_upstream_failed`.
 
 Health returned to **yellow** and the blocker is explicit on the board: comments are shipped but non-functional until the credential is reconciled. Founder/provider action under CANON-019.
+
+### S357 — the two post-release advisories, sourced
+
+The pre-push output carried two warnings from `build-promotion-receipt`. Both turned out to be vantage/semantics mis-reads, not defects, and the committed receipt was also two days stale (`generatedAt 2026-09-15`, still listing the retired presence endpoint among its signals). Re-emitted with a live browser probe; the endpoint list dropped 7 → 6, which is independent confirmation that today's retired-fetch fix landed.
+
+**"7 console error(s) on the promoted artifact"** — measured at `pages.dev`, which has no Worker in front, so Worker routes necessarily fail there. Measured both vantages: `/api/auth/me` apex **200** / pages.dev 404; `/v/rum` apex 405 (correct for a POST endpoint) / pages.dev 404. **Apex console errors: 0.** The metric is structurally unable to reach zero — the same "pages.dev cannot see Worker routes" lesson this repo already records.
+
+**"stranded/stale deploy"** — production `build-sha.sha` stays at the baseline by content-lane design while `contentLaneHead` carries the release. The receipt already records `productionContentLaneHead` (correct: `949cfacb6`) and its `behind` finding ignores it.
+
+Both are advisory, both recorded on the board with the measurements rather than fixed here: the first needs a vantage-policy decision (pages.dev was chosen deliberately for WAF-independence), not an origin swap.

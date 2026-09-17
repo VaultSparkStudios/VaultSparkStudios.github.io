@@ -4,20 +4,20 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "9e84fe27d12891655bcdc918bbcf6cc297bd47a8",
+    "sha": "1dc56d3a3de24a434c094b1330bac214c2f10b27",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
     "sha": "e65eca737d7e97a5891f460537b7eb5c279bd6ba",
-    "contentLaneHead": null,
+    "contentLaneHead": "949cfacb65aa178298d3dd29ba64d8b5fe6840f6",
     "reachable": true,
     "reconciliation": "behind",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-09-14T10:11:37.815Z",
-      "ageHours": 18.4,
-      "stale": true,
+      "observedAt": "2026-09-17T19:10:57.730Z",
+      "ageHours": 0.2,
+      "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
     }
@@ -34,10 +34,9 @@
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
     "consoleErrors": 7,
-    "signalCardinality": 7,
+    "signalCardinality": 6,
     "signalEndpoints": [
       "api/ecosystem-state.json",
-      "api/founder-presence.json",
       "api/ignis-conduit.json",
       "api/public-intelligence.json",
       "api/rank-climbers.json",
@@ -50,9 +49,8 @@
         "target": "https://vaultsparkstudios-website.pages.dev/",
         "captured": true,
         "consoleErrors": 5,
-        "signalCardinality": 6,
+        "signalCardinality": 5,
         "signalEndpoints": [
-          "api/founder-presence.json",
           "api/ignis-conduit.json",
           "api/public-intelligence.json",
           "api/rank-climbers.json",
@@ -73,10 +71,9 @@
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
         "consoleErrors": 1,
-        "signalCardinality": 3,
+        "signalCardinality": 2,
         "signalEndpoints": [
           "api/ecosystem-state.json",
-          "api/founder-presence.json",
           "api/public-intelligence.json"
         ]
       }
@@ -85,18 +82,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves e65eca73 — OLDER than promoted 9e84fe27 — stranded/stale deploy",
+    "production origin serves e65eca73 — OLDER than promoted 1dc56d3a — stranded/stale deploy",
     "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-09-15T04:36:00.874Z",
+  "generatedAt": "2026-09-17T19:24:24.506Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-15T04:36:00.874Z",
-    "currentBehindStreak": 10,
-    "newestGradableAt": "2026-09-15T04:36:00.874Z",
+    "lastStrandedAt": "2026-09-17T19:24:24.506Z",
+    "currentBehindStreak": 12,
+    "newestGradableAt": "2026-09-17T19:24:24.506Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
