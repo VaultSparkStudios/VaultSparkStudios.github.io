@@ -1,88 +1,88 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-09-15T15:03:31.578Z",
+  "generatedAt": "2026-09-17T07:09:50.809Z",
   "publicSafe": true,
   "source": "scripts/run-build-check.mjs",
-  "commandCount": 33,
+  "commandCount": 29,
   "plannedCommandCount": 495,
   "firstStep": 1,
   "coverageComplete": false,
   "planFingerprint": "972c091ff4c0d2347b62f902",
-  "sourceFingerprint": "8cba4f10ac1439d3c56d530f",
-  "passed": 32,
+  "sourceFingerprint": "ba3733576240bad27651c100",
+  "passed": 28,
   "failed": 1,
-  "totalDurationMs": 4586,
-  "startedAt": "2026-09-15T15:02:53.653Z",
-  "finishedAt": "2026-09-15T15:03:31.578Z",
+  "totalDurationMs": 4039,
+  "startedAt": "2026-09-17T07:09:43.059Z",
+  "finishedAt": "2026-09-17T07:09:50.809Z",
   "slowest": [
     {
       "step": 29,
       "command": "node scripts/check-generated-drift-preflight.mjs",
-      "status": 0,
-      "durationMs": 1023,
+      "status": 1,
+      "durationMs": 1126,
       "error": null
     },
     {
       "step": 23,
       "command": "node scripts/check-capability-discovery-contract.mjs",
       "status": 0,
-      "durationMs": 419,
+      "durationMs": 351,
       "error": null
     },
     {
       "step": 8,
       "command": "node scripts/build-proof-aware-projects.mjs --check",
       "status": 0,
-      "durationMs": 140,
+      "durationMs": 119,
+      "error": null
+    },
+    {
+      "step": 16,
+      "command": "node scripts/probe-supabase-control-plane.mjs --check",
+      "status": 0,
+      "durationMs": 117,
+      "error": null
+    },
+    {
+      "step": 2,
+      "command": "node scripts/manage-forge-editorial.mjs --check",
+      "status": 0,
+      "durationMs": 107,
       "error": null
     },
     {
       "step": 12,
       "command": "node scripts/check-proof-verifier-contract.mjs",
       "status": 0,
-      "durationMs": 136,
+      "durationMs": 106,
       "error": null
     },
     {
-      "step": 21,
-      "command": "node scripts/check-capability-discovery-contract.mjs --self-test",
+      "step": 27,
+      "command": "node scripts/check-lighthouse-trend.mjs --self-test",
       "status": 0,
-      "durationMs": 119,
+      "durationMs": 103,
       "error": null
     },
     {
-      "step": 3,
-      "command": "node scripts/check-journey-conductor-contract.mjs --self-test",
+      "step": 19,
+      "command": "node scripts/verify-supabase-runtime.mjs --self-test",
       "status": 0,
-      "durationMs": 114,
+      "durationMs": 101,
       "error": null
     },
     {
-      "step": 7,
-      "command": "node scripts/build-proof-aware-projects.mjs --self-test",
+      "step": 5,
+      "command": "node scripts/check-startup-context-budget.mjs",
       "status": 0,
-      "durationMs": 113,
+      "durationMs": 100,
       "error": null
     },
     {
-      "step": 22,
-      "command": "node scripts/check-obelisk-link-readiness.mjs --self-test",
+      "step": 10,
+      "command": "node scripts/check-theme-boot-contract.mjs",
       "status": 0,
-      "durationMs": 111,
-      "error": null
-    },
-    {
-      "step": 6,
-      "command": "node scripts/lib/startup-evidence.mjs --self-test",
-      "status": 0,
-      "durationMs": 110,
-      "error": null
-    },
-    {
-      "step": 9,
-      "command": "node scripts/check-theme-boot-contract.mjs --self-test",
-      "status": 0,
-      "durationMs": 109,
+      "durationMs": 100,
       "error": null
     }
   ],
@@ -91,16 +91,16 @@
     "minActionableStepMs": 45000,
     "dominantStep": 29,
     "dominantCommand": "node scripts/check-generated-drift-preflight.mjs",
-    "dominantDurationMs": 1023,
-    "dominantShare": 0.2231,
+    "dominantDurationMs": 1126,
+    "dominantShare": 0.2788,
     "breached": false
   },
   "failures": [
     {
-      "step": 33,
-      "command": "node scripts/check-uptime-contract.mjs",
+      "step": 29,
+      "command": "node scripts/check-generated-drift-preflight.mjs",
       "status": 1,
-      "durationMs": 102,
+      "durationMs": 1126,
       "error": null
     }
   ],
@@ -109,234 +109,206 @@
       "step": 1,
       "command": "node scripts/manage-forge-editorial.mjs --self-test",
       "status": 0,
-      "durationMs": 101,
+      "durationMs": 94,
       "error": null
     },
     {
       "step": 2,
       "command": "node scripts/manage-forge-editorial.mjs --check",
       "status": 0,
-      "durationMs": 97,
+      "durationMs": 107,
       "error": null
     },
     {
       "step": 3,
       "command": "node scripts/check-journey-conductor-contract.mjs --self-test",
       "status": 0,
-      "durationMs": 114,
+      "durationMs": 98,
       "error": null
     },
     {
       "step": 4,
       "command": "node scripts/check-startup-context-budget.mjs --self-test",
       "status": 0,
-      "durationMs": 100,
+      "durationMs": 84,
       "error": null
     },
     {
       "step": 5,
       "command": "node scripts/check-startup-context-budget.mjs",
       "status": 0,
-      "durationMs": 104,
+      "durationMs": 100,
       "error": null
     },
     {
       "step": 6,
       "command": "node scripts/lib/startup-evidence.mjs --self-test",
       "status": 0,
-      "durationMs": 110,
+      "durationMs": 94,
       "error": null
     },
     {
       "step": 7,
       "command": "node scripts/build-proof-aware-projects.mjs --self-test",
       "status": 0,
-      "durationMs": 113,
+      "durationMs": 88,
       "error": null
     },
     {
       "step": 8,
       "command": "node scripts/build-proof-aware-projects.mjs --check",
       "status": 0,
-      "durationMs": 140,
+      "durationMs": 119,
       "error": null
     },
     {
       "step": 9,
       "command": "node scripts/check-theme-boot-contract.mjs --self-test",
       "status": 0,
-      "durationMs": 109,
+      "durationMs": 92,
       "error": null
     },
     {
       "step": 10,
       "command": "node scripts/check-theme-boot-contract.mjs",
       "status": 0,
-      "durationMs": 94,
+      "durationMs": 100,
       "error": null
     },
     {
       "step": 11,
       "command": "node scripts/check-proof-verifier-contract.mjs --self-test",
       "status": 0,
-      "durationMs": 93,
+      "durationMs": 89,
       "error": null
     },
     {
       "step": 12,
       "command": "node scripts/check-proof-verifier-contract.mjs",
       "status": 0,
-      "durationMs": 136,
+      "durationMs": 106,
       "error": null
     },
     {
       "step": 13,
       "command": "node scripts/check-shell-parity-contract.mjs --self-test",
       "status": 0,
-      "durationMs": 91,
+      "durationMs": 90,
       "error": null
     },
     {
       "step": 14,
       "command": "node scripts/check-shell-parity-contract.mjs",
       "status": 0,
-      "durationMs": 87,
+      "durationMs": 81,
       "error": null
     },
     {
       "step": 15,
       "command": "node scripts/probe-supabase-control-plane.mjs --self-test",
       "status": 0,
-      "durationMs": 91,
+      "durationMs": 99,
       "error": null
     },
     {
       "step": 16,
       "command": "node scripts/probe-supabase-control-plane.mjs --check",
       "status": 0,
-      "durationMs": 105,
+      "durationMs": 117,
       "error": null
     },
     {
       "step": 17,
       "command": "node scripts/build-identity-migration-receipt.mjs --self-test",
       "status": 0,
-      "durationMs": 87,
+      "durationMs": 91,
       "error": null
     },
     {
       "step": 18,
       "command": "node scripts/build-identity-migration-receipt.mjs --check",
       "status": 0,
-      "durationMs": 93,
+      "durationMs": 99,
       "error": null
     },
     {
       "step": 19,
       "command": "node scripts/verify-supabase-runtime.mjs --self-test",
       "status": 0,
-      "durationMs": 92,
+      "durationMs": 101,
       "error": null
     },
     {
       "step": 20,
       "command": "node scripts/verify-obelisk-edge-deployment.mjs --self-test",
       "status": 0,
-      "durationMs": 92,
+      "durationMs": 90,
       "error": null
     },
     {
       "step": 21,
       "command": "node scripts/check-capability-discovery-contract.mjs --self-test",
       "status": 0,
-      "durationMs": 119,
+      "durationMs": 92,
       "error": null
     },
     {
       "step": 22,
       "command": "node scripts/check-obelisk-link-readiness.mjs --self-test",
       "status": 0,
-      "durationMs": 111,
+      "durationMs": 74,
       "error": null
     },
     {
       "step": 23,
       "command": "node scripts/check-capability-discovery-contract.mjs",
       "status": 0,
-      "durationMs": 419,
+      "durationMs": 351,
       "error": null
     },
     {
       "step": 24,
       "command": "node scripts/check-promotion-scope.mjs --self-test",
       "status": 0,
-      "durationMs": 106,
+      "durationMs": 99,
       "error": null
     },
     {
       "step": 25,
       "command": "node scripts/check-production-promotion-gate.mjs --self-test",
       "status": 0,
-      "durationMs": 96,
+      "durationMs": 81,
       "error": null
     },
     {
       "step": 26,
       "command": "node scripts/check-production-promotion-gate.mjs --check",
       "status": 0,
-      "durationMs": 101,
+      "durationMs": 78,
       "error": null
     },
     {
       "step": 27,
       "command": "node scripts/check-lighthouse-trend.mjs --self-test",
       "status": 0,
-      "durationMs": 108,
+      "durationMs": 103,
       "error": null
     },
     {
       "step": 28,
       "command": "node scripts/build-ignis-platform-status.mjs --check",
       "status": 0,
-      "durationMs": 86,
+      "durationMs": 96,
       "error": null
     },
     {
       "step": 29,
       "command": "node scripts/check-generated-drift-preflight.mjs",
-      "status": 0,
-      "durationMs": 1023,
-      "error": null
-    },
-    {
-      "step": 30,
-      "command": "node scripts/check-ci-status-freshness.mjs --max-age-hours=96",
-      "status": 0,
-      "durationMs": 88,
-      "error": null
-    },
-    {
-      "step": 31,
-      "command": "node scripts/build-ci-status-beacon.mjs --self-test",
-      "status": 0,
-      "durationMs": 93,
-      "error": null
-    },
-    {
-      "step": 32,
-      "command": "node scripts/check-uptime-contract.mjs --self-test",
-      "status": 0,
-      "durationMs": 85,
-      "error": null
-    },
-    {
-      "step": 33,
-      "command": "node scripts/check-uptime-contract.mjs",
       "status": 1,
-      "durationMs": 102,
+      "durationMs": 1126,
       "error": null
     }
   ],
   "note": "Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.",
-  "receiptId": "bf51ad209019d98d99c8782d"
+  "receiptId": "32cabd2d52423b636f8aa6dd"
 }
