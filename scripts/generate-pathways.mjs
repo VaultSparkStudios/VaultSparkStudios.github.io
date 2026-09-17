@@ -49,6 +49,28 @@ if (!navBlock.includes('nav-item')) {
   process.exit(1);
 }
 
+// S356 added the Desk wire strip to the site-wide header in propagate-nav.mjs,
+// but this generator hand-writes everything between the nav and </header>, so it
+// stripped the wire off all six pathway pages every time it ran — and its own
+// --check then reported them permanently stale against a page propagate-nav had
+// correctly repaired. Harvest the strip from the same sample as the nav, with the
+// same refuse-on-failure discipline, so one generator cannot silently undo the
+// other. A sample without a wire is a site without a wire, and writing none is
+// then correct.
+// Start at the line's own indentation, not the tag, so the emitted block is
+// byte-identical to what propagate-nav writes — otherwise --check stays red on a
+// whitespace difference and the two writers still disagree.
+const WIRE_TAG = sample.indexOf('<div class="desk-wire"');
+const WIRE_START = WIRE_TAG >= 0 ? sample.lastIndexOf('\n', WIRE_TAG) + 1 : -1;
+const WIRE_END = WIRE_START >= 0 ? sample.indexOf('</header>', WIRE_START) : -1;
+const deskWireBlock = WIRE_START >= 0 && WIRE_END > WIRE_START
+  ? sample.slice(WIRE_START, WIRE_END).replace(/\s+$/, '')
+  : '';
+if (WIRE_START >= 0 && !deskWireBlock.includes('data-desk-wire-headline')) {
+  console.error('[generate-pathways] desk-wire harvest failed — refusing to write pages that would drop the site-wide Desk strip');
+  process.exit(1);
+}
+
 const FOOTER_START = sample.indexOf('<footer class="site-footer"');
 const FOOTER_END = sample.indexOf('</footer>') + 9;
 const footerBlock = sample.slice(FOOTER_START, FOOTER_END);
@@ -152,7 +174,7 @@ function buildPage(p) {
         </button>
       </div>
     </div>
-  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
+${deskWireBlock ? deskWireBlock + '\n' : ''}  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p>${buildRoute(p.steps)}</section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
 ${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }
