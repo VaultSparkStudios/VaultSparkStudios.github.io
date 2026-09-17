@@ -16,6 +16,51 @@ function readJson(rel, fallback) {
   try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8')); } catch { return fallback; }
 }
 
+/**
+ * S357 — a reader-legibility firewall on the one field that reaches a visitor.
+ *
+ * This feed is rendered on /changelog/ under the heading "You asked → we
+ * shipped", and `summary` is a raw git subject with its conventional-commit
+ * prefix stripped. Observed live, about to ship to production:
+ *
+ *   "bind visual + mobile proof to the S357 candidate a1c97bfa8612"
+ *   "make the hero-ticker sink guard measure the hazard, not a call-site snapshot"
+ *   "re-capture visual + mobile proof against candidate b7f213dd4b88"
+ *
+ * Two problems, and the smaller one is the vocabulary. The larger one is that
+ * nobody asked for those: they are internal receipt operations presented under
+ * "You asked". S344 already noticed the vocabulary edge and answered it with a
+ * disclaimer ("the wording is ours"), which excuses jargon rather than removing
+ * it — and a disclaimer cannot rescue a line carrying a candidate hash.
+ *
+ * The repo already has the right idiom twice over: `publicNote` and
+ * build-nervous-system's stripDevTalk, both of which this surface bypassed. The
+ * honest move is not to rewrite a commit subject into marketing — that would be
+ * fabricating a reader-facing claim from an internal one — but to DROP the line
+ * when it cannot be published truthfully, exactly like every other honest-dark
+ * surface here. A theme with no legible ship still carries its signal count and
+ * its visual proof; it just stops inventing prose.
+ */
+export const ILLEGIBLE_TO_A_READER = [
+  /\b[0-9a-f]{7,}\b/i,                                        // a sha or candidate hash
+  /\bS\d{2,4}\b/,                                             // a session code
+  /\b[\w-]+\.(?:mjs|js|json|css|sql|html|ts|ndjson|yml)\b/i,  // a filename
+  /\bnpm run\b|build:check|--check|--self-test|--probe/i,        // a command or flag
+  // Working vocabulary. A visitor has no reason to know any of these, and
+  // S344's disclaimer cannot rescue a sentence built out of them.
+  /\b(?:self-test|negative control|receipt|candidate|gate|guard|preflight|resync|rebase|closeout|handoff|write-back|drift|cascade|ratchet|sweep|parity|shell asset)\b/i,
+  // Internal-operation verbs: work done TO the repo, not a change a reader can
+  // observe on the site.
+  /\b(?:scope|wire|bind|re-?capture|regenerate|converge|hand-run|harvest)\b/i,
+];
+
+/** True when a commit subject can stand on a public page without a glossary. */
+export function readerLegible(summary) {
+  const text = String(summary || '').trim();
+  if (text.length < 12) return false;
+  return !ILLEGIBLE_TO_A_READER.some((re) => re.test(text));
+}
+
 export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }) {
   const commitsBySha = new Map((commitMap.entries || []).map((entry) => [entry.sha, entry]));
   // S174 field-verdict-engine: speed-theme receipts carry the latest
@@ -45,7 +90,10 @@ export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }
         theme: theme.key,
         label: theme.label,
         feedbackSignals: theme.count || 0,
-        shippedCommits: commits.slice(0, 5).map((commit) => ({
+        // Illegible lines are dropped, never rewritten: inventing reader-facing
+        // prose from an internal subject would fabricate the very claim this
+        // surface exists to evidence.
+        shippedCommits: commits.filter((commit) => readerLegible(commit.summary)).slice(0, 5).map((commit) => ({
           sha: commit.sha,
           summary: commit.summary,
           ts: commit.ts,
@@ -95,13 +143,35 @@ ${rows}
 if (SELF_TEST) {
   const payload = buildReceipts({
     feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2, commits: [{ sha: 'abc' }] }] },
-    commitMap: { entries: [{ sha: 'abc', summary: 'fast', ts: 'today' }] },
+    // A reader-legible summary: 'fast' is now correctly dropped as too short to
+    // be a sentence, so the fixture has to carry something publishable.
+    commitMap: { entries: [{ sha: 'abc', summary: 'pages load faster on a phone', ts: 'today' }] },
     visualSets: [{ name: 'home-lcp-s173', routes: ['/'], captureCount: 4 }],
     fieldVerdicts: { boundaries: [{ date: '2026-06-05', label: 'S173', overall: 'improved', routes: { '/': { lcpDeltaPct: -23.4, confidence: 'medium' } } }] },
   });
+  // S357 — the reader-legibility firewall. These are the exact subjects that were
+  // rendering on /changelog/ under "You asked → we shipped" before it existed.
+  const illegible = buildReceipts({
+    feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 4, commits: [{ sha: 'a1' }, { sha: 'a2' }, { sha: 'a3' }] }] },
+    commitMap: { entries: [
+      { sha: 'a1', summary: 'bind visual + mobile proof to the S357 candidate a1c97bfa8612', ts: 'today' },
+      { sha: 'a2', summary: 'harvest the header controls instead of hand-writing them', ts: 'today' },
+      { sha: 'a3', summary: 'every Desk article opens with its own illustration', ts: 'today' },
+    ] },
+    visualSets: [], fieldVerdicts: { boundaries: [] },
+  });
   const cases = [
+    ['a candidate hash never reaches a reader', !readerLegible('bind visual + mobile proof to the S357 candidate a1c97bfa8612')],
+    ['a session code never reaches a reader', !readerLegible('S356 — Desk flagship and site-wide crawl fixes')],
+    ['a filename never reaches a reader', !readerLegible('teach generate-pathways.mjs about the strip')],
+    ['a flag or command never reaches a reader', !readerLegible('wire four gates into npm run build:check')],
+    ['working vocabulary never reaches a reader', !readerLegible('rebuild the derived graph after the rebase')],
+    ['a plain reader-facing sentence still publishes', readerLegible('the mobile menu now opens on the first tap')],
+    ['illegible lines are DROPPED, not rewritten', illegible.receipts[0].shippedCommits.length === 1
+      && illegible.receipts[0].shippedCommits[0].summary === 'every Desk article opens with its own illustration'],
+    ['the signal count survives the drop, so the theme stays honest', illegible.receipts[0].feedbackSignals === 4],
     ['receipt created', payload.receipts.length === 1],
-    ['commit joined', payload.receipts[0].shippedCommits[0].summary === 'fast'],
+    ['commit joined', payload.receipts[0].shippedCommits[0].summary === 'pages load faster on a phone'],
     ['proof joined', payload.receipts[0].proof?.set === 'home-lcp-s173'],
     ['field verdict joined on speed', payload.receipts[0].fieldVerdict?.verdict === 'improved'],
     ['field delta carried', payload.receipts[0].fieldVerdict?.lcpDeltaPct === -23.4],
