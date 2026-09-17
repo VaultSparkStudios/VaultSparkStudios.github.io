@@ -1553,3 +1553,32 @@ Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner s
 **Method:** parallel agents with disjoint file ownership; an independent reviewer read every finished diff before release; every visual claim verified from rendered pixels.
 
 **Findings that only showed up in pixels or live runs:** a decorative link covering the menu button on 134 pages; an overlay registry that protected only its listed widgets; a Windows sandbox backend that failed to start and ran unconfined; a "plan-covered" path that would have billed an API key; a claim-release that could double-send email.
+
+## S357 · 2026-09-17 · recovery, deploy-truth, and the release the gates kept honest
+
+**Intent:** recover a cut-off session, then run the full arc — audit, implement, release.
+
+**Recovered (Phase 0):** the prior Codex session died mid-recovery of S356, after deploying a staging Worker and repairing a gateway-CSP defect, with all of it uncommitted in a 395-file tree. All 106 changed JSON/NDJSON parsed; `~/.claude.json` valid; unit suite 238/235 pass/0 fail/3 pre-existing TODO and doctor blockingFailing 0 confirmed its claims were real. Reconstructed and pushed 19 commits over two rebases spanning 128 upstream publisher commits, ~30 generated-artifact conflicts resolved to upstream then regenerated through the graph. Removed 3 stale agent worktrees (which were failing a filesystem-walking gate) and 9 byte-identical cache duplicates. No force-push, no reset.
+
+**The headline finding:** production was serving 2026-09-14 bytes. **S356 never reached production** — The Desk flagship, comments, newsletter and 18 crawl fixes were all committed and none were live.
+
+**Shipped (11):**
+1. **Deploy-truth.** `api/deploy-currency.json` published `content-current` while a live probe said `stale` with 4 shell assets missing. Root cause is tree identity, not ordering: shell parity compares two operands and records only one as evidence, so a CI reading was rebased into a tree it had never measured. Three fixes — `SHELL_PARITY_MAX_AGE_HOURS` (a `matched` with no clock could pin `content-current` indefinitely once `/` started being challenged while the JSON feed still read), a binding to the tree the verdict was measured against that works retroactively on every receipt ever written, and honest naming of what the pages.dev vantage certifies. Self-test 91 → 93 including a fixture replaying the real receipt byte-for-byte.
+2. **32 WCAG AA contrast failures**, and two board items disproved. Worst were not on the board: `/ignis/` light theme at 1.40:1 and 1.64:1, reproducing a bug class `/oracle/` had already diagnosed and repaired for its own classes. Fixed at the surface with oracle's vetted token pattern.
+3. **Four gates that had never run** — two orphaned scripts nothing invoked, two self-tests no build:check path reached. Reachability now 252/252 and 320/320.
+4. **TT sink guard** made to measure the hazard instead of a call-site snapshot S356 legitimately refactored away.
+5. **`generate-pathways`** stopped stripping the site-wide Desk wire from six pages; **`generate-evidence-hub`** stopped hand-writing a header that shipped `/evidence/` without the GitHub link every other page carries. Both now harvest, both refuse on a failed harvest.
+6. **Public-voice firewall** — `/changelog/` was about to publish raw commit subjects to visitors under "You asked → we shipped". Two structural filters (touched-file `visitorFacing`, already computed and never read; conventional-commit type) after a denylist was out-vocabularied twice.
+7. **83% off the slowest build:check step** (95.9s → 16.5s) by memoizing three pure functions on content hashes. No threshold moved.
+8. **Changelog entry** — first public one since 2026-07-16, clearing the 60-day trust ceiling. Every line verified on staging first.
+9. **Changelog timeline contrast** — title 1.63:1 and Live label 2.30:1 in light theme, found by measuring the deployed page.
+10. **Two client scripts content-addressed** after the release ceremony caught a 404 for a privacy endpoint S356 deleted.
+11. **Signal-bus gate** made rotation-proof after fingerprinting moved the file it was pinned to.
+
+**Verified:** build:check 499/499 · unit 238 tests / 235 pass / 0 fail / 3 pre-existing TODO · mobile 215/215 zero P0/P1 · theme matrix 84 hash-bound · staging serves the exact candidate with **zero failed responses** · ceremony 9/10 (both browser gates pass; the one rejection is the expected pre-deploy `deploy-currency-live` staleness).
+
+**The structural finding, measured:** `check-content-lane-purity` holds unhashed `.js` as executable and promotes only fingerprinted assets, so **the content lane cannot update a plain client script**. 27 of 171 unhashed client scripts were serving pre-S356 bytes on staging. Production looked clean only because it still serves the pre-removal deploy; promoting without the fix would have moved the 404 to production rather than fixing it.
+
+**Not done:** production promotion. Both steps (Worker deploy, `pages-deploy` `confirm_content` dispatch) were refused by the agent session's permission policy. Nothing is blocked on readiness.
+
+**Corrections made in public:** my first root-cause hypothesis for the deploy-truth defect (a build-ordering race) was refuted with byte-level evidence and is recorded as wrong. A contrast harness reported PASS at 9.07:1 by treating a 5%-alpha tint as opaque; corrected and re-measured before acting. CANON-028 caught my own explanatory comment reintroducing the retired path into a tracked file, and I took the gate's side.

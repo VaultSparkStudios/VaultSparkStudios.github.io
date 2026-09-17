@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-17T10:52:39.430Z",
+  "generatedAt": "2026-09-17T11:10:04.181Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,17 +22,18 @@
     }
   },
   "pulse": {
-    "currentSession": 356,
-    "lastUpdated": "2026-09-15",
-    "currentFocus": "S356 rebuilt The Desk as the studio flagship: real generated illustrations (25 backfilled and reviewed), reader-first articles and index, working reactions, open community comments, homepage lead and a site-wide headline strip — plus honest Studio Pulse activity, a working member newsletter, and 18 site-wide crawl defects closed.",
-    "nextMilestone": "Release S356: build + receipts + build:check, staging, production; then the comments migration and Worker deploy, and a newsletter preview to founder@ before any member send.",
+    "currentSession": 357,
+    "lastUpdated": "2026-09-17",
+    "currentFocus": "S357 recovered the cut-off S356 closeout and released it to staging: the deploy-truth surface no longer certifies a tree it never measured, 32 WCAG contrast failures are repaired, four gates that had never run are wired, and two client scripts that kept calling a retired privacy endpoint are content-addressed. Staging carries the exact candidate with zero failed responses.",
+    "nextMilestone": "Promote S356+S357 to production: deploy the Worker (comments and newsletter-unsubscribe routes are 404 in production today), then dispatch pages-deploy with confirm_content, then verify from served bytes. Both steps are ready and blocked only on founder authorization.",
     "blockers": [
-      "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
+      "Production promotion is pending founder authorization: the Worker deploy and the pages-deploy confirm_content dispatch were both refused by the agent session's permission policy. Staging carries the exact candidate (zero failed responses, ceremony 9/10 with only the expected pre-deploy deploy-currency-live staleness).",
+      "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
+      "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
-      "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
-      "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
-      "[skip ci] publishers still do not cascade every derived artifact: 20 proof-surface generators are outside the evidence graph (tracked as coverage baseline 20), so the cascade gate cannot see them yet."
+      "Human signup acceptance, newsletter arming, Desk cadence, public-member-data and immutable warm-origin choices remain unobserved or undecided.",
+      "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
     ],
     "queues": {
       "now": [

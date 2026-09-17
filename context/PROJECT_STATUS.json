@@ -12,26 +12,27 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S356 rebuilt The Desk as the studio flagship: real generated illustrations (25 backfilled and reviewed), reader-first articles and index, working reactions, open community comments, homepage lead and a site-wide headline strip — plus honest Studio Pulse activity, a working member newsletter, and 18 site-wide crawl defects closed.",
+  "currentFocus": "S357 recovered the cut-off S356 closeout and released it to staging: the deploy-truth surface no longer certifies a tree it never measured, 32 WCAG contrast failures are repaired, four gates that had never run are wired, and two client scripts that kept calling a retired privacy endpoint are content-addressed. Staging carries the exact candidate with zero failed responses.",
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
-  "nextMilestone": "Release S356: build + receipts + build:check, staging, production; then the comments migration and Worker deploy, and a newsletter preview to founder@ before any member send.",
+  "nextMilestone": "Promote S356+S357 to production: deploy the Worker (comments and newsletter-unsubscribe routes are 404 in production today), then dispatch pages-deploy with confirm_content, then verify from served bytes. Both steps are ready and blocked only on founder authorization.",
   "blockers": [
-    "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects (seamline, studio-ops-cron, veilos, velaxis-proxy x2). Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
+    "Production promotion is pending founder authorization: the Worker deploy and the pages-deploy confirm_content dispatch were both refused by the agent session's permission policy. Staging carries the exact candidate (zero failed responses, ceremony 9/10 with only the expected pre-deploy deploy-currency-live staleness).",
+    "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
+    "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
-    "Human signup acceptance, newsletter deployment/arming, Desk cadence, public-member-data, and immutable warm-origin choices remain unobserved or undecided.",
-    "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
-    "[skip ci] publishers still do not cascade every derived artifact: 20 proof-surface generators are outside the evidence graph (tracked as coverage baseline 20), so the cascade gate cannot see them yet."
+    "Human signup acceptance, newsletter arming, Desk cadence, public-member-data and immutable warm-origin choices remain unobserved or undecided.",
+    "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
   ],
-  "lastUpdated": "2026-09-15",
-  "currentSession": 356,
+  "lastUpdated": "2026-09-17",
+  "currentSession": 357,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-15",
-  "silScore": 991,
+  "silScore": 979,
   "silAvg3": 987,
-  "silVelocity": 10,
+  "silVelocity": 9,
   "silDebt": "down",
-  "silLastSession": 356,
+  "silLastSession": 357,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -88,17 +89,17 @@
   "silMax": 1000,
   "silCategoriesV3": {
     "devHealth": 99,
-    "creativeAlignment": 100,
-    "momentum": 99,
-    "engagement": 97,
-    "processQuality": 98,
+    "creativeAlignment": 98,
+    "momentum": 96,
+    "engagement": 94,
+    "processQuality": 99,
     "crossRepoCoherence": 100,
     "securityPosture": 99,
-    "ecosystemIntegration": 100,
-    "capitalEfficiency": 100,
-    "automationCoverage": 99
+    "ecosystemIntegration": 98,
+    "capitalEfficiency": 99,
+    "automationCoverage": 97
   },
-  "silCategoriesUpdatedSession": 356,
+  "silCategoriesUpdatedSession": 357,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-17",
@@ -260,5 +261,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "11018ead8fa6858b3f4d1ec2",
   "testsSourceFingerprint": "03288cb46bc7b23374af224b",
-  "lastSessionSummary": "S356: Desk real art + reader-first redesign + reactions + comments + site-wide presence; Studio Pulse truth; newsletter repaired; 5 P0 and 13 P1 crawl defects fixed; 9 new unit specs and a Desk copy-quality gate."
+  "lastSessionSummary": "S357: recovered the cut-off S356 closeout and pushed it; deploy-truth no longer certifies a tree it never measured; 32 WCAG contrast failures repaired; four never-run gates wired; the \"You asked\" surface stopped publishing commit subjects; two client scripts that kept calling a retired privacy endpoint content-addressed. build:check 499/499, staging verified with zero failed responses, production promotion pending founder authorization."
 }

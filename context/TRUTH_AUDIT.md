@@ -1254,3 +1254,21 @@ The first S351 write-back stated the uptime sampler was armed on a 30-minute cro
 Every surface carrying the "armed" claim was corrected before commit, and `UPTIME_SAMPLER_ENABLED` was returned to `"0"` so the deployed Worker does not read as sampling when nothing can invoke it. Source-of-truth status stays `yellow`: the edge is UNMEASURED, `/status/` says so, and that is now backed by a named provider limit rather than an untested permission sentence.
 
 A second, more general finding: **a green GitHub Actions run is not deploy evidence in this repo.** Both production workflows can take a "Promotion held — no production mutation" branch that skips every deploy step and still concludes `success`. Deploy claims must be verified against served bytes or the deployed Worker's own configuration.
+
+## S357 — 2026-09-17
+
+**A public truth surface was found lying, and it is the one that reports whether the site is current.**
+
+`api/deploy-currency.json` published `state: content-current` with `shellParity.state: matched` while a live probe of the same production origin returned `stale` with four shell assets missing and three unexpected, over a 67.7h content backlog. `check-deploy-currency-gate` maps `content-current` to pass, so the gate was green on a stale production.
+
+- **Source-of-truth status changed:** shell parity now records the identity of BOTH operands. Previously `actual` (production) was evidence and `expected` (the prober's own tree) was not, which is what let a CI reading survive a rebase into a tree it had never measured.
+- **A snapshot is no longer read as a measurement.** `matched` expires. The pre-existing observation clock is reset by a successful build-sha sub-probe, so it could never bound the parity reading — the defence that looked present was structurally unreachable.
+- **A claim was narrowed to what its vantage supports.** Parity is probed at the pages.dev origin, which cannot see the apex Worker. A match certifies the promoted artifact, never the served surface, and the gate string said the latter.
+
+**A second surface was overclaiming its scope.** `check-generated-drift-preflight` printed `generated artifacts are current` — no quantifier, no denominator — from 6 subjects out of 94 `--check`-gated generators, and was observed saying it while two generators were stale. It now states its own measured fraction and the evidence strength of its sample (0 drift-comparing / 1 shape-only / 5 unclassified), so a green cannot read as whole-tree freshness.
+
+**A public page was about to publish internal language as reader-facing truth.** `/changelog/` renders "You asked → we shipped" from raw git subjects; the window included lines carrying a candidate hash and internal operation verbs, presented as things readers had asked for. Filtering is now structural and fails closed, and an illegible line is dropped rather than rewritten — rewriting would fabricate the claim the surface exists to evidence.
+
+**Two board items were false and are corrected rather than carried.** `.ignis-chip` was described as "solid orange with near-black text" defined in `ignis-answer-engine.js`; it is an 8%-alpha tint with `#FF7A00` text, defined in two page-level style blocks, already patched for light theme since S94, with a residual 4.22:1 over the hero wash. The leaderboard item named 2 failing declarations; there are 5.
+
+**What remains unproven, stated plainly.** Production has not been promoted, so every claim above is verified on staging and in the repo, not in production. Production continues to serve `e65eca737` from 2026-09-14 and no surface claims otherwise — `build-deploy-currency` now reports `stale`, which is the truth. The 25 remaining unhashed client scripts are a measured exposure, not a hypothesis: 27 of 171 were serving pre-S356 bytes when measured.

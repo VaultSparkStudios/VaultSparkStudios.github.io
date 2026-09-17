@@ -1,5 +1,25 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S357 · 2026-09-17
+
+- **Recovered:** the cut-off S356 closeout tail. 19 commits reconstructed, rebased over 112 + 16 upstream publisher commits, and pushed. Three stale agent worktrees and nine duplicate cache captures removed.
+- **Shipped:** deploy-truth binding + clock, 32 WCAG AA contrast repairs, four gates that had never run, a public-voice firewall on /changelog/, 83% off the slowest build:check step, the first public changelog entry since 2026-07-16, and two client scripts content-addressed.
+- **Released to staging, verified:** staging serves the exact candidate, zero failed responses, release ceremony 9/10.
+- **NOT in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy, not by any gate.
+
+**Read this first if you are promoting.** Two steps, in this order:
+1. `node scripts/deploy-worker.mjs --env production --confirm-production` — production currently 404s `/v/desk-comments` and `/api/newsletter/unsubscribe`; staging returns 200 and 400 (bad token) respectively. The old production Worker also treats a reaction retract as an add, so it must go first.
+2. Dispatch `pages-deploy.yml` with `confirm_content: true` (the SCOPED content lane). `check-promotion-scope` reports `promotable=true · scoped-disjoint`, held surfaces `auth/**, identity, worker:identity` — the identity backlog does not move.
+Then verify from served bytes: `/api/build-sha.json`, `/v/desk-comments` 200, `npm run smoke:live`.
+
+**The local release ceremony will sit at 9/10 and that is expected.** Its `doctor` step fails on one blocking check, `deploy-currency-live`, which is the pre-deploy staleness the ceremony is written to accept — but acceptance also requires a full staging attestation (`candidateReady`, `candidateShaBound`, `deployAttested`) that a content-lane OVERLAY never produces, because staging's base `build-sha` stays at the base deployment. Do not read 9/10 as a refusal of the candidate; both browser gates pass 6/6 and 15/15.
+
+**The finding that matters most for future releases.** `check-content-lane-purity` holds unhashed `.js` as "sensitive, executable, or unrecognised type" and promotes only fingerprinted shell assets. **The content lane therefore cannot update a plain client script at all.** Measured on staging: 27 of 171 unhashed client scripts were serving pre-S356 bytes. That is how a fetch S356 deleted stayed live and made the ceremony's browser gate red — and production looked clean only because it still serves the pre-removal deploy. Two are fixed by content-addressing; 25 remain.
+
+**Deploy-truth was publishing a false green.** `api/deploy-currency.json` said `content-current` while a live probe said `stale` with four shell assets missing. Not an ordering bug — a tree-identity one: shell parity records only one of its two operands as evidence, so a CI reading was rebased into a tree it had never measured. Fixed with a freshness clock on the parity reading, a binding to the tree it was taken against (retroactive, because the operand was always in `expected[]`), and honest naming of what the pages.dev vantage can certify.
+
+**Two audit items on the board were wrong, and are corrected in place.** `.ignis-chip` is not "solid orange with near-black text" and is not defined in `ignis-answer-engine.js`; its real defect is a 4.22:1 label over the hero wash. The leaderboard item named 2 declarations; there are 5. The worst contrast failures were not on the board at all — `/ignis/` in light theme had text at 1.40:1.
+
 ## Where We Left Off — S356 · 2026-09-15
 
 - **Shipped:** The Desk rebuilt as the studio's flagship (real art + reader-first articles + reactions + site-wide presence), studio-truth fixes across Pulse and the deploy beacons, 18 crawl defects, the newsletter repaired end to end, and a copy-quality gate.

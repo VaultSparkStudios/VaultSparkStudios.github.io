@@ -1,8 +1,27 @@
 # Current State
 
-Last updated: 2026-09-15 (S356)
+Last updated: 2026-09-17 (S357)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S357 The deploy-truth surface stops certifying trees it never measured (2026-09-17)
+
+**What changed in shipped behaviour, and what did not.** Everything below is committed, gated at build:check 499/499, and deployed to staging where it is verified. **None of it is in production.** Production still serves `e65eca737` from 2026-09-14. Both promotion steps were refused by the agent session's permission policy; the exact two commands are in `LATEST_HANDOFF.md`.
+
+**The public deploy-truth feed was green over a stale production.** `api/deploy-currency.json` published `content-current` with shell parity `matched` while a live probe of the same origin reported `stale` with four shell assets missing and three unexpected — over a 67.7h content backlog. The cause was not a build-ordering race (that hypothesis was tested and refuted with byte-level evidence) but tree identity: shell parity compares two operands and recorded only production as evidence, so a CI reading taken against `origin/main` was rebased into a tree that added a twelfth shell asset and kept asserting `matched`. Three closures: a verdict now carries a hash of the operand it was measured against and becomes `superseded` when the tree moves (recovered retroactively for every receipt ever written, because the operand was always sitting in `expected[]`); `matched` now expires, since the existing observation clock is reset by a different sub-probe and could never bound it; and the gate string now says the pages.dev vantage certifies the promoted artifact, never the served surface.
+
+**The content lane cannot update an unhashed client script — nobody had said so.** `check-content-lane-purity` holds unhashed `.js` as "sensitive, executable, or unrecognised type" and promotes only fingerprinted shell assets. Correct as a safety property, but it means a plain client script only changes on a full deploy. Measured on staging: 27 of 171 unhashed client scripts were serving pre-S356 bytes, including two that still fetched a privacy endpoint S356 deleted. The release ceremony's browser gate caught the resulting 404 on chromium and webkit and refused promotion. Production looked clean only because it still serves the pre-removal deploy, so promoting without the fix would have moved the 404 to production. `studio-now` and `public-intelligence` are now content-addressed; 25 remain.
+
+**Light theme was unreadable on surfaces nobody had measured.** `/ignis/` carried text at 1.40:1 and 1.64:1 and four tier labels between 1.47:1 and 2.30:1 — the exact bug class `/oracle/` had already diagnosed and repaired for its own panels and never extended. The changelog timeline's entry title read 1.63:1 and its Live label 2.30:1, found by measuring the deployed staging page rather than the stylesheet. 32 declarations repaired in all, each to the smallest value clearing 4.5:1 on its own measured ground. Two items the board listed were disproved in the process and corrected in place.
+
+**Four gates that had never run now run.** Two scripts were referenced by nothing (a 43-article Desk contract and a 12-case reaction-cooldown suite), and two self-tests were reachable by no build:check path. Reachability is now 252/252 build-scope modes and 320/320 self-test modes. Separately, three gates that could not fail now can: the Trusted-Types sink guard was pinned to a call site S356 legitimately refactored away, the signal-bus check was pinned to a path fingerprinting moved, and the generated-drift preflight printed "generated artifacts are current" — an unquantified whole-tree claim — from a sample of 6 out of 94 gated generators. It now computes its own denominator and reports its sample's evidence strength.
+
+**Two generators had been quietly undoing a third.** `generate-pathways` stripped the site-wide Desk wire from six pages on every run, and `generate-evidence-hub` hand-wrote a header that shipped `/evidence/` without the GitHub link every other page carries. Both now harvest shared chrome from a page they do not write, and both refuse rather than ship a stripped header.
+
+**The changelog speaks to readers again.** The first public entry since 2026-07-16 clears the 60-day trust ceiling, and every line was verified against staging before publication. The "You asked → we shipped" box was about to publish raw commit subjects to visitors — including one carrying a candidate hash — and now filters structurally on touched files and commit type rather than on a vocabulary denylist that was out-vocabularied twice.
+
+**The slowest gate step is 83% faster** (95.9s → 16.5s) by memoizing three pure functions on content hashes, with no threshold moved and no assertion relaxed.
+
 
 ## S356 The Desk becomes the flagship, and the studio's public numbers start telling the truth (2026-09-15)
 

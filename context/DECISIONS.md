@@ -1932,3 +1932,33 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 **Decision:** the portfolio total is registry-derived (26: 8 sparked, 16 forge, 2 vaulted); the press kit sentence is generator-owned; the drift gate now matches "projects" as well as "initiatives"; and press copy says 6 initiatives are unannounced sealed silhouettes instead of "12 additional initiatives are vaulted".
 
 **Why:** the 27 was a hand-kept literal with no 27th project behind it, and 141 pages carried it. The gate missed the membership page for months because its pattern was noun-locked. "Vaulted" means paused or archived on this site, so using it for unannounced work was wrong on the site's own terms, not merely numerically stale.
+
+## D-S357.1 — Shell parity must be bound to the tree it measured, and must expire
+
+`api/deploy-currency.json` published `content-current` over a 67.7h content backlog. Shell parity is a comparison between two operands, but the receipt recorded only `actual` (production) as evidence; `expected` (the prober's own `index.html`) carried no binding to the tree it came from, so a CI reading survived being rebased into a tree it had never seen.
+
+**Decided:** a parity verdict carries `expectedFrom`, a hash of the operand it was measured against, and is downgraded to `superseded` when the local tree no longer matches. The binding is recovered retroactively by hashing `expected[]`, because the operand was always in the receipt and nobody compared it. Separately, `matched` expires after `SHELL_PARITY_MAX_AGE_HOURS`; an aged snapshot is not a measurement, and an unknown age counts as aged.
+
+**Rejected:** widening `OBSERVATION_MAX_AGE_HOURS`. That clock is reset by a successful build-sha sub-probe, so it can never bound the parity reading — which is exactly how the false green survived.
+
+## D-S357.2 — The content lane cannot update an unhashed client script, so client JS is fingerprinted
+
+`check-content-lane-purity` classifies an unhashed `.js` as "sensitive, executable, or unrecognised type" and holds it; only fingerprinted shell assets are promotable. This is correct — executable code should not ride a content lane — but it means a plain client script never changes except on a full deploy. Measured on staging: 27 of 171 unhashed client scripts were serving pre-S356 bytes, including two that still called a privacy endpoint S356 deleted.
+
+**Decided:** client scripts that ship behaviour are fingerprinted through `build-shell-assets`, and loader-embedded references are content-addressed through `CONTENT_ADDRESSED_PREDICATE_SRCS` at bundle-build time. The remaining 25 are on the task board; each rotation needs its own receipt cycle, so they are not swept in at once.
+
+**Rejected:** relaxing the lane's purity rule to let unhashed `.js` through. The rule is the safety property; the naming was the defect.
+
+## D-S357.3 — A public surface fed from git subjects filters structurally, and fails closed
+
+`/changelog/` was about to publish raw commit subjects to visitors under "You asked → we shipped", including one carrying a candidate hash. A denylist of developer vocabulary was out-vocabularied twice within the hour — once by a perf commit, once by the commit that installed the denylist.
+
+**Decided:** filter on structure first — the commit's touched files (`visitorFacing`, already computed by `build-commit-map` and never read by this surface) and its conventional-commit type. Prose filtering stays as a third pass. All three fail closed, and an illegible line is dropped rather than rewritten, because rewriting an internal subject into reader prose would fabricate the claim the surface exists to evidence. The box rendering empty is the honest outcome.
+
+**Recorded as the real fix, not done here:** source the shipped lines from `data/consumer-changelog.json`, which is reader prose by construction, so no filter has to guess.
+
+## D-S357.4 — Production promotion deferred to the founder
+
+S356 + S357 are ready: build:check 499/499, staging serving the exact candidate with zero failed responses, both ceremony browser gates green. The Worker deploy and the `pages-deploy` `confirm_content` dispatch were both refused by the agent session's permission policy.
+
+**Decided:** do not work around the denial. The release is handed to the founder with the exact two commands, in order, and the verification steps — recorded in `LATEST_HANDOFF.md`. Production continues to serve `e65eca737` from 2026-09-14 until then, and no surface claims otherwise.

@@ -1,0 +1,109 @@
+{
+  "session": "S357",
+  "date": "2026-09-17",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Recovered a cut-off session, then found the studio's own deploy-truth surface publishing a false green over three-day-old production — and the release ceremony caught a deleted fetch still running in served bytes before it could reach production.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "deploy-truth-binding",
+      "title": "A parity verdict can no longer certify a tree it never measured",
+      "axis": "truth",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "Shell parity compares two operands and recorded only production as evidence, so a CI reading was rebased into a tree that added a shell asset and kept asserting matched. Bound to its tree, given a clock, and honestly scoped to what the pages.dev vantage can certify.",
+      "evidence": "self-test 91 to 93 with the real receipt replayed byte-for-byte from c629dd66c; 4 negative controls on the aged-parity path; artifact now reads stale/drift"
+    },
+    {
+      "id": "#2",
+      "slug": "content-lane-unhashed-js",
+      "title": "The content lane cannot update an unhashed client script",
+      "axis": "truth",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "check-content-lane-purity holds unhashed .js as executable, so a deleted fetch kept running in served bytes. Production looked clean only because it still serves the pre-removal deploy; promoting would have moved the 404 rather than fixing it.",
+      "evidence": "27 of 171 unhashed client scripts serving pre-S356 bytes; caller found by fetch stack trace; two content-addressed, staging now 0 failed responses"
+    },
+    {
+      "id": "#3",
+      "slug": "contrast-repairs",
+      "title": "32 WCAG AA failures repaired, two board items disproved",
+      "axis": "craft",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The worst failures were not on the board: /ignis/ light theme at 1.40:1 and 1.64:1, reproducing a bug class /oracle/ had already diagnosed and repaired for its own panels and never extended.",
+      "evidence": "ratios computed per theme, not eyeballed; pixel receipt in docs/visual-qa/s357-contrast/; changelog title 1.63 to 5.83 measured on the deployed page"
+    },
+    {
+      "id": "#4",
+      "slug": "gates-that-never-ran",
+      "title": "Four gates that had never run, and three that could not fail",
+      "axis": "rigor",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "Two scripts nothing invoked, two self-tests no path reached; plus a sink guard pinned to a deleted call, a bus check pinned to a moved path, and a preflight claiming whole-tree freshness from 6 of 94 generators.",
+      "evidence": "reachability 252/252 and 320/320; preflight now states its own denominator and its sample's evidence strength"
+    },
+    {
+      "id": "#5",
+      "slug": "public-voice-firewall",
+      "title": "The changelog stopped publishing commit subjects to visitors",
+      "axis": "voice",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "You asked then we shipped was about to render internal receipt operations, one carrying a candidate hash, as things readers had asked for. A word denylist was out-vocabularied twice, so the filter went structural.",
+      "evidence": "filters on touched files and commit type, both already available and unread; self-test 6 to 20; box renders empty, which is the honest reading"
+    },
+    {
+      "id": "#6",
+      "slug": "generator-tug-of-war",
+      "title": "Two generators were quietly undoing a third",
+      "axis": "craft",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "generate-pathways stripped the site-wide Desk wire from six pages every run, and generate-evidence-hub hand-wrote a header that shipped /evidence/ without the GitHub link every other page carries.",
+      "evidence": "both now harvest shared chrome and refuse on a failed harvest; byte-identical output, negative controls proven"
+    },
+    {
+      "id": "#7",
+      "slug": "gate-performance",
+      "title": "83% off the slowest build gate step",
+      "axis": "efficiency",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "The concentration ratchet fired for the first time only because no run had ever reached step 475. Three pure functions were recomputing identical work across the dry-run and real ingest passes.",
+      "evidence": "95.9s to 16.5s; content-hash keys; no threshold moved, no assertion relaxed; self-tests 32/32 and 33/33"
+    },
+    {
+      "id": "#8",
+      "slug": "changelog-entry",
+      "title": "The first public changelog entry since July",
+      "axis": "reach",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "The public changelog was 63 days old against a 60-day trust ceiling because the studio had shipped for two months and published none of it.",
+      "evidence": "seven highlights, each verified on staging before publication; content-freshness gate now green"
+    },
+    {
+      "id": "#9",
+      "slug": "recovery",
+      "title": "The cut-off S356 closeout, recovered and pushed",
+      "axis": "rigor",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "A prior session died with a staging Worker deployed and a real CSP repair uncommitted in a 395-file tree. Its claims were verified real before anything was trusted.",
+      "evidence": "19 commits over two rebases spanning 128 publisher commits; 106 JSON files parsed; 3 stale worktrees and 9 duplicate captures removed; no force-push"
+    }
+  ],
+  "followUps": [
+    "PROMOTE TO PRODUCTION (founder): deploy-worker --env production --confirm-production, then pages-deploy with confirm_content, then verify from served bytes. Both refused by the agent session's permission policy, not by any gate.",
+    "Fingerprint the remaining 25 unhashed client scripts — the content lane can never update them.",
+    "Add a served-vs-repo drift gate for every path the content lane holds; run the measurement that found the 404 every release.",
+    "Source the You asked then we shipped lines from data/consumer-changelog.json so no filter has to guess at reader prose.",
+    "vault_feedback returns 404 on production /changelog/ on every visit; pre-existing, absent on staging."
+  ],
+  "blockers": [
+    "Production still serves e65eca737 from 2026-09-14. Everything in this session and all of S356 is verified on staging and unreleased."
+  ]
+}

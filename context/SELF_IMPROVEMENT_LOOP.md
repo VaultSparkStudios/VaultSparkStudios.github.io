@@ -2880,3 +2880,32 @@ The 993/1000 score remains unchanged: release execution strengthened Dev Health 
 **Committed to TASK_BOARD:** [S356] "Coming soon" copy on six game pages · [S356] leaderboard embed contrast.
 
 **Intent outcome:** see the S356 release addendum.
+
+## 2026-09-17 — Session 357 (recovery, deploy-truth, and the release the gates kept honest) | Total: 979/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Every fix bound to the failure it names: the deploy-truth regression replays the real receipt byte-for-byte from c629dd66c, the contrast repairs carry computed ratios per theme, the 404 was traced to its caller by stack rather than by grep. |
+| Creative Alignment | 98 | The flagship's own changelog entry now reads in the studio's voice, and the surface that was publishing commit subjects to visitors stopped. |
+| Momentum | 96 | Recovery, a full audit, eleven fixes and a verified staging release in one arc; production promotion is the one thing not done, and it is blocked on permission, not on work. |
+| Engagement | 94 | Everything readers gain is deployed to staging and verified there; none of it is live yet, so the reader-facing gain is still pending. |
+| Process Quality | 99 | Two audit findings were disproved rather than implemented, a wrong root-cause hypothesis was refuted with byte-level evidence and stated as wrong, and a measurement harness that inverted a verdict was corrected before acting on it. |
+| Cross-Repo Coherence | 100 | No sibling repo touched; three stale agent worktrees removed rather than left to poison a filesystem-walking gate. |
+| Security Posture | 99 | A retired privacy surface was still being fetched by served bytes; that is closed at the mechanism. CANON-028 caught my own comment reintroducing the path and I took the gate's side. |
+| Ecosystem Integration | 98 | The unhashed-client-script finding, the aged-snapshot clock, and the derive-your-own-denominator pattern all generalize to any repo with a differential content lane. |
+| Capital Efficiency | 99 | 83% off the slowest gate step by memoizing three pure functions — no threshold moved, no assertion relaxed. |
+| Automation Coverage | 97 | Four gates that had never run are now wired; three gates that could not fail can now fail, each with a negative control drawn from the real incident. |
+
+**Top win:** `api/deploy-currency.json` published `content-current` while production was `stale` with four shell assets missing. The cause was not an ordering bug, as I first thought, but a tree-identity one: shell parity is a comparison between two operands and only one was recorded as evidence, so a CI reading was rebased into a tree it had never measured and kept asserting `matched`. Closed three ways — a clock on the reading, a binding to its tree that works retroactively on every receipt ever written, and honest naming of what the pages.dev vantage can certify.
+
+**Second win, and the gate deserves the credit:** the release ceremony refused promotion over a 404 for a privacy endpoint S356 deleted. The served copy of two client scripts still called it, because check-content-lane-purity holds unhashed `.js` as executable and only promotes fingerprinted assets — so the content lane structurally cannot update a plain client script. 27 of 171 unhashed scripts were serving pre-S356 bytes. Production looked clean only because it still serves the pre-removal deploy; promoting without the fix would have moved the 404 to production rather than fixing it.
+
+**Top gap:** production is still on 2026-09-14 bytes. The Worker deploy and the content-lane dispatch are both blocked by this session's permission policy, not by readiness — staging carries the exact candidate with zero failed responses.
+
+**Honesty ledger:** stated plainly that my build-ordering hypothesis for the deploy-truth defect was refuted rather than quietly adopting the real cause. Did not accept a contrast harness that reported PASS at 9.07:1 when the pixels looked wrong — corrected the alpha compositing and re-measured. Did not widen the drift preflight's node list to make its claim true; made it state its real denominator instead. Did not lower the concentration ratchet that was blocking the gate. Did not grow a denylist a third time after it was out-vocabularied twice; went structural. Did not work around the production-deploy denial. Reported the changelog box as empty rather than inventing reader prose from commit subjects.
+
+**Brainstorm:** (1) fingerprint the remaining 25 unhashed client scripts, since the content lane can never update them; (2) source the "You asked → we shipped" lines from `data/consumer-changelog.json` so no filter has to guess at reader prose; (3) a gate that fails when a served asset's bytes differ from the repo's for any path the content lane holds — the measurement that found this one, run every release.
+
+**Committed to TASK_BOARD:** [S357] fingerprint the remaining unhashed client scripts · [S357] served-vs-repo drift gate for lane-held paths.
+
+**Intent outcome:** recovery complete and pushed; audit and implementation complete; staging released and verified; production promotion pending founder authorization.

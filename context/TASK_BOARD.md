@@ -1,5 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
+Last updated: 2026-09-17 (S357 recovered the cut-off S356 closeout and pushed it, then found the studio's deploy-truth surface publishing a false green: api/deploy-currency.json said content-current while a live probe said stale with four shell assets missing. Root cause was tree identity, not ordering — shell parity records only one of its two operands as evidence, so a CI reading was rebased into a tree it had never measured. Closed with a clock on the reading, a binding to the tree it was taken against that works retroactively on every receipt ever written, and honest naming of what the pages.dev vantage can certify. The release ceremony then refused promotion over a 404 for a privacy endpoint S356 deleted, which traced to a structural fact nobody had stated: check-content-lane-purity holds unhashed .js as executable, so the content lane cannot update a plain client script at all — 27 of 171 were serving pre-S356 bytes, and production looked clean only because it still serves the pre-removal deploy. Also: 32 WCAG contrast failures repaired with two board items disproved and worse ones found, four gates that had never run wired in, the /changelog/ "You asked" surface stopped from publishing raw commit subjects to visitors, and 83% off the slowest build gate step. build:check 499/499, staging verified with zero failed responses, production promotion pending founder authorization.)
+
+## Open — S357
+
+- [ ] **[S357][RELEASE/P0 · FOUNDER]** Promote S356+S357 to production. Two commands in order, with verification, in `context/LATEST_HANDOFF.md`. Refused by the agent session's permission policy, not by any gate. Production still serves `e65eca737` from 2026-09-14.
+- [ ] **[S357][ASSETS/P1]** Fingerprint the remaining 25 unhashed client scripts. The content lane holds unhashed `.js` as executable and can never update them; measured on staging, 27 of 171 were serving pre-S356 bytes. Two are fixed (`studio-now`, `public-intelligence`). Each rotation needs its own receipt cycle, so batch them with a theme-matrix + mobile pass per batch.
+- [ ] **[S357][GATES/P1]** A served-vs-repo drift gate for every path the content lane holds. The measurement that found the 404 — hash each unhashed asset in the repo against the served copy — should run every release instead of being reconstructed by hand.
+- [ ] **[S357][CONTENT/P2]** Source the "You asked → we shipped" lines from `data/consumer-changelog.json` rather than from git subjects. A commit subject is written for the next engineer and no filter turns one into reader prose; the box renders empty today, which is honest but empty.
+- [ ] **[S357][OBS/P2]** `vault_feedback` returns 404 on production `/changelog/` on every visit — a public page making a failing API call. Pre-existing and confirmed absent on staging.
+
+## Previous — S356
+
 Last updated: 2026-09-15 (S356: The Desk rebuilt as the flagship — real art, reader-first articles, comments, site-wide presence; studio truth fixes; 18 crawl defects closed.)
 
 Previous: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
