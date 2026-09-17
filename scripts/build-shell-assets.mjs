@@ -41,6 +41,15 @@ const SHELL_ASSETS = [
   { key: 'deskPresence', source: 'assets/desk-presence.js', stem: 'desk-presence.shell', attribute: 'src' },
   { key: 'deskComments', source: 'assets/desk-comments.js', stem: 'desk-comments.shell', attribute: 'src' },
   { key: 'heroTicker', source: 'assets/hero-ticker.js', stem: 'hero-ticker.shell', attribute: 'src' },
+  // S357 — caught by the release ceremony's staging browser gate, not by review.
+  // S356 removed the public /api/founder-presence.json surface for privacy and
+  // removed the fetch from this file, but the file is loaded UNHASHED. Staging
+  // therefore kept serving the previous bytes, which still fetched the retired
+  // feed, and the gate recorded a 404 on chromium and webkit. Production only
+  // looked clean because it still serves the pre-removal deploy — promoting
+  // without this would have moved the 404 to production rather than fixing it.
+  // A fingerprinted name cannot be served stale: new bytes ship under a new URL.
+  { key: 'publicIntelligence', source: 'assets/public-intelligence.js', stem: 'public-intelligence.shell', attribute: 'src' },
   { key: 'statsSurface', source: 'assets/stats-surface.js', stem: 'stats-surface.shell', attribute: 'src' },
   { key: 'ecosystemStats', source: 'assets/ecosystem-stats.js', stem: 'ecosystem-stats.shell', attribute: 'src' },
   { key: 'heroChoiceTracking', source: 'assets/hero-choice-tracking.js', stem: 'hero-choice-tracking.shell', attribute: 'src' },
