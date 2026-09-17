@@ -72,25 +72,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   499/499 passing  ·  2026-09-17                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         499/499 passing (2026-09-17)                   ║
+║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
 ║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46492 FORGE  ·  8d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  6d old (2026-09-11)                            ║
-║  ⛔  Deploy gaps   production 244 commit(s) behind · 3d — past t  ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
+║  ⛔  Deploy gaps   production 249 commit(s) behind · 3.1d — past  ║
+║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7409 <   ║
