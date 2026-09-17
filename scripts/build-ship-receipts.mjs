@@ -47,12 +47,42 @@ export const ILLEGIBLE_TO_A_READER = [
   /\b[\w-]+\.(?:mjs|js|json|css|sql|html|ts|ndjson|yml)\b/i,  // a filename
   /\bnpm run\b|build:check|--check|--self-test|--probe/i,        // a command or flag
   // Working vocabulary. A visitor has no reason to know any of these, and
-  // S344's disclaimer cannot rescue a sentence built out of them.
-  /\b(?:self-test|negative control|receipt|candidate|gate|guard|preflight|resync|rebase|closeout|handoff|write-back|drift|cascade|ratchet|sweep|parity|shell asset)\b/i,
+  // S344's disclaimer cannot rescue a sentence built out of them. Every entry
+  // after 'shell asset' was added because it was OBSERVED leaking to the public
+  // page during this session, not because it seemed likely to — which is the
+  // whole argument for the two structural filters above doing the real work.
+  /\b(?:self-test|negative control|receipt|candidate|gate|guard|preflight|resync|rebase|closeout|handoff|write-back|drift|cascade|ratchet|sweep|parity|shell asset|commit|subject|denylist|memoi[sz]e|derivative|fixture|selector)\b/i,
   // Internal-operation verbs: work done TO the repo, not a change a reader can
   // observe on the site.
   /\b(?:scope|wire|bind|re-?capture|regenerate|converge|hand-run|harvest)\b/i,
 ];
+
+/**
+ * Conventional-commit types that can describe something a reader observes.
+ *
+ * Structural, so it needs no vocabulary: perf, chore, refactor, test, ci, build,
+ * style and docs are never a user-visible change, whatever words they use. This
+ * exists because the denylist below was out-vocabularied twice in one session —
+ * first by "memoize panel derivatives too — 95.9s -> 16.5s", then by the commit
+ * that installed the denylist itself.
+ */
+export const READER_FACING_TYPES = new Set(['feat', 'fix']);
+
+/**
+ * All three filters, and every one of them fails CLOSED.
+ *
+ * A git subject is written for the next engineer, not for a reader, and no
+ * filter turns one into the other — these only decide what is safe to NOT
+ * publish. The box being empty is the honest outcome when nothing in the window
+ * was written for a reader. The durable fix is to stop feeding this surface from
+ * git at all and source it from data/consumer-changelog.json, which is reader
+ * prose by construction; that is recorded on the task board.
+ */
+export function reachesAReader(commit) {
+  if (!commit || commit.visitorFacing !== true) return false;
+  if (!READER_FACING_TYPES.has(String(commit.type || '').toLowerCase())) return false;
+  return readerLegible(commit.summary);
+}
 
 /** True when a commit subject can stand on a public page without a glossary. */
 export function readerLegible(summary) {
@@ -90,10 +120,26 @@ export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }
         theme: theme.key,
         label: theme.label,
         feedbackSignals: theme.count || 0,
+        // Two filters, and the STRUCTURAL one leads.
+        //
+        // `visitorFacing` is computed by build-commit-map from the commit's
+        // touched FILES against config-declared visitor-facing paths. It already
+        // existed, build-changelog-narrative already consumed it, and this
+        // surface simply never read it — which is why a denylist of dev words
+        // was the first thing that looked like a fix. A denylist only catches
+        // the words its author thought of: the first version of this filter let
+        // "memoize panel derivatives too — 95.9s -> 16.5s" straight through.
+        // Paths cannot be out-vocabularied.
+        //
+        // The prose filter stays as a second pass, because a commit CAN touch a
+        // visitor-facing path and still have an internal subject — this very
+        // change does. A missing `visitorFacing` is treated as false: the
+        // producer writes it for every entry on every run, so its absence means
+        // the producer did not run, which is not a licence to publish.
         // Illegible lines are dropped, never rewritten: inventing reader-facing
         // prose from an internal subject would fabricate the very claim this
         // surface exists to evidence.
-        shippedCommits: commits.filter((commit) => readerLegible(commit.summary)).slice(0, 5).map((commit) => ({
+        shippedCommits: commits.filter(reachesAReader).slice(0, 5).map((commit) => ({
           sha: commit.sha,
           summary: commit.summary,
           ts: commit.ts,
@@ -145,7 +191,7 @@ if (SELF_TEST) {
     feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2, commits: [{ sha: 'abc' }] }] },
     // A reader-legible summary: 'fast' is now correctly dropped as too short to
     // be a sentence, so the fixture has to carry something publishable.
-    commitMap: { entries: [{ sha: 'abc', summary: 'pages load faster on a phone', ts: 'today' }] },
+    commitMap: { entries: [{ sha: 'abc', summary: 'pages load faster on a phone', ts: 'today', visitorFacing: true, type: 'feat' }] },
     visualSets: [{ name: 'home-lcp-s173', routes: ['/'], captureCount: 4 }],
     fieldVerdicts: { boundaries: [{ date: '2026-06-05', label: 'S173', overall: 'improved', routes: { '/': { lcpDeltaPct: -23.4, confidence: 'medium' } } }] },
   });
@@ -154,9 +200,9 @@ if (SELF_TEST) {
   const illegible = buildReceipts({
     feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 4, commits: [{ sha: 'a1' }, { sha: 'a2' }, { sha: 'a3' }] }] },
     commitMap: { entries: [
-      { sha: 'a1', summary: 'bind visual + mobile proof to the S357 candidate a1c97bfa8612', ts: 'today' },
-      { sha: 'a2', summary: 'harvest the header controls instead of hand-writing them', ts: 'today' },
-      { sha: 'a3', summary: 'every Desk article opens with its own illustration', ts: 'today' },
+      { sha: 'a1', summary: 'bind visual + mobile proof to the S357 candidate a1c97bfa8612', ts: 'today', visitorFacing: true, type: 'feat' },
+      { sha: 'a2', summary: 'harvest the header controls instead of hand-writing them', ts: 'today', visitorFacing: true, type: 'feat' },
+      { sha: 'a3', summary: 'every Desk article opens with its own illustration', ts: 'today', visitorFacing: true, type: 'feat' },
     ] },
     visualSets: [], fieldVerdicts: { boundaries: [] },
   });
@@ -167,6 +213,27 @@ if (SELF_TEST) {
     ['a flag or command never reaches a reader', !readerLegible('wire four gates into npm run build:check')],
     ['working vocabulary never reaches a reader', !readerLegible('rebuild the derived graph after the rebase')],
     ['a plain reader-facing sentence still publishes', readerLegible('the mobile menu now opens on the first tap')],
+    ['a non-visitor-facing commit never publishes, whatever its prose', buildReceipts({
+      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n1' }] }] },
+      commitMap: { entries: [{ sha: 'n1', summary: 'the mobile menu now opens on the first tap', ts: 'today', visitorFacing: false, type: 'fix' }] },
+      visualSets: [], fieldVerdicts: { boundaries: [] },
+    }).receipts[0].shippedCommits.length === 0],
+    ['a missing visitorFacing flag is treated as false, never as permission', buildReceipts({
+      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n2' }] }] },
+      commitMap: { entries: [{ sha: 'n2', summary: 'the mobile menu now opens on the first tap', ts: 'today' }] },
+      visualSets: [], fieldVerdicts: { boundaries: [] },
+    }).receipts[0].shippedCommits.length === 0],
+    ['the denylist gap that motivated the structural filter stays closed', buildReceipts({
+      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n3' }] }] },
+      commitMap: { entries: [{ sha: 'n3', summary: 'memoize panel derivatives too', ts: 'today', visitorFacing: false, type: 'perf' }] },
+      visualSets: [], fieldVerdicts: { boundaries: [] },
+    }).receipts[0].shippedCommits.length === 0],
+    ['a perf/chore commit never publishes, however readable its prose', !reachesAReader(
+      { summary: 'pages load faster on a phone', visitorFacing: true, type: 'perf' })],
+    ['a missing type is treated as not-reader-facing', !reachesAReader(
+      { summary: 'pages load faster on a phone', visitorFacing: true })],
+    ['a feat on a visitor-facing path with reader prose does publish', reachesAReader(
+      { summary: 'the mobile menu now opens on the first tap', visitorFacing: true, type: 'feat' })],
     ['illegible lines are DROPPED, not rewritten', illegible.receipts[0].shippedCommits.length === 1
       && illegible.receipts[0].shippedCommits[0].summary === 'every Desk article opens with its own illustration'],
     ['the signal count survives the drop, so the theme stays honest', illegible.receipts[0].feedbackSignals === 4],
