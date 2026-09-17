@@ -82,13 +82,13 @@
 ║  ✓  Context age   2d                                             ║
 ║  ⚠  IGNIS         46492 FORGE  ·  8d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
+║  ✓  Revenue sig.  6d old (2026-09-11)                            ║
 ║  ⛔  Deploy gaps   production 233 commit(s) behind · 3d — past t  ║
 ║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║

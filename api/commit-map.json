@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 33,
+    "inspected": 35,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,39 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "74efe332",
+      "ts": "2026-09-17T10:51:33.000Z",
+      "type": "chore",
+      "scope": "gates",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "record build:check diagnostics",
+      "visitorFacing": false
+    },
+    {
+      "sha": "31f23e2b",
+      "ts": "2026-09-17T10:51:33.000Z",
+      "type": "chore",
+      "scope": "receipts",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bind proof to the content-addressed candidate",
+      "visitorFacing": false
+    },
+    {
+      "sha": "7a0bde65",
+      "ts": "2026-09-17T10:51:33.000Z",
+      "type": "fix",
+      "scope": "assets",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "content-address the two client scripts that kept a retired fetch alive",
+      "visitorFacing": true
+    },
     {
       "sha": "77acd1e6",
       "ts": "2026-09-17T10:35:22.000Z",
@@ -248,39 +281,6 @@
       "tone": "muted",
       "summary": "bind visual + mobile proof to candidate ff33386097d7",
       "visitorFacing": false
-    },
-    {
-      "sha": "2d10ded6",
-      "ts": "2026-09-17T09:42:33.000Z",
-      "type": "fix",
-      "scope": "public-voice",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "stop rendering raw commit subjects to visitors on /changelog/",
-      "visitorFacing": true
-    },
-    {
-      "sha": "dbe11200",
-      "ts": "2026-09-17T09:42:32.000Z",
-      "type": "chore",
-      "scope": "receipts",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "bind visual + mobile proof to the S357 candidate a1c97bfa8612",
-      "visitorFacing": false
-    },
-    {
-      "sha": "f50605bb",
-      "ts": "2026-09-17T09:42:32.000Z",
-      "type": "chore",
-      "scope": "build",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "converge the generated surface on the S357 release candidate",
-      "visitorFacing": true
     }
   ]
 }
