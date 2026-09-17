@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T09:46:35.699Z",
+  "generatedAt": "2026-09-17T09:51:50.872Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Deployment reconciliation ledger is stale (newest receipt 2 days old); production promotion state is unobserved, not stranded. CI gates are still running.",
+  "summary": "Deployment reconciliation ledger is stale (newest receipt 2 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-15T04:36:00.874Z",
     "currentBehindStreak": 10,
     "newestGradableAt": "2026-09-15T04:36:00.874Z",
-    "newestAgeHours": 53.2,
+    "newestAgeHours": 53.3,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-17T09:44:27Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-17T09:51:13Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35206749748",
       "headSha": "ada385233bdfd059cbd3e497b8582fc474342f68",
       "event": "push"
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.45,
+      "ageHours": 0.54,
       "staleAfterHours": 48
     },
     {
@@ -100,7 +100,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.84,
+      "ageHours": 2.92,
       "staleAfterHours": 48
     },
     {
@@ -124,7 +124,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.37,
+      "ageHours": 2.46,
       "staleAfterHours": 48
     },
     {
@@ -148,7 +148,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 3.12,
+      "ageHours": 3.2,
       "staleAfterHours": 48
     },
     {
@@ -172,7 +172,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.12,
+      "ageHours": 3.21,
       "staleAfterHours": 48
     },
     {
@@ -185,7 +185,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.81,
+      "ageHours": 2.89,
       "staleAfterHours": 48
     },
     {
@@ -199,7 +199,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.11,
+      "ageHours": 1.2,
       "staleAfterHours": 48
     },
     {
@@ -212,7 +212,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.92,
+      "ageHours": 3,
       "staleAfterHours": 48
     },
     {
@@ -227,7 +227,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.11,
+      "ageHours": 0.2,
       "staleAfterHours": 48
     },
     {
