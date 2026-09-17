@@ -169,6 +169,34 @@ function hashIndex(artDir) {
 }
 
 /** Validate + normalize every candidate. Pure with respect to the repo (reads only). */
+/**
+ * Normalize one source raster, memoized on its CONTENT hash.
+ *
+ * S357 — `png({ compressionLevel: 9, adaptiveFiltering: true })` at 1600x900 is
+ * the most expensive single operation in this file, and the documented workflow
+ * runs planIngest twice over the same staged batch (a --dry-run pass, then the
+ * real pass), so every image was normalized twice for byte-identical output.
+ * In --self-test, where both passes happen in one process over eight staged
+ * rasters, that was most of a 95s step — 43.3% of build:check's parallel
+ * segment, which tripped the concentration ratchet the first time a run ever
+ * got far enough to observe it.
+ *
+ * The key is the source's own sha256, which planIngest has already computed by
+ * this point, so a changed file can never hit a stale entry. This is a cache of
+ * a pure function: the bytes and every assertion made about them are unchanged.
+ */
+const normalizedCache = new Map();
+export async function normalizeRaster(source, sourceSha) {
+  const hit = normalizedCache.get(sourceSha);
+  if (hit) return hit;
+  const buffer = await sharp(source)
+    .resize({ width: NORMALIZED_MAX.width, height: NORMALIZED_MAX.height, fit: 'inside', withoutEnlargement: true })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+  normalizedCache.set(sourceSha, buffer);
+  return buffer;
+}
+
 export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null } = {}) {
   const plan = { accepted: [], skipped: [], rejected: [] };
   if (!fs.existsSync(from)) return plan;
@@ -194,10 +222,7 @@ export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = 
     if (!(m.entropy >= REAL_ART_ENTROPY_FLOOR)) { reject(`entropy ${m.entropy} below real-art floor ${REAL_ART_ENTROPY_FLOOR} (flat, blank or diagram-like)`); continue; }
     if (batchHashes.has(m.sha256)) { reject(`identical pixels to ${batchHashes.get(m.sha256)} in this batch`); continue; }
     batchHashes.set(m.sha256, id);
-    const buffer = await sharp(source)
-      .resize({ width: NORMALIZED_MAX.width, height: NORMALIZED_MAX.height, fit: 'inside', withoutEnlargement: true })
-      .png({ compressionLevel: 9, adaptiveFiltering: true })
-      .toBuffer();
+    const buffer = await normalizeRaster(source, m.sha256);
     const n = await measureArt(buffer);
     const current = story.visual?.artSource ? path.join(root, story.visual.artSource) : null;
     const currentSha = current && fs.existsSync(current) ? (await measureArt(current)).sha256 : null;

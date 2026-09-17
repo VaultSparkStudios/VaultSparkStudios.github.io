@@ -150,18 +150,40 @@ export function renderFallbackArtSvg(story, date) {
 export const renderArticleArtSvg = renderFallbackArtSvg;
 
 /** Decode + measure a raster (read-only). */
+/**
+ * S357 — memoized on the bytes' own hash.
+ *
+ * measureArt is a pure function of its input bytes, but it fully decodes the
+ * raster and computes channel stats (entropy) on every call, and the ingest path
+ * calls it three times per image — source, normalized, and the art already on
+ * disk — across two planIngest passes. Hashing first is microseconds; the decode
+ * is hundreds of milliseconds, so the order below is the whole point.
+ *
+ * The cache is keyed on content, so it cannot serve a stale answer for a changed
+ * file, and it is capped because a full Desk backfill measures hundreds of
+ * rasters and a decoded-stats cache of that size has no reason to live.
+ */
+const measureCache = new Map();
+const MEASURE_CACHE_MAX = 256;
+
 export async function measureArt(input) {
   const bytes = Buffer.isBuffer(input) ? input : fs.readFileSync(input);
+  const sha256 = crypto.createHash('sha256').update(bytes).digest('hex');
+  const cached = measureCache.get(sha256);
+  if (cached) return cached;
   const image = sharp(bytes);
   const [metadata, stats] = await Promise.all([image.metadata(), image.stats()]);
-  return {
+  const measured = {
     format: metadata.format,
     width: metadata.width,
     height: metadata.height,
     entropy: Number.isFinite(stats.entropy) ? round(stats.entropy, 3) : null,
-    sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
+    sha256,
     bytes: bytes.length,
   };
+  if (measureCache.size >= MEASURE_CACHE_MAX) measureCache.clear();
+  measureCache.set(sha256, measured);
+  return measured;
 }
 
 /**
