@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-17T09:59:40.208Z
-Receipt: `94cdc5ffca80d9f9f24cfded` · coverage 499/499 from step 1
+Generated: 2026-09-17T10:19:16.040Z
+Receipt: `ea53457864e48d803501b0c9` · coverage 61/499 from step 1
 
-Latest: **499/499** passed · failed 0 · total 114.1s
-Concentration: **10.7%** in step 475 · ratchet clear (>30% and ≥45s)
+Latest: **60/61** passed · failed 1 · total 11.7s
+Concentration: **45.9%** in step 61 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 475 | 12.2s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
-| 145 | 11.0s | 0 | `node scripts/check-proof-surface.mjs` |
-| 104 | 8.0s | 0 | `node --test tests/founder-presence-absent.unit.spec.js tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js tests/tt-report-only.unit.spec.js tests/resync-derived.unit.spec.js tests/local-preview.unit.spec.js tests/studio-pulse.unit.spec.js tests/desk-wire.unit.spec.js tests/desk-comments.unit.spec.js tests/consent-analytics.unit.spec.js tests/theme-toggle.unit.spec.js tests/nav-toggle.unit.spec.js tests/csrf-token.unit.spec.js tests/turnstile.unit.spec.js tests/page-feedback-payload.unit.spec.js tests/desk-presence.unit.spec.js tests/public-contract-libs.unit.spec.js` |
-| 99 | 6.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 61 | 5.3s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 250 | 3.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 473 | 3.0s | 0 | `node scripts/generate-news-art.mjs --self-test` |
-| 385 | 2.9s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 95 | 1.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 262 | 1.8s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
+| 61 | 5.4s | 1 | `node scripts/smoke-startup-scripts.mjs` |
+| 29 | 0.8s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 58 | 0.6s | 0 | `node scripts/run-build-check.mjs --self-test` |
+| 23 | 0.3s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
+| 41 | 0.3s | 0 | `node scripts/build-oracle-velocity-public.mjs --check` |
+| 40 | 0.2s | 0 | `node scripts/build-oracle-velocity-public.mjs --self-test` |
+| 38 | 0.1s | 0 | `node scripts/build-deploy-currency.mjs --self-test` |
+| 46 | 0.1s | 0 | `node scripts/build-candidate-artifact-manifest.mjs --check` |
+| 50 | 0.1s | 0 | `node scripts/rollup-rum-ux.mjs --self-test` |
+| 27 | 0.1s | 0 | `node scripts/check-lighthouse-trend.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 61: `node scripts/smoke-startup-scripts.mjs` exited 1
