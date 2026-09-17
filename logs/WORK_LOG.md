@@ -1612,3 +1612,13 @@ The pre-push output carried two warnings from `build-promotion-receipt`. Both tu
 **"stranded/stale deploy"** — production `build-sha.sha` stays at the baseline by content-lane design while `contentLaneHead` carries the release. The receipt already records `productionContentLaneHead` (correct: `949cfacb6`) and its `behind` finding ignores it.
 
 Both are advisory, both recorded on the board with the measurements rather than fixed here: the first needs a vantage-policy decision (pages.dev was chosen deliberately for WAF-independence), not an origin swap.
+
+### S357 — one tool built rather than endured
+
+`scripts/rebind-mobile-receipt.mjs` (new, `npm run receipt:mobile:rebind`). `check-receipt-ordering` rightly rejects a receipt whose `candidateSha` differs from the final candidate manifest, but that sha is metadata and moves on every `npm run build` — so after every publisher rebase. The visual receipt has had a rebind path since S303; the mobile one never did, so clearing a pure metadata mismatch meant a ~7-minute re-run of a 215-cell audit whose findings had not changed. That happened three times in this session, identical 215/215 each time.
+
+It cannot launder evidence: records come from the real audit's `findings.jsonl`, every capture hash is recomputed from the PNG on disk, `generatedAt` is preserved (it is when the pixels were observed, not when they were re-stamped) with a separate `rebound` stamp, the source list is parsed from the spec rather than copied so the two cannot drift, and it REFUSES and names the files if any bound source actually changed. The rebound receipt must pass `validateReceipt` before it is written.
+
+Two of its own bugs are worth the note: a bare quoted-string match over the spec's `SOURCE_FILES` literal also captured the `'/'` inside `page.url === '/'` and read a directory (EISDIR), and dropping the spec's `filter(record => record.screenshot)` produced a null path — 40 of the 215 cells (ipad-portrait) record no screenshot, which is why the receipt carries 175 captures against 215 completed probes.
+
+Wired as a plain runner (it mutates a receipt and must never run inside the gate) with its `--self-test` in `build:check:steps`, so it cannot rot unseen — the same class fixed earlier today. Orphan scripts 0, reachability 252/252 and 320/320, self-test 5/5. `docs/mobile-audit/` is gitignored, so the receipt is a local artifact and this friction was per-machine.

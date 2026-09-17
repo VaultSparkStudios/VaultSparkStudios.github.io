@@ -2472,3 +2472,13 @@ Production reached: Worker `b19ce12e`, content-lane run `35256380631`, `contentL
 **The best evidence the session produced.** After the release, `build-deploy-currency --probe` reports `content-current` with parity `matched`, 0 missing, 0 unexpected, age 0h, `expectedFrom` bound to this tree, 0 undeployed content commits. This morning it reported the same two words with four shell assets missing, no binding and no clock. Same verdict, and now it is earned.
 
 **Honesty ledger (addendum):** did not read 9/10 as "expected" once a real cause existed. Did not retry the denied deploy more than once before reporting. Did not treat the capability-slice block as an obstacle to route around — the missing route contract was the defect. Corrected my own compound-command diagnosis in public rather than quietly moving on.
+
+### S357 addendum 2 — the last hour, and one correction to my own closeout
+
+Everything shipped and pushed; production verified from served bytes and `smoke:live` 6/6.
+
+**Built rather than endured:** `scripts/rebind-mobile-receipt.mjs`. Re-stamping a receipt's candidate metadata cost a 7-minute 215-cell re-run three times in this session because only the visual receipt had a rebind path. It refuses when a bound source genuinely changed, preserves the observation time, parses the spec's source list rather than copying it, and its self-test is in the gate.
+
+**I committed the exact defect class I spent the day fixing.** My push-retry loop grepped stdout for `main -> main`, which also matches `! [rejected] main -> main` — so it reported "PUSHED on attempt 1" while nothing had landed. A second loop ran five silent no-op iterations against a stranded rebase it never checked for. Both were caught by comparing shas and reading real state instead of a string, which is the rule this session added to three other people's gates.
+
+**Closeout completeness:** this addendum exists because the write-back asserted done while the rebind tool, committed after it, appeared on no surface. An unasserted closeout is the defect that made F7 necessary; an under-asserted one is the same defect one step smaller.
