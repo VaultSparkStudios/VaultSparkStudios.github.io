@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-09-17T07:39:41.420Z",
+  "generatedAt": "2026-09-17T08:16:51.543Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -13,18 +13,18 @@
       "/ → fingerprinted shell paths"
     ]
   },
-  "state": "content-current",
-  "observedAt": "2026-09-17T07:39:41.420Z",
+  "state": "stale",
+  "observedAt": "2026-09-17T08:16:51.543Z",
   "observedOrigin": "multi-vantage-quorum",
   "deployedSha": "e65eca737d7e97a5891f460537b7eb5c279bd6ba",
   "deployedShaShort": "e65eca737d7e",
-  "repoTipShaShort": "2a770a85b880",
-  "commitsBehind": 171,
+  "repoTipShaShort": "602b9b14f5c9",
+  "commitsBehind": 193,
   "deployedCommitAt": "2026-09-14T10:13:52.000Z",
-  "ageHours": 69,
-  "undeployedContentCommits": 11,
+  "ageHours": 70,
+  "undeployedContentCommits": 18,
   "oldestUndeployedContentAt": "2026-09-14T12:35:41Z",
-  "contentLagHours": 67.1,
+  "contentLagHours": 67.7,
   "ageDays": 2.9,
   "thresholds": {
     "warnHours": 12,
@@ -45,7 +45,7 @@
     "state": "agreed",
     "required": 2,
     "agreementCount": 2,
-    "observedAt": "2026-09-17T07:39:41.420Z",
+    "observedAt": "2026-09-17T08:16:51.543Z",
     "agreedShaShort": "e65eca737d7e",
     "agreedSha256": "85ca5c582c961ecaefb308c403ddbcc94756698702780d5405d850b7f5044daf",
     "evidence": [
@@ -53,7 +53,7 @@
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-09-17T07:39:41.420Z",
+        "observedAt": "2026-09-17T08:16:51.543Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +67,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-09-17T07:39:41.451Z",
+        "observedAt": "2026-09-17T08:16:51.575Z",
         "shaShort": "e65eca737d7e",
         "sha256": "85ca5c582c961ecaefb308c403ddbcc94756698702780d5405d850b7f5044daf",
         "httpStatus": 200,
@@ -81,7 +81,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-09-17T07:39:41.452Z",
+        "observedAt": "2026-09-17T08:16:51.576Z",
         "shaShort": "e65eca737d7e",
         "sha256": "85ca5c582c961ecaefb308c403ddbcc94756698702780d5405d850b7f5044daf",
         "httpStatus": 200,
@@ -95,7 +95,7 @@
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
         "state": "unobserved",
-        "observedAt": "2026-09-17T07:39:41.454Z",
+        "observedAt": "2026-09-17T08:16:51.578Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 200,
@@ -115,21 +115,22 @@
     ]
   },
   "shellParity": {
-    "state": "matched",
+    "state": "drift",
     "route": "/",
-    "observedAt": "2026-09-17T07:39:41.420Z",
+    "observedAt": "2026-09-17T08:16:51.543Z",
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
-      "assets/ambient-core.shell-a4349880f3.js",
-      "assets/ambient-feature.shell-ca3b329506.js",
+      "assets/ambient-core.shell-7ca24aa233.js",
+      "assets/ambient-feature.shell-9b5baeb1ab.js",
       "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+      "assets/hero-ticker.shell-550971e267.js",
       "assets/home-idle-loader.shell-24f891da0e.js",
       "assets/nav-sheet.shell-d6938be4eb.js",
       "assets/nav-toggle.shell-8c1f2155b5.js",
       "assets/sentry-init.shell-8b1d92d92b.js",
       "assets/shell-health.shell-0995bd7945.js",
       "assets/stats-surface.shell-b33242e1cc.js",
-      "assets/style.shell-79b001d0ae.css",
+      "assets/style.shell-0fa853d549.css",
       "assets/theme-toggle.shell-8221605898.js"
     ],
     "actual": [
@@ -145,8 +146,17 @@
       "assets/style.shell-79b001d0ae.css",
       "assets/theme-toggle.shell-8221605898.js"
     ],
-    "missing": [],
-    "unexpected": [],
+    "missing": [
+      "assets/ambient-core.shell-7ca24aa233.js",
+      "assets/ambient-feature.shell-9b5baeb1ab.js",
+      "assets/hero-ticker.shell-550971e267.js",
+      "assets/style.shell-0fa853d549.css"
+    ],
+    "unexpected": [
+      "assets/ambient-core.shell-a4349880f3.js",
+      "assets/ambient-feature.shell-ca3b329506.js",
+      "assets/style.shell-79b001d0ae.css"
+    ],
     "challengedAt": null,
     "challengeError": null
   },
