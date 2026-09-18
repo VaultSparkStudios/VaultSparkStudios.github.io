@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-17T23:57:32.893Z
-Receipt: `eff9cc847a5090659ab6a8cc` · coverage 109/109
+Generated: 2026-09-18T00:53:19.372Z
+Receipt: `6aad3be3d86860ed098f3ed7` · coverage 88/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 40.0s
+Latest: **87/88** passed · blocking 87/88 · advisory findings 0/0 · total 14.4s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 82 | blocking | 2.3s | 0 | `node scripts/build-route-consolidation.mjs --check` |
-| 92 | blocking | 1.6s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 81 | blocking | 1.3s | 0 | `node scripts/build-route-consolidation.mjs --self-test` |
-| 106 | advisory | 1.2s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 88 | blocking | 1.1s | 0 | `node scripts/check-receipt-ordering.mjs` |
-| 98 | advisory | 0.9s | 0 | `node scripts/build-oracle-query-insights.mjs --check` |
-| 80 | blocking | 0.9s | 0 | `node scripts/build-projects-catalog.mjs --check` |
-| 46 | blocking | 0.8s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 100 | advisory | 0.8s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
-| 102 | advisory | 0.8s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
+| 78 | blocking | 0.5s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 49 | blocking | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 37 | blocking | 0.4s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 35 | blocking | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 46 | blocking | 0.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 14 | blocking | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 24 | blocking | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 18 | blocking | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 82 | blocking | 0.2s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 36 | blocking | 0.2s | 0 | `node scripts/build-news-desk.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 88 [blocking]: `node scripts/check-receipt-ordering.mjs` exited 1 — self/contract

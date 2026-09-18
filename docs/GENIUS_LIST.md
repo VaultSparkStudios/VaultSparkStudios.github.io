@@ -94,10 +94,10 @@ Why it matters: Mount the narrative on /journal/. Deferred: a UI change needs it
 
 ### DEFERRED / GATED
 
-#### 1. [PRODUCT] Desk comments are live but every read 503s comments_upstream_failed
-Final score: **96**
-[S357][ENG/P0 · FOUNDER] Desk comments are live but every read 503s comments_upstream_failed — the Supabase service-role key is rejected ("Invalid API key"). Pre-existing credential-project mismatch (S344), not the release. Reconcile the credential for project fjnpzjjyhnpmunfoycrp.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+#### 1. [VERIFY] Desk comments 503 is a Supabase outage, not a credential fault: proje…
+Final score: **100**
+[S357][ENG/P0 · PROVIDER] Desk comments 503 is a Supabase outage, not a credential fault: project fjnpzjjyhnpmunfoycrp reports db/rest/auth all UNHEALTHY via Supabase’s own health API while its project status still reads ACTIVE_HEALTHY. Two faults were stacked and one is fixed — the gateway’s supabase.admin points at a *different* project (ckwtolofoqzrqouqkmvs, "VaultSpark Studios-2"), and the legacy JWT key type is retired here (the project carries sb_publishable_/sb_secret_ issued 2026-03-12). Staging now holds the correct new-style secret; production still holds the wrong-project legacy key. When the provider recovers: npm run repair:desk-comments-credential, then --apply --env production --verify-at-worker.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 2. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
 Final score: **93**
