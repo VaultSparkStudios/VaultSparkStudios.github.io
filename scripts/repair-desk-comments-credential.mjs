@@ -26,7 +26,10 @@
  *   node scripts/repair-desk-comments-credential.mjs --apply --env production
  *   node scripts/repair-desk-comments-credential.mjs --self-test
  */
-import { spawn } from 'node:child_process';
+// Never node:child_process directly — check-windows-hide enforces this, and it
+// caught this file. safe-spawn forces windowsHide:true, which is what stops a
+// visible console window per spawn on Windows (§0 window-storm guard).
+import { spawn } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSecret, envForSpawn } from './lib/secrets.mjs';
