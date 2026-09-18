@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-17T18:42:42.765Z",
+  "generatedAt": "2026-09-18T19:55:45.497Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 553
+      "durationMs": 437
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 2,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,25 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 123
+      "durationMs": 104
+    },
+    {
+      "id": "lane-held-asset-drift",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 1728
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 106406
+      "durationMs": 54598
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3,
+      "durationMs": 1,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -53,13 +59,13 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 110433
+      "durationMs": 87380
     },
     {
       "id": "attention-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 1,
       "passed": 15,
       "expected": 15,
       "skipped": 0,
@@ -70,13 +76,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 229
+      "durationMs": 86
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3,
+      "durationMs": 2,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending",
@@ -96,16 +102,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2327,
+      "durationMs": 1093,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
-      "observedDate": "2026-09-17"
+      "observedDate": "2026-09-18"
     }
   ],
-  "evidenceSha256": "6174454dd49abd3e4e0a8365d5c278a17e6c7f0213fbe250ee3c7ed0f5dee131",
-  "contractSha256": "502980c9e4ad58db6c829eedf6e2f6d8a60ebb07d7e6882efcf8868f526c1772",
+  "evidenceSha256": "2cad76b61b21d81b0c6f4deb8c3ed5faac2e2d73be60ade89480863de0d5a3e9",
+  "contractSha256": "c7adf422a39c286d601e0942c776da44e8c653e6f41f555aa68773ec48693310",
   "chain": {
-    "previousReceiptSha256": "4483ac777cc804fab3c597cdb2a3db2ed53988f26d14ec69568dcd518c8c28fd"
+    "previousReceiptSha256": "22d1bf50fae2c370340360fcfaa062b09fe44b68db38b47ad9f4f90bca206d89"
   },
   "privacy": {
     "stdoutRetained": false,
