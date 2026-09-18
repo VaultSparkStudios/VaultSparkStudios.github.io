@@ -33,6 +33,20 @@
  *     the honest baseline on a repo with a real backlog is "not zero yet", and a
  *     gate that fails from day one gets suppressed rather than fixed.
  *
+ *   @check-mode dry-run — this REPORTS lane-held drift and exits 0 unless
+ *   `--strict`. It is deliberately NOT in build:check:steps: it probes a live
+ *   origin over the network, and build:check must stay runnable offline and
+ *   deterministic. It is not therefore a gate nothing asks — it runs in
+ *   run-release-ceremony (`lane-held-asset-drift`, at the staging origin, which
+ *   is the moment the number can still change a decision) and on demand via
+ *   `npm run verify:lane-drift`. Its --self-test IS in build:check, so the
+ *   measurement's logic cannot rot unseen.
+ *
+ * Measured the day it was written: staging, which receives a FULL deploy, was
+ * 171 match / 0 drift. Production, which receives only the content lane, was
+ * 137 match / 32 drift, 19 of them still referenced. That difference IS the
+ * defect this file exists to keep visible.
+ *
  * Usage:
  *   node scripts/check-lane-held-asset-drift.mjs            # measure, advisory
  *   node scripts/check-lane-held-asset-drift.mjs --strict   # non-zero on drift
@@ -48,7 +62,11 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const SELF_TEST = args.includes('--self-test');
 const STRICT = args.includes('--strict');
-const ORIGIN = args.includes('--origin') ? args[args.indexOf('--origin') + 1] : 'https://vaultsparkstudios.com';
+// Both flag forms: the release ceremony passes --origin=X, a human passes --origin X.
+const originFlag = args.find((a) => a.startsWith('--origin='));
+const ORIGIN = originFlag ? originFlag.slice('--origin='.length)
+  : args.includes('--origin') ? args[args.indexOf('--origin') + 1]
+  : 'https://vaultsparkstudios.com';
 const OUT = path.join(ROOT, '.cache', 'lane-held-asset-drift.json');
 
 const FINGERPRINTED = /\.shell-[a-f0-9]{10}\.(?:js|css)$/;

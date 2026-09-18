@@ -307,6 +307,13 @@ steps.push(runScript('redirect-readiness-probe', 'scripts/check-obelisk-redirect
 steps.push(artifactStep('redirect-readiness', 'api/obelisk-redirect-readiness.json', (value) => value.state === 'passed' && value.ready === true,
   (value) => ({ verdict: value.state || 'unavailable', contractSha256: value.contractSha256 || null })));
 steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-receipt.mjs'));
+// S357 — lane-held asset drift, measured at the moment it matters. The content
+// lane HOLDS unhashed .js, so a plain client script cannot be updated by a
+// promotion; it changes only on a full deploy. That is how a fetch S356 deleted
+// stayed live in served bytes. This reports (exit 0 unless --strict) so the
+// number is in front of whoever is promoting, rather than reconstructed by hand
+// after a browser gate happens to trip over the consequence.
+steps.push(runScript('lane-held-asset-drift', 'scripts/check-lane-held-asset-drift.mjs', [`--origin=${CANONICAL_STAGING}`]));
 steps.push(runScript('staging-browser', 'scripts/run-staging-release-gate.mjs', [`--url=${CANONICAL_STAGING}`]));
 // S319: `held` is accepted, `skipped` is still not. A held contract is evidence
 // consciously scoped out of a blast-radius-disjoint promotion, declared on the
