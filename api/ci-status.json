@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T20:13:01.461Z",
+  "generatedAt": "2026-09-18T20:18:09.468Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 5,
-    "healthy": 5,
-    "unknown": 9,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 14 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 14 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-18T00:44:19.701Z",
     "currentBehindStreak": 14,
     "newestGradableAt": "2026-09-18T00:44:19.701Z",
-    "newestAgeHours": 19.5,
+    "newestAgeHours": 19.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-18T20:11:44Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35388739199",
-      "headSha": "fabe5dfee17b12acc3ad48406a0b8c57a86af86f",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-18T20:15:39Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35390468088",
+      "headSha": "c77a9058aea93907d8abfbab35d74cbe657166a8",
       "event": "push"
     },
     {
@@ -50,19 +50,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-09-18T19:58:44Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35388739224",
-      "headSha": "fabe5dfee17b12acc3ad48406a0b8c57a86af86f",
+      "updatedAt": "2026-09-18T20:17:17Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35390467829",
+      "headSha": "c77a9058aea93907d8abfbab35d74cbe657166a8",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-18T20:12:19Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35388739127",
-      "headSha": "fabe5dfee17b12acc3ad48406a0b8c57a86af86f",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-18T20:15:39Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35390467729",
+      "headSha": "c77a9058aea93907d8abfbab35d74cbe657166a8",
       "event": "push"
     },
     {
@@ -159,13 +159,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-18T18:27:06Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.77,
+      "ageHours": 1.85,
       "staleAfterHours": 48
     },
     {
@@ -173,13 +172,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-18T18:46:28Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.44,
+      "ageHours": 1.53,
       "staleAfterHours": 48
     },
     {
@@ -187,13 +185,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-18T16:31:44Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.69,
+      "ageHours": 3.77,
       "staleAfterHours": 48
     },
     {
@@ -219,20 +216,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.03,
+      "ageHours": 0.11,
       "staleAfterHours": 48
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-18T13:07:59Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 7.08,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
