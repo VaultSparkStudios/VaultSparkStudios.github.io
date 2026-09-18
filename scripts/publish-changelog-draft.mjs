@@ -63,7 +63,12 @@ export function validateDraft(parsed) {
   const hit = DEVISH.find((re) => re.test(blob));
   if (hit) return { error: `dev-voice content rejected (matched ${hit}) — rewrite in audience voice` };
   if (highlights.some((h) => h.length > 220)) return { error: 'a highlight exceeds 220 chars — tighten it' };
-  return { entry: { date: meta.date, title: meta.title, highlights } };
+  // S358: `answers: frontdoor, speed` declares which feedback themes this entry
+  // answers. It is the ONLY way a change reaches "You asked → we shipped" — the
+  // link is a claim the founder makes at approval, never inferred from wording.
+  const answers = String(meta.answers || '').split(',').map((a) => a.trim().toLowerCase()).filter(Boolean);
+  if (answers.some((a) => !/^[a-z][a-z0-9-]{1,31}$/.test(a))) return { error: 'answers must be comma-separated feedback theme keys (e.g. frontdoor, speed)' };
+  return { entry: { date: meta.date, title: meta.title, highlights, ...(answers.length ? { answers } : {}) } };
 }
 
 function readFeed() {
@@ -90,6 +95,9 @@ function selfTest() {
     ['bad date', '---\ndate: soon\ntitle: X\napproved: true\n---\n- ok', (r) => /date/.test(r.error || '')],
     ['no highlights', '---\ndate: 2026-07-16\ntitle: X\napproved: true\n---\n', (r) => /highlight/.test(r.error || '')],
     ['no frontmatter', 'just text', (r) => /frontmatter/.test(r.error || '')],
+    ['declared answers carried', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: frontdoor, Speed\n---\n- ok', (r) => r.entry?.answers?.join() === 'frontdoor,speed'],
+    ['no answers means no field', '---\ndate: 2026-07-16\ntitle: X\napproved: true\n---\n- ok', (r) => r.entry && !('answers' in r.entry)],
+    ['malformed answers rejected', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: front door!\n---\n- ok', (r) => /answers/.test(r.error || '')],
   ];
   let pass = 0;
   for (const [name, raw, check] of cases) {

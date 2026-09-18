@@ -90,36 +90,59 @@ export function laneHeldAssets(names) {
  * Observed immediately: hero-ticker, public-intelligence and studio-now were all
  * fingerprinted earlier in S357 and still showed as drift.
  */
+// Paths a browser can load. The fingerprint suffix is part of the name, so a
+// page tag naming `assets/x.shell-0123456789.js` makes THAT file a root.
+const TAG = /<script[^>]+src=["']\/?(assets\/[a-z0-9.-]+\.js)["']/gi;
+// Inside served JS, any quoted `/assets/x.js` string: a predicate loader's
+// `src:` entry and an idle loader's plain list both have this shape.
+const JS_REF = /['"]\/(assets\/[a-z0-9.-]+\.js)['"]/gi;
+
+/**
+ * Pure: the set of assets reachable at RUNTIME, from page tags through every
+ * served script that names another. `jsFiles` maps a repo path to its text.
+ *
+ * S358 — reachability, not mention. The first version read every assets/*.js
+ * on disk as a potential loader, so an UNBUNDLED loader source counted: the
+ * readable ambient-loader.js still names `/assets/studio-now.js` while the
+ * bundle it is concatenated into — the only copy a browser ever runs — names
+ * the fingerprint. Two already-fixed scripts therefore stayed RISK forever.
+ * Walking from what pages actually load makes a source file matter only when
+ * something served reaches it.
+ */
+export function resolveReferences(htmlTexts, jsFiles) {
+  const reached = new Set();
+  const queue = [];
+  const add = (rel) => { if (!reached.has(rel)) { reached.add(rel); queue.push(rel); } };
+  for (const html of htmlTexts) for (const m of html.matchAll(TAG)) add(m[1]);
+  while (queue.length) {
+    const rel = queue.shift();
+    const text = jsFiles[rel];
+    if (typeof text !== 'string') continue;
+    for (const m of text.matchAll(JS_REF)) if (m[1] !== rel) add(m[1]);
+  }
+  return reached;
+}
+
 export function referencedAssets(root = ROOT) {
-  const refs = new Set();
+  // Build output, tooling and docs are never served as pages.
   const skip = /^(?:node_modules|\.git|\.cache|output|lighthouse-results|playwright-report|docs|coverage|scripts|tests)$/;
-  // A RUNTIME load only. Two shapes ship to a browser:
-  //   <script src="/assets/x.js">        — a page tag
-  //   { src: '/assets/x.js', when: ... } — a loader entry (ambient/idle loaders)
-  // Everything else that merely NAMES the file is build-time bookkeeping: the
-  // service worker's non-cacheable source list, build-shell-assets' input table,
-  // this gate's own docs. Counting those made every asset I had just fingerprinted
-  // still read as RISK, because the build table still names its source.
-  const TAG = /<script[^>]+src=["']\/?(assets\/[a-z0-9-]+\.js)["']/gi;
-  const LOADER = /\bsrc:\s*['"]\/?(assets\/[a-z0-9-]+\.js)['"]/gi;
+  const htmlTexts = [];
+  const jsFiles = {};
   const walk = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       if (entry.isDirectory()) { if (!skip.test(entry.name)) walk(path.join(dir, entry.name)); continue; }
       const full = path.join(dir, entry.name);
       const rel = path.relative(root, full).replace(/\\/g, '/');
-      if (rel === 'sw.js') continue; // precache bookkeeping, not a load
-      let text;
-      if (/\.html$/i.test(entry.name)) {
-        try { text = fs.readFileSync(full, 'utf8'); } catch { continue; }
-        for (const m of text.matchAll(TAG)) refs.add(m[1]);
-      } else if (/^assets\//.test(rel) && /\.js$/i.test(entry.name)) {
-        try { text = fs.readFileSync(full, 'utf8'); } catch { continue; }
-        for (const m of text.matchAll(LOADER)) { if (m[1] !== rel) refs.add(m[1]); }
-      }
+      // sw.js names assets for precache bookkeeping; that is not a load.
+      if (rel === 'sw.js') continue;
+      try {
+        if (/\.html$/i.test(entry.name)) htmlTexts.push(fs.readFileSync(full, 'utf8'));
+        else if (/^assets\//.test(rel) && /\.js$/i.test(entry.name)) jsFiles[rel] = fs.readFileSync(full, 'utf8');
+      } catch { /* unreadable: contributes nothing */ }
     }
   };
   walk(root);
-  return refs;
+  return resolveReferences(htmlTexts, jsFiles);
 }
 
 /** Pure: turn per-asset observations into a verdict. */
@@ -187,6 +210,20 @@ function selfTest() {
   ]);
   t('referenced drift is the number that matters', split.driftThatMatters === 1 && split.driftedReferenced[0] === 'live.js');
   t('unreferenced drift is residue, not risk', split.driftedResidue[0] === 'old.js' && split.drift === 2);
+  // S358: reachability. An unbundled loader SOURCE naming a plain path must not
+  // count; the served bundle naming the fingerprint is what a browser runs.
+  const reach = resolveReferences(
+    ['<script src="/assets/core.shell-0123456789.js" defer></script>', '<script src="/assets/tagged.js"></script>'],
+    {
+      'assets/core.shell-0123456789.js': "{ src: '/assets/child.shell-abcdef0123.js' }; ['/assets/listed.js']",
+      'assets/loader-source.js': "{ src: '/assets/child.js' }",
+      'assets/listed.js': "load('/assets/grandchild.js')",
+    },
+  );
+  t('a page tag is reached', reach.has('assets/tagged.js'));
+  t('a served loader reaches its children, hashed and plain', reach.has('assets/child.shell-abcdef0123.js') && reach.has('assets/listed.js'));
+  t('reachability is transitive', reach.has('assets/grandchild.js'));
+  t('an unserved loader source reaches nothing', !reach.has('assets/child.js'));
   t('the verdict names its vantage', typeof s.origin === 'string' && s.origin.startsWith('http'));
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);

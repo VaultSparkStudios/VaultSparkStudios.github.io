@@ -123,6 +123,15 @@ const CONTENT_ADDRESSED_PREDICATE_SRCS = [
   'assets/desk-wire.js',
   'assets/studio-now.js',
   'assets/public-intelligence.js',
+  // S358: the loader-only members of the 17 that production's drift gate found
+  // still loaded while serving pre-S356 bytes. Each is also a shell asset.
+  'assets/exit-intent.js',
+  'assets/honest-traction-scoreboard.js',
+  'assets/ignis-lens.js',
+  'assets/rate-page.js',
+  'assets/security-posture.js',
+  // S358: re-sourced to the reader changelog; content-addressed so the change ships.
+  'assets/returning-signal-strip.js',
 ];
 
 function shellHash(relPath) {

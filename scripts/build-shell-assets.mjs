@@ -74,7 +74,43 @@ const SHELL_ASSETS = [
   // journeyConductor), so it must be content-addressed to be promotable through
   // the content lane.
   { key: 'deskWire', source: 'assets/desk-wire.js', stem: 'desk-wire.shell', attribute: 'src' },
+  // S358 — the rest of the class S357 measured. `check-lane-held-asset-drift`
+  // against production found these 17 client scripts still LOADED by a page tag
+  // or a loader entry while serving pre-S356 bytes: the content lane holds
+  // unhashed .js by design, so none of them could ever change without a full
+  // deploy. Fingerprinting moves each onto the path the lane promotes. The five
+  // loader-only entries are also in build-ambient-bundle's
+  // CONTENT_ADDRESSED_PREDICATE_SRCS; trustDepth is also rewritten inside
+  // homeIdleLoader (see NESTED_SHELL_REFERENCES — buildManifest hashes children
+  // before parents, so array position does not matter).
+  { key: 'changelogReactions', source: 'assets/changelog-reactions.js', stem: 'changelog-reactions.shell', attribute: 'src' },
+  { key: 'countdown', source: 'assets/countdown.js', stem: 'countdown.shell', attribute: 'src' },
+  { key: 'exitIntent', source: 'assets/exit-intent.js', stem: 'exit-intent.shell', attribute: 'src' },
+  { key: 'faqToggle', source: 'assets/faq-toggle.js', stem: 'faq-toggle.shell', attribute: 'src' },
+  { key: 'githubStream', source: 'assets/github-stream.js', stem: 'github-stream.shell', attribute: 'src' },
+  { key: 'honestTractionScoreboard', source: 'assets/honest-traction-scoreboard.js', stem: 'honest-traction-scoreboard.shell', attribute: 'src' },
+  { key: 'ignisLens', source: 'assets/ignis-lens.js', stem: 'ignis-lens.shell', attribute: 'src' },
+  { key: 'ignisProjectBlock', source: 'assets/ignis-project-block.js', stem: 'ignis-project-block.shell', attribute: 'src' },
+  { key: 'oracleExtra', source: 'assets/oracle-extra.js', stem: 'oracle-extra.shell', attribute: 'src' },
+  { key: 'oracleInsightsCompute', source: 'assets/oracle-insights-compute.js', stem: 'oracle-insights-compute.shell', attribute: 'src' },
+  { key: 'proofCard', source: 'assets/proof-card.js', stem: 'proof-card.shell', attribute: 'src' },
+  { key: 'pwaNav', source: 'assets/pwa-nav.js', stem: 'pwa-nav.shell', attribute: 'src' },
+  { key: 'ratePage', source: 'assets/rate-page.js', stem: 'rate-page.shell', attribute: 'src' },
+  { key: 'schemaInjector', source: 'assets/schema-injector.js', stem: 'schema-injector.shell', attribute: 'src' },
+  { key: 'securityPosture', source: 'assets/security-posture.js', stem: 'security-posture.shell', attribute: 'src' },
+  { key: 'studioPulseLive', source: 'assets/studio-pulse-live.js', stem: 'studio-pulse-live.shell', attribute: 'src' },
+  { key: 'trustDepth', source: 'assets/trust-depth.js', stem: 'trust-depth.shell', attribute: 'src' },
+  // S358: now reads the reader changelog instead of commit sentences, and the
+  // content lane could not have shipped that change to an unhashed name.
+  { key: 'returningSignalStrip', source: 'assets/returning-signal-strip.js', stem: 'returning-signal-strip.shell', attribute: 'src' },
 ];
+
+// Parent shell assets whose SOURCE names a child shell asset by its plain path.
+// The child is rewritten to its fingerprint before the parent is hashed, so a
+// child change rotates the parent too and both ride the content lane together.
+const NESTED_SHELL_REFERENCES = {
+  homeIdleLoader: ['vaultPulse', 'trustDepth'],
+};
 
 const HTML_SKIP_DIRS = new Set([
   '.ai',
@@ -105,13 +141,18 @@ function readShellAssetContent(filePath) {
 }
 
 function rewriteNestedShellReferences(asset, content, assets) {
-  if (asset.key !== 'homeIdleLoader') return content;
-  const pulse = assets.vaultPulse;
-  if (!pulse) throw new Error('vaultPulse must be fingerprinted before homeIdleLoader');
-  const next = content.toString('utf8').replace(
-    /\/assets\/vault-pulse(?:\.shell-[a-f0-9]{10})?\.js(?:\?[^'\"]*)?/g,
-    '/' + pulse.path
-  );
+  const children = NESTED_SHELL_REFERENCES[asset.key];
+  if (!children) return content;
+  let next = content.toString('utf8');
+  for (const childKey of children) {
+    const child = assets[childKey];
+    if (!child) throw new Error(`${childKey} must be fingerprinted before ${asset.key}`);
+    const basename = path.basename(child.source, '.js').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    next = next.replace(
+      new RegExp(`\\/assets\\/${basename}(?:\\.shell-[a-f0-9]{10})?\\.js(?:\\?[^'"]*)?`, 'g'),
+      '/' + child.path
+    );
+  }
   return Buffer.from(next, 'utf8');
 }
 
@@ -342,7 +383,13 @@ function buildManifest() {
   const assets = {};
   const generatedFiles = [];
 
-  for (const asset of SHELL_ASSETS) {
+  // Children before parents, so a parent's nested references resolve regardless
+  // of where either sits in SHELL_ASSETS. Every other asset keeps its order.
+  const buildOrder = [
+    ...SHELL_ASSETS.filter((asset) => !NESTED_SHELL_REFERENCES[asset.key]),
+    ...SHELL_ASSETS.filter((asset) => NESTED_SHELL_REFERENCES[asset.key]),
+  ];
+  for (const asset of buildOrder) {
     const sourcePath = path.join(root, asset.source);
     const content = rewriteNestedShellReferences(asset, readShellAssetContent(sourcePath), assets);
     const hash = shortHash(content);

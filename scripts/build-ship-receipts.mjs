@@ -91,8 +91,42 @@ export function readerLegible(summary) {
   return !ILLEGIBLE_TO_A_READER.some((re) => re.test(text));
 }
 
-export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }) {
-  const commitsBySha = new Map((commitMap.entries || []).map((entry) => [entry.sha, entry]));
+/**
+ * S358 — the durable fix D-S357.3 recorded: the shipped lines come from
+ * data/consumer-changelog.json, never from git.
+ *
+ * The filters above were a firewall on the wrong material. Within a day of
+ * shipping them a subject ("rebind the mobile proof without re-running the
+ * 215-cell audit") was on the feed, because `rebind` is not `\bbind\b` — the
+ * third time a denylist was out-vocabularied. No filter turns a subject written
+ * for the next engineer into a sentence written for a reader.
+ *
+ * The consumer changelog IS reader prose: founder-approved, and dev-voice
+ * rejected at publish time by publish-changelog-draft. The LINK between a
+ * feedback theme and a change is a claim, so it is declared, never inferred: an
+ * entry answers a theme only when its `answers` array names that theme's key.
+ * No keyword matching — guessing "this is what you asked for" would fabricate
+ * the very claim the surface exists to evidence. An untagged corpus renders the
+ * box honest-dark, which is the correct outcome, not a regression.
+ *
+ * The field keeps the name `shippedCommits` because three shipped clients read
+ * it (you-asked-shipped.js, studio-now.js, portal-dashboard.js), each only for
+ * `summary` + `ts`; renaming it would rotate fingerprinted scripts to say
+ * nothing new. The git filters stay exported and self-tested for any future
+ * consumer that must read commit subjects, but nothing on this surface does.
+ */
+export function shippedFromChangelog(changelog, themeKey, limit = 5) {
+  const key = String(themeKey || '').toLowerCase();
+  if (!key) return [];
+  return ((changelog && changelog.entries) || [])
+    .filter((entry) => Array.isArray(entry.answers) && entry.answers.map((a) => String(a).toLowerCase()).includes(key))
+    .filter((entry) => typeof entry.title === 'string' && entry.title.trim() && /^\d{4}-\d{2}-\d{2}$/.test(String(entry.date || '')))
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+    .slice(0, limit)
+    .map((entry) => ({ summary: entry.title.trim(), ts: entry.date, source: 'consumer-changelog' }));
+}
+
+export function buildReceipts({ feedback, changelog, visualSets, fieldVerdicts }) {
   // S174 field-verdict-engine: speed-theme receipts carry the latest
   // deploy-boundary field verdict so "we shipped speed work" is graded by
   // real visitors, not by us.
@@ -111,7 +145,6 @@ export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }
     publicSafe: true,
     note: 'Aggregate theme-to-ship receipts. No raw feedback text.',
     receipts: (feedback.themes || []).map((theme) => {
-      const commits = (theme.commits || []).map((commit) => commitsBySha.get(commit.sha) || commit);
       const proof = visualSets.find((set) => {
         const needle = theme.key === 'trust' ? 'privacy' : theme.key === 'speed' ? 'home' : theme.key;
         return String(set.name).includes(needle) || (set.routes || []).some((route) => String(route).includes(needle));
@@ -120,30 +153,8 @@ export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }
         theme: theme.key,
         label: theme.label,
         feedbackSignals: theme.count || 0,
-        // Two filters, and the STRUCTURAL one leads.
-        //
-        // `visitorFacing` is computed by build-commit-map from the commit's
-        // touched FILES against config-declared visitor-facing paths. It already
-        // existed, build-changelog-narrative already consumed it, and this
-        // surface simply never read it — which is why a denylist of dev words
-        // was the first thing that looked like a fix. A denylist only catches
-        // the words its author thought of: the first version of this filter let
-        // "memoize panel derivatives too — 95.9s -> 16.5s" straight through.
-        // Paths cannot be out-vocabularied.
-        //
-        // The prose filter stays as a second pass, because a commit CAN touch a
-        // visitor-facing path and still have an internal subject — this very
-        // change does. A missing `visitorFacing` is treated as false: the
-        // producer writes it for every entry on every run, so its absence means
-        // the producer did not run, which is not a licence to publish.
-        // Illegible lines are dropped, never rewritten: inventing reader-facing
-        // prose from an internal subject would fabricate the very claim this
-        // surface exists to evidence.
-        shippedCommits: commits.filter(reachesAReader).slice(0, 5).map((commit) => ({
-          sha: commit.sha,
-          summary: commit.summary,
-          ts: commit.ts,
-        })),
+        // Declared links only — see shippedFromChangelog.
+        shippedCommits: shippedFromChangelog(changelog, theme.key),
         proof: proof ? { set: proof.name, captures: proof.captureCount, routes: proof.routes } : null,
         fieldVerdict: theme.key === 'speed' ? fieldVerdict : undefined,
       };
@@ -171,7 +182,7 @@ function loadVisualSets() {
 
 function renderDoc(payload) {
   const rows = payload.receipts.map((r) =>
-    `| ${r.label} | ${r.feedbackSignals} | ${r.shippedCommits.map((c) => `${c.sha} ${c.summary}`).join('<br>')} | ${r.proof ? `${r.proof.set} (${r.proof.captures})` : 'pending'} |`
+    `| ${r.label} | ${r.feedbackSignals} | ${r.shippedCommits.map((c) => `${c.ts} ${c.summary}`).join('<br>')} | ${r.proof ? `${r.proof.set} (${r.proof.captures})` : 'pending'} |`
   ).join('\n');
   return `<!-- generated-by: scripts/build-ship-receipts.mjs -->
 <!-- generated-at: ${(payload.generatedAt || new Date().toISOString()).slice(0, 10)} -->
@@ -188,24 +199,24 @@ ${rows}
 
 if (SELF_TEST) {
   const payload = buildReceipts({
-    feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2, commits: [{ sha: 'abc' }] }] },
-    // A reader-legible summary: 'fast' is now correctly dropped as too short to
-    // be a sentence, so the fixture has to carry something publishable.
-    commitMap: { entries: [{ sha: 'abc', summary: 'pages load faster on a phone', ts: 'today', visitorFacing: true, type: 'feat' }] },
+    feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2 }] },
+    changelog: { entries: [{ date: '2026-06-05', title: 'Pages load faster on a phone', highlights: ['x'], answers: ['speed'] }] },
     visualSets: [{ name: 'home-lcp-s173', routes: ['/'], captureCount: 4 }],
     fieldVerdicts: { boundaries: [{ date: '2026-06-05', label: 'S173', overall: 'improved', routes: { '/': { lcpDeltaPct: -23.4, confidence: 'medium' } } }] },
   });
-  // S357 — the reader-legibility firewall. These are the exact subjects that were
-  // rendering on /changelog/ under "You asked → we shipped" before it existed.
-  const illegible = buildReceipts({
-    feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 4, commits: [{ sha: 'a1' }, { sha: 'a2' }, { sha: 'a3' }] }] },
-    commitMap: { entries: [
-      { sha: 'a1', summary: 'bind visual + mobile proof to the S357 candidate a1c97bfa8612', ts: 'today', visitorFacing: true, type: 'feat' },
-      { sha: 'a2', summary: 'harvest the header controls instead of hand-writing them', ts: 'today', visitorFacing: true, type: 'feat' },
-      { sha: 'a3', summary: 'every Desk article opens with its own illustration', ts: 'today', visitorFacing: true, type: 'feat' },
-    ] },
-    visualSets: [], fieldVerdicts: { boundaries: [] },
+  // S358 — the surface reads the reader changelog, and only DECLARED links.
+  const changelog = { entries: [
+    { date: '2026-09-01', title: 'Older front-door change', answers: ['frontdoor'] },
+    { date: '2026-09-17', title: 'Newer front-door change', answers: ['FrontDoor'] },
+    { date: '2026-09-10', title: 'Front door mentioned but not declared as an answer' },
+    { date: '2026-09-12', title: 'Answers a different theme', answers: ['speed'] },
+    { date: 'soon', title: 'Undated entry', answers: ['frontdoor'] },
+  ] };
+  const declared = buildReceipts({
+    feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 4 }] },
+    changelog, visualSets: [], fieldVerdicts: { boundaries: [] },
   });
+  const ships = declared.receipts[0].shippedCommits;
   const cases = [
     ['a candidate hash never reaches a reader', !readerLegible('bind visual + mobile proof to the S357 candidate a1c97bfa8612')],
     ['a session code never reaches a reader', !readerLegible('S356 — Desk flagship and site-wide crawl fixes')],
@@ -213,32 +224,27 @@ if (SELF_TEST) {
     ['a flag or command never reaches a reader', !readerLegible('wire four gates into npm run build:check')],
     ['working vocabulary never reaches a reader', !readerLegible('rebuild the derived graph after the rebase')],
     ['a plain reader-facing sentence still publishes', readerLegible('the mobile menu now opens on the first tap')],
-    ['a non-visitor-facing commit never publishes, whatever its prose', buildReceipts({
-      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n1' }] }] },
-      commitMap: { entries: [{ sha: 'n1', summary: 'the mobile menu now opens on the first tap', ts: 'today', visitorFacing: false, type: 'fix' }] },
-      visualSets: [], fieldVerdicts: { boundaries: [] },
-    }).receipts[0].shippedCommits.length === 0],
-    ['a missing visitorFacing flag is treated as false, never as permission', buildReceipts({
-      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n2' }] }] },
-      commitMap: { entries: [{ sha: 'n2', summary: 'the mobile menu now opens on the first tap', ts: 'today' }] },
-      visualSets: [], fieldVerdicts: { boundaries: [] },
-    }).receipts[0].shippedCommits.length === 0],
-    ['the denylist gap that motivated the structural filter stays closed', buildReceipts({
-      feedback: { themes: [{ key: 'speed', label: 'Speed', count: 1, commits: [{ sha: 'n3' }] }] },
-      commitMap: { entries: [{ sha: 'n3', summary: 'memoize panel derivatives too', ts: 'today', visitorFacing: false, type: 'perf' }] },
-      visualSets: [], fieldVerdicts: { boundaries: [] },
-    }).receipts[0].shippedCommits.length === 0],
     ['a perf/chore commit never publishes, however readable its prose', !reachesAReader(
       { summary: 'pages load faster on a phone', visitorFacing: true, type: 'perf' })],
     ['a missing type is treated as not-reader-facing', !reachesAReader(
       { summary: 'pages load faster on a phone', visitorFacing: true })],
     ['a feat on a visitor-facing path with reader prose does publish', reachesAReader(
       { summary: 'the mobile menu now opens on the first tap', visitorFacing: true, type: 'feat' })],
-    ['illegible lines are DROPPED, not rewritten', illegible.receipts[0].shippedCommits.length === 1
-      && illegible.receipts[0].shippedCommits[0].summary === 'every Desk article opens with its own illustration'],
-    ['the signal count survives the drop, so the theme stays honest', illegible.receipts[0].feedbackSignals === 4],
+    // The exact line that leaked on 2026-09-18: git is no longer an input at all.
+    ['a commit subject can never reach the surface, whatever it says', buildReceipts({
+      feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 3, commits: [{ sha: 'r1', summary: 'rebind the mobile proof without re-running the 215-cell audit' }] }] },
+      changelog: { entries: [] }, visualSets: [], fieldVerdicts: { boundaries: [] },
+    }).receipts[0].shippedCommits.length === 0],
+    ['only entries that DECLARE the theme answer it', ships.length === 2 && ships.every((c) => /front-door change/.test(c.summary))],
+    ['a keyword in the title is not a declaration', !ships.some((c) => /mentioned/.test(c.summary))],
+    ['theme keys match case-insensitively', ships.some((c) => c.summary === 'Newer front-door change')],
+    ['newest declared answer first', ships[0].summary === 'Newer front-door change' && ships[0].ts === '2026-09-17'],
+    ['an undated entry is never published', !ships.some((c) => /Undated/.test(c.summary))],
+    ['each line names its source', ships.every((c) => c.source === 'consumer-changelog')],
+    ['an untagged corpus is honest-dark, not an error', shippedFromChangelog({ entries: [{ date: '2026-09-01', title: 'x' }] }, 'frontdoor').length === 0],
+    ['the signal count survives an empty box', declared.receipts[0].feedbackSignals === 4],
     ['receipt created', payload.receipts.length === 1],
-    ['commit joined', payload.receipts[0].shippedCommits[0].summary === 'pages load faster on a phone'],
+    ['declared change joined', payload.receipts[0].shippedCommits[0].summary === 'Pages load faster on a phone'],
     ['proof joined', payload.receipts[0].proof?.set === 'home-lcp-s173'],
     ['field verdict joined on speed', payload.receipts[0].fieldVerdict?.verdict === 'improved'],
     ['field delta carried', payload.receipts[0].fieldVerdict?.lcpDeltaPct === -23.4],
@@ -255,7 +261,7 @@ if (SELF_TEST) {
 
 const payload = buildReceipts({
   feedback: readJson('api/feedback-provenance.json', { themes: [] }),
-  commitMap: readJson('api/commit-map.json', { entries: [] }),
+  changelog: readJson('data/consumer-changelog.json', { entries: [] }),
   visualSets: loadVisualSets(),
   fieldVerdicts: readJson('data/field-verdicts.json', null),
 });

@@ -1,17 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-17 (S357 recovered and pushed the cut-off S356 closeout, then closed two truth defects the gates could not previously see: api/deploy-currency.json published content-current over a stale production because shell parity records only one of its two operands, and the content lane structurally cannot update an unhashed client script — 27 of 171 were serving pre-S356 bytes, which kept a deleted fetch alive until the release ceremony caught its 404. Plus 32 WCAG contrast repairs, four never-run gates wired, the /changelog/ "You asked" surface stopped from publishing commit subjects to visitors, and 83% off the slowest gate step. build:check 499/499; staging verified, zero failed responses; production promotion pending founder authorization. Detail: CURRENT_STATE · LATEST_HANDOFF · docs/CLOSEOUT_BRIEF_S357_2026-09-17.md.)
+Last updated: 2026-09-18 (S358 recovered the un-written-back S357 tail, then closed every open S357 board item: 17 still-loaded client scripts fingerprinted so the content lane can update them, the lane-drift gate made reachability-based, "You asked → we shipped" sourced from the founder-approved changelog instead of git, and the dead vault_feedback fetch removed from /changelog/. Desk comments are live again on production after the Supabase outage cleared. Detail: CURRENT_STATE · LATEST_HANDOFF.)
 
-## Open — S357
+## Open — S358
+
+- [ ] **[S358][CONTENT/P2 · FOUNDER]** Tag changelog entries with `answers: <theme>` (D-S358.2) — until one is tagged, "You asked → we shipped" is honest-dark by design.
+- [ ] **[S358][ASSETS/P3]** 32 unreferenced lane-held scripts (incl. the plain copies of the 17 just fingerprinted) still serve pre-S356 bytes as residue. Harmless (nothing loads them); a full deploy clears them.
+- [ ] **[SIL][S358][GATES/P2]** Check that every `CONTENT_ADDRESSED_PREDICATE_SRCS` entry is also a shell asset (kept in sync by hand today).
+- [ ] **[SIL][S358][CONTENT/P3]** `publish-changelog-draft` lists the live feedback theme keys so `answers:` is chosen, not remembered.
+- [ ] **[S358][CONTENT/P2]** `api/changelog-narrative.json` is still commit-derived; `notify-changelog-subscribers` keys mail off its sha. Re-source it from the reader changelog with a mail-side plan (D-S358.4).
+
+## Closed — S357 (worked in S358)
 
 - [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
-- [ ] **[S357][ENG/P0 · PROVIDER]** Desk comments 503 is a **Supabase outage**, not a credential fault: project `fjnpzjjyhnpmunfoycrp` reports db/rest/auth all UNHEALTHY via Supabase’s own health API while its project status still reads ACTIVE_HEALTHY. Two faults were stacked and one is fixed — the gateway’s `supabase.admin` points at a *different* project (`ckwtolofoqzrqouqkmvs`, "VaultSpark Studios-2"), and the legacy JWT key type is retired here (the project carries `sb_publishable_`/`sb_secret_` issued 2026-03-12). Staging now holds the correct new-style secret; production still holds the wrong-project legacy key. When the provider recovers: `npm run repair:desk-comments-credential`, then `--apply --env production --verify-at-worker`.
-- [ ] **[S357][OBS/P2]** `build-promotion-receipt` reports "7 console error(s) on the promoted artifact" and can never report zero. It probes `pages.dev`, which has no Worker in front, so Worker routes necessarily fail there — measured: `/api/auth/me` apex **200** / pages.dev 404, `/v/rum` apex 405 / pages.dev 404. Apex console errors are **0**. Decide the vantage policy (pages.dev was chosen deliberately for WAF-independence) rather than just swapping the origin.
-- [ ] **[S357][OBS/P2]** The same receipt reports "stranded/stale deploy" because production `build-sha.sha` stays at the baseline by content-lane design while `contentLaneHead` carries the release. It already records `productionContentLaneHead` (correct: `949cfacb6`) but the `behind` finding ignores it. Same family as the deploy-currency vantage naming fixed this session.
-- [ ] **[S357][ASSETS/P1]** Fingerprint the remaining 25 unhashed client scripts; the content lane can never update them (D-S357.2). Batch with a receipt pass each.
-- [ ] **[S357][GATES/P1]** Served-vs-repo drift gate for lane-held paths — run the measurement that found the 404 every release.
-- [ ] **[S357][CONTENT/P2]** Source the "You asked" lines from `data/consumer-changelog.json`, not git subjects (D-S357.3).
-- [ ] **[S357][OBS/P2]** `vault_feedback` 404s on production `/changelog/` every visit. Pre-existing; absent on staging.
+- [x] **[S357][ENG/P0 · PROVIDER]** Desk comments — **DONE**: the Supabase outage cleared; `/v/desk-comments` returns 200 on production and staging (S358), and the repair script's `--check` verifies the resolved key at HTTP 200.
+- [x] **[S357][OBS/P2]** Promotion-receipt console errors — **DONE in S357** (`ee7d1386`): Worker-only routes at the Pages vantage are counted in their own bucket; 0 unexplained.
+- [x] **[S357][OBS/P2]** Promotion-receipt "stranded" — **DONE in S357** (`ee7d1386`): shell parity separates a stranded deploy from a promotion backlog.
+- [x] **[S357][ASSETS/P1]** Fingerprint the remaining still-loaded client scripts — **DONE S358**: 17 shell assets added; production drift that matters 19 → 0 once promoted (D-S358.1).
+- [x] **[S357][GATES/P1]** Served-vs-repo drift gate — **DONE**: built S357 (`b0def96d`), wired into the release ceremony (`0d6d5459`), made reachability-based S358.
+- [x] **[S357][CONTENT/P2]** "You asked" from `data/consumer-changelog.json` — **DONE S358** (D-S358.2).
+- [x] **[S357][OBS/P2]** `vault_feedback` 404 on `/changelog/` — **DONE S358**: the table never existed by design (browser-local feedback); the dead fetch is removed.
 
 ## Previous — S356
 

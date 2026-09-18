@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-18T16:31:21.790Z",
+  "generatedAt": "2026-09-18T19:07:25.571Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 357,
-    "lastUpdated": "2026-09-17",
-    "currentFocus": "S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker 8a856192 plus content-lane run 35256380631, production contentLaneHead = origin/main. The Desk flagship, reader-first articles, reactions, the site-wide strip and the first public changelog entry since July are live. Comments ship but are degraded by a pre-existing Supabase credential mismatch, and now say which of the two possible causes it is.",
-    "nextMilestone": "Fingerprint the remaining 25 unhashed client scripts (the content lane can never update them) and add a served-vs-repo drift gate for lane-held paths, so the class that kept a deleted fetch alive cannot recur.",
+    "currentSession": 358,
+    "lastUpdated": "2026-09-18",
+    "currentFocus": "S358 recovered S357's un-written-back tail and closed every open S357 item: 17 still-loaded client scripts fingerprinted so the content lane can update them, the lane-drift gate made reachability-based, \"You asked → we shipped\" sourced from founder-declared changelog links, and the dead vault_feedback fetch removed from /changelog/. Desk comments are live again after the Supabase outage cleared.",
+    "nextMilestone": "Founder tags the first changelog entry with the feedback theme it answers, so \"You asked → we shipped\" lights up with reader prose; next full deploy clears the 32 unreferenced residue scripts.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -134,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 357,
+    "sessionsCompleted": 358,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,16 +151,16 @@
     "silCategories": {
       "devHealth": 99,
       "alignment": 98,
-      "momentum": 96,
-      "engagement": 94,
+      "momentum": 97,
+      "engagement": 95,
       "process": 99,
       "coherence": 100,
       "security": 99,
       "ecosystem": 98,
       "capital": 99,
-      "automation": 97,
-      "total": 979,
-      "updatedSession": 357
+      "automation": 98,
+      "total": 982,
+      "updatedSession": 358
     },
     "sealedNextRevealAt": null
   },
@@ -822,8 +822,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 14 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-18T01:35:17.702Z",
+    "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-09-18T00:26:59.317Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -839,7 +839,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "success"
       }
     ]
   }

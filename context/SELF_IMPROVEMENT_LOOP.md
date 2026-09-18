@@ -2482,3 +2482,20 @@ Everything shipped and pushed; production verified from served bytes and `smoke:
 **I committed the exact defect class I spent the day fixing.** My push-retry loop grepped stdout for `main -> main`, which also matches `! [rejected] main -> main` — so it reported "PUSHED on attempt 1" while nothing had landed. A second loop ran five silent no-op iterations against a stranded rebase it never checked for. Both were caught by comparing shas and reading real state instead of a string, which is the rule this session added to three other people's gates.
 
 **Closeout completeness:** this addendum exists because the write-back asserted done while the rebind tool, committed after it, appeared on no surface. An unasserted closeout is the defect that made F7 necessary; an under-asserted one is the same defect one step smaller.
+
+## 2026-09-18 — Session 358 (recovery + every open S357 item closed) | Total: 982/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Each change carries a negative control from the real incident: the unserved-loader case in the drift gate, and the exact leaked subject in ship-receipts. Drift self-test 13/13, ship-receipts 24/24, draft publisher 9/9. |
+| Creative Alignment | 98 | The changelog's loop section stops showing session codes and stops claiming a retired feature; the "You asked" box speaks only in founder-approved reader prose. |
+| Momentum | 97 | Every open S357 board item closed in one arc, plus the recovered write-back. |
+| Engagement | 95 | A 404 on every /changelog/ visit is gone and comments are live again. The "You asked" box is honest-dark until the founder tags an entry. |
+| Process Quality | 99 | Triage caught a write-back skip the tree could not show. Two stale blockers were re-probed and removed on evidence, not on elapsed time. |
+| Cross-Repo Coherence | 100 | No sibling repo touched. |
+| Security Posture | 99 | A browser query to a table that feedback policy says must not exist is gone. |
+| Ecosystem Integration | 98 | Reachability over mention is a pattern for any gate that reads source to decide what is served. |
+| Capital Efficiency | 99 | Existing mechanisms reused throughout (shell assets, content-addressed predicates, draft frontmatter); nothing new invented. |
+| Automation Coverage | 98 | The drift gate's reference model now matches what a browser loads, so its RISK count can reach zero honestly. |
+
+**Brainstorm → committed:** (1) `[SIL]` add a build-time check that every `CONTENT_ADDRESSED_PREDICATE_SRCS` entry is also a shell asset (today the two lists are kept in sync by hand). (2) `[SIL]` let `publish-changelog-draft` list the current feedback theme keys, so `answers:` is chosen from the real set rather than remembered.

@@ -201,7 +201,6 @@ flowchart LR
   n_api_commit_map_json --> n_api_ignis_conduit_json
   n_api_commit_map_json --> n_api_proof_aware_projects_json
   n_api_commit_map_json --> n_api_public_status_json
-  n_api_commit_map_json --> n_api_ship_receipts_json
   n_api_commit_map_json --> n_feed_forge_ledger_json
   n_api_deploy_currency_json --> n_api_intent_map_json
   n_api_deploy_currency_json --> n_api_release_proof_json
@@ -304,6 +303,7 @@ flowchart LR
   n_context_ --> n_api_security_posture_json
   n_context_ --> n_docs_STARTUP_BRIEF_md
   n_data_ --> n_api_analytics_summary_json
+  n_data_ --> n_api_changelog_narrative_json
   n_data_ --> n_api_feedback_provenance_json
   n_data_ --> n_api_field_win_json
   n_data_ --> n_api_news_desk_engagement_json
@@ -397,7 +397,7 @@ flowchart LR
 | `changelog-live` | `changelog/index.html` | yes | `api/public-intelligence.json` | — |
 | `changelog-narrative` | `api/changelog-narrative.json` | — | `api/commit-map.json` | — |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
-| `commit-map` | `api/commit-map.json` | yes | — | `api/changelog-narrative.json`<br>`api/feedback-provenance.json`<br>`api/ignis-conduit.json`<br>`api/proof-aware-projects.json`<br>`api/public-status.json`<br>`api/ship-receipts.json`<br>`feed/forge-ledger.json` |
+| `commit-map` | `api/commit-map.json` | yes | — | `api/changelog-narrative.json`<br>`api/feedback-provenance.json`<br>`api/ignis-conduit.json`<br>`api/proof-aware-projects.json`<br>`api/public-status.json`<br>`feed/forge-ledger.json` |
 | `cta-readiness` | `.cache/cta-readiness.json` | yes | — | — |
 | `deploy-currency` | `api/deploy-currency.json` | yes | `index.html` | `api/intent-map.json`<br>`api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
 | `early-hints-headers` | `_headers` | — | `assets/shell-manifest.json` | `api/ai-discovery-health.json` |
@@ -448,7 +448,7 @@ flowchart LR
 | `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json`<br>`api/identity-migration-receipt.json`<br>`api/promotion-receipt.json`<br>`api/release-dependencies.json`<br>`api/staging-deploy-receipt.json`<br>`api/worker-route-provenance.json` | — |
 | `security-posture` | `api/security-posture.json` | yes | `api/worker-route-provenance.json` | `api/status-proof.json`<br>`data/ignis-search-index.json` |
 | `shell-assets` | `assets/shell-manifest.json` | — | `assets/ambient-core.bundle.js` | `_headers`<br>`api/candidate-artifact-manifest.json`<br>`pathways/builders/index.html` |
-| `ship-receipts` | `api/ship-receipts.json` | — | `api/commit-map.json`<br>`api/feedback-provenance.json` | `api/intelligence-budget.json`<br>`changelog/index.html` |
+| `ship-receipts` | `api/ship-receipts.json` | — | `api/feedback-provenance.json` | `api/intelligence-budget.json`<br>`changelog/index.html` |
 | `site-health` | `api/site-health.json` | — | — | `api/intelligence-budget.json`<br>`api/status-proof.json` |
 | `sitemap` | `sitemap.xml` | yes | — | — |
 | `staging-deploy-continuity` | `api/staging-deploy-continuity.json` | — | `api/staging-deploy-receipt.json` | — |
@@ -565,7 +565,7 @@ flowchart LR
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `release-dependencies`, `security-posture`, `shell-assets`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `analytics-summary`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
+- `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
 - `docs/` → `ignis-roi`, `ship-receipts`
 - `external:build-vantage-worker-routes` → `worker-route-provenance`
 - `external:founder-brand-masters` → `brand-assets`

@@ -122,7 +122,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 <script defer src="/assets/theme-toggle.shell-8221605898.js"></script>
 <script src="/assets/analytics.js" defer></script>
-<script src="/assets/pwa-nav.js" defer></script>
+<script src="/assets/pwa-nav.shell-5f63b6b75a.js" defer></script>
 <script defer src="/assets/pwa-install.js"></script>
 <!-- vs-speculation:start -->
   <script type="speculationrules">
@@ -232,9 +232,7 @@
     <section style="padding:0 0 4rem;">
       <div class="container">
         <div data-you-asked-shipped>
-<!-- yas-ssr:start -->
-<style id="vs-yas-style">.vs-yas{margin:2.5rem 0;padding:1.4rem;border:1px solid var(--line,rgba(255,255,255,.08));border-radius:18px;background:linear-gradient(135deg,rgba(255,196,0,.05),rgba(126,201,255,.03))}.vs-yas__eyebrow{font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold,#ffc400);font-weight:700}.vs-yas__title{font-family:Georgia,serif;font-size:1.4rem;margin:.3rem 0 .35rem}.vs-yas__note{font-size:.8rem;color:var(--muted,#a8b4d0);margin:0 0 1rem}.vs-yas__note a{color:var(--gold,#ffc400)}.vs-yas__row{display:flex;align-items:flex-start;gap:.8rem;padding:.75rem 0;border-top:1px solid var(--line,rgba(255,255,255,.06))}.vs-yas__ask{flex:0 0 auto;min-width:120px}.vs-yas__ask-k{display:block;font-size:.72rem;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.06em}.vs-yas__theme{font-weight:700;color:var(--text,#eef2ff)}.vs-yas__signals{font-size:.78rem;color:var(--muted,#a8b4d0)}.vs-yas__arrow{flex:0 0 auto;color:var(--gold,#ffc400);align-self:center;font-weight:700}.vs-yas__ships{flex:1 1 auto;min-width:0}.vs-yas__ship{font-size:.86rem;color:var(--muted,#a8b4d0);line-height:1.5}.vs-yas__ship-when{color:var(--dim,#6272a0);font-size:.76rem}</style><section class="vs-yas" data-yas-ssr><div class="vs-yas__eyebrow">Closed loops</div><h2 class="vs-yas__title">You asked → we shipped.</h2><p class="vs-yas__note">Straight from our release log — so the wording is ours. <a href="/how-we-build/">How we build</a> explains the terms.</p><div class="vs-yas__row"><div class="vs-yas__ask"><span class="vs-yas__ask-k">You asked</span><div class="vs-yas__theme">Front door</div><div class="vs-yas__signals">3 signals</div></div><div class="vs-yas__arrow" aria-hidden="true">→</div><div class="vs-yas__ships"><div class="vs-yas__ship">✦ rebind the mobile proof without re-running the 215-cell audit  <span class="vs-yas__ship-when">· today</span></div></div></div></section>
-<!-- yas-ssr:end -->
+<!-- yas-ssr:start --><!-- yas-ssr:end -->
         </div>
         <!-- S335: /feedback/ + /feedback/insights/ folded here. Ids and data-stat attributes are
              contracts with feedback-provenance.js, feedback-insights.js and feedback-summary.js. -->
@@ -292,37 +290,29 @@
             <h2 id="requests-heading">You asked. We shipped.</h2>
             <p class="lede">Every signal a member sends — micro-feedback chip, support note, journal comment — gets read by the studio. The acknowledged ones become shipped changes. Here's the loop, closing in public.</p>
             <div class="fb-stats" id="fbStats">
-              <div class="fb-stat"><strong id="fbCount">—</strong> loops closed</div>
-              <div class="fb-stat"><strong id="fbLatest">—</strong> latest session</div>
-              <div class="fb-stat"><strong id="fbTurnaround">—</strong> avg turnaround (days)</div>
+              <div class="fb-stat"><strong id="fbCount">3</strong> loops closed</div>
+              <div class="fb-stat"><strong id="fbLatest">May 22</strong> latest</div>
             </div>
           </div>
 
           <div class="fb-timeline" id="fbTimeline">
-            <!-- Hand-curated seed entries until vault_feedback aggregation lands. -->
+            <!-- Hand-curated. New loops reach this page through the "You asked → we shipped" box, which reads founder-approved changelog entries (data/consumer-changelog.json, "answers"). -->
             <article class="fb-entry">
-              <p class="fb-entry-meta">S130 · 2026-05-19</p>
+              <p class="fb-entry-meta">2026-05-19</p>
               <h3>"The mobile drawer is dark and the brand cuts off."<span class="fb-arrow">→</span>Drawer rebuilt, brand split structurally.</h3>
               <p>Iron-clad iPhone 11 brand cutoff + dark-drawer bug pair was traced to a stacking-context trap. Drawer now portals to body; brand uses a hidden suffix span on ≤768px so the icon-only mobile mark never wraps. <a class="fb-link" href="#main-content">See changelog →</a></p>
             </article>
             <article class="fb-entry">
-              <p class="fb-entry-meta">S147 · 2026-05-20</p>
+              <p class="fb-entry-meta">2026-05-20</p>
               <h3>"There are 39 redundant pages cluttering the sitemap."<span class="fb-arrow">→</span>39 stubs deleted, Worker carries every legacy URL.</h3>
               <p>Subtractive sweep: 144 → 98 pages (−31%). Worker Layer 0c holds 46 edge 301s with a Playwright contract test. AI crawlers and humans both see one canonical URL per intent. <a class="fb-link" href="/journal/">See journal →</a></p>
             </article>
             <article class="fb-entry">
-              <p class="fb-entry-meta">S159 · 2026-05-22</p>
-              <h3>"Show me when the founder is here, ambiently."<span class="fb-arrow">→</span>Gold underline on the wordmark when founder is live.</h3>
-              <p>BroadcastChannel mirrors founder presence across tabs without extra polling. When the studio's brain is active in studio-hub, a 1px gold underline fades in under the VaultSpark wordmark sitewide. Subtle by design.</p>
-            </article>
-            <article class="fb-entry">
-              <p class="fb-entry-meta">S160 · 2026-05-22</p>
+              <p class="fb-entry-meta">2026-05-22</p>
               <h3>"The Vault namespace is confusing — where do I go to log in?"<span class="fb-arrow">→</span>Wrapper laid; the unified /vault/ entry lands next.</h3>
               <p>Obelisk-ready identity wrapper (<code>window.VSIdentity</code>) shipped so the ~70 portal call sites swap in one line when Obelisk Phase 2 goes live. The /vault/ namespace collapse is the very next change once Phase 2 lands.</p>
             </article>
           </div>
-
-          <div class="fb-loading" id="fbDynamicNote">Aggregating live acknowledged feedback…</div>
 
           <div class="fb-cta">
             <p><strong>Want to be in the next loop?</strong> Use the micro-feedback chip on any page (or write at <a href="/contact/">/contact/</a>). Tagged + acknowledged signals get rolled into the next session's audit pass — and end up here when they ship.</p>
@@ -949,58 +939,16 @@
   <script src="/assets/public-intelligence.shell-c86a6ecc39.js" defer></script>
   <script src="/assets/changelog-live.js" defer></script>
   <script src="/assets/changelog-time-machine.js" defer></script>
-  <script src="/assets/changelog-reactions.js" defer></script>
+  <script src="/assets/changelog-reactions.shell-1ddedc6d81.js" defer></script>
   <!-- S335: the #requests section (folded /feedback/ + /feedback/insights/) reads Supabase views -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous"></script>
   <script src="/assets/supabase-client.shell-dfcab21788.js"></script>
-  <script>
-  // Runtime: fetch acknowledged vault_feedback rows and append to the #requests timeline.
-  // Graceful fallback — if RLS or table is absent, hide the dynamic note and leave the seed entries intact.
-  (function () {
-    var note = document.getElementById('fbDynamicNote');
-    function done(text) {
-      if (!note) return;
-      if (text) { note.textContent = text; }
-      else { note.hidden = true; }
-    }
-    if (!window.VSSupabase || !window.VSSupabase.from) { done(''); return; }
-    try {
-      window.VSSupabase
-        .from('vault_feedback')
-        .select('id, summary, shipped_in_session, shipped_at, asked_at, commit_sha')
-        .not('shipped_in_session', 'is', null)
-        .order('shipped_at', { ascending: false })
-        .limit(20)
-        .then(function (res) {
-          if (res.error || !res.data || !res.data.length) { done(''); return; }
-          var timeline = document.getElementById('fbTimeline');
-          if (!timeline) { done(''); return; }
-          res.data.forEach(function (row) {
-            var article = document.createElement('article');
-            article.className = 'fb-entry';
-            var meta = document.createElement('p');
-            meta.className = 'fb-entry-meta';
-            meta.textContent = (row.shipped_in_session || 'recent') + ' · ' + (row.shipped_at || '').slice(0, 10);
-            var h3 = document.createElement('h3');
-            h3.textContent = (row.summary || 'A signal closed the loop.');
-            article.appendChild(meta);
-            article.appendChild(h3);
-            timeline.appendChild(article);
-          });
-          var stats = document.getElementById('fbCount');
-          if (stats) stats.textContent = String(res.data.length);
-          done('');
-        })
-        .catch(function () { done(''); });
-    } catch (_e) { done(''); }
-  })();
-  </script>
   <script src="/assets/feedback-provenance.js" defer></script>
   <script src="/assets/feedback-insights.js" defer></script>
   <script src="/assets/feedback-summary.js" defer></script>
-<script src="/assets/schema-injector.js" defer></script>
+<script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-9de9470671.js" defer></script>
+<script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
 <script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>

@@ -1,4 +1,4 @@
-# Genius Hit List — Session 357
+# Genius Hit List — Session 358
 
 Generated: 2026-09-18
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **82/100**
+- Overall opportunity pressure: **81/100**
 - Health: **yellow**
-- Current SIL: **979/1000**
+- Current SIL: **982/1000**
 - CI health: **check gh run list**
-- Current focus: S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker 8a856192 plus content-lane run 35256380631, production contentLaneHead = origin/main. The Desk flagship, reader-first articles, reactions, the site-wide strip and the first public changelog entry since July are live. Comments ship but are degraded by a pre-existing Supabase credential mismatch, and now say which of the two possible causes it is.
+- Current focus: S358 recovered S357's un-written-back tail and closed every open S357 item: 17 still-loaded client scripts fingerprinted so the content lane can update them, the lane-drift gate made reachability-based, "You asked → we shipped" sourced from founder-declared changelog links, and the dead vault_feedback fetch removed from /changelog/. Desk comments are live again after the Supabase outage cleared.
 
 ## Strategic Read
 
@@ -22,82 +22,80 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [SECURITY] build-promotion-receipt reports "7 console error(s) on the promoted a…
-Final score: **100**
-[S357][OBS/P2] build-promotion-receipt reports "7 console error(s) on the promoted artifact" and can never report zero. It probes pages.dev, which has no Worker in front, so Worker routes necessarily fail there — measured: /api/auth/me apex 200 / pages.dev 404, /v/rum apex 405 / pages.dev 404. Apex console errors are 0. Decide the vantage policy (pages.dev was chosen deliberately for WAF-independence) rather than just swapping the origin.
-Why it matters: build-promotion-receipt reports "7 console error(s) on the promoted ar lowers operational risk and is entirely local — no external dependencies block it.
-
-First command: `node scripts/lint-repo.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] The same receipt reports "stranded/stale deploy" because production b…
+#### 2. [PRODUCT] Check that every CONTENT_ADDRESSED_PREDICATE_SRCS entry is also a she…
 Final score: **93**
-[S357][OBS/P2] The same receipt reports "stranded/stale deploy" because production build-sha.sha stays at the baseline by content-lane design while contentLaneHead carries the release. It already records productionContentLaneHead (correct: 949cfacb6) but the behind finding ignores it. Same family as the deploy-currency vantage naming fixed this session.
-Why it matters: The same receipt reports "stranded/stale deploy" because production bu is open, local, and unblocked — can ship this session.
+[SIL][S358][GATES/P2] Check that every CONTENT_ADDRESSED_PREDICATE_SRCS entry is also a shell asset (kept in sync by hand today).
+Why it matters: Check that every CONTENT_ADDRESSED_PREDICATE_SRCS entry is also a shel is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Fingerprint the remaining 25 unhashed client scripts; the content lan…
+#### 3. [PRODUCT] publish-changelog-draft lists the live feedback theme keys so answers…
 Final score: **90**
-[S357][ASSETS/P1] Fingerprint the remaining 25 unhashed client scripts; the content lane can never update them (D-S357.2). Batch with a receipt pass each.
-Why it matters: Fingerprint the remaining 25 unhashed client scripts; the content lane is open, local, and unblocked — can ship this session.
+[SIL][S358][CONTENT/P3] publish-changelog-draft lists the live feedback theme keys so answers: is chosen, not remembered.
+Why it matters: publish-changelog-draft lists the live feedback theme keys so answers: is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] api/changelog-narrative.json is still commit-derived; notify-changelo…
+Final score: **87**
+[S358][CONTENT/P2] api/changelog-narrative.json is still commit-derived; notify-changelog-subscribers keys mail off its sha. Re-source it from the reader changelog with a mail-side plan (D-S358.4).
+Why it matters: api/changelog-narrative.json is still commit-derived; notify-changelog is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Served-vs-repo drift gate for lane-held paths
-Final score: **87**
-[S357][GATES/P1] Served-vs-repo drift gate for lane-held paths — run the measurement that found the 404 every release.
-Why it matters: Served-vs-repo drift gate for lane-held paths is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Source the "You asked" lines from data/consumer-changelog.json, not g…
-Final score: **84**
-[S357][CONTENT/P2] Source the "You asked" lines from data/consumer-changelog.json, not git subjects (D-S357.3).
-Why it matters: Source the "You asked" lines from data/consumer-changelog.json, not gi is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] vault_feedback 404s on production /changelog/ every visit. Pre-existi…
-Final score: **81**
-[S357][OBS/P2] vault_feedback 404s on production /changelog/ every visit. Pre-existing; absent on staging.
-Why it matters: vault_feedback 404s on production /changelog/ every visit. Pre-existin is open, local, and unblocked — can ship this session.
-
-#### 4. [AI] Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (…
-Final score: **79**
+#### 1. [AI] Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (…
+Final score: **85**
 [S356][SITE/P1] Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (from assets/ignis-answer-engine.js, styled at oracle/index.html:35 / ignis/index.html:34) is solid orange with near-black text in light theme on /oracle/ and /ignis/ — seen in the S356 matrix, pre-existing. Fix with theme tokens.
 Why it matters: Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (f must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 5. [PRODUCT] Purge api/founder-presence.json from public git history. 30 revisions…
-Final score: **78**
+#### 2. [PRODUCT] 32 unreferenced lane-held scripts (incl. the plain copies of the 17 j…
+Final score: **84**
+[S358][ASSETS/P3] 32 unreferenced lane-held scripts (incl. the plain copies of the 17 just fingerprinted) still serve pre-S356 bytes as residue. Harmless (nothing loads them); a full deploy clears them.
+Why it matters: 32 unreferenced lane-held scripts (incl. the plain copies of the 17 ju is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Purge api/founder-presence.json from public git history. 30 revisions…
+Final score: **84**
 [S356][PRIVACY/P0] Purge api/founder-presence.json from public git history. 30 revisions carry live:true with project names and exact start timestamps; founder authorised the purge. Requires crons disabled, filter-repo rewrite, force-push, then regenerating SHA-pinned proof artifacts.
 Why it matters: Purge api/founder-presence.json from public git history. 30 revisions  is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Drift preflight scope is narrower than the gate set. check-generated-…
-Final score: **72**
+#### 4. [PRODUCT] Drift preflight scope is narrower than the gate set. check-generated-…
+Final score: **78**
 [S356][GATES/P2] Drift preflight scope is narrower than the gate set. check-generated-drift-preflight declares ~7 nodes and reported "current" while build-news-desk and generate-pathways were stale (both out of scope). Widen it toward the 92-subject sweep, or rename it so green cannot read as whole-tree freshness.
 Why it matters: Drift preflight scope is narrower than the gate set. check-generated-d is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Staging Worker observability. Still the only way to source the S354/S…
-Final score: **66**
+#### 5. [PRODUCT] Staging Worker observability. Still the only way to source the S354/S…
+Final score: **72**
 [S356][OBS/P3] Staging Worker observability. Still the only way to source the S354/S355 staging 503s; needs a Worker deploy and a free-tier cost check.
 Why it matters: Staging Worker observability. Still the only way to source the S354/S3 is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Mount the narrative on /journal/. Deferred: a UI change needs its own…
-Final score: **63**
+### LATER
+
+#### 1. [PRODUCT] Mount the narrative on /journal/. Deferred: a UI change needs its own…
+Final score: **69**
 [S355][UX/P3] Mount the narrative on /journal/. Deferred: a UI change needs its own theme-matrix receipt cycle; declare the script in page-script scope.
 Why it matters: Mount the narrative on /journal/. Deferred: a UI change needs its own  is open, local, and unblocked — can ship this session.
 
+#### 2. [PRODUCT] Enable Worker observability for staging. Deferred: needs a Worker dep…
+Final score: **66**
+[S355][OBS/P3] Enable Worker observability for staging. Deferred: needs a Worker deploy and a Workers Logs free-tier cost check (CANON-029); without it the S354 staging 503s cannot be sourced.
+Why it matters: Enable Worker observability for staging. Deferred: needs a Worker depl is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Leaderboard embed hard-codes low-contrast greys. api/leaderboard/v1/w…
+Final score: **63**
+[S356][SITE/P2] Leaderboard embed hard-codes low-contrast greys. api/leaderboard/v1/widget.js:22,33 (#555/#666 on #0a0a0a) fails AA in both themes; owned by the embed, not the stylesheet.
+Why it matters: Leaderboard embed hard-codes low-contrast greys. api/leaderboard/v1/wi is open, local, and unblocked — can ship this session.
+
 ### DEFERRED / GATED
 
-#### 1. [VERIFY] Desk comments 503 is a Supabase outage, not a credential fault: proje…
-Final score: **100**
-[S357][ENG/P0 · PROVIDER] Desk comments 503 is a Supabase outage, not a credential fault: project fjnpzjjyhnpmunfoycrp reports db/rest/auth all UNHEALTHY via Supabase’s own health API while its project status still reads ACTIVE_HEALTHY. Two faults were stacked and one is fixed — the gateway’s supabase.admin points at a *different* project (ckwtolofoqzrqouqkmvs, "VaultSpark Studios-2"), and the legacy JWT key type is retired here (the project carries sb_publishable_/sb_secret_ issued 2026-03-12). Staging now holds the correct new-style secret; production still holds the wrong-project legacy key. When the provider recovers: npm run repair:desk-comments-credential, then --apply --env production --verify-at-worker.
-Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+#### 1. [PRODUCT] Tag changelog entries with answers: <theme> (D-S358.2)
+Final score: **96**
+[S358][CONTENT/P2 · FOUNDER] Tag changelog entries with answers: <theme> (D-S358.2) — until one is tagged, "You asked → we shipped" is honest-dark by design.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 2. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
 Final score: **93**
@@ -136,18 +134,18 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 
 ## Recommended Build Order
 
-1. build-promotion-receipt reports "7 console error(s) on the promoted a…
-2. Post-push CI confirmation
-3. The same receipt reports "stranded/stale deploy" because production b…
-4. Fingerprint the remaining 25 unhashed client scripts; the content lan…
-5. Served-vs-repo drift gate for lane-held paths
-6. Source the "You asked" lines from data/consumer-changelog.json, not g…
-7. vault_feedback 404s on production /changelog/ every visit. Pre-existi…
-8. Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (…
-9. Purge api/founder-presence.json from public git history. 30 revisions…
-10. Drift preflight scope is narrower than the gate set. check-generated-…
-11. Staging Worker observability. Still the only way to source the S354/S…
-12. Mount the narrative on /journal/. Deferred: a UI change needs its own…
+1. Post-push CI confirmation
+2. Check that every CONTENT_ADDRESSED_PREDICATE_SRCS entry is also a she…
+3. publish-changelog-draft lists the live feedback theme keys so answers…
+4. api/changelog-narrative.json is still commit-derived; notify-changelo…
+5. Oracle/IGNIS prompt chips fail contrast in light theme. .ignis-chip (…
+6. 32 unreferenced lane-held scripts (incl. the plain copies of the 17 j…
+7. Purge api/founder-presence.json from public git history. 30 revisions…
+8. Drift preflight scope is narrower than the gate set. check-generated-…
+9. Staging Worker observability. Still the only way to source the S354/S…
+10. Mount the narrative on /journal/. Deferred: a UI change needs its own…
+11. Enable Worker observability for staging. Deferred: needs a Worker dep…
+12. Leaderboard embed hard-codes low-contrast greys. api/leaderboard/v1/w…
 
 ## Best Immediate Move
 

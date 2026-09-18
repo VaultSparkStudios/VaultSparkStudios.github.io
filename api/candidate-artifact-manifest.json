@@ -30,10 +30,10 @@
     },
     "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident"
   },
-  "candidateSha": "0d6d54597f808e2019600771b18b074bd128ea1d",
-  "root": "0ee82e5e53d4b45311bb59bfb886e9351f076005286fc54550768e52e8566bc9",
-  "leafCount": 35,
-  "totalBytes": 977954,
+  "candidateSha": "f695a43fa4d8cd1af8bb3365c3e904de6c716f57",
+  "root": "cfd8bdd45d1cbe435c60feca758d2c624c5e9ae07b1050273574c166b90dadee",
+  "leafCount": 53,
+  "totalBytes": 1165180,
   "leaves": [
     {
       "path": ".well-known/llms.txt",
@@ -50,32 +50,44 @@
     {
       "path": "api/build-sha.json",
       "bytes": 322,
-      "sha256": "983c6d2e087aacd41df6bde4b0c97545da32403ba34ab67d8f5ec17214ed8127",
-      "leafHash": "3af51423da00d4713893da6a00badec8dc5c4b4f0d0ce61a98f24e34fef4cc65",
+      "sha256": "cf8f82248099f52eecf92f4dba9aa31dc13a031ee1a9615d3c0feae1424b88fd",
+      "leafHash": "a6185b2de0fa48c0c8a0b5c8f21b0cacf62b48af0fd3782a3116d1cbde03eb96",
       "volatileFieldsStripped": [
         "builtAt"
       ]
     },
     {
       "path": "api/public-intelligence.json",
-      "bytes": 28007,
-      "sha256": "b905b4032d0c5f0d813778ae3d650e8ea7ee28dad69565b6f34e55e9964fda03",
-      "leafHash": "0d982e08e30ed5e9ee1b7fb09416e1d56fa4c7fe27d7d22a498d9412bb3a8125",
+      "bytes": 27970,
+      "sha256": "3031978ef3573c568c4647bbe3128b475d01c3e834677bf5d90851709828fcb0",
+      "leafHash": "3a0b22a9ea2f9188174a7a6adb5d8ac0790b157f681f9046cf4c0a6f7f43b42b",
       "volatileFieldsStripped": [
         "generatedAt"
       ]
     },
     {
-      "path": "assets/ambient-core.shell-9de9470671.js",
-      "bytes": 77230,
-      "sha256": "9de94706712046bf9e666536e213a323d22adf45aafdcaac9b3231dc9ea98d5b",
-      "leafHash": "56bd09b5f43673580a4a581538fd0cee3094ee5c4b13a76612b859b48ac272a4"
+      "path": "assets/ambient-core.shell-1732d293f8.js",
+      "bytes": 77332,
+      "sha256": "1732d293f8728bd0eddcb9dbba47dafc5fd4007a0606735eaa3f079d964979b4",
+      "leafHash": "aa34269de0e642b0796bf8777d2f0763d095626e4d52835cd9c7ddcbc2235390"
     },
     {
       "path": "assets/ambient-feature.shell-9b5baeb1ab.js",
       "bytes": 13194,
       "sha256": "9b5baeb1abae2f8e678b547d8ed182858dda28d2167728d2bdf2f8d882dd3943",
       "leafHash": "f438a380b7e60a22f6679294554b325d00507787866433742f84ee674f527d35"
+    },
+    {
+      "path": "assets/changelog-reactions.shell-1ddedc6d81.js",
+      "bytes": 12343,
+      "sha256": "1ddedc6d812991f7bb72c2ee9405779a897d33fbedaab81784e3df96123d7528",
+      "leafHash": "b96e0e9f30a874f5b1e9b2749f99913b47e4c79e8113da4fade96b0032cba4bd"
+    },
+    {
+      "path": "assets/countdown.shell-f058757524.js",
+      "bytes": 3349,
+      "sha256": "f058757524a4100506f798c23943b667650328c3fa89c16ad9bc8774e9ac578e",
+      "leafHash": "ae406fd0d1ef8e847fb6cf589108db94055880cc32a19fa9edeeec1c81b0b056"
     },
     {
       "path": "assets/desk-comments.shell-3a3e7af2e8.js",
@@ -108,6 +120,24 @@
       "leafHash": "1f340973cc06bcc4882f34b53ee961c4e41ed48a202d0b3b8d97815bff312311"
     },
     {
+      "path": "assets/exit-intent.shell-91a127bb4a.js",
+      "bytes": 10858,
+      "sha256": "91a127bb4af5366a5cd153ef72f9e9fc7b4ba8c936d1928530c71e6bd8b75f9c",
+      "leafHash": "8d5e8aa2c697197eba29b0e739961a24a8270991eefa0fce8b4bbdc331745daa"
+    },
+    {
+      "path": "assets/faq-toggle.shell-6abbb39184.js",
+      "bytes": 557,
+      "sha256": "6abbb39184f6c851148cebc8d087094d9dc68d6313dfd77d07e8f818097356a7",
+      "leafHash": "b8b74198f97029989c1147ac50f582b3f11c657a7e33afa10eb0ddb8c6fb8eb2"
+    },
+    {
+      "path": "assets/github-stream.shell-37d24392f4.js",
+      "bytes": 1217,
+      "sha256": "37d24392f4301e03b1d37ba74f77d4e8b42c04a07b92f06c7c6133a4906171db",
+      "leafHash": "1ee96d833ec7e0ee743a685a58234fbd77765c2dca1a0ef8287d42e48a23fdb7"
+    },
+    {
       "path": "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
       "bytes": 1796,
       "sha256": "8dd57eb3a3f671183fa369a09714bab3df800f4dfcdc814752f32090c1c38803",
@@ -120,10 +150,28 @@
       "leafHash": "8f2eca4d3598e86bb8ded746f803d16bfcbdcc567d35a94b070ed5472987a887"
     },
     {
-      "path": "assets/home-idle-loader.shell-24f891da0e.js",
-      "bytes": 3170,
-      "sha256": "24f891da0e4920f3cbe10f5ec935e1b4110ff14ff1cfb94514f51ca86ea00313",
-      "leafHash": "b49cdf6936c7fba972dac74059267581b9c5dbb1d24fb1ee9f5503076066623a"
+      "path": "assets/home-idle-loader.shell-15b061f5c6.js",
+      "bytes": 3187,
+      "sha256": "15b061f5c675f3d29c5fe9a17ba1a3527e0de06dd4ec8bf2c2c34dc8060a7fce",
+      "leafHash": "f29febd46b029efcd871cf79cc3284863a21f1a80bfe1ec774bcb9970f98f2bb"
+    },
+    {
+      "path": "assets/honest-traction-scoreboard.shell-6b434171f8.js",
+      "bytes": 7553,
+      "sha256": "6b434171f84e24d79b881895cfd28623bcf3c37b096754de05dd874283fc30a2",
+      "leafHash": "043559e128ddc69cc687536598e7bc13207d03506057e6c3385fa9a2ffa47ca3"
+    },
+    {
+      "path": "assets/ignis-lens.shell-d369cfd082.js",
+      "bytes": 5669,
+      "sha256": "d369cfd082059e932a9cda699178a3586aa0004ce587fe20ff3cb87f8f047466",
+      "leafHash": "df55337ad989f8a7c08b1dfdb6bce3107dd9776bfb968ee399f96d32377c9d2d"
+    },
+    {
+      "path": "assets/ignis-project-block.shell-0fbab844d7.js",
+      "bytes": 12620,
+      "sha256": "0fbab844d7819f8392a1b4202cca69d70eec0da09c6c6169dcd15f057dd27756",
+      "leafHash": "0e24308e771f23a69d03a4cbb2f9145a02b68d6d939937875d102029649d3830"
     },
     {
       "path": "assets/journey-conductor.shell-9b61d0c064.js",
@@ -144,10 +192,28 @@
       "leafHash": "c5080e4c03f6dc010906c7a5eb1fbb218d1bdc1a8c28b7d9c65fce0aa0bc6496"
     },
     {
+      "path": "assets/oracle-extra.shell-a71c845b99.js",
+      "bytes": 28231,
+      "sha256": "a71c845b99c3297b107db5b7b2f4e6504464d98499edb5139e705acd54b56cb0",
+      "leafHash": "d6578a13c62a015ed19474c87d33305a9f85d9c5e42f6cde75de2e5521c7469b"
+    },
+    {
+      "path": "assets/oracle-insights-compute.shell-355aaa84cf.js",
+      "bytes": 10772,
+      "sha256": "355aaa84cff148204d482e2d8292e51561a1580a915dfab757c903fc0b21b15c",
+      "leafHash": "e06b02657a6dff40871f27a18b27194f77f5faf13a50e42a3343419ba3ae1ad1"
+    },
+    {
       "path": "assets/proof-card.js",
       "bytes": 7714,
       "sha256": "1af2012142674778d405c0fe9e135d69348a1639b455a18dbc220a9680874d6b",
       "leafHash": "6a5d5f6748cbd1b75ec608735e3eb8a6aca007308d86fb493748f1d46e691b71"
+    },
+    {
+      "path": "assets/proof-card.shell-1af2012142.js",
+      "bytes": 7714,
+      "sha256": "1af2012142674778d405c0fe9e135d69348a1639b455a18dbc220a9680874d6b",
+      "leafHash": "406a61759a955379a0bb3db2604d2f9d1ac51b2709578f8596cf7759b96bcdcd"
     },
     {
       "path": "assets/proof-conversion-line.js",
@@ -168,10 +234,40 @@
       "leafHash": "9b8d0cf9a562b86ec77a3b316c2663a38fdd2768bebb26c3f9aee08287cb3a45"
     },
     {
+      "path": "assets/pwa-nav.shell-5f63b6b75a.js",
+      "bytes": 2048,
+      "sha256": "5f63b6b75a3bbc3329565b5e4f77792c31208cf0a14de227a66950f4cedd6d20",
+      "leafHash": "66bbcfc29526056660da3876b6e5507be9fd238fe44ad88c101e3c57c00db898"
+    },
+    {
+      "path": "assets/rate-page.shell-7ca5d9e98f.js",
+      "bytes": 7960,
+      "sha256": "7ca5d9e98ff37ac2880ea6d22ca51268c181a0b0d0b8cb64ff5c6b1cfd51c440",
+      "leafHash": "5ef04dadada8812ed6daee5c697a56a84e19fd441d2624ff2cbc72f11419903b"
+    },
+    {
+      "path": "assets/returning-signal-strip.shell-d927bf3c2d.js",
+      "bytes": 8560,
+      "sha256": "d927bf3c2d7c2dd6b1452c93a7bb359675de368b3519e2679b31a7d0d6b71353",
+      "leafHash": "7e0eedf3d3c3d32e1edce0a20f9e6cf2e5a35d825b5f514d550a26b1a09505fc"
+    },
+    {
+      "path": "assets/schema-injector.shell-33115efcde.js",
+      "bytes": 10831,
+      "sha256": "33115efcde0528d2c03de0c0680753275d69ca9583a462a47da9f41637ba52c0",
+      "leafHash": "4c43b23d5bded3b9103c80496cc3096f539e714e6f18a6ce057e598e0de66790"
+    },
+    {
       "path": "assets/security-posture.js",
       "bytes": 4926,
       "sha256": "cb874aa5e8e15c48da34b9deb25bbe2131abddcc5a6ddb6678fc0d3fc2a6adfc",
       "leafHash": "ff423cc9a095e72f5f45ceac5c0477bd19ff1b0b070fa08dba085de04c15fb80"
+    },
+    {
+      "path": "assets/security-posture.shell-cb874aa5e8.js",
+      "bytes": 4926,
+      "sha256": "cb874aa5e8e15c48da34b9deb25bbe2131abddcc5a6ddb6678fc0d3fc2a6adfc",
+      "leafHash": "b05826936046c3e96c5e4ff6569f3dd1ad97c194bcbb0c493a0e6d8c3851239a"
     },
     {
       "path": "assets/sentry-init.shell-8b1d92d92b.js",
@@ -187,9 +283,9 @@
     },
     {
       "path": "assets/shell-manifest.json",
-      "bytes": 4024,
-      "sha256": "ae950f65e5432988a2a468e8ff60e4b1dbd072dd3a22b5dda5f5683cc94e1c8e",
-      "leafHash": "e2c9973f8f78900cb33e03e4d9d1c59c2997001bfba2340579f0d0ba91ccff71",
+      "bytes": 7119,
+      "sha256": "f8c5635d76fe7fb1fc355d04e91e949348da01c81bf2a6a7781ec3ed1e1da43c",
+      "leafHash": "b281e7efc3a0f4deb7d633c52f80ba3af67a0b84d78eccde038a6035889557e3",
       "volatileFieldsStripped": [
         "generatedAt"
       ]
@@ -205,6 +301,12 @@
       "bytes": 4778,
       "sha256": "fef717e631362db6d45e59244cb20df2d5277db882b057412b9c9198b272e78e",
       "leafHash": "e9c15abc7cf5436610991ba9bf4a48487cbd292e996aef1dfb549934292fef3c"
+    },
+    {
+      "path": "assets/studio-pulse-live.shell-f85a427911.js",
+      "bytes": 34268,
+      "sha256": "f85a427911022733d1b35287c4968bbd2f7b436b67ce687a1ecbf05aee9f4b42",
+      "leafHash": "fccc69b670a8b2f6731dcd63c0f2aec659f5d2d9e33dfb7c26ebd0615ee12253"
     },
     {
       "path": "assets/style.shell-0fa853d549.css",
@@ -225,6 +327,12 @@
       "leafHash": "f7b978f2e1342b80ffbcf25380f77d3781fa59fb3e72d9142453563e9c7a56e3"
     },
     {
+      "path": "assets/trust-depth.shell-4a894d44d5.js",
+      "bytes": 14312,
+      "sha256": "4a894d44d5b80739eff23aefc5d0c62b6ff06c1bb092a42ebc92eee8388b27a8",
+      "leafHash": "d7d5ffeb4a32daa6b0ffd0ab6eb588598aa848f28441115968073bf19db2e268"
+    },
+    {
       "path": "assets/vault-pulse.shell-141c057d30.js",
       "bytes": 8649,
       "sha256": "141c057d30731a4ff2e268ff528f6b99a1a0c9bba7681382d7718d9208c704dd",
@@ -232,43 +340,43 @@
     },
     {
       "path": "index.html",
-      "bytes": 163904,
-      "sha256": "25e05480a6d74df99c2deba5ac3b1bcdc5ffaefcb3bf7701b193ef9056976004",
-      "leafHash": "8911c7da20d0bcd7075a10a5cf6cd61602d651406e640cf1df4b8c5206372d39"
+      "bytes": 163995,
+      "sha256": "cd75ee250ba19ab7386dcd86cf612e90c2d5aab9029081899ef09597fd9ac5ca",
+      "leafHash": "cffccbd1cc2e4bddedbe3fccc370ee7aa54c1489d61c2b456c5488ff4e256242"
     },
     {
       "path": "membership/index.html",
-      "bytes": 110077,
-      "sha256": "2440d3a2900196600c9b6624bb49573e9e212ebb1dc09983af821b20f173e56b",
-      "leafHash": "0011938aa46e47892d31f105a5b9cf46835f291a5511b61e49cab2575c8895eb"
+      "bytes": 110128,
+      "sha256": "d7a9180b5a8616c804e0ffe524b17f2b3bf9c800132ee31852b485b9c0f8957d",
+      "leafHash": "126b4c65f4b159c718b97eeb869bcf9c8775211b6524fa2e1f7c950e00bd7f0e"
     },
     {
       "path": "status/index.html",
-      "bytes": 82775,
-      "sha256": "53c80063c4bf9d66d2d0669ae7c4c8d0ebc6895489908ba3ebf09bafb58263e1",
-      "leafHash": "fd9216ebb9881722b71fd26899780ac0fe47d86b6a217e14d7fa6c547a4a0775"
+      "bytes": 82843,
+      "sha256": "429f1b0eead3115cad9c7d3e6f098cb533a792038f20ee0e77eb418a8c1dd705",
+      "leafHash": "638652979bfdfbca233fff1ae0a4b8bf8aa8277b0eda8cee819a25bd24051a7a"
     },
     {
       "path": "studio-pulse/index.html",
-      "bytes": 67439,
-      "sha256": "e5685e9a23bbd445ca456c7307799b6829a3ef0181f2a36b6402f5e8748568de",
-      "leafHash": "819185e4f9397b4610784cdd242a2c84898454fd36a7c2a08c6718d0083bf6d8"
+      "bytes": 67490,
+      "sha256": "7ffe49d4b2ac33cdd4012499051a4e827066d670acece32f3f0c500a1747e7e8",
+      "leafHash": "034154f65579bd5b445fe7cd66be580c2fb2e76988b7a1336d9b0ff6699cf8f1"
     }
   ],
-  "observedRoot": "d59f20c687a6007de44b61654a0d7c17ed13566f41293c0aea713aa295cd43c7",
+  "observedRoot": "12e8f4ab29c85a98acb88c19a23b2e424376d8e9a3e82869fad8862f5c4d30d3",
   "observedLeafCount": 2,
   "observedLeaves": [
     {
       "path": "api/uptime.json",
       "bytes": 26089,
-      "sha256": "c1cdab18f3c38737d0e347bda357ef680606c7a8ff62ad0b1cbb8c5f48d8a40e",
-      "leafHash": "23d7822985010220388e9ea8f75e03bb5015db7c5062aab10312bbf78327ce77"
+      "sha256": "0d524542448b90f314cece4e0122e7f46abd92836cb29f6692087e5b350638f3",
+      "leafHash": "a50350c9add036e4d83d3732a7e59047752533f178ccd06098214774604b7d0e"
     },
     {
       "path": "api/worker-route-provenance.json",
       "bytes": 3158,
-      "sha256": "8b4f545a8045b7f2805ddf936a6bf9341298854dac7a932992a5d6b83dac5a5b",
-      "leafHash": "d852f060292bf147892aa707b9e9c665560e88bba2b01dfc3147d05b2631ded5"
+      "sha256": "49694f091d98ac780e347349e7fea06616a769c16bbf4a8f96576b64e487ac42",
+      "leafHash": "4e2e43d57113d97b6d1c593dec67460f4df9f60b14734171da99a3a928642097"
     }
   ]
 }

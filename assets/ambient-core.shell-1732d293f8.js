@@ -849,7 +849,7 @@
   }
   const modules = [
     {
-      src: '/assets/exit-intent.js',
+      src: '/assets/exit-intent.shell-91a127bb4a.js',
       when: function () {
         return !document.documentElement.hasAttribute('data-vs-signed-in') && !window.matchMedia('(pointer: coarse)').matches;
       },
@@ -910,7 +910,7 @@
       // S210 #2: returning-visitor signal strip — voice-driven changelog headlines
       // "What sparked since your last visit" on the homepage for ≥2 visits.
       // Additive to the digest (count vs narrative); homepage-only; idle-loaded.
-      src: '/assets/returning-signal-strip.js',
+      src: '/assets/returning-signal-strip.shell-d927bf3c2d.js',
       when: function () {
         try {
           var p = (window.location.pathname || '/').replace(/\/?$/, '/');
@@ -957,7 +957,7 @@
       idle: true
     },
     {
-      src: '/assets/security-posture.js',
+      src: '/assets/security-posture.shell-cb874aa5e8.js',
       when: function () {
         return (location.pathname || '/').indexOf('/security') === 0 ||
           !!document.querySelector('[data-security-posture]');
@@ -1030,7 +1030,7 @@
     {
       // S185 ambient-split wave 4 — 4 scripts extracted from feature bundle.
       // ignis-lens: Ask IGNIS floating pill — game/project/universe pages only.
-      src: '/assets/ignis-lens.js',
+      src: '/assets/ignis-lens.shell-d369cfd082.js',
       when: function () {
         var p = location.pathname || '/';
         if (document.querySelector('[data-vault-oracle]')) return false;
@@ -1075,7 +1075,7 @@
     },
     {
       // rate-page: emoji feedback widget — content pages, skip portals/admin/api.
-      src: '/assets/rate-page.js',
+      src: '/assets/rate-page.shell-7ca5d9e98f.js',
       when: function () {
         var p = location.pathname || '/';
         return !/^\/(vault-member|investor-portal|admin|api)\//.test(p);
@@ -1127,7 +1127,7 @@
       // counts (live / in-forge / sealed / sessions-in-the-open) from the
       // deployed public-intelligence feed. Mounts only on its hook; honest-dark
       // below a breadth floor so it never fabricates momentum.
-      src: '/assets/honest-traction-scoreboard.js',
+      src: '/assets/honest-traction-scoreboard.shell-6b434171f8.js',
       when: function () {
         return !!document.querySelector('[data-vs-traction]');
       },

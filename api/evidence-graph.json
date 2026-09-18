@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "776942f6a8877394446b5a7b9e8aef7b59d321ac5e8cbe7346a6ded0cb7486b6",
+  "contractSha256": "b375cf03ffb1e085db44626d7386ecc25b17c49cb34bccb6334bc8e320a09522",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -346,7 +346,9 @@
         "api/commit-map.json"
       ],
       "feeds": [],
-      "externalSources": []
+      "externalSources": [
+        "data/consumer-changelog.json"
+      ]
     },
     {
       "id": "citation",
@@ -374,7 +376,6 @@
         "api/ignis-conduit.json",
         "api/proof-aware-projects.json",
         "api/public-status.json",
-        "api/ship-receipts.json",
         "feed/forge-ledger.json"
       ],
       "externalSources": [
@@ -1271,7 +1272,6 @@
         "docs/SHIP_RECEIPTS.md"
       ],
       "dependsOn": [
-        "api/commit-map.json",
         "api/feedback-provenance.json"
       ],
       "feeds": [
@@ -1279,6 +1279,7 @@
         "changelog/index.html"
       ],
       "externalSources": [
+        "data/consumer-changelog.json",
         "data/field-verdicts.json",
         "docs/visual-proof/*/manifest.json"
       ]

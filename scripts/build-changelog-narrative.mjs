@@ -18,6 +18,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const COMMIT_MAP = join(ROOT, 'api', 'commit-map.json');
 const OUT = join(ROOT, 'api', 'changelog-narrative.json');
 const RECENT_SHIPS_OUT = join(ROOT, 'api', 'recent-ships.json');
+const CONSUMER_CHANGELOG = join(ROOT, 'data', 'consumer-changelog.json');
 
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
@@ -124,19 +125,30 @@ function isoWeek(ts) {
   } catch (_) { return 'unknown'; }
 }
 
-function recentShipsFor(entries) {
+/**
+ * S358 — the homepage hero ticker reads the READER changelog, never git.
+ *
+ * This projection used to be the newest commit-derived sentences, and the hero
+ * showed "Latest from the forge · S357 · Refined record the three board items
+ * worked." to every visitor. Commit subjects are written for the next engineer;
+ * no verb map or strip list turns one into a sentence for a reader (the same
+ * conclusion D-S358.2 reached for "You asked → we shipped").
+ * data/consumer-changelog.json is founder-approved reader prose by construction,
+ * and the ticker already deep-links to /changelog/#cl-latest — the entry this
+ * now names. No scope chip: an entry's title carries its own subject.
+ */
+export function recentShipsFor(changelog) {
+  const list = ((changelog && changelog.entries) || [])
+    .filter(function (e) { return e && typeof e.title === 'string' && e.title.trim() && /^\d{4}-\d{2}-\d{2}$/.test(String(e.date || '')); })
+    .slice()
+    .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
   return {
     schemaVersion: '1.0',
-    generatedAt: new Date().toISOString().slice(0, 10),
+    generatedAt: String((changelog && changelog.updated) || ''),
     generatedBy: 'scripts/build-changelog-narrative.mjs',
-    source: 'api/changelog-narrative.json',
-    ships: entries.slice(0, 12).map(function (entry) {
-      return {
-        sha: entry.sha,
-        date: entry.ts,
-        title: entry.sentence,
-        scope: entry.scope,
-      };
+    source: 'data/consumer-changelog.json',
+    ships: list.slice(0, 12).map(function (entry) {
+      return { date: entry.date, title: entry.title.trim() };
     }),
   };
 }
@@ -166,7 +178,22 @@ function selfTest() {
 
     { name: 'Tended becomes Refined for a non-chore type', commit: { sha: 'c', ts: '2026-01-01', move: 'Tended', tone: 'muted', visitorFacing: true, summary: 'orbit shift' }, expectVerb: 'Refined' },
   ];
-  var pass = 0, fail = 0;
+  // S358 — the hero ticker projection: reader changelog only, newest first.
+  var ships = recentShipsFor({ updated: '2026-09-17', entries: [
+    { date: '2026-07-16', title: 'Older entry' },
+    { date: '2026-09-17', title: 'The Desk: real art' },
+    { date: 'soon', title: 'Undated' },
+  ] });
+  var projectionCases = [
+    ['newest reader entry leads the hero', ships.ships[0].title === 'The Desk: real art' && ships.ships[0].date === '2026-09-17'],
+    ['an undated entry never reaches the hero', ships.ships.length === 2],
+    ['no commit fields survive (sha, scope)', ships.ships.every(function (x) { return !('sha' in x) && !('scope' in x); })],
+    ['the projection names its source', ships.source === 'data/consumer-changelog.json'],
+    ['an empty changelog is honest-dark, not an error', recentShipsFor(null).ships.length === 0],
+  ];
+  projectionCases.forEach(function (c) { if (!c[1]) console.error('  FAIL ' + c[0]); });
+  var projectionFail = projectionCases.filter(function (c) { return !c[1]; }).length;
+  var pass = projectionCases.length - projectionFail, fail = projectionFail;
   cases.forEach(function (c) {
     if (c.input !== undefined) {
       var result = strip(c.input);
@@ -179,7 +206,7 @@ function selfTest() {
       else { fail++; console.error('  FAIL ' + c.name + ': got ' + JSON.stringify(n)); }
     }
   });
-  console.log('build-changelog-narrative self-test: ' + pass + '/' + cases.length + ' passed' + (fail ? ' — ' + fail + ' failed' : ''));
+  console.log('build-changelog-narrative self-test: ' + pass + '/' + (cases.length + projectionCases.length) + ' passed' + (fail ? ' — ' + fail + ' failed' : ''));
   process.exit(fail > 0 ? 1 : 0);
 }
 
@@ -209,7 +236,9 @@ if (!SELF_TEST && RUN_DIRECT) {
     entries,
     byWeek,
   };
-  const recentShips = recentShipsFor(entries);
+  let consumerChangelog = { entries: [] };
+  try { consumerChangelog = JSON.parse(readFileSync(CONSUMER_CHANGELOG, 'utf8')); } catch { /* absent → honest-dark ticker */ }
+  const recentShips = recentShipsFor(consumerChangelog);
 
   if (CHECK) {
     if (!existsSync(OUT)) {

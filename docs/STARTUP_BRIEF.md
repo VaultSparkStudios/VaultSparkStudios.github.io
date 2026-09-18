@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-18 (Session 357 closeout) -->
+<!-- generated-at: 2026-09-18 (Session 358 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 357 closeout · 2026-09-18.
+> **Fast-boot brief** — generated at Session 358 closeout · 2026-09-18.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 358 · 2026-09-18 · FOUNDER MODE                         ║
+║  Session 359 · 2026-09-18 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S357) - WHAT SHIPPED ══════════════════════════╗
-║  S357: recovered the cut-off S356 closeout and released it to p  ║
-║  Tests  -                                                        ║
-║  Deploy -                                                        ║
+╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
+║  Expected S358; PROJECT_STATUS summary says S357.                ║
+║  S358 recovered S357's un-written-back tail and closed every op  ║
+║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    979/1000   ███████████████████████░   98%                     ║
-║    SIL v3.0  ·  Avg3: 987.7  ·  Velocity 9↑                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
-║    Trend  ▇▇▆▄  ↑  (last 4 sessions)                             ║
+║    982/1000   ███████████████████████░   98%                     ║
+║    SIL v3.0  ·  Avg3: 987.7  ·  Velocity 6↑                      ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▆▇▇▆▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ██▇███▇▇ →                ║
-║    Alignment         98    ██████████  ▇▇█▇▇▇█▇ →                ║
-║    Momentum          96    ██████████  ██▇█▇▇▇▇ →                ║
-║    Engagement        94    █████████░  ▇▇█▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ████▇▇▇▇ →                ║
+║    Dev Health        99    ██████████  █▇███▇▇▇ →                ║
+║    Alignment         98    ██████████  ▇█▇▇▇█▇▇ →                ║
+║    Momentum          97    ██████████  █▇█▇▇▇▇▇ →                ║
+║    Engagement        95    ██████████  ▇█▇▇▇▇▇▇ →                ║
+║    Process Qual      99    ██████████  ███▇▇▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         98    ██████████  ········ →                ║
 ║    Capital           99    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 357 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 358 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    479/479 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,20 +77,20 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
-║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46492 FORGE  ·  9d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
-║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
+║  ⚠  Revenue sig.  7d old (2026-09-11)  ⚠ stale                   ║
+║  ⛔  Deploy gaps   production 326 commit(s) behind · 3.6d — past  ║
+║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7409 <   ║
@@ -117,31 +117,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▇▆▄  9↑  (last 5 sessions)                         ║
+║  Velocity:   ▆▇▇▆▄  6↑  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  971/1000  (↓8 vs current 979)                       ║
+║  Projected:  984/1000  (↑2 vs current 982)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [SECURITY]     build-promotion-receipt reports "7 console  ║
-║        build-promotion-receipt reports "7 console error(s) on t  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      The same receipt reports "stranded/stale d  ║
-║        The same receipt reports "stranded/stale deploy" because  ║
+║   93  [PRODUCT]      Check that every CONTENT_ADDRESSED_PREDICA  ║
+║        Check that every CONTENT_ADDRESSED_PREDICATE_SRCS entry   ║
 ║                                                                  ║
-║   90  [PRODUCT]      Fingerprint the remaining 25 unhashed clie  ║
-║        Fingerprint the remaining 25 unhashed client scripts; th  ║
+║   90  [PRODUCT]      publish-changelog-draft lists the live fee  ║
+║        publish-changelog-draft lists the live feedback theme ke  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Served-vs-repo drift gate for lane-held pa  ║
-║        Served-vs-repo drift gate for lane-held paths is open, l  ║
+║   87  [PRODUCT]      api/changelog-narrative.json is still comm  ║
+║        api/changelog-narrative.json is still commit-derived; no  ║
+║                                                                  ║
+║   85  [AI]           Oracle/IGNIS prompt chips fail contrast in  ║
+║        Oracle/IGNIS prompt chips fail contrast in light theme.   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -149,5 +149,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 357 closeout · 2026-09-18*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 358 closeout · 2026-09-18*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

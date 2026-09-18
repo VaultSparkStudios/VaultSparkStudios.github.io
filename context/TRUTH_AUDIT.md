@@ -1272,3 +1272,11 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 **Two board items were false and are corrected rather than carried.** `.ignis-chip` was described as "solid orange with near-black text" defined in `ignis-answer-engine.js`; it is an 8%-alpha tint with `#FF7A00` text, defined in two page-level style blocks, already patched for light theme since S94, with a residual 4.22:1 over the hero wash. The leaderboard item named 2 failing declarations; there are 5.
 
 **What remains unproven, stated plainly.** Production has not been promoted, so every claim above is verified on staging and in the repo, not in production. Production continues to serve `e65eca737` from 2026-09-14 and no surface claims otherwise — `build-deploy-currency` now reports `stale`, which is the truth. The 25 remaining unhashed client scripts are a measured exposure, not a hypothesis: 27 of 171 were serving pre-S356 bytes when measured.
+
+
+## S358 — 2026-09-18
+
+- **Write-back debt recovered.** S357's final closeout commit (`b3e28806`) never touched the SIL, and three substantive commits landed after it (`24933cc9` safe-spawn, `0d6d5459` lane drift in the ceremony, `f695a43f` resync). `check-writeback-currency` flagged 9 commits, oldest 18.2h. Recorded in S358's surfaces; no code re-implemented.
+- **A blocker sentence expired.** PROJECT_STATUS still named a Supabase outage and a wrong production key. Re-probed: the provider is healthy, and production `/v/desk-comments` returns 200. Both blockers were removed on that evidence, not because time had passed.
+- **A gate reported two false RISK rows** (`studio-now`, `journey-conductor`) by reading an unserved loader source. Fixed at the mechanism (D-S358.1).
+- **A public surface claimed a retired feature.** The /changelog/ loop section still described the founder-presence underline. Removed (D-S358.3).

@@ -1,8 +1,20 @@
 # Current State
 
-Last updated: 2026-09-17 (S357)
+Last updated: 2026-09-18 (S358)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S358 Every script a page loads can now be updated, and the changelog stops guessing (2026-09-18)
+
+**Seventeen client scripts the content lane could never update are now fingerprinted.** Production served pre-S356 bytes for 19 scripts that pages still loaded. 17 of them now join the shell-asset table (five through the ambient bundle's content-addressed loader list, `trust-depth` inside the idle loader), so new bytes ship under new URLs on the path the lane promotes. The other two were already fixed: the drift gate had been reading an unbundled loader source. It now follows references from what pages actually load, so a source file only counts when something served reaches it. On the rebuilt tree, drift that matters is **19 → 0**.
+
+**"You asked → we shipped" reads the reader changelog, not git.** A commit subject had slipped past S357's filters within a day. The box now shows a changelog entry only when the founder has declared, at approval, which feedback theme it answers (`answers:` in the draft). No entry is tagged yet, so the box is honest-dark until one is.
+
+**/changelog/ no longer 404s on every visit.** It was querying a `vault_feedback` table that deliberately does not exist. The loop section now shows true static counts, no session codes, and no longer claims the founder-presence underline that was retired for privacy.
+
+**The homepage stops showing commit subjects.** The hero ticker and the returning-visitor strip now name the newest founder-approved changelog entry ("The Desk: real art, reader-first articles, and a community on every story") instead of lines like "Refined record the three board items worked."
+
+**Desk comments work in production again.** The Supabase outage cleared; `/v/desk-comments` returns 200 on production and staging.
 
 ## S357 The deploy-truth surface stops certifying trees it never measured (2026-09-17)
 

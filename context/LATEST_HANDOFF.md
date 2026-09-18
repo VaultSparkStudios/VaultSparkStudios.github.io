@@ -1,5 +1,16 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S358 · 2026-09-18
+
+- **Recovered:** S357's tail was never written back (closeout `b3e28806` skipped the SIL; `24933cc9`, `0d6d5459`, `f695a43f` landed after it). Recorded here; no code redone.
+- **Shipped:** 17 still-loaded client scripts fingerprinted (D-S358.1); the lane-drift gate follows served reachability; "You asked → we shipped" reads founder-declared changelog links only (D-S358.2); the dead `vault_feedback` fetch and a retired-feature claim removed from /changelog/ (D-S358.3); the homepage ticker and returning-visitor strip re-sourced to the reader changelog (D-S358.4, found in the rendered-pixel pass).
+- **Verified live before any change:** Supabase healthy again; `/v/desk-comments` 200 on production and staging. The two provider/credential blockers are closed on that evidence.
+- **Release:** see the S358 release addendum below (content lane only — no Worker change this session).
+
+**Founder item:** tag a changelog entry with `answers: frontdoor` (the one live theme) in its draft frontmatter when one genuinely answers it. Until then the box stays empty, which is correct.
+
+**Read before promoting next time:** the lane-drift line in the ceremony should now read 0 still-referenced on production. Any non-zero number is a newly added unhashed script. Fingerprint it; do not relax the purity rule.
+
 ## Where We Left Off — S357 · 2026-09-17
 
 - **Recovered:** the cut-off S356 closeout tail. 19 commits reconstructed, rebased over 112 + 16 upstream publisher commits, and pushed. Three stale agent worktrees and nine duplicate cache captures removed.

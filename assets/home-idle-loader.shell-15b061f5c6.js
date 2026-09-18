@@ -25,7 +25,7 @@
     // hashing the parent loader, so both files can ride the content lane together.
     '/assets/vault-pulse.shell-141c057d30.js',
     // S228: moved from defer → idle (below-fold, non-critical for initial paint)
-    '/assets/trust-depth.js',
+    '/assets/trust-depth.shell-4a894d44d5.js',
     '/assets/related-content.js',
   ];
 

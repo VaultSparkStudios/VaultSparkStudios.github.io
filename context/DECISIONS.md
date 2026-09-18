@@ -1962,3 +1962,25 @@ Any browser module pulled by a fingerprinted shell loader must itself be fingerp
 S356 + S357 are ready: build:check 499/499, staging serving the exact candidate with zero failed responses, both ceremony browser gates green. The Worker deploy and the `pages-deploy` `confirm_content` dispatch were both refused by the agent session's permission policy.
 
 **Decided:** do not work around the denial. The release is handed to the founder with the exact two commands, in order, and the verification steps — recorded in `LATEST_HANDOFF.md`. Production continues to serve `e65eca737` from 2026-09-14 until then, and no surface claims otherwise.
+
+## D-S358.1 — Every client script a page or served loader reaches is fingerprinted; the drift gate counts reachability, not mention
+
+Production measured 19 lane-held scripts still loaded while serving pre-S356 bytes. Two of the 19 were false alarms: `studio-now` and `journey-conductor` were already content-addressed, but the gate read the UNBUNDLED `ambient-loader.js` source, which still names the plain path, while the served bundle names the fingerprint.
+
+**Decided:** (1) the remaining 17 join `build-shell-assets` (five loader-only ones also join `CONTENT_ADDRESSED_PREDICATE_SRCS`; `trust-depth` is rewritten inside `home-idle-loader` through a generalised nested-reference table, hashed children-first). (2) `check-lane-held-asset-drift` resolves references transitively from page tags through served scripts, so a source file matters only when something served reaches it. Self-test 13/13 with a negative control for the unserved-loader case. Result on the rebuilt tree: drift that matters 19 → 0. The purity rule is untouched — the naming was the defect, never the rule.
+
+## D-S358.2 — "You asked → we shipped" reads only founder-declared links from the reader changelog
+
+Within a day of S357's three-layer firewall, a git subject ("rebind the mobile proof without re-running the 215-cell audit") was on the feed: `rebind` is not `\bbind\b`. That is the third time a vocabulary filter was out-vocabularied.
+
+**Decided:** `build-ship-receipts` no longer reads git. Shipped lines come from `data/consumer-changelog.json`, and an entry answers a feedback theme only when its `answers` array names that theme — set via `answers:` in the draft frontmatter at founder approval (`publish-changelog-draft`, validated). No keyword inference: guessing "this is what you asked for" would fabricate the claim the surface exists to evidence. No entry is tagged yet, so the box is honest-dark until the founder tags one; that is a board item, not a defect. The field keeps the name `shippedCommits` so no fingerprinted client rotates for a rename.
+
+## D-S358.3 — The /changelog/ loop section stops querying a table that was never meant to exist
+
+`vault_feedback` returns PGRST205 (no such table), and the Q2 decision on feedback is that raw feedback stays browser-local and never reaches a server table. The runtime fetch could only ever 404. **Decided:** remove it and its permanent "Aggregating…" note; make the stats static and true (3 loops, latest May 22; the never-populated turnaround stat removed); drop session codes from the entry meta; and remove the entry describing the founder-presence underline, a feature retired for privacy in S356 that the page still presented as live.
+
+## D-S358.4 — The homepage ticker and the returning-visitor strip read the reader changelog
+
+Found by looking at the rendered homepage during the CANON-053 pass, not by a gate: the hero showed "Latest from the forge · Shipped run the lane-drift measurement inside t…", and the feed behind it held "Refined record the three board items worked." (scope `S357`). `api/recent-ships.json` was a projection of the commit-derived narrative; `returning-signal-strip.js` rendered the same sentences to returning visitors as "New:".
+
+**Decided:** `recent-ships.json` is now projected from `data/consumer-changelog.json` (newest founder-approved titles, no sha or scope), and the strip reads it instead of the narrative. The strip is fingerprinted so the change can ride the content lane. `api/changelog-narrative.json` itself is left commit-derived for now: `notify-changelog-subscribers` keys subscriber mail off its latest sha, and changing that is a mail-side decision, not a surface fix — it is recorded on the board.

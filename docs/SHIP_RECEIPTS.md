@@ -7,4 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Front door | 3 | 1d66c6e8 rebind the mobile proof without re-running the 215-cell audit | pending |
+| Front door | 3 |  | pending |
