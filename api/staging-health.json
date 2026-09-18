@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-18T19:49:40.596Z",
+  "generatedAt": "2026-09-18T20:11:20.813Z",
   "candidateReady": true,
   "candidateFindings": [],
   "candidateBuildSha": "afe8ac65528a8e4ed1ca0aefec04139da7963a6f",
@@ -18,18 +18,13 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "staging-ahead",
-    "productionRoutes": 159,
+    "state": "uncomparable",
+    "productionRoutes": null,
     "stagingRoutes": 163,
     "missingOnStaging": [],
-    "missingOnStagingCount": 0,
-    "aheadOnStaging": [
-      "/news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/",
-      "/news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/",
-      "/news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/",
-      "/news/2026-09-18/security-researchers-used-anthropic-039-s-claude-to-hack/"
-    ],
-    "aheadOnStagingCount": 4,
+    "missingOnStagingCount": null,
+    "aheadOnStaging": [],
+    "aheadOnStagingCount": null,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -37,26 +32,12 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
+      "statusParity": false,
       "shellParity": false,
-      "prodShell": [
-        "assets/ambient-core.shell-9de9470671.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
-        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-24f891da0e.js",
-        "assets/nav-sheet.shell-d6938be4eb.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/public-intelligence.shell-c86a6ecc39.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-0fa853d549.css",
-        "assets/theme-toggle.shell-8221605898.js"
-      ],
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-1732d293f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -74,12 +55,12 @@
         "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "headerParity": true,
+      "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -92,7 +73,10 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "shell-mismatch"
+        "status-mismatch",
+        "prod-forbidden",
+        "shell-mismatch",
+        "header-mismatch"
       ]
     },
     {
@@ -101,14 +85,17 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": false,
+      "shellParity": true,
       "prodShell": [
-        "assets/ambient-core.shell-9de9470671.js",
+        "assets/ambient-core.shell-1732d293f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/studio-pulse-live.shell-f85a427911.js",
         "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
@@ -142,9 +129,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "shell-mismatch"
-      ]
+      "reasonCodes": []
     },
     {
       "route": "/membership/",
