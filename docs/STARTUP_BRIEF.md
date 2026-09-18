@@ -90,7 +90,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  7d old (2026-09-11)  ⚠ stale                   ║
 ║  ⛔  Deploy gaps   production 326 commit(s) behind · 3.6d — past  ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7409 <   ║
