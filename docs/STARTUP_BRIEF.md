@@ -98,8 +98,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    25d · Authorize or decline immutable warm-origin migrati      ║
-║    25d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    26d · Authorize or decline immutable warm-origin migrati      ║
+║    26d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
