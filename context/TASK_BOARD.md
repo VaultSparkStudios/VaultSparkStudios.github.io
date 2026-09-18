@@ -11,7 +11,7 @@ Last updated: 2026-09-18 (S359 closed every open S358 item: "You asked" now coun
 ## Closed — S358 items (worked in S359)
 
 - [x] **[S358][CONTENT/P2]** Tag an entry with `answers:` — **superseded S359** (D-S359.1): "You asked" now counts only k-anonymous reader choices, and none has reached k=5, so there is no reader ask to answer yet. Tagging now would claim demand nobody expressed.
-- [x] **[S358][ASSETS/P3]** 32 residue scripts — cleared by the S359 full production promotion (see LATEST_HANDOFF).
+- [x] **[S358][ASSETS/P3]** 32 residue scripts — full production promotion (run 35403055493) took drift to 7, all unreferenced and edge-cached (s-maxage 7d); they expire by 2026-09-25. The deploy token cannot purge cache.
 - [x] **[SIL][S358][GATES/P2]** Predicate ⊂ shell-asset check — **DONE S359**: `build-shell-assets` fails write and `--check` on a content-addressed predicate with no shell asset.
 - [x] **[SIL][S358][CONTENT/P3]** `answers:` keys from the live set — **DONE S359**: validated against `READER_THEME_KEYS`, which a self-test binds to the sampler's theme map.
 - [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.

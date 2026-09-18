@@ -6,7 +6,8 @@
   `node --input-type=module -e "const {getSecret}=await import('./scripts/lib/secrets.mjs');const t=await getSecret('SUPABASE_ACCESS_TOKEN','supabase.management');const r=await fetch('https://api.supabase.com/v1/projects/fjnpzjjyhnpmunfoycrp/restart',{method:'POST',headers:{Authorization:'Bearer '+t}});console.log('restart',r.status)"`
   (or Dashboard → Project Settings → General → Restart project). Verify: `curl -s "https://vaultsparkstudios.com/v/desk-comments?slug=2026-08-10/test-story"` returns `{"ok":true,...}`.
 - **Shipped:** "You asked" counts k-anonymous reader choices only (D-S359.1); narrative + subscriber push built from the reader changelog, notifier keyed on a git-free id (D-S359.2); /games/ light-theme status labels pass AA (D-S359.3); predicate/shell-asset gate; `answers:` keys bound to the sampler.
-- **Release:** see the S359 release addendum below.
+- **RELEASED — full deploy.** Staging full publish `c83259337df4` (6946 files, chain 77) → ceremony **11/11** → scoped full promotion run `35403055493` (`confirm_production=true`, identity surfaces held). Production `build-sha` = `453dd16d0` = HEAD at release — a full deploy, not a content-lane overlay.
+- **Verified from served bytes:** `/api/changelog-narrative.json` `source: data/consumer-changelog.json`, schema 2.0; `/games/` serves the theme classes; `/api/ship-receipts.json` 0 receipts (honest-dark); lane drift 171 held · 164 match · 7 drift · **0 referenced**; smoke-live 6/6. The 7 are edge-cached plain copies (s-maxage 7d) that nothing loads; the deploy token returned 401 on a targeted purge, so they expire by 2026-09-25.
 
 ## Where We Left Off — S358 · 2026-09-18
 
