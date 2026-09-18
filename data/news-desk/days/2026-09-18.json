@@ -1,7 +1,8 @@
 {
   "date": "2026-09-18",
   "simulated": false,
-  "leadSlug": "security-researchers-used-anthropic-039-s-claude-to-hack",
+  "leadSlug": "microsoft-exec-called-ai-scraping-the-largest-theft-of",
+  "quietStorySlug": "microsoft-exec-called-ai-scraping-the-largest-theft-of",
   "stories": [
     {
       "slug": "claude-code-relaunches-projects-to-manage-multiple-ai-agents",
@@ -469,6 +470,131 @@
         "fellBack": false,
         "attempt": 3,
         "at": "2026-09-18T18:26:48.755Z"
+      }
+    },
+    {
+      "slug": "microsoft-exec-called-ai-scraping-the-largest-theft-of",
+      "format": "explainer",
+      "kind": "quiet",
+      "edition": "latenight",
+      "headline": "Microsoft exec calls AI scraping 'largest theft of labor'",
+      "hook": "Unredacted filings reveal the scale of data extraction from newsrooms.",
+      "tldr": "New unredacted legal filings have surfaced, shedding light on the internal metrics and datasets that power major AI models. Microsoft executives have characterized the widespread scraping of copyrighted content as the largest theft of labor in human history. The documents provide concrete evidence of the volume of proprietary material ingested by tech giants, including millions of documents from major news outlets. This revelation underscores the growing tension between AI development and journalistic integrity, highlighting the sheer magnitude of digital appropriation occurring behind closed doors.",
+      "facts": [
+        {
+          "text": "For example, Microsoft’s own data shows its Copilot “answer engine” caused click-through rates for The New York Times&#8217; domain to drop as much as 93% compared to traditional Bing search.",
+          "sourceUrl": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/"
+        },
+        {
+          "text": "A Common Crawl-derived dataset included more than 2 million documents from nytimes.com alone.",
+          "sourceUrl": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/"
+        },
+        {
+          "text": "The documents reveal for the first time that OpenAI’s mid-training datasets alone contain more than 91,692 copies of works published by the NYT, Daily News, and Center for Investigative Reporting.",
+          "sourceUrl": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "The data shows our traffic dropped 93% when Copilot answered directly. We ran this, it fell over, and now we see why: they took our work without asking.",
+          "sources": [
+            "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 0,
+          "horizon": 1,
+          "verdict": "fair",
+          "confidence": 0.75,
+          "position": "OpenAI’s mid-training datasets contain over 91,692 copies of works from the NYT and others. You are going to see this shift in how value is assigned to original reporting.",
+          "sources": [
+            "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I was paged at 3 A.M. because the click-through rates for our domain had just plummeted. I checked the logs, and sure enough, the new answer engine was pulling our content and serving it up without sending users back to us. It wasn't a bug; it was the product."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at the numbers. Over 91,000 copies of specific investigative pieces sitting in a training set. That’s not just data; that’s a library being digitized without a librarian. The direction is clear: the model eats the source."
+        }
+      ],
+      "memeLine": {
+        "text": "The biggest heist didn't involve a mask, just a license agreement nobody read.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "It started with a quiet drop in traffic. For months, we watched the numbers bleed out, attributing it to algorithm changes or shifting user habits. Then the unredacted filings came through, and the picture became starkly clear. Microsoft’s own data showed its Copilot “answer engine” caused click-through rates for The New York Times’ domain to drop as much as 93% compared to traditional Bing search. We weren't losing readers to competitors; we were losing them to a machine that ate our words and spat them back out as answers. It felt like running a newsroom where the printers were stolen, but instead of printing papers, they were printing summaries that kept people from buying the paper."
+        },
+        {
+          "voice": "rex",
+          "text": "You are looking at the symptom, but the disease is in the dataset. The documents reveal for the first time that OpenAI’s mid-training datasets alone contain more than 91,692 copies of works published by the NYT, Daily News, and Center for Investigative Reporting. That is not accidental ingestion; that is systematic harvesting. A Common Crawl-derived dataset included more than 2 million documents from nytimes.com alone. When you stack those two facts together, you realize the scale isn't just large—it's total. The infrastructure of modern AI is built on a foundation of unlicensed, uncredited mass reproduction of human creativity."
+        },
+        {
+          "voice": "vera",
+          "text": "The executive calling it the largest theft of labor in human history isn't using hyperbole; he's describing the operational reality. We spent years building trust and depth, only to find that our output was being treated as free raw material. The workaround nobody documents is that we can't stop the scrape, but we can demand the accounting. Until there is a mechanism to track and compensate for every copy taken, the industry will continue to operate on an imbalance of value extraction that no amount of PR can justify. The silence from the labs is deafening, but the data in the court filings is screaming."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-18--microsoft-exec-called-ai-scraping-the-largest-theft-of.png",
+        "scene": "A dimly lit server room filled with rows of blinking hard drives, each labeled with names of major news organizations like NYTimes and Daily News, connected by thick black cables to a central glowing AI core. The composition shows hard drives connected central processing unit.",
+        "alt": "Close-up of server racks with labels reading 'NYT', 'Daily News', and 'Center for Investigative Reporting' plugged into a central processing unit emitting blue light. The composition shows hard drives connected central processing unit.",
+        "anchors": [
+          "largest theft of labor",
+          "drop as much as 93%",
+          "more than 2 million documents"
+        ],
+        "relationships": [
+          {
+            "id": "server-rack-ingestion",
+            "subject": [
+              "hard drives"
+            ],
+            "action": [
+              "connected"
+            ],
+            "object": [
+              "central processing unit"
+            ],
+            "evidenceAnchorRefs": [
+              "largest theft of labor"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "ebc3dd3e7ef42798377c76ec0b51b132fd8cd52d128e2ba36371b69ca9f738b6",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.136
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "the corporate legal strategy of claiming fair use while systematically dismantling the economic incentives for original journalism through automated scraping tools",
+          "setup": "A lawyer presents a slide deck showing a graph where revenue goes down as AI engagement goes up, arguing that this decline is actually a sign of market efficiency.",
+          "payoff": "The audience nods in agreement, convinced that the destruction of their own business model is simply the necessary friction of progress.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-09-18T22:21:13.675Z"
       }
     }
   ]
