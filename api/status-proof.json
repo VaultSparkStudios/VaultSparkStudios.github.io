@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-09-18T01:09:52.630Z",
+  "generatedAt": "2026-09-18T01:18:56.420Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 83,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 1986278,
+      "ageSeconds": 1986822,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
@@ -35,7 +35,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-09-18T01:09:48.513Z",
-      "freshnessSeconds": 4,
+      "freshnessSeconds": 548,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -196,7 +196,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-09-17T17:59:22.088Z",
-      "freshnessSeconds": 25831,
+      "freshnessSeconds": 26374,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -331,7 +331,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-09-18T01:09:49.741Z",
-      "freshnessSeconds": 3,
+      "freshnessSeconds": 547,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -519,8 +519,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-09-18T00:09:16.343Z",
-      "freshnessSeconds": 3636,
+      "generatedAt": "2026-09-18T01:18:12.903Z",
+      "freshnessSeconds": 44,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -580,19 +580,19 @@
             "postLcpP75": 1606
           }
         ],
-        "generatedAt": "2026-09-18T00:09:16.343Z"
+        "generatedAt": "2026-09-18T01:18:12.903Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-09-18T01:04:49.990Z",
-      "freshnessSeconds": 303,
+      "generatedAt": "2026-09-18T01:18:38.662Z",
+      "freshnessSeconds": 18,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-18T01:04:49.990Z",
+        "generatedAt": "2026-09-18T01:18:38.662Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -621,7 +621,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-09-18T00:26:59.317Z",
-      "freshnessSeconds": 2573,
+      "freshnessSeconds": 3117,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -874,7 +874,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-09-18T00:26:59.317Z",
-      "freshnessSeconds": 2573,
+      "freshnessSeconds": 3117,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -924,8 +924,8 @@
     "promotion-receipt": {
       "present": true,
       "source": "/api/promotion-receipt.json",
-      "generatedAt": "2026-09-17T19:24:24.506Z",
-      "freshnessSeconds": 20728,
+      "generatedAt": "2026-09-18T00:44:19.701Z",
+      "freshnessSeconds": 2077,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -934,7 +934,7 @@
         "publicSafe": true,
         "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
         "promoted": {
-          "sha": "1dc56d3a3de24a434c094b1330bac214c2f10b27",
+          "sha": "2819bdc4b5bb8686fe4ab607f579eb6cdef4a6ea",
           "source": "api/build-sha.json"
         },
         "production": {
@@ -945,8 +945,8 @@
           "reconciliation": "behind",
           "shellParity": {
             "state": "matched",
-            "observedAt": "2026-09-17T19:10:57.730Z",
-            "ageHours": 0.2,
+            "observedAt": "2026-09-17T23:35:17.202Z",
+            "ageHours": 1.2,
             "stale": false,
             "maxAgeHours": 12,
             "source": "api/deploy-currency.json → shellParity"
@@ -964,6 +964,7 @@
           "captured": true,
           "target": "https://vaultsparkstudios-website.pages.dev",
           "consoleErrors": 7,
+          "workerRouteErrors": 7,
           "signalCardinality": 6,
           "signalEndpoints": [
             "api/ecosystem-state.json",
@@ -979,6 +980,7 @@
               "target": "https://vaultsparkstudios-website.pages.dev/",
               "captured": true,
               "consoleErrors": 5,
+              "workerRouteErrors": 5,
               "signalCardinality": 5,
               "signalEndpoints": [
                 "api/ignis-conduit.json",
@@ -993,6 +995,7 @@
               "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
               "captured": true,
               "consoleErrors": 1,
+              "workerRouteErrors": 1,
               "signalCardinality": 0,
               "signalEndpoints": []
             },
@@ -1001,6 +1004,7 @@
               "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
               "captured": true,
               "consoleErrors": 1,
+              "workerRouteErrors": 1,
               "signalCardinality": 2,
               "signalEndpoints": [
                 "api/ecosystem-state.json",
@@ -1012,18 +1016,18 @@
         "reconciled": false,
         "receiptState": "degraded",
         "findings": [
-          "production origin serves e65eca73 — OLDER than promoted 1dc56d3a — stranded/stale deploy",
-          "7 console error(s) on the promoted artifact"
+          "the repo has advanced past the last promotion: production serves e65eca73, repo build-sha is 2819bdc4 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+          "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
         ],
-        "generatedAt": "2026-09-17T19:24:24.506Z",
+        "generatedAt": "2026-09-18T00:44:19.701Z",
         "history": {
           "window": 20,
           "gradable": 20,
           "reconciled": 0,
           "reconciledPct": 0,
-          "lastStrandedAt": "2026-09-17T19:24:24.506Z",
-          "currentBehindStreak": 12,
-          "newestGradableAt": "2026-09-17T19:24:24.506Z",
+          "lastStrandedAt": "2026-09-18T00:44:19.701Z",
+          "currentBehindStreak": 14,
+          "newestGradableAt": "2026-09-18T00:44:19.701Z",
           "newestAgeHours": 0,
           "maxAgeHours": 48,
           "stale": false,
@@ -1034,13 +1038,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-09-18T00:09:42.312Z",
-      "freshnessSeconds": 3610,
+      "generatedAt": "2026-09-18T01:18:31.260Z",
+      "freshnessSeconds": 25,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-18T00:09:42.312Z",
+        "generatedAt": "2026-09-18T01:18:31.260Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -1063,7 +1067,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-09-18T01:09:49.670Z",
-      "freshnessSeconds": 3,
+      "freshnessSeconds": 547,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1244,7 +1248,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 1986278,
+      "freshnessSeconds": 1986822,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1417,7 +1421,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-09-09T07:17:53.725Z",
-      "freshnessSeconds": 755519,
+      "freshnessSeconds": 756063,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1491,13 +1495,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-09-18T01:09:52.447Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-09-18T01:17:53.666Z",
+      "freshnessSeconds": 63,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-18T01:09:52.447Z",
+        "generatedAt": "2026-09-18T01:17:53.666Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1505,15 +1509,15 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-07-02",
-          "days": 38
+          "lastDay": "2026-08-16",
+          "days": 56
         },
         "countries": [
           {
             "country": "US",
-            "samples": 464,
-            "lcpP75": 992,
-            "ttfbP75": 157,
+            "samples": 783,
+            "lcpP75": 936,
+            "ttfbP75": 128,
             "confidence": "high",
             "colos": [
               "ATL",
@@ -1522,23 +1526,66 @@
               "DEN",
               "DFW",
               "EWR",
+              "HNL",
               "IAD",
+              "JAX",
+              "LAS",
               "LAX",
               "MCI",
+              "MIA",
+              "OMA",
               "ORD",
+              "PHL",
+              "PHX",
               "SEA",
               "SJC"
             ]
           },
           {
             "country": "GB",
-            "samples": 8,
-            "lcpP75": 1388,
-            "ttfbP75": 437,
+            "samples": 13,
+            "lcpP75": 1072,
+            "ttfbP75": 337,
             "confidence": "low",
             "colos": [
               "LHR",
               "MAN"
+            ]
+          },
+          {
+            "country": "CN",
+            "samples": 12,
+            "lcpP75": 1020,
+            "ttfbP75": 746,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX",
+              "SJC"
+            ]
+          },
+          {
+            "country": "RU",
+            "samples": 10,
+            "lcpP75": 1584,
+            "ttfbP75": 196,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "DME",
+              "FRA",
+              "GIG"
+            ]
+          },
+          {
+            "country": "CA",
+            "samples": 7,
+            "lcpP75": 9960,
+            "ttfbP75": 1286,
+            "confidence": "low",
+            "colos": [
+              "YVR",
+              "YYZ"
             ]
           },
           {
@@ -1554,25 +1601,15 @@
             ]
           },
           {
-            "country": "CA",
+            "country": "AU",
             "samples": 6,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
+            "lcpP75": 1432,
+            "ttfbP75": 496,
             "confidence": "low",
             "colos": [
-              "YVR",
-              "YYZ"
-            ]
-          },
-          {
-            "country": "CN",
-            "samples": 6,
-            "lcpP75": 1020,
-            "ttfbP75": 746,
-            "confidence": "low",
-            "colos": [
-              "AMS",
-              "LAX"
+              "MEL",
+              "PER",
+              "SIN"
             ]
           },
           {
@@ -1586,6 +1623,17 @@
             ]
           },
           {
+            "country": "DE",
+            "samples": 4,
+            "lcpP75": 9756,
+            "ttfbP75": 529,
+            "confidence": "low",
+            "colos": [
+              "CPH",
+              "FRA"
+            ]
+          },
+          {
             "country": "EG",
             "samples": 4,
             "lcpP75": 2184,
@@ -1593,6 +1641,38 @@
             "confidence": "low",
             "colos": [
               "MRS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 4,
+            "lcpP75": 1522,
+            "ttfbP75": 880,
+            "confidence": "low",
+            "colos": [
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "BR",
+            "samples": 3,
+            "lcpP75": 1724,
+            "ttfbP75": 538,
+            "confidence": "low",
+            "colos": [
+              "GRU"
+            ]
+          },
+          {
+            "country": "IT",
+            "samples": 3,
+            "lcpP75": 1599,
+            "ttfbP75": 975,
+            "confidence": "low",
+            "colos": [
+              "FCO",
+              "MXP"
             ]
           },
           {
@@ -1606,6 +1686,16 @@
             ]
           },
           {
+            "country": "SG",
+            "samples": 3,
+            "lcpP75": 1084,
+            "ttfbP75": 118,
+            "confidence": "low",
+            "colos": [
+              "SIN"
+            ]
+          },
+          {
             "country": "TR",
             "samples": 3,
             "lcpP75": 764,
@@ -1616,27 +1706,33 @@
             ]
           },
           {
-            "country": "other",
-            "samples": 22,
-            "lcpP75": 1284,
-            "ttfbP75": 538,
-            "confidence": "high",
+            "country": "UA",
+            "samples": 3,
+            "lcpP75": 1824,
+            "ttfbP75": 318,
+            "confidence": "low",
             "colos": [
+              "VIE"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 17,
+            "lcpP75": 1128,
+            "ttfbP75": 374,
+            "confidence": "low",
+            "colos": [
+              "AKL",
               "ARN",
               "BOM",
               "BRU",
               "BUD",
-              "DFW",
-              "DME",
-              "FCO",
-              "FRA",
-              "GRU",
+              "CPH",
+              "HKG",
               "LIS",
               "MAD",
-              "MNL",
               "MRS",
               "PRG",
-              "SIN",
               "WAW"
             ]
           }
@@ -1647,7 +1743,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 2855393,
+      "freshnessSeconds": 2855936,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2021,7 +2117,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 2855393,
+      "freshnessSeconds": 2855936,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2051,13 +2147,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-09-18T01:04:39.722Z",
-      "freshnessSeconds": 313,
+      "generatedAt": "2026-09-18T01:17:49.831Z",
+      "freshnessSeconds": 67,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-18T01:04:39.722Z",
+        "generatedAt": "2026-09-18T01:17:49.831Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2077,7 +2173,7 @@
           "passed": 9,
           "failed": 0,
           "unknown": 3,
-          "longestUnknownStreak": 114,
+          "longestUnknownStreak": 115,
           "neverKnownGood": 2
         },
         "results": [
@@ -2095,7 +2191,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2112,7 +2208,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2129,7 +2225,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2146,7 +2242,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2163,7 +2259,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2180,7 +2276,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2191,7 +2287,7 @@
             "attemptCount": 2,
             "attempts": [
               {
-                "status": 403,
+                "status": 401,
                 "redirected": false,
                 "outcome": "unknown"
               },
@@ -2201,7 +2297,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 114,
+            "unknownStreak": 115,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2219,7 +2315,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2236,7 +2332,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2253,7 +2349,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-18T01:04:39.722Z",
+            "lastKnownGoodAt": "2026-09-18T01:17:49.831Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2274,9 +2370,9 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 18,
+            "unknownStreak": 19,
             "lastKnownGoodAt": "2026-09-17T18:01:09.676Z",
-            "lastKnownGoodAgeHours": 7.1
+            "lastKnownGoodAgeHours": 7.3
           },
           {
             "slug": "vaultfront",
@@ -2296,7 +2392,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 114,
+            "unknownStreak": 115,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           }
@@ -2308,7 +2404,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-09-18T00:00:00.000Z",
-      "freshnessSeconds": 4193,
+      "freshnessSeconds": 4736,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2323,7 +2419,7 @@
           "forge": 14,
           "vaulted": 6,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-09-18T00:10:16.000Z",
+          "lastArkBroadcastAt": "2026-09-18T01:16:44.000Z",
           "ignisHeartbeatAt": "2026-09-10T18:22:46.790Z",
           "lastShippedSession": "S357"
         },
@@ -2371,7 +2467,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-09-18T00:00:00.000Z",
-      "freshnessSeconds": 4193,
+      "freshnessSeconds": 4736,
       "staleAfterH": 720,
       "stale": false,
       "data": {
