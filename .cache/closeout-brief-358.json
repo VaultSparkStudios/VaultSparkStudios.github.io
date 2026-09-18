@@ -3,7 +3,7 @@
   "date": "2026-09-18",
   "agent": "claude-code",
   "repo": "VaultSparkStudios.github.io",
-  "headline": "Recovered a write-back the tree could not show, closed every open S357 item, and found by looking at the homepage that its hero was still publishing commit subjects to visitors.",
+  "headline": "Recovered a write-back the tree could not show, closed every open S357 item, released to production, and found by looking at the homepage that its hero was still publishing commit subjects to visitors.",
   "items": [
     {
       "id": "#1",
@@ -52,8 +52,8 @@
       "axis": "rigor",
       "projectImpact": 6,
       "ecosystemImpact": 5,
-      "insight": "S357's final closeout never touched the SIL and three commits followed it. Two stale blockers were re-probed and closed on evidence: Supabase healthy, production comments 200.",
-      "evidence": "writeback-currency flagged 9 commits, oldest 18.2h; /v/desk-comments 200 on both origins"
+      "insight": "S357's final closeout never touched the SIL and three commits followed it. The Supabase blocker was re-probed healthy at start and closed; by release it was down again, so it is reopened as intermittent.",
+      "evidence": "writeback-currency flagged 9 commits, oldest 18.2h; comments 200 at start, comments_upstream_failed at release with db/rest/auth UNHEALTHY"
     }
   ],
   "followUps": [
@@ -62,5 +62,7 @@
     "Measure two light-theme candidates seen at thumbnail scale: /membership/ See The Value and /games/ status-count labels.",
     "Next full deploy clears 32 unreferenced residue scripts."
   ],
-  "blockers": []
+  "blockers": [
+    "Supabase project fjnpzjjyhnpmunfoycrp is intermittently UNHEALTHY (db/rest/auth) while reporting ACTIVE_HEALTHY; Desk comments fail on both origins. Provider/dashboard action for the founder."
+  ]
 }

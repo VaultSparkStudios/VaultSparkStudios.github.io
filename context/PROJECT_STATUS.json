@@ -16,6 +16,7 @@
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
   "nextMilestone": "Founder tags the first changelog entry with the feedback theme it answers, so \"You asked → we shipped\" lights up with reader prose; next full deploy clears the 32 unreferenced residue scripts.",
   "blockers": [
+    "INTERMITTENT PROVIDER OUTAGE: Supabase project fjnpzjjyhnpmunfoycrp was healthy at S358 start (Desk comments 200 on production and staging) and UNHEALTHY again by release (db/rest/auth \"Failed to connect to database\") while its project status reads ACTIVE_HEALTHY. Desk comments return comments_upstream_failed on both origins. Not caused by the S358 release. Needs the provider dashboard (restart or support ticket) — founder action under CANON-019.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",

@@ -4,6 +4,7 @@ Last updated: 2026-09-18 (S358 recovered the un-written-back S357 tail, then clo
 
 ## Open — S358
 
+- [ ] **[S357→S358][ENG/P0 · PROVIDER]** Desk comments: Supabase project `fjnpzjjyhnpmunfoycrp` is **intermittently** down — healthy at S358 start (comments 200 on both origins), then db/rest/auth UNHEALTHY again at release while status still reads ACTIVE_HEALTHY. Not deploy-caused (staging identical, no Worker change). Needs the provider dashboard (restart/support); CANON-019 founder action.
 - [ ] **[S358][CONTENT/P2 · FOUNDER]** Tag changelog entries with `answers: <theme>` (D-S358.2) — until one is tagged, "You asked → we shipped" is honest-dark by design.
 - [ ] **[S358][ASSETS/P3]** 32 unreferenced lane-held scripts (incl. the plain copies of the 17 just fingerprinted) still serve pre-S356 bytes as residue. Harmless (nothing loads them); a full deploy clears them.
 - [ ] **[SIL][S358][GATES/P2]** Check that every `CONTENT_ADDRESSED_PREDICATE_SRCS` entry is also a shell asset (kept in sync by hand today).
@@ -13,7 +14,7 @@ Last updated: 2026-09-18 (S358 recovered the un-written-back S357 tail, then clo
 ## Closed — S357 (worked in S358)
 
 - [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
-- [x] **[S357][ENG/P0 · PROVIDER]** Desk comments — **DONE**: the Supabase outage cleared; `/v/desk-comments` returns 200 on production and staging (S358), and the repair script's `--check` verifies the resolved key at HTTP 200.
+
 - [x] **[S357][OBS/P2]** Promotion-receipt console errors — **DONE in S357** (`ee7d1386`): Worker-only routes at the Pages vantage are counted in their own bucket; 0 unexplained.
 - [x] **[S357][OBS/P2]** Promotion-receipt "stranded" — **DONE in S357** (`ee7d1386`): shell parity separates a stranded deploy from a promotion backlog.
 - [x] **[S357][ASSETS/P1]** Fingerprint the remaining still-loaded client scripts — **DONE S358**: 17 shell assets added; production drift that matters 19 → 0 once promoted (D-S358.1).
@@ -38,10 +39,7 @@ Previous: 2026-09-10 (S348 full arc and release complete: 11 audited improvement
 Previous: 2026-09-03 (S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. The receipt I had quoted was eight days old; re-probing found four of five listed blockers already satisfied, including a relying-party registration that had been active with both callbacks for months while a public trust surface published it as `missing` because the tracker keyed on an Ark cargo that had aged out of retention. Fixed by observing the substance at the IdP with an unregistered control redirect that must be denied, fail-closed five ways and on a 14-day clock. The identity hold was preserved deliberately. The one real remaining step is a human completing the sign-in ceremony -- and it is `--watch`, not `--live`.)
 
 
-
 Previous (S335 and earlier): session narratives live in `logs/WORK_LOG.md` and `context/archive/CURRENT_STATE_through_S347.md`. Trimmed from this board in S357 to stay inside the startup context budget; nothing was lost.
-
-
 
 
 

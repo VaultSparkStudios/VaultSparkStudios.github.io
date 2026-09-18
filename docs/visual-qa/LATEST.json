@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-18T19:36:38.549Z",
+  "capturedAt": "2026-09-18T20:07:16.206Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -242,9 +242,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "e0c52935b5f02a004503d40ea733acc9e43ae65f56b67e02cce4cc7816871683",
-    "candidateSha": "afe8ac65528a8e4ed1ca0aefec04139da7963a6f",
-    "root": "10093039ef9a42ae215064ac70c961069ff619eb29f54fc68a27e49b7936d2c5"
+    "manifestSha256": "44919d480a7a6624cc856a08f7b9ec79fb9a5ae050fd5189e9bb28a0c8ad7726",
+    "candidateSha": "fabe5dfee17b12acc3ad48406a0b8c57a86af86f",
+    "root": "c6e79777802c7fb1f9c5bc1951c77f66279b67a940d3b0b2ca1e2013db7a21e5"
   },
   "matrix": {
     "routes": [
@@ -290,9 +290,9 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)",
+    "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)",
     "findings": [
-      "S358 post-rebase recapture: all 84 captures inspected on per-route contact sheets. Hero ticker shows reader prose in all 7 themes on desktop and mobile. No broken layout, missing script, or dark-on-dark/light-on-light text. /status/ member-system and database rows read 'Checking…' because the live probe was mid-flight at capture time (the prior capture showed Operational), a timing state rather than a defect. Pre-existing light-theme candidates still to measure: /membership/ 'See The Value' ghost button and /games/ status-count labels."
+      "S358 final recapture: all 84 captures inspected on per-route contact sheets. Hero ticker shows reader prose in all 7 themes on desktop and mobile. No broken layout, missing script, or dark-on-dark/light-on-light text. /status/ member-system and database rows read 'Checking…': the page's live probe had not resolved at capture time while the Supabase project was reporting UNHEALTHY. Pre-existing light-theme candidates still to measure: /membership/ 'See The Value' ghost button and /games/ status-count labels."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -313,7 +313,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -325,12 +325,12 @@
         "height": 900
       },
       "file": "games--dark--desktop.png",
-      "sha256": "9b8f4e651311181b9e68b3be7a47645ae4a518d3bc964e450ebd9be4ebd4edc0",
+      "sha256": "68a31d4dec57a5d51188ed8999af10df8382d374fae693af7a39162b6d9b1e2b",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -347,7 +347,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -359,12 +359,12 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "6604ee844d836fc5de2c71489960ceb0c892e8c268b52d0cbacdd937d77f6919",
+      "sha256": "ff78696d08fd64adcb6abc41dab0be51a6402d3446dd00cad4636538a5209cf7",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -381,7 +381,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -393,12 +393,12 @@
         "height": 900
       },
       "file": "atlas--dark--desktop.png",
-      "sha256": "bce79d852fb830c94b3e850444c2320ab692766cf2854079a1f61e53d8900235",
+      "sha256": "e6d6fe9c67cfc3de51812e382861a33f180ffa75c26d8e723e74ee1546679f13",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -410,12 +410,12 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "8f8387cf0f627fa7905ece0acaeb66b8dfa44aba5d04dff2ac2f1ef5d0c6c39a",
+      "sha256": "1696e8d33e8b3ba92e2faf1e97d8caf5b96b6fbc32cef484c43dc3f6c109a4f5",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -427,12 +427,12 @@
         "height": 900
       },
       "file": "games--light--desktop.png",
-      "sha256": "f0c87887f0953bb266abab448f228f6ce8c4a8e30f7485bfd45430686a048449",
+      "sha256": "3995759b81d20fd2237ce543b16559152fa4610212643cb4c27a9f88e5674b4d",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -449,7 +449,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -461,12 +461,12 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "55700507674ca0b398f1d4f763f66334462953d61d83c9c0b521abda3d2ab466",
+      "sha256": "43e247c67a60815c228719c905e56853699bd14b789d0e32c8bca2ccc83a9e31",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -483,7 +483,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -500,7 +500,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -517,7 +517,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -534,7 +534,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -551,7 +551,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -563,12 +563,12 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "cfb13faf3143f51d7234daa5cd34cef1a16c7250199a1c3d54b4a2e3b5a9aaa1",
+      "sha256": "97779ddc2e043e500c89ed5d44cb788ecefdad4df497160c673a380b9c297349",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -580,12 +580,12 @@
         "height": 900
       },
       "file": "evidence--ambient--desktop.png",
-      "sha256": "f04446743396a062860e268904b9d58b0d4885cd1d68873986555e4164da2a85",
+      "sha256": "315bbdf17938832b0e509f45d32ca925cbea8f51f6b8182597717f2f7f1126ee",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -602,7 +602,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -619,7 +619,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -636,7 +636,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -653,7 +653,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -665,12 +665,12 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "b97e8df4d78bb1ae629f5423961404d19666a976bd853e2ed1946708f228b923",
+      "sha256": "c17e3d53709d7745249a9815402b28f19c796b42c4c7a2f3be3440025d47dd38",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -687,7 +687,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -699,12 +699,12 @@
         "height": 900
       },
       "file": "atlas--warm--desktop.png",
-      "sha256": "7cedc32ec5c6b0eb1df2fad1a02ae192dabf5d54d0b70b5d7e04960088b1572c",
+      "sha256": "41d7039ea116782079098bd0609fca0fb9981e1487c2e61a302aa0b670a5a1fc",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -721,7 +721,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -738,7 +738,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -755,7 +755,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -772,7 +772,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -789,7 +789,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -806,7 +806,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -818,12 +818,12 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "db8cf342ef56241e44995aba5ad2b5f83545005fcdcca568d87f9b1c3b418aa2",
+      "sha256": "3f2031568a89a66b311bf69da483b994be080589b9514a26610386e042d80619",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -835,12 +835,12 @@
         "height": 900
       },
       "file": "games--lava--desktop.png",
-      "sha256": "63d1ab1c3f658854ea2e5e3159ed4823c4d2fa17d75596d120426da6fd6e5fa8",
+      "sha256": "fc3b85397b383057d98b0c7b8046c7061f51b21f99d489a449d312992fbde42a",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -857,7 +857,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -869,12 +869,12 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "8d2b61c84f996e1ad5ef6fbf90ded317e638946b2708d08ebacf6a7c84100b68",
+      "sha256": "20ca9a4cf75c56a07713014969afd1003fd824564cb911234f762b1510146a9e",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -886,12 +886,12 @@
         "height": 900
       },
       "file": "evidence--lava--desktop.png",
-      "sha256": "e600e2b2252872c06657921a06f20c3de294695f5723965e066ac34c0ca02e98",
+      "sha256": "365c37659927b16926c6328422376fae8095f0e17a1cb8c9fb905c8473535e86",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -903,12 +903,12 @@
         "height": 900
       },
       "file": "atlas--lava--desktop.png",
-      "sha256": "b4a962497dcd171038080e8f3e93539812fde1fde063397dc434f1b16b4c294a",
+      "sha256": "dc379e05e5bd42c970ab789c1fac37b1213246617a98a830671b36a9b14e48f7",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -920,12 +920,12 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "536d183a11b01b18d90701cd04a684d1eed05f18d33b5185ad6398bd8af4bbdc",
+      "sha256": "d943d85555edcb9a56a5dac9a13bfdbc617bb3c8c71730c73edfd2550d364941",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -937,12 +937,12 @@
         "height": 900
       },
       "file": "games--high-contrast--desktop.png",
-      "sha256": "ff6a07c14114aba42785e3dcdccfc1927ec3c98cb75722f5ffc8ca45750ef90b",
+      "sha256": "398deece7ed5b1013ca83dd17fb8ec7b7250f31f7bec5b3e76d05df0fc410d23",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -959,7 +959,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -971,12 +971,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "b40cfb50c463093aec2ee16b1fad8efb893a6a56b424e7a488dedbd7e64cade6",
+      "sha256": "e363e303226c6424d9a6c8fac9a04535cdd778343e5ef1f48fa44e13359bbcc5",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -993,7 +993,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1005,12 +1005,12 @@
         "height": 900
       },
       "file": "atlas--high-contrast--desktop.png",
-      "sha256": "509bb7c0a79b724b54ab80c0674ed18c332a5615010cbaff10bbf25023ac96c2",
+      "sha256": "1537557ce07d8498adb3a201f974f95171f64aba8af559b146827add16d43f32",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1027,7 +1027,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1039,12 +1039,12 @@
         "height": 844
       },
       "file": "games--dark--mobile.png",
-      "sha256": "72a0c1cf4c36995fa52be2d4298f1e50de4af47d9e76674b9a62064bf0ff349c",
+      "sha256": "6f149c52c19de47e305c7a7c78429b69cae32907b39062c49df123d9feb624c3",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1061,7 +1061,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1078,7 +1078,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1095,7 +1095,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1107,12 +1107,12 @@
         "height": 844
       },
       "file": "atlas--dark--mobile.png",
-      "sha256": "66f37a8d81a8bda990f4cb10f0cfb7075b69bb083f8e105c997c66b3ea3c20ef",
+      "sha256": "88c53814f5338b7394f9fec7581f31b3d2a6d042c7c5b45640a6734cc9cc4722",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1129,7 +1129,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1141,12 +1141,12 @@
         "height": 844
       },
       "file": "games--light--mobile.png",
-      "sha256": "376fc0409f7a9de245317bf05c3a0d8e34fcd4bf759af5000d3d09201d70fd1c",
+      "sha256": "546d46c944961cab3fc7e1fef4e0d7be11ceb92ba92e2c63f89a6e6bee9268ab",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1163,7 +1163,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1180,7 +1180,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1192,12 +1192,12 @@
         "height": 844
       },
       "file": "evidence--light--mobile.png",
-      "sha256": "819d9acafb5729e3fcec5202b5bf7801ace78635c95515bcd89f919314f97764",
+      "sha256": "d8f7c60eda9c75197c870915d7477dad4e2042982c118e62febce6c25ee97641",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1209,12 +1209,12 @@
         "height": 844
       },
       "file": "atlas--light--mobile.png",
-      "sha256": "dc14a459a9492b363e2851c91dee37b4c7bd27c6bf0db5ac9556026634196b01",
+      "sha256": "77018d28e66bb21b7e4af592cfc77767a1c9f83c035c95f375fca290685bdcca",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1231,7 +1231,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1248,7 +1248,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1265,7 +1265,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1277,12 +1277,12 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "b01244774f57929061c47ff1a3f2745930a28f249c76013d24450eb26ff8ca2b",
+      "sha256": "7cb7e75e87ad5f432bdca3329c77d7a78ad96719eea61432614362160a363ae7",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1299,7 +1299,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1316,7 +1316,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1333,7 +1333,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1350,7 +1350,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1367,7 +1367,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1384,7 +1384,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1396,12 +1396,12 @@
         "height": 844
       },
       "file": "evidence--warm--mobile.png",
-      "sha256": "ce0fe5d22f50cefebf50a09092cfc3f13a53e0cb37a882d757df7ec171fdb3e9",
+      "sha256": "e2e4b33a5953866844d31b8d277eff89e5b97f96169f13751661a33b93ef4e4c",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1413,12 +1413,12 @@
         "height": 844
       },
       "file": "atlas--warm--mobile.png",
-      "sha256": "f6a10904afcafa800fdc3048d1475ff34853917b0b5700df98e3378b192e2d95",
+      "sha256": "720c56274735e93d46ff25e37d50c6bbd1e7bf7a4388e94a60a59a227a0c8905",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1435,7 +1435,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1447,12 +1447,12 @@
         "height": 844
       },
       "file": "games--cool--mobile.png",
-      "sha256": "a63e4479eec6fbbdeab4b8b22327323508415c9b021e0d1407912b205f1d423d",
+      "sha256": "01616f0fc21a15fe7064a576f7fdbe9d9cc2cb2e9e87f6e42a576abdc7da6570",
       "page": "/games/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1469,7 +1469,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1486,7 +1486,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1498,12 +1498,12 @@
         "height": 844
       },
       "file": "evidence--cool--mobile.png",
-      "sha256": "47b6c1f6e5a22188beafcedb08f3098d1eb16b5867d04c5b4dee3b7e7e9bd677",
+      "sha256": "dd48fecf64e77cdb99f8f0dd863a0760491ee0e7096efd49db345742be03f3f7",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1515,12 +1515,12 @@
         "height": 844
       },
       "file": "atlas--cool--mobile.png",
-      "sha256": "ebf77094b50dd79a29dbfa61a1681be8552631b0b2afd548059a4a49cc557ecb",
+      "sha256": "daa88532949e8dd943e8c2915397ed7a8e56cf45982ba115de60e38ef924acf7",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1537,7 +1537,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1554,7 +1554,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1566,12 +1566,12 @@
         "height": 844
       },
       "file": "membership--lava--mobile.png",
-      "sha256": "7f6e469df41b3c4d3fd5046ce018eee4999daa71d7af6ec162c305a5c6b1b968",
+      "sha256": "4e9424cc5bba3d081a5452c353f6388ff3ae17985fa8ff799d6047b2d77edbab",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1583,12 +1583,12 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "ff14df1d9e11b5704d788e455b82d1234b85e76f456c609297f6de0550fd643f",
+      "sha256": "2f2e75878c468b7b8b310c129ef939a08958fef57532ee43647788c0b5661e27",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1605,7 +1605,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1622,7 +1622,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1639,7 +1639,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1656,7 +1656,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1673,7 +1673,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1685,12 +1685,12 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "1595d63d4ddb1d9ca5ca516b4f83bd28b1768ab46142d6a8b9cf8cfad5c97d35",
+      "sha256": "cd1675649407db1d09cf504bd664cf40cf04b38643d1f06ae24cda2a1183b3fb",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1707,7 +1707,7 @@
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     },
     {
@@ -1719,12 +1719,12 @@
         "height": 844
       },
       "file": "atlas--high-contrast--mobile.png",
-      "sha256": "bb41f895ce624a3f6a86b3448cddab4cb0798ecad3676985a46cac621a728c88",
+      "sha256": "fed0266def2234f74708ffafef2bf683dfb1063171492b531e0eb688be331001",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "Claude Opus 5 (S358, per-route contact sheets, all 84, post-correction recapture)"
       }
     }
   ]

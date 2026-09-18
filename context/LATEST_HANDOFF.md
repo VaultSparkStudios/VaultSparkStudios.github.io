@@ -4,8 +4,19 @@
 
 - **Recovered:** S357's tail was never written back (closeout `b3e28806` skipped the SIL; `24933cc9`, `0d6d5459`, `f695a43f` landed after it). Recorded here; no code redone.
 - **Shipped:** 17 still-loaded client scripts fingerprinted (D-S358.1); the lane-drift gate follows served reachability; "You asked → we shipped" reads founder-declared changelog links only (D-S358.2); the dead `vault_feedback` fetch and a retired-feature claim removed from /changelog/ (D-S358.3); the homepage ticker and returning-visitor strip re-sourced to the reader changelog (D-S358.4, found in the rendered-pixel pass).
-- **Verified live before any change:** Supabase healthy again; `/v/desk-comments` 200 on production and staging. The two provider/credential blockers are closed on that evidence.
-- **Release:** see the S358 release addendum below (content lane only — no Worker change this session).
+- **Supabase is intermittent, not recovered.** Healthy at session start (`/v/desk-comments` 200 on both origins); UNHEALTHY again by release (db/rest/auth, status still ACTIVE_HEALTHY). Blocker reopened as INTERMITTENT, founder/provider action.
+- **RELEASED.** Full staging publish `88ef1f382c75` (6937 files, chain 76) → release ceremony **11/11** → production content lane run `35388747654` succeeded. Production `contentLaneHead` = `fabe5dfee` = origin/main; `build-sha.sha` stays at baseline `e65eca737` by content-lane design (identity backlog held). No Worker change this session.
+
+## S358 release addendum — verified from served bytes
+
+- Fingerprinted scripts served 200 on production (e.g. `pwa-nav.shell-5f63b6b75a.js`, `returning-signal-strip.shell-d927bf3c2d.js`, `countdown.shell-f058757524.js`); the homepage references the hashed `pwa-nav`.
+- `/api/recent-ships.json` on production: `source: data/consumer-changelog.json` — the hero names "The Desk: real art, reader-first articles…".
+- `/changelog/` on production: 0 occurrences of `vault_feedback`.
+- Staging lane drift after the full publish: **171 match · 0 drift · 0 referenced**.
+- Gates on the way: the ceremony's `staging-deploy-lineage` refused once (continuity summary behind the ledger the publish had just appended — rebuilt, depth 76), and the pre-push coherence gate caught `release-proof` drifting over the staging receipts (resealed; candidate manifest unchanged at `10093039ef9a`). Both real, both fixed at source.
+- **Not fixed by this release:** Desk comments return `comments_upstream_failed` on production and staging because the Supabase project went UNHEALTHY again during the session.
+
+**Next session:** measure the two light-theme candidates (/membership/ "See The Value", /games/ status-count labels) before claiming either.
 
 **Founder item:** tag a changelog entry with `answers: frontdoor` (the one live theme) in its draft frontmatter when one genuinely answers it. Until then the box stays empty, which is correct.
 

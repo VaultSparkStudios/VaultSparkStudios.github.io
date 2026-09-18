@@ -14,7 +14,7 @@ Last updated: 2026-09-18 (S358)
 
 **The homepage stops showing commit subjects.** The hero ticker and the returning-visitor strip now name the newest founder-approved changelog entry ("The Desk: real art, reader-first articles, and a community on every story") instead of lines like "Refined record the three board items worked."
 
-**Desk comments work in production again.** The Supabase outage cleared; `/v/desk-comments` returns 200 on production and staging.
+**Desk comments depend on an intermittently failing provider.** At session start the Supabase project was healthy and comments returned 200 on both origins; by release it was UNHEALTHY again, so comments currently return `comments_upstream_failed`. Readers see the existing degraded state, not an error page.
 
 ## S357 The deploy-truth surface stops certifying trees it never measured (2026-09-17)
 

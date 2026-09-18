@@ -1636,7 +1636,7 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 
 **Triage:** `check-writeback-currency` found write-back debt with a clean tree: 9 commits after the last SIL write, the oldest 18.2h. S357's last closeout commit recorded the board items but never touched the SIL, and three more commits followed it. Verdict: cut off, write-back skipped, so the record was recovered and nothing re-implemented.
 
-**Blockers re-probed, not trusted.** The repair script's `--check` resolved the correct new-style key and got HTTP 200 from the Worker's exact query. Production and staging both return 200 on `/v/desk-comments`. The outage and credential blockers are closed.
+**Blockers re-probed, not trusted.** At session start the repair script's `--check` got HTTP 200 from the Worker's exact query and both origins returned 200 on `/v/desk-comments`, so I closed the outage blocker. That was premature: see the release note below.
 
 **1. Seventeen scripts fingerprinted.** The production drift measurement named 19 still-referenced stale scripts. Mapping how each is loaded found 12 by page tag, 5 through the ambient loader, and `trust-depth` also through the idle loader. Two (`studio-now`, `journey-conductor`) were false RISK: the gate read the unbundled `ambient-loader.js` source. Added 17 shell assets, 5 content-addressed predicates, and a generalised nested-reference table hashed children-first (the naive order would have hashed `home-idle-loader` before its child and thrown). Rewrote the gate's reference model as transitive reachability from page tags, self-test 13/13. Rebuilt tree: 0 still-referenced.
 
@@ -1647,3 +1647,9 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **4. Found by looking, not by a gate.** Inspecting the rendered homepage for CANON-053 showed the hero ticker publishing a commit subject. `recent-ships.json` now projects the reader changelog, `returning-signal-strip` reads it (and is fingerprinted so the change can ship), and narrative self-test is 14/14. The narrative feed itself stays commit-derived because subscriber mail keys off its sha; that is on the board.
 
 **Tooling friction, noted:** two in-place patch attempts lost regex backslashes through template-literal and shell quoting, and one Python patch stalled. Both were caught by running the file, and fixed with direct edits.
+
+### S358 — release, and a blocker that came back
+
+**Release:** full staging publish `88ef1f382c75` (6937 files, chain 76), ceremony 11/11 after one real `staging-deploy-lineage` refusal (continuity summary behind the freshly appended ledger), pre-push coherence caught `release-proof` drift over the staging receipts (resealed; manifest unchanged). Production content lane run `35388747654` succeeded; `contentLaneHead` = `fabe5dfee` = origin/main. Verified from served bytes: hashed scripts 200, the hero feed sourced from the reader changelog, no `vault_feedback` on /changelog/. Staging lane drift 0/171.
+
+**Comments went 503 again, and it was not the release.** Production and staging both return `comments_upstream_failed`; Supabase's own health API reports db/rest/auth UNHEALTHY while the project status reads ACTIVE_HEALTHY — the S357 signature. It was healthy at session start. I had closed that blocker on one healthy probe; an intermittent fault needs more than one observation to call recovered. Reopened as INTERMITTENT on every surface. A project restart would be a production-database action nobody authorized, so it stays with the founder.

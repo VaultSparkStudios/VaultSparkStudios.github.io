@@ -5,9 +5,9 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Recovered a write-back the tree could not show, closed every open S357 item, and found     ║
-║    by looking at the homepage that its hero was still publishing commit subjects to           ║
-║    visitors.                                                                                  ║
+║    Recovered a write-back the tree could not show, closed every open S357 item, released      ║
+║    to production, and found by looking at the homepage that its hero was still publishing     ║
+║    commit subjects to visitors.                                                               ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ███████░░░   74/100                                                       ║
 ║  ECOSYSTEM IMPACT   █████░░░░░   54/100                                                       ║
@@ -42,10 +42,10 @@
 
   [#5]  writeback-recovery                                        PROJ 6  ·  ECOS 5
          ── rigor ───────────────────────────────────────────────────────────────────────────
-         S357's final closeout never touched the SIL and three commits followed it. Two stale
-         blockers were re-probed and closed on evidence: Supabase healthy, production
-         comments 200.
-         → writeback-currency flagged 9 commits, oldest 18.2h; /v/desk-comments 200 on both origins
+         S357's final closeout never touched the SIL and three commits followed it. The
+         Supabase blocker was re-probed healthy at start and closed; by release it was down
+         again, so it is reopened as intermittent.
+         → writeback-currency flagged 9 commits, oldest 18.2h; comments 200 at start, comments_upstream_failed at release with db/rest/auth UNHEALTHY
 
   [#4]  changelog-dead-fetch                                      PROJ 6  ·  ECOS 3
          ── truth ───────────────────────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@
     • Next full deploy clears 32 unreferenced residue scripts.
 
   BLOCKERS
-    (none)
+    • Supabase project fjnpzjjyhnpmunfoycrp is intermittently UNHEALTHY (db/rest/auth) while reporting ACTIVE_HEALTHY; Desk comments fail on both origins. Provider/dashboard action for the founder.
 
   ACTION GATE
     5 items shipped · ready to commit & push? [y/N]

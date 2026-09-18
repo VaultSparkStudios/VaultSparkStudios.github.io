@@ -1277,6 +1277,6 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 ## S358 — 2026-09-18
 
 - **Write-back debt recovered.** S357's final closeout commit (`b3e28806`) never touched the SIL, and three substantive commits landed after it (`24933cc9` safe-spawn, `0d6d5459` lane drift in the ceremony, `f695a43f` resync). `check-writeback-currency` flagged 9 commits, oldest 18.2h. Recorded in S358's surfaces; no code re-implemented.
-- **A blocker sentence expired.** PROJECT_STATUS still named a Supabase outage and a wrong production key. Re-probed: the provider is healthy, and production `/v/desk-comments` returns 200. Both blockers were removed on that evidence, not because time had passed.
+- **A blocker sentence expired — and then un-expired.** PROJECT_STATUS named a Supabase outage. At session start a re-probe found the provider healthy and production `/v/desk-comments` at 200, so the blocker was closed on evidence. By release the same project reported db/rest/auth UNHEALTHY again (status still ACTIVE_HEALTHY). One healthy probe does not establish recovery from an intermittent fault: the blocker is reopened as INTERMITTENT, and the closing is recorded as premature.
 - **A gate reported two false RISK rows** (`studio-now`, `journey-conductor`) by reading an unserved loader source. Fixed at the mechanism (D-S358.1).
 - **A public surface claimed a retired feature.** The /changelog/ loop section still described the founder-presence underline. Removed (D-S358.3).

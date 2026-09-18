@@ -2499,3 +2499,7 @@ Everything shipped and pushed; production verified from served bytes and `smoke:
 | Automation Coverage | 98 | The drift gate's reference model now matches what a browser loads, so its RISK count can reach zero honestly. |
 
 **Brainstorm → committed:** (1) `[SIL]` add a build-time check that every `CONTENT_ADDRESSED_PREDICATE_SRCS` entry is also a shell asset (today the two lists are kept in sync by hand). (2) `[SIL]` let `publish-changelog-draft` list the current feedback theme keys, so `answers:` is chosen from the real set rather than remembered.
+
+### S358 addendum — a correction to my own entry
+
+The Engagement row above says comments are "live again". By release the Supabase project was UNHEALTHY again and comments were failing on both origins. The claim was true when written and false by closeout; I had closed a blocker on a single healthy probe of an intermittent fault. The score stands (the release shipped everything else it claims), but the lesson is recorded: **recovery from an intermittent fault needs a second observation, separated in time, before a blocker closes.**
