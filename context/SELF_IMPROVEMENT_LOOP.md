@@ -2503,3 +2503,21 @@ Everything shipped and pushed; production verified from served bytes and `smoke:
 ### S358 addendum — a correction to my own entry
 
 The Engagement row above says comments are "live again". By release the Supabase project was UNHEALTHY again and comments were failing on both origins. The claim was true when written and false by closeout; I had closed a blocker on a single healthy probe of an intermittent fault. The score stands (the release shipped everything else it claims), but the lesson is recorded: **recovery from an intermittent fault needs a second observation, separated in time, before a blocker closes.**
+
+
+## 2026-09-18 — Session 359 (every open S358 item worked) | Total: 983/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Every change carries its negative control: commits-are-not-asks, id-less feed refused, commented predicate ignored, below-k stays dark. |
+| Creative Alignment | 98 | Every public feed now speaks in founder-approved prose; none is composed from git. |
+| Momentum | 97 | All open S358 items closed; the one left is a provider restart the session could not perform. |
+| Engagement | 94 | Readers get AA-legible labels and truthful "you asked" framing, but sign-in and comments are down with the provider. |
+| Process Quality | 99 | A founder item was investigated before acting and turned out to rest on a mislabelled metric; a thumbnail suspicion was measured before being fixed. |
+| Cross-Repo Coherence | 100 | Registry mismatch routed through Ark, not edited. |
+| Security Posture | 99 | The permission denial on a production-database action was respected, not routed around. |
+| Ecosystem Integration | 98 | "Count the people, not the work" applies to any feedback surface in the portfolio. |
+| Capital Efficiency | 100 | No new tools: existing sampler, publisher and shell-asset table extended. |
+| Automation Coverage | 99 | Two lists that were synced by hand are now gate-bound. |
+
+**Brainstorm → committed:** (1) `[SIL]` a provider-health line on /status/ from the Supabase health API, so an outage reads as an outage instead of "Checking…". (2) `[SIL]` make `build-shell-assets` import-safe so its pure helpers can carry a self-test.

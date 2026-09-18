@@ -1,5 +1,13 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S359 · 2026-09-18
+
+- **P0, founder action: restart Supabase.** Project `fjnpzjjyhnpmunfoycrp`: db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB (status still ACTIVE_HEALTHY). Desk comments and Vault Member sign-in are both down. The agent restart was refused by the session permission policy. Run from this repo:
+  `node --input-type=module -e "const {getSecret}=await import('./scripts/lib/secrets.mjs');const t=await getSecret('SUPABASE_ACCESS_TOKEN','supabase.management');const r=await fetch('https://api.supabase.com/v1/projects/fjnpzjjyhnpmunfoycrp/restart',{method:'POST',headers:{Authorization:'Bearer '+t}});console.log('restart',r.status)"`
+  (or Dashboard → Project Settings → General → Restart project). Verify: `curl -s "https://vaultsparkstudios.com/v/desk-comments?slug=2026-08-10/test-story"` returns `{"ok":true,...}`.
+- **Shipped:** "You asked" counts k-anonymous reader choices only (D-S359.1); narrative + subscriber push built from the reader changelog, notifier keyed on a git-free id (D-S359.2); /games/ light-theme status labels pass AA (D-S359.3); predicate/shell-asset gate; `answers:` keys bound to the sampler.
+- **Release:** see the S359 release addendum below.
+
 ## Where We Left Off — S358 · 2026-09-18
 
 - **Recovered:** S357's tail was never written back (closeout `b3e28806` skipped the SIL; `24933cc9`, `0d6d5459`, `f695a43f` landed after it). Recorded here; no code redone.

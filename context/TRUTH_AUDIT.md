@@ -1280,3 +1280,11 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 - **A blocker sentence expired — and then un-expired.** PROJECT_STATUS named a Supabase outage. At session start a re-probe found the provider healthy and production `/v/desk-comments` at 200, so the blocker was closed on evidence. By release the same project reported db/rest/auth UNHEALTHY again (status still ACTIVE_HEALTHY). One healthy probe does not establish recovery from an intermittent fault: the blocker is reopened as INTERMITTENT, and the closing is recorded as premature.
 - **A gate reported two false RISK rows** (`studio-now`, `journey-conductor`) by reading an unserved loader source. Fixed at the mechanism (D-S358.1).
 - **A public surface claimed a retired feature.** The /changelog/ loop section still described the founder-presence underline. Removed (D-S358.3).
+
+
+## S359 — 2026-09-18
+
+- **"You asked" was counting our own commits as reader demand.** The feedbackSignals figure came from keyword-classified commits; the only reader signal (k-anonymous sampler) has observed 0. Fixed at the source (D-S359.1).
+- **A dormant path would have sent commit text to subscribers.** The push notifier read the commit-derived narrative. Never run to completion (no sentinel); now re-sourced (D-S359.2).
+- **A thumbnail-scale suspicion was measured and disproved** (/membership/ 4.61:1), and one was confirmed and fixed (/games/ 1.47–2.22:1).
+- **Supabase outage persists**; sign-in is affected as well as comments.

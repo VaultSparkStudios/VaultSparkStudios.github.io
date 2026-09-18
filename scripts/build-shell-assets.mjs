@@ -140,6 +140,20 @@ function readShellAssetContent(filePath) {
   return Buffer.from(fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n'), 'utf8');
 }
 
+/** Pure over two texts, so it can be exercised with fixtures. */
+export function predicatesMissingShellAsset(ambientBundleSource, shellSources) {
+  const block = /const CONTENT_ADDRESSED_PREDICATE_SRCS = \[([\s\S]*?)\];/.exec(ambientBundleSource);
+  if (!block) return ['(CONTENT_ADDRESSED_PREDICATE_SRCS not found in build-ambient-bundle.mjs)'];
+  const listed = [...block[1].replace(/\/\/[^\n]*/g, '').matchAll(/'([^']+\.js)'/g)].map((m) => m[1]);
+  const shell = new Set(shellSources);
+  return listed.filter((src) => !shell.has(src));
+}
+
+function contentAddressedPredicatesMissingShellAsset() {
+  const bundleScript = path.join(root, 'scripts', 'build-ambient-bundle.mjs');
+  return predicatesMissingShellAsset(fs.readFileSync(bundleScript, 'utf8'), SHELL_ASSETS.map((asset) => asset.source));
+}
+
 function rewriteNestedShellReferences(asset, content, assets) {
   const children = NESTED_SHELL_REFERENCES[asset.key];
   if (!children) return content;
@@ -472,6 +486,16 @@ function main() {
     if (next !== current) {
       htmlChanges.push({ path: htmlPath, next });
     }
+  }
+
+  // S359: build-ambient-bundle rewrites each CONTENT_ADDRESSED_PREDICATE_SRCS
+  // entry to `<stem>.shell-<hash>.js` — a file only THIS script generates. An
+  // entry missing from SHELL_ASSETS ships a loader that points at a 404. The two
+  // lists were kept in sync by hand; now a mismatch fails both write and check.
+  const predicateMissing = contentAddressedPredicatesMissingShellAsset();
+  if (predicateMissing.length) {
+    console.error(`Content-addressed loader predicate(s) with no shell asset (would 404):\n${predicateMissing.map((item) => `- ${item}`).join('\n')}\nAdd each to SHELL_ASSETS in scripts/build-shell-assets.mjs.`);
+    process.exit(1);
   }
 
   if (checkMode) {

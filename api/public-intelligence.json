@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-18T20:30:55.342Z",
+  "generatedAt": "2026-09-18T22:11:19.416Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 358,
+    "currentSession": 359,
     "lastUpdated": "2026-09-18",
-    "currentFocus": "S358 recovered S357's un-written-back tail and closed every open S357 item: 17 still-loaded client scripts fingerprinted so the content lane can update them, the lane-drift gate made reachability-based, \"You asked → we shipped\" sourced from founder-declared changelog links, and the dead vault_feedback fetch removed from /changelog/. Desk comments are live again after the Supabase outage cleared.",
-    "nextMilestone": "Founder tags the first changelog entry with the feedback theme it answers, so \"You asked → we shipped\" lights up with reader prose; next full deploy clears the 32 unreferenced residue scripts.",
+    "currentFocus": "S359 closed every open S358 item: \"You asked\" counts k-anonymous reader choices instead of commits, the changelog narrative and subscriber push read founder-approved entries, /games/ light-theme labels pass AA, and two hand-synced lists are gate-bound. Supabase is down (comments and sign-in) pending a founder restart.",
+    "nextMilestone": "Restart the Supabase project and verify comments + sign-in; then a provider-health line on /status/.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -134,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 358,
+    "sessionsCompleted": 359,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -152,15 +152,15 @@
       "devHealth": 99,
       "alignment": 98,
       "momentum": 97,
-      "engagement": 95,
+      "engagement": 94,
       "process": 99,
       "coherence": 100,
       "security": 99,
       "ecosystem": 98,
-      "capital": 99,
-      "automation": 98,
-      "total": 982,
-      "updatedSession": 358
+      "capital": 100,
+      "automation": 99,
+      "total": 983,
+      "updatedSession": 359
     },
     "sealedNextRevealAt": null
   },
@@ -822,12 +822,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 14 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-09-18T20:18:09.468Z",
+    "summary": "Production deployment is stranded for 14 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-09-18T20:32:02.269Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -835,7 +835,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",

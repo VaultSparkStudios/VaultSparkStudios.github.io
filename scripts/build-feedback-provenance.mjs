@@ -29,6 +29,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { READER_THEME_KEYS } from './publish-changelog-draft.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -84,8 +85,13 @@ function build(commitMap) {
   return themes;
 }
 
+// The reader choices the sampler aggregates, and the theme each one qualifies.
+// publish-changelog-draft's READER_THEME_KEYS must equal these values (asserted
+// in --self-test), so an `answers:` key can always be shown when readers ask.
+const DECISION_THEME = { clarity: 'frontdoor', proof: 'trust', value: 'conversion' };
+
 function buildDecisionSampler(ndjson, threshold = 5) {
-  const map = { clarity: 'frontdoor', proof: 'trust', value: 'conversion' };
+  const map = DECISION_THEME;
   const counts = { clarity: 0, proof: 0, value: 0 };
   for (const line of String(ndjson || '').split(/\r?\n/).filter(Boolean)) {
     let row; try { row = JSON.parse(line); } catch { continue; }
@@ -106,6 +112,7 @@ function buildDecisionSampler(ndjson, threshold = 5) {
 
 if (SELF_TEST) {
   const cases = [
+    ['changelog answers keys equal the sampler themes', JSON.stringify([...READER_THEME_KEYS].sort()) === JSON.stringify(Object.values(DECISION_THEME).sort())],
     ['membership commit → conversion', themeForEntry({ type: 'feat', scope: 'S160', summary: 'progressive membership journey' }) === 'conversion'],
     ['LCP commit → speed', themeForEntry({ type: 'perf', summary: 'RUM field-LCP gate + warm-trace-mode' }) === 'speed'],
     ['oracle commit → transparency', themeForEntry({ type: 'feat', summary: 'Forge Ledger on studio-pulse' }) === 'transparency'],

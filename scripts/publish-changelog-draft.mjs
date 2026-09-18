@@ -36,6 +36,8 @@ const DEVISH = [
   /\bcloseout\b/i, /\brebase\b/i, /\bcommit\b/i, /\bgate\b/i, /\bself-heal/i,
 ];
 
+export const READER_THEME_KEYS = ['frontdoor', 'trust', 'conversion'];
+
 function parseDraft(text) {
   const m = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
   if (!m) return { error: 'missing YAML frontmatter (--- … ---)' };
@@ -67,7 +69,12 @@ export function validateDraft(parsed) {
   // answers. It is the ONLY way a change reaches "You asked → we shipped" — the
   // link is a claim the founder makes at approval, never inferred from wording.
   const answers = String(meta.answers || '').split(',').map((a) => a.trim().toLowerCase()).filter(Boolean);
-  if (answers.some((a) => !/^[a-z][a-z0-9-]{1,31}$/.test(a))) return { error: 'answers must be comma-separated feedback theme keys (e.g. frontdoor, speed)' };
+  // S359: chosen from the live set, never remembered. These are the themes the
+  // reader decision sampler can qualify (build-feedback-provenance: clarity →
+  // frontdoor, proof → trust, value → conversion); any other key could never be
+  // shown, so it is rejected with the valid list.
+  const unknown = answers.filter((a) => !READER_THEME_KEYS.includes(a));
+  if (unknown.length) return { error: `answers: unknown theme key(s) ${unknown.join(', ')} — valid: ${READER_THEME_KEYS.join(', ')}` };
   return { entry: { date: meta.date, title: meta.title, highlights, ...(answers.length ? { answers } : {}) } };
 }
 
@@ -95,7 +102,8 @@ function selfTest() {
     ['bad date', '---\ndate: soon\ntitle: X\napproved: true\n---\n- ok', (r) => /date/.test(r.error || '')],
     ['no highlights', '---\ndate: 2026-07-16\ntitle: X\napproved: true\n---\n', (r) => /highlight/.test(r.error || '')],
     ['no frontmatter', 'just text', (r) => /frontmatter/.test(r.error || '')],
-    ['declared answers carried', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: frontdoor, Speed\n---\n- ok', (r) => r.entry?.answers?.join() === 'frontdoor,speed'],
+    ['declared answers carried', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: frontdoor, Trust\n---\n- ok', (r) => r.entry?.answers?.join() === 'frontdoor,trust'],
+    ['a theme readers cannot qualify is rejected with the valid list', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: speed\n---\n- ok', (r) => /unknown theme key\(s\) speed — valid: frontdoor, trust, conversion/.test(r.error || '')],
     ['no answers means no field', '---\ndate: 2026-07-16\ntitle: X\napproved: true\n---\n- ok', (r) => r.entry && !('answers' in r.entry)],
     ['malformed answers rejected', '---\ndate: 2026-07-16\ntitle: X\napproved: true\nanswers: front door!\n---\n- ok', (r) => /answers/.test(r.error || '')],
   ];

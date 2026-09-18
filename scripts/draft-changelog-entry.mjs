@@ -115,9 +115,9 @@ function parseWorkLogSession(text) {
   return { header, items };
 }
 
-function getCommitsSince(sha) {
+function getCommitsSince(date) {
   try {
-    const out = execFileSync('git', ['log', `${sha}..HEAD`, '--pretty=format:%h %s', '--no-merges'], {
+    const out = execFileSync('git', ['log', `--since=${date}T23:59:59Z`, '--pretty=format:%h %s', '--no-merges'], {
       cwd: ROOT, encoding: 'utf8',
     }).trim();
     return out ? out.split('\n').filter(Boolean) : [];
@@ -172,14 +172,17 @@ if (!session || !session.items.length) {
   process.exit(0);
 }
 
-// Find the most recent changelog SHA to bound the git log.
-let lastSha = '';
+// Bound the git log by the newest PUBLISHED entry. S359: the narrative no longer
+// carries commit shas (it is built from the reader changelog), so the baseline is
+// that entry's date. This is an internal drafting aid; commit text stays in the
+// founder-review draft and never reaches a public feed.
+let lastDate = '';
 try {
   const narrative = JSON.parse(fs.readFileSync(CHANGELOG_NARRATIVE, 'utf8'));
-  lastSha = (narrative.entries || [])[0]?.sha || '';
+  lastDate = (narrative.entries || [])[0]?.date || '';
 } catch { /* ok — no prior narrative */ }
 
-const commits = lastSha ? getCommitsSince(lastSha) : [];
+const commits = /^\d{4}-\d{2}-\d{2}$/.test(lastDate) ? getCommitsSince(lastDate) : [];
 const groups = groupByTheme(session.items);
 
 // Build the draft markdown.

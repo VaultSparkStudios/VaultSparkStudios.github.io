@@ -196,7 +196,6 @@ flowchart LR
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
   n_api_candidate_artifact_manifest_json --> n_api_staging_deploy_receipt_json
   n_api_canonical_destination_reachability_json --> n_api_status_proof_json
-  n_api_commit_map_json --> n_api_changelog_narrative_json
   n_api_commit_map_json --> n_api_feedback_provenance_json
   n_api_commit_map_json --> n_api_ignis_conduit_json
   n_api_commit_map_json --> n_api_proof_aware_projects_json
@@ -395,9 +394,9 @@ flowchart LR
 | `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `.well-known/llms.txt`<br>`agents.json`<br>`api/public-intelligence.json`<br>`api/worker-route-provenance.json`<br>`assets/shell-manifest.json`<br>`index.html`<br>`membership/index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
 | `canonical-destination-reachability` | `api/canonical-destination-reachability.json` | yes | `api/ecosystem-state.json` | `api/status-proof.json` |
 | `changelog-live` | `changelog/index.html` | yes | `api/public-intelligence.json` | — |
-| `changelog-narrative` | `api/changelog-narrative.json` | — | `api/commit-map.json` | — |
+| `changelog-narrative` | `api/changelog-narrative.json` | — | — | — |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
-| `commit-map` | `api/commit-map.json` | yes | — | `api/changelog-narrative.json`<br>`api/feedback-provenance.json`<br>`api/ignis-conduit.json`<br>`api/proof-aware-projects.json`<br>`api/public-status.json`<br>`feed/forge-ledger.json` |
+| `commit-map` | `api/commit-map.json` | yes | — | `api/feedback-provenance.json`<br>`api/ignis-conduit.json`<br>`api/proof-aware-projects.json`<br>`api/public-status.json`<br>`feed/forge-ledger.json` |
 | `cta-readiness` | `.cache/cta-readiness.json` | yes | — | — |
 | `deploy-currency` | `api/deploy-currency.json` | yes | `index.html` | `api/intent-map.json`<br>`api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
 | `early-hints-headers` | `_headers` | — | `assets/shell-manifest.json` | `api/ai-discovery-health.json` |
@@ -604,43 +603,43 @@ flowchart LR
 6. `attention-pressure`
 7. `brand-assets`
 8. `cache-evidence-classification`
-9. `commit-map`
-10. `cta-readiness`
-11. `entity-graph`
-12. `evidence-graph-agent`
-13. `evidence-graph-doc`
-14. `evidence-hub`
-15. `favicon`
-16. `field-win-proof`
-17. `flight-director`
-18. `geo-vitals`
-19. `heartbeat`
-20. `identity-migration-receipt`
-21. `ignis-platform-status`
-22. `ignis-roi`
-23. `inp-soak-verdicts`
-24. `lqip-map`
-25. `nav-sheet-stats`
-26. `news-desk`
-27. `news-desk-engagement`
-28. `news-desk-freshness`
-29. `news-desk-reactions`
-30. `news-desk-stats`
-31. `news-visual-receipts`
-32. `newsroom-run`
-33. `oracle-velocity-public`
-34. `promotion-receipt`
-35. `public-intelligence`
-36. `rank-climbers`
-37. `release-dependencies`
-38. `site-health`
-39. `sitemap`
-40. `surface-spine`
-41. `tt-readiness`
-42. `tt-summary`
-43. `worker-route-provenance`
-44. `changelog-live`
-45. `changelog-narrative`
+9. `changelog-narrative`
+10. `commit-map`
+11. `cta-readiness`
+12. `entity-graph`
+13. `evidence-graph-agent`
+14. `evidence-graph-doc`
+15. `evidence-hub`
+16. `favicon`
+17. `field-win-proof`
+18. `flight-director`
+19. `geo-vitals`
+20. `heartbeat`
+21. `identity-migration-receipt`
+22. `ignis-platform-status`
+23. `ignis-roi`
+24. `inp-soak-verdicts`
+25. `lqip-map`
+26. `nav-sheet-stats`
+27. `news-desk`
+28. `news-desk-engagement`
+29. `news-desk-freshness`
+30. `news-desk-reactions`
+31. `news-desk-stats`
+32. `news-visual-receipts`
+33. `newsroom-run`
+34. `oracle-velocity-public`
+35. `promotion-receipt`
+36. `public-intelligence`
+37. `rank-climbers`
+38. `release-dependencies`
+39. `site-health`
+40. `sitemap`
+41. `surface-spine`
+42. `tt-readiness`
+43. `tt-summary`
+44. `worker-route-provenance`
+45. `changelog-live`
 46. `feedback-provenance`
 47. `forge-feed`
 48. `home-desk-module`

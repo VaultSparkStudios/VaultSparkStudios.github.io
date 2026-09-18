@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-09-09",
-  "contractSha256": "b375cf03ffb1e085db44626d7386ecc25b17c49cb34bccb6334bc8e320a09522",
+  "contractSha256": "ee612b0c0d1802ab8ee97d9d1a5705bf1c6e2a8fa6f8e89010e8eaff94ae6eff",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
@@ -19,6 +19,7 @@
     "attention-pressure",
     "brand-assets",
     "cache-evidence-classification",
+    "changelog-narrative",
     "commit-map",
     "cta-readiness",
     "entity-graph",
@@ -55,7 +56,6 @@
     "tt-summary",
     "worker-route-provenance",
     "changelog-live",
-    "changelog-narrative",
     "feedback-provenance",
     "forge-feed",
     "home-desk-module",
@@ -342,9 +342,7 @@
       "builder": "scripts/build-changelog-narrative.mjs",
       "verify": "node scripts/build-changelog-narrative.mjs --check",
       "publishCascade": false,
-      "dependsOn": [
-        "api/commit-map.json"
-      ],
+      "dependsOn": [],
       "feeds": [],
       "externalSources": [
         "data/consumer-changelog.json"
@@ -371,7 +369,6 @@
       "publishCascade": true,
       "dependsOn": [],
       "feeds": [
-        "api/changelog-narrative.json",
         "api/feedback-provenance.json",
         "api/ignis-conduit.json",
         "api/proof-aware-projects.json",

@@ -213,6 +213,15 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
+    /* S359: status hues were inline styles, so no theme could reach them —
+       light mode measured 1.47:1 / 1.90:1 / 2.22:1. Dark themes keep the hue;
+       light mode takes darker variants of the same family (>= 4.5:1). */
+    .hero-stat-label--sparked { color: #fbbf24; }
+    .hero-stat-label--forge { color: #f59e0b; }
+    .hero-stat-label--vaulted { color: #94a3b8; }
+    body.light-mode .hero-stat-label--sparked { color: #8a5a00; }
+    body.light-mode .hero-stat-label--forge { color: #9a3412; }
+    body.light-mode .hero-stat-label--vaulted { color: #475569; }
     .hero-stat-divider {
       width: 1px;
       height: 36px;
@@ -741,17 +750,17 @@
         <div class="hero-stats" role="group" aria-label="Game library stats">
           <div class="hero-stat">
             <span class="hero-stat-val">2</span>
-            <span class="hero-stat-label" style="color:#fbbf24;">🔥 Sparked</span>
+            <span class="hero-stat-label hero-stat-label--sparked">🔥 Sparked</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
             <span class="hero-stat-val">4</span>
-            <span class="hero-stat-label" style="color:#f59e0b;">⚒️ In The Forge</span>
+            <span class="hero-stat-label hero-stat-label--forge">⚒️ In The Forge</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
             <span class="hero-stat-val">2</span>
-            <span class="hero-stat-label" style="color:#94a3b8;">🔒 Vaulted</span>
+            <span class="hero-stat-label hero-stat-label--vaulted">🔒 Vaulted</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">

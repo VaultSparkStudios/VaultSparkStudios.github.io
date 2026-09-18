@@ -1984,3 +1984,19 @@ Within a day of S357's three-layer firewall, a git subject ("rebind the mobile p
 Found by looking at the rendered homepage during the CANON-053 pass, not by a gate: the hero showed "Latest from the forge · Shipped run the lane-drift measurement inside t…", and the feed behind it held "Refined record the three board items worked." (scope `S357`). `api/recent-ships.json` was a projection of the commit-derived narrative; `returning-signal-strip.js` rendered the same sentences to returning visitors as "New:".
 
 **Decided:** `recent-ships.json` is now projected from `data/consumer-changelog.json` (newest founder-approved titles, no sha or scope), and the strip reads it instead of the narrative. The strip is fingerprinted so the change can ride the content lane. `api/changelog-narrative.json` itself is left commit-derived for now: `notify-changelog-subscribers` keys subscriber mail off its latest sha, and changing that is a mail-side decision, not a surface fix — it is recorded on the board.
+
+## D-S359.1 — "You asked" counts readers who asked, never commits
+
+`build-ship-receipts` rendered `feedbackSignals` from `build-feedback-provenance`'s theme counts, which are the number of COMMITS keyword-classified into a theme ("a correlation surface, not a per-ticket link", in that script's own header). So three homepage commits read as three readers asking. **Decided:** receipts exist only for themes the k-anonymous decision sampler has qualified (threshold 5), with the reader count; below the threshold the box is honest-dark. None qualifies today (observed total 0), which supersedes the S358 "founder: tag an entry" item — there is no reader ask to answer yet. `answers:` keys are validated against `READER_THEME_KEYS`, bound by self-test to the sampler's own theme map.
+
+## D-S359.2 — The narrative feed and the subscriber push read the reader changelog
+
+`api/changelog-narrative.json` was the last public feed built from commit subjects, and `notify-changelog-subscribers` would have pushed `entry.sentence` ("Refined record the three board items worked.") to web-push subscribers. **Decided:** the narrative is built from `data/consumer-changelog.json` (one entry per approved entry; `sentence` is the approved title, nothing composed), entries carry a git-free `id` (sha256 of date|title), and the notifier keys its sentinel on that id and refuses a feed without ids. The internal draft tool bounds its git log by the newest published entry's date. The narrative `--check` now compares content, not just entry count. The notifier was dry-run only; no push was sent.
+
+## D-S359.3 — Status hues on /games/ become theme classes
+
+Inline `style="color:#…"` on the three hero status labels meant no theme could reach them; light mode measured 1.47 / 1.90 / 2.22:1. **Decided:** modifier classes with the same hues in dark themes and darker same-family variants in light mode (5.22 / 6.45 / 6.55:1, measured from rendered pixels with the text hidden to sample the real background). `/membership/` "See The Value", flagged from a thumbnail in S358, measured 4.61:1 and is not a defect.
+
+## D-S359.4 — A Supabase restart is a founder action this session
+
+The project's DB is unreachable even from Supabase's control plane (readonly probe: connection timeout; disk util 500; no upgrade running). A restart through the Management API is the remedy; the agent's attempt was refused by the session permission policy and was not worked around. The exact command is in LATEST_HANDOFF.

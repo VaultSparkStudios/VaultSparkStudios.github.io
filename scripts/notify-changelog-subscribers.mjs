@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 /* notify-changelog-subscribers.mjs — S212 W6
-   Reads api/changelog-narrative.json, compares the latest entry SHA against
+   Reads api/changelog-narrative.json, compares the latest entry id against
    data/last-notified-changelog.json, and dispatches a push notification if
    a new changelog entry has shipped.
+
+   S359: the narrative is now built from data/consumer-changelog.json, so the
+   notification body is a founder-approved changelog title. Before, it was a
+   commit sentence ("Refined record the three board items worked.") keyed on a
+   commit sha — every push would have sent git to subscribers. Entries carry a
+   git-independent `id` (sha256 of date|title); the sentinel keys on it.
 
    Usage:
      node scripts/notify-changelog-subscribers.mjs
@@ -33,12 +39,12 @@ function loadFeed() {
 }
 
 function loadSentinel() {
-  if (!existsSync(SENTINEL)) return { lastNotifiedSha: null, lastNotifiedAt: null };
+  if (!existsSync(SENTINEL)) return { lastNotifiedId: null, lastNotifiedAt: null };
   return JSON.parse(readFileSync(SENTINEL, 'utf8'));
 }
 
-function writeSentinel(sha) {
-  writeFileSync(SENTINEL, JSON.stringify({ lastNotifiedSha: sha, lastNotifiedAt: new Date().toISOString() }, null, 2));
+function writeSentinel(id) {
+  writeFileSync(SENTINEL, JSON.stringify({ lastNotifiedId: id, lastNotifiedAt: new Date().toISOString() }, null, 2) + '\n');
 }
 
 async function dispatch(entry) {
@@ -92,12 +98,11 @@ async function dispatch(entry) {
   const webPush = require('web-push');
   webPush.setVapidDetails(vapidSubj, vapidPub, vapidPriv);
 
-  const badge = entry.tone === 'feat' ? '✨' : entry.tone === 'fix' ? '🔧' : '📦';
-  const title = `${badge} VaultSpark Update`;
+  const title = '✨ VaultSpark Update';
   const body = entry.sentence.length > 100 ? entry.sentence.slice(0, 97) + '…' : entry.sentence;
-  const url = '/changelog/';
+  const url = '/changelog/#cl-latest';
 
-  const payload = JSON.stringify({ title, body, icon: '/assets/icons/icon-192.png', badge: '/assets/icons/badge-72.png', url, tag: `vs-changelog-${entry.sha}` });
+  const payload = JSON.stringify({ title, body, icon: '/assets/icons/icon-192.png', badge: '/assets/icons/badge-72.png', url, tag: `vs-changelog-${entry.id}` });
 
   let sent = 0, failed = 0;
   for (const key of keys) {
@@ -124,14 +129,19 @@ async function dispatch(entry) {
   }
 
   const latest = entries[0];
+  if (!latest.id || !latest.sentence) {
+    // A pre-S359 (commit-derived) feed has no id — refuse rather than send git text.
+    console.error('notify-changelog: feed entries carry no id — rebuild with node scripts/build-changelog-narrative.mjs');
+    process.exit(1);
+  }
   const sentinel = loadSentinel();
 
-  if (!FORCE && sentinel.lastNotifiedSha === latest.sha) {
-    console.log(`notify-changelog: already notified for ${latest.sha} — nothing to do.`);
+  if (!FORCE && sentinel.lastNotifiedId === latest.id) {
+    console.log(`notify-changelog: already notified for ${latest.id} — nothing to do.`);
     process.exit(0);
   }
 
-  console.log(`notify-changelog: new entry → sha=${latest.sha} tone=${latest.tone}`);
+  console.log(`notify-changelog: new entry → id=${latest.id} date=${latest.date}`);
   console.log(`  "${latest.sentence}"`);
 
   if (DRY_RUN) {
@@ -141,8 +151,8 @@ async function dispatch(entry) {
 
   const sent = await dispatch(latest);
   if (sent > 0 || !entries.length) {
-    writeSentinel(latest.sha);
-    console.log(`notify-changelog: sentinel updated → ${latest.sha}`);
+    writeSentinel(latest.id);
+    console.log(`notify-changelog: sentinel updated → ${latest.id}`);
   }
   process.exit(0);
 })();

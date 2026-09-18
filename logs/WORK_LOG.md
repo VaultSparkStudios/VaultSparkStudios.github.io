@@ -1653,3 +1653,18 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **Release:** full staging publish `88ef1f382c75` (6937 files, chain 76), ceremony 11/11 after one real `staging-deploy-lineage` refusal (continuity summary behind the freshly appended ledger), pre-push coherence caught `release-proof` drift over the staging receipts (resealed; manifest unchanged). Production content lane run `35388747654` succeeded; `contentLaneHead` = `fabe5dfee` = origin/main. Verified from served bytes: hashed scripts 200, the hero feed sourced from the reader changelog, no `vault_feedback` on /changelog/. Staging lane drift 0/171.
 
 **Comments went 503 again, and it was not the release.** Production and staging both return `comments_upstream_failed`; Supabase's own health API reports db/rest/auth UNHEALTHY while the project status reads ACTIVE_HEALTHY — the S357 signature. It was healthy at session start. I had closed that blocker on one healthy probe; an intermittent fault needs more than one observation to call recovered. Reopened as INTERMITTENT on every surface. A project restart would be a production-database action nobody authorized, so it stays with the founder.
+
+
+## S359 — 2026-09-18 — every open S358 item worked
+
+**1. Supabase (P0).** Still down: health API db/rest/auth UNHEALTHY; the control plane's own readonly probe times out; disk util 500; no upgrade in progress; 8 GB gp3, no autoscale. A Management API restart is the remedy; my POST was refused by the session's permission classifier and I did not route around it. Founder command recorded in LATEST_HANDOFF. Vault Member sign-in shares the outage.
+
+**2. "Tag an entry" turned into a truth fix.** Checking what the `frontdoor` theme measured: `feedbackSignals` was the COMMIT count from `build-feedback-provenance`, not readers. Receipts now come only from the decision sampler's k-anonymous qualified themes (k=5, observed 0 → honest-dark). Self-test 26/26 including the commits-are-not-asks control.
+
+**3. SIL items.** `answers:` validated against `READER_THEME_KEYS` (publisher 10/10), bound to the sampler map by a provenance self-test (11/11). `build-shell-assets` now fails on a content-addressed predicate with no shell asset (fixture-verified: missing caught, commented ignored, absent list fails closed).
+
+**4. Narrative + notifier.** Rebuilt `build-changelog-narrative` around the reader changelog (12/12), with a real content `--check` (it compared only entry counts). Notifier keyed on entry id and refuses id-less feeds; dry run shows the approved title. Draft tool baselines on the newest entry's date (11/11). Evidence graph updated; publish cascades closed.
+
+**5. Contrast, measured.** Pixel harness with text hidden to sample the real background: /membership/ "See The Value" 4.61:1 (not a defect); /games/ labels 1.47/1.90/2.22 → 5.22/6.45/6.55 in light, dark/warm/high-contrast unchanged.
+
+**6. Registry mismatch** shipped to studio-ops as Ark repo-question.

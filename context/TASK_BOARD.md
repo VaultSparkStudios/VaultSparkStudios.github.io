@@ -1,15 +1,22 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-18 (S358 recovered the un-written-back S357 tail, then closed every open S357 board item: 17 still-loaded client scripts fingerprinted so the content lane can update them, the lane-drift gate made reachability-based, "You asked → we shipped" sourced from the founder-approved changelog instead of git, and the dead vault_feedback fetch removed from /changelog/. Desk comments are live again on production after the Supabase outage cleared. Detail: CURRENT_STATE · LATEST_HANDOFF.)
+Last updated: 2026-09-18 (S359 closed every open S358 item: "You asked" now counts readers, not commits; the narrative and subscriber push read the reader changelog; /games/ light-theme labels pass AA; a predicate/shell-asset gate; full production promotion. Supabase is down and needs a founder restart. Detail: CURRENT_STATE · LATEST_HANDOFF.)
 
-## Open — S358
+## Open — S359
 
-- [ ] **[S357→S358][ENG/P0 · PROVIDER]** Desk comments: Supabase project `fjnpzjjyhnpmunfoycrp` is **intermittently** down — healthy at S358 start (comments 200 on both origins), then db/rest/auth UNHEALTHY again at release while status still reads ACTIVE_HEALTHY. Not deploy-caused (staging identical, no Worker change). Needs the provider dashboard (restart/support); CANON-019 founder action.
-- [ ] **[S358][CONTENT/P2 · FOUNDER]** Tag changelog entries with `answers: <theme>` (D-S358.2) — until one is tagged, "You asked → we shipped" is honest-dark by design.
-- [ ] **[S358][ASSETS/P3]** 32 unreferenced lane-held scripts (incl. the plain copies of the 17 just fingerprinted) still serve pre-S356 bytes as residue. Harmless (nothing loads them); a full deploy clears them.
-- [ ] **[SIL][S358][GATES/P2]** Check that every `CONTENT_ADDRESSED_PREDICATE_SRCS` entry is also a shell asset (kept in sync by hand today).
-- [ ] **[SIL][S358][CONTENT/P3]** `publish-changelog-draft` lists the live feedback theme keys so `answers:` is chosen, not remembered.
-- [ ] **[S358][CONTENT/P2]** `api/changelog-narrative.json` is still commit-derived; `notify-changelog-subscribers` keys mail off its sha. Re-source it from the reader changelog with a mail-side plan (D-S358.4).
+- [ ] **[S357→S359][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy, so it is a founder action. Command in LATEST_HANDOFF.
+- [ ] **[SIL][S359][OBS/P2]** Provider-health line on /status/ from the Supabase health API, so an outage reads as an outage, not "Checking…".
+- [ ] **[SIL][S359][GATES/P3]** Make `build-shell-assets` import-safe so its pure helpers can carry a self-test.
+
+## Closed — S358 items (worked in S359)
+
+- [x] **[S358][CONTENT/P2]** Tag an entry with `answers:` — **superseded S359** (D-S359.1): "You asked" now counts only k-anonymous reader choices, and none has reached k=5, so there is no reader ask to answer yet. Tagging now would claim demand nobody expressed.
+- [x] **[S358][ASSETS/P3]** 32 residue scripts — cleared by the S359 full production promotion (see LATEST_HANDOFF).
+- [x] **[SIL][S358][GATES/P2]** Predicate ⊂ shell-asset check — **DONE S359**: `build-shell-assets` fails write and `--check` on a content-addressed predicate with no shell asset.
+- [x] **[SIL][S358][CONTENT/P3]** `answers:` keys from the live set — **DONE S359**: validated against `READER_THEME_KEYS`, which a self-test binds to the sampler's theme map.
+- [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.
+- [x] **[S359][A11Y/P1]** /games/ status labels in light theme 1.47 / 1.90 / 2.22:1 → 5.22 / 6.45 / 6.55:1 (D-S359.3). /membership/ "See The Value" measured 4.61:1 — not a defect.
+- [x] **[S359][OPS/P3]** Registry slug mismatch (`franchise-architect` vs `franchise-architect-football`) shipped to studio-ops as Ark cargo.
 
 ## Closed — S357 (worked in S358)
 

@@ -126,6 +126,29 @@ export function shippedFromChangelog(changelog, themeKey, limit = 5) {
     .map((entry) => ({ summary: entry.title.trim(), ts: entry.date, source: 'consumer-changelog' }));
 }
 
+/**
+ * S359 — "you asked" must count people who asked, not commits.
+ *
+ * `feedback.themes[].count` is the number of COMMITS build-feedback-provenance
+ * keyword-classified into a theme (its own header: "a correlation surface, not a
+ * per-ticket link"). This surface rendered that number under "You asked", so
+ * three commits touching the homepage read as three readers asking for it.
+ *
+ * The only reader signal on the site is the decision sampler: aggregate
+ * clarity/proof/value choices, published only once a choice reaches the
+ * k-anonymity threshold. A theme appears here only when readers qualified it;
+ * below the threshold the box is honest-dark rather than counting our own work
+ * as demand.
+ */
+const THEME_LABELS = { frontdoor: 'Front door', trust: 'Trust', conversion: 'Conversion' };
+export function readerThemes(feedback) {
+  const qualified = (feedback && feedback.decisionSampler && feedback.decisionSampler.qualifiedThemes) || [];
+  const threshold = Number(feedback?.decisionSampler?.kAnonymityThreshold) || 5;
+  return qualified
+    .filter((q) => q && q.theme && Number(q.count) >= threshold)
+    .map((q) => ({ key: q.theme, label: THEME_LABELS[q.theme] || q.theme, count: Number(q.count) }));
+}
+
 export function buildReceipts({ feedback, changelog, visualSets, fieldVerdicts }) {
   // S174 field-verdict-engine: speed-theme receipts carry the latest
   // deploy-boundary field verdict so "we shipped speed work" is graded by
@@ -144,7 +167,7 @@ export function buildReceipts({ feedback, changelog, visualSets, fieldVerdicts }
     generatedBy: 'scripts/build-ship-receipts.mjs',
     publicSafe: true,
     note: 'Aggregate theme-to-ship receipts. No raw feedback text.',
-    receipts: (feedback.themes || []).map((theme) => {
+    receipts: readerThemes(feedback).map((theme) => {
       const proof = visualSets.find((set) => {
         const needle = theme.key === 'trust' ? 'privacy' : theme.key === 'speed' ? 'home' : theme.key;
         return String(set.name).includes(needle) || (set.routes || []).some((route) => String(route).includes(needle));
@@ -199,9 +222,9 @@ ${rows}
 
 if (SELF_TEST) {
   const payload = buildReceipts({
-    feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2 }] },
-    changelog: { entries: [{ date: '2026-06-05', title: 'Pages load faster on a phone', highlights: ['x'], answers: ['speed'] }] },
-    visualSets: [{ name: 'home-lcp-s173', routes: ['/'], captureCount: 4 }],
+    feedback: { decisionSampler: { kAnonymityThreshold: 5, qualifiedThemes: [{ choice: 'x', theme: 'conversion', count: 6 }] } },
+    changelog: { entries: [{ date: '2026-06-05', title: 'Pages load faster on a phone', highlights: ['x'], answers: ['conversion'] }] },
+    visualSets: [{ name: 'conversion-journey-s173', routes: ['/membership/'], captureCount: 4 }],
     fieldVerdicts: { boundaries: [{ date: '2026-06-05', label: 'S173', overall: 'improved', routes: { '/': { lcpDeltaPct: -23.4, confidence: 'medium' } } }] },
   });
   // S358 — the surface reads the reader changelog, and only DECLARED links.
@@ -213,7 +236,7 @@ if (SELF_TEST) {
     { date: 'soon', title: 'Undated entry', answers: ['frontdoor'] },
   ] };
   const declared = buildReceipts({
-    feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 4 }] },
+    feedback: { decisionSampler: { kAnonymityThreshold: 5, qualifiedThemes: [{ choice: 'x', theme: 'frontdoor', count: 5 }] } },
     changelog, visualSets: [], fieldVerdicts: { boundaries: [] },
   });
   const ships = declared.receipts[0].shippedCommits;
@@ -232,7 +255,7 @@ if (SELF_TEST) {
       { summary: 'the mobile menu now opens on the first tap', visitorFacing: true, type: 'feat' })],
     // The exact line that leaked on 2026-09-18: git is no longer an input at all.
     ['a commit subject can never reach the surface, whatever it says', buildReceipts({
-      feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 3, commits: [{ sha: 'r1', summary: 'rebind the mobile proof without re-running the 215-cell audit' }] }] },
+      feedback: { ...({ decisionSampler: { kAnonymityThreshold: 5, qualifiedThemes: [{ choice: 'x', theme: 'frontdoor', count: 5 }] } }), themes: [{ key: 'frontdoor', label: 'Front door', count: 3, commits: [{ sha: 'r1', summary: 'rebind the mobile proof without re-running the 215-cell audit' }] }] },
       changelog: { entries: [] }, visualSets: [], fieldVerdicts: { boundaries: [] },
     }).receipts[0].shippedCommits.length === 0],
     ['only entries that DECLARE the theme answer it', ships.length === 2 && ships.every((c) => /front-door change/.test(c.summary))],
@@ -242,12 +265,18 @@ if (SELF_TEST) {
     ['an undated entry is never published', !ships.some((c) => /Undated/.test(c.summary))],
     ['each line names its source', ships.every((c) => c.source === 'consumer-changelog')],
     ['an untagged corpus is honest-dark, not an error', shippedFromChangelog({ entries: [{ date: '2026-09-01', title: 'x' }] }, 'frontdoor').length === 0],
-    ['the signal count survives an empty box', declared.receipts[0].feedbackSignals === 4],
+    ['the reader signal count survives an empty box', declared.receipts[0].feedbackSignals === 5],
+    // S359 — the defect: commit counts were rendered as reader asks.
+    ['commits classified into a theme are NOT reader signals', buildReceipts({
+      feedback: { themes: [{ key: 'frontdoor', label: 'Front door', count: 3 }], decisionSampler: { kAnonymityThreshold: 5, observedTotal: 0, qualifiedThemes: [] } },
+      changelog: { entries: [{ date: '2026-09-17', title: 'x', answers: ['frontdoor'] }] }, visualSets: [], fieldVerdicts: { boundaries: [] },
+    }).receipts.length === 0],
+    ['a choice below the k-anonymity threshold stays dark', readerThemes({ decisionSampler: { kAnonymityThreshold: 5, qualifiedThemes: [{ theme: 'trust', count: 4 }] } }).length === 0],
+    ['reader themes map to their labels', readerThemes({ decisionSampler: { kAnonymityThreshold: 5, qualifiedThemes: [{ theme: 'trust', count: 7 }] } })[0].label === 'Trust'],
     ['receipt created', payload.receipts.length === 1],
     ['declared change joined', payload.receipts[0].shippedCommits[0].summary === 'Pages load faster on a phone'],
-    ['proof joined', payload.receipts[0].proof?.set === 'home-lcp-s173'],
-    ['field verdict joined on speed', payload.receipts[0].fieldVerdict?.verdict === 'improved'],
-    ['field delta carried', payload.receipts[0].fieldVerdict?.lcpDeltaPct === -23.4],
+    ['proof joined', payload.receipts[0].proof?.set === 'conversion-journey-s173'],
+    ['no field verdict on a non-speed theme', payload.receipts[0].fieldVerdict === undefined],
     ['empty document has exactly one trailing newline', /[^\n]\n$/.test(renderDoc({ receipts: [] }))],
   ];
   let failed = 0;

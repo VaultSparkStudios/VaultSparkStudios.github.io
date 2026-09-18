@@ -1,8 +1,18 @@
 # Current State
 
-Last updated: 2026-09-18 (S358)
+Last updated: 2026-09-18 (S359)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S359 Public surfaces count readers, not commits (2026-09-18)
+
+**"You asked → we shipped" only shows what readers asked for.** It had been counting commits keyword-matched to a theme as reader signals. It now shows a theme only once the anonymous reader choices reach the public threshold of five. None has yet, so the box is empty.
+
+**No public feed is built from git any more.** The changelog narrative (returning-visitor strip, IGNIS topic chips, subscriber push notifications) is built from founder-approved changelog entries. The push notifier, run manually and never sent, would have pushed commit sentences to subscribers; it now sends the approved title and keys on a git-free entry id.
+
+**/games/ reads in light theme.** The Sparked / In The Forge / Vaulted labels were hardcoded colours at 1.47–2.22:1; they are now theme classes at 5.2–6.6:1, unchanged in dark themes.
+
+**Supabase is down.** The site's project cannot reach its database, which breaks Desk comments and Vault Member sign-in. It needs a project restart (founder action).
 
 ## S358 Every script a page loads can now be updated, and the changelog stops guessing (2026-09-18)
 
