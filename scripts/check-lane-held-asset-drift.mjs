@@ -62,6 +62,48 @@ export function laneHeldAssets(names) {
   return names.filter((name) => name.endsWith('.js') && !FINGERPRINTED.test(name)).sort();
 }
 
+/**
+ * Is this asset still referenced by anything the repo ships?
+ *
+ * Drift only MATTERS for an asset something still loads. Once a script is
+ * fingerprinted, its old unhashed copy lingers on the origin and will read as
+ * "drifted" forever while nothing loads it — residue, not risk. Counting those
+ * the same way overstates the problem and trains people to ignore the number.
+ * Observed immediately: hero-ticker, public-intelligence and studio-now were all
+ * fingerprinted earlier in S357 and still showed as drift.
+ */
+export function referencedAssets(root = ROOT) {
+  const refs = new Set();
+  const skip = /^(?:node_modules|\.git|\.cache|output|lighthouse-results|playwright-report|docs|coverage|scripts|tests)$/;
+  // A RUNTIME load only. Two shapes ship to a browser:
+  //   <script src="/assets/x.js">        — a page tag
+  //   { src: '/assets/x.js', when: ... } — a loader entry (ambient/idle loaders)
+  // Everything else that merely NAMES the file is build-time bookkeeping: the
+  // service worker's non-cacheable source list, build-shell-assets' input table,
+  // this gate's own docs. Counting those made every asset I had just fingerprinted
+  // still read as RISK, because the build table still names its source.
+  const TAG = /<script[^>]+src=["']\/?(assets\/[a-z0-9-]+\.js)["']/gi;
+  const LOADER = /\bsrc:\s*['"]\/?(assets\/[a-z0-9-]+\.js)['"]/gi;
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isDirectory()) { if (!skip.test(entry.name)) walk(path.join(dir, entry.name)); continue; }
+      const full = path.join(dir, entry.name);
+      const rel = path.relative(root, full).replace(/\\/g, '/');
+      if (rel === 'sw.js') continue; // precache bookkeeping, not a load
+      let text;
+      if (/\.html$/i.test(entry.name)) {
+        try { text = fs.readFileSync(full, 'utf8'); } catch { continue; }
+        for (const m of text.matchAll(TAG)) refs.add(m[1]);
+      } else if (/^assets\//.test(rel) && /\.js$/i.test(entry.name)) {
+        try { text = fs.readFileSync(full, 'utf8'); } catch { continue; }
+        for (const m of text.matchAll(LOADER)) { if (m[1] !== rel) refs.add(m[1]); }
+      }
+    }
+  };
+  walk(root);
+  return refs;
+}
+
 /** Pure: turn per-asset observations into a verdict. */
 export function summarize(observations, { origin = ORIGIN } = {}) {
   const drifted = observations.filter((o) => o.state === 'drift');
@@ -77,9 +119,12 @@ export function summarize(observations, { origin = ORIGIN } = {}) {
     total: observations.length,
     match: clean.length,
     drift: drifted.length,
+    driftThatMatters: drifted.filter((o) => o.referenced).length,
     unknown: unknown.length,
     absent: absent.length,
     drifted: drifted.map((o) => o.asset),
+    driftedReferenced: drifted.filter((o) => o.referenced).map((o) => o.asset),
+    driftedResidue: drifted.filter((o) => !o.referenced).map((o) => o.asset),
     unknownAssets: unknown.map((o) => ({ asset: o.asset, reason: o.reason })),
     // Unknown is never folded into either side: an unreachable asset is not
     // evidence of drift and not evidence of cleanliness.
@@ -87,16 +132,17 @@ export function summarize(observations, { origin = ORIGIN } = {}) {
   };
 }
 
-async function observe(asset, origin) {
+async function observe(asset, origin, referenced = new Set()) {
   const local = sha(fs.readFileSync(path.join(ROOT, 'assets', asset)));
   try {
     const response = await fetch(`${origin}/assets/${asset}`, { signal: AbortSignal.timeout(15000) });
-    if (response.status === 404) return { asset, state: 'absent' };
-    if (!response.ok) return { asset, state: 'unknown', reason: `HTTP ${response.status}` };
+    const isRef = referenced.has('assets/' + asset);
+    if (response.status === 404) return { asset, state: 'absent', referenced: isRef };
+    if (!response.ok) return { asset, state: 'unknown', referenced: isRef, reason: `HTTP ${response.status}` };
     const served = sha(Buffer.from(await response.arrayBuffer()));
-    return { asset, state: served === local ? 'match' : 'drift' };
+    return { asset, state: served === local ? 'match' : 'drift', referenced: isRef };
   } catch (error) {
-    return { asset, state: 'unknown', reason: String(error?.cause?.message || error?.message || error).slice(0, 80) };
+    return { asset, state: 'unknown', referenced: referenced.has('assets/' + asset), reason: String(error?.cause?.message || error?.message || error).slice(0, 80) };
   }
 }
 
@@ -117,6 +163,12 @@ function selfTest() {
   t('an unreachable asset is NOT counted clean', s.match === 1);
   t('an unreachable asset is NOT counted as drift', s.drift === 1 && s.unknown === 1);
   t('measured excludes unknown and absent', s.measured === 2 && s.total === 4);
+  const split = summarize([
+    { asset: 'live.js', state: 'drift', referenced: true },
+    { asset: 'old.js', state: 'drift', referenced: false },
+  ]);
+  t('referenced drift is the number that matters', split.driftThatMatters === 1 && split.driftedReferenced[0] === 'live.js');
+  t('unreferenced drift is residue, not risk', split.driftedResidue[0] === 'old.js' && split.drift === 2);
   t('the verdict names its vantage', typeof s.origin === 'string' && s.origin.startsWith('http'));
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
@@ -126,24 +178,27 @@ function selfTest() {
 
 async function main() {
   const assets = laneHeldAssets(fs.readdirSync(path.join(ROOT, 'assets')));
+  const referenced = referencedAssets();
   const observations = [];
   // Small batches: this is a few hundred requests against our own origin.
   for (let i = 0; i < assets.length; i += 8) {
-    observations.push(...await Promise.all(assets.slice(i, i + 8).map((asset) => observe(asset, ORIGIN))));
+    observations.push(...await Promise.all(assets.slice(i, i + 8).map((asset) => observe(asset, ORIGIN, referenced))));
   }
   const report = summarize(observations, { origin: ORIGIN });
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify(report, null, 2) + '\n');
 
   console.log(`lane-held-asset-drift @ ${report.origin}`);
-  console.log(`  ${report.total} held asset(s) · ${report.match} match · ${report.drift} DRIFT · ${report.unknown} unknown · ${report.absent} not served`);
-  for (const asset of report.drifted.slice(0, 40)) console.log(`    drift  ${asset}`);
+  console.log(`  ${report.total} held asset(s) · ${report.match} match · ${report.drift} drift (${report.driftThatMatters} STILL REFERENCED) · ${report.unknown} unknown · ${report.absent} not served`);
+  for (const asset of report.driftedReferenced) console.log(`    RISK      ${asset} — something still loads this`);
+  for (const asset of report.driftedResidue.slice(0, 20)) console.log(`    residue   ${asset} — nothing references it; an old copy the origin still serves`);
   if (report.unknown) console.log(`  ${report.unknown} unreachable — counted as neither clean nor drifted`);
   if (report.drift) {
     console.log('  These cannot be repaired by a content-lane promotion: the lane HOLDS unhashed .js.');
     console.log('  Fingerprint them through build-shell-assets (and CONTENT_ADDRESSED_PREDICATE_SRCS if a loader names them), or ship a full deploy.');
   }
-  if (STRICT && report.drift > 0) process.exitCode = 1;
+  // Only referenced drift can actually hurt a visitor; residue is cleanup.
+  if (STRICT && report.driftThatMatters > 0) process.exitCode = 1;
 }
 
 if (SELF_TEST) selfTest();
