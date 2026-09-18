@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "1dc56d3a3de24a434c094b1330bac214c2f10b27",
+    "sha": "2819bdc4b5bb8686fe4ab607f579eb6cdef4a6ea",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -15,8 +15,8 @@
     "reconciliation": "behind",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-09-17T19:10:57.730Z",
-      "ageHours": 0.2,
+      "observedAt": "2026-09-17T23:35:17.202Z",
+      "ageHours": 1.2,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -34,6 +34,7 @@
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
     "consoleErrors": 7,
+    "workerRouteErrors": 7,
     "signalCardinality": 6,
     "signalEndpoints": [
       "api/ecosystem-state.json",
@@ -49,6 +50,7 @@
         "target": "https://vaultsparkstudios-website.pages.dev/",
         "captured": true,
         "consoleErrors": 5,
+        "workerRouteErrors": 5,
         "signalCardinality": 5,
         "signalEndpoints": [
           "api/ignis-conduit.json",
@@ -63,6 +65,7 @@
         "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
         "captured": true,
         "consoleErrors": 1,
+        "workerRouteErrors": 1,
         "signalCardinality": 0,
         "signalEndpoints": []
       },
@@ -71,6 +74,7 @@
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
         "consoleErrors": 1,
+        "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
           "api/ecosystem-state.json",
@@ -82,18 +86,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves e65eca73 — OLDER than promoted 1dc56d3a — stranded/stale deploy",
-    "7 console error(s) on the promoted artifact"
+    "the repo has advanced past the last promotion: production serves e65eca73, repo build-sha is 2819bdc4 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-09-17T19:24:24.506Z",
+  "generatedAt": "2026-09-18T00:44:19.701Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-17T19:24:24.506Z",
-    "currentBehindStreak": 12,
-    "newestGradableAt": "2026-09-17T19:24:24.506Z",
+    "lastStrandedAt": "2026-09-18T00:44:19.701Z",
+    "currentBehindStreak": 14,
+    "newestGradableAt": "2026-09-18T00:44:19.701Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

@@ -150,12 +150,25 @@ export function derivePromotionReceipt(i) {
   const consoleDirty = browser.captured === true && Number(browser.consoleErrors) > 0;
 
   if (cspRegression) findings.push(`production CSP is '${csp.mode}' but source policy is 'enforce' — enforce header missing at the edge`);
-  if (shaBehind) findings.push(`production origin serves ${String(productionSha).slice(0, 8)} — OLDER than promoted ${String(promotedSha).slice(0, 8)} — stranded/stale deploy`);
+  // S357 — "stranded" is a strong word and it was being applied to a normal
+  // state. `promotedSha` is read from the repo's CURRENT api/build-sha.json, not
+  // from what was actually promoted, so once publishers advance the repo past the
+  // last promotion this finding fires on a perfectly healthy production. The two
+  // cases need different words because they need different responses: a served
+  // shell that no longer matches is a stranded deploy; a repo that has simply
+  // moved on is a promotion backlog. Shell parity is what separates them.
+  if (shaBehind && parityDrift) findings.push(`production origin serves ${String(productionSha).slice(0, 8)} — OLDER than promoted ${String(promotedSha).slice(0, 8)} — stranded/stale deploy (shell parity observed as drift)`);
+  else if (shaBehind) findings.push(`the repo has advanced past the last promotion: production serves ${String(productionSha).slice(0, 8)}, repo build-sha is ${String(promotedSha).slice(0, 8)} — a promotion backlog, not a stranded deploy (shell parity is '${shellParity.state}', not drift)`);
   if (reconciliation === 'ahead') findings.push(`production serves ${String(productionSha).slice(0, 8)}, newer than the recorded promoted ${String(promotedSha).slice(0, 8)} (benign — a later rebuild moved on)`);
   if (reconciliation === 'content-lane-match') findings.push(`production build sha ${String(productionSha).slice(0, 8)} is the content-lane baseline; served contentLaneHead ${String(contentLaneHead).slice(0, 8)} is at/after promoted ${String(promotedSha).slice(0, 8)} and shell parity was observed 'matched' at ${shellParity.observedAt} (current)`);
   if (contentLaneCurrent && !parityMatched && !parityDrift) findings.push(`served contentLaneHead ${String(contentLaneHead).slice(0, 8)} is at/after promoted ${String(promotedSha).slice(0, 8)}, but shell parity was not observed as matched (state '${shellParity.state}'${shellParity.observedAt ? `, observed ${shellParity.ageHours}h ago, max ${shellParity.maxAgeHours}h` : ', never observed'}) — not graded as current (honest-dark)`);
   if (contentLaneCurrent && parityDrift) findings.push(`shell parity observed as 'drift' at ${shellParity.observedAt} — the served shell does not match the promoted build, so the advanced contentLaneHead does not make production current`);
-  if (consoleDirty) findings.push(`${browser.consoleErrors} console error(s) on the promoted artifact`);
+  if (consoleDirty) {
+    const vantage = Number(browser.workerRouteErrors || 0);
+    findings.push(vantage > 0
+      ? `${browser.consoleErrors} console error(s) on the promoted artifact — ${vantage} from Worker-only route(s) this Pages vantage cannot serve, ${browser.consoleErrors - vantage} unexplained`
+      : `${browser.consoleErrors} console error(s) on the promoted artifact`);
+  }
 
   // reconciled = production is serving the promoted build or newer (not stale), CSP not regressed, no console errors.
   const reconciled = (reconciliation === 'match' || reconciliation === 'content-lane-match' || reconciliation === 'ahead')
@@ -199,6 +212,11 @@ export function derivePromotionReceipt(i) {
       captured: browser.captured === true,
       target: browser.target || null,
       consoleErrors: browser.captured === true ? Number(browser.consoleErrors) : null,
+      // How many of those are explained by the vantage rather than by the
+      // artifact: the Pages origin has no Worker, so a Worker-only route cannot
+      // succeed here. Published so a reader can see the residual, and so the
+      // headline count never silently absorbs an unfixable class.
+      workerRouteErrors: browser.captured === true ? Number(browser.workerRouteErrors || 0) : null,
       signalCardinality: browser.captured === true ? Number(browser.signalCardinality) : null,
       signalEndpoints: browser.captured === true ? (browser.signalEndpoints || []) : [],
       routes: Array.isArray(browser.routes) ? browser.routes : [],
@@ -337,6 +355,13 @@ async function observeCsp() {
   } finally { clearTimeout(tid); }
 }
 
+/**
+ * Routes served only by the apex Worker. The Pages origin necessarily 404s them,
+ * so a failure here is a vantage property, never an artifact defect. Kept in one
+ * place so the list is auditable rather than scattered through the counter.
+ */
+const WORKER_ONLY_ROUTE = /^\/(?:v\/|api\/auth\/|api\/newsletter\/unsubscribe$|_health$)/;
+
 async function observeBrowser() {
   // Observe a deterministic critical-route matrix. Route failures remain honest-dark
   // per route; healthy routes are never allowed to conceal an unobserved one.
@@ -354,9 +379,23 @@ async function observeBrowser() {
     for (const route of ['/', '/vault-member/', '/games/franchise-architect/']) {
       const page = await ctx.newPage();
       let consoleErrors = 0;
+      let workerRouteErrors = 0;
       const signalEndpoints = new Set();
       page.on('console', (message) => { if (message.type() === 'error') consoleErrors += 1; });
       page.on('pageerror', () => { consoleErrors += 1; });
+      // S357 — this vantage is the PAGES origin, which has no Worker in front, so
+      // a Worker-served route CANNOT succeed here and its failure is a property of
+      // the vantage, not a defect in the artifact. Measured live:
+      //   /api/auth/me  apex 200 · pages.dev 404
+      //   /v/rum        apex 405 · pages.dev 404
+      // Counting those made the metric structurally unable to reach zero, so the
+      // receipt reported "7 console error(s)" on an artifact whose apex console
+      // was clean. They are now counted separately instead of silently dropped —
+      // a real regression on these routes still shows up, just in its own bucket.
+      page.on('response', (response) => {
+        if (response.status() < 400) return;
+        if (WORKER_ONLY_ROUTE.test(new URL(response.url()).pathname)) workerRouteErrors += 1;
+      });
       page.on('request', (request) => {
         const match = request.url().match(/\/(api\/[a-z0-9-]+\.json|v\/[a-z]+|feed\/[a-z0-9-]+\.(?:json|xml)|data\/[a-z0-9-]+\.(?:json|ndjson))/i);
         if (match) signalEndpoints.add(match[1]);
@@ -369,6 +408,7 @@ async function observeBrowser() {
           target: PAGES_ORIGIN + route,
           captured: true,
           consoleErrors,
+          workerRouteErrors,
           signalCardinality: signalEndpoints.size,
           signalEndpoints: [...signalEndpoints].sort(),
         });
@@ -386,6 +426,7 @@ async function observeBrowser() {
       captured: true,
       target: PAGES_ORIGIN,
       consoleErrors: captured.reduce((sum, route) => sum + route.consoleErrors, 0),
+      workerRouteErrors: captured.reduce((sum, route) => sum + (route.workerRouteErrors || 0), 0),
       signalCardinality: signalEndpoints.length,
       signalEndpoints,
       routes,

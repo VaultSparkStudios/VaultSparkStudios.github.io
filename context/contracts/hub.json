@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-18T00:09:33.984Z",
+  "generatedAt": "2026-09-18T00:44:44.982Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -27,7 +27,8 @@
     "currentFocus": "S357 recovered the cut-off S356 closeout and RELEASED it to production: Worker 8a856192 plus content-lane run 35256380631, production contentLaneHead = origin/main. The Desk flagship, reader-first articles, reactions, the site-wide strip and the first public changelog entry since July are live. Comments ship but are degraded by a pre-existing Supabase credential mismatch, and now say which of the two possible causes it is.",
     "nextMilestone": "Fingerprint the remaining 25 unhashed client scripts (the content lane can never update them) and add a served-vs-repo drift gate for lane-held paths, so the class that kept a deleted fetch alive cannot recur.",
     "blockers": [
-      "Desk comments are DEPLOYED but non-functional: every thread read answers 503 comments_upstream_failed because the Supabase service-role key is rejected with \"Invalid API key\". This is the credential-project mismatch tracked since S344 and listed as a release-proof blocker before this release — not caused by the promotion. Founder/provider action (CANON-019): reconcile the service-role credential with project fjnpzjjyhnpmunfoycrp.",
+      "PROVIDER OUTAGE: the site's Supabase project fjnpzjjyhnpmunfoycrp reports db/rest/auth ALL UNHEALTHY via Supabase's own health API (\"Failed to connect to database\"), while its project-level status still reads ACTIVE_HEALTHY. Desk comments 503 and the /changelog/ vault_feedback 404 are both downstream of this. Nothing agent-side can fix it; it needs the provider/dashboard.",
+      "Desk comments credential: the correct key is now on STAGING (project fjnpzjjyhnpmunfoycrp, new-style sb_secret_). PRODUCTION still holds a wrong-project legacy JWT — the secret write was refused by the agent session's permission policy, and it could not have been verified anyway while the project is down. Apply with: npm run repair:desk-comments-credential (then --apply --env production) once the provider recovers.",
       "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
       "25 unhashed client scripts still cannot be updated by the content lane, which holds unhashed .js as executable. Measured on staging: 27 of 171 were serving pre-S356 bytes; two are fixed, the rest are open.",
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
