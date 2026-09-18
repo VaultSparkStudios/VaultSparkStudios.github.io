@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-18T22:35:30.515Z",
+  "generatedAt": "2026-09-18T22:43:05.314Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -12,45 +12,37 @@
     "status": "yellow",
     "routeCount": 3,
     "reachable": true,
-    "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
-    ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
-    ],
+    "reasonCodes": [],
+    "candidateReady": true,
+    "candidateFindings": [],
     "candidateBuildSha": "cbba3e533fdb1a8942897dbab6e33be00c73e254",
-    "deployedBuildSha": "afe8ac65528a8e4ed1ca0aefec04139da7963a6f",
-    "candidateShaBound": false,
+    "deployedBuildSha": "cbba3e533fdb1a8942897dbab6e33be00c73e254",
+    "candidateShaBound": true,
     "artifactManifest": {
       "candidateRoot": "b4804e85be6351bce43751c0075bc5404ceefd743eb51e4bb2a7bb5ba0cd8f9e",
       "candidateLeafCount": 53,
-      "stagingRoot": "10093039ef9a42ae215064ac70c961069ff619eb29f54fc68a27e49b7936d2c5",
+      "stagingRoot": "b4804e85be6351bce43751c0075bc5404ceefd743eb51e4bb2a7bb5ba0cd8f9e",
       "stagingLeafCount": 53,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
-      "receiptId": "88ef1f382c75c881f3e8e45c",
+      "receiptId": "c83259337df455e8dbb9f097",
       "state": "verified",
-      "deployId": "20260918194728",
-      "manifestFileCount": 6937,
-      "remoteFileCount": 6937,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20260918194728",
-      "sourceFingerprint": "e3139ebe8b93b11450e24401",
-      "archiveSha256": "c84934b5e3864c4bcd59971b88d5b23433264b42a70292034b57f5d575146790",
+      "deployId": "20260918224053",
+      "manifestFileCount": 6946,
+      "remoteFileCount": 6946,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20260918224053",
+      "sourceFingerprint": "d7dec76999be691666ece304",
+      "archiveSha256": "8a8d2d91241da83e1fac79eeef7a1ac753371e4ea94f1fa7a2925071dc05d6d8",
       "remoteVerified": true,
-      "attested": false,
-      "reason": "receipt facts do not match current staging evidence"
+      "attested": true,
+      "reason": null
     },
     "deployHistory": {
-      "depth": 76,
-      "headReceiptId": "88ef1f382c75c881f3e8e45c",
-      "previousReceiptId": "38b05c300781b83f456f8003",
+      "depth": 77,
+      "headReceiptId": "c83259337df455e8dbb9f097",
+      "previousReceiptId": "88ef1f382c75c881f3e8e45c",
       "bound": true,
       "reason": null
     }
@@ -71,13 +63,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 11,
-    "ageHours": 2.3,
-    "observedAt": "2026-09-18T22:35:19.194Z",
+    "commitsBehind": 7,
+    "ageHours": 1.3,
+    "observedAt": "2026-09-18T22:10:31.490Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-18T22:35:19.194Z",
+      "observedAt": "2026-09-18T22:10:31.490Z",
       "expectedFrom": "0bcfe41505c55736f504db187021b02b3ad0e5aef2b94e90b89b5779966d3f8e",
       "supersededBy": null,
       "ageHours": 0,
@@ -175,10 +167,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
-    "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
-    "stagingDeployAttested": false,
+    "stagingCandidateReady": true,
+    "stagingCandidateShaBound": true,
+    "stagingArtifactManifestBound": true,
+    "stagingDeployAttested": true,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -191,10 +183,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
-    "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
