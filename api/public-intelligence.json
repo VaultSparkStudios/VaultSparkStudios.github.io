@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-19T20:30:24.998Z",
+  "generatedAt": "2026-09-19T22:18:13.251Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 361,
+    "currentSession": 362,
     "lastUpdated": "2026-09-19",
-    "currentFocus": "S361: the service worker installs again (three duplicate precache entries made every production install redundant since at least June, so members could not enable push); /status/ treats offline support as a browser property, not a service. Supabase recovered: comments and sign-in are back.",
-    "nextMilestone": "A browser gate that proves a real service-worker install, then the credential-side per-service health feed for /status/.",
+    "currentFocus": "S362: fixed two probes that were reporting false alarms (a cron line with a trailing comment was invisible to the staleness probe; post-closeout resync commits were counted as write-back debt), added a blocking browser gate that installs the service worker, and made the unarmed newsletter cron hold instead of failing. Nothing was armed or sent.",
+    "nextMilestone": "The credential-side per-service Supabase health feed for /status/, and a staleness verdict bound to its own denominator.",
     "ignis": {
       "score": 46492,
       "grade": "FORGE",
@@ -134,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 361,
+    "sessionsCompleted": 362,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,16 +151,16 @@
     "silCategories": {
       "devHealth": 99,
       "alignment": 98,
-      "momentum": 97,
+      "momentum": 98,
       "engagement": 96,
-      "process": 99,
+      "process": 100,
       "coherence": 100,
       "security": 99,
-      "ecosystem": 98,
+      "ecosystem": 99,
       "capital": 100,
-      "automation": 99,
-      "total": 985,
-      "updatedSession": 361
+      "automation": 97,
+      "total": 986,
+      "updatedSession": 362
     },
     "sealedNextRevealAt": null
   },
