@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-19T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch",
+    "url": "https://vaultsparkstudios.com/news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-01-81bb22c10457",
+      "hash": "81bb22c10457a2ab0ab6df08c935c66fd5890168ab1808895e94e49f39aa8118",
+      "text": "The order responds to recent incidents like the Hugging Face attack .",
+      "sourceUrl": "https://the-decoder.com/california-governor-newsom-signs-executive-order-demanding-kill-switch-for-ai-models/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/#fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-01-81bb22c10457"
+    },
+    {
+      "id": "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-02-4a79223ba92b",
+      "hash": "4a79223ba92b31235b985c46f22a122056efd6979337cc9558dd02d6d8788bb9",
+      "text": "Newsom sharply criticized his rival Donald Trump, who accused the labs of fearmongering .",
+      "sourceUrl": "https://the-decoder.com/california-governor-newsom-signs-executive-order-demanding-kill-switch-for-ai-models/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/#fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-02-4a79223ba92b"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "vera:fair",
+      "persona": "vera",
+      "text": "The order responds to real production failures like the Hugging Face attack, but panic-driven mandates often ignore how these systems actually break in the wild.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-01-81bb22c10457",
+        "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-02-4a79223ba92b"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:overhyped",
+      "persona": "rex",
+      "text": "This is not about safety; it is a political power play where Newsom uses the Hugging Face incident to attack Trump's narrative of fearmongering while ignoring the changelog.",
+      "confidence": 0.9,
+      "verdict": "overhyped",
+      "direction": -2,
+      "factRefs": [
+        "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-01-81bb22c10457",
+        "fact-2026-09-19-california-governor-newsom-signs-executive-order-demanding-kill-switch-02-4a79223ba92b"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-19-vera-1",
+      "persona": "vera",
+      "text": "By Q4 2026, major AI labs will report that implementing the mandated kill switch has increased their average incident response time by at least 15% during simulated attacks.",
+      "confidence": 0.75,
+      "resolveBy": "2026-11-03",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-19-rex-2",
+      "persona": "rex",
+      "text": "Within six months of September 19, 2026, Donald Trump will publicly declare that the California kill switch order proves his point about tech industry fearmongering.",
+      "confidence": 0.8,
+      "resolveBy": "2027-01-17",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-19--california-governor-newsom-signs-executive-order-demanding-kill-switch.png",
+    "artSha256": "de86fe38bface3c7c97019d35d58d84dc60511c031f64ad6fa98724e0b48ecc5",
+    "pageSha256": "b1aa32c10dcba45f12b73771e5be5c1d58f9651c994a03d943dba7e04762aa07",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "0829b9b371e371c3b7f908982a029cc354904f4ab7c1557a612cf65942002b3b",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
