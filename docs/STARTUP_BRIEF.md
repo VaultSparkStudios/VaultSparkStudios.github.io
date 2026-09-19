@@ -62,21 +62,21 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 360 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    479/479 passing  ·  Deploy: N/A                       ║
+║  Tests:    502/502 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   502/502 passing  ·  2026-09-19                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         479/479 passing (2026-09-10) · UNVERIFIED (no  ║
+║  ✓  Tests         502/502 passing (2026-09-19)                   ║
 ║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
