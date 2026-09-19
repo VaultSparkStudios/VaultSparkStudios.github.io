@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T22:52:43.840Z",
+  "generatedAt": "2026-09-19T22:56:27.278Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 5,
-    "healthy": 5,
-    "unknown": 9,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 14 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 14 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-18T00:44:19.701Z",
     "currentBehindStreak": 14,
     "newestGradableAt": "2026-09-18T00:44:19.701Z",
-    "newestAgeHours": 46.1,
+    "newestAgeHours": 46.2,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -40,9 +40,9 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-09-19T22:46:08Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474259276",
-      "headSha": "dae84c0c40f74ed8d592636f53dbdc8839e74124",
+      "updatedAt": "2026-09-19T22:54:24Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474624596",
+      "headSha": "0363743324e7cf773f23f6729f3ea923f7403958",
       "event": "push"
     },
     {
@@ -50,19 +50,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-09-19T22:47:47Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474259280",
-      "headSha": "dae84c0c40f74ed8d592636f53dbdc8839e74124",
+      "updatedAt": "2026-09-19T22:55:51Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474624997",
+      "headSha": "0363743324e7cf773f23f6729f3ea923f7403958",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-19T22:52:08Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474259267",
-      "headSha": "dae84c0c40f74ed8d592636f53dbdc8839e74124",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-19T22:54:16Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35474624590",
+      "headSha": "0363743324e7cf773f23f6729f3ea923f7403958",
       "event": "push"
     },
     {
@@ -165,7 +165,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.55,
+      "ageHours": 0.61,
       "staleAfterHours": 48
     },
     {
@@ -173,13 +173,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-09-19T18:45:45Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.12,
+      "ageHours": 4.18,
       "staleAfterHours": 48
     },
     {
@@ -193,7 +192,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.37,
+      "ageHours": 2.43,
       "staleAfterHours": 48
     },
     {
@@ -219,20 +218,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.3,
+      "ageHours": 0.36,
       "staleAfterHours": 48
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-19T13:07:28Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 9.75,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
