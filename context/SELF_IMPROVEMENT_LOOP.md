@@ -2573,3 +2573,9 @@ The Engagement row above says comments are "live again". By release the Supabase
 | Automation Coverage | 97 | A real install is now gated, but the staleness probe denominator can still shrink under gh budget pressure — committed as [SIL]. |
 
 **Brainstorm → committed:** (1) `[SIL]` bind the staleness verdict to the discovered workflow count so a shrinking denominator cannot change it silently. (2) `[SIL]` resolve the IGNIS remedy path with studio-ops rather than leaving a doctor remedy that cannot run.
+
+### S362 addendum — the fix found two more of its own kind, after the release
+
+After production was verified, the repaired write-back probe still counted this session's own `chore(release)` and `chore(resync)` commits as substantive: their only non-generated files were `output/staging-themes/*.png` (ceremony theme screenshots) and `docs/GENIUS_LIST.md` (a generator output). Twelve hours later that would have been a brand-new false DEBT — the same defect, in the shape the S352 comment predicted an enumeration would keep taking. Both are now receipt paths (D-S362.7), and the probe reads current.
+
+Also recorded rather than muted: the newsletter still shows six consecutive failures, because the hold only takes effect on the next scheduled run (2026-10-02) and the probe reads run history, not workflow source (D-S362.8). No score change; the entry above already credits the probe work, and this is the same item continuing.
