@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   502/502 passing  ·  2026-09-19                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         502/502 passing (2026-09-19) · UNVERIFIED (no  ║
+║  ✓  Tests         502/502 passing (2026-09-19)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
@@ -90,7 +90,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  8d old (2026-09-11)  ⚠ stale                   ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⛔  Doctor        12/17 (71%)  ·  2 failing                      ║
 ║  Open current tasks 34 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7409 <   ║
