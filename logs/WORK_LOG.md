@@ -1685,3 +1685,5 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 
 **6. Startup budget (found at closeout).** build:check step 5 failed at 42,217 of 42,000 tokens; the named repair `rotate-taskboard.mjs` could not act because it did not know the S357+ `## Closed — S<n>` heading form, and it would have archived blocks still holding open tasks. Fixed both (D-S360.5); 4 closed blocks rotated, 69 open items before and after.
 
+**Release.** Staging full publish 834fb0216357 (6950 files, chain 78); ceremony 11/11 after rebuilding the continuity summary; scoped promotion run 35413377247 succeeded; production build-sha f2066eb7e = HEAD (full deploy). /status/ verified on production in a real browser under the live Worker CSP; smoke:live 6/6.
+
