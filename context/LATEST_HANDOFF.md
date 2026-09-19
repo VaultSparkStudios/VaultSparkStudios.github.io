@@ -11,7 +11,9 @@
 - **Deferred, on purpose:** the doctor's IGNIS remedy cannot run in a project repo (it reads a studio-ops-only registry) — Ark repo-question `01K2TR2MCB649E1AD036E22BAD` shipped instead of a local workaround, and the IGNIS tree was left untouched because it holds another session's uncommitted work. Purging `api/founder-presence.json` from history still needs a force-push, which stays a founder action.
 - **Ark:** two `pattern-share` cargos for the propagated probe fixes (`01K2TR2J2O36AABB2BCFBC91AE`, `01K2TR2KK71B4A94B828BDC63E`).
 
-PLACEHOLDER_RELEASE
+- **RELEASED — full deploy.** Staging full publish `27f1046cdb5d` (6969 files, chain 80) → ceremony **11/11** (refused once on `staging-deploy-lineage`: the continuity summary was behind the ledger the publish had just appended — rebuilt, depth 80) → scoped promotion run `35474267138` (`confirm_production=true`, identity surfaces held) **success**. Production `build-sha` = `dae84c0c4` = HEAD at release, `deployedBy: pages-deploy` — a full deploy, not a content-lane overlay.
+- **Verified from served bytes:** the new install spec run against **production** passes — a real `register('/sw.js')` reaches `activated` with a complete precache; `smoke:live` 6/6. The same spec passed against staging before promotion.
+- **Gates on the way (all real, all fixed at source):** the ceremony lineage refusal above; then the pre-push coherence gate caught `release-proof`, `status-proof` and `stats-surface` drifting over the upstream rebase — converged with `resync-derived` rather than resealed one at a time. Three pushes raced the hourly publishers and were landed with `git pull --rebase`; generated-file conflicts were resolved to the fresh release evidence and regenerated afterwards.
 
 ## Where We Left Off — S361 · 2026-09-19
 

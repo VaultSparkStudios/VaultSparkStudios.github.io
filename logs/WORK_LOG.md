@@ -1713,3 +1713,5 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **5. Precache reviewed:** 100 entries, 3.2 MB raw / ~779 KB brotli, only for members who opt into offline/push. Kept.
 
 **Deferred honestly:** the IGNIS rescore remedy is a no-op in project repos (reads a studio-ops-only registry) — Ark repo-question shipped; founder-presence history purge still needs a force-push.
+
+**Release.** Staging full publish 27f1046cdb5d (6969 files, chain 80); ceremony 11/11 after rebuilding the continuity summary; scoped promotion run 35474267138 succeeded; production build-sha dae84c0c4 = HEAD (full deploy). The service-worker install spec passes against production and staging; smoke:live 6/6.
