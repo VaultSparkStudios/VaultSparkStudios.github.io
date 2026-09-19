@@ -2053,3 +2053,11 @@ The Monthly Member Newsletter had failed all six of its scheduled runs since 202
 ## D-S362.6 — The IGNIS rescore remedy cannot work from a project repo (deferred, routed to studio-ops)
 
 The doctor's `ignis` check reports a 10-day-stale score and names `rescore-ignis --stale` as the remedy. The propagated copy reads `portfolio/PROJECT_REGISTRY.json` from **its own repo root**, a file that exists only in studio-ops, so here it reports `staleCount: 0, rows: []` and the remedy is a structural no-op. Scoring would also run the IGNIS CLI against the `vaultspark-ignis` tree, which currently holds another session's uncommitted changes — a project session must not write there (CANON-018). **Decided:** not worked around locally. Shipped as an Ark `repo-question` to studio-ops (`01K2TR2MCB649E1AD036E22BAD`); the stale score stays honestly reported meanwhile.
+
+## D-S362.7 — Two more receipt paths, found by the fix from an hour earlier
+
+After the release, the repaired write-back probe still counted `chore(release): bind the S362 staging publish` and `chore(resync): converge derived graph` as substantive — in 12h they would have been a fresh false DEBT. Their only non-generated files were `output/staging-themes/*.png` (the release ceremony theme screenshots, written by `tests/staging-release.spec.js`) and `docs/GENIUS_LIST.md` (written by `generate-genius-list.mjs`). **Decided:** both are receipt paths. The probe reads "write-back current" with no substantive commits after the SIL anchor, which is the truth. Noted because it is the enumeration failure mode the S352 comment predicted: the list grows one real discovery at a time, and each one must come from an observed commit, never a guess.
+
+## D-S362.8 — The newsletter streak is not cleared by this session, and should not be
+
+The staleness probe still reports `Monthly Member Newsletter: 6 consecutive failures`. The hold (D-S362.3) only takes effect on the next scheduled run (2026-10-02), and the probe reads run history, not workflow source. Backfilling or muting the streak would be fabricating evidence. **Decided:** the red stands until a real held run replaces it, and this expectation is recorded here so the next session reads it as expected rather than as a regression.

@@ -8,6 +8,9 @@ Last updated: 2026-09-19 (S362: two false-alarming probes fixed (cron comments, 
 - [ ] **[SIL][S362][OBS/P3]** The doctor names `rescore-ignis --stale` as the IGNIS remedy, but the propagated copy reads `portfolio/PROJECT_REGISTRY.json` from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question `01K2TR2MCB649E1AD036E22BAD`; until then the stale score stands honestly reported.
 - [ ] **[SIL][S362][OBS/P3]** The staleness probe checked count flickered (14 vs 11 workflows a minute apart) when `gh` calls hit the per-run budget. Unreachable workflows are named, but a shrinking denominator still changes the verdict — bind the verdict to the discovered workflow count.
 
+- [ ] **[S362][OBS/P3]** `desk-model-servability` dropped to 1/2 during this session: `Qwen3.8-27B` is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
+- [ ] **[S362][OBS/P3]** The newsletter cron still shows 6 consecutive failures until the first held run on 2026-10-02 (D-S362.8). Expected, not a regression — confirm the run concludes success with a `held` annotation.
+
 ## Closed — S361 items (worked in S362)
 
 - [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.

@@ -109,6 +109,14 @@ export const GENERATED_PATH_RES = [
   /\.lock$/i,
   // S352: tool-written session telemetry (context-meter, skill-costs, triggers).
   /^\.cache\//i,
+  // S362: found the same way — these two were the only non-generated files in a
+  // `chore(release)` and a `chore(resync)` commit, so both would have been
+  // reported as debt 12h later. `output/staging-themes/*.png` are the release
+  // ceremony's theme screenshots (tests/staging-release.spec.js writes them) and
+  // `docs/GENIUS_LIST.md` is written by generate-genius-list.mjs. Neither is ever
+  // edited by hand.
+  /^output\/staging-themes\//i,
+  /^docs\/GENIUS_LIST\.md$/i,
 ];
 
 /**
