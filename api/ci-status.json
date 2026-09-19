@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T01:56:26.652Z",
+  "generatedAt": "2026-09-19T02:04:57.418Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 14 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 14 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-18T00:44:19.701Z",
     "currentBehindStreak": 14,
     "newestGradableAt": "2026-09-18T00:44:19.701Z",
-    "newestAgeHours": 25.2,
+    "newestAgeHours": 25.3,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-19T01:49:44Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-19T02:04:19Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35413843457",
       "headSha": "f502caae45f50ffb9ee3123880a7dd17b986ed77",
       "event": "push"
@@ -175,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.8,
+      "ageHours": 0.94,
       "staleAfterHours": 48
     },
     {
@@ -188,7 +188,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.89,
+      "ageHours": 1.03,
       "staleAfterHours": 48
     },
     {
@@ -214,7 +214,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.2,
+      "ageHours": 0.34,
       "staleAfterHours": 48
     },
     {
