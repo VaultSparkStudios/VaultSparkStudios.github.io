@@ -7,7 +7,8 @@
 - **Supabase recovered.** db/rest/auth ACTIVE_HEALTHY; Desk comments `ok:true`; /status/ reads "All Systems Operational". The P0 is closed. The restart was not done by the agent.
 - **Shipped:** service-worker install fixed (duplicate precache entries; D-S361.1); /status/ offline row is informational and truthful (D-S361.2).
 - **Found by looking, not by a gate:** checking what the new status row would say led to discovering that the worker had never installed. Every production install went `redundant`, so push notifications could not be enabled.
-- **Release:** see the S361 release addendum.
+- **RELEASED — full deploy.** Staging full publish `b79c4d8c50ee` (6960 files, chain 79) → ceremony **11/11** → scoped promotion run `35434590099` **success**. Production `build-sha` = `113474364` = HEAD at release (`pages-deploy`).
+- **Verified from served bytes:** a real `register('/sw.js')` on production now reaches **activated** (it was `redundant` before the fix); `smoke:live` 6/6.
 
 ## Where We Left Off — S360 · 2026-09-18
 

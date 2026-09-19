@@ -1695,3 +1695,5 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 
 **3. Supabase** recovered (health API all ACTIVE_HEALTHY; comments ok:true).
 
+**Release.** Staging b79c4d8c50ee (6960 files, chain 79); ceremony 11/11; the service worker reached activated on staging, then on production after scoped promotion run 35434590099 (build-sha 113474364). smoke:live 6/6.
+
