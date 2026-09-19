@@ -56,6 +56,10 @@
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--dim);
     }
+    body.light-mode .overall-banner.checking {
+      background: rgba(15,23,42,0.04);
+      border-color: rgba(15,23,42,0.14);
+    }
     .overall-banner.operational {
       background: rgba(16,185,129,0.1);
       border: 1px solid rgba(16,185,129,0.3);
@@ -71,6 +75,20 @@
       border: 1px solid rgba(239,68,68,0.3);
       color: var(--status-down);
     }
+    .provider-note {
+      max-width: 520px;
+      margin: 0.85rem auto 0;
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.06);
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      text-align: left;
+    }
+    .provider-note[hidden] { display: none; }
+    .provider-note strong { color: var(--status-down); }
     .overall-dot {
       width: 12px;
       height: 12px;
@@ -280,6 +298,7 @@
           <div class="overall-dot"></div>
           <span id="overallText">Checking services…</span>
         </div>
+        <div class="provider-note" id="providerNote" role="note" hidden></div>
       </div>
     </section>
 
@@ -310,6 +329,18 @@
             </div>
           </div>
           <div class="status-card-label" id="status-label-vault">—</div>
+        </div>
+
+        <!-- Member sign-in & data (Supabase Auth) -->
+        <div class="status-card" id="status-auth">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-auth"></div>
+            <div>
+              <div class="status-card-name">Member Accounts (Auth)</div>
+              <div class="status-card-msg" id="status-msg-auth">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-auth">—</div>
         </div>
 
         <!-- Supabase Database -->
@@ -1075,6 +1106,10 @@
 
       // Track results for overall banner
       var results = {};
+      // Every check whose answer comes from the Supabase project. When all of them
+      // fail together, the fault is the provider, not the site — say so.
+      var PROVIDER_CHECKS = ['auth', 'vault', 'db', 'games', 'investor'];
+      var ALL_CHECKS = ['website', 'sw'].concat(PROVIDER_CHECKS);
 
       function setCard(name, state, ms, errorMsg) {
         var dot   = document.getElementById('dot-' + name);
@@ -1106,8 +1141,35 @@
         var banner = document.getElementById('overallBanner');
         var text   = document.getElementById('overallText');
         if (!banner || !text) return;
+        // Never summarise a partial set: with only `website` reported, the old
+        // banner read "All Systems Operational" for the first ~5s of every load —
+        // including during a total provider outage (seen S360).
+        var pending = ALL_CHECKS.filter(function(k) { return !results[k]; }).length;
+        if (pending && !vals.some(function(v) { return v === 'down'; })) {
+          banner.className = 'overall-banner checking';
+          text.textContent = 'Checking services… (' + (ALL_CHECKS.length - pending) + ' of ' + ALL_CHECKS.length + ')';
+          return;
+        }
 
-        if (vals.some(function(v) { return v === 'down'; })) {
+        var providerDown = PROVIDER_CHECKS.every(function(k) { return results[k] === 'down'; });
+        var note = document.getElementById('providerNote');
+        if (note) {
+          if (providerDown) {
+            note.replaceChildren();
+            var lead = document.createElement('strong');
+            lead.textContent = 'Our database provider (Supabase) is not responding.';
+            note.appendChild(lead);
+            note.appendChild(document.createTextNode(' The website itself is up and every page loads. Desk comments, member profiles, sign-in and leaderboards are affected until the provider recovers.'));
+            note.hidden = false;
+          } else {
+            note.hidden = true;
+          }
+        }
+
+        if (providerDown) {
+          banner.className = 'overall-banner down';
+          text.textContent = 'Database Provider Outage';
+        } else if (vals.some(function(v) { return v === 'down'; })) {
           banner.className = 'overall-banner down';
           text.textContent = 'Partial Outage Detected';
         } else if (vals.some(function(v) { return v === 'degraded'; })) {
@@ -1138,34 +1200,51 @@
         }
       }
 
+      // A probe proves the database path only if the answer came FROM the database.
+      // The Supabase gateway rejects a request with 401 in ~50ms even while the
+      // database is unreachable (measured S360), so a bare 401/403 is not proof of
+      // life. PostgREST's own refusals carry a Postgres SQLSTATE `code` (e.g. 42501
+      // permission denied) — that one did reach the database, so it counts.
+      async function assertDbAnswered(r) {
+        if (r.ok) return;
+        if (r.status === 401 || r.status === 403) {
+          var body = null;
+          try { body = await r.json(); } catch (_e) { body = null; }
+          if (body && typeof body.code === 'string' && /^[0-9A-Z]{5}$/.test(body.code)) return;
+          throw new Error('Gateway refused the request (' + r.status + ')');
+        }
+        throw new Error('Error ' + r.status);
+      }
+
       async function pingVault() {
-        var r = await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
+        await assertDbAnswered(await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
           headers: { apikey: ANON_KEY }
-        });
-        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+        }));
       }
 
       async function pingDB() {
-        var r = await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
+        await assertDbAnswered(await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
           headers: { apikey: ANON_KEY, 'Prefer': 'count=exact', 'Range': '0-0' }
-        });
-        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+        }));
       }
 
       async function pingGameSessions() {
-        var r = await fetch(SUPABASE_URL + '/rest/v1/game_sessions?select=id&limit=1', {
+        await assertDbAnswered(await fetch(SUPABASE_URL + '/rest/v1/game_sessions?select=id&limit=1', {
           headers: { apikey: ANON_KEY }
-        });
-        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+        }));
       }
 
       async function pingInvestors() {
-        var r = await fetch(SUPABASE_URL + '/rest/v1/investors?select=id&limit=1', {
+        // Anonymous reads are denied by design; a database-originated refusal
+        // still proves the portal's data path answers.
+        await assertDbAnswered(await fetch(SUPABASE_URL + '/rest/v1/investors?select=id&limit=1', {
           headers: { apikey: ANON_KEY }
-        });
-        // 403 is expected for anon — means the endpoint is alive
-        if (r.status === 403 || r.status === 401 || r.ok) return;
-        throw new Error('Error ' + r.status);
+        }));
+      }
+
+      async function pingAuth() {
+        var r = await fetch(SUPABASE_URL + '/auth/v1/health', { headers: { apikey: ANON_KEY } });
+        if (!r.ok) throw new Error('Error ' + r.status);
       }
 
       function checkSW() {
@@ -1184,6 +1263,7 @@
         // Website is always operational if the page loaded
         results['website'] = 'operational';
 
+        checkService('auth', pingAuth);
         checkService('vault', pingVault);
         checkService('db', pingDB);
         checkService('games', pingGameSessions);

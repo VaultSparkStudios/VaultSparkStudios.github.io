@@ -1288,3 +1288,12 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 - **A dormant path would have sent commit text to subscribers.** The push notifier read the commit-derived narrative. Never run to completion (no sentinel); now re-sourced (D-S359.2).
 - **A thumbnail-scale suspicion was measured and disproved** (/membership/ 4.61:1), and one was confirmed and fixed (/games/ 1.47–2.22:1).
 - **Supabase outage persists**; sign-in is affected as well as comments.
+
+## S360 — 2026-09-18
+
+- **/status/ opened on "All Systems Operational" for about five seconds on every load**, including during a total database outage, because it summarised a partial set (only the Website row had reported). It now waits for all 7 (D-S360.1).
+- **/status/ counted a gateway 401/403 as a working database.** It now accepts a refusal only when it carries a Postgres SQLSTATE code (D-S360.1).
+- **Two open board items described defects that no longer existed** (IGNIS chip, drift-preflight scope; both fixed in S357). A third (leaderboard greys) named the wrong cause: the defect had moved from hard-coded greys to inherited host tokens. All three were corrected against the code (D-S360.2, D-S360.3).
+- **SIL rolling header had stopped at S356**; S357–S360 folded in, and the 10-session average is left blank rather than estimated.
+- **Supabase outage persists** (db/rest/auth UNHEALTHY at S360 start).
+

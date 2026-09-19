@@ -8,8 +8,9 @@
  * (Session N)` blocks into context/archive/TASK_BOARD_ARCHIVE.md, keeping the
  * three most-recent sessions inline so the live board stays lean.
  *
- * Conservative by design: only Done/Now session blocks older than the kept window
- * move; the preamble and any non-session `##` blocks stay. Nothing is deleted —
+ * Conservative by design: only session-tagged blocks older than the kept window
+ * move, never one holding an open `- [ ]` item; the preamble and any non-session
+ * `##` blocks stay. Nothing is deleted —
  * archived blocks are appended verbatim under a dated rotation marker.
  *
  * Usage:
@@ -35,9 +36,14 @@ const SIZE_WARN_BYTES = 220 * 1024; // secondary tripwire; the session-window dr
 //   ## Done (Session 178 — …) / ## Now (Session 182 runway)      S178-era
 //   ## Previous (S209 runway)                                     transitional
 //   ## S246 outcome + carries / ## S208 SATURATION outcome …      S210+-era
-// Standing sections (## Human Action Required, ## Reference …) never match.
+//   ## Closed — S358 items (worked in S359) / ## Previous — S356   S357+-era
+// Standing sections (## Human Action Required, ## Reference …) never match, and
+// neither does the live `## Open — S<n>` block.
+// S360: the S357+ form was unrecognised, so the board grew past the startup
+// budget while this tool — the repair that budget names — reported "nothing to rotate".
 const SESSION_HEADER_FORMS = [
   /^## (?:Done|Now|Previous) \(S(?:ession\s*)?(\d+)/,
+  /^## (?:Closed|Previous) — S(\d+)\b/,
   /^## S(\d+)\b/,
   /^## Session\s+(\d+)\b/,
 ];
@@ -117,6 +123,10 @@ export function consolidateStaleRunwayHeadings(text, currentSession, windowSize 
   return { text: out, renamed };
 }
 
+export function hasOpenItem(block) {
+  return block.lines.some((line) => /^\s*[-*] \[ \]/.test(line));
+}
+
 export function rotate(text, keepRecent = KEEP_RECENT) {
   const { preamble, blocks } = parseBlocks(text);
   const sessions = [...new Set(blocks.map((b) => b.session).filter((s) => s != null))].sort((a, b) => b - a);
@@ -127,8 +137,9 @@ export function rotate(text, keepRecent = KEEP_RECENT) {
   const keptBlocks = [];
   const archivedBlocks = [];
   for (const b of blocks) {
-    // Only session-tagged Done/Now blocks are eligible to move; keep everything else.
-    if (b.session != null && b.session < threshold) archivedBlocks.push(b);
+    // Only session-tagged blocks are eligible to move, and never one that still
+    // carries an open item: archiving an unchecked task hides live work (S360).
+    if (b.session != null && b.session < threshold && !hasOpenItem(b)) archivedBlocks.push(b);
     else keptBlocks.push(b);
   }
   const kept = [preamble.join('\n').replace(/\n+$/, ''), '', ...keptBlocks.map((b) => b.lines.join('\n').replace(/\n+$/, ''))]
@@ -174,6 +185,15 @@ function selfTest() {
     ['sessionOf matches SATURATION variant', sessionOf('## S208 SATURATION outcome + carries') === 208],
     ['sessionOf matches Previous (S209 runway)', sessionOf('## Previous (S209 runway)') === 209],
     ['sessionOf matches legacy Done (Session N)', sessionOf('## Done (Session 178 — x)') === 178],
+    ['sessionOf matches Closed — S<n> (S357+ form)', sessionOf('## Closed — S358 items (worked in S359)') === 358],
+    ['sessionOf matches Previous — S<n>', sessionOf('## Previous — S356') === 356],
+    ['sessionOf never matches the live Open — S<n> block', sessionOf('## Open — S360') === null],
+    ['a block with an open item is never archived', (() => {
+      const board = ['# B', '', '## Closed — S10 x', '- [x] a', '', '## Closed — S9 x', '- [x] b', '', '## Closed — S8 x', '- [x] c', '',
+        '## Previous — S7', '- [ ] still open', '', '## Closed — S6 x', '- [x] done', ''].join('\n');
+      const r = rotate(board, 3);
+      return r.movedCount === 1 && r.archived.includes('S6') && !r.archived.includes('still open') && r.kept.includes('- [ ] still open');
+    })()],
     ['sessionOf ignores standing sections', sessionOf('## Human Action Required') === null && sessionOf('## SIL notes') === null && sessionOf('## Premium-site roadmap — S208 outcome') === null],
     ['rotate archives old S210+-era blocks', (() => {
       const t = ['# B', '', '## S12 outcome + carries', '- a', '## S11 outcome + carries', '- b', '## S10 outcome + carries', '- c', '## S9 outcome + carries', '- d', ''].join('\n');

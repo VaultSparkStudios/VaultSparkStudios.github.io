@@ -1,0 +1,57 @@
+{
+  "session": "S360",
+  "date": "2026-09-18",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "During a live database outage, /status/ opened on 'All Systems Operational' before its probes returned. It now waits for every check, names a provider outage as one, and says the site is up.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "status-provider-outage",
+      "title": "/status/ tells a provider outage from a site fault",
+      "axis": "truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The banner summarised a partial result set, so every load opened green for ~5s; a gateway 401 also counted as a live database. It now shows 'Checking services... (n of 7)', accepts only database-origin refusals, adds an Auth row, and derives 'Database Provider Outage' with a plain note on what is affected.",
+      "evidence": "timed probe 300/1500/4000ms Checking (2 of 7), 6500ms Database Provider Outage, 0 page errors; rendered-pixel pass dark/light/high-contrast at desktop and mobile"
+    },
+    {
+      "id": "#2",
+      "slug": "leaderboard-embed-palette",
+      "title": "The leaderboard embed is readable on any host page",
+      "axis": "craft",
+      "projectImpact": 5,
+      "ecosystemImpact": 5,
+      "insight": "The board's S356 premise (hard-coded greys) was stale; the live defect was host theme tokens painted over the widget's own near-black ground, 1.9 / 2.6:1 on our light theme. Literal palette, unit-enforced.",
+      "evidence": "#a8b4d0 9.5:1, #8b9bc9 ~7:1 on #0a0a0a; unit test rejects var(-- in the widget"
+    },
+    {
+      "id": "#3",
+      "slug": "shell-assets-import-safe",
+      "title": "build-shell-assets is import-safe and tested",
+      "axis": "rigor",
+      "projectImpact": 5,
+      "ecosystemImpact": 3,
+      "insight": "Importing the module ran the whole build and rewrote every page, so its predicate helper could carry no test. Guarded; 7 unit tests; a negative control fails when the guard is removed.",
+      "evidence": "tests/shell-assets.unit.spec.js 7/7; unit-suite parity 18/18/18; build:check all steps passed"
+    },
+    {
+      "id": "#4",
+      "slug": "stale-board-items",
+      "title": "Two open board items closed as already fixed",
+      "axis": "truth",
+      "projectImpact": 3,
+      "ecosystemImpact": 2,
+      "insight": "The IGNIS chip and drift-preflight items were fixed in S357 but still open; verified against the code and closed with file references rather than re-worked.",
+      "evidence": "oracle/index.html:78, ignis/index.html:80-97, check-generated-drift-preflight header"
+    }
+  ],
+  "followUps": [
+    "FOUNDER: restart the Supabase project (command in LATEST_HANDOFF); comments and member data are down.",
+    "Credential-side scheduled probe that publishes the Supabase per-service health verdict for /status/.",
+    "Treat a missing Service Worker as informational, not a partial outage."
+  ],
+  "blockers": [
+    "Supabase project fjnpzjjyhnpmunfoycrp cannot reach its database; the restart was refused by the permission classifier in S359 and S360."
+  ]
+}

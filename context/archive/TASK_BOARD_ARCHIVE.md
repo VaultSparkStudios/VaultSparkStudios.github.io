@@ -1892,3 +1892,71 @@ holds these as a flat list, which is why its repair suggestion is a no-op here (
 - [x] **[S319][AUTH/P0] Diagnosed the production /login outage to one line.** Cloudflare 1101 from an unhandled throw; upstream discovery serves HTML. Guard committed, Ark cargo shipped. Deployment blocked — see Now.
 - [x] **[S319][EFF/P1] Modeling `index.html` in the evidence graph exposed a real strand:** `refresh-live-data` updates the Desk feeds the homepage renders but never re-rendered the homepage.
 - [x] **[S319][HYGIENE/P1] Removed `recover-news-desk.mjs`.** The review-held recovery policy it served was retired by founder decision; the orphan gate caught it immediately.
+
+
+<!-- rotated 2026-09-19 · sessions < 357 · 4 block(s) -->
+
+## Previous — S356
+
+Last updated: 2026-09-15 (S356: The Desk rebuilt as the flagship — real art, reader-first articles, comments, site-wide presence; studio truth fixes; 18 crawl defects closed.)
+
+Previous: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
+
+Previous: 2026-09-14 (S354 proved the Web Analytics beacon is delivered and reports, disclosed it on /privacy/, and closed a release-proof strand hidden by an unmodeled graph edge.)
+
+Previous: 2026-09-14 (S353 found two scheduled workflows red on missing prerequisites and a narrative publisher green while it published nothing for 19 days; fixed all three and gated both CI classes.)
+
+Previous: 2026-09-10 (S349 found the public /status/ page had been publishing `edge-degraded` for 604 consecutive samples since 2026-07-13 while the site served every visitor: Cloudflare widened bot challenges to JSON and OPTIONS paths, expiring the premise the uptime probe was rewritten on, and each API leg read its own challenge as an outage. Made unobservable a first-class state instead of a fake outage OR a fake green, shipped the Worker `scheduled()` sampler dark as the only vantage that can ever observe our edge, separated the service worker page cache from the precache it had been silently evicting, and taught the secrets gateway to read the disproof it already held.)
+
+Previous: 2026-09-10 (S348 full arc and release complete: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed; 479/479 build gate, 215/215 mobile cells, 14/14 reviewed release captures, staging ceremony 10/10, and production content promotion run 34508529884.)
+
+Previous: 2026-09-03 (S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. The receipt I had quoted was eight days old; re-probing found four of five listed blockers already satisfied, including a relying-party registration that had been active with both callbacks for months while a public trust surface published it as `missing` because the tracker keyed on an Ark cargo that had aged out of retention. Fixed by observing the substance at the IdP with an unregistered control redirect that must be denied, fail-closed five ways and on a 14-day clock. The identity hold was preserved deliberately. The one real remaining step is a human completing the sign-in ceremony -- and it is `--watch`, not `--live`.)
+
+
+Previous (S335 and earlier): session narratives live in `logs/WORK_LOG.md` and `context/archive/CURRENT_STATE_through_S347.md`. Trimmed from this board in S357 to stay inside the startup context budget; nothing was lost.
+
+## S346 recovery boundary
+
+Startup-only interruption recovered; the full arc continues after its separate checkpoint.
+
+- [x] **[SIL][S346][BUILD/P1] Preserve the active verification lock during build-runner self-tests and diagnostics.** S347: exclusive ownership tokens and read-only-mode separation implemented and focused-tested. Final suite and release pending.
+- [x] **[SIL][S346][OBS/P1] Preserve scheduled-workflow observation failures in Doctor.** S347: complete-result parsing, explicit execution/coverage outcomes and bounded observation deadline implemented and focused-tested. Final suite and release pending.
+
+## S347 implementation verification queue
+
+Implementation checkboxes below mean source implemented and focused-tested only. Final synchronized-candidate suite, Doctor, rendered states, staging/served checks and release are pending; no item is labelled shipped from a checkbox.
+
+- [x] **[S347 #1] Keep the verification freeze owned by its full-suite process.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #2] Distinguish scheduled workflow failures from unavailable observations.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #3] Show current bullet tasks without claiming an empty backlog.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #4] Give Evidence one canonical navigation owner.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #5] Let live tile text own game names and genres.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #6] Render unnamed community entries accessibly.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #7] Keep mobile Search reachable without covering reading content.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #8] Execute each derived builder with its declared write arguments.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #9] Model five real derived evidence dependencies.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #10] Order the derived build chain behind its actual prerequisites.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #11] Bind real postbuild execution and measured HTML hash ordering.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #12] Replace repeated Git membership probes with one measured inventory.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #13] Separate modeled checks from demonstrated drift comparisons.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #14] Preserve indentation when parsing local preview Link headers.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #15] Use public change eligibility for the homepage Conduit narrative.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #16] Preserve bounded actionable file evidence from every browser failure.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #17] Use absolute publication evidence in static News pages.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #18] Compare explicitly declared News composition metadata.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #19] Distinguish local history exhaustion from Git failure and scan ceilings.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #20] Keep newsletter secret handling and guard verification precise.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+- [x] **[S347 #21] Publish explicitly attributed Reader-to-Director response evidence.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
+
+- [x] **[S347 #22] Require the actual verification mode to be reachable from the runner.** Implemented and focused-tested; final complete suite and release pending.
+
+- [x] **[S347 #23] Send member feedback using the verified public feedback schema.** Implemented and focused-tested 6/6; final complete suite and release pending.
+
+- [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **SHIPPED:** checkpoint `172073cb7`; 477/477 build steps; 84/84 reviewed normal captures plus 84 supplemental states; 215/215 mobile cells; staging receipt `bb5016b2a85891bf778e4f87`; production Actions run `34412238486`; live content-current with matched shell parity; Doctor `blockingFailing: 0`. Identity, acceptance, cadence, mail-arming, data-policy, and traffic decisions remain separate.
+
+## Done (Session 320 — content lane promoted · Worker deployed · gate honesty)
+
+- [x] **[S320][RELEASE/P0] Production is serving current content again.** The static content lane promoted 259 content-pure paths after 13.8 days at baseline `9527f227`, withholding 733 repo-internal paths (run `32192776059`, `contentLaneHead 60ed3748c`). Verified at the served surface: `deployedBy: pages-deploy-content-lane`, `/` 200 with the Desk module present, `/news/` 200. `deploy-currency` FAIL → WARN `content-current`; doctor blocking failures 1 → 0. `confirm_production` stayed false — the hold was narrowed, never waived (D-S320.5).
+- [x] **[S320][RELEASE/P0] Worker deployed and verified.** Run `32193258963`: ceremony passed, post-deploy liveness green, no rollback. Live contract check returns `202 {"ok":true,"synthetic":true}`.
+- [x] **[S320][OBS/P0] `check-writeback-currency` no longer reads green on an unmeasurable window.** It scanned a fixed 60 commits and returned "cannot measure" as `ok: true`, exit 0 — so the more `[skip ci]` churn accumulated, the blinder the arc's own cut-off detector became. Reproduced live in both directions in one session. Window is now anchor-derived, `unmeasured` exits `3`, churn is classified structurally. 68 false positives → 6. Self-test 11/11 (D-S320.1, D-S320.2).
+- [x] **[S320][OBS/P0] The split-release guard's evidence gap was diagnosed, not bypassed.** The content lane blocked because nine promoted callers referenced three Worker routes with no live provenance. The routes were live; only the evidence was missing (7/7 matched once probed) — exactly the distinction the guard exists to draw (D-S320.6).

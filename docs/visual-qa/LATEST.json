@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-18T22:35:56.629Z",
+  "capturedAt": "2026-09-19T00:56:44.080Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "aa632ee6561302c8ac7acc6e2ece7e5809290510617f511b5d5d30df54c4dae0",
+    "sha256": "5211f842b58ff935df099e1f193141ee28404b0ca10233008c41e2e0ef55bbf6",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -172,7 +172,7 @@
       },
       {
         "path": "index.html",
-        "sha256": "d93f12b1062a6795b72542a9ba21f5c8c00f614706e4ef89ce3dddf1de6cd45a"
+        "sha256": "6326a7de357c0d6d6197044b1ae06aa7e08e4ea7b8f6e370914861ecefbdfbd1"
       },
       {
         "path": "membership/index.html",
@@ -216,7 +216,7 @@
       },
       {
         "path": "status/index.html",
-        "sha256": "429f1b0eead3115cad9c7d3e6f098cb533a792038f20ee0e77eb418a8c1dd705"
+        "sha256": "7b6dfc138fa929ee706495b80b675d30220477cff52ad3a8576b5b8da22e503b"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -242,9 +242,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "fb7cd3789125ab7e1beed339242f5682c4341ff70cb44c2bcc04e94b9faebdd1",
-    "candidateSha": "cbba3e533fdb1a8942897dbab6e33be00c73e254",
-    "root": "b4804e85be6351bce43751c0075bc5404ceefd743eb51e4bb2a7bb5ba0cd8f9e"
+    "manifestSha256": "cf901588f624b7a3e073c4a70fa41ee69f01f7b000ea9ae639c42612b63c3ed4",
+    "candidateSha": "656ecf35cd8441e691a6c73201e4d1fa87606a3f",
+    "root": "e6ddc8ed925ba4d545aeced47faf5f7fbac95429e31e6ac7a254ee0166077b86"
   },
   "matrix": {
     "routes": [
@@ -283,20 +283,22 @@
     "completedCaptures": 84
   },
   "inspection": {
-    "renderedPixelsReviewed": true,
+    "renderedPixelsReviewed": false,
     "coverage": {
       "totalCaptures": 84,
-      "manuallyReviewed": 84,
-      "automatedOnly": 0,
-      "complete": true
+      "manuallyReviewed": 3,
+      "automatedOnly": 81,
+      "complete": false
     },
-    "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)",
+    "reviewer": "claude-code S360",
     "findings": [
-      "S359 post-rebase recapture over the new Desk edition: all 84 captures inspected on per-route contact sheets. /games/ light-theme status labels legible (5.22/6.45/6.55:1); home hero shows reader prose; no broken layout or unreadable text in any theme. /status/ member-system and database rows read 'Checking…' while the Supabase project is down."
+      "Status banner reads 'Checking services… (2 of 7)' while probes run (no premature All Systems Operational); light-mode checking banner outline visible; text AA in light/high-contrast; home unchanged apart from derived date."
     ],
-    "fixesApplied": [],
-    "blockingDefectsOpen": 0,
-    "limitation": null
+    "fixesApplied": [
+      "Light checking-banner outline added; provider note moved out of the hero p rule."
+    ],
+    "blockingDefectsOpen": null,
+    "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
   },
   "captures": [
     {
@@ -308,12 +310,11 @@
         "height": 900
       },
       "file": "home--dark--desktop.png",
-      "sha256": "1b70e0d2c8a7fd7ac36ae6912d939ba1608b6d460a87d4543f8e5d975f939ea1",
+      "sha256": "ce546126560849367ec40ce8b491706659bf665c672b75785633528a3e5831fb",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -325,12 +326,11 @@
         "height": 900
       },
       "file": "games--dark--desktop.png",
-      "sha256": "68a31d4dec57a5d51188ed8999af10df8382d374fae693af7a39162b6d9b1e2b",
+      "sha256": "9b8f4e651311181b9e68b3be7a47645ae4a518d3bc964e450ebd9be4ebd4edc0",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -346,8 +346,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -359,12 +358,11 @@
         "height": 900
       },
       "file": "status--dark--desktop.png",
-      "sha256": "efe7c7343fe060b5106c117607a7eeb03bf75ab7ff21b32fdaf23a314394067e",
+      "sha256": "16c78800541a7052c77453bf0f5b955c8965b8c5e2ef45672bde2c880b0ebee4",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -380,8 +378,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -397,8 +394,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -410,12 +406,12 @@
         "height": 900
       },
       "file": "home--light--desktop.png",
-      "sha256": "1696e8d33e8b3ba92e2faf1e97d8caf5b96b6fbc32cef484c43dc3f6c109a4f5",
+      "sha256": "222b3c27eff914c190ce506d244fda4e56d150466b14872e5fa82f59e94cd58c",
       "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "claude-code S360"
       }
     },
     {
@@ -431,8 +427,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -448,8 +443,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -461,12 +455,11 @@
         "height": 900
       },
       "file": "status--light--desktop.png",
-      "sha256": "66a8f7d63cb8cb0a43fd596bb6e7093486eb7546a22ad7c9b9a2e651a4f72d99",
+      "sha256": "c541fe82447791fac201abcc2987690bc94293c043b61ab63be53f7337778039",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -478,12 +471,11 @@
         "height": 900
       },
       "file": "evidence--light--desktop.png",
-      "sha256": "eb5abe6e9e91565ae015af65a69747b5b317da3c03e927ff5a439dd377f66069",
+      "sha256": "f82e76d687b0dd329503df4ab208db053bff6b1a60566e96a27a0d80fa1bf03f",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -499,8 +491,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -512,12 +503,11 @@
         "height": 900
       },
       "file": "home--ambient--desktop.png",
-      "sha256": "fcaf22fb7d0ed6404a378e639977c0a100c4b96912c32b90a5219a6d758e3464",
+      "sha256": "9ddb99e34902aba30fdf4b72c0dd2a3a4bcc56adef9fbc621bc9513e8939747a",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -529,12 +519,11 @@
         "height": 900
       },
       "file": "games--ambient--desktop.png",
-      "sha256": "94415c24a6583df46b50622d46568fcf71607b680b6032c6ee7227896814f30f",
+      "sha256": "427f38fcaa70a16d1f22e01b1c4b4af7afee52a1f625cf0646ccda1a80178312",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -550,8 +539,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -563,12 +551,11 @@
         "height": 900
       },
       "file": "status--ambient--desktop.png",
-      "sha256": "ab4397091b9ba0f1a9db973a8a16f7889f700bca5383ca63b2a62df32e892a80",
+      "sha256": "f8304ee777567a8b970ca8591c3dba0703d3d2c70279b96701361bd85d7240fa",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -580,12 +567,11 @@
         "height": 900
       },
       "file": "evidence--ambient--desktop.png",
-      "sha256": "315bbdf17938832b0e509f45d32ca925cbea8f51f6b8182597717f2f7f1126ee",
+      "sha256": "f04446743396a062860e268904b9d58b0d4885cd1d68873986555e4164da2a85",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -601,8 +587,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -614,12 +599,11 @@
         "height": 900
       },
       "file": "home--warm--desktop.png",
-      "sha256": "d696d5cf799c280ab0580d65786f6418646e37f8561a85e54deb1b4ed4d7b7a6",
+      "sha256": "6b7812a38947863d56073d78f438614ba0bf00513983ab6b0bf43cfc53bd3b85",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -635,8 +619,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -652,8 +635,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -665,12 +647,11 @@
         "height": 900
       },
       "file": "status--warm--desktop.png",
-      "sha256": "ba39eacccff2432c4c057f3f4bb998cfe4d5adb473e3d75c46632bf152af0414",
+      "sha256": "94a221559a6f44a8ea00b75ff775669bcb0b7e97e8088af2dc89388c7a779a95",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -682,12 +663,11 @@
         "height": 900
       },
       "file": "evidence--warm--desktop.png",
-      "sha256": "3bb7f475a089801bbfee8fe398917e7dc52a7d0cf763e48e4c6e25673b9b30d9",
+      "sha256": "de70cf2c7aee9c56e16b22f56f8bf707cfe6e4ef61ac1482b5ba495ded9f9400",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -699,12 +679,11 @@
         "height": 900
       },
       "file": "atlas--warm--desktop.png",
-      "sha256": "41d7039ea116782079098bd0609fca0fb9981e1487c2e61a302aa0b670a5a1fc",
+      "sha256": "7cedc32ec5c6b0eb1df2fad1a02ae192dabf5d54d0b70b5d7e04960088b1572c",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -716,12 +695,11 @@
         "height": 900
       },
       "file": "home--cool--desktop.png",
-      "sha256": "dfcc7871fe0b8d5a7d722c3114c1d7b4e1f2b9423e043de39941e590cbee05ec",
+      "sha256": "1bc0345e1eb49bff3a1ae09335aab7e2d79487580c6e40d0b92ce070011bd43c",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -733,12 +711,11 @@
         "height": 900
       },
       "file": "games--cool--desktop.png",
-      "sha256": "da0f789de835cb3c9d0a8a11b5306600a683981f2ffdbcf9a71f9e1c38702d55",
+      "sha256": "61e9da9903e9070e3f3b64b6f804e9d8519bf4d87bc2aacab68988239b83c562",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -754,8 +731,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -767,12 +743,11 @@
         "height": 900
       },
       "file": "status--cool--desktop.png",
-      "sha256": "e7c40a5dddc7b445cb2db245b39ab3e4d1b9e1ee3cf3117bae230c72e9e30e51",
+      "sha256": "072d9808774d0f432e470ab0849f88c4b7019af63c932368004dbfba7ffe4b31",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -788,8 +763,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -805,8 +779,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -818,12 +791,11 @@
         "height": 900
       },
       "file": "home--lava--desktop.png",
-      "sha256": "3f2031568a89a66b311bf69da483b994be080589b9514a26610386e042d80619",
+      "sha256": "0bdfdfdf3eb14d40e91f8e285c8f57adf8fc89c6192ceec279b3399a7bbc2a03",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -835,12 +807,11 @@
         "height": 900
       },
       "file": "games--lava--desktop.png",
-      "sha256": "63d1ab1c3f658854ea2e5e3159ed4823c4d2fa17d75596d120426da6fd6e5fa8",
+      "sha256": "fc3b85397b383057d98b0c7b8046c7061f51b21f99d489a449d312992fbde42a",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -856,8 +827,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -869,12 +839,11 @@
         "height": 900
       },
       "file": "status--lava--desktop.png",
-      "sha256": "84e012e98e7c41b7021e97ddfe68aabc45d30ab7168f5e0d4f20223c879183fc",
+      "sha256": "b31c0d1bb758d856f8b92b7f29384c7f6ddb71605fb52bdc07dd0506a77bcad3",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -886,12 +855,11 @@
         "height": 900
       },
       "file": "evidence--lava--desktop.png",
-      "sha256": "365c37659927b16926c6328422376fae8095f0e17a1cb8c9fb905c8473535e86",
+      "sha256": "e600e2b2252872c06657921a06f20c3de294695f5723965e066ac34c0ca02e98",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -903,12 +871,11 @@
         "height": 900
       },
       "file": "atlas--lava--desktop.png",
-      "sha256": "b4a962497dcd171038080e8f3e93539812fde1fde063397dc434f1b16b4c294a",
+      "sha256": "dc379e05e5bd42c970ab789c1fac37b1213246617a98a830671b36a9b14e48f7",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -920,12 +887,11 @@
         "height": 900
       },
       "file": "home--high-contrast--desktop.png",
-      "sha256": "d943d85555edcb9a56a5dac9a13bfdbc617bb3c8c71730c73edfd2550d364941",
+      "sha256": "7f512b8a495ec46533ca223f94563a809ec3d9086959de78aaeb1b1aa0fb80d5",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -941,8 +907,7 @@
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -958,8 +923,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -971,12 +935,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop.png",
-      "sha256": "7e7dfd4e3ca33e1fa55c4d9edc4109970d114261c109113d2e7f5497ccaec9cb",
+      "sha256": "1295ef4b3b88341ff053087a105c3954435656e9dead126c60aadb3e4563fc90",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "claude-code S360"
       }
     },
     {
@@ -992,8 +956,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1005,12 +968,11 @@
         "height": 900
       },
       "file": "atlas--high-contrast--desktop.png",
-      "sha256": "1537557ce07d8498adb3a201f974f95171f64aba8af559b146827add16d43f32",
+      "sha256": "509bb7c0a79b724b54ab80c0674ed18c332a5615010cbaff10bbf25023ac96c2",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1022,12 +984,11 @@
         "height": 844
       },
       "file": "home--dark--mobile.png",
-      "sha256": "b781af9f3f365acbc5a0dbaac2e2e7df2b034a434a003605fb77f1c508dbf81e",
+      "sha256": "893b0f01693877458c0c400023b28fc00da4d6967cba445487be1be3b3510bdc",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1039,12 +1000,11 @@
         "height": 844
       },
       "file": "games--dark--mobile.png",
-      "sha256": "6f149c52c19de47e305c7a7c78429b69cae32907b39062c49df123d9feb624c3",
+      "sha256": "72a0c1cf4c36995fa52be2d4298f1e50de4af47d9e76674b9a62064bf0ff349c",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1060,8 +1020,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1073,12 +1032,11 @@
         "height": 844
       },
       "file": "status--dark--mobile.png",
-      "sha256": "bb41e58fe10c3b2f8b359cdffc15e45c803f5d3a19ff125cac3bdf6884934199",
+      "sha256": "2944a07b11f7769a23a77242e9939bee1db1d89d7127d7b61bac7308f90e94cc",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1090,12 +1048,11 @@
         "height": 844
       },
       "file": "evidence--dark--mobile.png",
-      "sha256": "d903e3c4f509bbf64ba4b74a8fb0633464670ca9b41340212df370cfb86bc016",
+      "sha256": "071bc9a0d656aabb3530a89f20870699f4f9696fc6a6d905e98e66769deaaf37",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1107,12 +1064,11 @@
         "height": 844
       },
       "file": "atlas--dark--mobile.png",
-      "sha256": "88c53814f5338b7394f9fec7581f31b3d2a6d042c7c5b45640a6734cc9cc4722",
+      "sha256": "66f37a8d81a8bda990f4cb10f0cfb7075b69bb083f8e105c997c66b3ea3c20ef",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1124,12 +1080,11 @@
         "height": 844
       },
       "file": "home--light--mobile.png",
-      "sha256": "0fcedb504307799acf179e62f2901480ea6de2270f47e62c7803a6249eb12986",
+      "sha256": "9082cbd82da7f425cb927c9ca3d759900f53657ca4eb08d80423bdd409bed841",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1141,12 +1096,11 @@
         "height": 844
       },
       "file": "games--light--mobile.png",
-      "sha256": "b563fb6144154e3b962b665b1c745e1f787f88ffb176eb9fd4651dc387432a49",
+      "sha256": "b253ab1fab441ff2a340525d456fc17091cdc74e8b722f3134b50ad7318fd75c",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1162,8 +1116,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1175,12 +1128,12 @@
         "height": 844
       },
       "file": "status--light--mobile.png",
-      "sha256": "fcac2d191adad27f75752fcc14669f1ab174674e0636e21a39c8541cb608efac",
+      "sha256": "2bd86e1e8faafbbbb3e733a74f73eec1446eb6395b292d50cbf6d8c304a2c5be",
       "page": "/status/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "reviewer": "claude-code S360"
       }
     },
     {
@@ -1196,8 +1149,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1209,12 +1161,11 @@
         "height": 844
       },
       "file": "atlas--light--mobile.png",
-      "sha256": "dc14a459a9492b363e2851c91dee37b4c7bd27c6bf0db5ac9556026634196b01",
+      "sha256": "77018d28e66bb21b7e4af592cfc77767a1c9f83c035c95f375fca290685bdcca",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1226,12 +1177,11 @@
         "height": 844
       },
       "file": "home--ambient--mobile.png",
-      "sha256": "fba67699b42bdcca786fa519cd63a33136d5135b604094f8dfe29ddd503c6b62",
+      "sha256": "f4df3b0cede4ac4beea59d777110ca542c945ca285247eb54d4c9a99bb4317f7",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1243,12 +1193,11 @@
         "height": 844
       },
       "file": "games--ambient--mobile.png",
-      "sha256": "c3816caa66142cf6877245734959f5ffd6097f15297db869862696151145a451",
+      "sha256": "3c0d06ed3d87819a6ad14666e0bc1a70011c0e519b0c3e4a5c4a89a8242e91c3",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1264,8 +1213,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1277,12 +1225,11 @@
         "height": 844
       },
       "file": "status--ambient--mobile.png",
-      "sha256": "7cb7e75e87ad5f432bdca3329c77d7a78ad96719eea61432614362160a363ae7",
+      "sha256": "5c1a89c7575058cc4f5e1a2a1018c3446ad5a538bf4a8ee2581054986733f23e",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1294,12 +1241,11 @@
         "height": 844
       },
       "file": "evidence--ambient--mobile.png",
-      "sha256": "b94db62a1638079753bc1b20de8315de0ef80e60000d002418692f4b4e6f1a5b",
+      "sha256": "1b4697a57ee6177605ac891dd3def64d22453ffc4a504fb9fec89822120f4558",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1315,8 +1261,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1328,12 +1273,11 @@
         "height": 844
       },
       "file": "home--warm--mobile.png",
-      "sha256": "0c0cc6b3d3b1eb0b934050e5fc713c823fadcdaa8b6592c71f3407bed7670e77",
+      "sha256": "4afae1536bd68da45bf1f8632ff316833d4e9d33937b039e8197f8fd06a76337",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1345,12 +1289,11 @@
         "height": 844
       },
       "file": "games--warm--mobile.png",
-      "sha256": "b220efb7c7473eae2d7a2b1b31b78343f55bba9b50980d93b3f74ed034087eac",
+      "sha256": "21b3c03232be210339d9459a78f8404238002405239da53bd8fe113b9b53ab52",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1366,8 +1309,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1379,12 +1321,11 @@
         "height": 844
       },
       "file": "status--warm--mobile.png",
-      "sha256": "1748d9abc1a504db661673b7afc291edaeb6c080ab9f448182396ba6311b5214",
+      "sha256": "b5a7111973289b3fdfbefd96b675280f2209c014d34d09e90629623087935925",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1396,12 +1337,11 @@
         "height": 844
       },
       "file": "evidence--warm--mobile.png",
-      "sha256": "e2e4b33a5953866844d31b8d277eff89e5b97f96169f13751661a33b93ef4e4c",
+      "sha256": "ce0fe5d22f50cefebf50a09092cfc3f13a53e0cb37a882d757df7ec171fdb3e9",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1413,12 +1353,11 @@
         "height": 844
       },
       "file": "atlas--warm--mobile.png",
-      "sha256": "f6a10904afcafa800fdc3048d1475ff34853917b0b5700df98e3378b192e2d95",
+      "sha256": "720c56274735e93d46ff25e37d50c6bbd1e7bf7a4388e94a60a59a227a0c8905",
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1430,12 +1369,11 @@
         "height": 844
       },
       "file": "home--cool--mobile.png",
-      "sha256": "ee3e8b4afa5f0323976eab46f57d3ffbe22410603671bfae9e4b08d2d2be3e7e",
+      "sha256": "a56e4354d0e2b6737020944a78d86eec2f8c983888a39defa2d02a02e60bd684",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1447,12 +1385,11 @@
         "height": 844
       },
       "file": "games--cool--mobile.png",
-      "sha256": "a63e4479eec6fbbdeab4b8b22327323508415c9b021e0d1407912b205f1d423d",
+      "sha256": "69af16cd67aefd5643640ed8fb3155fdd9dc3c3bb2e068cea410f5f71f3d8990",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1468,8 +1405,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1481,12 +1417,11 @@
         "height": 844
       },
       "file": "status--cool--mobile.png",
-      "sha256": "ddfbfff31f5d3a0b1121528eef8351632081201db22c3a635b1e129ccd44a1da",
+      "sha256": "76281b3311e057eeaa446bff46517a04d991a8e27481a5224e03fb3e1770e375",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1498,12 +1433,11 @@
         "height": 844
       },
       "file": "evidence--cool--mobile.png",
-      "sha256": "47b6c1f6e5a22188beafcedb08f3098d1eb16b5867d04c5b4dee3b7e7e9bd677",
+      "sha256": "dd48fecf64e77cdb99f8f0dd863a0760491ee0e7096efd49db345742be03f3f7",
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1519,8 +1453,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1532,12 +1465,11 @@
         "height": 844
       },
       "file": "home--lava--mobile.png",
-      "sha256": "8037af57b65ad0600fba43934ff41433f11d82e95c661216c09874c66954e9ac",
+      "sha256": "509679b4caccfb8d68d9e2594f083f0ce3f8afb2e7a1a1b09f26eba939c1ea40",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1549,12 +1481,11 @@
         "height": 844
       },
       "file": "games--lava--mobile.png",
-      "sha256": "f181e7762c224ca75b5f943f3a2ccc21570a2a4aefcabc30c02e0fda946b2a1e",
+      "sha256": "851cbe4f21d489e7585bb48bbb13a06161f1445d17ee20e10cad099fef66bbd1",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1566,12 +1497,11 @@
         "height": 844
       },
       "file": "membership--lava--mobile.png",
-      "sha256": "7f6e469df41b3c4d3fd5046ce018eee4999daa71d7af6ec162c305a5c6b1b968",
+      "sha256": "4e9424cc5bba3d081a5452c353f6388ff3ae17985fa8ff799d6047b2d77edbab",
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1583,12 +1513,11 @@
         "height": 844
       },
       "file": "status--lava--mobile.png",
-      "sha256": "2f2e75878c468b7b8b310c129ef939a08958fef57532ee43647788c0b5661e27",
+      "sha256": "5de46f3a14052f212f7a748414a81de2b85d0f8e8ff00b5a132e3274716609be",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1604,8 +1533,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1621,8 +1549,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1634,12 +1561,11 @@
         "height": 844
       },
       "file": "home--high-contrast--mobile.png",
-      "sha256": "75abfbe5b3a702d49704432ec63f12ba4366f36c8e1be414ab6cd4bf99f51e55",
+      "sha256": "be29ce88a59b32326ee1deae661480a7c71e92e5ed9b0965da85b2d931d385fa",
       "page": "/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1651,12 +1577,11 @@
         "height": 844
       },
       "file": "games--high-contrast--mobile.png",
-      "sha256": "61baf0d49655617f1d18ef8a5b701f1225d94ae5098799598d28e6556279b47a",
+      "sha256": "93de5f18c080122a080e900b82af4806ad0a987bba1b969372d3f8ac102e3353",
       "page": "/games/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1672,8 +1597,7 @@
       "page": "/membership/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1685,12 +1609,11 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile.png",
-      "sha256": "1595d63d4ddb1d9ca5ca516b4f83bd28b1768ab46142d6a8b9cf8cfad5c97d35",
+      "sha256": "eafd174a8616b0d1457527edbb703a68a025c200027e558a5dd41c028f2e1dde",
       "page": "/status/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1706,8 +1629,7 @@
       "page": "/evidence/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     },
     {
@@ -1723,8 +1645,7 @@
       "page": "/atlas/",
       "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Claude Opus 5 (S359, per-route contact sheets, all 84, post-rebase recapture)"
+        "mode": "automated-only"
       }
     }
   ]

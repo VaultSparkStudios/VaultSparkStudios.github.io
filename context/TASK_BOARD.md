@@ -1,13 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-18 (S359 closed every open S358 item: "You asked" now counts readers, not commits; the narrative and subscriber push read the reader changelog; /games/ light-theme labels pass AA; a predicate/shell-asset gate; full production promotion. Supabase is down and needs a founder restart. Detail: CURRENT_STATE · LATEST_HANDOFF.)
+Last updated: 2026-09-18 (S360: /status/ names a provider outage as one and no longer opens on a false "All Systems Operational"; the leaderboard embed is readable on any host; build-shell-assets is import-safe with unit tests; two stale board items closed with evidence. Supabase is still down and the restart is a founder action.)
 
-## Open — S359
+## Open — S360
 
-- [ ] **[S357→S359][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy, so it is a founder action. Command in LATEST_HANDOFF.
-- [ ] **[SIL][S359][OBS/P2]** Provider-health line on /status/ from the Supabase health API, so an outage reads as an outage, not "Checking…".
-- [ ] **[SIL][S359][GATES/P3]** Make `build-shell-assets` import-safe so its pure helpers can carry a self-test.
+- [ ] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF.
+- [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API's per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
+- [ ] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational.
+## Closed — S359 items (worked in S360)
 
+- [x] **[SIL][S359][OBS/P2]** Provider-health line on /status/ — **DONE S360** (D-S360.1): "Database Provider Outage" with an attribution note when every Supabase-backed check fails, a new Member Accounts (Auth) row, and no summary before all 7 checks report. Rendered-pixel verified against the live outage.
+- [x] **[SIL][S359][GATES/P3]** `build-shell-assets` import-safe — **DONE S360**: `main()` behind an `isMain` guard; `tests/shell-assets.unit.spec.js` 7/7, negative control fails with the guard removed; wired into `test:unit` and `build:check:steps`.
+- [x] **[S356][SITE/P1]** Oracle/IGNIS chip light-theme contrast — **already fixed S357** (D-S360.3): opaque ground in light mode, `oracle/index.html:78`, `ignis/index.html:80-97`, 7.11:1.
+- [x] **[S356][GATES/P2]** Drift preflight scope — **already fixed S357** (D-S360.3): the tool computes its denominator from the registry and prints that it is a sample.
+- [x] **[S356][SITE/P2]** Leaderboard embed greys — **DONE S360** (D-S360.2): the S356 premise (#555/#666) was stale; the live defect was host-token inheritance (1.9 / 2.6:1 on our light theme). Literal palette, unit-enforced.
 ## Closed — S358 items (worked in S359)
 
 - [x] **[S358][CONTENT/P2]** Tag an entry with `answers:` — **superseded S359** (D-S359.1): "You asked" now counts only k-anonymous reader choices, and none has reached k=5, so there is no reader ask to answer yet. Tagging now would claim demand nobody expressed.
@@ -17,7 +23,6 @@ Last updated: 2026-09-18 (S359 closed every open S358 item: "You asked" now coun
 - [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.
 - [x] **[S359][A11Y/P1]** /games/ status labels in light theme 1.47 / 1.90 / 2.22:1 → 5.22 / 6.45 / 6.55:1 (D-S359.3). /membership/ "See The Value" measured 4.61:1 — not a defect.
 - [x] **[S359][OPS/P3]** Registry slug mismatch (`franchise-architect` vs `franchise-architect-football`) shipped to studio-ops as Ark cargo.
-
 ## Closed — S357 (worked in S358)
 
 - [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
@@ -28,66 +33,6 @@ Last updated: 2026-09-18 (S359 closed every open S358 item: "You asked" now coun
 - [x] **[S357][GATES/P1]** Served-vs-repo drift gate — **DONE**: built S357 (`b0def96d`), wired into the release ceremony (`0d6d5459`), made reachability-based S358.
 - [x] **[S357][CONTENT/P2]** "You asked" from `data/consumer-changelog.json` — **DONE S358** (D-S358.2).
 - [x] **[S357][OBS/P2]** `vault_feedback` 404 on `/changelog/` — **DONE S358**: the table never existed by design (browser-local feedback); the dead fetch is removed.
-
-## Previous — S356
-
-Last updated: 2026-09-15 (S356: The Desk rebuilt as the flagship — real art, reader-first articles, comments, site-wide presence; studio truth fixes; 18 crawl defects closed.)
-
-Previous: 2026-09-14 (S355 shipped seven agent-owned fixes: Pages concurrency, publisher resync gate, founder-presence gate stability, Desk claim-parity escaping, held-run and model-servability observability, mobile audit production guard.)
-
-Previous: 2026-09-14 (S354 proved the Web Analytics beacon is delivered and reports, disclosed it on /privacy/, and closed a release-proof strand hidden by an unmodeled graph edge.)
-
-Previous: 2026-09-14 (S353 found two scheduled workflows red on missing prerequisites and a narrative publisher green while it published nothing for 19 days; fixed all three and gated both CI classes.)
-
-Previous: 2026-09-10 (S349 found the public /status/ page had been publishing `edge-degraded` for 604 consecutive samples since 2026-07-13 while the site served every visitor: Cloudflare widened bot challenges to JSON and OPTIONS paths, expiring the premise the uptime probe was rewritten on, and each API leg read its own challenge as an outage. Made unobservable a first-class state instead of a fake outage OR a fake green, shipped the Worker `scheduled()` sampler dark as the only vantage that can ever observe our edge, separated the service worker page cache from the precache it had been silently evicting, and taught the secrets gateway to read the disproof it already held.)
-
-Previous: 2026-09-10 (S348 full arc and release complete: 11 audited improvements plus immutable Vault Pulse delivery and a deterministic hero-ticker feed; 479/479 build gate, 215/215 mobile cells, 14/14 reviewed release captures, staging ceremony 10/10, and production content promotion run 34508529884.)
-
-Previous: 2026-09-03 (S342 answered the founder's challenge that Obelisk should already be complete -- and the founder was right. The receipt I had quoted was eight days old; re-probing found four of five listed blockers already satisfied, including a relying-party registration that had been active with both callbacks for months while a public trust surface published it as `missing` because the tracker keyed on an Ark cargo that had aged out of retention. Fixed by observing the substance at the IdP with an unregistered control redirect that must be denied, fail-closed five ways and on a 14-day clock. The identity hold was preserved deliberately. The one real remaining step is a human completing the sign-in ceremony -- and it is `--watch`, not `--live`.)
-
-
-Previous (S335 and earlier): session narratives live in `logs/WORK_LOG.md` and `context/archive/CURRENT_STATE_through_S347.md`. Trimmed from this board in S357 to stay inside the startup context budget; nothing was lost.
-
-
-
-
-## S346 recovery boundary
-
-Startup-only interruption recovered; the full arc continues after its separate checkpoint.
-
-- [x] **[SIL][S346][BUILD/P1] Preserve the active verification lock during build-runner self-tests and diagnostics.** S347: exclusive ownership tokens and read-only-mode separation implemented and focused-tested. Final suite and release pending.
-- [x] **[SIL][S346][OBS/P1] Preserve scheduled-workflow observation failures in Doctor.** S347: complete-result parsing, explicit execution/coverage outcomes and bounded observation deadline implemented and focused-tested. Final suite and release pending.
-## S347 implementation verification queue
-
-Implementation checkboxes below mean source implemented and focused-tested only. Final synchronized-candidate suite, Doctor, rendered states, staging/served checks and release are pending; no item is labelled shipped from a checkbox.
-
-- [x] **[S347 #1] Keep the verification freeze owned by its full-suite process.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #2] Distinguish scheduled workflow failures from unavailable observations.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #3] Show current bullet tasks without claiming an empty backlog.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #4] Give Evidence one canonical navigation owner.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #5] Let live tile text own game names and genres.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #6] Render unnamed community entries accessibly.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #7] Keep mobile Search reachable without covering reading content.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #8] Execute each derived builder with its declared write arguments.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #9] Model five real derived evidence dependencies.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #10] Order the derived build chain behind its actual prerequisites.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #11] Bind real postbuild execution and measured HTML hash ordering.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #12] Replace repeated Git membership probes with one measured inventory.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #13] Separate modeled checks from demonstrated drift comparisons.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #14] Preserve indentation when parsing local preview Link headers.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #15] Use public change eligibility for the homepage Conduit narrative.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #16] Preserve bounded actionable file evidence from every browser failure.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #17] Use absolute publication evidence in static News pages.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #18] Compare explicitly declared News composition metadata.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #19] Distinguish local history exhaustion from Git failure and scan ceilings.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #20] Keep newsletter secret handling and guard verification precise.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-- [x] **[S347 #21] Publish explicitly attributed Reader-to-Director response evidence.** Implemented and focused-tested in the S347 audit lanes; final suite and applicable rendered/served verification pending.
-
-- [x] **[S347 #22] Require the actual verification mode to be reachable from the runner.** Implemented and focused-tested; final complete suite and release pending.
-
-- [x] **[S347 #23] Send member feedback using the verified public feedback schema.** Implemented and focused-tested 6/6; final complete suite and release pending.
-
-- [x] **[S347][VERIFY/P0] Complete synchronized-candidate verification and scoped release.** **SHIPPED:** checkpoint `172073cb7`; 477/477 build steps; 84/84 reviewed normal captures plus 84 supplemental states; 215/215 mobile cells; staging receipt `bb5016b2a85891bf778e4f87`; production Actions run `34412238486`; live content-current with matched shell parity; Doctor `blockingFailing: 0`. Identity, acceptance, cadence, mail-arming, data-policy, and traffic decisions remain separate.
 ## Now (next session ready)
 
 - [x] **[S356][DESK/P1] The Desk publishes real illustrations again — SHIPPED.** The publisher never had an image model — art 08-07..08-23 was hand-made, so 25 stories shipped the procedural card. A local Codex worker (ChatGPT plan, no API key) generates it; ingest takes only reviewed images; 25 backfilled (D-S356.1).
@@ -102,10 +47,10 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S356][QA/P2] Test coverage + copy gate — SHIPPED.** 9 new unit specs over consent/analytics, theme, nav, CSRF, Turnstile, feedback payloads, presence and pure libs; new Desk copy-quality gate (a typo reached the homepage and two feeds with no spellcheck anywhere).
 - [x] **[S356][PRIVACY/P0] Founder presence removed from the website — SHIPPED.** Feed, generator, badge, wordmark handle, favicon pulse, hero/Pulse tiles, Atlas dot, edge allowlist, graph node and all regeneration vectors deleted; session-timing and work-recency removed from public-intelligence, the timeline, Pulse and /oracle/; guard test blocks any return. Agent-invented S98, never requested; ~41h live across 73 days (D-S356.6).
 - [ ] **[S356][PRIVACY/P0] Purge api/founder-presence.json from public git history.** 30 revisions carry live:true with project names and exact start timestamps; founder authorised the purge. Requires crons disabled, filter-repo rewrite, force-push, then regenerating SHA-pinned proof artifacts.
-- [ ] **[S356][SITE/P1] Oracle/IGNIS prompt chips fail contrast in light theme.** `.ignis-chip` (from `assets/ignis-answer-engine.js`, styled at `oracle/index.html:35` / `ignis/index.html:34`) is solid orange with near-black text in light theme on `/oracle/` and `/ignis/` — seen in the S356 matrix, pre-existing. Fix with theme tokens.
-- [ ] **[S356][GATES/P2] Drift preflight scope is narrower than the gate set.** `check-generated-drift-preflight` declares ~7 nodes and reported "current" while `build-news-desk` and `generate-pathways` were stale (both out of scope). Widen it toward the 92-subject sweep, or rename it so green cannot read as whole-tree freshness.
+- [x] **[S356][SITE/P1] Oracle/IGNIS prompt chips fail contrast in light theme.** — **closed S360, see Closed — S359 items.** `.ignis-chip` (from `assets/ignis-answer-engine.js`, styled at `oracle/index.html:35` / `ignis/index.html:34`) is solid orange with near-black text in light theme on `/oracle/` and `/ignis/` — seen in the S356 matrix, pre-existing. Fix with theme tokens.
+- [x] **[S356][GATES/P2] Drift preflight scope is narrower than the gate set.** — **closed S360, see Closed — S359 items.** `check-generated-drift-preflight` declares ~7 nodes and reported "current" while `build-news-desk` and `generate-pathways` were stale (both out of scope). Widen it toward the 92-subject sweep, or rename it so green cannot read as whole-tree freshness.
 - [ ] **[S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages.** Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
-- [ ] **[S356][SITE/P2] Leaderboard embed hard-codes low-contrast greys.** api/leaderboard/v1/widget.js:22,33 (#555/#666 on #0a0a0a) fails AA in both themes; owned by the embed, not the stylesheet.
+- [x] **[S356][SITE/P2] Leaderboard embed hard-codes low-contrast greys.** — **closed S360, see Closed — S359 items.** api/leaderboard/v1/widget.js:22,33 (#555/#666 on #0a0a0a) fails AA in both themes; owned by the embed, not the stylesheet.
 - [ ] **[S356][OBS/P3] Staging Worker observability.** Still the only way to source the S354/S355 staging 503s; needs a Worker deploy and a free-tier cost check.
 
 - [x] **[S355][CI/P1] Held Pages runs no longer cancel confirmed promotions — SHIPPED.** `cancel-in-progress` is true only for a dispatch confirming production or content; refresh-live-data's input-less dispatch cancelled promotion `34824034218` in S354.
@@ -371,12 +316,6 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S320][RELEASE/P0] Give route-provenance a vantage CI can actually use — PREMISE DISPROVEN S321, re-scoped above (D-S321.5).** The committed approach was to probe the `pages.dev` origin as a corroborating second vantage. Measured directly in S321, `pages.dev` returns 404 for `/_health` and `/api/auth/me` and 405 for `OPTIONS /v/rum`: it is the Pages origin *behind* the Worker, and the Worker owns the `vaultsparkstudios.com/*` route, so it can never observe Worker route provenance. Implementing it as written would have been worse than leaving the gap open — `isMissingRoute` treats a 404 beside a clear control as a fact about the deployment, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict. Re-scoped to the staging `workers_dev` binding (see the S321 item above). The underlying gap remains open; only this approach is closed.
 - [x] **[S320][SIL][OBS/P1] Promote `contractLive` to a hard assertion in the `/v/rum` ingest probe.** SHIPPED S321 — the tolerance existed only for the Worker rollout window (D-S320.4) and the code said so ("Tighten once contractLive holds"). Verified live `202 {"ok":true,"synthetic":true}`, so `summarize()` now treats `contractLive === false` as `edge-degraded`. Both directions self-tested (a healthy contract must not page, or the assertion gets muted). probe-uptime 40/40.
 - [x] **[S320][VERIFY/P1] Confirm sign-in recovers at the 00:00 UTC KV reset.** VERIFIED S321 — `GET /login` returns **302** to `obeliskgate.com/auth/authorize` carrying a complete S256 PKCE challenge. The 503 cleared. Verifying it also surfaced that the recovery was never retracted from the public status surface, and that the S319 crash fix covered only the start leg; both fixed this session.
-## Done (Session 320 — content lane promoted · Worker deployed · gate honesty)
-
-- [x] **[S320][RELEASE/P0] Production is serving current content again.** The static content lane promoted 259 content-pure paths after 13.8 days at baseline `9527f227`, withholding 733 repo-internal paths (run `32192776059`, `contentLaneHead 60ed3748c`). Verified at the served surface: `deployedBy: pages-deploy-content-lane`, `/` 200 with the Desk module present, `/news/` 200. `deploy-currency` FAIL → WARN `content-current`; doctor blocking failures 1 → 0. `confirm_production` stayed false — the hold was narrowed, never waived (D-S320.5).
-- [x] **[S320][RELEASE/P0] Worker deployed and verified.** Run `32193258963`: ceremony passed, post-deploy liveness green, no rollback. Live contract check returns `202 {"ok":true,"synthetic":true}`.
-- [x] **[S320][OBS/P0] `check-writeback-currency` no longer reads green on an unmeasurable window.** It scanned a fixed 60 commits and returned "cannot measure" as `ok: true`, exit 0 — so the more `[skip ci]` churn accumulated, the blinder the arc's own cut-off detector became. Reproduced live in both directions in one session. Window is now anchor-derived, `unmeasured` exits `3`, churn is classified structurally. 68 false positives → 6. Self-test 11/11 (D-S320.1, D-S320.2).
-- [x] **[S320][OBS/P0] The split-release guard's evidence gap was diagnosed, not bypassed.** The content lane blocked because nine promoted callers referenced three Worker routes with no live provenance. The routes were live; only the evidence was missing (7/7 matched once probed) — exactly the distinction the guard exists to draw (D-S320.6).
 ## Previous Now (Session 314 — audit saturated and live)
 
 - [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.

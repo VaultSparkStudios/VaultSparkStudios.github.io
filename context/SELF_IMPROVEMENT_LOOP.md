@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇▇█
-Avgs — 3: 987.7 | 5: 987.4 | 10: 987.3 | 25: — | all: 983.1
-History scope: 195 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-15 | Session 356 | Total: 991/1000 | Velocity: 10 | protocolVelocity: 0
+Sparkline (last 5 totals): █▁▃▄▄
+Avgs — 3: 983.0 | 5: 983.8 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 983.1
+History scope: 199 recorded /1000 entries across the active ledger and preserved SIL archives (S357–S360 folded in at S360; the header had stopped at S356).
+Velocity trend: → | Protocol velocity: → | Debt: ↓
+Last session: 2026-09-18 | Session 360 | Total: 984/1000 | Velocity: 5 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2521,3 +2521,20 @@ The Engagement row above says comments are "live again". By release the Supabase
 | Automation Coverage | 99 | Two lists that were synced by hand are now gate-bound. |
 
 **Brainstorm → committed:** (1) `[SIL]` a provider-health line on /status/ from the Supabase health API, so an outage reads as an outage instead of "Checking…". (2) `[SIL]` make `build-shell-assets` import-safe so its pure helpers can carry a self-test.
+
+## 2026-09-18 — Session 360 (/status/ honesty under a live outage) | Total: 984/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | build:check all steps green on the final tree; new unit spec 7/7 with a negative control that fails when the guard is removed; mobile 215/215 on the local candidate. |
+| Creative Alignment | 98 | Outage copy says what readers feel and whose fault it is, in plain words, with no status jargon. |
+| Momentum | 97 | Both S359 SIL items and three S356 carries closed. The P0 is still a provider restart the session could not do. |
+| Engagement | 95 | A visitor during an outage now learns the site is up and what is affected, instead of seeing a false green and then a bare red. |
+| Process Quality | 99 | Two board items were disproved against the code before any work, and the false "All Systems Operational" came from looking at a capture, not from a gate. |
+| Cross-Repo Coherence | 100 | No sibling-repo edits. |
+| Security Posture | 99 | The production-database restart was refused again and not routed around. |
+| Ecosystem Integration | 98 | "An embed paints only with its own colours" applies to every embeddable widget in the portfolio. |
+| Capital Efficiency | 100 | No new services: the browser probes, the existing receipt tooling and the existing test runner. |
+| Automation Coverage | 99 | The widget rule and the import-safety property are both unit-enforced. |
+
+**Brainstorm → committed:** (1) `[SIL]` a scheduled credential-side probe that publishes the Supabase health API's per-service verdict, so /status/ can say which layer is down. (2) `[SIL]` treat a missing Service Worker as informational, not as a partial outage.

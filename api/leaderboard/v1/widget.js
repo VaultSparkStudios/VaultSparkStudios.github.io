@@ -19,20 +19,20 @@
     '#vaultspark-leaderboard *{box-sizing:border-box;margin:0;padding:0}' +
     '.vs-lb-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}' +
     '.vs-lb-title{font-size:0.95rem;font-weight:700;color:#ffc400}' +
-    '.vs-lb-brand{font-size:0.7rem;color:var(--dim,#6e7fb0);text-decoration:none}' +
+    '.vs-lb-brand{font-size:0.7rem;color:#8b9bc9;text-decoration:none}' +
     '.vs-lb-brand:hover{color:#ffc400}' +
     '.vs-lb-list{list-style:none}' +
     '.vs-lb-row{display:flex;align-items:center;padding:0.5rem 0;border-bottom:1px solid #141414}' +
     '.vs-lb-row:last-child{border-bottom:none}' +
-    '.vs-lb-rank{width:2rem;font-weight:800;font-size:0.8rem;color:var(--muted,#a8b4d0);text-align:center;flex-shrink:0}' +
+    '.vs-lb-rank{width:2rem;font-weight:800;font-size:0.8rem;color:#a8b4d0;text-align:center;flex-shrink:0}' +
     '.vs-lb-rank.gold{color:#ffc400}.vs-lb-rank.silver{color:#c0c0c0}.vs-lb-rank.bronze{color:#cd7f32}' +
     '.vs-lb-info{flex:1;min-width:0}' +
     '.vs-lb-name{font-weight:600;font-size:0.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
-    '.vs-lb-rt{font-size:0.72rem;color:var(--muted,#a8b4d0);margin-top:0.1rem}' +
+    '.vs-lb-rt{font-size:0.72rem;color:#a8b4d0;margin-top:0.1rem}' +
     '.vs-lb-score{font-weight:700;color:#ffc400;font-size:0.88rem;flex-shrink:0;margin-left:0.75rem}' +
-    '.vs-lb-empty{text-align:center;padding:2rem 0;color:var(--muted,#a8b4d0);font-size:0.88rem}' +
+    '.vs-lb-empty{text-align:center;padding:2rem 0;color:#a8b4d0;font-size:0.88rem}' +
     '.vs-lb-foot{text-align:center;margin-top:0.75rem}' +
-    '.vs-lb-foot a{font-size:0.75rem;color:var(--dim,#6e7fb0);text-decoration:none}' +
+    '.vs-lb-foot a{font-size:0.75rem;color:#8b9bc9;text-decoration:none}' +
     '.vs-lb-foot a:hover{color:#ffc400}';
 
   var style = document.createElement('style');

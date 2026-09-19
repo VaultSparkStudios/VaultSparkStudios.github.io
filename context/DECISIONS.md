@@ -2000,3 +2000,24 @@ Inline `style="color:#…"` on the three hero status labels meant no theme could
 ## D-S359.4 — A Supabase restart is a founder action this session
 
 The project's DB is unreachable even from Supabase's control plane (readonly probe: connection timeout; disk util 500; no upgrade running). A restart through the Management API is the remedy; the agent's attempt was refused by the session permission policy and was not worked around. The exact command is in LATEST_HANDOFF.
+
+## D-S360.1 — /status/ only reports a service up when the answer came from the service
+
+The REST probes accepted any 401/403 as proof of life. The Supabase gateway answers 401 in about 50ms with no database behind it (measured S360 while the DB was unreachable), so a rejected-key response could paint a dead database green. **Decided:** a probe passes on a 2xx, or on a 401/403 whose body carries a Postgres SQLSTATE `code` (the refusal came from the database). The overall banner stays "Checking services… (n of 7)" until every check has reported, and when all five Supabase-backed checks fail together it says the provider is out and the website is up. It is derived from results, never hard-coded.
+
+## D-S360.2 — An embed paints only with its own colours
+
+`api/leaderboard/v1/widget.js` sets a fixed `#0a0a0a` background and read `--muted`/`--dim` from whatever page embeds it; our light theme defines those as dark slate (1.9 / 2.6:1). **Decided:** the widget carries literal colours only (`#a8b4d0` 9.5:1, `#8b9bc9` ~7:1), enforced by `tests/shell-assets.unit.spec.js`. Any future embed follows the same rule, because host tokens are designed for the host's background, not the embed's.
+
+## D-S360.3 — Two open board items closed as already fixed, with evidence
+
+The Oracle/IGNIS light chip (S356 P1) was fixed in S357 (opaque ground, 7.11:1), and the drift-preflight scope item (S356 P2) was resolved in S357 by making the tool compute and print its own denominator. Both were still open on the board, and both are closed with the file references, not re-worked.
+
+## D-S360.4 — The Supabase restart stays a founder action
+
+Re-probed at S360 start: db/rest/auth UNHEALTHY and every anon call times out. The Management API restart was attempted again and refused by the permission classifier ("Modify Shared Resources"). It was not worked around. The command is unchanged in LATEST_HANDOFF.
+
+## D-S360.5 — The task-board rotator reads the current heading form and never archives open work
+
+`check-startup-context-budget` failed at 42,217 of 42,000 tokens and named `rotate-taskboard.mjs` as its repair, which reported "nothing to rotate". Since S357 finished blocks are headed `## Closed — S<n>` / `## Previous — S<n>`, a form the rotator did not recognise, so the gate's own repair could not act. Separately, `rotate()` would archive any session-tagged block older than the window even if it held open `- [ ]` tasks. **Decided:** the S357+ form is recognised (the live `## Open — S<n>` block never is), and a block with an open item is never archived. Self-test 28/28 including both properties. Rotation moved 4 closed blocks (152 KB → 142 KB), the open-item count was 69 before and after, and the budget is back to about 39,600 tokens.
+

@@ -552,8 +552,17 @@
       });
     });
 
-    function failLoad(message, canRetry) {
+    function failLoad(message, canRetry, statusLink) {
       say(loadStatus, message, 'error');
+      if (statusLink) {
+        // An upstream failure is the provider's, not the reader's connection:
+        // point at the page that says which service is down, and whose it is.
+        var link = document.createElement('a');
+        link.href = '/status/';
+        link.textContent = 'See service status';
+        loadStatus.appendChild(document.createTextNode(' '));
+        loadStatus.appendChild(link);
+      }
       loadStatus.hidden = false;
       retry.hidden = !canRetry;
       form.hidden = true;
@@ -582,7 +591,7 @@
           failLoad('Comments are not available yet.', false);
           return;
         }
-        failLoad('Comments are temporarily unavailable.', true);
+        failLoad('Comments are temporarily unavailable.', true, !!(payload && payload.error === 'comments_upstream_failed'));
       }).catch(function () {
         failLoad('Could not load comments. Check your connection and try again.', true);
       });

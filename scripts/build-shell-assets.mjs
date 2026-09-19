@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = process.cwd();
 const checkMode = process.argv.includes('--check');
@@ -547,4 +548,7 @@ function main() {
   console.log(`Updated ${htmlChanges.length} HTML files`);
 }
 
-main();
+// Import-safe (S360): importing this module used to run the whole build and
+// rewrite every page, which is why its pure helpers could carry no self-test.
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) main();

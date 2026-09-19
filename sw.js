@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-566db39f228b2235';
+const CACHE_NAME = 'vaultspark-shell-52b44bbd326da400';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -34,7 +34,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
   '/assets/desk-presence.shell-3dc76e3a40.js',
-  '/assets/desk-comments.shell-3a3e7af2e8.js',
+  '/assets/desk-comments.shell-2ae95371be.js',
   '/assets/hero-ticker.shell-550971e267.js',
   '/assets/public-intelligence.shell-c86a6ecc39.js',
   '/assets/studio-now.shell-fef717e631.js',

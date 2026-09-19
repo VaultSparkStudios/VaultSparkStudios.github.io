@@ -1,8 +1,22 @@
 # Current State
 
-Last updated: 2026-09-18 (S359)
+Last updated: 2026-09-18 (S360)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S360 /status/ says who is down, and never says "all operational" before it knows (2026-09-18)
+
+**/status/ names a provider outage as one.** When every Supabase-backed check fails together, the banner reads "Database Provider Outage" and a note says the website is up and names what is affected (Desk comments, member profiles, sign-in, leaderboards). A new Member Accounts (Auth) row probes the auth service directly. Measured live against the current outage.
+
+**It stopped claiming "All Systems Operational" for its first five seconds.** The banner summarised whatever had reported, and at first only the Website row had, so every load, including during today's outage, opened on a false green. It now reads "Checking services… (n of 7)" until every check has answered. A gateway 401/403 no longer counts as a working database; only a response that came from the database does.
+
+**Desk comments point readers to /status/** when the comments service itself fails.
+
+**The leaderboard embed is readable on any host page.** It painted text with the host page's theme colours on its own fixed near-black background, so our light theme put ranks at about 1.9:1. The widget now uses only its own colours, and a unit test rejects any `var(--` in it.
+
+**`build-shell-assets` is safe to import.** Its pure predicate helper now has seven unit tests. A negative control shows the import test fails if the guard is removed.
+
+**Supabase is still down** (db/rest/auth UNHEALTHY). The restart was refused by the permission policy a second time. It is a founder action.
 
 ## S359 Public surfaces count readers, not commits (2026-09-18)
 

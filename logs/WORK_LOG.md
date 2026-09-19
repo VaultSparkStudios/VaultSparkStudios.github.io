@@ -1668,3 +1668,20 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **5. Contrast, measured.** Pixel harness with text hidden to sample the real background: /membership/ "See The Value" 4.61:1 (not a defect); /games/ labels 1.47/1.90/2.22 → 5.22/6.45/6.55 in light, dark/warm/high-contrast unchanged.
 
 **6. Registry mismatch** shipped to studio-ops as Ark repo-question.
+
+## S360 — 2026-09-18 — /status/ honesty under a live outage
+
+**1. Supabase (P0).** Re-probed: health API db/rest/auth UNHEALTHY; anon REST and `/auth/v1/health` time out at 12s; `/v/desk-comments` returns `comments_upstream_failed`. Management API restart attempted, refused by the permission classifier ("Modify Shared Resources"), not worked around.
+
+**2. /status/.** Added an Auth row, a derived provider-outage banner and note, and database-origin-only proof of life (SQLSTATE-bearing 401/403). The rendered-pixel pass found the note under the hero `p` rule (flush, narrowed; fixed by making it a `div`). The 84-shot matrix then found the banner reading "All Systems Operational" before any probe returned; it now reads "Checking services… (n of 7)". Timed probe: 300 / 1500 / 4000 ms "Checking… (2 of 7)", 6500 ms "Database Provider Outage", 0 page errors. Light-mode checking banner outline added.
+
+**3. Leaderboard embed.** Host-token inheritance (not the S356 greys) put text at 1.9 / 2.6:1 on our light theme; literal palette, unit-enforced.
+
+**4. build-shell-assets.** `isMain` guard; `tests/shell-assets.unit.spec.js` 7/7; negative control (unguarded `main()`) fails the import test; unit-suite parity 18/18/18.
+
+**5. Desk comments** link to /status/ on an upstream failure (26/26 comments unit tests).
+
+**Verification:** build:check all steps passed (exit 0 read directly); mobile audit 215/215 against a local preview; visual receipt 84 captures, 3 manually reviewed.
+
+**6. Startup budget (found at closeout).** build:check step 5 failed at 42,217 of 42,000 tokens; the named repair `rotate-taskboard.mjs` could not act because it did not know the S357+ `## Closed — S<n>` heading form, and it would have archived blocks still holding open tasks. Fixed both (D-S360.5); 4 closed blocks rotated, 69 open items before and after.
+
