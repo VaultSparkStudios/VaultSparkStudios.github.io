@@ -384,7 +384,7 @@
           <div class="status-card-left">
             <div class="status-dot" id="dot-sw"></div>
             <div>
-              <div class="status-card-name">Service Worker / PWA</div>
+              <div class="status-card-name">Notifications &amp; Offline (this browser)</div>
               <div class="status-card-msg" id="status-msg-sw">Checking&hellip;</div>
             </div>
           </div>
@@ -1126,6 +1126,13 @@
           if (msg)   msg.textContent = errorMsg || 'Slow response';
           if (label) { label.textContent = 'Degraded'; label.style.color = 'var(--status-degraded)'; }
           results[name] = 'degraded';
+        } else if (state === 'info') {
+          // A property of this visitor's browser, not a service: reported, but
+          // never counted toward an outage or degradation verdict.
+          if (dot)   dot.style.background = 'var(--dim)';
+          if (msg)   msg.textContent = errorMsg || '';
+          if (label) { label.textContent = 'Not in use'; label.style.color = 'var(--muted)'; }
+          results[name] = 'info';
         } else {
           if (dot)   dot.style.background = 'var(--status-down)';
           if (msg)   msg.textContent = errorMsg || 'Service unavailable';
@@ -1247,15 +1254,29 @@
         if (!r.ok) throw new Error('Error ' + r.status);
       }
 
-      function checkSW() {
-        return new Promise(function(resolve, reject) {
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(regs) {
-              resolve(regs);
-            }).catch(reject);
+      // Offline support describes THIS browser, not a studio service. A private
+      // window or an unsupported browser used to mark it "Down" and turn the whole
+      // banner into "Partial Outage" (S360); a present API with nothing registered
+      // read "Operational" with a meaningless response time.
+      function checkOfflineSupport() {
+        if (!('serviceWorker' in navigator)) {
+          setCard('sw', 'info', 0, 'Not available in this browser (private window or unsupported)');
+          return;
+        }
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          if (regs && regs.length) {
+            var label = document.getElementById('status-label-sw');
+            setCard('sw', 'operational', 0, null);
+            var msg = document.getElementById('status-msg-sw');
+            if (msg) msg.textContent = 'Notifications and offline support active in this browser';
+            if (label) label.textContent = 'Active';
           } else {
-            reject(new Error('Service Worker not supported'));
+            // sw.js is registered only by the Vault portal and the notification
+            // opt-in (portal-features.js, push-subscribe.js), never on a plain visit.
+            setCard('sw', 'info', 0, 'Not installed — it installs when you turn on Vault notifications');
           }
+        }).catch(function() {
+          setCard('sw', 'info', 0, 'Blocked by this browser’s settings');
         });
       }
 
@@ -1268,7 +1289,7 @@
         checkService('db', pingDB);
         checkService('games', pingGameSessions);
         checkService('investor', pingInvestors);
-        checkService('sw', checkSW);
+        checkOfflineSupport();
         updateLastChecked();
       }
 

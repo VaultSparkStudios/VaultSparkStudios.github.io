@@ -50,6 +50,24 @@ test('the real ambient bundle lists no predicate outside the shell set', () => {
   assert.deepEqual(predicatesMissingShellAsset(src, sources), []);
 });
 
+test('the service-worker precache has no duplicate requests (Cache.addAll rejects them)', () => {
+  // S360: three duplicates made every production install go `redundant` —
+  // no offline precache and no push notifications for months.
+  const sw = fs.readFileSync(SW, 'utf8');
+  const block = /const STATIC_ASSETS = \[([\s\S]*?)\];/.exec(sw);
+  assert.ok(block, 'STATIC_ASSETS not found in sw.js');
+  const urls = [...block[1].replace(/\/\/[^\n]*/g, '').matchAll(/'([^']+)'/g)].map((m) => new URL(m[1], 'https://x/').href);
+  assert.ok(urls.length > 20, 'precache list parsed');
+  const dupes = urls.filter((u, i) => urls.indexOf(u) !== i);
+  assert.deepEqual(dupes, [], 'duplicate precache entries: ' + dupes.join(', '));
+});
+
+test('a duplicate precache entry is caught by the same parser (negative control)', () => {
+  const fixture = "const STATIC_ASSETS = [\n  '/a.js',\n  // '/a.js' commented out is fine\n  '/b.js',\n  '/a.js',\n];";
+  const urls = [.../const STATIC_ASSETS = \[([\s\S]*?)\];/.exec(fixture)[1].replace(/\/\/[^\n]*/g, '').matchAll(/'([^']+)'/g)].map((m) => m[1]);
+  assert.deepEqual(urls.filter((u, i) => urls.indexOf(u) !== i), ['/a.js']);
+});
+
 test('the leaderboard embed paints with its own palette, never host tokens', () => {
   const widget = fs.readFileSync(path.join(ROOT, 'api', 'leaderboard', 'v1', 'widget.js'), 'utf8');
   assert.equal(/var\(--/.test(widget), false, 'widget CSS must not read host custom properties over its fixed #0a0a0a ground');

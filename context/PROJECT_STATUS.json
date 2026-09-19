@@ -12,11 +12,10 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S360: /status/ names a provider outage as one (derived banner + note, a new Auth row) and no longer opens on a false \"All Systems Operational\" before its probes return; a gateway 401 no longer counts as a working database. The leaderboard embed is readable on any host page, build-shell-assets is import-safe with unit tests, and two stale board items were closed with evidence. Supabase is still down (comments and member data) pending a founder restart.",
+  "currentFocus": "S361: the service worker installs again (three duplicate precache entries made every production install redundant since at least June, so members could not enable push); /status/ treats offline support as a browser property, not a service. Supabase recovered: comments and sign-in are back.",
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
-  "nextMilestone": "Restart the Supabase project and verify comments + sign-in; then a credential-side probe that publishes the per-service health verdict for /status/.",
+  "nextMilestone": "A browser gate that proves a real service-worker install, then the credential-side per-service health feed for /status/.",
   "blockers": [
-    "PROVIDER OUTAGE: Supabase project fjnpzjjyhnpmunfoycrp — db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB, status still ACTIVE_HEALTHY. Desk comments and Vault Member sign-in are down. Needs a project restart (Management API POST /v1/projects/{ref}/restart or the dashboard); the agent attempt was refused by the session permission policy in S359 and again in S360. Founder action.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
     "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
@@ -24,14 +23,14 @@
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
   ],
   "lastUpdated": "2026-09-19",
-  "currentSession": 360,
+  "currentSession": 361,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-09-18",
-  "silScore": 984,
-  "silAvg3": 983,
-  "silVelocity": 5,
+  "silScore": 985,
+  "silAvg3": 984,
+  "silVelocity": 3,
   "silDebt": "down",
-  "silLastSession": 360,
+  "silLastSession": 361,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -90,7 +89,7 @@
     "devHealth": 99,
     "creativeAlignment": 98,
     "momentum": 97,
-    "engagement": 95,
+    "engagement": 96,
     "processQuality": 99,
     "crossRepoCoherence": 100,
     "securityPosture": 99,
@@ -98,7 +97,7 @@
     "capitalEfficiency": 100,
     "automationCoverage": 99
   },
-  "silCategoriesUpdatedSession": 360,
+  "silCategoriesUpdatedSession": 361,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-09-19",
@@ -259,6 +258,6 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "4393e9c77c8f64db0e09d05f",
-  "testsSourceFingerprint": "b6c1d89e926b54a86c2fecca",
-  "lastSessionSummary": "S360: /status/ tells a provider outage from a site fault and waits for every probe before summarising; leaderboard embed palette pinned; build-shell-assets import-safe (7 unit tests); Supabase restart refused again by the permission policy (founder action)."
+  "testsSourceFingerprint": "bb5af557e305e0f61c071d97",
+  "lastSessionSummary": "S361: fixed the service worker, which had never installed in production (duplicate precache entries); /status/ offline row made informational; Supabase recovered."
 }

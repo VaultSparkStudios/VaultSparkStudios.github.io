@@ -1297,3 +1297,9 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 - **SIL rolling header had stopped at S356**; S357–S360 folded in, and the 10-session average is left blank rather than estimated.
 - **Supabase outage persists** (db/rest/auth UNHEALTHY at S360 start).
 
+## S361 — 2026-09-19
+
+- **The service worker never installed in production** (since at least 2026-06-03): duplicate precache entries made `Cache.addAll` reject, so every install went `redundant`. No offline precache existed, and no member could enable push. No gate measured a real install (D-S361.1).
+- **/status/ counted a browser capability as a service**, so a private window read "Partial Outage" (D-S361.2).
+- **Supabase outage resolved** (recovered by 09:00Z; not an agent action).
+

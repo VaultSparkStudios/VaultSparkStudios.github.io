@@ -1687,3 +1687,11 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 
 **Release.** Staging full publish 834fb0216357 (6950 files, chain 78); ceremony 11/11 after rebuilding the continuity summary; scoped promotion run 35413377247 succeeded; production build-sha f2066eb7e = HEAD (full deploy). /status/ verified on production in a real browser under the live Worker CSP; smoke:live 6/6.
 
+## S361 — 2026-09-19 — the service worker installs again
+
+**1. Offline row.** A missing Service Worker API marked the row Down and flipped the banner to Partial Outage. It is now informational. While checking what "Active" would mean, I found the site registers `sw.js` only for the Vault portal and the notification opt-in, so the copy says that.
+
+**2. Service worker.** Registering on production went `redundant`. Tested each precache URL in a page: all fine alone. Ran `addAll` on the real list: `InvalidStateError: duplicate requests` (notify-me, scroll-depth, scroll-reveal); the de-duplicated list succeeds. Fixed at source and at install; unit test 9/9, and it fails against the old file. Local install now reaches `activated`; the card reads Active / Not in use correctly in dark and light.
+
+**3. Supabase** recovered (health API all ACTIVE_HEALTHY; comments ok:true).
+

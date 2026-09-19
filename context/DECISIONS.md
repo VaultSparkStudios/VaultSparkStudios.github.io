@@ -2021,3 +2021,11 @@ Re-probed at S360 start: db/rest/auth UNHEALTHY and every anon call times out. T
 
 `check-startup-context-budget` failed at 42,217 of 42,000 tokens and named `rotate-taskboard.mjs` as its repair, which reported "nothing to rotate". Since S357 finished blocks are headed `## Closed — S<n>` / `## Previous — S<n>`, a form the rotator did not recognise, so the gate's own repair could not act. Separately, `rotate()` would archive any session-tagged block older than the window even if it held open `- [ ]` tasks. **Decided:** the S357+ form is recognised (the live `## Open — S<n>` block never is), and a block with an open item is never archived. Self-test 28/28 including both properties. Rotation moved 4 closed blocks (152 KB → 142 KB), the open-item count was 69 before and after, and the budget is back to about 39,600 tokens.
 
+## D-S361.1 — The service-worker precache is de-duplicated at source, at install and by test
+
+Found while checking what the new /status/ offline row would claim: on production, a real `navigator.serviceWorker.register('/sw.js')` went `redundant` every time. Reproduced in a page: `cache.addAll(STATIC_ASSETS)` → `InvalidStateError: duplicate requests (notify-me.js, scroll-depth.js, scroll-reveal.js)`; the de-duplicated list → `ok`. **Decided:** remove the duplicates, install from `[...new Set(STATIC_ASSETS)]`, and assert no duplicates in `tests/shell-assets.unit.spec.js` (fails against the old file). Local install now reaches `activated`.
+
+## D-S361.2 — A browser capability is not a service
+
+The /status/ Service Worker row fed the overall verdict, so a private window read "Partial Outage". **Decided:** it is informational ("Notifications & Offline (this browser)"), with the true reason. The worker is registered only by the Vault portal and the notification opt-in, never on a plain visit, so the copy says exactly that.
+

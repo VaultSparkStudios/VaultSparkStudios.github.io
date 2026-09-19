@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▁▃▄▄
-Avgs — 3: 983.0 | 5: 983.8 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 983.1
-History scope: 199 recorded /1000 entries across the active ledger and preserved SIL archives (S357–S360 folded in at S360; the header had stopped at S356).
+Sparkline (last 5 totals): ▁▃▄▄▆
+Avgs — 3: 984.0 | 5: 983.4 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 983.1
+History scope: 200 recorded /1000 entries across the active ledger and preserved SIL archives.
 Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-18 | Session 360 | Total: 984/1000 | Velocity: 5 | protocolVelocity: 0
+Last session: 2026-09-19 | Session 361 | Total: 985/1000 | Velocity: 3 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2538,3 +2538,21 @@ The Engagement row above says comments are "live again". By release the Supabase
 | Automation Coverage | 99 | The widget rule and the import-safety property are both unit-enforced. |
 
 **Brainstorm → committed:** (1) `[SIL]` a scheduled credential-side probe that publishes the Supabase health API's per-service verdict, so /status/ can say which layer is down. (2) `[SIL]` treat a missing Service Worker as informational, not as a partial outage.
+
+## 2026-09-19 — Session 361 (the service worker installs again) | Total: 985/1000 (v3.0) | Velocity: 3 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Root cause reproduced in a real page (duplicate `addAll` rejection) before any fix; unit test fails against the old file; real install reaches `activated`. |
+| Creative Alignment | 98 | Status copy describes the visitor's own browser in plain words and tells them how to turn it on. |
+| Momentum | 97 | Small scope, but it closed a months-old production defect and the P0. |
+| Engagement | 96 | Members can enable push notifications for the first time since at least June; comments and sign-in are back. |
+| Process Quality | 99 | Checking what a new UI row would claim led to a defect no gate measured. |
+| Cross-Repo Coherence | 100 | No sibling-repo edits. |
+| Security Posture | 99 | No new capability; the worker's own caching rules are unchanged. |
+| Ecosystem Integration | 98 | "`Cache.addAll` rejects duplicates" applies to every studio PWA. |
+| Capital Efficiency | 100 | No new tools. |
+| Automation Coverage | 99 | Duplicate precache entries are unit-enforced; a real-install gate is committed as `[SIL]`. |
+
+**Brainstorm → committed:** (1) `[SIL]` a browser gate that registers `/sw.js` and requires `activated`. (2) `[SIL]` review the 100-entry precache now that it actually downloads.
+

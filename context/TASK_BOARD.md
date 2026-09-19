@@ -1,12 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-18 (S360: /status/ names a provider outage as one and no longer opens on a false "All Systems Operational"; the leaderboard embed is readable on any host; build-shell-assets is import-safe with unit tests; two stale board items closed with evidence. Supabase is still down and the restart is a founder action.)
+Last updated: 2026-09-19 (S361: the service worker installs again (duplicate precache entries had made every production install redundant since at least June); /status/ treats offline support as a browser property; Supabase recovered.)
 
-## Open — S360
+## Open — S361
 
-- [ ] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF.
 - [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API's per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
-- [ ] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational.
+- [ ] **[SIL][S361][OBS/P2]** Add a real service-worker install check to a gate (a browser test that registers `/sw.js` and requires `activated`). The unit test catches duplicates, but not any other reason `addAll` could reject.
+- [ ] **[SIL][S361][PERF/P3]** Review the 100-entry precache now that it actually installs: two entries (`/vaultsparked/*.js`) 301 to an HTML page, and a member's first install downloads the whole list.
+## Closed — S360 items (worked in S361)
+
+- [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.
+- [x] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational. — **DONE S361** (D-S361.2).
+- [x] **[S361][PWA/P0]** Service worker never installed in production — **FIXED S361** (D-S361.1): duplicate precache entries made `Cache.addAll` reject.
 ## Closed — S359 items (worked in S360)
 
 - [x] **[SIL][S359][OBS/P2]** Provider-health line on /status/ — **DONE S360** (D-S360.1): "Database Provider Outage" with an attribution note when every Supabase-backed check fails, a new Member Accounts (Auth) row, and no summary before all 7 checks report. Rendered-pixel verified against the live outage.
@@ -23,16 +28,6 @@ Last updated: 2026-09-18 (S360: /status/ names a provider outage as one and no l
 - [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.
 - [x] **[S359][A11Y/P1]** /games/ status labels in light theme 1.47 / 1.90 / 2.22:1 → 5.22 / 6.45 / 6.55:1 (D-S359.3). /membership/ "See The Value" measured 4.61:1 — not a defect.
 - [x] **[S359][OPS/P3]** Registry slug mismatch (`franchise-architect` vs `franchise-architect-football`) shipped to studio-ops as Ark cargo.
-## Closed — S357 (worked in S358)
-
-- [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
-
-- [x] **[S357][OBS/P2]** Promotion-receipt console errors — **DONE in S357** (`ee7d1386`): Worker-only routes at the Pages vantage are counted in their own bucket; 0 unexplained.
-- [x] **[S357][OBS/P2]** Promotion-receipt "stranded" — **DONE in S357** (`ee7d1386`): shell parity separates a stranded deploy from a promotion backlog.
-- [x] **[S357][ASSETS/P1]** Fingerprint the remaining still-loaded client scripts — **DONE S358**: 17 shell assets added; production drift that matters 19 → 0 once promoted (D-S358.1).
-- [x] **[S357][GATES/P1]** Served-vs-repo drift gate — **DONE**: built S357 (`b0def96d`), wired into the release ceremony (`0d6d5459`), made reachability-based S358.
-- [x] **[S357][CONTENT/P2]** "You asked" from `data/consumer-changelog.json` — **DONE S358** (D-S358.2).
-- [x] **[S357][OBS/P2]** `vault_feedback` 404 on `/changelog/` — **DONE S358**: the table never existed by design (browser-local feedback); the dead fetch is removed.
 ## Now (next session ready)
 
 - [x] **[S356][DESK/P1] The Desk publishes real illustrations again — SHIPPED.** The publisher never had an image model — art 08-07..08-23 was hand-made, so 25 stories shipped the procedural card. A local Codex worker (ChatGPT plan, no API key) generates it; ingest takes only reviewed images; 25 backfilled (D-S356.1).

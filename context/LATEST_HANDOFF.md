@@ -1,5 +1,14 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S361 · 2026-09-19
+
+**Session intent:** founder `cont` after the S360 arc (direct-to-main and full-deploy authorization carried from S360).
+
+- **Supabase recovered.** db/rest/auth ACTIVE_HEALTHY; Desk comments `ok:true`; /status/ reads "All Systems Operational". The P0 is closed. The restart was not done by the agent.
+- **Shipped:** service-worker install fixed (duplicate precache entries; D-S361.1); /status/ offline row is informational and truthful (D-S361.2).
+- **Found by looking, not by a gate:** checking what the new status row would say led to discovering that the worker had never installed. Every production install went `redundant`, so push notifications could not be enabled.
+- **Release:** see the S361 release addendum.
+
 ## Where We Left Off — S360 · 2026-09-18
 
 **Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.

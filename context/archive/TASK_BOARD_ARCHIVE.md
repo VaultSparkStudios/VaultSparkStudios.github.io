@@ -1960,3 +1960,17 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S320][RELEASE/P0] Worker deployed and verified.** Run `32193258963`: ceremony passed, post-deploy liveness green, no rollback. Live contract check returns `202 {"ok":true,"synthetic":true}`.
 - [x] **[S320][OBS/P0] `check-writeback-currency` no longer reads green on an unmeasurable window.** It scanned a fixed 60 commits and returned "cannot measure" as `ok: true`, exit 0 — so the more `[skip ci]` churn accumulated, the blinder the arc's own cut-off detector became. Reproduced live in both directions in one session. Window is now anchor-derived, `unmeasured` exits `3`, churn is classified structurally. 68 false positives → 6. Self-test 11/11 (D-S320.1, D-S320.2).
 - [x] **[S320][OBS/P0] The split-release guard's evidence gap was diagnosed, not bypassed.** The content lane blocked because nine promoted callers referenced three Worker routes with no live provenance. The routes were live; only the evidence was missing (7/7 matched once probed) — exactly the distinction the guard exists to draw (D-S320.6).
+
+
+<!-- rotated 2026-09-19 · sessions < 358 · 1 block(s) -->
+
+## Closed — S357 (worked in S358)
+
+- [x] **[S357][RELEASE/P0]** Promote S356+S357 to production — **DONE**. Worker `b19ce12e`, content-lane run `35256380631`; production `contentLaneHead` = origin/main; smoke-live 6/6; zero failed browser responses. Two real gate refusals on the way — the staging candidate attestation needed a FULL staging publish (an overlay leaves staging’s build-sha at the base deployment), and `/v/desk-comments` had no production route contract. Both fixed at the root; see the S357 release addendum.
+
+- [x] **[S357][OBS/P2]** Promotion-receipt console errors — **DONE in S357** (`ee7d1386`): Worker-only routes at the Pages vantage are counted in their own bucket; 0 unexplained.
+- [x] **[S357][OBS/P2]** Promotion-receipt "stranded" — **DONE in S357** (`ee7d1386`): shell parity separates a stranded deploy from a promotion backlog.
+- [x] **[S357][ASSETS/P1]** Fingerprint the remaining still-loaded client scripts — **DONE S358**: 17 shell assets added; production drift that matters 19 → 0 once promoted (D-S358.1).
+- [x] **[S357][GATES/P1]** Served-vs-repo drift gate — **DONE**: built S357 (`b0def96d`), wired into the release ceremony (`0d6d5459`), made reachability-based S358.
+- [x] **[S357][CONTENT/P2]** "You asked" from `data/consumer-changelog.json` — **DONE S358** (D-S358.2).
+- [x] **[S357][OBS/P2]** `vault_feedback` 404 on `/changelog/` — **DONE S358**: the table never existed by design (browser-local feedback); the dead fetch is removed.

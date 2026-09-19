@@ -195,10 +195,8 @@ const STATIC_ASSETS = [
   '/assets/heartbeat.js',
   '/assets/ignis-tour.js',
   '/assets/visit-depth.js',
-  '/assets/notify-me.js',
+  // (notify-me, scroll-reveal, scroll-depth are listed above — see install note)
   '/assets/exit-intent.shell-91a127bb4a.js',
-  '/assets/scroll-reveal.js',
-  '/assets/scroll-depth.js',
   // S100 assets
   '/assets/rank-projector.js',
   '/assets/changelog-reactions.shell-1ddedc6d81.js',
@@ -216,9 +214,14 @@ const STATIC_ASSETS = [
 ];
 
 // ── Install: cache static assets ──────────────────────────────────────────
+// S360: Cache.addAll() REJECTS the whole batch on a duplicate request, and a
+// rejected install makes the worker redundant. Three entries were listed twice
+// (since at least 2026-06-03), so this worker never installed in production:
+// no offline precache, and no member could enable push notifications. The list
+// is de-duplicated at source and here, and a unit test refuses duplicates.
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll([...new Set(STATIC_ASSETS)]))
   );
   self.skipWaiting();
 });

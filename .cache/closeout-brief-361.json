@@ -1,0 +1,45 @@
+{
+  "session": "S361",
+  "date": "2026-09-19",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The service worker had never installed in production. Three duplicate precache entries made every install fail, so members could not turn on push notifications. Fixed, and the P0 outage is over.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "service-worker-installs",
+      "title": "The service worker installs again",
+      "axis": "truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Cache.addAll rejects a batch containing a duplicate request; three entries were listed twice since at least June, so every production install went redundant. De-duplicated at source and at install, with a unit test that fails against the old file.",
+      "evidence": "production register → redundant; in-page addAll → InvalidStateError duplicate requests; deduplicated → ok; local install now activated"
+    },
+    {
+      "id": "#2",
+      "slug": "offline-row-informational",
+      "title": "/status/ stops calling a browser capability an outage",
+      "axis": "craft",
+      "projectImpact": 4,
+      "ecosystemImpact": 3,
+      "insight": "A private window marked the Service Worker row Down and flipped the banner to Partial Outage. It is informational now, and its copy says the worker installs when a member turns on notifications, which is the only time the site registers it.",
+      "evidence": "blocked / not-installed / active states verified in a browser; dark and light captures inspected"
+    },
+    {
+      "id": "#3",
+      "slug": "supabase-recovered",
+      "title": "Supabase recovered",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 2,
+      "insight": "Re-probed rather than carried: db/rest/auth ACTIVE_HEALTHY and comments ok:true. The P0 is closed; the restart was not an agent action.",
+      "evidence": "Supabase health API 200 all healthy; /v/desk-comments ok:true"
+    }
+  ],
+  "followUps": [
+    "A browser gate that registers /sw.js and requires activated.",
+    "Review the 100-entry precache now that it actually downloads.",
+    "Credential-side per-service health feed for /status/."
+  ],
+  "blockers": []
+}

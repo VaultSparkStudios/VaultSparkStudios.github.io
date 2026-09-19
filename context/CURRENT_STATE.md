@@ -1,8 +1,16 @@
 # Current State
 
-Last updated: 2026-09-18 (S360)
+Last updated: 2026-09-19 (S361)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S361 The service worker installs again, and Supabase is back (2026-09-19)
+
+**The service worker had never installed in production.** `sw.js` listed three precache entries twice, and `Cache.addAll()` rejects a batch that contains a duplicate request. Every install went `redundant`, which meant no offline precache and no way for a member to turn on push notifications. The duplicates date back to at least the 2026-06-03 history root. The list is now de-duplicated, the install de-duplicates again as a guard, and a unit test rejects duplicates. A real install now reaches `activated` in the browser.
+
+**/status/ stops calling a browser capability an outage.** The Service Worker row used to show "Down" whenever the API was missing (private windows, some browsers), and that alone flipped the banner to "Partial Outage". The row is now "Notifications & Offline (this browser)": Active, or Not in use with the honest reason. It never counts toward the outage verdict.
+
+**Supabase recovered.** The health API reports db, REST and auth all ACTIVE_HEALTHY, and Desk comments return `ok:true`. The restart was not done by the agent.
 
 ## S360 /status/ says who is down, and never says "all operational" before it knows (2026-09-18)
 
