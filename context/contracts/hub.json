@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-19T09:29:02.581Z",
+  "generatedAt": "2026-09-19T22:06:29.781Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 361,
+    "currentSession": 362,
     "lastUpdated": "2026-09-19",
-    "currentFocus": "S361: the service worker installs again (three duplicate precache entries made every production install redundant since at least June, so members could not enable push); /status/ treats offline support as a browser property, not a service. Supabase recovered: comments and sign-in are back.",
-    "nextMilestone": "A browser gate that proves a real service-worker install, then the credential-side per-service health feed for /status/.",
+    "currentFocus": "S362: fixed two probes that were reporting false alarms (a cron line with a trailing comment was invisible to the staleness probe; post-closeout resync commits were counted as write-back debt), added a blocking browser gate that installs the service worker, and made the unarmed newsletter cron hold instead of failing. Nothing was armed or sent.",
+    "nextMilestone": "The credential-side per-service Supabase health feed for /status/, and a staleness verdict bound to its own denominator.",
     "blockers": [
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",

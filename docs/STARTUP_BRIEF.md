@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-19 (Session 361 closeout) -->
+<!-- generated-at: 2026-09-19 (Session 362 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 361 closeout · 2026-09-19.
+> **Fast-boot brief** — generated at Session 362 closeout · 2026-09-19.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 362 · 2026-09-19 · FOUNDER MODE                         ║
+║  Session 363 · 2026-09-19 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S361) - WHAT SHIPPED ══════════════════════════╗
-║  S361: fixed the service worker, which had never installed in p  ║
+╔══ LAST SESSION (S362) - WHAT SHIPPED ══════════════════════════╗
+║  S362: two false-alarming probes fixed (cron comments, write-ba  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    985/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
+║    986/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 984  ·  Velocity 4→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ██▇▇▇▇▇▇ →                ║
-║    Alignment         98    ██████████  ▇▇█▇▇▇▇▇ →                ║
-║    Momentum          97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        99    ██████████  █▇▇▇▇▇▇▇ →                ║
+║    Alignment         98    ██████████  ▇█▇▇▇▇▇▇ →                ║
+║    Momentum          98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇▇▇▇█ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
-║    Ecosystem         98    ██████████  ········ →                ║
+║    Ecosystem         99    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation        97    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 361 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 362 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    502/502 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,7 +77,7 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ⚠  Tests         502/502 passing (2026-09-19) · UNVERIFIED (no  ║
-║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        unknown                                        ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46492 FORGE  ·  10d old                        ║
@@ -117,31 +117,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▇▇▆▄  3→  (last 5 sessions)                        ║
+║  Velocity:   ▆▇▇▆▄  4→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  985/1000  (→0 vs current 985)                       ║
+║  Projected:  986/1000  (→0 vs current 986)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add a real service-worker install check to  ║
-║        Add a real service-worker install check to a gate (a bro  ║
+║   96  [PRODUCT]      The staleness probe checked count flickere  ║
+║        The staleness probe checked count flickered (14 vs 11 wo  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Review the 100-entry precache now that it   ║
-║        Review the 100-entry precache now that it actually insta  ║
-║                                                                  ║
-║   90  [PRODUCT]      Purge api/founder-presence.json from publi  ║
+║   93  [PRODUCT]      Purge api/founder-presence.json from publi  ║
 ║        Purge api/founder-presence.json from public git history.  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Staging Worker observability. Still the on  ║
+║   90  [PRODUCT]      Staging Worker observability. Still the on  ║
 ║        Staging Worker observability. Still the only way to sour  ║
+║                                                                  ║
+║   87  [PRODUCT]      Mount the narrative on /journal/. Deferred  ║
+║        Mount the narrative on /journal/. Deferred: a UI change   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -149,5 +149,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 361 closeout · 2026-09-19*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 362 closeout · 2026-09-19*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
