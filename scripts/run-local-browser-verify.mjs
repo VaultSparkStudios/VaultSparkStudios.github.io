@@ -19,6 +19,7 @@ const TIERS = {
   ],
   core: [
     'tests/computed-styles.spec.js',
+    'tests/service-worker-install.spec.js',
     'tests/compliance-pages.spec.js',
     'tests/eternal-dispatch.spec.js',
     'tests/homepage-hero-regression.spec.js',
@@ -30,6 +31,7 @@ const TIERS = {
   ],
   extended: [
     'tests/computed-styles.spec.js',
+    'tests/service-worker-install.spec.js',
     'tests/compliance-pages.spec.js',
     'tests/eternal-dispatch.spec.js',
     'tests/homepage-hero-regression.spec.js',

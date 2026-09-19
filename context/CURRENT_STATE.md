@@ -1,8 +1,20 @@
 # Current State
 
-Last updated: 2026-09-19 (S361)
+Last updated: 2026-09-19 (S362)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S362 Two probes stopped crying wolf, and a browser now installs the worker (2026-09-19)
+
+**The scheduled-cron probe could not read half the crons it was watching.** Any cron line carrying a trailing YAML comment matched nothing — 11 lines in 9 workflows — so those jobs were expected daily whatever their real cadence, and the weekly maintenance job, which ran on time, was reported `silent`. Cron lines are now read to the closing quote (or to the comment), and several lines combine by adding their rates: the four daily Desk slots are one run every 6h, not one a day. Live: 14 workflows checked, 0 silent.
+
+**Write-back currency stopped reporting debt after a clean closeout.** `context/PROJECT_STATUS.json` is written by hand and by tools, and the post-closeout resync rewrites `doctorScore` inside it, so every resync commit looked like un-written-back session work. It is now classified by which top-level keys changed: a resync that touches a hand-written key still counts as debt, and a diff that cannot be read stays debt.
+
+**A browser gate installs the service worker.** `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated`, and checks that every declared precache entry landed. It blocks the E2E compliance job and runs in `verify:local`. A 404 precache entry turns it red, so the three-month production failure S361 found could not survive it again.
+
+**The unarmed newsletter holds instead of failing.** Its scheduled run had failed six times since April because it is deliberately not armed. It now emits a held annotation and exits 0 unless the repository variable `NEWSLETTER_ARMED` is `true`. Nothing was armed and nothing was sent.
+
+**The precache was reviewed and kept:** 100 entries, 3.2 MB raw / about 779 KB brotli, fetched in the background only for members who turn on offline and push.
 
 ## S361 The service worker installs again, and Supabase is back (2026-09-19)
 

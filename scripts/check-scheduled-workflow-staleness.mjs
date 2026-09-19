@@ -77,6 +77,36 @@ export function cronIntervalHours(expr) {
   return 24;                          // daily
 }
 
+/**
+ * S362: every `- cron:` expression in a workflow's source. The old pattern ended in
+ * `['"]?\s*$`, so a line carrying a YAML comment (`- cron: '0 6 * * 1'  # Monday`)
+ * matched nothing — 11 of this repo's cron lines. Those workflows fell back to a
+ * daily expectation, and the weekly maintenance job was reported `silent` 135h
+ * after a run that was exactly on time. Read up to the closing quote, or, when
+ * unquoted, up to a comment.
+ */
+export function parseCronLines(src) {
+  const out = [];
+  for (const m of String(src).matchAll(/^\s*-\s*cron:\s*(.+)$/gm)) {
+    const raw = m[1].trim();
+    const q = /^(['"])(.*?)\1/.exec(raw);
+    const expr = (q ? q[2] : raw.replace(/\s+#.*$/, '')).trim();
+    if (expr) out.push(expr);
+  }
+  return out;
+}
+
+/**
+ * S362: several cron lines fire independently, so their RATES add. `news-publish`
+ * has four daily slots — one run every 6h — and taking the minimum interval
+ * expected it once a day, so a three-day stall stayed under the silent threshold.
+ */
+export function combinedIntervalHours(crons) {
+  if (!crons.length) return 24;
+  const rate = crons.reduce((sum, c) => sum + 1 / cronIntervalHours(c), 0);
+  return 1 / rate;
+}
+
 /** Tolerate two missed cycles before calling a cron silent, capped so a monthly
  *  job cannot hide behind its own cadence past GitHub's auto-disable window. */
 export function silentThresholdHours(intervalHours) {
@@ -212,10 +242,10 @@ function scheduledWorkflows() {
     const src = readFileSync(join(WF_DIR, file), 'utf8');
     if (!/^\s*schedule:/m.test(src)) continue;
     const m = src.match(/^name:\s*(.+?)\s*$/m);
-    const crons = [...src.matchAll(/^\s*-\s*cron:\s*['"]?([^'"\n]+?)['"]?\s*$/gm)].map((c) => c[1]);
-    // The FASTEST schedule sets the expectation: a workflow with both a daily and
-    // an hourly trigger is late the moment the hourly one stops.
-    const intervalHours = crons.length ? Math.min(...crons.map(cronIntervalHours)) : 24;
+    // Combined rate of every cron line: never slower than the fastest one, so a
+    // workflow with both a daily and an hourly trigger is late the moment the
+    // hourly one stops.
+    const intervalHours = combinedIntervalHours(parseCronLines(src));
     out.push({
       file,
       // gh keys runs by the workflow's `name:`; the FILE is the stable query key.
@@ -293,6 +323,25 @@ function runSelfTest() {
   assert(cronIntervalHours('nonsense') === 24, 'an unparseable cron falls back to daily, never to zero');
   assert(silentThresholdHours(24 * 30) <= MAX_SILENT_HOURS,
     'a monthly cron cannot hide behind its own cadence past the 45-day cap');
+
+  // S362 — the real text of weekly-maintenance.yml and news-publish.yml.
+  const weekly = "on:\n  schedule:\n    - cron: '0 6 * * 1'   # Every Monday at 06:00 UTC\n";
+  assert(JSON.stringify(parseCronLines(weekly)) === '["0 6 * * 1"]',
+    'a cron line with a trailing comment is read, not dropped');
+  assert(combinedIntervalHours(parseCronLines(weekly)) === 24 * 7,
+    'the commented weekly cron is expected weekly, not daily');
+  const desk = [
+    '    - cron: "7 6 * * *"   # The Wire      06:00 UTC',
+    '    - cron: "7 12 * * *"  # Midday Desk   12:00 UTC',
+    '    - cron: "7 18 * * *"  # The Close     18:00 UTC',
+    '    - cron: "7 22 * * *"  # Late Night    22:00 UTC',
+  ].join('\n');
+  assert(parseCronLines(desk).length === 4, 'all four commented desk slots are read');
+  assert(Math.abs(combinedIntervalHours(parseCronLines(desk)) - 6) < 1e-9,
+    'four daily slots are one run every 6h, not one a day');
+  assert(JSON.stringify(parseCronLines('    - cron: 0 9 * * *  # unquoted\n')) === '["0 9 * * *"]',
+    'an unquoted cron stops at its comment');
+  assert(combinedIntervalHours([]) === 24, 'no cron lines falls back to daily');
 
   const NOW = Date.parse('2026-09-03T00:00:00Z');
   const at = (hoursAgo) => new Date(NOW - hoursAgo * 36e5).toISOString();

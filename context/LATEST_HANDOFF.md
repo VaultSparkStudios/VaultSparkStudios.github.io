@@ -1,5 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Where We Left Off — S362 · 2026-09-19
+
+**Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.
+
+- **Triage disbelieved two alarms, and both were wrong.** The write-back probe reported DEBT 12.3h after a correct S361 closeout; the doctor reported Weekly Maintenance `silent` when it had run on time. Neither was a missed closeout or a dead cron — both were probe defects, and they headed the audit.
+- **Shipped:** cron lines with trailing comments are readable and several lines combine by rate (D-S362.1); write-back currency classifies PROJECT_STATUS.json by key, not by file (D-S362.2); the unarmed newsletter cron holds instead of failing (D-S362.3); a blocking browser gate installs the service worker (D-S362.4); the precache is reviewed and kept with numbers (D-S362.5).
+- **Nothing was armed and nothing was sent.** The newsletter change gates the scheduled send on a repository variable `NEWSLETTER_ARMED`; arming stays a founder decision (D-S341.4 preserved).
+- **Verified locally:** `build:check` 502/502; staleness self-test 28/28 and live 14 workflows checked / 0 silent; write-back self-test 20/20 and live "current"; the service-worker spec mutation-tested in both directions (404 precache entry → `redundant` → red; duplicate entry → still green, because S361 de-duplicates at install).
+- **Deferred, on purpose:** the doctor's IGNIS remedy cannot run in a project repo (it reads a studio-ops-only registry) — Ark repo-question `01K2TR2MCB649E1AD036E22BAD` shipped instead of a local workaround, and the IGNIS tree was left untouched because it holds another session's uncommitted work. Purging `api/founder-presence.json` from history still needs a force-push, which stays a founder action.
+- **Ark:** two `pattern-share` cargos for the propagated probe fixes (`01K2TR2J2O36AABB2BCFBC91AE`, `01K2TR2KK71B4A94B828BDC63E`).
+
+PLACEHOLDER_RELEASE
+
 ## Where We Left Off — S361 · 2026-09-19
 
 **Session intent:** founder `cont` after the S360 arc (direct-to-main and full-deploy authorization carried from S360).

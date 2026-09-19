@@ -152,6 +152,40 @@ export function isGeneratedPath(file = '', graphOutputs = repoGraphOutputs()) {
 }
 
 /**
+ * S362: PROJECT_STATUS.json is hand-written AND tool-written. `resync-derived`
+ * rewrites `doctorScore` on every run, so each `chore(resync)` commit after a
+ * closeout touched one "hand-written" file and was reported as WRITE-BACK DEBT
+ * 12h after a correct S361 closeout. The whole file cannot be classed as
+ * generated: `20e0dd4b2 chore(resync)` also changed health/currentFocus/blockers,
+ * which is real session work. So classify by KEY: these are the top-level
+ * fields only tools write (surveyed over 40 commits, S344–S361).
+ */
+export const STATUS_PATH = 'context/PROJECT_STATUS.json';
+export const STATUS_RECEIPT_KEYS = new Set([
+  'doctorScore', 'doctorBlockingFailing',
+  'testsSourceFingerprint', 'testsPlanFingerprint',
+  'ignisScore', 'ignisLastComputed', 'entropyScore', 'entropyLastComputed',
+]);
+
+/** Top-level keys whose JSON value differs between two parsed objects. */
+export function changedTopLevelKeys(before = {}, after = {}) {
+  const a = before && typeof before === 'object' ? before : {};
+  const b = after && typeof after === 'object' ? after : {};
+  return [...new Set([...Object.keys(a), ...Object.keys(b)])]
+    .filter((k) => JSON.stringify(a[k]) !== JSON.stringify(b[k]));
+}
+
+/**
+ * A STATUS_PATH edit is a receipt only when its changed keys are KNOWN and all are
+ * receipt keys. Unknown (`statusKeys` absent — the diff was not read) stays
+ * substantive, so an unreadable diff can only over-report, never launder.
+ */
+function isReceiptOnlyStatusEdit(commit) {
+  return Array.isArray(commit.statusKeys)
+    && commit.statusKeys.every((k) => STATUS_RECEIPT_KEYS.has(k));
+}
+
+/**
  * A commit counts as SUBSTANTIVE session work when it is not an automation-lane
  * subject AND it touches at least one non-generated file.
  */
@@ -161,7 +195,33 @@ export function isSubstantiveCommit(commit = {}) {
   if (AUTOMATION_SUBJECT_RE.test(subject)) return false;
   const files = Array.isArray(commit.files) ? commit.files : [];
   if (!files.length) return false; // empty/merge commit — nothing to write back
-  return files.some((f) => !isGeneratedPath(f));
+  return files.some((f) => {
+    if (isGeneratedPath(f)) return false;
+    if (String(f).replace(/\\/g, '/') === STATUS_PATH && isReceiptOnlyStatusEdit(commit)) return false;
+    return true;
+  });
+}
+
+/**
+ * Attach `statusKeys` to commits whose ONLY non-generated file is STATUS_PATH —
+ * the one shape where the answer changes the verdict. Bounded to those commits,
+ * so a normal window costs zero extra git calls.
+ */
+export function withStatusKeys(commits, root = ROOT) {
+  const show = (rev) => {
+    const r = spawnSync('git', ['show', `${rev}:${STATUS_PATH}`],
+      { cwd: root, encoding: 'utf8', windowsHide: true, maxBuffer: 64 * 1024 * 1024 });
+    if (r.status !== 0) return undefined;
+    try { return JSON.parse(r.stdout); } catch { return undefined; }
+  };
+  return commits.map((c) => {
+    const hand = (c.files || []).filter((f) => !isGeneratedPath(f));
+    if (hand.length !== 1 || String(hand[0]).replace(/\\/g, '/') !== STATUS_PATH) return c;
+    const before = show(`${c.sha}^`);
+    const after = show(c.sha);
+    if (!before || !after) return c; // unreadable → stays substantive
+    return { ...c, statusKeys: changedTopLevelKeys(before, after) };
+  });
 }
 
 /**
@@ -305,7 +365,7 @@ export function run(root = ROOT, opts = {}) {
   // Derive the window from the anchor instead of guessing a fixed depth, so
   // accumulating [skip ci] chore commits can never push the anchor out of view.
   const limit = opts.limit || resolveWindow(anchorDistance(root));
-  return evaluateWriteBackCurrency({ commits: readCommits(root, limit), ...opts, limit: undefined });
+  return evaluateWriteBackCurrency({ commits: withStatusKeys(readCommits(root, limit), root), ...opts, limit: undefined });
 }
 
 /**
@@ -377,6 +437,23 @@ export function selfTest() {
       }],
     ['a homepage edit stays substantive even though a generator writes into it',
       () => isSubstantiveCommit({ sha: 'h1', isoDate: old, subject: 'fix(home): hero copy', files: ['index.html', 'api/status-proof.json'] }) === true],
+    // S362 regression: the real shape of df79cc6b / 6df82ca9, reported as debt
+    // 12.3h after the correct S361 closeout.
+    ['a resync that only rewrites doctorScore in PROJECT_STATUS is churn (df79cc6b)',
+      () => isSubstantiveCommit({ sha: 'df79cc6b', isoDate: old, subject: 'chore(resync): converge derived graph over the S361 rebase',
+        files: ['api/commit-map.json', '.cache/context-meter.json', STATUS_PATH], statusKeys: ['doctorScore'] }) === false],
+    // Guard: 20e0dd4b2 was ALSO a chore(resync), and it changed health/currentFocus/blockers.
+    ['a resync that changes hand-written status keys stays substantive (20e0dd4b2)',
+      () => isSubstantiveCommit({ sha: '20e0dd4b', isoDate: old, subject: 'chore(resync): converge after publisher rebase',
+        files: ['api/commit-map.json', STATUS_PATH], statusKeys: ['health', 'currentFocus', 'blockers', 'doctorScore'] }) === true],
+    ['a PROJECT_STATUS edit whose keys were not read stays substantive (errs toward debt)',
+      () => isSubstantiveCommit({ sha: 'u1', isoDate: old, subject: 'chore(resync): converge',
+        files: [STATUS_PATH] }) === true],
+    ['receipt keys never excuse a second hand-written file',
+      () => isSubstantiveCommit({ sha: 'u2', isoDate: old, subject: 'chore(resync): converge',
+        files: [STATUS_PATH, 'context/CURRENT_STATE.md'], statusKeys: ['doctorScore'] }) === true],
+    ['changedTopLevelKeys reports value changes, additions and removals',
+      () => JSON.stringify(changedTopLevelKeys({ a: 1, b: { x: 1 }, c: 3 }, { a: 1, b: { x: 2 }, d: 4 }).sort()) === '["b","c","d"]'],
     ['hand-written write-back surfaces under context/ are NOT treated as generated',
       () => isGeneratedPath('context/CURRENT_STATE.md') === false && isGeneratedPath('context/contracts/hub.json') === true],
     // The regression this fix exists for. Before S320 this returned ok:true.

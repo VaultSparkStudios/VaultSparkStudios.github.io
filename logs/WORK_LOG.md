@@ -1697,3 +1697,19 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 
 **Release.** Staging b79c4d8c50ee (6960 files, chain 79); ceremony 11/11; the service worker reached activated on staging, then on production after scoped promotion run 35434590099 (build-sha 113474364). smoke:live 6/6.
 
+
+## S362 — 2026-09-19 — two probes stopped crying wolf
+
+**0. Triage.** The write-back probe said DEBT 12.3h after a correct S361 closeout, and the doctor reported a "silent" cron that had run on time. Both were probe defects, and both became the top of the audit: a probe that raises false alarms gets ignored.
+
+**1. Cron parsing.** `- cron: '0 6 * * 1'   # Every Monday` matched nothing, because the pattern was anchored at end-of-line — 11 lines in 9 workflows. Those workflows silently became "daily", and Weekly Maintenance was flagged silent 135h after an on-time run. Added `parseCronLines` + `combinedIntervalHours` (rates add; four daily Desk slots are one run every 6h). Fixtures use the real workflow text. Self-test 28/28; live 14 checked, 0 silent.
+
+**2. Write-back currency.** `chore(resync)` commits touch generated files plus `doctorScore` inside PROJECT_STATUS.json. Surveyed 40 commits to separate the keys tools write from the keys people write, then classified by key. A resync that changed health/currentFocus/blockers (20e0dd4b2) still counts as debt; an unreadable diff stays debt. Self-test 20/20; live: current.
+
+**3. Service-worker install gate.** New Playwright spec registers `/sw.js` and requires `activated` plus a complete precache. Mutation-tested twice: a duplicate entry passes (S361 de-duplicates at install — correct), a 404 entry goes `redundant` and the spec goes red. Blocking in the E2E compliance job; added to verify:local core + extended.
+
+**4. Newsletter.** Six scheduled failures since April, all from a deliberate non-arming. The scheduled run now emits a held annotation and exits 0 unless NEWSLETTER_ARMED=true. Nothing armed, nothing sent.
+
+**5. Precache reviewed:** 100 entries, 3.2 MB raw / ~779 KB brotli, only for members who opt into offline/push. Kept.
+
+**Deferred honestly:** the IGNIS rescore remedy is a no-op in project repos (reads a studio-ops-only registry) — Ark repo-question shipped; founder-presence history purge still needs a force-push.

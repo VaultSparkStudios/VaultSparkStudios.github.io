@@ -2556,3 +2556,20 @@ The Engagement row above says comments are "live again". By release the Supabase
 
 **Brainstorm → committed:** (1) `[SIL]` a browser gate that registers `/sw.js` and requires `activated`. (2) `[SIL]` review the 100-entry precache now that it actually downloads.
 
+
+## 2026-09-19 — Session 362 (two probes stopped crying wolf) | Total: 986/1000 (v3.0) | Velocity: 4 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | Both probe defects reproduced against live data before any edit; each fix pinned with a fixture taken from the real artifact; 502/502 build:check. |
+| Creative Alignment | 98 | No visitor-facing surface changed; the honesty rules that govern them were the thing repaired. |
+| Momentum | 98 | Four audit items shipped and two closed board items, in one pass, with two honest deferrals recorded rather than faked. |
+| Engagement | 96 | The offline/push path members opt into is now gated in a browser, so it cannot silently break again. |
+| Process Quality | 100 | Two alarms were disbelieved and investigated instead of carried; the service-worker gate was mutation-tested in both directions, including one mutation that correctly did NOT fail. |
+| Cross-Repo Coherence | 100 | No sibling-repo edits. Two propagated-script fixes and one defect question shipped as Ark cargo; the IGNIS tree (another session's uncommitted work) was left alone. |
+| Security Posture | 99 | No new capability, no new credential, no arming. |
+| Ecosystem Integration | 99 | Both probe fixes apply to every repo carrying the propagated scripts and were shipped as pattern-share cargo. |
+| Capital Efficiency | 100 | No new tools, no paid calls. |
+| Automation Coverage | 97 | A real install is now gated, but the staleness probe denominator can still shrink under gh budget pressure — committed as [SIL]. |
+
+**Brainstorm → committed:** (1) `[SIL]` bind the staleness verdict to the discovered workflow count so a shrinking denominator cannot change it silently. (2) `[SIL]` resolve the IGNIS remedy path with studio-ops rather than leaving a doctor remedy that cannot run.

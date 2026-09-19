@@ -38,8 +38,22 @@ jobs:
           FUNCTION_BASE_URL: ${{ secrets.SUPABASE_FUNCTION_BASE_URL }}
           MODE: ${{ github.event_name == 'schedule' && 'send' || inputs.mode }}
           PREVIEW_TO: ${{ inputs.preview_to }}
+          EVENT_NAME: ${{ github.event_name }}
+          NEWSLETTER_ARMED: ${{ vars.NEWSLETTER_ARMED }}
         run: |
           set -euo pipefail
+
+          # S362 (D-S362.3): the monthly send is deliberately unarmed (D-S341.4; the
+          # S354 founder directive keeps arming a founder decision). Until then the
+          # schedule HOLDS instead of failing: six red runs a year looked exactly like
+          # a broken cron, and trained everyone to ignore the one that matters. The
+          # held annotation keeps it visible: the staleness probe reports it by name.
+          # To arm: set the repository variable NEWSLETTER_ARMED=true, and first run
+          # ONE manual `preview` dispatch, then a manual `dry-run` dispatch.
+          if [ "${EVENT_NAME}" = "schedule" ] && [ "${NEWSLETTER_ARMED}" != "true" ]; then
+            echo "::warning title=Member newsletter held::Scheduled send skipped: NEWSLETTER_ARMED is not 'true' (unarmed by decision D-S341.4). Nothing was sent."
+            exit 0
+          fi
 
           if [ -z "${NEWSLETTER_SECRET}" ]; then
             echo "::error::Repository secret NEWSLETTER_SECRET is not set (the function would reject an empty Bearer)."

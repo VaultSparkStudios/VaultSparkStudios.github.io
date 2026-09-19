@@ -1,12 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-19 (S361: the service worker installs again (duplicate precache entries had made every production install redundant since at least June); /status/ treats offline support as a browser property; Supabase recovered.)
+Last updated: 2026-09-19 (S362: two false-alarming probes fixed (cron comments, write-back currency); a browser service-worker install gate; the unarmed newsletter cron holds instead of failing; the precache reviewed and kept.)
 
-## Open — S361
+## Open — S362
 
-- [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API's per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
-- [ ] **[SIL][S361][OBS/P2]** Add a real service-worker install check to a gate (a browser test that registers `/sw.js` and requires `activated`). The unit test catches duplicates, but not any other reason `addAll` could reject.
-- [ ] **[SIL][S361][PERF/P3]** Review the 100-entry precache now that it actually installs: two entries (`/vaultsparked/*.js`) 301 to an HTML page, and a member's first install downloads the whole list.
+- [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
+- [ ] **[SIL][S362][OBS/P3]** The doctor names `rescore-ignis --stale` as the IGNIS remedy, but the propagated copy reads `portfolio/PROJECT_REGISTRY.json` from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question `01K2TR2MCB649E1AD036E22BAD`; until then the stale score stands honestly reported.
+- [ ] **[SIL][S362][OBS/P3]** The staleness probe checked count flickered (14 vs 11 workflows a minute apart) when `gh` calls hit the per-run budget. Unreachable workflows are named, but a shrinking denominator still changes the verdict — bind the verdict to the discovered workflow count.
+
+## Closed — S361 items (worked in S362)
+
+- [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.
+- [x] **[SIL][S361][PERF/P3]** Review the 100-entry precache — **DONE S362** (D-S362.5): 100 entries, 3.2 MB raw / about 779 KB brotli, background-fetched only for members who opt into offline and push. Kept; no trim justified by the numbers.
+- [x] **[S341][OPS/P1]** Decide whether to arm the Monthly Member Newsletter — **RESOLVED S362 without arming** (D-S362.3): the schedule now holds (held annotation, exit 0) unless `NEWSLETTER_ARMED=true`, so a deliberate hold no longer reads as a broken cron. Arming remains a founder decision.
+
 ## Closed — S360 items (worked in S361)
 
 - [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.

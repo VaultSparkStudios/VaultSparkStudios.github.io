@@ -2029,3 +2029,27 @@ Found while checking what the new /status/ offline row would claim: on productio
 
 The /status/ Service Worker row fed the overall verdict, so a private window read "Partial Outage". **Decided:** it is informational ("Notifications & Offline (this browser)"), with the true reason. The worker is registered only by the Vault portal and the notification opt-in, never on a plain visit, so the copy says exactly that.
 
+
+## D-S362.1 — The cron staleness probe reads a cron line that carries a comment, and adds the rates
+
+`check-scheduled-workflow-staleness.mjs` anchored its cron pattern at end-of-line, so every `- cron: '0 6 * * 1'   # Every Monday` matched nothing — 11 cron lines in 9 of this repo's workflows. Those workflows fell back to a daily expectation, and **Weekly Maintenance**, whose last scheduled run was on time, was reported `silent` against a 72h threshold; the doctor printed that verdict. **Decided:** `parseCronLines()` reads to the closing quote, or to the comment when unquoted, and `combinedIntervalHours()` combines lines by summing their rates rather than taking the minimum — four daily slots (`news-publish`) are one run every 6h, not one a day, so a three-day stall there is now reportable. Fixtures use the verbatim workflow text; self-test 28/28. Live: 14 workflows checked, 0 silent.
+
+## D-S362.2 — Write-back currency classifies PROJECT_STATUS.json by key, not by file
+
+`context/PROJECT_STATUS.json` is hand-written *and* tool-written: `resync-derived` rewrites `doctorScore` on every run, so each `chore(resync)` commit that follows a closeout carried exactly one "hand-written" file and was reported as **WRITE-BACK DEBT** 12.3h after a correct S361 closeout (`df79cc6b`, `6df82ca9`). Classing the whole file as generated would have laundered real work: `20e0dd4b2`, also a `chore(resync)`, changed `health`, `currentFocus` and `blockers`. **Decided:** classify at key level. `STATUS_RECEIPT_KEYS` (doctorScore, doctorBlockingFailing, testsSourceFingerprint, testsPlanFingerprint, ignis/entropy score + lastComputed) was surveyed across 40 commits, S344–S361. A PROJECT_STATUS edit is churn only when its changed keys are **known** and all are receipt keys; an unreadable diff leaves the commit substantive, so the rule can only over-report, never launder. Self-test 20/20 with both regressions pinned.
+
+## D-S362.3 — The unarmed newsletter cron holds instead of failing
+
+The Monthly Member Newsletter had failed all six of its scheduled runs since 2026-04-02 (`404 Requested function was not found`) because it is deliberately unarmed (D-S341.4; arming is a founder decision, S354). Six red runs a year are indistinguishable from a cron that broke, which is how a real breakage would hide. **Decided:** the scheduled trigger checks the repository variable `NEWSLETTER_ARMED`; when it is not `true` the run emits `::warning title=Member newsletter held::` and exits 0. The staleness probe already reports held publishers by name (S355), so the state stays visible without reading green. Manual `preview` / `dry-run` / `send` dispatches are unchanged. **This arms nothing and sends nothing.** To arm: set the variable, then dispatch one `preview` and one `dry-run` before the cron fires.
+
+## D-S362.4 — A browser gate now installs the service worker
+
+`verify-sw-assets.mjs` proves the precache files exist and the S361 unit test rejects duplicates, but no gate had ever run `navigator.serviceWorker.register()` — which is why an uninstallable worker survived in production from at least 2026-06-03 to S361. **Decided:** `tests/service-worker-install.spec.js` registers `/sw.js` against the local preview, requires `activated` (not `redundant`), and asserts every declared `STATIC_ASSETS` entry landed in the precache. It is a **blocking** step in the E2E compliance job and is in the `verify:local` core and extended tiers. Mutation-tested: a duplicate entry now passes (S361's install-time `Set` absorbs it, correctly), and a 404 precache entry turns the worker `redundant` and the test red.
+
+## D-S362.5 — The precache is reviewed and kept, with numbers
+
+100 unique entries, 3.2 MB raw / ~779 KB brotli; the largest are `vaultspark-icon.webp` (75 KB), `icon-256.png` (40 KB) and the shell CSS (36 KB). The worker is registered only by the Vault portal and the notification opt-in (D-S361.2), so this is a background cost for members who asked for offline and push, not a first-visit cost for readers. **Decided:** keep the list as it stands; no trim is justified by these numbers. The S361 board item is closed with the measurement.
+
+## D-S362.6 — The IGNIS rescore remedy cannot work from a project repo (deferred, routed to studio-ops)
+
+The doctor's `ignis` check reports a 10-day-stale score and names `rescore-ignis --stale` as the remedy. The propagated copy reads `portfolio/PROJECT_REGISTRY.json` from **its own repo root**, a file that exists only in studio-ops, so here it reports `staleCount: 0, rows: []` and the remedy is a structural no-op. Scoring would also run the IGNIS CLI against the `vaultspark-ignis` tree, which currently holds another session's uncommitted changes — a project session must not write there (CANON-018). **Decided:** not worked around locally. Shipped as an Ark `repo-question` to studio-ops (`01K2TR2MCB649E1AD036E22BAD`); the stale score stays honestly reported meanwhile.

@@ -68,6 +68,15 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
 
+      # S362: a real register('/sw.js') must reach `activated`. The worker went
+      # `redundant` on every production install for three months and no gate
+      # ran an install. Blocking: an uninstallable worker means no offline
+      # shell and no push notifications for any member.
+      - name: Service worker install
+        run: npx playwright test tests/service-worker-install.spec.js --reporter=list --project=chromium
+        env:
+          BASE_URL: http://127.0.0.1:4173
+
       - name: Computed render smoke
         run: npx playwright test tests/computed-styles.spec.js --reporter=list --project=chromium
         env:
