@@ -127,6 +127,13 @@ function run(command, commandArgs, extraEnv = {}) {
         cwd: process.cwd(),
         stdio: 'inherit',
         shell: false,
+        // S363 — stated at the call site even though ./lib/safe-spawn.mjs already
+        // forces it. This line names cmd.exe explicitly, and a direct interpreter
+        // spawn is the §0 window-storm's exact shape: one visible console per call,
+        // and this runner spawns per verification tier. The hardened gate requires
+        // the flag where the interpreter is named, so a future refactor away from
+        // safe-spawn cannot silently reopen the storm.
+        windowsHide: true,
         env: { ...process.env, ...extraEnv },
       });
     } else {

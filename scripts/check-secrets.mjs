@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-// @verification-scope startup — secrets-gateway capability discovery.
+// @verification-scope startup — reads LIVE credentials through the secrets gateway,
+// so its verdict describes this machine, not this tree; wiring it into build:check
+// would make the build fail on a laptop without credentials and pass in CI for the
+// wrong reason. Genuinely invoked: /start step 2 runs it (`--audit`) and
+// scripts/git-hooks/pre-push runs it before every push. Declared S363.
 /**
  * check-secrets.mjs — Secrets discovery CLI (v3.1)
  *
@@ -19,7 +23,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { listCapabilities, resolveCapability } from './lib/secrets.mjs';
+import { listCapabilities, resolveCapability, describeCapability } from './lib/secrets.mjs';
 import { gradeCapability, probeableCapabilities } from './lib/capability-action-probes.mjs';
 
 const args = process.argv.slice(2);
@@ -39,7 +43,16 @@ function emitCapabilityStatus(rows) {
   const capabilities = rows.map((r) => ({
     capability: r.capability,
     ok: Boolean(r.ok),
-    status: r.ok ? 'READY' : (r.found || []).length > 0 ? 'PARTIAL' : 'MISSING',
+    // S313 [audit #1] — the console tile inherits the gateway's reason rather than
+    // re-deriving status from found.length, which cannot see the difference between a
+    // credential-free capability, an unknown name, and a genuinely empty credential set.
+    status: r.ok
+      ? 'READY'
+      : r.reason === 'unknown-capability' ? 'UNKNOWN'
+        : r.reason === 'map-absent' || r.reason === 'map-unreadable' ? 'NO-MAP'
+          : (r.found || []).length > 0 ? 'PARTIAL' : 'MISSING',
+    reason: r.reason,
+    cause: describeCapability(r),
     requiredCount: (r.required || []).length,
     presentCount: (r.found || []).length,
     missingKeys: r.missing || [],   // NAMES only — no values, ever
@@ -53,6 +66,8 @@ function emitCapabilityStatus(rows) {
     ready: capabilities.filter((c) => c.status === 'READY').length,
     partial: capabilities.filter((c) => c.status === 'PARTIAL').length,
     missing: capabilities.filter((c) => c.status === 'MISSING').length,
+    unknown: capabilities.filter((c) => c.status === 'UNKNOWN').length,
+    noMap: capabilities.filter((c) => c.status === 'NO-MAP').length,
     capabilities,
   };
   const out = new URL('../portfolio/CAPABILITY_STATUS.json', import.meta.url);
@@ -76,30 +91,15 @@ function render(rows) {
   console.log('\n' + line);
   console.log(sep);
   for (const r of rows) {
-    // UNKNOWN is not MISSING. MISSING is a founder action (mint a credential);
-    // UNKNOWN is an agent action (fix the name). Rendering them identically is
-    // how a typo becomes a "human-blocked" label — the phantom blocker
-    // CANON-019 forbids. Restored S316 after an inbound propagation delivered a
-    // newer CLI that had never carried this distinction.
-    // S349: a credential that is PRESENT but whose last real probe FAILED is its
-    // own state. Collapsing it into READY is how the gateway told agents a
-    // capability was usable while holding the proof that it was not.
-    const status = r.known === false ? '✗ UNKNOWN '
-      : r.ok && r.probeFailing ? '⚠ FAILING '
-        : r.ok ? '✓ READY   '
-          : r.required.length === 0 ? '◦ EXTERNAL'
-            : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
-    const keys = r.known === false
-      ? (r.suggestions?.length ? `no such capability — did you mean ${r.suggestions.slice(0, 3).join(', ')}?` : 'no such capability in CAPABILITY_MAP.json')
-      : r.ok && r.probeFailing
-        ? `present but last probe: ${r.lastProbeStatus}${r.lastProbeAt ? ` (${String(r.lastProbeAt).slice(0, 10)})` : ''}`
-      : r.ok
-        ? `${r.found.length}/${r.required.length} all present`
-        : r.required.length === 0
-          ? 'no env keys — vault/OAuth capability'
-          : r.missing.length > 3
-            ? `missing ${r.missing.length}: ${r.missing.slice(0, 2).join(', ')}…`
-            : `missing: ${r.missing.join(', ')}`;
+    // S313 [audit #1] — status and cause both derive from the gateway's `reason`, never
+    // from `missing.length`. A credential-free capability is READY, an unknown name is a
+    // spelling defect, and neither may render as `⛔ MISSING  missing:` with an empty cause.
+    const status = r.ok
+      ? '✓ READY   '
+      : r.reason === 'unknown-capability' ? '? UNKNOWN '
+        : r.reason === 'map-absent' || r.reason === 'map-unreadable' ? '· NO MAP  '
+          : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
+    const keys = describeCapability(r);
     console.log(
       r.capability.padEnd(32) + ' ' +
       status.padEnd(10) + ' ' +
@@ -107,6 +107,16 @@ function render(rows) {
     );
   }
   console.log('');
+  // S363 — restored after the same inbound propagation that reverted
+  // lib/secrets.mjs also flattened this render. Two distinctions were lost, and
+  // both of them exist to stop a phantom blocker (CANON-019):
+  //   · an unrecognised NAME is a caller error, not a missing credential. Folded
+  //     into the plain tally, a typo reads as "a human must mint this".
+  //   · a capability can be PRESENT and its last action probe FAILING (S349).
+  //     Counting those as ready is how `✓ READY 2/2 all present` got printed for
+  //     a capability whose own entry recorded `auth-error`.
+  // The denominator is scoped to KNOWN capabilities for the same reason: an
+  // unknown name must not quietly enlarge the "not ready" count.
   const unknown = rows.filter(r => r.known === false).length;
   if (unknown) {
     console.log(`${unknown} unrecognised capability name(s) — this is a caller error, NOT a missing credential. Fix the name and retry before labelling anything human-blocked.`);
@@ -125,7 +135,7 @@ function render(rows) {
 if (probe) {
   // Action-scoped grading: one capability, or every capability with a probe.
   const caps = capArg ? [capArg] : probeableCapabilities();
-  const graded = caps.map((c) => gradeCapability(c, { refresh }));
+  const graded = await Promise.all(caps.map((c) => gradeCapability(c, { refresh })));
   if (json) {
     process.stdout.write(JSON.stringify(graded, null, 2) + '\n');
   } else {
@@ -142,8 +152,9 @@ if (probe) {
 } else if (capArg) {
   const result = resolveCapability(capArg);
   render([{ capability: capArg, ...result }]);
-  // 0 ready · 1 credential genuinely absent (founder) · 3 unknown name (caller).
-  // Distinct codes so a wrapper cannot fold a typo into a human-blocked label.
+  // S363 — exit 3 is the machine-readable half of the same separation: a caller
+  // that cannot tell "you typed the name wrong" (3) from "the credential is
+  // genuinely absent" (1) will escalate a typo to the founder.
   process.exit(result.known === false ? 3 : result.ok ? 0 : 1);
 } else {
   const rows = listCapabilities();

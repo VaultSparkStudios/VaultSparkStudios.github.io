@@ -18,8 +18,8 @@
 // Threshold files (any context/ or docs/ file):
 //   Content length must not shrink below WIPE_THRESHOLD (default 50%) of HEAD.
 
-import { readFileSync, existsSync } from 'fs';
-import { resolve, join, dirname } from 'path';
+import { readFileSync, existsSync, realpathSync, readdirSync } from 'fs';
+import { resolve, join, dirname, basename, relative, isAbsolute } from 'path';
 import { fileURLToPath } from 'url';
 import { spawnSync } from './safe-spawn.mjs';
 import { STUDIO_STATE_DIRS } from './studio-state-dirs.mjs';
@@ -70,6 +70,96 @@ function appendOnlyPreserved(existing, newContent) {
   return p + s >= oldBody.length;
 }
 
+
+const ARCHIVED_RECORD = /^context\/archive\/(?:DECISIONS|SELF_IMPROVEMENT_LOOP|SIL)_(?:S\d+-S\d+|\d{4}Q[1-4])\.md$/;
+// S363 — this repo's rotation tool does not use the `_S<a>-S<b>.md` + in-file
+// pointer convention the propagated guard was written for. `scripts/rotate-ledger.mjs`
+// writes `context/archive/<TAG>_<YYYY>Q<q>.md` (DECISIONS_2026Q3.md, SIL_2026Q3.md)
+// and adds no pointer line to the hot file. The two contracts met head-on in this
+// closeout: the ledger size gate aborted naming `rotate-ledger --apply` as the
+// repair, and running exactly that repair produced a tree the wipe guard rejected
+// as `append-only-violated (79.1% of HEAD)`. A prescribed repair that trips a
+// sibling gate leaves no correct move.
+//
+// Only DISCOVERY is broadened — how archive bodies are located. The substantive
+// proof below is untouched: every `## ` section present in HEAD must still exist
+// verbatim, either in the new hot file or in an archive body, each occurrence
+// consumed once. Content that vanished still fails, and content that was silently
+// edited on its way to the archive still fails.
+const ARCHIVE_STEM_ALIASES = { SELF_IMPROVEMENT_LOOP: ['SELF_IMPROVEMENT_LOOP', 'SIL'], DECISIONS: ['DECISIONS'] };
+function discoverArchiveRecords(repo, stem) {
+  const names = ARCHIVE_STEM_ALIASES[stem] || [stem];
+  let entries = [];
+  try { entries = readdirSync(join(repo, 'context', 'archive')); } catch { return []; }
+  return entries
+    .map((name) => `context/archive/${name}`)
+    .filter((rel) => ARCHIVED_RECORD.test(rel) && names.some((n) => basename(rel).startsWith(`${n}_`)))
+    .sort();
+}
+const ARCHIVE_POINTER = /^> Older entries [^\r\n]*?live verbatim in \`(context\/archive\/[A-Z_]+_S\d+-S\d+\.md)\`[^\r\n]*$/gm;
+function archivePointers(text) {
+  return [...String(text).matchAll(ARCHIVE_POINTER)].map(m=>m[1]);
+}
+function withoutArchivePointers(text) {
+  return normalizeEol(stripRegenerable(text)).replace(ARCHIVE_POINTER,'').trim();
+}
+/** Exact prior sections may relocate only through explicit same-document pointers.
+ * No archive directory exemption: missing/edited content and lost navigation fail.
+ */
+export function archivedAppendOnlyPreserved(existing,next,{filePath,root}={}) {
+  if(!filePath || !/[/\\]context[/\\](?:DECISIONS|SELF_IMPROVEMENT_LOOP)\.md$/.test(filePath))return false;
+  const repo=resolve(root||dirname(dirname(filePath)));
+  const stem=basename(filePath,'.md');
+  const declared=archivePointers(next);
+  const oldPointers=archivePointers(existing);
+  // A pointer that existed before must never be dropped, whichever convention is in use.
+  if(oldPointers.some(p=>!declared.includes(p)))return false;
+  // S363 — fall back to the archive files this repo's rotation actually writes when
+  // the hot file declares no pointers. Never a blanket pass: an empty discovery
+  // still returns false, and every section must still be proven present below.
+  const pointers=declared.length?declared:discoverArchiveRecords(repo,stem);
+  if(!pointers.length)return false;
+  const archiveDir=join(repo,'context','archive');
+  let archiveRoot;
+  try {
+    archiveRoot=realpathSync(archiveDir);
+    const rel=relative(realpathSync(repo),archiveRoot);
+    if(!rel || rel.startsWith('..') || isAbsolute(rel))return false;
+  } catch { return false; }
+  const bodies=[withoutArchivePointers(next)];
+  for(const pointer of new Set(pointers)) {
+    // S363 — accept this repo's archive stems (SIL for SELF_IMPROVEMENT_LOOP) and its
+    // quarter naming. ARCHIVED_RECORD still pins the shape, and the containment check
+    // below still refuses anything resolving outside context/archive/.
+    const allowedPrefixes=(ARCHIVE_STEM_ALIASES[stem]||[stem]).map(n=>`context/archive/${n}_`);
+    if(!allowedPrefixes.some(prefix=>pointer.startsWith(prefix))||!ARCHIVED_RECORD.test(pointer))return false;
+    try {
+      const target=realpathSync(join(repo,pointer));
+      const rel=relative(archiveRoot,target);
+      if(!rel || rel.startsWith('..') || isAbsolute(rel))return false;
+      bodies.push(normalizeEol(readFileSync(target,'utf8')));
+    } catch { return false; }
+  }
+  const old=withoutArchivePointers(existing);
+  const starts=[...old.matchAll(/^## /gm)].map(m=>m.index);
+  if(!starts.length)return false;
+  const preamble=old.slice(0,starts[0]).trim();
+  if(preamble&&!bodies[0].includes(preamble))return false;
+  const sections=starts.map((start,i)=>old.slice(start,starts[i+1]??old.length).trim());
+  // Consume each exact occurrence once; duplicated old sections need equal evidence.
+  for(const section of sections) {
+    let found=false;
+    for(let i=0;i<bodies.length;i++) {
+      const at=bodies[i].indexOf(section);
+      if(at<0 || (at>0&&bodies[i][at-1]!=='\n'))continue;
+      bodies[i]=bodies[i].slice(0,at)+bodies[i].slice(at+section.length);
+      found=true;break;
+    }
+    if(!found)return false;
+  }
+  return true;
+}
+
 // Files where content must only GROW (old content must be a prefix of new)
 const APPEND_ONLY = [
   'context/DECISIONS.md',
@@ -107,6 +197,36 @@ const GENERATED = [
   // render. The shape check still catches a true wipe (empty scaffold).
   'docs/STARTUP_BRIEF.md',
   'context/SIGNALS.md',
+  // S294 recovery — this is a live generated census, not an append-only ledger.
+  // A healthy run may legitimately resolve every escalation and rewrite the file
+  // to { count: 0, escalations: [] }. The JSON shape guard below still rejects an
+  // empty object, empty array, or corrupt payload, so wipe protection stays armed.
+  'portfolio/ark/DISPATCH_ESCALATIONS.json',
+  // S295 — ACTIVE_SESSIONS is another live lock census. A truthful refresh may
+  // legitimately shrink whenever a worker closes, so byte-ratio loss is not a
+  // wipe signal. Keep it in GENERATED (rather than SHRINK_ALLOWED) so an empty
+  // object/array or corrupt JSON still fails the content-shape guard.
+  'portfolio/ACTIVE_SESSIONS.json',
+  // S283 — a LIVE CENSUS: orchestrate.mjs rewrites this from the session locks
+  // that exist right now, so shrinking IS the measurement, not damage. It halved
+  // (19,273 → 8,665 bytes) purely because five sibling sessions ended between
+  // renders: identical schema, every key present, sessions 11 → 6 and collisions
+  // 17 → 4. Classified GENERATED rather than SHRINK_ALLOWED deliberately — the
+  // JSON branch of isGeneratedWiped still catches the true wipe (an empty object,
+  // or corrupt JSON), so this keeps the guard armed instead of blanket-exempting
+  // a file. Declaring a false positive beats weakening the detector (D-S282.3).
+  'portfolio/compiled/SESSION_ORCHESTRATOR.json',
+  // S312 — a LIVE CENSUS of blocked tasks, rebuilt by build-blocker-dag.mjs from every
+  // sibling TASK_BOARD on each run, so its size is a function of the current blocked
+  // population rather than of accumulated content. It shrank hard this session for the
+  // best possible reason: classifyStatus had been matching the literal status
+  // `unblocked` against /block/, so 1126 of 1144 rows were never blocked at all. The
+  // honest population is 18 and the artifact correctly followed it down. Classified
+  // GENERATED rather than SHRINK_ALLOWED deliberately (D-S282.3): the JSON branch of
+  // isGeneratedWiped still rejects an empty object, empty array or corrupt payload, so
+  // a true wipe is still caught — declaring a false positive beats weakening the
+  // detector.
+  'portfolio/BLOCKER_DAG.json',
 ];
 
 // Template-placeholder markers that signal an empty scaffold overwrote real
@@ -137,9 +257,21 @@ function isGeneratedWiped(content) {
   // brief header) and status-row artifacts (context/SIGNALS.md is bare ✓/⚠/⛔
   // rows — rows ARE the content; no headings or list markers exist by design).
   const hasGenStamp = /generated[-\s]*(by|at|:)/i.test(content);
+  // S363 — the status-row test above was written for "bare ✓/⚠/⛔ rows", but the
+  // artifact it names is BOX-DRAWN: every row in context/SIGNALS.md begins with
+  // `║  ✓  Tests …`, never with the glyph itself. So the pattern never matched, the
+  // file carries no `generated-by` stamp either, and every regeneration classified
+  // as contentless — including one measured at 110% of HEAD, i.e. a file that GREW.
+  // A guard whose shape test does not match the shape it names cannot tell a wipe
+  // from a refresh, and this one was blocking a legitimate closeout commit while
+  // HEAD's copy sat five weeks stale.
+  //
+  // Allow an optional box-drawing / quote / whitespace prefix before the glyph. The
+  // emptiness and placeholder tests above are untouched, so a genuinely blanked or
+  // scaffolded file is still a wipe.
   const hasRealEntry = /^##\s+\S/m.test(content)
     || /^\s*[-*]\s+\S/m.test(content)
-    || /^[✓⚠⛔]\s+\S/mu.test(content);
+    || /^[\s║│|>]*[✓⚠⛔]\s+\S/mu.test(content);
   // Lost both its generator stamp AND any structured entry → contentless.
   return !hasGenStamp && !hasRealEntry;
 }
@@ -182,6 +314,9 @@ export function assertSafeWrite(filePath, newContent, opts = {}) {
     return; // valid regeneration of a generated file — never a wipe regardless of size
   }
 
+  // Archive evidence is checked before ratio: relocation may legitimately be small.
+  if (archivedAppendOnlyPreserved(existing, newContent, { filePath, root: opts.root })) return;
+
   // 1. Content reduction check
   const ratio = newContent.length / existing.length;
   if (ratio < threshold) {
@@ -193,7 +328,7 @@ export function assertSafeWrite(filePath, newContent, opts = {}) {
   }
 
   // 2. Append-only preservation check (order-agnostic — prepend or append)
-  const isAppendOnly = APPEND_ONLY.some(p => normPath.includes(p));
+  const isAppendOnly = APPEND_ONLY.some(p => normPath.includes(p)) || ARCHIVED_RECORD.test(normPath.slice(normPath.lastIndexOf('/context/') + 1));
   if (isAppendOnly && !appendOnlyPreserved(existing, newContent)) {
     throw new Error(
       `context-wipe-guard: ${filePath} is append-only — every prior entry must be ` +
@@ -259,10 +394,15 @@ export function checkContextFiles(root, opts = {}) {
   for (const relPath of APPEND_ONLY) {
     if (changedFiles && !changedFiles.has(relPath)) continue; // not changed → skip
     const absPath = join(root, relPath);
-    if (!existsSync(absPath)) continue;
+    if (!existsSync(absPath)) {
+      if (gitShow(relPath) !== null) findings.push({ file: relPath, issue: 'append-only-deleted', ratio: 0 });
+      continue;
+    }
     const headContent = gitShow(relPath);
     if (headContent === null) continue; // new file
     const diskContent = readFileSync(absPath, 'utf8');
+
+    if (archivedAppendOnlyPreserved(headContent, diskContent, { filePath: absPath, root })) continue;
 
     // Reduction check
     const ratio = diskContent.length / (headContent.length || 1);
@@ -273,6 +413,16 @@ export function checkContextFiles(root, opts = {}) {
       // is exempt because CANON-001 designs it to be overwritten each closeout).
       findings.push({ file: relPath, issue: 'append-only-violated', ratio });
     }
+  }
+
+  // A previously committed archive remains a protected record after relocation.
+  for (const relPath of changedFiles || []) {
+    if (!ARCHIVED_RECORD.test(relPath)) continue;
+    const prior = gitShow(relPath);
+    if (prior === null) continue;
+    const absPath = join(root, relPath);
+    if (!existsSync(absPath) || !appendOnlyPreserved(prior, readFileSync(absPath, 'utf8')))
+      findings.push({ file: relPath, issue: 'archived-record-lost', ratio: 0 });
   }
 
   // Threshold check on non-shrink-allowed context files.

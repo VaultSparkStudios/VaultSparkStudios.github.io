@@ -57,10 +57,12 @@ const ALLOWLIST = {
   //    skill?), not repository code, so a build-time verdict would be meaningless
   //    mid-session. Removing them instead would delete gates the arc protocol
   //    actively calls. ─────────────────────────────────────────────────────────
-  'check-protocol-skill-parity.mjs':
-    'Structural parity gate invoked by /start, and named as the enforcement mechanism in studio-start SKILL.md ' +
-    '("Parity with docs/SESSION_PROTOCOL.md §1 is enforced by ..."). Compares the protocol document against the ' +
-    'four skill copies that actually run it (CANON-010).',
+  // check-protocol-skill-parity.mjs removed from the allowlist S363. The exemption
+  // read "invoked by /start", but check-build-gate-reachability measured that NOTHING
+  // invoked it — the claim had quietly become untrue, which is precisely the rot this
+  // allowlist's own detector exists to catch. It is now wired into build:check:steps,
+  // so the exemption is redundant rather than merely inaccurate. Keeping a redundant
+  // entry is how an allowlist eventually excuses a real orphan by inheritance.
   'codemod-safe-spawn.mjs':
     'One-shot codemod (not a gate): rewrites child_process call sites onto lib/safe-spawn.mjs so every spawn ' +
     'carries windowsHide:true (the §0 Windows window-storm guard). Run by an agent when new spawn sites appear; ' +

@@ -1,8 +1,22 @@
 # Current State
 
-Last updated: 2026-09-19 (S362)
+Last updated: 2026-09-20 (S363)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S363 A safety gate keyed on the wrong thing, and a propagation quietly took eight guards back (2026-09-20)
+
+**The monthly newsletter's arming decision was bypassable by a dropdown.** The unarmed send was held behind `EVENT_NAME = schedule`, so a manual `workflow_dispatch` with `mode=send` skipped the hold entirely and would have mailed every opted-in member while `NEWSLETTER_ARMED` was still unset. The same choice made the hold branch unreachable by any manual run, so the guard added last session would first have executed unobserved on 2026-10-02. The gate now keys on the effective **mode**: it holds whenever a send is requested and the repository variable is not `true`, whatever triggered the run. That closes the bypass and makes the branch testable by the same dispatch it protects. Nothing was armed and nothing was sent.
+
+**The staleness probe can now say "repaired, awaiting its next run."** It judged crons purely on run history, so the newsletter's six pre-fix failures were going to read as a dead cron until 2026-10-02 even though both causes were already fixed — and during that window a genuinely newly-broken monthly cron would have looked identical. The probe now also reads the commit time of the workflow's own source. A streak whose every run predates the fix is reported as `repaired-untested`, with the streak, the commit and an expiry instant all named. It self-expires after one full cadence, a workflow nobody touched stays broken, a failure postdating the fix makes the streak real again, and silence past cadence is still reported. This is not the mute D-S362.8 refused: it asserts only what git can prove.
+
+**`/status/` was publishing that Supabase was blocked while three of its four authorities were live.** The control-plane receipt computed its headline from the service-role plane alone, so it read `overall: "blocked"` while carrying `managementApi`, `sqlMigration` and `edgeFunctions` all `ready` — and the identity receipt beside it published `readyPlanes: 3, totalPlanes: 4` next to that same word. Deploy authority was live throughout; this session used it to enumerate 30 edge functions. The verdict now aggregates all four planes and the CLI names which authorities are live. The promotion gate keys on `ready`, so nothing was loosened.
+
+**The startup brief could never find the revenue signal.** It parsed a path that exists only inside studio-ops, so from this repo the read always came back empty and the brief always printed `Revenue sig. not found` — a signal structurally incapable of ever being found, rendered as if the file were missing, while the doctor resolved it fine. Both surfaces now go through the shared resolver.
+
+**A propagation drained at `/start` took eight guards back, and only the loud ones were visible.** The inbound drain was mostly a real improvement — 44 files, net +2,162 lines — but it also removed symbols this repo's own code imports: the capability gateway's UNKNOWN-vs-MISSING separation and its presence-is-not-health fields, the `check-secrets` caller-error render and its exit code 3, the SIL invariant helpers in a pure 23-line deletion, the task-board inventory parser and the brief row that uses it, the deprecated-alias guard on `PROJECT_STATUS.json`, and `probe-capability`'s entire self-test. Every one is a phantom-blocker or honesty guard. All were merged back beside the propagated improvements rather than reverted, and the lane fix was shipped upstream as Ark cargo — the second time for one of them.
+
+**The write-back probe could be made to cry wolf by a `git pull`.** Fifty-seven upstream commits, every one authored by `github-actions[bot]`, counted as substantive session debt; the session lock written afterwards then tripped the cut-off heuristic and the probe reported an abandoned session with 57 unrecorded commits. Authorship is now the filter: a commit no session produced is not a session's debt. The file also gained a real `--self-test` — it had none, so `build:check` had been running the live git probe while reporting itself as a logic test.
 
 ## S362 Two probes stopped crying wolf, and a browser now installs the worker (2026-09-19)
 

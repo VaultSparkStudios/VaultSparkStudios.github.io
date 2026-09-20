@@ -138,11 +138,54 @@ export function evaluateStaleness(workflows, now = Date.now()) {
     const ageHours = newest == null ? null : (now - newest) / 36e5;
     const interval = wf.intervalHours ?? 24;
     const threshold = silentThresholdHours(interval);
-    const broken = streak >= MIN_CONSECUTIVE;
+    const redStreak = streak >= MIN_CONSECUTIVE;
+
+    // ── S363: "repaired, awaiting its next run" is not the same as "broken" ──
+    // This probe judges a cron purely on run history, so a cron that has ALREADY
+    // been fixed keeps reporting dead until its next scheduled occurrence — for a
+    // monthly job, up to 30 more days of red. Measured live: Monthly Member
+    // Newsletter carried streak 6 while both causes of those six failures were
+    // already repaired (the missing edge function was deployed; the unarmed
+    // schedule now holds instead of failing). Worse than the noise, during that
+    // window a genuinely NEWLY broken monthly cron is indistinguishable from it.
+    //
+    // The missing evidence was never in CI — it was in git: did the workflow's own
+    // source change AFTER the newest failing run? If it did, the failures are
+    // pre-fix and have not yet been retried.
+    //
+    // This must not become a mute button, so it is bounded at both ends:
+    //   · source unchanged since the failures  → stays broken (a claim needs a fix)
+    //   · a NEW run fails                      → that run postdates the change, so
+    //                                            the streak is real again
+    //   · one full interval elapses            → the downgrade EXPIRES and broken
+    //                                            returns; a repair that never ran
+    //                                            is not a repair, and silence is
+    //                                            not a pass
+    //   · an undated run in the streak         → no downgrade at all (absence of
+    //                                            evidence is not evidence of repair)
+    // And `silent` is still computed below from the FINAL verdict, so a cron that
+    // is quiet past its cadence keeps saying so even while repaired-untested.
+    const changedAt = wf.sourceChangedAt ? Date.parse(wf.sourceChangedAt) : NaN;
+    let repairedUntested = false;
+    let repairExpiresAt = null;
+    if (redStreak && Number.isFinite(changedAt)) {
+      const streakRuns = completed.slice(0, streak);
+      const allDated = streakRuns.every((r) => Number.isFinite(Date.parse(r.createdAt ?? '')));
+      const allPredateFix = allDated && streakRuns.every((r) => Date.parse(r.createdAt) < changedAt);
+      const expiresAt = changedAt + interval * 36e5;
+      if (allPredateFix && now < expiresAt) {
+        repairedUntested = true;
+        repairExpiresAt = new Date(expiresAt).toISOString();
+      }
+    }
+    const broken = redStreak && !repairedUntested;
 
     out.push({
       name: wf.name,
       broken,
+      repairedUntested,
+      repairExpiresAt,
+      sourceChangedAt: wf.sourceChangedAt ?? null,
       streak,
       recent: completed.slice(0, 3).map((r) => r.conclusion),
       intervalHours: interval,
@@ -234,6 +277,18 @@ function fetchRunAnnotations(runId, timeout = 8000) {
   return { ok: true, annotations };
 }
 
+/**
+ * S363: ISO commit time of the last change to a workflow's own source, or null.
+ * Null on any doubt (no git, untracked file, unparseable output) — a missing
+ * timestamp must never produce a downgrade.
+ */
+export function workflowSourceChangedAt(file, run = (args) => spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', timeout: 8000 })) {
+  const res = run(['log', '-1', '--format=%cI', '--', `.github/workflows/${file}`]);
+  if (!res || res.status !== 0) return null;
+  const iso = String(res.stdout || '').trim();
+  return Number.isFinite(Date.parse(iso)) ? iso : null;
+}
+
 function scheduledWorkflows() {
   if (!existsSync(WF_DIR)) return [];
   const out = [];
@@ -248,6 +303,9 @@ function scheduledWorkflows() {
     const intervalHours = combinedIntervalHours(parseCronLines(src));
     out.push({
       file,
+      // S363: when this workflow's own source last changed. A failing streak that
+      // entirely predates it is pre-fix history, not a live break.
+      sourceChangedAt: workflowSourceChangedAt(file),
       // gh keys runs by the workflow's `name:`; the FILE is the stable query key.
       name: m ? m[1].replace(/^["']|["']$/g, '') : file.replace(/\.ya?ml$/, ''),
       intervalHours,
@@ -375,6 +433,69 @@ function runSelfTest() {
   assert(c('silent-daily').silent && !c('silent-daily').broken,
     'the silent verdict is fixture-proven: a silent cron is silent and not broken');
 
+  // ── S363: repaired-untested (bounded downgrade) ──────────────────────────
+  // The live case: a monthly cron with 6 failures, every one of them older than
+  // the commit that fixed the workflow, and the next occurrence not yet due.
+  const MONTH = 24 * 30;
+  const fixedAt = (hoursAgo) => new Date(NOW - hoursAgo * 36e5).toISOString();
+  const repair = evaluateStaleness([
+    { name: 'repaired-monthly', intervalHours: MONTH, sourceChangedAt: fixedAt(20), runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(430) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(1150) },
+    ] },
+    // No fix has landed — history alone, so the streak stands.
+    { name: 'never-fixed', intervalHours: MONTH, sourceChangedAt: fixedAt(5000), runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(430) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(1150) },
+    ] },
+    // The fix ran and failed again: the newest failure POSTDATES it.
+    { name: 'fix-did-not-work', intervalHours: MONTH, sourceChangedAt: fixedAt(800), runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(430) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(1150) },
+    ] },
+    // A full interval has passed since the fix with no new run: the downgrade expires.
+    { name: 'repair-expired', intervalHours: 24, sourceChangedAt: fixedAt(30), runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(50) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(74) },
+    ] },
+    // No git timestamp at all — absence of evidence is not evidence of repair.
+    { name: 'no-source-date', intervalHours: MONTH, runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(430) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(1150) },
+    ] },
+    // A run in the streak carries no createdAt: cannot prove it predates the fix.
+    { name: 'undated-run', intervalHours: MONTH, sourceChangedAt: fixedAt(20), runs: [
+      { event: 'schedule', conclusion: 'failure' },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(1150) },
+    ] },
+    // Repaired, but quiet far past its cadence: the repair does not explain the silence.
+    { name: 'repaired-but-silent', intervalHours: 24, sourceChangedAt: fixedAt(2), runs: [
+      { event: 'schedule', conclusion: 'failure', createdAt: at(200) },
+      { event: 'schedule', conclusion: 'failure', createdAt: at(224) },
+    ] },
+  ], NOW);
+  const r = (n) => repair.find((v) => v.name === n);
+
+  assert(r('repaired-monthly').repairedUntested && !r('repaired-monthly').broken,
+    'a red streak entirely older than the fix is repaired-untested, not broken');
+  assert(r('repaired-monthly').streak === 2 && r('repaired-monthly').repairExpiresAt,
+    'a downgraded verdict still reports its streak and names when it expires');
+  assert(r('never-fixed').broken && !r('never-fixed').repairedUntested,
+    'THE MUTE-BUTTON GUARD: an untouched workflow stays broken — a claim of repair needs a fix');
+  assert(r('fix-did-not-work').broken && !r('fix-did-not-work').repairedUntested,
+    'a failure POSTDATING the fix means the fix did not work — broken again');
+  assert(r('repair-expired').broken && !r('repair-expired').repairedUntested,
+    'the downgrade expires after one full interval: a repair that never ran is not a repair');
+  assert(r('no-source-date').broken && !r('no-source-date').repairedUntested,
+    'no source timestamp → no downgrade (absence of evidence is not evidence of repair)');
+  assert(r('undated-run').broken && !r('undated-run').repairedUntested,
+    'an undated run in the streak cannot be proven pre-fix → no downgrade');
+  assert(r('repaired-but-silent').repairedUntested && r('repaired-but-silent').silent,
+    'silence past cadence is still reported while repaired-untested — the repair does not explain it');
+  assert(workflowSourceChangedAt('x.yml', () => ({ status: 0, stdout: 'not-a-date' })) === null
+    && workflowSourceChangedAt('x.yml', () => ({ status: 1, stdout: '' })) === null,
+    'an unparseable or failed git read yields null, never a fabricated timestamp');
+
   // ── S355: held publishers (advisory) ─────────────────────────────────────
   const heldRun = { event: 'schedule', status: 'completed', conclusion: 'success', databaseId: 101 };
   const annotations = {
@@ -414,7 +535,7 @@ function runSelfTest() {
   assert(!existsSync(narrative) || canEmitHeldMarker(readFileSync(narrative, 'utf8')),
     'the live Vault Narrative workflow is recognised as able to hold');
 
-  console.log('check-scheduled-workflow-staleness self-test passed (28/28)');
+  console.log('check-scheduled-workflow-staleness self-test passed (37/37)');
 }
 
 export function collectWorkflowObservations(workflows, { fetch = fetchRunsFor, now = Date.now, budgetMs = 24000 } = {}) {
@@ -460,6 +581,7 @@ function main() {
   const verdicts = evaluateStaleness(observed);
   const { held, unmeasured: heldUnmeasured } = heldVerdicts(observed, fetchRunAnnotations);
   const broken = verdicts.filter((v) => v.broken);
+  const repaired = verdicts.filter((v) => v.repairedUntested);
   const silent = verdicts.filter((v) => v.silent);
   const unmeasured = verdicts.filter((v) => v.unmeasured);
   const unreachable = workflows.length - observed.length;
@@ -477,6 +599,7 @@ function main() {
     broken: broken.length,
     silent: silent.length,
     unmeasured: unmeasured.length,
+    repairedUntested: repaired.length,
   };
   const fixtureOnly = Object.entries(liveCorroboration)
     .filter(([, n]) => n === 0).map(([k]) => k);
@@ -487,6 +610,13 @@ function main() {
       broken,
       silent: silent.map((v) => ({ name: v.name, ageHours: v.ageHours, expectEveryHours: v.intervalHours, thresholdHours: v.silentThresholdHours })),
       checked: verdicts.length,
+      // S363 advisory: red streaks that entirely predate a change to the workflow's
+      // own source, with the next scheduled occurrence not yet due. Reported by name
+      // with the instant the downgrade expires — never part of ok/exit, and never
+      // open-ended.
+      repairedUntested: repaired.map((v) => ({
+        name: v.name, streak: v.streak, sourceChangedAt: v.sourceChangedAt, expiresAt: v.repairExpiresAt,
+      })),
       // S355 advisory: success runs that logged a held marker. Not part of ok/exit.
       held,
       heldUnmeasured,
@@ -513,6 +643,7 @@ function main() {
   if (broken.length === 0 && silent.length === 0) {
     console.log(`scheduled-workflow staleness ✓ (${verdicts.length} scheduled workflows, none red ≥${MIN_CONSECUTIVE} runs, none silent past cadence)${suffix ? ` · ${suffix}` : ''}`);
     if (unmeasured.length) console.log(`  unmeasured (no scheduled run observed): ${unmeasured.map((v) => v.name).join(', ')}`);
+    if (repaired.length) console.log(`  ⟳ repaired-untested (fixed since the failures, awaiting the next scheduled run): ${repaired.map((v) => `${v.name} · ${v.streak} pre-fix failure(s) · expires ${v.repairExpiresAt}`).join(', ')}`);
     if (held.length) console.log(`  ⚠ held (concluded success but held instead of publishing): ${held.map((h) => `${h.name} · run ${h.runId}`).join(', ')}`);
     if (fixtureOnly.length) console.log(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
     return 0;
@@ -527,6 +658,7 @@ function main() {
       console.error(`  - ${s.name}: last scheduled run ${s.ageHours}h ago, expected every ~${s.intervalHours}h (threshold ${s.silentThresholdHours}h)`);
     }
   }
+  if (repaired.length) console.error(`  ⟳ repaired-untested (fixed since the failures, awaiting the next scheduled run): ${repaired.map((v) => `${v.name} · ${v.streak} pre-fix failure(s) · expires ${v.repairExpiresAt}`).join(', ')}`);
   if (held.length) console.error(`  ⚠ held (concluded success but held instead of publishing): ${held.map((h) => `${h.name} · run ${h.runId}`).join(', ')}`);
   if (fixtureOnly.length) console.error(`  fixture-proven only this run (no live instance): ${fixtureOnly.join(', ')}`);
   return 1;

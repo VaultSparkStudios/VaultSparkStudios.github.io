@@ -129,9 +129,26 @@ export function classifyControlPlane({ inventory, observations, source }) {
   }
   if (!functionReady) blockers.push(inventory.managementToken ? 'supabase-functions-probe-failed' : 'supabase-functions-token-missing');
 
+  // S363 — `overall` used to read `allReady ? 'ready' : dataRestReady ? 'partial'
+  // : 'blocked'`, pivoting the entire summary on ONE plane. Measured live this
+  // session: the receipt said `blocked` while carrying managementApi: ready,
+  // sqlMigration: ready and edgeFunctions: ready — contradicting the invariants
+  // published three lines below it, which state outright that the service-role
+  // plane governs none of the other three. `blocked` is the single line the CLI
+  // prints and this receipt is served to status/, agents.json and release-proof,
+  // so the contradiction reached readers as "you cannot deploy". Edge-function
+  // deploy authority was live throughout (HTTP 200) — a phantom blocker of exactly
+  // the kind CANON-019 exists to prevent.
+  //
+  // `partial` already meant "some authority, not all"; it simply was unreachable
+  // unless dataRest happened to be the healthy plane. Aggregate over all four.
+  // This cannot loosen any gate: check-production-promotion-gate.mjs keys on
+  // `overall === 'ready'`, which is unchanged, and its held path requires the
+  // disclosure reason `supabase-control-plane-partial`, which this makes accurate.
   const allReady = dataRestReady && managementReady && sqlReady && functionReady;
+  const anyReady = dataRestReady || managementReady || sqlReady || functionReady;
   return {
-    overall: allReady ? 'ready' : dataRestReady ? 'partial' : 'blocked',
+    overall: allReady ? 'ready' : anyReady ? 'partial' : 'blocked',
     planes,
     blockers: [...new Set(blockers)].sort(),
     invariants: {
@@ -258,6 +275,20 @@ function selfTest() {
     observations: { dataRest: { status: 'credential-project-mismatch', httpStatus: null } },
     source,
   });
+  // S363 — the state MEASURED LIVE this session, which the old aggregation got
+  // wrong: the service-role slot points at the sibling project, while the
+  // management token proves metadata, SQL and edge-function authority. The old
+  // `dataRestReady ? 'partial' : 'blocked'` called this `blocked`.
+  const liveMismatch = classifyControlPlane({
+    inventory: { dataRest: true, managementToken: true, databaseCredential: false },
+    observations: {
+      dataRest: { status: 'credential-project-mismatch', httpStatus: null },
+      managementApi: { status: 'ok', httpStatus: 200 },
+      sqlMigration: { status: 'ok', httpStatus: 201 },
+      edgeFunctions: { status: 'ok', httpStatus: 200 },
+    },
+    source,
+  });
   const fakeJwt = (ref) =>
     `x.${Buffer.from(JSON.stringify({ role: 'service_role', ref })).toString('base64')}.y`;
 
@@ -278,6 +309,22 @@ function selfTest() {
       mismatch.blockers.includes('supabase-credential-project-mismatch')],
     ['a mismatch is NOT reported as a probe failure',
       !mismatch.blockers.includes('supabase-rest-probe-failed')],
+    // S363 — the summary must not pivot on one plane. A mismatch that leaves
+    // management/SQL/function authority live is PARTIAL, not blocked; `blocked`
+    // is reserved for no authority at all.
+    ['THE FALSE-RED IS CAUGHT: ready deploy authority is never summarised as blocked',
+      liveMismatch.overall === 'partial'],
+    ['the deploy plane the summary was hiding is still ready',
+      liveMismatch.planes.edgeFunctions.status === 'ready' && liveMismatch.planes.sqlMigration.status === 'ready'],
+    ['the mismatch is still named as a blocker, not swallowed by the softer verdict',
+      liveMismatch.blockers.includes('supabase-credential-project-mismatch')],
+    ['partial never satisfies a gate keyed on ready', liveMismatch.overall !== 'ready'],
+    ['blocked still means no plane is ready at all',
+      authFail.overall === 'blocked' && mismatch.overall === 'blocked'],
+    ['overall never contradicts its own planes',
+      [mismatch, liveMismatch, authFail, management, partial].every(
+        (r) => (r.overall === 'blocked') === Object.values(r.planes).every((p) => p.status !== 'ready'))],
+
     ['a genuine probe failure still reports as one, not as a mismatch',
       authFail.blockers.includes('supabase-rest-probe-failed')
         && !authFail.blockers.includes('supabase-credential-project-mismatch')],
@@ -320,7 +367,12 @@ if (args.has('--self-test')) {
   const errors = validateReceipt(receipt, source);
   if (errors.length) throw new Error(errors.join('\n'));
   if (args.has('--write')) fs.writeFileSync(OUT, `${JSON.stringify(receipt, null, 2)}\n`, 'utf8');
-  console.log(`supabase-control-plane: ${receipt.overall} (${receipt.blockers.join(', ') || 'no blockers'})${args.has('--write') ? ' · wrote public-safe receipt' : ''}`);
+  // S363: name the authorities that ARE live. A bare verdict plus a blocker list
+  // tells a reader everything that is wrong and nothing about what they can do —
+  // which is how a ready edge-function deploy plane got read as unavailable.
+  const ready = Object.entries(receipt.planes).filter(([, p]) => p.status === 'ready').map(([k]) => k);
+  const readyNote = ready.length ? ` · ready: ${ready.join(', ')}` : ' · ready: none';
+  console.log(`supabase-control-plane: ${receipt.overall} (${receipt.blockers.join(', ') || 'no blockers'})${readyNote}${args.has('--write') ? ' · wrote public-safe receipt' : ''}`);
 } else if (args.has('--check')) {
   const receipt = JSON.parse(fs.readFileSync(OUT, 'utf8'));
   const errors = validateReceipt(receipt);

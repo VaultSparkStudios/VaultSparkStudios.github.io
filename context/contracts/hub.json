@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-19T22:18:13.211Z",
+  "generatedAt": "2026-09-20T21:33:25.674Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,27 +22,29 @@
     }
   },
   "pulse": {
-    "currentSession": 362,
-    "lastUpdated": "2026-09-19",
-    "currentFocus": "S362: fixed two probes that were reporting false alarms (a cron line with a trailing comment was invisible to the staleness probe; post-closeout resync commits were counted as write-back debt), added a blocking browser gate that installs the service worker, and made the unarmed newsletter cron hold instead of failing. Nothing was armed or sent.",
-    "nextMilestone": "The credential-side per-service Supabase health feed for /status/, and a staleness verdict bound to its own denominator.",
+    "currentSession": 363,
+    "lastUpdated": "2026-09-20",
+    "currentFocus": "S363: closed a live bypass of the newsletter arming decision (a manual dispatch with mode=send skipped the hold entirely and would have mailed every opted-in member), gave the scheduled-cron probe a bounded, self-expiring 'repaired-untested' verdict, stopped the public Supabase receipt reporting 'blocked' while three of its four authorities were live, and restored eight local-ahead guards that this session's own /start propagation had removed. Nothing was armed or sent.",
+    "nextMilestone": "Make build:check idempotent over the gitignored oracle-feed artifact, and refuse an inbound propagation that removes an exported symbol this repo's own code imports.",
     "blockers": [
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
       "Human signup acceptance, newsletter arming, Desk cadence, public-member-data and immutable warm-origin choices remain unobserved or undecided.",
-      "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains."
+      "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
+      "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
+      "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
     ],
     "queues": {
       "now": [
-        "[S356][DESK/P1] The Desk publishes real illustrations again — SHIPPED. The publisher never had an image model — art 08-07..08-23 was hand-made, so 25 stories shipped the procedural card. A local Codex worker (ChatGPT plan, no API key) generates it; ingest takes only reviewed images; 25 backfilled (D-S356.1).",
-        "[S356][DESK/P1] Article + index redesigned for readers — SHIPPED. Headline/byline/illustration/short-version first, readable persona blocks, receipts folded per fact, image-led index, \"Illustration pending\" when art is a placeholder.",
-        "[S356][DESK/P1] Reactions toggle and diversify — SHIPPED. One pick per bar, tap again to remove, 8 panel emoji, and the floating widget no longer covers the bars.",
-        "[S356][DESK/P1] Community comments on every article — BUILT (deploy pending). Anyone may post, automatic filter, members badged and featured; report + auto-hold; moderation CLI; migration + probe ready (D-S356.2).",
-        "[S356][DESK/P1] Desk reaches readers everywhere — SHIPPED. Flagship homepage module above the fold and a site-wide header strip that only claims \"Live\" when the measured cadence is daily.",
-        "[S356][DESK/P1] Daily publishing defects fixed — SHIPPED. Authoring runs the checks promote runs, anchors repaired verbatim (with an overlap rule), a missed day fails the late-night run, 7-day novelty, feed-summary facts, 20 verified new sources, same-day follow-up overwrite refused (D-S356.3).",
-        "[S356][TRUTH/P1] Studio Pulse tells the truth — SHIPPED. Dormant projects derived from real activity (Solara is no longer \"right now in the forge\"), studio-wide 7-day timeline with honest partial states, false \"stranded deploy\" alarm closed.",
-        "[S356][SITE/P0] Site-wide crawl: 5 P0 + 13 P1 defects fixed. Sigil covering the mobile menu button on 134 pages, floating widgets covering content on 104+ loads, two production 404s, an unhandled error on /invite/, light-theme contrast, 181 undersized tap targets, /faq/ CLS 0.419→0.003."
+        "[S363][SIL/P3] Compact the agent memory index by hand (21.3KB, target <17.1KB). An automated label-truncation pass was tried and reverted: shortening to a character budget inverted meanings (\"Green run can deploy nothing\" → \"Green run can deploy\"). Needs a deliberate pass that merges genuine near-duplicates (the two \"receipts after final …\" entries, the two skip-ci entries) and writes shorter labels that still carry the claim. A wrong recall hook is worse than a large index.",
+        "[S363][SAFETY/P0] The newsletter send gate keys on the mode, not the event — SHIPPED. A manual `workflow_dispatch` with `mode=send` skipped the hold entirely and would have mailed every opted-in member with `NEWSLETTER_ARMED` unset; the hold branch was also unreachable by any manual run. Now held whenever the effective mode is `send` and the variable is not `true` (D-S363.1). Nothing armed, nothing sent.",
+        "[S363][OBS/P1] The staleness probe can say \"repaired, awaiting its next run\" — SHIPPED. Reads the workflow source's commit time, so a streak whose every run predates the fix is `repaired-untested` with streak, commit and expiry named. Self-expires after one cadence; untouched workflows stay broken; a post-fix failure makes the streak real again; silence still reported. 9 self-test guards (D-S363.2).",
+        "[S363][TRUTH/P1] Supabase control-plane `overall` aggregates all four planes — SHIPPED. The public receipt read `blocked` while carrying three `ready` authorities and `readyPlanes: 3/4` beside it. Now `ready`/`partial`/`blocked` over all four, with live authorities named on the CLI. Promotion gate keys on `ready`, so nothing loosened (D-S363.3).",
+        "[S363][TRUTH/P1] The startup brief resolves revenue freshness through the shared resolver — SHIPPED. It parsed a studio-ops-only path, so it always printed `not found` while the doctor read it fine. `smoke-startup-scripts` 60/60 (D-S363.6).",
+        "[S363][PROTOCOL/P0] Eight local-ahead guards restored after the `/start` propagation drain — SHIPPED. `lib/secrets.mjs` (suggestCapabilities + known/suggestions/probe-health fields), `check-secrets.mjs` (caller-error render, exit 3), `lib/sil-categories.mjs` (pure 23-line deletion of the SIL invariant helpers), `lib/task-board.mjs` + the brief's inventory row, `lib/project-status-contract.mjs` (deprecated-alias guard), `probe-capability.mjs` (entire self-test). Merged beside the propagated improvements, never reverted; lane fix shipped upstream as Ark `pattern-share` `01K3052GLJ1D81D97FA5043903` (D-S363.4).",
+        "[S363][OBS/P1] A `git pull` could make the write-back probe cry wolf — SHIPPED. 57 commits authored by `github-actions[bot]` counted as session debt and the lock written afterwards tripped the cut-off heuristic. Authorship is now the filter, and the file gained a real `--self-test` (8/8) — it had none, so `build:check` was running the live git probe while reporting itself as a logic test.",
+        "[S363][GATES/P2] Six gates no runner invoked, and two rotted allowlists — SHIPPED. `check-protocol-skill-parity` and `check-scheduled-write-admission` wired into `build:check`; four lifecycle-owned gates declared their real lane with `@verification-scope`. Redundant allowlist entries removed from `check-orphan-libs` and `check-orphan-scripts` (D-S363.5)."
       ],
       "next": [
         "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."
@@ -50,9 +52,9 @@
       "shipped": []
     },
     "ignis": {
-      "score": 46492,
+      "score": 46724,
       "grade": "FORGE",
-      "lastComputed": "2026-09-09"
+      "lastComputed": "2026-09-17"
     },
     "stats": {
       "liveCatalogItems": 6,

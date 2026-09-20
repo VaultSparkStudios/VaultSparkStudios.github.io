@@ -1,20 +1,22 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         295/295 passing (2026-08-14)                   ║
-║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
-║  ✓  Runway        The Desk is live with article-bound art and…   ║
-║  ⛔  Context age   ?d                                             ║
-║  ⚠  IGNIS         48498 FORGE  ·  11d old                        ║
+║  ✓  Tests         503/503 passing (2026-09-20)                   ║
+║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
+║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
+║  ✓  Context age   0d                                             ║
+║  ✓  IGNIS         46724 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   31/36 (86%) → ▄▄▄▆▆▆▆▆                          ║
-║  ✓  Genome dims   all stable  (25/25)                            ║
-║  ✓  Entropy       0.195  (healthy)                               ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ✓  Genome dims   all stable  (24/25)                            ║
+║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
-║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
+║  ⚠  Revenue sig.  9d old (2026-09-11)                            ║
+║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
-║  ✓  Cost          real $0.02/7d · 7d notional $0.15…             ║
+║  Open current tasks 35 / Human-action entries 7                  ║
+║  Unchecked tasks require task-level triage.                      ║
+║  ✓  Cost          real $0.00/7d · real metered total $0.7409…    ║
 ╚════════════════════════════════════════════════════════════════╝

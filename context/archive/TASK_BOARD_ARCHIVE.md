@@ -1974,3 +1974,16 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S357][GATES/P1]** Served-vs-repo drift gate — **DONE**: built S357 (`b0def96d`), wired into the release ceremony (`0d6d5459`), made reachability-based S358.
 - [x] **[S357][CONTENT/P2]** "You asked" from `data/consumer-changelog.json` — **DONE S358** (D-S358.2).
 - [x] **[S357][OBS/P2]** `vault_feedback` 404 on `/changelog/` — **DONE S358**: the table never existed by design (browser-local feedback); the dead fetch is removed.
+
+
+<!-- rotated 2026-09-20 · sessions < 359 · 1 block(s) -->
+
+## Closed — S358 items (worked in S359)
+
+- [x] **[S358][CONTENT/P2]** Tag an entry with `answers:` — **superseded S359** (D-S359.1): "You asked" now counts only k-anonymous reader choices, and none has reached k=5, so there is no reader ask to answer yet. Tagging now would claim demand nobody expressed.
+- [x] **[S358][ASSETS/P3]** 32 residue scripts — full production promotion (run 35403055493) took drift to 7, all unreferenced and edge-cached (s-maxage 7d); they expire by 2026-09-25. The deploy token cannot purge cache.
+- [x] **[SIL][S358][GATES/P2]** Predicate ⊂ shell-asset check — **DONE S359**: `build-shell-assets` fails write and `--check` on a content-addressed predicate with no shell asset.
+- [x] **[SIL][S358][CONTENT/P3]** `answers:` keys from the live set — **DONE S359**: validated against `READER_THEME_KEYS`, which a self-test binds to the sampler's theme map.
+- [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.
+- [x] **[S359][A11Y/P1]** /games/ status labels in light theme 1.47 / 1.90 / 2.22:1 → 5.22 / 6.45 / 6.55:1 (D-S359.3). /membership/ "See The Value" measured 4.61:1 — not a defect.
+- [x] **[S359][OPS/P3]** Registry slug mismatch (`franchise-architect` vs `franchise-architect-football`) shipped to studio-ops as Ark cargo.

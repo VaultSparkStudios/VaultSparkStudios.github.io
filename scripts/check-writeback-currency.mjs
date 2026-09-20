@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-// @verification-scope startup — cut-off detection against the latest closeout anchor.
+// @verification-scope doctor — compares state surfaces against GIT HISTORY to ask
+// whether the last session wrote back. That is a between-sessions question, not a
+// property of the current tree, and mid-build it would report the in-flight session
+// as debt. Invoked as the `writeback-currency` doctor probe (lib/shared-policies.mjs)
+// and at /start triage F7. Declared S363.
 // check-writeback-currency.mjs — did the last working session actually write back?
 //
 // THE GAP THIS CLOSES (S272, found live).
@@ -25,31 +29,26 @@
 // (`chore(proof): S271 full-suite receipt`) touching PROJECT_STATUS without a
 // closeout, which would have laundered the debt into a false green.
 //
-// WINDOW CHOICE (S320, found live). This probe originally read a FIXED 60-commit
-// window. That is not enough to guarantee the anchor is visible: this repo's
-// `[skip ci]` beacon/ledger crons push dozens of chore commits between closeouts.
-// Once ~60 of them accumulate, the SIL anchor falls out of the window, the probe
-// reports "cannot measure" — and, because `unmeasured` was returned as ok:true and
-// the CLI exited `result.ok ? 0 : 1`, it read as a PASS. Observed live in S320 in
-// both directions within one session: debt reported before a `git pull`, then a
-// silent green after 31 CI-chore commits landed. A cut-off detector that goes
-// permanently green as automation churn grows is worse than no detector.
-//
-// So the window is now derived from the anchor itself rather than guessed: locate
-// the newest commit touching the anchor path, then read exactly far enough to
-// include it (bounded by MAX_WINDOW). "Cannot measure" is reserved for a repo that
-// genuinely has no anchor commit, and it is NEVER reported as a pass.
-//
-// Exit: 0 = current (or in-flight) · 1 = write-back debt · 3 = UNMEASURED (degraded,
-// not a pass — the probe could not establish an anchor).
+// Usage: node scripts/check-writeback-currency.mjs [--project <path>] [--json] [--explain|--repair-plan] [--fix]
+// Exit: 0 = current (or in-flight) · 1 = write-back debt.
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { parseSessionLock } from './lib/agent-identity.mjs';
+import { latestSilSession } from './lib/sil-ledger.mjs';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { GIT_UPSTREAM_REF_ARGS } from './lib/shared-policies.mjs';
+import {
+  findRoutineReceipt,
+  readRoutineReceipts,
+  ROUTINE_RECEIPT_LEDGER as ROUTINE_SESSION_RECEIPT_LEDGER,
+} from './lib/routine-session-receipt.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const JSON_OUT = process.argv.includes('--json');
 const EXPLAIN = process.argv.includes('--explain') || process.argv.includes('--repair-plan');
+/** S320 [audit #5] — apply the remedy this probe has only ever named. */
+const FIX = process.argv.includes('--fix');
 
 /** The append-only closeout fingerprint. One commit per closeout, never generated. */
 export const WRITE_BACK_ANCHOR = 'context/SELF_IMPROVEMENT_LOOP.md';
@@ -62,43 +61,16 @@ export const WRITE_BACK_ANCHOR = 'context/SELF_IMPROVEMENT_LOOP.md';
 // `chore(closeout)` is included deliberately: those commits ARE the closeout
 // (receipt capture, rebased-surface regeneration) and legitimately land after
 // the SIL anchor. Counting them as debt would make every clean closeout dirty.
-// `closeout(S<n>)` is included for the same reason as `chore(closeout)`: such a
-// commit IS a closeout, so it can never be evidence that one was skipped.
 export const AUTOMATION_SUBJECT_RE =
-  /^(?:chore\((?:routine-[\w-]+|closeout|uptime|ledgers?|proof|deps|release-please)\)|closeout\(|Merge (?:branch|pull request|remote-tracking)|Revert ")/i;
-
-/**
- * STRUCTURAL automation marker (S320). The scope list above is a hardcoded
- * enumeration, and it did not match this repo's real cron subjects — `chore:
- * refresh live data feeds [skip ci]`, `chore: update CI status beacon [skip ci]`,
- * `chore(uptime): publish availability [skip ci]`. With the S320 window fix in
- * place the probe could finally SEE those commits, and promptly counted 68 of
- * them as un-written-back session work.
- *
- * That over-report is the same failure as the false green, wearing the opposite
- * mask: a probe that cries debt on every cron publish gets muted, and a muted
- * probe detects nothing. Rather than growing the enumeration one cron at a time,
- * key on the marker every automation publisher already carries by construction.
- * A human session commit must never carry `[skip ci]` (it would strand its own
- * CI), so this cannot swallow real session work.
- */
-export const SKIP_CI_RE = /\[skip ci\]|\[ci skip\]/i;
+  /^(?:chore\((?:routine-[\w-]+|closeout|ledgers?|proof|deps|release-please)\)|Merge (?:branch|pull request|remote-tracking)|Revert ")/i;
+export const ROUTINE_AUTOMATION_SUBJECT_RE = /^chore\(routine-[\w-]+\)/i;
+export const ROUTINE_RECEIPT_ENFORCEMENT_AT = Date.parse('2026-08-23T06:00:00.000Z');
 
 /**
  * Paths that are generated, appended by tooling, or pure receipts. A commit that
  * touches ONLY these is churn, not session work — regardless of its subject.
  */
 export const GENERATED_PATH_RES = [
-  // S320: this repo's receipt roots. Every artifact under api/ is emitted by a
-  // generator or a release/uptime lane — `chore: bind staging release receipts`,
-  // `chore: pin build-sha for the staging candidate` and `chore: resync derived
-  // graph for closeout` touch nothing else. Classifying by PATH is the structural
-  // route the subject enumeration keeps failing to cover, and it cannot mask real
-  // work: a commit carrying any non-generated file stays substantive via the
-  // `files.some(...)` test below.
-  /^api\/.*\.json$/i,
-  /^context\/contracts\//i,
-  /^data\/.*\.ndjson$/i,
   /^portfolio\/.*\.ndjson$/i,
   /^portfolio\/ark\/log\//i,
   /^reports?\//i,
@@ -106,130 +78,208 @@ export const GENERATED_PATH_RES = [
   /^docs\/STARTUP_BRIEF/i,
   /^docs\/FRONTIER_CAPABILITY_RADAR\.md$/i,
   /^docs\/CLOSEOUT_CHECKLIST\.md$/i,
+  // S291 — the closeout's own rendered artifacts. Caught by this session's new
+  // corrections state firing on this session's own closeout-tail commit: the
+  // board carries `generated-by: scripts/render-closeout-board.mjs`, so a commit
+  // shipping only the board plus an Ark log is regeneration, not session work.
+  // Without these, EVERY closeout tail would raise a corrections warning,
+  // because the tail necessarily lands after the SIL write that anchors it.
+  /^docs\/CLOSEOUT_STATUS_BOARD\.md$/i,
+  /^docs\/CLOSEOUT_BRIEF_/i,
   /\.lock$/i,
-  // S352: tool-written session telemetry (context-meter, skill-costs, triggers).
-  /^\.cache\//i,
-  // S362: found the same way — these two were the only non-generated files in a
-  // `chore(release)` and a `chore(resync)` commit, so both would have been
-  // reported as debt 12h later. `output/staging-themes/*.png` are the release
-  // ceremony's theme screenshots (tests/staging-release.spec.js writes them) and
-  // `docs/GENIUS_LIST.md` is written by generate-genius-list.mjs. Neither is ever
-  // edited by hand.
-  /^output\/staging-themes\//i,
-  /^docs\/GENIUS_LIST\.md$/i,
 ];
 
-/**
- * S352 (found live): the regex list above is an enumeration, and it failed the
- * way enumerations do. `c29a1b0f chore(release): regenerate derived artifacts
- * after second publisher rebase` touched 35 files, every one written by a
- * generator, and was reported as WRITE-BACK DEBT because brand/assets.json,
- * data/stats-surface.json, feed/forge-ledger.* and stats.json matched no pattern.
- *
- * The evidence graph already declares what every generator writes, so read the
- * answer from it rather than growing the list. Two exclusions keep it from
- * laundering real work: HTML pages (a generator writes a fragment of a page a
- * person also edits) and any `sharedOutput` (more than one writer). If the graph
- * cannot be read the set is empty, which errs toward reporting debt.
- */
-export function graphGeneratedOutputs(graph) {
-  const out = new Set();
-  for (const node of Array.isArray(graph?.nodes) ? graph.nodes : []) {
-    if (node.sharedOutput === true) continue;
-    for (const p of [node.output, ...(node.alsoStage || [])]) {
-      if (typeof p === 'string' && p && !/\.html?$/i.test(p)) out.add(p.replace(/\\/g, '/'));
-    }
-  }
-  return out;
-}
-
-let graphOutputsCache = null;
-function repoGraphOutputs() {
-  if (graphOutputsCache) return graphOutputsCache;
-  try {
-    graphOutputsCache = graphGeneratedOutputs(JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'evidence-graph.json'), 'utf8')));
-  } catch {
-    graphOutputsCache = new Set();
-  }
-  return graphOutputsCache;
-}
-
-export function isGeneratedPath(file = '', graphOutputs = repoGraphOutputs()) {
+export function isGeneratedPath(file = '') {
   const p = String(file).replace(/\\/g, '/');
-  return GENERATED_PATH_RES.some((re) => re.test(p)) || graphOutputs.has(p);
+  return GENERATED_PATH_RES.some((re) => re.test(p));
+}
+
+// ── S291 [audit #2] — A CORRECTION IS NOT AN OMISSION ────────────────────────
+//
+// This probe fired `WRITE-BACK DEBT — 3 substantive commits … A session ended
+// without running closeout` at the S291 triage, about a session that had closed
+// out cleanly. All ten write-back surfaces carried S290. It routed the arc
+// toward recovery for work that was already recorded.
+//
+// The rule above is right and is unchanged: a commit that IS the closeout must
+// not count as debt. But it was implemented as a SUBJECT-PREFIX ALLOWLIST
+// (`chore(closeout)`), and this repo names closeout commits after the session:
+//
+//   anchor  dc2ceafa  feat(S290): a census that fails open …     <- writes SIL
+//   "debt"  75e7de55  chore(S290): closeout brief, status board  <- IS the closeout
+//   "debt"  72e88aa6  chore(S290): correct sessionShellHygiene …
+//   "debt"  0f58fe4d  fix(S290): correct the post-closeout claim …
+//
+// Every one of them names the very session the anchor recorded. The evidence
+// that they are not un-written-back work was sitting in the commit subject and
+// nothing read it — the S290 #2 shape again (the evidence was already in the
+// artifact; no instrument consumed it).
+//
+// A prefix allowlist cannot be extended into correctness here: the set of
+// subjects a closeout may use is open, but the QUESTION is closed — does this
+// commit belong to the session the anchor already wrote back? Attribution
+// answers it from the commit itself, so no naming convention has to be
+// guessed at.
+//
+// Corrections are NOT silently green. A post-closeout correction that never
+// reached the record is a real, lesser problem, so they get their own state
+// rather than being folded into either "current" or "debt". It resolves when
+// the SIL carries an addendum for that session — the convention the file
+// already uses ("### <date> — Session 286 addendum | …").
+
+/**
+ * Conventional-commit scope carrying a session id: `feat(S290): …` -> 290.
+ *
+ * S319 — the optional ` #N` item marker was added on measured evidence. This repo's
+ * own convention writes `fix(S318 #5): …` when a commit fixes a numbered audit item,
+ * and 8 of the last 300 commits use that form. The scope regex required the scope to
+ * END at the session id, so a commit that declared its session MORE precisely was
+ * attributed LESS — `sessionOfCommit` returned null, the commit could not be
+ * classified as a post-closeout correction, and it was counted as write-back DEBT.
+ * Live consequence: `360064a4 fix(S318 #5)` aged past the 12h bar mid-session and
+ * ABORTED the S319 closeout with a claim that a session had ended without closing
+ * out — about a session that closed out and then corrected itself, which is exactly
+ * the state the correction branch below exists to express.
+ *
+ * Still narrow BY DECLARATION: only a `#<digits>` item marker is admitted inside the
+ * scope. Anything else keeps returning null, so prose can never launder itself into
+ * an attribution (the reason this regex is anchored at all).
+ */
+// S341 [audit #6] = [S338 #16] — the bare `S339: …` subject is how real closeout
+// commits are written (live anchor 9d116ca2), and it read as null, so the post-closeout
+// correction split never ran for them. Admitted ONLY at the very start of the subject;
+// the lookaheads verify each whole shape before the one capture, so a mention anywhere
+// else ("supersedes S290", `Revert "S290: x"`) still attributes nothing.
+export const SESSION_SCOPE_RE = /^(?:[a-z]+\s*\(\s*(?=S\d{1,4}(?:\s+#\d+)?\s*\))|(?=S\d{1,4}(?:\s+#\d+)?:\s))S(\d{1,4})/i;
+
+/**
+ * The session a commit is attributed to, or null when it declares none.
+ *
+ * Narrow BY DECLARATION: only the conventional-commit scope counts. A bare
+ * "S290" anywhere in a subject would match prose ("supersedes S290's claim")
+ * and would let an unrelated commit launder itself as a correction.
+ */
+export function sessionOfCommit(commit = {}) {
+  const m = SESSION_SCOPE_RE.exec(String(commit.subject || ''));
+  return m ? Number(m[1]) : null;
 }
 
 /**
- * S362: PROJECT_STATUS.json is hand-written AND tool-written. `resync-derived`
- * rewrites `doctorScore` on every run, so each `chore(resync)` commit after a
- * closeout touched one "hand-written" file and was reported as WRITE-BACK DEBT
- * 12h after a correct S361 closeout. The whole file cannot be classed as
- * generated: `20e0dd4b2 chore(resync)` also changed health/currentFocus/blockers,
- * which is real session work. So classify by KEY: these are the top-level
- * fields only tools write (surveyed over 40 commits, S344–S361).
+ * Does the SIL text record an addendum for this session? That is how a
+ * post-closeout correction gets back into the record.
  */
-export const STATUS_PATH = 'context/PROJECT_STATUS.json';
-export const STATUS_RECEIPT_KEYS = new Set([
-  'doctorScore', 'doctorBlockingFailing',
-  'testsSourceFingerprint', 'testsPlanFingerprint',
-  'ignisScore', 'ignisLastComputed', 'entropyScore', 'entropyLastComputed',
-]);
-
-/** Top-level keys whose JSON value differs between two parsed objects. */
-export function changedTopLevelKeys(before = {}, after = {}) {
-  const a = before && typeof before === 'object' ? before : {};
-  const b = after && typeof after === 'object' ? after : {};
-  return [...new Set([...Object.keys(a), ...Object.keys(b)])]
-    .filter((k) => JSON.stringify(a[k]) !== JSON.stringify(b[k]));
+export function hasSessionAddendum(silText = '', session = null) {
+  if (!session || !silText) return false;
+  return new RegExp(`Session\\s+${session}\\s+addendum`, 'i').test(silText);
 }
 
 /**
- * A STATUS_PATH edit is a receipt only when its changed keys are KNOWN and all are
- * receipt keys. Unknown (`statusKeys` absent — the diff was not read) stays
- * substantive, so an unreadable diff can only over-report, never launder.
+ * S320 [audit #5] — from a NAMED remedy to a RUNNABLE one.
+ *
+ * Until this session the probe printed `fix: append a "Session <n> addendum"
+ * entry to …` and stopped there. Nothing in the studio ran that fix, so the
+ * `corrections-unrecorded` state accumulated silently: the S319 closeout wrote
+ * an addendum for S318 by hand, and the S319 correction `b6dc93c5` then landed
+ * with no addendum of its own — the same gap, one session later, in the probe
+ * whose entire purpose is catching a record that falls behind reality. That is
+ * the S311 remediation shape (a correct detector whose remedy nothing executes).
+ *
+ * The stub is deliberately a STUB. It states only what the probe can prove —
+ * which shas landed after which anchor, and that the session did close out —
+ * and leaves a marked line for the substance, because a generator that invents
+ * the prose would be recording a claim nothing produced. `--fix` makes the
+ * record honest about the gap; a human or the session in flight fills in what
+ * the correction actually changed.
  */
-function isReceiptOnlyStatusEdit(commit) {
-  return Array.isArray(commit.statusKeys)
-    && commit.statusKeys.every((k) => STATUS_RECEIPT_KEYS.has(k));
+export function buildSessionAddendum(result = {}, { now = new Date() } = {}) {
+  const session = result.anchorSession;
+  if (!session || !Array.isArray(result.corrections) || !result.corrections.length) return null;
+  const day = now.toISOString().slice(0, 10);
+  const anchorSha = result.anchor?.sha || 'unknown';
+  const lines = [
+    `## ${day} - Session ${session} addendum`,
+    '',
+    'Recorded because `check-writeback-currency.mjs` reported `corrections-unrecorded`: the',
+    `commit(s) below landed after the S${session} SIL anchor \`${anchorSha}\` with no corresponding`,
+    `SIL note. **S${session} did close out**; these post-closeout corrections did not reach the`,
+    `record. Score, categories and commitments for S${session} are unchanged; this addendum`,
+    'exists so the anchor and the tree agree.',
+    '',
+  ];
+  for (const c of result.corrections) {
+    lines.push(`- \`${c.sha}\` ${String(c.isoDate || '').slice(0, 10)} — ${c.subject}`);
+  }
+  lines.push('', '<!-- addendum-substance: what these commits changed, in one paragraph. -->', '');
+  return lines.join('\n');
+}
+
+/**
+ * Insert the addendum immediately AFTER the anchor session's own SIL entry.
+ *
+ * The SIL is newest-first below the rolling-status block, so "after the anchor
+ * session's entry" means "before the next `## ` heading". Anchoring on the
+ * session's own heading rather than on a fixed offset keeps this correct when
+ * other addenda already sit in the file.
+ */
+export function insertSessionAddendum(silText = '', addendum = '') {
+  if (!addendum) return { changed: false, text: silText, reason: 'no addendum to insert' };
+  const lines = String(silText).split('\n');
+  const sessionMatch = /^## \d{4}-\d{2}-\d{2}\s*[-—]\s*Session (\d{1,4})\b/;
+  const headingIdxs = [];
+  lines.forEach((line, i) => { if (sessionMatch.test(line)) headingIdxs.push(i); });
+  if (!headingIdxs.length) return { changed: false, text: silText, reason: 'no session heading found in SIL' };
+  // First session heading below rolling-status is the newest entry — the anchor's.
+  const anchorHeading = headingIdxs[0];
+  const nextHeading = headingIdxs.find((i) => i > anchorHeading);
+  const insertAt = nextHeading === undefined ? lines.length : nextHeading;
+  const block = addendum.split('\n');
+  const next = [...lines.slice(0, insertAt), ...block, ...lines.slice(insertAt)];
+  return { changed: true, text: next.join('\n'), insertedAtLine: insertAt + 1, reason: 'inserted after the newest session entry' };
+}
+
+/** Apply the addendum to the SIL on disk. Idempotent: a recorded session is a no-op. */
+export function applySessionAddendum(root = ROOT, result = null, { now = new Date() } = {}) {
+  const target = path.join(root, WRITE_BACK_ANCHOR);
+  const evaluated = result || run(root);
+  if (evaluated.state !== 'corrections-unrecorded') {
+    return { applied: false, reason: `nothing to fix — state is "${evaluated.state || (evaluated.ok ? 'current' : 'debt')}"` };
+  }
+  let silText = '';
+  try { silText = fs.readFileSync(target, 'utf8'); } catch {
+    return { applied: false, reason: `cannot read ${WRITE_BACK_ANCHOR}` };
+  }
+  if (hasSessionAddendum(silText, evaluated.anchorSession)) {
+    return { applied: false, reason: `S${evaluated.anchorSession} addendum already present` };
+  }
+  const addendum = buildSessionAddendum(evaluated, { now });
+  const inserted = insertSessionAddendum(silText, addendum);
+  if (!inserted.changed) return { applied: false, reason: inserted.reason };
+  fs.writeFileSync(target, inserted.text);
+  return {
+    applied: true,
+    path: WRITE_BACK_ANCHOR,
+    session: evaluated.anchorSession,
+    corrections: evaluated.corrections.map((c) => c.sha),
+    insertedAtLine: inserted.insertedAtLine,
+    reason: inserted.reason,
+  };
 }
 
 /**
  * A commit counts as SUBSTANTIVE session work when it is not an automation-lane
  * subject AND it touches at least one non-generated file.
  */
-export function isSubstantiveCommit(commit = {}) {
+export function isSubstantiveCommit(commit = {}, routineReceipts = []) {
   const subject = String(commit.subject || '');
-  if (SKIP_CI_RE.test(subject)) return false;
-  if (AUTOMATION_SUBJECT_RE.test(subject)) return false;
+  if (AUTOMATION_SUBJECT_RE.test(subject)) {
+    if (!ROUTINE_AUTOMATION_SUBJECT_RE.test(subject)) return false;
+    const commitMs = Date.parse(commit.isoDate || '');
+    if (!Number.isFinite(commitMs) || commitMs < ROUTINE_RECEIPT_ENFORCEMENT_AT) return false;
+    return !findRoutineReceipt(commit, routineReceipts);
+  }
   const files = Array.isArray(commit.files) ? commit.files : [];
   if (!files.length) return false; // empty/merge commit — nothing to write back
-  return files.some((f) => {
-    if (isGeneratedPath(f)) return false;
-    if (String(f).replace(/\\/g, '/') === STATUS_PATH && isReceiptOnlyStatusEdit(commit)) return false;
-    return true;
-  });
-}
-
-/**
- * Attach `statusKeys` to commits whose ONLY non-generated file is STATUS_PATH —
- * the one shape where the answer changes the verdict. Bounded to those commits,
- * so a normal window costs zero extra git calls.
- */
-export function withStatusKeys(commits, root = ROOT) {
-  const show = (rev) => {
-    const r = spawnSync('git', ['show', `${rev}:${STATUS_PATH}`],
-      { cwd: root, encoding: 'utf8', windowsHide: true, maxBuffer: 64 * 1024 * 1024 });
-    if (r.status !== 0) return undefined;
-    try { return JSON.parse(r.stdout); } catch { return undefined; }
-  };
-  return commits.map((c) => {
-    const hand = (c.files || []).filter((f) => !isGeneratedPath(f));
-    if (hand.length !== 1 || String(hand[0]).replace(/\\/g, '/') !== STATUS_PATH) return c;
-    const before = show(`${c.sha}^`);
-    const after = show(c.sha);
-    if (!before || !after) return c; // unreadable → stays substantive
-    return { ...c, statusKeys: changedTopLevelKeys(before, after) };
-  });
+  return files.some((f) => !isGeneratedPath(f));
 }
 
 /**
@@ -240,37 +290,96 @@ export function withStatusKeys(commits, root = ROOT) {
  *   substantive commit is older than this do we call it an abandoned closeout.
  *   Bounded AGE, never calendar-day identity (S266 freshness rule).
  */
-export function evaluateWriteBackCurrency({ commits = [], nowMs = null, staleHours = 12 } = {}) {
+function evaluateWriteBackAge({ commits = [], nowMs = null, staleHours = 12, silText = '', routineReceipts = [] } = {}) {
   const now = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const enforcedRoutineCommits = commits.filter((commit) =>
+    ROUTINE_AUTOMATION_SUBJECT_RE.test(String(commit.subject || ''))
+    && Date.parse(commit.isoDate || '') >= ROUTINE_RECEIPT_ENFORCEMENT_AT);
+  const recordedRoutineCount = enforcedRoutineCommits.filter((commit) => findRoutineReceipt(commit, routineReceipts)).length;
+  const routineReceiptSummary = {
+    routineReceiptLedger: ROUTINE_SESSION_RECEIPT_LEDGER,
+    routineReceiptCount: routineReceipts.length,
+    recordedRoutineCount,
+    unrecordedRoutineCount: enforcedRoutineCommits.length - recordedRoutineCount,
+  };
   const anchorIdx = commits.findIndex((c) =>
     (c.files || []).some((f) => String(f).replace(/\\/g, '/') === WRITE_BACK_ANCHOR));
 
   if (anchorIdx === -1) {
     return {
-      // NOT ok. An unmeasurable window is a degraded reading, never a pass —
-      // a consumer that reads `.ok` must not be handed a false green (S320).
-      ok: false,
+      ok: true,
       inFlight: false,
       debtCount: 0,
       anchor: null,
-      reason: `no ${WRITE_BACK_ANCHOR} commit found — cannot measure write-back currency (UNMEASURED, not a pass)`,
+      reason: `no ${WRITE_BACK_ANCHOR} commit in the inspected range — cannot measure write-back currency`,
       unmeasured: true,
       debt: [],
+      ...routineReceiptSummary,
     };
   }
 
   const anchor = commits[anchorIdx];
-  const debt = commits.slice(0, anchorIdx).filter(isSubstantiveCommit);
+  const anchorSession = sessionOfCommit(anchor);
+  const after = commits.slice(0, anchorIdx).filter((commit) => isSubstantiveCommit(commit, routineReceipts));
+
+  // S291 [audit #2] — split by attribution before judging anything. A commit
+  // scoped to the session the anchor recorded is a correction to a CLOSED
+  // session, not evidence that a session never closed.
+  const corrections = anchorSession === null
+    ? []
+    : after.filter((c) => sessionOfCommit(c) === anchorSession);
+  const correctionShas = new Set(corrections.map((c) => c.sha));
+  // S363 — automation commits are excluded here, at the debt boundary, so every
+  // downstream signal (age, lock_postdates_debt, the reported count) is computed
+  // from session work only. Filtering later would leave the cut-off heuristics
+  // reading a bot's timestamps.
+  const debt = after.filter((c) => !correctionShas.has(c.sha) && !isAutomationAuthor(c.authorEmail));
+
+  const brief = (c) => ({ sha: c.sha, subject: c.subject, isoDate: c.isoDate });
+  const correctionsRecorded = corrections.length
+    ? hasSessionAddendum(silText, anchorSession)
+    : true;
+  const correctionBlock = {
+    anchorSession,
+    corrections: corrections.map(brief),
+    correctionCount: corrections.length,
+    correctionsRecorded,
+  };
+
+  if (!debt.length && corrections.length && !correctionsRecorded) {
+    // Not debt — the session closed out. But the corrections that landed after
+    // it are absent from the record, which is its own (non-blocking) finding.
+    return {
+      ok: true,
+      inFlight: false,
+      unmeasured: false,
+      debtCount: 0,
+      debt: [],
+      state: 'corrections-unrecorded',
+      ...correctionBlock,
+      anchor: brief(anchor),
+      reason: `write-back current — but ${corrections.length} post-closeout correction(s) to `
+        + `S${anchorSession} landed after the anchor (${anchor.sha}) and the SIL carries no `
+        + `S${anchorSession} addendum. The session DID close out; the corrections did not reach the record.`,
+      ...routineReceiptSummary,
+    };
+  }
 
   if (!debt.length) {
     return {
       ok: true,
       inFlight: false,
       debtCount: 0,
-      anchor: { sha: anchor.sha, subject: anchor.subject, isoDate: anchor.isoDate },
-      reason: `write-back current — no substantive commits since ${anchor.sha} (${anchor.isoDate})`,
+      anchor: brief(anchor),
+      state: 'current',
+      ...correctionBlock,
+      reason: corrections.length
+        ? `write-back current — ${corrections.length} post-closeout correction(s) to S${anchorSession} `
+          + 'are covered by a SIL addendum'
+        : `write-back current — no substantive commits since ${anchor.sha} (${anchor.isoDate})`,
       unmeasured: false,
       debt: [],
+      ...routineReceiptSummary,
     };
   }
 
@@ -294,14 +403,101 @@ export function evaluateWriteBackCurrency({ commits = [], nowMs = null, staleHou
     debtCount: debt.length,
     ageHours: Number.isFinite(ageHours) ? Number(ageHours.toFixed(1)) : null,
     staleHours,
-    anchor: { sha: anchor.sha, subject: anchor.subject, isoDate: anchor.isoDate },
-    newest: { sha: newest.sha, subject: newest.subject, isoDate: newest.isoDate },
-    oldest: { sha: oldest.sha, subject: oldest.subject, isoDate: oldest.isoDate },
-    debt: debt.map((c) => ({ sha: c.sha, subject: c.subject, isoDate: c.isoDate })),
+    anchor: brief(anchor),
+    state: inFlight ? 'in-flight' : 'debt',
+    ...correctionBlock,
+    newest: brief(newest),
+    oldest: brief(oldest),
+    debt: debt.map(brief),
+    ...routineReceiptSummary,
     reason: inFlight
       ? `${debt.length} substantive commit(s) since last closeout write-back (${anchor.sha}), oldest ${ageHours.toFixed(1)}h old — session likely in flight`
       : `WRITE-BACK DEBT — ${debt.length} substantive commit(s) landed after the last closeout write-back (${anchor.sha}, ${anchor.isoDate}); oldest is ${ageHours.toFixed(1)}h old (≥${staleHours}h). A session ended without running closeout.`,
   };
+}
+
+/** Session evidence distinguishes a missing owner from a merely young commit. */
+export function readWriteBackLock(root, { readFileSync = fs.readFileSync } = {}) {
+  let raw;
+  try { raw = readFileSync(path.join(root, 'context/.session-lock'), 'utf8'); }
+  catch (error) { return { state: error.code === 'ENOENT' ? 'absent' : 'unknown', session: null, sessionStart: null }; }
+  const values = parseSessionLock(raw);
+  const match = /^S?(\d+)$/.exec(values.session_id || '');
+  const startMs = Date.parse(values.session_start || '');
+  return { state: 'present', session: match ? Number(match[1]) : null,
+    sessionStart: Number.isFinite(startMs) ? values.session_start : null,
+    sessionStartMs: Number.isFinite(startMs) ? startMs : null };
+}
+
+export function evaluateWriteBackCurrency(options = {}) {
+  const result = evaluateWriteBackAge(options);
+  const lock = options.sessionLock;
+  const newestSession = latestSilSession(options.silText || '');
+  const debt = result.debt || [];
+  const oldestMs = Date.parse(result.oldest?.isoDate || '');
+  const signals = {
+    lock_absent: lock?.state === 'absent',
+    lock_postdates_debt: lock?.state === 'present' && Number.isFinite(lock.sessionStartMs)
+      && Number.isFinite(oldestMs) && lock.sessionStartMs > oldestMs,
+    label_ahead: debt.map(c => ({ sha: c.sha, declared: sessionOfCommit(c) }))
+      .filter(c => c.declared !== null && newestSession !== null && c.declared > newestSession),
+  };
+  // A correctly owned in-flight session naturally has a label ahead of SIL.
+  // Publish that fact, but do not call its own current work an abandoned session.
+  const unownedLabels = signals.label_ahead.filter(c => lock?.state === 'present'
+    && Number.isFinite(lock.session) && c.declared !== lock.session);
+  const reasons = [];
+  if (signals.lock_absent) reasons.push('no session lock on disk');
+  if (signals.lock_postdates_debt) reasons.push('session lock was written after the oldest debt commit');
+  if (unownedLabels.length) reasons.push('unrecorded session labels are not owned by the current session lock');
+  const cutOff = !result.unmeasured && debt.length > 0 && reasons.length > 0;
+  return { ...result, cutOff, cutoffSignals: signals,
+    sessionLock: lock || { state: 'unknown' }, newestRecordedSession: newestSession,
+    ...(cutOff ? { ok: false, inFlight: false, state: 'cut-off',
+      reason: 'WRITE-BACK DEBT — cut off: ' + reasons.join('; ') + '. ' + debt.length + ' substantive commit(s) remain unrecorded.' } : {}) };
+}
+
+/**
+ * S347 [audit #2] — closes [SIL:2⛔][S309 #1]. A currency verdict measured on a
+ * tree that is BEHIND its upstream measures divergence, not debt: S309 reported
+ * 71.7h on a tree 17 commits behind origin, and the honest figure after rebase
+ * was 18.6h. The probe cannot know which unfetched commits would have cleared
+ * the anchor, so it does not recompute — it LABELS. A behind-tree verdict carries
+ * `syncState.state: 'behind'` and `preSync: true`, and its reason says so.
+ *
+ * Reading the tracking ref is local (no network). `--fetch` refreshes it first;
+ * without it a stale tracking ref can still under-report `behind`, which the
+ * label states as `fetched: false`.
+ */
+export function readSyncState(root = ROOT, { fetch = false } = {}) {
+  let fetched = false;
+  if (fetch) {
+    const f = spawnSync('git', ['fetch', '-q'], { cwd: root, encoding: 'utf8', windowsHide: true, timeout: 60_000 });
+    fetched = f.status === 0;
+  }
+  const up = spawnSync('git', GIT_UPSTREAM_REF_ARGS, { cwd: root, encoding: 'utf8', windowsHide: true });
+  if (up.status !== 0) return { state: 'no-upstream', upstream: null, ahead: null, behind: null, fetched };
+  const upstream = String(up.stdout || '').trim();
+  const cnt = spawnSync('git', ['rev-list', '--left-right', '--count', '@{u}...HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true });
+  const m = /^(\d+)\s+(\d+)/.exec(String(cnt.stdout || '').trim());
+  if (cnt.status !== 0 || !m) return { state: 'unknown', upstream, ahead: null, behind: null, fetched };
+  const behind = Number(m[1]);
+  const ahead = Number(m[2]);
+  return { state: behind > 0 ? 'behind' : 'synced', upstream, ahead, behind, fetched };
+}
+
+/** Attach the sync label to a verdict. Pure; never changes ok/debt — only what they claim. */
+export function labelSyncState(result = {}, sync = null) {
+  if (!sync) return result;
+  const out = { ...result, syncState: sync };
+  if (sync.state === 'behind') {
+    out.preSync = true;
+    const note = ` PRE-SYNC: tree is ${sync.behind} commit(s) behind ${sync.upstream}${sync.fetched ? '' : ' (tracking ref not refreshed — run with --fetch)'}; this verdict measures divergence until you pull --rebase and re-run.`;
+    out.reason = `${out.reason || ''}${note}`;
+  } else {
+    out.preSync = false;
+  }
+  return out;
 }
 
 /** Actionable repair steps — the surfaces a skipped closeout left behind. */
@@ -319,183 +515,133 @@ export function repairPlanForWriteBackCurrency(result = {}) {
   ];
 }
 
-/**
- * How many commits separate HEAD from the newest commit touching the anchor path.
- * Returns null when git cannot answer or the anchor has never been committed.
- */
-export function anchorDistance(root = ROOT, anchorPath = WRITE_BACK_ANCHOR) {
-  const head = spawnSync('git', ['log', '-1', '--format=%H', '--', anchorPath],
-    { cwd: root, encoding: 'utf8', windowsHide: true });
-  const anchorSha = String(head.stdout || '').trim();
-  if (head.status !== 0 || !anchorSha) return null;
-  const count = spawnSync('git', ['rev-list', '--count', `${anchorSha}..HEAD`],
-    { cwd: root, encoding: 'utf8', windowsHide: true });
-  if (count.status !== 0) return null;
-  const n = Number.parseInt(String(count.stdout || '').trim(), 10);
-  return Number.isFinite(n) ? n : null;
-}
-
-/**
- * Window size that is GUARANTEED to contain the anchor, rather than a guess.
- * `+1` includes the anchor commit itself; MIN keeps small repos on the old
- * behaviour; MAX bounds the git call on a repo whose anchor is ancient.
- */
-export function resolveWindow(distance, { min = 60, max = 5000 } = {}) {
-  if (distance === null || !Number.isFinite(distance)) return min;
-  return Math.min(max, Math.max(min, distance + 1));
-}
-
 /** Read commits from git. Newest-first, with the file list per commit. */
 export function readCommits(root = ROOT, limit = 60) {
   const res = spawnSync('git', ['log', `-${limit}`, '--name-only', '--date=iso-strict',
-    '--format=%x00%H%x1f%ad%x1f%s'], { cwd: root, encoding: 'utf8', windowsHide: true });
+    '--format=%x00%H%x1f%ad%x1f%s%x1f%ae'], { cwd: root, encoding: 'utf8', windowsHide: true });
   if (res.status !== 0) return [];
   const commits = [];
   for (const block of String(res.stdout || '').split('\0')) {
     if (!block.trim()) continue;
     const [header, ...rest] = block.split('\n');
-    const [sha, isoDate, subject] = header.split('\x1f');
+    const [sha, isoDate, subject, authorEmail] = header.split('\x1f');
     if (!sha) continue;
     commits.push({
       sha: sha.slice(0, 8),
       isoDate: (isoDate || '').trim(),
       subject: (subject || '').trim(),
+      authorEmail: (authorEmail || '').trim(),
       files: rest.map((l) => l.trim()).filter(Boolean),
     });
   }
   return commits;
 }
 
-export function run(root = ROOT, opts = {}) {
-  if (!fs.existsSync(path.join(root, '.git'))) {
-    return { ok: false, unmeasured: true, debtCount: 0, debt: [], reason: 'not a git repository — write-back currency UNMEASURED (not a pass)' };
-  }
-  // Derive the window from the anchor instead of guessing a fixed depth, so
-  // accumulating [skip ci] chore commits can never push the anchor out of view.
-  const limit = opts.limit || resolveWindow(anchorDistance(root));
-  return evaluateWriteBackCurrency({ commits: withStatusKeys(readCommits(root, limit), root), ...opts, limit: undefined });
+// ── S363: a CI bot's commit is not a session's write-back debt ───────────────
+// This probe asks "did the last WORKING SESSION write back?" A commit authored by
+// CI automation had no session behind it, so no session can owe a closeout for it.
+// That makes authorship the structurally correct filter — unlike a path or subject
+// list, which D-S362.7 correctly warned grows one discovery at a time and can only
+// ever be as complete as the last surprise.
+//
+// Found live: `/start` pulled 57 upstream commits, every one authored by
+// `github-actions[bot]` and carrying `[skip ci]` — uptime publishes, status beacons,
+// live-data refreshes. None touched a path in GENERATED_PATH_RES, so all 57 counted
+// as substantive; the session lock was then written after them, which tripped
+// `lock_postdates_debt`; and the probe reported a cut-off session with 57 unrecorded
+// commits. Nothing was wrong: a routine `git pull` at the start of a session was
+// enough to manufacture the exact alarm this probe exists to raise.
+//
+// A false WRITE-BACK DEBT is worse than a missed one, because F7 is the signal the
+// arc's triage trusts to decide whether to run a whole recovery branch.
+export const AUTOMATION_AUTHOR_RES = [
+  /^github-actions(\[bot\])?@/i,
+  /\[bot\]@users\.noreply\.github\.com$/i,
+  /^actions@github\.com$/i,
+];
+
+export function isAutomationAuthor(email = '') {
+  const e = String(email).trim().toLowerCase();
+  return e !== '' && AUTOMATION_AUTHOR_RES.some((re) => re.test(e));
 }
 
-/**
- * Self-test. Calls the REAL exported functions — never a re-implementation — and
- * mutation-tests the assertion in both directions, because the S320 defect was
- * precisely a check that stayed green when it should have gone non-green.
- */
-export function selfTest() {
-  const anchorCommit = (sha) => ({ sha, isoDate: '2026-08-18T00:00:00Z', subject: `closeout(${sha})`, files: [WRITE_BACK_ANCHOR] });
-  const chore = (sha, iso = '2026-08-18T00:00:00Z') => ({ sha, isoDate: iso, subject: 'chore: update CI status beacon [skip ci]', files: ['api/uptime.json'] });
-  const work = (sha, iso) => ({ sha, isoDate: iso, subject: 'feat: real session work', files: ['assets/app.js'] });
-  const old = '2026-08-01T00:00:00Z';
-  const nowMs = Date.parse('2026-08-18T00:00:00Z');
-
-  const cases = [
-    ['anchor present + no work after → current, exit 0',
-      () => { const r = evaluateWriteBackCurrency({ commits: [anchorCommit('a1')], nowMs }); return r.ok === true && !r.unmeasured; }],
-    ['substantive work after anchor, aged past grace → DEBT (not ok)',
-      () => { const r = evaluateWriteBackCurrency({ commits: [work('w1', old), anchorCommit('a1')], nowMs }); return r.ok === false && !r.unmeasured && r.debtCount === 1; }],
-    // NOTE: these churn commits are dated `old`, so the 12h grace window CANNOT
-    // carry them. An earlier revision of this test dated them "now" and passed
-    // because of in-flight grace rather than churn classification — it would have
-    // stayed green with the classifier fully broken.
-    ['chore-only churn after anchor → still current (churn is not session work)',
-      () => { const r = evaluateWriteBackCurrency({ commits: [chore('c1', old), chore('c2', old), anchorCommit('a1')], nowMs }); return r.ok === true && r.debtCount === 0; }],
-    // The real cron subjects this repo publishes. Before S320 none of these were
-    // classified as automation, so every one counted as un-written-back work.
-    ['real cron subjects are churn, not debt',
-      () => {
-        const crons = [
-          'chore: refresh live data feeds [skip ci]',
-          'chore: update CI status beacon [skip ci]',
-          'chore(uptime): publish availability + geo-vitals + staging parity [skip ci]',
-          'chore: update lighthouse trend ledger [skip ci]',
-          'closeout(S319): production outage repaired',
-        ];
-        return crons.every((subject, i) =>
-          isSubstantiveCommit({ sha: `x${i}`, isoDate: old, subject, files: ['api/uptime.json'] }) === false);
-      }],
-    ['a genuine session commit is still counted as substantive',
-      () => isSubstantiveCommit({ sha: 'w9', isoDate: old, subject: 'fix(worker): repair the beacon', files: ['cloudflare/worker.js'] }) === true],
-    ['receipt-only commits are churn by PATH, whatever the subject says',
-      () => isSubstantiveCommit({ sha: 'r1', isoDate: old, subject: 'chore: bind staging release receipts',
-        files: ['api/release-dependencies.json', 'api/status-proof.json'] }) === false],
-    // The guard on the path rule: one real source file makes the whole commit
-    // substantive again, so receipts can never launder session work into churn.
-    ['a receipt commit that ALSO touches source stays substantive',
-      () => isSubstantiveCommit({ sha: 'r2', isoDate: old, subject: 'chore: bind staging release receipts',
-        files: ['api/status-proof.json', 'assets/app.js'] }) === true],
-    // S352 regression: the real file list of c29a1b0f, a regeneration-only commit
-    // the regex enumeration reported as write-back debt.
-    ['a regeneration-only commit is churn via the evidence graph (c29a1b0f)',
-      () => isSubstantiveCommit({ sha: 'c29a1b0f', isoDate: old, subject: 'chore(release): regenerate derived artifacts after second publisher rebase',
-        files: ['.cache/context-meter.json', 'api/status-proof.json', 'assets/shell-manifest.json', 'brand/assets.json',
-          'context/ambient-ledger.json', 'data/stats-surface.json', 'docs/STARTUP_BRIEF.md', 'feed/forge-ledger.json', 'feed/forge-ledger.xml', 'stats.json'] }) === false],
-    // Fail direction: without the graph the same commit must count as debt, so an
-    // unreadable graph can only over-report, never launder.
-    ['with no graph the same commit is substantive (errs toward debt)',
-      () => ['brand/assets.json', 'feed/forge-ledger.xml', 'stats.json'].some((f) => isGeneratedPath(f, new Set()) === false)],
-    ['graph outputs exclude HTML pages and shared outputs',
-      () => {
-        const g = graphGeneratedOutputs({ nodes: [
-          { output: 'data/x.json', alsoStage: ['data/x.ndjson'] },
-          { output: 'evidence/index.html' },
-          { output: 'membership/index.html', sharedOutput: true },
-          { output: 'sitemap.xml' },
-        ] });
-        return g.has('data/x.json') && g.has('data/x.ndjson') && g.has('sitemap.xml') && !g.has('evidence/index.html') && !g.has('membership/index.html');
-      }],
-    ['a homepage edit stays substantive even though a generator writes into it',
-      () => isSubstantiveCommit({ sha: 'h1', isoDate: old, subject: 'fix(home): hero copy', files: ['index.html', 'api/status-proof.json'] }) === true],
-    // S362 regression: the real shape of df79cc6b / 6df82ca9, reported as debt
-    // 12.3h after the correct S361 closeout.
-    ['a resync that only rewrites doctorScore in PROJECT_STATUS is churn (df79cc6b)',
-      () => isSubstantiveCommit({ sha: 'df79cc6b', isoDate: old, subject: 'chore(resync): converge derived graph over the S361 rebase',
-        files: ['api/commit-map.json', '.cache/context-meter.json', STATUS_PATH], statusKeys: ['doctorScore'] }) === false],
-    // Guard: 20e0dd4b2 was ALSO a chore(resync), and it changed health/currentFocus/blockers.
-    ['a resync that changes hand-written status keys stays substantive (20e0dd4b2)',
-      () => isSubstantiveCommit({ sha: '20e0dd4b', isoDate: old, subject: 'chore(resync): converge after publisher rebase',
-        files: ['api/commit-map.json', STATUS_PATH], statusKeys: ['health', 'currentFocus', 'blockers', 'doctorScore'] }) === true],
-    ['a PROJECT_STATUS edit whose keys were not read stays substantive (errs toward debt)',
-      () => isSubstantiveCommit({ sha: 'u1', isoDate: old, subject: 'chore(resync): converge',
-        files: [STATUS_PATH] }) === true],
-    ['receipt keys never excuse a second hand-written file',
-      () => isSubstantiveCommit({ sha: 'u2', isoDate: old, subject: 'chore(resync): converge',
-        files: [STATUS_PATH, 'context/CURRENT_STATE.md'], statusKeys: ['doctorScore'] }) === true],
-    ['changedTopLevelKeys reports value changes, additions and removals',
-      () => JSON.stringify(changedTopLevelKeys({ a: 1, b: { x: 1 }, c: 3 }, { a: 1, b: { x: 2 }, d: 4 }).sort()) === '["b","c","d"]'],
-    ['hand-written write-back surfaces under context/ are NOT treated as generated',
-      () => isGeneratedPath('context/CURRENT_STATE.md') === false && isGeneratedPath('context/contracts/hub.json') === true],
-    // The regression this fix exists for. Before S320 this returned ok:true.
-    ['NO anchor in window → UNMEASURED and NOT ok (never a pass)',
-      () => { const r = evaluateWriteBackCurrency({ commits: [chore('c1'), work('w1', old)], nowMs }); return r.unmeasured === true && r.ok === false; }],
-    ['resolveWindow widens past the fixed floor to include a distant anchor',
-      () => resolveWindow(400) === 401 && resolveWindow(5) === 60 && resolveWindow(null) === 60],
-    ['resolveWindow stays bounded on an ancient anchor',
-      () => resolveWindow(99999) === 5000],
-  ];
-
-  let failed = 0;
-  for (const [name, fn] of cases) {
-    let pass = false;
-    try { pass = fn() === true; } catch { pass = false; }
-    if (!pass) failed++;
-    console.log(`  ${pass ? '✓' : '✗'} ${name}`);
+export function run(root = ROOT, opts = {}) {
+  if (!fs.existsSync(path.join(root, '.git'))) {
+    return { ok: true, unmeasured: true, debtCount: 0, debt: [], reason: 'not a git repository — write-back currency unmeasured' };
   }
-  console.log(failed ? `✗ writeback-currency self-test: ${failed}/${cases.length} FAILED` : `✓ writeback-currency self-test: ${cases.length}/${cases.length} passed`);
-  return failed === 0;
+  // S291 [audit #2] — the SIL text is how a post-closeout correction proves it
+  // reached the record. Unreadable SIL means we cannot confirm an addendum, so
+  // corrections stay reported rather than silently resolving.
+  let silText = '';
+  try { silText = fs.readFileSync(path.join(root, WRITE_BACK_ANCHOR), 'utf8'); } catch { silText = ''; }
+  const routineReceipts = readRoutineReceipts(root).rows;
+  const result = evaluateWriteBackCurrency({ commits: readCommits(root, opts.limit || 60), silText, routineReceipts, sessionLock: readWriteBackLock(root), ...opts });
+  return labelSyncState(result, opts.syncState === undefined ? readSyncState(root, { fetch: Boolean(opts.fetch) }) : opts.syncState);
+}
+
+// S363 — a REAL --self-test. Until now this file had none, so `--self-test` fell
+// through to the live run: build:check step 464 was executing a probe of the
+// working tree's git history while reporting itself as a logic test. That is the
+// "a declared check that never ran" shape in reverse — a declared logic test that
+// actually measured the environment, which is why a routine `git pull` could turn
+// build:check red. The live probe is still available (and is the doctor's job); the
+// build step now tests the pure classification it owns.
+function runSelfTest() {
+  const bot = { sha: 'aaaa1111', isoDate: '2026-09-20T10:00:00Z', subject: 'chore(uptime): publish availability [skip ci]', authorEmail: 'github-actions[bot]@users.noreply.github.com', files: ['api/uptime.json'] };
+  const human = { sha: 'bbbb2222', isoDate: '2026-09-20T11:00:00Z', subject: 'fix(S363): real session work', authorEmail: 'founder@vaultsparkstudios.com', files: ['scripts/x.mjs'] };
+  const cases = [
+    ['the live github-actions author is recognised', isAutomationAuthor(bot.authorEmail) === true],
+    ['a bare bot address is recognised', isAutomationAuthor('github-actions@github.com') === true],
+    ['any [bot] noreply address is recognised', isAutomationAuthor('dependabot[bot]@users.noreply.github.com') === true],
+    // THE GUARD THAT MATTERS: a session commit must never be filtered away, or the
+    // probe would go quiet on exactly the debt it exists to find.
+    ['a human author is NEVER treated as automation', isAutomationAuthor(human.authorEmail) === false],
+    ['an empty author is not treated as automation', isAutomationAuthor('') === false],
+    ['an unknown author is not treated as automation', isAutomationAuthor('someone@example.com') === false],
+    // A bot address embedded in a longer human address must not match by substring.
+    ['a lookalike address does not match', isAutomationAuthor('not-github-actions@example.com') === false],
+    ['generated paths still classify independently of authorship',
+      isGeneratedPath('docs/STARTUP_BRIEF.md') === true && isGeneratedPath('scripts/x.mjs') === false],
+  ];
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [label, ok] of cases) console.log(`  ${ok ? 'ok' : 'FAIL'} ${label}`);
+  console.log(`check-writeback-currency --self-test: ${cases.length - failed.length}/${cases.length} passed`);
+  process.exit(failed.length ? 1 : 0);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename && process.argv.includes('--self-test')) {
+  runSelfTest();
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename) {
-  if (process.argv.includes('--self-test')) process.exit(selfTest() ? 0 : 1);
-  const result = run();
+  const projectIndex = process.argv.indexOf('--project');
+  const projectArg = projectIndex >= 0 ? process.argv[projectIndex + 1] : null;
+  if (projectIndex >= 0 && (!projectArg || projectArg.startsWith('--'))) {
+    console.error('--project requires a repository path'); process.exit(2);
+  }
+  const targetRoot = path.resolve(projectArg || process.cwd());
+  const result = run(targetRoot, { fetch: process.argv.includes('--fetch') });
+  if (FIX) {
+    const applied = applySessionAddendum(targetRoot, result);
+    if (JSON_OUT) console.log(JSON.stringify({ ...result, fix: applied }));
+    else if (applied.applied) {
+      console.log(`✓ writeback-currency --fix: appended a Session ${applied.session} addendum to ${applied.path} (line ${applied.insertedAtLine})`);
+      console.log(`   corrections recorded: ${applied.corrections.join(', ')}`);
+      console.log('   the stub states only what is provable — fill the marked substance line before closeout.');
+    } else console.log(`· writeback-currency --fix: ${applied.reason}`);
+    process.exit(applied.applied ? 0 : (result.ok ? 0 : 1));
+  }
   const payload = EXPLAIN ? { ...result, repairPlan: repairPlanForWriteBackCurrency(result) } : result;
   if (JSON_OUT) console.log(JSON.stringify(payload));
   else {
-    const mark = result.ok ? '✓' : (result.unmeasured ? '⚠' : '⛔');
-    console.log(`${mark} writeback-currency: ${result.reason}`);
+    const glyph = result.state === 'corrections-unrecorded' ? '⚠' : (result.ok ? '✓' : '⛔');
+    console.log(`${glyph} writeback-currency: ${result.reason}`);
     if (!result.ok) for (const c of result.debt) console.log(`   · ${c.sha} ${c.isoDate.slice(0, 10)} ${c.subject}`);
+    if (result.state === 'corrections-unrecorded') {
+      for (const c of result.corrections) console.log(`   · ${c.sha} ${c.isoDate.slice(0, 10)} ${c.subject}`);
+      console.log(`   fix: append a "Session ${result.anchorSession} addendum" entry to ${WRITE_BACK_ANCHOR}.`);
+    }
     if (EXPLAIN) for (const s of repairPlanForWriteBackCurrency(result)) console.log(`- ${s.step}: ${s.action}`);
   }
-  // 0 current · 1 write-back debt · 3 UNMEASURED. Three states, three codes: an
-  // unmeasurable window must be distinguishable from both a pass and real debt.
-  process.exit(result.ok ? 0 : (result.unmeasured ? 3 : 1));
+  process.exit(result.ok ? 0 : 1);
 }

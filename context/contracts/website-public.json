@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-19T22:18:13.211Z",
+  "generatedAt": "2026-09-20T21:33:25.674Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 362,
-    "currentFocus": "S362: fixed two probes that were reporting false alarms (a cron line with a trailing comment was invisible to the staleness probe; post-closeout resync commits were counted as write-back debt), added a blocking browser gate that installs the service worker, and made the unarmed newsletter cron hold instead of failing. Nothing was armed or sent.",
-    "nextMilestone": "The credential-side per-service Supabase health feed for /status/, and a staleness verdict bound to its own denominator.",
+    "currentSession": 363,
+    "currentFocus": "S363: closed a live bypass of the newsletter arming decision (a manual dispatch with mode=send skipped the hold entirely and would have mailed every opted-in member), gave the scheduled-cron probe a bounded, self-expiring 'repaired-untested' verdict, stopped the public Supabase receipt reporting 'blocked' while three of its four authorities were live, and restored eight local-ahead guards that this session's own /start propagation had removed. Nothing was armed or sent.",
+    "nextMilestone": "Make build:check idempotent over the gitignored oracle-feed artifact, and refuse an inbound propagation that removes an exported symbol this repo's own code imports.",
     "pulseKeys": [
       "now",
       "next",

@@ -1715,3 +1715,27 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **Deferred honestly:** the IGNIS rescore remedy is a no-op in project repos (reads a studio-ops-only registry) — Ark repo-question shipped; founder-presence history purge still needs a force-push.
 
 **Release.** Staging full publish 27f1046cdb5d (6969 files, chain 80); ceremony 11/11 after rebuilding the continuity summary; scoped promotion run 35474267138 succeeded; production build-sha dae84c0c4 = HEAD (full deploy). The service-worker install spec passes against production and staging; smoke:live 6/6.
+
+---
+
+## S363 — 2026-09-20 · `/arc`, direct-to-main + full deploy authorized
+
+**Triage.** No lock, clean tree, F7 current through `2d101d67`; 57 behind origin was the routine refresh, not a cut-off. Pulled, then audited.
+
+**1. Newsletter send gate (A1).** The unarmed hold keyed on `EVENT_NAME = schedule`, so a manual dispatch with `mode=send` skipped it entirely and would have mailed every opted-in member with `NEWSLETTER_ARMED` unset — a dropdown overriding D-S341.4 — and the hold branch was unreachable by any manual run, so it would first have executed unobserved on 2026-10-02. Now keyed on effective mode: safer and testable by the same dispatch it protects. Nothing armed, nothing sent.
+
+**2. Staleness probe `repaired-untested` (A2).** Verified live first: the Sept 2 failure was `HTTP 404 · function not found`, and the Management API now lists `send-member-newsletter` ACTIVE v1 — both causes of the six-failure streak were already fixed, but the probe reads only run history and could not clear until Oct 2. Added a verdict keyed on the workflow source's commit time, bounded at both ends and self-expiring after one cadence. Nine self-test guards, three named for the mute they prevent. D-S362.8 is reconciled in D-S363.2, not overridden: this asserts only what git can prove.
+
+**3. Supabase `overall` (A3).** The receipt read `blocked` while carrying three `ready` planes, and the identity receipt beside it published `readyPlanes: 3, totalPlanes: 4` next to that word. Deploy authority was live throughout — used it to enumerate 30 edge functions. Aggregated over all four planes; checked the promotion gate keys on `ready` before changing anything, so nothing loosened. Its held path requires the disclosure reason `supabase-control-plane-partial`, which this makes accurate.
+
+**4. The propagation clobber (A4 — found during implementation, not during audit).** The drain at this session's own `/start` was mostly an improvement (44 files, net +2,162) but removed eight guards this repo's code imports: the gateway's UNKNOWN-vs-MISSING separation and probe-health fields, `check-secrets`' caller-error render and exit 3, the SIL invariant helpers (pure 23-line deletion), the task-board inventory parser and the brief row using it, the `PROJECT_STATUS.json` deprecated-alias guard, and `probe-capability`'s whole self-test. Merged back beside the propagated improvements, never reverted. Shipped upstream as `pattern-share` `01K3052GLJ1D81D97FA5043903`. Recurrence: S316 already did this once for `suggestCapabilities` and shipped cargo so the next propagation would carry it — it did not.
+
+**5. Write-back probe authorship filter.** 57 commits authored by `github-actions[bot]` counted as substantive debt; the lock written afterwards tripped `lock_postdates_debt`; the probe reported an abandoned session with 57 unrecorded commits. A routine `git pull` was enough to manufacture the exact alarm the probe exists to raise. Authorship is the structural filter — a commit no session produced is not a session's debt. Also gave the file a real `--self-test` (8/8); it had none, so `build:check` had been running the live git probe while reporting itself as a logic test.
+
+**6. Gate hygiene.** Six gates no runner invoked: two wired into `build:check`, four declared their real lifecycle lane with `@verification-scope` after confirming that lane actually invokes them. Two rotted allowlist entries removed (one claimed "invoked by /start" for a script nothing invoked). Seven superseded orphan libs removed, plus one vacuous self-test step. Five spawn sites brought back under the window-storm guard, and the propagated gate's scan roots made repo-aware — owned roots still hard-fail, portable ones are named when absent.
+
+**7. Copy gate false positive.** It split at the period inside `(R-Mo.)` and reported correct English as a reader-facing defect on the live 2026-09-20 corpus. Fixed structurally rather than with a vocabulary list, with the accepted blind spot written into the tests instead of hidden. 45/45.
+
+**Verified.** `build:check` 503/503 · mobile audit 215/215 against the local preview · visual matrix 84 hash-bound captures, 5 manually inspected across dark/light/high-contrast on desktop and mobile · both receipts bound to the final tree · doctor and live probes green.
+
+**Deferred honestly:** the founder-presence history purge still needs a force-push (CANON-019); the stale ATLAS lock and four sibling-owned compliance failures are cross-repo (CANON-018); the Supabase service-role slot still points at the sibling project, reported by name rather than worked around.

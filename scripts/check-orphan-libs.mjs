@@ -61,10 +61,11 @@ const ALLOWLIST = {
   // imports ./secrets.mjs + references portfolio/, both studio-ops paths). Handed
   // off via Ark S219, never committed here → deleted from the website tree as debris
   // rather than carried as a permanent allowlist exception. See DECISIONS D-S220.
-  'write-project-status.mjs':
-    'S154 SIL-invariant write-path for PROJECT_STATUS.json. Standalone CLI (--check/--fix) + importable lib, ' +
-    'intentionally invoked on demand and propagated to siblings via the protocol-scripts lane. ' +
-    'build:check enforces the same SIL invariants via check-sil-integrity.mjs, so it is not wired into the chain.',
+  // write-project-status.mjs removed from the allowlist S363: the gate's own
+  // allowlist-rot detector flagged it REDUNDANT — it now has real code consumers,
+  // so the exemption was describing a state that no longer exists. An allowlist
+  // that holds non-orphans is the rot this gate exists to catch; left in place it
+  // would eventually excuse a genuine orphan by inheritance.
   'env-local.mjs':
     'Side-effect .env.local loader (no dotenv dep). Import-on-demand by local-only/dev scripts that need ' +
     'IGNIS_MCP_URL etc. at module-load; intentionally not imported by committed build code.',

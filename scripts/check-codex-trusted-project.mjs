@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-// @verification-scope machine — reads and optionally repairs per-machine Codex trust.
+// @verification-scope startup — machine-local Codex trust state, not a property of
+// the tree. It cannot be a build gate (CI has no Codex config), and it is genuinely
+// invoked: render-startup-brief.mjs surfaces it as the "Codex trust" signal and
+// lib/doctor-remedies.mjs names it as the repair. Declared S363 so the reachability
+// gate records the lane that runs it instead of reporting it as never-run.
 /**
  * check-codex-trusted-project.mjs
  *

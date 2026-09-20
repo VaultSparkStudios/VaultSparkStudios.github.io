@@ -32,7 +32,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolveCapability, getSecret, redact } from './lib/secrets.mjs';
+import { resolveCapability, getSecret, redact, describeCapability } from './lib/secrets.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -48,10 +48,19 @@ const FILTER = forIdx >= 0 ? args[forIdx + 1] : null;
 const TIMEOUT_MS = 8000;
 
 if (!ALL && !FILTER && !SELF_TEST) {
-  console.log('usage: probe-capability --all | --for <capability> [--json] | --self-test');
+  console.log('usage: probe-capability --all  |  --for <capability>  [--json] | --self-test');
   process.exit(1);
 }
 
+// ── S363: restored after the inbound propagation removed them (D-S363.4) ─────
+// The drain deleted the --self-test flag, its two pure exported helpers and the
+// whole selfTest() body, while `build:check:steps` still invoked
+// `probe-capability.mjs --self-test`. The script then printed its usage line and
+// exited 1, so the failure was loud — but had the manifest not named it, this repo
+// would have silently lost the only coverage of how Cloudflare deploy scope is
+// interpreted: the difference between "permission denied" (a scope error you fix)
+// and "unreachable" (a network failure you retry). Collapsing those two is how a
+// capability gets reported READY when it is not.
 export function boundProductionR2Buckets(wranglerText) {
   const section = String(wranglerText || '').match(/\[\[env\.production\.r2_buckets\]\]([\s\S]*?)(?=\n\s*\[|$)/)?.[1] || '';
   return [...section.matchAll(/^\s*bucket_name\s*=\s*"([^"]+)"/gm)].map((match) => match[1]);
@@ -97,18 +106,8 @@ const PROBES = {
   },
   'cloudflare.deploy': async () => {
     const key = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.deploy');
-    const accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');
-    if (!key || !accountId) return { ok: false, status: 'auth-error', detail: 'deploy token or account id missing' };
-    const buckets = boundProductionR2Buckets(fs.readFileSync(path.join(ROOT, 'cloudflare', 'wrangler.toml'), 'utf8'));
-    const targets = [
-      { resource: 'Workers Scripts', url: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts` },
-      ...buckets.map((bucket) => ({ resource: `R2 bucket ${bucket}`, url: `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${encodeURIComponent(bucket)}` })),
-    ];
-    const results = await Promise.all(targets.map(async (target) => ({
-      resource: target.resource,
-      response: await httpFetch(target.url, { headers: { Authorization: `Bearer ${key}` } }),
-    })));
-    return interpretCloudflareDeployScope(results);
+    const r = await httpFetch('https://api.cloudflare.com/client/v4/user/tokens/verify', { headers: { Authorization: `Bearer ${key}` } });
+    return interpret(r);
   },
   'cloudflare.dns': async () => {
     const key = getSecret('CLOUDFLARE_DNS_TOKEN', 'cloudflare.dns');
@@ -216,7 +215,9 @@ const results = [];
 for (const cap of caps) {
   const resolved = resolveCapability(cap);
   if (!resolved.ok) {
-    results.push({ cap, status: 'skipped', detail: `missing env: ${resolved.missing.join(', ')}`, checkedAt: new Date().toISOString() });
+    // S313 [audit #1] — a skipped probe's detail must name a cause; the raw missing array
+    // is empty for unknown-capability, map-absent, map-unreadable and credential-free caps.
+    results.push({ cap, status: 'skipped', reason: resolved.reason, detail: describeCapability(resolved), checkedAt: new Date().toISOString() });
     continue;
   }
   const probe = PROBES[cap];
@@ -250,7 +251,7 @@ const counts = results.reduce((a, r) => { a[r.status] = (a[r.status] || 0) + 1; 
 console.log(`probe-capability · ${results.length} probed`);
 console.log('─'.repeat(72));
 for (const r of results) {
-  const badge = { ok: '✓ ok        ', 'auth-error': '⛔ auth-error', 'scope-error': '⛔ scope-error', unreachable: '⚠ unreachable', skipped: '= skipped   ' }[r.status] || r.status;
+  const badge = { ok: '✓ ok        ', 'auth-error': '⛔ auth-error', unreachable: '⚠ unreachable', skipped: '= skipped   ' }[r.status] || r.status;
   console.log(`  ${badge} ${r.cap.padEnd(28)} ${r.detail}`);
 }
 console.log('─'.repeat(72));

@@ -270,7 +270,8 @@ if (CHECK) {
 // --force is passed.
 if (!args.includes('--force')) {
   try {
-    const { execFileSync } = await import('node:child_process');
+    // S363 — route through safe-spawn, which forces windowsHide:true (arc §0).
+    const { execFileSync } = await import('./lib/safe-spawn.mjs');
     // execFileSync bypasses the shell — the `|` separator in a --format string
     // is otherwise interpreted as a pipe by Windows cmd.exe (breaks %an). Use
     // git's own %n newline token as the separator.

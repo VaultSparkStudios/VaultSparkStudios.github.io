@@ -705,7 +705,10 @@ if (CHECK) console.log('propagate-nav --check: passed · all standard-shell page
 // extractor so propagation can never re-introduce that debt class.
 if (!DRY_RUN && !CHECK) {
   try {
-    const { execSync } = await import('node:child_process');
+    // S363 — route through safe-spawn, which forces windowsHide:true (arc §0). A
+    // propagation walk runs once per sibling repo, so a bare import here is exactly
+    // the hot-path spawner the window-storm rule was written for.
+    const { execSync } = await import('./lib/safe-spawn.mjs');
     // S275: execPath must be quoted — "C:\Program Files\nodejs\node.exe" has a
     // space, so the bare interpolation ran 'C:\Program' and silently skipped
     // the extractor on Windows.

@@ -20,6 +20,7 @@
  */
 
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -48,21 +49,7 @@ function findStudioOpsSecretsDir() {
   return null;
 }
 const STUDIO_OPS_SECRETS_DIR = findStudioOpsSecretsDir();
-const LOCAL_CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
-// S316 — loadEnv already resolves VALUES from the studio-ops sibling, but an
-// inbound propagation reduced the capability map to a local-only path. In a
-// consumer repo with no local secrets/CAPABILITY_MAP.json that makes every
-// capability resolve to UNKNOWN silently, because an absent map is (correctly)
-// treated as the legitimate CI case and never warns. Capability resolution
-// follows the same sibling walk as the values it describes.
-function capabilityMapCandidates() {
-  const candidates = [LOCAL_CAP_MAP_PATH];
-  if (STUDIO_OPS_SECRETS_DIR) candidates.push(path.join(STUDIO_OPS_SECRETS_DIR, 'CAPABILITY_MAP.json'));
-  return [...new Set(candidates.map((p) => path.resolve(p)))];
-}
-function findCapabilityMapPath() {
-  return capabilityMapCandidates().find((p) => fs.existsSync(p)) || LOCAL_CAP_MAP_PATH;
-}
+const CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
 const ACCESS_LOG = path.join(SECRETS_DIR, '.access.log');
 
 let _cache = null;         // flat merged env
@@ -145,10 +132,9 @@ function loadCapMap() {
   // single curly quote could make getSecret/resolveCapability fail to find any
   // capability with no signal. Corruption now fails LOUD (stderr + access log)
   // while still returning empty so callers degrade gracefully rather than crash.
-  const capMapPath = findCapabilityMapPath();
-  if (!fs.existsSync(capMapPath)) { _capMap = { capabilities: {} }; return _capMap; }
+  if (!fs.existsSync(CAP_MAP_PATH)) { _capMap = { capabilities: {}, _absent: true }; return _capMap; }
   try {
-    _capMap = JSON.parse(fs.readFileSync(capMapPath, 'utf8'));
+    _capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
   } catch (e) {
     const msg = `CAPABILITY_MAP.json is present but UNPARSEABLE (${e.message}). ` +
       `Capability resolution is degraded to empty — fix the file. ` +
@@ -230,15 +216,106 @@ export async function getSecretWithVaultFallback(key, capability = 'unspecified'
 }
 
 /**
- * Check whether all env vars required for a capability are present.
- * @param {string} capability - e.g. "stripe.checkout"
- * @returns {{ok: boolean, required: string[], missing: string[], found: string[]}}
+ * Every distinct outcome capability resolution can have. S313 [audit #1]: the prior
+ * `ok = required.length > 0 && missing.length === 0` collapsed four different worlds
+ * into one indistinguishable `{ok:false, missing:[]}` — a credential-free capability,
+ * an unknown capability name, an absent map and a corrupt map all returned the same
+ * bytes. `missing` was then rendered by 25 call sites as if it named a credential,
+ * so the founder-facing line read `⛔ MISSING  missing:` with nothing after the colon
+ * and the pg-backup healer wrote that same empty cause into its durable receipt.
+ *
+ * The set is six, not the five the audit recipe named. `map-absent` is deliberately
+ * NOT folded into `map-unreadable`: an absent map is the designed, legitimate CI case
+ * (loadCapMap has always treated it as silent-and-empty) while an unparseable map is a
+ * loud defect. Folding them would reproduce exactly the collapse this fixes.
  */
+export const CAPABILITY_REASONS = Object.freeze([
+  'ready',                   // every declared env var is present
+  'no-credentials-required', // declared with an empty env list (OAuth/MCP-brokered) — nothing to hold
+  'missing-credentials',     // declared env vars, one or more absent — `missing` names them
+  // S332 — set, but pointing at nothing. A *_PATH/_FILE/_KEYFILE variable whose target
+  // does not exist on this host: every presence test passes and the capability is
+  // unusable. Its own state because its remedy is its own — "you never set this" sends
+  // the reader to the provider, "the file is not on this machine" sends them to the box.
+  'path-unresolved',
+  'unknown-capability',      // not in CAPABILITY_MAP.json at all (typically a typo)
+  'map-absent',              // no CAPABILITY_MAP.json on this host (legitimate: CI without secrets/)
+  'map-unreadable',          // the map exists and will not parse
+]);
+
+/** Reasons under which the capability is usable. A credential-free capability IS ready. */
+const READY_REASONS = new Set(['ready', 'no-credentials-required']);
+
+/**
+ * Check whether a capability is usable, and say WHY in one word.
+ * @param {string} capability - e.g. "stripe.checkout"
+ * @returns {{ok: boolean, reason: string, required: string[], missing: string[], found: string[]}}
+ */
+/**
+ * S332 — the three states one required key can be in.
+ *
+ * Extracted as a pure function because it is the part worth testing and the part that was
+ * wrong: the loader's own precedence (secrets/*.env beats process.env) makes the resolver
+ * awkward to drive from a test, and a rule this small should not be provable only through
+ * a live capability on one machine.
+ *
+ * `PATH`/`FILE`/`KEYFILE` suffixes are the declaration of intent — the rule keys on the
+ * variable's NAME, never on whether a value happens to look like a path, so a token that
+ * resembles one is never filesystem-tested.
+ */
+export function classifyRequiredKey(key, value, exists = fs.existsSync) {
+  if (!value) return 'missing';
+  if (!/_(PATH|FILE|KEYFILE)$/.test(key)) return 'present';
+  // NOT every path is a LOCAL path. `RESTIC_REMOTE_PATH` names a location on a backup
+  // server; filesystem-testing it here would report a perfectly good credential as
+  // unresolved, and a wrong rejection is the expensive direction — it is what teaches
+  // an operator to stop believing the gateway. Two independent tells, because a remote
+  // location can arrive under any name: the name says REMOTE, or the value carries a
+  // scheme or a `user@host:` prefix. Found in review, before it could fire: the map
+  // declares exactly one such variable and it happens to be unset today.
+  if (/REMOTE/.test(key)) return 'present';
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(value) || /^[^/\\\s]+@[^/\\\s]+:/.test(value)) return 'present';
+  // S333 [audit #9] — A TILDE IS A PATH THIS HOST CAN RESOLVE, and `fs` is the one
+  // reader that will not resolve it. S332 shipped this check and taught it that a
+  // REMOTE path is not a local one; one commit later the same rule reported
+  // `hetzner.ssh` as "set but UNUSABLE on this host — HETZNER_SSH_KEY_PATH points at a
+  // path that does not exist" for the value `~/.ssh/id_ed25519`, a file that plainly
+  // exists. OpenSSH expands `~` itself, so the credential was always good: the
+  // deployers that consume it connected over SSH and returned real remote checksums
+  // WHILE the gateway called them blocked. That is a phantom blocker the gateway
+  // manufactured about itself (CANON-019), and a wrong rejection is the expensive
+  // direction — it is exactly what teaches an operator to stop believing the gateway.
+  return exists(expandHome(value)) ? 'present' : 'path-unresolved';
+}
+
+/**
+ * Expand a leading `~` the way every shell and OpenSSH already does. Only a bare `~` or
+ * a `~/`-prefixed value is expanded — `~user/...` is deliberately left alone, because
+ * resolving another account's home is a guess, and a guess must never point forward.
+ */
+export function expandHome(value, home = os.homedir()) {
+  const v = String(value);
+  if (v === '~') return home;
+  if (v.startsWith('~/') || v.startsWith('~\\')) return path.join(home, v.slice(2));
+  return v;
+}
+
 /**
  * Rank known capability names against a query so an unknown name can be
  * corrected instead of escalated. Exact-prefix relatives first (`supabase` →
  * `supabase.admin`), then substring relatives. Deterministic — sorted, never
  * dependent on object key order.
+ *
+ * S363 — REMOVED BY AN INBOUND PROPAGATION FOR THE SECOND TIME. S316 restored
+ * this function after the first clobber and shipped it upstream as Ark cargo so
+ * the next propagation would carry it; the propagation drained at this session's
+ * /start dropped it again. The rest of that propagation is an improvement and is
+ * kept — it folds S316's UNKNOWN-vs-MISSING distinction into a formal
+ * `unknown-capability` reason — so this is a merge, not a revert. But the
+ * recurrence is the finding: shipping cargo upstream did not stop the clobber,
+ * and `check-capability-discovery-contract.mjs` imports this symbol, so the loss
+ * is a hard ImportError in build:check rather than a silent degradation. That is
+ * the only reason it was caught. Re-shipped upstream; see DECISIONS D-S363.4.
  */
 export function suggestCapabilities(query, known) {
   const q = String(query || '').toLowerCase();
@@ -260,49 +337,117 @@ export function suggestCapabilities(query, known) {
     .slice(0, 5);
 }
 
-/**
- * Resolve a capability's credential readiness.
- *
- * `known` is load-bearing and separate from `ok`. An unknown capability name —
- * a typo, or a guess like `supabase` when the real entries are `supabase.admin`
- * and `supabase.client` — used to return the same empty-`missing` shape as a
- * genuinely absent credential. That is the phantom blocker CANON-019 forbids,
- * produced by the very tool that exists to prevent one: MISSING means a human
- * must mint a credential, UNKNOWN means the caller should fix the name and
- * retry. Callers must be able to tell those apart.
- *
- * S316 — this distinction, and suggestCapabilities above, were removed by an
- * inbound studio-ops propagation that reverted this function to its
- * pre-CANON-019 shape. Restored here and shipped upstream as Ark cargo so the
- * next propagation carries it rather than clobbering it again.
- */
 export function resolveCapability(capability) {
   const map = loadCapMap();
-  const catalogue = map.capabilities || {};
-  const known = Object.prototype.hasOwnProperty.call(catalogue, capability);
-  const required = catalogue[capability]?.env || [];
+  const entry = map.capabilities?.[capability];
+  const required = entry?.env || [];
   const env = loadEnv();
   const missing = [];
   const found = [];
+  // S332 — A *_PATH VARIABLE POINTS AT SOMETHING. PRESENCE OF THE POINTER IS NOT
+  // PRESENCE OF THE THING.
+  //
+  // Found by trying to use a capability instead of reading its badge: `hetzner.ssh`
+  // reported READY 2/2 while the private key at `HETZNER_SSH_KEY_PATH` did not exist on
+  // this machine. Both variables were set, so every presence test passed, and the
+  // capability was unusable — the same shape as S319's resolvable-vs-missing collapse
+  // and S313's state that cannot express what it is in. A path credential that resolves
+  // to nothing is MISSING wearing a READY badge, and an agent reading the badge will
+  // plan work it cannot do (this session did exactly that, twice, in a handoff).
+  //
+  // Reported as its own reason, not folded into `missing-credentials`: "you never set
+  // this" and "you set it and the file is gone" need different actions from the reader.
+  const unresolvedPaths = [];
   for (const k of required) {
-    if (env[k] || process.env[k]) found.push(k); else missing.push(k);
+    const state = classifyRequiredKey(k, env[k] || process.env[k]);
+    if (state === 'missing') missing.push(k);
+    else if (state === 'path-unresolved') unresolvedPaths.push(k);
+    else found.push(k);
   }
-  const ok = known && required.length > 0 && missing.length === 0;
-  const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(catalogue));
-  // S349 — presence is not health. The map records the outcome of the last real
-  // action probe, and this resolver held that field without ever reading it: the
-  // gateway printed `✓ READY 2/2 all present` for supabase.admin while the very
-  // same entry recorded `lastProbeStatus: "auth-error"`. This is the surface an
-  // agent checks before declaring itself blocked (CANON-019), so a READY that
-  // contradicts our own stored disproof sends the next session down a dead path.
-  // `ok` deliberately keeps its meaning — presence — so no existing caller changes
-  // behaviour; the probe verdict is reported ALONGSIDE it and rendered distinctly.
-  const entry = catalogue[capability] || {};
-  const lastProbeStatus = entry.lastProbeStatus ?? null;
-  const lastProbeAt = entry.lastProbeAt ?? null;
+
+  let reason;
+  if (map._corrupt) reason = 'map-unreadable';
+  else if (map._absent) reason = 'map-absent';
+  else if (!entry) reason = 'unknown-capability';
+  else if (required.length === 0) reason = 'no-credentials-required';
+  else if (missing.length === 0 && unresolvedPaths.length === 0) reason = 'ready';
+  else if (missing.length === 0) reason = 'path-unresolved';
+  else reason = 'missing-credentials';
+
+  const ok = READY_REASONS.has(reason);
+
+  // ── S363: fields the same inbound propagation dropped, restored beside it ──
+  // The propagated `reason` taxonomy and S332 `unresolvedPaths` check above are
+  // genuine improvements and are kept — this is a merge, not a revert. But the
+  // same propagation removed three local-ahead contracts that live callers rely
+  // on, and each fails in a different, quiet way:
+  //
+  //  · `known` — the UNKNOWN-vs-MISSING separation (S316/CANON-019). `reason`
+  //    carries the same fact, but check-capability-discovery-contract.mjs asserts
+  //    the BOOLEAN, so dropping it turned a readable flag into a contract break.
+  //  · `suggestions` — the whole point of separating UNKNOWN from MISSING is that
+  //    the caller can fix a typo instead of escalating a credential request. The
+  //    separation without the suggestions leaves the reader correctly informed
+  //    and still stuck.
+  //  · `lastProbeStatus` / `lastProbeAt` / `probeFailing` (S349) — PRESENCE IS NOT
+  //    HEALTH. The map records the last real action probe, and dropping these
+  //    fields restores exactly the state S349 fixed: `✓ READY 2/2 all present`
+  //    printed for a capability whose own entry records `lastProbeStatus:
+  //    "auth-error"`. This is the surface an agent reads before declaring itself
+  //    blocked, so a READY that contradicts our own stored disproof sends the next
+  //    session down a dead path. `ok` keeps its meaning (presence) so no caller
+  //    changes behaviour; the probe verdict is reported ALONGSIDE it.
+  //
+  // probe-capability.mjs still WRITES lastProbeStatus into the map, so without
+  // this the studio kept recording a health signal that nothing could read.
+  const known = !map._corrupt && !map._absent && Boolean(entry);
+  const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(map.capabilities || {}));
+  const lastProbeStatus = entry?.lastProbeStatus ?? null;
+  const lastProbeAt = entry?.lastProbeAt ?? null;
   const probeFailing = Boolean(lastProbeStatus) && lastProbeStatus !== 'ok';
-  audit({ capability, action: 'resolveCapability', ok, known, missing });
-  return { ok, known, required, missing, found, suggestions, lastProbeStatus, lastProbeAt, probeFailing };
+
+  audit({ capability, action: 'resolveCapability', ok, reason, known, missing });
+  return {
+    ok, reason, known, required, missing, found, unresolvedPaths,
+    suggestions, lastProbeStatus, lastProbeAt, probeFailing,
+  };
+}
+
+/**
+ * The ONE renderer for a resolveCapability result. Call sites must not format
+ * `.missing` themselves — an empty array is a legitimate outcome for four of the six
+ * reasons, and `missing.join(', ')` turns every one of them into the empty string.
+ * Guaranteed non-empty for every reason.
+ * @param {{ok:boolean, reason:string, required:string[], missing:string[], found:string[]}} result
+ * @param {{capability?: string}} [opts]
+ */
+export function describeCapability(result, opts = {}) {
+  const cap = opts.capability ? `${opts.capability}: ` : '';
+  const { reason, required = [], missing = [], found = [], unresolvedPaths = [] } = result || {};
+  switch (reason) {
+    case 'ready':
+      return `${cap}${found.length}/${required.length} all present`;
+    case 'no-credentials-required':
+      return `${cap}no credentials required (brokered/OAuth capability)`;
+    case 'missing-credentials':
+      return missing.length > 3
+        ? `${cap}missing ${missing.length}: ${missing.slice(0, 2).join(', ')}…`
+        : `${cap}missing: ${missing.join(', ')}`;
+    // S332 — its own sentence, because its remedy is its own too. "You never set this"
+    // sends the reader to the provider; "you set it and the file is not on this machine"
+    // sends them to the machine. Folding the second into the first cost this session two
+    // phantom founder actions in a handoff.
+    case 'path-unresolved':
+      return `${cap}set but UNUSABLE on this host — ${unresolvedPaths.join(', ')} points at a path that does not exist`;
+    case 'unknown-capability':
+      return `${cap}unknown capability — not declared in secrets/CAPABILITY_MAP.json (check the spelling)`;
+    case 'map-absent':
+      return `${cap}no CAPABILITY_MAP.json on this host — capability resolution unavailable here`;
+    case 'map-unreadable':
+      return `${cap}CAPABILITY_MAP.json will not parse — capability resolution degraded`;
+    default:
+      return `${cap}unrecognised resolution reason ${JSON.stringify(reason)}`;
+  }
 }
 
 /**

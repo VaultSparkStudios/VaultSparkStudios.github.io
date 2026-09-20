@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "2819bdc4b5bb8686fe4ab607f579eb6cdef4a6ea",
+    "sha": "119899cb09d1995df7f8b1abca136975c3dbd262",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "e65eca737d7e97a5891f460537b7eb5c279bd6ba",
-    "contentLaneHead": "949cfacb65aa178298d3dd29ba64d8b5fe6840f6",
+    "sha": "dae84c0c40f74ed8d592636f53dbdc8839e74124",
+    "contentLaneHead": null,
     "reachable": true,
     "reconciliation": "behind",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-09-17T23:35:17.202Z",
-      "ageHours": 1.2,
+      "observedAt": "2026-09-20T18:12:58.266Z",
+      "ageHours": 3.3,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -86,18 +86,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves e65eca73, repo build-sha is 2819bdc4 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "the repo has advanced past the last promotion: production serves dae84c0c, repo build-sha is 119899cb — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-09-18T00:44:19.701Z",
+  "generatedAt": "2026-09-20T21:29:44.242Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-18T00:44:19.701Z",
-    "currentBehindStreak": 14,
-    "newestGradableAt": "2026-09-18T00:44:19.701Z",
+    "lastStrandedAt": "2026-09-20T21:29:44.242Z",
+    "currentBehindStreak": 19,
+    "newestGradableAt": "2026-09-20T21:29:44.242Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

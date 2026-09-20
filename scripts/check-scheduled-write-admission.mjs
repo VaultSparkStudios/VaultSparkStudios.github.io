@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// @verification-scope scheduler — admission control for unattended writers.
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';

@@ -265,6 +265,17 @@ export function sentences(text) {
       const lastToken = (before.match(/[A-Za-z][A-Za-z.]*$/) || [''])[0].toLowerCase();
       // Abbreviation, single initial, or a numeric decimal: not a sentence end.
       if (ABBREVIATIONS.has(lastToken) || /^[a-z]$/.test(lastToken) || /\d$/.test(before)) continue;
+      // S363 — a period tucked inside a parenthetical that the clause CONTINUES
+      // past in lowercase is an abbreviation, not a sentence end:
+      //   "Josh Hawley (R-Mo.) launched an investigation into OpenAI"
+      // `lastToken` stops at the hyphen and reads `mo`, so no vocabulary list
+      // catches it, and the live 2026-09-20 corpus was reported as a reader-facing
+      // copy defect for correct English. Structural rather than a word list, and
+      // the same false-positive class as the ellipsis case above: a real sentence
+      // does not end inside a parenthesis and resume lowercase outside it. A
+      // parenthetical that IS a whole sentence still splits, because its
+      // continuation is capitalised — "(This was late.) It shipped anyway."
+      if (/^[)\]]+\s+[a-z]/.test(src.slice(i + 1))) continue;
     }
     let end = i + 1;
     while (end < src.length && /["'”’)\]]/.test(src[end])) end++;
@@ -516,6 +527,23 @@ function selfTest() {
     ['a markdown heading fires', () => fires('markdown-artifact', '## The stakes\nIt matters.')],
     ['a double space fires', () => fires('double-space', 'The model  shipped today.')],
     ['a lowercase sentence start fires', () => fires('sentence-starts-lowercase', 'The model shipped. it was late.')],
+    // S363 — regression guards for the parenthetical-abbreviation split. The first
+    // is the live 2026-09-20 corpus sentence that was wrongly reported; the second
+    // and third pin that the fix did not blunt the rule it was narrowing.
+    ['a parenthetical abbreviation does not fire a lowercase start',
+      () => clean('Josh Hawley (R-Mo.) launched an investigation into OpenAI on Sept. 9.')],
+    ['a parenthetical whole sentence is not itself reported',
+      () => clean('The model shipped. (This was late.) It broke anyway.')],
+    // THE ACCEPTED BLIND SPOT, stated rather than hidden: a lowercase sentence
+    // opening IMMEDIATELY after a closing parenthesis is now unreachable, because
+    // nothing distinguishes "(R-Mo.) launched" from "(This was late.) it broke"
+    // without reading the parenthetical's meaning. The rule still fires one word
+    // later, so the defect is delayed, not lost — and a false positive on every
+    // parenthesised abbreviation in the corpus was the larger cost.
+    ['a lowercase start elsewhere in the same paragraph still fires',
+      () => fires('sentence-starts-lowercase', 'The model shipped (R-Mo.) late. it broke anyway.')],
+    ['a genuine lowercase start after a normal period still fires',
+      () => fires('sentence-starts-lowercase', 'The audit closed cleanly. everything passed.')],
     ['a shouted word fires', () => fires('all-caps-run', 'This is ENORMOUS for the field.')],
     ['a run of caps words fires', () => fires('all-caps-run', 'The AI API GPU LLM stack is fragile.')],
     ['an elided quote fires', () => fires('ellipsis-truncated-quote', 'He said “we blocked it … eventually” in the report.')],

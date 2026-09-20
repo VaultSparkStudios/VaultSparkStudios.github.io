@@ -43,15 +43,25 @@ jobs:
         run: |
           set -euo pipefail
 
-          # S362 (D-S362.3): the monthly send is deliberately unarmed (D-S341.4; the
-          # S354 founder directive keeps arming a founder decision). Until then the
-          # schedule HOLDS instead of failing: six red runs a year looked exactly like
-          # a broken cron, and trained everyone to ignore the one that matters. The
-          # held annotation keeps it visible: the staleness probe reports it by name.
-          # To arm: set the repository variable NEWSLETTER_ARMED=true, and first run
-          # ONE manual `preview` dispatch, then a manual `dry-run` dispatch.
-          if [ "${EVENT_NAME}" = "schedule" ] && [ "${NEWSLETTER_ARMED}" != "true" ]; then
-            echo "::warning title=Member newsletter held::Scheduled send skipped: NEWSLETTER_ARMED is not 'true' (unarmed by decision D-S341.4). Nothing was sent."
+          # S363 (D-S363.1): this gate now keys on the EFFECTIVE MODE, not on the
+          # event that triggered the run. Keyed on `EVENT_NAME = schedule` (S362) it
+          # had two defects that were really one defect: a manual dispatch with
+          # mode=send skipped the hold entirely and mailed every member while
+          # NEWSLETTER_ARMED was still unset — a dropdown silently overriding the
+          # arming decision D-S341.4 — and the branch itself was unreachable by any
+          # manual run, so the guard that stops the false alarm would first execute
+          # unobserved on the 2nd of a month. Gating on mode closes the bypass AND
+          # makes the branch testable: a manual `send` dispatch now takes exactly
+          # the path the schedule takes. preview and dry-run send nothing to
+          # members and are never held.
+          #
+          # A held run exits 0 by design: six red runs a year looked exactly like a
+          # broken cron and trained everyone to ignore the one that matters. The
+          # annotation keeps it visible — the staleness probe reports it by name.
+          # To arm: set repository variable NEWSLETTER_ARMED=true, then run ONE
+          # manual `preview` dispatch, then a manual `dry-run` dispatch.
+          if [ "${MODE}" = "send" ] && [ "${NEWSLETTER_ARMED}" != "true" ]; then
+            echo "::warning title=Member newsletter held::Send held: NEWSLETTER_ARMED is not 'true' (unarmed by decision D-S341.4). Mode was '${MODE}' via ${EVENT_NAME}. Nothing was sent."
             exit 0
           fi
 

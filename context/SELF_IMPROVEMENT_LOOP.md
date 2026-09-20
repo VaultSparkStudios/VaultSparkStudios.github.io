@@ -2579,3 +2579,22 @@ The Engagement row above says comments are "live again". By release the Supabase
 After production was verified, the repaired write-back probe still counted this session's own `chore(release)` and `chore(resync)` commits as substantive: their only non-generated files were `output/staging-themes/*.png` (ceremony theme screenshots) and `docs/GENIUS_LIST.md` (a generator output). Twelve hours later that would have been a brand-new false DEBT — the same defect, in the shape the S352 comment predicted an enumeration would keep taking. Both are now receipt paths (D-S362.7), and the probe reads current.
 
 Also recorded rather than muted: the newsletter still shows six consecutive failures, because the hold only takes effect on the next scheduled run (2026-10-02) and the probe reads run history, not workflow source (D-S362.8). No score change; the entry above already credits the probe work, and this is the same item continuing.
+
+## 2026-09-20 — Session 363 (a safety gate keyed on the wrong thing, and a propagation took eight guards back) | Total: 988/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 100 | 503/503 build:check, from 502 — two gates nothing invoked are now wired in and one self-test that tested a deleted module was removed. Mobile audit 215/215 re-run against a local preview, not rebound, because the rebind correctly refused a real content change. |
+| Creative Alignment | 98 | No visitor-facing design changed; five renders inspected across dark/light/high-contrast on desktop and mobile to confirm that, and the receipt claims 5 of 84 reviewed rather than 84. |
+| Momentum | 99 | Three audited items plus eight propagation regressions, five spawn-guard sites, six unreachable gates and two rotted allowlists, in one continuous pass, ending green. |
+| Engagement | 96 | Unchanged surface. The member-facing consequence is negative-space: a send that could have gone out unarmed now cannot. |
+| Process Quality | 100 | A1 was found by reading the workflow rather than the alarm; A3 was verified by using the authority the receipt said was blocked; the A2 change was reconciled against D-S362.8, which had explicitly refused to mute that streak, instead of quietly overriding it. One self-test I wrote asserted behaviour the fix deliberately trades away — corrected to the true behaviour and the blind spot named in the test file. |
+| Cross-Repo Coherence | 100 | No sibling-repo edits. The propagation-lane fix shipped as Ark cargo, because a sibling's lane is not ours to edit even when it is the thing breaking us. |
+| Security Posture | 100 | A live bypass of the arming decision D-S341.4 was closed: a manual dispatch could have mailed every opted-in member with the repository variable unset. Nothing armed, nothing sent, no new credential. |
+| Ecosystem Integration | 99 | Five fixes land in every repo carrying the propagated scripts. The windows-hide scan scope is now repo-aware, so the guard stops failing on siblings that simply lack studio-ops' components. |
+| Capital Efficiency | 100 | No new tools, no paid calls, no new dependencies. |
+| Automation Coverage | 96 | Two new verdicts (`repaired-untested`, authorship filtering) are fixture-proven with nine and eight guards. But the staleness probe's live corroboration still reports `broken, silent, unmeasured` as fixture-only this run, and the oracle-feed sanitizer leaves a gitignored artifact that fails the NEXT build:check — a non-idempotent gate. Both committed as `[SIL]`. |
+
+**Brainstorm → committed:** (1) `[SIL]` make `build:check` idempotent over `ignis/output/ecosystem-state.json` — today a completed run leaves the next one failing at step 81, which trains a reader to re-run rather than read. (2) `[SIL]` give the propagation drain an exported-symbol diff locally: this repo cannot fix the lane, but it can refuse to accept a drain that removes a symbol its own code imports, and S316 proves upstream cargo alone does not hold.
+
+**Why 988 and not higher:** the session ended green and every claim above is receipt-backed, but two things are worth naming. The A4 work was unplanned remediation of damage this session's own `/start` caused, so a large share of the effort bought back ground rather than gaining it. And the eight clobbered guards were caught because seven happened to fail loudly; the eighth (`check-secrets`) did not, and only a contract test noticed — which means the detection was partly luck, and the `[SIL]` item above exists to replace that luck with a check.

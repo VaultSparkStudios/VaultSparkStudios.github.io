@@ -81,7 +81,10 @@ function waitForServer(child, timeoutMs = 10_000) {
 }
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
-const { spawn } = await import('node:child_process');
+// S363 — route through safe-spawn, which forces windowsHide:true (arc §0). A bare
+// node:child_process import is how the window storm gets back in: this file spawns
+// a preview server per capture run.
+const { spawn } = await import('./lib/safe-spawn.mjs');
 const child = spawn(process.execPath, ['scripts/local-preview-server.mjs'], {
   cwd: ROOT,
   stdio: ['ignore', 'pipe', 'pipe'],

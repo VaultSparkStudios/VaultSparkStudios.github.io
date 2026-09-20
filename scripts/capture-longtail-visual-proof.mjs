@@ -138,6 +138,7 @@ console.log(`long-tail visual proof captured: ${captures.length} screenshot(s) �
 // S172 visual-proof-gallery: regenerate the review gallery after every capture
 // run so founder review stays one click.
 try {
-  const { spawnSync } = await import('node:child_process');
+  // S363 — route through safe-spawn, which forces windowsHide:true (arc §0).
+  const { spawnSync } = await import('./lib/safe-spawn.mjs');
   spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'render-visual-proof-gallery.mjs')], { stdio: 'inherit', cwd: ROOT });
 } catch { /* gallery is additive — capture result stands without it */ }

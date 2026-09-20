@@ -1,3 +1,21 @@
+## S363 A Public Receipt Contradicted Itself, and a Probe Could Be Made to Cry Wolf by a Pull (2026-09-20)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | `supabase-control-plane.json` gained no fields; its `overall` now aggregates the four planes it already published. `check-writeback-currency` reads `%ae` and carries `authorEmail` per commit. `check-windows-hide` splits its root list into owned/portable and reports both. |
+| Prompt/template alignment | 5 | The newsletter workflow's held annotation still matches the marker `check-scheduled-workflow-staleness` looks for, now stating the mode and event that produced the hold. |
+| Public claim accuracy | 5 | `/status/`, `agents.json` and `api/release-proof.json` were serving `overall: "blocked"` for Supabase while `managementApi`, `sqlMigration` and `edgeFunctions` were all `ready` — and `api/identity-migration-receipt.json` published `readyPlanes: 3, totalPlanes: 4` next to that same word. Deploy authority was live throughout (HTTP 200, 30 functions enumerated). Now `partial`, with the mismatch blocker still named. |
+| Internal consistency | 5 | The startup brief printed `Revenue sig. not found` from a path that cannot exist in this repo while the doctor resolved it as 9d old; both now read the shared resolver. The promotion gate's held-path disclosure reason `supabase-control-plane-partial` is accurate rather than contradicted by the receipt it describes. |
+| Evidence freshness | 5 | Both proof receipts re-bound to the final tree after the last generator pass: visual matrix 84 hash-bound captures (5 manually inspected), mobile audit 215/215 re-run against the local preview because the rebind correctly refused a real content change. |
+
+**What was true and is no longer:** the staleness probe's "Monthly Member Newsletter: 6 consecutive failures" described a dead cron. Both causes are fixed — the edge function is deployed ACTIVE v1, and the unarmed schedule holds — so the same six failures are now reported as `repaired-untested`, with the streak, the fixing commit and an expiry instant all named. If the 2026-10-02 run does not appear, the verdict returns to red on its own.
+
+**What was never true:** `check-writeback-currency` reporting "cut off — 57 substantive commits remain unrecorded". All 57 were authored by `github-actions[bot]` and pulled at `/start`; the session lock written afterwards tripped the cut-off heuristic. A routine `git pull` could manufacture the alarm the probe exists to raise. A false WRITE-BACK DEBT is worse than a missed one, because the arc's triage trusts that signal to decide whether to run a whole recovery branch.
+
+**What is NOT resolved:** the Supabase service-role slot still points at the sibling project (`supabase-credential-project-mismatch`) — reported by name, not worked around, and it gates row-data admin only. The staging 503s remain unsourced pending Worker observability. `api/founder-presence.json` still carries 30 revisions in public history; the purge needs a force-push and stays a founder action. Four compliance failures and one stale session lock are sibling-owned and were not touched.
+
+**Honesty note on this session's own work:** the visual receipt claims 5 of 84 captures manually reviewed, not 84. The other 79 prove rendering and hash binding only. The copy-gate fix trades away one narrow detection — a lowercase sentence opening immediately after a closing parenthesis — and that blind spot is written into the test file rather than left for a later session to rediscover.
+
 ## S356 The Public Surfaces Were Overstating, and the Flagship Was Shipping Placeholders (2026-09-15)
 
 | Dimension | Score | Evidence |

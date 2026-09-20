@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// @verification-scope closeout — compares and repairs session write-back surfaces.
+// @verification-scope doctor — asserts a closeout-written cache against the latest
+// completed session, so it is meaningful only after a closeout, never mid-build.
+// Invoked via lib/doctor-remedies.mjs. Declared S363.
 // check-last-session-summary.mjs — ensure cached last-session prose names the latest completed session.
 //
 // Usage:
@@ -17,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { latestSilSession as latestLedgerSession, parseSilSessions } from './lib/sil-ledger.mjs';
+import { writeProjectStatus } from './lib/write-project-status.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const JSON_OUT = process.argv.includes('--json');
@@ -114,7 +117,7 @@ export function fix(root = ROOT) {
     status.lastSessionSummary = derived;
     healedFrom = 'sil-ledger';
   }
-  fs.writeFileSync(statusPath, JSON.stringify(status, null, 2) + '\n', 'utf8');
+  writeProjectStatus(root, status, { touchLastUpdated: false });
   const after = evaluateLastSessionSummary({ status, silText });
   return { ...after, healed: true, reason: `healed from ${healedFrom} → S${after.actual}` };
 }
