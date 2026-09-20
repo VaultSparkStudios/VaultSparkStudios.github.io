@@ -1,17 +1,17 @@
 {
-  "agent": "claude-code",
-  "model": "opus-5-1m",
-  "sessionStart": 1789940645629,
-  "limit": 1000000,
-  "sessionId": 364,
+  "agent": "unknown",
+  "model": "default",
+  "sessionStart": 1789944841207,
+  "limit": 200000,
+  "sessionId": null,
   "subject": {
     "runtimeAgent": "claude-code",
     "runtimeSource": "env:CLAUDECODE",
-    "lockAgent": "claude-code",
-    "state": "corroborated",
-    "trustworthy": true
+    "lockAgent": null,
+    "state": "no-lock",
+    "trustworthy": false
   },
-  "measuredAt": "2026-09-20T22:39:29.506Z",
+  "measuredAt": "2026-09-20T22:54:01.496Z",
   "usedTokens": null,
   "remainingTokens": null,
   "pctUsed": null,
@@ -19,10 +19,10 @@
   "overLimit": null,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 36716,
+  "continueCostPerTurn": 1549,
   "freshSessionBootstrap": 3098,
-  "breakEvenTurns": 1,
-  "turnsToCompact": 23,
+  "breakEvenTurns": 2,
+  "turnsToCompact": 116,
   "compactImminent": false,
   "compactTriggerPct": 0.92,
   "recommendation": "UNMEASURED",
@@ -33,7 +33,7 @@
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 36,716 tok/turn"
+      "reason": "stay in session · cost 1,549 tok/turn"
     }
   ],
   "warnThreshold": 0.75,
@@ -43,7 +43,7 @@
     "ledgerEntries": 0,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 73431,
+    "heuristicTokens": 3098,
     "ledgerTokens": 0,
     "ledgerUSD": 0,
     "byScript": [],

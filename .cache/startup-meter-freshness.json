@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.1",
-  "checkedAt": "2026-09-20T22:32:30.615Z",
+  "checkedAt": "2026-09-20T22:54:01.525Z",
   "ok": true,
   "brief": {
     "verdict": "CONTINUE",
@@ -13,12 +13,14 @@
   "live": {
     "recommendation": "UNMEASURED",
     "usedTokens": null,
-    "limit": 1000000,
+    "limit": 200000,
     "pctUsed": null,
-    "agent": "claude-code",
-    "model": "opus-5-1m"
+    "agent": "unknown",
+    "model": "default"
   },
-  "limitComparable": true,
-  "notes": [],
+  "limitComparable": false,
+  "notes": [
+    "token-limit comparison skipped — not like-for-like (brief agent=claude-code, live agent=unknown); limit is an agent property, and an unidentified agent reports a default, not a reading"
+  ],
   "findings": []
 }
