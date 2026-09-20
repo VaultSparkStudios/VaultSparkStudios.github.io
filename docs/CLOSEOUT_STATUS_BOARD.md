@@ -1,32 +1,32 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-09-19 (Session 362 closeout) -->
+<!-- generated-at: 2026-09-20 (Session 363 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S362 ═══════╗
-║  Date: 2026-09-19  ·  SIL: 986/1000  ·  Velocity: 4 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S363 ═══════╗
+║  Date: 2026-09-20  ·  SIL: 988/1000  ·  Velocity: 4 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
-║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
+║  Autopilot: unknown (S363) — receipt ledger unreadable, NOT che  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Triage disbelieved two alarms, and both were wrong.** The   ║
-║  ✓ **Shipped:** cron lines with trailing comments are readable   ║
-║  ✓ **Nothing was armed and nothing was sent.** The newsletter c  ║
-║  ✓ **Verified locally:** `build:check` 502/502; staleness self-  ║
-║  ✓ **Deferred, on purpose:** the doctor's IGNIS remedy cannot r  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore(S363): converge the derived graph after the second pub  ║
+║  ✓ chore(S363): rebase reconcile — regenerated artifacts and re  ║
+║  ✓ chore(deploy): trigger Cloudflare Pages build after closeout  ║
+║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ closeout(S363): send gate keys on the mode, a repaired-untes  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 986/1000 ═══════════════════════════════════════╗
-║    Dev Health         99   ██████████                            ║
+╔══ SCORES · SIL 988/1000 ═══════════════════════════════════════╗
+║    Dev Health         100  ██████████                            ║
 ║    Alignment          98   ██████████                            ║
-║    Momentum           98   ██████████                            ║
+║    Momentum           99   ██████████                            ║
 ║    Engagement         96   ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          100  ██████████                            ║
-║    Security           99   ██████████                            ║
+║    Security           100  ██████████                            ║
 ║    Ecosystem          99   ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         97   ██████████                            ║
+║    Automation         96   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -41,20 +41,20 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 4 files  ·  M:2 A:0 D:0 ?:2                            ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 6 files  ·  M:6 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 3                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
-║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
+║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/17                                            ║
+║  Doctor:        14/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         502/502                                          ║
+║  Tests:         503/503                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         11d ago                                          ║
+║  IGNIS:         4d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

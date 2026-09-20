@@ -1,18 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-20T22:34:43.613Z",
-  "candidateReady": false,
-  "candidateFindings": [
-    "staging-artifact-root-mismatch"
-  ],
+  "generatedAt": "2026-09-20T22:18:01.180Z",
+  "candidateReady": true,
+  "candidateFindings": [],
   "candidateBuildSha": "4b3ce6dc139b7618f4147ffd10f1add3e968396e",
   "stagingBuildSha": "4b3ce6dc139b7618f4147ffd10f1add3e968396e",
   "artifactManifest": {
-    "candidateRoot": "eae4fb77cfa8c87e0b07b629ac473e9e1335656f368001cc27ea64db1f143897",
+    "candidateRoot": "fc5471acf727c258a79208b875365de42aae9469e6bd2a3ba9d85132c6cf5aa0",
     "candidateLeafCount": 53,
     "stagingRoot": "fc5471acf727c258a79208b875365de42aae9469e6bd2a3ba9d85132c6cf5aa0",
     "stagingLeafCount": 53,
-    "matched": false
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -20,13 +18,17 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "uncomparable",
-    "productionRoutes": null,
+    "state": "staging-ahead",
+    "productionRoutes": 166,
     "stagingRoutes": 169,
     "missingOnStaging": [],
-    "missingOnStagingCount": null,
-    "aheadOnStaging": [],
-    "aheadOnStagingCount": null,
+    "missingOnStagingCount": 0,
+    "aheadOnStaging": [
+      "/news/2026-09-20/anthropic-selects-accenture-as-first-embedded-evaluator-to-help/",
+      "/news/2026-09-20/openai-and-anthropic-oversold-ai-security-breaches/",
+      "/news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/"
+    ],
+    "aheadOnStagingCount": 3,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -34,12 +36,28 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
-      "shellParity": false,
-      "prodShell": [],
+      "statusParity": true,
+      "shellParity": true,
+      "prodShell": [
+        "assets/ambient-core.shell-1732d293f8.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-15b061f5c6.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-0fa853d549.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
       "stagingShell": [
         "assets/ambient-core.shell-1732d293f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -57,12 +75,12 @@
         "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "headerParity": false,
+      "headerParity": true,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -74,12 +92,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
-        "shell-mismatch",
-        "header-mismatch"
-      ]
+      "reasonCodes": []
     },
     {
       "route": "/studio-pulse/",
