@@ -63,6 +63,12 @@ const ALLOWLIST = {
   // allowlist's own detector exists to catch. It is now wired into build:check:steps,
   // so the exemption is redundant rather than merely inaccurate. Keeping a redundant
   // entry is how an allowlist eventually excuses a real orphan by inheritance.
+  'arc-profile.mjs':
+    'Invoked by the machine-global /arc skill, which cannot be scanned from inside this repo. Its SKILL.md §1b ' +
+    'names this exact path and requires the LOCAL copy: "node scripts/arc-profile.mjs" — running the studio-ops ' +
+    'copy instead silently profiles studio-ops (it resolves its root from import.meta.dirname), which S66 measured ' +
+    'waiving the CANON-007 staging gate on a production-deploy session. Arrived here with the S363 propagation; ' +
+    'this session had to fall back to the $OPS copy because the file did not yet exist.',
   'codemod-safe-spawn.mjs':
     'One-shot codemod (not a gate): rewrites child_process call sites onto lib/safe-spawn.mjs so every spawn ' +
     'carries windowsHide:true (the §0 Windows window-storm guard). Run by an agent when new spawn sites appear; ' +
