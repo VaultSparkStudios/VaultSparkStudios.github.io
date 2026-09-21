@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T03:39:28.625Z",
+  "generatedAt": "2026-09-21T03:43:54.749Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 19 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 19 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-21T03:36:59Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-21T03:43:15Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35558118527",
       "headSha": "6e7d7f1abefe5f7a5849205339ad5b3aaba1e1d4",
       "event": "push"
@@ -164,7 +164,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.32,
+      "ageHours": 5.4,
       "staleAfterHours": 48
     },
     {
@@ -177,7 +177,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.39,
+      "ageHours": 2.46,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +190,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.5,
+      "ageHours": 2.57,
       "staleAfterHours": 48
     },
     {
@@ -207,7 +207,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-21T03:15:46Z",
+      "lastUpdatedAt": "2026-09-21T03:43:39Z",
       "recentConclusions": [
         "success",
         "success",
@@ -216,7 +216,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.4,
+      "ageHours": 0,
       "staleAfterHours": 48
     },
     {
