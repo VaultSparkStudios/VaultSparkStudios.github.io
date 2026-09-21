@@ -278,8 +278,17 @@ const meter = loadLiveContextMeter();
 const meterUsed = meter.usedTokens;
 const meterRemaining = Math.max(0, meter.limit - meterUsed);
 const meterRemainingPct = Math.round((meterRemaining / meter.limit) * 100);
-// context-meter returns pctUsed in percentage form (0-100), not 0-1. Normalize.
-const meterUsedPctRaw = meter.pctUsed == null ? null : (meter.pctUsed > 1 ? meter.pctUsed : meter.pctUsed * 100);
+// S363 — THE COMMENT HERE WAS WRONG AND THE CODE FOLLOWED IT. It claimed
+// context-meter returns pctUsed "in percentage form (0-100)", so the line below
+// disambiguated with `> 1 ? raw : raw * 100`. context-meter.mjs computes
+// `const pctUsed = usedTokens / limit` — always a FRACTION. The guess therefore
+// worked by luck under 100% (0.23 → 23%) and INVERTED above it: 237,123 / 200,000
+// = 1.1856 was read as already-a-percentage and rendered "1% used" beside its own
+// "237,123 / 200,000 tok". That is the exact failure the S262 note below was
+// written to prevent — it unclamped the number so an overrun would show its
+// magnitude, and this line quietly returned it to ~1 anyway.
+// A fraction is a fraction: multiply, never guess.
+const meterUsedPctRaw = meter.pctUsed == null ? null : meter.pctUsed * 100;
 // S262 — the `Math.min(100, …)` here clamped the DISPLAY while the brief's own
 // token figure said 154%, and that internal disagreement is what tripped
 // check-startup-meter-freshness. An overrun is the single most important thing
@@ -1344,6 +1353,40 @@ const lines = [
     const liveTag = meter.confidence || (meter.live ? 'live' : 'heuristic');
     const usedStr = meterUsed.toLocaleString();
     const limitStr = meter.limit.toLocaleString();
+    // ── S363: a default is not a reading (CANON-031) ────────────────────────
+    // The meter identifies the agent from context/.session-lock, and the closeout
+    // autopilot CLEARS that lock. Any brief rendered after it therefore had
+    // `agent: unknown` and fell back to a 200k default limit — so 234,339 tokens
+    // rendered as "1% used" on the bar and 117% against the limit at the same
+    // time, with a CONSIDER_CLOSEOUT verdict derived from neither. That tripped
+    // check-startup-meter-freshness three times in one session.
+    //
+    // The meter itself already says the right thing — "limit is an agent property,
+    // and an unidentified agent reports a default, not a reading" — so honour it:
+    // when the subject is untrustworthy or nothing was measured, report UNMEASURED
+    // and name the reason, rather than publishing a percentage of a limit we have
+    // no basis for.
+    const subjectUntrusted = meter.subject && meter.subject.trustworthy === false;
+    const nothingMeasured = meter.usedTokens == null && meter.pctUsed == null;
+    // The limit is an AGENT property. With no identified agent there is no limit to
+    // divide by, so the heuristic byte-estimate fallback is a number without a
+    // denominator — not a smaller reading.
+    const agentUnknown = !meter.agent || meter.agent === 'unknown';
+    if (subjectUntrusted || nothingMeasured || agentUnknown) {
+      // Name the actual reason. These are different problems with different fixes,
+      // and collapsing them is how the previous version sent a reader looking for a
+      // lock that was already there.
+      const why = agentUnknown
+        ? 'no session lock — agent identity unavailable, so there is no limit to divide by'
+        : subjectUntrusted
+          ? `session lock not trustworthy (${meter.subject?.state ?? 'unknown'})`
+          : 'no ledger measurement yet this session — a byte estimate is not a reading';
+      return [
+        row(`⚠  ${'░'.repeat(24)}   UNMEASURED`),
+        row(`   ${why}; a default limit is not a reading`),
+        row(`   Verdict: UNMEASURED  ← re-run inside a locked session to measure`),
+      ];
+    }
     const lines = [
       row(`${tagIcon}  ${bar}  ${String(meterUsedPct).padStart(3)}% used`),
       row(`   ${usedStr} / ${limitStr} tok  ·  ${meter.agent}${meter.model ? '/' + meter.model : ''}  ·  ${liveTag}`),

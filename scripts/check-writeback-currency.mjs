@@ -170,7 +170,18 @@ export function sessionOfCommit(commit = {}) {
  */
 export function hasSessionAddendum(silText = '', session = null) {
   if (!session || !silText) return false;
-  return new RegExp(`Session\\s+${session}\\s+addendum`, 'i').test(silText);
+  // S363 — this matched only the literal phrase `Session <n> addendum`, while every
+  // addendum this ledger has ever carried is headed `S<n> addendum`: five live
+  // entries (S357, S357-2, S358, S362, S363) and three more in the 2026Q3 archive,
+  // against exactly ZERO of the form it was looking for. So the probe could never
+  // see one, and it reported "the SIL carries no S363 addendum" with an S363
+  // addendum sitting directly above the line it was reading.
+  //
+  // Caught by writing a heading purely to satisfy this regex — which is the tell
+  // that the reader, not the record, was wrong. Accept the convention actually in
+  // use; `\b` keeps S363 from matching S3631, and the addendum word must appear on
+  // the same line so a later mention cannot vouch for a heading that isn't there.
+  return new RegExp(`(?:Session\\s+|S)${session}\\b[^\\n]*addendum`, 'i').test(silText);
 }
 
 /**
@@ -602,6 +613,25 @@ function runSelfTest() {
     ['a lookalike address does not match', isAutomationAuthor('not-github-actions@example.com') === false],
     ['generated paths still classify independently of authorship',
       isGeneratedPath('docs/STARTUP_BRIEF.md') === true && isGeneratedPath('scripts/x.mjs') === false],
+
+    // S363 — the addendum matcher. The first case is the real ledger convention,
+    // which this probe was blind to; the rest keep it from vouching for nothing.
+    ['THE LEDGER CONVENTION IS SEEN: `### S363 addendum — …` counts',
+      hasSessionAddendum('### S363 addendum — released, and verified\n\nbody', 363) === true],
+    ['the older `Session 363 addendum` phrasing still counts',
+      hasSessionAddendum('### Session 363 addendum\n', 363) === true],
+    ['a numbered follow-up addendum counts',
+      hasSessionAddendum('### S357 addendum 2 — the last hour\n', 357) === true],
+    ['a DIFFERENT session\'s addendum does not vouch for this one',
+      hasSessionAddendum('### S362 addendum — earlier work\n', 363) === false],
+    ['a longer session number is not a prefix match',
+      hasSessionAddendum('### S3631 addendum\n', 363) === false],
+    ['a heading with no addendum word does not count',
+      hasSessionAddendum('## 2026-09-20 — Session 363 (a normal entry)\n', 363) === false],
+    ['the word on a LATER line does not vouch for the heading',
+      hasSessionAddendum('### S363 release notes\nsome addendum elsewhere\n', 363) === false],
+    ['no session or no text is never a pass',
+      hasSessionAddendum('### S363 addendum', null) === false && hasSessionAddendum('', 363) === false],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) console.log(`  ${ok ? 'ok' : 'FAIL'} ${label}`);

@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-20 (Session 363 closeout) -->
+<!-- generated-at: 2026-09-21 (Session 363 closeout) -->
 <!-- semantic-freshness: hash=2257a714d3da14ff next=364 silSession=363 silScore=988 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 363 closeout · 2026-09-20.
+> **Fast-boot brief** — generated at Session 363 closeout · 2026-09-21.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 364 · 2026-09-20 · FOUNDER MODE                         ║
+║  Session 364 · 2026-09-21 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    988/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 5→                        ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 1d  ·  Last closeout: 2d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -67,17 +67,17 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   24% used                          ║
-║     235,205 / 1,000,000 tok  ·  claude-code  ·  heuristic-stale  ║
-║     Verdict: CONTINUE                                            ║
+║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
+║     no session lock — agent identity unavailable, so there is…   ║
+║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         503/503 passing (2026-09-20)                   ║
 ║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         46724 FORGE  ·  3d old                         ║
+║  ✓  Context age   1d                                             ║
+║  ✓  IGNIS         46724 FORGE  ·  4d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  9d old (2026-09-11)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    28d · Authorize or decline immutable warm-origin migrati      ║
-║    28d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    29d · Authorize or decline immutable warm-origin migrati      ║
+║    29d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      The staleness probe checked count flickere  ║
-║        The staleness probe checked count flickered (14 vs 11 wo  ║
+║   97  [AI]           Make build:check idempotent over ignis/out  ║
+║        Make build:check idempotent over ignis/output/ecosystem-  ║
+║                                                                  ║
+║   96  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
+║        The newsletter cron still shows 6 consecutive failures u  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
-║        The newsletter cron still shows 6 consecutive failures u  ║
+║   95  [COHESION]     Refuse an inbound propagation that removes  ║
+║        Refuse an inbound propagation that removes an exported s  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Purge api/founder-presence.json from publi  ║
+║   84  [PRODUCT]      Purge api/founder-presence.json from publi  ║
 ║        Purge api/founder-presence.json from public git history.  ║
-║                                                                  ║
-║   84  [PRODUCT]      Staging Worker observability. Still the on  ║
-║        Staging Worker observability. Still the only way to sour  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 363 closeout · 2026-09-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 363 closeout · 2026-09-21*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

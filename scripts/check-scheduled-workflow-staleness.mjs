@@ -496,6 +496,31 @@ function runSelfTest() {
     && workflowSourceChangedAt('x.yml', () => ({ status: 1, stdout: '' })) === null,
     'an unparseable or failed git read yields null, never a fabricated timestamp');
 
+  // ── S363 [SIL, carried from S362]: the verdict is bound to its denominator ──
+  // collectWorkflowObservations is the seam where coverage is lost, so prove the
+  // loss is observable rather than silent. S362 saw 11 of 14 crons and reported the
+  // same clean line as a run that saw all 14.
+  const budgetFetch = (wf) => (wf.file === 'reachable.yml'
+    ? { ok: true, runs: [{ event: 'schedule', status: 'completed', conclusion: 'success', createdAt: new Date(NOW).toISOString() }] }
+    : { ok: false, reason: 'gh: API rate limit exceeded' });
+  const partial = collectWorkflowObservations(
+    [{ file: 'reachable.yml', name: 'reachable' }, { file: 'budget-capped.yml', name: 'budget-capped' }],
+    { fetch: budgetFetch, now: () => NOW, budgetMs: 10_000 },
+  );
+  assert(partial.observed.length === 1 && partial.unreachableWorkflows.length === 1,
+    'a cron the scan could not reach is recorded as unreachable, not dropped');
+  assert(partial.unreachableWorkflows[0] === 'budget-capped' && /rate limit/i.test(partial.firstFailure),
+    'the unreached cron is named, with the reason that stopped it');
+  assert(evaluateStaleness(partial.observed, NOW).every((v) => !v.broken && !v.silent),
+    'THE S362 SHAPE: the reachable subset alone reads perfectly clean — which is why '
+    + 'the verdict must consult coverage and not just this list');
+  const fullBudget = collectWorkflowObservations(
+    [{ file: 'reachable.yml', name: 'reachable' }],
+    { fetch: budgetFetch, now: () => NOW, budgetMs: 10_000 },
+  );
+  assert(fullBudget.unreachableWorkflows.length === 0 && !fullBudget.timedOut,
+    'a scan that reaches every discovered cron reports complete coverage');
+
   // ── S355: held publishers (advisory) ─────────────────────────────────────
   const heldRun = { event: 'schedule', status: 'completed', conclusion: 'success', databaseId: 101 };
   const annotations = {
@@ -535,7 +560,7 @@ function runSelfTest() {
   assert(!existsSync(narrative) || canEmitHeldMarker(readFileSync(narrative, 'utf8')),
     'the live Vault Narrative workflow is recognised as able to hold');
 
-  console.log('check-scheduled-workflow-staleness self-test passed (37/37)');
+  console.log('check-scheduled-workflow-staleness self-test passed (41/41)');
 }
 
 export function collectWorkflowObservations(workflows, { fetch = fetchRunsFor, now = Date.now, budgetMs = 24000 } = {}) {
@@ -566,7 +591,21 @@ export function collectWorkflowObservations(workflows, { fetch = fetchRunsFor, n
 
 function main() {
   const workflows = scheduledWorkflows();
-  const { observed, firstFailure, unreachableWorkflows, timedOut } = collectWorkflowObservations(workflows);
+  // ── S363: the budget has to scale with the number of crons it must reach ───
+  // THE ROOT CAUSE OF THE S362 FLICKER. The budget was a flat 24s for the WHOLE
+  // sweep, one sequential `gh` call per workflow. At ~1s per call that reaches all
+  // 14; at ~6s per call it reaches 4, and the count "flickered" purely with GitHub
+  // API latency. Measured live this session: 4/14 reached, deadline exhausted —
+  // while the very same probe had reported a clean `checked: 14` minutes earlier.
+  // Both readings were produced by the same code; only the network differed.
+  //
+  // Budget per discovered workflow instead, so a repo with more crons is given
+  // proportionally more time, with a floor for tiny repos and a ceiling so a
+  // pathological API cannot hang the doctor. When it still runs out, the coverage
+  // verdict above reports the partial honestly rather than shrinking the claim.
+  const observationBudgetMs = Math.min(Math.max(workflows.length * 8000, 24000), 150000);
+  const { observed, firstFailure, unreachableWorkflows, timedOut } =
+    collectWorkflowObservations(workflows, { budgetMs: observationBudgetMs });
 
   // Only a TOTAL inability to reach CI is a skip. A partial read is reported as
   // what it is, with the unreachable workflows named — not quietly rounded up.
@@ -585,6 +624,34 @@ function main() {
   const silent = verdicts.filter((v) => v.silent);
   const unmeasured = verdicts.filter((v) => v.unmeasured);
   const unreachable = workflows.length - observed.length;
+
+  // ── S363 [SIL, carried from S362]: bind the verdict to its own denominator ──
+  // S362 recorded that the checked count flickered (14 vs 11 workflows a minute
+  // apart) when `gh` calls hit the per-run budget, and asked for the verdict to be
+  // bound to the discovered workflow count. Until now `ok` was computed purely from
+  // broken/silent, so a run that could only SEE 11 of 14 crons reported exactly the
+  // same clean line as a run that saw all 14 — the three it never reached simply did
+  // not exist as far as the verdict was concerned. A shrinking denominator silently
+  // strengthened the claim.
+  //
+  // S363 first tried to close this item by observing a stable `checked: 14`. That
+  // was one reading under a healthy budget, not a bound denominator, and the item
+  // was reopened rather than closed on it.
+  //
+  // Coverage is now part of the verdict: a scan that did not reach every discovered
+  // cron is `partial` and is NOT ok. This probe is advisory (it surfaces in doctor,
+  // it does not gate build:check), so the cost of an honest partial is a visible
+  // doctor line — which is the point.
+  const coverageComplete = unreachable === 0 && !timedOut;
+  const coverage = {
+    discovered: workflows.length,
+    observed: observed.length,
+    unreachable,
+    timedOut,
+    complete: coverageComplete,
+  };
+  const cleanVerdict = broken.length === 0 && silent.length === 0;
+  const ok = cleanVerdict && coverageComplete;
 
   // S345 — declare which verdicts this RUN actually exercised against live data.
   //
@@ -606,7 +673,12 @@ function main() {
 
   if (JSON_OUT) {
     console.log(JSON.stringify({
-      ok: broken.length === 0 && silent.length === 0,
+      ok,
+      // S363 — the denominator the verdict was computed over. `cleanVerdict` is the
+      // historical broken/silent reading; `ok` additionally requires that the scan
+      // reached every discovered cron, so a partial scan can never read as a pass.
+      cleanVerdict,
+      coverage,
       broken,
       silent: silent.map((v) => ({ name: v.name, ageHours: v.ageHours, expectEveryHours: v.intervalHours, thresholdHours: v.silentThresholdHours })),
       checked: verdicts.length,
@@ -632,7 +704,7 @@ function main() {
       // exercised only by --self-test fixtures. Not a failure; a scope statement.
       fixtureOnlyVerdicts: fixtureOnly,
     }));
-    return broken.length === 0 && silent.length === 0 ? 0 : 1;
+    return ok ? 0 : 1;
   }
 
   const suffix = [
@@ -640,8 +712,18 @@ function main() {
     unreachable ? `${unreachable} unreachable` : null,
   ].filter(Boolean).join(' · ');
 
-  if (broken.length === 0 && silent.length === 0) {
-    console.log(`scheduled-workflow staleness ✓ (${verdicts.length} scheduled workflows, none red ≥${MIN_CONSECUTIVE} runs, none silent past cadence)${suffix ? ` · ${suffix}` : ''}`);
+  // S363 — a clean reading over an INCOMPLETE scan is reported as partial, never as
+  // a pass. The line names the denominator it was computed over, so "none red" can
+  // no longer stand in for "none red out of all of them".
+  if (cleanVerdict && !coverageComplete) {
+    console.error(`scheduled-workflow staleness ⚠ PARTIAL — clean over ${coverage.observed}/${coverage.discovered} discovered cron(s); the rest were never reached, so this is not an all-clear${timedOut ? ' (observation deadline exhausted)' : ''}:`);
+    for (const name of unreachableWorkflows) console.error(`   unreached: ${name}`);
+    if (repaired.length) console.error(`  ⟳ repaired-untested: ${repaired.map((v) => `${v.name} · expires ${v.repairExpiresAt}`).join(', ')}`);
+    return 1;
+  }
+
+  if (cleanVerdict) {
+    console.log(`scheduled-workflow staleness ✓ (${verdicts.length}/${coverage.discovered} scheduled workflows reached, none red ≥${MIN_CONSECUTIVE} runs, none silent past cadence)${suffix ? ` · ${suffix}` : ''}`);
     if (unmeasured.length) console.log(`  unmeasured (no scheduled run observed): ${unmeasured.map((v) => v.name).join(', ')}`);
     if (repaired.length) console.log(`  ⟳ repaired-untested (fixed since the failures, awaiting the next scheduled run): ${repaired.map((v) => `${v.name} · ${v.streak} pre-fix failure(s) · expires ${v.repairExpiresAt}`).join(', ')}`);
     if (held.length) console.log(`  ⚠ held (concluded success but held instead of publishing): ${held.map((h) => `${h.name} · run ${h.runId}`).join(', ')}`);
