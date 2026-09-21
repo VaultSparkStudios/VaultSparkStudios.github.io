@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-21T07:03:50.982Z",
+  "generatedAt": "2026-09-21T07:06:31.901Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -73,10 +73,10 @@
     {
       "id": "human-page-loads-30d",
       "label": "Human page loads",
-      "value": 6060,
+      "value": 6400,
       "unitOrDenominator": "bot-excluded browser page loads",
       "period": "30 complete UTC days",
-      "computedAt": "2026-09-20T06:51:03.760Z",
+      "computedAt": "2026-09-21T07:06:31.859Z",
       "source": "/api/ecosystem-analytics.json",
       "sourceType": "cloudflare-web-analytics",
       "sourceDataset": "rumPageloadEventsAdaptiveGroups",
@@ -87,13 +87,13 @@
         "sampleInterval": 10,
         "confidenceLevel": 0.95,
         "confidence": {
-          "estimate": 6060,
-          "lower": 5123,
-          "upper": 7004,
-          "sampleSize": 606
+          "estimate": 6400,
+          "lower": 5354,
+          "upper": 7452,
+          "sampleSize": 640
         }
       },
-      "observedThrough": "2026-09-20",
+      "observedThrough": "2026-09-21",
       "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
@@ -101,8 +101,8 @@
       "available": true,
       "window": {
         "days": 30,
-        "start": "2026-08-21",
-        "endExclusive": "2026-09-20",
+        "start": "2026-08-22",
+        "endExclusive": "2026-09-21",
         "timezone": "UTC",
         "completeDaysOnly": true
       },
@@ -198,7 +198,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-09-21T03:04:09.554Z",
+      "computedAt": "2026-09-21T07:06:31.901Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -254,12 +254,12 @@
   "history": {
     "performanceSamplesDaily": [],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-09-21T03:04:09.554Z",
+    "computedAt": "2026-09-21T07:06:31.901Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
     "source": "/api/ecosystem-analytics.json",
-    "computedAt": "2026-09-20T06:51:03.760Z",
+    "computedAt": "2026-09-21T07:06:31.859Z",
     "dimensions": [
       {
         "id": "human-page-loads",
