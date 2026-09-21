@@ -1,7 +1,7 @@
 {
   "date": "2026-09-21",
   "simulated": false,
-  "leadSlug": "indias-ai-agent-sprawl-enterprises-struggle-with-production-beyond",
+  "leadSlug": "5-companies-using-nvidia-ai-for-clean-energy",
   "stories": [
     {
       "slug": "indias-ai-agent-sprawl-enterprises-struggle-with-production-beyond",
@@ -154,6 +154,131 @@
         "fellBack": false,
         "attempt": 2,
         "at": "2026-09-21T06:48:52.547Z"
+      }
+    },
+    {
+      "slug": "5-companies-using-nvidia-ai-for-clean-energy",
+      "format": "quick",
+      "kind": "trending",
+      "edition": "midday",
+      "headline": "NVIDIA AI Powers Clean Energy: TerraPower, CFS, and EV Batteries",
+      "hook": "NVIDIA’s AI is accelerating nuclear, fusion, and recycling. Here’s the heat.",
+      "tldr": "NVIDIA applies AI to clean energy challenges via TerraPower, Commonwealth Fusion Systems, and recycled EV batteries. This trio represents a shift from theoretical demos to grid-ready infrastructure, though production realities remain steep. The technology works, but the scale is the real story.",
+      "facts": [
+        {
+          "text": "TerraPower’s Natrium Reactor Sets New Standard for Safe, Sustainable Nuclear Power TerraPower Natrium Reactor Nuclear energy currently powers 20% of the nation’s electricity.",
+          "sourceUrl": "https://blogs.nvidia.com/blog/clean-energy-nvidia-ai/"
+        },
+        {
+          "text": "Commonwealth Fusion Systems Creates Fusion Energy Ready for the Grid Fusion energy is poised to join the clean energy stack in the 2030’s, thanks to Commonwealth Fusion Systems (CFS).",
+          "sourceUrl": "https://blogs.nvidia.com/blog/clean-energy-nvidia-ai/"
+        },
+        {
+          "text": "These 100%-recycled electric vehicle batteries are firming up power suppliers by acting as onsite energy storage to create a secure, flexible energy system for AI factories and the national grid at large.",
+          "sourceUrl": "https://blogs.nvidia.com/blog/clean-energy-nvidia-ai/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": 1,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "TerraPower’s Natrium Reactor sets a new standard, but nuclear still only powers 20% of electricity. I’ve seen the postmortems; safety standards are hard-won, not just coded.",
+          "sources": [
+            "https://blogs.nvidia.com/blog/clean-energy-nvidia-ai/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 2,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "Commonwealth Fusion Systems creates fusion energy ready for the grid in the 2030s. You’re watching the changelog for the biggest energy upgrade since the steam engine.",
+          "sources": [
+            "https://blogs.nvidia.com/blog/clean-energy-nvidia-ai/"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "We ran the simulation for the Natrium Reactor last night. It didn't crash, which is rare. But remember, nuclear energy currently powers 20% of the nation’s electricity. That’s the baseline we’re trying to move without blowing up the substation."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at Commonwealth Fusion Systems. They create fusion energy ready for the grid. Not in ten years. In the 2030s. You think this is science fiction? It’s just engineering with better PR. Watch what happens when the torque hits."
+        }
+      ],
+      "memeLine": {
+        "text": "Fusion is ready for the grid in the 2030s, if you can wait that long.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "I was paged at 3 a.m. because the TerraPower Natrium Reactor simulation finally converged. It’s not magic; it’s math that doesn’t lie. TerraPower’s Natrium Reactor Sets New Standard for Safe, Sustainable Nuclear Power. But don’t get too excited. Nuclear energy currently powers 20% of the nation’s electricity. We have a long way to go before 'safe' becomes 'ubiquitous.' The first six months of integration are always painful, but when it holds, it holds."
+        },
+        {
+          "voice": "rex",
+          "text": "You’re still looking at the demo deck. I’m reading the changelog for Commonwealth Fusion Systems. They Create Fusion Energy Ready for the Grid. Well, almost. Fusion energy is poised to join the clean energy stack in the 2030’s, thanks to Commonwealth Fusion Systems (CFS). That’s the overhang. Everyone is arguing about the press release, but the physics is shipping. If you aren’t tracking CFS, you’re already late."
+        },
+        {
+          "voice": "vera",
+          "text": "Then there’s the battery waste problem. These 100%-recycled electric vehicle batteries are firming up power suppliers by acting as onsite energy storage to create a secure, flexible energy system for AI factories and the national grid at large. It’s boring infrastructure work. No explosions, no fusion fires. Just recycling old tech to keep the lights on while the big players build their reactors. It’s unglamorous, but it’s the only thing keeping the grid stable right now."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-21--5-companies-using-nvidia-ai-for-clean-energy.png",
+        "scene": "A split screen showing a glowing nuclear reactor core on the left and a futuristic fusion tokamak on the right, with a pile of recycled EV batteries in the foreground connecting them. The composition shows NVIDIA AI powers TerraPower’s Natrium Reactor.",
+        "alt": "A composite image depicting the three key technologies: a safe nuclear reactor, a fusion device, and recycled batteries, all illuminated by NVIDIA AI processing lines. The composition shows NVIDIA AI powers TerraPower’s Natrium Reactor.",
+        "anchors": [
+          "Natrium Reactor",
+          "fusion energy ready",
+          "100%-recycled electric"
+        ],
+        "relationships": [
+          {
+            "id": "nvidia-powers-nuclear",
+            "subject": [
+              "NVIDIA AI"
+            ],
+            "action": [
+              "powers"
+            ],
+            "object": [
+              "TerraPower’s Natrium Reactor"
+            ],
+            "evidenceAnchorRefs": [
+              "Natrium Reactor"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "b889e8471de8cf3755ba7e5d60f254f1b7c01d8f3691bde5768b10c096e781de",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.139
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "Corporate Sustainability Reports",
+          "setup": "The company claims to be green because they bought carbon credits.",
+          "payoff": "Meanwhile, the actual nuclear reactor is running safely in the basement.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 1,
+        "at": "2026-09-21T12:32:23.235Z"
       }
     }
   ]
