@@ -79,15 +79,15 @@
 ║  ✓  Context age   1d                                             ║
 ║  ✓  IGNIS         46724 FORGE  ·  4d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  9d old (2026-09-11)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
