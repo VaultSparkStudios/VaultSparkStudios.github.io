@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20",
+  "generatedAt": "2026-09-21",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 171,
+    "inspected": 156,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,28 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "5f9e72b7",
+      "ts": "2026-09-20T22:57:06.000Z",
+      "type": "closeout",
+      "scope": "S363",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "SIL addendum, and the phrase the write-back probe actually matches",
+      "visitorFacing": false
+    },
+    {
+      "sha": "66a7fdd7",
+      "ts": "2026-09-20T22:39:58.000Z",
+      "type": "chore",
+      "scope": "S363",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "converge the derived graph after the third publisher rebase",
+      "visitorFacing": true
+    },
     {
       "sha": "e6905296",
       "ts": "2026-09-20T22:38:28.000Z",
@@ -258,28 +280,6 @@
       "move": "Fixed",
       "tone": "fix",
       "summary": "the service worker installs again; /status/ treats offline support as a browser property",
-      "visitorFacing": true
-    },
-    {
-      "sha": "f502caae",
-      "ts": "2026-09-19T01:49:31.000Z",
-      "type": "chore",
-      "scope": "resync",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "converge derived graph over the CI beacon rebase",
-      "visitorFacing": true
-    },
-    {
-      "sha": "2a4718c2",
-      "ts": "2026-09-19T01:48:00.000Z",
-      "type": "chore",
-      "scope": "resync",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "converge derived graph over the publisher commits",
       "visitorFacing": true
     }
   ]
