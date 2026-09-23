@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "5f9e72b743d97b1f84f04f17b1598e2ca95303a0",
+    "sha": "77b5238fd14177316668ad18a56bd83f6185745b",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "cf48e380c09d15de5f58247d52c5ecfbcd211970",
+    "sha": "353c8e17d98a6b75413ac01a209f51cbbcfa0b06",
     "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-09-22T20:37:25.839Z",
-      "ageHours": 3.5,
+      "observedAt": "2026-09-23T05:38:30.301Z",
+      "ageHours": 2.2,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -86,21 +86,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves cf48e380, repo build-sha is 5f9e72b7 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+    "production serves 353c8e17, newer than the recorded promoted 77b5238f (benign — a later rebuild moved on)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-09-23T00:09:32.858Z",
+  "generatedAt": "2026-09-23T07:49:14.143Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
     "lastStrandedAt": "2026-09-23T00:09:32.858Z",
-    "currentBehindStreak": 20,
-    "newestGradableAt": "2026-09-23T00:09:32.858Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-09-23T07:49:14.143Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }

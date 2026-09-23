@@ -1739,3 +1739,24 @@ Execute the founder-requested full `/start → /audit → /implement → /closeo
 **Release evidence:** full staging deployed 6,490 files with rollback snapshot `20260909222156`, attested receipt `bb5016b2a85891bf778e4f87`, lineage depth 59, and a green ten-step ceremony. Production content promotion completed in Actions run `34412238486`; live currency is content-current with matched shell parity. Doctor is 13 passing, 1 warning, 2 advisory failures, and `blockingFailing: 0`.
 
 **Truthful holds / resume:** identity/provider acceptance, scoped credential-owner reconciliation, newsletter deployment/arming, the founder-observed signup walkthrough, and the Desk cadence decision remain independent and unresolved. Local performance exceptions are recorded; no field Core Web Vitals pass is claimed. Begin S348 with a fresh `/start → /audit → /implement → /closeout` arc from the two performance items and the regenerated Unified Genius List.
+
+
+---
+<!-- archived: 2026-09-23 -->
+
+## Where We Left Off — S362 · 2026-09-19
+
+**Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.
+
+- **Triage disbelieved two alarms, and both were wrong.** The write-back probe reported DEBT 12.3h after a correct S361 closeout; the doctor reported Weekly Maintenance `silent` when it had run on time. Neither was a missed closeout or a dead cron — both were probe defects, and they headed the audit.
+- **Shipped:** cron lines with trailing comments are readable and several lines combine by rate (D-S362.1); write-back currency classifies PROJECT_STATUS.json by key, not by file (D-S362.2); the unarmed newsletter cron holds instead of failing (D-S362.3); a blocking browser gate installs the service worker (D-S362.4); the precache is reviewed and kept with numbers (D-S362.5).
+- **Nothing was armed and nothing was sent.** The newsletter change gates the scheduled send on a repository variable `NEWSLETTER_ARMED`; arming stays a founder decision (D-S341.4 preserved).
+- **Verified locally:** `build:check` 502/502; staleness self-test 28/28 and live 14 workflows checked / 0 silent; write-back self-test 20/20 and live "current"; the service-worker spec mutation-tested in both directions (404 precache entry → `redundant` → red; duplicate entry → still green, because S361 de-duplicates at install).
+- **Deferred, on purpose:** the doctor's IGNIS remedy cannot run in a project repo (it reads a studio-ops-only registry) — Ark repo-question `01K2TR2MCB649E1AD036E22BAD` shipped instead of a local workaround, and the IGNIS tree was left untouched because it holds another session's uncommitted work. Purging `api/founder-presence.json` from history still needs a force-push, which stays a founder action.
+- **Ark:** two `pattern-share` cargos for the propagated probe fixes (`01K2TR2J2O36AABB2BCFBC91AE`, `01K2TR2KK71B4A94B828BDC63E`).
+
+- **RELEASED — full deploy.** Staging full publish `27f1046cdb5d` (6969 files, chain 80) → ceremony **11/11** (refused once on `staging-deploy-lineage`: the continuity summary was behind the ledger the publish had just appended — rebuilt, depth 80) → scoped promotion run `35474267138` (`confirm_production=true`, identity surfaces held) **success**. Production `build-sha` = `dae84c0c4` = HEAD at release, `deployedBy: pages-deploy` — a full deploy, not a content-lane overlay.
+- **Verified from served bytes:** the new install spec run against **production** passes — a real `register('/sw.js')` reaches `activated` with a complete precache; `smoke:live` 6/6. The same spec passed against staging before promotion.
+- **Gates on the way (all real, all fixed at source):** the ceremony lineage refusal above; then the pre-push coherence gate caught `release-proof`, `status-proof` and `stats-surface` drifting over the upstream rebase — converged with `resync-derived` rather than resealed one at a time. Three pushes raced the hourly publishers and were landed with `git pull --rebase`; generated-file conflicts were resolved to the fresh release evidence and regenerated afterwards.
+
+- **RELEASED — full deploy.** Staging publish `ef30e3790de4c9f84aff9c6b` (7018 files) → staging gate **3 passed · 3 held-by-design · 0 failed** → scoped promotion run `35541452760` (`confirm_production=true`, identity surfaces held) **success**. Pushed `8aaf100c8` after two publisher rebases; the deployed commit `cf48e380c` has it as an ancestor, so S363 is live. Verified from served bytes: `/api/supabase-control-plane.json` serves `overall: "partial"` with three ready planes, and `/api/identity-migration-receipt.json` serves `readyPlanes: 3, totalPlanes: 4` beside it — consistent for the first time. `smoke-live` 6/6.

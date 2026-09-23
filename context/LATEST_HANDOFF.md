@@ -1,5 +1,4 @@
 # Latest Handoff
-
 ## Where We Left Off — S364 · 2026-09-23
 
 Session intent: repair Desk signup, commit/push main, fully deploy and close out.
@@ -7,7 +6,6 @@ Session intent: repair Desk signup, commit/push main, fully deploy and close out
 S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
 
 Worker 53a3be6e-b0e4-425b-8953-462127bbbea8; Pages run 35830977875 serves 353c8e17d98a6b75413ac01a209f51cbbcfa0b06. Hosted E2E/compliance green on cf56856ce; local 505/505 and mobile 215/215. Article Lighthouse 85/90 remains a follow-up under the founder’s explicit wrap-up/deploy direction. No threshold or identity hold changed. Existing rollback origins and staging lineage retained.
-
 ## Where We Left Off — S363 · 2026-09-20
 
 **Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.
@@ -19,19 +17,3 @@ Worker 53a3be6e-b0e4-425b-8953-462127bbbea8; Pages run 35830977875 serves 353c8e
 - **The A4 lesson worth carrying:** every clobbered guard that failed loudly did so because it happened to be a named import. `check-secrets.mjs` was not — it kept running and simply stopped drawing two distinctions, caught only by a contract test. And it is a recurrence: S316 restored `suggestCapabilities` after this exact clobber and shipped it upstream so the next propagation would carry it. It did not. Cargo alone is not sufficient; the lane needs an exported-symbol diff. Shipped as `pattern-share` `01K3052GLJ1D81D97FA5043903`.
 - **Verified locally:** `build:check` **503/503** (up from 502 — two previously-unreachable gates are now wired in and one vacuous self-test step removed); mobile audit **215/215** against the local preview; visual matrix **84 captures** hash-bound with 5 manually inspected; both receipts bound to the final tree; doctor and the live probes green.
 - **Deferred, on purpose:** purging `api/founder-presence.json` from history still needs a force-push (founder-gated, CANON-019). The stale ATLAS session lock and the four sibling-owned compliance failures are cross-repo and were not touched (CANON-018). The Supabase service-role slot still points at the sibling project — reported by name, not worked around.
-## Where We Left Off — S362 · 2026-09-19
-
-**Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.
-
-- **Triage disbelieved two alarms, and both were wrong.** The write-back probe reported DEBT 12.3h after a correct S361 closeout; the doctor reported Weekly Maintenance `silent` when it had run on time. Neither was a missed closeout or a dead cron — both were probe defects, and they headed the audit.
-- **Shipped:** cron lines with trailing comments are readable and several lines combine by rate (D-S362.1); write-back currency classifies PROJECT_STATUS.json by key, not by file (D-S362.2); the unarmed newsletter cron holds instead of failing (D-S362.3); a blocking browser gate installs the service worker (D-S362.4); the precache is reviewed and kept with numbers (D-S362.5).
-- **Nothing was armed and nothing was sent.** The newsletter change gates the scheduled send on a repository variable `NEWSLETTER_ARMED`; arming stays a founder decision (D-S341.4 preserved).
-- **Verified locally:** `build:check` 502/502; staleness self-test 28/28 and live 14 workflows checked / 0 silent; write-back self-test 20/20 and live "current"; the service-worker spec mutation-tested in both directions (404 precache entry → `redundant` → red; duplicate entry → still green, because S361 de-duplicates at install).
-- **Deferred, on purpose:** the doctor's IGNIS remedy cannot run in a project repo (it reads a studio-ops-only registry) — Ark repo-question `01K2TR2MCB649E1AD036E22BAD` shipped instead of a local workaround, and the IGNIS tree was left untouched because it holds another session's uncommitted work. Purging `api/founder-presence.json` from history still needs a force-push, which stays a founder action.
-- **Ark:** two `pattern-share` cargos for the propagated probe fixes (`01K2TR2J2O36AABB2BCFBC91AE`, `01K2TR2KK71B4A94B828BDC63E`).
-
-- **RELEASED — full deploy.** Staging full publish `27f1046cdb5d` (6969 files, chain 80) → ceremony **11/11** (refused once on `staging-deploy-lineage`: the continuity summary was behind the ledger the publish had just appended — rebuilt, depth 80) → scoped promotion run `35474267138` (`confirm_production=true`, identity surfaces held) **success**. Production `build-sha` = `dae84c0c4` = HEAD at release, `deployedBy: pages-deploy` — a full deploy, not a content-lane overlay.
-- **Verified from served bytes:** the new install spec run against **production** passes — a real `register('/sw.js')` reaches `activated` with a complete precache; `smoke:live` 6/6. The same spec passed against staging before promotion.
-- **Gates on the way (all real, all fixed at source):** the ceremony lineage refusal above; then the pre-push coherence gate caught `release-proof`, `status-proof` and `stats-surface` drifting over the upstream rebase — converged with `resync-derived` rather than resealed one at a time. Three pushes raced the hourly publishers and were landed with `git pull --rebase`; generated-file conflicts were resolved to the fresh release evidence and regenerated afterwards.
-
-- **RELEASED — full deploy.** Staging publish `ef30e3790de4c9f84aff9c6b` (7018 files) → staging gate **3 passed · 3 held-by-design · 0 failed** → scoped promotion run `35541452760` (`confirm_production=true`, identity surfaces held) **success**. Pushed `8aaf100c8` after two publisher rebases; the deployed commit `cf48e380c` has it as an ancestor, so S363 is live. Verified from served bytes: `/api/supabase-control-plane.json` serves `overall: "partial"` with three ready planes, and `/api/identity-migration-receipt.json` serves `readyPlanes: 3, totalPlanes: 4` beside it — consistent for the first time. `smoke-live` 6/6.

@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S364) - WHAT SHIPPED ══════════════════════════╗
-║  S364 signup repair validated on staging; production release an  ║
+║  S364 signup repair deployed and production negative route veri  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -76,7 +76,7 @@
 ║  ✓  Tests         505/505 passing (2026-09-23)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         46724 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  1d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ✓  Doctor        17/17 (100%)  ·  2026-09-23  ✓                 ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -123,17 +123,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   88  [AI]           Make build:check idempotent over ignis/out  ║
+║   94  [AI]           Make build:check idempotent over ignis/out  ║
 ║        Make build:check idempotent over ignis/output/ecosystem-  ║
 ║                                                                  ║
-║   87  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
+║   93  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
 ║        The newsletter cron still shows 6 consecutive failures u  ║
 ║                                                                  ║
-║   86  [VERIFY]       Clear the article performance release gate  ║
-║        Clear the article performance release gate (Lighthouse 0  ║
-║                                                                  ║
-║   86  [COHESION]     Refuse an inbound propagation that removes  ║
+║   92  [COHESION]     Refuse an inbound propagation that removes  ║
 ║        Refuse an inbound propagation that removes an exported s  ║
+║                                                                  ║
+║   86  [VERIFY]       Verify one real confirmation only after ex  ║
+║        Verify one real confirmation only after explicit email-s  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
