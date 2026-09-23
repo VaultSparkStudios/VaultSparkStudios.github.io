@@ -1,9 +1,9 @@
 # Latest Handoff — VaultSparkStudios.github.io
-## S364 — active release, 2026-09-22
+## S364 — active release, 2026-09-23
 
-S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.
+The Desk signup repair and CI corrections are pushed to main through ae29fe69b. Staging serves the fixed Worker and matching Turnstile secret; production still returns edge_handler_unavailable (503) and lacks that binding. No email has been sent.
 
-Owner: current Codex session. Acceptance: main contains repair; Worker and static production serve it; negative routes return intended errors. Real delivery remains a separate unverified acceptance leg pending explicit send authorization. Staging archive retry succeeded (receipt 90108b61e6ba2dbcd4285f39); build/release ceremony and production are still pending. No identity hold was cleared.
+Owner: current Codex session. Acceptance: main contains repair; Worker and static production serve it; negative routes return intended errors. Successful confirmation delivery remains unverified pending explicit send authorization. Staging receipt cdf818d2dafa000fad476188, continuity f598f156a29ddd96b14ffa7c, candidate e20530fcf12a. Local build 505/505; hosted Secret Lint, full repository check, mobile contract, accessibility and end-to-end job pass. Hosted compliance then fails notebook empty/error footer CLS 0.0684 against 0.02 (repaired locally: CLS at most 0.0004, all light badges at least 5.85:1, hosted recheck pending). Article Lighthouse remains 0.86 against 0.90; scoped release exception requested, no approval received. No thresholds or identity hold were changed. Production promotion is pending.
 
 ## Where We Left Off — S363 · 2026-09-20
 

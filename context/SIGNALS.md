@@ -11,9 +11,9 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  0d old (2026-09-22)                            ║
+║  ✓  Revenue sig.  1d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  Open current tasks 38 / Human-action entries 7                  ║

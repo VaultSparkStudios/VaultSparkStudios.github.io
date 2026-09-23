@@ -85,9 +85,9 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  0d old (2026-09-22)                            ║
+║  ✓  Revenue sig.  1d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -123,17 +123,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   91  [AI]           Make build:check idempotent over ignis/out  ║
+║   88  [AI]           Make build:check idempotent over ignis/out  ║
 ║        Make build:check idempotent over ignis/output/ecosystem-  ║
 ║                                                                  ║
-║   90  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
+║   87  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
 ║        The newsletter cron still shows 6 consecutive failures u  ║
 ║                                                                  ║
-║   89  [COHESION]     Refuse an inbound propagation that removes  ║
-║        Refuse an inbound propagation that removes an exported s  ║
+║   86  [VERIFY]       Clear the article performance release gate  ║
+║        Clear the article performance release gate (Lighthouse 0  ║
 ║                                                                  ║
-║   86  [VERIFY]       Complete release checks, push main, deploy  ║
-║        Complete release checks, push main, deploy production an  ║
+║   86  [COHESION]     Refuse an inbound propagation that removes  ║
+║        Refuse an inbound propagation that removes an exported s  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

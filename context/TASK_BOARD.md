@@ -1,12 +1,15 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-22 (S364: Desk signup repair and release)
+Last updated: 2026-09-23 (S364: Desk signup release verification)
 
 ## S364 — requested signup repair
 
 - [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
 - [x] Restore the source-owned Turnstile secret on staging; verify negative response without sending mail.
-- [ ] Complete release checks, push main, deploy production and verify served repair.
+- [x] Push the signup repair and CI corrections to main; local build checks 505/505 and hosted end-to-end tests pass at ae29fe69b.
+- [x] Repair notebook empty/error footer layout shift and light badge contrast: 42 after-state captures across seven themes, CLS at most 0.0004 and contrast at least 5.85:1; hosted recheck pending.
+- [ ] Clear the article performance release gate (Lighthouse 0.86 versus 0.90); a scoped exception was requested but is not approved. Threshold unchanged.
+- [ ] Deploy the production Worker, provision its matching Turnstile secret, publish the static candidate, and verify the served repair.
 - [ ] Verify one real confirmation only after explicit email-send authorization; no email sent yet.
 ## Open — S362
 

@@ -44,10 +44,14 @@
     .nb-loading { padding:1.4rem 1.2rem;color:var(--dim); }
     /* The commit stream is fetched post-paint and replaces .nb-loading with ~80
        entries, which pushed the footer down (CLS 0.24). Reserve a viewport of
-       height while the placeholder is still in place; the reservation vanishes
-       the moment real entries (or the honest empty/error state) render. */
-    .nb-stream:has(> .nb-loading) { min-height:115vh; }
+       height across loading, empty, error, and short populated states so the
+       footer never jumps into view when the request resolves. */
+    .nb-stream { min-height:115vh; }
     body.light-mode .nb-week:before { background:#fdf8ec; }
+    body.light-mode .nb-mood--feat { color:#205676; }
+    body.light-mode .nb-mood--fix { color:#654600; }
+    body.light-mode .nb-mood--ship { color:#654600; }
+    body.light-mode .nb-mood--meta { color:#46505e; }
   </style>
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <!-- vs-speculation:start -->
