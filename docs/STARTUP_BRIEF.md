@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 364 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    504/504 passing  ·  Deploy: N/A                       ║
+║  Tests:    505/505 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         504/504 passing (2026-09-23)                   ║
+║  ✓  Tests         505/505 passing (2026-09-23)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   1d                                             ║

@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         504/504 passing (2026-09-23)                   ║
+║  ✓  Tests         505/505 passing (2026-09-23)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   1d                                             ║
