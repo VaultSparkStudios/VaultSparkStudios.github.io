@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-23T04:06:01.725Z",
+  "generatedAt": "2026-09-23T07:56:53.824Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -52,8 +52,8 @@
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
     "currentSession": 364,
-    "currentFocus": "S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.",
-    "nextMilestone": "Complete staging release checks, promote the Desk signup repair and verify served production behavior.",
+    "currentFocus": "S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.",
+    "nextMilestone": "Monitor the deployed signup repair; improve article performance and verify one real confirmation only with explicit send authorization.",
     "pulseKeys": [
       "now",
       "next",

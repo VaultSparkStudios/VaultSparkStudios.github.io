@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-23T04:36:34.217Z",
+  "generatedAt": "2026-09-23T07:56:53.825Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 364,
     "lastUpdated": "2026-09-23",
-    "currentFocus": "S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.",
-    "nextMilestone": "Complete staging release checks, promote the Desk signup repair and verify served production behavior.",
+    "currentFocus": "S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.",
+    "nextMilestone": "Monitor the deployed signup repair; improve article performance and verify one real confirmation only with explicit send authorization.",
     "ignis": {
       "score": 46724,
       "grade": "FORGE",
@@ -817,17 +817,17 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 240
+      "heat": 280
     }
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 20 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-09-23T04:31:33.224Z",
+    "summary": "Production deployment is stranded for 20 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-09-23T04:44:48.052Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -835,7 +835,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",
