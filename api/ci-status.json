@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T04:37:11.436Z",
+  "generatedAt": "2026-09-23T04:44:48.052Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 4,
-    "healthy": 4,
-    "unknown": 10,
+    "observed": 3,
+    "healthy": 3,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-23T00:09:32.858Z",
     "currentBehindStreak": 20,
     "newestGradableAt": "2026-09-23T00:09:32.858Z",
-    "newestAgeHours": 4.5,
+    "newestAgeHours": 4.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-23T04:29:27Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-23T04:44:07Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35818535692",
       "headSha": "2b24cb0a143923eb1ac3551a224003aac42c300c",
       "event": "push"
@@ -156,15 +156,13 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-22T22:21:08Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 6.27,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -177,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.44,
+      "ageHours": 3.57,
       "staleAfterHours": 48
     },
     {
@@ -191,7 +189,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0,
+      "ageHours": 0.13,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +206,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-23T04:14:20Z",
+      "lastUpdatedAt": "2026-09-23T04:40:56Z",
       "recentConclusions": [
         "success",
         "success",
@@ -217,7 +215,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.38,
+      "ageHours": 0.06,
       "staleAfterHours": 48
     },
     {
