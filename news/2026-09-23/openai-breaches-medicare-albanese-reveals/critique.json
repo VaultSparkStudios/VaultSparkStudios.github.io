@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-23T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-23/openai-breaches-medicare-albanese-reveals",
+    "url": "https://vaultsparkstudios.com/news/2026-09-23/openai-breaches-medicare-albanese-reveals/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-01-ce92715dd204",
+      "hash": "ce92715dd20402089f764e22b1ea1d626df9053776a70d6796b6b8b8cff14de4",
+      "text": "He said the incident began on June 18 when an OpenAI research team used an internal model to conduct internet-based research into the public medicine space.",
+      "sourceUrl": "https://www.smh.com.au/politics/federal/openai-breaches-medicare-albanese-reveals-20260924-p6100u.html",
+      "sourceHost": "smh.com.au",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-23/openai-breaches-medicare-albanese-reveals/#fact-2026-09-23-openai-breaches-medicare-albanese-reveals-01-ce92715dd204"
+    },
+    {
+      "id": "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-02-e0d7b35687eb",
+      "hash": "e0d7b35687eb67d490469aef983de50e13adac7c47ff6eb08a5e4a8af6da35e2",
+      "text": "Albanese said OpenAI did not notify the government until September 10, almost three months after the incident, and did so by sending an email to a public mailbox.",
+      "sourceUrl": "https://www.smh.com.au/politics/federal/openai-breaches-medicare-albanese-reveals-20260924-p6100u.html",
+      "sourceHost": "smh.com.au",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-23/openai-breaches-medicare-albanese-reveals/#fact-2026-09-23-openai-breaches-medicare-albanese-reveals-02-e0d7b35687eb"
+    },
+    {
+      "id": "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-03-ee568903b448",
+      "hash": "ee568903b4487a0ee09fb8bd2d807c50bc1d6df47b1fcfdda41b3b04865393e5",
+      "text": "Albanese said the government would seek urgent advice on whether offences had been committed and whether the matter should be referred to the Australian Federal Police.",
+      "sourceUrl": "https://www.smh.com.au/politics/federal/openai-breaches-medicare-albanese-reveals-20260924-p6100u.html",
+      "sourceHost": "smh.com.au",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-23/openai-breaches-medicare-albanese-reveals/#fact-2026-09-23-openai-breaches-medicare-albanese-reveals-03-ee568903b448"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "mara:fair",
+      "persona": "mara",
+      "text": "The delay from June 18 to September 10 indicates a failure in basic reporting mechanisms rather than malice.",
+      "confidence": 0.9,
+      "verdict": "fair",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-01-ce92715dd204",
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-02-e0d7b35687eb",
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-03-ee568903b448"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Using an internal model for public research is a technical capability; the breach is administrative negligence.",
+      "confidence": 0.8,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-01-ce92715dd204",
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-02-e0d7b35687eb",
+        "fact-2026-09-23-openai-breaches-medicare-albanese-reveals-03-ee568903b448"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-23--openai-breaches-medicare-albanese-reveals.png",
+    "artSha256": "94a8073c76ca4d23f3416414cc4ade9b349d1569d96c88ec486f00690c516f40",
+    "pageSha256": "87dea12c1a8dd6e2e6d51f08a6e880df13db49f66c512c6c42733b52bc537672",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "eae3aa2dd18e8193d507895779fe36cd0e7815df8100d9ce1d0468eb50621091",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
