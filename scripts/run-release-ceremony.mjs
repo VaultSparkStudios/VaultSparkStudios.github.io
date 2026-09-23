@@ -210,16 +210,20 @@ function priorReceiptHash() {
   try { return sha256(readFileSync(OUT)); } catch { return null; }
 }
 
+const EXPECTED_STEP_IDS = ['redirect-readiness-probe', 'redirect-readiness', 'staging-deploy-lineage', 'lane-held-asset-drift', 'staging-browser', 'staging-browser-receipt', 'attention-browser', 'attention-browser-receipt', 'promotion-contract', 'promotion-ready', 'doctor'];
+
 function validateReceipt(receipt) {
   const errors = [];
   if (!['passed', 'rejected'].includes(receipt?.state)) errors.push('unknown state');
   if (receipt?.publicSafe !== true) errors.push('publicSafe must be true');
   if (receipt?.stagingOrigin !== CANONICAL_STAGING) errors.push('canonical staging origin mismatch');
-  if (!Array.isArray(receipt?.steps) || receipt.steps.length !== 10) errors.push('ten ceremony steps required');
+  const steps = Array.isArray(receipt?.steps) ? receipt.steps : [];
+  const ids = steps.map((step) => step?.id);
+  if (steps.length !== EXPECTED_STEP_IDS.length || new Set(ids).size !== EXPECTED_STEP_IDS.length || EXPECTED_STEP_IDS.some((id) => !ids.includes(id))) errors.push('exact eleven ceremony step IDs required; missing, duplicate or unknown step');
   if (!/^[a-f0-9]{64}$/.test(receipt?.evidenceSha256 || '')) errors.push('evidence hash missing');
   if (!/^[a-f0-9]{64}$/.test(receipt?.contractSha256 || '')) errors.push('contract hash missing');
   if (Object.hasOwn(receipt || {}, 'stdout') || Object.hasOwn(receipt || {}, 'stderr')) errors.push('subprocess output retained');
-  const allPassed = receipt?.steps?.every((step) => step.state === 'passed');
+  const allPassed = steps.length > 0 && steps.every((step) => step?.state === 'passed');
   if ((receipt?.state === 'passed') !== Boolean(allPassed)) errors.push('state/step disagreement');
   return errors;
 }
@@ -227,12 +231,15 @@ function validateReceipt(receipt) {
 function selfTest() {
   if (!exactStagingOrigin(`${CANONICAL_STAGING}/`)) throw new Error('canonical origin rejected');
   if (exactStagingOrigin('https://evil.example/')) throw new Error('foreign origin accepted');
-  const steps = Array.from({ length: 10 }, (_, index) => ({ id: `s${index}`, state: 'passed' }));
+  const steps = EXPECTED_STEP_IDS.map((id) => ({ id, state: 'passed' }));
   const base = {
     state: 'passed', publicSafe: true, stagingOrigin: CANONICAL_STAGING, steps,
     evidenceSha256: 'a'.repeat(64), contractSha256: 'b'.repeat(64),
   };
   if (validateReceipt(base).length) throw new Error('green receipt rejected');
+  for (const invalidSteps of [steps.filter((step) => step.id !== 'lane-held-asset-drift'), [...steps, { id: 'unexpected', state: 'passed' }], steps.map((step, index) => index === 3 ? steps[0] : step), steps.map((step, index) => index === 3 ? { ...step, id: 'unexpected' } : step), steps.map((step, index) => index === 3 ? null : step), null, {}]) {
+    if (!validateReceipt({ ...base, steps: invalidSteps }).length) throw new Error('missing, duplicate, unknown or malformed ceremony steps accepted');
+  }
   const skippedBrowser = { ...base, state: 'rejected', steps: steps.map((step, index) => index === 3 ? { ...step, state: 'rejected', skipped: 1 } : step) };
   if (validateReceipt(skippedBrowser).length) throw new Error('honest rejected receipt malformed');
   const lying = { ...skippedBrowser, state: 'passed' };
@@ -252,7 +259,7 @@ function selfTest() {
   if (evaluateDoctorStep(staleOnly, { state: 'stale' }, {}).state !== 'rejected') throw new Error('staleness without verified staging was exempted');
   if (evaluateDoctorStep({ ...staleOnly, blockingFailing: 2 }, { state: 'stale' }, verifiedStaging).state !== 'rejected') throw new Error('multiple Doctor blockers were exempted');
   if (evaluateDoctorStep({ date: '2026-08-16', blockingFailing: 0, checks: [] }, { state: 'current' }, {}).state !== 'passed') throw new Error('green Doctor was rejected');
-  console.log('run-release-ceremony --self-test: OK (origin + ten-step + fail-closed receipts + pre-deploy Doctor classification)');
+  console.log('run-release-ceremony --self-test: OK (origin + exact eleven-step IDs + fail-closed receipts + pre-deploy Doctor classification)');
 }
 
 if (process.argv.includes('--self-test')) {

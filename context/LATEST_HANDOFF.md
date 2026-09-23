@@ -1,4 +1,10 @@
 # Latest Handoff — VaultSparkStudios.github.io
+## S364 — active release, 2026-09-22
+
+S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.
+
+Owner: current Codex session. Acceptance: main contains repair; Worker and static production serve it; negative routes return intended errors. Real delivery remains a separate unverified acceptance leg pending explicit send authorization. Staging archive retry succeeded (receipt 90108b61e6ba2dbcd4285f39); build/release ceremony and production are still pending. No identity hold was cleared.
+
 ## Where We Left Off — S363 · 2026-09-20
 
 **Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.

@@ -1,48 +1,48 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-19T22:40:12.768Z",
+  "generatedAt": "2026-09-23T01:39:09.377Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
-  "state": "passed",
+  "state": "rejected",
   "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
   "steps": [
     {
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1662
+      "durationMs": 1652
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 0,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
     {
       "id": "staging-deploy-lineage",
-      "state": "passed",
-      "exitCode": 0,
-      "durationMs": 732
+      "state": "rejected",
+      "exitCode": 1,
+      "durationMs": 578
     },
     {
       "id": "lane-held-asset-drift",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 4698
+      "durationMs": 4137
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 197265
+      "durationMs": 185781
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3,
+      "durationMs": 8,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -59,7 +59,7 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 123445
+      "durationMs": 114442
     },
     {
       "id": "attention-browser-receipt",
@@ -76,7 +76,7 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 528
+      "durationMs": 469
     },
     {
       "id": "promotion-ready",
@@ -102,16 +102,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3557,
+      "durationMs": 6992,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
-      "observedDate": "2026-09-19"
+      "observedDate": "2026-09-21"
     }
   ],
-  "evidenceSha256": "3d7a95ed6e46701debceeacf907a1aeb48a8cefe9546005ae11233c0c9452abc",
+  "evidenceSha256": "cfca12c7a74a18b415b16454981b75f75576e8276893e3c2dff3580aadc9c979",
   "contractSha256": "c7adf422a39c286d601e0942c776da44e8c653e6f41f555aa68773ec48693310",
   "chain": {
-    "previousReceiptSha256": "a1ee8fd932f7594eeabd7578cb1b16f797820bb1af88714f8c7ac4b56cba7a1f"
+    "previousReceiptSha256": "dc149bc617a57606b6f7f7c7455d24f19b263022b26455e939d25ddb66363425"
   },
   "privacy": {
     "stdoutRetained": false,

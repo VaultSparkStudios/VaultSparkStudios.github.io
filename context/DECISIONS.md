@@ -1928,3 +1928,14 @@ The cause is a contract mismatch, and the guard is the half that arrived this se
 **A fourth propagated-layout finding, recorded not fixed.** `scripts/arc-profile.mjs` — which arrived with this session's propagation, and which the `/arc` protocol explicitly requires be run as the LOCAL copy — resolves the registry as `<this repo>/portfolio/PROJECT_REGISTRY.json`, a path that exists only inside studio-ops. So the local copy can never match the registry and always falls back to inference: it reported `type=website (NOT in registry — inferred)` where the registry says `type=app`. No harm this session, because both readings agreed on every decisive dial (public-live · SPARKED · product rubric · direct-to-main · staging-hetzner-first · sanitize-before-push). But the skill's stated rationale for preferring the local copy does not hold for the registry field in a sibling repo, and that is the same shape as the revenue-signal path fixed in D-S363.6. Shipped upstream rather than patched locally, since a propagated file patched here is re-clobbered on the next drain.
 
 **Also corrected this pass:** the closeout protocol requires committing 1–2 `[SIL]` items to `TASK_BOARD.md`, and S363's brainstorm lived only in the SIL ledger. The items are now on the board. The S362 `[SIL]` item about the staleness probe's flickering checked-count is closed with evidence — this session measured a stable `checked: 14` against the 14 workflow files carrying `schedule:`.
+
+
+## D-S364.1 — Repair signup without weakening challenge enforcement (2026-09-22)
+
+Share the JSON response headers across protected handlers; restore only the existing source-owned widget secret. Do not rotate the widget or use a sibling secret. The verifier targets the website project explicitly and defaults to no send; an explicit test mailbox is required for real sends, with evidence tied to a new message. Fix consumed-token reuse so retries request a fresh challenge. Identity promotion holds remain intact. The staging archive manifest also excludes its own temporary directory; the first archive attempt coincided with removal of two old audit paths and was retried after source stabilization.
+
+
+## D-S364.2 — Preserve valid unmeasured context verdicts (2026-09-22)
+
+The full build stopped because the startup renderer accepted only exit zero from context-meter, although exits 2, 3 and 4 carry valid verdict JSON. It discarded UNMEASURED and substituted a file-byte estimate. Accept the documented verdict exits and avoid formatting null before the existing unmeasured branch. Local rendering and the unchanged freshness checker now agree on UNMEASURED; the gate was not weakened.
+

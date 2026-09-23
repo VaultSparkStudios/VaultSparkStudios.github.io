@@ -148,8 +148,9 @@
 
   function _onToken(token) {
     _clearTimer();
-    _cachedToken = token;
-    _tokenExpiry = Date.now() + TOKEN_TTL_MS;
+    // Never cache a single-use token already handed to a waiting caller.
+    _cachedToken = _pendingResolvers.length ? null : token;
+    _tokenExpiry = _cachedToken ? Date.now() + TOKEN_TTL_MS : 0;
     var resolvers = _pendingResolvers.slice();
     _pendingResolvers = [];
     _pendingRejecters = [];
@@ -268,3 +269,5 @@
     ensureLoaded();
   }
 })(window);
+
+

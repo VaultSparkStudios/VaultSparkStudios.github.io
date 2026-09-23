@@ -1987,3 +1987,14 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S358][CONTENT/P2]** Narrative + subscriber mail off git — **DONE S359** (D-S359.2): narrative built from the reader changelog; notifier keyed on a git-free entry id.
 - [x] **[S359][A11Y/P1]** /games/ status labels in light theme 1.47 / 1.90 / 2.22:1 → 5.22 / 6.45 / 6.55:1 (D-S359.3). /membership/ "See The Value" measured 4.61:1 — not a defect.
 - [x] **[S359][OPS/P3]** Registry slug mismatch (`franchise-architect` vs `franchise-architect-football`) shipped to studio-ops as Ark cargo.
+
+
+<!-- rotated 2026-09-23 · sessions < 360 · 1 block(s) -->
+
+## Closed — S359 items (worked in S360)
+
+- [x] **[SIL][S359][OBS/P2]** Provider-health line on /status/ — **DONE S360** (D-S360.1): "Database Provider Outage" with an attribution note when every Supabase-backed check fails, a new Member Accounts (Auth) row, and no summary before all 7 checks report. Rendered-pixel verified against the live outage.
+- [x] **[SIL][S359][GATES/P3]** `build-shell-assets` import-safe — **DONE S360**: `main()` behind an `isMain` guard; `tests/shell-assets.unit.spec.js` 7/7, negative control fails with the guard removed; wired into `test:unit` and `build:check:steps`.
+- [x] **[S356][SITE/P1]** Oracle/IGNIS chip light-theme contrast — **already fixed S357** (D-S360.3): opaque ground in light mode, `oracle/index.html:78`, `ignis/index.html:80-97`, 7.11:1.
+- [x] **[S356][GATES/P2]** Drift preflight scope — **already fixed S357** (D-S360.3): the tool computes its denominator from the registry and prints that it is a sample.
+- [x] **[S356][SITE/P2]** Leaderboard embed greys — **DONE S360** (D-S360.2): the S356 premise (#555/#666) was stale; the live defect was host-token inheritance (1.9 / 2.6:1 on our light theme). Literal palette, unit-enforced.

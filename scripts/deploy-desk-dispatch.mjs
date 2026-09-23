@@ -13,7 +13,8 @@
  * Modes:
  *   --secrets   push BREVO_API_KEY + dispatch config into the function env
  *   --deploy    deploy supabase/functions/subscribe-desk-dispatch
- *   --verify    live probe: valid address accepted, junk rejected, CORS pinned
+ *   --verify    no-send probe: junk rejected, CORS and sender config pinned
+ *   --live-email=<address> explicitly send one confirmation to a real test mailbox
  *   --all       secrets → deploy → verify
  */
 
@@ -27,7 +28,7 @@ const SLUG = 'subscribe-desk-dispatch';
 const ENTRYPOINT = `supabase/functions/${SLUG}/index.ts`;
 const MGMT = 'https://api.supabase.com/v1';
 const BREVO_API = 'https://api.brevo.com/v3';
-const DEFAULT_REF = 'fjnpzjjyhnpmunfoycrp';
+export const PROJECT_REF = 'fjnpzjjyhnpmunfoycrp';
 
 /**
  * Provisioned in Brevo on 2026-08-08 (S308) — list + double opt-in template.
@@ -54,12 +55,19 @@ const DISPATCH_DOI_TEMPLATE_ID = '1';
 const DISPATCH_CONFIRM_URL = 'https://vaultsparkstudios.com/news/subscribed/';
 const DISPATCH_SENDER = 'news@vaultsparkstudios.com';
 
-function projectRef() {
-  const url = getSecret('SUPABASE_URL', 'supabase.management');
-  try {
-    const host = new URL(url).hostname;
-    return host.endsWith('.supabase.co') ? host.slice(0, -'.supabase.co'.length) : DEFAULT_REF;
-  } catch { return DEFAULT_REF; }
+// Shared SUPABASE_URL can belong to a sibling; pin this site's live project.
+export function projectRef() { return PROJECT_REF; }
+
+export function parseOptions(argv) {
+  const modes = argv.filter((arg) => ['--all', '--secrets', '--deploy', '--verify'].includes(arg));
+  if (modes.length !== 1) throw new Error('Specify exactly one mode: --secrets | --deploy | --verify | --all');
+  const live = argv.filter((arg) => arg.startsWith('--live-email='));
+  if (live.length > 1 || (live.length && argv.includes('--no-live'))) throw new Error('--live-email must appear once and cannot be combined with --no-live');
+  if (argv.some((arg) => !modes.includes(arg) && arg !== '--no-live' && !arg.startsWith('--live-email='))) throw new Error('Unknown argument; use --live-email=<address> for a test send');
+  const liveEmail = live.length ? live[0].slice('--live-email='.length).toLowerCase() : null;
+  if (liveEmail !== null && (liveEmail.length > 254 || !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/.test(liveEmail) || liveEmail.startsWith('.') || liveEmail.includes('..') || liveEmail.includes('.@'))) throw new Error('--live-email requires a valid email address');
+  if (liveEmail && !['--verify', '--all'].includes(modes[0])) throw new Error('--live-email requires --verify or --all');
+  return { mode: modes[0], liveEmail };
 }
 
 const token = () => getSecret('SUPABASE_ACCESS_TOKEN', 'supabase.management');
@@ -70,6 +78,15 @@ async function mgmt(pathname, init = {}) {
     headers: { Authorization: `Bearer ${token()}`, ...(init.headers || {}) },
   });
   return { ok: res.ok, status: res.status, text: await res.text() };
+}
+
+export async function assertProject(request = mgmt) {
+  const res = await request(`/projects/${PROJECT_REF}/functions`);
+  if (!res.ok) throw new Error(`Management token cannot read project ${PROJECT_REF} (${res.status}); refusing to continue`);
+  let functions;
+  try { functions = JSON.parse(res.text); } catch { throw new Error('Management project visibility response is invalid'); }
+  if (!Array.isArray(functions)) throw new Error('Management project visibility response is invalid');
+  return functions;
 }
 
 async function setSecrets() {
@@ -124,7 +141,26 @@ async function deploy() {
  * including two negative controls — a probe that only ever sends a good
  * address cannot tell a working validator from no validator at all.
  */
-async function verify() {
+export function currentConfirmation(rows, email, startedAt, existingIds = []) {
+  const known = new Set(existingIds);
+  return rows.find((row) => row.email === email
+    && typeof row.messageId === 'string' && row.messageId && !known.has(row.messageId)
+    && Number(row.templateId) === Number(DISPATCH_DOI_TEMPLATE_ID)
+    && Number.isFinite(Date.parse(row.date))
+    && Date.parse(row.date) >= Math.floor(startedAt / 1000) * 1000) || null;
+}
+
+async function confirmationLog() {
+  const res = await fetch(`${BREVO_API}/smtp/emails?templateId=${DISPATCH_DOI_TEMPLATE_ID}&limit=20`, {
+    headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' },
+  });
+  if (!res.ok) throw new Error(`Confirmation log unreadable (HTTP ${res.status})`);
+  const body = await res.json();
+  if (!Array.isArray(body.transactionalEmails)) throw new Error('Confirmation log shape is invalid');
+  return body.transactionalEmails;
+}
+
+async function verify({ liveEmail = null } = {}) {
   const ref = projectRef();
   const endpoint = `https://${ref}.supabase.co/functions/v1/${SLUG}`;
   const origin = 'https://vaultsparkstudios.com';
@@ -171,18 +207,13 @@ async function verify() {
     results.push([`sender identity readable from Brevo (${String(err).slice(0, 60)})`, false]);
   }
 
-  // Real deliverability: a genuine double-opt-in send to the founder address.
-  // This is the only check that proves Brevo actually accepted the call.
-  //
-  // It is opt-OUT rather than opt-in because a verify that never touches Brevo
-  // cannot distinguish a working integration from a missing API key. But it
-  // sends a REAL email and consumes Brevo's free-tier daily send budget, so it
-  // must never run unattended: pass --no-live in CI or any loop.
-  if (args.has('--no-live')) {
-    results.push(['live send skipped (--no-live) — integration NOT proven', true]);
-    console.log('  ⚠ --no-live: Brevo acceptance was not exercised; this run cannot prove the integration works.');
+  // Sending requires an explicit real mailbox; no synthetic recipients.
+  if (!liveEmail) {
+    console.log('  No live send requested: Brevo acceptance and delivery remain unverified.');
   } else {
-    const probe = `desk-verify-${Date.now()}@vaultsparkstudios.com`;
+    const probe = liveEmail;
+    const existingIds = (await confirmationLog()).map((row) => row.messageId);
+    const startedAt = Date.now();
     const live = await post({ email: probe, source: 'deploy-verify' });
     results.push(['endpoint accepted a valid address', live.status === 200]);
     if (live.status !== 200) console.error(redact(`   live probe body: ${live.body.slice(0, 240)}`));
@@ -208,9 +239,9 @@ async function verify() {
       const log = logRes.ok ? await logRes.json() : {};
       const rows = log?.transactionalEmails || [];
       seen = rows.length;
-      sent = rows.some((r) => r.email === probe);
+      sent = Boolean(currentConfirmation(rows, probe, startedAt, existingIds));
     }
-    results.push([`provider log confirms the confirmation mail was actually sent (${seen} message(s))`, sent]);
+    results.push([`provider log confirms a new confirmation submission for this test (${seen} message(s))`, sent]);
     if (!sent) console.error('   ✗ endpoint returned 200 but the provider has no send event — the integration is NOT working');
   }
 
@@ -221,16 +252,26 @@ async function verify() {
   return failed === 0;
 }
 
-const args = new Set(process.argv.slice(2));
-if (args.has('--all')) {
-  if (await setSecrets() && await deploy()) {
-    await new Promise((r) => setTimeout(r, 4000)); // let the new version go live
-    await verify();
+export async function main(argv = process.argv.slice(2), operations = {}) {
+  const options = parseOptions(argv);
+  const ops = { assertProject, setSecrets, deploy, verify,
+    settle: () => new Promise((r) => setTimeout(r, 4000)), ...operations };
+  await ops.assertProject();
+  if (options.mode === '--all') {
+    if (await ops.setSecrets() && await ops.deploy()) {
+      await ops.settle();
+      return ops.verify(options);
+    }
+    return false;
   }
-} else if (args.has('--secrets')) await setSecrets();
-else if (args.has('--deploy')) await deploy();
-else if (args.has('--verify')) await verify();
-else {
-  console.error('Usage: --secrets | --deploy | --verify | --all');
-  process.exitCode = 2;
+  if (options.mode === '--secrets') return ops.setSecrets();
+  if (options.mode === '--deploy') return ops.deploy();
+  return ops.verify(options);
 }
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try { await main(); }
+  catch (error) { console.error(redact(error.message)); process.exitCode = 1; }
+}
+
+

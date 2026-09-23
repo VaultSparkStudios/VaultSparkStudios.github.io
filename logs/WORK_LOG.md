@@ -1739,3 +1739,8 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 **Verified.** `build:check` 503/503 · mobile audit 215/215 against the local preview · visual matrix 84 hash-bound captures, 5 manually inspected across dark/light/high-contrast on desktop and mobile · both receipts bound to the final tree · doctor and live probes green.
 
 **Deferred honestly:** the founder-presence history purge still needs a force-push (CANON-019); the stale ATLAS lock and four sibling-owned compliance failures are cross-repo (CANON-018); the Supabase service-role slot still points at the sibling project, reported by name rather than worked around.
+
+
+## S364 — 2026-09-22 — Desk signup repair, release checkpoint
+
+The reported 503 was reproduced and traced to an out-of-scope JSON_HEADERS constant. Repaired the protected response branches, restored the matching widget secret on staging, prevented consumed-token reuse, and pinned the verifier to this website with explicit send controls. Validation: 270 unit tests, 268 passed, zero failed, two unrelated TODOs; provider no-send checks 6/6; staging negative route now gives the expected missing-token 403. Real automated challenge timed out. No confirmation email sent. Production release follows this checkpoint; no production success is claimed here.

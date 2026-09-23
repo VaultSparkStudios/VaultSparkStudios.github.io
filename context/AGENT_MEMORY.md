@@ -19,3 +19,13 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 - `context/CURRENT_STATE.md` is a hot ledger; history through S347 is byte-preserved in `context/archive/CURRENT_STATE_through_S347.md`.
 - Desk facts, arguments, predictions, and visual evidence are exposed per story in deterministic `critique.json`; empty evidence links must remain `unlinked`.
 - Uptime Actions→Worker scheduling is a dedicated public-trust migration, not closeout cleanup.
+
+
+## S364 signup repair
+
+- Protected-form JSON_HEADERS must remain module scoped. Route-level tests caught the production error shape.
+- Resolve Turnstile secret from the source site key and matching Cloudflare account, never a generic sibling capability.
+- Desk verification pins fjnpzjjyhnpmunfoycrp and defaults to no email; delivery evidence must belong to a new current test message.
+- Do not cache a challenge token already delivered to a pending caller.
+- Keep archive manifests stable while tar runs; staging temporary archives must not enter later release manifests.
+- No real email sent in S364 at the release checkpoint; automated challenge timed out.

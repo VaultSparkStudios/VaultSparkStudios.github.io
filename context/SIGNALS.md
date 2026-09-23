@@ -1,9 +1,9 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         503/503 passing (2026-09-20)                   ║
-║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   1d                                             ║
-║  ✓  IGNIS         46724 FORGE  ·  4d old                         ║
+║  ✓  IGNIS         46724 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
@@ -11,7 +11,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  9d old (2026-09-11)                            ║
+║  ✓  Revenue sig.  0d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║

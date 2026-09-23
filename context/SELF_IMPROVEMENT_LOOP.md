@@ -2616,3 +2616,23 @@ Also recorded rather than muted: the newsletter still shows six consecutive fail
 `66a7fdd74` landed after the SIL anchor: the hourly publishers raced the release-addendum push for the third time, seven generated artifacts conflicted, and `resync-derived` converged the graph. Nothing but regenerated derived artifacts changed. Recorded here rather than enumerated as a new receipt path, because D-S362.7 was explicit that the path list must grow only from an observed commit and never from a guess — and one regeneration commit is not yet evidence that this class is routine.
 
 **Noted while writing this:** `hasSessionAddendum()` matches the literal phrase `Session <n> addendum`, while every addendum in this ledger — including S362's and the one above — is headed `S<n> addendum`. So the probe could never see them, and it correctly reported "the SIL carries no S363 addendum" while an S363 addendum sat directly above. This heading uses the phrase the reader actually matches. The two conventions should be reconciled in one direction next session rather than left as a heading that happens to satisfy a regex; filed with the `[SIL]` items above.
+
+
+## 2026-09-22 — Session 364 (Desk signup repair; release checkpoint) | Total: 888/1000 (v3.0) | Debt: stable
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 90 | 268 passing unit tests, zero failures, two unrelated TODOs; full release checks still pending at checkpoint. |
+| Creative Alignment | 90 | Existing visual design preserved; signup reviewed across themes. |
+| Momentum | 70 | Fault isolated and repaired, but tool-launch failures and release regeneration added substantial delay. |
+| Engagement | 85 | Signup response and retry defects fixed; successful email delivery remains unverified. |
+| Process Quality | 80 | Production exception matched to a negative request; screenshot crop defect detected during pixel review. |
+| Cross-Repo Coherence | 100 | No sibling source files edited. |
+| Security Posture | 98 | Existing widget identity verified before binding; CSRF and challenge enforcement retained; no credentials logged. |
+| Ecosystem Integration | 90 | Verifier targets the website explicitly; scoped identity hold remains intact. |
+| Capital Efficiency | 90 | No dependencies, purchases or paid services added; lengthy local release overhead remains costly. |
+| Automation Coverage | 95 | Route, target, message-correlation, secret scope and token retry regression coverage added. |
+
+**Acceptance limits:** staging is verified for negative responses. A real automated challenge timed out; no email has been sent and no inbox delivery is claimed. This is a release checkpoint, not a claim that production is already repaired.
+
+**Follow-up committed:** [SIL] add a scheduled no-send public-form configuration probe so a missing challenge secret is visible before a visitor finds it. Do not introduce scheduled email sends.

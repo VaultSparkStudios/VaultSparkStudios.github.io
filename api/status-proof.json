@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-09-23T01:45:27.869Z",
+  "generatedAt": "2026-09-23T02:26:23.942Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,13 +12,13 @@
     "trustScore": 89,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 2420413,
+      "ageSeconds": 2422869,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
       {
         "key": "identity-migration-receipt",
-        "ageHours": 672,
+        "ageHours": 673,
         "staleAfterH": 336,
         "pctOfWindow": 200
       }
@@ -29,7 +29,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-09-23T01:45:24.686Z",
-      "freshnessSeconds": 3,
+      "freshnessSeconds": 2459,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -190,7 +190,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-09-17T17:59:22.088Z",
-      "freshnessSeconds": 459966,
+      "freshnessSeconds": 462422,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -211,7 +211,7 @@
         },
         "sourceContract": {
           "path": "cloudflare/security-headers-worker.js",
-          "sha256": "b41cfaee4aa1567bc67df1f37815c91ec3ffce3fb49ee417da8cd0b363f69b82",
+          "sha256": "163445c8790600d3235115872bf3136149a95a50b21594c6715464dbb086cbd4",
           "expectedRoutes": 9
         },
         "state": "matched",
@@ -325,7 +325,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-09-23T01:45:25.984Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 2458,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -508,8 +508,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-09-21T03:01:09.233Z",
-      "freshnessSeconds": 168259,
+      "generatedAt": "2026-09-23T01:26:36.344Z",
+      "freshnessSeconds": 3588,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -569,19 +569,19 @@
             "postLcpP75": 1606
           }
         ],
-        "generatedAt": "2026-09-21T03:01:09.233Z"
+        "generatedAt": "2026-09-23T01:26:36.344Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-09-23T01:03:44.815Z",
-      "freshnessSeconds": 2503,
+      "generatedAt": "2026-09-23T02:26:17.567Z",
+      "freshnessSeconds": 6,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-23T01:03:44.815Z",
+        "generatedAt": "2026-09-23T02:26:17.567Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -610,7 +610,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-09-21T03:51:55.571Z",
-      "freshnessSeconds": 165212,
+      "freshnessSeconds": 167668,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -863,7 +863,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-09-21T03:51:55.571Z",
-      "freshnessSeconds": 165212,
+      "freshnessSeconds": 167668,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -913,8 +913,8 @@
     "promotion-receipt": {
       "present": true,
       "source": "/api/promotion-receipt.json",
-      "generatedAt": "2026-09-20T21:29:44.242Z",
-      "freshnessSeconds": 188144,
+      "generatedAt": "2026-09-23T00:09:32.858Z",
+      "freshnessSeconds": 8211,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -923,19 +923,19 @@
         "publicSafe": true,
         "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
         "promoted": {
-          "sha": "119899cb09d1995df7f8b1abca136975c3dbd262",
+          "sha": "5f9e72b743d97b1f84f04f17b1598e2ca95303a0",
           "source": "api/build-sha.json"
         },
         "production": {
           "origin": "https://vaultsparkstudios-website.pages.dev",
-          "sha": "dae84c0c40f74ed8d592636f53dbdc8839e74124",
+          "sha": "cf48e380c09d15de5f58247d52c5ecfbcd211970",
           "contentLaneHead": null,
           "reachable": true,
           "reconciliation": "behind",
           "shellParity": {
             "state": "matched",
-            "observedAt": "2026-09-20T18:12:58.266Z",
-            "ageHours": 3.3,
+            "observedAt": "2026-09-22T20:37:25.839Z",
+            "ageHours": 3.5,
             "stale": false,
             "maxAgeHours": 12,
             "source": "api/deploy-currency.json → shellParity"
@@ -1005,18 +1005,18 @@
         "reconciled": false,
         "receiptState": "degraded",
         "findings": [
-          "the repo has advanced past the last promotion: production serves dae84c0c, repo build-sha is 119899cb — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
+          "the repo has advanced past the last promotion: production serves cf48e380, repo build-sha is 5f9e72b7 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
           "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
         ],
-        "generatedAt": "2026-09-20T21:29:44.242Z",
+        "generatedAt": "2026-09-23T00:09:32.858Z",
         "history": {
           "window": 20,
           "gradable": 20,
           "reconciled": 0,
           "reconciledPct": 0,
-          "lastStrandedAt": "2026-09-20T21:29:44.242Z",
-          "currentBehindStreak": 19,
-          "newestGradableAt": "2026-09-20T21:29:44.242Z",
+          "lastStrandedAt": "2026-09-23T00:09:32.858Z",
+          "currentBehindStreak": 20,
+          "newestGradableAt": "2026-09-23T00:09:32.858Z",
           "newestAgeHours": 0,
           "maxAgeHours": 48,
           "stale": false,
@@ -1027,13 +1027,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-09-21T03:04:09.898Z",
-      "freshnessSeconds": 168078,
+      "generatedAt": "2026-09-23T01:27:02.005Z",
+      "freshnessSeconds": 3562,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-21T03:04:09.898Z",
+        "generatedAt": "2026-09-23T01:27:02.005Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -1045,7 +1045,7 @@
         "measured": [],
         "engagement": {
           "observationEnd": "2026-08-15",
-          "ageDays": 37,
+          "ageDays": 39,
           "fresh": false,
           "eventCount": 147,
           "note": "Engagement evidence is stale; conversion decisions must abstain."
@@ -1056,7 +1056,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-09-23T01:45:25.919Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 2458,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1250,7 +1250,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 2420413,
+      "freshnessSeconds": 2422869,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1423,7 +1423,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-09-20T18:35:05.575Z",
-      "freshnessSeconds": 198622,
+      "freshnessSeconds": 201078,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1497,13 +1497,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-09-23T01:45:27.684Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-09-23T02:18:12.701Z",
+      "freshnessSeconds": 491,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-23T01:45:27.684Z",
+        "generatedAt": "2026-09-23T02:18:12.701Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1511,15 +1511,15 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-07-02",
-          "days": 38
+          "lastDay": "2026-08-16",
+          "days": 56
         },
         "countries": [
           {
             "country": "US",
-            "samples": 464,
-            "lcpP75": 992,
-            "ttfbP75": 157,
+            "samples": 783,
+            "lcpP75": 936,
+            "ttfbP75": 128,
             "confidence": "high",
             "colos": [
               "ATL",
@@ -1528,23 +1528,66 @@
               "DEN",
               "DFW",
               "EWR",
+              "HNL",
               "IAD",
+              "JAX",
+              "LAS",
               "LAX",
               "MCI",
+              "MIA",
+              "OMA",
               "ORD",
+              "PHL",
+              "PHX",
               "SEA",
               "SJC"
             ]
           },
           {
             "country": "GB",
-            "samples": 8,
-            "lcpP75": 1388,
-            "ttfbP75": 437,
+            "samples": 13,
+            "lcpP75": 1072,
+            "ttfbP75": 337,
             "confidence": "low",
             "colos": [
               "LHR",
               "MAN"
+            ]
+          },
+          {
+            "country": "CN",
+            "samples": 12,
+            "lcpP75": 1020,
+            "ttfbP75": 746,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX",
+              "SJC"
+            ]
+          },
+          {
+            "country": "RU",
+            "samples": 10,
+            "lcpP75": 1584,
+            "ttfbP75": 196,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "DME",
+              "FRA",
+              "GIG"
+            ]
+          },
+          {
+            "country": "CA",
+            "samples": 7,
+            "lcpP75": 9960,
+            "ttfbP75": 1286,
+            "confidence": "low",
+            "colos": [
+              "YVR",
+              "YYZ"
             ]
           },
           {
@@ -1560,25 +1603,15 @@
             ]
           },
           {
-            "country": "CA",
+            "country": "AU",
             "samples": 6,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
+            "lcpP75": 1432,
+            "ttfbP75": 496,
             "confidence": "low",
             "colos": [
-              "YVR",
-              "YYZ"
-            ]
-          },
-          {
-            "country": "CN",
-            "samples": 6,
-            "lcpP75": 1020,
-            "ttfbP75": 746,
-            "confidence": "low",
-            "colos": [
-              "AMS",
-              "LAX"
+              "MEL",
+              "PER",
+              "SIN"
             ]
           },
           {
@@ -1592,6 +1625,17 @@
             ]
           },
           {
+            "country": "DE",
+            "samples": 4,
+            "lcpP75": 9756,
+            "ttfbP75": 529,
+            "confidence": "low",
+            "colos": [
+              "CPH",
+              "FRA"
+            ]
+          },
+          {
             "country": "EG",
             "samples": 4,
             "lcpP75": 2184,
@@ -1599,6 +1643,38 @@
             "confidence": "low",
             "colos": [
               "MRS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 4,
+            "lcpP75": 1522,
+            "ttfbP75": 880,
+            "confidence": "low",
+            "colos": [
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "BR",
+            "samples": 3,
+            "lcpP75": 1724,
+            "ttfbP75": 538,
+            "confidence": "low",
+            "colos": [
+              "GRU"
+            ]
+          },
+          {
+            "country": "IT",
+            "samples": 3,
+            "lcpP75": 1599,
+            "ttfbP75": 975,
+            "confidence": "low",
+            "colos": [
+              "FCO",
+              "MXP"
             ]
           },
           {
@@ -1612,6 +1688,16 @@
             ]
           },
           {
+            "country": "SG",
+            "samples": 3,
+            "lcpP75": 1084,
+            "ttfbP75": 118,
+            "confidence": "low",
+            "colos": [
+              "SIN"
+            ]
+          },
+          {
             "country": "TR",
             "samples": 3,
             "lcpP75": 764,
@@ -1622,27 +1708,33 @@
             ]
           },
           {
-            "country": "other",
-            "samples": 22,
-            "lcpP75": 1284,
-            "ttfbP75": 538,
-            "confidence": "high",
+            "country": "UA",
+            "samples": 3,
+            "lcpP75": 1824,
+            "ttfbP75": 318,
+            "confidence": "low",
             "colos": [
+              "VIE"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 17,
+            "lcpP75": 1128,
+            "ttfbP75": 374,
+            "confidence": "low",
+            "colos": [
+              "AKL",
               "ARN",
               "BOM",
               "BRU",
               "BUD",
-              "DFW",
-              "DME",
-              "FCO",
-              "FRA",
-              "GRU",
+              "CPH",
+              "HKG",
               "LIS",
               "MAD",
-              "MNL",
               "MRS",
               "PRG",
-              "SIN",
               "WAW"
             ]
           }
@@ -1653,7 +1745,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 3289528,
+      "freshnessSeconds": 3291984,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2027,7 +2119,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 3289528,
+      "freshnessSeconds": 3291984,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2057,13 +2149,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-09-23T01:03:32.843Z",
-      "freshnessSeconds": 2515,
+      "generatedAt": "2026-09-23T02:18:10.208Z",
+      "freshnessSeconds": 494,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-23T01:03:32.843Z",
+        "generatedAt": "2026-09-23T02:18:10.208Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2083,7 +2175,7 @@
           "passed": 10,
           "failed": 0,
           "unknown": 2,
-          "longestUnknownStreak": 197,
+          "longestUnknownStreak": 201,
           "neverKnownGood": 2
         },
         "results": [
@@ -2101,7 +2193,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2118,7 +2210,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2135,7 +2227,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2152,7 +2244,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2169,7 +2261,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2186,7 +2278,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2197,7 +2289,7 @@
             "attemptCount": 2,
             "attempts": [
               {
-                "status": 403,
+                "status": 401,
                 "redirected": false,
                 "outcome": "unknown"
               },
@@ -2207,7 +2299,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 197,
+            "unknownStreak": 201,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2225,7 +2317,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2242,7 +2334,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2259,7 +2351,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2276,7 +2368,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-09-23T01:03:32.843Z",
+            "lastKnownGoodAt": "2026-09-23T02:18:10.208Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2297,7 +2389,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 197,
+            "unknownStreak": 201,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           }
@@ -2309,7 +2401,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-09-23T00:00:00.000Z",
-      "freshnessSeconds": 6328,
+      "freshnessSeconds": 8784,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2326,7 +2418,7 @@
           "activeThisWeek": 1,
           "lastArkBroadcastAt": "2026-09-21T03:36:31.000Z",
           "ignisHeartbeatAt": "2026-09-20T21:37:09.465Z",
-          "lastShippedSession": "S363"
+          "lastShippedSession": "S364"
         },
         "edgeIntegrity": {
           "state": "matched",
@@ -2363,7 +2455,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S363"
+            "value": "S364"
           }
         ]
       }
@@ -2372,7 +2464,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-09-23T00:00:00.000Z",
-      "freshnessSeconds": 6328,
+      "freshnessSeconds": 8784,
       "staleAfterH": 720,
       "stale": false,
       "data": {

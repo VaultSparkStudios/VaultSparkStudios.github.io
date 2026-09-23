@@ -1321,3 +1321,8 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 - **/status/ counted a browser capability as a service**, so a private window read "Partial Outage" (D-S361.2).
 - **Supabase outage resolved** (recovered by 09:00Z; not an agent action).
 
+
+
+## S364 — Desk signup evidence boundary (2026-09-22)
+
+The production 503 was a real Worker exception, not a report-only Trusted Types warning. Staging now returns the intended protected validation responses after the code and widget-binding repair. The website-specific backend verifier passes 6/6 no-send checks. Unit tests verify successful forwarding using a controlled mock; that is not an actual email delivery. Real browser challenge automation timed out. Production promotion remains pending at this checkpoint.

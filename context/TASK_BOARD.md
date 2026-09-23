@@ -1,7 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-19 (S362: two false-alarming probes fixed (cron comments, write-back currency); a browser service-worker install gate; the unarmed newsletter cron holds instead of failing; the precache reviewed and kept.)
+Last updated: 2026-09-22 (S364: Desk signup repair and release)
 
+## S364 — requested signup repair
+
+- [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
+- [x] Restore the source-owned Turnstile secret on staging; verify negative response without sending mail.
+- [ ] Complete release checks, push main, deploy production and verify served repair.
+- [ ] Verify one real confirmation only after explicit email-send authorization; no email sent yet.
 ## Open — S362
 
 - [ ] **[SIL][S360][OBS/P2]** Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
@@ -20,13 +26,6 @@ Last updated: 2026-09-19 (S362: two false-alarming probes fixed (cron comments, 
 - [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.
 - [x] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational. — **DONE S361** (D-S361.2).
 - [x] **[S361][PWA/P0]** Service worker never installed in production — **FIXED S361** (D-S361.1): duplicate precache entries made `Cache.addAll` reject.
-## Closed — S359 items (worked in S360)
-
-- [x] **[SIL][S359][OBS/P2]** Provider-health line on /status/ — **DONE S360** (D-S360.1): "Database Provider Outage" with an attribution note when every Supabase-backed check fails, a new Member Accounts (Auth) row, and no summary before all 7 checks report. Rendered-pixel verified against the live outage.
-- [x] **[SIL][S359][GATES/P3]** `build-shell-assets` import-safe — **DONE S360**: `main()` behind an `isMain` guard; `tests/shell-assets.unit.spec.js` 7/7, negative control fails with the guard removed; wired into `test:unit` and `build:check:steps`.
-- [x] **[S356][SITE/P1]** Oracle/IGNIS chip light-theme contrast — **already fixed S357** (D-S360.3): opaque ground in light mode, `oracle/index.html:78`, `ignis/index.html:80-97`, 7.11:1.
-- [x] **[S356][GATES/P2]** Drift preflight scope — **already fixed S357** (D-S360.3): the tool computes its denominator from the registry and prints that it is a sample.
-- [x] **[S356][SITE/P2]** Leaderboard embed greys — **DONE S360** (D-S360.2): the S356 premise (#555/#666) was stale; the live defect was host-token inheritance (1.9 / 2.6:1 on our light theme). Literal palette, unit-enforced.
 ## Now (next session ready)
 
 - [ ] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json`. A completed run leaves the next one failing at step 81 (`sanitize-public-oracle-feed --check`), because a later step regenerates the gitignored artifact unsanitized. The caller currently has to pre-sanitize. A non-idempotent gate trains a reader to re-run rather than read, which is how a genuine step-81 finding gets waved through. `closeout-autopilot.mjs` already documents the ordering it depends on; the standalone entry point does not apply it.
@@ -546,3 +545,6 @@ Verification, S281 (do not re-derive):
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+## S364 follow-up
+
+- [ ] **[SIL][S364][OBS/P2]** Add a scheduled no-send public-form configuration probe that distinguishes missing challenge configuration from ordinary invalid input. No scheduled email sends.

@@ -74,6 +74,8 @@ const SECURITY_HEADERS = {
   'X-Robots-Tag': 'noai, noimageai',
 };
 
+const JSON_HEADERS = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' };
+
 const REMOVE_HEADERS = ['x-powered-by', 'server'];
 
 // S156 audit #29 — JSON hot-path SWR. Worker serves these instant from edge,
@@ -723,7 +725,7 @@ const PUSH_ACTIVE_GLOBAL_MAX = 1000;
 
 async function handlePushSubscribe(request, env) {
   const NO_STORE = { 'Cache-Control': 'no-store' };
-  const JSON_HEADERS = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' };
+
 
   if (!env.RATE_LIMIT) {
     return new Response(JSON.stringify({ ok: false, error: 'storage_unavailable' }), { status: 503, headers: JSON_HEADERS });
@@ -1594,3 +1596,4 @@ const worker = {
 };
 
 export default worker;
+

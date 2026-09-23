@@ -1,0 +1,235 @@
+{
+  "schemaVersion": "2.0",
+  "session": "S364",
+  "generatedAt": "2026-09-22",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "scope": "Deliver: repair The Desk signup, verify staging, commit and push main, fully deploy. No unrelated maintenance or identity migration.",
+  "axes": [
+    "featureDepth",
+    "security",
+    "observability"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "desk-signup-response-crash",
+      "axis": "featureDepth",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 10,
+      "innovation": 2,
+      "priority": 15.1,
+      "title": "Repair the public form response-header scope error",
+      "why": "A production negative signup probe returned 503; the matching Worker log recorded JSON_HEADERS is not defined.",
+      "recipe": "Share the response header constant across the two handlers and exercise the real Worker route's validation and forwarding branches.",
+      "premises": [
+        {
+          "claim": "Public-form responses use JSON_HEADERS",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "headers: JSON_HEADERS",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "Production log captured through a bounded direct Worker tail. The invalid request could not send an email.",
+        "limitations": "Initial read-only observability query had no retained logs for this Worker; direct tail supplied the exception."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Fix constant scope."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Fix scope and add route-level regression tests."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Verify intended negative responses on staging and production."
+        }
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-09-22",
+          "note": "78/78 route and existing Worker tests passed; staging Worker version 7d255cc2-1440-493c-b824-6b4912a351bf returns intended 403 instead of 503.",
+          "status": "verified-in-staging"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "desk-turnstile-runtime-secret",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 1,
+      "impact": 10,
+      "innovation": 2,
+      "priority": 12.6,
+      "title": "Restore the existing widget secret to the public-form Worker",
+      "why": "Production binding inspection found no TURNSTILE_SECRET_KEY. Staging after the code repair returns turnstile_not_configured.",
+      "recipe": "Validate the source-owned widget and account, provision only its existing secret to staging, verify, then promote under the current release gate. Do not rotate or change widget domains.",
+      "premises": [
+        {
+          "claim": "Public forms require the Worker Turnstile secret",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "secret: env.TURNSTILE_SECRET_KEY",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "Cloudflare settings read and widget read confirm the missing binding and the existing VaultSpark widget.",
+        "limitations": "The shared gateway Turnstile capability may belong to a sibling; source widget identity must be validated."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Restore the matching secret."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Use a bounded, dry-by-default provisioning tool with scope checks."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Exercise a real browser challenge and verify the complete authorized signup."
+        }
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-09-22",
+          "note": "Provisioning tool validates account, source widget, allowed hostname and Worker origin; 8/8 unit tests pass. Staging existing secret attached and binding readback confirmed. Negative route returns intended missing-token 403. Real browser challenge timed out.",
+          "status": "verified-in-staging"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "desk-verifier-project-and-send-scope",
+      "axis": "observability",
+      "tier": "⚡",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 2,
+      "priority": 10.1,
+      "title": "Pin the verifier to this website and make real sends explicit",
+      "why": "The previous shared-URL resolver tested a different project. Its endpoint checks failed while the site's actual endpoint passed.",
+      "recipe": "Pin the repository project and assert management visibility; default to no send; require a valid explicit mailbox and correlate provider evidence to a new current message.",
+      "premises": [
+        {
+          "claim": "The site-owned project is pinned in the Worker endpoint",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "Corrected live no-send verification passes 6/6; unit checks prove target and send boundaries.",
+        "limitations": "No-send verification does not prove successful delivery."
+      },
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Pin the correct project."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add authority check, explicit send option and current-message evidence tests."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Verify one authorized real confirmation through the public form."
+        }
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-09-22",
+          "note": "7/7 verifier tests passed; live no-send checks 6/6 passed. No email sent.",
+          "status": "verified-in-staging"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "desk-challenge-token-reuse",
+      "axis": "featureDepth",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 8,
+      "innovation": 1,
+      "priority": 12,
+      "title": "Never return an already-consumed challenge token on retry",
+      "why": "The existing TODO reproduced the same single-use token being returned on the next call.",
+      "recipe": "Cache only tokens that have not been delivered to a waiting caller and promote the existing TODO to a passing browser regression test.",
+      "premises": [
+        {
+          "claim": "Token callback resolves callers",
+          "adapter": "file-content",
+          "target": "assets/turnstile.js",
+          "pattern": "function _onToken(token)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-09-22",
+          "note": "6/6 challenge lifecycle tests pass, including a second distinct token on retry.",
+          "status": "verified-in-staging"
+        }
+      ],
+      "ladder": {
+        "L2": {
+          "recipe": "Require a second distinct token in the browser regression.",
+          "effortHours": 0.5
+        },
+        "L3": {
+          "recipe": "Verify the retry behavior on the deployed site.",
+          "effortHours": 1
+        },
+        "L1": {
+          "recipe": "Stop caching delivered tokens.",
+          "effortHours": 0.25
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 4,
+    "priority": 49.8,
+    "top3": [
+      "desk-signup-response-crash",
+      "desk-turnstile-runtime-secret",
+      "desk-verifier-project-and-send-scope"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "title": "Unrelated portfolio and feature maintenance",
+      "reason": "Outside the founder's bounded signup repair and deployment request.",
+      "slug": "unrelated-maintenance"
+    }
+  ],
+  "limitations": [
+    "Windows sandbox cryptographic process and file helpers fail intermittently; approved outside-sandbox commands are used.",
+    "Local check-audit-premises helper is absent; premises and runtime evidence were inspected directly."
+  ],
+  "premiseVerification": {
+    "method": "Production route reproduction, matching Worker exception, provider settings reads, source inspection and tests",
+    "verifiedAt": "2026-09-22"
+  }
+}

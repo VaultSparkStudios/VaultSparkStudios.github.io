@@ -234,7 +234,8 @@ function loadLiveContextMeter() {
     const res = spawnSync(node, [path.join(__dirname, 'context-meter.mjs'), '--json'], {
       cwd: root, encoding: 'utf8', timeout: 5000,
     });
-    if (res.status === 0 && res.stdout) {
+    // Meter exit codes encode valid verdicts, including UNMEASURED (4).
+    if ([0, 2, 3, 4].includes(res.status) && res.stdout) {
       const meter = JSON.parse(res.stdout);
       return {
         live: true,
@@ -1351,7 +1352,7 @@ const lines = [
       : meter.recommendation === 'CONSIDER_CLOSEOUT' ? '⚠'
       : '✓';
     const liveTag = meter.confidence || (meter.live ? 'live' : 'heuristic');
-    const usedStr = meterUsed.toLocaleString();
+    const usedStr = meterUsed?.toLocaleString() ?? 'unmeasured';
     const limitStr = meter.limit.toLocaleString();
     // ── S363: a default is not a reading (CANON-031) ────────────────────────
     // The meter identifies the agent from context/.session-lock, and the closeout

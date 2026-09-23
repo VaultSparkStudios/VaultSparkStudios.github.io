@@ -154,9 +154,7 @@ test('an unanswered challenge times out after 12s with an actionable message', a
 // reuse). _onToken() both resolves the waiting caller AND caches the same token,
 // so the very next getToken() within 4 minutes is handed the consumed token —
 // e.g. a member who mistypes their password gets a CAPTCHA failure on retry.
-test('two sequential getToken() calls never hand out the same single-use token', {
-  todo: 'BUG assets/turnstile.js _onToken caches the token it just delivered; getToken() then re-serves it',
-}, async () => {
+test('two sequential getToken() calls never hand out the same single-use token', async () => {
   const { f } = await setup();
   try {
     await start(f.page);
@@ -169,5 +167,11 @@ test('two sequential getToken() calls never hand out the same single-use token',
     await settle(300);
     const second = await result(f.page);
     assert.ok(!second || second.t !== 'tok-1', `second caller received the consumed token: ${JSON.stringify(second)}`);
+    await callOpt(f.page, 'callback', 'tok-2');
+    await waitFor(async () => (await result(f.page)) !== null);
+    assert.deepEqual(await result(f.page), { ok: true, t: 'tok-2' });
   } finally { await f.close(); }
 });
+
+
+

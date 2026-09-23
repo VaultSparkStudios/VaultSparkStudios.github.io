@@ -63,6 +63,7 @@ const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(v
 const OPEN_NAV = argv.includes('--open-nav');
 const FOCUS_CHANGED = argv.includes('--focus-changed');
 const FOCUS_FOOTER = argv.includes('--footer');
+const FOCUS_DISPATCH = argv.includes('--dispatch');
 const FOCUS_CHANGELOG_REACTIONS = argv.includes('--changelog-reactions');
 
 const MIME = new Map([
@@ -160,10 +161,27 @@ async function main() {
             '/status/': '#liveSignalsGrid',
             '/news/': '.desk-story-card[href="/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"]',
           }[route] || (route.startsWith('/news/') ? '.desk-critique-link' : null);
-          const focusSelector = FOCUS_CHANGED ? changedSelector : null;
+          const focusSelector = FOCUS_DISPATCH ? '.desk-dispatch:has(form[data-dispatch])' : FOCUS_CHANGED ? changedSelector : null;
           if (focusSelector) {
             const focus = page.locator(focusSelector);
             await focus.waitFor({ state: 'visible', timeout: 5000 });
+            if (FOCUS_DISPATCH) {
+              // Settle long-article scrolling before measuring the complete signup section.
+              await page.addStyleTag({ content: 'html, body { scroll-behavior: auto !important; }' });
+              await page.evaluate(() => document.fonts.ready);
+              await focus.evaluate((node) => node.scrollIntoView({ behavior: 'instant', block: 'center' }));
+              let previous = null;
+              let stable = 0;
+              for (let attempt = 0; attempt < 30 && stable < 3; attempt += 1) {
+                await page.waitForTimeout(100);
+                const bounds = await focus.boundingBox();
+                if (!bounds) throw new Error('Dispatch section lost its rendered bounds');
+                const current = JSON.stringify(bounds);
+                stable = current === previous ? stable + 1 : 0;
+                previous = current;
+              }
+              if (stable < 3) throw new Error('Dispatch layout did not settle before capture');
+            }
             const images = focus.locator('img');
             for (let index = 0; index < await images.count(); index += 1) {
               await images.nth(index).evaluate(async (image) => {
@@ -257,7 +275,7 @@ function writeCanonReceipt(manifest) {
   const viewports = [...new Set(captures.map((capture) => capture.viewportName))].map((name) => VIEWPORT_PRESETS.find((viewport) => viewport.name === name));
   const states = [...new Set(captures.map((capture) => capture.state))];
   const sourceFiles = [
-    'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
     'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
     'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js', 'assets/changelog-reactions.js',

@@ -42,6 +42,7 @@ export function safeManifest(files) {
     .filter((file) => !SENSITIVE.test(file))
     .filter((file) => !/^(?:\.git|\.playwright-cli|node_modules|output|test-results|playwright-report|ignis\/output)(?:\/|$)/.test(file))
     .filter((file) => !/^\.tmp(?:-|\.|$)/.test(file))
+    .filter((file) => !/^\.cache\/staging-tmp(?:\/|$)/.test(file))
     .sort();
 }
 
@@ -79,7 +80,7 @@ function checked(result, label) {
 if (SELF_TEST) {
   const manifest = safeManifest([
     'index.html', '.well-known/llms.txt', 'assets/icon.png', '.env',
-    'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js',
+    'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js', '.cache/staging-tmp/previous.tgz',
     '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs', RECEIPT_REL,
   ]);
   const cases = [
