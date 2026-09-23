@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.",
+  "currentFocus": "S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.",
   "publicNote": "The status page continues to report edge availability as unmeasured. A sampler that could measure it is built and deployed, but it has no scheduler yet, so claiming coverage would be untrue.",
-  "nextMilestone": "Complete staging release checks, promote the Desk signup repair and verify served production behavior.",
+  "nextMilestone": "Monitor the deployed signup repair; improve article performance and verify one real confirmation only with explicit send authorization.",
   "blockers": [
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
     "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
@@ -261,5 +261,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "206c6218fdcd601e77ae28a6",
   "testsSourceFingerprint": "3f1361ba97719483a98491f5",
-  "lastSessionSummary": "S364 signup repair validated on staging; production release and real email delivery remain unverified at checkpoint."
+  "lastSessionSummary": "S364 signup repair deployed and production negative route verified; real email delivery unverified."
 }

@@ -6,10 +6,10 @@ Last updated: 2026-09-23 (S364: Desk signup release verification)
 
 - [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
 - [x] Restore the source-owned Turnstile secret on staging; verify negative response without sending mail.
-- [x] Push the signup repair and CI corrections to main; local build checks 505/505 and hosted end-to-end tests pass at ae29fe69b.
-- [x] Repair notebook empty/error footer layout shift and light badge contrast: 42 after-state captures across seven themes, CLS at most 0.0004 and contrast at least 5.85:1; hosted recheck pending.
-- [ ] Clear the article performance release gate (Lighthouse 0.86 versus 0.90); a scoped exception was requested but is not approved. Threshold unchanged.
-- [ ] Deploy the production Worker, provision its matching Turnstile secret, publish the static candidate, and verify the served repair.
+- [x] Push signup repair and CI corrections; hosted E2E and compliance pass at cf56856ce (505 repository checks).
+- [x] Repair notebook footer shift and badge contrast; LF-bound visual evidence and hosted CLS checks pass.
+- [ ] Improve article performance (latest Lighthouse 0.85 versus 0.90); founder approved this release exception on 2026-09-23. Threshold unchanged.
+- [x] Deploy production Worker and static candidate, install matching Turnstile secret, verify intended 403 validation response instead of 503.
 - [ ] Verify one real confirmation only after explicit email-send authorization; no email sent yet.
 ## Open — S362
 

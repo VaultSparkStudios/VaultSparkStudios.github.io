@@ -2636,3 +2636,7 @@ Also recorded rather than muted: the newsletter still shows six consecutive fail
 **Acceptance limits:** staging is verified for negative responses. A real automated challenge timed out; no email has been sent and no inbox delivery is claimed. This is a release checkpoint, not a claim that production is already repaired.
 
 **Follow-up committed:** [SIL] add a scheduled no-send public-form configuration probe so a missing challenge secret is visible before a visitor finds it. Do not introduce scheduled email sends.
+
+### S364 completion addendum — 2026-09-23
+
+Production repair completed after the founder’s scoped performance exception. Retain the recorded 888/1000 score; no score inflation from repeated checks. Hosted Linux exposed mixed local line endings in visual evidence: recapture from exact committed LF bytes before certifying portability. Existing performance and receipt-portability follow-ups remain on TASK_BOARD.

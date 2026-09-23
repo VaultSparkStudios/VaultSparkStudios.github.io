@@ -1,9 +1,12 @@
-# Latest Handoff — VaultSparkStudios.github.io
-## S364 — active release, 2026-09-23
+# Latest Handoff
 
-The Desk signup repair and CI corrections are pushed to main through ae29fe69b. Staging serves the fixed Worker and matching Turnstile secret; production still returns edge_handler_unavailable (503) and lacks that binding. No email has been sent.
+## Where We Left Off — S364 · 2026-09-23
 
-Owner: current Codex session. Acceptance: main contains repair; Worker and static production serve it; negative routes return intended errors. Successful confirmation delivery remains unverified pending explicit send authorization. Staging receipt cdf818d2dafa000fad476188, continuity f598f156a29ddd96b14ffa7c, candidate e20530fcf12a. Local build 505/505; hosted Secret Lint, full repository check, mobile contract, accessibility and end-to-end job pass. Hosted compliance then fails notebook empty/error footer CLS 0.0684 against 0.02 (repaired locally: CLS at most 0.0004, all light badges at least 5.85:1, hosted recheck pending). Article Lighthouse remains 0.86 against 0.90; scoped release exception requested, no approval received. No thresholds or identity hold were changed. Production promotion is pending.
+Session intent: repair Desk signup, commit/push main, fully deploy and close out.
+
+S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
+
+Worker 53a3be6e-b0e4-425b-8953-462127bbbea8; Pages run 35830977875 serves 353c8e17d98a6b75413ac01a209f51cbbcfa0b06. Hosted E2E/compliance green on cf56856ce; local 505/505 and mobile 215/215. Article Lighthouse 85/90 remains a follow-up under the founder’s explicit wrap-up/deploy direction. No threshold or identity hold changed. Existing rollback origins and staging lineage retained.
 
 ## Where We Left Off — S363 · 2026-09-20
 

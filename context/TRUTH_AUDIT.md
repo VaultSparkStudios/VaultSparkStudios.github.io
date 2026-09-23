@@ -1326,3 +1326,7 @@ A second, more general finding: **a green GitHub Actions run is not deploy evide
 ## S364 — Desk signup evidence boundary (2026-09-22)
 
 The production 503 was a real Worker exception, not a report-only Trusted Types warning. Staging now returns the intended protected validation responses after the code and widget-binding repair. The website-specific backend verifier passes 6/6 no-send checks. Unit tests verify successful forwarding using a controlled mock; that is not an actual email delivery. Real browser challenge automation timed out. Production promotion remains pending at this checkpoint.
+
+### S364 production truth — 2026-09-23
+
+S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified. Provider configuration checks pass 6/6 without sending. A 403 missing-token result proves error-path recovery and enforcement, not successful mail delivery.

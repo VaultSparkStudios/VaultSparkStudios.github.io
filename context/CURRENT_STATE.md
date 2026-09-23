@@ -1,14 +1,14 @@
 # Current State
 
-Last updated: 2026-09-22 (S364; release in progress)
+Last updated: 2026-09-23 (S364; production deployed)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
 
-## S364 — Desk signup repair (2026-09-22; release in progress)
+## S364 — Desk signup repair (2026-09-23; deployed)
 
-S364: repaired the Desk signup Worker response crash, restored the matching Turnstile secret on staging, stopped reuse of consumed browser tokens, and pinned the no-send verifier to the website project. Production promotion and successful confirmation delivery remain unverified.
+S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
 
-Production logging identified `JSON_HEADERS is not defined`. Sharing that constant fixes the error branches without changing CSRF or challenge enforcement. Staging now responds with `turnstile_token_missing` to a protected negative probe. The real automated challenge timed out, so no successful signup or email delivery is claimed. Unit suite: 270 tests, 268 passed, zero failed, two existing unrelated TODOs.
+Hosted E2E and compliance passed on cf56856ce, including 505 repository checks and notebook CLS. Mobile 215/215; visual evidence spans seven themes. The founder directed immediate deployment after disclosure of the article performance shortfall (85/100 against 90); this is a one-release exception, not a changed threshold.
 
 ## S363 A safety gate keyed on the wrong thing, and a propagation quietly took eight guards back (2026-09-20)
 

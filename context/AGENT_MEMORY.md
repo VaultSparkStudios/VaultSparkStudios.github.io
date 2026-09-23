@@ -29,3 +29,7 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 - Do not cache a challenge token already delivered to a pending caller.
 - Keep archive manifests stable while tar runs; staging temporary archives must not enter later release manifests.
 - No real email sent in S364 at the release checkpoint; automated challenge timed out.
+
+### S364 deployment completion
+
+Production Worker and static source deployed; protected signup returns intended 403 validation instead of 503. Receipt hashes must match Git LF bytes, not Windows mixed-line-ending working copies. Article performance exception is release-specific; the threshold remains 90. No real email sent.

@@ -1744,3 +1744,7 @@ Wired as a plain runner (it mutates a receipt and must never run inside the gate
 ## S364 — 2026-09-22 — Desk signup repair, release checkpoint
 
 The reported 503 was reproduced and traced to an out-of-scope JSON_HEADERS constant. Repaired the protected response branches, restored the matching widget secret on staging, prevented consumed-token reuse, and pinned the verifier to this website with explicit send controls. Validation: 270 unit tests, 268 passed, zero failed, two unrelated TODOs; provider no-send checks 6/6; staging negative route now gives the expected missing-token 403. Real automated challenge timed out. No confirmation email sent. Production release follows this checkpoint; no production success is claimed here.
+
+### S364 production completion — 2026-09-23
+
+S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified. Worker 53a3be6e-b0e4-425b-8953-462127bbbea8; Pages 35830977875. Approved one-release article performance exception; hosted E2E/compliance passed.

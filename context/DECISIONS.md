@@ -1939,3 +1939,7 @@ Share the JSON response headers across protected handlers; restore only the exis
 
 The full build stopped because the startup renderer accepted only exit zero from context-meter, although exits 2, 3 and 4 carry valid verdict JSON. It discarded UNMEASURED and substituted a file-byte estimate. Accept the documented verdict exits and avoid formatting null before the existing unmeasured branch. Local rendering and the unchanged freshness checker now agree on UNMEASURED; the gate was not weakened.
 
+
+## D-S364.3 — Scoped release exception and immediate completion (2026-09-23)
+
+After disclosure of the article Lighthouse gate (latest 85/100, required 90), the founder instructed: "you need to wrap up, closeout and deploy asap". Apply that direction as approval for this signup-repair release only. Preserve the 90 threshold and track the performance follow-up. E2E/compliance, secrets, staging and rollback checks remain required; no identity/security gate is weakened.
