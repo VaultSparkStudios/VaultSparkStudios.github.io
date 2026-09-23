@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T03:51:55.571Z",
+  "generatedAt": "2026-09-23T02:48:57.508Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 19 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 20 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -26,10 +26,10 @@
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-20T21:29:44.242Z",
-    "currentBehindStreak": 19,
-    "newestGradableAt": "2026-09-20T21:29:44.242Z",
-    "newestAgeHours": 6.4,
+    "lastStrandedAt": "2026-09-23T00:09:32.858Z",
+    "currentBehindStreak": 20,
+    "newestGradableAt": "2026-09-23T00:09:32.858Z",
+    "newestAgeHours": 2.7,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-21T03:51:14Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35558118420",
-      "headSha": "6e7d7f1abefe5f7a5849205339ad5b3aaba1e1d4",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-23T02:46:51Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35811709463",
+      "headSha": "b0f341f215221bbc032980dcec8407bbf166135a",
       "event": "push"
     },
     {
@@ -50,30 +50,30 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-09-21T03:38:47Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35558118462",
-      "headSha": "6e7d7f1abefe5f7a5849205339ad5b3aaba1e1d4",
+      "updatedAt": "2026-09-23T02:48:18Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35811709494",
+      "headSha": "b0f341f215221bbc032980dcec8407bbf166135a",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-09-21T03:43:15Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35558118527",
-      "headSha": "6e7d7f1abefe5f7a5849205339ad5b3aaba1e1d4",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-09-23T02:46:42Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35811709504",
+      "headSha": "b0f341f215221bbc032980dcec8407bbf166135a",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "unknown",
-      "rawStatus": "unknown",
-      "conclusion": null,
-      "updatedAt": null,
-      "url": null,
-      "headSha": null,
-      "event": null
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-09-23T02:47:15Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35811709500",
+      "headSha": "b0f341f215221bbc032980dcec8407bbf166135a",
+      "event": "push"
     }
   ],
   "scheduledWorkflows": [
@@ -157,40 +157,44 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-20T22:20:08Z",
+      "lastUpdatedAt": "2026-09-22T22:21:08Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.53,
+      "ageHours": 4.46,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-21T01:16:02Z",
+      "lastUpdatedAt": "2026-09-23T01:10:33Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.6,
+      "ageHours": 1.64,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-21T01:09:29Z",
+      "lastUpdatedAt": "2026-09-23T01:03:53Z",
       "recentConclusions": [
+        "success",
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.71,
+      "ageHours": 1.75,
       "staleAfterHours": 48
     },
     {
@@ -207,7 +211,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-21T03:43:39Z",
+      "lastUpdatedAt": "2026-09-23T02:43:29Z",
       "recentConclusions": [
         "success",
         "success",
@@ -216,7 +220,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.14,
+      "ageHours": 0.09,
       "staleAfterHours": 48
     },
     {
