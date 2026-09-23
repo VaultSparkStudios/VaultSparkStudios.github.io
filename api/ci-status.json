@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T02:48:57.508Z",
+  "generatedAt": "2026-09-23T02:53:43.838Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 20 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 20 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-23T02:46:42Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-23T02:53:05Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/35811709504",
       "headSha": "b0f341f215221bbc032980dcec8407bbf166135a",
       "event": "push"
@@ -165,7 +165,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.46,
+      "ageHours": 4.54,
       "staleAfterHours": 48
     },
     {
@@ -179,7 +179,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.64,
+      "ageHours": 1.72,
       "staleAfterHours": 48
     },
     {
@@ -194,7 +194,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.75,
+      "ageHours": 1.83,
       "staleAfterHours": 48
     },
     {
@@ -220,7 +220,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.09,
+      "ageHours": 0.17,
       "staleAfterHours": 48
     },
     {
