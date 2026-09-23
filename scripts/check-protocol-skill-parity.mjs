@@ -295,14 +295,25 @@ export function skillCovers(skillText, script) {
   return skillText.includes(script);
 }
 
-export function evaluate({ protocolText, bindings = BINDINGS, readSkill, controlPlane = isControlPlane() }) {
+export function isGithubActions(env = process.env) { return env.GITHUB_ACTIONS === 'true'; }
+
+export function evaluate({ protocolText, bindings = BINDINGS, readSkill, controlPlane = isControlPlane(), githubActions = false }) {
   const results = [];
+  let inspectedCopies = 0;
   for (const binding of bindings) {
     const body = sectionBody(protocolText, binding.heading);
     const mandated = mandatedScripts(body);
     for (const copy of skillCopies(binding.skill, { controlPlane })) {
       const text = readSkill(copy.file);
       if (text === null) {
+        // Hosted runners need not install workstation skills. Available copies
+        // and required tracked snapshots still undergo every registered gate.
+        if (githubActions && ['claude-live', 'codex-live'].includes(copy.role)) {
+          results.push({ section: binding.section, skill: binding.skill, copy: copy.role, file: copy.file,
+            script: null, status: 'not-applicable',
+            detail: 'GitHub Actions has no installed live skill copy; workstation parity was not measured' });
+          continue;
+        }
         results.push({
           section: binding.section, skill: binding.skill, copy: copy.role, file: copy.file,
           script: null, status: 'copy-missing',
@@ -310,6 +321,7 @@ export function evaluate({ protocolText, bindings = BINDINGS, readSkill, control
         });
         continue;
       }
+      inspectedCopies += 1;
       for (const script of mandated) {
         if (skillCovers(text, script)) continue;
         const gate = GATES[script];
@@ -342,6 +354,7 @@ export function evaluate({ protocolText, bindings = BINDINGS, readSkill, control
   }
   const gaps = results.filter((r) => r.status === 'gap');
   const missingCopies = results.filter((r) => r.status === 'copy-missing');
+  const notApplicableCopies = results.filter((r) => r.status === 'not-applicable');
   const exempt = results.filter((r) => r.status === 'exempt');
   const unclassified = results.filter((r) => r.status === 'unclassified');
   // Distinct script names, not per-copy rows — six copies of one unruled script is
@@ -354,34 +367,70 @@ export function evaluate({ protocolText, bindings = BINDINGS, readSkill, control
     unclassified,
     unclassifiedScripts,
     missingCopies,
+    notApplicableCopies,
     summary: {
       gapCount: gaps.length,
       exemptCount: exempt.length,
       missingCopyCount: missingCopies.length,
+      notApplicableCopyCount: notApplicableCopies.length,
+      githubActions,
       // Published so a reader can tell "clean" from "checked almost nothing".
       registeredGates: Object.keys(GATES).length,
       unclassifiedScriptCount: unclassifiedScripts.length,
       // S281: derived from the copies actually inspected, never a hardcoded 3 —
       // outside the control plane there are two roles, and a count that claimed
       // three would overstate coverage in exactly the repos with the least of it.
-      skillsChecked: bindings.reduce((n, b) => n + skillCopies(b.skill, { controlPlane }).length, 0),
+      skillsChecked: inspectedCopies,
+      skillsExpected: bindings.reduce((n, b) => n + skillCopies(b.skill, { controlPlane }).length, 0),
       copyRoles: bindings.length ? skillCopies(bindings[0].skill, { controlPlane }).map((c) => c.role) : [],
       controlPlane,
     },
   };
 }
 
+function selfTest() {
+  const bindings = [{ section: '§1', heading: /^## §1 — /, skill: 'studio-start', command: '/start' }];
+  const protocolText = '## §1 — Start\nRun scripts/start-canon-sync.mjs.\n';
+  const complete = 'Run scripts/start-canon-sync.mjs.';
+  const fixture = (options = {}) => evaluate({ protocolText, bindings, controlPlane: false, readSkill: () => null, ...options });
+  const local = fixture();
+  const ci = fixture({ githubActions: true });
+  const incomplete = fixture({ githubActions: true, readSkill: (file) => file.includes('.claude') ? 'no required gate' : null });
+  const compliant = fixture({ githubActions: true, readSkill: () => complete });
+  const missingSnapshot = fixture({ githubActions: true, controlPlane: true });
+  const badSnapshot = fixture({ githubActions: true, controlPlane: true, readSkill: (file) => file.includes(path.join('plugins', 'studio-os', 'skills')) ? 'no required gate' : null });
+  const localComplete = fixture({ readSkill: () => complete });
+  const cases = [
+    ['local missing live copies fail', !local.ok && local.missingCopies.length === 2 && local.notApplicableCopies.length === 0],
+    ['absent live copies explicitly not applicable on GitHub Actions', ci.ok && ci.notApplicableCopies.length === 2 && ci.summary.skillsChecked === 0],
+    ['available CI copy missing a gate fails', !incomplete.ok && incomplete.gaps.length === 1 && incomplete.summary.skillsChecked === 1],
+    ['compliant CI copies pass', compliant.ok && compliant.summary.skillsChecked === 2 && compliant.notApplicableCopies.length === 0],
+    ['missing tracked snapshot fails in CI', !missingSnapshot.ok && missingSnapshot.missingCopies.length === 1 && missingSnapshot.missingCopies[0].copy === 'tracked-snapshot'],
+    ['tracked snapshot missing a gate fails', !badSnapshot.ok && badSnapshot.gaps.some((gap) => gap.copy === 'tracked-snapshot')],
+    ['generic CI is not GitHub Actions', !isGithubActions({ CI: 'true' }) && !isGithubActions({ GITHUB_ACTIONS: 'false' }) && isGithubActions({ GITHUB_ACTIONS: 'true' })],
+    ['complete local copies pass', localComplete.ok && localComplete.summary.skillsChecked === 2],
+  ];
+  for (const [name, ok] of cases) console.log((ok ? 'PASS ' : 'FAIL ') + name);
+  if (cases.some(([, ok]) => !ok)) throw new Error('protocol skill parity fixture failed');
+  console.log('check-protocol-skill-parity --self-test: ' + cases.length + '/' + cases.length + ' passed');
+}
+
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(import.meta.filename);
-if (isMain) {
+if (isMain && process.argv.includes('--self-test')) {
+  try { selfTest(); } catch (error) { console.error(error.message); process.exitCode = 1; }
+} else if (isMain) {
   const readSkill = (file) => { try { return fs.readFileSync(file, 'utf8'); } catch { return null; } };
-  const report = evaluate({ protocolText: fs.readFileSync(PROTOCOL, 'utf8'), readSkill });
+  const report = evaluate({ protocolText: fs.readFileSync(PROTOCOL, 'utf8'), readSkill, githubActions: isGithubActions() });
 
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(report, null, 2));
   } else {
     console.log('Protocol ↔ skill parity (SESSION_PROTOCOL vs the SKILL.md that actually runs)');
     console.log('─'.repeat(72));
-    if (report.ok) {
+    for (const copy of report.notApplicableCopies) console.log('  N/A ' + copy.skill + ' [' + copy.copy + '] — ' + copy.detail);
+    if (report.ok && report.summary.skillsChecked === 0) {
+      console.log('Not applicable on this runner — no live skill copies inspected; workstation parity remains unmeasured.');
+    } else if (report.ok) {
       console.log(`✓ every registered gate present · ${report.summary.registeredGates} gate(s) × `
         + `${report.summary.skillsChecked} skill copies`);
     } else {

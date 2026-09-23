@@ -129,7 +129,7 @@ function baseEnv(kv = fakeKv()) {
   return {
     CSRF_SIGNING_KEY: 'unit-test-signing-key-not-a-secret',
     TURNSTILE_SECRET_KEY: 'unit-test-turnstile-not-a-secret',
-    SUPABASE_SERVICE_ROLE_KEY: 'unit-test-service-role-not-a-secret',
+    SUPABASE_SERVICE_ROLE_KEY: 'unit-test-service-role',
     RATE_LIMIT: kv,
   };
 }
