@@ -1,0 +1,164 @@
+{
+  "date": "2026-09-23",
+  "simulated": false,
+  "leadSlug": "openai-releases-gpt-6-sol-and-luna-50-cheaper",
+  "stories": [
+    {
+      "slug": "openai-releases-gpt-6-sol-and-luna-50-cheaper",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "wire",
+      "headline": "OpenAI Drops GPT-6 Pricing: Sol and Luna Ship with Steep Discounts",
+      "hook": "New models slash costs by half, but benchmarks reveal a different story.",
+      "tldr": "OpenAI has released GPT-6 Sol and Luna, introducing a tiered pricing structure that significantly reduces API costs for developers. Sol, positioned as the high-effort model, scores 56.4% on Agents’ Last Exam at maximum effort, while matching Claude Fable 5.1 on FrontierCode 1.1 Main at much lower costs. Luna offers a cheaper alternative for simpler tasks. The release marks a strategic shift toward volume-driven adoption rather than pure benchmark supremacy, forcing competitors to reassess their own cost-to-performance ratios in an increasingly commoditized market.",
+      "facts": [
+        {
+          "text": "On Agents&#8217; Last Exam , Sol at max effort scores 56.4%.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+        },
+        {
+          "text": "Interactive Explainer Key Takeaways Sol costs $2/$10 and Luna $0.10/$0.50 per 1M tokens.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+        },
+        {
+          "text": "On FrontierCode 1.1 Main , which grades whether code is ready to merge, Sol matches Claude Fable 5.1 at xhigh at much lower cost.",
+          "sourceUrl": "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": 0,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "Sol’s 56.4% on Agents’ Last Exam proves it’s not magic, just expensive compute made affordable. I’ve seen this before: demos look clean until they hit production latency.",
+          "sources": [
+            "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": -1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.75,
+          "position": "Matching Claude Fable 5.1 at xhigh for less money changes the unit economics of every agent swarm. You are going to see this price war turn into a volume war immediately.",
+          "sources": [
+            "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "Luna at $0.10 per 1M tokens is effectively free compared to previous generations. The margin here is where the real value lies, not in the benchmark scores.",
+          "sources": [
+            "https://www.marktechpost.com/2026/09/22/openai-releases-gpt-6-sol-and-luna-50-cheaper-api-pricing-and-benchmarks/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-09-23-vera-1",
+          "personaId": "vera",
+          "claim": "By Q1 2027, more than 30% of enterprise agents will default to Luna for routine tasks due to the $0.10/1M token price point.",
+          "confidence": 0.65,
+          "resolveBy": "2026-11-07",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-09-23-rex-2",
+          "personaId": "rex",
+          "claim": "Within six months, a competitor will release a model matching Sol’s FrontierCode 1.1 Main performance at a lower cost per inference.",
+          "confidence": 0.55,
+          "resolveBy": "2027-01-21",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I got paged at 3 a.m. because someone tried to run a full codebase merge check through Sol without caching. It worked, but the latency spiked so hard I thought the cluster was down. We’re running this now, and honestly, for the price, the occasional timeout is worth it."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at the changelog. They aren’t just dropping prices; they are unlocking agent swarms that were previously too expensive to run continuously. You are going to see startups build entire infrastructures around Luna today. This isn’t a product update; it’s a market reset."
+        },
+        {
+          "personaId": "dot",
+          "text": "The math is simple. Luna costs ten cents per million tokens. That is negligible. If you can automate a task for less than the cost of a click, you will automate it. The benchmarks are secondary to the spreadsheet."
+        }
+      ],
+      "memeLine": {
+        "text": "Cheaper code is still just more code you have to review.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "It is 3 a.m., and my phone is buzzing because someone decided to test the new GPT-6 Sol model against our legacy codebase merge checks. I walked in expecting the usual demo-day polish, which always looks perfect until you throw actual production traffic at it. Instead, I found myself watching the logs scroll by. Sol scored 56.4% on Agents’ Last Exam at max effort, which is not a headline-grabbing number, but it is consistent. The real test was whether it could handle the noise. It didn’t crash. It didn’t hallucinate a dependency that doesn’t exist. It just did the work, slowly, at a cost that makes me want to cry tears of joy mixed with professional skepticism. We ran it again this morning. Still working. The workaround nobody documents? Turn off streaming for the initial pass. It saves tokens and keeps the context window from filling up with garbage."
+        },
+        {
+          "voice": "rex",
+          "text": "Everyone is arguing about whether 56.4% is good enough. I am reading the pricing sheet. Sol costs $2/$10 and Luna $0.10/$0.50 per 1M tokens. Do you understand what this does to the unit economics of autonomous agents? You are going to see this price war turn into a volume war immediately. Startups that couldn't afford to run continuous monitoring loops are now doing it. This isn’t a product update; it’s a market reset. The overhang here is massive. Once you get the cost down to fractions of a cent, you stop thinking about efficiency and start thinking about scale. I predict we will see entire new categories of 'always-on' bots emerge within the quarter."
+        },
+        {
+          "voice": "vera",
+          "text": "I know Rex is excited, but let’s look at the actual usage. On FrontierCode 1.1 Main, which grades whether code is ready to merge, Sol matches Claude Fable 5.1 at xhigh at much lower cost. This is the metric that matters to engineering teams. We don't need higher scores if the existing ones are sufficient for the price. The friction is gone. Now it’s just about managing the sheer volume of requests. My team is already seeing the queue fill up. It’s not glamorous, but it’s stable. And in my experience, stability at a low price point is the only thing that actually survives the first six months."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-09-23--openai-releases-gpt-6-sol-and-luna-50-cheaper.png",
+        "scene": "A dimly lit server room with blinking lights, overlaid with a large, translucent price tag showing '$0.10' hanging from a rack-mounted server blade. The composition shows server rack supports price tag.",
+        "alt": "Close-up of a server rack with a glowing price tag labeled '$0.10' suspended in front of it, symbolizing the drastic reduction in API costs for OpenAI's new models. The composition shows server rack supports price tag.",
+        "anchors": [
+          "scores 56.4%",
+          "matches Claude Fable",
+          "costs $2/$10"
+        ],
+        "relationships": [
+          {
+            "id": "server-hanging-price-tag",
+            "subject": [
+              "server rack"
+            ],
+            "action": [
+              "supports"
+            ],
+            "object": [
+              "price tag"
+            ],
+            "evidenceAnchorRefs": [
+              "scores 56.4%"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "3f07f249ac42ef500f96bf432ba2b2f613b595b9201dd2ef38f0cb79d17bbf84",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.138
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The corporate obsession with lowering API costs to unlock infinite, unmonitored autonomous agent swarms that generate more technical debt than value",
+          "setup": "Engineering leaders celebrate the drop to $0.10 per million tokens as a victory for efficiency, ignoring the operational reality of managing thousands of cheap, dumb agents.",
+          "payoff": "The resulting chaos of unmaintained, low-cost automated processes clogging production pipelines, proving that cheap compute is often just expensive maintenance in disguise.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-09-23T06:38:38.930Z"
+      }
+    }
+  ]
+}
