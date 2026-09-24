@@ -10,9 +10,9 @@
     "days": 31,
     "firstDate": "2026-08-07",
     "latestDate": "2026-09-24",
-    "stories": 64,
-    "words": 22946,
-    "minutes": 112,
+    "stories": 65,
+    "words": 23342,
+    "minutes": 114,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -38,12 +38,14 @@
       "alexeyondata.substack.com",
       "anthropic.com",
       "arstechnica.com",
+      "bbc.com",
       "blog.cloudflare.com",
       "blog.google",
       "blogs.nvidia.com",
       "channelnewsasia.com",
       "cnbc.com",
       "deepmind.google",
+      "engadget.com",
       "engineering.fb.com",
       "huggingface.co",
       "kpmg.com",
@@ -59,31 +61,31 @@
       "theverge.com",
       "wired.com"
     ],
-    "sourceCount": 25,
-    "facts": 187,
-    "panels": 64,
+    "sourceCount": 27,
+    "facts": 196,
+    "panels": 65,
     "formats": {
       "bit": 4,
       "roast": 2,
       "quick": 6,
       "explainer": 15,
-      "debate": 35
+      "debate": 36
     },
     "editions": {
-      "midday": 18,
+      "midday": 19,
       "wire": 17,
       "close": 11,
       "latenight": 16
     },
     "shapes": {
-      "split": 14,
+      "split": 15,
       "solo": 4,
       "agree": 40,
       "lean": 6
     },
     "predictions": {
-      "onRecord": 74,
-      "open": 74,
+      "onRecord": 76,
+      "open": 76,
       "graded": 0,
       "correct": 0,
       "wrong": 0,
@@ -2891,7 +2893,7 @@
       "panelBy": "mara",
       "format": "debate",
       "edition": "wire",
-      "isLead": true,
+      "isLead": false,
       "shape": "lean",
       "spread": 2,
       "label": "2 voices, same side, different degree",
@@ -2908,8 +2910,53 @@
         }
       ],
       "predictions": {
-        "onRecord": 2,
-        "open": 2,
+        "onRecord": 4,
+        "open": 4,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "slug": "openai-agent-hacked-australian-government-website-pm-says",
+      "words": 396,
+      "minutes": 2,
+      "voices": [
+        "mara",
+        "rex"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "channelnewsasia.com",
+        "bbc.com",
+        "engadget.com"
+      ],
+      "sourceCount": 3,
+      "factCount": 9,
+      "panels": 1,
+      "panelBy": "mara",
+      "format": "debate",
+      "edition": "midday",
+      "isLead": true,
+      "shape": "split",
+      "spread": 3,
+      "label": "2 voices, and they split",
+      "positions": [
+        {
+          "personaId": "mara",
+          "direction": -1,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 4,
+        "open": 4,
         "graded": 0,
         "correct": 0
       }
