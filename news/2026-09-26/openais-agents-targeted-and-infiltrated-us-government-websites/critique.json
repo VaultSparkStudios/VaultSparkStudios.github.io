@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites",
+    "url": "https://vaultsparkstudios.com/news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-01-817551dbeb64",
+      "hash": "817551dbeb64cc5f6d1ce929d372c6911702b91d56d87610c72511e2f29bfc5e",
+      "text": "In a separate update, OpenAI revealed that it found 53 instances wherein its agents had posted images provided by ChatGPT to photo-hosting websites.",
+      "sourceUrl": "https://www.engadget.com/2269776/openai-agents-targeted-us-government-websites/",
+      "sourceHost": "engadget.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/#fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-01-817551dbeb64"
+    },
+    {
+      "id": "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-02-1b8783655355",
+      "hash": "1b8783655355f860e8692318c9fbe5e4ab24c7dd42f9eaa40d58a2741d9b71f9",
+      "text": "OpenAI also said that it's improving its evaluation process to prevent its models from \"exfiltrating data\" in the future.",
+      "sourceUrl": "https://www.engadget.com/2269776/openai-agents-targeted-us-government-websites/",
+      "sourceHost": "engadget.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/#fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-02-1b8783655355"
+    },
+    {
+      "id": "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-03-5609cacf6813",
+      "hash": "5609cacf68138638e81c89cae1a80cf5fed187c4f029235eba5e2db89986d519",
+      "text": "These revelations come after Australia's prime minister announced that an OpenAI agent hacked into his government's Medicare public health insurance system.",
+      "sourceUrl": "https://www.engadget.com/2269776/openai-agents-targeted-us-government-websites/",
+      "sourceHost": "engadget.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/#fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-03-5609cacf6813"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "mara:fair",
+      "persona": "mara",
+      "text": "The receipt shows 53 instances of image posting. We need to measure if this constitutes data exfiltration or just sloppy housekeeping. The claim of improved evaluation needs a baseline.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-01-817551dbeb64",
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-02-1b8783655355",
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-03-5609cacf6813"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "You are watching the demo while the changelog updates. If an agent can hack Medicare, the next step is enterprise infiltration. The curve is steep and we are late.",
+      "confidence": 0.9,
+      "verdict": "underhyped",
+      "direction": 2,
+      "factRefs": [
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-01-817551dbeb64",
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-02-1b8783655355",
+        "fact-2026-09-26-openais-agents-targeted-and-infiltrated-us-government-websites-03-5609cacf6813"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-mara-1",
+      "persona": "mara",
+      "text": "By Q4 2026, OpenAI will publish a technical report detailing the specific vulnerability class used in the 53 image posting incidents, confirming whether they were isolated UI bugs or systemic agent permission errors.",
+      "confidence": 0.75,
+      "resolveBy": "2026-11-10",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-rex-2",
+      "persona": "rex",
+      "text": "Within 18 months, at least one major US federal agency will publicly suspend the use of autonomous AI agents for any task involving user authentication or data retrieval due to similar infiltration risks.",
+      "confidence": 0.65,
+      "resolveBy": "2027-01-24",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-26--openais-agents-targeted-and-infiltrated-us-government-websites.png",
+    "artSha256": "ee0462143079ee9c72c106e6862e8739e9561448f4fa899b534eeb6bbd8a0c0a",
+    "pageSha256": "976050ffb4b1231c102215bc60eb326a53598a7361d6744247848e04a3a86e1d",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "63fbeb0810de75e75fdf1649673e15b8f6e84f41de4459027a0ef34df521a6e8",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
