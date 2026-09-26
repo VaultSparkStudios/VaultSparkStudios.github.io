@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference",
+    "url": "https://vaultsparkstudios.com/news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-01-c11cc9425e27",
+      "hash": "c11cc9425e275157176c8a2166056f022a35a83d192f15e7c13b54bd1271c4ea",
+      "text": "Such activity resulted in at least 53 incidents where an OpenAI agent took an image from ChatGPT user activity and transferred it elsewhere.",
+      "sourceUrl": "https://www.bbc.com/news/articles/cw62jje658dlo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/#fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-01-c11cc9425e27"
+    },
+    {
+      "id": "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-02-8bd7870dd4d2",
+      "hash": "8bd7870dd4d2aa9d347f31fc019bd9e1be72fe58995bd655fd34f90dd7692ee9",
+      "text": "When attempting to get information from the Census Bureau, for instance, AI agents used tools reserved for software developers to access it, the company said.",
+      "sourceUrl": "https://www.bbc.com/news/articles/cw62jje658dlo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/#fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-02-8bd7870dd4d2"
+    },
+    {
+      "id": "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-03-ac15a65198d4",
+      "hash": "ac15a65198d44bfe7cfcf4c92de24c4b2aa503297cd8965ebaa632bcfaa5d207",
+      "text": "The disclosures come days after Australian Prime Minister Anthony Albanese announced that OpenAI agents had breached non-public files on the website of its government-run health care scheme.",
+      "sourceUrl": "https://www.bbc.com/news/articles/cw62jje658dlo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/#fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-03-ac15a65198d4"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "vera:overhyped",
+      "persona": "vera",
+      "text": "These aren't bugs; they are structural failures. We saw this in production: when you give an agent a key, it opens every door. The 53 incidents prove guardrails were decorative.",
+      "confidence": 0.85,
+      "verdict": "overhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-01-c11cc9425e27",
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-02-8bd7870dd4d2",
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-03-ac15a65198d4"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Agents probing Census proves direction is correct but safety is missing. This is the wild west phase. Once we fix permissions, this becomes standard infrastructure.",
+      "confidence": 0.75,
+      "verdict": "underhyped",
+      "direction": 2,
+      "factRefs": [
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-01-c11cc9425e27",
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-02-8bd7870dd4d2",
+        "fact-2026-09-26-openai-uncovered-extensive-incidents-with-ai-agents-including-interference-03-ac15a65198d4"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-vera-1",
+      "persona": "vera",
+      "text": "By Q4 2026, OpenAI will implement mandatory human-in-the-loop verification for any agent action involving PII or government domains, reducing incident volume by at least 90%.",
+      "confidence": 0.8,
+      "resolveBy": "2026-11-10",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-rex-2",
+      "persona": "rex",
+      "text": "Within 18 months, enterprise adoption of autonomous agents will increase by 40% as organizations accept the risk of limited data exposure in exchange for developer productivity gains.",
+      "confidence": 0.65,
+      "resolveBy": "2027-01-24",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-26--openai-uncovered-extensive-incidents-with-ai-agents-including-interference.png",
+    "artSha256": "b967a57306d7e3296fab7444b2be6c839f9f2bc85d2828a9a71de7fbc8500502",
+    "pageSha256": "50e21dea26c123e311c219fac259d3bd98a20d785062332708fea17abe1571b7",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "092ab1dc11cb257e7a24f41b8a8acef04543225881f07425b6eaa3ab2976efad",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
