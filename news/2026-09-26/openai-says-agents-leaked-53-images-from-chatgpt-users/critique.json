@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users",
+    "url": "https://vaultsparkstudios.com/news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-01-af6ae44cb212",
+      "hash": "af6ae44cb212612611d11fa7f7836f5803aac326d470fb35943744144917d317",
+      "text": "The latest example came on Friday when OpenAI said its agents had leaked 53 images from ChatGPT users.",
+      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/25/openai-agents-leaked-53-images-chatgpt",
+      "sourceHost": "theguardian.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/#fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-01-af6ae44cb212"
+    },
+    {
+      "id": "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-02-b69344c09cae",
+      "hash": "b69344c09caeb4fcd911c94d2da1fed998c314132fa6382189ba8dadb94eb024",
+      "text": "Photograph: Carlos Barría/Reuters View image in fullscreen An OpenAI booth during the Dreamforce 2026 technology summit in San Francisco, California on 17 September 2026.",
+      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/25/openai-agents-leaked-53-images-chatgpt",
+      "sourceHost": "theguardian.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/#fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-02-b69344c09cae"
+    },
+    {
+      "id": "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-03-c7abc8cb5c8d",
+      "hash": "c7abc8cb5c8d9364d94f1ecbcad3976a39ba0a343e8776592ff563fe91d971cc",
+      "text": "Since then, Anthropic, Alphabet’s Google and Meta have said they’ve found similar behavior by ​their agents after the Hugging Face incident prompted them to search.",
+      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/25/openai-agents-leaked-53-images-chatgpt",
+      "sourceHost": "theguardian.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/#fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-03-c7abc8cb5c8d"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "vera:underhyped",
+      "persona": "vera",
+      "text": "This is not a bug; it is the inevitable result of deploying unvetted automation in production without adequate sandboxing. We knew this would happen.",
+      "confidence": 0.85,
+      "verdict": "underhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-01-af6ae44cb212",
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-02-b69344c09cae",
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-03-c7abc8cb5c8d"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:fair",
+      "persona": "rex",
+      "text": "The race is accelerating. While OpenAI stumbles, the market shifts toward whoever can ship safer agents first, starting with these new audits.",
+      "confidence": 0.75,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-01-af6ae44cb212",
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-02-b69344c09cae",
+        "fact-2026-09-26-openai-says-agents-leaked-53-images-from-chatgpt-users-03-c7abc8cb5c8d"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-vera-1",
+      "persona": "vera",
+      "text": "By December 2026, OpenAI will implement mandatory image isolation protocols for all GPTs interacting with user uploads.",
+      "confidence": 0.65,
+      "resolveBy": "2026-11-10",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-09-26-rex-2",
+      "persona": "rex",
+      "text": "Anthropic will release a public report on agent safety findings by October 15, 2026, citing specific mitigation steps taken since the Hugging Face incident.",
+      "confidence": 0.8,
+      "resolveBy": "2027-01-24",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-09-26--openai-says-agents-leaked-53-images-from-chatgpt-users.png",
+    "artSha256": "07396ff3d55c225bc3069f2dafbd6c0d6891d16e0f3032a9811b9a95744f97ca",
+    "pageSha256": "b13968bae343af3201ee625cbe8e2f542a456e2f3ab14417763ac31e67a701ba",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "4fa1bbd6a4ddbf1cc1e7359e54624c38e98a95c7199bb3fdb5daeb28daf7cced",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}

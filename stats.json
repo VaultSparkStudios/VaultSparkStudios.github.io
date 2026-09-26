@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-26T06:18:42.786Z",
+  "generatedAt": "2026-09-26T06:35:39.949Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -111,10 +111,10 @@
     {
       "id": "news-stories",
       "label": "Desk stories",
-      "value": 71,
+      "value": 72,
       "unitOrDenominator": "published editorial stories",
       "period": "all published editions",
-      "computedAt": "2026-09-25T00:00:00.000Z",
+      "computedAt": "2026-09-26T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -123,11 +123,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-25T00:00:00.000Z",
+      "observedThrough": "2026-09-26T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "213 sourced facts across 71 stories; prediction accuracy remains withheld until the sample earns it."
+      "interpretation": "216 sourced facts across 72 stories; prediction accuracy remains withheld until the sample earns it."
     },
     {
       "id": "forge-projects",
@@ -153,10 +153,10 @@
     {
       "id": "sourced-facts",
       "label": "Sourced Desk facts",
-      "value": 213,
+      "value": 216,
       "unitOrDenominator": "source-linked factual claims",
       "period": "all published editions",
-      "computedAt": "2026-09-25T00:00:00.000Z",
+      "computedAt": "2026-09-26T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -165,7 +165,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-25T00:00:00.000Z",
+      "observedThrough": "2026-09-26T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
@@ -177,7 +177,7 @@
       "value": 72,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-09-26T06:18:42.786Z",
+      "computedAt": "2026-09-26T06:35:39.949Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -186,7 +186,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-26T06:18:42.786Z",
+      "observedThrough": "2026-09-26T06:35:39.949Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -233,7 +233,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-09-26T06:18:42.786Z",
+      "computedAt": "2026-09-26T06:35:39.949Z",
       "values": {
         "fresh": 13,
         "stale": 5,
@@ -242,10 +242,10 @@
     },
     "deskRecord": {
       "source": "/api/news-desk-stats.json",
-      "computedAt": "2026-09-25T00:00:00.000Z",
+      "computedAt": "2026-09-26T00:00:00.000Z",
       "values": {
-        "stories": 71,
-        "facts": 213,
+        "stories": 72,
+        "facts": 216,
         "sources": 27,
         "predictionsGraded": 0
       }
