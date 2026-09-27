@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-23T07:56:53.824Z",
+  "generatedAt": "2026-09-27T04:23:50.935Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -23,7 +23,7 @@
   },
   "pulse": {
     "currentSession": 364,
-    "lastUpdated": "2026-09-23",
+    "lastUpdated": "2026-09-27",
     "currentFocus": "S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.",
     "nextMilestone": "Monitor the deployed signup repair; improve article performance and verify one real confirmation only with explicit send authorization.",
     "blockers": [
@@ -33,7 +33,8 @@
       "Human signup acceptance, newsletter arming, Desk cadence, public-member-data and immutable warm-origin choices remain unobserved or undecided.",
       "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
       "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
-      "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
+      "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
+      "124 open PRs on this repo (#4 through #130, oldest opened 2026-06-16), none merged or closed. The scheduled CANON-041/SEO routine's own stop-first gate ('do not open another PR while one is open') has been correctly firing and blocking every run since, so no new automated PRs have landed since #130 (2026-09-17), but the routine also cannot make further progress until this is triaged. Several open PRs touch overlapping mobile-nav CSS (#100, #102, #114, #116, #119, #121, #124, #127) and may conflict or duplicate each other. Ark transport to studio-ops is unreachable from this checkout (no sibling repo present, GitHub access scoped to this repo only), so this could not be shipped as cargo — recorded here instead. CANON-019 preflight run before writing this: `check-secrets.mjs --for github --json` returns `map-absent` (CAPABILITY_MAP.json lives only in the studio-ops sibling, unreachable here — same class as the Ark shim, not a credential gate) and `ops.mjs blocker-preflight` reports 0 open Human Action Required items (this entry deliberately avoids that literal tag). This is not a hardware-key/billing/destructive-op human-only gate — the agent has working GitHub write access to this repo and a safe triage path exists (merge clean, conflict-free PRs first; dedupe/close superseded ones among the mobile-nav-CSS group named above). Held pending an explicit go-ahead in-session instead, because merging dozens of unreviewed PRs into a live production site's history is a large, hard-to-reverse, shared-system action under this session's own operating rules, independent of CANON-019 — asked the live user directly; proceeding once granted."
     ],
     "queues": {
       "now": [
