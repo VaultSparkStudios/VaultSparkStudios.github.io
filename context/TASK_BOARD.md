@@ -1,6 +1,10 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-23 (S364: Desk signup release verification)
+Last updated: 2026-09-27 (scheduled routine: PR backlog blocker logged)
+
+## 2026-09-27 — scheduled routine blocker
+
+- [ ] **[OPS/P1] 124 open PRs, none merged or closed, oldest from 2026-06-16 (#4) through 2026-09-17 (#130).** The scheduled CANON-041/SEO routine's stop-first gate requires exactly one open PR at a time and has been correctly refusing to open a 125th every run since — so the routine itself has been silently idle for months while the review/merge step never happened. Several open PRs touch the same mobile-nav CSS (#100, #102, #114, #116, #119, #121, #124, #127) and risk conflicting with or duplicating each other the longer they sit. Ark transport to studio-ops is unreachable from this checkout (no `vaultspark-studio-ops` sibling present, GitHub scope limited to this repo), so this could not be shipped as cargo — logged here and in `PROJECT_STATUS.json.blockers` instead. Needs a human triage pass: merge or close, oldest first, watching for cross-PR conflicts in the mobile-nav files.
 
 ## S364 — requested signup repair
 
