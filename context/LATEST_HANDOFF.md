@@ -1,4 +1,6 @@
-# Latest Handoff## Where We Left Off — S365 · 2026-09-29
+# Latest Handoff
+
+## Where We Left Off — S365 · 2026-09-29
 
 **Session intent:** `/arc` on the public website, with direct main commits and staging-first production deployment already authorized.
 
@@ -8,7 +10,8 @@ Staging receipt `eb48a702c8d5cf87b330e334` is served and verified at depth 87; t
 
 Next: monitor the next three article Lighthouse runs. Fix staging-deploy continuity sequencing so a ceremony started immediately after deploy cannot read the prior summary. Real signup email delivery remains unverified and still requires explicit send authorization.
 
-Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle sanitization drift and rotated the work log at its size cap. The full build gate must finish on this final tree before closing the session.
+Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle sanitization drift and rotated the work log at its size cap. The full build gate passed 505/505 twice before closeout. The automated late-night Desk edition landed on main after this content release; it is a new candidate for the next staging-first promotion, not part of production content head `c46f22fa36d52901e505f2a99433cef9276fbbd0`.
+
 ## Where We Left Off — S364 · 2026-09-23
 
 Session intent: repair Desk signup, commit/push main, fully deploy and close out.

@@ -10,6 +10,7 @@ Last updated: 2026-09-29 (S365: Desk source integrity and article release)
 - [ ] **[S365][CI/P2]** Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
 - [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
 - [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.
+- [ ] **[S365][DESK/P3]** Decode literal HTML entities in a few older Desk source-receipt excerpts (`&#x27;`, `&#8217;`), then regenerate and visually verify those pages. The S365 post-edition visual matrix exposed the artifacts in mobile source cards.
 ## S364 — requested signup repair
 
 - [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
