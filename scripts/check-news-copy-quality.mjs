@@ -175,7 +175,7 @@ export const ACRONYMS = new Set([
   'TLS', 'VPN', 'XSS', 'CSP', 'DNS', 'SSO', 'MFA', 'PQC', 'TBA',
   // Brands whose own house style is all-caps — flagging these reads as noise.
   'NVIDIA', 'IBM', 'AMD', 'ARM', 'TSMC', 'HBM', 'PCIE', 'DDR', 'SRAM', 'DRAM',
-  'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM',
+  'CUDA', 'ROCM', 'MLPERF', 'NASA', 'DARPA', 'MIT', 'IEEE', 'ACM', 'UNCTAD',
 ]);
 
 /** Brands and identifiers that legitimately begin a sentence in lowercase. */
@@ -461,12 +461,32 @@ export function checkText(text) {
   return RULES.flatMap((rule) => rule.run(text).map((f) => ({ rule: rule.id, ...f })));
 }
 
+/** Publisher navigation and promotions are never evidence for an article claim. */
+export function sourceChromeReason(text) {
+  const value = String(text || '');
+  if (/\b\d{1,2}\s+hours?\s+ago\b.{0,130}\b(?:In Brief|Latest in AI)\b/i.test(value)) return 'related-story navigation';
+  if (/\b(?:Get 50% off a second pass|TechCrunch Events View Bio)\b/i.test(value)) return 'publisher event promotion';
+  return null;
+}
+
 /** Pure: days → findings, each located by file + story + field. */
 export function evaluateCorpus(days) {
   const findings = [];
   for (const day of days || []) {
     if (day?.simulated === true) continue;
     for (const story of day.stories || []) {
+      for (const [index, fact] of (story.facts || []).entries()) {
+        const reason = sourceChromeReason(fact?.text);
+        if (reason) findings.push({
+          file: `data/news-desk/days/${day.date}.json`,
+          date: day.date,
+          story: story.slug || '?',
+          field: `facts[${index}].text`,
+          rule: 'source-page-chrome',
+          detail: `${reason} cannot be a cited fact`,
+          text: fact.text,
+        });
+      }
       for (const { field, text } of readerFacingFields(story)) {
         for (const f of checkText(text)) {
           findings.push({
@@ -496,6 +516,16 @@ function selfTest() {
   const clean = (text) => checkText(text).length === 0;
 
   const cases = [
+    ['related-story metadata is refused as a cited fact', () =>
+      sourceChromeReason('Anthony Ha 11 hours ago Latest in AI In Brief Anthropic meets Trump Anthony Ha 10 hours ago') === 'related-story navigation'],
+    ['publisher event promotion is refused as a cited fact', () =>
+      sourceChromeReason('TechCrunch Events View Bio October 13. Get 50% off a second pass.') === 'publisher event promotion'],
+    ['legitimate sourced prose survives the chrome rule', () =>
+      sourceChromeReason('Axios first reported the meeting, and TechCrunch confirmed it with a source familiar with the plans.') === null],
+    ['the corpus gate locates a bad fact in its original story', () => {
+      const found = evaluateCorpus([{ date: '2026-09-28', stories: [{ slug: 'test-story', facts: [{ text: 'Anthony Ha 11 hours ago In Brief Another story' }] }] }]);
+      return found.some((f) => f.rule === 'source-page-chrome' && f.field === 'facts[0].text' && f.story === 'test-story');
+    }],
     // ── Each rule fires ──
     ['THE LIVE CASE: "biowepon" in a story hook is caught',
       () => fires('misspelling', 'Moonshot routed 300k requests, revealing a scaled biowepon misuse vector.')],

@@ -116,8 +116,14 @@ function decodeJwtPayload(token) {
   }
 }
 
-function isKnownPublicToken(line, matched, pat) {
+function isKnownPublicToken(line, matched, pat, relPath) {
   if (line.includes('sb_publishable_')) return true;
+
+  // Editorial fact IDs and visual receipt filenames are dated public slugs.
+  // A 40-character slice of one can trip the generic Cloudflare-token probe.
+  if (pat.type === 'cf-maybe'
+      && /^(?:api\/news-desk-claims\.ndjson|docs\/visual-qa\/LATEST\.json|news\/)/.test(relPath.replace(/\\/g, '/'))
+      && /^(?:(?:fact|news)-|-)?20\d{2}-\d{2}-\d{2}-[a-z0-9-]{12,}$/i.test(matched)) return true;
 
   if ((pat.type === 'aws-maybe' || pat.type === 'cf-maybe') &&
       (line.includes('sha256-') || line.includes('sha384-') || line.includes('sha512-') || line.includes('"integrity"'))) {
@@ -149,7 +155,7 @@ function scanContent(relPath, content) {
       if (!match) continue;
 
       const matched = match[0];
-      if (isKnownPublicToken(line, matched, pat)) continue;
+      if (isKnownPublicToken(line, matched, pat, relPath)) continue;
 
       // Entropy gate for low-confidence patterns
       if (pat.needsEntropy) {

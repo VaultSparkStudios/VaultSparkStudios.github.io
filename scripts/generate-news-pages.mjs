@@ -200,9 +200,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, community = false }) {
+function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, community = false, heroPreload = null }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${community ? '<link rel="stylesheet" href="/assets/desk-comments.css">' : ''}${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${heroPreload ? `<link rel="preload" as="image" href="${escapeHtml(heroPreload)}" type="image/avif" fetchpriority="high">` : ''}<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${community ? '<link rel="stylesheet" href="/assets/desk-comments.css">' : ''}${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -847,6 +847,7 @@ function buildStoryPage(day, story) {
     description: metaDescription(story),
     canonical: supersededUrl || url,
     ogImage: image,
+    heroPreload: isFallbackArt(story) ? null : `/assets/og/news/${day.date}--${story.slug}--meme.avif`,
     depth: '../../../',
     noindex: !!day.simulated || !!supersededUrl,
     breadcrumb: breadcrumbFor([

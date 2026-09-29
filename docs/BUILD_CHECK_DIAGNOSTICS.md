@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-09-23T07:56:48.001Z
-Receipt: `b62bb27e7c889982de0e79d7` · coverage 505/505 from step 1
+Generated: 2026-09-29T00:32:03.610Z
+Receipt: `19a2df55ca3fb63b2b432201` · coverage 179/505 from step 327
 
-Latest: **505/505** passed · failed 0 · total 171.2s
-Concentration: **9.4%** in step 145 · ratchet clear (>30% and ≥45s)
+Latest: **179/179** passed · failed 0 · total 379.0s
+Concentration: **12.8%** in step 481 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 145 | 16.2s | 0 | `node scripts/check-proof-surface.mjs` |
-| 481 | 12.7s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
-| 104 | 10.4s | 0 | `node --test tests/provision-desk-turnstile.unit.spec.js tests/desk-signup-route.unit.spec.js tests/deploy-desk-dispatch.unit.spec.js tests/founder-presence-absent.unit.spec.js tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js tests/tt-report-only.unit.spec.js tests/resync-derived.unit.spec.js tests/local-preview.unit.spec.js tests/studio-pulse.unit.spec.js tests/desk-wire.unit.spec.js tests/desk-comments.unit.spec.js tests/consent-analytics.unit.spec.js tests/theme-toggle.unit.spec.js tests/nav-toggle.unit.spec.js tests/csrf-token.unit.spec.js tests/turnstile.unit.spec.js tests/page-feedback-payload.unit.spec.js tests/desk-presence.unit.spec.js tests/public-contract-libs.unit.spec.js tests/shell-assets.unit.spec.js` |
-| 99 | 7.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 60 | 6.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 262 | 4.2s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 250 | 4.2s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 388 | 3.7s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
-| 479 | 3.2s | 0 | `node scripts/generate-news-art.mjs --self-test` |
-| 95 | 2.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 481 | 48.3s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
+| 388 | 42.5s | 0 | `node scripts/check-postbuild-ordering.mjs --self-test` |
+| 402 | 16.7s | 0 | `node scripts/check-build-gate-reachability.mjs` |
+| 384 | 13.0s | 0 | `node scripts/check-mobile-runtime-contract.mjs` |
+| 479 | 9.7s | 0 | `node scripts/generate-news-art.mjs --self-test` |
+| 417 | 6.2s | 0 | `node scripts/check-recovery-process-contract.mjs` |
+| 355 | 4.6s | 0 | `node scripts/check-hero-lcp-element.mjs` |
+| 367 | 4.2s | 0 | `node scripts/check-visual-review-receipt.mjs` |
+| 478 | 3.8s | 0 | `node scripts/generate-news-art-codex.mjs --self-test` |
+| 359 | 3.8s | 0 | `node scripts/check-orphan-libs.mjs --check` |
 
 ## Failures
 

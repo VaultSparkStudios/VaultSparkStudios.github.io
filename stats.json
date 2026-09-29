@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-29T01:27:31.668Z",
+  "generatedAt": "2026-09-29T01:37:07.826Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -34,7 +34,7 @@
       "value": 21,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-09-23T02:04:07.493Z",
+      "computedAt": "2026-09-29T01:34:35.448Z",
       "source": "/api/ecosystem-state.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/ecosystem-state.json",
@@ -43,8 +43,8 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-23T02:04:07.493Z",
-      "freshnessState": "stale",
+      "observedThrough": "2026-09-29T01:34:35.448Z",
+      "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
       "interpretation": "14 are currently green and 6 yellow; private and sealed work is excluded."
@@ -127,7 +127,7 @@
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "246 sourced facts across 81 stories; prediction accuracy remains withheld until the sample earns it."
+      "interpretation": "243 sourced facts across 81 stories; prediction accuracy remains withheld until the sample earns it."
     },
     {
       "id": "forge-projects",
@@ -153,7 +153,7 @@
     {
       "id": "sourced-facts",
       "label": "Sourced Desk facts",
-      "value": 246,
+      "value": 243,
       "unitOrDenominator": "source-linked factual claims",
       "period": "all published editions",
       "computedAt": "2026-09-28T00:00:00.000Z",
@@ -174,10 +174,10 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 61,
+      "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-09-29T01:27:31.668Z",
+      "computedAt": "2026-09-29T01:37:07.826Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -186,11 +186,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-29T01:27:31.668Z",
+      "observedThrough": "2026-09-29T01:37:07.826Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
-      "interpretation": "11 of 18 proof feeds are within their declared freshness windows; 7 are stale, not silently treated as green."
+      "interpretation": "15 of 18 proof feeds are within their declared freshness windows; 3 are stale, not silently treated as green."
     },
     {
       "id": "performance-samples-7d",
@@ -198,7 +198,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-09-28T07:12:21.178Z",
+      "computedAt": "2026-09-29T01:36:26.188Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -207,14 +207,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-28",
+      "observedThrough": "2026-09-29",
       "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-09-21",
-        "endExclusive": "2026-09-28",
+        "start": "2026-09-22",
+        "endExclusive": "2026-09-29",
         "days": 7,
         "timezone": "UTC"
       },
@@ -233,10 +233,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-09-29T01:27:31.668Z",
+      "computedAt": "2026-09-29T01:37:07.826Z",
       "values": {
-        "fresh": 11,
-        "stale": 7,
+        "fresh": 15,
+        "stale": 3,
         "total": 18
       }
     },
@@ -245,7 +245,7 @@
       "computedAt": "2026-09-28T00:00:00.000Z",
       "values": {
         "stories": 81,
-        "facts": 246,
+        "facts": 243,
         "sources": 27,
         "predictionsGraded": 0
       }
@@ -254,7 +254,7 @@
   "history": {
     "performanceSamplesDaily": [],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-09-28T07:12:21.178Z",
+    "computedAt": "2026-09-29T01:36:26.188Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {

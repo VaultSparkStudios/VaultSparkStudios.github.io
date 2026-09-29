@@ -78,6 +78,34 @@ export function extractText(html) {
     .trim();
 }
 
+/** Prefer the publisher's article prose to unrelated page navigation and promos. */
+export function extractArticleText(html) {
+  const source = String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<(nav|aside|figure|figcaption|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  const openings = [...source.matchAll(/<(article|main|div|section)\b[^>]*>/gi)];
+  const isBody = (opening) => /\bitemprop\s*=\s*["']articleBody["']/i.test(opening)
+    || /\bclass\s*=\s*["'][^"']*\b(?:entry-content|article-body|post-content)\b/i.test(opening);
+  for (const priority of ['body', 'article', 'main']) {
+    for (const opening of openings) {
+      const tag = opening[1].toLowerCase();
+      if (priority === 'body' ? !isBody(opening[0]) : tag !== priority) continue;
+      const tags = new RegExp(`<\\/?${tag}\\b[^>]*>`, 'gi');
+      let depth = 0;
+      for (const match of source.slice(opening.index).matchAll(tags)) {
+        depth += /^<\//.test(match[0]) ? -1 : 1;
+        if (depth !== 0) continue;
+        const article = source.slice(opening.index, opening.index + match.index + match[0].length);
+        const text = extractText(article);
+        if (text) return text;
+        break;
+      }
+    }
+  }
+  return extractText(source);
+}
+
 /**
  * Candidate factual sentences: specific, attributable, and short enough to
  * quote. Scored so the ones a reader could actually verify float up —
@@ -228,7 +256,7 @@ export async function fetchSource(url, { topicTokens = null, feedSummary = null,
   try {
     const res = await fetchImpl(url, { headers: { 'user-agent': UA }, signal: controller.signal });
     if (!res.ok) return refused(`HTTP ${res.status}`);
-    const text = extractText(await res.text());
+    const text = extractArticleText(await res.text());
     const facts = factCandidates(text, { topicTokens });
     if (text.length < MIN_ARTICLE_CHARS) return refused(`thin body (${text.length} chars)`, { chars: text.length, facts });
     if (!facts.length) return { url, ok: false, reason: 'no extractable factual claims', chars: text.length, facts };
@@ -1169,6 +1197,16 @@ async function selfTest() {
   const prose = 'OpenAI said the program will begin with 10,000 researchers and expand to 100,000 scientists through 2027. '
     + 'We think you should sign up for our newsletter today to learn more about it. '
     + 'The company confirmed that participants receive free frontier-model access and expanded research tooling.';
+  const publisherPage = `<main><div class="related">Anthony Ha 11 hours ago In Brief Anthropic CEO met the president, Anthony Ha 10 hours ago.</div><div class="entry-content wp-block-post-content"><figure><figcaption>Dario Amodei during an interview at headquarters on Thursday.</figcaption></figure><aside>Get 50% off a second pass.</aside><p>${prose.repeat(4)}</p></div></main>`;
+  const publisherArticle = extractArticleText(publisherPage);
+  t('article-body extraction excludes related-story navigation despite topic overlap',
+    publisherArticle.includes('10,000 researchers') && !publisherArticle.includes('Anthony Ha'));
+  t('article-body extraction excludes captions and promotions inside the article container',
+    !publisherArticle.includes('during an interview') && !publisherArticle.includes('second pass'));
+  t('semantic article without a named body remains readable',
+    extractArticleText(`<article>${prose.repeat(4)}</article>`).includes('10,000 researchers'));
+  t('plain HTML without a semantic article keeps the conservative fallback',
+    extractArticleText(`<p>${prose}</p>`).includes('10,000 researchers'));
   const facts = factCandidates(prose);
   t('quantified claims are surfaced', facts.some((f) => /10,000 researchers/.test(f.text)));
   t('marketing voice is demoted or dropped', !facts.some((f) => /sign up for our newsletter/.test(f.text)));

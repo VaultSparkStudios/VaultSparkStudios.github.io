@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "2.0",
+  "session": "S365",
+  "generatedAt": "2026-09-28",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "scope": "Full website arc after syncing live main: protect The Desk's sourced claims, clear the article performance gate, verify staging, then commit, push and deploy production.",
+  "axes": [
+    "featureDepth",
+    "innovation",
+    "ux",
+    "feedbackLoop",
+    "engagement",
+    "aiIntegration",
+    "security",
+    "speed",
+    "tokenCost"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "desk-article-body-extraction",
+      "axis": "aiIntegration",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27,
+      "title": "Extract publisher article prose before selecting sourced facts",
+      "why": "The current fetcher flattens the full HTML page. The 2026-09-28 edition cites TechCrunch navigation, event promotion and related-story links as facts even though the article has an entry-content body.",
+      "outcome": "Readers and AI agents can follow fact links to article prose that actually supports the Desk story.",
+      "recipe": "Select a semantic article or article-body container before text extraction, retain the publisher-owned feed fallback for inaccessible pages, and pin the observed TechCrunch shape in the source-fetch self-test.",
+      "premises": [
+        {
+          "claim": "The source fetcher flattens the full response body",
+          "adapter": "file-content",
+          "target": "scripts/news-draft-edition.mjs",
+          "pattern": "const text = extractText(await res.text());",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "The publisher page has an entry-content article body; the current edition contains four page-chrome facts across two stories.",
+        "limitations": "The extraction must fall back safely for publishers without recognizable semantic containers."
+      },
+      "ladder": {
+        "L1": { "effortHours": 0.75, "recipe": "Exclude the observed page chrome from fact selection." },
+        "L2": { "effortHours": 2, "recipe": "Extract semantic article bodies with a conservative fallback and test the current publisher shape plus an ordinary article." },
+        "L3": { "effortHours": 3, "recipe": "Add a publisher-shape fixture corpus and measure usable sourced-fact yield before and after." }
+      },
+      "status": "shipped",
+      "executionLog": [
+        { "at": "2026-09-28", "note": "Article-body extraction now selects semantic publisher prose before fact candidates, excludes sidebars and photo captions, falls back for non-semantic pages, and passes 120/120 self-tests. The saved publisher article yielded two body facts without related-story or event chrome." }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "desk-published-fact-integrity",
+      "axis": "featureDepth",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 5,
+      "priority": 22.5,
+      "title": "Correct the current edition and gate page-chrome facts before publication",
+      "why": "Fact parity proves byte agreement between corpus and rendered receipts, but it does not reject a source sentence that is actually a related-story link, photo caption or conference advertisement.",
+      "outcome": "The current public edition presents only supported evidence, and future editions fail before a navigation snippet becomes a cited claim.",
+      "recipe": "Remove the four page-chrome facts from the 2026-09-28 day artifact, regenerate its derived claims and pages, and add a focused editorial fact-quality gate with negative controls for valid article sentences.",
+      "premises": [
+        {
+          "claim": "The current day artifact includes publisher navigation as a fact",
+          "adapter": "file-content",
+          "target": "data/news-desk/days/2026-09-28.json",
+          "pattern": "Anthony Ha 11 hours ago In Brief",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "Four bad facts were read directly from the current day artifact. Each story retains at least two article-sourced facts after removing them.",
+        "limitations": "The gate should detect structural page chrome without rejecting legitimate prose containing an event date or a person's name."
+      },
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Correct the four facts and regenerate the rendered edition." },
+        "L2": { "effortHours": 2, "recipe": "Correct the edition and add a corpus quality gate with positive and negative fixtures." },
+        "L3": { "effortHours": 3, "recipe": "Audit the recent corpus for the same failure shape and publish a bounded correction receipt." }
+      },
+      "status": "shipped",
+      "executionLog": [
+        { "at": "2026-09-28", "note": "Corrected two related-story facts, removed two event-promotion facts and a photo caption, regenerated the merged 81-story Desk artifacts, and added source-page-chrome checks. Copy quality and claim parity pass; the checker passes 49/49 self-tests. Postbuild now regenerates public Desk stats after the edition changes." }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "desk-article-lighthouse-floor",
+      "axis": "speed",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 13.8,
+      "title": "Clear the article's existing 0.90 Lighthouse performance floor",
+      "why": "Four recent PR Lighthouse runs fail at the article route; the latest scored 0.88 with a 3,901 ms Largest Contentful Paint. The S364 release exception was limited to that release, and the threshold remains 0.90.",
+      "outcome": "A reader reaches the article hero sooner under mobile throttling, and the existing CI floor passes without lowering it.",
+      "recipe": "Measure the article's Largest Contentful Paint request and render path, optimize the proven bottleneck in the article generator or assets, then verify the unchanged 0.90 gate on the candidate.",
+      "premises": [
+        {
+          "claim": "The article is held to the analytics 0.90 floor",
+          "adapter": "file-content",
+          "target": "config/lighthouse-route-tiers.json",
+          "pattern": "cloudflare-gave-the-agent-a-browser-and-a-chaperone",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "interpretation": "GitHub run 36294613365 reported article performance 0.88 < 0.90, LCP 3,901 ms and Total Blocking Time 0. The local warm trace identifies the editorial illustration as the LCP element but does not reproduce CI throttling.",
+        "limitations": "The CI report archive failed the package-trust gate; a fresh candidate CI run must supply the final score."
+      },
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Prioritize the LCP hero request from the document head." },
+        "L2": { "effortHours": 3, "recipe": "Measure the throttled request path, prioritize the true LCP resource and verify mobile CI without moving the floor." },
+        "L3": { "effortHours": 5, "recipe": "Reduce render blocking article CSS if request priority alone does not clear the floor, with seven-theme visual parity." }
+      },
+      "status": "pending",
+      "executionLog": [
+        { "at": "2026-09-28", "note": "Added an early high-priority AVIF hero preload on real-art story pages after a local trace identified the hero as the LCP element. A new hosted Lighthouse run must confirm the unchanged 0.90 floor." }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 3,
+    "priority": 63.3,
+    "top3": [
+      "desk-article-body-extraction",
+      "desk-published-fact-integrity",
+      "desk-article-lighthouse-floor"
+    ]
+  },
+  "innovationReserve": [],
+  "rejectedCandidates": [
+    "Membership/auth changes have standing provider and acceptance holds and no new verified premise in this arc.",
+    "Gamification and feedback-loop expansion lack a measured current reader need and would distract from sourced-claim quality.",
+    "Token/API reduction has no measured cost hotspot in the current content lane."
+  ]
+}
