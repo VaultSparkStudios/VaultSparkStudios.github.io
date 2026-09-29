@@ -2657,3 +2657,7 @@ Production repair completed after the founder’s scoped performance exception. 
 | Automation Coverage | 92 | Article order and fact-quality gates cover the new behavior; scanner and build-check setup were repaired, while deploy-continuity ordering remains manual. |
 
 **Brainstorm → TASK_BOARD:** make staging deploy regenerate continuity before the ceremony, and watch three future article Lighthouse medians at the unchanged 0.90 floor. Both are bounded checks tied to failures or variance observed this session.
+
+### S365 addendum — post-closeout reconciliation
+
+The closeout push was followed by generated event and contract reconciliation. A concurrent late-night Desk edition changed the homepage and article bytes, so the S365 visual and mobile evidence was recaptured on the rebased tree: 168/168 captures were reviewed across seven themes and 215/215 mobile cases passed. A later status-only publisher commit required one intent-map regeneration. The final candidate receipt ordering and pre-push coherence checks passed before main reached `8fca03c82`. Production remains the earlier scoped content release at head `c46f22fa36d52901e505f2a99433cef9276fbbd0`; this later edition has not gone through a new staging-first promotion. The 946/1000 score and commitments above are unchanged. Literal HTML entities found in some older source excerpts were added to TASK_BOARD as a P3 follow-up.
