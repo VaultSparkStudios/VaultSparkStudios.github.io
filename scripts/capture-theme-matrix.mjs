@@ -291,7 +291,7 @@ function writeCanonReceipt(manifest) {
     'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.webp',
     'assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.avif',
     ...fs.readdirSync(path.join(ROOT, 'assets', 'og', 'news'))
-      .filter((file) => file.endsWith('--meme--640.avif'))
+      .filter((file) => /--meme--(?:640|128)\.avif$/.test(file))
       .map((file) => `assets/og/news/${file}`),
     'vault-member/portal.css',
     'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',

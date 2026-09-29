@@ -201,9 +201,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, community = false }) {
+function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${community ? '<link rel="stylesheet" href="/assets/desk-comments.css">' : ''}${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -419,7 +419,7 @@ function panelReactions(story, day) {
   const reactionSlug = `${day.date}/${story.slug}/panel/editorial-illustration-1`;
   return `<section class="desk-reactions desk-panel-reactions" data-desk-reactions="${escapeHtml(reactionSlug)}" aria-label="React to this AI-generated editorial illustration">
     <div class="desk-panel-react-head">
-      <a class="desk-panel-thumb" href="#editorial-illustration-1" aria-label="Back to the illustration"><picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp"><img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture></a>
+      <a class="desk-panel-thumb" href="#editorial-illustration-1" aria-label="Back to the illustration"><picture><source srcset="${isFallbackArt(story) ? base : `${base}--128`}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp"><img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture></a>
       <p class="desk-react-title">${isFallbackArt(story) ? 'React to this panel' : `React to ${escapeHtml(persona.name)}’s illustration`}<span>Identity-free · one pick, tap it again to take it back · counts appear only after confirmed votes.</span></p>
     </div>
     <div class="desk-react-row desk-panel-react-row">
@@ -843,7 +843,6 @@ function buildStoryPage(day, story) {
   // says so honestly instead of competing with itself in search.
   const supersededUrl = story.supersededBy ? `${PROD}${story.supersededBy}` : null;
   const head = chromeHead({
-    community: true,
     title: storyTitle(story.headline),
     description: metaDescription(story),
     canonical: supersededUrl || url,
@@ -933,7 +932,7 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
   ${dispatchCta('story', { compact: true })}
   ${moreFromDesk(day, story)}
   ${DISCLOSURE}
-</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script><script src="${deskCommentsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
+</article></main><link rel="stylesheet" href="/assets/desk-comments.css"><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script><script src="${deskCommentsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
@@ -1218,17 +1217,17 @@ function buildDirectorsReportPage() {
 // Keep reviewed full-size artwork unchanged. The mobile derivative is produced
 // from that committed image and only when missing, so routine builds cannot
 // silently change a previously reviewed illustration.
-const mobileHeroArt = days.flatMap((day) => day.stories
+const responsiveArt = days.flatMap((day) => day.stories
   .filter((story) => !isFallbackArt(story))
-  .map((story) => {
+  .flatMap((story) => {
     const base = join(ROOT, 'assets', 'og', 'news', `${day.date}--${story.slug}--meme`);
-    return { source: `${base}.avif`, output: `${base}--640.avif` };
+    return [640, 128].map((width) => ({ source: `${base}.avif`, output: `${base}--${width}.avif`, width }));
   }));
-for (const art of mobileHeroArt) {
+for (const art of responsiveArt) {
   if (existsSync(art.output)) continue;
   if (!existsSync(art.source)) throw new Error(`missing reviewed Desk art: ${art.source}`);
-  if (CHECK) throw new Error(`missing mobile Desk art: ${art.output}`);
-  if (APPLY) await sharp(art.source).resize({ width: 640, withoutEnlargement: true }).avif({ quality: 58, effort: 6 }).toFile(art.output);
+  if (CHECK) throw new Error(`missing responsive Desk art: ${art.output}`);
+  if (APPLY) await sharp(art.source).resize({ width: art.width, withoutEnlargement: true }).avif({ quality: 58, effort: 6 }).toFile(art.output);
 }
 
 const targets = [
