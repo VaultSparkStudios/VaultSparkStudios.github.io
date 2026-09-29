@@ -406,7 +406,7 @@ function memeFigure(story, day) {
     : `AI-generated editorial illustration, drawn by <strong>${escapeHtml(persona.name)}</strong> (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
     <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
-    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
+    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="sync" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
 }

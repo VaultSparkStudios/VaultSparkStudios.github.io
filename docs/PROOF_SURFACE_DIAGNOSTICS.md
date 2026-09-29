@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-29T01:33:11.965Z
-Receipt: `342073cb9dff51483ca2ecec` · coverage 109/109
+Generated: 2026-09-29T01:49:57.027Z
+Receipt: `b62814e707b9280f51de23a0` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 27.3s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 46.9s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 106 | advisory | 0.9s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 24 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 78 | blocking | 0.7s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 49 | blocking | 0.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 37 | blocking | 0.7s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 73 | blocking | 0.6s | 0 | `node scripts/check-phantom-carries.mjs` |
-| 75 | blocking | 0.5s | 0 | `node scripts/build-intelligence-suite.mjs --self-test` |
-| 14 | blocking | 0.5s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 18 | blocking | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 59 | blocking | 0.4s | 0 | `node scripts/check-decision-currency.mjs` |
+| 49 | blocking | 2.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 35 | blocking | 1.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 18 | blocking | 1.3s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 24 | blocking | 1.1s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 11 | blocking | 1.1s | 0 | `node scripts/check-og-images.mjs` |
+| 21 | blocking | 1.0s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 82 | blocking | 0.9s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 78 | blocking | 0.8s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 46 | blocking | 0.8s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 23 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs --self-test` |
 
 ## Failures
 
