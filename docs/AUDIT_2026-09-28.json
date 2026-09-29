@@ -118,17 +118,18 @@
         }
       ],
       "evidence": {
-        "interpretation": "GitHub run 36294613365 reported article performance 0.88 < 0.90, LCP 3,901 ms and Total Blocking Time 0. The local warm trace identifies the editorial illustration as the LCP element but does not reproduce CI throttling.",
-        "limitations": "The CI report archive failed the package-trust gate; a fresh candidate CI run must supply the final score."
+        "interpretation": "Earlier GitHub runs measured article performance at 0.85–0.88 against the unchanged 0.90 floor. Browser inspection then showed offscreen illustration requests competing with the text LCP. After moving the illustration below sources, GitHub run 36629194379 passed both local-preview and staging Lighthouse gates.",
+        "limitations": "A single green candidate does not prove future lab-score stability; monitor the next three article runs."
       },
       "ladder": {
         "L1": { "effortHours": 1, "recipe": "Prioritize the LCP hero request from the document head." },
         "L2": { "effortHours": 3, "recipe": "Measure the throttled request path, prioritize the true LCP resource and verify mobile CI without moving the floor." },
         "L3": { "effortHours": 5, "recipe": "Reduce render blocking article CSS if request priority alone does not clear the floor, with seven-theme visual parity." }
       },
-      "status": "pending",
+      "status": "shipped",
       "executionLog": [
-        { "at": "2026-09-28", "note": "Added an early high-priority AVIF hero preload on real-art story pages after a local trace identified the hero as the LCP element. A new hosted Lighthouse run must confirm the unchanged 0.90 floor." }
+        { "at": "2026-09-28", "note": "Added an early high-priority AVIF hero preload on real-art story pages after a local trace identified the hero as the LCP element. A new hosted Lighthouse run must confirm the unchanged 0.90 floor." },
+        { "at": "2026-09-29", "note": "Moved article illustration and reactions below the story and sources after hosted traces showed below-the-fold art competing with the text LCP. Verified no art request in the first mobile viewport, 168/168 reviewed theme captures, 215/215 mobile checks, and Lighthouse run 36629194379 passing the unchanged local and staging floors." }
       ]
     }
   ],

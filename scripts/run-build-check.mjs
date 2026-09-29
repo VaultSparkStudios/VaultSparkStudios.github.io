@@ -249,6 +249,17 @@ function main() {
     return;
   }
 
+  // A previous generator may have refreshed the gitignored IGNIS export after
+  // the last sanitizer run. Normalize it before freezing the source snapshot,
+  // so repeated build:check invocations see the same public-safe feed at step 81.
+  const oracleSanitizer = spawnSync(process.execPath, [resolve(ROOT, 'scripts', 'sanitize-public-oracle-feed.mjs')], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    windowsHide: true,
+  });
+  if (oracleSanitizer.error || oracleSanitizer.status !== 0) {
+    throw new Error(`oracle feed sanitizer failed before verification: ${oracleSanitizer.error?.message || oracleSanitizer.status}`);
+  }
   const lock = acquireVerificationLock(ROOT);
   process.on('exit', () => releaseVerificationLock(lock));
   console.log('Tree frozen for verification; do not edit tracked files until this run reports.');

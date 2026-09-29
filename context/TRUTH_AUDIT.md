@@ -1330,3 +1330,14 @@ The production 503 was a real Worker exception, not a report-only Trusted Types 
 ### S364 production truth — 2026-09-23
 
 S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified. Provider configuration checks pass 6/6 without sending. A 403 missing-token result proves error-path recovery and enforcement, not successful mail delivery.
+## S365 Source Receipts and Scoped Production Truth (2026-09-29)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The 83-story corpus, rendered article receipts and claims feed pass parity; the content deployment metadata distinguishes the production baseline from the content head. |
+| Prompt/template alignment | 5 | Desk generation orders short version, story and source receipts before illustration and reactions. |
+| Public claim accuracy | 5 | The 2026-09-28 edition's navigation, promotion and caption fragments were removed from facts; the semantic body extractor and quality gate prevent that source-shape error. |
+| Internal consistency | 5 | The staged receipt and ledger verify at depth 87; the 11/11 ceremony records identity as held while allowing only scoped content. |
+| Evidence freshness | 5 | Hosted Lighthouse local/staging, E2E/compliance and the live production article were verified on 2026-09-29. |
+
+**What was true and is no longer:** the article performance floor was failing at 0.85–0.88; hosted candidate local and staging Lighthouse now pass the unchanged 0.90 gate. Production now serves the reader-first article order. Identity/provider acceptance and real signup email delivery remain unverified.

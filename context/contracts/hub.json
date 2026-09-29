@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-29T20:42:23.889Z",
+  "generatedAt": "2026-09-29T22:20:57.713Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 364,
-    "lastUpdated": "2026-09-23",
-    "currentFocus": "S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.",
-    "nextMilestone": "Monitor the deployed signup repair; improve article performance and verify one real confirmation only with explicit send authorization.",
+    "currentSession": 365,
+    "lastUpdated": "2026-09-29",
+    "currentFocus": "S365: Desk source-integrity and article performance changes passed hosted Lighthouse, E2E, mobile, visual, and staging gates; scoped content deployed to production. Identity flows remain held.",
+    "nextMilestone": "Monitor three article Lighthouse runs and repair staging continuity sequencing; verify one real signup confirmation only with explicit send authorization.",
     "blockers": [
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
@@ -37,7 +37,7 @@
     ],
     "queues": {
       "now": [
-        "[SIL][S363][GATES/P2] Make `build:check` idempotent over `ignis/output/ecosystem-state.json`. A completed run leaves the next one failing at step 81 (`sanitize-public-oracle-feed --check`), because a later step regenerates the gitignored artifact unsanitized. The caller currently has to pre-sanitize. A non-idempotent gate trains a reader to re-run rather than read, which is how a genuine step-81 finding gets waved through. `closeout-autopilot.mjs` already documents the ordering it depends on; the standalone entry point does not apply it.",
+        "[SIL][S363][GATES/P2] Make `build:check` idempotent over `ignis/output/ecosystem-state.json` — DONE S365. The standalone runner now sanitizes the gitignored Oracle export before freezing and fingerprinting the tree, so a prior generator cannot strand step 81 on a rerun. This repaired a real closeout gate failure.",
         "[SIL][S363][PROTOCOL/P1] Refuse an inbound propagation that removes an exported symbol this repo's own code imports. S363 merged back eight such symbols (D-S363.4), and S316 had already restored one of them and shipped cargo upstream so the next drain would carry it — it did not. Upstream cargo alone does not hold, so the recipient needs its own check: diff exported symbols pre/post drain and fail the drain, not the next build. Seven of the eight failed loudly as named imports; the eighth degraded silently and was caught only by a contract test, so detection is currently partly luck.",
         "[SIL][S363][PROTOCOL/P2] Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): `check-windows-hide` scan roots, the wipe guard's status-row format and archive naming, and `arc-profile.mjs` resolving `PROJECT_REGISTRY` to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo `01K30UDB1264A040FE519B8D8B` carries the upstream ask; this item tracks whether the next drain actually lands it.",
         "[S363][SIL/P3] Compact the agent memory index by hand (21.3KB, target <17.1KB). An automated label-truncation pass was tried and reverted: shortening to a character budget inverted meanings (\"Green run can deploy nothing\" → \"Green run can deploy\"). Needs a deliberate pass that merges genuine near-duplicates (the two \"receipts after final …\" entries, the two skip-ci entries) and writes shorter labels that still carry the claim. A wrong recall hook is worse than a large index.",

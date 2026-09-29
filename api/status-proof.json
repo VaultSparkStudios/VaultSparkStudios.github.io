@@ -592,7 +592,7 @@
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-29T20:43:13.648Z",
+        "generatedAt": "2026-09-29T22:20:58.801Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -934,19 +934,19 @@
         "publicSafe": true,
         "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
         "promoted": {
-          "sha": "77b5238fd14177316668ad18a56bd83f6185745b",
+          "sha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
           "source": "api/build-sha.json"
         },
         "production": {
           "origin": "https://vaultsparkstudios-website.pages.dev",
           "sha": "353c8e17d98a6b75413ac01a209f51cbbcfa0b06",
-          "contentLaneHead": null,
+          "contentLaneHead": "c46f22fa36d52901e505f2a99433cef9276fbbd0",
           "reachable": true,
-          "reconciliation": "ahead",
+          "reconciliation": "behind",
           "shellParity": {
             "state": "matched",
-            "observedAt": "2026-09-23T05:38:30.301Z",
-            "ageHours": 2.2,
+            "observedAt": "2026-09-29T20:39:50.760Z",
+            "ageHours": 1.6,
             "stale": false,
             "maxAgeHours": 12,
             "source": "api/deploy-currency.json → shellParity"
@@ -1016,22 +1016,22 @@
         "reconciled": false,
         "receiptState": "degraded",
         "findings": [
-          "production serves 353c8e17, newer than the recorded promoted 77b5238f (benign — a later rebuild moved on)",
+          "the repo has advanced past the last promotion: production serves 353c8e17, repo build-sha is dafe6fba — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
           "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
         ],
-        "generatedAt": "2026-09-23T07:49:14.143Z",
+        "generatedAt": "2026-09-29T22:16:20.227Z",
         "history": {
           "window": 20,
           "gradable": 20,
           "reconciled": 0,
           "reconciledPct": 0,
-          "lastStrandedAt": "2026-09-23T00:09:32.858Z",
-          "currentBehindStreak": 0,
-          "newestGradableAt": "2026-09-23T07:49:14.143Z",
+          "lastStrandedAt": "2026-09-29T22:16:20.227Z",
+          "currentBehindStreak": 5,
+          "newestGradableAt": "2026-09-29T22:16:20.227Z",
           "newestAgeHours": 0,
           "maxAgeHours": 48,
           "stale": false,
-          "strandedAlert": false
+          "strandedAlert": true
         }
       }
     },
@@ -2335,7 +2335,7 @@
           "activeThisWeek": 1,
           "lastArkBroadcastAt": "2026-09-29T20:38:59.000Z",
           "ignisHeartbeatAt": "2026-09-23T07:56:53.682Z",
-          "lastShippedSession": "S364"
+          "lastShippedSession": "S365"
         },
         "edgeIntegrity": {
           "state": "matched",
@@ -2372,7 +2372,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S364"
+            "value": "S365"
           }
         ]
       }

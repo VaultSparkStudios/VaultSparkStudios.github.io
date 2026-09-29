@@ -1998,3 +1998,12 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S356][SITE/P1]** Oracle/IGNIS chip light-theme contrast — **already fixed S357** (D-S360.3): opaque ground in light mode, `oracle/index.html:78`, `ignis/index.html:80-97`, 7.11:1.
 - [x] **[S356][GATES/P2]** Drift preflight scope — **already fixed S357** (D-S360.3): the tool computes its denominator from the registry and prints that it is a sample.
 - [x] **[S356][SITE/P2]** Leaderboard embed greys — **DONE S360** (D-S360.2): the S356 premise (#555/#666) was stale; the live defect was host-token inheritance (1.9 / 2.6:1 on our light theme). Literal palette, unit-enforced.
+
+
+<!-- rotated 2026-09-29 · sessions < 361 · 1 block(s) -->
+
+## Closed — S360 items (worked in S361)
+
+- [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.
+- [x] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational. — **DONE S361** (D-S361.2).
+- [x] **[S361][PWA/P0]** Service worker never installed in production — **FIXED S361** (D-S361.1): duplicate precache entries made `Cache.addAll` reject.

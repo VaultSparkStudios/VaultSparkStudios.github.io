@@ -1,14 +1,22 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-23 (S364: Desk signup release verification)
+Last updated: 2026-09-29 (S365: Desk source integrity and article release)
 
+## S365 — completed arc and follow-up
+
+- [x] Extract publisher article prose before fact selection; correct page-chrome facts in the 2026-09-28 edition and gate future Desk facts against navigation, promotion, and captions.
+- [x] Clear the unchanged 0.90 article Lighthouse floor; hosted local and staging Lighthouse passed on `091481ba5` (run `36629194379`).
+- [x] Verify 168/168 theme captures, 215/215 mobile cases, hosted E2E/compliance, and staging ceremony 11/11; deploy the scoped content lane and verify the live article order (`36631405999`).
+- [ ] **[S365][CI/P2]** Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
+- [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
+- [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.
 ## S364 — requested signup repair
 
 - [x] Repair the Worker response crash, verify route branches, pin the verifier and prevent consumed-token reuse.
 - [x] Restore the source-owned Turnstile secret on staging; verify negative response without sending mail.
 - [x] Push signup repair and CI corrections; hosted E2E and compliance pass at cf56856ce (505 repository checks).
 - [x] Repair notebook footer shift and badge contrast; LF-bound visual evidence and hosted CLS checks pass.
-- [ ] Improve article performance (latest Lighthouse 0.85 versus 0.90); founder approved this release exception on 2026-09-23. Threshold unchanged.
+- [x] Improve article performance; S365 hosted local and staging Lighthouse passed the unchanged 0.90 floor (`36629194379`).
 - [x] Deploy production Worker and static candidate, install matching Turnstile secret, verify intended 403 validation response instead of 503.
 - [ ] Verify one real confirmation only after explicit email-send authorization; no email sent yet.
 ## Open — S362
@@ -24,14 +32,9 @@ Last updated: 2026-09-23 (S364: Desk signup release verification)
 - [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.
 - [x] **[SIL][S361][PERF/P3]** Review the 100-entry precache — **DONE S362** (D-S362.5): 100 entries, 3.2 MB raw / about 779 KB brotli, background-fetched only for members who opt into offline and push. Kept; no trim justified by the numbers.
 - [x] **[S341][OPS/P1]** Decide whether to arm the Monthly Member Newsletter — **RESOLVED S362 without arming** (D-S362.3): the schedule now holds (held annotation, exit 0) unless `NEWSLETTER_ARMED=true`, so a deliberate hold no longer reads as a broken cron. Arming remains a founder decision.
-## Closed — S360 items (worked in S361)
-
-- [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.
-- [x] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational. — **DONE S361** (D-S361.2).
-- [x] **[S361][PWA/P0]** Service worker never installed in production — **FIXED S361** (D-S361.1): duplicate precache entries made `Cache.addAll` reject.
 ## Now (next session ready)
 
-- [ ] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json`. A completed run leaves the next one failing at step 81 (`sanitize-public-oracle-feed --check`), because a later step regenerates the gitignored artifact unsanitized. The caller currently has to pre-sanitize. A non-idempotent gate trains a reader to re-run rather than read, which is how a genuine step-81 finding gets waved through. `closeout-autopilot.mjs` already documents the ordering it depends on; the standalone entry point does not apply it.
+- [x] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json` — **DONE S365.** The standalone runner now sanitizes the gitignored Oracle export before freezing and fingerprinting the tree, so a prior generator cannot strand step 81 on a rerun. This repaired a real closeout gate failure.
 - [ ] **[SIL][S363][PROTOCOL/P1]** Refuse an inbound propagation that removes an exported symbol this repo's own code imports. S363 merged back eight such symbols (D-S363.4), and S316 had already restored one of them and shipped cargo upstream so the next drain would carry it — it did not. Upstream cargo alone does not hold, so the recipient needs its own check: diff exported symbols pre/post drain and fail the drain, not the next build. Seven of the eight failed loudly as named imports; the eighth degraded silently and was caught only by a contract test, so detection is currently partly luck.
 - [ ] **[SIL][S363][PROTOCOL/P2]** Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): `check-windows-hide` scan roots, the wipe guard's status-row format and archive naming, and `arc-profile.mjs` resolving `PROJECT_REGISTRY` to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo `01K30UDB1264A040FE519B8D8B` carries the upstream ask; this item tracks whether the next drain actually lands it.
 

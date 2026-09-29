@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-09-29T20:18:54.471Z
-Receipt: `2be7337e056a23a19c457002` · coverage 109/109
+Generated: 2026-09-29T22:22:39.986Z
+Receipt: `07664721e387bb31d8b7e08d` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 69.2s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 27.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 49 | blocking | 2.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 38 | blocking | 2.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 11 | blocking | 1.7s | 0 | `node scripts/check-og-images.mjs` |
-| 51 | blocking | 1.4s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
-| 35 | blocking | 1.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 24 | blocking | 1.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 40 | blocking | 1.3s | 0 | `node scripts/build-newsroom-run.mjs --check` |
-| 22 | blocking | 1.2s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 7 | blocking | 1.2s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
-| 39 | blocking | 1.2s | 0 | `node scripts/build-newsroom-run.mjs --self-test` |
+| 49 | blocking | 0.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 35 | blocking | 0.8s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 78 | blocking | 0.7s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 106 | advisory | 0.7s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 82 | blocking | 0.6s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 88 | blocking | 0.5s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 100 | advisory | 0.5s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
+| 37 | blocking | 0.4s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 92 | blocking | 0.4s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 86 | blocking | 0.4s | 0 | `node scripts/check-franchise-interaction-attribution.mjs` |
 
 ## Failures
 
-- None.
+- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness

@@ -1,8 +1,16 @@
 # Current State
 
-Last updated: 2026-09-23 (S364; production deployed)
+Last updated: 2026-09-29 (S365; scoped content deployed)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S365 — Desk source integrity and article performance (2026-09-29; content deployed)
+
+The 2026-09-28 audit's three items are shipped. Publisher fetching now selects semantic article prose before fact candidates; the observed page-chrome facts in the edition were corrected; a quality gate rejects navigation, promotion and caption fragments. The current 83-story corpus passes claim parity. Article pages now place the short version, story, and sources before the illustration and reactions. The first mobile viewport makes no illustration request, and the unchanged 0.90 article Lighthouse floor passed in hosted local and staging jobs (`36629194379`).
+
+The candidate passed 215/215 mobile checks, 168/168 manually reviewed seven-theme captures, hosted E2E and compliance (`36629194109`), and a staging release ceremony at 11/11. Staging served receipt `eb48a702c8d5cf87b330e334` at continuity depth 87. Production content-lane workflow `36631405999` overlaid 385 content-pure paths on the existing deployed baseline and withheld 375 other paths. Live Pages metadata names content head `c46f22fa36d52901e505f2a99433cef9276fbbd0`; the public article returns 200 with story, sources, then illustration. The standing identity/Worker identity hold remains scoped out of this release.
+
+Closeout reproduced and repaired the known standalone build-check step-81 drift: the runner now sanitizes the gitignored Oracle export before freezing its verification snapshot. The work log was rotated at its 250 KB cap.
 
 ## S364 — Desk signup repair (2026-09-23; deployed)
 

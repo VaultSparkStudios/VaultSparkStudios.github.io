@@ -695,3 +695,423 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Cross-repo work moved only through signed Ark cargo: studio-ops contract dossier `01JUILJPGC952DF42AB689BCCC`; Social Dashboard producer dossier `01JUIVGUM107D70A08C1C6C7BB`.
 - Post-push CI exposed an isolated-checkout false contradiction: private revenue evidence is unavailable in the public clone. Root-fixed the agreement gate to emit SKIP/unverifiable only when absent, remain strict when present, and behaviorally prevent unavailable from passing.
 
+
+<!-- rotated-from: logs/WORK_LOG.md · 2026-09-29 -->
+## 2026-07-28 -- Session 298 · /goal full arc · Typed evidence + staging transparency
+
+- Ran the complete continuous `/start → /audit → /implement → /closeout` arc. Pulled/rebased `origin/main` first, loaded canonical context, drained Ark, resolved secrets through the gateway, ran blocker-preflight, and verified Canon at 0 gaps.
+- Audited every premise against live code. Shipped typed public-feed contracts, atomic staging deploy attestations, and a signed Ark protocol-propagation dossier; recorded six bad or authority-gated audit ideas as honest deferrals.
+- Exhausted the actionable Genius List, then generated and implemented four planned second-order candidates: exact acknowledgement parsing, hash-chained deploy chronology, served-receipt HTTPS equality, and release-proof lineage binding; final fixed-point proof then exposed and closed a fifth, the receipt/discovery DAG boundary.
+- The first attestation deploy reached exact candidate parity but exposed a parser escape defect. Preserved that red as evidence, fixed the parser contract, rebuilt, and deployed again rather than manufacturing a receipt.
+- Closeout staging was rebuilt and redeployed after canonical write-back; the canonical receipt and append-only ledger carry exact file/archive/rollback identities without copying self-invalidating dynamic IDs into verification-source context.
+- Production was not promoted. Provider/auth/control-plane and genuine recovery evidence remain held; cost stayed notional under the flat-rate Max Plan.
+- Final direct evidence: `npm run build:check` **255/255 EXIT 0** from step 1 (receipt `44e3045bbfd89fc9f9714334`); Doctor `blockingFailing: 0`; staged secret scan clean; canonical staging receipt `79676d2f5f8d8cdebe5ac3b3` binds 4,294 files, the 24-leaf candidate root, rollback `20260730021857`, and a 27-row hash chain.
+
+
+## 2026-07-30 -- Session 299 · full `/arc` · served deploy-history ledger independently compared
+
+- Ran the complete continuous agent-neutral `/start → /audit → /implement → /closeout` mission. Rebased `origin/main` first (27 hourly-Action commits behind → 0/0), drained Ark (44 cargo), ran blocker-preflight, and confirmed doctor `blockingFailing: 0` at baseline.
+- **Audit verified every premise against LIVE code and live staging bytes** — one genuine in-repo item, three evidence-backed defers, zero phantoms. The S298 handoff's top next-step was the target: independently compare the served deploy-history ledger.
+- **Shipped:** `scripts/lib/staging-deploy-continuity.mjs` + `scripts/build-staging-deploy-continuity.mjs` publish `api/staging-deploy-continuity.json`, a reproducible anchor (depth · genesis · head lineage · SHA-256 of the canonical render · source-derived `generatedAt`). Extended `check-staging-deploy-receipt.mjs --remote` to fetch the served NDJSON ledger, re-validate the chain from scratch, and require served depth + head + canonical digest to match the anchor. Structural cycle-guard asserts the artifact is excluded from candidate CORE_PATHS. Wired into `build` + `build:check` (2 new steps → 257).
+- **Live proof:** `check-staging-deploy-receipt --remote` → `served ledger verified (depth 27 · 11776aea3ce1)`; continuity self-tests 12; checker suite 26/26.
+- **Root-fixed pre-existing drift:** `public-intelligence.json` (a CORE_PATHS leaf) had drifted on `main` without its candidate→release→status→citation cascade — the recurring un-cascaded-publisher class. A full canonical `npm run build` resynced it; no floor lowered, no data fabricated.
+- **Honest deferrals (WINS):** protocol-propagation repair (studio-ops-owned, §2B/§2C not yet propagated), skill-trace/session-floor (control-plane-owned, `skill-trace.mjs` absent here, 12 evidence cargo already outstanding), RUM anomaly re-eval (external — `totalSamples: 0`, production held 0/5, no backfill). Design decision D-S299.1: continuity kept independent of the release cascade.
+- **Final direct evidence:** `npm run build` EXIT 0; `npm run build:check` **257/257 EXIT 0** from step 1 (receipt `5ef9d2504f9260dcabbf1584`, source fingerprint `3e7a3af57244b3195e3ae1d1`); doctor `blockingFailing: 0`. Production not promoted; interlock preserved; no sibling tree edited; cost notional under the flat-rate Max Plan.
+
+## 2026-08-13 — Session 314 — full audit implementation and production content release
+
+- Ran the full S314 /start → /audit → /implement all arc and shipped 10/10 ranked items.
+- Added public Analytica Stats, News relationship contracts, reaction honesty, hero denominators, mobile focus/inert behavior, capture-level visual receipts, discovery micro-lane, positive served manifest, durable content release continuity, and proof orchestration compression.
+- Verified 42 manually reviewed captures across seven themes; 26/26 touched browser checks passed locally, staging, and production; mobile focus repeated 45/45; throttled local homepage/Stats LCP remained under 1s.
+- Rebased safely across scheduled automation commits; every conflict was confined to generated feeds and newer origin evidence was retained before canonical regeneration.
+- Staging caught /stats.json omitted from the content lane; fixed with one exact-path exception plus mutation tests. Production run 31667858631 deployed successfully but final receipt verification false-red on a transient canonical 403; reused the exact Pages-origin contract and corrective run 31668050323 passed end to end. Final certification added the Stats share card and BreadcrumbList, then follow-up production run 31739144442 passed every content-lane gate.
+- Final live content receipt: cc5d67845b37e33b2ecc6d34031051103ddf2af4e29d226d118b7f8e262bd2f7, head 00eed5089, 240 promoted paths, continuity depth 6, content verdict exact; production Stats card SHA-256 equals local bytes.
+- Full standalone Playwright matrix exceeded the 20-minute local bound and is not claimed green. Final build-check passed 295/295 from step one on the rebased tree (receipt 16cd2fe9841849b708b166cc; plan d808a9610d8b1a4e18defbb4; source 605799bc86af12761cf08cfa). Its pre-certification runs caught and closed a missing Stats social card, missing BreadcrumbList, and three undiscoverable visual-review helpers.
+
+## 2026-08-14 — Session 315 — Cloudflare ecosystem analytics + Desk engagement
+
+- Diagnosed the Stats discrepancy as three different instruments rather than a broken counter: Cloudflare edge requests, Cloudflare Web Analytics visits/page loads, and first-party interaction/performance samples.
+- Used the founder-provided analytics capability through the secrets boundary, queried all 29 active Cloudflare zones, and generated bounded current/history receipts with complete-day UTC windows, human/bot separation, and provenance.
+- Expanded `/stats/` and `/status/` with explicit denominator language; added a separate `/stats/ecosystem/` explorer with production/staging/internal divisions, filters, 19 project states, public-safe coverage ratios, and agent feeds.
+- Added per-generated-illustration Like/Fire/Laugh/Wow reactions to every published Desk article. Delivery is server-confirmed and aria-live; each figure has a stable reaction key distinct from story/voice signals.
+- Added per-article live-reader presence and visible-and-focused reading time: 90-second short-lived hashed presence, identifier-free bounded summaries, rate limits, dedupe, five-observation public floor, nightly rollup, and discovery contract.
+- Set the Cloudflare analytics GitHub secret without committing credential material. The token reads zone/account analytics but lacks the separate Account Settings scope required for main-domain Web Analytics Site Info; that metric remains honestly unobserved.
+- Verified Playwright/Axe 32/32, Worker unit 42/42, 56/56 manually reviewed captures, 42 News pixel proofs, public contracts, shell/service-worker coherence, News derivation/disclosure/allowlist gates, Lighthouse route-tier config, and repository lint. Local mobile traces: Stats LCP 252ms / CLS 0; ecosystem LCP 228ms / CLS 0.0091; Desk LCP 412ms / CLS 0.
+- Isolated the unrelated pre-existing worktree mismatch from the release candidate, then passed the canonical 295-step build from step one (authoritative receipt: `api/build-check-diagnostics.json`; plan `d808a9610d8b1a4e18defbb4`; source `e71cc9478c5293283a4c0d8e`).
+
+**SIL:** 994/1000 · Intent achieved in source and proof; deployment remains correctly divided between safe static content and the held Worker bundle.
+
+## 2026-08-14 — Session 316 — deploy-currency truth chain + propagation recovery
+
+- Ran the full S316 arc (/start → /audit → /implement → /closeout) and shipped 7/7 ranked audit items, rejecting 2 candidates as false premises with evidence rather than shipping them.
+- Found three defects masking each other on the public /status/ surface: `check-workflow-git-depth` was green because its detector matched only a direct `execFileSync('git', ['log'…])` shape and missed `build-deploy-currency.mjs`'s helper-bound `git(['cat-file'…])`; that let both producing workflows run a depth-1 checkout, where the deployed-sha lookup always fails and the producer published `diverged`; and `status/index.html` read `d.status` while the producer emits `d.state`, so the false alarm rendered as a permanent neutral "Unverified".
+- Verified the deployed sha is an ordinary ancestor of main (`git merge-base --is-ancestor`), then re-probed from a full clone: the true state is `content-current`, 515 commits behind, shell fingerprints matched.
+- Root-fixed all three: the gate detects history-dependent git through helper bindings and now covers cat-file/merge-base/describe; both workflows set fetch-depth: 0; `classify()` returns `unverified` rather than `diverged` when the clone is incomplete and publishes `honesty.historyComplete`; the tile reads `state` through a declared vocabulary with matching severity.
+- Mutation-tested the strengthened gate against the real tree — removing `fetch-depth: 0` makes it exit 1 and name the right workflow — and pinned self-tests to the verbatim live call shape so a future refactor cannot silently re-open the blind spot.
+- Un-inverted the E2E compliance gate, which asserted "shell fingerprint matched" while the page renders the plural "shell fingerprints matched" — it went red exactly when production was healthy and green when parity was broken.
+- Added bounded rebase/backoff push retry to both publishing crons after run 31778262455 lost a full analytics window to a transient GitHub 500 on a single-shot push.
+- Recovered three local-ahead surfaces regressed by inbound studio-ops propagation: the CANON-019 unknown-vs-missing capability distinction (a hard build break at step 21/295 plus a silent phantom-blocker regression), the secrets sibling capability-map fallback, and the startup-brief renderer's evidence + revenue integrations. Restored locally and shipped upstream as Ark cargo; no sibling tree was edited.
+- Removed seven consumer-less propagated libs under D-S220.1 (each byte-identical to its canonical studio-ops copy), including obelisk-broker.mjs which a prior decision had already removed for the same reason and propagation re-delivered. Allowlisted four session-protocol scripts with their real-but-unscannable SKILL.md callers documented.
+- Brought the AGENTS.md canon index current — it stopped at CANON-053 while live canon has 54 headings including CANON-054 and CANON-055.
+- Verified: canonical build:check 295/295 from step one, Playwright compliance 18/18 (including the previously red release-truth test), build-deploy-currency 59/59, check-workflow-git-depth 22/22, capability-discovery 8/8, doctor blockingFailing 0.
+- Honest gaps recorded: the light-theme capture did not apply the theme swap, so this specific tile is pixel-verified in dark only; the corrected feed was re-probed from this workstation rather than CI, so the next uptime-probe run is the first CI-side proof.
+
+**SIL:** 972/1000 · Root-caused a three-layer coupled defect on a public trust surface and closed the gate that permitted it, but the session's own propagation commit is what introduced the build break it later had to recover from.
+
+## 2026-08-16 — Session 317 — Desk reader loop restored, per-article stats, gate closure
+
+- Founder reported three Desk defects (reactions failing, "Lead signal"/"Quiet signal" incomprehensible, no per-article statistics) and pasted a browser console log that contained four more real bugs nobody had filed. All seven fixed across four phases, plus five gates that were green while broken.
+- Diagnosed the reaction failure as a deployment gap, not a client bug: handlers landed 2026-08-10, deployed Worker was 2026-07-31, and `cloudflare/**` is hard-blocked from the content lane that shipped the front end — the lane ships the caller and strands the callee by construction. Deployed through the identity lane, which does not release the promotion hold; verified 200/204 live on both routes.
+- Fixed worker-route-provenance laundering the outage as `vantage-challenged`: one challenge-shaped route condemned the whole receipt while /_health answered 200 JSON from the same probe. A clear control now disproves a challenge and `missing` names the absent routes.
+- Replaced "Lead signal"/"Quiet signal" with "Today's lead"/"The quiet story", derived from day.leadSlug rather than a hand-set `kind` (two trending stories on one day previously both printed "Lead signal"), aligned RSS to the same words, added a legend, and validated both fields.
+- Shipped per-article reach, measured engaged time, attention ratio and away-time bands, server-rendered and floor-suppressed. The view counter already existed — rum-beacon has been posting per-route to R2 all along — but most rows are `ux` events: counting rows would have inflated reach ~10x and published it as a visitor number.
+- Added the reader-signal rollup that reactions never had: corpus-derived bounded enumeration rather than KV.list, published truncation, and a monotonic guard that reports `reset` when a cumulative counter drops instead of drawing a fabricated decline.
+- Closed a gate hole: generate-news-pages --check and build-news-desk-engagement --check were real byte-drift gates living in an uncalled `news:check` script that had never once run in CI. build:check 295 → 302.
+- Modeling the new feeds in the evidence graph immediately caught a real strand — refresh-live-data.yml re-renders the article pages via `npm run build` but staged only api/, discarding them every run.
+- Fixed social icons 404ing on every article (depth-1 chrome harvested into depth-3 pages) and journey-conductor.js 404ing on every page since S306 (predicate-loaded, never hash-named, unpromotable while the full-site lane is held). clean-stale-shells would have deleted the fix, so its reference map now covers tracked JS.
+- Fixed two startup-brief honesty defects: a raw UTC date where the shared resolver uses the studio calendar (everything read a day staler after 20:00 ET), and a byte heuristic rendered as "Verdict: CLOSEOUT — act now" while the live meter was UNMEASURED.
+- Verified: build:check 302/302 with the exit code read directly, Playwright desk+compliance 23/23, Worker units 43/43, engagement 24/24, reactions 10/10, coherence 9/9, doctor blockingFailing 0.
+- Honest gaps recorded: both new surfaces sit at 0 above their floors because the endpoint only came back up today and reach has 6 pageloads against a floor of 5; idle bands have never been observed end-to-end; the ambient-core hash rotation costs returning visitors one ~66KB re-download; the stale Link preload header still needs a full-site deploy.
+
+**SIL:** 981/1000 · Every founder-reported symptom was traced to a root cause rather than patched, and the diagnosis surfaced more real defects than were reported — but the session shipped no verified-with-data surface, because the pipelines it built are honestly empty until traffic arrives.
+
+## 2026-08-16 — Session 318 — release-safe truth surfaces + exact staging
+
+- Ran the complete `/arc` audit/implement/release sequence and shipped 7/8 ranked items.
+- Unified local/CI production gates, added caller/callee capability slices, and hardened push subscription enrollment/dispatch.
+- Converted mobile audit evidence into a blocking 47-route × 5-viewport contract: 235/235, zero P0/P1; manually reviewed 63/63 CANON-053 captures.
+- Made crawler policy coherent, Desk cadence evidence-derived, the claims stream fact-complete (21 facts / 37 rows), and status projection receipt-bound.
+- Passed canonical `build:check` 309/309.
+- Deployed canonical Hetzner staging: receipt `dd9ef88720ae57d4a4359fa7`, 5,004/5,004 files, SHA/root exact, browser 6/6.
+- Found and root-fixed a circular pre-deploy Doctor gate. The ceremony-local exception accepts only one trustworthy `stale` currency finding bound to the exact staging SHA/root/receipt/browser evidence; uncertainty and all other blockers remain red.
+- Independent app-release verdict remained NO-GO. Final ceremony is 7/8; production was not mutated because `real-provider-e2e-pending` keeps promotion held.
+- Immutable GitHub Pages rollback migration remains founder-scoped under D-S303.
+
+**SIL:** 985/1000 · The candidate is thoroughly implemented, rendered, built, and staged, and the release system refused the one action whose identity evidence is still absent.
+
+### 2026-08-17 deployment addendum
+
+- Rebased over 34 upstream observation commits without discarding telemetry, reran the canonical suite 309/309 on the final source, and pushed `40106d3bf` directly to `main`; staged secret scan remained clean.
+- GitHub Worker and Cloudflare Pages workflows both passed their gate jobs and explicitly skipped every production deploy step. No production mutation occurred.
+- Redeployed canonical Hetzner staging after reconciling and pushing current automated observations: 5,007/5,007 files, pushed candidate commit `29be0bd8d`, receipt `8aa1f9f42262b96d5e8ea5b4`, candidate root `2cc840670e5a…`, browser 6/6, chain depth 39, rollback `20260817172802`.
+- Fresh production quorum returned `stale` at 644 commits / 12.3 days. Ceremony is 7/8; only `promotion-ready` rejects on `real-provider-e2e-pending`. The remaining proof requires a real platform-passkey ceremony and was not fabricated.
+
+## 2026-08-18 — Session 319 (agent: claude-code, Opus 5 1M) — reproducible release candidate · scoped hold · scheduled Desk · live login outage found
+
+**Intent:** run the full `/arc`, then push directly to `main` and fully deploy.
+
+### The finding that explains the 12-day production dark period
+
+Production was 651 commits / 12.3 days stale, and the Obelisk hold was only half the reason. The other half was structural and filed nowhere: the hourly `uptime-probe` cron rewrote five of the thirty-one leaves inside the promotion artifact **and**, in the same commit, rewrote `api/candidate-artifact-manifest.json` and `api/release-proof.json` — the artifact and the receipt that judges it. Three different roots were observed for one unchanged source. An 8/8 ceremony was unreachable by construction. Fixed by splitting the manifest into a commit-derived source set and an observed telemetry set, and canonicalising declared wall-clock stamps out of hashed leaves. Proven on the real tree: the promotion root now survives a cron tick unchanged.
+
+The generalised gate (`check-artifact-reproducibility`) immediately found a second cron — `cloudflare-analytics-pull` — writing two more hashed leaves, which the instance fix had missed.
+
+### Shipped
+
+- **Reproducible promotion candidate.** 31 leaves → 29 source + 2 observed, with the exclusions published on the receipt. Self-tests 18/18.
+- **Blast-radius scoped hold (D-S319.2, founder-authorized).** Resolver wired into both the ceremony and the promotion gate; `promotionMode` returns clear/scoped/blocked and names held surfaces publicly. Self-tests 25/25 and 23/23.
+- **Structural reproducibility gate.** 20/20, with reasoned exemptions required to carry a reason.
+- **`api/build-sha.json` had FOUR producers and three shapes** (one local script, three separate printf blocks in `pages-deploy.yml`). All now emit one declared 1.1 field set; mutation-tested on the real tree after a first assertion passed while two producers were still wrong.
+- **The Desk publishes on a schedule (founder-requested).** `news:publish` was referenced by zero workflows, so cadence was whatever a session happened to run — last edition 7 days old. `news-publish.yml` now drafts and publishes four editions daily via self-hosted inference, gated by the existing editorial checks.
+- **The Desk has a homepage module (founder-requested).** Previously reachable only from a nav dropdown and a footer link. Server-rendered, text-only, cadence copy read from the freshness receipt — it currently says "Paused", because that is true.
+- **`news-draft-edition` ran its CLI on import**, setting `exitCode 2`; every successful scheduled edition would have reported failure. RUN_DIRECT guard added.
+- **CI could never pass the ceremony:** the step named "Install release-ceremony browser dependencies" installed npm packages but not Playwright browsers, so the browser gate failed in six seconds and read as a quality failure rather than a missing dependency.
+- **deploy-currency published `unverified` because a step never received credentials** that already existed as repository secrets — a missing env wiring reading as an unknowable production state.
+
+### The live outage found while deploying
+
+`vaultsparkstudios.com/login` returns **HTTP 500** with body `error code: 1101` — a Worker throwing an unhandled exception. Root cause is upstream: `obeliskgate.com/.well-known/openid-configuration` answers 200 with **HTML** (SPA catch-all shadowing the discovery path), so `authorization_endpoint` is undefined and `new URL(undefined)` throws. Production sign-in has been dead to real visitors. Our side now degrades to an honest 503; the discovery document is Obelisk's and was shipped as Ark cargo `01K09H7FPDC44A67D990320A8B`.
+
+### Deploy outcome — honest
+
+`main` received all work (verified 0/0 against origin). Staging deployed and verified exactly: candidate `2f29768322`, receipt `8359c4ba5c271f1fb80ab126`, 5016/5016 files, artifact root matched, attested, chain depth 43, browser 6/6. **Local release ceremony reached 8/8** with `promotion-ready` passing as `scoped`.
+
+**Production was NOT promoted.** The CI ceremony re-runs the browser suite, which includes the anonymous Obelisk boundary journey — and that journey fails because `/login` is 500, which is the very surface the hold names. The gates are refusing correctly: a tested surface is genuinely broken. The Worker fix that would repair it also cannot deploy, because S318 deliberately closed the identity-lane bypass and the Worker lane runs the same ceremony. The unlock is the Obelisk discovery document.
+
+No gate was weakened, no evidence fabricated, no hold hand-edited.
+
+**SIL:** 972/1000 · Deep structural repair and two founder-requested features shipped and verified; production promotion remains correctly blocked by a sibling-owned dependency now diagnosed to a single line.
+
+### 2026-08-18 deploy addendum — production Worker shipped, live outage repaired
+
+The blocker turned out to be layered, and each layer was real:
+
+1. **Scoped the ceremony's EVIDENCE, not just its authority.** `held` is now a first-class receipt state — permitted only when the promotion resolves as `scoped` and the contract's surface sits inside an active blast radius, with coverage still total (executed + held = expected) and skips still rejected. 15 self-test cases, fail-closed in five directions.
+2. **Four workflows ran the ceremony with no browsers installed.** `pages-deploy`, `cloudflare-worker-deploy`, `cloudflare-cache-purge` and `sentry-release` all installed npm packages only, so the browser gate died in seconds and reported a quality failure. Fixed in all four and pinned by `check-ceremony-browser-deps.mjs` (9/9).
+3. **The real production defect was a KV write-quota exhaustion.** `checkRumRateLimit` wrote a KV counter on EVERY request to the public `/v/rum` beacon against a ~1,000/day free-tier limit. Once exhausted, every `.put()` rejected, the rejection escaped, and every KV-writing route returned Cloudflare 1101 / HTTP 500 — the telemetry beacon was self-DoSing daily and taking sign-in down with it.
+
+**Production Worker deployed** (run 32103812856): ceremony passed in CI, deploy succeeded, post-deploy liveness gate green, no rollback.
+
+Verified live on production immediately after:
+
+- `/v/rum` POST **500 → 202** — telemetry ingestion restored; RUM data can accrue for the first time, which is why `data/news-desk-engagement-history.ndjson` never existed.
+- `/v/rum` malformed body **500 → 400** — now reaches the parser.
+- `/login` **500 → 503** carrying `{"code":"auth_store_unavailable","detail":"KV put() limit exceeded for the day."}` — production now names its own root cause instead of returning a bare crash.
+
+Sign-in recovers automatically at the 00:00 UTC quota reset, and the sampled counter means ordinary traffic can no longer exhaust it. Staging Worker also deployed and verified (version 39e4a2cc).
+
+Static content promotion (Pages) remains unpromoted this session; the Worker lane carried the outage fix, which was the urgent half.
+
+---
+
+## 2026-08-18 — Session 320 · claude-code (Opus 5, 1M) · full `/arc` → content lane promoted → Worker deployed
+
+**Intent:** run the complete `/arc`, then push directly to `main` and fully deploy.
+
+### Triage
+
+Not cut off. The SIL anchor `84cc4808` *is* `closeout(S319)`; the substantive commits after it are S319's own closeout sequence. Tree clean, synced. Git Bash was unresponsive for the whole session (`echo` timed out) — all work ran through PowerShell.
+
+### Audit → `docs/AUDIT_2026-08-18.md`
+
+`ops.mjs genius-list` ranked "promote the static content lane" at #11 / LATER. Overridden to #1 and the override recorded: it was the sole **blocking** doctor failure, 13.8 days past CANON-036's 48h ceiling, and the founder's stated session goal. The ranker scores TASK_BOARD text and cannot see either fact.
+
+### Shipped
+
+1. **Content lane promoted to production** — 259 content-pure paths (733 repo-internal withheld at baseline), run `32192776059`, `contentLaneHead 60ed3748c`. Verified at the served surface: `deployedBy: pages-deploy-content-lane`, homepage 200 with the Desk module present, `/news/` 200. `baselineSha` still `9527f227`, so `deploy-currency` honestly reads `content-current` rather than claiming HEAD. `deploy-currency` FAIL → WARN; doctor blocking failures **1 → 0**.
+2. **Worker deployed** (run `32193258963`) — ceremony passed, post-deploy liveness green, no rollback.
+3. **Real-method synthetic probes** — `POST /v/rum` and `GET /login` now asserted against expected status. A named `503 auth_store_unavailable` is classified as honest degradation; a 500/1101 is judged `down`.
+4. **`check-writeback-currency` window + classifier** — anchor-derived window, `unmeasured` as a distinct non-pass exit `3`, structural churn classification. 68 false positives → 6.
+5. **`deploy-currency` observed before the low-churn short-circuit**, so a healthy same-hour run can no longer skip the staleness reading.
+
+### The circular dependency (the real story)
+
+Worker deploy required a green doctor → doctor's only blocker was stale production content → the content lane clears it → but the lane blocked on the S317 split-release guard, because nine promoted callers reference `/v/rum`, `/v/desk-reaction`, `/v/desk-presence` and the provenance receipt held no live evidence. The routes were live all along; only the evidence was missing. A probe from an unchallenged vantage returned **7/7 matched** and the lane opened. Resolution order ended up the reverse of the intuitive one: **content lane first, Worker second.**
+
+### Verification
+
+- `npm run build:check` **319/319 passing**, exit code read directly (not through a pipe).
+- `probe-uptime --self-test` 40/40 (33 → 40), **mutation-tested**: neutering the login-crash branch correctly dropped it to 39/40.
+- `check-writeback-currency --self-test` 11/11 (new suite), including a case that previously passed for the wrong reason (grace window rather than churn classification) and was rewritten.
+- Live contract check: `POST /v/rum` → `202 {"ok":true,"synthetic":true}` — the deployed Worker honours the no-write contract.
+- Full production probe: all content routes 200 served, `/v/rum (POST) 202`, `/login (GET) 503` classified as honest degradation, overall `up`.
+
+### Cost of the session's own mistakes
+
+- Shipped a probe asserting a Worker contract whose callee could not deploy yet; caught and corrected before it ever ran on schedule.
+- Lost several push attempts to a rejection whose real cause was a **detached HEAD** from an unfinished rebase — `git rev-list` reported `0 behind` while the server refused, because `git push origin main` was pushing a stale local `main`, not the detached work.
+- A `--ours` conflict resolution during rebase discarded the freshly probed provenance receipt in favour of CI's bot-challenged version, and had to be re-probed. `--ours` is the *upstream* side during a rebase, and for evidence artifacts upstream is systematically the worse vantage.
+
+### Not done / deferred honestly
+
+Sign-in remains `503 auth_store_unavailable` until the 00:00 UTC KV quota reset — the crash is fixed, the beacon now samples its counter, and the 503 is the honest degradation. The production promotion stays held on `real-provider-e2e-pending` (sibling-owned). Content promotion still depends on a route-provenance probe from an unchallenged vantage; recorded as a blocker and committed to the board rather than resolved by weakening the guard.
+
+
+## 2026-08-19 — Session 323 (gate-name honesty sweep)
+
+**Arc: /start → /audit → /implement → /closeout, single continuous mission. Founder authorized direct push to main + deploy.**
+
+Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mjs` gates for the name-vs-body defect class (a gate whose name promises a property its body never measures). Five in-process reader agents (no OS windows), every candidate verified against live code before any edit.
+
+**Ten gates fixed, each locked by a both-directions self-test:**
+- `check-worker-rewriter-safety` — wired 2 of 4 defined-but-dormant unsafe-op scanners into the live scan (nonce-header-drop + HEAD-cache-poison); added a composition self-test; relaxed the HEAD-cache regex to accept the Worker's strengthened `&& edgeCacheOn` guard while still catching a HEAD-inclusive one. Worker confirmed safe on all four. self-test 17/17.
+- `check-canon-compliance` — CANON-008 now requires a real license artifact, not a canon-id substring. self-test 6/6.
+- `check-news-engagement-coherence` — added engaged-time DRIFT check (was fabrication-only); reproduced the SSR humanizer. self-test 12/12.
+- `check-build-step-resilience` — added unguarded-read detection; unified the self-test replica into one shared `auditSource`. self-test 8/8, live green across 82 build-chain scripts.
+- `check-launch-ready` — fixed staging-blocker gap + case-insensitive `sparked` + `runtimeUrl` field resolution. self-test 6/6; this repo now 100% GO.
+- `check-game-playability-coherence` — hoisted the sourceRepo cross-check out of the findings loop. self-test 12/12.
+- `check-registry-freshness` — populated the dead `urlDrift` bucket (surfaced a real mindframe drift). live green.
+- `check-hero-jsonld-completeness` — empty array/string now counts as missing. self-test 15/15.
+- `check-journal-dates` — day-number predicate instead of comma. self-test 11/11.
+- `check-portfolio-coherence` — removed a false "sitemap.xml" leg the header advertised but the body never read.
+
+**Verification:** `npm run build:check` 319/319, confirmed by a real captured `BUILDCHECK_EXIT=0` (the background wrapper's "exit 0" masked a real exit 1 on the first run — a stale derived artifact). Regenerated the cron-churn-staled derived artifacts (ignis-search-index, intelligence-budget, intent-map, status-proof, news-desk family, and others) as routine closeout resync.
+
+**Surfaced (advisory, not closed here):** mindframe registry `deployedUrl` drift and franchise-architect portfolio drift are studio-ops-owned (CANON-018); registry uses `runtimeUrl` not `liveUrl` for the live URL.
+
+## 2026-08-21 — Session 325 — The Desk recovery and article measurement release
+
+- Reproduced the August 11 publication ceiling and traced it through the unattended workflow: wrong radar invocation, missing dependency install, body/visual metadata loss, art ordering, and a freshness check that could not enforce the claimed daily cadence.
+- Repaired the full scheduled path and set the two Hetzner inference secrets through the shared gateway. The workflow now scans real sources, authors without inventing facts, creates/pixel-checks art, promotes only complete editions, rebuilds engagement/reactions before pages, and requires a current daily edition.
+- Published the August 21 source-bound edition “Memory Configs: The +9.5% Lift That Actually Works,” with bespoke ImageGen art and complete article copy.
+- Put estimated read time and privacy-thresholded Reader views above the fold and in every article evidence panel; measured engaged time remains suppressed until five real pageloads qualify.
+- Shipped the three ranked arc items: 233/233 multi-family verification reachability plus 33 Windows-safe spawn repairs; closed-day SHA-256 velocity proof with UTC-normalized Git history; and the four-hour coalesced production-promotion contract rendered on `/status/`.
+- Refreshed Linux visual-regression baselines only after inspecting expected/actual/diff artifacts from run 32446357122. Final evidence: build/check 368/368, 28/28 manually reviewed theme/viewport captures, mobile runtime 235/235, News engagement coherence 12/12 with eight live panels exact.
+
+## 2026-08-22 — Session 326 — Desk production release and claim-ledger closure
+
+- Completed the founder-authorized direct push, Hetzner staging overlay, guarded Cloudflare Pages content promotion, and live verification for the Desk recovery.
+- Verified three post-August-11 editions live through August 22; every tested route returns 200 and the article surface shows estimated read time, Reader views, and the honest `Collecting` state.
+- Found production `api/news-desk-claims.ndjson` still frozen at August 11 despite current Git content. Root cause: the fail-closed content lane accepted top-level `api/*.json` but withheld `.ndjson`.
+- Added one exact-path public-artifact exception for the canonical Desk claims ledger. Arbitrary API/data NDJSON remains blocked. Self-tests: hotfix gate 43/43; content lane 63/63.
+- Passed canonical build/check 368/368 and the security sweep (settings clean, staged secret scan 0 findings). Exact commit `0b5e2bd88` passed E2E, compliance, mobile runtime, accessibility, and local/staging Lighthouse.
+- Staging content head `0b5e2bd88` served five August 22 claim rows. Production run 32605433768 promoted 137 paths; live receipt head `ef703658c814d913c5ed4b553fcd787c64ee3777`; independent checks confirmed daily freshness through August 22, five claim rows, `/v/desk-presence` 204, and all new article routes 200.
+
+## 2026-08-23 — Session 327 — collision-free Desk satire and scoped production release
+
+- Converted The Desk artwork pipeline to one typography authority: text-free source imagery plus deterministic opaque masthead/caption safe zones. Removed duplicate visible punchlines and blocked visual-description/meta-composition prose from becoming satire copy.
+- Replaced the August 21–23 Atari-related source masters with article-specific text-free ImageGen artwork. The newest published punchline is “Fifteen years later, the tutorial level is an open world.”
+- Captured and manually reviewed 28 News index/article renders across seven themes at desktop/mobile; zero overlap, clipping, contrast, or conflicting-text defects. Final production figure captures at 1440px and 390px also passed visual inspection.
+- Made reviewed News art immutable during ordinary scheduled rebuilds: complete PNG/WebP/AVIF families are preserved, partial families fail closed, overwrite requires `--refresh-art`, and the publisher workflow rejects tracked art mutation. Self-test 139/139; ordinary rebuild creates zero replacement cards.
+- Fixed shallow-clone candidate-manifest reproducibility and tracked the prior closeout boundary receipt so exact clean CI passes. Canonical build/check 368/368 and exact E2E/compliance/accessibility/mobile/local+staging Lighthouse are green.
+- Deployed the exact candidate to Hetzner staging, then promoted only the authorized content lane. Production run `32662840244` completed green: 12 News pages, 36 exact assets, newest 2026-08-23, five claim rows, durable receipt finalized. Full-site/identity promotion remained held.
+- Hardened exact News release verification with a bounded five-attempt Pages propagation window after the first deploy produced a transient false red; strict byte equality remains the acceptance condition.
+
+## 2026-08-24 — Session 328 — the cascade gate's blind spot, and a readiness surface that overstated its own bar
+
+- Opened on a contradiction: S327 closed at `build:check 368/368`, nothing was hand-edited, and step **57/368** was red on a clean tree. The only intervening commits were five `[skip ci]` cron publishes.
+- Root cause: `refresh-live-data.yml` runs `npm run build` (which regenerates both `api/funnel-summary.json` and the `.cache/cta-readiness.json` derived from it) but stages only `api/`. The producer was committed every cycle; the byte-checked consumer never was. `[skip ci]` meant no CI run ever observed the break.
+- The deeper finding: `check-publish-cascade-coverage` — written specifically to stop `[skip ci]` publishers stranding derived artifacts — **passed on the run that shipped this strand, and could never have failed.** It builds its universe from `config/evidence-graph.json`, which held 33 nodes and **zero** under `.cache/`. Declared `.cache/cta-readiness.json` as the graph's first `.cache/` node; the existing gate now catches the strand unaided. Verified in both directions in one process: with the staging fix → exit 0; without → exit 1 naming `refresh-live-data.yml` and the exact artifact.
+- Sized the remaining class honestly rather than implying it was closed: **17 other byte-checked `--check` gates read or write `.cache/` and are still undeclared.** Recorded in the node's own `note` and in the audit.
+- `check-cta-readiness` now states what it actually measures. `counts.shown` is a rolling 30-day count (`rollup-rum-ux` `WINDOW_DAYS = 30`; its own comment: an epoch "only TIGHTENS the window"), but the message read "waiting for 20 more post-epoch impressions" — promising a cumulative bar while enforcing a per-window one. The row now carries `basis`, `windowDays`, and `observedThrough`, phrases the requirement as *within a single 30-day window*, and reports a distinct no-post-epoch-span verdict when evidence stops at the epoch. `--check` widened to compare `basis` and `observedThrough`. **No floor lowered** — `minShown`, `WINDOW_DAYS`, and the epoch are untouched.
+- Fixed a suppressor that could never fire: the genius-list play-next gate was pinned to `'2026-06-18'` while the live epoch is `'2026-07-02'` — and `check-play-next-impression-contract`'s self-test uses `'2026-06-18'` as its *wrong-epoch negative control*. Both now read the shared `cta-contract-registry`. Latent, not user-visible; reported as such.
+- Two self-corrections rather than shipped claims: the audit's first draft called the readiness threshold "unreachable by construction" — withdrawn, because `funnel.asOf` is source-derived, not wall-clock. And the first verification of the graph fix came back green *without* the staging fix applied; re-run atomically in one node process it correctly failed, so the first green was not trusted.
+- Self-tests: `check-publish-cascade-coverage` 20/20 (incl. the new strand regression), `check-cta-readiness` 11/11, `check-evidence-graph` 34 nodes acyclic with a valid build order.
+
+## 2026-08-24 — Session 329 — mega-audit sprint: truth drift, Desk slug reruns, and a feedback widget that finally talks
+
+- Ran a three-agent full-site audit (page inventory/redundancy · member/AI/engagement · build/perf/security) plus a sequencing design pass; the founder approved an 8-phase plan and locked four decisions (journal revives on a monthly AI cadence; full-merge-with-analysis for redundant clusters; only vault-narrative→Hetzner on the cost menu; build /ask-founders/).
+- **Phase 1 — truth.** The footer legend "27 initiatives" was a literal byte-duplicated on 125 pages, with two more copies in `build-portfolio-counts` and `build-hero-portfolio`; all three now derive from `api/public-intelligence.json → portfolio.total` (single authority: `generate-public-intelligence.mjs`). `check-press-kit-drift` now enumerates every git-tracked HTML banner carrier (125 pages) instead of three hand-picked ones — proven-fail on a doctored deep page before trusting it. The internal green/yellow/red health grade no longer publishes into `llms-full.txt` (vaultStatus is the public vocabulary). Six root-junk files removed with their gate references. CANON-053's adoption row cited a verifier that never existed (`check-visual-qa.mjs`); corrected to the real receipt chain.
+- **Phase 2 — editorial truth.** The Desk published the same slug three consecutive days (2026-08-21..23) because every dedupe layer compared AI-REWRITTEN headlines and the rewrites scored under the 0.62 similarity gate. `scoreTopic` now hard-blocks an exact published-slug match (14-day memory), `--promote` refuses cross-date reruns as the final funnel, and `check-news-slug-uniqueness` — proven-fail against the live triple-run before the data fix — locks the class. The 8/22+8/23 copies consolidated: `supersededBy` → the 8/21 canonical, rendered noindex + canonical + an honest "Superseded edition" banner, dropped from the index listing (edition history preserved; freshness gate untouched). Registry truth: game-registry 8→11; Scriptorium's page stopped claiming "Forging" (the tool is live behind a 401 — new `sparked` variant in the page generator, chips and all, footer legend untouched); Franchise Architect's shard restored to llms.txt AND agents.json via a shared ROUTE_ALIAS (`franchise-architect-football` → page dir; the ai-spine parity gate caught the first one-sided fix); `api/ignis-roi.json`'s `generatedAt` was a hardcoded literal from May — now derived from newest ledger evidence (deterministic, no wall clock), the script joined the build chain, and the feed joined the trust-feed ceilings (7d/21d). Call of Doodie's forge-vs-SPARKED drift is sibling-owned: Ark repo-question shipped.
+- **Phase 3 — feedback loops.** `micro-feedback.js` had written localStorage and stopped for 100+ sessions (VSFunnel strips payloads to the event name by design). The anonymous usefulness enum now inserts into the same `page_feedback` table `rate-page.js` uses (mixed→ok, not_yet→not_useful), the widget copy states exactly which half is shared and which stays local, and a new e2e test intercepts the POST with a strict 4-column privacy assertion — keyed on a `sharesUsefulness` capability marker so a pre-capability prod bundle skips loudly. supabase-client added to the 5 mount pages that lacked it. The vault-member Connected Games panel stopped promising auto-flowing stats (no producer exists); Games Tracked reads an honest 0. The feedback-sentiment cron's own contract makes it studio-ops-owned (service-role credentials) — shipped as an Ark agent-handoff instead of building it here. member-voices' empty state reviewed: already honest, kept.
+- **Process honesty:** one push briefly landed with step 357 red because a verdict was read through a pipe — the exact class the memory bank warns about; fixed forward within minutes and all later pushes gated on real exit codes plus an ALL_GREEN marker. Learned: the mobile-runtime receipt goes stale whenever a build re-stamps `ignis/`/`studio/` pages — run `test:mobile` after the FINAL build, before `build:check`. Discovered `propagate-nav.mjs`'s hand-arrays are stale vs live pages (a bare run clobbered 126 pages — reverted, reconciliation task filed) and the sitemap workflow's `vault-member` EXCLUDE substring silently drops two legitimate pages.
+- Verified per push: build:check 368→370/370 · mobile runtime 235/235 · radar self-tests 62/62 · theme-matrix receipts with changed-surface captures inspected (dark+light, desktop+mobile). Three cron-race rebase cycles resolved with regenerate-before-push.
+
+## 2026-08-27 — Session 330 — attention-safe experience arc and held production promotion
+
+- Implemented a shared attention arbiter across cookie consent, install, exit intent, visit depth, returning context, journey prompts, and portal notices. First-visit consent and functional onboarding reserve priority; all other automatic surfaces share one per-tab claim and 30-day recurrence limits where applicable.
+- Removed the duplicate returning-member nudge, converted the homepage digest to an inline signal, contained the footer dispatch on narrow screens, and enlarged the membership interview skip link to a 44px tap target.
+- Added a 15-assertion static attention contract, five browser behavior scenarios across three engines, and a final-tree receipt-ordering gate. Bound the dynamic membership interview source into the mobile audit.
+- Verified the final candidate with build:check 370/370, mobile 235/235 zero P0/P1, visual review 42/42, staging attention 15/15, release ceremony 8/8, and zero staged secret findings. Exact staging receipt: `63c9201a665bcb5123e79283` (6,841 files; continuity depth 52).
+- Reconciled three scheduled publisher races without force-pushing. Implementation and evidence commits through `9eaa10424` reached `main`; the scheduled sitemap refresh then advanced remote tip to `b70642883`.
+- Production promotion was attempted only through the canonical gate and was rejected with `real-provider-e2e-pending`. Secrets discovery found `obelisk.identity.verify` missing all three RP values; the Obelisk staging-registration dependency is absent. No production mutation occurred.
+- Audited current production after all work: 3/15 pass across Chromium/Firefox/WebKit. The old bundle lacks the shared claim/consent contract; only the recent-prompt cooldown case passes. This discrepancy is recorded as a release blocker, not a shipped-live claim.
+## 2026-08-27 — Session 331 — Sitewide audit implementation
+
+- Audited the current tree and reduced the actionable set to four verified findings; six inherited findings were disproven against live gates and recorded as wins.
+- Added the fail-closed 15-case attention release runner and aggregate receipt, expanded the canonical staging ceremony from 8 to 10 steps, and passed exact staging 15/15 plus ceremony 10/10.
+- Repaired Solara routes and canonical VaultFront/Scriptorium/Seamline calls to action; upgraded the link court; final result: 200 files, 24,361 links, zero findings.
+- Added bounded one-hop RUM helper dataflow, removed a false dead-event warning, and fixed two newly exposed allowlist gaps; final court: 82 events, 188 call sites, zero warnings.
+- Manually reviewed 42 desktop/mobile renders across seven themes, passed mobile runtime 235/235, and passed the full build gate 370/370.
+- Preserved the production identity hold; no deploy, push, auth change, pricing change, dependency install, or cross-repo write occurred.
+
+## 2026-08-28 — Session 332 — Evidence-pressure arc, CI recovery, and exact staging
+
+- Recovered the branch-only S331 candidate, merged the current remote-main lineage without force, and completed the project-aware audit/implement arc.
+- Shipped CTA evidence-age states, privacy-thresholded post-consent attention-pressure telemetry/status evidence, and deterministic canonical-destination reachability with two-attempt hard-dead semantics and explicit unknowns.
+- Diagnosed the two latest failed `Refresh Live Data` runs to a bare News Desk invocation. Added declared per-step arguments to the canonical runner, set `--rebuild`, and locked the contract with a 24/24 self-test; the exact 29-step profile now passes.
+- Verified canonical build 370/370, Worker/auth 94/94, mobile 235/235, visual 14/14, destination reachability 10/12 pass with 0 hard failures and 2 unknowns, plus local/staging `/status/` performance within budgets.
+- Resealed and deployed 6,953 exact files to canonical Hetzner staging at candidate root `1cb71fc2a094…`, rollback `20260828102714`; receipt `3822cf612d7f040cd6feab5a`, continuity depth 58, ceremony 10/10.
+- Security sweep: settings clean, staged leak scan clean, deployment capabilities ready. Obelisk relying-party values remain missing and the founder passkey ceremony remains owner-reserved; scoped promotion does not relabel either as resolved.
+- Repaired release regressions without lowering gates: redirect-aware smoke/accessibility checks, test-output exclusion from sitemap discovery, CI-local closeout-boundary evidence, served-surface classification for `/ask-founders/` and `/api/agent-actions/v1`, and proof-aware Refresh Live Data cascades.
+- Cloudflare Pages run `33167403022` deployed static SHA `d2b15bcf90b6e82e2e9840933b99bdabdd065512`; Worker run `33167667067` completed successfully. Apex route/CSP/feed/provenance probes passed.
+- Diagnosed the initial 12/15 live attention result as a harness bug: `page.addInitScript` cleared storage inside the same-origin telemetry iframe on Firefox/WebKit. Restricted initialization to the top frame; the apex then passed 15/15 across Chromium, Firefox, and WebKit.
+- Recaptured and manually inspected all 14 `/status/` theme/viewport states after the test-source change, resealed the hash-bound visual receipt, and passed the final settled-tree canonical gate 370/370.
+
+## 2026-08-30 — Session 333 — Desk publish recovery, orphaned-gate discovery, and evidence continuity
+
+- Triaged the prior session as NOT cut off (all eight state surfaces written in `502517899`; 128 intervening commits were all `[skip ci]` automation), and abandoned the stale `codex/s331-*` branch, which was 0 ahead / 120 behind `origin/main`.
+- Found `The Desk — Scheduled Publish` failing eight consecutive runs since 2026-08-29 with the public newsroom five days stale. Root cause was single-topic selection in `news-draft-edition.mjs`, not a source drought: a static aggregator filter cannot predict a live 401, so one paywalled link dropped every slot while six readable topics remained queued.
+- Shipped rank-ordered, host-aware topic fallback with a bounded attempt budget. A refusing host is remembered within the run, so consecutive same-host topics are skipped without consuming budget. Verified live end to end: one 403 cost one attempt, five `openai.com` topics skipped free, `huggingface.co` reached, edition drafted with 3 sourced facts.
+- Discovered that `scripts/lib/build-order.mjs --self-test` — S332's regression lock for the previous scheduled-CI bug — was referenced by no npm script and no workflow and had therefore never run. Wired it into `build:check` as step 371.
+- Generalized invocation-mode validation into `scripts/lib/invocation-modes.mjs`, deriving mode-requirement structurally from each producer's dispatch source rather than naming one script. Proven to fire on a reintroduced S332 regression and on a typo'd flag, and to stay silent on a correct declaration.
+- Added consecutive-unknown streak and last-known-good age to the canonical destination receipt, with validator invariants that forbid retained evidence from ever becoming a verdict. Published the retained evidence on the `/status/` tile.
+- Investigated and deliberately rejected two shortcuts: resolving Google News aggregator tokens (probed directly — the modern format embeds no publisher URL and needs Google's undocumented `batchexecute` RPC) and spoofing a browser user-agent to evade publisher bot blocks.
+- Verification: news-draft-edition 58/58, build-order 27/27, invocation-modes 10/10, probe-canonical-destinations 23/23, CANON-053 rendered-pixel review 14/14 across seven themes and two viewports, all captures individually inspected.
+- Found and repaired a fifth defect during closeout verification: the public forge ledger was publishing zero entries because its fixed 120-commit scan window had been buried by 128 consecutive automation commits since the last closeout. Sized scan depth to the entries displayed instead; restored 0 → 24 live. Committed a follow-up to audit every other fixed-size scan window and to gate on the zero-entries-with-recent-activity signature.
+- Deployed the release: content lane run `33353060409` promoted 57 paths and Worker run `33353179486` succeeded; all six probed apex routes answered 200 with CSP from an unchallenged vantage, and the live forge ledger, destination-continuity fields, and status tile copy were each verified by content, not status code.
+- Dispatched The Desk rather than waiting for the 06:07 UTC cron, so the first post-fix publish would run under observation. Selection was proven fixed in production CI (`prepare: 0`, 2/2 sources, 6 sourced facts), which exposed a second defect the first had been masking: Hetzner retired the pinned authoring model `Qwen/Qwen3.6-35B-A3B-FP8` while still advertising it in `GET /models` — 503 on every completion, twice, while `Qwen3.8-27B` answered 200 on the same credentials.
+- Added a declared standby authoring model with disclosed fallback (`fellBackFrom`), narrow failover semantics (a 429 quota fact is never retried against another model), and eight regression-locking cases. Proven live end to end.
+- Corrected an overstated claim: "The Desk publishes again" was premature. Selection is fixed and the standby works, but no edition has reached `/news/` yet; the public state remains "periodic, latest 2026-08-25" until an unattended scheduled run publishes one.
+- The Desk published: edition `2026-08-31` ("Meta's Data Center Robots: Tugger Carts and Laundry Folds") authored on attempt 1, promoted, deployed via content lane run `33356296320`, and verified serving 200 at https://vaultsparkstudios.com/news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/. Public freshness moved from `periodic · age 6d` to `daily · age 0d` — the first successful run after nine consecutive failures.
+- Noted that workflow success is not the same as a served edition: the publish run reported success while the live feed still read `periodic · age 6`, because the edition was committed but unpromoted. Verified the served surface rather than the run status.
+- Ran three review cycles over the session's own output. Cycle 1: re-pinned an Opus 5 setting that had silently reverted to an alias, found the Worker deploy had been a no-op (no `cloudflare/` change), and cleaned 99 untracked scratch files from a public repo. Cycle 2: found the model-failover loop shipped with only its predicate tested, a second live fixed-window burial in `build-ignis-conduit` hiding 84% of activity, and a receipt-binding diagnosis this session got wrong twice before 24 measured commits settled it. Cycle 3: made an empty topic queue diagnosable, diagnosed and disproved my own first fix for it, and found a `windowDays: 0` boundary bug that only a day with a published edition could expose.
+- Wired a third orphaned self-test (`news-trend-radar`) into `build:check` — the only orphan found actively failing, and the reason the boundary bug was invisible. Gate 371 → 372 steps.
+- Resolved both escalated decisions on founder delegation. Receipts now bind the promotion candidate rather than cron churn and a wall-clock stamp; the Desk gains corroboration by borrowing outlet names across clusters at a stricter-than-merge bar rather than by loosening clustering, which was rejected as a truth risk.
+- Tuned the corroboration bar on live data rather than by assumption: 0.55 changed nothing, 0.45 doubled readable+corroborated topics from 2 to 4 with 13 links across 4 topics.
+- Closed the corroboration half of the Desk starvation. Measured single-blocker headroom first — 70 topics lack only a readable source, 55 lack only corroboration, and zero lack only a persona beat — which disproved the beat-map lever before any code was written.
+- Fixed the real cause: clusters retained only their lead headline, so cross-outlet matching compared one wording against one wording. Clusters now carry up to six member wordings and match on any pair at the unchanged 0.45 bar; readable-and-corroborated topics went 2 to 5.
+- Capped borrowing at 8 outlets after auditing the heaviest link by name (a genuine 26-outlet mega-story). Corroboration is a threshold signal, so beyond a handful the extra links change no decision while widening the blast radius of a bad match; `corroborationCapped` records the true count so the clamp is visible.
+
+## 2026-09-01 — Session 335
+
+**Intent:** re-audit the whole site one day after S334, rank one combined plan, implement in token-optimal order, close out and push.
+
+**Shipped:**
+- `supabase-phase61-member-write-lockdown.sql` applied live via the new `scripts/apply-supabase-migration.mjs` (pre-image, apply, post-image, 9/9 probe): column-scoped UPDATE grants, atomic `gift_points()`, hardened `purchase_treasury_item()`, `public_leaderboard` definer view; every anonymous reader repointed to the view.
+- `build-route-consolidation.mjs` rewritten as a court; 13 meta-refresh stubs deleted for good; footer's four retired links reconciled; 16 duplicate/dead build invocations removed; `full` profile complete; early-hints after shell rotation; `run-build-check --quiet`.
+- Four merges with edge 301s: `/proof/`→`/evidence/#verify`, `/feedback/`+`/feedback/insights/`→`/changelog/#requests`, `/vault-wall/`→`/community/#wall`. New `/how-we-build/` + vocabulary gate. Season 1 live; expired event cards replaced; past-label freshness rule.
+- Member dashboard: IGNIS quota meter, single-upsell Eternal panel with Sparked digest, feedback-shipped strip; every `/vaultsparked/` link repointed.
+- Worker `TT_ENFORCE_ENABLED` switch (off) + unit test; `weekly-maintenance.yml` replaces two same-cron workflows; SW cache name is a composite digest; `.cache/s3xx-*`, `audit-shots-full` untracked; 69 audit docs archived.
+
+**Disproved:** semantic-search prompt caching (below cacheable minimum); Desk art AVIF (served derivatives already optimized).
+
+**Held / carried:** Trusted Types flip (readiness receipt says not eligible); uptime probe Worker-cron (designed); CURRENT_STATE sharding; `/atlas/` retirement; build-to-build churn in commit-derived feeds; `page_feedback` schema drift.
+
+---
+
+## 2026-09-02 — Session 336 (stranded release recovered · deploy alarm gets a second clock · TT evidence age disclosed)
+
+**Intent:** run the full project-aware `/arc` under founder authorization to commit/push directly to `main` and fully deploy production.
+
+**Shipped:**
+- **Restored the deploy path.** `prune-served-surface` had been refusing on `/evidence/` (S334) and `/how-we-build/` (S335) — both pages exist, are linked, and are advertised in `sitemap.xml`, and neither was ever added to `config/served-surface.json`. No deploy of any kind could succeed. Added both prefixes; restored `vault-wall/` because the content lane cannot delete files or promote `_redirects`, so production still serves it and the deployed sitemap still advertises it (D-S336.2).
+- **Added `prune-served-surface --check`** and wired it into `build:check`. Until now the gate ran only `--self-test` over synthetic fixtures while the real manifest was exercised solely inside `pages-deploy.yml`, so drift was undiscoverable until a deploy was already running. Proven by restoring the S335-era manifest: exit 1 naming exactly the two routes, exit 0 once fixed.
+- **Promoted the content lane and verified it live.** Run `33585666290`, 194 paths. `/how-we-build/` 404 → **200**; served `contentLaneHead 88393a29` contains `aff64499`. The entire S335 release — member-write lockdown, Season 1, community wall, dashboard meter — reached readers for the first time.
+- **Gave `deploy-currency` a second clock.** It measured only `deployedCommit → repo tip` against a 48h ceiling, a span hourly cron commits continuously reset, so 34 uptime crons and one stranded release were the same reading (`behind`, PASS). Now publishes `undeployedContentCommits` / `oldestUndeployedContentAt` / `contentLagHours`, aged from the OLDEST undeployed hand-authored commit against a 12h ceiling, with churn classified structurally against the served-surface manifest and `config/evidence-graph.json` rather than by commit subject. Measured against the promoted `contentLaneHead` so held identity work and already-live pages cannot trip it. `check-deploy-currency-gate` now names which ceiling fired.
+- **Made `api/tt-readiness.json` disclose the age of its evidence.** It computed no age at all (`amber-soak` forever on any warm row, while telling the reader to wait for rows to age out that nothing aged) and re-stamped `generatedAt` every build over a manifest from 2026-07-07 against a 30-day window. Now ages rows for real, publishes `manifestAgeDays`/`soakWindowDays`/`evidenceStale`, and adds `stale-evidence`, which keeps `enforceEligible` false so a fossil can never manufacture readiness. Live artifact moved `amber-soak → stale-evidence`.
+- **Fixed two unparseable PostgREST queries on `/community/`:** `?eq.is_active=true` (operator/column swapped — probed live, `HTTP 400 PGRST100`) and a `game_sessions` filter on `created_at`, a column that does not exist (`played_at` does).
+
+**Closed by evidence, no work needed:** the four merged routes carried from S335 — `/nervous-system`, `/membership-value`, `/vaultsparked`, `/ip` all 301 correctly at the apex under a real browser UA.
+
+**Escalated, not built:** four public tables (`challenge_submissions`, `game_sessions`, `point_events`, `member_achievements`) still render a silent zero to anonymous visitors. The remedy generalizes S335's `public_leaderboard` pattern, but it decides which member activity becomes publicly readable — a founder privacy decision. Full diagnosis with call sites in D-S336.5.
+
+**Held / carried:** Trusted Types flip (now honestly blocked on a stale soak, not on a broken gate); manual CANON-053 review of the newly-served surfaces; the four projection views; everything on the identity/Obelisk hold, untouched.
+
+**VERIFIED IN CI AND IN PRODUCTION.** `build:check` 388/388 green and doctor `blockingFailing 0`; pushed directly to `main` as `1d1ccc68d` after one publisher race resolved by rebase + deterministic re-derive. The production deploy (run `33716265674`) completed **success with 0 failed steps**, and `https://vaultsparkstudios.com/api/build-sha.json` serves exactly `1d1ccc68d` — verified against the served artifact, not the workflow's own verdict. `/`, `/evidence/`, `/status/` and `/games/` all 200; `/proof/` correctly 301. The primary fix was then exercised on the real cron: `uptime-probe` run `33716566954` completed **success**, logging `uptime publish: published on attempt 1.` — the new shared helper landing a real publish against real `main`.
+
+**Honest limits:** the polls fix changes no pixels today (no active poll; recorded as a capability fix). Real row counts behind the silent-zero tables were not measured — the sandbox classifier blocked the credentialed probe and it was not worked around — so that finding rests on policy reading.
+
+**Evidence:** build-deploy-currency 78/78 · check-deploy-currency-gate 30/30 · build-tt-readiness 14/14 · prune-served-surface 43/43 · doctor 15/16 (sole warn sibling-owned). Exit codes read directly, never through a pipe.
+
+## 2026-09-03 — Session 341 (the publisher's other half)
+
+**Ran:** `/arc` under founder authorization for a direct push to `main` and a full production deploy.
+
+**Found first, on a live probe:** the `uptime-probe` cron failed two consecutive runs from 01:52Z, leaving the public availability surface — `api/uptime.json`, `public-status`, `status-proof`, `citation`, `stats-surface` — unpublished. The conflict in the log was a red herring. The defect was the retry loop: `git pull --rebase --autostash origin main || true` swallowed a failed rebase, so attempt 1's conflict left the runner detached mid-rebase and attempts 2, 3 and 4 could only fail on "unmerged files". Three of four attempts were structurally incapable of succeeding. The 03:45Z run then recovered on its own once the race cleared — the fix prevents recurrence rather than restoring service, and that self-recovery is why the defect is durable: the loop only ever succeeds when it does not meet a conflict (D-S341.1).
+
+**Blast radius:** eleven of twelve publishers carried that shape. `news-publish.yml` was the sole exception and already had the answer. The landing transaction now lives in one gated helper — `scripts/ci/publish-push.sh` — that all twelve call, with `--resync` repairing the derived closure of anything a rebase brings in and amending it into the publish commit before pushing.
+
+**The gate named for this class had been green throughout,** because its subject was the script's transient-network half and the git transaction was outside it. Extending it was easy; proving it was not. **Both negative controls passed on the first attempt** — the landing check had inherited `UNATTENDED_TRIGGER` from the network contract, so push-triggered `sitemap.yml` (which carried the worst variant in the repo) was invisible to it; and `helperRecovers()` was matching `git rebase --abort` in the helper's own *header comment*. Both fixed, both pinned in the self-test, and both controls now fail correctly — the second taking down all twelve delegating callers at once, which is the indirection guarantee (D-S341.2).
+
+**Then the dead-cron detector, measured rather than assumed:** its 120-run window spans **4.6 hours** because push traffic dominates it, so 11 of the 14 scheduled workflows it claimed to check returned zero rows — and zero rows counted as healthy. Now one bounded window per workflow, judged against each cron's own cadence, with `unmeasured` reported honestly and a new `silent` verdict for a cron that is not failing because it is not running (D-S341.3).
+
+**Found by that fix, immediately:** **Monthly Member Newsletter has failed all six runs since 2026-04-02 — it has never once sent.** Two confirmed causes: `NEWSLETTER_SECRET` does not exist (the bearer token is literally empty) and the edge function returns 404 because it was never deployed. Diagnosed in full and **deliberately not armed** — deploying it emails every member next month, which is not a side effect of a website deploy session (D-S341.4).
+
+**Also:** the ambient "13 unexpected-absent protocol scripts" is resolved into a named `propagationGap` with the canonical owner attached; the `--heal` shim path was rejected because a shim would measure studio-ops while appearing to measure this repo (D-S341.5).
+
+**Deliberately deferred, reasons re-published:** the `/evidence/` nav registration (five consumers) and the art-only cover regeneration (rotates the home LCP asset). Both carried with the same reason that was true in S340 and is still true: neither belongs next to an authorized production deploy.
+
+**Evidence:** check-ci-publisher-resilience 28/28 self-test (+9), `--check` exit 1 on the mutated tree and 0 restored, read directly without a pipe · check-scheduled-workflow-staleness 18/18 (+13) · 12 publishers on one implementation, 0 raw `pull --rebase` landing sites left · check-protocol-scripts 0 unexpected-absent (was 13).
+
+**Found by refusing to fake a receipt:** re-binding the CANON-053 visual receipt after the reseal, I wrote a finding claiming 84 captures were inspected before inspecting any of them. Correcting that meant actually opening them — and the fourth, `proof--high-contrast--desktop.png`, was entirely blank. So was every `proof--*` capture, in all seven themes at both viewports. `/proof/` was retired in S335; `capture-theme-matrix.mjs` still targeted it and serves files from its own server with no `_redirects`, so every request 404'd to a blank page that `record-visual-review --all` then certified as manually reviewed. Third recurrence of the S338/S340 class, invisible to the S340 gate because this harness is invoked by a person, not a workflow. Route corrected and a blank-capture guard added (HTTP >=400 or <200 chars of visible text fails the run); proven in the failing direction. Receipt now records 8/84 manually reviewed, honestly (D-S341.7).
+
+**Honest limits:** the `silent` verdict is proven by fixtures only — no live cron is currently silent. The newsletter is diagnosed, not fixed. 76 of 84 captures remain automated-only — a smaller claim than the receipt used to make, and the only supportable one.
+
+
+## 2026-09-03 — Session 342 (the blocker was four-fifths phantom)
+
+**Ran:** a founder-directed investigation of what remained on the Obelisk integration, then `/closeout` with a direct push to `main` and a full production deploy.
+
+**The session started with me being wrong.** Asked what was left, I answered from `api/identity-migration-receipt.json` — generated 2026-08-26, eight days stale — and reported the last step as a cross-repo registration the `obelisk` repo had to ship. The founder said Obelisk should be complete as of now. That was a correct challenge to a false claim, not a misunderstanding, and re-probing settled it in minutes (D-S342.2).
+
+**What re-probing found, all live:** relying party `active`, passport v2, **both** callbacks registered including `website.staging`; `/login` → `obeliskgate.com/auth/authorize` with correct PKCE S256, client_id, state, nonce; revocation endpoint live in OIDC discovery; `recordJourney` wired at all three legs of the deployed Worker; `OBELISK_RP_ID`/`RP_NAME`/`RP_ORIGIN` consumed by zero files here. Four of five listed blockers were already satisfied. The remaining one — a real human completing a sign-in — is unchanged and cannot be delegated.
+
+**Root-caused the phantom.** `deriveDependency` returns `missing` when it cannot find the request cargo; cargo `01JV7U…` aged out of the 168-hour Ark window months ago. So a public trust surface published `state: rejected` and a release blocker for a job that was long since done. Fixed by observing the substance: all four contract `requestedChecks` are directly verifiable at the IdP, with an **unregistered control redirect** that must be denied — without the control, acceptance proves nothing. Fails closed five ways, 27/27 both directions, `--probe` kept out of the default build so a byte-checked artifact cannot drift with the network (D-S342.1).
+
+**Preserved the hold deliberately.** `releaseState: hold` unchanged, both `real-provider-e2e-pending` blockers present, `auth/**` · `surface:identity` · `worker:identity` still held. Only the two false entries cleared.
+
+**Declined to re-request settled work, then found the reason it mattered.** Instructed to ship the registration cargo anyway, I began implementing and stopped at a defect: the live probe settles only the no-cargo path, so reopening the conversation would have demoted the dependency from `completed` back to `sent` and re-raised `releaseDependenciesSatisfied`. The founder redirected to the recommended path; a `pattern-share` carrying the class went to the portfolio instead (D-S342.3).
+
+**Two errors of mine, on the record.** I sent the founder into `--live` twice — an automated browser that structurally could not offer a Chrome-held passkey, timing out twice and writing nothing — while `--watch` sat one line away in a usage block I had already read. And I nearly concluded watch mode was structurally broken after grepping this repo's stale worker source; the live Worker has the producer at all three legs (D-S342.4). Roughly forty minutes of founder time went to avoidable misdirection.
+
+**Also shipped:** `--channel` and `--wait-minutes` on the journey verifier, with a loud failure when a requested channel will not launch; PKCE challenge derived from the RFC 7636 verifier rather than pasted, clearing a secret-scanner false positive at source rather than by allowlist.
+
+**Evidence:** build-release-dependencies 27/27 (+21) · `--probe` verified against the live IdP with the control denied · build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean · release-proof hold preserved with both real blockers intact · Ark pattern-share `01K1J2NO0FB8B3B26F4CD77A8D`.
+
+**After the closeout commit, three more things.** (1) Asked for the easiest route through the ceremony, I found most of its difficulty was choreography rather than security: `--watch` discarded receipts older than its own start while the Worker keeps them in KV for seven days. `--since <hours>` decouples sign-in from verification, capped at the TTL and disclosed as `observationWindow`; default unchanged, 36/36 (D-S342.5). (2) Established that the hold blocks nothing in flight — 11 of the last 12 production deploys succeeded with it active. (3) A reseal tripped a real red on `origin/main`: the Desk publisher committed five new art files with no LQIP placeholders and, being `[skip ci]`, nothing caught it. Publisher fixed; the cascade gate that should have caught it reported 29/29 clean because the art→lqip edge is absent from the graph — boarded (D-S342.6). Ark `repo-question` shipped to `obelisk` on the consent button that silently no-ops an expired `req`.
+
+**Honest limits:** `api/identity-migration-receipt.json` is NOT stale and never was — I said otherwise four times this session and was wrong. `generatedAt: evidence.updatedAt` by construction, so the receipt carries the timestamp of the EVIDENCE, not of the build; a rebuild cannot and must not advance it. It reads 2026-08-26 because that is genuinely when the identity evidence was last observed. Re-ran the builder to confirm: exit 0, `honest-dark (1 blocker)`, timestamp unchanged. What I called a personal failure was the system being correct. The 14-day probe clock has no automated re-probe cadence yet, so it will go stale on its own and fall honestly back to `missing`; boarded. Obelisk is **not** complete: the provider journey remains unobserved.
+
+---
+

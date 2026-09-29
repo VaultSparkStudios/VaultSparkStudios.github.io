@@ -2640,3 +2640,20 @@ Also recorded rather than muted: the newsletter still shows six consecutive fail
 ### S364 completion addendum — 2026-09-23
 
 Production repair completed after the founder’s scoped performance exception. Retain the recorded 888/1000 score; no score inflation from repeated checks. Hosted Linux exposed mixed local line endings in visual evidence: recapture from exact committed LF bytes before certifying portability. Existing performance and receipt-portability follow-ups remain on TASK_BOARD.
+
+## 2026-09-29 — Session 365 (Desk integrity and scoped content release) | Total: 946/1000 (v3.0) | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 95 | Semantic source extraction, corrected facts and page-chrome gate shipped; hosted Lighthouse, E2E and compliance passed. |
+| Creative Alignment | 95 | Reader-first article hierarchy reviewed in 168 seven-theme desktop/mobile captures. |
+| Momentum | 96 | Three audit items shipped and the static content lane deployed to production. |
+| Engagement | 95 | The story and sources now appear before illustration and reactions, with the illustration still accessible below. |
+| Process Quality | 90 | Staging lineage initially ran before its continuity summary; the settled 11/11 rerun passed and sequencing follow-up is filed. |
+| Cross-Repo Coherence | 100 | No sibling source was edited; standing identity ownership and holds were preserved. |
+| Security Posture | 97 | Staged secrets scan found zero across 231 text files; content purity withheld 375 other paths from production. |
+| Ecosystem Integration | 94 | Staging receipt, production content receipt, and live public article were independently verified. |
+| Capital Efficiency | 92 | No new paid dependency or API use; repeated bot-driven rebases and release scans consumed time. |
+| Automation Coverage | 92 | Article order and fact-quality gates cover the new behavior; scanner and build-check setup were repaired, while deploy-continuity ordering remains manual. |
+
+**Brainstorm → TASK_BOARD:** make staging deploy regenerate continuity before the ceremony, and watch three future article Lighthouse medians at the unchanged 0.90 floor. Both are bounded checks tied to failures or variance observed this session.

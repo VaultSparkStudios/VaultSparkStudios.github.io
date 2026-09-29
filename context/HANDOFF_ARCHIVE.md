@@ -1760,3 +1760,19 @@ Execute the founder-requested full `/start → /audit → /implement → /closeo
 - **Gates on the way (all real, all fixed at source):** the ceremony lineage refusal above; then the pre-push coherence gate caught `release-proof`, `status-proof` and `stats-surface` drifting over the upstream rebase — converged with `resync-derived` rather than resealed one at a time. Three pushes raced the hourly publishers and were landed with `git pull --rebase`; generated-file conflicts were resolved to the fresh release evidence and regenerated afterwards.
 
 - **RELEASED — full deploy.** Staging publish `ef30e3790de4c9f84aff9c6b` (7018 files) → staging gate **3 passed · 3 held-by-design · 0 failed** → scoped promotion run `35541452760` (`confirm_production=true`, identity surfaces held) **success**. Pushed `8aaf100c8` after two publisher rebases; the deployed commit `cf48e380c` has it as an ancestor, so S363 is live. Verified from served bytes: `/api/supabase-control-plane.json` serves `overall: "partial"` with three ready planes, and `/api/identity-migration-receipt.json` serves `readyPlanes: 3, totalPlanes: 4` beside it — consistent for the first time. `smoke-live` 6/6.
+
+
+---
+<!-- archived: 2026-09-29 -->
+
+## Where We Left Off — S363 · 2026-09-20
+
+**Session intent:** founder `/arc`, with authorization to commit directly to main and fully deploy.
+
+- **Triage was clean and stayed clean.** No lock, clean tree, F7 write-back current through `2d101d67`. 57 commits behind origin — the routine refresh Action, not a cut-off. The audit went looking for real work instead of recovering a session.
+- **The audit found three, and implementation found a fourth that was larger than all of them.** A1 the newsletter send bypass, A2 the staleness probe's missing "repaired" verdict, A3 the Supabase `overall` false red — then A4, an inbound propagation that had quietly taken eight local-ahead guards back during this session's own `/start`.
+- **Shipped (D-S363.1…6):** the send gate keys on effective mode, closing a dropdown bypass of the arming decision and making the hold branch testable; the staleness probe reads the workflow source's commit time and reports a bounded, self-expiring `repaired-untested`; the control-plane verdict aggregates all four planes; the startup brief resolves revenue through the shared resolver; eight propagation-clobbered guards merged back beside the propagated improvements; the write-back probe filters by authorship and gained a real `--self-test`.
+- **Nothing was armed and nothing was sent.** D-S341.4 is preserved and is now *harder* to bypass than it was this morning.
+- **The A4 lesson worth carrying:** every clobbered guard that failed loudly did so because it happened to be a named import. `check-secrets.mjs` was not — it kept running and simply stopped drawing two distinctions, caught only by a contract test. And it is a recurrence: S316 restored `suggestCapabilities` after this exact clobber and shipped it upstream so the next propagation would carry it. It did not. Cargo alone is not sufficient; the lane needs an exported-symbol diff. Shipped as `pattern-share` `01K3052GLJ1D81D97FA5043903`.
+- **Verified locally:** `build:check` **503/503** (up from 502 — two previously-unreachable gates are now wired in and one vacuous self-test step removed); mobile audit **215/215** against the local preview; visual matrix **84 captures** hash-bound with 5 manually inspected; both receipts bound to the final tree; doctor and the live probes green.
+- **Deferred, on purpose:** purging `api/founder-presence.json` from history still needs a force-push (founder-gated, CANON-019). The stale ATLAS session lock and the four sibling-owned compliance failures are cross-repo and were not touched (CANON-018). The Supabase service-role slot still points at the sibling project — reported by name, not worked around.

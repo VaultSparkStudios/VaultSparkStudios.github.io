@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-29 (Session 364 closeout) -->
-<!-- semantic-freshness: hash=fcb6aa7b77f44284 next=365 silSession=364 silScore=888 handoff=- tests=- -->
+<!-- generated-at: 2026-09-29 (Session 365 closeout) -->
+<!-- semantic-freshness: hash=05ae3eee9b5355ee next=366 silSession=365 silScore=946 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 364 closeout · 2026-09-29.
+> **Fast-boot brief** — generated at Session 365 closeout · 2026-09-29.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 365 · 2026-09-29 · FOUNDER MODE                         ║
+║  Session 366 · 2026-09-29 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S364) - WHAT SHIPPED ══════════════════════════╗
-║  S364 signup repair deployed and production negative route veri  ║
+╔══ LAST SESSION (S365) - WHAT SHIPPED ══════════════════════════╗
+║  S365 audit items shipped; 0.90 article Lighthouse floor restor  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,53 +41,53 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    888/1000   █████████████████████░░░   89%                     ║
+║    946/1000   ██████████████████████░░   95%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 6d  ·  Last closeout: 10d  ·  (active =…         ║
+║    Last active: 0d  ·  Last closeout: 10d  ·  (active =…         ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        90    █████████░  ▇▇▇▇▇▇█▇ →                ║
-║    Alignment         90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          70    ███████░░░  ▇▇▇▇▇▇▇▅ →                ║
-║    Engagement        85    █████████░  ▇▇▇▇▇▇▇▆ →                ║
-║    Process Qual      80    ████████░░  ▇▇▇▇▇██▆ →                ║
+║    Dev Health        95    ██████████  ▇▇▇▇▇█▇▇ →                ║
+║    Alignment         95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          96    ██████████  ▇▇▇▇▇▇▅▇ →                ║
+║    Engagement        95    ██████████  ▇▇▇▇▇▇▆▇ →                ║
+║    Process Qual      90    █████████░  ▇▇▇▇██▆▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
-║    Security          98    ██████████  ········ →                ║
-║    Ecosystem         90    █████████░  ········ →                ║
-║    Capital           90    █████████░  ········ →                ║
-║    Automation        95    ██████████  ········ →                ║
+║    Security          97    ██████████  ········ →                ║
+║    Ecosystem         94    █████████░  ········ →                ║
+║    Capital           92    █████████░  ········ →                ║
+║    Automation        92    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 364 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 365 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    505/505 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         505/505 passing (2026-09-23)                   ║
+║  ✓  Tests         505/505 passing (2026-09-29)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   6d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46724 FORGE  ·  12d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  7d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -114,26 +114,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  827/1000  (↓61 vs current 888)                      ║
-║  At-risk:    Momentum Δ-17 · Process Quality Δ-12 ·…             ║
-║  Calibration: 2/3 samples — uncalibrated                         ║
+║  Projected:  966/1000  (↑20 vs current 946)                      ║
+║  All categories forecast stable or rising.                       ║
+║  Calibration: MAE 73.3 over last 3 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
+║  100  [VERIFY]       Make staging deployment regenerate its con  ║
+║        Make staging deployment regenerate its continuity summar  ║
 ║                                                                  ║
-║   94  [AI]           Make build:check idempotent over ignis/out  ║
-║        Make build:check idempotent over ignis/output/ecosystem-  ║
+║   97  [VERIFY]       Watch the next three article Lighthouse ru  ║
+║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
-║   93  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
-║        The newsletter cron still shows 6 consecutive failures u  ║
+║   90  [PRODUCT]      Teach the closeout wipe guard to recognize  ║
+║        Teach the closeout wipe guard to recognize a byte-preser  ║
 ║                                                                  ║
-║   92  [COHESION]     Refuse an inbound propagation that removes  ║
+║   86  [COHESION]     Refuse an inbound propagation that removes  ║
 ║        Refuse an inbound propagation that removes an exported s  ║
 ║                                                                  ║
-║   86  [VERIFY]       Verify one real confirmation only after ex  ║
-║        Verify one real confirmation only after explicit email-s  ║
+║   84  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
+║        The newsletter cron still shows 6 consecutive failures u  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 364 closeout · 2026-09-29*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 365 closeout · 2026-09-29*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
