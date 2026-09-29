@@ -52,6 +52,9 @@ const PATTERNS = [
 
 // ── Allowlist rules ────────────────────────────────────────────────────────
 const ALLOWLIST_PATHS = [
+  // Text regexes cannot inspect binary assets; avoid decoding screenshots and
+  // font/image payloads as UTF-8 (and spawning one git-show per asset).
+  /\.(?:png|jpe?g|webp|avif|gif|ico|woff2?|ttf|otf|pdf)$/i,
   /^secrets\//,
   /^\.ops-cache\//,
   /^portfolio\/ACCESS_LEDGER\.ndjson$/,
@@ -196,6 +199,13 @@ function gitStagedContent(file) {
   return r.stdout;
 }
 
+function gitUnstagedFiles() {
+  const r = spawnSync('git', ['diff', '--name-only', '-z'], {
+    cwd: ROOT, encoding: 'utf8',
+  });
+  return r.status === 0 ? new Set(r.stdout.split('\0').filter(Boolean)) : null;
+}
+
 // ── Working-tree scan ──────────────────────────────────────────────────────
 function walkFiles(dir, base = '', out = []) {
   let entries;
@@ -232,12 +242,19 @@ function run() {
       files = gitStagedFiles();
     }
 
+    // Read the working file when it matches the index. This avoids one slow
+    // git process per generated text file while keeping partially staged files
+    // bound to their actual index content.
+    const unstagedFiles = MODE_STAGED && !MODE_ALL && !pathArg ? gitUnstagedFiles() : null;
     for (const file of files) {
       if (isAllowlistedPath(file)) continue;
 
       let content;
       if (MODE_STAGED && !MODE_ALL && !pathArg) {
-        content = gitStagedContent(file);
+        if (unstagedFiles && !unstagedFiles.has(file)) {
+          try { content = fs.readFileSync(path.resolve(ROOT, file), 'utf8'); } catch { /* fall back to index */ }
+        }
+        if (content === undefined) content = gitStagedContent(file);
       } else {
         try {
           const full = path.resolve(ROOT, file);

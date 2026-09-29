@@ -896,16 +896,16 @@ ${day.simulated ? PREVIEW_BANNER : ''}
 ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
   <section class="desk-tldr" aria-labelledby="desk-short-title"><h2 class="desk-tldr-k" id="desk-short-title">The short version</h2><p class="desk-standfirst">${escapeHtml(story.tldr)}</p></section>
   ${storyToc(tocSections)}
-  ${memeFigure(story, day)}
   <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
   <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
-  ${panelReactions(story, day)}
   <section class="desk-section" id="sources" aria-labelledby="desk-sources-title">
   <h2 class="desk-h2" id="desk-sources-title">Where this came from</h2>
   <p class="desk-section-note">Every factual claim in the piece, linked to the source it came from. Open a receipt to copy its verifiable id and hash.</p>
   <ol class="desk-panel desk-facts">${facts}</ol>
   <p class="desk-critique-link"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
   </section>
+  ${memeFigure(story, day)}
+  ${panelReactions(story, day)}
   <section class="desk-section" id="positions" aria-labelledby="desk-positions-title">
   <h2 class="desk-h2" id="desk-positions-title">Where they are coming from</h2>
   ${pulseBar(story, day, heat, stats)}
