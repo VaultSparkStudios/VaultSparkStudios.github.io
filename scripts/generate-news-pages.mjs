@@ -201,9 +201,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, heroPreload = null }) {
+function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${heroPreload ? `<link rel="preload" as="image" href="${escapeHtml(heroPreload)}--640.webp" media="(max-width: 600px)" type="image/webp" fetchpriority="high"><link rel="preload" as="image" href="${escapeHtml(heroPreload)}.avif" media="(min-width: 601px)" type="image/avif" fetchpriority="high">` : ''}<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -407,7 +407,7 @@ function memeFigure(story, day) {
     : `AI-generated editorial illustration, drawn by <strong>${escapeHtml(persona.name)}</strong> (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
     <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
-    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
+    <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
 }
@@ -847,7 +847,6 @@ function buildStoryPage(day, story) {
     description: metaDescription(story),
     canonical: supersededUrl || url,
     ogImage: image,
-    heroPreload: isFallbackArt(story) ? null : `/assets/og/news/${day.date}--${story.slug}--meme`,
     depth: '../../../',
     noindex: !!day.simulated || !!supersededUrl,
     breadcrumb: breadcrumbFor([
@@ -893,11 +892,11 @@ function buildStoryPage(day, story) {
   ${followUpLine(story)}
   ${bylineRow(story, day, stats)}
   </header>
-  ${memeFigure(story, day)}
 ${day.simulated ? PREVIEW_BANNER : ''}
 ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
   <section class="desk-tldr" aria-labelledby="desk-short-title"><h2 class="desk-tldr-k" id="desk-short-title">The short version</h2><p class="desk-standfirst">${escapeHtml(story.tldr)}</p></section>
   ${storyToc(tocSections)}
+  ${memeFigure(story, day)}
   <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
   <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
   ${panelReactions(story, day)}

@@ -2,7 +2,7 @@ name: RUM Field Pull
 
 # S174 rum-autopull-ci — accrue field RUM history daily so the strict perf
 # ladder (scripts/check-rum-strict-ladder.mjs) flips on evidence cadence,
-# not founder-session cadence. Pipeline is dependency-free (node builtins).
+# not founder-session cadence. The news-page generator needs the site dependencies.
 # Commits with [skip ci] so the push does not trigger the full suite.
 on:
   schedule:
@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Install site dependencies
+        run: npm install --no-audit --no-fund
 
       - name: Pull RUM from R2 and roll up
         env:
