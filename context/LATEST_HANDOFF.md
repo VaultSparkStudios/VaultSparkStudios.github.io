@@ -12,6 +12,8 @@ Next: monitor the next three article Lighthouse runs. Fix staging-deploy continu
 
 Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle sanitization drift and rotated the work log at its size cap. The full build gate passed 505/505 twice before closeout. The automated late-night Desk edition landed on main after this content release; it is a new candidate for the next staging-first promotion, not part of production content head `c46f22fa36d52901e505f2a99433cef9276fbbd0`.
 
+The post-closeout hosted compliance run found two new edition art files missing from `data/lqip-map.json`: the Desk publisher derived the map before staging its new art, while the map generator scans Git's index. The map is regenerated, the publisher now stages art before map derivation, and its ordering guard passes. The corrected tree passed the full 505/505 local build gate; hosted rerun is pending.
+
 ## Where We Left Off — S364 · 2026-09-23
 
 Session intent: repair Desk signup, commit/push main, fully deploy and close out.

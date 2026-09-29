@@ -7,6 +7,7 @@ Last updated: 2026-09-29 (S365: Desk source integrity and article release)
 - [x] Extract publisher article prose before fact selection; correct page-chrome facts in the 2026-09-28 edition and gate future Desk facts against navigation, promotion, and captions.
 - [x] Clear the unchanged 0.90 article Lighthouse floor; hosted local and staging Lighthouse passed on `091481ba5` (run `36629194379`).
 - [x] Verify 168/168 theme captures, 215/215 mobile cases, hosted E2E/compliance, and staging ceremony 11/11; deploy the scoped content lane and verify the live article order (`36631405999`).
+- [x] Repair the late-night Desk publisher's art-to-placeholder order after hosted compliance found two missing LQIP entries; regenerate the map, pass 505/505 locally, and guard the workflow ordering.
 - [ ] **[S365][CI/P2]** Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
 - [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
 - [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.

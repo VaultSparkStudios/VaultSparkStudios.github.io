@@ -134,12 +134,17 @@ function scriptFlags(scriptName) {
 function deskArtworkGuardFinding(src) {
   const rebuild = src.indexOf('node scripts/build-news-desk.mjs --rebuild');
   const guard = src.indexOf('git diff --name-only --diff-filter=MD -- assets/og/news/');
+  const artStage = src.indexOf('git add -- assets/og/news/ data/news-desk/art/');
+  const lqip = src.indexOf('node scripts/build-lqip-map.mjs');
   const publish = src.indexOf('git add index.html data/news-desk/ assets/og/news/');
   if (rebuild < 0) return 'Desk publisher must run the normal --rebuild path';
   const rebuildLine = src.slice(rebuild, src.indexOf('\n', rebuild));
   if (rebuildLine.includes('--refresh-art')) return 'unattended Desk publisher must never pass --refresh-art';
   if (guard < rebuild || publish < guard) {
     return 'tracked Desk artwork mutation guard must run after rebuild and before git add';
+  }
+  if (artStage < guard || lqip < artStage || publish < lqip) {
+    return 'new Desk art must be indexed before the LQIP map and final publish';
   }
   return null;
 }
@@ -240,10 +245,12 @@ function selfTest() {
   assert(checkInv && checkInv.liveInvocation === false, 'check-* verifier is not misclassified as a publisher');
   assert(UNATTENDED_TRIGGER.test(wfHard) && UNATTENDED_TRIGGER.test(wfContinue), 'schedule/workflow_run detected as unattended');
   assert(!UNATTENDED_TRIGGER.test('on:\n  push:\n    branches: [main]\n'), 'push-only workflow is NOT unattended');
-  const guardedDesk = 'node scripts/build-news-desk.mjs --rebuild\nchanged_art="$(git diff --name-only --diff-filter=MD -- assets/og/news/)"\ngit add index.html data/news-desk/ assets/og/news/';
+  const guardedDesk = 'node scripts/build-news-desk.mjs --rebuild\nchanged_art="$(git diff --name-only --diff-filter=MD -- assets/og/news/)"\ngit add -- assets/og/news/ data/news-desk/art/\nnode scripts/build-lqip-map.mjs\ngit add index.html data/news-desk/ assets/og/news/';
   assert(deskArtworkGuardFinding(guardedDesk) === null, 'Desk artwork mutation guard is ordered between rebuild and publish');
   assert(/never pass --refresh-art/.test(deskArtworkGuardFinding(guardedDesk.replace('--rebuild', '--rebuild --refresh-art')) || ''), 'unattended Desk refresh-art is rejected');
   assert(/must run after rebuild/.test(deskArtworkGuardFinding(guardedDesk.replace('git diff --name-only --diff-filter=MD -- assets/og/news/', 'echo unguarded')) || ''), 'missing Desk artwork mutation guard is rejected');
+  assert(/must be indexed/.test(deskArtworkGuardFinding(guardedDesk.replace('git add -- assets/og/news/ data/news-desk/art/', 'echo unstaged')) || ''), 'new Desk art omitted from index before LQIP is rejected');
+  assert(/must be indexed/.test(deskArtworkGuardFinding(guardedDesk.replace('node scripts/build-lqip-map.mjs', 'echo stale map')) || ''), 'missing LQIP derivation is rejected');
 
   // Classifier regex cases.
   assert(NETWORK_CALL.some((r) => r.test(`execFileSync('gh', ['api'])`)), 'gh execFileSync is a network call');

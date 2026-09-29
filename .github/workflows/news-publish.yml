@@ -221,6 +221,9 @@ jobs:
             echo "$changed_art"
             exit 1
           fi
+          # build-lqip-map scans git's index. Newly generated art is still
+          # untracked here, so stage it before deriving its placeholders.
+          git add -- assets/og/news/ data/news-desk/art/
           node scripts/build-news-desk-stats.mjs
           node scripts/build-news-freshness.mjs
           # Pages consume these feeds at render time. Build them first so a new
