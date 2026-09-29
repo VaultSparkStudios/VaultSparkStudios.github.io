@@ -1067,19 +1067,17 @@
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-29T20:39:50.688Z",
-        "candidateReady": false,
-        "candidateFindings": [
-          "staging-artifact-root-mismatch"
-        ],
-        "candidateBuildSha": "faf244a3810aad7969964f1d63fbaad218078df6",
-        "stagingBuildSha": "faf244a3810aad7969964f1d63fbaad218078df6",
+        "generatedAt": "2026-09-29T20:52:45.025Z",
+        "candidateReady": true,
+        "candidateFindings": [],
+        "candidateBuildSha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
+        "stagingBuildSha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
         "artifactManifest": {
-          "candidateRoot": "9dfd64ea1a8e9b9190445c10a7dc761c93b94419c20ab87b7149c92215ae6d2c",
+          "candidateRoot": "9e7177b8c4e9d04b529ad5bf9efadea0cfa3ff68f4de9df6ebf5ad727e1b0f88",
           "candidateLeafCount": 53,
-          "stagingRoot": "2be9c3bab1f12b52fd6875580303c47c2d0f1a6c2a84303fcda4cb4299304353",
+          "stagingRoot": "9e7177b8c4e9d04b529ad5bf9efadea0cfa3ff68f4de9df6ebf5ad727e1b0f88",
           "stagingLeafCount": 53,
-          "matched": false
+          "matched": true
         },
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
@@ -1087,13 +1085,37 @@
         "staging": "https://website.staging.vaultsparkstudios.com",
         "status": "yellow",
         "surfaceParity": {
-          "state": "uncomparable",
-          "productionRoutes": null,
+          "state": "staging-ahead",
+          "productionRoutes": 176,
           "stagingRoutes": 199,
           "missingOnStaging": [],
-          "missingOnStagingCount": null,
-          "aheadOnStaging": [],
-          "aheadOnStagingCount": null,
+          "missingOnStagingCount": 0,
+          "aheadOnStaging": [
+            "/news/2026-09-23/anthropic-launches-claude-opus-5-5-with-stricter-safeguards/",
+            "/news/2026-09-23/ema-raises-77m-as-ai-starts-eating-into-enterprise/",
+            "/news/2026-09-23/openai-breaches-medicare-albanese-reveals/",
+            "/news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/",
+            "/news/2026-09-24/australia-says-openai-agent-hacked-into-government-website/",
+            "/news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/",
+            "/news/2026-09-24/openai-agent-hacked-australian-government-website-pm-says/",
+            "/news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/",
+            "/news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/",
+            "/news/2026-09-25/pentagon-was-right-to-slap-anthropic-with-a-security/",
+            "/news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/",
+            "/news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/",
+            "/news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/",
+            "/news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/",
+            "/news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/",
+            "/news/2026-09-27/openai-agents-tried-to-bruteforce-a-un-website/",
+            "/news/2026-09-27/openai-halts-training-of-latest-models-as-reports-mount/",
+            "/news/2026-09-27/openai-pauses-training-of-its-most-capable-models/",
+            "/news/2026-09-28/anthropic-gamma-and-clay-share-what-happens-when-enterprises/",
+            "/news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/",
+            "/news/2026-09-28/nvidia-launches-new-platform-for-reining-in-rogue-ai/",
+            "/news/2026-09-29/anthropic-warns-of-existential-ai-risks-to-humanity-in/",
+            "/news/2026-09-29/new-kind-of-cyber-incident-openai-apologises-for-medicare/"
+          ],
+          "aheadOnStagingCount": 23,
           "gating": true,
           "gatingSince": "S339",
           "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -1101,12 +1123,28 @@
         "routes": [
           {
             "route": "/",
-            "prodStatus": 403,
+            "prodStatus": 200,
             "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
-            "shellParity": false,
-            "prodShell": [],
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/ambient-core.shell-1732d293f8.js",
+              "assets/ambient-feature.shell-9b5baeb1ab.js",
+              "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+              "assets/hero-ticker.shell-550971e267.js",
+              "assets/home-idle-loader.shell-15b061f5c6.js",
+              "assets/nav-sheet.shell-d6938be4eb.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/public-intelligence.shell-c86a6ecc39.js",
+              "assets/pwa-nav.shell-5f63b6b75a.js",
+              "assets/schema-injector.shell-33115efcde.js",
+              "assets/sentry-init.shell-8b1d92d92b.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/stats-surface.shell-b33242e1cc.js",
+              "assets/style.shell-0fa853d549.css",
+              "assets/theme-toggle.shell-8221605898.js"
+            ],
             "stagingShell": [
               "assets/ambient-core.shell-1732d293f8.js",
               "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -1124,12 +1162,12 @@
               "assets/style.shell-0fa853d549.css",
               "assets/theme-toggle.shell-8221605898.js"
             ],
-            "headerParity": false,
+            "headerParity": true,
             "prodHeaders": {
-              "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-              "hsts": "",
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
               "xcto": "nosniff",
-              "referrer": "same-origin"
+              "referrer": "strict-origin-when-cross-origin"
             },
             "stagingHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -1141,12 +1179,7 @@
             "stagingCspMode": "dynamic-worker",
             "stagingCanonicalCsp": true,
             "stagingSecurityHeaders": true,
-            "reasonCodes": [
-              "status-mismatch",
-              "prod-forbidden",
-              "shell-mismatch",
-              "header-mismatch"
-            ]
+            "reasonCodes": []
           },
           {
             "route": "/studio-pulse/",

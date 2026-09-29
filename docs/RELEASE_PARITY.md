@@ -1,25 +1,27 @@
 # Release platform parity
 
-Observed: 2026-08-17
+Observed: 2026-09-29
 
-Candidate: `29be0bd8df6ff1d5e2f125ff38c864bbbc908eca`
-Receipt: `8aa1f9f42262b96d5e8ea5b4` · 5,007 files · chain depth 39
+Candidate: `091481ba5625ac844d21dfa6416b9ddd95bceb49`
+Receipt: `eb48a702c8d5cf87b330e334` · 7,622 files · continuity depth 87
 Canonical staging: `https://website.staging.vaultsparkstudios.com`
 
 ## Browser surfaces
 
-Desktop and mobile browser surfaces are at feature parity for this website release.
+The article layout and site navigation remain usable on desktop and mobile browsers.
 
-- The blocking runtime matrix passed 235/235 checks across 47 routes and five mobile viewports.
-- The canonical staging release browser passed 6/6 scenarios, including the mobile drawer and all themes.
-- CANON-053 visual evidence covers the three changed Rank Projector surfaces at 360, 390, and 430 pixels across all seven themes: 63/63 captures manually reviewed.
-- Touch-target and runtime findings contain zero P0/P1 failures.
-- Auxiliary headless measurements on staging observed LCP 424 ms / CLS 0.0138 at 1440 px and LCP 508 ms / CLS 0.0225 at 390 px. The Chrome DevTools performance audit was unavailable, so that distinct check remains recorded as skipped, not passed.
+- The local mobile runtime matrix passed 215/215 checks across phone and tablet viewports.
+- CANON-053 evidence contains 168 hash-bound captures across seven themes and desktop/mobile widths; all were visually reviewed. Article top and illustration-anchor states were inspected after moving the illustration below the story and sources.
+- The staging release ceremony passed 11/11 checks: 3/3 executed browser cases passed, 3 identity cases stayed explicitly held, and the attention suite passed 15/15.
+- Staging parity reports no missing routes; 23 news routes are ahead of production. The staged receipt and ledger were verified from the served origin.
+- Hosted Lighthouse passed both the local preview floor and the staging run (run `36629194379`); hosted E2E and compliance both passed (run `36629194109`). The article's 0.90 performance floor was unchanged.
+
+The canonical `responsive-audit.mjs` returned an explicit SKIP because its Playwright dependency was unavailable in that invocation. The repository's separate 215-case mobile audit and visual captures provide the measured browser evidence above; the skip is not counted as a pass.
 
 ## Native/mobile app
 
-Not applicable. This project ships a responsive public website and does not expose a separate native application surface.
+Not applicable. This project ships a responsive public website without a separate native app.
 
 ## Release disposition
 
-Platform parity passes. This does not override the independent production-promotion interlock: production remains held until the real-provider Obelisk journey and release dependencies are verified.
+The article/static candidate is scoped away from the standing identity and Worker identity holds. Staging, browser parity, Lighthouse, E2E, and compliance pass. Production promotion uses the content-pure lane; identity remains held.
