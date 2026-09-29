@@ -203,7 +203,7 @@ function storyBadge(story, day) {
 
 function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, heroPreload = null }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${heroPreload ? `<link rel="preload" as="image" href="${escapeHtml(heroPreload)}--640.avif" media="(max-width: 600px)" type="image/avif" fetchpriority="high"><link rel="preload" as="image" href="${escapeHtml(heroPreload)}.avif" media="(min-width: 601px)" type="image/avif" fetchpriority="high">` : ''}<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${heroPreload ? `<link rel="preload" as="image" href="${escapeHtml(heroPreload)}--640.webp" media="(max-width: 600px)" type="image/webp" fetchpriority="high"><link rel="preload" as="image" href="${escapeHtml(heroPreload)}.avif" media="(min-width: 601px)" type="image/avif" fetchpriority="high">` : ''}<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -406,7 +406,7 @@ function memeFigure(story, day) {
     ? `<strong>Illustration pending.</strong> ${escapeHtml(persona.name)}’s panel for this story has not been drawn yet; this placeholder is generated from the story, not an illustration of it.`
     : `AI-generated editorial illustration, drawn by <strong>${escapeHtml(persona.name)}</strong> (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
-    <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.avif" type="image/avif">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
+    <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
@@ -1222,13 +1222,19 @@ const responsiveArt = days.flatMap((day) => day.stories
   .filter((story) => !isFallbackArt(story))
   .flatMap((story) => {
     const base = join(ROOT, 'assets', 'og', 'news', `${day.date}--${story.slug}--meme`);
-    return [640, 128].map((width) => ({ source: `${base}.avif`, output: `${base}--${width}.avif`, width }));
+    return [
+      ...[640, 128].map((width) => ({ source: `${base}.avif`, output: `${base}--${width}.avif`, width, format: 'avif' })),
+      { source: `${base}.webp`, output: `${base}--640.webp`, width: 640, format: 'webp' },
+    ];
   }));
 for (const art of responsiveArt) {
   if (existsSync(art.output)) continue;
   if (!existsSync(art.source)) throw new Error(`missing reviewed Desk art: ${art.source}`);
   if (CHECK) throw new Error(`missing responsive Desk art: ${art.output}`);
-  if (APPLY) await sharp(art.source).resize({ width: art.width, withoutEnlargement: true }).avif({ quality: 58, effort: 6 }).toFile(art.output);
+  if (APPLY) {
+    const image = sharp(art.source).resize({ width: art.width, withoutEnlargement: true });
+    await (art.format === 'webp' ? image.webp({ quality: 80, smartSubsample: true }) : image.avif({ quality: 58, effort: 6 })).toFile(art.output);
+  }
 }
 
 const targets = [
