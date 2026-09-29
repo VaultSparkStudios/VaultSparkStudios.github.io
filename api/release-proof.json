@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-29T20:52:45.055Z",
+  "generatedAt": "2026-09-29T21:11:34.979Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -12,7 +12,12 @@
     "status": "yellow",
     "routeCount": 3,
     "reachable": true,
-    "reasonCodes": [],
+    "reasonCodes": [
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
+    ],
     "candidateReady": true,
     "candidateFindings": [],
     "candidateBuildSha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
@@ -63,13 +68,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 428,
-    "ageHours": 157.3,
-    "observedAt": "2026-09-29T20:39:50.760Z",
+    "commitsBehind": 438,
+    "ageHours": 157.9,
+    "observedAt": "2026-09-29T21:11:34.979Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-29T20:39:50.760Z",
+      "observedAt": "2026-09-29T21:11:34.979Z",
       "expectedFrom": "0bcfe41505c55736f504db187021b02b3ad0e5aef2b94e90b89b5779966d3f8e",
       "supersededBy": null,
       "ageHours": 0,
