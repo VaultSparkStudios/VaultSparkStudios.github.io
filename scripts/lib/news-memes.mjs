@@ -14,6 +14,7 @@
  *   pager      VERA  — a 3 A.M. alert
  *   declare    REX   — big-type declaration over a steep curve
  *   oneperson  JUNO  — one figure, one caption
+ *   frame      MICA  — the tool frame and the thing it helped make
  *
  * Everything is deterministic SVG rasterized by the build. No diffusion, no
  * per-image cost, no roulette — and the style is period-appropriate: the satire
@@ -183,7 +184,16 @@ function oneperson({ text, accent }) {
   <text x="420" y="560" font-family="Georgia, serif" font-size="24" fill="#9aa4b8" letter-spacing="6">JUNO</text>`;
 }
 
-const REGISTERS = { cartoon, chart, receipt, thenNow, pager, declare, oneperson };
+function frame({ text, accent }) {
+  return `<rect width="${W}" height="${H}" fill="${DARK}"/>
+  <rect x="80" y="105" width="450" height="355" rx="18" stroke="${accent}" stroke-width="7" fill="none"/>
+  <path d="M115 155 h380 M115 420 l95-95 75 60 105-120 105 155" stroke="${accent}" stroke-width="6" fill="none" stroke-linejoin="round"/>
+  <circle cx="200" cy="235" r="26" stroke="${accent}" stroke-width="6" fill="none"/>
+  ${caption(text, { x: 610, y: 215, size: 41, cols: 24, max: 5, fill: '#fafafa' })}
+  <text x="610" y="565" font-family="Georgia, serif" font-size="24" fill="#9aa4b8" letter-spacing="6">MICA</text>`;
+}
+
+const REGISTERS = { cartoon, chart, receipt, thenNow, pager, declare, oneperson, frame };
 
 /**
  * Render a persona's meme. Falls back to the cartoon register for any voice
@@ -308,6 +318,7 @@ export function altForMeme({ style, text, motif = null, persona = null }) {
     pager: 'A pager alert screen',
     declare: 'A large declarative statement card',
     oneperson: 'A single figure beside the line',
+    frame: 'A creator frame showing the work beside its tool',
   }[style] || 'An illustrated panel';
   const who = persona ? `, signed ${persona}` : '';
   return `${scene}${who}, captioned: “${String(text).trim()}”`;

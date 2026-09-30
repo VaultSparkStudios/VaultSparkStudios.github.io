@@ -1,4 +1,10 @@
 # Latest Handoff
+## Post-S366 Desk persona candidate · 2026-09-30 UTC
+
+Eight fictional correspondent profiles are built in an isolated worktree from `origin/main` at `1e253cc35`; the root `main` worktree has independent local commits and must not be reset. Each profile has a generated portrait, vector mark, sharper editorial voice, beat and boundary notes, a current published record, and a feed of its own sourced contributions. MICA adds creative tools, games and media; the feed clearly says no published work yet. The Desk hub and generated article bylines point to profiles. Release is pending: rebase onto the moving main branch, run candidate and staging gates, and use an eligible promotion lane. The existing full-site identity/provider hold remains in force; the Desk-only path allowlist does not include these new profile routes, portraits or CSS.
+
+Local verification: `build-news-desk --self-test` 157/157, `news-trend-radar --self-test` 99/99, 99 generated pages current, 212 sitemap routes, exact claim parity, 56/56 manually reviewed seven-theme desktop/mobile captures, and CANON-053 checker pass. Supplemental rendered inspection covered the first REX feed card, MICA's honest empty state, and all other six persona mobile heroes. No staging or production proof for this candidate exists yet.
+
 ## Where We Left Off — S366 · 2026-09-30 UTC
 
 **Post-closeout verification, 2026-09-30:** Scheduled Desk authoring runs `36679345071` and `36716077242` each triggered the automatic staging-first release (`36679807164`, `36716493332`), and both release runs passed. The first scheduled CI Health Monitor run `36695299391` caught a checker error: it searched one article for every fact from that UTC date, including facts belonging to other stories. Commit `ed6d294db` scopes fact receipts to the selected story. Hosted rerun `36750321612` passed live-route/Desk assurance and scheduled-workflow health. Hosted E2E and compliance passed together in `36747372651`; hosted Lighthouse `36741037407` passed all nine route tiers. The full-site production promotion hold still applies.

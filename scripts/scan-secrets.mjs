@@ -128,6 +128,16 @@ function isKnownPublicToken(line, matched, pat, relPath) {
       && /^(?:api\/news-desk-claims\.ndjson|docs\/visual-qa\/LATEST\.json|news\/)/.test(relPath.replace(/\\/g, '/'))
       && /^(?:(?:fact|news)-|-)?20\d{2}-\d{2}-\d{2}-[a-z0-9-]{12,}$/i.test(matched)) return true;
 
+  // The retention report lists public screenshot filenames, one JSON string per
+  // line. Their long dated slugs can look like Cloudflare tokens to this broad
+  // heuristic. Limit the exception to the exact generated filename shape; any
+  // credential elsewhere in the report still reaches the scanner.
+  if (pat.type === 'cf-maybe'
+      && relPath.replace(/\\/g, '/') === 'docs/performance/visual-qa-retention.json'
+      && /^\s*"news-20\d{2}-\d{2}-\d{2}-[a-z0-9-#]+--(?:dark|light|ambient|warm|cool|lava|high-contrast)--(?:desktop|mobile)\.png",?\s*$/i.test(line)
+      && line.includes(matched)
+      && /^(?:-)?20\d{2}-\d{2}-\d{2}-[a-z0-9-]{12,}$/i.test(matched)) return true;
+
   if ((pat.type === 'aws-maybe' || pat.type === 'cf-maybe') &&
       (line.includes('sha256-') || line.includes('sha384-') || line.includes('sha512-') || line.includes('"integrity"'))) {
     return true;
@@ -349,4 +359,19 @@ function run() {
   }
 }
 
-run();
+if (args.includes('--self-test')) {
+  const rel = 'docs/performance/visual-qa-retention.json';
+  const slug = '"news-2026-09-28-nvidia-launches-new-platform-for-reining-in-rogue-ai-#editorial-illustration-1--dark--desktop.png",';
+  const heuristic = PATTERNS.find((pattern) => pattern.type === 'cf-maybe');
+  const candidate = slug.match(heuristic.regex)?.[0];
+  const tests = [
+    ['dated capture filename is recognized', Boolean(candidate) && isKnownPublicToken(slug, candidate, heuristic, rel)],
+    ['other paths are still scanned', !isKnownPublicToken(slug, candidate, heuristic, 'api/other.json')],
+    ['mixed lines are still scanned', !isKnownPublicToken(`${slug} "token":"${'x'.repeat(48)}"`, candidate, heuristic, rel)],
+    ['high-confidence tokens are still scanned', !isKnownPublicToken(slug, candidate, { type: 'github' }, rel)],
+  ];
+  for (const [name, ok] of tests) process.stdout.write(`${ok ? '✓' : '✗'} ${name}\n`);
+  process.exit(tests.every(([, ok]) => ok) ? 0 : 1);
+} else {
+  run();
+}

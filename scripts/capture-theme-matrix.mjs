@@ -9,6 +9,7 @@
  *
  * Usage:
  *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/evidence/]
+ *   Use --focus-selector '.desk-profile-feed .desk-profile-entry:first-child' to inspect a touched panel.
  *   Add --receipt --receipt-all to hash-bind every requested route/theme/viewport
  *   into docs/visual-qa/LATEST.json for a focused changed-surface review. Pass
  *   --reviewed-files <comma-separated filenames> only after directly inspecting
@@ -62,6 +63,7 @@ const requestedViewports = new Set(arg('--viewports', 'desktop,mobile').split(',
 const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(viewport.name));
 const OPEN_NAV = argv.includes('--open-nav');
 const FOCUS_CHANGED = argv.includes('--focus-changed');
+const FOCUS_SELECTOR = arg('--focus-selector', null);
 const FOCUS_FOOTER = argv.includes('--footer');
 const FOCUS_DISPATCH = argv.includes('--dispatch');
 const FOCUS_CHANGELOG_REACTIONS = argv.includes('--changelog-reactions');
@@ -161,7 +163,7 @@ async function main() {
             '/status/': '#liveSignalsGrid',
             '/news/': '.desk-story-card[href="/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"]',
           }[route] || (route.startsWith('/news/') ? '.desk-critique-link' : null);
-          const focusSelector = FOCUS_DISPATCH ? '.desk-dispatch:has(form[data-dispatch])' : FOCUS_CHANGED ? changedSelector : null;
+          const focusSelector = FOCUS_SELECTOR || (FOCUS_DISPATCH ? '.desk-dispatch:has(form[data-dispatch])' : FOCUS_CHANGED ? changedSelector : null);
           if (focusSelector) {
             const focus = page.locator(focusSelector);
             await focus.waitFor({ state: 'visible', timeout: 5000 });
@@ -277,6 +279,9 @@ function writeCanonReceipt(manifest) {
   const sourceFiles = [
     'assets/turnstile.js', 'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
+    ...fs.readdirSync(path.join(ROOT, 'assets', 'desk-personas'))
+      .filter((file) => file.endsWith('.webp'))
+      .map((file) => `assets/desk-personas/${file}`),
     'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
     'assets/cookie-consent.js', 'assets/pwa-install.js', 'assets/ambient-loader.js', 'assets/changelog-reactions.js',
     'assets/exit-intent.js', 'assets/visit-depth.js', 'assets/returning-visitor-digest.js',

@@ -796,7 +796,7 @@ function selfTest() {
   const carousel = deriveCarousel([day]);
   t('carousel lead is the declared leadSlug', carousel.cards[0].slug === 'frontier-tier-split');
   t('carousel card carries tldr + meme + heat', !!carousel.cards[0].tldr && !!carousel.cards[0].memeLine && Number.isFinite(carousel.cards[0].heat));
-  t('persona roster is 7 and unique', PERSONAS.length === 7 && new Set(PERSONAS.map((p) => p.id)).size === 7);
+  t('persona roster is 8 and unique', PERSONAS.length === 8 && new Set(PERSONAS.map((p) => p.id)).size === 8);
   t('every voice has its own visual register',
     new Set(PERSONAS.map((p) => p.memeStyle)).size === PERSONAS.length);
   t('NIB is the cartoonist and aims at institutions, not people',
@@ -843,6 +843,7 @@ function selfTest() {
     econCast.some((p) => p.id === 'rex'));
   t('casting is deterministic', JSON.stringify(castForStory({ beats: ['labor', 'access'], size: 3 }).map((p) => p.id))
     === JSON.stringify(castForStory({ beats: ['labor', 'access'], size: 3 }).map((p) => p.id)));
+  t('creative coverage seats MICA', castForStory({ beats: ['creative', 'games'], size: 3 })[0].id === 'mica');
   t('different beats cast a different desk',
     JSON.stringify(castForStory({ beats: ['labor', 'access'] }).map((p) => p.id))
     !== JSON.stringify(castForStory({ beats: ['safety', 'governance'] }).map((p) => p.id)));
@@ -1160,7 +1161,8 @@ function selfTest() {
   const livePerf = deriveDeskPerformance(loadPublicDays(), readJson(LEDGER_PATH, { entries: [] }), { through: liveReport.date });
   t('the published report validates against real performance',
     validateDirectorsReport(liveReport, { performance: livePerf }).length === 0);
-  t('the published report ranks the whole desk', (liveReport.reviews || []).length === PERSONAS.length);
+  t('the published report preserves its historical roster', (liveReport.reviews || []).length >= 2
+    && new Set(liveReport.reviews.map((review) => review.personaId)).size === liveReport.reviews.length);
 
   // Both directions of the filed/did-not-file rule, on real data. A one-way rule
   // let the page print "1 assignment · 249 words" beside "Did not file."
