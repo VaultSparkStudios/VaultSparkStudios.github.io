@@ -526,7 +526,7 @@ const PERSONA_MARKS = {
 const personaHref = (persona) => `/news/personas/${persona.id}/`;
 const personaMark = (persona) => `<svg class="desk-persona-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PERSONA_MARKS[persona.id]}</svg>`;
 const personaPortrait = (persona, className = 'desk-mini-avatar') => `<img class="${className}" data-persona="${persona.id}" src="/assets/desk-personas/${persona.id}.webp" width="384" height="384" loading="${className === 'desk-profile-portrait' ? 'eager' : 'lazy'}" decoding="async" alt="">`;
-const personaNameLink = (persona) => `<a class="desk-persona-link" href="${personaHref(persona)}" style="--persona:${persona.accent}">${personaMark(persona)}<span>${escapeHtml(persona.name)}</span></a>`;
+const personaNameLink = (persona) => `<a class="desk-persona-link" href="${personaHref(persona)}" data-persona="${persona.id}">${personaMark(persona)}<span>${escapeHtml(persona.name)}</span></a>`;
 
 /** Compact byline: persona avatars, names, the AI-written pill, date and read time. */
 function bylineRow(story, day, stats) {
@@ -989,7 +989,7 @@ function buildHubPage() {
     const standingChip = form.standing === 'unproven'
       ? '<span class="desk-standing is-unproven">Unproven · too few resolved calls</span>'
       : `<span class="desk-standing is-${form.standing}">${{ hot: 'On a run', cold: 'Recently wrong', even: 'Level' }[form.standing]} · ${form.graded} graded</span>`;
-    return `<article class="desk-panel desk-persona" style="--persona:${p.accent}" data-mark="${escapeHtml(p.monogram)}">
+    return `<article class="desk-panel desk-persona" data-persona="${p.id}" data-mark="${escapeHtml(p.monogram)}">
     <div class="desk-persona-head">${personaPortrait(p, 'desk-avatar')}<div><h3>${personaNameLink(p)} <span class="desk-ai-tag">AI persona</span></h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
     <p class="desk-persona-tagline">${escapeHtml(p.tagline)}</p>
     <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
@@ -1133,7 +1133,7 @@ function buildPersonaPage(persona) {
     </li>`;
   }).join('\n');
   const otherVoices = PERSONAS.filter((p) => p.id !== persona.id).map((p) => `<li>${personaPortrait(p)}${personaNameLink(p)}<span>${escapeHtml(p.role)}</span></li>`).join('');
-  const html = `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-profile" style="--persona:${persona.accent}">
+  const html = `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-profile" data-persona="${persona.id}">
     <p class="desk-kicker"><a href="/news/">The Desk</a> · Editorial board</p>
     <header class="desk-profile-hero">${personaPortrait(persona, 'desk-profile-portrait')}<div><p class="desk-profile-eyebrow">Fictional AI persona · ${escapeHtml(persona.role)}</p><h1>${personaMark(persona)} ${escapeHtml(persona.name)}</h1><p class="desk-profile-tagline">${escapeHtml(persona.tagline)}</p><p class="desk-profile-creed">“${escapeHtml(persona.creed)}”</p></div></header>
     ${AI_BANNER}
@@ -1261,7 +1261,7 @@ function buildDirectorsReportPage() {
     const persona = personaById(r.personaId);
     const p = byId[r.personaId] || { assignments: 0, words: 0, panels: 0, formats: [] };
     const filed = p.assignments > 0 || p.panels > 0;
-    return `<article class="desk-panel desk-review${filed ? '' : ' is-quiet'}" style="--persona:${persona.accent}">
+    return `<article class="desk-panel desk-review${filed ? '' : ' is-quiet'}" data-persona="${persona.id}">
       <div class="desk-review-head">
         <span class="desk-rank">${r.rank}</span>
         <div><h3>${escapeHtml(persona.name)} <span class="desk-ai-tag">AI persona</span></h3>
