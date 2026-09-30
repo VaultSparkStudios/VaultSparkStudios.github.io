@@ -1,6 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
+Last updated: 2026-09-30 UTC (post-S366 Desk persona follow-up)
+
+## Desk persona follow-up — 2026-09-30
+
+- [x] Build eight fictional AI correspondent profiles with generated portraits, personal marks, clearer writing identities, published contribution feeds, and public prediction records; add MICA for creative tools, games and media.
+- [x] Keep each profile feed sourced from existing editions; label desk conversations as panel turns and leave MICA's feed empty until a real sourced story casts her.
+- [x] Verify the regenerated 99-page newsroom, 212-route sitemap, claim parity, Desk self-tests, and a manually inspected 56-capture seven-theme desktop/mobile matrix.
+- [ ] **[DESK/RELEASE]** Rebase the profile candidate onto the moving main branch, run the full release checks, publish through staging, and promote only through an authorized content or full-site lane. The existing identity/provider full-site hold still applies.
 
 ## S366 — Robinhood Summit and daily homepage publication
 

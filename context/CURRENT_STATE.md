@@ -1,6 +1,10 @@
 # Current State
 
-Last updated: 2026-09-30 UTC (S366; Desk automatic content release verified)
+Last updated: 2026-09-30 UTC (post-S366; Desk persona candidate)
+
+## Post-S366 — Desk persona candidate (2026-09-30; not deployed)
+
+The Desk now has eight generated correspondent profile pages in the local candidate, with distinct portraits and vector marks, sharper writing taglines, beat and editorial-boundary descriptions, and feeds drawn from published story passages, positions, panel turns, captions and predictions. MICA adds a creative-tools, games and media lens; her empty feed is explicit until she is cast in a sourced edition. Existing article and hub bylines link to the profiles. The generator produced 99 current pages and 212 sitemap routes; 157 Desk self-tests, 99 trend-radar self-tests, claim parity, and 56 manually inspected route/theme/viewport captures passed. Production still serves the pre-profile roster. Release remains subject to staging parity and the standing full-site identity/provider hold.
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
 
