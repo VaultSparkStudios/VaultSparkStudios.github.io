@@ -1,5 +1,11 @@
 # Release platform parity
 
+## Desk correspondent profiles — 2026-09-30
+
+PR #132 merged as `91116c423`. Eight fictional correspondent profiles, portraits and marks are live through the 147-path content-only Pages run `36791903046`. The scope included all 124 paths from the previous live Desk overlay so the baseline reconstruction did not roll them back. Every released path matched canonical staging and the public Pages origin byte for byte; REX, VERA and MICA returned 200 on the canonical domain. The full-site identity/provider gate remained held.
+
+The local mobile browser audit passed 215/215 cases across phone and tablet sizes with zero P0/P1 findings. The 70 profile/news/article captures across seven themes and desktop/mobile widths were manually reviewed and hash-bound. Hosted E2E/compliance, accessibility, Lighthouse and a refreshed Linux visual-regression comparison passed. No native app applies to this website. Staging `/_health` returned 200; the scoped static release did not change the sign-in or membership flows.
+
 Observed: 2026-09-29
 
 Candidate: `091481ba5625ac844d21dfa6416b9ddd95bceb49`

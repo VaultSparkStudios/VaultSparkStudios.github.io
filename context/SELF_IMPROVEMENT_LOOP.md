@@ -2696,3 +2696,11 @@ The closeout audit found a real hosted E2E/compliance failure: one completed his
 **Brainstorm → TASK_BOARD:** Make the completed-session rotation part of the normal pre-push gate, and investigate the homepage longtail Lighthouse dip using fresh hosted evidence. The first is represented by the E2E recheck item; the second by the performance item. Both are bounded to observed defects.
 
 The subsequent full build exposed a stale-source versus dead-publisher confusion in IGNIS ROI. The ledger has been quiet since September 9; the generator now records `rebuiltAt` separately while `generatedAt` remains the source date. This repairs the 21-day publisher-health gate without claiming new usage, and is recorded as D-S366.6. The build also exposed the new lifecycle checkers' missing reachability metadata; D-S366.7 records the scope and self-test fix. The final local gate passed 505/505. The 965/1000 session score is unchanged.
+
+### Post-S366 Desk persona release audit — 2026-09-30
+
+**Score:** Not a new SIL session score; the S366 score remains unchanged.
+
+**Audit:** The release is live through a scoped content lane with 147/147 staging and Pages-origin byte checks, 215/215 mobile cases, 70/70 reviewed theme captures, hosted E2E/accessibility/Lighthouse/visual checks, and a successful production workflow. The full-site identity/provider hold remains visible. The release preflight caught a real rollback risk: the hotfix baseline archive would have dropped nine files from the previous 124-path Desk overlay. Expanding the scope to preserve all 124 paths closed that risk for this release. The visual-regression workflow's old Linux references had failed multiple prior runs; current production captures restored a passing comparison without changing its tolerance.
+
+**Brainstorm committed to TASK_BOARD:** automate prior-overlay preservation in scoped Pages releases, and keep visual-regression references current through a measured, reviewed Linux capture process. Both follow-ups are bounded by observed release failures.
