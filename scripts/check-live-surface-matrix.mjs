@@ -59,7 +59,10 @@ export function inspectDesk({ feed, claimsText, freshness, home, news, article, 
   if (!home.includes(`href="${contract.route}"`)) throw new Error(`homepage does not link to newest Desk story ${contract.route}`);
   if (!news.includes(`href="${contract.route}"`)) throw new Error(`News index does not link to newest Desk story ${contract.route}`);
   const rows = claimsText.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
-  for (const fact of rows.filter((row) => row.type === 'fact' && row.date === contract.date)) {
+  const story = contract.route.split('/').filter(Boolean).at(-1);
+  const storyFacts = rows.filter((row) => row.type === 'fact' && row.date === contract.date && row.story === story);
+  if (!storyFacts.length) throw new Error(`claim ledger has no fact row for newest Desk story ${contract.route}`);
+  for (const fact of storyFacts) {
     if (!article.includes(`id="${fact.id}"`) || !article.includes(`data-fact-hash="${fact.hash}"`)) {
       throw new Error(`newest Desk article lacks fact receipt ${fact.id}`);
     }
@@ -103,11 +106,12 @@ async function sweep(routes, width) {
 
 function selfTest() {
   const feed = { items: [{ url: 'https://vaultsparkstudios.com/news/2026-09-30/test/', title: 'Test', date_published: '2026-09-30T00:00:00Z' }] };
-  const claims = '{"type":"fact","date":"2026-09-30","id":"fact-1","hash":"abc"}\n{"type":"stance","date":"2026-09-30"}\n';
+  const claims = '{"type":"fact","date":"2026-09-30","story":"test","id":"fact-1","hash":"abc"}\n{"type":"stance","date":"2026-09-30","story":"test"}\n{"type":"fact","date":"2026-09-30","story":"other","id":"fact-other","hash":"def"}\n';
   const input = { feed, claimsText: claims, freshness: { latestEditionDate: '2026-09-30', state: 'daily' }, home: 'href="/news/2026-09-30/test/"', news: 'href="/news/2026-09-30/test/"', article: '<title>Test</title><li id="fact-1" data-fact-hash="abc">', artStatus: 200, now: new Date('2026-10-01T09:00:00Z'), allowedAge: 1 };
   const reject = (change, pattern) => { try { inspectDesk({ ...input, ...change }); return false; } catch (error) { return pattern.test(error.message); } };
   const cases = [
     ['valid Desk chain', inspectDesk(input).ageDays === 1],
+    ['same-day facts from another story do not belong in the newest article', inspectDesk(input).factCount === 2],
     ['stale Desk fails', reject({ now: new Date('2026-10-02T09:00:00Z') }, /old/)],
     ['missing homepage link fails', reject({ home: '' }, /homepage/)],
     ['missing fact receipt fails', reject({ article: '<title>Test</title>' }, /fact receipt/)],
