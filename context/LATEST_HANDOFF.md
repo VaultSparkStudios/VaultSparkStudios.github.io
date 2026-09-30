@@ -10,9 +10,11 @@ Staging receipt `eb48a702c8d5cf87b330e334` is served and verified at depth 87; t
 
 Next: monitor the next three article Lighthouse runs. Fix staging-deploy continuity sequencing so a ceremony started immediately after deploy cannot read the prior summary. Real signup email delivery remains unverified and still requires explicit send authorization.
 
-Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle sanitization drift and rotated the work log at its size cap. The full build gate passed 505/505 twice before closeout. The automated late-night Desk edition landed on main after this content release; it is a new candidate for the next staging-first promotion, not part of production content head `c46f22fa36d52901e505f2a99433cef9276fbbd0`.
+Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle sanitization drift and rotated the work log at its size cap. The full build gate passed 505/505 twice before closeout. The automated late-night Desk edition landed on main after the initial content release.
 
-The post-closeout hosted compliance run found two new edition art files missing from `data/lqip-map.json`: the Desk publisher derived the map before staging its new art, while the map generator scans Git's index. The map is regenerated, the publisher now stages art before map derivation, and its ordering guard passes. The corrected tree passed the full 505/505 local build gate; hosted rerun is pending.
+The post-closeout hosted compliance run found two new edition art files missing from `data/lqip-map.json`: the Desk publisher derived the map before staging its new art, while the map generator scans Git's index. The map is regenerated, the publisher now stages art before map derivation, and its ordering guard passes. The corrected tree passed the full 505/505 local build gate and hosted E2E/compliance. A fresh Lighthouse local rerun passed after one isolated `/community/` dip.
+
+The Desk's four scheduled slots ran successfully on 2026-09-29. Canonical staging served the late-night homepage and article through the scoped content lane; production run `36648112113` promoted 125 content-pure paths. The live homepage lead, News index, and late-night OpenAI article now match, with content head `90a79ff6a7afabf966efa8a0bd03bd2facb15314`. Future daily live updates are a release-policy decision: `confirm_content` is deliberately manual and CI has no staging deploy credential. Do not silently bypass that interlock or the identity/full-site holds.
 
 ## Where We Left Off — S364 · 2026-09-23
 

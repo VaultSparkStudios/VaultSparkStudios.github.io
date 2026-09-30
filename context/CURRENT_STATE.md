@@ -12,6 +12,8 @@ The candidate passed 215/215 mobile checks, 168/168 manually reviewed seven-them
 
 Closeout reproduced and repaired the known standalone build-check step-81 drift: the runner now sanitizes the gitignored Oracle export before freezing its verification snapshot. The work log was rotated at its 250 KB cap.
 
+The Desk's four scheduled daily slots ran on 2026-09-29, with wire, midday, and late-night editions published. The late-night edition landed after the initial S365 content release. Its new art exposed an index-order gap in the publisher's image placeholder map; the map and publisher guard were repaired, and the corrected tree passed 505/505 locally plus hosted E2E and compliance. A fresh Lighthouse local rerun passed after one isolated `/community/` lab dip. Canonical staging then served the late-night homepage and article through its scoped content lane. Production run `36648112113` promoted 125 content-pure paths; the live homepage, News index, and OpenAI late-night article now show the latest edition. Identity and full-site release holds remain in place. Future unattended live content promotion still requires a separate decision because the content lane has an explicit manual confirmation gate and CI lacks a staging deploy credential.
+
 ## S364 — Desk signup repair (2026-09-23; deployed)
 
 S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
