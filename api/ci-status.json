@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T16:38:54.632Z",
+  "generatedAt": "2026-09-30T16:50:59.996Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 5 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-29T22:16:20.227Z",
     "currentBehindStreak": 5,
     "newestGradableAt": "2026-09-29T22:16:20.227Z",
-    "newestAgeHours": 18.4,
+    "newestAgeHours": 18.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-30T16:36:21Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-09-30T16:50:10Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/36745411844",
       "headSha": "e020de8d2e9f2f760bb2f86335a0322a3afa5679",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-09-30T16:36:20Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-09-30T16:50:48Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/36745411914",
       "headSha": "e020de8d2e9f2f760bb2f86335a0322a3afa5679",
       "event": "push"
@@ -164,7 +164,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.94,
+      "ageHours": 4.14,
       "staleAfterHours": 48
     },
     {
@@ -177,7 +177,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.53,
+      "ageHours": 3.73,
       "staleAfterHours": 48
     },
     {
@@ -191,7 +191,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.01,
+      "ageHours": 0.21,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +208,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-09-30T16:14:33Z",
+      "lastUpdatedAt": "2026-09-30T16:42:08Z",
       "recentConclusions": [
         "success",
         "success",
@@ -217,7 +217,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.41,
+      "ageHours": 0.15,
       "staleAfterHours": 48
     },
     {
@@ -230,7 +230,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.43,
+      "ageHours": 3.63,
       "staleAfterHours": 48
     },
     {
