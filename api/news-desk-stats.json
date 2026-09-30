@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-29",
+  "generatedAt": "2026-09-30",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 36,
+    "days": 37,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-09-29",
-    "stories": 84,
-    "words": 30227,
-    "minutes": 148,
+    "latestDate": "2026-09-30",
+    "stories": 85,
+    "words": 32394,
+    "minutes": 158,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -47,12 +47,18 @@
       "deepmind.google",
       "engadget.com",
       "engineering.fb.com",
+      "fortune.com",
       "huggingface.co",
+      "investors.robinhood.com",
       "kpmg.com",
+      "kwsn.com",
       "marktechpost.com",
       "newsletter.semianalysis.com",
       "nypost.com",
       "openai.com",
+      "prnewswire.com",
+      "robinhood.com",
+      "sg.finance.yahoo.com",
       "smh.com.au",
       "techcrunch.com",
       "terrytao.wordpress.com",
@@ -61,24 +67,25 @@
       "theverge.com",
       "wired.com"
     ],
-    "sourceCount": 27,
-    "facts": 252,
-    "panels": 84,
+    "sourceCount": 33,
+    "facts": 265,
+    "panels": 85,
     "formats": {
       "bit": 4,
       "roast": 3,
       "quick": 6,
       "explainer": 21,
-      "debate": 48
+      "debate": 48,
+      "deep": 1
     },
     "editions": {
       "midday": 23,
-      "wire": 22,
+      "wire": 23,
       "close": 15,
       "latenight": 22
     },
     "shapes": {
-      "split": 19,
+      "split": 20,
       "solo": 4,
       "agree": 53,
       "lean": 8
@@ -3791,6 +3798,60 @@
       "predictions": {
         "onRecord": 2,
         "open": 2,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "slug": "robinhood-hood-summit-2026-agentic-trading-analysis",
+      "words": 2167,
+      "minutes": 10,
+      "voices": [
+        "rex",
+        "mara",
+        "dot"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "robinhood.com",
+        "sg.finance.yahoo.com",
+        "fortune.com",
+        "kwsn.com",
+        "prnewswire.com",
+        "investors.robinhood.com"
+      ],
+      "sourceCount": 6,
+      "factCount": 13,
+      "panels": 1,
+      "panelBy": "mara",
+      "format": "deep",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "split",
+      "spread": 3,
+      "label": "3 voices, and they split",
+      "positions": [
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "mara",
+          "direction": -1,
+          "verdict": "overhyped"
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "verdict": "fair"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
         "graded": 0,
         "correct": 0
       }

@@ -1110,6 +1110,12 @@ export function personaForm(ledger, { minGraded = 4, streakWindow = 5 } = {}) {
  */
 export const STORY_FORMATS = [
   {
+    id: 'deep', name: 'Deep Analysis',
+    bodyWords: [1500, 3500],
+    minFacts: 5, minStances: 2, minPredictions: 0, tldrRange: [40, 110], requiresDisagreement: false,
+    brief: 'A sourced, sectioned feature that distinguishes a launch from a plan and explains the strategic and human consequences.',
+  },
+  {
     id: 'debate', name: 'The Argument', flagship: true,
     bodyWords: [320, 900],
     minFacts: 2, minStances: 2, minPredictions: 1, tldrRange: [40, 110], requiresDisagreement: true,

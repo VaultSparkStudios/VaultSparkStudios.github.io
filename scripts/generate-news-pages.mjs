@@ -446,8 +446,9 @@ function panelReactions(story, day) {
 function bodyHtml(story) {
   let last = null;
   const blocks = (story.body || []).map((b) => {
+    const heading = b.heading ? `<h2 class="desk-h2">${escapeHtml(b.heading)}</h2>` : '';
     const persona = b.voice ? personaById(b.voice) : null;
-    if (!persona) return `<p>${escapeHtml(b.text)}</p>`;
+    if (!persona) return `${heading}<p>${escapeHtml(b.text)}</p>`;
     const showByline = persona.id !== last;
     last = persona.id;
     // S356: persona-attributed prose in the article font. The persona colour is
@@ -456,7 +457,7 @@ function bodyHtml(story) {
     const byline = showByline
       ? `<p class="desk-said-who"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)}</strong><span class="desk-role-chip">AI persona · ${escapeHtml(persona.role)}</span></p>`
       : '';
-    return `<div class="desk-said desk-voice-${escapeHtml(persona.memeStyle || 'declare')}" data-voice="${escapeHtml(persona.id)}">${byline}<p>${escapeHtml(b.text)}</p></div>`;
+    return `${heading}<div class="desk-said desk-voice-${escapeHtml(persona.memeStyle || 'declare')}" data-voice="${escapeHtml(persona.id)}">${byline}<p>${escapeHtml(b.text)}</p></div>`;
   });
   // The panel's line doubles as the piece's pull quote, set mid-story.
   const quotePersona = personaById(story.memeLine?.personaId);
@@ -884,12 +885,13 @@ function buildStoryPage(day, story) {
   ];
   const edition = story.edition ? (EDITIONS.find((e) => e.id === story.edition)?.name || story.edition) : '';
   const kickerParts = [edition, day.date, formatFor(story).name, storyBadge(story, day)].filter(Boolean).map((part) => escapeHtml(part));
+  const followUp = followUpLine(story);
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
   <header class="desk-article-head">
   <p class="desk-kicker"><a href="/news/" class="desk-kicker-home">The Desk</a> · ${kickerParts.join(' · ')}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
-  ${followUpLine(story)}
+${followUp ? `  ${followUp}\n` : ''}
   ${bylineRow(story, day, stats)}
   </header>
 ${day.simulated ? PREVIEW_BANNER : ''}

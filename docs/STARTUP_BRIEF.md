@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-29 (Session 365 closeout) -->
+<!-- generated-at: 2026-09-30 (Session 365 closeout) -->
 <!-- semantic-freshness: hash=05ae3eee9b5355ee next=366 silSession=365 silScore=946 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 365 closeout · 2026-09-29.
+> **Fast-boot brief** — generated at Session 365 closeout · 2026-09-30.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 366 · 2026-09-29 · FOUNDER MODE                         ║
+║  Session 366 · 2026-09-30 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    946/1000   ██████████████████████░░   95%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 0d  ·  Last closeout: 10d  ·  (active =…         ║
+║    Last active: 1d  ·  Last closeout: 11d  ·  (active =…         ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -76,8 +76,8 @@
 ║  ✓  Tests         505/505 passing (2026-09-29)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   0d                                             ║
-║  ⚠  IGNIS         46724 FORGE  ·  12d old                        ║
+║  ✓  Context age   1d                                             ║
+║  ⚠  IGNIS         46724 FORGE  ·  13d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  7d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    37d · Authorize or decline immutable warm-origin migrati      ║
-║    37d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    38d · Authorize or decline immutable warm-origin migrati      ║
+║    38d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -126,14 +126,14 @@
 ║   97  [VERIFY]       Watch the next three article Lighthouse ru  ║
 ║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   91  [VERIFY]       Decode literal HTML entities in a few olde  ║
+║        Decode literal HTML entities in a few older Desk source-  ║
+║                                                                  ║
 ║   90  [PRODUCT]      Teach the closeout wipe guard to recognize  ║
 ║        Teach the closeout wipe guard to recognize a byte-preser  ║
-║                                                                  ║
-║   86  [COHESION]     Refuse an inbound propagation that removes  ║
-║        Refuse an inbound propagation that removes an exported s  ║
-║                                                                  ║
-║   84  [PRODUCT]      The newsletter cron still shows 6 consecut  ║
-║        The newsletter cron still shows 6 consecutive failures u  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 365 closeout · 2026-09-29*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 365 closeout · 2026-09-30*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

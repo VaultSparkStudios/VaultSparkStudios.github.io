@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-30T02:00:51.498Z",
+  "generatedAt": "2026-09-30T02:20:23.146Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -34,7 +34,7 @@
       "value": 21,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-09-29T20:27:58.622Z",
+      "computedAt": "2026-09-29T21:57:37.904Z",
       "source": "/api/ecosystem-state.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/ecosystem-state.json",
@@ -43,7 +43,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-29T20:27:58.622Z",
+      "observedThrough": "2026-09-29T21:57:37.904Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -111,10 +111,10 @@
     {
       "id": "news-stories",
       "label": "Desk stories",
-      "value": 84,
+      "value": 85,
       "unitOrDenominator": "published editorial stories",
       "period": "all published editions",
-      "computedAt": "2026-09-29T00:00:00.000Z",
+      "computedAt": "2026-09-30T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -123,11 +123,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-29T00:00:00.000Z",
+      "observedThrough": "2026-09-30T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "252 sourced facts across 84 stories; prediction accuracy remains withheld until the sample earns it."
+      "interpretation": "265 sourced facts across 85 stories; prediction accuracy remains withheld until the sample earns it."
     },
     {
       "id": "forge-projects",
@@ -153,10 +153,10 @@
     {
       "id": "sourced-facts",
       "label": "Sourced Desk facts",
-      "value": 252,
+      "value": 265,
       "unitOrDenominator": "source-linked factual claims",
       "period": "all published editions",
-      "computedAt": "2026-09-29T00:00:00.000Z",
+      "computedAt": "2026-09-30T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/news-desk-stats.json",
@@ -165,11 +165,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-29T00:00:00.000Z",
+      "observedThrough": "2026-09-30T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "editorial",
       "format": "integer",
-      "interpretation": "Drawn from 27 named source domains; opinions are not counted as facts."
+      "interpretation": "Drawn from 33 named source domains; opinions are not counted as facts."
     },
     {
       "id": "proof-freshness",
@@ -177,7 +177,7 @@
       "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-09-30T02:00:51.498Z",
+      "computedAt": "2026-09-30T02:20:23.146Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -186,7 +186,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-30T02:00:51.498Z",
+      "observedThrough": "2026-09-30T02:20:23.146Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -233,7 +233,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-09-30T02:00:51.498Z",
+      "computedAt": "2026-09-30T02:20:23.146Z",
       "values": {
         "fresh": 15,
         "stale": 3,
@@ -242,11 +242,11 @@
     },
     "deskRecord": {
       "source": "/api/news-desk-stats.json",
-      "computedAt": "2026-09-29T00:00:00.000Z",
+      "computedAt": "2026-09-30T00:00:00.000Z",
       "values": {
-        "stories": 84,
-        "facts": 252,
-        "sources": 27,
+        "stories": 85,
+        "facts": 265,
+        "sources": 33,
         "predictionsGraded": 0
       }
     }
