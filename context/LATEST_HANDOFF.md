@@ -8,6 +8,8 @@ The founder approved a restricted, content-only automatic release path. Four sch
 
 **Next verification:** Observe the next successful scheduled News Publish run and ensure its `workflow_run` starts this release workflow; the manual recovery dispatch proved the stages but did not exercise that trigger. Monitor Desk overlay size and reset the deployed baseline through the normal reviewed release path before the archive grows too large. No local staging private key remains; the CI credential is in GitHub Actions secrets and the staging account is restricted to the Desk receiver.
 
+**Assurance follow-up:** Daily CI Health Monitor now has a read-only surface job: 232 local HTML files, 201 live sitemap routes, eight public files, newest Desk feed/claim/article/art/homepage parity, edge liveness, and 15 Chromium journeys/theme tests. Hosted manual run `36667110751` passed both jobs. Desk automatic release adds the existing disclosure, fact, copy and stats checks plus the local crawl before staging; the skipped-plan guard now uses an explicit yes/no output. Observe the first scheduled assurance run as well as the first scheduled publisher-to-release trigger.
+
 ## Where We Left Off — S365 · 2026-09-29
 
 **Session intent:** `/arc` on the public website, with direct main commits and staging-first production deployment already authorized.

@@ -8,6 +8,9 @@ Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
 - [x] Add a restricted staging credential and an automatic Desk-only path from a successful scheduled publisher through staging byte parity to pinned Cloudflare Pages promotion. Recovery run `36663473926` and production run `36663563135` passed; 109 routes matched staging.
 - [ ] **[S366][DESK/P2]** Observe the next successful scheduled News Publish `workflow_run` and its downstream automatic release. The recovery dispatch proves the same workflow steps, but the event trigger itself has not fired since installation.
 - [ ] **[S366][RELEASE/P2]** Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
+- [x] **[S366][QA]** Add daily local and live route assurance across 232 HTML files, 201 sitemap routes, eight public support files, edge liveness, latest Desk content chain, and 15 Chromium journeys/theme cases. Hosted manual run `36667110751` passed both jobs.
+- [x] **[S366][DESK/QA]** Re-run AI disclosure, claim parity, copy and stats checks plus full local crawl in the restricted Desk release before staging; correct skipped-plan guard to use a yes/no output.
+- [ ] **[S366][QA/P2]** Observe the first scheduled CI Health Monitor run with the new surface-assurance job; the manually dispatched hosted run passed, but the scheduled trigger has not fired since the change.
 
 ## S365 — completed arc and follow-up
 

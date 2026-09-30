@@ -2684,3 +2684,7 @@ The founder then asked for daily stories on the live homepage. Four scheduled sl
 **Audit:** The manually dispatched recovery path and production run are verified, while the scheduled `workflow_run` trigger has not yet fired. The overlay grows with each new story until a reviewed baseline reset. Neither is represented as completed evidence.
 
 **Brainstorm → TASK_BOARD:** Observe the next successful scheduled publisher and downstream release; monitor overlay size and reset its baseline before archive or Pages limits. Both follow-ups are recorded as S366 tasks.
+
+### S366 assurance addendum — same session, score unchanged
+
+The founder requested broader website and Desk automation. A new daily job covers all local HTML and live sitemap routes plus public files and the newest Desk chain; the hosted recovery dispatch `36667110751` passed, including Chromium journeys. The Desk release now repeats its critical editorial gates and local crawl. The first scheduled run is recorded on TASK_BOARD, so the 965/1000 S366 score remains unchanged. The new route-count floor blocks a drop below 180; any smaller loss from the current 201-route baseline should be investigated if the scheduled run reveals it.
