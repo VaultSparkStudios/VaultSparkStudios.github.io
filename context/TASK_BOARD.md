@@ -6,13 +6,13 @@ Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
 
 - [x] Publish a sourced deep analysis of the September 29 Robinhood HOOD Summit, including agentic trading controls, wider market hours, higher-risk products, agentic apps, and VaultSpark's hypothetical role; lead the live homepage with it.
 - [x] Add a restricted staging credential and an automatic Desk-only path from a successful scheduled publisher through staging byte parity to pinned Cloudflare Pages promotion. Recovery run `36663473926` and production run `36663563135` passed; 109 routes matched staging.
-- [ ] **[S366][DESK/P2]** Observe the next successful scheduled News Publish `workflow_run` and its downstream automatic release. The recovery dispatch proves the same workflow steps, but the event trigger itself has not fired since installation.
+- [x] **[S366][DESK/P2]** Scheduled News Publish `36679345071` triggered automatic Desk release `36679807164`, and scheduled run `36716077242` triggered release `36716493332`; both downstream runs passed.
 - [ ] **[S366][RELEASE/P2]** Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 - [x] **[S366][QA]** Add daily local and live route assurance across 232 HTML files, 201 sitemap routes, eight public support files, edge liveness, latest Desk content chain, and 15 Chromium journeys/theme cases. Hosted manual run `36667110751` passed both jobs.
 - [x] **[S366][DESK/QA]** Re-run AI disclosure, claim parity, copy and stats checks plus full local crawl in the restricted Desk release before staging; correct skipped-plan guard to use a yes/no output.
-- [ ] **[S366][QA/P2]** Observe the first scheduled CI Health Monitor run with the new surface-assurance job; the manually dispatched hosted run passed, but the scheduled trigger has not fired since the change.
-- [ ] **[S366][CI/P2]** Recheck hosted E2E/compliance after the task-board rotation repaired the startup-context-budget failure (local probe now passes). Investigate any remaining failure at the new main SHA.
-- [ ] **[S366][PERF/P2]** Investigate the latest homepage Lighthouse 0.73 against the unchanged 0.76 longtail floor; keep the threshold and require a fresh passing hosted run before a full-site promotion.
+- [x] **[S366][QA/P2]** First scheduled CI Health Monitor run `36695299391` exposed a same-day story-scope error in the live fact-receipt checker; `ed6d294db` fixed it, and hosted rerun `36750321612` passed both jobs.
+- [x] **[S366][CI/P2]** Hosted E2E and compliance both passed in run `36747372651` after closeout artifact refreshes.
+- [x] **[S366][PERF/P2]** A subsequent hosted Lighthouse run `36741037407` passed all nine route tiers at the unchanged floors; retain trend monitoring before any full-site promotion.
 - [x] **[S366][TRUTH/CI]** Keep IGNIS ROI source age separate from publisher health after a quiet ledger blocked closeout: `generatedAt` remains September 9 evidence, `rebuiltAt` tracks regeneration, and focused freshness checks pass.
 - [x] **[S366][CI]** Declare workflow scope for the new scheduled surface and Desk staging checks, and run their pure self-tests from the build gate; the reachability census now passes 254/254 checks and 325/325 self-tests.
 
