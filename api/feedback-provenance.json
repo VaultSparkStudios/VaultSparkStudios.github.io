@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-29",
+  "generatedAt": "2026-09-30",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 3,
+  "themeCount": 4,
   "themes": [
     {
       "key": "conversion",
@@ -21,16 +21,37 @@
       ]
     },
     {
+      "key": "transparency",
+      "label": "Transparency",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "8fca03c8",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "reconcile intent map after status publisher update",
+          "ts": "2026-09-29T22:55:28.000Z"
+        }
+      ]
+    },
+    {
       "key": "speed",
       "label": "Speed",
       "count": 6,
       "commits": [
         {
-          "sha": "9e0faf28",
+          "sha": "e1f9a5c0",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "S365: Desk source-integrity and article performance changes",
+          "ts": "2026-09-29T22:53:15.000Z"
+        },
+        {
+          "sha": "a5764492",
           "move": "Fixed",
           "tone": "fix",
           "summary": "defer article art until after sources",
-          "ts": "2026-09-29T20:38:41.000Z"
+          "ts": "2026-09-29T20:46:47.000Z"
         },
         {
           "sha": "64f37cd0",
@@ -59,21 +80,21 @@
           "tone": "perf",
           "summary": "defer comments CSS and right-size reaction art",
           "ts": "2026-09-29T16:29:04.000Z"
-        },
-        {
-          "sha": "42d9d6a4",
-          "move": "Sped up",
-          "tone": "perf",
-          "summary": "serve smaller mobile hero art without duplicate fetch",
-          "ts": "2026-09-29T16:04:21.000Z"
         }
       ]
     },
     {
       "key": "frontdoor",
       "label": "Front door",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "db4b10d3",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "refresh visual and mobile receipts after Desk edition",
+          "ts": "2026-09-29T22:53:16.000Z"
+        },
         {
           "sha": "734b595c",
           "move": "Shipped",
