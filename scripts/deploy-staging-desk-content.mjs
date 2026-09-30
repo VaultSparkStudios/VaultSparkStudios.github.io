@@ -39,7 +39,7 @@ async function plan() {
 
 function emitGithub(value) {
   if (!process.env.GITHUB_OUTPUT) return;
-  fs.appendFileSync(process.env.GITHUB_OUTPUT, `staging_paths=${value.paths.length}\nstaging_head=${value.head}\nstaging_baseline=${value.baseline}\n`);
+  fs.appendFileSync(process.env.GITHUB_OUTPUT, `staging_paths=${value.paths.length}\nstaging_delta=${value.paths.length ? 'yes' : 'no'}\nstaging_head=${value.head}\nstaging_baseline=${value.baseline}\n`);
 }
 
 async function deploy(value) {

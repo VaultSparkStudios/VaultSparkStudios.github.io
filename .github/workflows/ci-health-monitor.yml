@@ -38,3 +38,31 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/sync-ci-health-issue.mjs staleness-result.json
+
+  surface-assurance:
+    name: Daily live routes and Desk assurance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check every local HTML route
+        run: node scripts/crawl-all-pages.mjs
+      - name: Check every live sitemap route and newest Desk edition
+        run: |
+          node scripts/check-live-surface-matrix.mjs --self-test
+          node scripts/check-live-surface-matrix.mjs
+      - name: Check canonical edge liveness
+        run: node scripts/smoke-live.mjs --edge-only
+      - name: Install existing browser test dependencies
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Check key public journeys and Desk themes in Chromium
+        env:
+          BASE_URL: https://vaultsparkstudios-website.pages.dev
+        run: npx playwright test tests/smoke.spec.js tests/news-theme-controls.spec.js --project=chromium --reporter=list --workers=2

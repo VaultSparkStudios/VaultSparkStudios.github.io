@@ -34,7 +34,12 @@ jobs:
       - name: Verify the published Desk corpus
         run: |
           npm run news:check
+          node scripts/check-news-ai-disclosure.mjs
+          node scripts/check-news-claim-parity.mjs
+          node scripts/check-news-copy-quality.mjs
+          node scripts/check-news-stats-coherence.mjs
           node scripts/build-news-freshness.mjs --check --require-daily
+          node scripts/crawl-all-pages.mjs
           node scripts/check-content-lane-purity.mjs --self-test
           python3 scripts/ci/staging-desk-receiver.py --self-test
 
@@ -53,7 +58,7 @@ jobs:
         run: node scripts/deploy-staging-desk-content.mjs --plan
 
       - name: Prepare the restricted staging key
-        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_paths != '0'
+        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_delta == 'yes'
         env:
           PRIVATE_KEY: ${{ secrets.DESK_STAGING_SSH_PRIVATE_KEY }}
           KNOWN_HOSTS: ${{ secrets.DESK_STAGING_KNOWN_HOSTS }}
@@ -65,7 +70,7 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > "$RUNNER_TEMP/desk-staging-known-hosts"
 
       - name: Deploy the Desk delta to canonical staging
-        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_paths != '0'
+        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_delta == 'yes'
         env:
           DESK_STAGING_KEY_PATH: ${{ runner.temp }}/desk-staging-key
           DESK_STAGING_KNOWN_HOSTS_PATH: ${{ runner.temp }}/desk-staging-known-hosts
