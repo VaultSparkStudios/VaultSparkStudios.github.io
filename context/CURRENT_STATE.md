@@ -1,8 +1,14 @@
 # Current State
 
-Last updated: 2026-09-29 (S365; scoped content deployed)
+Last updated: 2026-09-30 UTC (S366; Desk automatic content release verified)
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
+
+## S366 — Robinhood Summit analysis and automatic Desk content release
+
+The September 29 HOOD Summit analysis is live at `/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/` and leads the homepage. The deep article covers Robinhood's in-app trading agents, approval controls, weekend equities plans, crypto perpetual futures, earnings contracts, Social, agentic app implications, and a clearly hypothetical VaultSpark role. Its UTC edition date is September 30; the event date is September 29. The 85-story Desk corpus passed its gates, and 42 current route/theme/viewport captures passed CANON-053 visual review.
+
+The four scheduled Desk authoring slots now feed a separate content-only release workflow after a successful publisher run. The workflow checks the corpus, applies only allowlisted homepage/newsroom files to canonical staging through a forced-command SSH key, checks every production candidate file against served staging bytes, then dispatches the production content lane pinned to the reviewed commit. A manual recovery run (`36663473926`) exercised the complete path and succeeded; Cloudflare Pages run `36663563135` promoted 109 Desk paths over baseline `c46f22fa36d52901e505f2a99433cef9276fbbd0`. The live homepage, article, art, and Pages build receipt were verified. The next scheduled `workflow_run` trigger remains to be observed; the manually triggered path is proven. Full-site and identity promotion remain held.
 
 ## S365 — Desk source integrity and article performance (2026-09-29; content deployed)
 

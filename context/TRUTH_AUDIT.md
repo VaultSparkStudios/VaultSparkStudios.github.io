@@ -1341,3 +1341,7 @@ S364: production Desk signup response crash repaired, matching Turnstile binding
 | Evidence freshness | 5 | Hosted Lighthouse local/staging, E2E/compliance and the live production article were verified on 2026-09-29. |
 
 **What was true and is no longer:** the article performance floor was failing at 0.85–0.88; hosted candidate local and staging Lighthouse now pass the unchanged 0.90 gate. Production now serves the reader-first article order. Identity/provider acceptance and real signup email delivery remain unverified.
+
+## S366 Desk release truth (2026-09-30 UTC)
+
+The Desk's four UTC authoring slots are scheduled; a new workflow is active on a successful News Publish `workflow_run`. Its manual recovery run `36663473926` passed the same corpus, restricted staging deploy and 109-route byte parity checks, and production run `36663563135` completed live News verification. The current Pages receipt names baseline `c46f22fa36d52901e505f2a99433cef9276fbbd0` and Desk content head `dc86372c6b665cb5cf02bbb075c85fac0640c351`. The Robinhood feature and homepage lead are live. The next scheduled event trigger has not yet been observed, so daily automatic end-to-end cadence remains a monitored claim rather than historical fact.

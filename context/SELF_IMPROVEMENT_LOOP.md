@@ -2665,3 +2665,22 @@ The closeout push was followed by generated event and contract reconciliation. A
 The hosted compliance gate then found two missing LQIP entries from that edition. Root cause: the Desk publisher ran the index-based map generator before staging newly created art. Regenerated the two placeholders, moved art staging before map derivation, and added a publisher-order guard with negative fixtures. The corrected map passed a full 505/505 local build gate; the publisher resilience and workflow guards pass. This is a post-closeout CI repair and does not change the session score.
 
 The founder then asked for daily stories on the live homepage. Four scheduled slots succeeded on 2026-09-29, but the live lead lagged the late-night source edition behind the deliberate manual content-release gate. The edition was staged and its article/feed/claim bytes verified; run `36648112113` promoted 125 content-pure paths and the live homepage and News index now show the late-night lead. Automatic future live promotion remains a separate release-policy and staging-credential decision, recorded on TASK_BOARD. The S365 score is unchanged.
+
+## 2026-09-30 UTC — Session 366 (Robinhood Summit and automatic Desk release) | Total: 965/1000 (v3.0) | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 95 | Article corpus and Desk path parity passed; the release workflow completed on its recovery path. |
+| Creative Alignment | 97 | The Summit feature combines sourced reporting, analysis, original art, and a clearly hypothetical Studio perspective. |
+| Momentum | 98 | The 85-story corpus, homepage lead, staging candidate, and 109-path production release shipped. |
+| Engagement | 96 | Readers can reach the feature from the live homepage and follow its cited announcements and implications. |
+| Process Quality | 93 | The restricted release path passed staging and production; its first scheduled event trigger remains to be observed. |
+| Cross-Repo Coherence | 100 | No sibling repo was edited; staging and production permissions stayed scoped to this website. |
+| Security Posture | 98 | Forced-command SSH receiver, root-owned allowlist, exact-byte parity, and secret scan constrained the content lane. |
+| Ecosystem Integration | 96 | The article identifies possible agentic app roles for VaultSpark without suggesting an existing Robinhood integration. |
+| Capital Efficiency | 94 | Existing scheduled authoring and Pages infrastructure were reused with no paid dependency. |
+| Automation Coverage | 98 | Four daily authoring slots now connect to a content-only release workflow with staging proof and pinned production dispatch. |
+
+**Audit:** The manually dispatched recovery path and production run are verified, while the scheduled `workflow_run` trigger has not yet fired. The overlay grows with each new story until a reviewed baseline reset. Neither is represented as completed evidence.
+
+**Brainstorm → TASK_BOARD:** Observe the next successful scheduled publisher and downstream release; monitor overlay size and reset its baseline before archive or Pages limits. Both follow-ups are recorded as S366 tasks.

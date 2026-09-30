@@ -1,6 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-29 (S365: Desk source integrity and article release)
+Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
+
+## S366 — Robinhood Summit and daily homepage publication
+
+- [x] Publish a sourced deep analysis of the September 29 Robinhood HOOD Summit, including agentic trading controls, wider market hours, higher-risk products, agentic apps, and VaultSpark's hypothetical role; lead the live homepage with it.
+- [x] Add a restricted staging credential and an automatic Desk-only path from a successful scheduled publisher through staging byte parity to pinned Cloudflare Pages promotion. Recovery run `36663473926` and production run `36663563135` passed; 109 routes matched staging.
+- [ ] **[S366][DESK/P2]** Observe the next successful scheduled News Publish `workflow_run` and its downstream automatic release. The recovery dispatch proves the same workflow steps, but the event trigger itself has not fired since installation.
+- [ ] **[S366][RELEASE/P2]** Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 
 ## S365 — completed arc and follow-up
 
@@ -9,7 +16,7 @@ Last updated: 2026-09-29 (S365: Desk source integrity and article release)
 - [x] Verify 168/168 theme captures, 215/215 mobile cases, hosted E2E/compliance, and staging ceremony 11/11; deploy the scoped content lane and verify the live article order (`36631405999`).
 - [x] Repair the late-night Desk publisher's art-to-placeholder order after hosted compliance found two missing LQIP entries; regenerate the map, pass 505/505 locally, and guard the workflow ordering.
 - [x] Verify all four scheduled Desk slots ran and three editions published on 2026-09-29, stage the late-night edition, and promote its homepage/news content through the scoped lane (`36648112113`); live homepage and article match.
-- [ ] **[S365][DESK/P1]** Decide whether to automate daily live content-only promotion. The Desk publisher updates source four times daily, but `pages-deploy.yml` requires explicit `confirm_content` and CI has no staging deploy credential. Preserve staging-first checks and the identity/full-site holds.
+- [x] **[S365][DESK/P1]** Founder approved restricted Desk-only automation; S366 installed the scoped staging key, staging parity gate, and pinned production lane. The broad `confirm_content` and identity/full-site holds remain separate.
 - [ ] **[S365][CI/P2]** Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
 - [ ] **[S365][PERF/P3]** Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
 - [ ] **[S365][OPS/P2]** Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs `--allow-wipe`; keep unarchived deletion blocking.

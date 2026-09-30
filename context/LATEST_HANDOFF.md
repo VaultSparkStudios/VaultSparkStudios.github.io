@@ -1,5 +1,13 @@
 # Latest Handoff
 
+## Where We Left Off — S366 · 2026-09-30 UTC
+
+**Outcome:** The September 29 Robinhood HOOD Summit feature is live at `/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/` and leads the homepage. It includes the in-app agentic trading upgrade, human approval and funding controls, weekend equities plans, crypto perpetual futures, earnings contracts, Social, and a clearly hypothetical VaultSpark Studios role. The event date and UTC publication date are distinguished.
+
+The founder approved a restricted, content-only automatic release path. Four scheduled Desk authoring slots already existed; the new `desk-content-release.yml` runs after a successful publisher, validates the Desk corpus, deploys allowlisted content to canonical staging with a forced-command key, verifies all production candidate routes byte for byte, and dispatches `pages-deploy.yml` at the pinned reviewed commit. Recovery workflow `36663473926` and production workflow `36663563135` both passed. Production metadata records 109 paths, baseline `c46f22fa36d52901e505f2a99433cef9276fbbd0`, and candidate head `dc86372c6b665cb5cf02bbb075c85fac0640c351`. Live homepage, article and art returned current content. Full-site and identity holds stayed in place.
+
+**Next verification:** Observe the next successful scheduled News Publish run and ensure its `workflow_run` starts this release workflow; the manual recovery dispatch proved the stages but did not exercise that trigger. Monitor Desk overlay size and reset the deployed baseline through the normal reviewed release path before the archive grows too large. No local staging private key remains; the CI credential is in GitHub Actions secrets and the staging account is restricted to the Desk receiver.
+
 ## Where We Left Off — S365 · 2026-09-29
 
 **Session intent:** `/arc` on the public website, with direct main commits and staging-first production deployment already authorized.
