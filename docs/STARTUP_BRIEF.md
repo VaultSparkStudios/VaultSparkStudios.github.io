@@ -85,7 +85,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  7d old (2026-09-22)                            ║
+║  ⚠  Revenue sig.  8d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
@@ -126,14 +126,14 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
+║   94  [VERIFY]       Observe the first scheduled CI Health Moni  ║
+║        Observe the first scheduled CI Health Monitor run with t  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Track growth of the Desk overlay from the   ║
 ║        Track growth of the Desk overlay from the production bas  ║
 ║                                                                  ║
-║   92  [VERIFY]       Make staging deployment regenerate its con  ║
+║   89  [VERIFY]       Make staging deployment regenerate its con  ║
 ║        Make staging deployment regenerate its continuity summar  ║
-║                                                                  ║
-║   89  [VERIFY]       Watch the next three article Lighthouse ru  ║
-║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

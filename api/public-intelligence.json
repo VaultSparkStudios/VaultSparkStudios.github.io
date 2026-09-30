@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-30T03:37:10.466Z",
+  "generatedAt": "2026-09-30T04:08:13.753Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 366,
     "lastUpdated": "2026-09-30",
-    "currentFocus": "S366: Robinhood HOOD Summit analysis leads the live homepage; the Desk's restricted staging-first automatic content release passed its recovery run. Identity flows remain held.",
-    "nextMilestone": "Observe the next scheduled Desk publisher-to-release trigger, monitor article Lighthouse runs and overlay growth, and repair staging continuity sequencing.",
+    "currentFocus": "S366: Robinhood Summit analysis leads the live homepage; the restricted Desk release and daily cross-site assurance passed hosted recovery runs. Identity flows remain held.",
+    "nextMilestone": "Observe the first scheduled Desk release and daily surface-assurance runs; monitor article Lighthouse and overlay growth, then repair staging continuity sequencing.",
     "ignis": {
       "score": 46724,
       "grade": "FORGE",
@@ -822,12 +822,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 5 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-09-30T03:27:53.577Z",
+    "summary": "Production deployment is stranded for 5 consecutive receipts. CI gates are still running.",
+    "checkedAt": "2026-09-30T04:05:10.468Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "in_progress"
       },
       {
         "name": "Accessibility Audit",
@@ -835,7 +835,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "failure"
+        "status": "in_progress"
       },
       {
         "name": "Deploy Cloudflare Worker",
