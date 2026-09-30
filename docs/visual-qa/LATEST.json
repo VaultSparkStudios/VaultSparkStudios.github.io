@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-09-30T22:26:49.977Z",
+  "capturedAt": "2026-09-30T22:39:52.920Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "82a1ecbe2aa0cf843684329b73539efc8442a901e9893e895767b71751aa99b4",
+    "sha256": "c76d66f6d0f6f707eafd925d1a42c9491e3eed6a35cffa528f40d3beb4a76251",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -185,6 +185,7 @@
       "news/index.html",
       "news/personas/mica/index.html",
       "news/personas/rex/index.html",
+      "news/personas/vera/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -867,7 +868,7 @@
       },
       {
         "path": "news/index.html",
-        "sha256": "58268509993d7b146134888696cc1a794d75b3f99d234be8d6e0cc5ac33d9911"
+        "sha256": "4a546ca115eed101b3714523d1f3d32d5f3ce8a96376d994eb5cda647323cc4f"
       },
       {
         "path": "news/personas/mica/index.html",
@@ -875,7 +876,11 @@
       },
       {
         "path": "news/personas/rex/index.html",
-        "sha256": "806cec3b4db3f60aefc45b7ed568ebedd9bb27bc009d22d66a98a894ada247a8"
+        "sha256": "d321a63fb9eac008b3cc16eca01fc6f6afce48a210fcca92d95e62e0ced892b7"
+      },
+      {
+        "path": "news/personas/vera/index.html",
+        "sha256": "0132bfc21ba2c0694801f1b98cc3e8f889c0d92eb217074e52ffa52b62eb77a2"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -937,14 +942,15 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "e2c7e78e85fc42dda75a56d0167ce1d6bcababe3f36da9bdfe07c3ba4fbb5709",
-    "candidateSha": "cff59e4bd1fa7cc3bcbd902dca631db09f8284e9",
-    "root": "1a9230324e94ead2f89e2e2eabc4e45506c86de915bd7fa6062589f246fc0b7b"
+    "manifestSha256": "66b00c6dbbfeb2575c47a3ccd20a18e16868000c4446ef9c75ef5a9213da7bd0",
+    "candidateSha": "f1306b7b2062ef946b532f4ffcce0de9cc3a09b5",
+    "root": "043b4ecc023288f7f4dd8341f6395075f43c95b5b8613ce250b1f7fc3582a723"
   },
   "matrix": {
     "routes": [
       "/news/",
       "/news/personas/rex/",
+      "/news/personas/vera/",
       "/news/personas/mica/",
       "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/"
     ],
@@ -972,14 +978,14 @@
     "states": [
       "page"
     ],
-    "expectedCaptures": 56,
-    "completedCaptures": 56
+    "expectedCaptures": 70,
+    "completedCaptures": 70
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 56,
-      "manuallyReviewed": 56,
+      "totalCaptures": 70,
+      "manuallyReviewed": 70,
       "automatedOnly": 0,
       "complete": true
     },
@@ -999,7 +1005,7 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "c890e359a1292aac4a93a10789b2c737add0d81c6773bd6b0cfc12aa8a2defec",
+      "sha256": "8410dfc0c690af5f001826c249179abd315ba81c1c8f5ae126210c9122818428",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1016,7 +1022,7 @@
         "height": 900
       },
       "file": "news-personas-rex--dark--desktop.png",
-      "sha256": "fb2b1eae8f28a158d34d2122ebb0fa4e277cf7ba0f1ba3727a3f73e5b9e751ff",
+      "sha256": "7cc396e59b19e6a1a2abde62e4a544ed22af030bc32a555c6dcc5f40bc34cddb",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1032,8 +1038,25 @@
         "width": 1366,
         "height": 900
       },
+      "file": "news-personas-vera--dark--desktop.png",
+      "sha256": "4f46f62c59998c0b08072555bae4fd80853842eb0233f21456d0b526595f55b2",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
       "file": "news-personas-mica--dark--desktop.png",
-      "sha256": "828d2bdfe88b810c184f9676b1b3581d1de858b4420f9a6342a8ef7ed36c1c37",
+      "sha256": "408c4e33bf579683b13773f4030f3cba1cf88927ad90003834be64eefcf1097d",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1050,7 +1073,7 @@
         "height": 900
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--dark--desktop.png",
-      "sha256": "38c2de8a56e1fe44e66c1de18a514e5aa5dfe3b459a92465a9e8ef578e78e971",
+      "sha256": "c8f0fa1a8b47bb53ceb55a0c3b200cdc5fe54322404f7deeae8e60041a3d3adb",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1067,7 +1090,7 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "f247d7ff7acd73facede323273a8857b7850cb3696c7394b921915e036600aff",
+      "sha256": "cc9d2790456475d20b5cae9c3df777ed3e678204d69a9bc7a835a6ba1bce3c42",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1084,7 +1107,7 @@
         "height": 900
       },
       "file": "news-personas-rex--light--desktop.png",
-      "sha256": "ec4a5953a87e92767c936c3fef30d9b69cf6933c0f8bd474837c8820c60c53db",
+      "sha256": "36146e6612faf92f30e82f1a504bc4ed1b03a5641abae31066b59b0eea24952b",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1100,8 +1123,25 @@
         "width": 1366,
         "height": 900
       },
+      "file": "news-personas-vera--light--desktop.png",
+      "sha256": "88fa083b4a5cadc820d042425e31fbcc014d5670bbe629be84fd628bd9a5cc28",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
       "file": "news-personas-mica--light--desktop.png",
-      "sha256": "ebec32248b2f27a3fa9e84be623968ac055ce48599e1e0220ed8fffc8b170ee9",
+      "sha256": "5a6defe584da171f2f3e39a0ddd3855cd51c8ad3b11c75f43aba1ac2423f5f51",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1118,7 +1158,7 @@
         "height": 900
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--light--desktop.png",
-      "sha256": "9b7c5aa1ce580a03621f25b67087a9f5d02088c4a92b614c778dd55e8548b718",
+      "sha256": "82b9f2d40b9abe8226fa13de2e472eec353c4375a535fdf1634edcdff4462fe2",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1135,7 +1175,7 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "66e13a1a104e795093d9cf84890a39c35824a112705a0ada8c0c91fb53b2359d",
+      "sha256": "d848c4ee1fd40a5e08d03cbbb68d44846858aa92b517ec249ec60327e0532934",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1152,7 +1192,7 @@
         "height": 900
       },
       "file": "news-personas-rex--ambient--desktop.png",
-      "sha256": "343ef93cebe4c12908ce724ca9fa77ae864aeff3530a26410cf250e193b9866c",
+      "sha256": "54a0ae1176ef670f07a58dd8588b7b419a424d6dcb48d8e1056b1862b34c981b",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1168,8 +1208,25 @@
         "width": 1366,
         "height": 900
       },
+      "file": "news-personas-vera--ambient--desktop.png",
+      "sha256": "c3fc15cf966242ac5e6381bfebdbed26e603e80a36751e23e78928d60d08e5cb",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
       "file": "news-personas-mica--ambient--desktop.png",
-      "sha256": "07cbb708a1ad7cfc8d9be47060f44750af450063048fc249271305ba611a4045",
+      "sha256": "d0721b407925b2bc503a46007bbe79d7ac59039e3be52f3f06e149bc0cdf101f",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1203,7 +1260,7 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "2de6cbe9ed533651c658b287926d34253886c92f4ed93b01cd774764f975b666",
+      "sha256": "047bb8df71669fcc01324e93e2abb4e2c131fe20712d40359ed7d188372592a6",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1220,8 +1277,25 @@
         "height": 900
       },
       "file": "news-personas-rex--warm--desktop.png",
-      "sha256": "32846ebce97bc9d3e66b674375ba4176d676bfe7c0ffd5484d7da8300f542172",
+      "sha256": "701aa01362c96dae8c8ec11a6aa1aa49d80c24a8f7c4582f478cd274579e746a",
       "page": "/news/personas/rex/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-personas-vera--warm--desktop.png",
+      "sha256": "6394c97b9b776a08872cb74ac5c7a6d4999795400f59d2a58fe11bde641f47fd",
+      "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -1254,7 +1328,7 @@
         "height": 900
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--warm--desktop.png",
-      "sha256": "1487f978d41cf52c45d99cc9c4dff8d5e147c6e2bf83ef65f77b3619bc456375",
+      "sha256": "93c42753e0344e910694b5f390889f3cfe40639954bb4ee4af167972d9ab9d24",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1271,7 +1345,7 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "e2a969f4516f3d723ec8bc3b35103b82f2d68336530af9a55fe032c5075aa5fd",
+      "sha256": "f7ffda7bda522655c8248318bd0409c4f2286236439dae8c1d1ba8a9fcb6b326",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1288,8 +1362,25 @@
         "height": 900
       },
       "file": "news-personas-rex--cool--desktop.png",
-      "sha256": "0abead0e684eb7a65d24f0dd7f047d7f80e46aa624f4bf30e8a8a322a8f74d67",
+      "sha256": "1ab307b731dd7c4677ac77656ca9e13250fb3a40575c90395ab00b186d6e0b2b",
       "page": "/news/personas/rex/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-personas-vera--cool--desktop.png",
+      "sha256": "5138f54da3273479906be43ed374668a5d08b0669439d6e817247f065aff2005",
+      "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -1339,7 +1430,7 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "3e9db42e5bef6a8fdcb837a03d2e5289678e9590323eeeda3522c379d6faf8a9",
+      "sha256": "3ba2c12ccf1a34649f151e1091ebd98761b02bc2e06e24e91ce7761efc621b2c",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1356,7 +1447,7 @@
         "height": 900
       },
       "file": "news-personas-rex--lava--desktop.png",
-      "sha256": "b4a11a23d4a07c0b203923079078b73ae6f10630e08dd173b707d06ac82f764e",
+      "sha256": "2253fc83794bab85d509894f5e53dd2c84f7a30627bfce0d5a8e2b9de41317e4",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1372,8 +1463,25 @@
         "width": 1366,
         "height": 900
       },
+      "file": "news-personas-vera--lava--desktop.png",
+      "sha256": "99c608828c7c04d5b70ee84b67e0b072e49ff186f32779a3944554d956158c36",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
       "file": "news-personas-mica--lava--desktop.png",
-      "sha256": "3b6a542240f616b149cd99602f9a7d7a87a69575be3ecba5492a461bd887d3f1",
+      "sha256": "7a99f40a9a039e42e5ecb8275cc030e2c404f0e4a5347e50ff6425620d6fa910",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1390,7 +1498,7 @@
         "height": 900
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--lava--desktop.png",
-      "sha256": "ecfa504a9c9f25d978f048a8c73cc395385c4650065ca077b64f9ad30d516c0f",
+      "sha256": "c2e0b6419b68ccb03859a85eb85731394d491f835866585d4f98003bcaf59c35",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1407,7 +1515,7 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "15b3faae4567521cbca6b1ef9c94ef895ed2c239864fc8b80dfc1fcb0354297f",
+      "sha256": "e01c89e1018ff2e6ef02952bc9951a82b19fa6bdf2bbad36b2f47bc3933f1ca0",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1424,7 +1532,7 @@
         "height": 900
       },
       "file": "news-personas-rex--high-contrast--desktop.png",
-      "sha256": "30a193e770156cb0d3f7bdbd6305c27d845dafbde191a8545833f90c7b892b6c",
+      "sha256": "d2588f41d2a8354f6fc2a00cf58f479a44ffde40318a1d0101baa88ecc8b8801",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1440,8 +1548,25 @@
         "width": 1366,
         "height": 900
       },
+      "file": "news-personas-vera--high-contrast--desktop.png",
+      "sha256": "1c8a3f4c81f325546d55fede304decb3cbaf7e83378c6d54d9518de015b86395",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
       "file": "news-personas-mica--high-contrast--desktop.png",
-      "sha256": "c754a81614ba1f16dc8a400f4016a04f2f4eaa1735afdd8aa17ef6e2c407b4c0",
+      "sha256": "1b136c8f2d80418d0c351291dfdf151cf235c507f029ff6dbd118485dbe003c3",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1475,7 +1600,7 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "a75261fc0bb67d411337f714f5c3bf613107b227270b280551acaeb7aafe6c4a",
+      "sha256": "05309af08fb5a7a1037952a65d7a17e5350c7a216092363961fbecc59b0f058d",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1492,8 +1617,25 @@
         "height": 844
       },
       "file": "news-personas-rex--dark--mobile.png",
-      "sha256": "1cc9dddde7440a2a0f413aeec1e3d25953fe0da7b3a6df711a1b62c245f6c1fa",
+      "sha256": "7a9ee0cfb9d69a5dff24afeffe6b003ea3760405a5f65b8d10c1f77876732d48",
       "page": "/news/personas/rex/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-personas-vera--dark--mobile.png",
+      "sha256": "7086b08ec44336f90bf5dd2f652f9fa2425adadfb04e2817ef626dc27584151a",
+      "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -1526,7 +1668,7 @@
         "height": 844
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--dark--mobile.png",
-      "sha256": "f3677ffabf25eb0ef859a922f9a9a5547aa68ad4d32c28c414ae51452ecf6a3f",
+      "sha256": "b4403c55c818bc6ae1b3efd482a8a0574e9e3ce98b01fce11ce5bfb85adb786e",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1543,7 +1685,7 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "906dded16aca1ff35a093e966420608d5c691f653717ef99851a4e8ec50efda5",
+      "sha256": "267034296e4e7fe47ac87e55dec03768a5b6317542a8b126895b6c95dc56f83e",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1560,8 +1702,25 @@
         "height": 844
       },
       "file": "news-personas-rex--light--mobile.png",
-      "sha256": "30db8f2d57dccc1ef0465ee08cbb25cb56f00074c65ce26692034d8bd49e7147",
+      "sha256": "9946be180566557095fa133689dd5f99adc053117602ecf0b5212a850e25ba95",
       "page": "/news/personas/rex/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-personas-vera--light--mobile.png",
+      "sha256": "b35aa39bd344e52896f84466d5dbe35af7e29e57e28c4bbb32e6cc72c1e76e79",
+      "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
         "mode": "manual",
@@ -1594,7 +1753,7 @@
         "height": 844
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--light--mobile.png",
-      "sha256": "5045c046dd697ed3f77850b19964c6bc2fb112b638270e040e55b5aab5aacb13",
+      "sha256": "d5a701ce253f949a96c84a9bd954ab097498c6da57d3ce41dd75666151fa268d",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1611,7 +1770,7 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "302cb9a2f1f969bb19a05d581e9cff552125ed9c4373a6011d775709c1cf8606",
+      "sha256": "5188ebda6a05ea7046e4c47d1254e48a789ce21dcb5a2736a20e08ec348c53ff",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1628,7 +1787,7 @@
         "height": 844
       },
       "file": "news-personas-rex--ambient--mobile.png",
-      "sha256": "3e31e74a943875130fddcb00b0fb01acebc6cc2208f786674106d9d323f1d45b",
+      "sha256": "5dd1ec16e7cdf43cc101ecef536fbbd9d16f4414bacb5b45f600a6cb1e8dfc8b",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1644,8 +1803,25 @@
         "width": 390,
         "height": 844
       },
+      "file": "news-personas-vera--ambient--mobile.png",
+      "sha256": "5488a3a20f38256a49a58d8e1a251451bf1574cae0c411814d134ab5432f3c20",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
       "file": "news-personas-mica--ambient--mobile.png",
-      "sha256": "a0d26076f921c72e9ef6e61a24184beb48730c2e71a28174a587f4063d3dd492",
+      "sha256": "8478181fbfe8bdf14cfbb498427b9a7a0c579a5771f0a251440168effcbe5f1e",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1662,7 +1838,7 @@
         "height": 844
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--ambient--mobile.png",
-      "sha256": "c618540e2eea9451c004690adba73d635980becc487f9e622ef84ffbe6ddd55b",
+      "sha256": "532a24c245a82ad120c8e8dc9184883ce4d8193e067044331c3a9906e4d9382a",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1679,7 +1855,7 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "bbf4499b4a24cd1d2b873f19e772d564f9ed35176fb31339396b206b3ce7d761",
+      "sha256": "31216c58999a7e88dfdda616081d281c0e6beedefb16afa27b7d4ff749d7ed9f",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1696,7 +1872,7 @@
         "height": 844
       },
       "file": "news-personas-rex--warm--mobile.png",
-      "sha256": "9c2285a9a17d4f7ba5254d7e5a5609f23e0f536fc5b3814883c94a356c20ed94",
+      "sha256": "1d054f2edf8ca4d72eb3541cc22a5021a2af8a621a8b11315ca1bbfc6f193e23",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1712,8 +1888,25 @@
         "width": 390,
         "height": 844
       },
+      "file": "news-personas-vera--warm--mobile.png",
+      "sha256": "047606fc7ce058550abc3b605ab003e083d783d08bf1802b5cf8167c96a0c9e5",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
       "file": "news-personas-mica--warm--mobile.png",
-      "sha256": "9f85653b3001d2e942c76fa9e503d2a3bd6d260bae2d4628699114e5c385f4c2",
+      "sha256": "5ec23f93501ba302852d17fa67703886995a08438b6ed52430ccd1ec0a9cc49e",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1730,7 +1923,7 @@
         "height": 844
       },
       "file": "news-2026-09-30-robinhood-hood-summit-2026-agentic-trading-analysis--warm--mobile.png",
-      "sha256": "f683823769eb654e98d992a34030a6582bae251cf79f031e6b7ae0a8683175a5",
+      "sha256": "6e4e46f33c435c5c7de133fa43c2e3ef5022c083f10400c72afa4b63b7b6a6b1",
       "page": "/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/",
       "state": "page",
       "inspection": {
@@ -1747,7 +1940,7 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "5838298032c0c2d6a484e3f4dc37d0ad48a062c0c7b0151f312cf93f57a3b792",
+      "sha256": "1ffc2c81fd58e5a052959198ce7291bab6911029b7f2373ad57fcf1050b95cc5",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1764,7 +1957,7 @@
         "height": 844
       },
       "file": "news-personas-rex--cool--mobile.png",
-      "sha256": "7d12ed424c9e4a49ca6188f5601a20c5e35a9aae209162546ddd4b34446d0ba0",
+      "sha256": "d0cab3a7f8feaa4882f801ab766d9564fabae5614aaf51a4dcf716dfea34ff57",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1780,8 +1973,25 @@
         "width": 390,
         "height": 844
       },
+      "file": "news-personas-vera--cool--mobile.png",
+      "sha256": "c4f981e5da395abd0a0e3e42c895cf73d5f07c7c731552f4fa96b92ebb886670",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
       "file": "news-personas-mica--cool--mobile.png",
-      "sha256": "0b18f9e20bcb4100847b156c61bb70a20b20fa3339188e81b7a2b2f9f2e10c95",
+      "sha256": "3b62bde4103a73d3be8655cef124fc5ef82b8ec13b7e2f92175fd5afabab15a6",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1815,7 +2025,7 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "95636b1a1cb85b3a296904784bb2cdfd0fddb2a2355aa5029690401658e4e992",
+      "sha256": "140b37088a6afa32e890dbdf8bba08427ce1a9a66b9869a8e96c467cb998a648",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1832,7 +2042,7 @@
         "height": 844
       },
       "file": "news-personas-rex--lava--mobile.png",
-      "sha256": "5de805d0ddce2c030f7631969dc36227238509450c7c7196c7f6b383ae9f52fa",
+      "sha256": "c3d5d763635ee930606a4caea476d705a37504c331698ebd278f8b8223dbeb64",
       "page": "/news/personas/rex/",
       "state": "page",
       "inspection": {
@@ -1848,8 +2058,25 @@
         "width": 390,
         "height": 844
       },
+      "file": "news-personas-vera--lava--mobile.png",
+      "sha256": "39644b8ac8f08b0d18ee60024dce61be8bdef8ddbd7645a78eb051db9733dad0",
+      "page": "/news/personas/vera/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
       "file": "news-personas-mica--lava--mobile.png",
-      "sha256": "3cc916d5c7e0d658aa11fdbbdeaa7bb9718cd1fdbaf97a3caf470268df967ad1",
+      "sha256": "976e67ab0ad2f4b9b86ce2380f9db541936ba9f8cd0be8ca001cea25816e59af",
       "page": "/news/personas/mica/",
       "state": "page",
       "inspection": {
@@ -1883,7 +2110,7 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "03a2998946bf9d1c984016cd6b3f57bce332b8a3fb1f59a0d8e40b41ca7d9e50",
+      "sha256": "c46048fef24f6a584fb7200c78f7a46c87cc92b692cc7b56c4c1db4cd878f55f",
       "page": "/news/",
       "state": "page",
       "inspection": {
@@ -1900,8 +2127,25 @@
         "height": 844
       },
       "file": "news-personas-rex--high-contrast--mobile.png",
-      "sha256": "87054fb667c67bd22b6c9c4729106224ffc63f770eb4effa0d10cced38e3b029",
+      "sha256": "3e7e95e1ea0e2d79d0d1e8106852a3d0a2cda6fe082221875b6ad34f7a678ecb",
       "page": "/news/personas/rex/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-personas-vera--high-contrast--mobile.png",
+      "sha256": "511ff1321c1bc52f1213b93eff544e49dd8c85c3d860c00ee295e7cd512b7d2d",
+      "page": "/news/personas/vera/",
       "state": "page",
       "inspection": {
         "mode": "manual",
