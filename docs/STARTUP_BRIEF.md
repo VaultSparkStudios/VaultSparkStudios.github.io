@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-30 (Session 365 closeout) -->
-<!-- semantic-freshness: hash=05ae3eee9b5355ee next=366 silSession=365 silScore=946 handoff=- tests=- -->
+<!-- generated-at: 2026-09-30 (Session 366 closeout) -->
+<!-- semantic-freshness: hash=f023320edfe42e69 next=367 silSession=366 silScore=965 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 365 closeout · 2026-09-30.
+> **Fast-boot brief** — generated at Session 366 closeout · 2026-09-30.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 366 · 2026-09-30 · FOUNDER MODE                         ║
+║  Session 367 · 2026-09-30 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S365) - WHAT SHIPPED ══════════════════════════╗
-║  S365 audit items shipped; 0.90 article Lighthouse floor restor  ║
+╔══ LAST SESSION (S366) - WHAT SHIPPED ══════════════════════════╗
+║  S366: Robinhood HOOD Summit analysis leads the live homepage;   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,27 +41,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    946/1000   ██████████████████████░░   95%                     ║
+║    965/1000   ███████████████████████░   97%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 1d  ·  Last closeout: 11d  ·  (active =…         ║
+║    Last active: 0d  ·  Last closeout: 11d  ·  (active =…         ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        95    ██████████  ▇▇▇▇▇█▇▇ →                ║
-║    Alignment         95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          96    ██████████  ▇▇▇▇▇▇▅▇ →                ║
-║    Engagement        95    ██████████  ▇▇▇▇▇▇▆▇ →                ║
-║    Process Qual      90    █████████░  ▇▇▇▇██▆▇ →                ║
+║    Dev Health        95    ██████████  ▇▇▇▇█▇▇▇ →                ║
+║    Alignment         97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          98    ██████████  ▇▇▇▇▇▅▇▇ →                ║
+║    Engagement        96    ██████████  ▇▇▇▇▇▆▇▇ →                ║
+║    Process Qual      93    █████████░  ▇▇▇██▆▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
-║    Security          97    ██████████  ········ →                ║
-║    Ecosystem         94    █████████░  ········ →                ║
-║    Capital           92    █████████░  ········ →                ║
-║    Automation        92    █████████░  ········ →                ║
+║    Security          98    ██████████  ········ →                ║
+║    Ecosystem         96    ██████████  ········ →                ║
+║    Capital           94    █████████░  ········ →                ║
+║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 365 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 366 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    505/505 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -76,7 +76,7 @@
 ║  ✓  Tests         505/505 passing (2026-09-29)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46724 FORGE  ·  13d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  7d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -114,26 +114,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  966/1000  (↑20 vs current 946)                      ║
+║  Projected:  973/1000  (↑8 vs current 965)                       ║
 ║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 73.3 over last 3 forecasts                     ║
+║  Calibration: MAE 55.3 over last 4 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Make staging deployment regenerate its con  ║
-║        Make staging deployment regenerate its continuity summar  ║
-║                                                                  ║
-║   97  [VERIFY]       Watch the next three article Lighthouse ru  ║
-║        Watch the next three article Lighthouse runs for stabili  ║
+║   96  [PRODUCT]      Observe the next successful scheduled News  ║
+║        Observe the next successful scheduled News Publish workf  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   91  [VERIFY]       Decode literal HTML entities in a few olde  ║
-║        Decode literal HTML entities in a few older Desk source-  ║
+║   93  [PRODUCT]      Track growth of the Desk overlay from the   ║
+║        Track growth of the Desk overlay from the production bas  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Teach the closeout wipe guard to recognize  ║
-║        Teach the closeout wipe guard to recognize a byte-preser  ║
+║   92  [VERIFY]       Make staging deployment regenerate its con  ║
+║        Make staging deployment regenerate its continuity summar  ║
+║                                                                  ║
+║   89  [VERIFY]       Watch the next three article Lighthouse ru  ║
+║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 365 closeout · 2026-09-30*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 366 closeout · 2026-09-30*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

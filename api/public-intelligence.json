@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-09-30T02:18:50.619Z",
+  "generatedAt": "2026-09-30T03:37:10.466Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 365,
-    "lastUpdated": "2026-09-29",
-    "currentFocus": "S365: Desk source integrity and article performance shipped; the 2026-09-29 late-night edition is live on the homepage through a staging-first, content-only release. Identity flows remain held.",
-    "nextMilestone": "Decide on staged, content-only daily live promotion; monitor three article Lighthouse runs, repair staging continuity sequencing, and verify signup delivery only with explicit send authorization.",
+    "currentSession": 366,
+    "lastUpdated": "2026-09-30",
+    "currentFocus": "S366: Robinhood HOOD Summit analysis leads the live homepage; the Desk's restricted staging-first automatic content release passed its recovery run. Identity flows remain held.",
+    "nextMilestone": "Observe the next scheduled Desk publisher-to-release trigger, monitor article Lighthouse runs and overlay growth, and repair staging continuity sequencing.",
     "ignis": {
       "score": 46724,
       "grade": "FORGE",
@@ -134,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 365,
+    "sessionsCompleted": 366,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -150,17 +150,17 @@
     "vaulted": 0,
     "silCategories": {
       "devHealth": 95,
-      "alignment": 95,
-      "momentum": 96,
-      "engagement": 95,
-      "process": 90,
+      "alignment": 97,
+      "momentum": 98,
+      "engagement": 96,
+      "process": 93,
       "coherence": 100,
-      "security": 97,
-      "ecosystem": 94,
-      "capital": 92,
-      "automation": 92,
-      "total": 946,
-      "updatedSession": 365
+      "security": 98,
+      "ecosystem": 96,
+      "capital": 94,
+      "automation": 98,
+      "total": 965,
+      "updatedSession": 366
     },
     "sealedNextRevealAt": null
   },
@@ -822,12 +822,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 5 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-09-29T23:58:54.865Z",
+    "summary": "Production deployment is stranded for 5 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-09-30T03:27:53.577Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -835,7 +835,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",
