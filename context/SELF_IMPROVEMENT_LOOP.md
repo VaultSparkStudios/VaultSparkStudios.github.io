@@ -12,7 +12,7 @@ Sparkline (last 5 totals): ▁▃▄▄▆
 Avgs — 3: 984.0 | 5: 983.4 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 983.1
 History scope: 200 recorded /1000 entries across the active ledger and preserved SIL archives.
 Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-19 | Session 361 | Total: 985/1000 | Velocity: 3 | protocolVelocity: 0
+Last session: 2026-09-30 | Session 366 | Total: 965/1000 | Velocity: 3 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2688,3 +2688,11 @@ The founder then asked for daily stories on the live homepage. Four scheduled sl
 ### S366 assurance addendum — same session, score unchanged
 
 The founder requested broader website and Desk automation. A new daily job covers all local HTML and live sitemap routes plus public files and the newest Desk chain; the hosted recovery dispatch `36667110751` passed, including Chromium journeys. The Desk release now repeats its critical editorial gates and local crawl. The first scheduled run is recorded on TASK_BOARD, so the 965/1000 S366 score remains unchanged. The new route-count floor blocks a drop below 180; any smaller loss from the current 201-route baseline should be investigated if the scheduled run reveals it.
+
+### S366 closeout addendum — 2026-09-30
+
+The closeout audit found a real hosted E2E/compliance failure: one completed historical task-board block had stayed in the active file. The archive-preserving rotator moved it, and `check-startup-context-budget` now passes with zero rotatable blocks. The latest hosted homepage Lighthouse run remains below its unchanged floor (0.73 versus 0.76); no full-site promotion is claimed. The prior 965/1000 score describes the shipped Desk and assurance work; the unresolved hosted performance reading is a tracked release gate, not a hidden pass.
+
+**Brainstorm → TASK_BOARD:** Make the completed-session rotation part of the normal pre-push gate, and investigate the homepage longtail Lighthouse dip using fresh hosted evidence. The first is represented by the E2E recheck item; the second by the performance item. Both are bounded to observed defects.
+
+The subsequent full build exposed a stale-source versus dead-publisher confusion in IGNIS ROI. The ledger has been quiet since September 9; the generator now records `rebuiltAt` separately while `generatedAt` remains the source date. This repairs the 21-day publisher-health gate without claiming new usage, and is recorded as D-S366.6. The build also exposed the new lifecycle checkers' missing reachability metadata; D-S366.7 records the scope and self-test fix. The final local gate passed 505/505. The 965/1000 session score is unchanged.

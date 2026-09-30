@@ -407,6 +407,8 @@ const DIRECT_GATES = [
   ['build-news-critique-packets.mjs', ['--check']],
   ['check-history-window-safety.mjs', ['--self-test']],
   ['check-history-window-safety.mjs', []],
+  ['check-live-surface-matrix.mjs', ['--self-test']],
+  ['deploy-staging-desk-content.mjs', ['--self-test']],
 ];
 for (const [script, flags] of DIRECT_GATES) {
   execFileSync(process.execPath, [join(ROOT, 'scripts', script), ...flags], {

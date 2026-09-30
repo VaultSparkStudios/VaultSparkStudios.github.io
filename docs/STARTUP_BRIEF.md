@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S366) - WHAT SHIPPED ══════════════════════════╗
-║  S366: Robinhood HOOD Summit analysis leads the live homepage;   ║
+║  S366: Summit feature and homepage lead deployed through the 10  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    965/1000   ███████████████████████░   97%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 0d  ·  Last closeout: 11d  ·  (active =…         ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -73,21 +73,21 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         505/505 passing (2026-09-29)                   ║
+║  ✓  Tests         505/505 passing (2026-09-30)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         46724 FORGE  ·  13d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  8d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -132,8 +132,8 @@
 ║   93  [PRODUCT]      Track growth of the Desk overlay from the   ║
 ║        Track growth of the Desk overlay from the production bas  ║
 ║                                                                  ║
-║   89  [VERIFY]       Make staging deployment regenerate its con  ║
-║        Make staging deployment regenerate its continuity summar  ║
+║   91  [VERIFY]       Recheck hosted E2E/compliance after the ta  ║
+║        Recheck hosted E2E/compliance after the task-board rotat  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

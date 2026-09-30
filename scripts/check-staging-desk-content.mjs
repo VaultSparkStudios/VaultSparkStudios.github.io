@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope content-release
 /** Exact candidate/staging parity for every file in an automated Desk release. */
 import crypto from 'node:crypto';
 import fs from 'node:fs';

@@ -86,6 +86,9 @@ function aggregate() {
   }, '');
   return {
     generatedAt: newestEvidence || null,
+    // Publication health is separate from evidence age. A quiet usage ledger
+    // must not make a running publisher look dead or make old evidence look new.
+    rebuiltAt: new Date().toISOString(),
     ledgerRows: rows.length,
     tokens: {
       input: totalInput,
@@ -118,8 +121,14 @@ function main() {
       console.error('build-ignis-roi --check: api/ignis-roi.json missing. Run build-ignis-roi.');
       process.exit(1);
     }
-    try { JSON.parse(existing); } catch {
+    let parsed;
+    try { parsed = JSON.parse(existing); } catch {
       console.error('build-ignis-roi --check: api/ignis-roi.json invalid JSON.');
+      process.exit(1);
+    }
+    if (!parsed.rebuiltAt || Number.isNaN(Date.parse(parsed.rebuiltAt)) ||
+        (parsed.generatedAt && Number.isNaN(Date.parse(parsed.generatedAt)))) {
+      console.error('build-ignis-roi --check: missing or invalid rebuild/source timestamp.');
       process.exit(1);
     }
     console.log('build-ignis-roi --check: present and parseable');

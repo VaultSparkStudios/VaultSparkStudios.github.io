@@ -2007,3 +2007,12 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[S357→S360][ENG/P0 · PROVIDER]** Supabase `fjnpzjjyhnpmunfoycrp` is DOWN (db/rest/auth UNHEALTHY, REST times out, control plane cannot reach the DB; status still ACTIVE_HEALTHY). Breaks Desk comments AND Vault Member sign-in. The fix is a project restart via the Management API; the agent restart was refused by the session permission policy (S359, and again S360), so it is a founder action. Command in LATEST_HANDOFF. — **RECOVERED by 2026-09-19 09:00Z**: health API db/rest/auth ACTIVE_HEALTHY; `/v/desk-comments` → `ok:true`. The agent did not perform the restart.
 - [x] **[SIL][S360][UX/P3]** A missing Service Worker (private window, unsupported browser) marks the overall banner "Partial Outage". It is a client capability, not a service; count it as informational. — **DONE S361** (D-S361.2).
 - [x] **[S361][PWA/P0]** Service worker never installed in production — **FIXED S361** (D-S361.1): duplicate precache entries made `Cache.addAll` reject.
+
+
+<!-- rotated 2026-09-30 · sessions < 364 · 1 block(s) -->
+
+## Closed — S361 items (worked in S362)
+
+- [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.
+- [x] **[SIL][S361][PERF/P3]** Review the 100-entry precache — **DONE S362** (D-S362.5): 100 entries, 3.2 MB raw / about 779 KB brotli, background-fetched only for members who opt into offline and push. Kept; no trim justified by the numbers.
+- [x] **[S341][OPS/P1]** Decide whether to arm the Monthly Member Newsletter — **RESOLVED S362 without arming** (D-S362.3): the schedule now holds (held annotation, exit 0) unless `NEWSLETTER_ARMED=true`, so a deliberate hold no longer reads as a broken cron. Arming remains a founder decision.

@@ -30,6 +30,15 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 - Keep archive manifests stable while tar runs; staging temporary archives must not enter later release manifests.
 - No real email sent in S364 at the release checkpoint; automated challenge timed out.
 
+## S366 Desk and release pattern
+
+- Four daily Desk authoring slots feed a restricted content-only workflow: forced-command staging receiver, shared allowlist, served-byte parity, then pinned Pages promotion. Recovery and production were proven; the first scheduled `workflow_run` trigger was not yet observed.
+- Keep event date separate from UTC edition date. Summit source-attributed announcements, contingent plans, analysis and VaultSpark hypotheticals have different claim status.
+- A successful hosted manual assurance run does not prove its next cron. Check the scheduled event separately.
+- Main push evaluates but cannot unlock the Pages promotion interlock. Full-site release remains held by provider acceptance and the homepage Lighthouse floor; content-only release has its own gate.
+- Rotate completed task-board blocks before the startup-context-budget gate; one stale block caused the current E2E/compliance failures and local rotation repaired that specific condition.
+- For quiet source-derived feeds, keep source evidence time separate from publisher rebuild time. IGNIS ROI `generatedAt` is the latest ledger row; `rebuiltAt` proves the generator ran, and the trust ceiling checks that publisher field.
+
 ### S364 deployment completion
 
 Production Worker and static source deployed; protected signup returns intended 403 validation instead of 503. Receipt hashes must match Git LF bytes, not Windows mixed-line-ending working copies. Article performance exception is release-specific; the threshold remains 90. No real email sent.

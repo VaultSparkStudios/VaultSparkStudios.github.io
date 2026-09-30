@@ -1,5 +1,4 @@
 # Latest Handoff
-
 ## Where We Left Off — S366 · 2026-09-30 UTC
 
 **Outcome:** The September 29 Robinhood HOOD Summit feature is live at `/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/` and leads the homepage. It includes the in-app agentic trading upgrade, human approval and funding controls, weekend equities plans, crypto perpetual futures, earnings contracts, Social, and a clearly hypothetical VaultSpark Studios role. The event date and UTC publication date are distinguished.
@@ -10,6 +9,13 @@ The founder approved a restricted, content-only automatic release path. Four sch
 
 **Assurance follow-up:** Daily CI Health Monitor now has a read-only surface job: 232 local HTML files, 201 live sitemap routes, eight public files, newest Desk feed/claim/article/art/homepage parity, edge liveness, and 15 Chromium journeys/theme tests. Hosted manual run `36667110751` passed both jobs. Desk automatic release adds the existing disclosure, fact, copy and stats checks plus the local crawl before staging; the skipped-plan guard now uses an explicit yes/no output. Observe the first scheduled assurance run as well as the first scheduled publisher-to-release trigger.
 
+**Closeout gate repair:** The five most recent E2E/compliance runs were failing at `check-startup-context-budget` because a completed historical task-board block was still live. `rotate-taskboard.mjs` archived it without deleting open work; the local budget check now passes with zero rotatable blocks. Recheck the hosted gate on the pushed SHA. The latest homepage Lighthouse run measured 0.73 below the unchanged 0.76 longtail floor, so full-site promotion remains held pending fresh passing evidence. The Summit story and homepage lead are already live through the verified Desk-only release; no new production content is required from the closeout records.
+
+**Closeout build follow-up:** The gate then found the IGNIS ROI feed's September 9 source date older than its 21-day publisher ceiling. The ledger itself has no newer usage. `generatedAt` remains the source date, while a new `rebuiltAt` records the scheduled generator's execution; the trust-feed gate now measures publisher health separately. Focused generator and trust-feed checks pass. The complete local build gate subsequently passed 505/505.
+
+**Refreshed browser proof:** Local mobile audit passed 215/215; a new 42-capture homepage/News/Summit seven-theme desktop/mobile matrix was inspected, and receipt-ordering, visual-review and proof-surface checks pass. A scheduled publisher advanced main during closeout; the candidate was rebased and the rendered matrix was recaptured and reviewed against that tree. The mobile receipt is local and the hosted workflow generates its own. Hosted checks still need the pushed SHA.
+
+**Gate reachability:** The ROI generator's reviewed evidence-contract hash was updated after its source change. The live surface checker and staging Desk parity now declare their actual scheduled/content-release scopes; pure self-tests are reachable in the local build gate. The census passes 254/254 build-scope checks and 325/325 self-tests. The final local full build passed **505/505** on September 30. Recheck hosted CI on the pushed SHA.
 ## Where We Left Off — S365 · 2026-09-29
 
 **Session intent:** `/arc` on the public website, with direct main commits and staging-first production deployment already authorized.
@@ -25,11 +31,3 @@ Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle
 The post-closeout hosted compliance run found two new edition art files missing from `data/lqip-map.json`: the Desk publisher derived the map before staging its new art, while the map generator scans Git's index. The map is regenerated, the publisher now stages art before map derivation, and its ordering guard passes. The corrected tree passed the full 505/505 local build gate and hosted E2E/compliance. A fresh Lighthouse local rerun passed after one isolated `/community/` dip.
 
 The Desk's four scheduled slots ran successfully on 2026-09-29. Canonical staging served the late-night homepage and article through the scoped content lane; production run `36648112113` promoted 125 content-pure paths. The live homepage lead, News index, and late-night OpenAI article now match, with content head `90a79ff6a7afabf966efa8a0bd03bd2facb15314`. Future daily live updates are a release-policy decision: `confirm_content` is deliberately manual and CI has no staging deploy credential. Do not silently bypass that interlock or the identity/full-site holds.
-
-## Where We Left Off — S364 · 2026-09-23
-
-Session intent: repair Desk signup, commit/push main, fully deploy and close out.
-
-S364: production Desk signup response crash repaired, matching Turnstile binding installed, and consumed-token reuse fixed. Production returns the intended missing-token rejection instead of 503. Static production serves the repaired candidate. No real confirmation email was sent; delivery remains unverified.
-
-Worker 53a3be6e-b0e4-425b-8953-462127bbbea8; Pages run 35830977875 serves 353c8e17d98a6b75413ac01a209f51cbbcfa0b06. Hosted E2E/compliance green on cf56856ce; local 505/505 and mobile 215/215. Article Lighthouse 85/90 remains a follow-up under the founder’s explicit wrap-up/deploy direction. No threshold or identity hold changed. Existing rollback origins and staging lineage retained.

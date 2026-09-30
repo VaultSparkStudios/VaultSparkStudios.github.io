@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope scheduled-assurance
 // Daily, read-only check of the served Pages origin. The edge may challenge CI
 // clients, so route/content assertions use Pages while smoke-live checks the edge.
 import { writeFile } from 'node:fs/promises';

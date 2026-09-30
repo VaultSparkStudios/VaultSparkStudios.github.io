@@ -11,6 +11,10 @@ Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
 - [x] **[S366][QA]** Add daily local and live route assurance across 232 HTML files, 201 sitemap routes, eight public support files, edge liveness, latest Desk content chain, and 15 Chromium journeys/theme cases. Hosted manual run `36667110751` passed both jobs.
 - [x] **[S366][DESK/QA]** Re-run AI disclosure, claim parity, copy and stats checks plus full local crawl in the restricted Desk release before staging; correct skipped-plan guard to use a yes/no output.
 - [ ] **[S366][QA/P2]** Observe the first scheduled CI Health Monitor run with the new surface-assurance job; the manually dispatched hosted run passed, but the scheduled trigger has not fired since the change.
+- [ ] **[S366][CI/P2]** Recheck hosted E2E/compliance after the task-board rotation repaired the startup-context-budget failure (local probe now passes). Investigate any remaining failure at the new main SHA.
+- [ ] **[S366][PERF/P2]** Investigate the latest homepage Lighthouse 0.73 against the unchanged 0.76 longtail floor; keep the threshold and require a fresh passing hosted run before a full-site promotion.
+- [x] **[S366][TRUTH/CI]** Keep IGNIS ROI source age separate from publisher health after a quiet ledger blocked closeout: `generatedAt` remains September 9 evidence, `rebuiltAt` tracks regeneration, and focused freshness checks pass.
+- [x] **[S366][CI]** Declare workflow scope for the new scheduled surface and Desk staging checks, and run their pure self-tests from the build gate; the reachability census now passes 254/254 checks and 325/325 self-tests.
 
 ## S365 — completed arc and follow-up
 
@@ -41,11 +45,6 @@ Last updated: 2026-09-30 UTC (S366: Desk automatic content release)
 
 - [ ] **[S362][OBS/P3]** `desk-model-servability` dropped to 1/2 during this session: `Qwen3.8-27B` is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
 - [ ] **[S362][OBS/P3]** The newsletter cron still shows 6 consecutive failures until the first held run on 2026-10-02 (D-S362.8). Expected, not a regression — confirm the run concludes success with a `held` annotation.
-## Closed — S361 items (worked in S362)
-
-- [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.
-- [x] **[SIL][S361][PERF/P3]** Review the 100-entry precache — **DONE S362** (D-S362.5): 100 entries, 3.2 MB raw / about 779 KB brotli, background-fetched only for members who opt into offline and push. Kept; no trim justified by the numbers.
-- [x] **[S341][OPS/P1]** Decide whether to arm the Monthly Member Newsletter — **RESOLVED S362 without arming** (D-S362.3): the schedule now holds (held annotation, exit 0) unless `NEWSLETTER_ARMED=true`, so a deliberate hold no longer reads as a broken cron. Arming remains a founder decision.
 ## Now (next session ready)
 
 - [x] **[SIL][S363][GATES/P2]** Make `build:check` idempotent over `ignis/output/ecosystem-state.json` — **DONE S365.** The standalone runner now sanitizes the gitignored Oracle export before freezing and fingerprinting the tree, so a prior generator cannot strand step 81 on a rerun. This repaired a real closeout gate failure.

@@ -55,10 +55,9 @@ export const SURFACES = [
   { name: 'public-status',     file: 'api/public-status.json',        tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-public-status.mjs',       recover: 'node scripts/build-public-status.mjs',         wf: '.github/workflows/pages-deploy.yml' },
   { name: 'security-posture',  file: 'api/security-posture.json',     tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-security-posture.mjs',    recover: 'node scripts/build-security-posture.mjs',      wf: '.github/workflows/pages-deploy.yml' },
   { name: 'og-coverage',       file: 'api/og-coverage.json',          tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-og-coverage.mjs',         recover: 'node scripts/build-og-coverage.mjs',           wf: '.github/workflows/pages-deploy.yml' },
-  // S329: /ignis/roi/ shipped a 3-month-stale feed with no freshness ceiling —
-  // a linked public intelligence surface silently rotting. Now in the build
-  // chain (refresh-live-data regenerates it 6x/day) with a ceiling.
-  { name: 'ignis-roi',         file: 'api/ignis-roi.json',            tsField: 'generatedAt', maxDays: 7,  blockDays: 21, gen: 'scripts/build-ignis-roi.mjs',           recover: 'node scripts/build-ignis-roi.mjs',             wf: '.github/workflows/refresh-live-data.yml' },
+  // The ROI input ledger can be quiet for weeks. Its generatedAt is the last
+  // evidence date; rebuiltAt is publisher health. Keep both dates distinct.
+  { name: 'ignis-roi',         file: 'api/ignis-roi.json',            tsField: 'rebuiltAt', maxDays: 7,  blockDays: 21, gen: 'scripts/build-ignis-roi.mjs',           recover: 'node scripts/build-ignis-roi.mjs',             wf: '.github/workflows/refresh-live-data.yml' },
 ];
 
 /**
@@ -118,6 +117,8 @@ function selfTest() {
   check('unparseable timestamp → unknown, not blocked', (() => {
     const r = classify('not-a-date', now, 2, 4); return r.status === 'unknown' && r.blocked === false;
   })());
+  check('ROI publisher health uses rebuild timestamp while evidence date remains separate',
+    SURFACES.find((s) => s.name === 'ignis-roi')?.tsField === 'rebuiltAt');
 
   console.log(`check-trust-feed-freshness self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
