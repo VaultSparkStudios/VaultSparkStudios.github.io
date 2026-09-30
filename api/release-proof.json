@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-30T02:19:56.674Z",
+  "generatedAt": "2026-09-30T02:34:05.323Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,18 +20,17 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-build-sha-mismatch"
     ],
     "candidateBuildSha": "c46f22fa36d52901e505f2a99433cef9276fbbd0",
     "deployedBuildSha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "c02159c6bfc3cffbd404f5148f45e2164490deb2d3921548d0970896b092b036",
+      "candidateRoot": "4940b51da690fcbdcc28b0e518993724c2307fb03993edb93620efa3b0b20f4e",
       "candidateLeafCount": 53,
-      "stagingRoot": "682e6f86df3c889f5ae21be8129251fd1a8e41660ed8e2a18d01d06037ee3664",
+      "stagingRoot": "4940b51da690fcbdcc28b0e518993724c2307fb03993edb93620efa3b0b20f4e",
       "stagingLeafCount": 53,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -71,13 +70,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 3,
-    "ageHours": 1.6,
-    "observedAt": "2026-09-30T02:00:49.802Z",
+    "commitsBehind": 8,
+    "ageHours": 2.5,
+    "observedAt": "2026-09-30T02:34:05.323Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-09-30T02:00:49.802Z",
+      "observedAt": "2026-09-30T02:34:05.323Z",
       "expectedFrom": "0bcfe41505c55736f504db187021b02b3ad0e5aef2b94e90b89b5779966d3f8e",
       "supersededBy": null,
       "ageHours": 0,
@@ -177,7 +176,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -193,7 +192,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
