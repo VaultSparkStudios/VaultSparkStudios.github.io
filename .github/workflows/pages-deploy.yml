@@ -1,4 +1,5 @@
 name: Cloudflare Pages Deploy
+run-name: ${{ inputs.confirm_desk && format('Desk content {0}', inputs.desk_head_sha) || 'Cloudflare Pages Deploy' }}
 
 # S175 cf-pages-origin-migration — production origin is Cloudflare Pages.
 # Pushes and schedules evaluate the promotion interlock but cannot deploy.
@@ -51,6 +52,16 @@ on:
         required: false
         default: false
         type: boolean
+      confirm_desk:
+        description: "Automated Desk lane: promote only the newsroom path allowlist after staging parity"
+        required: false
+        default: false
+        type: boolean
+      desk_head_sha:
+        description: "Exact candidate SHA for an automated Desk release"
+        required: false
+        default: ""
+        type: string
   schedule:
     # S289: schedules retain a visible promotion-gate receipt, but the fail-closed
     # interlock never lets a schedule deploy. Feed promotion is intentionally held
@@ -74,6 +85,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # A Desk dispatch pins the already staged commit. Routine feed bots may
+          # advance main while this workflow queues; the candidate must not move.
+          ref: ${{ inputs.confirm_desk && inputs.desk_head_sha || github.sha }}
           # S294: the hotfix lane rebuilds from a commit already in production, so
           # that commit must be present. Depth 1 would make `git archive <baseline>`
           # fail. Full history is also what the deploy-currency comparison needs.
@@ -156,11 +170,17 @@ jobs:
         # candidate with nothing promotable reads as "nothing to ship", not as a
         # broken workflow. Only runs when the full promotion is NOT already
         # allowed — a full promotion supersedes it.
-        if: inputs.confirm_content == true && steps.promotion-gate.outputs.allowed != 'true'
+        if: (inputs.confirm_content == true || inputs.confirm_desk == true) && steps.promotion-gate.outputs.allowed != 'true'
         env:
           BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          DESK_ONLY: ${{ inputs.confirm_desk }}
+          CONTENT_ONLY: ${{ inputs.confirm_content }}
         run: |
           set -euo pipefail
+          if [ "$DESK_ONLY" = "true" ] && [ "$CONTENT_ONLY" = "true" ]; then
+            echo "Desk and broad content lanes cannot be combined" >&2
+            exit 1
+          fi
           BASELINE="$BASELINE_INPUT"
           if [ -z "$BASELINE" ]; then
             BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
@@ -174,7 +194,13 @@ jobs:
             exit 1
           fi
           echo "content-lane baseline: $BASELINE"
-          node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --emit-github-output
+          if [ "$DESK_ONLY" = "true" ]; then
+            LIVE_BASELINE=$(curl -fsS https://vaultsparkstudios-website.pages.dev/api/build-sha.json | node -e "let s='';process.stdin.on('data',x=>s+=x).on('end',()=>process.stdout.write(JSON.parse(s).sha||''))")
+            [ "$BASELINE" = "$LIVE_BASELINE" ] || { echo "Desk baseline differs from live production" >&2; exit 1; }
+            node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --desk --emit-github-output
+          else
+            node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --emit-github-output
+          fi
 
       - name: Resolve content-lane references against the deployed tree
         id: content-refs
@@ -197,6 +223,18 @@ jobs:
             --paths "$LANE_PATHS" \
             "--baseline=$BASELINE" \
             --emit-github-output
+
+      - name: Verify automated Desk staging parity
+        if: inputs.confirm_desk == true && steps.content-refs.outputs.allowed == 'true'
+        env:
+          DESK_HEAD_SHA: ${{ inputs.desk_head_sha }}
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
+        run: |
+          set -euo pipefail
+          [[ "$DESK_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "Invalid Desk candidate SHA" >&2; exit 1; }
+          [ "$(git rev-parse HEAD)" = "$DESK_HEAD_SHA" ] || { echo "Desk candidate checkout mismatch" >&2; exit 1; }
+          git merge-base --is-ancestor HEAD origin/main || { echo "Desk candidate is not on main" >&2; exit 1; }
+          node scripts/check-staging-desk-content.mjs --head "$DESK_HEAD_SHA" --paths "$LANE_PATHS"
 
       - name: Validate caller and Worker capability slice
         # A hash-named browser bundle is executable even though it is safe to
@@ -324,15 +362,16 @@ jobs:
           # which is the exact lie the S300 work removed.
           NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
           DAY=$(date -u +%Y-%m-%d)
+          CANDIDATE_SHA=$(git rev-parse HEAD)
           mkdir -p /tmp/pages-dist/api
           printf '{\n  "schemaVersion": "1.1",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "baselineSha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-lane",\n  "contentLaneHead": "%s",\n  "contentLanePaths": "%s",\n  "contentLanePathSetSha256": "%s",\n  "workflowRunId": "%s"\n}\n' \
-            "$DAY" "$BASELINE" "$BASELINE" "$NOW" "$GITHUB_SHA" "$count paths" "$PATH_SET_SHA" "$GITHUB_RUN_ID" > /tmp/pages-dist/api/build-sha.json
+            "$DAY" "$BASELINE" "$BASELINE" "$NOW" "$CANDIDATE_SHA" "$count paths" "$PATH_SET_SHA" "$GITHUB_RUN_ID" > /tmp/pages-dist/api/build-sha.json
           mkdir -p /tmp/pages-dist/data
           curl -fsS https://vaultsparkstudios-website.pages.dev/data/content-deploy-history.ndjson -o /tmp/content-deploy-history.ndjson || : > /tmp/content-deploy-history.ndjson
           node scripts/build-content-release-receipt.mjs \
             --paths "$LANE_PATHS" \
             --baseline "$BASELINE" \
-            --head "$GITHUB_SHA" \
+            --head "$CANDIDATE_SHA" \
             --workflow-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --discovery-result .cache/discovery-content-result.json \
             --history-source /tmp/content-deploy-history.ndjson \

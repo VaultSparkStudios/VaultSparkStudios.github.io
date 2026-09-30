@@ -1,0 +1,116 @@
+name: The Desk — Staging-First Content Release
+
+on:
+  workflow_run:
+    workflows: ["The Desk — Scheduled Publish"]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: desk-content-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install existing project dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Verify the published Desk corpus
+        run: |
+          npm run news:check
+          node scripts/build-news-freshness.mjs --check --require-daily
+          node scripts/check-content-lane-purity.mjs --self-test
+          python3 scripts/ci/staging-desk-receiver.py --self-test
+
+      - name: Plan the exact production Desk partition
+        id: production
+        run: |
+          set -euo pipefail
+          BASELINE=$(curl -fsS https://vaultsparkstudios-website.pages.dev/api/build-sha.json | node -e "let s='';process.stdin.on('data',x=>s+=x).on('end',()=>process.stdout.write(JSON.parse(s).sha||''))")
+          [[ "$BASELINE" =~ ^[0-9a-f]{40}$ ]] || { echo "No valid production baseline" >&2; exit 1; }
+          echo "baseline=$BASELINE" >> "$GITHUB_OUTPUT"
+          node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --desk --allow-empty --emit-github-output
+
+      - name: Plan the staging delta
+        if: steps.production.outputs.deployable == 'true'
+        id: staging
+        run: node scripts/deploy-staging-desk-content.mjs --plan
+
+      - name: Prepare the restricted staging key
+        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_paths != '0'
+        env:
+          PRIVATE_KEY: ${{ secrets.DESK_STAGING_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DESK_STAGING_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "$PRIVATE_KEY" ] && [ -n "$KNOWN_HOSTS" ] || { echo "Restricted staging credential missing" >&2; exit 1; }
+          umask 077
+          printf '%s\n' "$PRIVATE_KEY" > "$RUNNER_TEMP/desk-staging-key"
+          printf '%s\n' "$KNOWN_HOSTS" > "$RUNNER_TEMP/desk-staging-known-hosts"
+
+      - name: Deploy the Desk delta to canonical staging
+        if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_paths != '0'
+        env:
+          DESK_STAGING_KEY_PATH: ${{ runner.temp }}/desk-staging-key
+          DESK_STAGING_KNOWN_HOSTS_PATH: ${{ runner.temp }}/desk-staging-known-hosts
+          DESK_STAGING_TARGET: vss-desk-deploy@${{ secrets.DESK_STAGING_HOST }}
+        run: node scripts/deploy-staging-desk-content.mjs --deploy
+
+      - name: Verify every production candidate path on staging
+        if: steps.production.outputs.deployable == 'true'
+        env:
+          LANE_PATHS: ${{ steps.production.outputs.paths }}
+        run: node scripts/check-staging-desk-content.mjs --paths "$LANE_PATHS"
+
+      - name: Dispatch the pinned production content lane
+        if: steps.production.outputs.deployable == 'true'
+        id: promotion
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASELINE: ${{ steps.production.outputs.baseline }}
+        run: |
+          set -euo pipefail
+          CANDIDATE_SHA=$(git rev-parse HEAD)
+          BEFORE=$(gh run list --workflow pages-deploy.yml --limit 1 --json databaseId --jq '.[0].databaseId // 0')
+          gh workflow run pages-deploy.yml --ref main \
+            -f confirm_production=false -f confirm_content=false \
+            -f confirm_desk=true -f desk_head_sha="$CANDIDATE_SHA" -f baseline_sha="$BASELINE"
+          RUN_ID=''
+          for attempt in $(seq 1 30); do
+            RUN_ID=$(gh run list --workflow pages-deploy.yml --limit 20 --json databaseId,displayTitle \
+              --jq ".[] | select(.displayTitle == \"Desk content $CANDIDATE_SHA\" and .databaseId > $BEFORE) | .databaseId" | head -1)
+            [ -n "$RUN_ID" ] && break
+            sleep 2
+          done
+          [ -n "$RUN_ID" ] || { echo "Desk production dispatch did not create a run" >&2; exit 1; }
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          gh run watch "$RUN_ID" --exit-status --interval 15
+
+      - name: Release summary
+        if: always()
+        env:
+          DEPLOYABLE: ${{ steps.production.outputs.deployable }}
+          PATHS: ${{ steps.production.outputs.promotable_count }}
+          STAGED: ${{ steps.staging.outputs.staging_paths }}
+          RUN_ID: ${{ steps.promotion.outputs.run_id }}
+        run: |
+          echo "### The Desk content release" >> "$GITHUB_STEP_SUMMARY"
+          echo "- production candidate: $DEPLOYABLE ($PATHS paths)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- staging delta: ${STAGED:-0} paths" >> "$GITHUB_STEP_SUMMARY"
+          echo "- production run: ${RUN_ID:-not dispatched}" >> "$GITHUB_STEP_SUMMARY"

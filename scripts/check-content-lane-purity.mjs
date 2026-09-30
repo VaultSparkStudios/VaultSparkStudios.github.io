@@ -58,6 +58,7 @@ import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 import { classifyPath as hotfixClassifyPath } from './check-content-hotfix-gate.mjs';
+import { deskContentPartition, selfTestDeskContentPaths } from './lib/desk-content-paths.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -187,6 +188,7 @@ function changedPathsFor(range) {
 }
 
 function selfTest() {
+  selfTestDeskContentPaths();
   const cases = [
     // Allowed — what the lane exists to ship.
     ['page markup is content', classifyPath('press/index.html').ok],
@@ -313,7 +315,7 @@ function main() {
   // --partition is what the content lane actually consumes: the promotable
   // subset. --strict keeps the all-or-nothing verdict for callers that need it.
   if (process.argv.includes('--partition')) {
-    const part = partition(changed);
+    const part = process.argv.includes('--desk') ? deskContentPartition(changed) : partition(changed);
     if (process.argv.includes('--emit-github-output') && process.env.GITHUB_OUTPUT) {
       fs.appendFileSync(
         process.env.GITHUB_OUTPUT,
@@ -321,10 +323,10 @@ function main() {
       );
     }
     // Never silently truncate coverage: say what was withheld and why.
-    console.log(`content-lane-purity --partition: ${part.detail}`);
-    for (const w of part.withheld.slice(0, 10)) console.log(`  withheld: ${w.path} — ${w.reason}`);
+    console.log(`content-lane-purity --partition${process.argv.includes('--desk') ? ' --desk' : ''}: ${part.detail || `${part.promotable.length} Desk paths · ${part.withheld.length} withheld`}`);
+    for (const w of part.withheld.slice(0, 10)) console.log(`  withheld: ${w.path || w}${w.reason ? ` — ${w.reason}` : ''}`);
     if (part.withheld.length > 10) console.log(`  withheld: +${part.withheld.length - 10} more`);
-    if (!part.deployable) process.exit(1);
+    if (!part.deployable && !process.argv.includes('--allow-empty')) process.exit(1);
     return;
   }
 
