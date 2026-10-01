@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-09-30 (Session 366 closeout) -->
+<!-- generated-at: 2026-10-01 (Session 366 closeout) -->
 <!-- semantic-freshness: hash=f023320edfe42e69 next=367 silSession=366 silScore=965 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 366 closeout · 2026-09-30.
+> **Fast-boot brief** — generated at Session 366 closeout · 2026-10-01.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 367 · 2026-09-30 · FOUNDER MODE                         ║
+║  Session 367 · 2026-10-01 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S366) - WHAT SHIPPED ══════════════════════════╗
-║  S366: Summit feature and homepage lead deployed through the 10  ║
+║  Post-S366: PR #132 merged eight correspondent profiles and sou  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    965/1000   ███████████████████████░   97%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,8 +76,8 @@
 ║  ✓  Tests         505/505 passing (2026-09-30)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   0d                                             ║
-║  ⚠  IGNIS         46724 FORGE  ·  13d old                        ║
+║  ✓  Context age   1d                                             ║
+║  ⛔  IGNIS         46724 FORGE  ·  14d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
+║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    38d · Authorize or decline immutable warm-origin migrati      ║
-║    38d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    39d · Authorize or decline immutable warm-origin migrati      ║
+║    39d · Confirm The Dispatch double opt-in. Click the conf      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Observe the next successful scheduled News  ║
-║        Observe the next successful scheduled News Publish workf  ║
+║   96  [PRODUCT]      Replace baseline-archive reconstruction wi  ║
+║        Replace baseline-archive reconstruction with an explicit  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
+║   93  [PRODUCT]      Keep Linux visual-regression snapshots tie  ║
+║        Keep Linux visual-regression snapshots tied to a measure  ║
 ║                                                                  ║
-║   94  [VERIFY]       Observe the first scheduled CI Health Moni  ║
-║        Observe the first scheduled CI Health Monitor run with t  ║
-║                                                                  ║
-║   93  [PRODUCT]      Track growth of the Desk overlay from the   ║
+║   90  [PRODUCT]      Track growth of the Desk overlay from the   ║
 ║        Track growth of the Desk overlay from the production bas  ║
 ║                                                                  ║
-║   91  [VERIFY]       Recheck hosted E2E/compliance after the ta  ║
-║        Recheck hosted E2E/compliance after the task-board rotat  ║
+║   89  [VERIFY]       Make staging deployment regenerate its con  ║
+║        Make staging deployment regenerate its continuity summar  ║
+║                                                                  ║
+║   86  [VERIFY]       Watch the next three article Lighthouse ru  ║
+║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 366 closeout · 2026-09-30*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 366 closeout · 2026-10-01*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
