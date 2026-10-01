@@ -1,10 +1,22 @@
 # Current State
 
-Last updated: 2026-09-30 UTC (S366; Desk automatic content release verified)
+Last updated: 2026-10-01 UTC (post-S366; Desk archive release)
+
+## Post-S366 — News archive live (2026-10-01)
+
+The News hub shows seven recent editions and links complete August, September and October archives; all 90 published stories remain reachable. PR #134 reduced the hub from 207,037 to 92,390 source bytes, below its 200 KiB budget. After a later scheduled Desk release exposed staging ancestry, allowlist and receiver-rule gaps, main commits `584d86957`, `eb94a31aa` and `5ded8c0de` repaired the content lane. Recovery run `36835514861` and Pages run `36835622726` passed; the October article and archive are live. Production matched the candidate at 159/159 paths and preserved all 153 prior overlay paths. The canonical hub, October story/archive and sampled profiles returned 200; 1366px and 390px browser checks found no horizontal overflow. The full-site identity/provider hold remains separate. Observe the next scheduled publisher-to-release run after this repair.
+
+## Post-S366 — Desk personas live (2026-09-30)
+
+The Desk has eight live fictional correspondent profiles with distinct generated portraits, vector marks, writing taglines, beats and editorial boundaries. Each profile draws reports, positions, panel turns, captions and predictions from published stories, with links to the source article. MICA adds a creative-tools, games and media lens; her feed says no work is published yet. The Desk hub and article bylines link to the profiles. The late-night edition has 89 stories; its VERA contributions appear on her profile. PR #132 merged as `91116c423`; scoped Cloudflare Pages run `36791903046` published 147 static paths while preserving the earlier 124-path Desk overlay. Canonical staging and the public Pages origin matched all 147 paths exactly, and the canonical REX, VERA and MICA routes returned 200. The full-site identity/provider promotion hold remains in force.
+
+Verification: full 506/506 build checks, 215/215 mobile browser cases, 70/70 reviewed desktop/mobile captures across seven themes, hosted E2E/compliance, accessibility, Lighthouse and the refreshed Linux visual-regression run passed. The prior production screenshot baseline had been stale on 40 unrelated surfaces; its current Linux reference images were reviewed and refreshed before release.
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
 
 ## S366 — Robinhood Summit analysis and automatic Desk content release
+
+Post-closeout observation: scheduled Desk authoring runs `36679345071` and `36716077242` both started the restricted downstream release, which passed in `36679807164` and `36716493332`. The first scheduled CI Health Monitor run exposed a live fact-receipt checker that mixed same-day stories; the story-scoped repair landed as `ed6d294db`, and hosted rerun `36750321612` passed both jobs. Hosted E2E/compliance passed in `36747372651`; Lighthouse `36741037407` passed all nine route tiers. Full-site promotion remains held on the independent identity/provider gate.
 
 The September 29 HOOD Summit analysis is live at `/news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/` and leads the homepage. The deep article covers Robinhood's in-app trading agents, approval controls, weekend equities plans, crypto perpetual futures, earnings contracts, Social, agentic app implications, and a clearly hypothetical VaultSpark role. Its UTC edition date is September 30; the event date is September 29. The 85-story Desk corpus passed its gates, and 42 current route/theme/viewport captures passed CANON-053 visual review.
 

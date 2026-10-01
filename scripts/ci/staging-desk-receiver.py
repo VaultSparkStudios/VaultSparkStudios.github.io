@@ -167,8 +167,15 @@ def receive():
 
 def self_test():
     rules = json.loads(Path('config/desk-content-paths.json').read_text(encoding='utf8'))
-    good = ['index.html', 'news/index.html', 'news/2026-09-30/example/index.html', 'assets/og/news/2026-09-30--example.png', 'api/news-desk-feed.json']
-    bad = ['auth/index.html', 'news/../auth/index.html', 'api/security-posture.json', 'sw.js', '.github/workflows/x.yml']
+    good = ['index.html', 'news/index.html', 'news/2026-09-30/example/index.html',
+            'news/archive/index.html', 'news/archive/2026-10/index.html',
+            'news/personas/rex/index.html', 'news/directors-report/index.html',
+            'assets/desk-personas/rex.webp', 'assets/news-desk.css',
+            'assets/og/og-news-archive-2026-10.png',
+            'assets/og/news/2026-09-30--example.png', 'api/news-desk-feed.json']
+    bad = ['auth/index.html', 'news/../auth/index.html',
+           'news/archive/../../auth/index.html', 'assets/desk-personas/rex.js',
+           'api/security-posture.json', 'sw.js', '.github/workflows/x.yml']
     assert all(allowed_path(value, rules) for value in good)
     assert all(not allowed_path(value, rules) for value in bad)
     print(f'staging-desk-receiver --self-test: {len(good) + len(bad)} paths passed')

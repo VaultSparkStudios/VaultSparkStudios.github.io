@@ -2,7 +2,7 @@
 
 ## Mental model
 
-This is a static site with serverless backend capabilities (Supabase edge functions + Cloudflare Worker). GitHub Pages auto-deploys on every push to `main`. There is no build step — raw HTML/CSS/JS.
+This is a generated static site with serverless capabilities (Supabase edge functions and Cloudflare Workers). GitHub is the source; Cloudflare Pages serves production. `npm run build` generates the public pages and feeds, and the full build gate checks them. A push to `main` does not imply a full-site promotion: identity/provider gates can hold it while an allowlisted static-content lane publishes a reviewed subset.
 
 ## Key systems
 
@@ -11,20 +11,21 @@ This is a static site with serverless backend capabilities (Supabase edge functi
 | Vault Member portal | `vault-member/` | Auth, ranks, achievements, challenges, Discord sync |
 | VaultSparked membership | `vaultsparked/` | Stripe checkout, phase progress, gift checkout |
 | Universe / lore | `universe/` | DreadSpike, Voidfall teaser |
-| Investor portal | `investor/` | Gated content |
+| Investor portal | `investor-portal/` | Gated content |
 | Studio Hub | `studio-hub/` | Synced from vaultspark-studio-hub repo |
-| Service worker | `service-worker.js` | Pre-caches STATIC_ASSETS; bump CACHE_NAME on each release |
-| Nav JS | `assets/nav-toggle.js` | Must be in STATIC_ASSETS for SW to pre-cache |
-| Cloudflare Worker | `cloudflare/worker.js` | All 9 security headers; deploy via Wrangler |
+| Service worker | `sw.js` | Versioned static shell and offline behavior |
+| Nav JS | `assets/nav-toggle.js` | Browser navigation and mobile drawer |
+| Cloudflare Worker | `cloudflare/security-headers-worker.js` | Edge security and route behavior; deploy via Wrangler |
+| The Desk personas | `scripts/lib/news-desk.mjs`, `scripts/generate-news-pages.mjs`, `assets/desk-personas/` | Fictional profile voices, portraits, marks and generated feeds from the published record |
 
 ## Architecture constraints
 
-- **No build step** — all JS/CSS is vanilla or loaded via CDN. No bundler.
+- **Generated public tree** — run `npm run build`, the 506-step build gate and rendered visual checks before a release; generated HTML, feeds and proof artifacts are committed.
 - **Public repo** — secrets never committed. All keys via Supabase secrets or Cloudflare env.
-- **GitHub Pages** — no server-side rendering, no dynamic routes. All routing is directory-based.
+- **Cloudflare Pages** — static output uses directory routes; Worker and Supabase capabilities are deployed separately.
 - **Edge functions stay cloud** — Supabase must remain cloud-hosted (per studio-ops Supabase migration guide). Edge functions cannot move to self-hosted Hetzner.
 - **Hover dropdowns** — must use `@media (hover: hover)` guards; touch devices get tap behavior.
-- **SW pre-cache rule** — any nav JS added must also be in `STATIC_ASSETS` in `service-worker.js`.
+- **Scoped content release** — the Pages hotfix reconstructs a production baseline commit before overlaying named files. Include every still-live path from previous content overlays, or a new release can silently roll those paths back. The post-S366 persona release verified all 124 prior Desk paths inside its 147-path scope.
 
 ## Heuristics
 

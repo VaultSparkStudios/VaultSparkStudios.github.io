@@ -8,24 +8,30 @@ const DIR = path.join(ROOT, 'docs', 'visual-qa');
 const SELF_TEST = process.argv.includes('--self-test');
 const CHECK = process.argv.includes('--check');
 
-export function classify(files, receipt) {
-  const retained = new Set((receipt?.captures || []).map((x) => x.file));
-  retained.add('LATEST.json');
+export function classify(files, receipts) {
+  const receiptList = Array.isArray(receipts) ? receipts : [receipts];
+  const retained = new Set(receiptList.flatMap((receipt) => (receipt?.captures || []).map((x) => x.file)));
   const png = files.filter((f) => f.endsWith('.png'));
   return { retained: png.filter((f) => retained.has(f)), archivalCandidates: png.filter((f) => !retained.has(f)) };
 }
 
 if (SELF_TEST) {
-  const got = classify(['a.png', 'b.png', 'LATEST.json'], { captures: [{ file: 'b.png' }] });
-  if (got.retained[0] !== 'b.png' || got.archivalCandidates[0] !== 'a.png') process.exit(1);
+  const got = classify(['a.png', 'b.png', 'c.png', 'LATEST.json'], [
+    { captures: [{ file: 'b.png' }] },
+    { captures: [{ file: 'c.png' }] },
+  ]);
+  if (got.retained.join(',') !== 'b.png,c.png' || got.archivalCandidates.join(',') !== 'a.png') process.exit(1);
   console.log('check-visual-qa-retention --self-test: all passed');
 } else {
-  const receipt = JSON.parse(fs.readFileSync(path.join(DIR, 'LATEST.json'), 'utf8'));
-  const got = classify(fs.readdirSync(DIR), receipt);
+  const files = fs.readdirSync(DIR);
+  const receipts = files.filter((file) => file.endsWith('.json') && file !== 'manifest.json')
+    .map((file) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8')))
+    .filter((value) => Array.isArray(value?.captures));
+  const got = classify(files, receipts);
   const out = {
     schemaVersion: 1,
     generatedBy: 'scripts/check-visual-qa-retention.mjs',
-    policy: 'LATEST.json captures are immutable release evidence; other PNGs are archival candidates, never automatically deleted.',
+    policy: 'Captures referenced by current or archived top-level review receipts are immutable release evidence; other PNGs are archival candidates, never automatically deleted.',
     retainedCount: got.retained.length,
     archivalCandidateCount: got.archivalCandidates.length,
     archivalCandidates: got.archivalCandidates,

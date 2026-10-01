@@ -1351,3 +1351,14 @@ Daily surface-assurance was added to CI Health Monitor and verified by hosted ma
 Closeout checked the newer hosted gates: the E2E/compliance failures identify one unrotated completed task-board block, which was archived and then passed the local startup budget check. A hosted rerun is still needed. The latest homepage Lighthouse reading is below its unchanged longtail floor (0.73 versus 0.76), so the full-site release gate remains held. The previously verified 109-path Desk content deployment is the current live production state; committing these records does not itself assert a new deployment.
 
 The IGNIS ROI feed's last evidence remains September 9. Its new `rebuiltAt` reports when the same input was processed, not when new token usage occurred. The public `generatedAt` source date was not advanced to make a stale fact look fresh.
+## Post-S366 Desk persona release truth — 2026-09-30
+
+The eight fictional correspondent profiles are live, not just built: PR #132 merged and Pages run `36791903046` completed. All 147 scoped files matched canonical staging and the public Pages origin; REX, VERA and MICA returned 200 on the canonical domain. The Pages receipt keeps baseline SHA `c46f22fa36d52901e505f2a99433cef9276fbbd0` because the deployment is a content overlay, not a full-site promotion. The standing identity/provider hold is still real. MICA's empty feed truthfully represents zero published contributions. The visual-regression baseline refresh was checked against current production and does not substitute for the separate profile UI screenshots.
+
+## Post-S366 daily Desk release truth — 2026-10-01
+
+The latest publisher created the 90th story, but its first downstream run failed while staging referenced an unmerged commit. Recovery then held production on omitted persona assets; another run caught the October archive absent from staging. After the repository and restricted server rules were reconciled, recovery `36835514861` and Pages `36835622726` passed. The public origin matches 159/159 candidate paths, preserving all 153 previous paths; the October article and archive return 200. This proves the repaired manual path, not yet the next scheduled trigger. The full-site identity/provider hold remains.
+
+## Post-S366 News archive release truth — 2026-10-01
+
+PR #134 merged and Pages run `36813693699` succeeded. The public News hub, archive index, August/September month pages and sampled profile routes return 200. Its 153-path overlay includes all 147 paths in the preceding Desk release; canonical staging and the Pages origin match the released source bytes at every path. The archive and hub retain links to all 89 nonsuperseded stories, while the hub itself is 92,390 source bytes. The baseline SHA remains `c46f22fa36d52901e505f2a99433cef9276fbbd0` because this was another content overlay. No full-site identity/provider acceptance is inferred from this release.

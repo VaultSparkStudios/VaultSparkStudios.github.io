@@ -10,6 +10,7 @@
  *   node scripts/deploy-staging-content.mjs --self-test
  *   node scripts/deploy-staging-content.mjs --repair-permissions
  *   node scripts/deploy-staging-content.mjs --baseline <served-build-sha>
+ *   node scripts/deploy-staging-content.mjs --baseline <served-build-sha> --paths "news/index.html assets/news-desk.css"
  */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -88,6 +89,27 @@ function changedPaths(range) {
     'candidate path discovery',
   ).stdout;
   return output.split(/\r?\n/).map((entry) => entry.trim()).filter(Boolean);
+}
+
+function requestedPathsArg() {
+  const inline = process.argv.find((arg) => arg.startsWith('--paths='));
+  const index = process.argv.indexOf('--paths');
+  const raw = inline ? inline.slice('--paths='.length) : index >= 0 ? process.argv[index + 1] : null;
+  return raw === null ? null : String(raw).trim().split(/\s+/).filter(Boolean);
+}
+
+export function selectPromotablePaths(changed, requested = null) {
+  const candidate = partition(changed);
+  if (requested === null) return candidate;
+  const wanted = [...new Set(requested)].sort();
+  if (!wanted.length) throw new Error('scoped content release requires at least one path');
+  const changedSet = new Set(changed);
+  const allowedSet = new Set(candidate.promotable);
+  for (const rel of wanted) {
+    if (!changedSet.has(rel)) throw new Error(`scoped path is not changed since staging baseline: ${rel}`);
+    if (!allowedSet.has(rel)) throw new Error(`scoped path is not promotable static content: ${rel}`);
+  }
+  return { ...candidate, promotable: wanted, deployable: true, detail: `${wanted.length} scoped content path(s) selected from ${candidate.promotable.length} promotable candidate path(s)` };
 }
 
 function deletedContentPaths(range) {
@@ -195,6 +217,10 @@ function selfTest() {
     ['News markup is content', classifyPath('news/index.html').ok],
     ['exact discovery roots are content', classifyPath('sitemap.xml').ok && classifyPath('.well-known/llms.txt').ok],
     ['auth markup is withheld', !classifyPath('auth/callback.html').ok],
+    ['scoped release selects changed content only', selectPromotablePaths(['news/index.html', 'api/site-health.json'], ['news/index.html']).promotable.join(',') === 'news/index.html'],
+    ['scoped release rejects unchanged paths', (() => { try { selectPromotablePaths(['news/index.html'], ['news/personas/rex/index.html']); return false; } catch { return true; } })()],
+    ['scoped release rejects sensitive paths', (() => { try { selectPromotablePaths(['news/index.html', 'auth/index.html'], ['auth/index.html']); return false; } catch { return true; } })()],
+    ['scoped release rejects empty selection', (() => { try { selectPromotablePaths(['news/index.html'], []); return false; } catch { return true; } })()],
     // S328 — edge-injected CSP nonces are transport, not content. These assert in
     // BOTH directions, so the normalisation can neither rot inert nor quietly
     // swallow a real content difference.
@@ -256,12 +282,13 @@ try {
   }
 
   const range = `${baseline}..HEAD`;
-  const part = partition(changedPaths(range));
+  const requested = requestedPathsArg();
+  const part = selectPromotablePaths(changedPaths(range), requested);
   if (!part.deployable) throw new Error(part.detail);
   const promotable = part.promotable
     .filter((entry) => entry !== 'api/build-sha.json')
     .filter((entry) => fs.existsSync(path.join(ROOT, entry)));
-  const removals = deletedContentPaths(range);
+  const removals = requested === null ? deletedContentPaths(range) : [];
   if (!promotable.length) throw new Error('no existing promotable files remain after build-receipt exclusion');
 
   checked(

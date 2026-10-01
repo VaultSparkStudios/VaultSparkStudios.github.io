@@ -598,6 +598,7 @@ async function selfTest() {
   // beat classification
   t('safety language classifies to a safety beat', classifyBeats('New agent control and oversight roadmap').includes('safety'));
   t('pricing language classifies to pricing', classifyBeats('Provider announces price cut per token').includes('pricing'));
+  t('creative tool coverage can seat MICA', classifyBeats('A new creative tool gives game developers a playable prototype').includes('creative'));
   t('unclassifiable text yields no beats', classifyBeats('a pleasant walk in the garden').length === 0);
   t('classification is capped', classifyBeats('agent alignment pricing funding gpu eval regulation jobs').length <= 4);
 

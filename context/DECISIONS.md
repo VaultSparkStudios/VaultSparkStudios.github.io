@@ -1970,3 +1970,23 @@ After disclosure of the article Lighthouse gate (latest 85/100, required 90), th
 **D-S366.6 — Separate ROI source age from publisher health.** The IGNIS ROI input ledger has no usage rows after September 9, so its `generatedAt` must continue to name that source date. The closeout build gate treated the old source date as proof that the scheduled publisher died, even though rebuilding from unchanged inputs cannot advance it. Add `rebuiltAt` for publication health and have the trust-feed ceiling measure that field; validate both timestamps and leave the evidence date intact. This preserves stale-source visibility while still blocking a dead publisher after 21 days.
 
 **D-S366.7 — Make lifecycle-only checks visible to the build reachability gate.** The new live surface sweep runs in scheduled CI Health Monitor, and staging Desk parity runs in the content-release workflow. Declare those actual scopes in their source comments; run the pure live-surface and staging-deployer self-tests from the build reachability gate. Do not run the staging parity command as a local self-test: it has no such mode and correctly requires a staged candidate and network receipt. The reachability census now reports 254/254 build-scope checks and 325/325 self-tests reachable; the downstream build steps 403–505 pass.
+
+## 2026-09-30 — Persona profiles derive from the published record
+
+The Desk treats its correspondents as fictional AI editorial characters. Their profile feeds are generated from already published article passages, positions, panel turns, captions and predictions, with links back to each story. A desk panel turn is labeled as such, never as a reply to a reader. The new creative-tools correspondent MICA has an empty published feed until a sourced edition casts her; old editions and the historical Directors report remain unchanged. This keeps personality and public accountability visible without inventing reporting or retroactively rewriting the record.
+
+## 2026-09-30 — Preserve the preceding Desk overlay during persona release
+
+The profile release used the existing static-content hotfix lane while the independent full-site identity/provider gate remained held. That lane reconstructs the baseline commit and overlays only named paths. The previous live Desk content lane had 124 paths, nine of which were initially absent from the persona scope. The release scope was expanded to all 124 preceding paths plus the new profile/article/asset paths, for 147 total. The content classifier, capability-slice check, canonical staging parity, public Pages-origin parity and production workflow all passed. Future scoped releases should prove prior-overlay preservation automatically instead of relying on a manual set comparison.
+
+## 2026-09-30 — Refresh the stale Linux visual-regression references with reviewed production evidence
+
+The hosted snapshot workflow compared current production against reference images from an older layout and had failed on several preceding PRs. A Linux capture run produced all 70 current references; 40 changed files were inspected for the intentional page-layout drift and committed. The hosted comparison rerun passed. This repairs the existing check without changing the 1.5% pixel tolerance or declaring a screenshot of production to be proof of the candidate's new profile UI; the candidate's separate 70-capture seven-theme review remains the profile evidence.
+
+## 2026-10-01 — Restage the complete Desk candidate before automatic promotion
+
+A staging receipt can name a recent commit while older receiver rules withheld paths. The daily Desk workflow now restages the full content-pure Desk slice from the production baseline and checks every candidate path byte for byte. The shared repository and root-owned server rules admit persona/profile/archive content while retaining path validation, file caps and the full-site production hold. Recovery `36835514861` and Pages `36835622726` prove the 159-path lane; the next scheduled trigger remains to be observed.
+
+## 2026-10-01 — Keep the News hub compact and preserve complete monthly archives
+
+The 89-story corpus pushed `/news/` past its 200 KiB HTML budget. The hub now renders the seven most recent published editions and links an archive index with complete month pages; individual article and persona URLs stay stable. Archive checks cover all 89 nonsuperseded story links and page-size limits. The resulting hub is 92,390 source bytes. Production used the same reviewed content-only overlay as the persona release, with all 147 prior paths included in its 153-path scope; neither the archive nor the release alters the held full-site identity/provider gate. A future month-rollover fixture is tracked on TASK_BOARD.
