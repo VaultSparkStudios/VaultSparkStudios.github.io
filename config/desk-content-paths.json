@@ -3,6 +3,8 @@
   "exact": [
     "index.html",
     "news/index.html",
+    "news/directors-report/index.html",
+    "assets/news-desk.css",
     "sitemap.xml",
     "api/news-visual-receipts.json",
     "api/news-critique-packets.json",
@@ -10,6 +12,10 @@
   ],
   "patterns": [
     "^news/[0-9]{4}-[0-9]{2}-[0-9]{2}/[a-z0-9-]+/index[.]html$",
+    "^news/archive(?:/[0-9]{4}-[0-9]{2})?/index[.]html$",
+    "^news/personas/[a-z0-9-]+/index[.]html$",
+    "^assets/desk-personas/[a-z0-9-]+[.]webp$",
+    "^assets/og/og-news-archive(?:-[0-9]{4}-[0-9]{2})?[.]png$",
     "^assets/og/news/[a-z0-9-]+[.](png|webp|avif|jpg|jpeg)$",
     "^api/news-desk(-[a-z0-9-]+)?[.](json|ndjson)$"
   ]

@@ -18,6 +18,31 @@ function changedPaths(range) {
   return checked(run('git', ['diff', '--name-only', '--diff-filter=ACMRT', range]), 'Desk diff').split(/\r?\n/).filter(Boolean);
 }
 
+function chooseDiffBase(receipt, head, productionBaseline, full = false, isAncestor = (from) => run('git', ['merge-base', '--is-ancestor', from, head]).status === 0) {
+  const candidates = full ? [receipt.sha, productionBaseline] : [receipt.contentLaneHead, receipt.sha, productionBaseline];
+  const from = candidates.find((value) => /^[a-f0-9]{40}$/.test(String(value || '')) && isAncestor(value));
+  if (!from) throw new Error('staging head is outside this checkout and no ancestral production baseline was supplied');
+  return from;
+}
+
+function selfTestDiffBase() {
+  const older = 'a'.repeat(40);
+  const staged = 'b'.repeat(40);
+  const lane = 'c'.repeat(40);
+  const receipt = { sha: staged, contentLaneHead: lane };
+  const available = (value) => value === lane || value === older;
+  if (chooseDiffBase(receipt, 'd'.repeat(40), older, false, available) !== lane) throw new Error('merged staging head was not preferred');
+  if (chooseDiffBase(receipt, 'd'.repeat(40), older, false, (value) => value === older) !== older) throw new Error('production fallback did not recover an unmerged staging head');
+  if (chooseDiffBase(receipt, 'd'.repeat(40), older, true, available) !== older) throw new Error('full staging pass did not use the ancestral baseline');
+  try {
+    chooseDiffBase(receipt, 'd'.repeat(40), older, false, () => false);
+    throw new Error('unresolvable staging ancestry was accepted');
+  } catch (error) {
+    if (!error.message.includes('no ancestral production baseline')) throw error;
+  }
+  return 4;
+}
+
 async function stagingReceipt() {
   const response = await fetch(`${STAGING}/api/build-sha.json?desk-plan=${Date.now()}`, { signal: AbortSignal.timeout(20_000) });
   if (!response.ok) throw new Error(`staging receipt HTTP ${response.status}`);
@@ -29,8 +54,7 @@ async function stagingReceipt() {
 async function plan() {
   const receipt = await stagingReceipt();
   const head = checked(run('git', ['rev-parse', 'HEAD']), 'HEAD');
-  let from = process.argv.includes('--full') ? receipt.sha : receipt.contentLaneHead;
-  if (!/^[a-f0-9]{40}$/.test(String(from || '')) || run('git', ['merge-base', '--is-ancestor', from, head]).status !== 0) from = receipt.sha;
+  const from = chooseDiffBase(receipt, head, arg('--production-baseline'), process.argv.includes('--full'));
   const part = deskContentPartition(changedPaths(`${from}..${head}`));
   const paths = part.promotable.filter((value) => fs.existsSync(path.join(ROOT, value)));
   if (paths.length !== part.promotable.length) throw new Error('Desk diff includes a missing candidate file');
@@ -78,7 +102,7 @@ async function deploy(value) {
 
 try {
   if (process.argv.includes('--self-test')) {
-    console.log(`deploy-staging-desk-content --self-test: ${selfTestDeskContentPaths()} path cases`);
+    console.log(`deploy-staging-desk-content --self-test: ${selfTestDeskContentPaths()} path cases, ${selfTestDiffBase()} ancestry cases`);
   } else {
     const value = await plan();
     emitGithub(value);

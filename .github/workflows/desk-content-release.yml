@@ -55,7 +55,9 @@ jobs:
       - name: Plan the staging delta
         if: steps.production.outputs.deployable == 'true'
         id: staging
-        run: node scripts/deploy-staging-desk-content.mjs --plan
+        env:
+          PRODUCTION_BASELINE: ${{ steps.production.outputs.baseline }}
+        run: node scripts/deploy-staging-desk-content.mjs --plan --production-baseline "$PRODUCTION_BASELINE"
 
       - name: Prepare the restricted staging key
         if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_delta == 'yes'
@@ -72,10 +74,11 @@ jobs:
       - name: Deploy the Desk delta to canonical staging
         if: steps.production.outputs.deployable == 'true' && steps.staging.outputs.staging_delta == 'yes'
         env:
+          PRODUCTION_BASELINE: ${{ steps.production.outputs.baseline }}
           DESK_STAGING_KEY_PATH: ${{ runner.temp }}/desk-staging-key
           DESK_STAGING_KNOWN_HOSTS_PATH: ${{ runner.temp }}/desk-staging-known-hosts
           DESK_STAGING_TARGET: vss-desk-deploy@${{ secrets.DESK_STAGING_HOST }}
-        run: node scripts/deploy-staging-desk-content.mjs --deploy
+        run: node scripts/deploy-staging-desk-content.mjs --deploy --production-baseline "$PRODUCTION_BASELINE"
 
       - name: Verify every production candidate path on staging
         if: steps.production.outputs.deployable == 'true'
