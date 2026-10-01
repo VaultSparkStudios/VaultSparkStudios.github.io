@@ -2712,3 +2712,11 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** The persona release exposed an HTML-size failure in the News hub once 89 stories were rendered there. A seven-edition hub and complete monthly archives brought the hub to 92,390 bytes without dropping a story link. PR #134 passed hosted E2E, compliance, Lighthouse, accessibility, mobile snapshots and secret scanning; the final 153-path scope included all 147 paths previously live. Staging and production matched 153/153 bytes, and desktop/mobile public browser checks passed. The existing full-site identity/provider hold remains visible.
 
 **Brainstorm committed to TASK_BOARD:** add a generated fixture for archive month rollover and keep the previously recorded prior-overlay preservation automation task. Those checks target concrete risks exposed by corpus growth and scoped production overlays.
+
+### Daily Desk release repair addendum — 2026-10-01
+
+**Score:** S366 remains 965/1000; this is follow-through, not a new scored session.
+
+**Audit:** A scheduled publisher succeeded while its release failed on staging ancestry. Recovery then exposed 24 withheld persona/archive paths and older server rules. A full candidate restage, shared allowlist, ancestral baseline fallback and held-run finalization guard closed those faults. Recovery `36835514861` and Pages `36835622726` passed with 159/159 production parity. The next scheduled trigger remains unobserved.
+
+**Brainstorm → TASK_BOARD:** retain an explicit prior-overlay set check and a generated month-rollover fixture; observe the next scheduled release. Each follows a measured failure or new October path.

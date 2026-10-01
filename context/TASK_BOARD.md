@@ -4,8 +4,10 @@ Last updated: 2026-10-01 UTC (post-S366 Desk archive release)
 
 ## Desk archive follow-up — 2026-10-01
 
-- [x] Archive 89 stories by month; seven recent editions keep the hub below 200 KiB.
+- [x] Archive 90 stories by month; seven recent editions keep the hub below 200 KiB.
 - [x] PR #134 and Pages run `36813693699`: 153-path staging/production parity preserves all 147 prior Desk paths; hosted and browser checks pass.
+- [x] Repair the daily Desk lane's staging ancestry, 24 withheld persona/archive paths and restricted receiver rules; recovery `36835514861` and Pages `36835622726` passed with 159/159 production bytes.
+- [ ] **[DESK/RELEASE/P2]** Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
 - [ ] **[DESK/QA/P2]** Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 
 ## Desk persona follow-up — 2026-09-30
@@ -13,12 +15,12 @@ Last updated: 2026-10-01 UTC (post-S366 Desk archive release)
 - [x] Release eight fictional correspondents with portraits, marks, voices, sourced feeds and prediction records; add creative-tools MICA with an honestly empty feed.
 - [x] Label panel turns accurately; keep historical articles and the Directors report unchanged.
 - [x] PR #132 and Pages run `36791903046`: 506 build checks, 215 mobile cases, 70 reviewed captures, hosted gates and 147-path parity passed. Full-site identity remains held.
-- [ ] **[DESK/RELEASE/P2]** Replace baseline-archive reconstruction with an explicit prior-overlay preservation check before future scoped Pages releases; this release verified all 124 previous Desk paths were included in its 147-path scope.
-- [ ] **[QA/P2]** Keep Linux visual-regression snapshots tied to a measured production layout and review any page-wide drift before refresh; the old baseline had failed several prior runs across unrelated routes.
+- [ ] **[DESK/RELEASE/P2]** Verify prior-overlay path preservation automatically before scoped Pages deploys.
+- [ ] **[QA/P2]** Review measured Linux screenshots before refreshing visual-regression references.
 
 ## S366 — Robinhood Summit and daily homepage publication
 
-- [x] Publish a sourced deep analysis of the September 29 Robinhood HOOD Summit, including agentic trading controls, wider market hours, higher-risk products, agentic apps, and VaultSpark's hypothetical role; lead the live homepage with it.
+- [x] Publish the sourced September 29 Robinhood HOOD Summit analysis and lead the homepage with it.
 - [x] Add a restricted staging credential and an automatic Desk-only path from a successful scheduled publisher through staging byte parity to pinned Cloudflare Pages promotion. Recovery run `36663473926` and production run `36663563135` passed; 109 routes matched staging.
 - [x] **[S366][DESK/P2]** Scheduled News Publish `36679345071` triggered automatic Desk release `36679807164`, and scheduled run `36716077242` triggered release `36716493332`; both downstream runs passed.
 - [ ] **[S366][RELEASE/P2]** Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
