@@ -1,8 +1,25 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/check-content-capability-slice.mjs",
-  "callers": [],
-  "requiredRoutes": [],
-  "allowed": true,
-  "blockers": []
+  "callers": [
+    {
+      "path": "assets/desk-presence.shell-b33c76422e.js",
+      "sourceSha256": "b33c76422eb4766b100aa9a890932464027ca5977850ba74f9cd582b3e20b083",
+      "routes": [
+        "/v/desk-presence"
+      ]
+    },
+    {
+      "path": "assets/supabase-client.shell-bd7ccf3b3d.js",
+      "sourceSha256": "bd7ccf3b3d02bdb1c3edf4b1ce6d854d4739cfbf4e7eb93ef7f00a22ae6171e1",
+      "routes": []
+    }
+  ],
+  "requiredRoutes": [
+    "/v/desk-presence"
+  ],
+  "allowed": false,
+  "blockers": [
+    "Worker route provenance is missing, future-dated, or older than 72 hours"
+  ]
 }
