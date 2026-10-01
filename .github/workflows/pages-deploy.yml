@@ -443,7 +443,7 @@ jobs:
       # partition, compare its exact description and one referenced AVIF against
       # HEAD, and assert the public icon contract in the served HTML.
       - name: Exact live News freshness (description, icon contract, art bytes)
-        if: steps.promotion-gate.outputs.allowed == 'true' || contains(steps.hotfix-gate.outputs.paths, 'news/index.html') || contains(steps.content-refs.outputs.paths, 'news/index.html')
+        if: steps.promotion-gate.outputs.allowed == 'true' || (steps.hotfix-gate.outputs.allowed == 'true' && contains(steps.hotfix-gate.outputs.paths, 'news/index.html')) || (steps.content-refs.outputs.allowed == 'true' && contains(steps.content-refs.outputs.paths, 'news/index.html'))
         env:
           # GitHub datacenter IPs are challenged by the canonical edge. Verify
           # exact deployed bytes at the unchallenged Pages origin, then require
@@ -467,7 +467,7 @@ jobs:
           exit 1
 
       - name: Finalize durable News release verification
-        if: contains(steps.content-refs.outputs.paths, 'news/index.html')
+        if: steps.content-refs.outputs.allowed == 'true' && contains(steps.content-refs.outputs.paths, 'news/index.html')
         env:
           # Reuse the exact-byte origin contract from the preceding gate. The
           # canonical edge may intentionally challenge GitHub datacenter IPs;
