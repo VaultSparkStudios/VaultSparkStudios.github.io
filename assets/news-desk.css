@@ -358,6 +358,23 @@ body.light-mode [data-persona],body.light-mode [data-voice]{--persona-ink:color-
 .desk-day-head{display:flex;align-items:center;gap:.7rem;margin:2.2rem 0 .9rem;color:var(--desk-muted);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .desk-day-head time{color:var(--desk-ink)}
 .desk-day-head:after{content:"";flex:1;height:1px;background:var(--desk-line)}
+.desk-archive-cta{margin:1.8rem 0 2.4rem;text-align:center}
+.desk-archive-cta a{display:inline-flex;padding:.85rem 1.2rem;border:1px solid var(--desk-line);border-radius:999px;background:var(--desk-panel);color:var(--desk-ink);font-size:.88rem;font-weight:800;text-decoration:none}
+.desk-archive-cta a:hover,.desk-archive-month:hover{border-color:var(--gold);color:var(--gold)}
+.desk-archive-months{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:.9rem;list-style:none;margin:2rem 0 3rem;padding:0}
+.desk-archive-month{display:flex;align-items:center;gap:1rem;padding:1.25rem;color:var(--desk-ink);text-decoration:none}
+.desk-archive-month strong{font:600 1.3rem/1.2 Georgia,serif}
+.desk-archive-month span:nth-child(2){margin-left:auto;color:var(--desk-muted);font-size:.76rem}
+.desk-archive-month span:last-child{font-size:1.2rem}
+.desk-archive-edition{margin:1.6rem 0 2.2rem}
+.desk-archive-edition .desk-day-head{margin-bottom:.7rem}
+.desk-archive-stories{list-style:none;margin:0;padding:0;border:1px solid var(--desk-line);border-radius:16px;overflow:hidden;background:var(--desk-panel)}
+.desk-archive-stories li{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:.85rem 1.1rem}
+.desk-archive-stories li+li{border-top:1px solid var(--desk-line)}
+.desk-archive-stories a{color:var(--desk-ink);font-weight:700;line-height:1.4;text-decoration:none}
+.desk-archive-stories a:hover{color:var(--gold);text-decoration:underline;text-underline-offset:.18em}
+.desk-archive-stories span{flex:none;color:var(--desk-muted);font-size:.72rem}
+@media(max-width:600px){.desk-archive-month{flex-wrap:wrap}.desk-archive-month span:nth-child(2){margin-left:0}.desk-archive-month span:last-child{display:none}.desk-archive-stories li{display:block}.desk-archive-stories span{display:block;margin-top:.3rem}}
 .desk-story-card.desk-lead{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);min-height:0}
 .desk-story-card.desk-lead .desk-story-art{aspect-ratio:auto;height:100%;min-height:320px;min-width:0}
 .desk-story-card.desk-lead .desk-story-copy{min-width:0;padding:clamp(1.2rem,2.6vw,2rem)}

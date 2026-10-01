@@ -88,10 +88,38 @@ for (const day of days) {
 const hub = readFileSync(join(ROOT, 'news', 'index.html'), 'utf8');
 if ((hub.match(/class="desk-panel desk-story-card desk-lead"/g) || []).length !== 1) errors.push('news/index.html: expected exactly one lead card');
 if (!hub.includes('class="desk-story-grid"')) errors.push('news/index.html: story grid missing');
+const publishedDays = [...days].filter((day) => day.stories?.some((story) => !story.supersededBy)).sort((a, b) => b.date.localeCompare(a.date));
+const recentDays = publishedDays.slice(0, 7);
+if ((hub.match(/class="desk-edition"/g) || []).length !== recentDays.length) errors.push('news/index.html: expected the latest seven full editions');
+for (const day of recentDays) {
+  for (const story of day.stories.filter((entry) => !entry.supersededBy)) {
+    if (!hub.includes(`href="/news/${day.date}/${story.slug}/"`)) errors.push(`news/index.html: recent story ${day.date}/${story.slug} missing`);
+  }
+}
+const archiveIndexPath = join(ROOT, 'news', 'archive', 'index.html');
+if (!existsSync(archiveIndexPath)) errors.push('news/archive/index.html: missing');
+const archiveIndex = existsSync(archiveIndexPath) ? readFileSync(archiveIndexPath, 'utf8') : '';
+if (!hub.includes('href="/news/archive/"')) errors.push('news/index.html: archive link missing');
+const monthKeys = [...new Set(publishedDays.map((day) => day.date.slice(0, 7)))];
+for (const month of monthKeys) {
+  const rel = `news/archive/${month}/index.html`;
+  const file = join(ROOT, rel);
+  if (!archiveIndex.includes(`href="/news/archive/${month}/"`)) errors.push(`news/archive/index.html: ${month} missing`);
+  if (!existsSync(file)) { errors.push(`${rel}: missing`); continue; }
+  const html = readFileSync(file, 'utf8');
+  if (Buffer.byteLength(html) > 200 * 1024) errors.push(`${rel}: exceeds the 200 KiB HTML budget`);
+  for (const day of publishedDays.filter((entry) => entry.date.startsWith(month))) {
+    for (const story of day.stories.filter((entry) => !entry.supersededBy)) {
+      if (!html.includes(`href="/news/${day.date}/${story.slug}/"`)) errors.push(`${rel}: ${day.date}/${story.slug} missing`);
+    }
+  }
+}
+if (Buffer.byteLength(hub) > 200 * 1024) errors.push('news/index.html: exceeds the 200 KiB HTML budget');
+if (Buffer.byteLength(archiveIndex) > 200 * 1024) errors.push('news/archive/index.html: exceeds the 200 KiB HTML budget');
 
 if (errors.length) {
   console.error(`test-news-article-layout: ${errors.length} problem(s)`);
   for (const e of errors) console.error(`  ✗ ${e}`);
   process.exit(1);
 }
-console.log(`test-news-article-layout: ${pages} article(s) + index — reader-first order and contracts hold`);
+console.log(`test-news-article-layout: ${pages} article(s) + index + ${monthKeys.length} archive month(s) — reader-first order and contracts hold`);
