@@ -1358,3 +1358,5 @@ Daily release follow-through, October 1: a successful publisher exposed an unrea
 ### S367 — Whole-site audit and security/truth core — 2026-10-01
 
 Ran /start, a baseline sweep (506-step gate with three drift repairs, live auth probes, extended and authenticated browser suites, email DNS/Brevo checks) and wrote `docs/AUDIT_2026-10-01`. Founder decisions: open Obelisk enrolment via Ark; keep Call of Doodie, PromoGrind and Velaxis FORGE; lifecycle redefinition to studio-ops; all gated areas approved for later. Shipped canon-true statuses across 15+ surfaces, HMAC CSP nonce, edge token renewal, settings redirect and deep links, price guard, copy sweep, generator and CSS defect fixes, and repaired tests. Visual review covered touched pages across dark, light and high-contrast at desktop and mobile.
+
+Staging follow-through: static staging deployed; first Worker upload rejected (global-scope getRandomValues), fixed lazily with a guarded test; staging Worker 622f7ba7 serves keyed nonces. Staging lacks `_redirects` parity (pre-existing).

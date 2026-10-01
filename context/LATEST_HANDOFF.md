@@ -9,7 +9,9 @@
 
 **Blocked:** real-login E2E needs an Obelisk test identity; the Sparked-renders-as-free test failure needs an authorized read of the test subscription. Homepage Lighthouse item closed on fresh evidence (three hosted passes on 2026-10-01).
 
-**Next:** Worker deploy for the nonce; observe Ark replies; continue the audit's pending items in plan order.
+**Staging (post-push):** static tree deployed (receipt `ecfa155695f022d56f48c8f6`, rollback 20261001231043). The first staging Worker upload was rejected by Cloudflare (10021: random generation at global scope in the new nonce key); nothing deployed. The key is now minted lazily inside the handler, a regression test with a negative control guards it, and staging Worker version `622f7ba7` serves keyed nonces. Staging does not apply `_redirects` (`/ranks`, `/join` also 404 there), so the settings 301 is production-only until staging parity covers redirects.
+
+**Next:** production Worker deploy for the nonce once the promotion gate allows; observe Ark replies; continue the audit's pending items in plan order.
 
 ## Post-S366 Desk archive release · 2026-10-01 UTC
 

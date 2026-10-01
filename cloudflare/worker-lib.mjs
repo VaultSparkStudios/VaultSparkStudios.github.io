@@ -188,14 +188,20 @@ export async function hmacSign(key, data) {
 // window under a key the client never sees. The cached HTML stores its nonce
 // and its CSP header together, so a per-isolate random key is already safe;
 // CSP_NONCE_KEY, when set, only makes nonces agree across isolates.
-const ISOLATE_NONCE_KEY = (() => {
-  const bytes = new Uint8Array(32);
-  crypto.getRandomValues(bytes);
-  return btoa(String.fromCharCode(...bytes));
-})();
+// Workers forbid random generation at global scope (Cloudflare 10021 rejected
+// the first S367 upload), so the isolate key is minted lazily inside a handler.
+let ISOLATE_NONCE_KEY = null;
+function isolateNonceKey() {
+  if (!ISOLATE_NONCE_KEY) {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    ISOLATE_NONCE_KEY = btoa(String.fromCharCode(...bytes));
+  }
+  return ISOLATE_NONCE_KEY;
+}
 
 export async function deriveWindowNonce(windowId, key) {
-  const sig = await hmacSign(key || ISOLATE_NONCE_KEY, `csp-nonce:${windowId}`);
+  const sig = await hmacSign(key || isolateNonceKey(), `csp-nonce:${windowId}`);
   return sig.slice(0, 24).replace(/[/+=]/g, '_');
 }
 

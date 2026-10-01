@@ -1196,3 +1196,15 @@ test('S367: the CSP nonce is keyed, not derivable from the clock', async () => {
   assert.notEqual(unkeyed, clockOnly, 'falls back to an isolate secret, never the clock');
   assert.match(keyed, /^[A-Za-z0-9_]{24}$/);
 });
+
+test('S367: worker-lib performs no random generation at module scope (Cloudflare 10021)', async () => {
+  const original = crypto.getRandomValues.bind(crypto);
+  let calledAtImport = false;
+  crypto.getRandomValues = (arr) => { calledAtImport = true; return original(arr); };
+  try {
+    await import(`../cloudflare/worker-lib.mjs?scope-probe=${Date.now()}`);
+  } finally {
+    crypto.getRandomValues = original;
+  }
+  assert.equal(calledAtImport, false, 'global-scope getRandomValues makes Workers reject the upload');
+});
