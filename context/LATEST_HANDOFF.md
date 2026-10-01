@@ -1,4 +1,8 @@
 # Latest Handoff
+## Post-S366 Desk archive release · 2026-10-01 UTC
+
+PR #134 merged as `f338ade085` after all hosted checks passed. The News hub presents seven recent editions and links an archive index plus August/September month pages; all 89 nonsuperseded story links remain available. This reduced `/news/` from 207,037 to 92,390 source bytes, below the 200 KiB budget. Scoped Pages run `36813693699` promoted 153 reviewed content paths over production baseline `c46f22fa36d52901e505f2a99433cef9276fbbd0`, preserving every path from the previous 147-path Desk overlay. Staging and Pages origin matched 153/153 exact bytes; the canonical hub, archive and sampled REX/VERA/MICA profile routes returned 200. Chromium checks at 1366px and 390px found no horizontal overflow. The full-site identity/provider hold remains in force. Follow up on automated prior-overlay preservation and month-rollover fixture coverage.
+
 ## Post-S366 Desk persona release · 2026-09-30 UTC
 
 Eight fictional correspondent profiles are live after PR #132 merged as `91116c423` and the 147-path content-only Pages deploy `36791903046` passed. Each profile has a generated portrait, vector mark, editorial voice, beat, boundary notes and a feed linked to published contributions. MICA covers creative tools, games and media and explicitly has no published reports yet. The late-night edition has 89 stories and feeds VERA's current profile. Canonical staging and the public Pages origin matched all 147 released paths exactly; REX, VERA and MICA canonical routes returned 200. The full-site identity/provider hold remains in force. The root `main` worktree had independent local changes and was not reset; this work used an isolated worktree.

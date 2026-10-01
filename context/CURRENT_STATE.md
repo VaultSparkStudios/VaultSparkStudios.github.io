@@ -1,6 +1,10 @@
 # Current State
 
-Last updated: 2026-09-30 UTC (post-S366; Desk persona release)
+Last updated: 2026-10-01 UTC (post-S366; Desk archive release)
+
+## Post-S366 — News archive live (2026-10-01)
+
+The News hub now shows seven recent published editions, with a linked archive index and monthly pages for August and September 2026. All 89 nonsuperseded story links remain reachable through the hub or archives. The hub fell from 207,037 to 92,390 source bytes, clearing its 200 KiB HTML budget. PR #134 merged as `f338ade085`; scoped Cloudflare Pages run `36813693699` promoted 153 content paths, including every path in the previous 147-path Desk overlay. Canonical staging and the public Pages origin matched all 153 paths exactly. The public hub, archive pages and sampled persona profiles returned 200; desktop 1366px and mobile 390px browser checks found no horizontal overflow. Hosted compliance, E2E, Lighthouse, accessibility, mobile snapshots and secret scanning passed. The full-site identity/provider hold remains separate.
 
 ## Post-S366 — Desk personas live (2026-09-30)
 
