@@ -1982,3 +1982,7 @@ The profile release used the existing static-content hotfix lane while the indep
 ## 2026-09-30 — Refresh the stale Linux visual-regression references with reviewed production evidence
 
 The hosted snapshot workflow compared current production against reference images from an older layout and had failed on several preceding PRs. A Linux capture run produced all 70 current references; 40 changed files were inspected for the intentional page-layout drift and committed. The hosted comparison rerun passed. This repairs the existing check without changing the 1.5% pixel tolerance or declaring a screenshot of production to be proof of the candidate's new profile UI; the candidate's separate 70-capture seven-theme review remains the profile evidence.
+
+## 2026-10-01 — Keep the News hub compact and preserve complete monthly archives
+
+The 89-story corpus pushed `/news/` past its 200 KiB HTML budget. The hub now renders the seven most recent published editions and links an archive index with complete month pages; individual article and persona URLs stay stable. Archive checks cover all 89 nonsuperseded story links and page-size limits. The resulting hub is 92,390 source bytes. Production used the same reviewed content-only overlay as the persona release, with all 147 prior paths included in its 153-path scope; neither the archive nor the release alters the held full-site identity/provider gate. A future month-rollover fixture is tracked on TASK_BOARD.

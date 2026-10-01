@@ -1,13 +1,18 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-30 UTC (post-S366 Desk persona release)
+Last updated: 2026-10-01 UTC (post-S366 Desk archive release)
+
+## Desk archive follow-up — 2026-10-01
+
+- [x] Archive 89 stories by month; seven recent editions keep the hub below 200 KiB.
+- [x] PR #134 and Pages run `36813693699`: 153-path staging/production parity preserves all 147 prior Desk paths; hosted and browser checks pass.
+- [ ] **[DESK/QA/P2]** Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 
 ## Desk persona follow-up — 2026-09-30
 
-- [x] Build eight fictional AI correspondent profiles with generated portraits, personal marks, clearer writing identities, published contribution feeds, and public prediction records; add MICA for creative tools, games and media.
-- [x] Keep each profile feed sourced from existing editions; label desk conversations as panel turns and leave MICA's feed empty until a real sourced story casts her.
-- [x] Verify the regenerated newsroom, sitemap, claim parity, Desk self-tests, and a manually inspected 70-capture seven-theme desktop/mobile matrix.
-- [x] **[DESK/RELEASE]** PR #132 merged; 506-step gate, 215 mobile cases, hosted release checks, 147-path staging parity and production run `36791903046` passed. The identity/provider full-site hold still applies.
+- [x] Release eight fictional correspondents with portraits, marks, voices, sourced feeds and prediction records; add creative-tools MICA with an honestly empty feed.
+- [x] Label panel turns accurately; keep historical articles and the Directors report unchanged.
+- [x] PR #132 and Pages run `36791903046`: 506 build checks, 215 mobile cases, 70 reviewed captures, hosted gates and 147-path parity passed. Full-site identity remains held.
 - [ ] **[DESK/RELEASE/P2]** Replace baseline-archive reconstruction with an explicit prior-overlay preservation check before future scoped Pages releases; this release verified all 124 previous Desk paths were included in its 147-path scope.
 - [ ] **[QA/P2]** Keep Linux visual-regression snapshots tied to a measured production layout and review any page-wide drift before refresh; the old baseline had failed several prior runs across unrelated routes.
 

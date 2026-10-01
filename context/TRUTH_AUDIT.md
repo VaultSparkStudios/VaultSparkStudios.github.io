@@ -1354,3 +1354,7 @@ The IGNIS ROI feed's last evidence remains September 9. Its new `rebuiltAt` repo
 ## Post-S366 Desk persona release truth — 2026-09-30
 
 The eight fictional correspondent profiles are live, not just built: PR #132 merged and Pages run `36791903046` completed. All 147 scoped files matched canonical staging and the public Pages origin; REX, VERA and MICA returned 200 on the canonical domain. The Pages receipt keeps baseline SHA `c46f22fa36d52901e505f2a99433cef9276fbbd0` because the deployment is a content overlay, not a full-site promotion. The standing identity/provider hold is still real. MICA's empty feed truthfully represents zero published contributions. The visual-regression baseline refresh was checked against current production and does not substitute for the separate profile UI screenshots.
+
+## Post-S366 News archive release truth — 2026-10-01
+
+PR #134 merged and Pages run `36813693699` succeeded. The public News hub, archive index, August/September month pages and sampled profile routes return 200. Its 153-path overlay includes all 147 paths in the preceding Desk release; canonical staging and the Pages origin match the released source bytes at every path. The archive and hub retain links to all 89 nonsuperseded stories, while the hub itself is 92,390 source bytes. The baseline SHA remains `c46f22fa36d52901e505f2a99433cef9276fbbd0` because this was another content overlay. No full-site identity/provider acceptance is inferred from this release.
