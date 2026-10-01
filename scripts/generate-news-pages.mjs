@@ -201,9 +201,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, ogTitle = null, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title>${ogTitle ? `<meta property="og:title" content="${escapeHtml(ogTitle)}">` : ''}<meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -954,6 +954,10 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
 
+const RECENT_EDITION_LIMIT = 7;
+const publishedDays = days.filter((day) => day.stories.some((story) => !story.supersededBy));
+const archiveMonths = [...new Set(publishedDays.map((day) => day.date.slice(0, 7)))];
+
 function buildHubPage() {
   const allSimulated = days.length > 0 && days.every((d) => d.simulated);
   const newest = days[0] || null;
@@ -1002,7 +1006,7 @@ function buildHubPage() {
     <p class="desk-profile-cta"><a href="${personaHref(p)}">Read ${escapeHtml(p.name)}’s profile and feed →</a></p>
   </article>`;
   }).join('\n');
-  const dayBlocks = days.map((day) => {
+  const dayBlocks = publishedDays.slice(0, RECENT_EDITION_LIMIT).map((day) => {
     // S329: superseded reruns stay reachable at their URL (noindex, canonical →
     // first publication) but never compete in the index listing.
     const listable = day.stories.filter((story) => !story.supersededBy);
@@ -1050,6 +1054,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-rule"></div>
   <div class="desk-section-head"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
+  ${archiveMonths.length ? '<p class="desk-archive-cta"><a href="/news/archive/">Browse every edition in The Desk archive →</a></p>' : ''}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
@@ -1080,6 +1085,68 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/evidence/#verify" style="color:var(--gold)">VaultSpark Evidence</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
 </section></main>${DISPATCH_SCRIPT}${chromeFoot('../')}`;
+}
+
+function monthLabel(month) {
+  return new Date(`${month}-01T00:00:00Z`).toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+function buildArchiveIndexPage() {
+  const url = `${PROD}/news/archive/`;
+  const head = chromeHead({
+    title: 'The Desk archive · VaultSpark Studios',
+    ogTitle: 'The Desk archive',
+    description: 'Browse every published edition of The Desk by month, with direct links to the original sourced stories.',
+    canonical: url,
+    ogImage: `${PROD}/assets/og/og-news-archive.png`,
+    depth: '../../',
+    noindex: archiveMonths.length === 0,
+    breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ['Archive', url]]),
+    jsonLd: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'The Desk archive', url }),
+  });
+  const months = archiveMonths.map((month) => {
+    const monthDays = publishedDays.filter((day) => day.date.startsWith(month));
+    const stories = monthDays.reduce((sum, day) => sum + day.stories.filter((story) => !story.supersededBy).length, 0);
+    return `<li><a class="desk-panel desk-archive-month" href="/news/archive/${month}/"><strong>${monthLabel(month)}</strong><span>${monthDays.length} edition${monthDays.length === 1 ? '' : 's'} · ${stories} stor${stories === 1 ? 'y' : 'ies'}</span><span aria-hidden="true">→</span></a></li>`;
+  }).join('');
+  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-archive">
+    <p class="desk-kicker"><a href="/news/">The Desk</a> · Archive</p>
+    <h1 class="desk-display">Every edition.<br><em>On the record.</em></h1>
+    <p class="desk-deck">Read the original stories by publication month. The latest seven editions also appear on <a href="/news/">The Desk homepage</a>.</p>
+    ${AI_BANNER}
+    <ul class="desk-archive-months">${months}</ul>
+    ${DISCLOSURE}
+  </section></main>${chromeFoot('../../')}`;
+}
+
+function buildArchiveMonthPage(month) {
+  const url = `${PROD}/news/archive/${month}/`;
+  const label = monthLabel(month);
+  const monthDays = publishedDays.filter((day) => day.date.startsWith(month));
+  const head = chromeHead({
+    title: `${label} · The Desk archive · VaultSpark Studios`,
+    ogTitle: `${label} · The Desk archive`,
+    description: `Every published Desk story from ${label}, linked to its original sourced article.`,
+    canonical: url,
+    ogImage: `${PROD}/assets/og/og-news-archive-${month}.png`,
+    depth: '../../../',
+    noindex: false,
+    breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ['Archive', `${PROD}/news/archive/`], [label, url]]),
+    jsonLd: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: `${label} · The Desk archive`, url }),
+  });
+  const editions = monthDays.map((day) => {
+    const stories = day.stories.filter((story) => !story.supersededBy);
+    const links = stories.map((story) => `<li><a href="/news/${day.date}/${story.slug}/">${escapeHtml(story.headline)}</a><span>${escapeHtml(formatFor(story).name)}</span></li>`).join('');
+    return `<section class="desk-archive-edition" aria-label="Edition ${escapeHtml(day.date)}"><h2 class="desk-day-head"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time><span>${stories.length} ${stories.length === 1 ? 'story' : 'stories'}</span></h2><ol class="desk-archive-stories">${links}</ol></section>`;
+  }).join('');
+  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-archive">
+    <p class="desk-kicker"><a href="/news/">The Desk</a> · <a href="/news/archive/">Archive</a></p>
+    <h1 class="desk-display">${escapeHtml(label)}.<br><em>Every story.</em></h1>
+    <p class="desk-deck">Original stories from each published edition, newest first. Return to <a href="/news/">the latest Desk coverage</a>.</p>
+    ${AI_BANNER}
+    ${editions}
+    ${DISCLOSURE}
+  </section></main>${chromeFoot('../../../')}`;
 }
 
 /* ── Persona profiles ─────────────────────────────────────────────────── */
@@ -1322,6 +1389,8 @@ for (const art of responsiveArt) {
 
 const targets = [
   { path: 'news/index.html', html: buildHubPage() },
+  { path: 'news/archive/index.html', html: buildArchiveIndexPage() },
+  ...archiveMonths.map((month) => ({ path: `news/archive/${month}/index.html`, html: buildArchiveMonthPage(month) })),
   ...PERSONAS.map((persona) => ({ path: `news/personas/${persona.id}/index.html`, html: buildPersonaPage(persona) })),
   { path: 'news/subscribed/index.html', html: buildSubscribedPage() },
   ...(buildDirectorsReportPage() ? [{ path: 'news/directors-report/index.html', html: buildDirectorsReportPage() }] : []),
