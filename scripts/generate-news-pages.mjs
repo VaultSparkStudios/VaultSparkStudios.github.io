@@ -201,9 +201,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, ogTitle = null, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title>${ogTitle ? `<meta property="og:title" content="${escapeHtml(ogTitle)}">` : ''}<meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -1095,9 +1095,10 @@ function buildArchiveIndexPage() {
   const url = `${PROD}/news/archive/`;
   const head = chromeHead({
     title: 'The Desk archive · VaultSpark Studios',
+    ogTitle: 'The Desk archive',
     description: 'Browse every published edition of The Desk by month, with direct links to the original sourced stories.',
     canonical: url,
-    ogImage: `${PROD}/assets/og-image.png`,
+    ogImage: `${PROD}/assets/og/og-news-archive.png`,
     depth: '../../',
     noindex: archiveMonths.length === 0,
     breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ['Archive', url]]),
@@ -1124,9 +1125,10 @@ function buildArchiveMonthPage(month) {
   const monthDays = publishedDays.filter((day) => day.date.startsWith(month));
   const head = chromeHead({
     title: `${label} · The Desk archive · VaultSpark Studios`,
+    ogTitle: `${label} · The Desk archive`,
     description: `Every published Desk story from ${label}, linked to its original sourced article.`,
     canonical: url,
-    ogImage: `${PROD}/assets/og-image.png`,
+    ogImage: `${PROD}/assets/og/og-news-archive-${month}.png`,
     depth: '../../../',
     noindex: false,
     breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ['Archive', `${PROD}/news/archive/`], [label, url]]),
