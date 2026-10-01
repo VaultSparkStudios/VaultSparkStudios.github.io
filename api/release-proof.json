@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-01T23:13:04.122Z",
+  "generatedAt": "2026-10-01T23:38:04.379Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -64,16 +67,16 @@
     "sourceContractSha256": "dbf49584f6b4f6cd9fba806854f6864881cf001403905e0cde1db91c02faeeb6"
   },
   "productionDeploy": {
-    "state": "current",
-    "commitsBehind": 0,
-    "ageHours": 0,
-    "observedAt": "2026-10-01T22:38:14.605Z",
+    "state": "behind",
+    "commitsBehind": 19,
+    "ageHours": 1.4,
+    "observedAt": "2026-10-01T23:38:04.379Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-01T22:38:14.605Z",
-      "expectedFrom": "0bcfe41505c55736f504db187021b02b3ad0e5aef2b94e90b89b5779966d3f8e",
-      "supersededBy": "7f918873c690afcb8eb82e93615e07cda3d003a8b07cd1640d84da16d457a929",
+      "observedAt": "2026-10-01T23:38:04.379Z",
+      "expectedFrom": "7f918873c690afcb8eb82e93615e07cda3d003a8b07cd1640d84da16d457a929",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -91,7 +94,7 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-0fa853d549.css",
+        "assets/style.shell-539ca122bd.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
@@ -111,8 +114,12 @@
         "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/style.shell-539ca122bd.css"
+      ],
+      "unexpected": [
+        "assets/style.shell-0fa853d549.css"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
