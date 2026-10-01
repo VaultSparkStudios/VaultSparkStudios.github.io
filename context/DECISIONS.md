@@ -1974,3 +1974,11 @@ After disclosure of the article Lighthouse gate (latest 85/100, required 90), th
 ## 2026-09-30 — Persona profiles derive from the published record
 
 The Desk treats its correspondents as fictional AI editorial characters. Their profile feeds are generated from already published article passages, positions, panel turns, captions and predictions, with links back to each story. A desk panel turn is labeled as such, never as a reply to a reader. The new creative-tools correspondent MICA has an empty published feed until a sourced edition casts her; old editions and the historical Directors report remain unchanged. This keeps personality and public accountability visible without inventing reporting or retroactively rewriting the record.
+
+## 2026-09-30 — Preserve the preceding Desk overlay during persona release
+
+The profile release used the existing static-content hotfix lane while the independent full-site identity/provider gate remained held. That lane reconstructs the baseline commit and overlays only named paths. The previous live Desk content lane had 124 paths, nine of which were initially absent from the persona scope. The release scope was expanded to all 124 preceding paths plus the new profile/article/asset paths, for 147 total. The content classifier, capability-slice check, canonical staging parity, public Pages-origin parity and production workflow all passed. Future scoped releases should prove prior-overlay preservation automatically instead of relying on a manual set comparison.
+
+## 2026-09-30 — Refresh the stale Linux visual-regression references with reviewed production evidence
+
+The hosted snapshot workflow compared current production against reference images from an older layout and had failed on several preceding PRs. A Linux capture run produced all 70 current references; 40 changed files were inspected for the intentional page-layout drift and committed. The hosted comparison rerun passed. This repairs the existing check without changing the 1.5% pixel tolerance or declaring a screenshot of production to be proof of the candidate's new profile UI; the candidate's separate 70-capture seven-theme review remains the profile evidence.

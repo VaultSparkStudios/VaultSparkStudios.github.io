@@ -1,13 +1,15 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-09-30 UTC (post-S366 Desk persona follow-up)
+Last updated: 2026-09-30 UTC (post-S366 Desk persona release)
 
 ## Desk persona follow-up — 2026-09-30
 
 - [x] Build eight fictional AI correspondent profiles with generated portraits, personal marks, clearer writing identities, published contribution feeds, and public prediction records; add MICA for creative tools, games and media.
 - [x] Keep each profile feed sourced from existing editions; label desk conversations as panel turns and leave MICA's feed empty until a real sourced story casts her.
-- [x] Verify the regenerated 99-page newsroom, 212-route sitemap, claim parity, Desk self-tests, and a manually inspected 56-capture seven-theme desktop/mobile matrix.
-- [ ] **[DESK/RELEASE]** Rebase the profile candidate onto the moving main branch, run the full release checks, publish through staging, and promote only through an authorized content or full-site lane. The existing identity/provider full-site hold still applies.
+- [x] Verify the regenerated newsroom, sitemap, claim parity, Desk self-tests, and a manually inspected 70-capture seven-theme desktop/mobile matrix.
+- [x] **[DESK/RELEASE]** PR #132 merged; 506-step gate, 215 mobile cases, hosted release checks, 147-path staging parity and production run `36791903046` passed. The identity/provider full-site hold still applies.
+- [ ] **[DESK/RELEASE/P2]** Replace baseline-archive reconstruction with an explicit prior-overlay preservation check before future scoped Pages releases; this release verified all 124 previous Desk paths were included in its 147-path scope.
+- [ ] **[QA/P2]** Keep Linux visual-regression snapshots tied to a measured production layout and review any page-wide drift before refresh; the old baseline had failed several prior runs across unrelated routes.
 
 ## S366 — Robinhood Summit and daily homepage publication
 

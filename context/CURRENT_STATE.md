@@ -1,10 +1,12 @@
 # Current State
 
-Last updated: 2026-09-30 UTC (post-S366; Desk persona candidate)
+Last updated: 2026-09-30 UTC (post-S366; Desk persona release)
 
-## Post-S366 — Desk persona candidate (2026-09-30; not deployed)
+## Post-S366 — Desk personas live (2026-09-30)
 
-The Desk now has eight generated correspondent profile pages in the local candidate, with distinct portraits and vector marks, sharper writing taglines, beat and editorial-boundary descriptions, and feeds drawn from published story passages, positions, panel turns, captions and predictions. MICA adds a creative-tools, games and media lens; her empty feed is explicit until she is cast in a sourced edition. Existing article and hub bylines link to the profiles. The generator produced 99 current pages and 212 sitemap routes; 157 Desk self-tests, 99 trend-radar self-tests, claim parity, and 56 manually inspected route/theme/viewport captures passed. Production still serves the pre-profile roster. Release remains subject to staging parity and the standing full-site identity/provider hold.
+The Desk has eight live fictional correspondent profiles with distinct generated portraits, vector marks, writing taglines, beats and editorial boundaries. Each profile draws reports, positions, panel turns, captions and predictions from published stories, with links to the source article. MICA adds a creative-tools, games and media lens; her feed says no work is published yet. The Desk hub and article bylines link to the profiles. The late-night edition has 89 stories; its VERA contributions appear on her profile. PR #132 merged as `91116c423`; scoped Cloudflare Pages run `36791903046` published 147 static paths while preserving the earlier 124-path Desk overlay. Canonical staging and the public Pages origin matched all 147 paths exactly, and the canonical REX, VERA and MICA routes returned 200. The full-site identity/provider promotion hold remains in force.
+
+Verification: full 506/506 build checks, 215/215 mobile browser cases, 70/70 reviewed desktop/mobile captures across seven themes, hosted E2E/compliance, accessibility, Lighthouse and the refreshed Linux visual-regression run passed. The prior production screenshot baseline had been stale on 40 unrelated surfaces; its current Linux reference images were reviewed and refreshed before release.
 
 > Historical state through Session 346 is preserved verbatim in `context/archive/CURRENT_STATE_through_S347.md`. This hot file retains the newest shipped-session state only.
 
