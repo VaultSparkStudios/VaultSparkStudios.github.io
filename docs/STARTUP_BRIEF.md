@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    965/1000   ███████████████████████░   97%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,7 +76,7 @@
 ║  ✓  Tests         505/505 passing (2026-09-30)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⛔  IGNIS         46724 FORGE  ·  14d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  4/54 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Replace baseline-archive reconstruction wi  ║
-║        Replace baseline-archive reconstruction with an explicit  ║
+║   96  [PRODUCT]      Observe the next scheduled publisher-to-re  ║
+║        Observe the next scheduled publisher-to-release trigger   ║
 ║                                                                  ║
-║   93  [PRODUCT]      Keep Linux visual-regression snapshots tie  ║
-║        Keep Linux visual-regression snapshots tied to a measure  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Track growth of the Desk overlay from the   ║
+║   93  [PRODUCT]      Add a generated-fixture check for month ro  ║
+║        Add a generated-fixture check for month rollover so a fu  ║
+║                                                                  ║
+║   87  [PRODUCT]      Review measured Linux screenshots before r  ║
+║        Review measured Linux screenshots before refreshing visu  ║
+║                                                                  ║
+║   84  [PRODUCT]      Track growth of the Desk overlay from the   ║
 ║        Track growth of the Desk overlay from the production bas  ║
-║                                                                  ║
-║   89  [VERIFY]       Make staging deployment regenerate its con  ║
-║        Make staging deployment regenerate its continuity summar  ║
-║                                                                  ║
-║   86  [VERIFY]       Watch the next three article Lighthouse ru  ║
-║        Watch the next three article Lighthouse runs for stabili  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
