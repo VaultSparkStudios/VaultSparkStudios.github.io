@@ -33,10 +33,10 @@ jobs:
     # Set in: GitHub repo → Settings → Secrets and variables → Actions.
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22' # wrangler v4 requires Node >= 22
 
