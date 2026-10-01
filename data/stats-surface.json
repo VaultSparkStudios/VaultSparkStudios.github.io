@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-01T21:17:50.485Z",
+  "generatedAt": "2026-10-01T22:40:23.101Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -31,10 +31,10 @@
     {
       "id": "public-projects",
       "label": "Public projects",
-      "value": 21,
+      "value": 22,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-09-30T02:26:17.737Z",
+      "computedAt": "2026-10-01T20:56:26.009Z",
       "source": "/api/ecosystem-state.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/ecosystem-state.json",
@@ -43,16 +43,16 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-30T02:26:17.737Z",
+      "observedThrough": "2026-10-01T20:56:26.009Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
-      "interpretation": "14 are currently green and 6 yellow; private and sealed work is excluded."
+      "interpretation": "14 are currently green and 7 yellow; private and sealed work is excluded."
     },
     {
       "id": "sparked-projects",
       "label": "Sparked projects",
-      "value": 6,
+      "value": 3,
       "unitOrDenominator": "projects marked SPARKED",
       "period": "current snapshot",
       "computedAt": "2026-10-01T00:00:00.000Z",
@@ -68,7 +68,7 @@
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
-      "interpretation": "6 of 26 tracked initiatives are live and active; FORGE work is reported separately."
+      "interpretation": "3 of 26 tracked initiatives are live and active; FORGE work is reported separately."
     },
     {
       "id": "human-page-loads-30d",
@@ -132,7 +132,7 @@
     {
       "id": "forge-projects",
       "label": "In the Forge",
-      "value": 14,
+      "value": 17,
       "unitOrDenominator": "projects marked FORGE",
       "period": "current snapshot",
       "computedAt": "2026-10-01T00:00:00.000Z",
@@ -177,7 +177,7 @@
       "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-10-01T21:17:50.485Z",
+      "computedAt": "2026-10-01T22:40:23.101Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -186,7 +186,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-01T21:17:50.485Z",
+      "observedThrough": "2026-10-01T22:40:23.101Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -198,7 +198,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-09-30T23:31:19.538Z",
+      "computedAt": "2026-10-01T22:05:48.402Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -207,14 +207,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-09-30",
+      "observedThrough": "2026-10-01",
       "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-09-23",
-        "endExclusive": "2026-09-30",
+        "start": "2026-09-24",
+        "endExclusive": "2026-10-01",
         "days": 7,
         "timezone": "UTC"
       },
@@ -226,14 +226,14 @@
       "source": "/api/public-status.json",
       "computedAt": "2026-10-01T00:00:00.000Z",
       "values": {
-        "sparked": 6,
-        "forge": 14,
+        "sparked": 3,
+        "forge": 17,
         "vaulted": 6
       }
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-10-01T21:17:50.485Z",
+      "computedAt": "2026-10-01T22:40:23.101Z",
       "values": {
         "fresh": 15,
         "stale": 3,
@@ -254,7 +254,7 @@
   "history": {
     "performanceSamplesDaily": [],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-09-30T23:31:19.538Z",
+    "computedAt": "2026-10-01T22:05:48.402Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {

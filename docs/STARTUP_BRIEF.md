@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-01 (Session 366 closeout) -->
-<!-- semantic-freshness: hash=f023320edfe42e69 next=367 silSession=366 silScore=965 handoff=- tests=- -->
+<!-- generated-at: 2026-10-01 (Session 367 closeout) -->
+<!-- semantic-freshness: hash=ffa1738002a669e0 next=368 silSession=367 silScore=948 handoff=- tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 366 closeout · 2026-10-01.
+> **Fast-boot brief** — generated at Session 367 closeout · 2026-10-01.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 367 · 2026-10-01 · FOUNDER MODE                         ║
+║  Session 368 · 2026-10-01 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S366) - WHAT SHIPPED ══════════════════════════╗
-║  Post-S366: PR #132 merged eight correspondent profiles and sou  ║
+╔══ LAST SESSION (S367) - WHAT SHIPPED ══════════════════════════╗
+║  S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,27 +41,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    965/1000   ███████████████████████░   97%                     ║
+║    948/1000   ██████████████████████░░   95%                     ║
 ║    SIL v3.0  ·  Avg3: 984  ·  Velocity 3→                        ║
 ║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        95    ██████████  ▇▇▇▇█▇▇▇ →                ║
-║    Alignment         97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          98    ██████████  ▇▇▇▇▇▅▇▇ →                ║
-║    Engagement        96    ██████████  ▇▇▇▇▇▆▇▇ →                ║
-║    Process Qual      93    █████████░  ▇▇▇██▆▇▇ →                ║
-║    Coherence        100    ██████████  ········ →                ║
-║    Security          98    ██████████  ········ →                ║
-║    Ecosystem         96    ██████████  ········ →                ║
-║    Capital           94    █████████░  ········ →                ║
-║    Automation        98    ██████████  ········ →                ║
+║    Dev Health        94    █████████░  ▇▇▇█▇▇▇▇ →                ║
+║    Alignment         95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          94    █████████░  ▇▇▇▇▅▇▇▇ →                ║
+║    Engagement        93    █████████░  ▇▇▇▇▆▇▇▇ →                ║
+║    Process Qual      95    ██████████  ▇▇██▆▇▇▇ →                ║
+║    Coherence         98    ██████████  ········ →                ║
+║    Security          96    ██████████  ········ →                ║
+║    Ecosystem         95    ██████████  ········ →                ║
+║    Capital           95    ██████████  ········ →                ║
+║    Automation        93    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 366 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 367 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    505/505 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,15 +77,15 @@
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   0d                                             ║
-║  ⛔  IGNIS         46724 FORGE  ·  14d old                        ║
+║  ✓  IGNIS         46119 FORGE  ·  1d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  9d old (2026-09-22)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
@@ -114,26 +114,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  973/1000  (↑8 vs current 965)                       ║
-║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 55.3 over last 4 forecasts                     ║
+║  Projected:  937/1000  (↓11 vs current 948)                      ║
+║  At-risk:    Automation Cover Δ-3                                ║
+║  Calibration: MAE 49.2 over last 5 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Observe the next scheduled publisher-to-re  ║
-║        Observe the next scheduled publisher-to-release trigger   ║
+║  100  [VERIFY]       Obelisk Ark 01K3SH847CF5020D9D7209EB07: re  ║
+║        Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup +   ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Add a generated-fixture check for month ro  ║
-║        Add a generated-fixture check for month rollover so a fu  ║
+║   93  [PRODUCT]      Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle r  ║
+║        Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle reply; deploy W  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Review measured Linux screenshots before r  ║
-║        Review measured Linux screenshots before refreshing visu  ║
+║   90  [PRODUCT]      Rest of AUDIT_2026-10-01.                   ║
+║        Rest of AUDIT_2026-10-01. is open, local, and unblocked   ║
 ║                                                                  ║
-║   84  [PRODUCT]      Track growth of the Desk overlay from the   ║
-║        Track growth of the Desk overlay from the production bas  ║
+║   87  [PRODUCT]      Observe the next scheduled publisher-to-re  ║
+║        Observe the next scheduled publisher-to-release trigger   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 366 closeout · 2026-10-01*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 367 closeout · 2026-10-01*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

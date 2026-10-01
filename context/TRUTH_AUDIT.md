@@ -1,3 +1,13 @@
+## S367 Public Statuses Now Match Canon, and the Signup Door Was Found Closed (2026-10-01)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | No feed fields changed; catalog status now comes from the registry value alone. |
+| Prompt/template alignment | 5 | Changelog generators print "Update" instead of session numbers. |
+| Public claim accuracy | 4 | Three projects stopped claiming SPARKED; the register panel stopped claiming open enrolment. Live production still serves the old claims until deploy. |
+| Internal consistency | 5 | Homepage tiers, hero, nav, /games/, project pages, press and sitemap page agree with canon; coherence gates pass. |
+| Evidence freshness | 4 | Visual review is fresh for touched surfaces; the mobile and visual receipts must be re-bound after the final build. |
+
 ## S363 A Public Receipt Contradicted Itself, and a Probe Could Be Made to Cry Wolf by a Pull (2026-09-20)
 
 | Dimension | Score | Evidence |

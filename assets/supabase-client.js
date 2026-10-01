@@ -180,11 +180,52 @@
   const authReady = bootstrapAuthoritativeSession();
   window.VSAuthReady = authReady;
 
+  // S367: the compatibility token lives one hour and is never refreshed by
+  // supabase-js (autoRefreshToken:false keeps the edge authoritative). A tab
+  // left open past that silently lost data access. Re-ask the EDGE — not
+  // GoTrue — shortly before expiry: a revoked Obelisk session answers 401 and
+  // signs the tab out, so this can never outlive the authoritative session.
+  const REFRESH_LEAD_MS = 5 * 60 * 1000;
+  let edgeRefresh = null;
+  function compatExpiresSoon() {
+    const exp = window.VSCompatibilitySession?.expires_at;
+    return Number.isFinite(exp) && exp * 1000 - Date.now() < REFRESH_LEAD_MS;
+  }
+  function refreshFromEdge() {
+    if (edgeRefresh) return edgeRefresh;
+    edgeRefresh = (async () => {
+      let res;
+      try {
+        res = await window.fetch('/api/auth/session', {
+          method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' }, cache: 'no-store',
+        });
+      } catch (_) {
+        return false; // offline: keep the current token; the next call retries
+      }
+      if (res.status === 401) { await clearCompatibilitySession(); return false; }
+      const payload = res.ok ? await res.json().catch(() => null) : null;
+      const pair = payload?.supabase;
+      if (!pair?.access_token || !pair?.refresh_token || payload?.identity?.sub !== window.VSObeliskIdentity?.sub) return false;
+      const set = await rawSetSession({ access_token: pair.access_token, refresh_token: pair.refresh_token });
+      if (set.error) return false;
+      window.VSCompatibilitySession = set.data.session;
+      return true;
+    })().finally(() => { edgeRefresh = null; });
+    return edgeRefresh;
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && window.VSCompatibilitySession && compatExpiresSoon()) refreshFromEdge();
+    });
+  }
+
   sb.auth.getSession = async function getAuthoritativeSession() {
     const authority = await authReady;
     if (!authority.authenticated || authority.error || !window.VSCompatibilitySession) {
       return { data: { session: null }, error: authority.error || null };
     }
+    if (compatExpiresSoon()) await refreshFromEdge();
+    if (!window.VSCompatibilitySession) return { data: { session: null }, error: null };
     const current = await rawGetSession();
     if (current.error || current.data?.session?.access_token !== window.VSCompatibilitySession.access_token) {
       return { data: { session: null }, error: current.error || new Error('Compatibility session authority mismatch.') };

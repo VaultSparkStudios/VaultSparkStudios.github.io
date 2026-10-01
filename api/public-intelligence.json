@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-01T20:36:13.740Z",
+  "generatedAt": "2026-10-01T22:07:14.974Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 366,
+    "currentSession": 367,
     "lastUpdated": "2026-10-01",
-    "currentFocus": "Eight Desk profiles and the compact News hub with August/September/October archives are live. The repaired daily content lane passed a 159-path recovery release; full-site identity remains held.",
-    "nextMilestone": "Observe the next scheduled Desk release after the repair; add month-rollover and prior-overlay set tests before the Desk baseline reaches Pages limits.",
+    "currentFocus": "S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses now follow studio-ops canon, HMAC CSP nonce, edge-side session renewal, price guard and copy sweep; deploy pending.",
+    "nextMilestone": "Deploy the S367 candidate (Worker nonce + content), then act on Obelisk and studio-ops Ark replies: reopen signup, staging test identity, lifecycle ratification.",
     "ignis": {
-      "score": 46724,
+      "score": 46119,
       "grade": "FORGE",
-      "lastComputed": "2026-09-17"
+      "lastComputed": "2026-09-30"
     }
   },
   "pulse": {
@@ -134,9 +134,9 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 366,
-    "liveProjects": 6,
-    "projectsInForge": 14,
+    "sessionsCompleted": 367,
+    "liveProjects": 3,
+    "projectsInForge": 17,
     "activeEdgeFunctions": 16,
     "vaultRankTiers": 9,
     "trackedSocialAccounts": 15
@@ -145,60 +145,26 @@
     "total": 26,
     "publicListed": 20,
     "sealedCount": 6,
-    "sparked": 6,
-    "forge": 14,
+    "sparked": 3,
+    "forge": 17,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 95,
-      "alignment": 97,
-      "momentum": 98,
-      "engagement": 96,
-      "process": 93,
-      "coherence": 100,
-      "security": 98,
-      "ecosystem": 96,
-      "capital": 94,
-      "automation": 98,
-      "total": 965,
-      "updatedSession": 366
+      "devHealth": 94,
+      "alignment": 95,
+      "momentum": 94,
+      "engagement": 93,
+      "process": 95,
+      "coherence": 98,
+      "security": 96,
+      "ecosystem": 95,
+      "capital": 95,
+      "automation": 93,
+      "total": 948,
+      "updatedSession": 367
     },
     "sealedNextRevealAt": null
   },
   "catalog": [
-    {
-      "id": "call-of-doodie",
-      "name": "Call of Doodie",
-      "type": "game",
-      "category": "Action Comedy",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Playable now. Satirical multiplayer chaos, live and still sharpening.",
-      "deployedUrl": "https://callofdoodie.wtf/",
-      "color": "#ff9478",
-      "spotlight": 0
-    },
-    {
-      "id": "promogrind",
-      "name": "PromoGrind",
-      "type": "tool",
-      "category": "Creator Tool",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Live utility. Vault-gated promo engine, iterating on UX.",
-      "deployedUrl": "https://promogrind.bet",
-      "color": "#7ae7c7"
-    },
-    {
-      "id": "velaxis",
-      "name": "Velaxis",
-      "type": "tool",
-      "category": "Trading Intelligence",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Solana memecoin operator cockpit — no-custody by design. Production-stable.",
-      "deployedUrl": "https://velaxis.markets/",
-      "color": "#4ade80"
-    },
     {
       "id": "veilos",
       "name": "VEILOS",
@@ -236,6 +202,29 @@
       "spotlight": 4
     },
     {
+      "id": "call-of-doodie",
+      "name": "Call of Doodie",
+      "type": "game",
+      "category": "Action Comedy",
+      "status": "FORGE",
+      "progress": 85,
+      "note": "Playable now. Satirical multiplayer chaos, live and still sharpening.",
+      "deployedUrl": "https://callofdoodie.wtf/",
+      "color": "#ff9478",
+      "spotlight": 0
+    },
+    {
+      "id": "promogrind",
+      "name": "PromoGrind",
+      "type": "tool",
+      "category": "Creator Tool",
+      "status": "FORGE",
+      "progress": 85,
+      "note": "Live utility. Vault-gated promo engine, iterating on UX.",
+      "deployedUrl": "https://promogrind.bet",
+      "color": "#7ae7c7"
+    },
+    {
       "id": "mindframe",
       "name": "MindFrame",
       "type": "tool",
@@ -246,6 +235,17 @@
       "deployedUrl": "https://steadfast-determination-production.up.railway.app",
       "color": "#38bdf8",
       "spotlight": 1
+    },
+    {
+      "id": "velaxis",
+      "name": "Velaxis",
+      "type": "tool",
+      "category": "Trading Intelligence",
+      "status": "FORGE",
+      "progress": 85,
+      "note": "Solana memecoin operator cockpit — no-custody by design. Production-stable.",
+      "deployedUrl": "https://velaxis.markets/",
+      "color": "#4ade80"
     },
     {
       "id": "obelisk",
@@ -823,7 +823,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 5 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-10-01T08:59:13.698Z",
+    "checkedAt": "2026-10-01T21:17:50.363Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

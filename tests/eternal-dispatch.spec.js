@@ -13,8 +13,9 @@ test.describe('Eternal intelligence surface', () => {
 
     const panel = page.locator('#eternal-intelligence-panel');
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('Eternal Upgrade');
-    await expect(panel).toContainText('Go VaultSparked Eternal');
+    // S335 replaced the stacked upgrade card with a usable digest plus one upsell line.
+    await expect(panel).toContainText('Your Sparked digest');
+    await expect(panel).toContainText('Go Eternal');
   });
 
   test('Eternal members load the dispatch positive path', async ({ page, request }) => {

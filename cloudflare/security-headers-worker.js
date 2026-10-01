@@ -46,6 +46,7 @@ import {
   handleDeskPresence,
   isAllowedWebPushEndpoint,
   validatePushSubscription,
+  deriveWindowNonce,
 } from './worker-lib.mjs';
 import {
   handleDeskComments,
@@ -244,10 +245,10 @@ function clampSampleRate(value) {
 // Types reporting watches injection sinks.
 const HTML_NONCE_WINDOW_SEC = 300;
 const HTML_CACHE_VERSION = 'ct5-2026-07-22';
-function generateWindowNonce() {
+// S367: keyed, not clock-derived — see deriveWindowNonce in worker-lib.mjs.
+function generateWindowNonce(env) {
   const windowId = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
-  const raw = `vs_${windowId}_nonce`;
-  return btoa(raw).slice(0, 24).replace(/[/+=]/g, '_');
+  return deriveWindowNonce(windowId, env && env.CSP_NONCE_KEY);
 }
 
 // CSRF nonce stack (issue + verify, HMAC sign/verify) is the single source of
@@ -1537,7 +1538,7 @@ const worker = {
     if (isHtml && nonceModeOn) {
       // S161: window nonce enables edge caching of HTML — eliminates GitHub Pages
       // slowness exposing visitors on every uncached request.
-      const nonce = generateWindowNonce();
+      const nonce = await generateWindowNonce(env);
       const rewriter = new HTMLRewriter()
         .on('meta', new MetaCspStripper())
         .on('script,style', new NonceInjector(nonce))

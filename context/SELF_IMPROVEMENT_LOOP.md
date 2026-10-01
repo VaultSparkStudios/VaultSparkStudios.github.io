@@ -2720,3 +2720,23 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** A scheduled publisher succeeded while its release failed on staging ancestry. Recovery then exposed 24 withheld persona/archive paths and older server rules. A full candidate restage, shared allowlist, ancestral baseline fallback and held-run finalization guard closed those faults. Recovery `36835514861` and Pages `36835622726` passed with 159/159 production parity. The next scheduled trigger remains unobserved.
 
 **Brainstorm → TASK_BOARD:** retain an explicit prior-overlay set check and a generated month-rollover fixture; observe the next scheduled release. Each follows a measured failure or new October path.
+
+
+## 2026-10-01 UTC — Session 367 (Whole-site audit, canon-true statuses, login hardening) | Total: 948/1000 (v3.0) | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 94 | Worker 72/72, Obelisk auth 42/42, unit 271 with todos cleared; a generator corruption bug fixed with a byte-identity self-test. |
+| Creative Alignment | 95 | Status vocabulary now matches canon and the founder's beta definition; copy no longer promises dates or open doors it cannot keep. |
+| Momentum | 94 | Audit plus nine shipped items; several larger approved items remain pending. |
+| Engagement | 93 | Playable beta keeps its Play CTA; mobile hero titles no longer hidden behind badges. |
+| Process Quality | 95 | Evidence-first: two audit premises disproved and closed rather than implemented. |
+| Cross-Repo Coherence | 98 | Obelisk and studio-ops reached only through Ark; no sibling files edited. |
+| Security Posture | 96 | Predictable nonce closed; session renewal bounded by edge revocation; forms verified to refuse unauthenticated posts. |
+| Ecosystem Integration | 95 | Lifecycle proposal reuses the existing ladder and launch tooling instead of a parallel scheme. |
+| Capital Efficiency | 95 | No new paid service; email checks used existing Brevo and DNS. |
+| Automation Coverage | 93 | New price and stat-strip derivations close two hand-maintained drift paths; real-login automation still blocked. |
+
+**Audit:** The nonce and renewal changes are not live until the next Worker and content deploys. Login E2E and the Sparked entitlement failure remain blocked on external inputs; both are recorded as open, not passed.
+
+**Brainstorm → TASK_BOARD:** Derive every remaining hand-written status badge from the registry (roadmap, press, sitemap-page) so a single canon flip needs no hand edits; add a registry-derived gate for page badges outside /games/ and /projects/.

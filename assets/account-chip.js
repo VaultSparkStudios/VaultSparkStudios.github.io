@@ -103,7 +103,7 @@
         '<a role="menuitem" href="/community/#wall">Vault Wall</a>' +
         '<a role="menuitem" href="/ranks/">Ranks &amp; points</a>' +
         '<a role="menuitem" href="/leaderboards/">Leaderboards</a>' +
-        '<a role="menuitem" href="/vault-member/settings/">Settings</a>' +
+        '<a role="menuitem" href="/vault-member/#settings">Settings</a>' +
         '<div class="vs-account-menu__sep" role="separator" aria-hidden="true"></div>' +
         '<a role="menuitem" href="/membership/">Upgrade membership</a>' +
         '<a role="menuitem" href="/changelog/#requests">Feedback loop</a>' +

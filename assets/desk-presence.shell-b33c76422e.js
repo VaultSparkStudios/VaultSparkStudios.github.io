@@ -88,7 +88,7 @@
     }
     var seconds = Number(row.averageEngagedSeconds) || 0;
     var label = seconds >= 60 ? Math.floor(seconds / 60) + 'm ' + (seconds % 60) + 's avg' : seconds + 's avg';
-    if (engaged) engaged.textContent = label + ' avg';
+    if (engaged) engaged.textContent = label;
     if (note) note.textContent = row.observations + ' completed, visible-and-focused reading observations · ~' + estimatedMinutes + '-minute estimated read · ' + row.windowDays + '-day window. Exact live counts are withheld below three.';
   }
 

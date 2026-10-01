@@ -63,9 +63,24 @@ export function syncGameIndexStatus(html, games) {
     if (newStatus !== oldStatus) {
       const already = updates.find((u) => u.slug === slug);
       if (!already) updates.push({ slug, from: oldStatus, to: newStatus });
-      return pre + newStatus + mid + slug + '">';
+      // S367: `mid` already runs through the tag's closing ">"; re-appending
+      // slug + '">' corrupted every reordered card it touched.
+      return pre + newStatus + mid;
     }
     return match;
+  });
+
+  // S367: the /games/ hero stat strip (Sparked / In The Forge / Vaulted) was
+  // hand-typed and drifted (showed 2/4/2 while the registry held 2/6/2, then
+  // 1/7/2). Derive it from the same registry as the cards.
+  const counts = { sparked: 0, forge: 0, vaulted: 0 };
+  for (const g of Object.values(games)) if (g && counts[g.status] !== undefined) counts[g.status] += 1;
+  const statPat = /(<span class="hero-stat-val">)(\d+)(<\/span>\s*<span class="hero-stat-label hero-stat-label--(sparked|forge|vaulted)">)/g;
+  result = result.replace(statPat, (match, open, oldVal, close, status) => {
+    const next = String(counts[status]);
+    if (next === oldVal) return match;
+    updates.push({ slug: `stat:${status}`, from: oldVal, to: next });
+    return open + next + close;
   });
 
   return { html: result, updates, unmatched };
@@ -87,6 +102,7 @@ function runSelfTest() {
   const html1 = '<article class="game-card" data-status="forge" data-game="game-a" aria-label="Game A">';
   const r1 = syncGameIndexStatus(html1, games);
   assert(r1.html.includes('data-status="sparked"'), 'T1 status updated');
+  assert(r1.html === '<article class="game-card" data-status="sparked" data-game="game-a" aria-label="Game A">', 'T1 tag otherwise byte-identical (S367: no duplicated slug tail)');
   assert(r1.updates.length === 1 && r1.updates[0].slug === 'game-a', 'T1 update recorded');
 
   // T2: leaves matching status untouched
@@ -105,6 +121,12 @@ function runSelfTest() {
   const once = syncGameIndexStatus(html4, games).html;
   const twice = syncGameIndexStatus(once, games).html;
   assert(once === twice, 'T4 idempotent');
+
+  // T5 (S367): hero stat strip is derived from registry counts
+  const html5 = '<span class="hero-stat-val">9</span>\n<span class="hero-stat-label hero-stat-label--sparked">🔥 Sparked</span>';
+  const r5 = syncGameIndexStatus(html5, games);
+  const sparkedCount = Object.values(games).filter((g) => g.status === 'sparked').length;
+  assert(r5.html.includes(`<span class="hero-stat-val">${sparkedCount}</span>`), 'T5 sparked stat derived from registry');
 
   console.log((fail === 0 ? '✓' : '✗') + ' derive-game-index self-test: ' + pass + '/' + (pass + fail));
   return fail;

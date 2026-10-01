@@ -43,6 +43,7 @@ import {
   handleDeskPresence,
   deskPresenceBand,
   resolvePublicOrigin,
+  deriveWindowNonce,
   isAllowedWebPushEndpoint,
   validatePushSubscription,
 } from '../cloudflare/worker-lib.mjs';
@@ -1181,4 +1182,17 @@ test('unsubscribe proxy restores only the pinned stylesheet policy stripped by t
   assert.equal((await run(style, { NEWSLETTER_UNSUBSCRIBE_UPSTREAM: 'https://untrusted.invalid/page' })).headers.get('content-security-policy'), gateway);
   assert.equal((await run(style, {}, "default-src 'none'")).headers.get('content-security-policy'), "default-src 'none'");
   assert.equal((await run(style + '</style><style>' + style)).headers.get('content-security-policy'), gateway);
+});
+
+test('S367: the CSP nonce is keyed, not derivable from the clock', async () => {
+  const windowId = 6003000;
+  const clockOnly = btoa(`vs_${windowId}_nonce`).slice(0, 24).replace(/[/+=]/g, '_');
+  const keyed = await deriveWindowNonce(windowId, 'key-a');
+  assert.notEqual(keyed, clockOnly);
+  assert.equal(keyed, await deriveWindowNonce(windowId, 'key-a'), 'stable within a window for one key');
+  assert.notEqual(keyed, await deriveWindowNonce(windowId, 'key-b'), 'changes with the key');
+  assert.notEqual(keyed, await deriveWindowNonce(windowId + 1, 'key-a'), 'changes with the window');
+  const unkeyed = await deriveWindowNonce(windowId);
+  assert.notEqual(unkeyed, clockOnly, 'falls back to an isolate secret, never the clock');
+  assert.match(keyed, /^[A-Za-z0-9_]{24}$/);
 });

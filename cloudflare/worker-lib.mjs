@@ -183,6 +183,22 @@ export async function hmacSign(key, data) {
   return btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/=+$/, '');
 }
 
+// S367: the HTML CSP nonce was btoa(`vs_${windowId}_nonce`) — computable from
+// the clock by anyone, which voids strict-dynamic. It is now an HMAC of the
+// window under a key the client never sees. The cached HTML stores its nonce
+// and its CSP header together, so a per-isolate random key is already safe;
+// CSP_NONCE_KEY, when set, only makes nonces agree across isolates.
+const ISOLATE_NONCE_KEY = (() => {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode(...bytes));
+})();
+
+export async function deriveWindowNonce(windowId, key) {
+  const sig = await hmacSign(key || ISOLATE_NONCE_KEY, `csp-nonce:${windowId}`);
+  return sig.slice(0, 24).replace(/[/+=]/g, '_');
+}
+
 export async function hmacVerify(key, data, signature) {
   const expected = await hmacSign(key, data);
   // Constant-time-ish compare via length + char-by-char; sufficient for our threat model.

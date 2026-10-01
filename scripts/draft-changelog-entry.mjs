@@ -86,7 +86,7 @@ function renderClPhase(sessionLabel, dateIso, items) {
     `          <article class="cl-phase" data-reveal="fade-up">`,
     `            <div class="cl-dot" aria-hidden="true"></div>`,
     `            <div class="cl-phase-header">`,
-    `              <span class="cl-phase-num">${sessionLabel}</span><span class="cl-phase-date">${dateIso}</span>`,
+    `              <span class="cl-phase-num">${/^S\d/.test(sessionLabel) ? 'Update' : sessionLabel}</span><span class="cl-phase-date">${dateIso}</span>`,
     `              <div class="cl-phase-title">REVIEW: write a 4–6 word visitor-facing headline</div>`,
     `            </div>`,
     `            <ul class="cl-items">`,

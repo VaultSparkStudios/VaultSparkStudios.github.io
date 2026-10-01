@@ -42,7 +42,7 @@ test.describe('Leaderboards main page', () => {
 });
 
 const SEO_PAGES = [
-  { slug: 'global', title: /Global Leaderboard/ },
+  // 'global' was retired into /leaderboards/#global by a _redirects 301; it has no sub-page.
   { slug: 'challenges', title: /Challenge.*Leaderboard/ },
   { slug: 'recruiters', title: /Recruiters/ },
   { slug: 'football-gm', title: /Franchise Architect/ },

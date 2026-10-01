@@ -1322,6 +1322,12 @@ body.light-mode .status {
   left: 1rem;
   z-index: 2;
 }
+/* S367: on narrow screens the hero content starts at the top of the card, so
+   the absolute badge sat on the h1 ("Forge · Playable Beta" covered "Call Of").
+   Reserve the badge's row instead of letting it float over the title. */
+@media (max-width: 640px) {
+  .hero-art > .status + .hero-art-content { padding-top: 2.75rem; }
+}
 .card-art h3 {
   font-size: 1.68rem;
   letter-spacing: -0.04em;

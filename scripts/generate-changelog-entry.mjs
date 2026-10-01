@@ -118,7 +118,8 @@ export function buildEntry({ items = [], session = null, date = '', title = '', 
     `          <article class="${phaseClass}" data-reveal="fade-up">`,
     `            <div class="cl-dot" aria-hidden="true"></div>`,
     `            <div class="cl-phase-header">`,
-    `              <span class="cl-phase-num">${escapeHtml(sessionLabel)}</span>` +
+    // S367: session numbers are operator vocabulary; visitors see "Update".
+    `              <span class="cl-phase-num">${/^S\d/.test(sessionLabel) ? 'Update' : escapeHtml(sessionLabel)}</span>` +
       (date ? `<span class="cl-phase-date">${escapeHtml(date)}</span>` : ''),
     `              <div class="cl-phase-title">${escapeHtml(title)}</div>`,
     `            </div>`,

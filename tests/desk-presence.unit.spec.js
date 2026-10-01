@@ -123,10 +123,8 @@ test('non-SSR sufficient sample renders the observation note', async () => {
   } finally { await f.close(); }
 });
 
-// renderAggregate builds `label = '2m 14s avg'` and then writes `label + ' avg'`.
-test('non-SSR sufficient sample renders "2m 14s avg" / "45s avg" exactly once', {
-  todo: 'BUG assets/desk-presence.js renderAggregate appends " avg" twice ("2m 14s avg avg")',
-}, async () => {
+// S367: renderAggregate used to write `label + ' avg'` over a label that already ends in "avg".
+test('non-SSR sufficient sample renders "2m 14s avg" / "45s avg" exactly once', async () => {
   const { f, state } = await setup();
   try {
     for (const [seconds, expected] of [[134, '2m 14s avg'], [45, '45s avg']]) {

@@ -16,11 +16,12 @@ test.describe('Site navigation', () => {
     await expect(brand).toBeVisible();
   });
 
-  test('Games dropdown contains all 7 games', async ({ page }) => {
+  test('Games dropdown lists every registry game plus All Games', async ({ page }) => {
     await page.goto(BASE + '/');
     const gameLinks = page.locator('.nav-dropdown a[href*="/games/"]');
-    // All Games + 3 sparked + 4 forge + 2 vaulted = 10? The locator is scoped to one dropdown and excludes the section label rows.
-    await expect(gameLinks).toHaveCount(9);
+    // S367: derived from data/game-registry.json so a new title cannot strand this test.
+    const registryGames = Object.keys(require('../data/game-registry.json').games).length;
+    await expect(gameLinks).toHaveCount(registryGames + 1);
   });
 
   test('Footer contains expected sections', async ({ page }) => {

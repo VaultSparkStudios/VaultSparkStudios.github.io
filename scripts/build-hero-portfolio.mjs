@@ -101,6 +101,20 @@ function liveHref(item) {
 
 const STATUS_LABEL = { SPARKED: 'Sparked', FORGE: 'In the Forge', VAULTED: 'Vaulted' };
 
+// S367 founder direction: FORGE includes public beta. A FORGE game the website's
+// game registry explicitly declares playable (`playUrl`) is a playable beta and
+// keeps its Play CTA; everything else in the forge still routes to its studio page.
+let PLAYABLE_BETA = null;
+function registryPlayUrl(id) {
+  if (!PLAYABLE_BETA) {
+    try {
+      const games = JSON.parse(readFileSync(path.join(ROOT, 'data/game-registry.json'), 'utf8')).games || {};
+      PLAYABLE_BETA = new Map(Object.entries(games).filter(([, g]) => g && g.playUrl).map(([k, g]) => [k, g.playUrl]));
+    } catch { PLAYABLE_BETA = new Map(); }
+  }
+  return PLAYABLE_BETA.get(id) || null;
+}
+
 // Project-specific primary CTA label. Compact labels on small tiles (where a
 // second button shares the row); fuller labels on the featured tile.
 function primaryLabel(item, hasLive, featured) {
@@ -109,6 +123,7 @@ function primaryLabel(item, hasLive, featured) {
     if (item.type === 'game') return featured ? '▶ Play free' : '▶ Play';
     return featured ? 'Open →' : 'Open';
   }
+  if (item.type === 'game') return featured ? '▶ Play the beta' : '▶ Play beta';
   return featured ? 'Try it →' : 'Try it'; // forge with a live build (external beta)
 }
 
@@ -152,11 +167,12 @@ function renderTile(item, fileExists, featured) {
   const live = liveHref(item);                  // live/deployed site, or null
   // Only truly-live (SPARKED) projects route to their live site; FORGE projects
   // route to their studio page (a forge dev/staging URL is not a public destination).
-  const sparkedLive = item.status === 'SPARKED' && live;
+  const betaLive = item.status === 'FORGE' && live && registryPlayUrl(item.id) ? live : null;
+  const sparkedLive = (item.status === 'SPARKED' && live) || betaLive;
   const primary = sparkedLive ? live : page;
   const coverKey = COVERS[item.id];
   const statusClass = item.status === 'SPARKED' ? 'is-live' : item.status === 'VAULTED' ? 'is-vaulted' : 'is-forge';
-  const badge = STATUS_LABEL[item.status] || item.status;
+  const badge = betaLive ? 'Playable Beta' : (STATUS_LABEL[item.status] || item.status);
   const mark = esc((item.name || '?').trim().charAt(0).toUpperCase());
   // Specific category (e.g. "AI Intelligence") from the feed; fall back to a type label.
   const typeLabel = item.category || (item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World');

@@ -78,6 +78,24 @@ function vaultedCountMismatch(statusJson, intelJson) {
   return shown !== source ? { shown, source } : null;
 }
 
+// 5. (S367) Every per-month / per-year price printed on a public page must be a
+//    price the canonical tier feed actually offers. api/membership-tiers.json
+//    claimed this guard existed; it did not, so a price edit on one page could
+//    silently contradict the others.
+const PRICE_RE = /\$(\d+(?:\.\d{2})?)\s*(?:\/\s*|per\s+)(mo|month|yr|year)\b/gi;
+function priceMismatches(html, tiersJson) {
+  const monthly = new Set((tiersJson?.tiers || []).map((t) => Number(t?.price?.monthly)).filter((n) => n > 0));
+  const annual = new Set((tiersJson?.tiers || []).map((t) => Number(t?.price?.annual)).filter((n) => n > 0));
+  const out = [];
+  for (const m of html.matchAll(PRICE_RE)) {
+    const value = Number(m[1]);
+    const perYear = /^y/i.test(m[2]);
+    if (!(perYear ? annual : monthly).has(value)) out.push(m[0]);
+  }
+  return out;
+}
+const PRICE_SURFACES = ['membership/index.html', 'press/index.html', 'terms/index.html', 'search/index.html', 'index.html'];
+
 // ── live check ──────────────────────────────────────────────────────────────────
 
 function runLive() {
@@ -115,6 +133,19 @@ function runLive() {
     } catch {}
   }
 
+  const tiersText = readSafe('api/membership-tiers.json');
+  if (tiersText) {
+    let tiers = null;
+    try { tiers = JSON.parse(tiersText); } catch { errs.push('api/membership-tiers.json is not valid JSON'); }
+    if (tiers) {
+      for (const rel of PRICE_SURFACES) {
+        const html = readSafe(rel);
+        if (!html) continue;
+        for (const bad of priceMismatches(html, tiers)) errs.push(`${rel} shows "${bad}", which no tier in api/membership-tiers.json offers`);
+      }
+    }
+  }
+
   if (errs.length) {
     console.error('check-content-coherence: cross-surface contradictions found:');
     for (const e of errs) console.error('  ✗ ' + e);
@@ -132,6 +163,14 @@ function runSelfTest() {
   // 1. retired label
   ok(findRetiredLabels('{"label":"Sealed"}').length === 1, 'detects retired "Sealed" label');
   ok(findRetiredLabels('{"label":"Vaulted"}').length === 0, 'passes canonical "Vaulted" label');
+
+  // 5. prices (S367)
+  const feed = { tiers: [{ price: { monthly: 0, annual: 0 } }, { price: { monthly: 4.99, annual: 44.99 } }] };
+  ok(priceMismatches('Sparked $4.99/mo or $44.99/yr', feed).length === 0, 'passes feed prices');
+  ok(priceMismatches('Sparked $5.99/mo', feed).length === 1, 'detects an off-feed monthly price');
+  ok(priceMismatches('$4.99 / month', feed).length === 0, 'accepts "/ month" spelling');
+  ok(priceMismatches('$44.99/mo', feed).length === 1, 'annual figure labelled monthly is a mismatch');
+  ok(priceMismatches('a $10 credit', feed).length === 0, 'ignores amounts with no billing period');
 
   // 2. theme color
   ok(sparkedThemeColor('gold VaultSparked profile theme') === 'gold', 'extracts gold theme');

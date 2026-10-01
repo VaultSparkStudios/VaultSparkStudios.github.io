@@ -983,3 +983,54 @@ test('S321: logout still ends the browser session when the store delete fails, a
   assert.equal(body.storeCleared, false, 'the degraded store delete is reported, not hidden');
   assert.match(cookieValue(response.headers, 'vs_portal_session') ?? '', /^$/, 'the session cookie is cleared regardless');
 });
+
+test('S367: a near-expiry compatibility token is renewed from the edge, and a revoked edge signs the tab out', async () => {
+  const source = await readFile(new URL('../assets/supabase-client.js', import.meta.url), 'utf8');
+  const identity = { provider: 'obelisk', sub: 'obl_person_refresh', supabaseUserId: '44444444-4444-4444-8444-444444444444' };
+  const nowSec = Math.floor(Date.now() / 1000);
+  let session = null;
+  let edgeState = 'live';
+  let issued = 0;
+  const calls = [];
+  const auth = {
+    async getSession() { return { data: { session }, error: null }; },
+    async setSession(next) {
+      issued += 1;
+      // First pair is about to expire; later pairs are fresh.
+      session = { ...next, expires_at: issued === 1 ? nowSec + 60 : nowSec + 3600 };
+      return { data: { session }, error: null };
+    },
+    async signOut() { session = null; return { data: {}, error: null }; },
+  };
+  const events = [];
+  const window = {
+    supabase: { createClient() { return { auth }; } },
+    localStorage: { removeItem() {} },
+    fetch: async (url) => {
+      calls.push(url);
+      if (url === '/api/auth/me') return response({ ok: true, identity });
+      if (url === '/api/auth/session') {
+        if (edgeState === 'revoked') return response({ ok: false, code: 'not_authenticated' }, 401);
+        return response({ ok: true, identity, supabase: { access_token: `access-${calls.length}`, refresh_token: `refresh-${calls.length}` } });
+      }
+      throw new Error(`unexpected request: ${url}`);
+    },
+    location: { pathname: '/vault-member/', search: '', hash: '', assign() {} },
+    dispatchEvent(event) { events.push(event.detail); },
+  };
+  class CustomEvent { constructor(type, options) { this.type = type; this.detail = options?.detail; } }
+  vm.runInNewContext(source, { window, URL, URLSearchParams, CustomEvent, Promise, Error, Object, Number, Date }, {
+    filename: 'assets/supabase-client.js',
+  });
+  assert.equal((await window.VSAuthReady).authenticated, true);
+  const renewed = await window.VSSupabase.auth.getSession();
+  assert.equal(calls.filter((c) => c === '/api/auth/session').length, 2, 'renewed from the edge, not from GoTrue');
+  assert.ok(renewed.data.session.expires_at > nowSec + 3000, 'fresh pair installed');
+
+  session = { ...session, expires_at: nowSec + 30 };
+  window.VSCompatibilitySession = session;
+  edgeState = 'revoked';
+  const afterRevoke = await window.VSSupabase.auth.getSession();
+  assert.equal(afterRevoke.data.session, null);
+  assert.equal(events.at(-1).authenticated, false, 'revocation at the edge signs the tab out');
+});

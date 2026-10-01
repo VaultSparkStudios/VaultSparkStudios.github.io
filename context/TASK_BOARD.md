@@ -1,6 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-10-01 UTC (post-S366 Desk archive release)
+Last updated: 2026-10-01 UTC (S367)
+
+## S367 — Site audit
+
+- [ ] **[S367][AUTH/P0]** Obelisk Ark `01K3SH847CF5020D9D7209EB07`: reopen signup + staging test identity → restore copy, build passkey login E2E.
+- [ ] **[S367][P1]** Ark `01K3SJ87V2E1476FF1FE837A06` lifecycle reply; deploy Worker (HMAC nonce); diagnose Sparked-as-free test member.
+- [ ] **[S367][P2]** Rest of AUDIT_2026-10-01.
 
 ## Desk archive follow-up — 2026-10-01
 

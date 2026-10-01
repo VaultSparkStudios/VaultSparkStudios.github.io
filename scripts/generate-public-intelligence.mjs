@@ -146,13 +146,11 @@ async function loadRegistryCatalog() {
     // Also exclude anything marked live-internal by phase
     if (project.developmentPhase === 'live-internal') continue;
     const vaultRaw = (project.vaultStatus || 'forge').toLowerCase();
-    // If an initiative is deployed on the studio's own domain and not paused,
-    // treat it as SPARKED regardless of the registry vaultStatus flag — the
-    // registry lags behind actual launch state for several items.
-    const selfHosted = (project.deployedUrl || '').includes('vaultsparkstudios.com');
-    const effectivelySparked = vaultRaw === 'sparked' || (selfHosted && vaultRaw !== 'vaulted');
+    // S367 founder direction: vault status comes from studio-ops canon only
+    // (CANON-052 single write path). A "deployed on our domain ⇒ SPARKED"
+    // override used to live here; being reachable is not being announced.
     const status = vaultRaw === 'vaulted' ? 'VAULTED'
-      : effectivelySparked ? 'SPARKED'
+      : vaultRaw === 'sparked' ? 'SPARKED'
       : 'FORGE';
     const typeMap = { game: 'game', tool: 'tool', platform: 'platform', infrastructure: 'tool' };
     const type = typeMap[project.type] || 'project';

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-01T08:36:47.858Z",
+  "generatedAt": "2026-10-01T22:07:14.972Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,11 +22,12 @@
     }
   },
   "pulse": {
-    "currentSession": 366,
+    "currentSession": 367,
     "lastUpdated": "2026-10-01",
-    "currentFocus": "Eight Desk profiles and the compact News hub with August/September/October archives are live. The repaired daily content lane passed a 159-path recovery release; full-site identity remains held.",
-    "nextMilestone": "Observe the next scheduled Desk release after the repair; add month-rollover and prior-overlay set tests before the Desk baseline reaches Pages limits.",
+    "currentFocus": "S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses now follow studio-ops canon, HMAC CSP nonce, edge-side session renewal, price guard and copy sweep; deploy pending.",
+    "nextMilestone": "Deploy the S367 candidate (Worker nonce + content), then act on Obelisk and studio-ops Ark replies: reopen signup, staging test identity, lifecycle ratification.",
     "blockers": [
+      "Obelisk production enrolment is invite-only (403 signup-token-required), so new visitors cannot create Vault accounts without an invite. Ark question to Obelisk pending (S367).",
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
       "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally.",
       "Identity/provider acceptance and scoped credential-owner reconciliation remain unresolved independently of this release.",
@@ -52,13 +53,13 @@
       "shipped": []
     },
     "ignis": {
-      "score": 46724,
+      "score": 46119,
       "grade": "FORGE",
-      "lastComputed": "2026-09-17"
+      "lastComputed": "2026-09-30"
     },
     "stats": {
-      "liveCatalogItems": 6,
-      "forgeCatalogItems": 14,
+      "liveCatalogItems": 3,
+      "forgeCatalogItems": 17,
       "trackedSocialAccounts": 15
     }
   },

@@ -24,7 +24,7 @@ export const PROJECTS = [
     // explicitly what the site already publishes and what data/game-registry.json
     // already records, so the net public change is zero and no lifecycle claim
     // depends on where a game happens to be hosted.
-    vaultStatus: "sparked",
+    vaultStatus: "forge",
     launchStatus: "deployed-unannounced",
     description: "Multiplayer shooter parody game.",
     githubRepo: "VaultSparkStudios/call-of-doodie",
@@ -181,7 +181,7 @@ export const PROJECTS = [
     status: "live",
     statusLabel: "Live",
     developmentPhase: "pre-launch",
-    vaultStatus: "sparked",
+    vaultStatus: "forge",
     launchStatus: "deployed-unannounced",
     description: "Vault-gated promotional and marketing tool.",
     githubRepo: "VaultSparkStudios/promogrind",
@@ -215,7 +215,7 @@ export const PROJECTS = [
     status: "live",
     statusLabel: "Live",
     developmentPhase: "pre-launch",
-    vaultStatus: "sparked",
+    vaultStatus: "forge",
     launchStatus: "deployed-unannounced",
     description: "Solana memecoin operator cockpit — SAFE-first discovery, evidence charts, thesis-required play tracking, wallet discipline, and replay. v2 live.",
     githubRepo: "VaultSparkStudios/velaxis",

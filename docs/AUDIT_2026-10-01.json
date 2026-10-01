@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": "2.0",
+  "session": "S367",
+  "generatedAt": "2026-10-01",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "scope": "Whole-site audit after /start: every public page, the member portal, login and identity, AI, security, speed and token cost, preceded by a baseline test sweep.",
+  "axes": [
+    "featureDepth",
+    "innovation",
+    "ux",
+    "feedbackLoop",
+    "engagement",
+    "aiIntegration",
+    "security",
+    "speed",
+    "tokenCost"
+  ],
+  "testResults": [
+    {
+      "area": "Build gate (506 steps)",
+      "result": "pass after repairs",
+      "detail": "Three generated drifts repaired (public-intelligence, brief revenue signal, destination receipt); four stale proof receipts (visual, mobile) await recapture after the final build."
+    },
+    {
+      "area": "Live login routes (production + staging)",
+      "result": "pass",
+      "detail": "PKCE S256, nonce and state present; flow cookie HttpOnly, Secure, SameSite=Lax; anonymous /api/auth/me 200 identity:null; cross-origin logout 403; bad callback state refused."
+    },
+    {
+      "area": "Signup door",
+      "result": "fail",
+      "detail": "Obelisk production enrolment is invite-only (403 signup-token-required)."
+    },
+    {
+      "area": "Dead links",
+      "result": "fail",
+      "detail": "/vault-member/settings/ returns 404."
+    },
+    {
+      "area": "Local extended browser tier (chromium)",
+      "result": "81 pass, 3 fail, 17 skip",
+      "detail": "Eternal panel copy drift and edge fetch failure from the local origin; navigation expects 9 games, finds 11."
+    },
+    {
+      "area": "Authenticated, portal, accessibility, leaderboards, community, nav (chromium)",
+      "result": "55 pass, 4 fail",
+      "detail": "Sparked member shown as free; /leaderboards/global/ title; two stale nav assertions. Accessibility suite passed including the authenticated dashboard scan."
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "signup-door-invite-only",
+      "axis": "ux",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 10,
+      "innovation": 4,
+      "title": "Reopen, or honestly label, the Vault signup door",
+      "why": "Live probe 2026-10-01: obeliskgate.com publishes X-Obelisk-Signup: invite and GET /auth/registration-options without a token answers 403 signup-token-required; the authorize screen tells visitors \"Enrollment is invite-only right now\". Every \"Join the Vault\" path on vaultsparkstudios.com therefore dead-ends for a stranger, and website decision D-S343.2 (open enrolment) is no longer true.",
+      "outcome": "A new visitor can either create an account, or is told before clicking that the Vault is invite-led and can request an invite.",
+      "recipe": "Ship an Ark repo-question to Obelisk asking whether production invite posture is intended for the website relying party. Until it reopens, add an invite-request path (Supabase table plus Turnstile) and honest copy on /vault-member/ and /membership/, and correct D-S343.2. Founder decides open versus invite-led.",
+      "premises": [
+        {
+          "claim": "Website signup sends visitors to the Obelisk authorize screen",
+          "adapter": "file-content",
+          "target": "cloudflare/obelisk-auth.js",
+          "pattern": "issuer: 'https://obeliskgate.com'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Correct D-S343.2 and put invite-led copy on the two join surfaces."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add an invite-request form with Turnstile and a member-visible queue position, plus Ark question to Obelisk."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Per-relying-party open enrolment at Obelisk for the website client, with abuse throttles and a live registration probe in daily assurance."
+        }
+      },
+      "founderGated": true,
+      "priority": 20,
+      "evidence": {
+        "interpretation": "Live probe 2026-10-01: obeliskgate.com publishes X-Obelisk-Signup: invite and GET /auth/registration-options without a token answers 403 signup-token-required; the authorize screen tells visitors \"Enrollment is invite-only right now\". Every \"Join the Vault\" path on vaultsparkstudios.com therefore dead-ends for a stranger, and website decision D-S343.2 (open enrolment) is no longer true.",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Founder chose: ask Obelisk to reopen. Ark repo-question 01K3SH847CF5020D9D7209EB07 sent to obelisk (open posture or per-client exception for vaultsparkstudios-website, plus a staging test-identity path). /vault-member/ register copy no longer claims open enrolment; it tells visitors enrolment is invite-led and links /contact/ to request an invite. Remaining: Obelisk answer, then flip the copy back."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "csp-nonce-hmac",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 3,
+      "title": "Make the CSP script nonce unpredictable",
+      "why": "cloudflare/security-headers-worker.js:247 builds the nonce as btoa('vs_' + windowId + '_nonce') with no secret, while the policy uses strict-dynamic. Anyone who can inject markup can compute the current nonce from the clock.",
+      "outcome": "Injected markup can no longer carry a valid nonce; the 300-second HTML cache window is unchanged.",
+      "recipe": "Derive the nonce as HMAC-SHA256(secret, windowId) with a new Worker secret, keep the window so the edge cache still works, and add a unit test proving the nonce differs from the clock-only value and changes with the secret.",
+      "premises": [
+        {
+          "claim": "Nonce is derived from the clock alone",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "const raw = `vs_${windowId}_nonce`;",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "HMAC the window id with a Worker secret."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Plus unit tests and a live header check on the apex."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Per-request nonce with cache-key variation measured against edge hit rate."
+        }
+      },
+      "founderGated": false,
+      "priority": 18,
+      "evidence": {
+        "interpretation": "cloudflare/security-headers-worker.js:247 builds the nonce as btoa('vs_' + windowId + '_nonce') with no secret, while the policy uses strict-dynamic. Anyone who can inject markup can compute the current nonce from the clock.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Nonce is now HMAC-SHA256 of the window under CSP_NONCE_KEY or a per-isolate random key (cloudflare/worker-lib.mjs deriveWindowNonce). Worker unit tests 72/72 including a new unpredictability test. Takes effect on the next Worker deploy."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "real-login-e2e-staging",
+      "axis": "security",
+      "tier": "🔥",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 7,
+      "title": "Automate the real Obelisk sign-in journey on staging",
+      "why": "No automated test exercises the only login path. tests/authenticated.spec.js signs in with a Supabase password and fakes /api/auth/me, /session and /logout with page.route, and e2e.yml does not run it. The identity hold real-provider-e2e-pending exists because only the manual passkey ceremony can prove the journey.",
+      "outcome": "Every release proves sign-in, callback, session, portal render, entitlement and logout revocation against staging with a software passkey.",
+      "recipe": "Register a staging test identity with a Playwright CDP virtual authenticator (Obelisk already ships a software authenticator for its own rehearsals). This needs an Obelisk invite token for the test identity via Ark, because production enrolment is invite-only. Then assert callback, HttpOnly session cookie, /api/auth/me identity, all portal tabs without console errors, entitlement gating and logout revocation. Fix the anonymous /api/auth/me mock (live returns 200 with identity:null) and run authenticated.spec.js in e2e.yml against staging.",
+      "premises": [
+        {
+          "claim": "Authenticated tests fake the edge auth endpoints",
+          "adapter": "file-content",
+          "target": "tests/helpers/vaultAuth.js",
+          "pattern": "route",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Correct the anonymous mock and run authenticated.spec.js in CI against staging."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Virtual-authenticator journey for one tier with revocation."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "All four tiers plus stale-tab refresh, wired as the evidence writer that can clear real-provider-e2e-pending."
+        }
+      },
+      "founderGated": false,
+      "priority": 12.6,
+      "evidence": {
+        "interpretation": "No automated test exercises the only login path. tests/authenticated.spec.js signs in with a Supabase password and fakes /api/auth/me, /session and /logout with page.route, and e2e.yml does not run it. The identity hold real-provider-e2e-pending exists because only the manual passkey ceremony can prove the journey.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Live probes passed (PKCE S256, HttpOnly flow cookie, anonymous /api/auth/me 200 identity:null, cross-origin logout 403, bad state refused). Anonymous auth mock corrected to the live contract. Virtual-authenticator journey blocked: production Obelisk enrolment requires an invite token; requested a staging test-identity path in the same Ark question."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "sparked-entitlement-divergence",
+      "axis": "ux",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 3,
+      "title": "Diagnose the Sparked member rendering as a free member",
+      "why": "Local authenticated suite, 2026-10-01: the Sparked test member shows \"Free Vault Member\" instead of \"VaultSparked active\", and its Eternal panel renders the free-tier lock. Either the test subscription expired (getActivePlanKey treats a past current_period_end as free) or entitlement resolution regressed. A read-only production data query to tell them apart was not authorized this session.",
+      "outcome": "Paying members always see the tier they pay for, and the entitlement test cannot silently rot.",
+      "recipe": "Reproduce on staging with a freshly provisioned Sparked identity; if the subscription row expired, make provision-vault-test-accounts set a far-future period and add a guard test; if not, fix plan resolution in portal-auth.js and assets/membership-access.js. Update the stale Eternal-panel copy assertions in eternal-dispatch.spec.js.",
+      "premises": [
+        {
+          "claim": "Expired subscriptions resolve to the default plan",
+          "adapter": "file-content",
+          "target": "assets/membership-access.js",
+          "pattern": "if (!isSubscriptionActive(subscription)) return CONFIG.defaultPlan;",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Reprovision the test subscription and update the stale copy assertions."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Root-cause on staging and fix whichever side is wrong, with a regression test."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Daily synthetic entitlement probe per tier in CI Health Monitor."
+        }
+      },
+      "founderGated": false,
+      "priority": 12,
+      "evidence": {
+        "interpretation": "Local authenticated suite, 2026-10-01: the Sparked test member shows \"Free Vault Member\" instead of \"VaultSparked active\", and its Eternal panel renders the free-tier lock. Either the test subscription expired (getActivePlanKey treats a past current_period_end as free) or entitlement resolution regressed. A read-only production data query to tell them apart was not authorized this session.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Stale Eternal-panel copy assertions updated to the S335 copy. Root cause (expired test subscription versus entitlement regression) needs a read of the test account subscription row, which was not authorized this session."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "homepage-lcp-floor",
+      "axis": "speed",
+      "tier": "🔥",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 4,
+      "title": "Bring the homepage back above its Lighthouse floor",
+      "why": "Latest homepage runs measure 0.73 and 0.76 against the unchanged 0.76 floor with LCP 6.1 s; the LCP element is span.hero-tile__cover. Twelve hero elements start at opacity 0 behind a 0.52 to 0.85 s animation delay, tile covers are late-discovered CSS image-set backgrounds, Sentry loads a vendor bundle, and ambient-core ships 77 KB unminified on every page. Full-site promotion is held on this.",
+      "outcome": "Homepage passes the unchanged floor on hosted runs, which unblocks full-site promotion.",
+      "recipe": "Exempt the LCP tile from .hero-reveal, render its cover as an <img fetchpriority=\"high\"> with the AVIF source, drop the low-value doodie.avif preload, idle-load Sentry after interaction, and measure in a warmed browser before and after.",
+      "premises": [
+        {
+          "claim": "Hero reveal hides elements until an animation runs",
+          "adapter": "file-content",
+          "target": "index.html",
+          "pattern": ".hero-reveal {",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Remove the reveal delay from the LCP tile and preload its image."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Plus the img conversion, Sentry idle load and a hosted Lighthouse pass."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Split ambient-core per page and ship minified shells with seven-theme visual parity."
+        }
+      },
+      "founderGated": false,
+      "priority": 10.7,
+      "evidence": {
+        "interpretation": "Latest homepage runs measure 0.73 and 0.76 against the unchanged 0.76 floor with LCP 6.1 s; the LCP element is span.hero-tile__cover. Twelve hero elements start at opacity 0 behind a 0.52 to 0.85 s animation delay, tile covers are late-discovered CSS image-set backgrounds, Sentry loads a vendor bundle, and ambient-core ships 77 KB unminified on every page. Full-site promotion is held on this.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "deferred",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Premise expired: the last three hosted Lighthouse runs on 2026-10-01 (36837760286, 36865465215, 36925812895) succeeded. The LCP tile is already an <img fetchpriority=high> outside every .hero-reveal, and the doodie.avif preload is the LCP image itself, so the audit recipe was wrong on two counts."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "canon-registry-single-source",
+      "axis": "featureDepth",
+      "tier": "🔥",
+      "effortHours": 6,
+      "impact": 9,
+      "innovation": 7,
+      "title": "Generate every game and project status surface from one registry",
+      "why": "Status is hand-typed in about eight places (homepage portfolio, /games/ cards, /roadmap/ pipeline, /press/ facts, /sitemap-page/, footer Games column, agents.json, llms.txt). data/game-registry.json and api/public-intelligence.json disagree on the vaulted count; Voidfall, VaultSpark Forge and VEILOS are missing from listings; agents.json still says Call of Doodie, PromoGrind and Velaxis are FORGE. The local navigation test expects 9 games and finds 11.",
+      "outcome": "One edit to the registry updates every human and agent surface, and a drift gate fails the build when any surface disagrees.",
+      "recipe": "Reconcile the two registries, then add marker-bounded generated blocks to each surface from a single build step, plus a check mode with a negative control. Derive test expectations (navigation.spec) from the same registry.",
+      "premises": [
+        {
+          "claim": "Footer games column is hand-maintained inside the nav propagator",
+          "adapter": "file-content",
+          "target": "scripts/propagate-nav.mjs",
+          "pattern": "Games",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Reconcile the registries and fix the eight stale statuses by hand."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Generated blocks for all surfaces with a drift gate and negative control."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Also generate per-title JSON-LD, the press facts table and the portal pipeline, with a public changelog row on every status flip."
+        }
+      },
+      "founderGated": false,
+      "priority": 10.5,
+      "evidence": {
+        "interpretation": "Status is hand-typed in about eight places (homepage portfolio, /games/ cards, /roadmap/ pipeline, /press/ facts, /sitemap-page/, footer Games column, agents.json, llms.txt). data/game-registry.json and api/public-intelligence.json disagree on the vaulted count; Voidfall, VaultSpark Forge and VEILOS are missing from listings; agents.json still says Call of Doodie, PromoGrind and Velaxis are FORGE. The local navigation test expects 9 games and finds 11.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Founder ruled Call of Doodie, PromoGrind and Velaxis stay FORGE (canon). Removed the \"self-hosted means SPARKED\" override in generate-public-intelligence; corrected the hub mirror and game registry; fixed hand-written badges on the homepage tiers, /games/, the game page, /roadmap/, /press/, /sitemap-page/, /projects/ and both project pages. The /games/ stat strip is now derived from the registry. Fixed a derive-game-index bug that duplicated the slug tail on reordered cards (self-test now asserts byte identity). Playable FORGE games keep a Play CTA as \"Playable Beta\". Lifecycle redefinition proposal shipped to studio-ops (Ark 01K3SJ87V2E1476FF1FE837A06, docs/proposals/LIFECYCLE_SPARKED_GATE_S367.md)."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "agent-geo-layer",
+      "axis": "aiIntegration",
+      "tier": "⚡",
+      "effortHours": 3,
+      "impact": 7,
+      "innovation": 6,
+      "title": "Make the site legible to answer engines and agents",
+      "why": "Root llms-full.txt is a 600-byte stub that llms.txt calls the source of truth; sitemap.xml has no lastmod; robots.txt blocks ClaudeBot, Claude-Web, anthropic-ai, Google-Extended and Perplexity and says nothing about search or user-fetch agents, so Claude and Perplexity answers cannot cite the studio (CANON-048).",
+      "outcome": "Answer engines can retrieve and cite current studio facts while training crawlers stay blocked.",
+      "recipe": "Generate llms-full.txt from the registry and public pages, add lastmod from git, add per-title VideoGame or SoftwareApplication and press NewsArticle JSON-LD, and (founder decision) allow retrieval agents such as Claude-SearchBot, Claude-User and Perplexity-User while keeping training crawlers disallowed.",
+      "premises": [
+        {
+          "claim": "robots.txt disallows ClaudeBot sitewide",
+          "adapter": "file-content",
+          "target": "robots.txt",
+          "pattern": "User-agent: ClaudeBot",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "lastmod and a generated llms-full.txt."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Plus JSON-LD per title and the robots split."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Plus an agents.json action backed by Ask the Vault."
+        }
+      },
+      "founderGated": true,
+      "priority": 14,
+      "evidence": {
+        "interpretation": "Root llms-full.txt is a 600-byte stub that llms.txt calls the source of truth; sitemap.xml has no lastmod; robots.txt blocks ClaudeBot, Claude-Web, anthropic-ai, Google-Extended and Perplexity and says nothing about search or user-fetch agents, so Claude and Perplexity answers cannot cite the studio (CANON-048).",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "slug": "post-merge-generated-drift",
+      "axis": "speed",
+      "tier": "💡",
+      "effortHours": 2,
+      "impact": 5,
+      "innovation": 5,
+      "title": "Regenerate derived feeds after scheduled publishers land",
+      "why": "Baseline after merging 149 publisher commits: public-intelligence drifted (step 28), the startup brief disagreed with the revenue resolver after the date rollover (step 60), and the canonical-destination receipt did not cover a new VaultFront URL (step 264). Each needed a hand repair before the gate could continue.",
+      "outcome": "A fresh checkout of main passes the build gate without hand regeneration.",
+      "recipe": "Have the publishers that skip CI hand off to a follow-up cascade workflow that rebuilds derived feeds and re-probes destinations; render the brief signal from the shared resolver at read time.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Document the three repairs as the cascade list."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Follow-up cascade workflow for skip-ci publishers."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Plus a fresh-clone gate in CI Health Monitor."
+        }
+      },
+      "founderGated": false,
+      "priority": 12.5,
+      "evidence": {
+        "interpretation": "Baseline after merging 149 publisher commits: public-intelligence drifted (step 28), the startup brief disagreed with the revenue resolver after the date rollover (step 60), and the canonical-destination receipt did not cover a new VaultFront URL (step 264). Each needed a hand repair before the gate could continue.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Observed again at /start: public-intelligence drift, brief revenue date after rollover, canonical-destination receipt missing a new URL, and stale visual/mobile receipts after scheduled Desk publishes."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "public-feed-exposure-trim",
+      "axis": "security",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 6,
+      "innovation": 3,
+      "title": "Stop publishing internal build and routing detail",
+      "why": "api/build-check-diagnostics.json, api/worker-route-provenance.json and 120 session-score files under audits/ are served publicly and describe internal setup.",
+      "outcome": "Public feeds carry only what visitors and agents need.",
+      "recipe": "Remove those paths from config/served-surface.json or replace them with public-safe summaries, after checking that no public page reads them.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Drop the two api files from the served surface."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Plus a summarized audits feed."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Plus a served-surface gate that blocks internal-shaped feeds."
+        }
+      },
+      "founderGated": false,
+      "priority": 12,
+      "evidence": {
+        "interpretation": "api/build-check-diagnostics.json, api/worker-route-provenance.json and 120 session-score files under audits/ are served publicly and describe internal setup.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "deferred",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Premise disproved: the flagged feeds are deliberate public proof linked from /evidence/, /status/ and agents.json, and contain no paths, hosts or IP addresses."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "prices-single-source",
+      "axis": "featureDepth",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 3,
+      "title": "Read every membership price from api/membership-tiers.json",
+      "why": "Prices are hard-coded in membership, press, terms, search and two asset scripts even though api/membership-tiers.json is meant to be the single source. Pricing is a public promise.",
+      "outcome": "A price change is one edit, and a gate fails if any page shows a different number.",
+      "recipe": "Render prices from the tiers feed at build time into marker blocks, keep prices themselves unchanged, and add a drift check.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Drift check that fails on any mismatch."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Generated price blocks on every surface."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Plus structured Offer JSON-LD generated from the same feed."
+        }
+      },
+      "founderGated": false,
+      "priority": 10.5,
+      "evidence": {
+        "interpretation": "Prices are hard-coded in membership, press, terms, search and two asset scripts even though api/membership-tiers.json is meant to be the single source. Pricing is a public promise.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "All printed per-month and per-year prices already matched the feed. Added the missing guard to check-content-coherence (runs live inside check-proof-surface): every $N/mo or $N/yr on membership, press, terms, search and home must be a feed price. Self-test 15/15 with negative controls."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "stale-test-fixtures",
+      "axis": "speed",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 5,
+      "innovation": 3,
+      "title": "Repair tests that assert superseded copy and counts",
+      "why": "Baseline 2026-10-01: navigation.spec expects 9 games (11 now), nav-dropdown-coverage expects an Oracle gold marker and \"Three minds\" copy that S-era nav changes removed, eternal-dispatch.spec asserts pre-S335 panel copy. Stale tests train people to ignore red.",
+      "outcome": "Every red test means a real defect.",
+      "recipe": "Derive counts from the registry, assert roles and links instead of decorative copy, and record intentional nav decisions in the spec comments.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Update the four assertions."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Registry-derived expectations."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Plus a nightly local-preview run of the extended tier."
+        }
+      },
+      "founderGated": false,
+      "priority": 10,
+      "evidence": {
+        "interpretation": "Baseline 2026-10-01: navigation.spec expects 9 games (11 now), nav-dropdown-coverage expects an Oracle gold marker and \"Three minds\" copy that S-era nav changes removed, eternal-dispatch.spec asserts pre-S335 panel copy. Stale tests train people to ignore red.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "navigation.spec derives the game count from the registry; nav-dropdown-coverage accepts the class-based Oracle promotion and a persona-count-agnostic Desk heading; eternal-dispatch asserts current copy; leaderboards.spec drops the retired global sub-page; desk-presence todo removed after fixing the duplicated \" avg\" suffix."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "dead-ends-and-titles",
+      "axis": "ux",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 2,
+      "title": "Fix dead links, orphaned pages and the leaderboard sub-page titles",
+      "why": "Live: /vault-member/settings/ returns 404 although the account chip links to it. /projects/scriptorium/, /projects/atlas/ and /games/gridiron-gm-play/ are reachable only from the sitemap. VEILOS is SPARKED with no project page. /leaderboards/global/ is titled \"Vault Leaderboard — Community Rankings\" (SEO test failure).",
+      "outcome": "No account-menu dead ends, every catalog item has a page, and each leaderboard sub-page ranks for its own query.",
+      "recipe": "Add an edge redirect /vault-member/settings/ to /vault-member/#settings, link the orphans from /projects/, add a VEILOS page from the registry template, and give each leaderboard sub-page its own title and description.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Settings redirect and leaderboard titles."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Plus orphan links and the VEILOS page."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Plus a crawler gate that fails on any internal 404 or orphan."
+        }
+      },
+      "founderGated": false,
+      "priority": 9.3,
+      "evidence": {
+        "interpretation": "Live: /vault-member/settings/ returns 404 although the account chip links to it. /projects/scriptorium/, /projects/atlas/ and /games/gridiron-gm-play/ are reachable only from the sitemap. VEILOS is SPARKED with no project page. /leaderboards/global/ is titled \"Vault Leaderboard — Community Rankings\" (SEO test failure).",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "/vault-member/settings/ now 301s to /vault-member/#settings, the account chip links there and the portal honours #<tab> deep links (admin only for admins). The /leaderboards/global/ \"failure\" was a stale test: that route was deliberately retired by a 301. Orphan project links and a VEILOS page remain."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "portal-engagement-loop",
+      "axis": "engagement",
+      "tier": "⚡",
+      "effortHours": 6,
+      "impact": 7,
+      "innovation": 7,
+      "title": "Turn the member dashboard into a loop",
+      "why": "Three onboarding systems overlap (tour, overlay, Complete-your-Vault checklist); there is no \"since your last visit\" view; panels have no feedback affordance; Season 1 ends 2026-10-14 with no visible rollover.",
+      "outcome": "Members see what changed, what to do next and that their feedback lands somewhere.",
+      "recipe": "Collapse onboarding into one Vault Initiation quest, add a since-last-visit delta panel from existing activity data, add a one-tap panel feedback control feeding the existing requests surface, and show the Season 2 countdown and rewards.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Season rollover banner and the delta panel."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Plus the unified quest and panel feedback."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Plus a personal weekly digest generated from the same data."
+        }
+      },
+      "founderGated": false,
+      "priority": 8.2,
+      "evidence": {
+        "interpretation": "Three onboarding systems overlap (tour, overlay, Complete-your-Vault checklist); there is no \"since your last visit\" view; panels have no feedback affordance; Season 1 ends 2026-10-14 with no visible rollover.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 14,
+      "slug": "admin-classified-server-side",
+      "axis": "security",
+      "tier": "⚡",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 4,
+      "title": "Stop shipping the admin pane and members-only lore in public HTML",
+      "why": "The Vault Command pane (pulse broadcast, key drop, file upload, member CSV export, investor requests) is in vault-member/index.html for every visitor, hidden only by a client-side username check in portal-auth.js. The \"Classified — Members Only\" lore is static HTML readable in view-source. The CSV export has no spreadsheet formula escaping.",
+      "outcome": "Operator tools and gated lore are delivered only after the server confirms the role.",
+      "recipe": "Move the admin pane markup behind the existing /vault-member/admin edge gate or an is_vault_admin() RPC, serve classified lore from an authenticated RPC, and prefix-escape =,+,-,@ in CSV cells.",
+      "premises": [
+        {
+          "claim": "Admin visibility is a client-side username comparison",
+          "adapter": "file-content",
+          "target": "vault-member/portal-auth.js",
+          "pattern": "=== 'vaultspark'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "CSV formula escaping and removal of lore text from static HTML."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Admin pane served only through the gated route; lore via RPC."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Admin actions audited with a signed receipt per action."
+        }
+      },
+      "founderGated": true,
+      "priority": 8,
+      "evidence": {
+        "interpretation": "The Vault Command pane (pulse broadcast, key drop, file upload, member CSV export, investor requests) is in vault-member/index.html for every visitor, hidden only by a client-side username check in portal-auth.js. The \"Classified — Members Only\" lore is static HTML readable in view-source. The CSV export has no spreadsheet formula escaping.",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 15,
+      "slug": "supabase-auth-hardening",
+      "axis": "security",
+      "tier": "⚡",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 3,
+      "title": "Close the Supabase auth gaps behind Obelisk",
+      "why": "supabase/config.toml enables anonymous sign-ins with captcha off although Obelisk is the only intended sign-in; streak_count, challenge_streak and rank_name are member-writable; the compatibility token is not refreshed client-side, so a tab left open past one hour silently loses data access.",
+      "outcome": "Progression cannot be self-edited, there is no side door into the data layer, and long-lived tabs recover their session.",
+      "recipe": "One migration through scripts/apply-supabase-migration.mjs (pre-image and probe) that revokes member writes to progression columns in favour of RPCs; disable anonymous sign-ins in the shared project after checking sibling consumers (Vorn, MindFrame) via Ark; refresh the compatibility session on focus and before expiry.",
+      "premises": [
+        {
+          "claim": "Anonymous sign-ins are enabled in the shared project config",
+          "adapter": "file-content",
+          "target": "supabase/config.toml",
+          "pattern": "enable_anonymous_sign_ins = true",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Refresh-on-focus for the compatibility session."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Plus the progression-column migration."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Plus anonymous sign-in shutdown coordinated with siblings."
+        }
+      },
+      "founderGated": true,
+      "priority": 8,
+      "evidence": {
+        "interpretation": "supabase/config.toml enables anonymous sign-ins with captcha off although Obelisk is the only intended sign-in; streak_count, challenge_streak and rank_name are member-writable; the compatibility token is not refreshed client-side, so a tab left open past one hour silently loses data access.",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Shipped the stale-tab fix: the compatibility token is renewed from the Obelisk edge five minutes before expiry and on tab focus; a revoked edge session signs the tab out (new unit test, 42/42). Progression-column migration and anonymous sign-in shutdown remain (approved)."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "slug": "ai-token-reduction",
+      "axis": "tokenCost",
+      "tier": "⚡",
+      "effortHours": 4,
+      "impact": 6,
+      "innovation": 5,
+      "title": "Cut model calls without lowering Desk or IGNIS quality",
+      "why": "Desk retries resend the whole conversation plus the previous reply; mechanical validation runs after the model rather than before a re-call; near-duplicate topics are authored; semantic-search has no response cache; the ask-ignis persona block (~300 tokens) is below the 1,024-token cache minimum, so prompt caching may never apply.",
+      "outcome": "Fewer and smaller calls per edition and per question, with before/after counts recorded.",
+      "recipe": "Retry with only the failed fields and the correction, run the cheap validators before re-calling, skip topics above a similarity threshold using the radar, reuse the ask-ignis SHA-256 response cache in semantic-search, merge stable prompt blocks so the cacheable prefix clears the minimum, and remove dead fallback model IDs after a catalog check.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Response cache for semantic-search and pre-call validation."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Plus field-only retries and duplicate-topic skip."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Plus a per-edition token ledger published on /stats/."
+        }
+      },
+      "founderGated": false,
+      "priority": 7.5,
+      "evidence": {
+        "interpretation": "Desk retries resend the whole conversation plus the previous reply; mechanical validation runs after the model rather than before a re-call; near-duplicate topics are authored; semantic-search has no response cache; the ask-ignis persona block (~300 tokens) is below the 1,024-token cache minimum, so prompt caching may never apply.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 17,
+      "slug": "ia-consolidation",
+      "axis": "ux",
+      "tier": "⚡",
+      "effortHours": 5,
+      "impact": 7,
+      "innovation": 5,
+      "title": "Merge redundant pages and duplicated sections",
+      "why": "The founding timeline appears four times (twice on /studio/, on /roadmap/ and the homepage fallback); How We Build and Studio OS are explained three times; /members/ and /member/ overlap; /atlas/ is a third rendering of the project inventory; the portal hard-codes the rank ladder, pipeline and benefits.",
+      "outcome": "Each fact lives in one place and other surfaces link or render from it; fewer, deeper pages.",
+      "recipe": "Keep one data-driven timeline on /studio/, make /how-we-build/ the single Studio OS explainer, merge /members/ and /member/ into /community/, retire /atlas/ into /oracle/ with 301s, and render portal rank and pipeline blocks from the shared data.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Remove the duplicate /studio/ timeline and redundant Studio OS sections."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Page merges with 301s and data-rendered portal blocks."
+        },
+        "L3": {
+          "effortHours": 7,
+          "recipe": "Plus an IA map published on /sitemap-page/ generated from the route registry."
+        }
+      },
+      "founderGated": false,
+      "priority": 7,
+      "evidence": {
+        "interpretation": "The founding timeline appears four times (twice on /studio/, on /roadmap/ and the homepage fallback); How We Build and Studio OS are explained three times; /members/ and /member/ overlap; /atlas/ is a third rendering of the project inventory; the portal hard-codes the rank ladder, pipeline and benefits.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 18,
+      "slug": "ask-the-vault",
+      "axis": "aiIntegration",
+      "tier": "💡",
+      "effortHours": 8,
+      "impact": 7,
+      "innovation": 8,
+      "title": "One grounded answer surface for humans and agents",
+      "why": "ask-ignis and semantic-search are two separate model endpoints with different caching and no shared grounding; agents have no action endpoint.",
+      "outcome": "Visitors and agents ask one endpoint and get cited answers from the registry, Desk and llms-full.",
+      "recipe": "Merge into one edge function grounded on the generated registry, Desk corpus and llms-full with citations, used by /search/ and declared as an agents.json action, with the existing cost cap.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Shared grounding corpus and citations in semantic-search."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "Unified endpoint plus agents.json action."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "Plus answer feedback that tunes retrieval."
+        }
+      },
+      "founderGated": false,
+      "priority": 7,
+      "evidence": {
+        "interpretation": "ask-ignis and semantic-search are two separate model endpoints with different caching and no shared grounding; agents have no action endpoint.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 19,
+      "slug": "vault-door-hero",
+      "axis": "innovation",
+      "tier": "💡",
+      "effortHours": 8,
+      "impact": 6,
+      "innovation": 9,
+      "title": "A signature scroll-driven Vault Door moment",
+      "why": "The brand promise is entry into something real; the hero is static text and tiles. A scroll-scrubbed vault opening per theme would be the memorable moment, as long as it stays off the LCP path.",
+      "outcome": "A distinctive first impression in all seven themes with no performance or accessibility cost.",
+      "recipe": "CSS scroll-driven animation with a lightweight canvas layer after first paint, disabled under prefers-reduced-motion, plus portal-style transitions into /universe/. Ship after the LCP fix and prove the floor still holds.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "CSS-only door reveal below the fold."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "Scroll-scrubbed scene per theme with motion fallback."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "Plus universe portal transitions and View Transitions between worlds."
+        }
+      },
+      "founderGated": true,
+      "priority": 6.8,
+      "evidence": {
+        "interpretation": "The brand promise is entry into something real; the hero is static text and tiles. A scroll-scrubbed vault opening per theme would be the memorable moment, as long as it stays off the LCP path.",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 20,
+      "slug": "public-copy-sweep",
+      "axis": "ux",
+      "tier": "⚡",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 2,
+      "title": "Remove stale and internal copy from public pages",
+      "why": "\"Four worlds playable. Nine more in the forge.\" (actual 6 and 14), the March \"Latest From The Forge\" teaser, \"backend infrastructure is coming online\", the outdated VPS/Docker/Caddy stack copy, visible session labels on /changelog/, two contradictory PromoGrind descriptions and \"Coming soon\" on six game pages.",
+      "outcome": "Visitors read only current, intended information.",
+      "recipe": "Correct or generate each line from the registry; route the six game-page copy decisions to the founder queue; add the strings to the existing voice-leak patrol.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Fix the factual lines."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Plus generated counts and voice-patrol coverage."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Plus a staleness gate on dated teasers."
+        }
+      },
+      "founderGated": false,
+      "priority": 6,
+      "evidence": {
+        "interpretation": "\"Four worlds playable. Nine more in the forge.\" (actual 6 and 14), the March \"Latest From The Forge\" teaser, \"backend infrastructure is coming online\", the outdated VPS/Docker/Caddy stack copy, visible session labels on /changelog/, two contradictory PromoGrind descriptions and \"Coming soon\" on six game pages.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-10-01",
+          "note": "Removed visible session labels from /changelog/ (and from both generators), corrected the homepage no-JS milestone and \"Latest From The Forge\" heading, and rewrote /roadmap/ \"What's Coming\" (backend already live; VaultFront no longer carries an unfounded 2026 launch promise)."
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "slug": "new-and-renovated-pages",
+      "axis": "featureDepth",
+      "tier": "⚡",
+      "effortHours": 10,
+      "impact": 8,
+      "innovation": 7,
+      "title": "Add the pages a leading indie studio site has, and renovate the stale ones",
+      "why": "Missing: a team page, per-game press kits with screenshots and a downloadable zip, a where-to-play hub, and a newsletter and Desk archive. Stale: /roadmap/ still promises \"Backend Goes Live\" and \"VaultFront Launch 2026\" and calls a vaulted game live; /careers/ has no roles or action; /changelog/ ends on Jul 16 and shows session labels.",
+      "outcome": "Press, players and partners each find a complete, current destination.",
+      "recipe": "Build /play/, /dispatch/ and generated per-game press kits from the registry; renovate /roadmap/ as data-driven Now/Next/Later, /careers/ as an honest collaborate form, and /changelog/ as generated with jargon stripped. /team/ needs a founder decision on identity exposure (CANON-028).",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Renovate /roadmap/ and /changelog/ from data."
+        },
+        "L2": {
+          "effortHours": 10,
+          "recipe": "Plus /play/, /dispatch/ and press kits."
+        },
+        "L3": {
+          "effortHours": 14,
+          "recipe": "Plus /team/ and a media gallery with trailer embeds."
+        }
+      },
+      "founderGated": true,
+      "priority": 5.6,
+      "evidence": {
+        "interpretation": "Missing: a team page, per-game press kits with screenshots and a downloadable zip, a where-to-play hub, and a newsletter and Desk archive. Stale: /roadmap/ still promises \"Backend Goes Live\" and \"VaultFront Launch 2026\" and calls a vaulted game live; /careers/ has no roles or action; /changelog/ ends on Jul 16 and shows session labels.",
+        "limitations": "Founder-gated: escalate before shipping (AGENTS.md)."
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 22,
+      "slug": "shell-asset-dedupe",
+      "axis": "speed",
+      "tier": "💡",
+      "effortHours": 4,
+      "impact": 5,
+      "innovation": 4,
+      "title": "Stop tracking duplicate shell assets and minify them",
+      "why": "41 tracked *.shell-<hash> copies sit beside identical sources (style.css and its shell are both 205 KB) and none are minified.",
+      "outcome": "Smaller deploys and fewer bytes per visitor.",
+      "recipe": "Emit hashed shells at build time and minify them, done last in the session because it changes every page head and every hash-bound receipt.",
+      "premises": [],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Minify the shell assets."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Build-emitted shells instead of tracked copies."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Plus per-route CSS splitting."
+        }
+      },
+      "founderGated": false,
+      "priority": 5,
+      "evidence": {
+        "interpretation": "41 tracked *.shell-<hash> copies sit beside identical sources (style.css and its shell are both 205 KB) and none are minified.",
+        "limitations": "None beyond normal release gates."
+      },
+      "status": "pending",
+      "executionLog": []
+    }
+  ],
+  "totals": {
+    "count": 22,
+    "priority": 221.2,
+    "top3": [
+      "signup-door-invite-only",
+      "csp-nonce-hmac",
+      "real-login-e2e-staging"
+    ]
+  },
+  "innovationReserve": [
+    "vault-door-hero",
+    "ask-the-vault"
+  ],
+  "rejectedCandidates": [
+    "Moving the data plane to the shared box: cost-neutral on the free tier and touches live accounts (D-S344.2).",
+    "Lowering any Lighthouse floor to clear promotion: floors stay unchanged by standing decision."
+  ]
+}

@@ -1,6 +1,16 @@
 # Current State
 
-Last updated: 2026-10-01 UTC (post-S366; Desk archive release)
+Last updated: 2026-10-01 UTC (S367 whole-site audit)
+
+## S367 — Whole-site audit, canon-true statuses, login and email hardening (2026-10-01)
+
+Whole-site audit `docs/AUDIT_2026-10-01.{json,md}` (22 ranked items, baseline test results) covers every public page, the portal, login, email, AI, security, speed and token cost.
+
+- **Statuses follow studio-ops canon.** Founder ruling: Call of Doodie, PromoGrind and Velaxis are FORGE. The "deployed on our domain means SPARKED" override in `generate-public-intelligence` is gone. Fixed: hub mirror, game registry, homepage tiers, hero, /games/ (stat strip now derived from the registry), game and project pages, /roadmap/, /press/, /sitemap-page/ and /projects/. Playable FORGE games show "Playable Beta" and keep their Play CTA. A derive-game-index bug that duplicated the slug tail on reordered cards is fixed and self-tested.
+- **Signup door.** Obelisk production enrolment is invite-only (403 `signup-token-required`). /vault-member/ now says so and links /contact/ for an invite. Ark repo-question to Obelisk asks to reopen.
+- **Security and login.** HTML CSP nonce is an HMAC under a key the client never sees (takes effect on next Worker deploy). The compatibility data token renews from the Obelisk edge before expiry and on focus; a revoked edge session signs the tab out. `/vault-member/settings/` 301s to the settings tab, which portal deep links now open.
+- **Truth gates.** `check-content-coherence` now fails on any printed per-month or per-year price the tier feed does not offer. Stale tests repaired; Desk presence "avg avg" fixed.
+- **Lifecycle.** Proposal to redefine FORGE/SPARKED/VAULTED and the SPARKED launch gate shipped to studio-ops (`docs/proposals/LIFECYCLE_SPARKED_GATE_S367.md`, Ark `01K3SJ87V2E1476FF1FE837A06`).
 
 ## Post-S366 — News archive live (2026-10-01)
 

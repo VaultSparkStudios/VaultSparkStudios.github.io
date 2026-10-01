@@ -38,13 +38,17 @@ test.describe('Header nav dropdown coverage (S136)', () => {
     await expect(oracleLink).toBeAttached();
     const styled = await oracleLink.evaluate((el) => {
       const style = el.getAttribute('style') || '';
+      // S367: promotion moved from inline style to the .dropdown-link-intel class (CSP).
+      const cs = getComputedStyle(el);
       return {
+        classed: el.classList.contains('dropdown-link-intel'),
+        computedBold: Number(cs.fontWeight) >= 600,
         gold: /#FFC400|color:[^;]*gold/i.test(style),
         bold: /font-weight\s*:\s*[67]00/i.test(style),
         marker: /⚡/.test(el.textContent || ''),
       };
     });
-    expect(styled.gold || styled.bold || styled.marker,
+    expect(styled.classed || styled.computedBold || styled.gold || styled.bold || styled.marker,
       `Oracle should be visually promoted in nav (style: ${JSON.stringify(styled)})`).toBe(true);
   });
 
@@ -68,6 +72,6 @@ test.describe('Header nav dropdown coverage (S136)', () => {
     await expect(headerLink).toBeVisible();
     await headerLink.click();
     await expect(page).toHaveURL(/\/news\/$/);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Three minds');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/minds\./i); // the persona count changes as the Desk grows
   });
 });

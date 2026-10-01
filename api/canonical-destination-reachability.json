@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-01T20:36:18.389Z",
+  "generatedAt": "2026-10-01T22:33:20.510Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
     "path": "api/ecosystem-state.json",
     "generatedBy": "scripts/build-public-ecosystem.mjs",
-    "digest": "c73cd2eacc6858772ac3201883b754c328ce7efe52b1580a6f5effb92d4dfe91"
+    "digest": "da5f8c6b6f0de18d11b3496111597ed9221ab95b0c4f08afc0176eb92fad87e0"
   },
   "sampling": {
     "deterministic": true,
@@ -17,13 +17,30 @@
   },
   "counts": {
     "total": 12,
-    "passed": 10,
+    "passed": 11,
     "failed": 0,
-    "unknown": 2,
-    "longestUnknownStreak": 336,
-    "neverKnownGood": 2
+    "unknown": 1,
+    "longestUnknownStreak": 337,
+    "neverKnownGood": 1
   },
   "results": [
+    {
+      "slug": "atlas",
+      "destination": "https://atlasaipaths.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
+      "lastKnownGoodAgeHours": 0
+    },
     {
       "slug": "call-of-doodie",
       "destination": "https://callofdoodie.wtf/",
@@ -38,7 +55,24 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "envolt",
+      "destination": "https://envoltmail.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +89,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +106,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +123,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -106,7 +140,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -123,7 +157,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -134,7 +168,7 @@
       "attemptCount": 2,
       "attempts": [
         {
-          "status": 403,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         },
@@ -144,7 +178,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 336,
+      "unknownStreak": 337,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
@@ -162,7 +196,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -179,7 +213,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -196,47 +230,8 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
+      "lastKnownGoodAt": "2026-10-01T22:33:20.510Z",
       "lastKnownGoodAgeHours": 0
-    },
-    {
-      "slug": "syntha",
-      "destination": "https://syntha.music/",
-      "verdict": "passed",
-      "reason": "response-reached",
-      "attemptCount": 1,
-      "attempts": [
-        {
-          "status": 200,
-          "redirected": false,
-          "outcome": "reachable"
-        }
-      ],
-      "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-01T20:36:18.389Z",
-      "lastKnownGoodAgeHours": 0
-    },
-    {
-      "slug": "vaultfront",
-      "destination": "https://vaultfront.io/",
-      "verdict": "unknown",
-      "reason": "transient-or-blocked",
-      "attemptCount": 2,
-      "attempts": [
-        {
-          "status": 503,
-          "redirected": false,
-          "outcome": "unknown"
-        },
-        {
-          "status": 503,
-          "redirected": false,
-          "outcome": "unknown"
-        }
-      ],
-      "unknownStreak": 336,
-      "lastKnownGoodAt": null,
-      "lastKnownGoodAgeHours": null
     }
   ],
   "note": "A failed verdict requires two 404/410 responses. Timeouts, access blocks, rate limits, and server errors remain unknown rather than being mislabeled dead. unknownStreak counts consecutive inconclusive runs and lastKnownGoodAt records the last confirmed reach; neither converts an unknown into a pass or a failure."

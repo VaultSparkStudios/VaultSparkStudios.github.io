@@ -35,7 +35,7 @@
     }
   },
   "totals": {
-    "publicProjects": 21,
+    "publicProjects": 22,
     "audienceMeasuredProjects": 7,
     "edgeMeasuredProjects": 16,
     "humanPageLoads30": {
@@ -66,9 +66,9 @@
     "unmappedHosts30": [],
     "activeZonesAccessible": 29,
     "registryComplete": true,
-    "publicProjects": 21,
-    "audienceProjectCoveragePct": 33,
-    "edgeProjectCoveragePct": 76,
+    "publicProjects": 22,
+    "audienceProjectCoveragePct": 32,
+    "edgeProjectCoveragePct": 73,
     "feedCoverageNote": "Project-specific Analytica Feed v1 coverage is independent from Cloudflare audience and edge coverage and must not be merged into one flattering percentage."
   },
   "projects": [
@@ -418,7 +418,7 @@
       "name": "The Living Protocol",
       "medium": "app",
       "vaultStatus": "forge",
-      "health": "S354 focused source tests pass; stable-tree verification and full release gates pending. Standing device, Apple, database-owner and hosted-runner budget blockers remain.",
+      "health": "S356: 3,377/3,377 product tests, unchanged coverage thresholds and denominators, verified scripts, lint/typecheck and nonfallback doctor (169 checks, 0 blocking) passed. Runtime still S354.",
       "liveUrl": "https://thelivingprotocol.life",
       "measurementState": "audience-and-edge",
       "zones": [
@@ -659,7 +659,7 @@
       "medium": "product",
       "vaultStatus": "forge",
       "health": "yellow",
-      "liveUrl": null,
+      "liveUrl": "https://atlasaipaths.com",
       "measurementState": "edge-only",
       "zones": [
         "atlasaipaths.com"
@@ -676,6 +676,25 @@
         "cachedRequests": 124,
         "bytes": 19927724,
         "threats": 55
+      }
+    },
+    {
+      "slug": "envolt",
+      "name": "Envolt Mail",
+      "medium": "platform",
+      "vaultStatus": "forge",
+      "health": "yellow",
+      "liveUrl": "https://envoltmail.com",
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
       }
     }
   ],

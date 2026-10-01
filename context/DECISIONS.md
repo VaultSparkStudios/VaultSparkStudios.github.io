@@ -1990,3 +1990,24 @@ A staging receipt can name a recent commit while older receiver rules withheld p
 ## 2026-10-01 — Keep the News hub compact and preserve complete monthly archives
 
 The 89-story corpus pushed `/news/` past its 200 KiB HTML budget. The hub now renders the seven most recent published editions and links an archive index with complete month pages; individual article and persona URLs stay stable. Archive checks cover all 89 nonsuperseded story links and page-size limits. The resulting hub is 92,390 source bytes. Production used the same reviewed content-only overlay as the persona release, with all 147 prior paths included in its 153-path scope; neither the archive nor the release alters the held full-site identity/provider gate. A future month-rollover fixture is tracked on TASK_BOARD.
+
+
+## D-S367.1 — Website vault status derives from studio-ops canon only
+
+Founder ruling: Call of Doodie, PromoGrind and Velaxis are FORGE. The catalog's "deployed on our domain means SPARKED" override is removed; being reachable is not being announced (CANON-052 single write path). A FORGE game the game registry marks playable keeps its Play CTA and is labelled "Playable Beta".
+
+## D-S367.2 — Honest signup copy while Obelisk enrolment is invite-only
+
+Live probe: `/auth/registration-options` answers 403 `signup-token-required`, so D-S343.2's "open enrolment" no longer holds. The register panel says enrolment is invite-led and links /contact/ for an invite until Obelisk answers Ark `01K3SH847CF5020D9D7209EB07`.
+
+## D-S367.3 — The HTML CSP nonce is keyed
+
+The nonce was derivable from the clock while the policy used strict-dynamic. It is now HMAC-SHA256 of the 300-second window under `CSP_NONCE_KEY` or a per-isolate random key; the window and edge cache are unchanged.
+
+## D-S367.4 — Compatibility tokens renew from the edge, never from GoTrue
+
+Tabs open past one hour lost data access. The client re-asks `/api/auth/session` five minutes before expiry and on focus; a 401 signs the tab out, so renewal can never outlive the Obelisk session.
+
+## D-S367.5 — Lifecycle redefinition proposed to studio-ops
+
+Founder direction: FORGE covers in development, unannounced and beta; SPARKED is finished and announced, with a launch kit, multi-channel announcement and an armed posting cadence. Proposal `docs/proposals/LIFECYCLE_SPARKED_GATE_S367.md` (Ark `01K3SJ87V2E1476FF1FE837A06`); canon changes stay with studio-ops.

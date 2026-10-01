@@ -1,4 +1,16 @@
 # Latest Handoff
+## Where We Left Off — S367 · 2026-10-01 UTC
+
+**Outcome:** Founder-requested whole-site audit with a baseline test sweep, then the security-and-truth core. `docs/AUDIT_2026-10-01.{json,md}` holds 22 ranked items with statuses and execution logs; founder approved all gated areas for later sessions.
+
+**Shipped (local, pending deploy):** canon-true statuses everywhere (Call of Doodie, PromoGrind, Velaxis are FORGE; playable FORGE games labelled "Playable Beta"); HMAC CSP nonce; edge-side compatibility token renewal; settings dead link fixed; price coherence guard; public copy sweep; derive-game-index corruption fix; mobile hero badge overlap fix; Desk presence "avg avg" fix; stale tests repaired.
+
+**Found and routed:** Obelisk production enrolment is invite-only, so strangers cannot join; /vault-member/ now says so and Obelisk was asked via Ark to reopen. Lifecycle redefinition (FORGE includes beta; SPARKED = finished, announced, with a launch kit and posting cadence) shipped to studio-ops.
+
+**Blocked:** real-login E2E needs an Obelisk test identity; the Sparked-renders-as-free test failure needs an authorized read of the test subscription. Homepage Lighthouse item closed on fresh evidence (three hosted passes on 2026-10-01).
+
+**Next:** Worker deploy for the nonce; observe Ark replies; continue the audit's pending items in plan order.
+
 ## Post-S366 Desk archive release · 2026-10-01 UTC
 
 PR #134 merged as `f338ade085`; its 153-path archive release passed hosted checks and staging/production parity. The hub remains below 200 KiB and now links August, September and October archives with all 90 stories. A later scheduled publisher succeeded but its release failed on an unreachable staging commit; a recovery exposed 24 missing Desk allowlist paths, and the next recovery found an October archive absent from staging. Main fixes `584d86957`, `eb94a31aa` and `5ded8c0de` expanded the shared allowlist, use an ancestral production fallback, restage the full candidate slice, and keep held Pages runs from finalizing. The root-owned staging receiver rules were updated from the reviewed config with a rollback copy retained. Recovery workflow `36835514861` and child Pages run `36835622726` passed. Production head `285acb9eca4deca8fec78502e860063469f8aa80` matched 159/159 candidate paths, including all 153 preceding paths. The canonical hub, October archive/story and REX/MICA profiles returned 200; desktop/mobile browser smoke passed. Full-site identity/provider promotion remains held. Next: observe a successful scheduled publisher-to-release run after the fix, and add a month-rollover fixture and explicit prior-overlay set check.

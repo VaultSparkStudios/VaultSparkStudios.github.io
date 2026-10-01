@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-52b44bbd326da400';
+const CACHE_NAME = 'vaultspark-shell-689de6dd1f5765bd';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -20,12 +20,12 @@ const MAX_PAGE_ENTRIES = 60;
 const PAGE_CACHE = CACHE_NAME + '-pages';
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-0fa853d549.css',
+  '/assets/style.shell-539ca122bd.css',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/nav-sheet.shell-d6938be4eb.js',
-  '/assets/supabase-client.shell-dfcab21788.js',
+  '/assets/supabase-client.shell-bd7ccf3b3d.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/home-idle-loader.shell-15b061f5c6.js',
@@ -33,7 +33,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
-  '/assets/desk-presence.shell-3dc76e3a40.js',
+  '/assets/desk-presence.shell-b33c76422e.js',
   '/assets/desk-comments.shell-2ae95371be.js',
   '/assets/hero-ticker.shell-550971e267.js',
   '/assets/public-intelligence.shell-c86a6ecc39.js',
@@ -107,7 +107,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-0fa853d549.css',
+  '/assets/style.shell-539ca122bd.css',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/ambient-core.shell-1732d293f8.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',

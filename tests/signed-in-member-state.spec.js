@@ -1,8 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
 async function mockIdentity(page, authenticated) {
+  // S367: the live edge answers an anonymous /api/auth/me with 200 {ok:true, identity:null}
+  // (verified against production), not 401 — mock the real contract.
   await page.route('**/api/auth/me', (route) => route.fulfill({
-    status: authenticated ? 200 : 401,
+    status: 200,
     contentType: 'application/json',
     body: JSON.stringify(authenticated ? {
       ok: true,
@@ -13,7 +15,7 @@ async function mockIdentity(page, authenticated) {
         email: 'member@example.test',
         name: 'Browser Proof',
       },
-    } : { ok: false, code: 'not_authenticated' }),
+    } : { ok: true, identity: null }),
   }));
 }
 

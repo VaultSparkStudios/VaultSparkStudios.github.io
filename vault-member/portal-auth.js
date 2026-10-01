@@ -323,9 +323,13 @@
       if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
       if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); loadAdminPolls(); }
 
-      // Restore active tab from last session
+      // A #<tab> deep link (e.g. the account chip's #settings) wins over the
+      // remembered tab; admin is never deep-linkable for non-admins.
+      const hashTab = (window.location.hash || '').slice(1);
+      const deepTab = hashTab && document.getElementById('tab-dash-' + hashTab) && (hashTab !== 'admin' || isAdmin) ? hashTab : null;
       const savedTab = localStorage.getItem('vs_active_tab');
-      if (savedTab && savedTab !== 'dashboard') switchDashTab(savedTab);
+      if (deepTab) switchDashTab(deepTab);
+      else if (savedTab && savedTab !== 'dashboard') switchDashTab(savedTab);
 
       // What's New modal — check for unread Studio Pulse entries
       setTimeout(() => checkWhatsNew(), 2500);
