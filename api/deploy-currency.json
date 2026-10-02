@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-10-02T05:40:40.184Z",
+  "generatedAt": "2026-10-02T06:20:44.595Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -13,19 +13,19 @@
       "/ → fingerprinted shell paths"
     ]
   },
-  "state": "behind",
-  "observedAt": "2026-10-02T05:40:40.184Z",
+  "state": "stale",
+  "observedAt": "2026-10-02T06:20:44.595Z",
   "observedOrigin": "multi-vantage-quorum",
-  "deployedSha": "fda14f325a35629b9fcecc71119ea700c728ee3b",
-  "deployedShaShort": "fda14f325a35",
-  "repoTipShaShort": "70245149205c",
-  "commitsBehind": 34,
-  "deployedCommitAt": "2026-10-01T22:11:25.000Z",
-  "ageHours": 7,
+  "deployedSha": "c46f22fa36d52901e505f2a99433cef9276fbbd0",
+  "deployedShaShort": "c46f22fa36d5",
+  "repoTipShaShort": "230ea7d6d10d",
+  "commitsBehind": 293,
+  "deployedCommitAt": "2026-09-29T21:09:14.000Z",
+  "ageHours": 56.5,
   "undeployedContentCommits": 2,
   "oldestUndeployedContentAt": "2026-10-01T18:54:33-04:00",
-  "contentLagHours": 6.8,
-  "ageDays": 0.3,
+  "contentLagHours": 7.4,
+  "ageDays": 2.4,
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48,
@@ -42,18 +42,22 @@
   },
   "retainedForHours": null,
   "quorum": {
-    "state": "agreed",
+    "state": "overlay-agreed",
     "required": 2,
-    "agreementCount": 2,
-    "observedAt": "2026-10-02T05:40:40.184Z",
-    "agreedShaShort": "fda14f325a35",
-    "agreedSha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
+    "agreementCount": 1,
+    "observedAt": "2026-10-02T06:20:44.595Z",
+    "agreedShaShort": "c46f22fa36d5",
+    "agreedSha256": "228108acd0de11a5caee627d37370ed60482d0112bdf24f2cdced672a65ff80b",
+    "contentLaneHeadShort": "fda14f325a35",
+    "contentLaneHeadSha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
+    "contentLanePathSetSha256": "f4aceddfcd1b7ecd5318ab7eb95a52b214da7c88455d555d89b7396b09add67b",
+    "interpretation": "provider baseline plus workflow-attested content overlay",
     "evidence": [
       {
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-10-02T05:40:40.184Z",
+        "observedAt": "2026-10-02T06:20:44.595Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +71,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-10-02T05:40:40.212Z",
+        "observedAt": "2026-10-02T06:20:44.619Z",
         "shaShort": "c46f22fa36d5",
         "sha256": "228108acd0de11a5caee627d37370ed60482d0112bdf24f2cdced672a65ff80b",
         "httpStatus": 200,
@@ -81,7 +85,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-10-02T05:40:40.214Z",
+        "observedAt": "2026-10-02T06:20:44.620Z",
         "shaShort": "fda14f325a35",
         "sha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
         "httpStatus": 200,
@@ -94,13 +98,13 @@
       {
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
-        "state": "observed",
-        "observedAt": "2026-10-02T05:40:40.215Z",
-        "shaShort": "fda14f325a35",
-        "sha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
+        "state": "unobserved",
+        "observedAt": "2026-10-02T06:20:44.621Z",
+        "shaShort": null,
+        "sha256": null,
         "httpStatus": 200,
-        "reason": null,
-        "evidenceIdSha256": "21f614affcaa4c1c0f592f5f539c07d36c6e394a9ebf1225e98021e6d49e2bbf",
+        "reason": "no-successful-deploy-step",
+        "evidenceIdSha256": null,
         "contentLaneHeadShort": null,
         "contentLaneHeadSha256": null,
         "contentLanePathSetSha256": null
@@ -108,13 +112,13 @@
     ],
     "disagreements": [
       {
-        "shaShort": "fda14f325a35",
-        "sha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
-        "count": 2
-      },
-      {
         "shaShort": "c46f22fa36d5",
         "sha256": "228108acd0de11a5caee627d37370ed60482d0112bdf24f2cdced672a65ff80b",
+        "count": 1
+      },
+      {
+        "shaShort": "fda14f325a35",
+        "sha256": "4e441e4cfde9c04208e6cd131b0564ad65848f543ae798048cbc9f1631ccb98b",
         "count": 1
       }
     ]
@@ -122,7 +126,7 @@
   "shellParity": {
     "state": "drift",
     "route": "/",
-    "observedAt": "2026-10-02T05:40:40.184Z",
+    "observedAt": "2026-10-02T06:20:44.595Z",
     "expectedFrom": "7f918873c690afcb8eb82e93615e07cda3d003a8b07cd1640d84da16d457a929",
     "supersededBy": null,
     "ageHours": 0,
