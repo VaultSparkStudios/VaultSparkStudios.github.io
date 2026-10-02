@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-02T16:36:42.286Z",
+  "generatedAt": "2026-10-02T20:31:11.931Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
     "path": "api/ecosystem-state.json",
     "generatedBy": "scripts/build-public-ecosystem.mjs",
-    "digest": "da5f8c6b6f0de18d11b3496111597ed9221ab95b0c4f08afc0176eb92fad87e0"
+    "digest": "0ec83eb3ed72da4d58971f4140f84021cc22c9520055cb7505c0a5e69f5ba3c5"
   },
   "sampling": {
     "deterministic": true,
@@ -17,10 +17,10 @@
   },
   "counts": {
     "total": 12,
-    "passed": 11,
-    "failed": 0,
+    "passed": 10,
+    "failed": 1,
     "unknown": 1,
-    "longestUnknownStreak": 349,
+    "longestUnknownStreak": 350,
     "neverKnownGood": 1
   },
   "results": [
@@ -38,7 +38,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +55,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +72,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +89,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -106,7 +106,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -123,25 +123,30 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "mindframe",
-      "destination": "https://usemindframe.com/",
-      "verdict": "passed",
-      "reason": "response-reached",
-      "attemptCount": 1,
+      "destination": "https://steadfast-determination-production.up.railway.app/",
+      "verdict": "failed",
+      "reason": "confirmed-not-found",
+      "attemptCount": 2,
       "attempts": [
         {
-          "status": 200,
+          "status": 404,
           "redirected": false,
-          "outcome": "reachable"
+          "outcome": "not-found"
+        },
+        {
+          "status": 404,
+          "redirected": false,
+          "outcome": "not-found"
         }
       ],
       "unknownStreak": 0,
       "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
-      "lastKnownGoodAgeHours": 0
+      "lastKnownGoodAgeHours": 3.9
     },
     {
       "slug": "promogrind",
@@ -157,7 +162,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -168,7 +173,7 @@
       "attemptCount": 2,
       "attempts": [
         {
-          "status": 403,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         },
@@ -178,7 +183,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 349,
+      "unknownStreak": 350,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
@@ -196,7 +201,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -213,7 +218,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -230,7 +235,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-02T16:36:42.286Z",
+      "lastKnownGoodAt": "2026-10-02T20:31:11.931Z",
       "lastKnownGoodAgeHours": 0
     }
   ],

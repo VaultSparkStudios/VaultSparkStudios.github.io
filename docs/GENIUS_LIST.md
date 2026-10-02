@@ -1,16 +1,16 @@
-# Genius Hit List — Session 367
+# Genius Hit List — Session 368
 
-Generated: 2026-10-01
+Generated: 2026-10-02
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
-- Current SIL: **948/1000**
+- Current SIL: **954/1000**
 - CI health: **check gh run list**
-- Current focus: S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses now follow studio-ops canon, HMAC CSP nonce, edge-side session renewal, price guard and copy sweep; deploy pending.
+- Current focus: S368 full audit refresh implemented (docs/AUDIT_2026-10-02): membership truth (Free / VaultSparked $4.99 / VaultSparked Eternal $29.99), Season 1 repair live, invite-led doors, registry-driven statuses, 12 page merges and new /play/ /dispatch/ /collaborate/ /api/, Ask the Vault, Desk personas and signup.
 
 ## Strategic Read
 
@@ -22,79 +22,81 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + staging test …
-Final score: **100**
-[S367][AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + staging test identity → restore copy, build passkey login E2E.
-Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + staging test i shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle reply; deploy Worker (HMAC n…
+#### 2. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
 Final score: **93**
-[S367][P1] Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle reply; deploy Worker (HMAC nonce); diagnose Sparked-as-free test member.
-Why it matters: Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle reply; deploy Worker (HMAC no is open, local, and unblocked — can ship this session.
+[P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
+Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Rest of AUDIT_2026-10-01.
+#### 3. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
 Final score: **90**
-[S367][P2] Rest of AUDIT_2026-10-01.
-Why it matters: Rest of AUDIT_2026-10-01. is open, local, and unblocked — can ship this session.
-
-### NEXT
-
-#### 1. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
-Final score: **87**
 [DESK/RELEASE/P2] Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
 Why it matters: Observe the next scheduled publisher-to-release trigger after the Octo is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
-Final score: **84**
+#### 4. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+Final score: **87**
 [DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **78**
+### NEXT
+
+#### 1. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+Final score: **86**
+[AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
+Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 368-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 2. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
+Final score: **81**
 [QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
 Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **75**
+#### 3. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
+Final score: **78**
 [S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **71**
+#### 4. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
+Final score: **74**
 [DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
-Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 367-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 368-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
+#### 5. [VERIFY] Make staging deployment regenerate its continuity summary before a re…
+Final score: **72**
+[S365][CI/P2] Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
+Why it matters: Make staging deployment regenerate its continuity summary before a rel was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
 ### LATER
 
-#### 1. [VERIFY] Make staging deployment regenerate its continuity summary before a re…
+#### 1. [VERIFY] Watch the next three article Lighthouse runs for stability at the unc…
 Final score: **69**
-[S365][CI/P2] Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
-Why it matters: Make staging deployment regenerate its continuity summary before a rel was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Watch the next three article Lighthouse runs for stability at the unc…
-Final score: **66**
 [S365][PERF/P3] Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
-Why it matters: Watch the next three article Lighthouse runs for stability at the unch was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: Watch the next three article Lighthouse runs for stability at the unch was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 3. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
-Final score: **66**
+#### 2. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
+Final score: **69**
 [S365][OPS/P2] Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs --allow-wipe; keep unarchived deletion blocking.
 Why it matters: Teach the closeout wipe guard to recognize a byte-preserving work-log  is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Decode literal HTML entities in a few older Desk source-receipt excer…
+Final score: **63**
+[S365][DESK/P3] Decode literal HTML entities in a few older Desk source-receipt excerpts (&#x27;, &#8217;), then regenerate and visually verify those pages. The S365 post-edition visual matrix exposed the artifacts in mobile source cards.
+Why it matters: Decode literal HTML entities in a few older Desk source-receipt excerp was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
+
+First command: `npm run build:check`
 
 ### DEFERRED / GATED
 
@@ -140,18 +142,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + staging test …
-2. Post-push CI confirmation
-3. Ark 01K3SJ87V2E1476FF1FE837A06 lifecycle reply; deploy Worker (HMAC n…
-4. Rest of AUDIT_2026-10-01.
-5. Observe the next scheduled publisher-to-release trigger after the Oct…
-6. Add a generated-fixture check for month rollover so a future edition …
-7. Review measured Linux screenshots before refreshing visual-regression…
-8. Track growth of the Desk overlay from the production baseline; arrang…
-9. Verify prior-overlay path preservation automatically before scoped Pa…
-10. Make staging deployment regenerate its continuity summary before a re…
-11. Watch the next three article Lighthouse runs for stability at the unc…
-12. Teach the closeout wipe guard to recognize a byte-preserving work-log…
+1. Post-push CI confirmation
+2. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+3. Observe the next scheduled publisher-to-release trigger after the Oct…
+4. Add a generated-fixture check for month rollover so a future edition …
+5. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+6. Review measured Linux screenshots before refreshing visual-regression…
+7. Track growth of the Desk overlay from the production baseline; arrang…
+8. Verify prior-overlay path preservation automatically before scoped Pa…
+9. Make staging deployment regenerate its continuity summary before a re…
+10. Watch the next three article Lighthouse runs for stability at the unc…
+11. Teach the closeout wipe guard to recognize a byte-preserving work-log…
+12. Decode literal HTML entities in a few older Desk source-receipt excer…
 
 ## Best Immediate Move
 
