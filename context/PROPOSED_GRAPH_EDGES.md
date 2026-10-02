@@ -10,16 +10,11 @@
 
 | Confirm? | From | To | Shared theme | Suggested type |
 |---|---|---|---|---|
-| `[ ]` | MindFrame (`mindframe`) | Velaxis (`velaxis`) | intelligence | `builds-on` |
-| `[ ]` | PromoGrind (`promogrind`) | Seamline (`seamline`) | creator | `sibling` |
-| `[ ]` | PromoGrind (`promogrind`) | SparkRaid (`sparkraid`) | creator | `sibling` |
-| `[ ]` | Solara (`solara`) | The Exodus (`the-exodus`) | survival | `shares-universe` |
-| `[ ]` | Solara (`solara`) | VaultFront (`vaultfront`) | survival | `shares-universe` |
+| `[ ]` | Hashmark (`hashmark`) | Gridiron GM (`gridiron-gm`) | sports | `sibling` |
 | `[ ]` | SparkRaid (`sparkraid`) | Seamline (`seamline`) | creator | `sibling` |
-| `[ ]` | VaultFront (`vaultfront`) | The Exodus (`the-exodus`) | survival | `shares-universe` |
 | `[ ]` | Vorn (`vorn`) | Concurrent (`concurrent`) | agent | `builds-on` |
 
 To confirm an edge, add `{ from: "<from>", to: "<to>", type: "<type>", label: "<short label>" }`
 to `PROJECT_EDGES` in `scripts/generate-public-intelligence.mjs`, then rebuild.
 
-<!-- generated-at: 2026-10-01T22:05:34.089Z · 8 candidate(s) -->
+<!-- generated-at: 2026-10-02T20:21:53.326Z · 3 candidate(s) -->

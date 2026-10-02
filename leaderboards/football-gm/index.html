@@ -77,7 +77,7 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
@@ -159,6 +159,7 @@
           <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
+          <a href="/games/voidfall/">Voidfall</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
@@ -392,21 +393,24 @@
         }
       }
       var all=[];
+      var memberTotal=0;
       var activeFilter='points';
       var activePeriod='alltime';
 
+      var seasonRows=null;
+      function loadSeasonStandings(){
+        return fetch(SB+'/rest/v1/rpc/get_season_standings',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify({p_limit:50})})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(rows){
+            seasonRows=(Array.isArray(rows)?rows:[]).map(function(m){return {username:m.username,points:m.season_xp||0,created_at:null,totalPoints:m.points||0};});
+            return seasonRows;
+          })
+          .catch(function(){seasonRows=[];return seasonRows;});
+      }
+
       function filterByPeriod(data, period) {
-        if (period === 'alltime') return data;
-        var now = Date.now();
-        var cutoff;
-        if (period === 'week') {
-          cutoff = new Date(now - 7 * 24 * 60 * 60 * 1000);
-        } else {
-          // This month: first day of current month
-          var d = new Date();
-          cutoff = new Date(d.getFullYear(), d.getMonth(), 1);
-        }
-        return data.filter(function(m){ return new Date(m.created_at) >= cutoff; });
+        if (period === 'season') return seasonRows || [];
+        return data;
       }
 
       function renderPodium(d){
@@ -468,8 +472,12 @@
             if (Date.now() - parsed.ts < CACHE_TTL) return Promise.resolve(parsed.data);
           } catch(_) {}
         }
-        return fetch(SB+'/rest/v1/public_leaderboard?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
-          .then(function(r){return r.ok?r.json():[];})
+        return fetch(SB+'/rest/v1/public_leaderboard?select=username,points,created_at&order=points.desc&limit=50',{headers:Object.assign({},H,{'Prefer':'count=exact'})})
+          .then(function(r){
+            var cr=r.headers.get('Content-Range');
+            if(cr){var n=parseInt(cr.split('/')[1],10);if(n>0)memberTotal=n;}
+            return r.ok?r.json():[];
+          })
           .then(function(data){
             if(!Array.isArray(data))data=[];
             try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: data, ts: Date.now() })); } catch(_) {}
@@ -481,7 +489,7 @@
         .then(function(data){
           if(!Array.isArray(data))data=[];
           all=data;
-          var te=document.getElementById('lb-total-members');if(te)te.textContent=fmt(data.length);
+          var te=document.getElementById('lb-total-members');if(te)te.textContent=fmt(Math.max(memberTotal,data.length));
           var pe=document.getElementById('lb-total-points');if(pe){var tot=data.reduce(function(s,m){return s+(m.points||0);},0);pe.textContent=fmt(tot);}
           var we=document.getElementById('lb-active');
           if(we){var wago=new Date(Date.now()-7*24*60*60*1000);we.textContent=fmt(data.filter(function(m){return new Date(m.created_at)>wago;}).length);}
@@ -505,6 +513,16 @@
           document.querySelectorAll('.lb-period-tab').forEach(function(x){x.classList.remove('active');});
           b.classList.add('active');
           activePeriod=b.dataset.period;
+          if(activePeriod==='season'&&seasonRows===null){
+            renderMessageRow(document.getElementById('lb-tbody'),'Loading season standings…');
+            loadSeasonStandings().then(function(rows){
+              if(activePeriod!=='season')return;
+              if(!rows.length){renderMessageRow(document.getElementById('lb-tbody'),'No season points yet — complete a challenge to get on the board.');return;}
+              apply();
+            });
+            return;
+          }
+          if(activePeriod==='season'&&seasonRows&&!seasonRows.length){renderMessageRow(document.getElementById('lb-tbody'),'No season points yet — complete a challenge to get on the board.');return;}
           apply();
         });
       });

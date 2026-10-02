@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-02T04:15:44.422Z",
+  "generatedAt": "2026-10-02T20:21:53.326Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 367,
+    "currentSession": 368,
     "lastUpdated": "2026-10-02",
-    "currentFocus": "S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses now follow studio-ops canon, HMAC CSP nonce, edge-side session renewal, price guard and copy sweep; deploy pending.",
-    "nextMilestone": "Deploy the S367 candidate (Worker nonce + content), then act on Obelisk and studio-ops Ark replies: reopen signup, staging test identity, lifecycle ratification.",
+    "currentFocus": "S368 full audit refresh implemented (docs/AUDIT_2026-10-02): membership truth (Free / VaultSparked $4.99 / VaultSparked Eternal $29.99), Season 1 repair live, invite-led doors, registry-driven statuses, 12 page merges and new /play/ /dispatch/ /collaborate/ /api/, Ask the Vault, Desk personas and signup.",
+    "nextMilestone": "Founder approves a Desk Dispatch test issue to arm the daily digest; apply the caller-trust column-revoke migration; act on the Obelisk Ark reply to reopen signup and enable login E2E.",
     "ignis": {
       "score": 46119,
       "grade": "FORGE",
@@ -134,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 367,
+    "sessionsCompleted": 368,
     "liveProjects": 3,
     "projectsInForge": 17,
     "activeEdgeFunctions": 16,
@@ -149,18 +149,18 @@
     "forge": 17,
     "vaulted": 1,
     "silCategories": {
-      "devHealth": 94,
-      "alignment": 95,
-      "momentum": 94,
-      "engagement": 93,
-      "process": 95,
-      "coherence": 98,
-      "security": 96,
+      "devHealth": 95,
+      "alignment": 96,
+      "momentum": 97,
+      "engagement": 95,
+      "process": 93,
+      "coherence": 97,
+      "security": 97,
       "ecosystem": 95,
       "capital": 95,
-      "automation": 93,
-      "total": 948,
-      "updatedSession": 367
+      "automation": 94,
+      "total": 954,
+      "updatedSession": 368
     },
     "sealedNextRevealAt": null
   },
@@ -834,7 +834,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Deployment reconciliation ledger is stale (newest receipt 2 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-10-01T23:44:43.880Z",
+    "checkedAt": "2026-10-02T07:16:47.092Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -850,7 +850,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "success"
+        "status": "unknown"
       }
     ]
   }
