@@ -174,69 +174,94 @@
     }
 
     // ── Feature 1: Daily login bonus + streak system ──────────────
+    // PostgREST builders are thenables without .catch; wrap before chaining.
+    function settle(builder) {
+      try {
+        return Promise.resolve(builder).then(function (r) { return r || {}; }, function (e) { return { error: e || {} }; });
+      } catch (e) { return Promise.resolve({ error: e }); }
+    }
+    function rpcMissing(error) {
+      return window.VSPortalLogic ? VSPortalLogic.isMissingRpc(error)
+        : !!(error && (error.code === 'PGRST202' || Number(error.status) === 404));
+    }
+
     async function checkDailyLogin(member) {
       try {
         const todayUTC = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
         if (member.last_login_date === todayUTC) {
-          // Already logged in today — just update streak badge
           updateStreakBadge(member.streak_count);
           return;
         }
 
-        // Work out new streak count
-        const yesterday = new Date();
-        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-        const yesterdayUTC = yesterday.toISOString().slice(0, 10);
-        const wasConsecutive = member.last_login_date === yesterdayUTC;
-        const newStreak = wasConsecutive ? member.streak_count + 1 : 1;
+        // S368: the streak is computed server-side by record_login_streak()
+        // (supabase-s368-caller-trust.sql). Until that RPC is deployed, the
+        // previous client-computed write runs as the fallback.
+        let newStreak;
+        const res = await settle(VSSupabase.rpc('record_login_streak'));
+        if (!res.error && res.data && typeof res.data === 'object') {
+          if (!res.data.ok) return;
+          newStreak = Number(res.data.streak) || 1;
+          if (res.data.already_today) {
+            member.streak_count = newStreak;
+            member.last_login_date = todayUTC;
+            updateStreakBadge(newStreak);
+            return;
+          }
+        } else if (rpcMissing(res.error)) {
+          const yesterday = new Date();
+          yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+          const wasConsecutive = member.last_login_date === yesterday.toISOString().slice(0, 10);
+          newStreak = wasConsecutive ? (member.streak_count || 0) + 1 : 1;
+          const write = await settle(VSSupabase.from('vault_members')
+            .update({ last_login_date: todayUTC, streak_count: newStreak })
+            .eq('id', member._id));
+          if (write.error) return;
+        } else {
+          return; // transient failure: try again next visit, award nothing
+        }
 
-        // 1. Award daily login XP
-        await VSSupabase.rpc('award_points', {
-          p_reason:   'daily_login',
-          p_points:   10,
-          p_label:    'Daily Login',
-          p_once_per: null,
-        }).catch(() => {});
-
-        // 2. Update streak + last_login_date in vault_members
-        await VSSupabase.from('vault_members')
-          .update({ last_login_date: todayUTC, streak_count: newStreak })
-          .eq('id', member._id)
-          .catch(() => {});
-
-        // Update local reference so refreshes are correct
         member.streak_count    = newStreak;
         member.last_login_date = todayUTC;
 
-        // 3. Keep the award, but stay quiet when onboarding or a higher-value
+        // Daily login XP: once per calendar day (p_once_per 'day'). A null
+        // window deduplicated forever, so the bonus only ever paid once.
+        const award = await settle(VSSupabase.rpc('award_points', {
+          p_reason:   'daily_login',
+          p_points:   10,
+          p_label:    'Daily Login',
+          p_once_per: 'day',
+        }));
+
+        // Keep the award, but stay quiet when onboarding or a higher-value
         // portal surface already owns this session's attention.
         const attentionBusy = window.VSPortalAttention && window.VSPortalAttention.current();
-        if (!attentionBusy) {
+        if (!attentionBusy && award.data && award.data.ok) {
           showToast('Day ' + newStreak + ' streak! +10 XP', {
             emoji: '🔥', color: 'rgba(251,146,60,0.18)', duration: 3200
           });
         }
 
-        // 4. Streak milestone bonuses
+        // Streak milestone bonuses (each milestone once per account).
         const MILESTONES = { 7: 50, 14: 100, 30: 200, 60: 500, 100: 1000 };
         if (MILESTONES[newStreak]) {
           const bonus = MILESTONES[newStreak];
-          await VSSupabase.rpc('award_points', {
+          const milestone = await settle(VSSupabase.rpc('award_points', {
             p_reason:   'streak_milestone_' + newStreak,
             p_points:   bonus,
             p_label:    newStreak + '-Day Streak Bonus',
-            p_once_per: null,
-          }).catch(() => {});
-          setTimeout(() => {
-            if (window.VSPortalAttention && window.VSPortalAttention.current()) return;
-            showToast(newStreak + '-Day Streak! +' + bonus + ' bonus XP', {
-              emoji: '🏆', color: 'rgba(255,196,0,0.18)', duration: 4000
-            });
-          }, 1600);
+            p_once_per: 'ever',
+          }));
+          if (milestone.data && milestone.data.ok) {
+            setTimeout(() => {
+              if (window.VSPortalAttention && window.VSPortalAttention.current()) return;
+              showToast(newStreak + '-Day Streak! +' + bonus + ' bonus XP', {
+                emoji: '🏆', color: 'rgba(255,196,0,0.18)', duration: 4000
+              });
+            }, 1600);
+          }
         }
 
         updateStreakBadge(newStreak);
-        // Refresh points after a short delay
         setTimeout(() => refreshPointsDisplay(), 1800);
 
       } catch (_) { /* non-fatal */ }
@@ -1266,40 +1291,9 @@
       }
     }
 
-    // ── Phase 44: Gift VaultSparked Checkout ─────────────────────
-    async function startGiftSubCheckout() {
-      const recipientInput = document.getElementById('gift-sub-username');
-      const btn            = document.getElementById('gift-sub-btn');
-      const fb             = document.getElementById('gift-sub-feedback');
-      const username       = (recipientInput?.value || '').trim();
-      if (!fb) return;
-      fb.textContent = '';
-      if (!username) { fb.style.color = '#f87171'; fb.textContent = 'Enter a recipient username.'; return; }
-      if (username.toLowerCase() === (_currentMember.username || '').toLowerCase()) {
-        fb.style.color = '#f87171'; fb.textContent = 'You cannot gift to yourself.'; return;
-      }
-      if (btn) { btn.textContent = 'Validating…'; btn.disabled = true; }
-      try {
-        const { data: { session } } = await VSSupabase.auth.getSession();
-        if (!session) { showAuth(); return; }
-        const { data, error } = await VSSupabase.functions.invoke('create-gift-checkout', {
-          headers: { Authorization: `Bearer ${session.access_token}` },
-          body: { recipient_username: username },
-        });
-        if (error || !data?.url) {
-          const msg = data?.error || error?.message || 'Gift checkout unavailable.';
-          fb.style.color = '#f87171'; fb.textContent = msg;
-          if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
-          return;
-        }
-        window.location.href = data.url;
-      } catch (err) {
-        fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not start gift.');
-        if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
-        if (window.Sentry) Sentry.captureException(err);
-      }
-    }
-    window.startGiftSubCheckout = startGiftSubCheckout;
+    // Gift VaultSparked checkout was removed from the portal (D-S368.1): it is
+    // hidden until rebuilt with a real 30-day expiry and a founder-set price.
+    // The create-gift-checkout edge function is left untouched.
     window.claimMilestone = claimMilestone;
 
     // ── Phase 25: Member Spotlight ────────────────────────────────
@@ -1308,9 +1302,10 @@
       if (!el) return;
       try {
         // Pick a random top-50 member that isn't the current user
+        // public_leaderboard only lists members who chose to be public.
         const { data: members } = await VSSupabase
-          .from('vault_members')
-          .select('username, points, member_number, avatar_id, accent')
+          .from('public_leaderboard')
+          .select('username, points, member_number, accent')
           .order('points', { ascending: false })
           .limit(50);
 
@@ -1339,45 +1334,8 @@
       }
     }
 
-    // ── Phase 25: Rank Comparison (who's just above you) ──────────
-    async function loadRankComparison(member) {
-      const el = document.getElementById('rank-compare-content');
-      if (!el) return;
-      try {
-        const { data: above } = await VSSupabase
-          .from('vault_members')
-          .select('username, points')
-          .gt('points', member.points)
-          .order('points', { ascending: true })
-          .limit(1);
-
-        if (!above || above.length === 0) {
-          el.innerHTML = '<span class="rank-compare-top">You\'re at the top of the leaderboard!</span>';
-          return;
-        }
-
-        const rival = above[0];
-        const diff  = rival.points - member.points;
-        el.innerHTML = `
-          <div class="rank-compare-text">
-            You are <strong class="rank-compare-pts">${diff.toLocaleString()} pts</strong> behind
-            <a href="/member/?u=${encodeURIComponent(rival.username)}"
-               class="rank-compare-user">${escHtml(rival.username)}</a>
-            on the leaderboard.
-          </div>
-          <div class="rank-compare-bar-wrap">
-            <div class="rank-compare-track">
-              <div class="rank-compare-fill" style="width:${Math.round((member.points / rival.points) * 100)}%;"></div>
-            </div>
-            <div class="rank-compare-legend">
-              <span>You · ${member.points.toLocaleString()} pts</span>
-              <span>${escHtml(rival.username)} · ${rival.points.toLocaleString()} pts</span>
-            </div>
-          </div>`;
-      } catch (_) {
-        if (el) el.textContent = 'Comparison unavailable.';
-      }
-    }
+    // Rank comparison moved beside the rank bar as the nearest-rival callout
+    // (portal-loop.js renderRival, public profiles only).
 
     // ── Phase 14: What's New modal — S66 enhanced ────────────────
     // S66 hardcoded fallback changelog items
@@ -1756,7 +1714,7 @@
       if (tier === 'free') {
         value.textContent = '—';
         setBar(0);
-        hint.innerHTML = 'Ask IGNIS opens with Sparked. <a href="/membership/#tiers" style="color:var(--gold);font-weight:700;">Upgrade to ask IGNIS →</a>';
+        hint.innerHTML = 'Ask IGNIS opens with VaultSparked. <a href="/vault-member/#upgrade" style="color:var(--gold);font-weight:700;">Upgrade to ask IGNIS →</a>';
         return;
       }
 
@@ -1796,7 +1754,7 @@
         setBar(pct);
         bar.setAttribute('aria-valuetext', used + ' of ' + limit + ' questions used');
         if (remaining === 0) {
-          hint.innerHTML = 'Quota spent — resets on the 1st (UTC). <a href="/membership/#tiers" style="color:#c084fc;font-weight:700;">Eternal removes the cap →</a>';
+          hint.innerHTML = 'Quota spent — resets on the 1st (UTC). <a href="/vault-member/#upgrade" style="color:#c084fc;font-weight:700;">VaultSparked Eternal removes the cap →</a>';
         } else {
           hint.textContent = remaining + ' left this month · resets on the 1st (UTC).';
         }
@@ -1817,8 +1775,8 @@
         // Free tier: ONE locked card, one link (S335 — no stacked paywalls).
         el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">'
           + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">Locked Surface</div>'
-          + '<div style="font-size:0.92rem;color:var(--text);margin-bottom:0.45rem;">Ask IGNIS, full Vault Wall depth, and Eternal studio briefings unlock above the free tier.</div>'
-          + '<a href="/membership/#tiers" style="display:inline-flex;align-items:center;gap:0.35rem;color:var(--gold);font-weight:700;text-decoration:none;">Compare tiers →</a>'
+          + '<div style="font-size:0.92rem;color:var(--text);margin-bottom:0.45rem;">Ask IGNIS, the Sparked archive and beta keys, and the Eternal Dispatch briefing unlock with VaultSparked and VaultSparked Eternal.</div>'
+          + '<a href="/vault-member/#upgrade" style="display:inline-flex;align-items:center;gap:0.35rem;color:var(--gold);font-weight:700;text-decoration:none;">See upgrade options →</a>'
           + '</div>';
         return;
       }
@@ -1829,7 +1787,7 @@
         el.innerHTML = '<div style="padding:1rem 1.1rem;border-radius:14px;background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.18);">'
           + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#c084fc;margin-bottom:0.5rem;">Your Sparked digest</div>'
           + '<div id="sparked-digest-list" style="display:flex;flex-direction:column;gap:0.45rem;font-size:0.88rem;color:var(--dim);">Loading the Desk…</div>'
-          + '<div style="font-size:0.8rem;color:var(--muted);margin-top:0.7rem;">Eternal adds unlimited IGNIS and sealed previews → <a href="/membership/#tiers" style="color:#c084fc;font-weight:700;">Go Eternal</a></div>'
+          + '<div style="font-size:0.8rem;color:var(--muted);margin-top:0.7rem;">VaultSparked Eternal adds unlimited IGNIS and the Eternal Dispatch briefing → <a href="/vault-member/#upgrade" style="color:#c084fc;font-weight:700;">Go Eternal</a></div>'
           + '</div>';
         loadSparkedDigest();
         return;
@@ -1937,75 +1895,11 @@
       }
     }
 
-    // ── Studio Access panel — games & tools per tier ─────────────
+    // ── Your Games (replaces Connected Games / Studio Access / Studio Pipeline)
+    // One list, rendered from data/game-registry.json by portal-loop.js so the
+    // statuses always match the registry. Name kept for existing callers.
     function loadStudioAccessPanel(planKey, rankName) {
-      const el = document.getElementById('studio-access-content');
-      if (!el) return;
-
-      const isSparked = planKey === 'vault_sparked' || planKey === 'vault_sparked_pro';
-      const isPro     = planKey === 'vault_sparked_pro';
-
-      const ITEMS = [
-        { name: 'Franchise Architect', url: '/games/franchise-architect/', tier: 'free',    desc: 'Browser sports sim — free for all Vault Members' },
-        { name: 'Call of Doodie',          url: '/games/call-of-doodie/',          tier: 'sparked', desc: 'Chaos shooter — VaultSparked & above' },
-        { name: 'Gridiron GM',             url: '/games/gridiron-gm/',             tier: 'sparked', desc: 'Football management — VaultSparked & above' },
-        { name: 'VaultFront',              url: '/games/vaultfront/',              tier: 'eternal', desc: 'Coming soon — Eternal members get first access' },
-      ];
-
-      const TIER_COLOR  = { free: '#94a3b8', sparked: '#FFC400', eternal: '#c084fc' };
-      const TIER_RGB    = { free: '148,163,184', sparked: '255,196,0', eternal: '192,132,252' };
-      const TIER_LABEL  = { free: 'Free', sparked: 'VaultSparked', eternal: 'Eternal' };
-
-      function unlocked(tier) {
-        return tier === 'free' || (tier === 'sparked' && isSparked) || (tier === 'eternal' && isPro);
-      }
-
-      el.innerHTML = ITEMS.map(function(g) {
-        const open  = unlocked(g.tier);
-        const color = TIER_COLOR[g.tier];
-        const rgb   = TIER_RGB[g.tier];
-        const label = TIER_LABEL[g.tier];
-        const nameHtml = open
-          ? '<a href="' + g.url + '" style="color:inherit;text-decoration:none;font-weight:700;">' + g.name + '</a>'
-          : '<span style="font-weight:700;">' + g.name + '</span>';
-        return '<div style="display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0.85rem;border-radius:12px;margin-bottom:0.5rem;'
-          + 'background:rgba(255,255,255,' + (open ? '0.04' : '0.015') + ');'
-          + 'border:1px solid rgba(255,255,255,' + (open ? '0.08' : '0.04') + ');'
-          + 'opacity:' + (open ? '1' : '0.5') + ';">'
-          + '<span style="font-size:1.05rem;">' + (open ? '🔓' : '🔒') + '</span>'
-          + '<div style="flex:1;min-width:0;">'
-          + '<div style="font-size:0.87rem;color:' + (open ? 'var(--text)' : 'var(--dim)') + ';">' + nameHtml + '</div>'
-          + '<div style="font-size:0.75rem;color:var(--dim);margin-top:0.1rem;">' + g.desc + '</div>'
-          + '</div>'
-          + '<span style="font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;'
-          + 'color:' + color + ';background:rgba(' + rgb + ',0.08);'
-          + 'border:1px solid rgba(' + rgb + ',0.2);border-radius:999px;padding:0.2rem 0.55rem;white-space:nowrap;">'
-          + label + '</span>'
-          + '</div>';
-      }).join('');
-
-      // Rank loyalty discount chip
-      const RANK_DISCOUNT = { 'Forge Master': 25, 'The Sparked': 50 };
-      const discount = rankName ? RANK_DISCOUNT[rankName] : null;
-      if (discount) {
-        const discountRgb = discount === 50 ? '255,196,0' : '248,113,113';
-        const discountColor = discount === 50 ? '#FFC400' : '#f87171';
-        el.innerHTML += '<div style="display:flex;align-items:center;gap:0.65rem;margin-top:0.75rem;'
-          + 'padding:0.7rem 0.9rem;border-radius:12px;'
-          + 'background:rgba(' + discountRgb + ',0.04);border:1px solid rgba(' + discountRgb + ',0.15);">'
-          + '<span style="font-size:1rem;">⚡</span>'
-          + '<div style="flex:1;font-size:0.8rem;color:var(--muted);">'
-          + '<strong style="color:' + discountColor + ';">' + discount + '% rank loyalty discount</strong> on VaultSparked — applied automatically at checkout.'
-          + ' Your <strong>' + rankName + '</strong> rank earned this.'
-          + '</div>'
-          + '</div>';
-      } else if (!isSparked) {
-        el.innerHTML += '<div style="margin-top:0.75rem;padding:0.8rem 1rem;border-radius:12px;'
-          + 'background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.1);'
-          + 'font-size:0.8rem;color:var(--muted);">'
-          + 'Upgrade to <a href="/membership/#tiers" style="color:var(--gold);font-weight:700;">VaultSparked</a> to unlock more games.</div>';
-      }
-
+      if (window.VSPortalLoop) VSPortalLoop.renderYourGames(planKey);
       loadEternalIntelligencePanel(planKey);
       loadIgnisQuotaMeter(planKey);
     }

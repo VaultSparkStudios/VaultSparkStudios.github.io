@@ -45,28 +45,28 @@
     if (mode === 'membership') {
       if (pathway === 'supporter') {
         return {
-          href: '/vaultsparked/#pricing',
+          href: '/membership/#tiers',
           label: 'Back The Studio',
           note: 'You marked supporter intent. Compare the live tiers and pick the depth that feels earned.'
         };
       }
       if (pathway === 'player') {
         return {
-          href: '/vaultsparked/#pricing',
+          href: '/membership/#tiers',
           label: 'See Player Perks',
           note: 'You marked player intent. Use the paid tiers only if the free account already made the worlds stick.'
         };
       }
       if (pathway === 'lore') {
         return {
-          href: '/vaultsparked/#pricing',
+          href: '/membership/#tiers',
           label: 'Unlock The Full Archive',
           note: 'You marked lore intent. Paid access matters here because the deeper archive is part of the membership layer.'
         };
       }
       if (pathway === 'member') {
         return {
-          href: '/vaultsparked/#pricing',
+          href: '/membership/#tiers',
           label: 'Compare Member Paths',
           note: 'You already know you want the identity layer. The next question is whether free, Sparked, or Eternal matches your conviction.'
         };
@@ -169,7 +169,7 @@
 
       if (state.membership_intent && mode === 'membership') {
         applyConfig(element, {
-          href: '/vaultsparked/#pricing',
+          href: '/membership/#tiers',
           label: 'See Live Pricing',
           note: 'Ready when you are. Here\'s the live tier comparison.'
         });

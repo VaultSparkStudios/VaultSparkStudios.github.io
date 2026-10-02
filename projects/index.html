@@ -365,6 +365,12 @@
     .status-sparked.card-badge { color: #6ef3aa; border-color: rgba(68,208,123,0.42); }
     .status-forge.card-badge   { color: #f7c98a; border-color: rgba(240,161,58,0.40); }
     .status-vaulted.card-badge { color: #94a3b8; border-color: rgba(100,116,139,0.36); }
+    /* S368: registry catalog cards have no art hero — keep the status chip in flow so it
+       never sits on top of the project name. */
+    #projects-grid .card-content > .status { position: static; display: inline-flex; align-self: flex-start; margin: 0 0 0.6rem; }
+    #projects-grid .project-eyebrow { margin: 0 0 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .projects-also { margin-top: 1.4rem; font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+    .projects-also a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
     .card-content {
       padding: 1.4rem 1.6rem 1.6rem;
       display: flex;
@@ -478,9 +484,7 @@
   "description": "Tools, platforms, and software projects built at VaultSpark Studios. From AI-powered tools to creative platforms.",
   "url": "https://vaultsparkstudios.com/projects/",
   "publisher": {
-    "@type": "Organization",
-    "name": "VaultSpark Studios",
-    "url": "https://vaultsparkstudios.com"
+    "@id": "https://vaultsparkstudios.com/#org"
   },
   "hasPart": [
     {
@@ -626,24 +630,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/" class="active" aria-current="page">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/" class="active" aria-current="page">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -671,17 +675,17 @@
           creator tools, product systems, and operational surfaces that make the games and
           worlds stronger. These are not side experiments; they are the infrastructure of the vault.
         </p>
-        <div class="hero-stats" aria-label="Project library stats">
+        <div class="hero-stats" aria-label="Project library stats"><!-- registry:projects-stats:start -->
           <div class="hero-stat">
-            <span class="hero-stat-val" style="color:#fbbf24;">5</span>
+            <span class="hero-stat-val" style="color:#fbbf24;">2</span>
             <span class="hero-stat-label">🔥 Sparked</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
-            <span class="hero-stat-val" style="color:#f59e0b;">6</span>
+            <span class="hero-stat-val" style="color:#f59e0b;">10</span>
             <span class="hero-stat-label">⚒️ In The Forge</span>
           </div>
-          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <!-- registry:projects-stats:end --><div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
             <span class="hero-stat-val">Free</span>
             <span class="hero-stat-label">To Use</span>
@@ -707,256 +711,23 @@
           <button class="filter-btn" data-filter="forge" style="--btn-accent:#f59e0b;">⚒️ In The Forge</button>
         </div>
 
-        <!-- Sparked -->
-        <div class="projects-section-label" data-section="sparked" aria-hidden="true">
-          <span style="color:#fbbf24;">⚒️ Featured — Live Beta</span>
-        </div>
-
-        <!-- PromoGrind — featured -->
-        <div class="project-card-featured" data-status="forge" aria-label="PromoGrind — Forge, live beta">
-          <div class="project-card-featured-inner">
-            <div class="project-card-hero promogrind">
-              <span class="status status-forge">⚒️ Forge · Live Beta</span>
-              <h2>PromoGrind</h2>
-            </div>
-            <div class="project-card-body">
-              <p class="project-eyebrow">Sports Promo Tool &nbsp;·&nbsp; Featured</p>
-              <p>
-                PromoGrind is a live sportsbook promo conversion suite: 53 calculators, sportsbook tracking,
-                a P/L ledger, beta-gated AI helpers, and public-safe copy for educational promo math.
-                Use the free core in your browser — no install.
-              </p>
-              <ul class="feature-list">
-                <li>53 sportsbook promo, arbitrage, EV, bankroll, and tracking calculators</li>
-                <li>P/L ledger, sportsbook manager, onboarding, pricing, and knowledge base</li>
-                <li>Browser-based with free account sync; paid + AI surfaces remain beta-gated</li>
-              </ul>
-              <div class="meta" style="margin-top:0.4rem;">
-                <span>Sports Promo Tool</span><span>53 Calculators</span><span>Live</span><span>Free Core</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="https://promogrind.bet/" target="_blank" rel="noreferrer">Open PromoGrind &rarr;</a>
-                <a class="button-secondary" href="/projects/promogrind/">About PromoGrind</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- In The Forge -->
-        <div class="projects-section-label" data-section="forge" aria-hidden="true">
-          <span style="color:#f59e0b;">⚒️ In The Forge — Building</span>
-        </div>
-
-        <!-- Standard grid -->
-        <div class="projects-grid" id="projects-grid">
-
-          <!-- Velaxis -->
-          <article class="project-card" data-status="forge" aria-label="Velaxis — In The Forge">
-            <div class="card-hero velaxis">
-              <span class="status status-forge card-badge">⚒️ Forge</span>
-              <h3>Velaxis</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Real-time crypto intelligence dashboard. Eight tabs of market data, portfolio tracking,
-                whale alerts, and AI-powered analysis — all in one browser-based command center.
-                No accounts, no install, no cost.
-              </p>
-              <div class="meta">
-                <span>Dashboard</span><span>Crypto</span><span>Analytics</span><span>Free</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="/projects/velaxis/">Open Dashboard</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Vorn -->
-          <article class="project-card" data-status="sparked" aria-label="Vorn — Sparked">
-            <div class="card-hero vorn">
-              <span class="status status-sparked card-badge">🔥 Sparked</span>
-              <h3>Vorn</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Social agent platform for building and deploying autonomous digital personas.
-                Create agents with memory, personality, and cross-platform presence — live build
-                open at joinvorn.com.
-              </p>
-              <div class="meta">
-                <span>Platform</span><span>AI Agents</span><span>Social</span><span>Live</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="https://joinvorn.com/" target="_blank" rel="noreferrer">Open Vorn &rarr;</a>
-                <a class="button-secondary" href="/projects/vorn/">About Vorn</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Seamline -->
-          <article class="project-card" data-status="forge" aria-label="Seamline — In The Forge">
-            <div class="card-hero seamline" style="--card-accent:#FFC400;">
-              <span class="status status-forge card-badge">⚒️ Forge</span>
-              <h3>Seamline</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                A new VaultSpark Studios project taking shape behind the steel. Details revealed
-                when the design lands — Vault Members hear first.
-              </p>
-              <div class="meta">
-                <span>Application</span><span>In The Forge</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button-secondary" href="/projects/seamline/">About Seamline</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Canon -->
-          <article class="project-card" data-status="forge" aria-label="Canon — In The Forge">
-            <div class="card-hero canon">
-              <span class="status status-forge card-badge">⚒️ Forge</span>
-              <h3>Canon</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Taste identity platform. Canon maps your cultural fingerprint — music, film, games,
-                books — into a living profile that evolves with you. Early-stage. Details sealed.
-              </p>
-              <div class="meta">
-                <span>Platform</span><span>Identity</span><span>Culture</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button-secondary" href="/projects/canon/">More Info</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- The Living Protocol -->
-          <article class="project-card" data-status="forge" aria-label="The Living Protocol — In The Forge">
-            <div class="card-hero living-protocol">
-              <span class="status status-forge card-badge">⚒️ Forge</span>
-              <h3>The Living Protocol</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Generational wellness operating system. A long-term health intelligence layer that
-                tracks, adapts, and compounds across decades — not days. Early-stage. Details sealed.
-              </p>
-              <div class="meta">
-                <span>Platform</span><span>Wellness</span><span>Long-Term</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button-secondary" href="/projects/the-living-protocol/">More Info</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- StatVault -->
-          <article class="project-card" data-status="forge" aria-label="StatVault — In The Forge">
-            <div class="card-hero statvault">
-              <span class="status status-forge card-badge">⚒️ Forge</span>
-              <h3>StatVault</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Sports analytics platform built for depth. Advanced stat models, historical
-                comparisons, and visualization tools for the serious sports mind.
-              </p>
-              <div class="meta">
-                <span>Analytics</span><span>Sports</span><span>Data</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button-secondary" href="/projects/statvault/">More Info</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- IdeaForge -->
-          <article class="project-card" data-status="forge" aria-label="IdeaForge — In The Forge">
-            <div class="card-hero ideaforge">
-              <span class="status status-forge card-badge">⚒️ Forge · Private Beta</span>
-              <h3>IdeaForge</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                Live private-beta idea intelligence platform. Submit a concept and get adaptive
-                dimensions, evidence-backed scoring, proof tasks, and a shareable Dimension Signature.
-              </p>
-              <div class="meta">
-                <span>Tool</span><span>AI</span><span>Private Beta</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button-secondary" href="/projects/ideaforge/">More Info</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Signal Log -->
-          <article class="project-card" data-status="sparked" aria-label="Signal Log — Sparked">
-            <div class="card-hero signallog">
-              <span class="status status-sparked card-badge">🔥 Sparked</span>
-              <h3>Signal Log</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                VaultSpark's public dev journal — build notes, update logs, and dispatches from inside
-                the forge. Signal over noise. Live and updating.
-              </p>
-              <div class="meta">
-                <span>Dev Journal</span><span>Studio</span><span>Live</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="/journal/">Read the Log</a>
-                <a class="button-secondary" href="/projects/signal-log/">About Signal Log</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Vault Pipeline -->
-          <article class="project-card" data-status="sparked" aria-label="Vault Pipeline — Sparked">
-            <div class="card-hero vaultpipeline">
-              <span class="status status-sparked card-badge">🔥 Sparked</span>
-              <h3>Vault Pipeline</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                The VaultSpark public development roadmap. Track what's shipping, what's in the forge,
-                and what's queued for the next cycle. Transparent development — every milestone visible.
-              </p>
-              <div class="meta">
-                <span>Roadmap</span><span>Studio</span><span>Live</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="/roadmap/">Open Pipeline</a>
-                <a class="button-secondary" href="/projects/vault-pipeline/">About the Pipeline</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Vault Member -->
-          <article class="project-card" data-status="sparked" aria-label="Vault Member — Sparked">
-            <div class="card-hero vaultmember">
-              <span class="status status-sparked card-badge">🔥 Sparked</span>
-              <h3>Vault Member</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                The cross-game identity and progress layer. Vault ranks, achievements, early-access
-                gating, and newsletter preferences — one account across every VaultSpark title.
-              </p>
-              <div class="meta">
-                <span>Membership</span><span>Identity</span><span>Live</span>
-              </div>
-              <div class="project-card-actions">
-                <a class="button" href="/vault-member/">Open Portal</a>
-                <a class="button-secondary" href="/projects/vault-member/">About Vault Member</a>
-              </div>
-            </div>
-          </article>
-
-        </div><!-- /projects-grid -->
+<!-- registry-project-catalog:start -->
+<div class="projects-section-label" data-section="all"><span>Every studio project</span></div>
+<div class="projects-grid" id="projects-grid" data-registry-project-count="12">
+<article class="project-card" data-status="sparked" data-project="veilos" aria-label="VEILOS — Sparked"><div class="card-content"><span class="status status-sparked">🔥 Sparked</span><h3>VEILOS</h3><p class="project-eyebrow">Cognitive Civilization OS</p><p>A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification and a Collaborate Exchange, live at veilos.io.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/veilos/">About VEILOS</a></div></div></article>
+<article class="project-card" data-status="sparked" data-project="vorn" aria-label="Vorn — Sparked"><div class="card-content"><span class="status status-sparked">🔥 Sparked</span><h3>Vorn</h3><p class="project-eyebrow">Agent Platform</p><p>Social-first, agent-native platform. Give your agent a home.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/vorn/">About Vorn</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="promogrind" aria-label="PromoGrind — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>PromoGrind</h3><p class="project-eyebrow">Sportsbook Promo Tool</p><p>Sportsbook promo conversion suite — calculators, tracking and a profit-and-loss ledger. 21+.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/promogrind/">About PromoGrind</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="velaxis" aria-label="Velaxis — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Velaxis</h3><p class="project-eyebrow">Trading Intelligence</p><p>Solana memecoin operator cockpit — no custody of your funds, by design.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/velaxis/">About Velaxis</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="obelisk" aria-label="Obelisk — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Obelisk</h3><p class="project-eyebrow">Trust Protocol</p><p>Trust and capability for the AI era.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/obelisk/">About Obelisk</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="hashmark" aria-label="Hashmark — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Hashmark</h3><p class="project-eyebrow">Sports AI</p><p>Football, rewritten every week by AI.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/hashmark/">About Hashmark</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="shadow" aria-label="SHADOW — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>SHADOW</h3><p class="project-eyebrow">Artist OS</p><p>An operating system for artists.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/shadow/">About SHADOW</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="sparkraid" aria-label="SparkRaid — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>SparkRaid</h3><p class="project-eyebrow">Creator Economy</p><p>Every tip is an event.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/sparkraid/">About SparkRaid</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="seamline" aria-label="Seamline — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Seamline</h3><p class="project-eyebrow">Creator Tool</p><p>Creator portfolio hub. Your whole world, one thread.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/seamline/">About Seamline</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="concurrent" aria-label="Concurrent — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Concurrent</h3><p class="project-eyebrow">Agent OS</p><p>A workstation built around user-owned AI.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/concurrent/">About Concurrent</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="ouren" aria-label="Ouren — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Ouren</h3><p class="project-eyebrow">Ambient AI</p><p>Ambient intelligence for smart eyewear.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/ouren/">About Ouren</a></div></div></article>
+<article class="project-card" data-status="forge" data-project="syntha" aria-label="Syntha — In The Forge"><div class="card-content"><span class="status status-forge">⚒️ Forge</span><h3>Syntha</h3><p class="project-eyebrow">Music Platform</p><p>AI-accepted music, with rights made clear.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/syntha/">About Syntha</a></div></div></article>
+</div>
+<!-- registry-project-catalog:end -->
 
         <div class="projects-empty" id="projects-empty" aria-live="polite">
           No projects match that filter yet. Check back soon — the forge is always running.
@@ -1000,15 +771,12 @@
           <h2 style="font-family:Georgia,serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.04em;margin:0.75rem auto 1rem;max-width:20ch;">Get Early Access to Everything We Ship</h2>
           <p style="color:var(--muted);font-size:1.02rem;max-width:48ch;margin:0 auto 1.8rem;line-height:1.65;">One free account unlocks beta drops, early tool access, dev signals, and cross-game tracking across the entire VaultSpark ecosystem.</p>
           <div style="display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap;">
-            <a class="button" href="/vault-member/#register">Create Free Account</a>
+            <a class="button" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
             <a class="button-secondary" href="/vault-member/">Learn About Membership</a>
           </div>
         </div>
       </div>
     </section>
-  <!-- registry-project-catalog:start -->
-<section aria-labelledby="registry-projects-heading" class="projects-catalog"><div class="container"><div class="projects-section-label"><span>Registry-complete catalog</span></div><h2 id="registry-projects-heading">Every current studio project.</h2><p class="projects-lead">Generated from the same portfolio registry that powers Studio Pulse. No hand-maintained omissions.</p><div class="projects-grid" data-registry-project-count="12"><article class="project-card" data-status="sparked"><div class="card-content"><span class="status status-sparked">SPARKED</span><h3>VEILOS</h3><p>D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="https://veilos.io" target="_blank" rel="noreferrer">Open project</a></div></div></article><article class="project-card" data-status="sparked"><div class="card-content"><span class="status status-sparked">SPARKED</span><h3>Vorn</h3><p>Social-first, agent-native platform. Give your agent a home.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/vorn/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>PromoGrind</h3><p>Live utility. Vault-gated promo engine, iterating on UX.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/promogrind/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Velaxis</h3><p>Solana memecoin operator cockpit — no-custody by design. Production-stable.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/velaxis/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Obelisk</h3><p>Trust and capability for the AI era.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/obelisk/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Hashmark</h3><p>Football, rewritten every week by AI.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/hashmark/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>SHADOW</h3><p>An operating system for artists.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/shadow/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>SparkRaid</h3><p>Every tip is an event.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/sparkraid/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Seamline</h3><p>Creator portfolio hub. Your whole world, one thread.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/seamline/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Concurrent</h3><p>A workstation built around user-owned AI.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/concurrent/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Ouren</h3><p>Ambient intelligence for smart eyewear.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/ouren/">Open project</a></div></div></article><article class="project-card" data-status="forge"><div class="card-content"><span class="status status-forge">FORGE</span><h3>Syntha</h3><p>AI-accepted music, with rights made clear.</p><div class="project-card-actions"><a class="button-secondary button-sm" href="/projects/syntha/">Open project</a></div></div></article></div></div></section>
-<!-- registry-project-catalog:end -->
 </main>
 
   <footer class="site-footer" aria-label="Site footer">
@@ -1021,23 +789,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -1056,19 +823,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -1078,7 +843,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -1098,17 +863,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -1122,6 +887,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -1212,7 +978,7 @@
 <script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>
 

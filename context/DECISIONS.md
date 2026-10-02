@@ -2011,3 +2011,27 @@ Tabs open past one hour lost data access. The client re-asks `/api/auth/session`
 ## D-S367.5 — Lifecycle redefinition proposed to studio-ops
 
 Founder direction: FORGE covers in development, unannounced and beta; SPARKED is finished and announced, with a launch kit, multi-channel announcement and an armed posting cadence. Proposal `docs/proposals/LIFECYCLE_SPARKED_GATE_S367.md` (Ark `01K3SJ87V2E1476FF1FE837A06`); canon changes stay with studio-ops.
+
+## D-S368.1 — Membership offering: Free, VaultSparked, VaultSparked Eternal (monthly)
+
+Founder ruling 2026-10-02 after a code-level truth map. The site sells Free, VaultSparked ($4.99/mo) and VaultSparked Eternal ($29.99/mo), monthly only; annual is labelled as coming later. Only enforced perks are advertised (badge and theme, Discord role, Ask IGNIS quota, Sparked archive and beta keys, PromoGrind live odds, monthly XP drop, Eternal Dispatch, Eternal 1000 XP/mo); 2×/3× XP, studio and rank discounts, priority queue, co-dev input and splash credit are removed. The gift button is hidden until a real 30-day expiry and a founder-set price exist. Canonical names: VaultSparked and VaultSparked Eternal. `api/membership-tiers.json` is the single source for every surface.
+
+## D-S368.2 — Season accounting can never block a member action
+
+Live probe 2026-10-02: `award_season_xp()` referenced columns that do not exist, so every game score, session and challenge submission insert was rolled back (challenge_submissions has never held a row), and the only season row was the expired Vault Ignition. Migration `supabase-s368-season-1-repair.sql` rewrites the function against the real schema inside an exception guard, declares Season 1 — Ignition with the already announced 2026-09-02 → 2026-10-14 window and recognition-only pass tiers, backfills season XP and adds `get_season_standings()`.
+
+## D-S368.3 — One description per project
+
+Founder rulings 2026-10-02: The Exodus is an engine-building card game for 2–4 players; MindFrame is a live metacognition platform (its vault status still follows canon); Solara is a browser roguelite RPG with a shared world; Project Unknown stays a sealed teaser with no status and leaves status counts until it has a canon record. Agent-resolved from canon: Gridiron GM is vaulted with no return promise; Voidfall is a nine-book saga; VaultFront carries no release window. Registry fields hold these, and pages render from them.
+
+## D-S368.4 — AI search agents allowed, training crawlers stay blocked
+
+Founder ruling 2026-10-02: robots.txt explicitly allows retrieval agents (Claude-SearchBot, Claude-User, Perplexity-User, alongside the existing OpenAI search agents) so answers can cite the studio; training crawlers stay disallowed, and the `noai` response header applies only to training user agents.
+
+## D-S368.5 — Anonymous solo studio; off-catalog pages noindexed
+
+Founder ruling 2026-10-02 (CANON-028): the site presents an independent, solo-founded studio with no founder name or photo; "Ask the Founders" becomes "Ask the Studio". Project pages that are not in the public catalog stay reachable but are noindexed and removed from listings until they join the catalog.
+
+## D-S368.6 — The Desk Dispatch is a daily digest, auto-sent after a confirmed test issue
+
+Founder ruling 2026-10-02: subscribers to The Desk Dispatch (Brevo list 3, double opt-in) receive at most one email a day summarising that day's Desk editions, sent automatically. Automatic sending starts only after the founder confirms a test issue sent to their own address. Persona profiles gain taglines, character sheets and a corpus-derived notebook, all clearly labelled as fictional AI correspondents.

@@ -22,6 +22,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { checkHash, saveHash } from './lib/build-cache.mjs';
+import { publicSummary } from './lib/public-summaries.mjs';
+import { ORG_ID, orgNode, websiteNode } from './lib/org-entity.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -32,7 +34,9 @@ const CHECK = process.argv.includes('--check');
 const FORCE = process.argv.includes('--force');
 
 const ORIGIN = 'https://vaultsparkstudios.com';
-const ID = (slug) => `${ORIGIN}/#${slug}`;
+// The studio Organization is #org (lib/org-entity.mjs) — the same @id every
+// page's JSON-LD references, so this graph and the pages describe ONE entity.
+const ID = (slug) => (slug === 'organization' ? ORG_ID : `${ORIGIN}/#${slug}`);
 
 // S231: the registry is in the studio-ops SIBLING repo — present in local sessions,
 // ABSENT in CI (CI checks out only this repo). Signal availability so --check and write
@@ -51,7 +55,21 @@ function audienceUrl(p) {
   return null;
 }
 
-function projectCreativeWork(p) {
+// agent-geo-layer-v2 (L1): api/public-intelligence.json is the canonical facts
+// source. A registry project that is in the public catalog takes its NAME and
+// VAULT STATUS from there, so this graph cannot contradict llms-full.txt or the
+// Oracle answers (check-grounding-coherence enforces it). Registry slugs that
+// differ from the catalog id are aliased.
+const PI_FILE = path.join(ROOT, 'api', 'public-intelligence.json');
+const PI_ALIAS = { 'franchise-architect-football': 'football-gm' };
+function loadCatalog() {
+  try { return new Map((JSON.parse(fs.readFileSync(PI_FILE, 'utf8')).catalog || []).map((c) => [c.id, c])); }
+  catch { return new Map(); }
+}
+
+function projectCreativeWork(raw, catalog = new Map()) {
+  const c = catalog.get(PI_ALIAS[raw.slug] || raw.slug);
+  const p = c ? { ...raw, name: c.name || raw.name, vaultStatus: c.status || raw.vaultStatus } : raw;
   const slug = p.slug;
   const wt = p.medium === 'game' ? 'VideoGame'
            : p.medium === 'novel' ? 'Book'
@@ -60,7 +78,7 @@ function projectCreativeWork(p) {
     '@type': wt,
     '@id': ID(`project-${slug}`),
     name: p.name,
-    description: p.summary || undefined,
+    description: publicSummary(p) || undefined,
     creator: { '@id': ID('organization') },
     publisher: { '@id': ID('organization') },
     isPartOf: { '@id': ID('website') },
@@ -71,26 +89,11 @@ function projectCreativeWork(p) {
   return node;
 }
 
-function buildGraph(registry) {
+function buildGraph(registry, catalog = loadCatalog()) {
   const founderName = registry.founder?.name || 'VaultSpark Founder';
 
   const org = {
-    '@type': 'Organization',
-    '@id': ID('organization'),
-    name: registry.dba || 'VaultSpark Studios',
-    legalName: registry.legalEntity || 'VaultSpark Studios LLC',
-    url: ORIGIN + '/',
-    logo: ORIGIN + '/assets/brand/logo-signature.png',
-    sameAs: [
-      'https://github.com/VaultSparkStudios',
-      'https://www.youtube.com/@VaultSparkStudios',
-      'https://x.com/VaultSpark',
-      'https://www.instagram.com/vaultsparkstudios/',
-      'https://www.reddit.com/r/VaultSparkStudios/',
-      'https://bsky.app/profile/vaultsparkstudios.bsky.social',
-      'https://www.facebook.com/VaultSparkStudios/',
-      'https://www.tiktok.com/@vaultsparkstudios',
-    ],
+    ...orgNode(),
     founder: { '@id': ID('founder') },
   };
 
@@ -102,18 +105,13 @@ function buildGraph(registry) {
     worksFor: { '@id': ID('organization') },
   };
 
-  const site = {
-    '@type': 'WebSite',
-    '@id': ID('website'),
-    url: ORIGIN + '/',
-    name: 'VaultSpark Studios',
-    publisher: { '@id': ID('organization') },
+  const site = websiteNode({
     potentialAction: {
       '@type': 'SearchAction',
       target: ORIGIN + '/search/?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
-  };
+  });
 
   const memberProgram = {
     '@type': 'ProgramMembership',
@@ -126,7 +124,7 @@ function buildGraph(registry) {
 
   const projects = (registry.projects || [])
     .filter((p) => p.audience && p.audience.startsWith('public') && p.vaultStatus !== 'vaulted')
-    .map(projectCreativeWork);
+    .map((p) => projectCreativeWork(p, catalog));
 
   const pathwayList = {
     '@type': 'ItemList',
@@ -163,7 +161,7 @@ function buildGraph(registry) {
 }
 
 function main() {
-  const ENTITY_INPUTS = [REGISTRY];
+  const ENTITY_INPUTS = [REGISTRY, PI_FILE, url.fileURLToPath(import.meta.url), path.join(__dirname, 'lib', 'org-entity.mjs')];
   const entityCache = (!FORCE) ? checkHash('entity-graph', ENTITY_INPUTS) : { hit: false, hash: '' };
   if (!CHECK && entityCache.hit) {
     console.log('build-entity-graph: SKIP (inputs unchanged)');

@@ -26,7 +26,7 @@ for (const viewport of viewports) {
       fs.mkdirSync(out, { recursive: true });
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.addInitScript((selectedTheme) => localStorage.setItem('vs_theme', selectedTheme), theme);
-      await page.goto('/stats/', { waitUntil: 'domcontentloaded' });
+      await page.goto('/evidence/#numbers', { waitUntil: 'domcontentloaded' });
       const surface = page.locator('[data-analytica-surface="deep"]');
       await expect(surface).toHaveAttribute('data-state', 'ready');
       await page.screenshot({ path: path.join(out, `stats--${theme}--${viewport.name}--report.png`), fullPage: true });

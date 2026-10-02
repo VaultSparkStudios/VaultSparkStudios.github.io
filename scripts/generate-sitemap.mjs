@@ -67,15 +67,53 @@ function priority(route) {
   return depth === 0 ? ['weekly', '1.0'] : depth === 1 ? ['weekly', '0.8'] : ['monthly', '0.6'];
 }
 
-export function renderSitemap(files) {
+// lastmod comes from dates the page itself declares (article meta or JSON-LD),
+// never from git or the clock, so --check stays deterministic across commits.
+export function contentDate(html) {
+  const pick = [
+    /<meta[^>]+property=["']article:modified_time["'][^>]+content=["'](\d{4}-\d{2}-\d{2})/i,
+    /"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})/,
+    /<meta[^>]+property=["']article:published_time["'][^>]+content=["'](\d{4}-\d{2}-\d{2})/i,
+    /"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})/,
+  ];
+  for (const re of pick) { const m = html.match(re); if (m) return m[1]; }
+  return null;
+}
+
+/**
+ * S368: a route the edge 301s away is never served, even when a stub file is
+ * still on disk (a generator may still read it). Listing it would point crawlers
+ * at a redirect. Parses _redirects: an exact source retires that route (with or
+ * without its trailing slash); a "/x/*" splat retires everything under /x/.
+ */
+export function redirectedRoutes(text) {
+  const exact = new Set();
+  const prefixes = [];
+  for (const line of String(text || '').split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const [from, , status] = t.split(/\s+/);
+    if (!from || !/^30[1278]$/.test(status || '301')) continue;
+    if (from.endsWith('/*')) prefixes.push(from.slice(0, -1));
+    else exact.add(from.replace(/\/+$/, '') || '/');
+  }
+  return (route) => exact.has(route.replace(/\/+$/, '') || '/') || prefixes.some((prefix) => route.startsWith(prefix));
+}
+
+const IS_REDIRECTED = redirectedRoutes(fs.existsSync(path.join(ROOT, '_redirects')) ? fs.readFileSync(path.join(ROOT, '_redirects'), 'utf8') : '');
+
+export function renderSitemap(files, isRedirected = IS_REDIRECTED) {
   const routes = files
     .filter((file) => !isNoindex(fs.readFileSync(file, 'utf8')))
     .map(routeFor)
     .filter((route) => !route.includes('/member/'))
+    .filter((route) => !isRedirected(route))
     .sort();
+  const byRoute = new Map(files.map((file) => [routeFor(file), file]));
   const rows = routes.map((route) => {
     const [freq, score] = priority(route);
-    return '  <url><loc>' + ORIGIN + route + '</loc><changefreq>' + freq + '</changefreq><priority>' + score + '</priority></url>';
+    const lastmod = contentDate(fs.readFileSync(byRoute.get(route), 'utf8'));
+    return '  <url><loc>' + ORIGIN + route + '</loc>' + (lastmod ? '<lastmod>' + lastmod + '</lastmod>' : '') + '<changefreq>' + freq + '</changefreq><priority>' + score + '</priority></url>';
   });
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows.join('\n') + '\n</urlset>\n';
 }
@@ -88,6 +126,13 @@ function selfTest() {
   if (isExcludedDirectory('projects')) throw new Error('public project directory was excluded');
   if (isExcludedDirectory('.ai')) throw new Error('the .ai fact-sheet layer must reach the sitemap — it is the surface machines read to find it');
   if (!isExcludedDirectory('.cache')) throw new Error('the .ai exception must not loosen the dot-directory rule for tooling directories');
+  if (contentDate('<script type="application/ld+json">{"datePublished":"2026-09-30T12:00:00Z"}</script>') !== '2026-09-30') throw new Error('JSON-LD datePublished must become lastmod');
+  if (contentDate('<meta property="article:modified_time" content="2026-10-01T00:00:00Z"><script>{"datePublished":"2026-09-01"}</script>') !== '2026-10-01') throw new Error('modified time must win over published time');
+  if (contentDate('<p>No dates here</p>') !== null) throw new Error('pages without declared dates must omit lastmod');
+  const retired = redirectedRoutes('# c\n/stats/   /evidence/#numbers   301\n/stats    /evidence/#numbers   301\n/careers/*  /collaborate/  301\n/x  /y  200');
+  if (!retired('/stats/') || retired('/stats/ecosystem/')) throw new Error('an exact redirect must retire only its own route, not its live children');
+  if (!retired('/careers/') || !retired('/careers/old/')) throw new Error('a splat redirect must retire its whole tree');
+  if (retired('/x/') || retired('/evidence/')) throw new Error('rewrites (200) and destinations are not retired routes');
   console.log('generate-sitemap: self-test passed');
 }
 

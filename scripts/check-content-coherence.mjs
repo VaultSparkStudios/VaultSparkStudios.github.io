@@ -23,6 +23,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from './lib/safe-spawn.mjs';
+import { findVoiceLeaks, visibleText } from './lib/voice-leak.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -96,6 +98,21 @@ function priceMismatches(html, tiersJson) {
 }
 const PRICE_SURFACES = ['membership/index.html', 'press/index.html', 'terms/index.html', 'search/index.html', 'index.html'];
 
+// 6. Served HTML for the voice-leak patrol: git-tracked pages, minus repo-internal
+//    trees (the same prefixes prune-served-surface removes from the deploy) and
+//    pages that exist to show operator evidence by design.
+const NOT_VISITOR_PREFIXES = ['.cache/', '.claude/', '.codex/', '.github/', 'context/', 'logs/', 'prompts/', 'scripts/', 'test/', 'tests/', 'node_modules/', 'studio-hub/'];
+const VOICE_LEAK_EXEMPT = Object.freeze({
+  'docs/visual-proof/index.html': 'Operator visual-QA receipt gallery; its captions name the proof run on purpose.',
+});
+function servedHtmlPages() {
+  let files = [];
+  try { files = execFileSync('git', ['ls-files', '*.html'], { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean); }
+  catch { return []; }
+  return files.filter((f) => !NOT_VISITOR_PREFIXES.some((p) => f.startsWith(p)) && !(f in VOICE_LEAK_EXEMPT)
+    && (!f.startsWith('docs/') || f.startsWith('docs/visual-proof/')));
+}
+
 // ── live check ──────────────────────────────────────────────────────────────────
 
 function runLive() {
@@ -146,12 +163,21 @@ function runLive() {
     }
   }
 
+  // 6. (S368) Voice-leak patrol over every served page: no session ids or
+  //    registry field names in text a visitor can see.
+  const leakPages = servedHtmlPages();
+  for (const rel of leakPages) {
+    const html = readSafe(rel);
+    if (!html) continue;
+    for (const l of findVoiceLeaks(html)) errs.push(`${rel} shows ${l.kind} "${l.match}" to visitors — "…${l.context}…"`);
+  }
+
   if (errs.length) {
     console.error('check-content-coherence: cross-surface contradictions found:');
     for (const e of errs) console.error('  ✗ ' + e);
     process.exit(1);
   }
-  console.log('check-content-coherence: all public surfaces coherent ✓');
+  console.log(`check-content-coherence: all public surfaces coherent ✓ (voice-leak patrol: ${leakPages.length} served pages clean)`);
 }
 
 // ── self-test ─────────────────────────────────────────────────────────────────
@@ -188,6 +214,15 @@ function runSelfTest() {
   ok(vaultedCountMismatch({ studio: { vaulted: 7 } }, { portfolio: { sealedCount: 7 } }) === null, 'passes matched count');
   const mm = vaultedCountMismatch({ studio: { vaulted: 0 } }, { portfolio: { sealedCount: 7 } });
   ok(mm && mm.shown === 0 && mm.source === 7, 'flags mismatched count');
+
+  // 6. voice-leak patrol (S368): structural shapes, visible text only
+  const leaky = '<html><head><title>x</title></head><body><p>Shipped in S367 with playUrl wired.</p></body></html>';
+  ok(findVoiceLeaks(leaky).length === 2, 'flags a session id and a registry field in visible text');
+  ok(findVoiceLeaks('<body><!-- S367 note --><script>var s="S367 playUrl"</script><p>Play now.</p></body>').length === 0, 'ignores comments and scripts');
+  ok(findVoiceLeaks('<head><meta name="description" content="Live since S205"></head><body></body>').length === 1, 'reads the meta description a search result shows');
+  ok(findVoiceLeaks('<body><img alt="Audience: public-unlaunched"></body>').length === 1, 'reads alt text and audience enums');
+  ok(findVoiceLeaks('<body><p>Season 1 runs 42 days; the S&amp;P 500 and Galaxy S23 are fine.</p></body>').length === 0, 'ordinary copy (S23, S&P 500) is not a session id');
+  ok(visibleText('<body><p>a&nbsp;b</p></body>') === 'a b', 'decodes entities in visible text');
 
   console.log(`check-content-coherence self-test: ${pass}/${pass + fail} passed`);
   if (fail) process.exit(1);

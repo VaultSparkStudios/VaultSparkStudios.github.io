@@ -14,7 +14,9 @@
  *   - activeThisWeek                          ← api/heartbeat.json (projects with pulses7d>0)
  *   - ignisHeartbeatAt                        ← api/heartbeat.json generatedAt
  *   - lastArkBroadcastAt / lastShipped        ← api/commit-map.json newest entry
- *   - lastShippedSession                      ← public-intelligence portfolio.silCategories
+ *   - lastShippedOn                           ← api/commit-map.json newest entry (calendar day)
+ *     (S368: was lastShippedSession "S<n>" — an internal session counter means
+ *     nothing to a public reader, so the feed carries the ship DATE instead)
  *
  * DETERMINISM CONTRACT (mirrors funnel-summary / field-win): generatedAt is the
  * date of the FRESHEST source signal, NOT wall-clock — so --check re-derives
@@ -105,8 +107,7 @@ export function derive({ heartbeat, intelligence, commitMap, routeHistory }) {
   const sparked = portfolio.sparked ?? null;
   const forge = portfolio.forge ?? null;
   const vaulted = portfolio.vaultedCount ?? portfolio.sealedCount ?? null;
-  const sessionN = portfolio.silCategories && portfolio.silCategories.updatedSession;
-  const lastShippedSession = sessionN ? `S${sessionN}` : null;
+  const lastShippedOn = dayOf(lastShipTs);
 
   const edgeIntegrity = deriveEdgeIntegrity(routeHistory);
 
@@ -131,7 +132,7 @@ export function derive({ heartbeat, intelligence, commitMap, routeHistory }) {
       activeThisWeek,
       lastArkBroadcastAt: lastShipTs,
       ignisHeartbeatAt,
-      lastShippedSession,
+      lastShippedOn,
     },
     edgeIntegrity,
     nervousSystem: [
@@ -140,7 +141,7 @@ export function derive({ heartbeat, intelligence, commitMap, routeHistory }) {
       { label: 'In the Forge', value: forge },
       { label: 'Vaulted', value: vaulted },
       { label: 'Active this week', value: activeThisWeek },
-      { label: 'Last shipped', value: lastShippedSession || ago(lastShipTs) },
+      { label: 'Last shipped', value: ago(lastShipTs) },
     ],
   };
 }
@@ -178,7 +179,9 @@ function selfTest() {
   const m = derive(fixture);
   assert(m.studio.reposOnline === 27, `reposOnline=27, got ${m.studio.reposOnline}`);
   assert(m.studio.activeThisWeek === 2, `activeThisWeek=2 (pulses7d>0), got ${m.studio.activeThisWeek}`);
-  assert(m.studio.lastShippedSession === 'S190', `lastShipped S190, got ${m.studio.lastShippedSession}`);
+  assert(m.studio.lastShippedOn === '2026-06-12', `lastShippedOn = newest commit-map day, got ${m.studio.lastShippedOn}`);
+  assert(!/"S\d+"/.test(JSON.stringify(m)), 'no internal "S<n>" session id reaches the public feed');
+  assert(m.nervousSystem.find((r) => r.label === 'Last shipped').value === 'on 2026-06-12', 'Last shipped row reads as a date');
   assert(m.studio.ignisHeartbeatAt === '2026-06-12T01:48:41.900Z', `ignisHeartbeatAt = freshest stable lastActivity (NOT wall-clock generatedAt), got ${m.studio.ignisHeartbeatAt}`);
   assert(m.generatedAt === '2026-06-12', `generatedAt freshest-source date, got ${m.generatedAt}`);
   assert(Array.isArray(m.nervousSystem) && m.nervousSystem.length === 6, 'nervousSystem array preserved');
@@ -196,7 +199,7 @@ function selfTest() {
   assert(empty.edgeIntegrity.state === 'unobserved' && empty.edgeIntegrity.routesMatched === null, 'a missing route-history feed is unobserved, never green');
   const healthy = derive({ ...fixture, routeHistory: { state: 'matched', asOf: '2026-06-11T00:00:00.000Z', current: { openIncidents: 0, totalRoutes: 5, onsetNotLaterThan: null, degradedForDays: 0 } } });
   assert(healthy.edgeIntegrity.routesMatched === 5 && healthy.edgeIntegrity.state === 'matched', 'a healthy edge reports 5/5 matched');
-  console.log('build-public-status --self-test: OK (15 assertions)');
+  console.log('build-public-status --self-test: OK (17 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) throw new Error(`build-public-status --self-test FAIL: ${msg}`); }
@@ -218,7 +221,7 @@ export function runProofCommand(args = []) {
   }
   fs.writeFileSync(OUT, fresh);
   const m = JSON.parse(fresh);
-  console.log(`✓ api/public-status.json — ${m.studio.reposOnline} repos · ${m.studio.activeThisWeek} active this week · ${m.studio.lastShippedSession} · asOf ${m.generatedAt}`);
+  console.log(`✓ api/public-status.json — ${m.studio.reposOnline} repos · ${m.studio.activeThisWeek} active this week · shipped ${m.studio.lastShippedOn} · asOf ${m.generatedAt}`);
     return 0;
   } catch (error) {
     console.error(error.message);

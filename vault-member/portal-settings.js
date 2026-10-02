@@ -11,7 +11,7 @@
         const [{ data: profile }, { data: points }, { data: challenges }] = await Promise.all([
           VSSupabase.from('vault_members').select('*').eq('id', uid).single(),
           VSSupabase.from('point_events').select('points,reason,label,created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(500),
-          VSSupabase.from('challenge_submissions').select('challenge_id,created_at').eq('member_id', uid).order('created_at', { ascending: false }),
+          VSSupabase.from('challenge_completions').select('challenge_id,completed_at').eq('user_id', uid).order('completed_at', { ascending: false }),
         ]);
 
         const exportData = {
@@ -42,7 +42,8 @@
       VSSupabase.auth.getSession().then(async ({ data: { session } }) => {
         if (!session) return;
         // Mark for deletion in vault_members (soft delete — admin can confirm)
-        await VSSupabase.from('vault_members').update({ delete_requested: true }).eq('id', session.user.id).catch(() => {});
+        // Wrapped: builders have no .catch, and the TypeError skipped the request.
+        await Promise.resolve(VSSupabase.from('vault_members').update({ delete_requested: true }).eq('id', session.user.id)).catch(() => {});
         await VSSupabase.auth.signOut();
         window.location.href = '/';
       });
@@ -537,7 +538,8 @@
             if (discordIdentity) {
               const did = String(discordIdentity.id || discordIdentity.user_id || '');
               if (did) {
-                await VSSupabase.rpc('save_discord_id', { p_discord_id: did }).catch(() => {});
+                // Wrapped: a bare builder has no .catch; the TypeError aborted init.
+                await Promise.resolve(VSSupabase.rpc('save_discord_id', { p_discord_id: did })).catch(() => {});
                 row.discord_id = did;
               }
             }

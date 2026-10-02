@@ -45,7 +45,6 @@ const ROUTES = [
   '/join/',
   '/faq/',
   '/journal/dispatches/',
-  '/notebook/',
   '/social/',
 ];
 
@@ -81,7 +80,6 @@ const ROUTES = [
 // margin-collapsing match the hydrated list by construction at every width.
 const ROUTE_BUDGETS = {
   '/journal/dispatches/': 0.02,
-  '/notebook/': 0.02,
   '/social/': 0.02,
   '/faq/': 0.02,
 };

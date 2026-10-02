@@ -48,6 +48,11 @@ const PROJECTS = [
   // forge framing for honest in-studio-use copy; liveUrl stays null because a
   // 401 wall is not a public destination.
   { id: 'scriptorium', name: 'Scriptorium', category: 'Writing OS', teaser: 'Where the studio’s worlds get written.', liveUrl: null, sparked: true },
+  // S368 registry-truth-everywhere: VEILOS is SPARKED in canon (studio-ops registry +
+  // api/public-intelligence.json) and live at its own domain, but had no on-site page —
+  // the nav, hero tile and /projects/ all linked straight off-site. publicLive switches
+  // the sparked variant from "in studio use" to live-product copy.
+  { id: 'veilos', name: 'VEILOS', category: 'Cognitive Civilization OS', teaser: 'A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification, and a Collaborate Exchange.', liveUrl: 'https://veilos.io', sparked: true, publicLive: true },
   // Flagship creative works in the games section (D-S208.8) — teaser pages so the
   // Atlas/hero link to a real page, not the generic /games/ index.
   { id: 'voidfall', name: 'Voidfall', section: 'games', category: 'Cinematic Saga', teaser: 'A nine-book cosmic-horror saga. Not a game — a world.', liveUrl: null },
@@ -59,7 +64,19 @@ function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').
 // Build one page by templating the Seamline forging page. Pure for testability.
 export function renderPage(template, p) {
   const section = p.section || 'projects';
-  let html = template;
+  // S368: shield the sitewide shell (nav + footer) from the token rewrites below.
+  // The global "Seamline"/"projects/seamline/" replaces used to rename the
+  // template's OWN nav/footer link to Seamline into a second link to the new
+  // project — the shell is reconciled by propagate-nav, never templated.
+  const shell = [];
+  let html = template.replace(/<header class="site-header">[\s\S]*?<\/header>|<footer class="site-footer"[\s\S]*?<\/footer>/g, (m) => {
+    shell.push(m);
+    return `\u0000SHELL${shell.length - 1}\u0000`;
+  });
+  // The template's own live destination (button + IGNIS attribute) — swap for this
+  // project's confirmed public URL, or drop the external button when it has none.
+  if (p.liveUrl) html = html.replace(/https:\/\/seamline\.now/g, p.liveUrl);
+  else html = html.replace(/\n\s*<a class="button" href="https:\/\/seamline\.now"[^>]*>[^<]*<\/a>/g, '');
   // 1. Path + slug tokens (lowercase): /projects/seamline/ → /<section>/<id>/ , og slug, data-voice.
   html = html.replace(/projects\/seamline\//g, `${section}/${p.id}/`);
   html = html.replace(/og-projects-seamline/g, `og-${section}-${p.id}`);
@@ -91,8 +108,38 @@ export function renderPage(template, p) {
     html = html.replace(/<span class="status status-forge">⚒️ Forge<\/span>/g, '<span class="status status-sparked">🔥 Sparked</span>');
     html = html.replace(/<span>In The Forge<\/span>/g, '<span>Sparked</span>');
     html = html.replace(/<span style="color:#f59e0b;">⚒️ In The Forge<\/span>/g, '<span style="color:#22c55e;">🔥 Sparked — in studio use</span>');
+    html = html.replace(/data-project-status="forge"/g, 'data-project-status="sparked"');
+    html = html.replace(/<section class="game-hero" data-status="forge">/g, '<section class="game-hero" data-status="sparked">');
   }
-  return html;
+  // 7. S368 public-sparked variant (VEILOS): live for everyone at its own domain —
+  // "in studio use" / "first notice when it opens" would both be false. Rewrites
+  // the forge-teaser prose into live-product copy using the registry teaser.
+  if (p.sparked && p.publicLive && p.liveUrl) {
+    const host = p.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    html = html.replace(/Sparked — in studio use/g, 'Sparked — live now');
+    html = html.replace(/live and in daily studio use\. Vault Members get first notice when it opens\./g, `live now at ${host}.`);
+    html = html.replace(/<h2>Sparked Quietly\.<\/h2>[\s\S]*?(<div class="meta")/, `<h2>Live at ${esc(host)}.</h2>
+            <p>
+              ${esc(p.name)} is sparked — ${esc(p.teaser.charAt(0).toLowerCase() + p.teaser.slice(1))} It is live for everyone at
+              <a href="${esc(p.liveUrl)}" target="_blank" rel="noopener">${esc(host)}</a>.
+            </p>
+            <p>
+              Vault Members follow ${esc(p.name)} from the studio side: release signals, changelog drops,
+              and the story of how it was built.
+            </p>
+            $1`);
+    html = html.replace(/<span>Project<\/span><span>Sparked<\/span><span>Early Signal<\/span>/, `<span>${esc(p.category)}</span><span>Sparked</span><span>Live</span>`);
+    html = html.replace(/>Open (?:&quot;)?([^<]*)<\/a>/g, (m, name) => `>Open ${name} &rarr;</a>`);
+    html = html.replace(/Get Early Signal — Free/g, 'Follow in the Vault — Free').replace(/>Get Early Signal</g, '>Follow in the Vault<');
+    html = html.replace(/<div class="info-row"><span>Audience<\/span><span>[^<]*<\/span><\/div>/, '<div class="info-row"><span>Audience</span><span>Public — live</span></div>');
+    html = html.replace(/Vault Members are first in line when [^.]*opens\. VaultSparked tier gets first-wave priority\./, `${esc(p.name)} is live now. Vault Members get release signals and studio notes as it grows.`);
+    html = html.replace(/Join Free — Get Notified/g, 'Join the Vault — Free');
+    html = html.replace(/"description": "A VaultSpark Studios project in the forge\. Details revealed at launch\."/, `"description": "${esc(p.name)} — ${esc(p.teaser)} Live at ${esc(host)}."`);
+    html = html.replace(/("applicationCategory": "Application",)/, `$1\n  "sameAs": "${esc(p.liveUrl)}",`);
+    html = html.replace(/(<meta name="description" content=")[^"]*"/, `$1${esc(p.name)} — ${esc(p.teaser)} A VaultSpark Studios project, sparked and live at ${esc(host)}."`);
+    html = html.replace(/(<meta property="og:description" content=")[^"]*"/, `$1${esc(p.teaser)} Sparked and live at ${esc(host)}."`);
+  }
+  return html.replace(/\u0000SHELL(\d+)\u0000/g, (m, i) => shell[Number(i)]);
 }
 
 if (SELF_TEST) {
@@ -103,7 +150,7 @@ if (SELF_TEST) {
   a(out.includes('<title>Hashmark'), 'title carries project name');
   a(out.includes('projects/hashmark/'), 'canonical/path rewritten to project id');
   a(out.includes('og-projects-hashmark'), 'OG image slug rewritten');
-  a(!out.includes('Seamline'), 'no residual template name');
+  a(!out.replace(/<header class="site-header">[\s\S]*?<\/header>|<footer class="site-footer"[\s\S]*?<\/footer>/g, '').includes('Seamline'), 'no residual template name outside the sitewide shell');
   a(out.includes('Sports AI · In the Forge'), 'category eyebrow injected');
   a(out.includes('data-live-url="https://hashmark.football"'), 'live url set');
   const sparkedOut = renderPage(tpl, PROJECTS.find((p) => p.sparked));
@@ -112,6 +159,15 @@ if (SELF_TEST) {
   a(sparkedOut.includes('live and in daily studio use'), 'sparked variant: prose flipped');
   a(!sparkedOut.includes('status status-forge') && !/<span>In The Forge<\/span>/.test(sparkedOut), 'sparked variant: status chips flipped');
   a(sparkedOut.includes('legend-status-forge'), 'sparked variant: studio-wide footer legend untouched');
+  const tplNavSeamline = (tpl.match(/<header class="site-header">[\s\S]*?<\/header>/) || [''])[0];
+  a(out.includes(tplNavSeamline) && out.includes('<a href="/projects/seamline/">Seamline</a>'), 'S368: nav/footer shell copied verbatim (template link to Seamline not renamed)');
+  const veilos = renderPage(tpl, PROJECTS.find((p) => p.id === 'veilos'));
+  a(veilos.includes('<link rel="canonical" href="https://vaultsparkstudios.com/projects/veilos/" />'), 'VEILOS: canonical points at /projects/veilos/');
+  a(!/seamline\.now/.test(veilos) && veilos.includes('href="https://veilos.io"'), 'VEILOS: template live URL replaced with veilos.io');
+  a(veilos.includes('Sparked — live now') && !/in studio use|first notice when it opens|Forging/.test(veilos.replace(/<header[\s\S]*?<\/header>|<footer[\s\S]*?<\/footer>/g, '')), 'VEILOS: public-live copy, no studio-use / forge-teaser claims');
+  a(veilos.includes('data-project-status="sparked"') && veilos.includes('"sameAs": "https://veilos.io"'), 'VEILOS: body status + JSON-LD sameAs');
+  const noLive = renderPage(tpl, PROJECTS.find((p) => p.id === 'concurrent'));
+  a(!/seamline\.now/.test(noLive), 'no-liveUrl project drops the template external button');
   console.log(`\nbuild-forge-project-pages self-test: ${fail ? '✗ ' + fail + ' failed' : 'all passed'}`);
   process.exit(fail ? 1 : 0);
 }

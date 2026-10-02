@@ -43,9 +43,7 @@
   "gamePlatform": "Web Browser",
   "url": "https://vaultsparkstudios.com/games/call-of-doodie/",
   "publisher": {
-    "@type": "Organization",
-    "name": "VaultSpark Studios",
-    "url": "https://vaultsparkstudios.com"
+    "@id": "https://vaultsparkstudios.com/#org"
   },
   "offers": {
     "@type": "Offer",
@@ -91,7 +89,7 @@
     {
       "@type": "Question",
       "name": "Can I save my progress?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Create a free Vault Member account to save your progress and earn Vault Points for playing." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Vault Members save scores and earn Vault Points for playing. Vault enrolment is invite-led right now." }
     }
   ]
 }
@@ -213,6 +211,41 @@
   <script defer src="/assets/ignis-project-block.shell-0fbab844d7.js"></script>
   <link rel="alternate" type="application/json" href="/agents.json" />
 <link rel="alternate" type="text/html" href="/games/call-of-doodie/.ai/" title="AI-canonical fact sheet" data-vs-ai-factsheet />
+
+  <style data-vs-game-system>
+    .vs-gs { padding: 3rem 0; border-top: 1px solid var(--line); }
+    .vs-gs-eyebrow { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 0.55rem; }
+    .vs-gs h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 400; letter-spacing: -0.02em; margin: 0 0 1.25rem; color: var(--text); }
+    .vs-gs-updates { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; max-width: 760px; }
+    .vs-gs-updates li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: 0.95rem 1.1rem; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--muted); line-height: 1.6; font-size: 0.93rem; }
+    .vs-gs-updates time { color: var(--text); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.02em; }
+    .vs-gs-more { display: inline-block; margin-top: 1rem; font-weight: 600; color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gold); }
+    .vs-gs-media { margin: 0; max-width: 960px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
+    .vs-gs-media img { width: 100%; height: auto; display: block; aspect-ratio: 1200 / 630; }
+    .vs-gs-media figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.9rem 1.1rem; color: var(--muted); font-size: 0.88rem; }
+    .vs-gs-media figcaption a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gold); }
+    .vs-gs-vault { position: relative; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1.5rem 2.5rem; align-items: center; padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: 22px; border: 1px solid var(--line); border-left: 3px solid var(--gold); background: var(--panel-strong, var(--panel)); box-shadow: var(--shadow); }
+    .vs-gs-vault h2 { margin-bottom: 0.6rem; }
+    .vs-gs-vault p { color: var(--muted); line-height: 1.65; max-width: 56ch; margin: 0; }
+    .vs-gs-vault-actions { display: flex; flex-direction: column; gap: 0.65rem; align-items: stretch; }
+    .vs-gs-vault-actions .button, .vs-gs-vault-actions .button-secondary { width: 100%; justify-content: center; }
+    .vs-gs-vault-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-top: 0.4rem; font-size: 0.86rem; justify-content: center; }
+    .vs-gs-vault-links a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+    .vs-gs-vault-links a:hover, .vs-gs-vault-links a:focus-visible { color: var(--text); }
+    .vs-gs-score { grid-column: 1 / -1; margin-top: 0.25rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+    .vs-gs-score-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); margin-bottom: 0.65rem; }
+    .vs-gs-score-row { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+    .vs-gs-score-row input { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0 0.85rem; min-height: 44px; color: var(--text); font-size: 16px; width: 170px; font-family: inherit; }
+    .vs-gs-score-row span, .vs-gs-score-result { font-size: 0.85rem; color: var(--muted); }
+    .vs-gs-score-result { margin-top: 0.5rem; min-height: 1.2rem; }
+    .vs-gs-also { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+    .vs-gs-also a { display: flex; flex-direction: column; gap: 0.25rem; min-height: 44px; padding: 0.95rem 1.05rem; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--text); font-weight: 700; text-decoration: none; transition: border-color .18s, transform .18s; }
+    .vs-gs-also a span { color: var(--muted); font-weight: 500; font-size: 0.82rem; }
+    .vs-gs-also a:hover, .vs-gs-also a:focus-visible { border-color: var(--gold); transform: translateY(-1px); }
+    .vs-gs-lineage { color: var(--muted); line-height: 1.65; max-width: 60ch; }
+    @media (max-width: 760px) { .vs-gs-vault { grid-template-columns: 1fr; } .vs-gs-updates li { grid-template-columns: 1fr; gap: 0.25rem; } }
+    @media (prefers-reduced-motion: reduce) { .vs-gs-also a { transition: none; } .vs-gs-also a:hover { transform: none; } }
+  </style>
 </head>
 <body data-schema-type="game" data-game-name="Call of Doodie" data-game-status="forge" data-game-platforms="Web Browser,iOS,Android" data-game-genre="Action / Humor" class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
@@ -226,24 +259,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/" class="active" aria-current="page">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/" class="active" aria-current="page">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -273,7 +306,7 @@
             </div>
             <div class="hero-art-actions">
               <a class="button" href="https://callofdoodie.wtf/">Play Now — Free</a>
-              <a class="button-secondary" href="/vault-member/#register">Track Your Score</a>
+              <a class="button-secondary" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
             </div>
           </div>
         </div>
@@ -283,13 +316,13 @@
     <div class="game-community-bar" id="gcb-call-of-doodie">
       <div class="container">
         <div class="gcb-stat">
-          <span>Session telemetry:</span>
-          <strong title="Individual play history is visible only to its signed-in member.">Member-private</strong>
+          <span>Your play history:</span>
+          <strong title="Individual play history is visible only to its signed-in member.">Private to you</strong>
         </div>
         <div class="gcb-divider"></div>
         <div class="gcb-stat">
-          <span>Public totals:</span>
-          <strong title="No privacy-safe aggregate is published yet; VaultSpark does not substitute a false zero.">Not published</strong>
+          <span>Community totals:</span>
+          <strong title="Community totals appear here once there is enough play to share them without exposing anyone.">Coming later</strong>
         </div>
         <div class="gcb-divider"></div>
         <!-- Member score badge — shown when signed in -->
@@ -318,7 +351,7 @@
               <li>Fast-paced arcade shooter gameplay — instant in your browser, no download required</li>
               <li>Comedy-first design — every encounter is a setup for the punchline</li>
               <li>Active development with live updates and content additions</li>
-              <li>Cross-game progress tracking with a free Vault Member account</li>
+              <li>Cross-game progress tracking for Vault Members</li>
               <li>No paywall, no install, no account required to start playing</li>
             </ul>
             <div class="meta" style="margin-bottom: 1.5rem;">
@@ -359,7 +392,7 @@
               <div class="info-row"><span>Genre</span><span>Action Comedy Shooter</span></div>
               <div class="info-row"><span>Platform</span><span>Web Browser</span></div>
               <div class="info-row"><span>Price</span><span>Free</span></div>
-              <div class="info-row"><span>Status</span><span style="color: #86efac;">Live &amp; Playable</span></div>
+              <!-- registry:status:start --><div class="info-row"><span>Status</span><span style="color:#f59e0b;">⚒️ Forge · Playable Beta</span></div><!-- registry:status:end -->
               <div class="info-row"><span>Developer</span><span>VaultSpark Studios</span></div>
             </div>
 
@@ -377,10 +410,9 @@
               <!-- Guest state (default) -->
               <div id="cod-cta-guest">
                 <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:1rem;">
-                  Create a free Vault Member account to track your scores, earn achievements,
-                  and join the access pool for future VaultSpark releases.
+                  Vault Members track scores and earn achievements across every VaultSpark game. Enrolment is invite-led right now.
                 </p>
-                <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(255,122,0,0.3);color:var(--orange);">Join The Vault — Free</a>
+                <a class="button-ghost" style="width:100%;display:flex;justify-content:center;border-color:rgba(255,122,0,0.3);color:var(--orange);" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
               </div>
               <!-- Signed-in state -->
               <div id="cod-cta-member" style="display:none;">
@@ -401,39 +433,6 @@
       </div>
     </section>
 
-    <!-- ── Share + Vault CTA ─────────────────────────────── -->
-    <section aria-label="Share and community" style="padding:0 0 1rem;">
-      <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:stretch;">
-
-          <!-- Share card -->
-          <div style="padding:1.75rem;border-radius:20px;background:rgba(255,122,0,0.04);border:1px solid rgba(255,122,0,0.1);">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:0.6rem;">Share the Chaos</div>
-            <p style="color:var(--muted);font-size:0.88rem;line-height:1.6;margin-bottom:1.1rem;">
-              Spreading the word helps the studio keep building. Share Call of Doodie with someone who needs a punchline delivered via ammunition.
-            </p>
-            <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-              <a href="https://x.com/intent/tweet?text=Playing%20Call%20of%20Doodie%20%E2%80%94%20a%20free%20browser%20shooter%20where%20punchlines%20arrive%20via%20ammunition%20%F0%9F%92%A5%20https%3A%2F%2Fvaultsparkstudios.com%2Fgames%2Fcall-of-doodie%2F" target="_blank" rel="noopener" style="padding:0.5rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;font-weight:600;text-decoration:none;transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(255,255,255,0.1)'">Share on X</a>
-              <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fvaultsparkstudios.com%2Fgames%2Fcall-of-doodie%2F&title=Call+of+Doodie+%E2%80%94+free+browser+shooter+from+VaultSpark+Studios" target="_blank" rel="noopener" style="padding:0.5rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;font-weight:600;text-decoration:none;transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(255,255,255,0.1)'">Reddit</a>
-              <button type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('https://vaultsparkstudios.com/games/call-of-doodie/').then(function(){var b=event.target;b.textContent='✓ Copied';setTimeout(function(){b.textContent='Copy Link'},1600);})" style="padding:0.5rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(255,255,255,0.1)'">Copy Link</button>
-            </div>
-          </div>
-
-          <!-- Early access / next game card -->
-          <div style="padding:1.75rem;border-radius:20px;background:rgba(31,162,255,0.04);border:1px solid rgba(31,162,255,0.1);">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue);margin-bottom:0.6rem;">More From The Vault</div>
-            <p style="color:var(--muted);font-size:0.88rem;line-height:1.6;margin-bottom:1.1rem;">
-              Six more games are being forged. Vault Members get first access when each one drops — plus XP, achievements, and community events around each launch.
-            </p>
-            <div style="display:flex;gap:0.65rem;flex-wrap:wrap;">
-              <a href="/games/" style="padding:0.55rem 1.1rem;border-radius:999px;background:rgba(31,162,255,0.1);border:1px solid rgba(31,162,255,0.2);color:var(--blue);font-size:0.85rem;font-weight:700;text-decoration:none;">See All Games</a>
-              <a href="/vault-member/#register" style="padding:0.55rem 1.1rem;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:0.85rem;font-weight:600;text-decoration:none;">Join The Vault Free</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
 
     <!-- ── Play Demo ─────────────────────────────────────── -->
     <section class="demo-section" aria-label="Play demo">
@@ -447,21 +446,21 @@
             <div class="demo-placeholder-inner">
               <div class="demo-placeholder-icon">🎮</div>
               <h3>It's Live — Play Free Right Now</h3>
-              <p>No download, no account needed to start. Create a free Vault Member account to save your progress and earn Vault Points as you climb.</p>
+              <p>No download, no account needed to start. Vault Members save scores and earn Vault Points as they climb — enrolment is invite-led right now.</p>
               <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
                 <a href="https://callofdoodie.wtf/" target="_blank" rel="noreferrer" class="button" data-track-event="game_play_click">&#9654;&nbsp;Play Now — It's Free</a>
-                <a href="/vault-member/#register" class="button-secondary" data-track-event="game_join_from_play">Save Your Progress — Join Free</a>
+                <a class="button-secondary" data-track-event="game_join_from_play" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
               </div>
               <div class="rank-preview-card">
                 <span class="rpc-badge">FORGE</span>
                 <div class="rpc-body">
                   <strong>Your starting rank</strong>
-                  <p>Every Vault Member begins at FORGE and rises through 9 ranks by playing.</p>
+                  <p>Every Vault Member begins as a Spark Initiate and rises through 9 ranks by playing.</p>
                   <a href="/ranks/">See all 9 ranks →</a>
                 </div>
               </div>
               <div class="first-climb-hook" id="vs-fch">
-                <span class="fch-label">First Climb quest: play both SPARKED games</span>
+                <span class="fch-label">First Climb quest: play two Vault games</span>
                 <span class="fch-count" id="vs-fch-count">0 of 2</span>
                 <a class="fch-link" href="/ranks/">earn your first badge →</a>
               </div>
@@ -482,39 +481,15 @@
         </div>
       </div>
     </section>
-    <!-- Patch Notes -->
-    <section class="section" style="padding:3rem 0;">
+    <section class="vs-gs" aria-labelledby="vs-gs-updates-heading">
       <div class="container">
-        <h2 style="font-family:Georgia,serif;font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;">Patch Notes</h2>
-        <div class="patch-notes">
-          <div class="patch-item" style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:0.75rem;overflow:hidden;">
-            <button type="button" class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="vsTogglePatch(this)">
-              <span>v1.2.0 — March 2026</span>
-              <span style="color:var(--dim);font-size:0.75rem;font-weight:400;">Latest</span>
-            </button>
-            <div style="display:none;padding:1rem 1.25rem 1.25rem;background:rgba(6,10,22,0.6);color:var(--muted);font-size:0.9rem;line-height:1.65;">
-              <ul style="padding-left:1.25rem;margin:0;display:flex;flex-direction:column;gap:0.4rem;">
-                <li>Improved performance and loading times</li>
-                <li>Fixed several gameplay bugs reported by the community</li>
-                <li>Added new visual effects and polish</li>
-                <li>Balance adjustments based on player feedback</li>
-              </ul>
-            </div>
-          </div>
-          <div class="patch-item" style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:0.75rem;overflow:hidden;">
-            <button type="button" class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="vsTogglePatch(this)">
-              <span>v1.1.0 — January 2026</span>
-              <span style="color:var(--dim);font-size:0.75rem;font-weight:400;">Previous</span>
-            </button>
-            <div style="display:none;padding:1rem 1.25rem 1.25rem;background:rgba(6,10,22,0.6);color:var(--muted);font-size:0.9rem;line-height:1.65;">
-              <ul style="padding-left:1.25rem;margin:0;display:flex;flex-direction:column;gap:0.4rem;">
-                <li>Initial public release improvements</li>
-                <li>Mobile responsiveness fixes</li>
-                <li>New content additions</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <p class="vs-gs-eyebrow">From the changelog</p>
+        <h2 id="vs-gs-updates-heading">What changed</h2>
+        <ul class="vs-gs-updates">
+          <li><time datetime="2026-03-20">Mar 20, 2026</time><span>Call of Doodie patch — stability improvements and a new satirical map variant</span></li>
+          <li><time datetime="2026-03-01">Mar 1, 2026</time><span>Studio founded and first world sparked — Call of Doodie goes live</span></li>
+        </ul>
+        <a class="vs-gs-more" href="/changelog/">Full changelog &rarr;</a>
       </div>
     </section>
 
@@ -539,119 +514,75 @@
             <button type="button" onclick="vsToggleFaq(this)" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
               Can I save my progress? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
             </button>
-            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Create a free Vault Member account to save your progress and earn Vault Points for playing.</div>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Vault Members save scores and earn Vault Points for playing. Vault enrolment is invite-led right now — request an invite from the Vault panel below.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Media: Trailer + Screenshots -->
-    <section style="padding:3rem 0;border-top:1px solid rgba(255,255,255,0.06);" aria-label="Game media">
+    <section class="vs-gs" aria-labelledby="vs-gs-media-heading">
       <div class="container">
-        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.6rem;">Media</div>
-        <h2 style="font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-0.03em;margin-bottom:1.5rem;">Trailer &amp; Screenshots</h2>
-        <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;">
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;">
-            <div style="font-size:2.5rem;">▶</div>
-            <div style="font-size:0.88rem;color:var(--muted);">Gameplay trailer coming soon.</div>
-            <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer"
-               style="font-size:0.8rem;color:var(--gold);text-decoration:none;font-weight:600;">Subscribe on YouTube →</a>
-          </div>
-        </div>
-        <p style="font-size:0.88rem;color:var(--dim);margin:0;">Screenshots coming soon. <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer" style="color:var(--gold);text-decoration:none;">Follow us on YouTube</a> for the latest updates.</p>
+        <p class="vs-gs-eyebrow">Media</p>
+        <h2 id="vs-gs-media-heading">Key art</h2>
+        <figure class="vs-gs-media">
+          <picture><source srcset="/assets/og-cod.webp" type="image/webp" /><img src="/assets/og-cod.png" alt="Call of Doodie key art: the title on a dark field with the tagline A satirical browser shooter, free, no download required." width="1200" height="630" loading="lazy" decoding="async" /></picture>
+          <figcaption><span>Call of Doodie key art · free to use in coverage via the <a href="/press/">press kit</a></span><a href="https://callofdoodie.wtf/" target="_blank" rel="noreferrer">See it in motion: play now</a></figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- Vault Points Callout -->
-    <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
-      <div class="container">
-        <div style="background:linear-gradient(135deg,rgba(255,196,0,0.07),rgba(255,122,0,0.04));border:1px solid rgba(255,196,0,0.2);border-radius:18px;padding:1.75rem 2rem;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
-            <div>
-              <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.5rem;">⚡ Vault Points</div>
-              <div style="font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:0.35rem;">Playing Call of Doodie? Earn Vault Points.</div>
-              <div style="font-size:0.88rem;color:var(--muted);max-width:48ch;line-height:1.6;">Complete Vault Challenges tied to this game to earn bonus points and climb the leaderboard. Free for all Vault Members.</div>
-            </div>
-            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;">
-              <a href="/vault-member/" class="button button-sm">Open Vault</a>
-              <a href="/leaderboards/" class="button-secondary" style="padding:0.55rem 1.1rem;font-size:0.88rem;">Leaderboard</a>
-            </div>
-          </div>
-          <div id="vs-score-panel" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,196,0,0.15);">
-            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.65rem;">📊 Submit Your Score</div>
-            <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;">
-              <input type="number" id="vs-score-input" placeholder="Your score" min="1" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,196,0,0.25);border-radius:8px;padding:0.45rem 0.85rem;color:var(--text);font-size:0.9rem;width:160px;outline:none;font-family:inherit;" />
-              <button type="button" id="vs-score-btn" onclick="vsSubmitScore()" style="background:#FFC400;color:#000;border:none;border-radius:8px;padding:0.45rem 1.1rem;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;">Submit</button>
-              <span id="vs-score-best" style="font-size:0.82rem;color:var(--muted);"></span>
-            </div>
-            <div id="vs-score-result" style="margin-top:0.5rem;font-size:0.85rem;min-height:1.2rem;"></div>
-          </div>
-        </div>
-
-        <div style="margin-top:1rem;padding:1.1rem 1.5rem;background:rgba(88,101,242,0.08);border:1px solid rgba(88,101,242,0.2);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:0.75rem;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(88,101,242,0.9)" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-            <div>
-              <div style="font-size:0.9rem;font-weight:600;color:var(--text);">Join the Call of Doodie community on Discord</div>
-              <div style="font-size:0.8rem;color:var(--muted);">Share scores, report bugs, and talk strategy with other players.</div>
-            </div>
-          </div>
-          <a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.35);border-radius:8px;padding:0.45rem 1rem;font-size:0.85rem;font-weight:600;color:rgb(88,101,242);text-decoration:none;white-space:nowrap;">Join Discord →</a>
-        </div>
-      </div>
-    </section>
 
   
-    <!-- Notify Me — Early Access (auto-injected by scripts/inject-early-signal.mjs) -->
-    <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
-      <div class="container">
-        <div style="background:linear-gradient(135deg,rgba(255,196,0,0.06),rgba(13,17,28,0.97));border:1px solid rgba(255,196,0,0.18);border-radius:18px;padding:2rem 2.25rem;">
-          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Early Signal</div>
-          <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:1.55rem;font-weight:400;letter-spacing:-0.025em;margin:0 0 0.4rem;color:var(--text);">Get the First Signal from Call of Doodie</h2>
-          <p style="color:var(--muted);font-size:0.93rem;line-height:1.6;max-width:52ch;margin:0 0 1.25rem;">Drop your email — we'll notify you the moment Call of Doodie opens.</p>
-          <form class="notify-me-form" data-game="Call of Doodie" novalidate>
-            <input type="hidden" name="access_key" value="af76f2ed-d5fd-4b28-8b73-a2e47be2bb71" />
-            <div class="notify-me-fields" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-              <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" style="flex:1;min-width:210px;height:44px;padding:0 1rem;border-radius:10px;border:1px solid rgba(255,196,0,0.25);background:rgba(255,255,255,0.05);color:var(--text);font-size:0.92rem;font-family:inherit;outline:none;" />
-              <button type="submit" class="button button-sm" style="height:44px;background:linear-gradient(135deg,#FFC400,#FF7A00);color:#000;font-weight:800;border:none;">Notify Me</button>
-            </div>
-            <p class="notify-me-feedback" hidden style="margin-top:0.75rem;font-size:0.88rem;line-height:1.5;"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-    <script src="/assets/notify-me.js" defer></script>
     <script src="/assets/funnel-tracking.js" defer></script>
-
-
-<!-- push-cta-inject:game (S216) -->
-    <section aria-label="Push notification opt-in" style="padding:1rem 0 2rem;">
+    <!-- vs-game-system:vault (game-page-system) -->
+    <section class="vs-gs" aria-labelledby="vs-gs-vault-heading">
       <div class="container">
-        <div style="max-width:520px;">
-          <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange,#ff7a00);margin-bottom:0.45rem;">Call of Doodie updates</p>
-          <div data-push-subscribe style="display:inline-block;"></div>
-        </div>
-      </div>
-    </section>
-    <!-- ecosystem-bridge-inject:game (S216) -->
-    <section class="ecosystem-bridge" aria-label="Cross-studio ecosystem">
-      <div class="container">
-        <div class="ecosystem-bridge-inner">
+        <div class="vs-gs-vault">
           <div>
-            <p class="ecosystem-bridge-eyebrow">Also From The Vault</p>
-            <h2>Explore More From The Vault</h2>
-            <p>From sports analytics to creator tools — VaultSpark builds a connected ecosystem where every project serves the games.</p>
-            <a href="/projects/" class="button-ghost button-sm" style="display:inline-flex;align-items:center;min-height:40px;padding:0 1rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);color:var(--muted,#a8b4d0);font-size:0.84rem;font-weight:600;text-decoration:none;">Explore All Projects &rarr;</a>
+            <p class="vs-gs-eyebrow">The Vault</p>
+            <h2 id="vs-gs-vault-heading">Your place in the Vault</h2>
+            <p>Call of Doodie is free to play right now — no account needed to start. Vault Members carry one identity across every VaultSpark game: Vault Points, ranks, achievements and a place on the leaderboard. Vault enrolment is invite-led right now.</p>
           </div>
-          <div class="ecosystem-bridge-links">
-            <a href="/projects/promogrind/" class="eco-link">PromoGrind <span>Creator Tool</span></a>
-            <a href="/games/mindframe/" class="eco-link">MindFrame <span>AI Intelligence</span></a>
-            <a href="/projects/velaxis/" class="eco-link">Velaxis <span>Trading Intelligence</span></a>
-            <a href="/games/" class="eco-link">All Games <span>VaultSpark Universe</span></a>
+          <div class="vs-gs-vault-actions">
+            <a class="button" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
+            <a class="button-secondary" href="/membership/">How membership works</a>
+            <div class="vs-gs-vault-links">
+              <a href="/leaderboards/">Leaderboard</a>
+              <a href="/vault-member/#login">Sign in</a>
+              <a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a>
+            </div>
+          </div>
+          <div id="vs-score-panel" class="vs-gs-score" style="display:none;">
+            <div class="vs-gs-score-label">Submit your score</div>
+            <div class="vs-gs-score-row">
+              <label class="vs-visually-hidden" for="vs-score-input">Your score</label>
+              <input type="number" id="vs-score-input" placeholder="Your score" min="1" inputmode="numeric" />
+              <button type="button" id="vs-score-btn" class="button button-sm" onclick="vsSubmitScore()">Submit</button>
+              <span id="vs-score-best"></span>
+            </div>
+            <div id="vs-score-result" class="vs-gs-score-result" role="status" aria-live="polite"></div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- vs-game-system:also (game-page-system) -->
+    <section class="vs-gs" aria-labelledby="vs-gs-also-heading">
+      <div class="container">
+        <p class="vs-gs-eyebrow">Keep exploring</p>
+        <h2 id="vs-gs-also-heading">Also from the Vault</h2>
+        <ul class="vs-gs-also">
+          <li><a href="/games/franchise-architect/">Franchise Architect <span>Football franchise sim</span></a></li>
+          <li><a href="/games/vaultfront/">VaultFront <span>In the forge</span></a></li>
+          <li><a href="/games/solara/">Solara: Sunfall <span>Browser roguelite RPG, shared world</span></a></li>
+          <li><a href="/games/">All games <span>The full catalog</span></a></li>
+          <li><a href="/play/">Where to play <span>Every playable title</span></a></li>
+        </ul>
+      </div>
+    </section>
+
+
+
 
   </main>
 
@@ -665,23 +596,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -700,19 +630,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -722,7 +650,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -742,17 +670,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -766,6 +694,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -1027,7 +956,7 @@
   }catch(e){}
 }());
 </script>
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>
 

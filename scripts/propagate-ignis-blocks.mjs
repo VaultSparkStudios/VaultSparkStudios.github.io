@@ -75,8 +75,16 @@ function siblingLiveUrl(folder) {
   return status?.liveUrl || status?.runtimeUrl || null;
 }
 
+// The public catalog (api/public-intelligence.json) is the canonical facts
+// source: its deployedUrl wins over a sibling repo's PROJECT_STATUS liveUrl,
+// which can lag a domain move (MindFrame's retired usemindframe.com kept
+// coming back on every rerun until this lookup came first).
+const PI_ALIAS = { 'franchise-architect-football': 'football-gm', 'franchise-architect': 'football-gm' };
+const publicCatalog = readJSON(path.join(repoRoot, 'api', 'public-intelligence.json'))?.catalog ?? [];
+const deployedUrlById = new Map(publicCatalog.filter((c) => c && c.deployedUrl).map((c) => [c.id, c.deployedUrl]));
+
 function canonicalUrl(slug, folder) {
-  return siblingLiveUrl(folder) || projectsBySlug[slug]?.runtimeUrl || null;
+  return deployedUrlById.get(PI_ALIAS[slug] || slug) || siblingLiveUrl(folder) || projectsBySlug[slug]?.runtimeUrl || null;
 }
 
 function ensureAsset(html, tag, href) {

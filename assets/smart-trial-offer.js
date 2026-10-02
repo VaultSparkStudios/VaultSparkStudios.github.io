@@ -6,7 +6,7 @@
      A) vs_visit_count >= 3 (returning multi-session visitor)
      B) 5 minutes of continuous presence on any page
 
-   Panel: bottom-anchored, dismissable, links to /join/?promo=TRIAL50.
+   Panel: bottom-anchored, dismissable, links to /vault-member/?promo=TRIAL50#upgrade.
    Gate: vs_trial_offered (set on first show — never shows again).
    RUM: funnel:trial_offer_shown · funnel:trial_offer_clicked · funnel:trial_offer_dismissed
 
@@ -32,11 +32,13 @@
 
   var PANEL_ID = 'vs-trial-offer-panel';
   // S207 (trial-offer-promo-acknowledgment): the discount applies to the PAID
-  // VaultSparked tier, whose checkout (with full promo_code plumbing) lives at
-  // /vaultsparked/ — NOT the free /join/ page. /vaultsparked/ now auto-reads the
-  // ?promo= param into the checkout promo field, and create-checkout validates it
-  // server-side (an unknown code surfaces an honest "not found or expired" toast).
-  var OFFER_URL = '/vaultsparked/?promo=TRIAL50';
+  // VaultSparked tier. S368 (D-S368.1): /vaultsparked/ is retired, so the offer
+  // now lands on the portal upgrade panel. portal-core.js reads ?promo= (query or
+  // after #upgrade), keeps it through sign-in, and passes it to create-checkout as
+  // promo_code, which validates it server-side against live Stripe promotion
+  // codes. An unknown or expired code is reported honestly and checkout continues
+  // at the standard price.
+  var OFFER_URL = '/vault-member/?promo=TRIAL50#upgrade';
   var SESSION_MIN = 5; // minutes of current-page presence
 
   function ensureStyles() {
@@ -89,11 +91,11 @@
 
     var label = document.createElement('div');
     label.className = 'vs-to-label';
-    label.textContent = '⚡ Limited Offer';
+    label.textContent = '⚡ VaultSparked offer';
 
     var msg = document.createElement('p');
     msg.className = 'vs-to-message';
-    msg.textContent = 'Your first month, half price — 24h only. Join the Vault and unlock the full studio.';
+    msg.textContent = 'Half off your first month of VaultSparked with code TRIAL50, applied at checkout from your Vault Member portal.';
 
     body.appendChild(label);
     body.appendChild(msg);
@@ -101,7 +103,7 @@
     var cta = document.createElement('a');
     cta.className = 'vs-to-cta';
     cta.href = OFFER_URL;
-    cta.textContent = 'Claim 50% off';
+    cta.textContent = 'Use TRIAL50';
     cta.addEventListener('click', function () {
       emitUx('funnel:trial_offer_clicked');
       lsSet('vs_trial_offered', Date.now());

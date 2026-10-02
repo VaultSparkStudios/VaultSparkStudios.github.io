@@ -1,0 +1,96 @@
+name: The Desk Dispatch — Daily Digest
+
+# D-S368.6 (founder ruling 2026-10-02): Desk Dispatch subscribers (Brevo list 3,
+# double opt-in) receive AT MOST one email a day summarising that day's Desk
+# editions, sent automatically — but automatic sending starts ONLY after the
+# founder confirms a test issue sent to their own address.
+#
+# That gate lives in config/desk-dispatch.json, not here, so the schedule and a
+# manual `send` dispatch take exactly the same path (the S363 lesson from
+# member-newsletter.yml: a gate keyed on the trigger can be bypassed by a
+# dropdown). While autoSend is false the script logs "auto-send disabled —
+# awaiting founder test approval", writes HELD to the job summary, and exits 0.
+# A held run is green by design but never reads as a send: the summary and a
+# warning annotation both say "Nothing was sent".
+#
+# Idempotent by Brevo campaign name desk-dispatch-YYYY-MM-DD: a re-run, a manual
+# dispatch after the cron, or a retry can never mail the list twice for a day.
+
+on:
+  schedule:
+    # 23:30 UTC — after the Late Night edition (news-publish.yml 22:07 UTC) and
+    # its staging-first content release, so the day's stories are live to link.
+    - cron: "30 23 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run = render only, sends nothing | send = campaign to list 3 (still HELD until config/desk-dispatch.json is armed)"
+        type: choice
+        options:
+          - dry-run
+          - send
+        default: dry-run
+      date:
+        description: "Issue day YYYY-MM-DD (blank = today, UTC). --send only accepts today or yesterday."
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desk-dispatch-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # No npm install: the digest builder imports only node: builtins and
+      # local scripts/lib modules (check-workflow-runtime-dependencies enforces it).
+      - name: Build and (if armed) send the Desk Dispatch
+        id: digest
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          MODE: ${{ github.event_name == 'schedule' && 'send' || inputs.mode }}
+          ISSUE_DATE: ${{ inputs.date }}
+        run: |
+          set -euo pipefail
+          case "${MODE}" in
+            send|dry-run) ;;
+            *) echo "::error::Unknown mode '${MODE}'"; exit 1 ;;
+          esac
+          args=("--${MODE}")
+          if [ -n "${ISSUE_DATE:-}" ]; then args+=("--date" "${ISSUE_DATE}"); fi
+          node scripts/build-desk-dispatch-digest.mjs "${args[@]}"
+
+      - name: Keep the rendered issue
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desk-dispatch-${{ github.run_id }}
+          path: .cache/desk-dispatch/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Outcome
+        if: always()
+        env:
+          OUTCOME: ${{ steps.digest.outputs.outcome }}
+        run: |
+          case "${OUTCOME:-}" in
+            sent)                echo "::notice::Desk Dispatch sent to Brevo list 3." ;;
+            already-sent)        echo "::notice::Nothing sent: today's Desk Dispatch was already dispatched." ;;
+            held)                echo "Nothing sent: auto-send is held awaiting founder test approval (D-S368.6)." ;;
+            skipped-no-editions) echo "Nothing sent: The Desk published no editions for this day." ;;
+            not-live)            echo "Nothing sent: none of the day's stories is live on production yet." ;;
+            dry-run)             echo "Dry run: rendered only, nothing sent." ;;
+            *)                   echo "::error::Digest step produced no outcome; check the step log. Nothing is known to have been sent." ;;
+          esac

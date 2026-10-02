@@ -19,11 +19,19 @@
  *   applicable) on disk, and that each file's byte count matches the committed
  *   `brand/assets.json` manifest. Catches hand-edits to brand outputs and
  *   drift between the manifest and the real files.
+ *
+ * Byte-identical outputs are published ONCE (asset-diet, 2026-10-02). When a job's
+ * PNG output has the same SHA-256 as an earlier job's, its own files are removed and
+ * its manifest entry carries `aliasOf: <earlier slug>` with that slug's URLs. The
+ * black/white primary-mark masters currently export identically to the cinematic
+ * logo, so three 1.78 MB copies of one file used to ship. No artwork is invented:
+ * the alias disappears by itself as soon as a genuinely distinct master is supplied.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import os from 'node:os';
+import crypto from 'node:crypto';
 
 /**
  * S351: the committed literal is the SANITIZED form (the pre-push scan rewrites an
@@ -94,6 +102,12 @@ const manifest = {
  * as the writer refusing to cause it.
  */
 const skipped = [];
+/** sha256 of each published (non-alias) job PNG → its manifest entry. */
+const publishedByHash = new Map();
+
+function aliasNote(target) {
+  return `Same artwork as ${target}: this master currently exports byte-identically, so one file is published and this slug points at it.`;
+}
 
 async function buildVariant(job, { signatureOnly = false } = {}) {
   if (!fs.existsSync(job.src)) {
@@ -108,6 +122,25 @@ async function buildVariant(job, { signatureOnly = false } = {}) {
 
   await image.clone().png({ compressionLevel: 9, palette: false, quality: 90 }).toFile(pngOut);
   const pngBytes = fs.statSync(pngOut).size;
+
+  if (!signatureOnly) {
+    const hash = crypto.createHash('sha256').update(fs.readFileSync(pngOut)).digest('hex');
+    const twin = publishedByHash.get(hash);
+    if (twin) {
+      fs.rmSync(pngOut, { force: true });
+      fs.rmSync(webpOut, { force: true });
+      manifest.assets.push({
+        slug: job.slug,
+        usage: job.usage,
+        width: job.width,
+        aliasOf: twin.slug,
+        note: aliasNote(twin.slug),
+        formats: JSON.parse(JSON.stringify(twin.formats)),
+      });
+      console.log(`  = ${job.slug}  identical to ${twin.slug} — published once, aliased`);
+      return;
+    }
+  }
 
   let webpBytes = null;
   if (!signatureOnly) {
@@ -127,6 +160,9 @@ async function buildVariant(job, { signatureOnly = false } = {}) {
     entry.formats.webp = { url: `/assets/brand/${job.slug}.webp`, bytes: webpBytes };
   }
   manifest.assets.push(entry);
+  if (!signatureOnly) {
+    publishedByHash.set(crypto.createHash('sha256').update(fs.readFileSync(pngOut)).digest('hex'), entry);
+  }
   console.log(`  ✓ ${job.slug}  png=${(pngBytes/1024).toFixed(1)}KB${webpBytes!=null?`  webp=${(webpBytes/1024).toFixed(1)}KB`:''}`);
 }
 
@@ -171,6 +207,28 @@ function runCheck() {
     const entry = bySlug.get(job.slug);
     if (!entry) {
       findings.push(`${job.slug}: missing from brand/assets.json manifest`);
+      continue;
+    }
+    if (entry.aliasOf) {
+      // An alias publishes no file of its own: its URLs must be the target's, the
+      // target must be a real (non-alias) entry, and no stale copy may linger on disk.
+      const target = bySlug.get(entry.aliasOf);
+      if (!target || target.aliasOf) {
+        findings.push(`${job.slug}: aliasOf "${entry.aliasOf}" is not a published asset`);
+        continue;
+      }
+      for (const fmt of Object.keys(target.formats || {})) {
+        const a = entry.formats?.[fmt];
+        const t = target.formats[fmt];
+        if (!a || a.url !== t.url || a.bytes !== t.bytes) {
+          findings.push(`${job.slug}.${fmt}: alias must carry ${entry.aliasOf}'s url+bytes`);
+        }
+      }
+      for (const ext of ['png', 'webp']) {
+        if (fs.existsSync(path.join(OUT_DIR, `${job.slug}.${ext}`))) {
+          findings.push(`${job.slug}.${ext}: aliased slug still has its own copy on disk`);
+        }
+      }
       continue;
     }
     const pngPath = path.join(OUT_DIR, `${job.slug}.png`);

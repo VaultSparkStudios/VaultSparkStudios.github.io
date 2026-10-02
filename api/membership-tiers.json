@@ -1,61 +1,95 @@
 {
-  "schemaVersion": "1.0",
-  "generatedBy": "hand-authored canonical source (S234) — single source of truth for membership tiers",
-  "generatedAt": "2026-06-28",
+  "schemaVersion": "2.0",
+  "generatedBy": "hand-authored canonical source (S234, rebuilt S368 per D-S368.1) — single source of truth for membership tiers",
+  "generatedAt": "2026-10-01",
   "publicSafe": true,
   "currency": "USD",
-  "note": "Canonical tier facts for /membership/, /membership-value/, /join/, and AI agents. Pricing + theme colors verified against membership/index.html. When tier facts change, edit HERE first; check-content-coherence guards page agreement.",
+  "decision": "D-S368.1",
+  "note": "Canonical tier facts for /membership/, the Vault Member portal, /terms/, /invite/, the FAQ and AI agents. Every perk listed here is enforced in code today; nothing aspirational is listed. Billing is monthly only — annual plans are flagged comingLater and are not for sale. Plan keys (planCode) are internal and never shown to visitors. When tier facts change, edit HERE first; scripts/check-content-coherence.mjs fails any public page that prints a price this feed does not offer.",
+  "enrolment": {
+    "freeAccounts": "invitation",
+    "label": "Request your Vault invite",
+    "url": "/invite/",
+    "note": "New free Vault Member accounts are currently opened by invitation."
+  },
+  "billing": {
+    "interval": "month",
+    "annual": {
+      "comingLater": true,
+      "buyable": false,
+      "label": "Annual plans: coming later"
+    },
+    "cancel": "Cancel any time from Manage billing in your Vault Member portal. Access continues to the end of the paid month.",
+    "priceLock": "Phase 1 subscribers keep their Phase 1 monthly price while their subscription stays active. Cancelling ends the lock."
+  },
+  "gamesAccess": "Every VaultSpark game is free to play. No tier locks a game.",
   "tiers": [
     {
       "id": "free",
       "name": "Vault Member",
       "planCode": "free",
-      "price": { "monthly": 0, "annual": 0, "display": "Free", "sub": "Forever free — no credit card" },
+      "recommended": false,
+      "price": { "monthly": 0, "annual": null, "display": "Free", "sub": "No card needed · by invitation for now" },
       "themeColor": "default",
       "themeLabel": "Default profile theme",
-      "highlights": [
-        "Cross-game Vault Rank (9 tiers)",
-        "Achievement tracking",
-        "Community challenges",
-        "Vault Wall profile",
-        "Play all free games",
-        "Studio Signal lore drops"
+      "summary": "Your identity across the studio: a profile, a rank that climbs as you play, and every game free.",
+      "perks": [
+        "Vault Member profile and Vault Wall",
+        "9-rank ladder from Spark Initiate to The Sparked",
+        "Vault Points, achievements and community challenges",
+        "Seasons and referral rewards",
+        "Every VaultSpark game, free to play"
       ],
-      "cta": { "label": "Join Free", "url": "/vault-member/#register" }
+      "cta": { "label": "Request your Vault invite", "url": "/invite/", "signedInUrl": "/vault-member/" }
     },
     {
       "id": "sparked",
-      "name": "Vault Sparked",
+      "name": "VaultSparked",
       "planCode": "vault_sparked",
-      "price": { "monthly": 4.99, "annual": 44.99, "annualSavingPct": 25, "display": "$4.99/mo", "sub": "or $44.99/yr · save 25%" },
+      "recommended": true,
+      "price": { "monthly": 4.99, "annual": null, "display": "$4.99/mo", "sub": "Billed monthly · cancel any time" },
       "themeColor": "#1FA2FF",
       "themeLabel": "Blue VaultSparked profile theme",
-      "highlights": [
-        "Everything in Free",
-        "Premium access across every game",
-        "2× XP",
-        "Studio discounts",
-        "Blue VaultSparked profile theme + Sparked badge",
-        "500 monthly XP bonus",
-        "Discord Sparked role"
+      "summary": "The supporter tier: a Sparked identity, more of IGNIS, the Sparked archive and beta keys, and a bonus every renewal.",
+      "perks": [
+        "Everything in Vault Member",
+        "Sparked badge and blue VaultSparked profile theme",
+        "Discord Sparked role (when your Discord is linked)",
+        "Ask IGNIS: 40 questions a month",
+        "Sparked archive files and beta keys",
+        "PromoGrind live odds",
+        "500 bonus Vault Points every renewal"
       ],
-      "cta": { "label": "Start Free → Upgrade", "url": "/vault-member/#register" }
+      "cta": { "label": "Get VaultSparked", "url": "/vault-member/#upgrade", "signedInUrl": "/vault-member/#upgrade" }
     },
     {
       "id": "eternal",
-      "name": "Vault Eternal",
+      "name": "VaultSparked Eternal",
       "planCode": "vault_sparked_pro",
-      "price": { "monthly": 29.99, "annual": 269.99, "annualSavingPct": 25, "display": "$29.99/mo", "sub": "or $269.99/yr · save 25% · grandfather-locked" },
+      "recommended": false,
+      "price": { "monthly": 29.99, "annual": null, "display": "$29.99/mo", "sub": "Billed monthly · cancel any time" },
       "themeColor": "#a78bfa",
       "themeLabel": "Purple Eternal profile theme",
-      "highlights": [
-        "Everything in Sparked",
-        "Maximum everything",
+      "summary": "The deepest tier: unlimited IGNIS, the Eternal Dispatch briefing and the Eternal identity.",
+      "perks": [
+        "Everything in VaultSparked",
+        "Unlimited Ask IGNIS questions",
+        "Eternal Dispatch: a private studio intelligence briefing",
+        "Discord Eternal role (when your Discord is linked)",
         "Purple Eternal profile theme",
-        "Permanent vault records placement",
-        "Grandfather pricing locked for life"
+        "1,000 bonus Vault Points every renewal"
       ],
-      "cta": { "label": "Start Free → Go Eternal", "url": "/vault-member/#register" }
+      "cta": { "label": "Go Eternal", "url": "/vault-member/#upgrade", "signedInUrl": "/vault-member/#upgrade" }
     }
+  ],
+  "notOffered": [
+    "XP or point multipliers",
+    "Studio-wide product discounts",
+    "Rank-based checkout discounts",
+    "Priority challenge queue",
+    "Co-development input or a direct studio channel",
+    "Game splash-screen or studio credits",
+    "Paid access to games (every game is free)",
+    "Gift subscriptions (paused until rebuilt)"
   ]
 }

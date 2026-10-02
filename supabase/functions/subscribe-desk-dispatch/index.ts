@@ -97,6 +97,24 @@ export function normalizeSource(raw: unknown): string {
  */
 const CONFIRM_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
+/**
+ * The PUBLIC URL of this function, for the confirmation link.
+ *
+ * It was previously rebuilt from `req.url`. Inside the Supabase edge runtime
+ * that is the request URL as forwarded by the gateway, which is not guaranteed
+ * to be the public `https://<ref>.supabase.co/functions/v1/<name>` address, so
+ * a link minted from it may not resolve from a reader's mail client. The link
+ * is now pinned: an explicit DISPATCH_CONFIRM_ENDPOINT wins, otherwise it is
+ * built from the runtime-provided SUPABASE_URL plus the fixed function path.
+ */
+export function confirmEndpoint(env: (name: string) => string | undefined): string | null {
+  const explicit = (env('DISPATCH_CONFIRM_ENDPOINT') || '').trim();
+  if (/^https:\/\/[^\s?#]+$/.test(explicit)) return explicit;
+  const base = (env('SUPABASE_URL') || '').trim().replace(/\/+$/, '');
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(base)) return null;
+  return `${base}/functions/v1/subscribe-desk-dispatch`;
+}
+
 const b64url = (bytes: Uint8Array) =>
   btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
@@ -182,9 +200,12 @@ Deno.serve(async (req) => {
 
   // A misconfigured newsletter must fail loudly to the operator and honestly
   // to the reader — never a cheerful "you're subscribed!" into a void.
-  if (!apiKey || !listId || !templateId) {
+  // The signing secret and the public confirm endpoint are config too: without
+  // either, the email would carry a link that can never confirm anyone.
+  const endpoint = confirmEndpoint((name) => Deno.env.get(name));
+  if (!apiKey || !listId || !templateId || !secret || !endpoint) {
     console.error('subscribe-desk-dispatch: missing config', {
-      hasKey: Boolean(apiKey), listId, templateId,
+      hasKey: Boolean(apiKey), listId, templateId, hasSecret: Boolean(secret), hasEndpoint: Boolean(endpoint),
     });
     return json({ error: 'Subscriptions are temporarily unavailable.' }, 503, cors);
   }
@@ -205,7 +226,7 @@ Deno.serve(async (req) => {
     // needs a dashboard-designated DOI template and answers 400 without one;
     // this path is proven to deliver. The confirm link carries a signed token,
     // so no contact exists until the reader clicks it.
-    const confirmUrl = `${new URL(req.url).origin}${new URL(req.url).pathname}?token=${encodeURIComponent(await mintToken(email, secret))}`;
+    const confirmUrl = `${endpoint}?token=${encodeURIComponent(await mintToken(email, secret))}`;
     const res = await fetch(`${BREVO_API}/smtp/email`, {
       method: 'POST',
       headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },

@@ -54,7 +54,6 @@ export const GENERIC_CARDS = ['/assets/og-image.png', '/assets/og-journal.png', 
 // URLs into indistinguishable shares.
 const DUPLICATE_CARD_OVERRIDES = new Set([
   'leaderboards/call-of-doodie/index.html',
-  'games/gridiron-gm-play/index.html',
   'leaderboards/football-gm/index.html',
   'franchise-architect/index.html',
   'universe/voidfall/index.html',
@@ -85,7 +84,6 @@ export const PUBLIC_NO_OG = [
   // route 301'd them into 404s), and solara/index.html + membership-value were
   // retired to edge redirects. Paths follow the pages.
   'games/solara/archive.html', 'games/solara/chronicle.html',
-  'stats/index.html',
   'stats/ecosystem/index.html', 'ask-founders/index.html',
   // S334: /evidence/ is the front door to the studio's live-data surfaces —
   // exactly the kind of link that gets shared into a thread about whether any

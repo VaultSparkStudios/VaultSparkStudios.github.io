@@ -109,7 +109,13 @@ export function evaluate({ html, gameRegistry, catalog, unresolvable = UNRESOLVA
   let checked = 0;
   let exempt = 0;
 
-  if (!tiers.length) findings.push('no project tiers found on the home page — the gate would otherwise pass by measuring nothing');
+  // S368 ia-consolidation-v2: the hand-written "Forged From The Vault" tiers were
+  // retired; the home portfolio is now only the registry-generated hero tiles plus a
+  // link row. A page with no tiers passes ONLY when it declares that hand-off in its
+  // own markup (data-home-portfolio="registry"), so a silently deleted grid still fails.
+  const declaredRegistry = /data-home-portfolio="registry"/.test(html);
+  if (!tiers.length && !declaredRegistry) findings.push('no project tiers found on the home page — the gate would otherwise pass by measuring nothing');
+  if (tiers.length && declaredRegistry) findings.push('the home page declares a registry-rendered portfolio but still carries hand-written project tiers');
 
   for (const tier of tiers) {
     const expected = TIER_STATUS[tier.tierClass];
@@ -198,6 +204,10 @@ function selfTest() {
       !run(tier('forge')).ok],
     ['a page with no tiers at all fails rather than measuring nothing',
       !run('<p>no portfolio here</p>').ok],
+    ['a page that declares a registry-rendered portfolio and carries no tiers passes',
+      run('<nav data-home-portfolio="registry"><a href="/games/">Games</a></nav>').ok],
+    ['a registry declaration alongside hand-written tiers fails',
+      !run('<nav data-home-portfolio="registry"></nav>' + tier('sparked', card('Solara', '/games/solara/'))).ok],
 
     // The gate's own first live run skipped this card silently and still looked green.
     // The residue found on a rendered capture after the badge rule was green.

@@ -21,6 +21,8 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from './lib/safe-spawn.mjs';
+import { ORG_ID, WEBSITE_ID, isStudioOrganization, isStudioWebsite } from './lib/org-entity.mjs';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dir, '..');
@@ -66,6 +68,40 @@ function parseTypes(html) {
   return types;
 }
 
+/* ── One entity graph (agent-geo-layer-v2) ──────────────────────────────────
+ * Every served page that declares the studio as an Organization (by name or by
+ * root URL) must declare it under the canonical @id; a studio WebSite node must
+ * carry #website. Pages that only REFERENCE the studio ({"@id": "…#org"}) pass.
+ * Without this, each hand-edited page re-forks the studio into another
+ * anonymous entity and answer engines see N studios instead of one. */
+export function entityGraphFindings(html) {
+  const findings = [];
+  const re = /<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g;
+  let m;
+  const visit = (n, at) => {
+    if (Array.isArray(n)) { n.forEach((x) => visit(x, at)); return; }
+    if (!n || typeof n !== 'object') return;
+    if (isStudioOrganization(n) && n['@id'] !== ORG_ID) findings.push(`${at || '(root)'}: Organization "${n.name || n.url}" without "@id":"${ORG_ID}"`);
+    if (isStudioWebsite(n) && n['@id'] !== WEBSITE_ID) findings.push(`${at || '(root)'}: WebSite without "@id":"${WEBSITE_ID}"`);
+    for (const [k, v] of Object.entries(n)) visit(v, k === '@graph' ? at : (at ? at + '.' : '') + k);
+  };
+  while ((m = re.exec(html)) !== null) {
+    let d;
+    try { d = JSON.parse(m[1]); } catch { continue; }
+    visit(d, '');
+  }
+  return findings;
+}
+
+function servedHtmlFiles() {
+  const served = JSON.parse(readFileSync(join(ROOT, 'config', 'served-surface.json'), 'utf8'));
+  const tracked = execFileSync('git', ['ls-files', '-z', '--', '*.html'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+    .split('\0').filter(Boolean);
+  return tracked
+    .filter((f) => served.exact.includes(f) || served.prefixes.some((p) => f.startsWith(p)))
+    .filter((f) => !(served.excludedPrefixes || []).some((p) => f.startsWith(p)));
+}
+
 function hasEntitySchema(types) {
   for (const t of types) {
     if (!NAV_TYPES.has(t)) return true;
@@ -104,7 +140,16 @@ if (SELF_TEST) {
   assert(isRedirectStub('<meta name="robots" content="noindex,follow"><link rel="canonical" href="https://vaultsparkstudios.com/new/"><meta http-equiv="refresh" content="0;url=/new/">'), 'redirect stub: verified contract passes');
   assert(!isRedirectStub('<meta name="robots" content="noindex,follow">'), 'redirect stub: incomplete contract fails');
 
-  if (fail === 0) { console.log('✓ check-schema-coverage --self-test: 9/9 passed'); process.exit(0); }
+  /* Entity graph: canonical @id passes, references pass, re-declarations fail (negative controls) */
+  const ld = (o) => '<script type="application/ld+json">' + JSON.stringify(o) + '</script>';
+  assert(entityGraphFindings(ld({ '@type': 'Organization', '@id': ORG_ID, name: 'VaultSpark Studios' })).length === 0, 'entity graph: canonical Organization passes');
+  assert(entityGraphFindings(ld({ '@type': 'Article', publisher: { '@id': ORG_ID } })).length === 0, 'entity graph: @id reference passes');
+  assert(entityGraphFindings(ld({ '@type': 'Article', publisher: { '@type': 'Organization', name: 'VaultSpark Studios', url: 'https://vaultsparkstudios.com/' } })).length === 1, 'entity graph NEGATIVE: re-declared publisher without @id fails');
+  assert(entityGraphFindings(ld({ '@graph': [{ '@type': 'Organization', name: 'VaultSpark Studios LLC', '@id': 'https://vaultsparkstudios.com/#organization' }] })).length === 1, 'entity graph NEGATIVE: wrong @id inside @graph fails');
+  assert(entityGraphFindings(ld({ '@type': 'WebPage', isPartOf: { '@type': 'WebSite', url: 'https://vaultsparkstudios.com/' } })).length === 1, 'entity graph NEGATIVE: studio WebSite without #website fails');
+  assert(entityGraphFindings(ld({ '@type': 'NewsArticle', author: { '@type': 'Organization', name: 'The Desk — AI personas', url: 'https://vaultsparkstudios.com/news/' } })).length === 0, 'entity graph: a different organization (The Desk) is not the studio');
+
+  if (fail === 0) { console.log('✓ check-schema-coverage --self-test: 15/15 passed'); process.exit(0); }
   console.error('✗ check-schema-coverage --self-test: ' + fail + ' failed'); process.exit(1);
 }
 
@@ -140,8 +185,23 @@ for (const { path, expected, allowNavOnly } of REQUIRED) {
   }
 }
 
+/* Phase 2 — one entity graph across every served page */
+const graphFiles = servedHtmlFiles();
+let graphFailures = 0;
+for (const f of graphFiles) {
+  const file = join(ROOT, f);
+  if (!existsSync(file)) continue;
+  for (const finding of entityGraphFindings(readFileSync(file, 'utf8'))) {
+    console.error('FAIL ' + f + ': ' + finding);
+    graphFailures++;
+  }
+}
+console.log('entity graph: ' + graphFiles.length + ' served page(s) scanned, ' + graphFailures + ' studio node(s) without the canonical @id');
+failures += graphFailures;
+
 console.log('\ncheck-schema-coverage: ' + ok + ' OK, ' + failures + ' failed');
 if (failures > 0) {
-  console.error('Entity schema missing on ' + failures + ' page(s). Run the appropriate enrich-* script or add a JSON-LD block.');
+  if (failures - graphFailures > 0) console.error('Entity schema missing on ' + (failures - graphFailures) + ' page(s). Run the appropriate enrich-* script or add a JSON-LD block.');
+  if (graphFailures > 0) console.error(graphFailures + ' studio node(s) re-declare the studio. Reference it as {"@id":"' + ORG_ID + '"} (scripts/lib/org-entity.mjs) or give the full definition the canonical @id.');
   process.exit(1);
 }

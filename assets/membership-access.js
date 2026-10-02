@@ -1,10 +1,10 @@
 // VaultSpark Studios — Membership Access (browser IIFE)
-// Version: 2026-04-03
+// Version: 2026-10-01 (D-S368.1: VaultSparked $4.99/mo, VaultSparked Eternal $29.99/mo)
 (function (global) {
   'use strict';
 
 const CONFIG = {
-  "version": "2026-04-03",
+  "version": "2026-10-01",
   "defaultPlan": "free",
   "planAliases": {
     "pro": "promogrind_pro"
@@ -82,8 +82,8 @@ const CONFIG = {
       "isPaid": true,
       "isSparked": true,
       "isPro": false,
-      "monthlyPriceUsd": null,
-      "priceDisplay": "From $4.99/mo",
+      "monthlyPriceUsd": 4.99,
+      "priceDisplay": "$4.99/mo",
       "portalLabel": "VaultSparked"
     },
     "vault_sparked_pro": {
@@ -92,8 +92,8 @@ const CONFIG = {
       "isPaid": true,
       "isSparked": true,
       "isPro": true,
-      "monthlyPriceUsd": null,
-      "priceDisplay": "From $29.99/mo",
+      "monthlyPriceUsd": 29.99,
+      "priceDisplay": "$29.99/mo",
       "portalLabel": "VaultSparked Eternal"
     },
     "promogrind_pro": {
@@ -210,7 +210,9 @@ const CONFIG = {
         "allowedPlans": [
           "vault_sparked_pro"
         ]
-      }
+      },
+      "advertised": false,
+      "note": "Not offered (D-S368.1). Key kept so existing vault-sdk gates resolve."
     },
     "pro_beta_builds": {
       "label": "Pro-tier beta build access",
@@ -232,6 +234,26 @@ const CONFIG = {
     },
     "pro_studio_credits": {
       "label": "Studio credits",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      },
+      "advertised": false,
+      "note": "Not offered (D-S368.1). Key kept so existing vault-sdk gates resolve."
+    },
+    "eternal_dispatch": {
+      "label": "Eternal Dispatch",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_profile_theme": {
+      "label": "VaultSparked Eternal profile theme",
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [

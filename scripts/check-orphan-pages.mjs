@@ -85,6 +85,27 @@ function normalizeRel(full) {
   return url === '//' ? '/' : url;
 }
 
+function isNoindex(html) {
+  return [...html.matchAll(/<meta\b[^>]*>/gi)].some(([tag]) => /name\s*=\s*["']robots["']/i.test(tag) && /content\s*=\s*["'][^"']*noindex/i.test(tag));
+}
+/** Exact 30x sources retire one route; "/x/*" retires the tree (same reading as generate-sitemap). */
+function redirectedRoutes(text) {
+  const exact = new Set();
+  const prefixes = [];
+  for (const line of String(text || '').split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const [from, , status] = t.split(/\s+/);
+    if (!from || !/^30[1278]$/.test(status || '301')) continue;
+    if (from.endsWith('/*')) prefixes.push(from.slice(0, -1));
+    else exact.add(from.replace(/\/+$/, '') || '/');
+  }
+  return (route) => exact.has(route.replace(/\/+$/, '') || '/') || prefixes.some((prefix) => route.startsWith(prefix));
+}
+let REDIRECTS_TEXT = '';
+try { REDIRECTS_TEXT = readFileSync(join(ROOT, '_redirects'), 'utf-8'); } catch {}
+const IS_REDIRECTED = redirectedRoutes(REDIRECTS_TEXT);
+
 const allPages = new Set();
 function walk(d) {
   for (const entry of readdirSync(d)) {
@@ -98,7 +119,15 @@ function walk(d) {
       // Skip pages that are redirect shims.
       const html = readFileSync(full, 'utf-8');
       if (/<meta\s+http-equiv=["']refresh["']/i.test(html)) continue;
-      allPages.add(normalizeRel(full));
+      const route = normalizeRel(full);
+      // S368: a stub kept on disk behind an edge 301 is never served (a generator
+      // still harvests it), so it cannot be an orphan — the redirect owns the route.
+      if (IS_REDIRECTED(route)) continue;
+      // D-S368.5: an off-catalog project page is noindexed and deliberately removed
+      // from every listing; it stays reachable by URL only. Narrow on purpose:
+      // only /projects/<slug>/ pages that declare robots noindex.
+      if (/^\/projects\/[^/]+\/$/.test(route) && isNoindex(html)) continue;
+      allPages.add(route);
     }
   }
 }
@@ -130,8 +159,10 @@ const sources = [
   'sitemap.xml',
   'index.html',
   'sitemap-page/index.html',
-  'journal/index.html',
-  'journal/archive/index.html',
+  // S368: the journal index + archive are edge-retired stubs; their stories are
+  // linked from the changelog's Stories section (a source below).
+  'dispatch/index.html',
+  'play/index.html',
   'games/index.html',
   'projects/index.html',
   'universe/index.html',

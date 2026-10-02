@@ -93,7 +93,12 @@ const SCRIPT_HASHES = [
 
 const THIRD_PARTY_SCRIPT_SOURCES = [
   'https://fjnpzjjyhnpmunfoycrp.supabase.co',
-  'https://cdn.jsdelivr.net',
+  // S368 csp-tightening: jsdelivr is path-scoped to the exact pinned files the
+  // site loads (each tag carries SRI). A new CDN package needs its exact path
+  // added here; a bare host entry would let any npm package run as script.
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js',
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js',
+  'https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js',
   'https://challenges.cloudflare.com',
   'https://static.cloudflareinsights.com',
   // S275: login.html loads the Obelisk auth client; the Worker strips page-level

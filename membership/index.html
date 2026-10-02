@@ -9,20 +9,20 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vault Membership — VaultSpark Studios</title>
-  <meta name="description" content="Vault Membership is your identity inside VaultSpark Studios. One account, every world we build. Three tiers — Free, Sparked, and Eternal. The vault recognizes you." />
+  <meta name="description" content="Vault Membership is your identity inside VaultSpark Studios. One account, every world we build. Three tiers: Vault Member (free), VaultSparked ($4.99 a month) and VaultSparked Eternal ($29.99 a month). Every game is free to play." />
   <link rel="canonical" href="https://vaultsparkstudios.com/membership/" />
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
 
   <meta property="og:title" content="Vault Membership | VaultSpark Studios" />
-  <meta property="og:description" content="One account. Every world we build. Join free — or go deeper with VaultSparked and Eternal." />
+  <meta property="og:description" content="One account. Every world we build. Every game free to play — go deeper with VaultSparked or VaultSparked Eternal." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vaultsparkstudios.com/membership/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-membership.png" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Vault Membership | VaultSpark Studios" />
-  <meta name="twitter:description" content="One account. Every world we build. Join free — or go deeper with VaultSparked and Eternal." />
+  <meta name="twitter:description" content="One account. Every world we build. Every game free to play — go deeper with VaultSparked or VaultSparked Eternal." />
 
   <link rel="icon" type="image/png" href="../assets/icon-32.png" />
   <link rel="apple-touch-icon" href="../assets/icon-256.png" />
@@ -136,67 +136,95 @@
     .mem-hero-proof strong { color: var(--text); font-size: 1rem; }
     .mem-hero-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
 
-    /* Tier identity cards */
-    .mem-tiers {
-      padding: 5rem 0;
+    /* Tier cards, comparison table, FAQ (D-S368.1).
+       Tier accents are theme tokens so every one of the 7 themes stays legible:
+       the dark-family themes use the bright brand hues; light mode swaps to deep
+       hues that hold WCAG AA on cream; high-contrast lifts them further. */
+    body {
+      --tier-free: #a8b4d0;
+      --tier-sparked: #3fb0ff;
+      --tier-eternal: #b9a2ff;
+      --tier-sparked-rgb: 31,162,255;
+      --tier-eternal-rgb: 139,92,246;
+      --tier-free-rgb: 148,163,184;
+      --tier-cta-sparked: linear-gradient(135deg, #0b74cc, #075aa8);
+      --tier-cta-eternal: linear-gradient(135deg, #7c3aed, #6527c9);
     }
+    body.light-mode {
+      --tier-free: #475569;
+      --tier-sparked: #0b5fa5;
+      --tier-eternal: #6d28d9;
+    }
+    body.high-contrast-mode {
+      --tier-free: #e5e7eb;
+      --tier-sparked: #8fd0ff;
+      --tier-eternal: #d6c8ff;
+    }
+    .mem-tiers { padding: 5rem 0 3.5rem; }
+    .mem-tiers-head { text-align: center; max-width: 62ch; margin: 0 auto 2.4rem; }
+    .mem-tiers-head h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-top: 0.5rem;
+    }
+    .mem-tiers-head p { color: var(--muted); margin: 0.8rem auto 0; font-size: 1.02rem; line-height: 1.68; }
     .mem-tiers-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1.5rem;
-      margin-top: 3rem;
+      align-items: stretch;
     }
     .mem-tier-card {
       position: relative;
+      display: flex;
+      flex-direction: column;
       border-radius: 28px;
-      padding: 2.4rem 2rem;
+      padding: 2.2rem 1.9rem 1.9rem;
       overflow: hidden;
       border: 1px solid var(--line);
       background: var(--panel);
       transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      cursor: default;
     }
-    .mem-tier-card:hover {
-      transform: translateY(-6px);
-    }
-    .mem-tier-card.tier-free {
-      border-color: rgba(148,163,184,0.2);
-    }
-    .mem-tier-card.tier-free:hover {
-      border-color: rgba(148,163,184,0.4);
-      box-shadow: 0 20px 60px rgba(148,163,184,0.06);
-    }
+    .mem-tier-card:hover { transform: translateY(-4px); }
+    .mem-tier-card.tier-free { border-color: rgba(var(--tier-free-rgb),0.28); }
+    .mem-tier-card.tier-free:hover { border-color: rgba(var(--tier-free-rgb),0.5); }
     .mem-tier-card.tier-sparked {
-      border-color: rgba(31,162,255,0.2);
-      background: linear-gradient(180deg, rgba(31,162,255,0.05), var(--panel));
+      border: 2px solid rgba(var(--tier-sparked-rgb),0.55);
+      background: linear-gradient(180deg, rgba(var(--tier-sparked-rgb),0.08), var(--panel) 45%);
+      box-shadow: 0 24px 70px rgba(var(--tier-sparked-rgb),0.14);
     }
-    .mem-tier-card.tier-sparked:hover {
-      border-color: rgba(31,162,255,0.4);
-      box-shadow: 0 20px 60px rgba(31,162,255,0.1);
-    }
+    .mem-tier-card.tier-sparked:hover { border-color: rgba(var(--tier-sparked-rgb),0.8); }
     .mem-tier-card.tier-eternal {
-      border-color: rgba(139,92,246,0.25);
-      background: linear-gradient(180deg, rgba(139,92,246,0.07), var(--panel));
+      border-color: rgba(var(--tier-eternal-rgb),0.35);
+      background: linear-gradient(180deg, rgba(var(--tier-eternal-rgb),0.08), var(--panel) 45%);
     }
-    .mem-tier-card.tier-eternal:hover {
-      border-color: rgba(139,92,246,0.45);
-      box-shadow: 0 20px 60px rgba(139,92,246,0.12);
-    }
-    .mem-tier-card.tier-eternal .tier-glow {
+    .mem-tier-card.tier-eternal:hover { border-color: rgba(var(--tier-eternal-rgb),0.6); box-shadow: 0 20px 60px rgba(var(--tier-eternal-rgb),0.12); }
+    .mem-tier-card .tier-glow {
       position: absolute;
       inset: -40% 20% 60% 20%;
-      background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 65%);
       filter: blur(40px);
       pointer-events: none;
     }
-    .mem-tier-card.tier-sparked .tier-glow {
-      position: absolute;
-      inset: -40% 20% 60% 20%;
-      background: radial-gradient(circle, rgba(31,162,255,0.14), transparent 65%);
-      filter: blur(40px);
-      pointer-events: none;
+    .mem-tier-card.tier-sparked .tier-glow { background: radial-gradient(circle, rgba(var(--tier-sparked-rgb),0.16), transparent 65%); }
+    .mem-tier-card.tier-eternal .tier-glow { background: radial-gradient(circle, rgba(var(--tier-eternal-rgb),0.16), transparent 65%); }
+    .mem-tier-card > *:not(.tier-glow) { position: relative; }
+    .tier-ribbon {
+      position: absolute !important;
+      top: 1.1rem;
+      right: 1.1rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.32rem 0.7rem;
+      border-radius: 999px;
+      background: var(--tier-cta-sparked);
+      color: #fff;
     }
     .tier-badge {
+      align-self: flex-start;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -206,108 +234,206 @@
       letter-spacing: 0.1em;
       padding: 0.3rem 0.75rem;
       border-radius: 999px;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.2rem;
     }
-    .tier-badge-free { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
-    .tier-badge-sparked { background: rgba(31,162,255,0.1); color: #1FA2FF; border: 1px solid rgba(31,162,255,0.25); }
-    .tier-badge-eternal { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+    .tier-badge-free { background: rgba(var(--tier-free-rgb),0.1); color: var(--tier-free); border: 1px solid rgba(var(--tier-free-rgb),0.3); }
+    .tier-badge-sparked { background: rgba(var(--tier-sparked-rgb),0.1); color: var(--tier-sparked); border: 1px solid rgba(var(--tier-sparked-rgb),0.35); }
+    .tier-badge-eternal { background: rgba(var(--tier-eternal-rgb),0.12); color: var(--tier-eternal); border: 1px solid rgba(var(--tier-eternal-rgb),0.4); }
     .mem-tier-name {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.9rem;
-      letter-spacing: -0.04em;
+      font-size: clamp(1.55rem, 2.4vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
       line-height: 1.1;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.6rem;
+      color: var(--text);
     }
     .mem-tier-price {
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
+      color: var(--text);
     }
-    .mem-tier-price-sub {
-      font-size: 0.8rem;
-      color: var(--dim);
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.02em;
-    }
-    .mem-tier-tagline {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1.6rem;
-    }
+    .tier-sparked .mem-tier-price { color: var(--tier-sparked); }
+    .tier-eternal .mem-tier-price { color: var(--tier-eternal); }
+    .mem-tier-price small { font-size: 1rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 0.15rem; }
+    .mem-tier-price-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.1rem; }
+    .mem-tier-tagline { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.4rem; }
     .mem-tier-features {
       list-style: none;
-      padding: 0;
-      margin: 0 0 2rem;
+      padding: 1.2rem 0 0;
+      margin: 0 0 1.8rem;
+      border-top: 1px solid var(--line);
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.7rem;
     }
     .mem-tier-features li {
       display: flex;
       align-items: flex-start;
       gap: 0.6rem;
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.9rem;
+      color: var(--text);
       line-height: 1.45;
     }
     .mem-tier-features li .check {
       flex-shrink: 0;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
+      font-size: 0.66rem;
+      font-weight: 800;
       margin-top: 1px;
     }
-    .check-free { background: rgba(148,163,184,0.15); color: #94a3b8; }
-    .check-sparked { background: rgba(31,162,255,0.15); color: #1FA2FF; }
-    .check-eternal { background: rgba(139,92,246,0.15); color: #a78bfa; }
-    .mem-tier-cta {
-      display: block;
+    .check-free { background: rgba(var(--tier-free-rgb),0.16); color: var(--tier-free); }
+    .check-sparked { background: rgba(var(--tier-sparked-rgb),0.16); color: var(--tier-sparked); }
+    .check-eternal { background: rgba(var(--tier-eternal-rgb),0.16); color: var(--tier-eternal); }
+    .mem-tier-actions { margin-top: auto; display: flex; flex-direction: column; gap: 0.6rem; }
+    .mem-tier-cta, .mem-tier-cta-member {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
       text-align: center;
-      padding: 0.9rem 1.5rem;
+      padding: 0.8rem 1.4rem;
       border-radius: 14px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      text-decoration: none !important;
+      transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
     }
-    .mem-cta-free {
-      border: 1px solid rgba(148,163,184,0.3);
-      color: var(--text);
-      background: rgba(255,255,255,0.04);
+    .mem-tier-cta-member { display: none; }
+    html[data-vs-signed-in="true"] .mem-tier-cta { display: none; }
+    html[data-vs-signed-in="true"] .mem-tier-cta-member { display: flex; }
+    html[data-vs-signed-in="true"] .tier-free .mem-tier-cta-note { display: none; }
+    .mem-cta-free { border: 1px solid rgba(var(--tier-free-rgb),0.4); color: var(--text); background: transparent; }
+    .mem-cta-free:hover { background: rgba(var(--tier-free-rgb),0.1); }
+    .mem-cta-sparked { background: var(--tier-cta-sparked); color: #fff; box-shadow: 0 6px 22px rgba(var(--tier-sparked-rgb),0.28); }
+    .mem-cta-sparked:hover { box-shadow: 0 10px 32px rgba(var(--tier-sparked-rgb),0.42); transform: translateY(-1px); }
+    .mem-cta-eternal { background: var(--tier-cta-eternal); color: #fff; box-shadow: 0 6px 22px rgba(var(--tier-eternal-rgb),0.28); }
+    .mem-cta-eternal:hover { box-shadow: 0 10px 32px rgba(var(--tier-eternal-rgb),0.45); transform: translateY(-1px); }
+    .mem-tier-cta:focus-visible, .mem-tier-cta-member:focus-visible { outline: 3px solid var(--focus-outline, var(--gold)); outline-offset: 3px; }
+    .mem-tier-cta-note { font-size: 0.8rem; color: var(--muted); text-align: center; margin: 0; line-height: 1.5; }
+    .mem-tier-cta-note a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    .mem-billing-notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.8rem;
     }
-    .mem-cta-free:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-    .mem-cta-sparked {
-      background: linear-gradient(135deg, rgba(31,162,255,0.9), rgba(0,120,220,0.9));
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(31,162,255,0.25);
+    .mem-billing-note {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 1rem 1.15rem;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--muted);
     }
-    .mem-cta-sparked:hover { box-shadow: 0 8px 32px rgba(31,162,255,0.4); transform: translateY(-1px); }
-    .mem-cta-eternal {
-      background: linear-gradient(135deg, rgba(139,92,246,0.9), rgba(109,40,217,0.9));
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(139,92,246,0.3);
-    }
-    .mem-cta-eternal:hover { box-shadow: 0 8px 32px rgba(139,92,246,0.5); transform: translateY(-1px); }
+    .mem-billing-note strong { color: var(--text); font-size: 0.92rem; }
+    .mem-billing-note a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
 
-    /* Progressive reveal — paid tiers enter on scroll */
-    .tier-reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.55s cubic-bezier(.22,.68,0,1.2), transform 0.55s cubic-bezier(.22,.68,0,1.2);
+    .mem-compare { padding: 3.5rem 0; border-top: 1px solid var(--line); }
+    .mem-compare-wrap {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      -webkit-overflow-scrolling: touch;
     }
-    .tier-reveal.tier-reveal-2 { transition-delay: 0.12s; }
-    .tier-reveal.tier-reveal-3 { transition-delay: 0.24s; }
-    .tier-reveal.in-view { opacity: 1; transform: none; }
+    .mem-compare-wrap:focus-visible { outline: 3px solid var(--focus-outline, var(--gold)); outline-offset: 3px; }
+    .mem-compare-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.9rem; }
+    .mem-compare-table th, .mem-compare-table td { padding: 0.85rem 1rem; text-align: center; border-bottom: 1px solid var(--line); color: var(--text); }
+    .mem-compare-table tbody tr:last-child th, .mem-compare-table tbody tr:last-child td { border-bottom: 0; }
+    .mem-compare-table thead th {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      font-weight: 700;
+      vertical-align: bottom;
+      line-height: 1.25;
+    }
+    .mem-compare-table thead th span {
+      display: block;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .mem-compare-table thead .col-sparked { color: var(--tier-sparked); background: rgba(var(--tier-sparked-rgb),0.07); }
+    .mem-compare-table thead .col-eternal { color: var(--tier-eternal); }
+    .mem-compare-table td:nth-child(3) { background: rgba(var(--tier-sparked-rgb),0.05); }
+    .mem-compare-table tbody th[scope="row"] { text-align: left; font-weight: 500; color: var(--text); }
+    .mem-compare-table td.yes { color: var(--text); font-weight: 800; }
+    .mem-compare-table td.no { color: var(--muted); }
+    .mem-compare-group th {
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold) !important;
+      background: var(--panel-strong, transparent);
+      padding-top: 1.1rem;
+    }
+    .mem-compare-table thead th:first-child, .mem-compare-table tbody th[scope="row"] {
+      position: sticky;
+      left: 0;
+      background: var(--panel-strong, var(--panel));
+      z-index: 1;
+    }
+    .mem-compare-foot { text-align: center; margin-top: 1.1rem; font-size: 0.86rem; color: var(--muted); }
+    .mem-compare-foot a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+
+    .mem-faq { padding: 3.5rem 0 4rem; border-top: 1px solid var(--line); }
+    .mem-faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.7rem; }
+    .mem-faq-item { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .mem-faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 52px;
+      padding: 0.9rem 1.2rem;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--text);
+    }
+    .mem-faq-item summary::-webkit-details-marker { display: none; }
+    .mem-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 1.3rem; font-weight: 400; color: var(--muted); transition: transform 0.2s ease; }
+    .mem-faq-item[open] summary::after { transform: rotate(45deg); }
+    .mem-faq-item summary:focus-visible { outline: 3px solid var(--focus-outline, var(--gold)); outline-offset: 2px; border-radius: 16px; }
+    .mem-faq-item p { padding: 0 1.2rem 1.1rem; color: var(--muted); font-size: 0.93rem; line-height: 1.65; }
+    .mem-faq-item p a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+
+    @media (max-width: 1024px) {
+      .mem-tiers-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+      .mem-billing-notes { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 640px) {
+      .mem-tiers { padding: 3.5rem 0 2.5rem; }
+      .mem-tier-card { padding: 1.9rem 1.35rem 1.5rem; border-radius: 22px; }
+      .mem-tier-price { font-size: 2.3rem; }
+      .mem-compare-table { min-width: 0; table-layout: fixed; font-size: 0.8rem; }
+      .mem-compare-table th, .mem-compare-table td { padding: 0.65rem 0.4rem; overflow-wrap: anywhere; }
+      .mem-compare-table thead th:first-child, .mem-compare-table tbody th[scope="row"] { width: 31%; position: static; padding-left: 0.75rem; }
+      .mem-compare-table thead th { font-size: 0.7rem; padding: 0.6rem 0.15rem; overflow-wrap: normal; letter-spacing: -0.01em; }
+      .mem-compare-table thead th span { font-size: 0.72rem; }
+      .mem-compare-group th { padding-left: 0.75rem; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      .tier-reveal { opacity: 1; transform: none; transition: none; }
+      .mem-tier-card, .mem-tier-cta, .mem-tier-cta-member { transition: none; }
+      .mem-tier-card:hover, .mem-cta-sparked:hover, .mem-cta-eternal:hover { transform: none; }
     }
 
     /* What you're really joining */
@@ -375,81 +501,6 @@
       color: var(--muted);
       line-height: 1.5;
       margin: 0;
-    }
-
-    /* Studio discount strip */
-    .mem-discount {
-      padding: 4rem 0;
-      border-top: 1px solid var(--line);
-    }
-    .mem-discount-inner {
-      position: relative;
-      padding: 3rem;
-      border-radius: var(--radius);
-      background:
-        linear-gradient(135deg, rgba(255,196,0,0.06) 0%, rgba(10,13,22,0.95) 50%, rgba(139,92,246,0.05) 100%);
-      border: 1px solid rgba(255,196,0,0.15);
-      overflow: hidden;
-    }
-    .mem-discount-inner::before {
-      content: "";
-      position: absolute;
-      inset: -30% 55% -30% -15%;
-      background: radial-gradient(circle, rgba(255,196,0,0.09), transparent 60%);
-      filter: blur(50px);
-      pointer-events: none;
-    }
-    .mem-discount-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    .mem-discount-copy h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      letter-spacing: -0.04em;
-      margin-bottom: 0.8rem;
-    }
-    .mem-discount-copy p {
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
-      font-size: 1.02rem;
-    }
-    .mem-discount-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .mem-discount-card {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding: 1.2rem 1.4rem;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-    }
-    .mem-discount-pct {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    .mem-discount-pct.sparked { color: #1FA2FF; }
-    .mem-discount-pct.eternal { color: #a78bfa; }
-    .mem-discount-info strong {
-      display: block;
-      font-size: 0.92rem;
-      margin-bottom: 0.18rem;
-    }
-    .mem-discount-info span {
-      font-size: 0.8rem;
-      color: var(--dim);
     }
 
     /* Vault Community section */
@@ -554,31 +605,26 @@
     .mem-world-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; margin: 0; }
     .mem-world-unlocks { display: flex; flex-direction: column; gap: 0.4rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); }
     .mem-world-unlock { font-size: 0.78rem; line-height: 1.45; padding: 0.35rem 0.6rem; border-radius: 8px; }
-    .mem-world-unlock--free { background: rgba(148,163,184,0.07); color: #94a3b8; }
+    .mem-world-unlock--free { background: rgba(var(--tier-free-rgb),0.08); color: var(--tier-free); }
     .mem-world-unlock--free::before { content: "◈ "; }
-    .mem-world-unlock--sparked { background: rgba(31,162,255,0.07); color: #1FA2FF; }
+    .mem-world-unlock--sparked { background: rgba(var(--tier-sparked-rgb),0.08); color: var(--tier-sparked); }
     .mem-world-unlock--sparked::before { content: "⚡ "; }
-    .mem-world-unlock--eternal { background: rgba(139,92,246,0.07); color: #a78bfa; }
+    .mem-world-unlock--eternal { background: rgba(var(--tier-eternal-rgb),0.08); color: var(--tier-eternal); }
     .mem-world-unlock--eternal::before { content: "♾ "; }
 
     /* Responsive */
     /* S83 tablet breakpoint — 2-col at 768–1024 before collapsing to 1-col */
     @media (min-width: 768px) and (max-width: 1024px) {
-      .mem-tiers-grid    { grid-template-columns: repeat(2, 1fr); }
       .mem-identity-grid { grid-template-columns: repeat(2, 1fr); }
-      .mem-discount-grid { grid-template-columns: repeat(2, 1fr); }
       .mem-stat-row      { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 767px) {
-      .mem-tiers-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
       .mem-identity-grid { grid-template-columns: 1fr; }
-      .mem-discount-grid { grid-template-columns: 1fr; }
       .mem-stat-row { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .mem-hero { padding: 4.5rem 0 3rem; }
       .mem-hero h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
-      .mem-discount-inner { padding: 2rem; }
       .mem-hero-proof { gap: 1rem; padding: 0.8rem 1.2rem; }
     }
 
@@ -780,36 +826,109 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "Vault Membership — VaultSpark Studios",
-  "description": "One account across every VaultSpark game and project. Vault Ranks, achievements, community access, early builds, and cross-game identity. Join free or upgrade with VaultSparked and Eternal.",
+  "description": "One account across every VaultSpark game and project. Every game is free to play. Vault Member is free (by invitation for now); VaultSparked and VaultSparked Eternal are monthly supporter tiers. Annual plans are coming later.",
   "url": "https://vaultsparkstudios.com/membership/",
-  "brand": { "@type": "Brand", "name": "VaultSpark Studios" },
+  "brand": {
+    "@type": "Brand",
+    "name": "VaultSpark Studios"
+  },
   "offers": [
     {
       "@type": "Offer",
       "name": "Vault Member (Free)",
-      "description": "Community rank, challenges, Discord access, limited Archive, Vault Wall — forever free.",
+      "description": "Vault Member profile and Vault Wall, 9-rank ladder, Vault Points, achievements, challenges, seasons, referral rewards, and every VaultSpark game free to play. New accounts by invitation.",
       "price": "0",
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
-      "url": "https://vaultsparkstudios.com/vault-member/#register"
+      "url": "https://vaultsparkstudios.com/invite/"
     },
     {
       "@type": "Offer",
       "name": "VaultSparked",
-      "description": "Full Archive, IGNIS AI access, beta first-wave, 2x XP, Sparked Discord role, exclusive achievements, grandfather-locked pricing.",
+      "description": "Sparked badge and blue profile theme, Discord Sparked role, Ask IGNIS 40 questions a month, Sparked archive files and beta keys, PromoGrind live odds, 500 bonus Vault Points every renewal.",
       "price": "4.99",
       "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "4.99",
+        "priceCurrency": "USD",
+        "billingDuration": 1,
+        "unitCode": "MON"
+      },
       "availability": "https://schema.org/InStock",
-      "url": "https://vaultsparkstudios.com/vaultsparked/"
+      "url": "https://vaultsparkstudios.com/membership/#tiers"
     },
     {
       "@type": "Offer",
       "name": "VaultSparked Eternal",
-      "description": "Unlimited IGNIS, permanent studio credits, game splash screen credit, cross-product Eternal access, Eternal beta builds, purple Eternal identity.",
+      "description": "Everything in VaultSparked plus unlimited Ask IGNIS, the Eternal Dispatch briefing, Discord Eternal role, purple Eternal profile theme, 1,000 bonus Vault Points every renewal.",
       "price": "29.99",
       "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "29.99",
+        "priceCurrency": "USD",
+        "billingDuration": 1,
+        "unitCode": "MON"
+      },
       "availability": "https://schema.org/InStock",
-      "url": "https://vaultsparkstudios.com/vaultsparked/"
+      "url": "https://vaultsparkstudios.com/membership/#tiers"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need to pay to play VaultSpark games?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every VaultSpark game is free to play, and no tier locks a game. Paid tiers add identity, Ask IGNIS, member drops and points bonuses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get a free Vault Member account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "New accounts are opened by invitation for now. Request your Vault invite at vaultsparkstudios.com/invite/, or use an invite link from a member, then create your account in the Vault Member portal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there an annual plan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. Every tier is billed monthly today. Annual plans are coming later."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When do the bonus Vault Points arrive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On each monthly renewal: 500 points for VaultSparked and 1,000 points for VaultSparked Eternal. The bonus starts with your first renewal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Phase 1 price lock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you join a tier during Phase 1, you keep its Phase 1 monthly price while your subscription stays active. Cancelling, a lapsed payment or switching tier ends the lock."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I cancel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open Manage billing in your Vault Member portal settings. Your tier stays active until the end of the month you already paid for."
+      }
     }
   ]
 }
@@ -830,24 +949,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -892,16 +1011,16 @@
       </p>
 
       <div class="mem-hero-actions mj-anon-only">
-        <a class="button" id="membership-hero-primary-cta" data-adaptive-cta="account" data-adaptive-note-target="membership-intel-note" href="/vault-member/#register" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="create_free_account" data-track-location="/membership/">Create Free Account</a>
-        <a class="button-secondary" id="membership-hero-tier-cta" data-adaptive-cta="membership" data-adaptive-note-target="membership-intel-note" href="/vaultsparked/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="choose_your_tier" data-track-location="/membership/">Choose Your Tier</a>
+        <a class="button" id="membership-hero-primary-cta" data-adaptive-cta="account" data-adaptive-note-target="membership-intel-note" href="/invite/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="request_invite" data-track-location="/membership/">Request your Vault invite</a>
+        <a class="button-secondary" id="membership-hero-tier-cta" data-adaptive-cta="membership" data-adaptive-note-target="membership-intel-note" href="#tiers" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="choose_your_tier" data-track-location="/membership/">Choose Your Tier</a>
         <a class="button-ghost" href="/membership-value/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="see_value" data-track-location="/membership/">See The Value</a>
       </div>
       <div class="mem-hero-actions mj-member-only">
         <a class="button" href="/vault-member/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="go_to_portal" data-track-location="/membership/">Go to your portal</a>
-        <a class="button-secondary" href="/vaultsparked/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="upgrade_tier" data-track-location="/membership/">Upgrade your tier</a>
+        <a class="button-secondary" href="/vault-member/#upgrade" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="upgrade_tier" data-track-location="/membership/">Upgrade your tier</a>
         <a class="button-ghost" href="/ranks/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="view_ranks" data-track-location="/membership/">View rank ladder</a>
       </div>
-      <p id="membership-intel-note" class="mj-anon-only" style="margin:1rem auto 0;max-width:52ch;text-align:center;color:var(--dim);font-size:0.9rem;line-height:1.65;">The free account is still the correct first step if you want to see your live portal, rank, and community identity before upgrading.</p>
+      <p id="membership-intel-note" class="mj-anon-only" style="margin:1rem auto 0;max-width:52ch;text-align:center;color:var(--dim);font-size:0.9rem;line-height:1.65;">Free accounts are opened by invitation for now. Every game is free to play while you wait, and paid tiers sit on top of a free account.</p>
 
       <!-- S206 #3: vault-momentum social proof — populated by membership-social-proof.js.
            Honest-dark: stays empty when api/vault-momentum.json is unavailable or honestDark=true. -->
@@ -910,7 +1029,7 @@
       <!-- ── P4 · AI-driven onboarding interview (progressive enhancement) ────
            Mounts a 3-turn IGNIS interview. Falls back to the existing tier
            cards on no-JS / degraded clients. -->
-      <div id="mem-interview-mount" class="mem-interview" data-fallback="/vaultsparked/" style="margin: 2rem auto 0; max-width: 640px;"></div>
+      <div id="mem-interview-mount" class="mem-interview" data-fallback="/membership/#tiers" style="margin: 2rem auto 0; max-width: 640px;"></div>
 
       <!-- S190: progressive membership unlock callouts — shown by membership-unlock.js
            via body[data-vs-unlock-stage] CSS selectors. All hidden by default. -->
@@ -922,12 +1041,12 @@
       <div class="vs-unlock-callout" data-stage="3" aria-live="polite" style="display:none;">
         You've seen the studio's field data. The members who act on that proof earliest
         tend to hold the <strong>highest permanent ranks</strong> when new worlds open.
-        <a href="/vault-member/#register">Claim your rank slot now →</a>
+        <a href="/invite/">Request your Vault invite →</a>
       </div>
       <div class="vs-unlock-callout" data-stage="4" aria-live="polite" style="display:none;">
         You're already on the Studio Dispatch list — <strong>you're in the community</strong>.
         A free Vault account ties your rank, portal, and identity to that membership permanently.
-        <a href="/vault-member/#register">Activate your free account →</a>
+        <a href="/invite/">Request your Vault invite →</a>
       </div>
 
       <div class="mem-hero-proof" aria-label="Vault community stats">
@@ -960,14 +1079,16 @@
       <div class="mem-hub-nav__inner">
         <a class="mem-hub-nav__tab" href="#overview">Overview</a>
         <a class="mem-hub-nav__tab" href="#tiers">Tiers</a>
+        <a class="mem-hub-nav__tab" href="#compare">Compare</a>
         <a class="mem-hub-nav__tab" href="#benefits">Benefits</a>
         <a class="mem-hub-nav__tab" href="#ranks">Ranks</a>
+        <a class="mem-hub-nav__tab" href="#faq">FAQ</a>
       </div>
     </div>
   </nav>
 
   <!-- fd-ssr:start -->
-<style id="vs-flight-director-style">.vs-flight-director{padding:0 0 2.4rem}.vs-flight-director__panel{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:.75rem;padding:1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(31,162,255,.06),rgba(255,196,0,.035));box-shadow:var(--shadow)}.vs-flight-director__lead{padding:.2rem .4rem}.vs-flight-director__eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:800}.vs-flight-director h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.3vw,2rem);margin:.35rem 0 .45rem}.vs-flight-director p{color:var(--muted);font-size:.92rem;line-height:1.55}.vs-flight-card{display:flex;flex-direction:column;gap:.45rem;min-height:148px;padding:.9rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);text-decoration:none;color:inherit;position:relative}.vs-flight-card:hover{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.06)}.vs-flight-card strong{font-size:1rem}.vs-flight-card span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:800}.vs-flight-card em{margin-top:auto;font-style:normal;color:var(--dim);font-size:.8rem}.vs-flight-new{position:absolute;top:.6rem;right:.7rem;font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.18em .45em;border-radius:4px;background:var(--gold);color:#000;line-height:1}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.vs-flight-hidden{display:none}@media(max-width:860px){.vs-flight-director__panel{grid-template-columns:1fr}.vs-flight-card{min-height:0}}</style><section class="vs-flight-director" data-fd-ssr aria-label="Recommended next steps"><div class="container"><div class="vs-flight-director__panel"><div class="vs-flight-director__lead"><div class="vs-flight-director__eyebrow">Pathfinder</div><h2>Your next clean move.</h2><p>Chosen locally from your current page, saved intent, and live studio signals. No account data leaves the browser.</p></div><a class="vs-flight-card" data-fd-key="vault-member" href="/vault-member/"><span>Portal</span><strong>Open your Vault Member portal</strong><p>Your rank, record, settings, and account state live here.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="vaultsparked" href="/vaultsparked/"><span>Support</span><strong>Compare Sparked and Eternal</strong><p>Paid depth is the support layer, not the entry fee.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="rank-simulator" href="/membership/#rank-economy"><span>Progression</span><strong>Model your Vault rank</strong><p>See how play, referrals, feedback, and support compound your member identity.</p><em>Open →</em></a></div></div></section>
+<style id="vs-flight-director-style">.vs-flight-director{padding:0 0 2.4rem}.vs-flight-director__panel{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:.75rem;padding:1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(31,162,255,.06),rgba(255,196,0,.035));box-shadow:var(--shadow)}.vs-flight-director__lead{padding:.2rem .4rem}.vs-flight-director__eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:800}.vs-flight-director h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.3vw,2rem);margin:.35rem 0 .45rem}.vs-flight-director p{color:var(--muted);font-size:.92rem;line-height:1.55}.vs-flight-card{display:flex;flex-direction:column;gap:.45rem;min-height:148px;padding:.9rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);text-decoration:none;color:inherit;position:relative}.vs-flight-card:hover{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.06)}.vs-flight-card strong{font-size:1rem}.vs-flight-card span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:800}.vs-flight-card em{margin-top:auto;font-style:normal;color:var(--dim);font-size:.8rem}.vs-flight-new{position:absolute;top:.6rem;right:.7rem;font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.18em .45em;border-radius:4px;background:var(--gold);color:#000;line-height:1}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.vs-flight-hidden{display:none}@media(max-width:860px){.vs-flight-director__panel{grid-template-columns:1fr}.vs-flight-card{min-height:0}}</style><section class="vs-flight-director" data-fd-ssr aria-label="Recommended next steps"><div class="container"><div class="vs-flight-director__panel"><div class="vs-flight-director__lead"><div class="vs-flight-director__eyebrow">Pathfinder</div><h2>Your next clean move.</h2><p>Chosen locally from your current page, saved intent, and live studio signals. No account data leaves the browser.</p></div><a class="vs-flight-card" data-fd-key="vault-member" href="/vault-member/"><span>Portal</span><strong>Open your Vault Member portal</strong><p>Your rank, record, settings, and account state live here.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="vaultsparked" href="/membership/#compare"><span>Support</span><strong>Compare VaultSparked and Eternal</strong><p>Paid depth is the support layer, not the entry fee.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="rank-simulator" href="/membership/#rank-economy"><span>Progression</span><strong>Model your Vault rank</strong><p>See how play, referrals, feedback, and support compound your member identity.</p><em>Open →</em></a></div></div></section>
 <!-- fd-ssr:end -->
   <section class="telemetry-matrix" data-reveal="fade-up" data-track-view="membership_telemetry_matrix_view" aria-label="Membership telemetry">
     <div class="container">
@@ -1076,7 +1197,7 @@
           <span class="vj-icon" aria-hidden="true">🎮</span>
           <div class="vj-heading">The Play Moment</div>
           <p class="vj-body">You play Call of Doodie and your score lands on the leaderboard — the first one with your name on it. The rank clock starts. FORGE is where every member begins, and the Vault tracks it.</p>
-          <a class="vj-cta" href="#register">Join free — start at FORGE →</a>
+          <a class="vj-cta" href="/invite/">Request your invite — start at FORGE →</a>
         </div>
         <div class="vj-card vj-card-2">
           <div class="vj-day">Day 30</div>
@@ -1091,89 +1212,109 @@
           <span class="vj-badge vj-badge-rank">KNOWN</span>
           <span class="vj-icon" aria-hidden="true">⚡</span>
           <div class="vj-heading">The Community Moment</div>
-          <p class="vj-body">People in the Vault recognize your handle by your rank badge. You're not anonymous — you're ranked. SPARKED and ETERNAL members get Dispatch access and priority release slots as the universe expands.</p>
-          <a class="vj-cta" href="/membership/#tiers-heading">See tier unlocks →</a>
+          <p class="vj-body">People in the Vault recognize your handle by your rank badge. You're not anonymous — you're ranked. VaultSparked members add a Sparked badge and Discord role; VaultSparked Eternal members also read the private Eternal Dispatch.</p>
+          <a class="vj-cta" href="/membership/#compare">Compare the tiers →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Tier Identity Cards ─────────────────────────── -->
-  <section class="mem-tiers" id="tiers" data-reveal="fade-up" aria-labelledby="tiers-heading">
+  <!-- ── Tier Cards (D-S368.1) ─────────────────────────
+       Static render of api/membership-tiers.json — names, prices and perks
+       must match that feed. Only enforced perks are listed. Billing is monthly;
+       annual plans are "coming later" and not for sale.
+       scripts/check-content-coherence.mjs fails any price the feed does not offer. -->
+  <section class="mem-tiers" id="tiers" data-reveal="fade-up" aria-labelledby="tiers-heading" data-tiers-source="/api/membership-tiers.json">
     <div class="container">
-      <div style="text-align:center;margin-bottom:1rem;">
-        <span class="eyebrow">Three Tiers</span>
-        <h2 id="tiers-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:-0.04em;margin-top:0.5rem;">Choose Your Identity in the Vault</h2>
-        <p style="color:var(--muted);max-width:54ch;margin:0.8rem auto 0;font-size:1.02rem;line-height:1.68;">The vault is free to enter. Go deeper when you're ready.</p>
+      <div class="mem-tiers-head">
+        <span class="eyebrow">Three tiers · billed monthly</span>
+        <h2 id="tiers-heading">Choose your place in the Vault</h2>
+        <p>Every VaultSpark game is free to play. Paid tiers add a Sparked identity, more of IGNIS and member-only drops. Everything listed here works today.</p>
       </div>
-
-      <!-- Intent tabs — S201 #2 -->
-      <div class="mem-intent-tabs" role="group" aria-label="Filter tiers by your purpose" style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:1.8rem;flex-wrap:wrap;">
-        <button class="mem-intent-btn mem-intent-btn--active" data-intent="all" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.07);color:var(--text);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">All Tiers</button>
-        <button class="mem-intent-btn" data-intent="play" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">▶ Play</button>
-        <button class="mem-intent-btn" data-intent="create" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">⚒ Create</button>
-        <button class="mem-intent-btn" data-intent="support" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">♾ Support</button>
-      </div>
-      <p id="mem-intent-hint" style="text-align:center;color:var(--muted);font-size:0.88rem;min-height:1.3em;margin-bottom:1rem;"></p>
 
       <div class="mem-tiers-grid" id="mem-tiers-grid-el">
         <!-- Free -->
-        <div class="mem-tier-card tier-free" data-intent-tags="all play">
-          <span class="tier-badge tier-badge-free">◈ Vault Member</span>
-          <div class="mem-tier-name">Vault<br>Member</div>
-          <div class="mem-tier-price" style="color:var(--text);">Free</div>
-          <div class="mem-tier-price-sub">Forever free — no credit card</div>
-          <p class="mem-tier-tagline">Your foundation in the vault. Cross-game rank, achievements, and community access — at no cost, forever.</p>
+        <article class="mem-tier-card tier-free" aria-labelledby="tier-free-name">
+          <span class="tier-badge tier-badge-free"><span aria-hidden="true">◈</span> Free</span>
+          <h3 class="mem-tier-name" id="tier-free-name">Vault Member</h3>
+          <div class="mem-tier-price">Free</div>
+          <div class="mem-tier-price-sub">No card needed · by invitation for now</div>
+          <p class="mem-tier-tagline">Your identity across the studio: a profile, a rank that climbs as you play, and every game free.</p>
           <ul class="mem-tier-features">
-            <li><span class="check check-free">✓</span> Cross-game Vault Rank (9 tiers)</li>
-            <li><span class="check check-free">✓</span> Achievement tracking</li>
-            <li><span class="check check-free">✓</span> Community challenges</li>
-            <li><span class="check check-free">✓</span> Vault Wall profile</li>
-            <li><span class="check check-free">✓</span> Play all free games</li>
-            <li><span class="check check-free">✓</span> Studio Signal lore drops</li>
+            <li><span class="check check-free" aria-hidden="true">✓</span> Vault Member profile and Vault Wall</li>
+            <li><span class="check check-free" aria-hidden="true">✓</span> 9-rank ladder from Spark Initiate to The Sparked</li>
+            <li><span class="check check-free" aria-hidden="true">✓</span> Vault Points, achievements and community challenges</li>
+            <li><span class="check check-free" aria-hidden="true">✓</span> Seasons and referral rewards</li>
+            <li><span class="check check-free" aria-hidden="true">✓</span> Every VaultSpark game, free to play</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-free" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="free" data-track-plan="free" data-track-location="/membership/">Join Free</a>
-        </div>
+          <div class="mem-tier-actions">
+            <a href="/invite/" class="mem-tier-cta mem-cta-free" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="free" data-track-plan="free" data-track-location="/membership/">Request your Vault invite</a>
+            <a href="/vault-member/" class="mem-tier-cta-member mem-cta-free" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="free_member_portal" data-track-plan="free" data-track-location="/membership/">Open your portal</a>
+            <p class="mem-tier-cta-note">Have an invite? <a href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a> · <a href="/vault-member/#login">Sign in</a></p>
+          </div>
+        </article>
 
-        <!-- VaultSparked -->
-        <div class="mem-tier-card tier-sparked tier-reveal tier-reveal-2" data-intent-tags="all play create support">
+        <!-- VaultSparked (recommended) -->
+        <article class="mem-tier-card tier-sparked tier-recommended" aria-labelledby="tier-sparked-name">
           <div class="tier-glow" aria-hidden="true"></div>
-          <span class="tier-badge tier-badge-sparked">⚡ VaultSparked</span>
-          <div class="mem-tier-name">Vault<br>Sparked</div>
-          <div class="mem-tier-price" style="color:#1FA2FF;">$4.99<small style="font-size:1rem;font-weight:400;color:var(--dim);">/mo</small></div>
-          <div class="mem-tier-price-sub">or $44.99/yr · save 25%</div>
-          <p class="mem-tier-tagline">The core supporter tier. Get premium access, 2× XP, studio discounts, and deeper integration across every game.</p>
+          <span class="tier-ribbon">Recommended</span>
+          <span class="tier-badge tier-badge-sparked"><span aria-hidden="true">⚡</span> Supporter</span>
+          <h3 class="mem-tier-name" id="tier-sparked-name">VaultSparked</h3>
+          <div class="mem-tier-price">$4.99<small>/mo</small></div>
+          <div class="mem-tier-price-sub">Billed monthly · cancel any time</div>
+          <p class="mem-tier-tagline">A Sparked identity, more of IGNIS, the Sparked archive and beta keys, and a points bonus every renewal.</p>
           <ul class="mem-tier-features">
-            <li><span class="check check-sparked">✓</span> Everything in Free</li>
-            <li><span class="check check-sparked">✓</span> 2× XP on all games</li>
-            <li><span class="check check-sparked">✓</span> VaultSparked badge + Discord role</li>
-            <li><span class="check check-sparked">✓</span> Blue VaultSparked profile theme</li>
-            <li><span class="check check-sparked">✓</span> 20% studio discount on all products</li>
-            <li><span class="check check-sparked">✓</span> Priority challenge queue</li>
-            <li><span class="check check-sparked">✓</span> Select game access</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> Everything in Vault Member</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> Sparked badge and Blue VaultSparked profile theme</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> Discord Sparked role (when your Discord is linked)</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> Ask IGNIS: 40 questions a month</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> Sparked archive files and beta keys</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> PromoGrind live odds</li>
+            <li><span class="check check-sparked" aria-hidden="true">✓</span> 500 bonus Vault Points every renewal</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-sparked" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked" data-track-plan="vault_sparked" data-track-location="/membership/">Start Free → Upgrade</a>
-        </div>
+          <div class="mem-tier-actions">
+            <a href="/vault-member/#upgrade" class="mem-tier-cta mem-cta-sparked" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked" data-track-plan="vault_sparked" data-track-location="/membership/">Get VaultSparked</a>
+            <a href="/vault-member/#upgrade" class="mem-tier-cta-member mem-cta-sparked" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked_member" data-track-plan="vault_sparked" data-track-location="/membership/">Upgrade to VaultSparked</a>
+            <p class="mem-tier-cta-note">Sits on top of a free Vault Member account.</p>
+          </div>
+        </article>
 
-        <!-- Eternal -->
-        <div class="mem-tier-card tier-eternal tier-reveal tier-reveal-3" data-intent-tags="all support create">
+        <!-- VaultSparked Eternal -->
+        <article class="mem-tier-card tier-eternal" aria-labelledby="tier-eternal-name">
           <div class="tier-glow" aria-hidden="true"></div>
-          <span class="tier-badge tier-badge-eternal">♾ VaultSparked Eternal</span>
-          <div class="mem-tier-name">Vault<br>Eternal</div>
-          <div class="mem-tier-price" style="color:#a78bfa;">$29.99<small style="font-size:1rem;font-weight:400;color:var(--dim);">/mo</small></div>
-          <div class="mem-tier-price-sub">or $269.99/yr · save 25% · grandfather-locked</div>
-          <p class="mem-tier-tagline">The highest tier. Maximum everything. You are baked into the vault records permanently — this price is locked for life.</p>
+          <span class="tier-badge tier-badge-eternal"><span aria-hidden="true">♾</span> Deepest tier</span>
+          <h3 class="mem-tier-name" id="tier-eternal-name">VaultSparked Eternal</h3>
+          <div class="mem-tier-price">$29.99<small>/mo</small></div>
+          <div class="mem-tier-price-sub">Billed monthly · cancel any time</div>
+          <p class="mem-tier-tagline">Unlimited IGNIS, the private Eternal Dispatch briefing and the Eternal identity.</p>
           <ul class="mem-tier-features">
-            <li><span class="check check-eternal">✓</span> Everything in VaultSparked</li>
-            <li><span class="check check-eternal">✓</span> 3× XP multiplier</li>
-            <li><span class="check check-eternal">✓</span> 35% studio discount on all products</li>
-            <li><span class="check check-eternal">✓</span> Cross-product Eternal access</li>
-            <li><span class="check check-eternal">✓</span> Eternal beta builds &amp; early drops</li>
-            <li><span class="check check-eternal">✓</span> Named in studio credits — forever</li>
-            <li><span class="check check-eternal">✓</span> Purple Eternal profile theme</li>
-            <li><span class="check check-eternal">✓</span> Vault records permanent entry</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> Everything in VaultSparked</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> Unlimited Ask IGNIS questions</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> Eternal Dispatch: a private studio intelligence briefing</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> Discord Eternal role (when your Discord is linked)</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> Purple Eternal profile theme</li>
+            <li><span class="check check-eternal" aria-hidden="true">✓</span> 1,000 bonus Vault Points every renewal</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-eternal" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked_eternal" data-track-plan="vault_sparked_pro" data-track-location="/membership/">Start Free → Go Eternal</a>
+          <div class="mem-tier-actions">
+            <a href="/vault-member/#upgrade" class="mem-tier-cta mem-cta-eternal" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked_eternal" data-track-plan="vault_sparked_pro" data-track-location="/membership/">Go Eternal</a>
+            <a href="/vault-member/#upgrade" class="mem-tier-cta-member mem-cta-eternal" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked_eternal_member" data-track-plan="vault_sparked_pro" data-track-location="/membership/">Upgrade to Eternal</a>
+            <p class="mem-tier-cta-note">Sits on top of a free Vault Member account.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="mem-billing-notes" role="note" aria-label="Billing notes">
+        <div class="mem-billing-note">
+          <strong>Annual plans: coming later.</strong>
+          <span>Every tier is billed monthly today. Annual billing is not on sale yet.</span>
+        </div>
+        <div class="mem-billing-note">
+          <strong>Phase 1 price lock.</strong>
+          <span>Join a tier in Phase 1 and you keep its Phase 1 monthly price while your subscription stays active. <a href="/terms/#grandfather-pricing">Terms</a></span>
+        </div>
+        <div class="mem-billing-note">
+          <strong>Cancel any time.</strong>
+          <span>Manage billing from your Vault Member portal. Access runs to the end of the paid month.</span>
         </div>
       </div>
 
@@ -1185,11 +1326,92 @@
           <button type="submit" style="padding:0.72rem 1.2rem;border-radius:999px;border:1px solid rgba(255,196,0,0.3);background:rgba(255,196,0,0.1);color:var(--gold);font-size:0.9rem;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0;">Ask IGNIS →</button>
         </form>
       </div>
+    </div>
+  </section>
 
-      <p style="text-align:center;margin-top:1.4rem;font-size:0.82rem;color:var(--dim);">
-        Current prices are grandfather-locked — early members keep this rate forever as the vault grows.
-        <a href="/membership-value/" style="color:var(--gold);text-decoration:none;margin-left:0.4em;">See value breakdown →</a>
-      </p>
+  <!-- ── Comparison table (D-S368.1) ─────────────────── -->
+  <section class="mem-compare" id="compare" data-reveal="fade-up" aria-labelledby="compare-heading">
+    <div class="container">
+      <div class="mem-tiers-head">
+        <span class="eyebrow">Side by side</span>
+        <h2 id="compare-heading">What each tier includes</h2>
+        <p>The complete list. If it is not in this table, it is not part of a tier.</p>
+      </div>
+      <div class="mem-compare-wrap" role="region" aria-labelledby="compare-heading" tabindex="0">
+        <table class="mem-compare-table">
+          <caption class="sr-only">Vault Membership tiers compared: Vault Member (free), VaultSparked ($4.99 a month) and VaultSparked Eternal ($29.99 a month)</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Perk</span></th>
+              <th scope="col" class="col-free">Vault Member<span>Free</span></th>
+              <th scope="col" class="col-sparked">VaultSparked<span>$4.99/mo</span></th>
+              <th scope="col" class="col-eternal">VaultSparked Eternal<span>$29.99/mo</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="mem-compare-group"><th scope="rowgroup" colspan="4">Play and progress</th></tr>
+            <tr><th scope="row">Every VaultSpark game, free to play</th><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Vault Member profile and Vault Wall</th><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">9-rank ladder, Vault Points and achievements</th><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Challenges, seasons and referral rewards</th><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Bonus Vault Points every renewal</th><td class="no">—<span class="sr-only">Not included</span></td><td>500</td><td>1,000</td></tr>
+            <tr class="mem-compare-group"><th scope="rowgroup" colspan="4">Identity</th></tr>
+            <tr><th scope="row">Sparked badge</th><td class="no">—<span class="sr-only">Not included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Profile theme</th><td>Default</td><td>Blue Sparked</td><td>Purple Eternal</td></tr>
+            <tr><th scope="row">Discord role (Discord linked)</th><td class="no">—<span class="sr-only">Not included</span></td><td>Sparked</td><td>Eternal</td></tr>
+            <tr class="mem-compare-group"><th scope="rowgroup" colspan="4">Intelligence and drops</th></tr>
+            <tr><th scope="row">Ask IGNIS</th><td class="no">—<span class="sr-only">Not included</span></td><td>40 a month</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Eternal Dispatch briefing</th><td class="no">—<span class="sr-only">Not included</span></td><td class="no">—<span class="sr-only">Not included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Sparked archive files and beta keys</th><td class="no">—<span class="sr-only">Not included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">PromoGrind live odds</th><td class="no">—<span class="sr-only">Not included</span></td><td class="yes">✓<span class="sr-only">Included</span></td><td class="yes">✓<span class="sr-only">Included</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mem-compare-foot">Every tier climbs the same 9-rank ladder, from Spark Initiate to The Sparked. <a href="/ranks/">See the rank ladder</a></p>
+    </div>
+  </section>
+
+  <!-- ── Membership FAQ (D-S368.1) ───────────────────── -->
+  <section class="mem-faq" id="faq" data-reveal="fade-up" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="mem-tiers-head">
+        <span class="eyebrow">Questions</span>
+        <h2 id="faq-heading">Membership, answered</h2>
+      </div>
+      <div class="mem-faq-list">
+        <details class="mem-faq-item">
+          <summary>Do I need to pay to play VaultSpark games?</summary>
+          <p>No. Every VaultSpark game is free to play, and no tier locks a game. Paid tiers add identity, Ask IGNIS, member drops and points bonuses.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>How do I get a free Vault Member account?</summary>
+          <p>New accounts are opened by invitation for now. <a href="/invite/">Request your Vault invite</a>, or use an invite link from a member, then create your account in the <a href="/vault-member/#register">Vault Member portal</a>.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>How do I upgrade to VaultSparked or VaultSparked Eternal?</summary>
+          <p>Sign in to your Vault Member portal and open the <a href="/vault-member/#upgrade">upgrade panel</a>. Checkout runs through Stripe, and the new tier appears on your account once payment confirms.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>Is there an annual plan?</summary>
+          <p>Not yet. Every tier is billed monthly today. Annual plans are coming later, and this page will say so when they are on sale.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>When do the bonus Vault Points arrive?</summary>
+          <p>On each monthly renewal: 500 points for VaultSparked and 1,000 points for VaultSparked Eternal. The bonus starts with your first renewal, not on the day you subscribe.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>What is the Phase 1 price lock?</summary>
+          <p>Pricing is phased. If you join a tier during Phase 1, you keep its Phase 1 monthly price while your subscription stays active. Cancelling, a lapsed payment or switching tier ends the lock. The full wording is in the <a href="/terms/">Terms of Service</a>.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>How do I cancel?</summary>
+          <p>Open <strong>Manage billing</strong> in your Vault Member portal settings. Cancelling stops the next charge; your tier stays active until the end of the month you already paid for.</p>
+        </details>
+        <details class="mem-faq-item">
+          <summary>Can I gift a membership?</summary>
+          <p>Not right now. Gift memberships are paused while we rebuild them properly.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -1199,7 +1421,7 @@
       <div style="text-align:center;margin-bottom:1.8rem;">
         <span class="eyebrow">What's Inside The Vault</span>
         <h2 id="worlds-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.04em;margin-top:0.4rem;">One membership. Every world.</h2>
-        <p style="color:var(--muted);max-width:54ch;margin:0.6rem auto 0;font-size:0.98rem;line-height:1.65;">Your vault account carries rank, achievements, and exclusive access across every game and project we ship — past, present, and future.</p>
+        <p style="color:var(--muted);max-width:54ch;margin:0.6rem auto 0;font-size:0.98rem;line-height:1.65;">Your vault account carries rank and achievements across every game and project we ship. Every game is free to play; paid tiers add identity and member drops.</p>
       </div>
       <div class="mem-worlds-grid" id="mem-worlds-grid" data-world-teaser-live>
         <div class="mem-world-card">
@@ -1209,9 +1431,9 @@
           </div>
           <p class="mem-world-desc">Satirical multiplayer chaos. Fully playable now.</p>
           <div class="mem-world-unlocks">
-            <div class="mem-world-unlock mem-world-unlock--free">Free — Play, earn Vault Points, and track kills on the leaderboard</div>
-            <div class="mem-world-unlock mem-world-unlock--sparked">Sparked — 2× XP, priority challenge queue, and exclusive Discord role</div>
-            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — 3× XP, studio build previews, and permanent record entry</div>
+            <div class="mem-world-unlock mem-world-unlock--free">Every tier — Free to play, earn Vault Points, and climb the leaderboard</div>
+            <div class="mem-world-unlock mem-world-unlock--sparked">VaultSparked — Sparked badge and Discord Sparked role alongside your scores</div>
+            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Purple Eternal theme and Discord Eternal role</div>
           </div>
         </div>
         <div class="mem-world-card">
@@ -1221,9 +1443,9 @@
           </div>
           <p class="mem-world-desc">Vault-gated promo engine for creators and players.</p>
           <div class="mem-world-unlocks">
-            <div class="mem-world-unlock mem-world-unlock--free">Free — Access basic promo tools and earn referral Vault Points</div>
-            <div class="mem-world-unlock mem-world-unlock--sparked">Sparked — Full feature access and priority support</div>
-            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Direct feedback pipeline and co-dev input on new features</div>
+            <div class="mem-world-unlock mem-world-unlock--free">Free — Core PromoGrind tools with a Vault Member account</div>
+            <div class="mem-world-unlock mem-world-unlock--sparked">VaultSparked — PromoGrind live odds</div>
+            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Live odds, plus unlimited Ask IGNIS</div>
           </div>
         </div>
         <div class="mem-world-card mem-world-card--forge">
@@ -1231,11 +1453,11 @@
             <span class="mem-world-status mem-world-status--forge">⚒ In The Forge</span>
             <span class="mem-world-title">Solara, VaultFront &amp; more</span>
           </div>
-          <p class="mem-world-desc">Desert survival, strategy worlds, and cosmic horror sagas — in development. Your membership account is already there when they ship.</p>
+          <p class="mem-world-desc">Browser roguelite RPG, strategy worlds, and cosmic horror sagas — in development. Your membership account is already there when they ship.</p>
           <div class="mem-world-unlocks">
-            <div class="mem-world-unlock mem-world-unlock--free">Free — Beta access and early community challenges on launch</div>
-            <div class="mem-world-unlock mem-world-unlock--sparked">Sparked — Beta test priority and sealed lore drops before launch</div>
-            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Developer preview builds and direct input on early design</div>
+            <div class="mem-world-unlock mem-world-unlock--free">Free — Play every world free when it ships</div>
+            <div class="mem-world-unlock mem-world-unlock--sparked">VaultSparked — Beta keys posted to the Sparked archive</div>
+            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Sealed reveals in the Eternal Dispatch briefing</div>
           </div>
         </div>
         <div class="mem-world-card mem-world-card--lore">
@@ -1245,9 +1467,9 @@
           </div>
           <p class="mem-world-desc">Voidfall, Dreadspike, and interconnected lore that spans every world we build.</p>
           <div class="mem-world-unlocks">
-            <div class="mem-world-unlock mem-world-unlock--free">Free — Studio Signal lore drops and public archive access</div>
-            <div class="mem-world-unlock mem-world-unlock--sparked">Sparked — Classified transmissions and early world reveals</div>
-            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — Direct studio channel and first access to all lore releases</div>
+            <div class="mem-world-unlock mem-world-unlock--free">Free — Public archive and studio lore</div>
+            <div class="mem-world-unlock mem-world-unlock--sparked">VaultSparked — Sparked-only archive files</div>
+            <div class="mem-world-unlock mem-world-unlock--eternal">Eternal — The Eternal Dispatch studio briefing</div>
           </div>
         </div>
       </div>
@@ -1267,7 +1489,6 @@
           <p>
             Vault Membership isn't a SaaS product. It's your stake in the VaultSpark universe.
             Your rank grows as we ship games. Your achievements cross every title we build.
-            Your name is in the vault records the day you go Eternal.
           </p>
           <p>
             This is the community that comes with us — through every launch, every experiment,
@@ -1280,7 +1501,7 @@
             One account, every game, every tool, every world. The foundation is being laid now.
             <a href="/projects/obelisk/" style="color:var(--gold);text-decoration:none;white-space:nowrap;"> Learn more →</a>
           </p>
-          <a class="button" href="/vault-member/#register">Claim Your Place</a>
+          <a class="button" href="/invite/">Request your Vault invite</a>
         </div>
 
         <div class="mem-pillars" role="list">
@@ -1301,22 +1522,22 @@
           <div class="mem-pillar" role="listitem">
             <div class="mem-pillar-icon" aria-hidden="true">🔓</div>
             <div>
-              <strong>Early Access Before the Vault Opens</strong>
-              <p>Every new game, tool, and beta invite goes to Vault Members first. You're not on a mailing list — you're in the vault.</p>
+              <strong>Beta Keys and the Sparked Archive</strong>
+              <p>VaultSparked members get beta keys and Sparked-only archive files as they are posted. Every finished game stays free for everyone.</p>
             </div>
           </div>
           <div class="mem-pillar" role="listitem">
             <div class="mem-pillar-icon" aria-hidden="true">📡</div>
             <div>
               <strong>Lore, Signals &amp; Studio Dispatches</strong>
-              <p>Character dispatches, world-building reveals, canon fragments, and studio decisions — delivered to members before the vault opens to the public.</p>
+              <p>Character dispatches, world-building reveals and studio decisions. VaultSparked Eternal members also get the private Eternal Dispatch briefing.</p>
             </div>
           </div>
           <div class="mem-pillar" role="listitem">
             <div class="mem-pillar-icon" aria-hidden="true">🎯</div>
             <div>
-              <strong>Studio Discount — On Everything</strong>
-              <p>VaultSparked and Eternal members get 20%–35% off every VaultSpark product, game, and tool — now and as the studio grows.</p>
+              <strong>Ask IGNIS, the Studio Oracle</strong>
+              <p>VaultSparked members get 40 Ask IGNIS questions a month. VaultSparked Eternal members ask without a monthly limit.</p>
             </div>
           </div>
           <div class="mem-pillar" role="listitem">
@@ -1324,48 +1545,6 @@
             <div>
               <strong>One Identity — Via Obelisk (Coming)</strong>
               <p>VaultSpark accounts are building toward Obelisk — the studio's unified identity protocol. One account, every game and tool in the ecosystem. Early members are the foundation it's built on.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Studio Discount Callout ─────────────────────── -->
-  <section class="mem-discount" data-reveal="fade-up" aria-labelledby="discount-heading">
-    <div class="container">
-      <div class="mem-discount-inner">
-        <div class="mem-discount-grid">
-          <div class="mem-discount-copy">
-            <span class="eyebrow">Studio Benefit</span>
-            <h2 id="discount-heading">Your Membership<br>Pays for Itself.</h2>
-            <p>
-              VaultSparked and Eternal members get a permanent studio-wide discount on every
-              VaultSpark product — games, tools, and projects. Not just the ones live today.
-              Every future release, every expansion, every new world we build.
-            </p>
-            <a class="button-secondary" href="/vaultsparked/">Compare Tiers</a>
-          </div>
-
-          <div class="mem-discount-cards">
-            <div class="mem-discount-card">
-              <div class="mem-discount-pct sparked">20%</div>
-              <div class="mem-discount-info">
-                <strong>VaultSparked Discount</strong>
-                <span>$4.99/mo — 20% off all VaultSpark products &amp; games</span>
-              </div>
-            </div>
-            <div class="mem-discount-card">
-              <div class="mem-discount-pct eternal">35%</div>
-              <div class="mem-discount-info">
-                <strong>Eternal Discount</strong>
-                <span>$29.99/mo — 35% off all VaultSpark products &amp; games</span>
-              </div>
-            </div>
-            <div style="padding:1rem 1.4rem;border-radius:14px;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.1);font-size:0.82rem;color:var(--muted);line-height:1.55;">
-              <strong style="color:var(--gold);display:block;margin-bottom:0.3rem;">Rank Loyalty Bonus</strong>
-              Reach <strong style="color:var(--text);">Forge Master</strong> rank and get 25% off your first month upgrading.
-              Hit <strong style="color:var(--gold);">The Sparked</strong> and that drops to 50% off.
             </div>
           </div>
         </div>
@@ -1405,9 +1584,8 @@
       <span class="eyebrow">The Vault Community</span>
       <h2 id="community-heading">Everyone Starts<br>From the Same Spark.</h2>
       <p>
-        The vault ranks are earned — not bought. Whether you join free or go Eternal,
-        your rank is a measure of your time in the vault. No shortcuts. No pay-to-win.
-        Just the work.
+        Whether you join free or go Eternal, you climb the same 9-rank ladder by playing,
+        taking part and bringing friends in. Every game is free to play, for everyone.
       </p>
 
       <div class="mem-stat-row">
@@ -1453,16 +1631,16 @@
       <span class="eyebrow">Ready?</span>
       <h2 id="final-cta-heading">The Vault<br>Is Open.</h2>
       <p>
-        Free to enter. Impossible to ignore once you're inside.
-        Create your account now — your Vault Rank starts the moment you join.
+        Free to play. Free to join, by invitation for now.
+        Request your invite — your Vault Rank starts the moment your account opens.
       </p>
       <div class="feedback-panel show neutral" style="max-width:640px;margin:0 auto 1.6rem;">
         <strong class="feedback-panel-title">What happens next</strong>
-        <div class="feedback-panel-copy">Create the free account first, then decide whether you want Sparked or Eternal once you can see your portal, rank, and community identity live.</div>
+        <div class="feedback-panel-copy">Request your invite and open a free account first. Once you can see your portal and rank, decide whether VaultSparked or VaultSparked Eternal is worth it to you. Both are billed monthly; annual plans are coming later.</div>
       </div>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a class="button" id="membership-final-primary-cta" data-adaptive-cta="account" href="/vault-member/#register" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="join_free" data-track-location="/membership/">Join Free — No Card Needed</a>
-        <a class="button-secondary" id="membership-final-tier-cta" data-adaptive-cta="membership" href="/vaultsparked/#pricing" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="see_pricing_tiers" data-track-location="/membership/">See Pricing Tiers</a>
+        <a class="button" id="membership-final-primary-cta" data-adaptive-cta="account" href="/invite/" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="request_invite" data-track-location="/membership/">Request your Vault invite</a>
+        <a class="button-secondary" id="membership-final-tier-cta" data-adaptive-cta="membership" href="#compare" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="see_pricing_tiers" data-track-location="/membership/">Compare the tiers</a>
       </div>
     </div>
   </section>
@@ -1486,23 +1664,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -1521,19 +1698,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -1543,7 +1718,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -1563,17 +1738,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -1587,6 +1762,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -1624,7 +1800,7 @@
 
 <script src="/assets/public-intelligence.shell-c86a6ecc39.js" defer></script>
 <script src="/assets/intent-state.js" defer></script>
-<script src="/assets/trust-depth.shell-4a894d44d5.js" defer></script>
+<script src="/assets/trust-depth.shell-bad58045cc.js" defer></script>
 <script src="/assets/live-proof.js" defer></script>
 <script src="/assets/adaptive-cta.js" defer></script>
 <script src="/assets/related-content.js" defer></script>
@@ -1637,56 +1813,6 @@
 <script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
-<!-- Progressive tier reveal — S205 #2: paid tiers stagger-reveal on scroll -->
-<script>
-(function(){
-  var reveals = document.querySelectorAll('.tier-reveal');
-  if (!reveals.length || !window.IntersectionObserver) {
-    reveals.forEach(function(el){ el.classList.add('in-view'); });
-    return;
-  }
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in-view'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(function(el){ obs.observe(el); });
-})();
-</script>
-<!-- Intent filter for tier grid — S201 #2 -->
-<script>
-(function(){
-  var HINTS = {
-    all: '',
-    play: 'Showing tiers most relevant for players — every tier gives you game access.',
-    create: 'Showing tiers with studio access, co-dev perks, and creation tools.',
-    support: 'Showing tiers for supporters who want to fuel the vault and lock in lifetime pricing.'
-  };
-  document.addEventListener('DOMContentLoaded', function() {
-    var btns = document.querySelectorAll('.mem-intent-btn');
-    var cards = document.querySelectorAll('[data-intent-tags]');
-    var hint = document.getElementById('mem-intent-hint');
-    if (!btns.length || !cards.length) return;
-    function setIntent(intent) {
-      btns.forEach(function(b) {
-        var active = b.getAttribute('data-intent') === intent;
-        b.style.background = active ? 'rgba(255,255,255,0.07)' : 'transparent';
-        b.style.borderColor = active ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
-        b.style.color = active ? 'var(--text)' : 'var(--muted)';
-      });
-      cards.forEach(function(c) {
-        var tags = (c.getAttribute('data-intent-tags') || '').split(' ');
-        c.style.display = (intent === 'all' || tags.indexOf(intent) !== -1) ? '' : 'none';
-      });
-      if (hint) hint.textContent = HINTS[intent] || '';
-      try { navigator.sendBeacon('/v/rum', JSON.stringify({ux:'funnel:membership_intent_tab',route:'/membership/',intent:intent,ts:Date.now()})); } catch(_){}
-    }
-    btns.forEach(function(b) {
-      b.addEventListener('click', function() { setIntent(b.getAttribute('data-intent')); });
-    });
-  });
-})();
-</script>
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>

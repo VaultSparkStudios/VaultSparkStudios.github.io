@@ -162,6 +162,18 @@
   </script>
   <!-- vs-speculation:end -->
   <link rel="alternate" type="application/json" href="/agents.json" />
+  <link rel="stylesheet" href="/assets/ignis-project-block.css" />
+  <style>
+    .ignis-oracle{padding:3.5rem 0 1.5rem;border-top:1px solid var(--line);scroll-margin-top:calc(var(--nav-height,78px) + 1rem)}
+    .ignis-oracle__title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.035em;margin:.9rem 0 .8rem;color:var(--text)}
+    .ignis-oracle__lede{color:var(--muted);font-size:1.04rem;max-width:62ch;line-height:1.68;margin-bottom:1.6rem}
+    .ignis-oracle .ignis-oracle__ask{padding:0;width:auto;min-height:1085px;margin-bottom:1.6rem}
+    @media(min-width:641px){.ignis-oracle .ignis-oracle__ask{min-height:752px}}
+    .ignis-oracle .ignis-oracle__ask.vs-ignis-mounted{min-height:0}
+    /* Oracle panels ported from /oracle/ carried dark-only gradients; on /ignis/ they follow the theme tokens. */
+    .oracle-stats.vsx-1dd744d811,.vsx-721c331cd8,.vsx-a080df2f46,.vsx-87e8e8ac8c,.vsx-d4756ff503,.oracle-panel{background:var(--panel)!important;border-color:var(--line)!important}
+    .vsx-d834f6d1dc{color:var(--text)!important}.vsx-f38f0a4723{border-top-color:var(--muted)!important}#vel-active-line{stroke:var(--muted)}
+  </style>
 </head>
 <body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
@@ -175,24 +187,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -212,7 +224,7 @@
   <main id="main-content">
     <!-- intelligence-suite:start -->
 <link rel="stylesheet" href="/assets/intelligence-suite.css">
-<nav class="intel-suite" aria-label="Studio Intelligence"><b class="intel-suite__label">Studio Intelligence</b><div class="intel-suite__rail"><a href="/evidence/"><span>Evidence</span><small>· verify the claims</small></a><a href="/studio-pulse/"><span>Pulse</span><small>· live heartbeat</small></a><a href="/oracle/"><span>Oracle</span><small>· deep read</small></a><a href="/ignis/" aria-current="page"><span>IGNIS</span><small>· intelligence engine</small></a><a href="/atlas/"><span>Atlas</span><small>· ecosystem map</small></a><a href="/status/"><span>Status</span><small>· service health</small></a><a href="/stats/"><span>Stats</span><small>· public numbers</small></a><a href="/changelog/"><span>Changelog</span><small>· what shipped</small></a><a href="/roadmap/"><span>Roadmap</span><small>· what is next</small></a><a href="/search/"><span>Search</span><small>· find a signal</small></a></div></nav>
+<nav class="intel-suite" aria-label="Studio Intelligence"><b class="intel-suite__label">Studio Intelligence</b><div class="intel-suite__rail"><a href="/evidence/"><span>Evidence</span><small>· verify the claims</small></a><a href="/studio-pulse/"><span>Pulse</span><small>· live heartbeat</small></a><a href="/ignis/" aria-current="page"><span>IGNIS</span><small>· intelligence engine</small></a><a href="/status/"><span>Status</span><small>· service health</small></a><a href="/changelog/"><span>Changelog</span><small>· what shipped</small></a><a href="/roadmap/"><span>Roadmap</span><small>· what is next</small></a><a href="/search/"><span>Search</span><small>· find a signal</small></a></div></nav>
 <!-- intelligence-suite:end -->
 
     <section class="ignis-hero" aria-labelledby="ignis-heading">
@@ -234,9 +246,9 @@
         </article>
 
         <div class="ignis-tier-grid">
-          <div class="ignis-tier-card" style="border-color:rgba(148,163,184,0.25);"><strong style="color:#94a3b8;">Vaulted · 0–20k</strong>Cold. Paused. Awaiting spark.</div>
-          <div class="ignis-tier-card" style="border-color:rgba(245,158,11,0.3);"><strong style="color:#f59e0b;">Forge · 20k–60k</strong>Active build. Shipping. Learning fast.</div>
-          <div class="ignis-tier-card" style="border-color:rgba(251,191,36,0.35);"><strong style="color:#fbbf24;">Sparked · 60k–85k</strong>Live output, compounding.</div>
+          <div class="ignis-tier-card" style="border-color:rgba(148,163,184,0.25);"><strong style="color:#94a3b8;">Cooling · 0–20k</strong>Quiet stretch. Awaiting the next spark.</div>
+          <div class="ignis-tier-card" style="border-color:rgba(245,158,11,0.3);"><strong style="color:#f59e0b;">Warming · 20k–60k</strong>Active build. Shipping. Learning fast.</div>
+          <div class="ignis-tier-card" style="border-color:rgba(251,191,36,0.35);"><strong style="color:#fbbf24;">Hot · 60k–85k</strong>Live output, compounding.</div>
           <div class="ignis-tier-card" style="border-color:rgba(255,122,0,0.4);"><strong style="color:#FF7A00;">Ignited · 85k–100k</strong>Peak velocity. All systems hot.</div>
         </div>
       </div>
@@ -289,14 +301,14 @@
         <h2 id="caps-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.03em;margin:0 0 1.5rem;">What IGNIS does for the studio.</h2>
         <div class="ignis-caps-grid" data-ignis-caps>
           <!-- Populated by ignis-platform.js from /api/ignis-platform-status.json -->
-          <div class="ignis-cap-card"><strong>Decision scoring</strong><span>Calibrated scoring for studio decisions</span></div>
+          <div class="ignis-cap-card"><strong>Decision scoring</strong><span>Scores studio decisions before they are made</span></div>
           <div class="ignis-cap-card"><strong>Portfolio monitoring</strong><span>Real-time health tracking across all projects</span></div>
-          <div class="ignis-cap-card"><strong>Carry prediction</strong><span>Survival curve estimation for open work items</span></div>
-          <div class="ignis-cap-card"><strong>Feed intelligence</strong><span>Multi-source signal ingestion and liveness tracking</span></div>
-          <div class="ignis-cap-card"><strong>Calibration</strong><span>Isotonic PAV calibration across prediction models</span></div>
-          <div class="ignis-cap-card"><strong>Pattern distribution</strong><span>Studio-wide RCA pattern sharing</span></div>
-          <div class="ignis-cap-card"><strong>Studio Council</strong><span>Cross-project automated feedback at session start</span></div>
-          <div class="ignis-cap-card"><strong>Intelligence coupling</strong><span>Lead-indicator detection across prediction dimensions</span></div>
+          <div class="ignis-cap-card"><strong>Delivery forecasting</strong><span>Estimates how likely open work is to ship on time</span></div>
+          <div class="ignis-cap-card"><strong>Signal intelligence</strong><span>Pulls in signals from many sources and notices when one goes quiet</span></div>
+          <div class="ignis-cap-card"><strong>Honest confidence</strong><span>Checks its own predictions against what actually happened</span></div>
+          <div class="ignis-cap-card"><strong>Shared lessons</strong><span>A fix learned on one project helps every other project</span></div>
+          <div class="ignis-cap-card"><strong>Cross-project review</strong><span>Automatic feedback across every project before work begins</span></div>
+          <div class="ignis-cap-card"><strong>Early warnings</strong><span>Spots the signals that tend to come before a problem</span></div>
         </div>
       </div>
     </section>
@@ -308,9 +320,212 @@
         <div class="ignis-pillars">
           <article class="ignis-pillar" data-pillar-id="velocity"><div class="pnum">01 · Velocity</div><h3>Shipped work per session</h3><p>Did the vault actually move this week? Features, content, decisions, playable builds. No "planning sprints."</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
           <article class="ignis-pillar" data-pillar-id="learning"><div class="pnum">02 · Learning</div><h3>Loops closed per session</h3><p>Self-improvement entries, playtest signals integrated, audits acted on. Learning without follow-through doesn't count.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
-          <article class="ignis-pillar" data-pillar-id="focus"><div class="pnum">03 · Focus</div><h3>Runway discipline</h3><p>Pre-loaded Now queue, no runway crashes, cross-repo coherence. Focus is a muscle that atrophies fast.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+          <article class="ignis-pillar" data-pillar-id="focus"><div class="pnum">03 · Focus</div><h3>Focus discipline</h3><p>Always knowing the next most important thing, and keeping every project consistent with the others. Focus is a muscle that atrophies fast.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
           <article class="ignis-pillar" data-pillar-id="truth"><div class="pnum">04 · Truth</div><h3>Drift between plan and reality</h3><p>If the site says one thing and the code says another, IGNIS drops. Transparency is not a slogan.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
           <article class="ignis-pillar" data-pillar-id="compound"><div class="pnum">05 · Compound</div><h3>Reuse and ecosystem gravity</h3><p>Shared tooling across projects, cross-surface handoffs, one vault — not ten islands.</p><div class="pillar-score"><span class="pillar-pct" data-pillar-pct></span><span class="pillar-grade" data-pillar-grade></span><div class="pillar-bar"><div class="pillar-bar-fill" data-pillar-bar style="width:0%"></div></div></div></article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- S368 ia-consolidation-v2: /oracle/ folded in. One page, one score: the
+         IGNIS gauge above is the only cognition number; the Oracle's duplicate
+         /100,000 card was dropped and its data sections live here. -->
+    <section id="oracle" class="ignis-oracle" aria-labelledby="oracle-heading">
+      <div class="container">
+        <div class="ignis-chip"><span class="ignis-dot" aria-hidden="true"></span>Live · IGNIS reads the studio</div>
+        <h2 id="oracle-heading" class="ignis-oracle__title">The Oracle.</h2>
+        <p class="ignis-oracle__lede">Most studios hide their pulse. This is ours, made public — every project under the vault banner, every cognition signal, every point of friction, served straight from the studio's own ledger.</p>
+        <section class="container ignis-oracle__ask" id="ask-ignis" data-ask-ignis aria-label="Ask IGNIS about the studio"></section>
+        <article class="oracle-stats vsx-1dd744d811" aria-live="polite">
+          <div class="eyebrow vsx-778a654305">Live ecosystem read</div>
+          <div class="oracle-stat-grid vsx-e5daa22a0f">
+            <div><strong id="oracle-stat-total" class="vsx-cba03488db">—</strong><span class="vsx-6aab46bba5">Projects tracked</span></div>
+            <div><strong id="oracle-stat-green" class="vsx-cb2c4a1714">—</strong><span class="vsx-6aab46bba5">Green health</span></div>
+            <div><strong id="oracle-stat-yellow" class="vsx-6a41cc91e7">—</strong><span class="vsx-6aab46bba5">Yellow health</span></div>
+            <div><strong id="oracle-stat-red" class="vsx-6fde786d28">—</strong><span class="vsx-6aab46bba5">Red health</span></div>
+            <div><strong id="oracle-stat-updated" class="vsx-19e4624672">—</strong><span class="vsx-6aab46bba5">Last sync</span></div>
+          </div>
+        </article>
+
+        <div class="vsx-3e4454b7ca">
+          <span class="vsx-6aab46bba5">Filter:</span>
+          <button type="button" class="oracle-filter button-ghost vsx-b5b8533655" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="oracle-filter button-ghost vsx-b5b8533655" data-filter="green">Green</button>
+          <button type="button" class="oracle-filter button-ghost vsx-b5b8533655" data-filter="yellow">Yellow</button>
+          <button type="button" class="oracle-filter button-ghost vsx-b5b8533655" data-filter="sparked">SPARKED</button>
+          <button type="button" class="oracle-filter button-ghost vsx-b5b8533655" data-filter="forge">FORGE</button>
+        </div>
+      </div>
+    </section>
+    <section aria-labelledby="oracle-velocity-heading" class="vsx-9e9e8f6ae3">
+      <div class="container">
+        <div class="eyebrow vsx-bba5e32d4a">Ecosystem velocity</div>
+        <h2 id="oracle-velocity-heading" class="vsx-f3bd01de7a">60-day studio momentum.</h2>
+        <p class="vsx-abbdba4372">IGNIS cognition score (the studio's composite intelligence signal) layered against ecosystem-wide studio signals across every VaultSpark world. The forge is loud when both lines climb together.</p>
+
+        <article class="oracle-velocity-card vsx-721c331cd8" aria-live="polite">
+          <div class="oracle-velocity-stats vsx-e4ef8cfa98">
+            <div><strong id="vel-commits" class="vsx-3ca99c277f">—</strong><span class="vsx-11cc0c9f1d">Signals in the window</span></div>
+            <div><strong id="vel-repos" class="vsx-3ca99c277f">—</strong><span class="vsx-11cc0c9f1d">Worlds tracked</span></div>
+            <div><strong id="vel-ignis-delta" class="vsx-36e08e7cbe">—</strong><span class="vsx-11cc0c9f1d">Studio cognition</span></div>
+            <div><strong id="vel-peak" class="vsx-b959021e6e">—</strong><span class="vsx-11cc0c9f1d">Loudest day</span></div>
+            <div><strong id="vel-fresh-repos" class="vsx-d834f6d1dc">—</strong><span class="vsx-11cc0c9f1d">Active today</span></div>
+            <div><strong id="vel-live-sessions" class="vsx-36e08e7cbe">—</strong><span title="Worlds with a founder actively in-session" class="vsx-11cc0c9f1d">In the forge now</span></div>
+          </div>
+
+          <svg id="oracle-velocity-chart" viewBox="0 0 1000 360" preserveAspectRatio="none" role="img" aria-label="Studio Ecosystem Velocity over the last 60 days" class="vsx-b6c2b30643">
+            <defs>
+              <linearGradient id="vel-ignis-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FF7A00" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#FF7A00" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="vel-commit-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFC400" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#FFC400" stop-opacity="0.4" />
+              </linearGradient>
+            </defs>
+            <!-- panels populated by JS -->
+            <g id="vel-grid"></g>
+            <g id="vel-ignis-area"></g>
+            <path id="vel-ignis-line" fill="none" stroke="#FF7A00" stroke-width="2" />
+            <g id="vel-commit-bars"></g>
+            <path id="vel-active-line" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-dasharray="3 3" />
+            <g id="vel-event-markers"></g>
+            <g id="vel-axis-labels"></g>
+            <line id="vel-hover-line" x1="-10" y1="0" x2="-10" y2="360" stroke="rgba(255,196,0,0.45)" stroke-width="1" />
+          </svg>
+
+          <div class="vsx-acece90326">
+            <span class="vsx-13c1b4b5e1"><span class="vsx-6f5c6b5034"></span>Studio cognition</span>
+            <span class="vsx-13c1b4b5e1"><span class="vsx-470be861d0"></span>Daily studio signal</span>
+            <span class="vsx-13c1b4b5e1"><span class="vsx-f38f0a4723"></span>Worlds active that day</span>
+            <span id="vel-hover-label" class="vsx-f111146979"></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-insights-heading" class="vsx-261c0cd7dd">
+      <div class="container">
+        <div class="eyebrow vsx-331c614df9">Smart insights</div>
+        <h2 id="oracle-insights-heading" class="vsx-f3bd01de7a">What IGNIS notices in the data.</h2>
+        <p class="vsx-abbdba4372">Auto-generated observations on velocity, co-activity, IGNIS trajectory, and peak output — computed live from the same series the chart above renders.</p>
+        <div id="oracle-insights" class="vsx-323686da3f">
+          <p class="vsx-8b4eff6b9a">Reading the data…</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-heatmap-heading" class="vsx-17d8fff0d4">
+      <div class="container">
+        <div class="eyebrow vsx-7ea4937329">Activity heatmap</div>
+        <h2 id="oracle-heatmap-heading" class="vsx-6e399428af">60 days of forge weather.</h2>
+        <p class="vsx-31f26ba0a0">Each cell is one day. Brighter = louder. Hover any cell for the date and signal count. Quiet days are honest — the studio breathes.</p>
+        <article class="oracle-panel vsx-a080df2f46">
+          <div id="oracle-heatmap" aria-label="60-day activity heatmap">
+            <p class="vsx-5d5126f280">Loading 60-day grid…</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-distribution-heading" class="vsx-17d8fff0d4">
+      <div class="container">
+        <div id="oracle-dist-row" class="vsx-91a30c230f">
+          <article class="oracle-panel vsx-87e8e8ac8c">
+            <div class="eyebrow vsx-b20f601468">Lifecycle distribution</div>
+            <h2 id="oracle-distribution-heading" class="vsx-1fba8cbad5">Where every project lives right now.</h2>
+            <div id="oracle-lifecycle">
+              <p class="vsx-5d5126f280">Mapping the catalog…</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-movers-heading" class="vsx-42c2870ed4">
+      <div class="container">
+        <div class="eyebrow vsx-c44895a161">Top movers</div>
+        <h2 id="oracle-movers-heading" class="vsx-6e399428af">Leading the forge right now.</h2>
+        <p class="vsx-abbdba4372">Three angles on portfolio leadership — the projects with the most studio attention this window.</p>
+        <div id="oracle-movers" class="vsx-2560572536">
+          <p class="vsx-8b4eff6b9a">Ranking projects…</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-layer3-heading" class="vsx-c62cc532a7">
+      <div class="container">
+        <div class="eyebrow vsx-b20f601468">Layer 3 · Constellation read</div>
+        <h2 id="oracle-layer3-heading" class="vsx-5a95a6633d">How the worlds pull on each other.</h2>
+        <p class="vsx-91754bfc5b">
+          The Oracle can now compare two projects side by side and surface cross-project gravity from public focus, voice, and activity patterns. Choose two worlds, then share the URL — the read stays attached.
+        </p>
+
+        <article class="oracle-panel vsx-d4756ff503">
+          <div class="vsx-f69acc92ea">
+            <label class="vsx-244ece17f0">
+              First world
+              <select id="oracle-compare-a" class="vsx-c43eb96857"></select>
+            </label>
+            <label class="vsx-244ece17f0">
+              Second world
+              <select id="oracle-compare-b" class="vsx-c43eb96857"></select>
+            </label>
+            <a id="oracle-compare-share" class="button-ghost vsx-586ef2410b" href="/ignis/#oracle">Share this read</a>
+          </div>
+          <div id="oracle-comparison" class="vsx-2560572536">
+            <p class="vsx-8b4eff6b9a">Preparing comparison deck…</p>
+          </div>
+        </article>
+
+        <div id="oracle-gravity" class="vsx-2560572536">
+          <p class="vsx-8b4eff6b9a">Mapping cross-project gravity…</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-forecast-heading" class="vsx-77be1c01e2">
+      <div class="container">
+        <div class="eyebrow vsx-331c614df9">⚡ Forge Forecast · proprietary</div>
+        <h2 id="oracle-forecast-heading" class="vsx-5a95a6633d">What the vault sees coming.</h2>
+        <p class="vsx-0179a44b63">
+          IGNIS reads activity patterns + stated focus across the studio and projects two forward-looking signals: what's likely to ship soon, and what's climbing fastest. <em class="vsx-3f0d247ee6">Confidence scores are transparent functions of observed studio activity — not opinion.</em>
+        </p>
+        <div id="oracle-forecasts" class="vsx-323686da3f">
+          <p class="vsx-8b4eff6b9a">Reading forward-looking signals…</p>
+        </div>
+        <p class="vsx-68cb3b3d0d">
+          Predictions move with the published feed, not with a calendar. A "Likely to ship" card doesn't promise a date — it reads the pre-launch shape of a project's stated focus and output volume, and surfaces it. Read it as the vault's own forecast, not a roadmap.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-feed-heading" class="vsx-e5cff43be4">
+      <div class="container">
+        <div class="eyebrow vsx-bba5e32d4a">Per-project intelligence</div>
+        <h2 id="oracle-feed-heading" class="vsx-2e4192a726">Every project, IGNIS's read.</h2>
+        <p class="vsx-461a9f9501">Each card is a live IGNIS block — pulse data, current focus, friction level, and IGNIS's own observation about the project. Click <em>Visit live</em> for the deployed version when one exists.</p>
+
+        <div id="oracle-feed" class="vsx-2fe27d6fc4">
+          <p id="oracle-feed-empty" class="vsx-565611076b">Reading portfolio pulse…</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oracle-spec-heading" class="vsx-0821fa4333">
+      <div class="container">
+        <div class="vsx-f8e21fbed0">
+          <div class="eyebrow vsx-16884469a8">How the Oracle is wired</div>
+          <h2 id="oracle-spec-heading" class="vsx-f65b3dce5b">One feed. One synthesis layer. No hidden opinion layer — just IGNIS's read.</h2>
+          <p class="vsx-f294e2bf49">Every VaultSpark project writes down <a href="/how-we-build/#handoff">what changed</a> each time work ends. IGNIS turns those notes into public Oracle feeds showing each project's health, focus, and friction. The Oracle serves that read directly to your browser. No middleware. No hidden opinion layer. Just the studio's own ledger, made legible.</p>
+          <p class="vsx-559d7bcc6e">Voice quotations are IGNIS's own observations per project, refreshed on demand. The block on every project page is the same widget — same feed, same logic. <em>One Oracle. Every surface.</em></p>
+          <div class="vsx-4d065b717d">
+            <a class="button" href="#ignis-heading">What is IGNIS &nbsp;↑</a>
+            <a class="button-ghost" href="/studio-pulse/">Studio Pulse</a>
+            <a class="button-ghost" href="/roadmap/">Vault Pipeline</a>
+          </div>
         </div>
       </div>
     </section>
@@ -330,7 +545,6 @@
       </div>
     </section>
 
-    <!-- S205 #13: personalized member context panel — hidden until auth confirms -->
     <style>
       .ignis-member-ctx { display: none; padding: 1.4rem 0 0; }
       body[data-vs-signed-in] .ignis-member-ctx { display: block; }
@@ -404,23 +618,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -439,19 +652,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -461,7 +672,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -481,17 +692,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -505,6 +716,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -546,23 +758,500 @@
   <script src="/assets/ignis-live.js" defer></script>
   <script src="/assets/ignis-platform.js" defer></script>
 <script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
+  <!-- Oracle runtime (S368: folded in from /oracle/) -->
+  <script src="/assets/ignis-project-block.shell-0fbab844d7.js" defer></script>
+  <script src="/assets/ignis-answer-engine.js" defer></script>
+  <script src="/assets/oracle-insights-compute.shell-355aaa84cf.js" defer></script>
+  <script src="/assets/oracle-extra.shell-a71c845b99.js" defer></script>
+  <script>
+    // One public-safe request spine for every Oracle runtime. Promise caching
+    // coalesces the inline renderer and deferred expansion panels into one
+    // request per feed. Local IGNIS preview is explicit and localhost-only;
+    // production never probes gitignored /ignis/output paths.
+    window.VSOracleFeeds = window.VSOracleFeeds || (() => {
+      const cache = new Map();
+      const localPreview = /^(?:localhost|127\.0\.0\.1)$/.test(location.hostname)
+        && new URLSearchParams(location.search).get('oracleSource') === 'local';
+      const source = (publicUrl, localUrl) => localPreview && localUrl ? localUrl : publicUrl;
+      const json = (url) => {
+        if (!cache.has(url)) {
+          cache.set(url, fetch(url, { cache: 'no-cache' })
+            .then((response) => response.ok ? response.json() : null)
+            .catch(() => null));
+        }
+        return cache.get(url);
+      };
+      return {
+        json,
+        ecosystem: () => json(source('/api/ecosystem-state.json', '/ignis/output/ecosystem-state.json')),
+        velocity: () => json(source('/api/ecosystem-velocity.json', '/ignis/output/ecosystem-velocity.json')),
+      };
+    })();
+
+    // Oracle feed renderer — use the committed public ecosystem, then the
+    // narrower public-intelligence catalog if the primary feed is unavailable.
+    (async function () {
+      const FEED = document.getElementById('oracle-feed');
+      const EMPTY = document.getElementById('oracle-feed-empty');
+      const feeds = window.VSOracleFeeds;
+
+      // S193 founder decision: external projects, no internal-only data.
+      let ecosystem = await feeds.ecosystem();
+
+      // Legacy variables retain the renderer's normalized input shape.
+      let pulse = null, voices = null;
+
+      // Narrower public-safe fallback, generated and committed on every build.
+      if (!ecosystem && (!pulse || !pulse.entries)) {
+        try {
+          const pi = await feeds.json('/api/public-intelligence.json');
+          if (pi) {
+            const cat = Array.isArray(pi.catalog) ? pi.catalog : [];
+            if (cat.length) {
+              const healthFor = (s) => s === 'SPARKED' ? 'green' : s === 'FORGE' ? 'yellow' : 'unknown';
+              pulse = {
+                schemaVersion: pi.schemaVersion,
+                generatedAt: pi.generatedAt,
+                totalProjects: cat.length,
+                healthDistribution: {
+                  green: cat.filter(p => p.status === 'SPARKED').length,
+                  yellow: cat.filter(p => p.status === 'FORGE').length,
+                  red: cat.filter(p => p.status === 'VAULTED').length,
+                },
+                entries: cat.map(p => ({
+                  id: p.id,
+                  name: p.name,
+                  health: healthFor(p.status),
+                  vaultStatus: p.status,
+                  currentFocus: p.note || '',
+                  blockerCount: 0,
+                })),
+              };
+              voices = { schemaVersion: '1.0', voices: {} };
+            }
+          }
+        } catch {}
+      }
+
+      // Normalize: if ecosystem-state is present, project it to the same shape
+      // the rest of this script expects.
+      if (ecosystem?.projects?.length) {
+        pulse = {
+          schemaVersion: ecosystem.schemaVersion,
+          generatedAt: ecosystem.generatedAt,
+          totalProjects: ecosystem.studioTotals?.projects ?? ecosystem.projects.length,
+          healthDistribution: {
+            green: ecosystem.studioTotals?.green ?? 0,
+            yellow: ecosystem.studioTotals?.yellow ?? 0,
+            red: ecosystem.studioTotals?.red ?? 0,
+          },
+          entries: ecosystem.projects.map(p => ({
+            id: p.slug,
+            name: p.name,
+            health: p.health,
+            vaultStatus: p.vaultStatus,
+            currentFocus: p.currentFocus,
+            blockerCount: p.blockerCount,
+          })),
+        };
+        voices = {
+          schemaVersion: '1.0',
+          voices: Object.fromEntries(ecosystem.projects.filter(p => p.voice).map(p => [p.slug, p.voice])),
+        };
+      }
+
+      if (!pulse || !pulse.entries) {
+        EMPTY.textContent = 'Live portfolio intelligence is regenerating — check back in a moment.';
+        return;
+      }
+
+      // ────── IGNIS Studio Cognition aggregate (top hero card) ──────
+      try {
+        const agg = ecosystem?.ignisAggregate;
+        if (agg) {
+          const score = Number(agg.currentStudioScore) || 0;
+          const pct = Math.min(100, Math.max(0, (score / 100000) * 100));
+          const setText = (id, v) => { const el = document.getElementById(id); if (el && v != null) el.textContent = v; };
+          setText('ignis-aggregate-score', score.toLocaleString());
+          setText('ignis-aggregate-tier', (agg.studioCognitionTier || 'forge').toString().toUpperCase());
+          setText('ignis-aggregate-sessions', `${agg.sessionsRecorded || 0} sessions logged`);
+          const bar = document.getElementById('ignis-aggregate-bar');
+          if (bar) bar.style.width = pct.toFixed(1) + '%';
+          const trendEl = document.getElementById('ignis-aggregate-trend');
+          if (trendEl) {
+            const t = String(agg.trend || 'flat');
+            const arrow = t === 'up' ? '↑' : t === 'down' ? '↓' : '→';
+            trendEl.textContent = `trend: ${arrow} ${t}`;
+            if (t === 'down') {
+              trendEl.style.background = 'rgba(245,176,66,0.12)';
+              trendEl.style.borderColor = 'rgba(245,176,66,0.35)';
+              trendEl.style.color = '#f5b042';
+            } else if (t === 'flat') {
+              trendEl.style.background = 'rgba(255,255,255,0.05)';
+              trendEl.style.borderColor = 'rgba(255,255,255,0.15)';
+              trendEl.style.color = 'rgba(255,255,255,0.7)';
+            }
+          }
+          const quoteEl = document.getElementById('ignis-aggregate-voice');
+          if (quoteEl && agg.studioVoice) {
+            quoteEl.innerHTML = `
+              <p class="vsx-6b9f556ad9">${agg.studioVoice.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p>
+              <footer class="vsx-a1e7d83bd2">— IGNIS, reading the vault</footer>
+            `;
+          }
+        } else {
+          // Honest-dark: the IGNIS cognition aggregate is computed from the
+          // gitignored /ignis/output/* feed (404 on prod — it aggregates sealed
+          // sibling repos, so it can't ship). No public-safe /100,000 score
+          // exists, so hide the card rather than strand it on "Loading…/—".
+          const card = document.querySelector('.oracle-ignis-card');
+          if (card) card.style.display = 'none';
+        }
+      } catch (e) { /* non-fatal */ }
+
+      // Share button — uses Web Share API where available, falls back to clipboard.
+      const shareBtn = document.getElementById('oracle-share-btn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const url = 'https://vaultsparkstudios.com/ignis/#oracle';
+          const title = 'VaultSpark Studios — Ecosystem Oracle';
+          const text = 'Live cross-project intelligence from VaultSpark Studios. IGNIS reads every project.';
+          try {
+            if (navigator.share) {
+              await navigator.share({ url, title, text });
+            } else {
+              await navigator.clipboard.writeText(url);
+              const orig = shareBtn.textContent;
+              shareBtn.textContent = 'Link copied ✓';
+              setTimeout(() => { shareBtn.textContent = orig; }, 2200);
+            }
+          } catch { /* user cancelled */ }
+        });
+      }
+
+      // Voice-key normalization: try kebab-case of name, fall back to lowercased name.
+      const nameToVoiceKey = (name) => {
+        const slug = String(name || '').toLowerCase().replace(/[\s_]+/g, '-').replace(/[^a-z0-9-]/g, '');
+        if (voices?.voices?.[slug]) return slug;
+        const alt = slug.replace(/^the-/, '');
+        if (voices?.voices?.[alt]) return alt;
+        return slug;
+      };
+
+      // Stats
+      const total = pulse.totalProjects || pulse.entries.length;
+      const dist = pulse.healthDistribution || {};
+      const setNum = (id, n) => { const el = document.getElementById(id); if (el) el.textContent = n; };
+      setNum('oracle-stat-total', total);
+      setNum('oracle-stat-green', dist.green ?? '—');
+      setNum('oracle-stat-yellow', dist.yellow ?? '—');
+      setNum('oracle-stat-red', dist.red ?? '—');
+      try {
+        const d = new Date(pulse.generatedAt);
+        const days = Math.floor((Date.now() - d.getTime()) / 86_400_000);
+        setNum('oracle-stat-updated', days < 1 ? 'today' : `${days}d ago`);
+      } catch { setNum('oracle-stat-updated', '—'); }
+
+      // Render cards
+      EMPTY.remove();
+      const cards = [];
+      for (const e of pulse.entries) {
+        const voiceKey = nameToVoiceKey(e.name);
+        const card = document.createElement('div');
+        card.className = 'oracle-card';
+        card.dataset.health = String(e.health || 'unknown').toLowerCase();
+        card.dataset.status = String(e.vaultStatus || '').toLowerCase();
+        card.dataset.ignisHint = e.name + ' project ' + (e.currentFocus || e.vaultStatus || '');
+        card.innerHTML = `
+          <div class="ignis-project-block"
+               data-project="${e.name.replace(/"/g, '&quot;')}"
+               data-voice="${voiceKey}"
+               data-health="${e.health || ''}"
+               data-status="${e.vaultStatus || ''}"
+               data-focus="${(e.currentFocus || '').replace(/"/g, '&quot;')}"
+          ></div>`;
+        cards.push(card);
+        FEED.appendChild(card);
+      }
+
+      if (window.IgnisProjectBlock?.init) window.IgnisProjectBlock.init();
+
+      // Filter wiring
+      const filters = document.querySelectorAll('.oracle-filter');
+      function applyFilter(name) {
+        for (const card of cards) {
+          let visible = true;
+          if (name === 'green' || name === 'yellow' || name === 'red') visible = card.dataset.health === name;
+          else if (name === 'sparked') visible = card.dataset.status === 'sparked';
+          else if (name === 'forge') visible = card.dataset.status === 'forge';
+          card.style.display = visible ? '' : 'none';
+        }
+        filters.forEach(b => b.setAttribute('aria-pressed', b.dataset.filter === name ? 'true' : 'false'));
+      }
+      filters.forEach(b => b.addEventListener('click', () => applyFilter(b.dataset.filter)));
+    })();
+
+    // Studio Ecosystem Velocity chart
+    (async function () {
+      const velSection = document.querySelector('section[aria-labelledby="oracle-velocity-heading"]');
+      const hideVel = () => { if (velSection) velSection.style.display = 'none'; };
+
+      // Use the shared public 60-day feed before the older weekly fallback.
+      // The daily feed is commit-count only, so cognition series are optional.
+      const feeds = window.VSOracleFeeds;
+      let data = await feeds.velocity();
+      let publicState = null;
+      let publicMode = Boolean(data);
+      if (data) {
+        publicState = await feeds.ecosystem();
+      }
+      if (!data) {
+        // Last-resort public fallback: api/velocity-series.json (24 weeks,
+        // git log, no private data). Kept only so the section never blanks if
+        // the daily feed fails to publish.
+        const pubRes = await fetch('/api/velocity-series.json', { cache: 'no-cache' }).catch(() => null);
+        if (!pubRes || !pubRes.ok) { hideVel(); return; }
+        const pub = await pubRes.json();
+        if (!pub?.weeks?.length) { hideVel(); return; }
+        // Update label to reflect source
+        const hd = document.getElementById('oracle-velocity-heading');
+        if (hd) hd.textContent = 'Studio Cadence — ' + pub.totalCommits + ' commits, 24 weeks';
+        const desc = velSection && velSection.querySelector('p');
+        if (desc) desc.textContent = 'Public git history grouped by week. Source of truth: this GitHub repo. ' + pub.totalCommits + ' commits across the last 24 weeks.';
+        // Populate the one stat we have
+        const cEl = document.getElementById('vel-commits');
+        if (cEl) { cEl.textContent = pub.totalCommits.toLocaleString(); cEl.nextElementSibling.textContent = 'Commits (24 wk)'; }
+        // Render weekly bar chart in #vel-commit-bars
+        var barsEl = document.getElementById('vel-commit-bars');
+        if (barsEl) {
+          var weekChartW = 1000, weekChartH = 360, weekLeft = 40, weekRight = 14, weekTop = 30, weekBottom = 48;
+          var weekInnerW = weekChartW - weekLeft - weekRight, weekInnerH = weekChartH - weekTop - weekBottom;
+          var wks = pub.weeks, weekCount = wks.length;
+          var mx = Math.max.apply(null, wks.map(function(w){return w.commitCount;})) || 1;
+          var bw = Math.max(1, Math.floor(weekInnerW / weekCount) - 2);
+          var html = '';
+          for (var i = 0; i < weekCount; i++) {
+            var cnt = wks[i].commitCount;
+            var bh = (cnt / mx) * weekInnerH;
+            var x = weekLeft + (i / weekCount) * weekInnerW;
+            var y = weekTop + weekInnerH - bh;
+            html += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh.toFixed(1) + '" fill="#FFC400" opacity="' + (cnt > 0 ? '0.75' : '0.15') + '" rx="2"/>';
+          }
+          barsEl.innerHTML = html;
+        }
+        return;
+      }
+      if (!data?.series?.dates?.length) { hideVel(); return; }
+
+      const dates = data.series.dates;
+      const commits = Array.isArray(data.series.commits) ? data.series.commits : dates.map(() => 0);
+      const ignis = Array.isArray(data.series.ignis) ? data.series.ignis : dates.map(() => null);
+      const activeRepos = Array.isArray(data.series.activeRepos)
+        ? data.series.activeRepos
+        : commits.map(v => v > 0 ? 1 : 0);
+      const n = dates.length;
+
+      // headline stats
+      const fmt = (n) => (typeof n === 'number' ? n.toLocaleString() : '—');
+      document.getElementById('vel-commits').textContent = fmt(data.ecosystem.totalCommits ?? data.totalCommits ?? commits.reduce((a, b) => a + b, 0));
+      const repoCount = data.ecosystem.totalRepos ?? publicState?.studioTotals?.publicProjects ?? publicState?.projects?.length;
+      document.getElementById('vel-repos').textContent = fmt(repoCount);
+      if (publicMode) document.getElementById('vel-repos').nextElementSibling.textContent = 'Public worlds tracked';
+      const currentCognition = data.ecosystem.currentStudioScore ?? publicState?.ignisAggregate?.currentStudioScore;
+      const previousCognition = data.ecosystem.previousScore ?? publicState?.ignisAggregate?.previousScore;
+      const delta = data.ecosystem.ignisDelta ?? (
+        typeof currentCognition === 'number' && typeof previousCognition === 'number'
+          ? currentCognition - previousCognition
+          : null
+      );
+      const deltaEl = document.getElementById('vel-ignis-delta');
+      if (delta != null) {
+        deltaEl.textContent = (delta >= 0 ? '+' : '') + fmt(delta);
+        deltaEl.style.color = delta >= 0 ? '#5ad28d' : '#ff5c5c';
+      } else if (typeof currentCognition === 'number') {
+        deltaEl.textContent = fmt(currentCognition);
+        deltaEl.style.color = '#5ad28d';
+        deltaEl.nextElementSibling.textContent = 'Studio cognition now';
+      } else {
+        deltaEl.textContent = 'public-safe';
+      }
+      document.getElementById('vel-peak').textContent = data.ecosystem.peakCommitDay || '—';
+      // S136: "Active today" prefers explicit ecosystem field (updated aggregator)
+      //       and falls back to the last-day-of-series for schema v1.0 compat.
+      const activeToday = data.ecosystem.activeRepoToday ?? activeRepos[activeRepos.length - 1] ?? 0;
+      document.getElementById('vel-fresh-repos').textContent = fmt(activeToday);
+      // S136: new "uncommitted today" + "live sessions" tiles
+      const workingEl = document.getElementById('vel-working-today');
+      if (workingEl) workingEl.textContent = fmt(data.ecosystem.workingRepoToday ?? 0);
+      const sessionsEl = document.getElementById('vel-live-sessions');
+      if (sessionsEl) sessionsEl.textContent = fmt(data.ecosystem.liveSessions ?? publicState?.ignisAggregate?.sessionsRecorded ?? 0);
+
+      // chart geometry — viewBox 1000x360
+      const W = 1000, H = 360;
+      const M = { top: 18, right: 14, bottom: 28, left: 40 };
+      const innerW = W - M.left - M.right;
+      const innerH = H - M.top - M.bottom;
+      const ignisPanelH = innerH * 0.55;
+      const commitPanelH = innerH * 0.40;
+      const commitPanelY = M.top + ignisPanelH + (innerH * 0.05);
+
+      const xAt = (i) => M.left + (n <= 1 ? innerW / 2 : (i / (n - 1)) * innerW);
+      const ignisKnown = ignis.filter(v => typeof v === 'number');
+      const ignisMin = ignisKnown.length ? Math.min(...ignisKnown) : 0;
+      const ignisMax = ignisKnown.length ? Math.max(...ignisKnown) : 1;
+      const ignisRange = Math.max(ignisMax - ignisMin, 1);
+      const ignisY = (v) => v == null ? null : (M.top + ignisPanelH - ((v - ignisMin) / ignisRange) * ignisPanelH);
+
+      const commitsMax = Math.max(...commits, 1);
+      const activeMax = Math.max(...activeRepos, 1);
+      const commitY = (v) => commitPanelY + commitPanelH - (v / commitsMax) * commitPanelH;
+      const activeY = (v) => commitPanelY + commitPanelH - (v / activeMax) * commitPanelH;
+
+      // grid
+      const grid = document.getElementById('vel-grid');
+      for (let k = 0; k <= 4; k++) {
+        const y = M.top + (k / 4) * ignisPanelH;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', M.left);
+        line.setAttribute('x2', W - M.right);
+        line.setAttribute('y1', y);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', 'rgba(255,255,255,0.05)');
+        grid.appendChild(line);
+      }
+
+      // IGNIS area + line — handles null gaps
+      const ignisAreaG = document.getElementById('vel-ignis-area');
+      const ignisLine = document.getElementById('vel-ignis-line');
+      let pathD = '';
+      let areaD = '';
+      let inSeg = false;
+      let segStartX = null;
+      for (let i = 0; i < n; i++) {
+        const y = ignisY(ignis[i]);
+        const x = xAt(i);
+        if (y == null) {
+          if (inSeg) {
+            // close area segment
+            areaD += ` L ${xAt(i - 1)} ${M.top + ignisPanelH} L ${segStartX} ${M.top + ignisPanelH} Z`;
+            inSeg = false;
+          }
+          continue;
+        }
+        if (!inSeg) {
+          pathD += ` M ${x} ${y}`;
+          areaD += ` M ${x} ${M.top + ignisPanelH} L ${x} ${y}`;
+          segStartX = x;
+          inSeg = true;
+        } else {
+          pathD += ` L ${x} ${y}`;
+          areaD += ` L ${x} ${y}`;
+        }
+        if (i === n - 1 && inSeg) {
+          areaD += ` L ${x} ${M.top + ignisPanelH} L ${segStartX} ${M.top + ignisPanelH} Z`;
+        }
+      }
+      ignisLine.setAttribute('d', pathD.trim());
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      areaPath.setAttribute('d', areaD.trim());
+      areaPath.setAttribute('fill', 'url(#vel-ignis-fill)');
+      ignisAreaG.appendChild(areaPath);
+
+      // commit bars
+      const commitsG = document.getElementById('vel-commit-bars');
+      const barW = Math.max(innerW / n - 1.5, 1.5);
+      for (let i = 0; i < n; i++) {
+        const v = commits[i];
+        if (v <= 0) continue;
+        const x = xAt(i) - barW / 2;
+        const y = commitY(v);
+        const h = commitPanelY + commitPanelH - y;
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y);
+        rect.setAttribute('width', barW);
+        rect.setAttribute('height', h);
+        rect.setAttribute('fill', 'url(#vel-commit-fill)');
+        rect.setAttribute('rx', '1');
+        commitsG.appendChild(rect);
+      }
+
+      // active-repos dotted line
+      const activeLine = document.getElementById('vel-active-line');
+      let aPath = '';
+      for (let i = 0; i < n; i++) {
+        const x = xAt(i);
+        const y = activeY(activeRepos[i] || 0);
+        aPath += (i === 0 ? `M ${x} ${y}` : ` L ${x} ${y}`);
+      }
+      activeLine.setAttribute('d', aPath);
+
+      // axis labels (4 evenly spaced dates)
+      const labelsG = document.getElementById('vel-axis-labels');
+      const labelCount = 5;
+      for (let k = 0; k < labelCount; k++) {
+        const idx = Math.floor((k / (labelCount - 1)) * (n - 1));
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', xAt(idx));
+        t.setAttribute('y', H - 8);
+        t.setAttribute('fill', 'rgba(255,255,255,0.45)');
+        t.setAttribute('font-size', '10');
+        t.setAttribute('text-anchor', 'middle');
+        t.textContent = dates[idx].slice(5); // MM-DD
+        labelsG.appendChild(t);
+      }
+      // y-axis for IGNIS (5 ticks)
+      for (let k = 0; k <= 4; k++) {
+        const v = ignisMin + (ignisRange * (1 - k / 4));
+        const y = M.top + (k / 4) * ignisPanelH;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', M.left - 6);
+        t.setAttribute('y', y + 3);
+        t.setAttribute('fill', 'rgba(255,255,255,0.4)');
+        t.setAttribute('font-size', '10');
+        t.setAttribute('text-anchor', 'end');
+        t.textContent = Math.round(v / 1000) + 'k';
+        labelsG.appendChild(t);
+      }
+
+      // hover
+      const svg = document.getElementById('oracle-velocity-chart');
+      const hoverLine = document.getElementById('vel-hover-line');
+      const hoverLabel = document.getElementById('vel-hover-label');
+      hoverLine.setAttribute('y1', M.top);
+      hoverLine.setAttribute('y2', H - M.bottom);
+      svg.addEventListener('mousemove', (ev) => {
+        const rect = svg.getBoundingClientRect();
+        const xRatio = (ev.clientX - rect.left) / rect.width;
+        const idx = Math.max(0, Math.min(n - 1, Math.round(xRatio * (n - 1))));
+        const x = xAt(idx);
+        hoverLine.setAttribute('x1', x);
+        hoverLine.setAttribute('x2', x);
+        hoverLabel.textContent = `${dates[idx]} · ${commits[idx] || 0} signal${commits[idx] === 1 ? '' : 's'} · ${activeRepos[idx] || 0} world${activeRepos[idx] === 1 ? '' : 's'}${ignis[idx] != null ? ` · cognition ${Math.round(ignis[idx]/1000)}k` : ''}`;
+      });
+      svg.addEventListener('mouseleave', () => {
+        hoverLine.setAttribute('x1', -10);
+        hoverLine.setAttribute('x2', -10);
+        hoverLabel.textContent = '';
+      });
+    })();
+  </script>
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
-<!-- S205 #13: personalized member context panel wire-up -->
 <script>
 (function(){
-  var TIER_LABELS = { free: 'Vault Member', sparked: 'Vault Sparked', eternal: 'Vault Eternal' };
+  var TIER_LABELS = { free: 'Vault Member', sparked: 'VaultSparked', eternal: 'VaultSparked Eternal' };
   var TIER_MILESTONES = {
-    free: 'Upgrade to Vault Sparked to unlock 2× XP, priority access, and deeper oracle sessions.',
-    sparked: 'Vault Sparked active. Your next step: Vault Eternal — permanent grandfather pricing locked for life.',
-    eternal: 'Vault Eternal — you are baked into the vault records permanently. Maximum everything.'
+    free: 'VaultSparked adds a monthly Ask IGNIS quota, the Sparked archive and beta keys.',
+    sparked: 'VaultSparked active. Next step: VaultSparked Eternal — unlimited Ask IGNIS and 1,000 XP every month.',
+    eternal: 'VaultSparked Eternal — the deepest tier in the vault.'
   };
   var TIER_ASKS = {
-    free: 'What do Vault Sparked members unlock?',
-    sparked: 'What does Vault Eternal add beyond Sparked?',
-    eternal: 'What content is available only to Eternal members?'
+    free: 'What do VaultSparked members unlock?',
+    sparked: 'What does VaultSparked Eternal add?',
+    eternal: 'What is available only to VaultSparked Eternal members?'
   };
 
   function esc(s) { var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
@@ -584,14 +1273,14 @@
     askBtn.textContent = 'Ask: "' + defaultAsk + '" →';
 
     askBtn.addEventListener('click', function() {
-      // Pre-fill vault oracle input if present, else navigate to /oracle/?q=
+      // Pre-fill vault oracle input if present, else open the Oracle section with ?q=
       var input = document.querySelector('[data-vault-oracle] input, [data-vault-oracle] textarea');
       if (input) {
         input.value = defaultAsk;
         var form = input.closest('form');
         if (form) { form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); return; }
       }
-      location.href = '/oracle/?q=' + encodeURIComponent(defaultAsk);
+      location.href = '/ignis/?q=' + encodeURIComponent(defaultAsk) + '#oracle';
     });
 
     ctx.setAttribute('aria-hidden', 'false');
@@ -607,6 +1296,6 @@
   });
 })();
 </script>
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>

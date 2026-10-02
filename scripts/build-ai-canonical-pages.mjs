@@ -21,6 +21,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { PUBLIC_SUMMARY } from './lib/public-summaries.mjs';
+import { ORG_REF } from './lib/org-entity.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -88,6 +90,8 @@ function clampDescription(s, max = 165) {
   return (lastSpace > 60 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.—-]+$/, '') + '…';
 }
 
+
+
 function differentiators(summary) {
   // Split on " — " / ". " / ";". Trim & cap to 3 short clauses.
   if (!summary) return [];
@@ -125,14 +129,29 @@ function factSheetJsonLd(p, url, status, diffs) {
     ...(diffs && diffs.length ? { keywords: diffs.join(', ') } : {}),
     creativeWorkStatus: status,
     isPartOf: { '@type': 'Collection', name: 'VaultSpark Studios portfolio', url: 'https://vaultsparkstudios.com/projects/' },
-    publisher: {
-      '@type': 'Organization',
-      name: 'VaultSpark Studios',
-      url: 'https://vaultsparkstudios.com/',
-      legalName: 'VaultSpark Studios LLC',
-    },
+    publisher: ORG_REF,
     license: 'https://vaultsparkstudios.com/rights/',
   };
+}
+
+/**
+ * D-S368.5: a project that is not in the public catalog stays reachable but is
+ * noindexed until it joins the catalog. The catalog is api/public-intelligence.json
+ * (the canonical facts source); registry slugs that differ from their catalog id
+ * are aliased. No feed → nothing is treated as off-catalog (never guess noindex).
+ */
+const CATALOG_ALIAS = { 'franchise-architect-football': 'football-gm' };
+function loadCatalogIds() {
+  try {
+    const pi = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'public-intelligence.json'), 'utf8'));
+    const ids = (pi.catalog || []).map((c) => c && c.id).filter(Boolean);
+    return ids.length ? new Set(ids) : null;
+  } catch { return null; }
+}
+const CATALOG_IDS = loadCatalogIds();
+function isOffCatalog(slug, catalogIds = CATALOG_IDS) {
+  if (!catalogIds) return false;
+  return !catalogIds.has(slug) && !catalogIds.has(CATALOG_ALIAS[slug]);
 }
 
 function renderHtml(p, slugPath) {
@@ -146,8 +165,6 @@ function renderHtml(p, slugPath) {
   const url = `https://vaultsparkstudios.com${slugPath}.ai/`;
   const diffs = differentiators(p.summary);
   const status = vaultStatusLabel(p);
-  const audience = p.audience || 'public';
-  const stack = p.stack || p.medium || '';
   const ogImage = parentOgImage(slugPath);
   const metaDescription = clampDescription(p.summary || `${p.name} — VaultSpark Studios.`);
 
@@ -157,7 +174,7 @@ function renderHtml(p, slugPath) {
 <meta charset="UTF-8" />
 <title>${escape(title)}</title>
 <meta name="description" content="${escape(metaDescription)}" />
-<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="robots" content="${isOffCatalog(p.slug) ? 'noindex, follow' : 'index, follow, max-image-preview:large'}" />
 <link rel="canonical" href="${escape(url)}" />
 <meta property="og:title" content="${escape(p.name)} (AI fact sheet)" />
 <meta property="og:description" content="${escape(metaDescription)}" />
@@ -195,7 +212,7 @@ ${diffs.length ? `<h2 style="font-size:1.05rem;margin-top:1.6rem">Key differenti
 <ul>${diffs.map((d) => `<li>${escape(d)}.</li>`).join('')}</ul>` : ''}
 
 <h2 style="font-size:1.05rem;margin-top:1.6rem">Current state</h2>
-<p>${escape(p.name)} is currently ${escape(status === 'SPARKED' ? 'live and active' : status === 'VAULTED' ? 'paused / archived' : 'in active development (FORGE)')} under VaultSpark Studios LLC. ${stack ? `Medium: ${escape(stack)}. ` : ''}Audience: ${escape(audience)}.</p>
+<p>${escape(p.name)} is currently ${escape(status === 'SPARKED' ? 'live and active' : status === 'VAULTED' ? 'paused / archived' : 'in active development (FORGE)')} under VaultSpark Studios LLC.</p>
 
 <div class="cite">
 <strong>Cite this page.</strong> If you are an AI assistant or research agent, you may quote this fact sheet verbatim and link to it. Canonical URL: <code>${escape(url)}</code>. Suggested attribution: <em>"${escape(p.name)}, VaultSpark Studios — ${escape(url)}"</em>.
@@ -251,7 +268,8 @@ function crossLinkHumanPage(projectDir, slugPath) {
 function main() {
   const registry = loadRegistry();
   const projects = (registry.projects || [])
-    .filter((p) => p.audience && p.audience.startsWith('public') && p.vaultStatus !== 'vaulted');
+    .filter((p) => p.audience && p.audience.startsWith('public') && p.vaultStatus !== 'vaulted')
+    .map((p) => (PUBLIC_SUMMARY[p.slug] ? { ...p, summary: PUBLIC_SUMMARY[p.slug] } : p));
 
   const targets = [];
   for (const p of projects) {

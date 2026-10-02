@@ -128,5 +128,50 @@
 
     toastClose.addEventListener('click', dismissToast);
     document.getElementById('contact-form').addEventListener('submit', onSubmit);
+    applyTopicPreset();
   });
+
+  // /contact/?topic=invite — Vault enrolment is invite-led (D-S367.2), so the
+  // public "Request your Vault invite" path lands here with the request framed.
+  // /contact/?topic=collaborate — the /collaborate/ page (playtesters, artists,
+  // audio collaborators) routes here with the request framed the same way.
+  var TOPIC_PRESETS = {
+    invite: {
+      subject: 'Vault invite request',
+      hiddenSubject: 'VaultSpark Studios — Vault invite request',
+      placeholder: 'Tell us a little about you — which games or tools brought you here, and your Discord handle if you have one.',
+      note: 'Vault enrolment is invite-led right now. Send a request and the studio will reply with an invite to your email.',
+      event: 'invite_request_view'
+    },
+    collaborate: {
+      subject: 'Collaboration — playtesting, art or audio',
+      hiddenSubject: 'VaultSpark Studios — Collaboration enquiry',
+      placeholder: 'Which role interests you (playtesting, art, audio)? Share links to your work, the games or worlds that drew you here, and how much time you can offer.',
+      note: 'VaultSpark is an independent, solo-founded studio. Collaborations are credited and arranged one by one — the studio reads every message and replies to serious enquiries.',
+      event: 'collaborate_request_view'
+    }
+  };
+
+  function applyTopicPreset() {
+    var topic = '';
+    try { topic = new URLSearchParams(window.location.search).get('topic') || ''; } catch (_) { return; }
+    var preset = Object.prototype.hasOwnProperty.call(TOPIC_PRESETS, topic) ? TOPIC_PRESETS[topic] : null;
+    if (!preset) return;
+    var subject = document.getElementById('contact-subject');
+    var message = document.getElementById('contact-message');
+    var hiddenSubject = document.querySelector('#contact-form input[name="subject"]');
+    if (subject && !subject.value) subject.value = preset.subject;
+    if (hiddenSubject) hiddenSubject.value = preset.hiddenSubject;
+    if (message) message.placeholder = preset.placeholder;
+    var panel = document.querySelector('.contact-form-panel');
+    if (panel && !document.getElementById('invite-request-note')) {
+      var note = document.createElement('p');
+      note.id = 'invite-request-note';
+      note.className = 'invite-request-note';
+      note.textContent = preset.note;
+      var heading = panel.querySelector('h2');
+      if (heading) heading.insertAdjacentElement('afterend', note);
+    }
+    if (window.VSFunnel) window.VSFunnel.track(preset.event, { page_path: window.location.pathname });
+  }
 })();

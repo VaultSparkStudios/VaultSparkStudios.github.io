@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "manual — single source of truth for game status/metadata",
-  "note": "Edit this file to change game status or play URLs. build:check validates page HTML against registry. navOrder controls display order in nav and index (lower = first within each status group).",
+  "note": "Edit this file to change game status or play URLs. build:check validates page HTML against registry. navOrder controls display order in nav and index (lower = first within each status group). featured:true puts that game in the /games/ featured slot. Status must match studio-ops canon (via api/public-intelligence.json); scripts/derive-registry-surfaces.mjs --check fails on disagreement and re-renders every registry:* marker block.",
   "games": {
     "call-of-doodie": {
       "name": "Call of Doodie",
@@ -10,7 +10,8 @@
       "sourceRepo": "call-of-doodie",
       "playUrl": "https://callofdoodie.wtf/",
       "embeddable": false,
-      "mediaReady": true
+      "mediaReady": true,
+      "featured": true
     },
     "franchise-architect": {
       "name": "Franchise Architect",
@@ -39,7 +40,8 @@
     },
     "project-unknown": {
       "name": "Project Unknown",
-      "status": "vaulted",
+      "status": "sealed",
+      "statusNote": "Sealed teaser with no vault status (D-S368.3). Excluded from status counts, status lists, the roadmap pipeline and nav status groups until it has a canon record.",
       "navOrder": 2,
       "playUrl": null,
       "embeddable": false,

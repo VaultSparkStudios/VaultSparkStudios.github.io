@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁▃▄▄▆
-Avgs — 3: 984.0 | 5: 983.4 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 983.1
-History scope: 200 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-09-30 | Session 366 | Total: 965/1000 | Velocity: 3 | protocolVelocity: 0
+Sparkline (last 5 totals): ▁▄▆▅▅
+Avgs — 3: 955.7 | 5: 940.2 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 982.7
+History scope: 202 recorded /1000 entries across the active ledger and preserved SIL archives.
+Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
+Last session: 2026-10-02 | Session 368 | Total: 954/1000 | Velocity: 23 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2740,3 +2740,22 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** The nonce and renewal changes are not live until the next Worker and content deploys. Login E2E and the Sparked entitlement failure remain blocked on external inputs; both are recorded as open, not passed.
 
 **Brainstorm → TASK_BOARD:** Derive every remaining hand-written status badge from the registry (roadmap, press, sitemap-page) so a single canon flip needs no hand edits; add a registry-derived gate for page badges outside /games/ and /projects/.
+
+## 2026-10-02 UTC — Session 368 (Full audit refresh implemented: membership truth, Season 1, invite-led doors, Ask the Vault) | Total: 954/1000 (v3.0) | Velocity: 23 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 95 | Unit suite 325 pass (26 declared = executed = tracked); new gates: registry surfaces, grounding coherence, entity graph, voice-leak, sitemap page, API index. |
+| Creative Alignment | 96 | Six founder rulings applied (membership, project stories, AI search, anonymous studio, Desk digest); Vault Door and universe map carry the brand promise without touching the LCP path. |
+| Momentum | 97 | 23 of 25 audit items shipped; Season 1 and billing fixes already live; Desk persona and signup requests added mid-session and shipped. |
+| Engagement | 95 | Onboarding quest, since-last-visit, season standings and Desk signup everywhere; real conversion still gated by invite-only Obelisk enrolment. |
+| Process Quality | 93 | Disjoint-ownership parallel agents; one sweep regex corrupted 104 anchors and was fully rebuilt from HEAD; repo closeout template still scores /500 against canon /1000. |
+| Cross-Repo Coherence | 97 | Registry summary request to studio-ops via Ark; no sibling files edited. |
+| Security Posture | 97 | Closed a cross-member AI cache leak, a public cache read policy, caller-trust gaps, public seat-count and gift-insert paths, and double billing. |
+| Ecosystem Integration | 95 | Reused the migration applier, secrets gateway, existing contact/Turnstile and Brevo paths instead of new services. |
+| Capital Efficiency | 95 | Ask the Vault sends ~99% fewer tokens than full feeds with zero-token no-answers; one cited live smoke test spent cents. |
+| Automation Coverage | 94 | Statuses, prices, nav, footer, roadmap, /play/ and JSON-LD now generated with drift checks; publisher drift cascade still manual. |
+
+**Audit:** Real-login E2E remains blocked on Obelisk; the Desk digest sends nothing until the founder approves a test issue; the column-revoke migration waits for the site deploy.
+
+**Brainstorm → TASK_BOARD:** Make the repo closeout template render from the canonical SIL v3 rubric so prompts/closeout.md can never score /500 again; add a release-time synthetic member journey (sign in → season standings → checkout 409 path) once an Obelisk test identity exists.

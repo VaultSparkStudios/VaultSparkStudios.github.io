@@ -29,7 +29,6 @@ Disallow: /vault-member/
 Disallow: /investor-portal/
 Disallow: /investor/
 Disallow: /studio-hub/
-Disallow: /ignis-health/
 Disallow: /.claude/
 Allow: /.well-known/llms.txt
 Allow: /.well-known/llms-full.txt
@@ -43,7 +42,23 @@ Disallow: /vault-member/
 Disallow: /investor-portal/
 Disallow: /investor/
 Disallow: /studio-hub/
-Disallow: /ignis-health/
+Disallow: /.claude/
+Allow: /.well-known/llms.txt
+Allow: /.well-known/llms-full.txt
+Allow: /.well-known/entity-graph.json
+Allow: /.well-known/security.txt
+Disallow: /.well-known/
+
+# Claude and Perplexity search + user-requested retrieval (D-S368.4): allowed
+# so answers can cite the studio. Their training crawlers stay disallowed below.
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Perplexity-User
+Allow: /
+Disallow: /vault-member/
+Disallow: /investor-portal/
+Disallow: /investor/
+Disallow: /studio-hub/
 Disallow: /.claude/
 Allow: /.well-known/llms.txt
 Allow: /.well-known/llms-full.txt
@@ -119,7 +134,6 @@ Disallow: /vault-member/admin/
 Disallow: /investor-portal/
 Disallow: /investor/
 Disallow: /studio-hub/
-Disallow: /ignis-health/
 Disallow: /.claude/
 
 # AI-discovery corpus (CANON-048) — these four files are the PUBLIC citable

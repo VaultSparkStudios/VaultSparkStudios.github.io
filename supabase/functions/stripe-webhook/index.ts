@@ -1,6 +1,11 @@
 // VaultSpark Studios — Stripe Webhook Edge Function
 // Handles subscription lifecycle events from Stripe.
-// Three-tier: vault_sparked, vault_sparked_pro, promogrind_pro (legacy)
+// Three-tier: vault_sparked (VaultSparked), vault_sparked_pro (VaultSparked Eternal),
+//             promogrind_pro (legacy)
+// Phase slots: checkout.session.completed claims the grandfather slot once per
+//   paid session via claim_phase_slot() (create-checkout only reads the price).
+// Gifts: every grant records gift_subscriptions.expires_at (max 30 days,
+//   D-S368.1); expire_gift_sparked() clears expired gift-only access.
 //
 // Deploy: supabase functions deploy stripe-webhook
 // Set secrets:
@@ -16,6 +21,14 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
 import { isVaultSparkedPlan, isVaultSparkedProPlan, normalizePlanKey } from '../_shared/membershipAccess.ts';
+import {
+  giftDurationDays,
+  giftExpiresAt,
+  giftMemberUpdate,
+  parsePhase,
+  shouldClaimPhaseSlot,
+  storedSubscriptionStatus,
+} from './policy.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
@@ -56,14 +69,22 @@ serve(async (req: Request) => {
         if (session.metadata?.gift === 'true') {
           const recipientId  = session.metadata?.recipient_id;
           const gifterId     = session.metadata?.gifter_id;
-          const durationDays = parseInt(session.metadata?.duration_days ?? '30', 10);
+          const durationDays = giftDurationDays(session.metadata?.duration_days);
 
           if (!recipientId || !gifterId) {
             console.error('gift checkout: missing recipient_id or gifter_id');
             break;
           }
 
-          const expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+          // Idempotent on Stripe retries: one grant per checkout session.
+          const { data: priorGift } = await supabase
+            .from('gift_subscriptions')
+            .select('id')
+            .eq('stripe_session_id', session.id)
+            .limit(1);
+          if (priorGift && priorGift.length > 0) break;
+
+          const expiresAt = giftExpiresAt(Date.now(), durationDays);
 
           await supabase.from('gift_subscriptions').insert({
             gifter_id:         gifterId,
@@ -74,9 +95,18 @@ serve(async (req: Request) => {
             expires_at:        expiresAt,
           });
 
-          await supabase.from('vault_members')
-            .update({ is_sparked: true, plan_key: 'vault_sparked' })
-            .eq('id', recipientId);
+          // Never downgrade a VaultSparked Eternal recipient.
+          const { data: recipientRow } = await supabase
+            .from('vault_members')
+            .select('plan_key')
+            .eq('id', recipientId)
+            .maybeSingle();
+          const memberUpdate = giftMemberUpdate(recipientRow);
+          if (memberUpdate) {
+            await supabase.from('vault_members')
+              .update(memberUpdate)
+              .eq('id', recipientId);
+          }
 
           // Award gifter 50 bonus points
           await supabase.from('point_events').insert({
@@ -111,7 +141,7 @@ serve(async (req: Request) => {
           stripe_customer_id:     customerId,
           stripe_subscription_id: subscriptionId,
           plan,
-          status:                 sub.status === 'active' ? 'active' : 'inactive',
+          status:                 storedSubscriptionStatus(sub.status),
           current_period_end:     new Date(sub.current_period_end * 1000).toISOString(),
           stripe_price_id:        stripePriceId,
           enrolled_phase:         enrolledPhase,
@@ -123,6 +153,21 @@ serve(async (req: Request) => {
           await supabase.from('vault_members')
             .update({ is_sparked: true, plan_key: plan })
             .eq('id', userId);
+        }
+
+        // Count the grandfather phase slot now that payment settled. Idempotent
+        // per session id (membership_phase_claims), so Stripe retries are safe.
+        if (shouldClaimPhaseSlot({ mode: session.mode, plan, paymentStatus: session.payment_status })) {
+          const { data: claim, error: claimError } = await supabase.rpc('claim_phase_slot', {
+            p_plan:       plan,
+            p_session_id: session.id,
+            p_phase:      parsePhase(session.metadata?.enrolled_phase),
+            p_user_id:    userId,
+          });
+          if (claimError || !claim?.ok) {
+            // Membership is already active; a missed count must not fail the webhook.
+            console.error('claim_phase_slot error:', claimError, claim);
+          }
         }
 
         break;

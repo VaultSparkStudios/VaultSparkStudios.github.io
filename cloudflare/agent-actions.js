@@ -55,7 +55,11 @@ export async function handleAgentActions(request, env, session) {
   const receiptKey = env.AGENT_RECEIPT_SIGNING_KEY || env.CSRF_SIGNING_KEY;
   if (!env.RATE_LIMIT || !receiptKey) return json({ error: 'agent_action_service_unavailable' }, 503);
 
-  const key = 'agent-action:' + idempotencyKey;
+  // S368: idempotency keys are scoped to the authenticated subject so one caller
+  // can never replay another caller's signed receipt by reusing its key.
+  const subject = String(session.record?.obelisk?.sub || session.record?.sub || '');
+  if (!subject) return json({ error: 'obelisk_auth_required' }, 401);
+  const key = 'agent-action:' + (await hmac('subject:' + subject, receiptKey)).slice(0, 32) + ':' + idempotencyKey;
   const prior = await env.RATE_LIMIT.get(key);
   if (prior) return json(JSON.parse(prior), 200, { 'Idempotent-Replay': 'true' });
 

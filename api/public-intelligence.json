@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-01T22:59:35.732Z",
+  "generatedAt": "2026-10-02T04:15:44.422Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -8,7 +8,7 @@
     "health": "yellow",
     "vaultStatus": "SPARKED",
     "currentSession": 367,
-    "lastUpdated": "2026-10-01",
+    "lastUpdated": "2026-10-02",
     "currentFocus": "S367 whole-site audit (docs/AUDIT_2026-10-01): public statuses now follow studio-ops canon, HMAC CSP nonce, edge-side session renewal, price guard and copy sweep; deploy pending.",
     "nextMilestone": "Deploy the S367 candidate (Worker nonce + content), then act on Obelisk and studio-ops Ark replies: reopen signup, staging test identity, lifecycle ratification.",
     "ignis": {
@@ -143,11 +143,11 @@
   },
   "portfolio": {
     "total": 26,
-    "publicListed": 20,
-    "sealedCount": 6,
+    "publicListed": 21,
+    "sealedCount": 5,
     "sparked": 3,
     "forge": 17,
-    "vaulted": 0,
+    "vaulted": 1,
     "silCategories": {
       "devHealth": 94,
       "alignment": 95,
@@ -172,7 +172,7 @@
       "category": "Cognitive Civilization OS",
       "status": "SPARKED",
       "progress": 85,
-      "note": "D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.",
+      "note": "A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification and a Collaborate Exchange, live at veilos.io.",
       "deployedUrl": "https://veilos.io",
       "color": "#22d3ee",
       "spotlight": 2
@@ -217,10 +217,10 @@
       "id": "promogrind",
       "name": "PromoGrind",
       "type": "tool",
-      "category": "Creator Tool",
+      "category": "Sportsbook Promo Tool",
       "status": "FORGE",
       "progress": 85,
-      "note": "Live utility. Vault-gated promo engine, iterating on UX.",
+      "note": "Sportsbook promo conversion suite — calculators, tracking and a profit-and-loss ledger. 21+.",
       "deployedUrl": "https://promogrind.bet",
       "color": "#7ae7c7"
     },
@@ -228,10 +228,10 @@
       "id": "mindframe",
       "name": "MindFrame",
       "type": "tool",
-      "category": "AI Intelligence",
+      "category": "Metacognition",
       "status": "FORGE",
       "progress": 85,
-      "note": "Metacognition training platform. Live on external infra; identity consolidating.",
+      "note": "Live metacognition platform — structured practice for how you think about your own thinking.",
       "deployedUrl": "https://steadfast-determination-production.up.railway.app",
       "color": "#38bdf8",
       "spotlight": 1
@@ -243,7 +243,7 @@
       "category": "Trading Intelligence",
       "status": "FORGE",
       "progress": 85,
-      "note": "Solana memecoin operator cockpit — no-custody by design. Production-stable.",
+      "note": "Solana memecoin operator cockpit — no custody of your funds, by design.",
       "deployedUrl": "https://velaxis.markets/",
       "color": "#4ade80"
     },
@@ -262,10 +262,10 @@
       "id": "solara",
       "name": "Solara",
       "type": "game",
-      "category": "Survival World",
+      "category": "Roguelite RPG",
       "status": "FORGE",
       "progress": 42,
-      "note": "Desert survival world. Systems converging.",
+      "note": "Browser roguelite RPG with a shared world — every death dims a shared sun.",
       "deployedUrl": null,
       "color": "#ffc874"
     },
@@ -306,7 +306,7 @@
       "id": "voidfall",
       "name": "Voidfall",
       "type": "game",
-      "category": "Cinematic Saga",
+      "category": "Cosmic-Horror Saga",
       "status": "FORGE",
       "progress": 32,
       "note": "Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.",
@@ -317,7 +317,7 @@
       "id": "vaultfront",
       "name": "VaultFront",
       "type": "game",
-      "category": "Survival World",
+      "category": "Strategy",
       "status": "FORGE",
       "progress": 28,
       "note": "In the forge.",
@@ -328,10 +328,10 @@
       "id": "the-exodus",
       "name": "The Exodus",
       "type": "game",
-      "category": "Narrative Survival",
+      "category": "Card Game",
       "status": "FORGE",
       "progress": 28,
-      "note": "Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.",
+      "note": "Engine-building card game for 2–4 players (plus solo) aboard a generation ship fleeing a dying star.",
       "deployedUrl": null,
       "color": "#f472b6"
     },
@@ -389,6 +389,17 @@
       "note": "Crafting-and-building world in early concept. Vaulted silhouette for now.",
       "deployedUrl": null,
       "color": "#fb923c"
+    },
+    {
+      "id": "gridiron-gm",
+      "name": "Gridiron GM",
+      "type": "game",
+      "category": "Sports Sim",
+      "status": "VAULTED",
+      "progress": 10,
+      "note": "Vaulted. Paused and honored in the vault — not currently playable.",
+      "deployedUrl": null,
+      "color": "#6ae3b2"
     }
   ],
   "ecosystem": {
@@ -822,8 +833,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 5 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-10-01T21:17:50.363Z",
+    "summary": "Deployment reconciliation ledger is stale (newest receipt 2 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-10-01T23:44:43.880Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -839,7 +850,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "success"
       }
     ]
   }

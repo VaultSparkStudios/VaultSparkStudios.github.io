@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-689de6dd1f5765bd';
+const CACHE_NAME = 'vaultspark-shell-5c4d6d8c5209a17e';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -24,11 +24,11 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/nav-sheet.shell-d6938be4eb.js',
+  '/assets/nav-sheet.shell-c0fddc0c73.js',
   '/assets/supabase-client.shell-bd7ccf3b3d.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
-  '/assets/home-idle-loader.shell-15b061f5c6.js',
+  '/assets/home-idle-loader.shell-d1839327b4.js',
   '/assets/ambient-core.shell-1732d293f8.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
@@ -58,9 +58,11 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/rate-page.shell-7ca5d9e98f.js',
   '/assets/schema-injector.shell-33115efcde.js',
   '/assets/security-posture.shell-cb874aa5e8.js',
-  '/assets/studio-pulse-live.shell-f85a427911.js',
-  '/assets/trust-depth.shell-4a894d44d5.js',
+  '/assets/studio-pulse-live.shell-5fc734ef84.js',
+  '/assets/trust-depth.shell-bad58045cc.js',
   '/assets/returning-signal-strip.shell-d927bf3c2d.js',
+  '/assets/vault-door.shell-20bb2584bc.js',
+  '/assets/universe-map.shell-d55870922b.js',
 ];
 const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/style.css',
@@ -104,6 +106,8 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/studio-pulse-live.js',
   '/assets/trust-depth.js',
   '/assets/returning-signal-strip.js',
+  '/assets/vault-door.js',
+  '/assets/universe-map.js',
 ];
 const STATIC_ASSETS = [
   '/',
@@ -143,7 +147,7 @@ const STATIC_ASSETS = [
   '/assets/studio-stats.js',
   '/assets/intent-state.js',
   '/assets/telemetry-matrix.js',
-  '/assets/trust-depth.shell-4a894d44d5.js',
+  '/assets/trust-depth.shell-bad58045cc.js',
   '/assets/network-spine.js',
   '/assets/micro-feedback.js',
   '/assets/pathways-router.js',
@@ -180,7 +184,6 @@ const STATIC_ASSETS = [
   '/share/',
   '/ignis/',
   '/social/',
-  '/notebook/',
   '/games/mindframe/',
   '/games/the-exodus/',
   '/games/vaultfront/',

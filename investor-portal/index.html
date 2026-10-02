@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../assets/portal-shell.css" />
   <link rel="stylesheet" href="../assets/investor-theme.css" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js" integrity="sha384-YieCqqg9gQufX7+5HcFvCEg/n3KUEdl8/Jb+A6J0npf1mB740VayvwKjTrtCeUoy" crossorigin="anonymous" defer></script>
   <script src="../assets/supabase-client.shell-bd7ccf3b3d.js" defer></script>
   <script src="../assets/investor-auth.js" defer></script>
   <script src="../assets/investor-ui.js" defer></script>
@@ -286,7 +286,7 @@
           </div>
         </div>
 
-        <!-- Right: activity log + ask the founders -->
+        <!-- Right: activity log + ask the studio -->
         <div>
           <h2 class="inv-section-title">Activity</h2>
           <div class="inv-card">
@@ -297,7 +297,7 @@
             </div>
           </div>
 
-          <h2 class="inv-section-title" style="margin-top:2rem;">Ask the Founders</h2>
+          <h2 class="inv-section-title" style="margin-top:2rem;">Ask the Studio</h2>
           <div class="inv-card inv-ask-card">
             <p style="font-size:0.87rem;color:var(--muted);margin:0 0 0.85rem;line-height:1.55;">
               Send a question directly to the founding team. We respond to all investor questions within 48 hours.
@@ -689,7 +689,7 @@
       });
     }
 
-    // ── Ask the Founders form ────────────────────────────────────────
+    // ── Ask the Studio form ────────────────────────────────────────
     document.getElementById('askForm')?.addEventListener('submit', submitFounderQuestion);
 
     async function submitFounderQuestion() {
@@ -748,6 +748,6 @@
 <script src="/assets/native-feel.js" defer></script>
 <script src="/assets/ignis-lens.shell-d369cfd082.js" defer></script>
 <script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex"/>
   <title>Season Chronicle — Solara: Sunfall</title>
   <meta name="description" content="The living record of Season 1: The Wandering Comet. Top runs, notable graves, echoes from the fallen, and the current state of the sun."/>
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-solara-chronicle.png" />
@@ -98,7 +99,7 @@
 </div>
 
 <footer>
-  <a href="/">← Back to Solara: Sunfall</a> ·
+  <a href="/games/solara/">← Back to Solara: Sunfall</a> ·
   <a href="/games/solara/archive.html">Archive of the Fallen</a> ·
   <a href="/games/solara/sun-widget.html">Sun Widget</a> ·
   VaultSpark Studios · Season <span id="footer-season">1</span>
@@ -214,7 +215,7 @@ async function loadTodayRuns() {
   const el = document.getElementById('today-runs');
 
   if (!SB_URL) {
-    el.innerHTML = '<div id="no-supabase">Chronicle requires Supabase to be configured.<br/><a href="/" style="color:#a98cc0">← Play the game</a></div>';
+    el.innerHTML = '<div id="no-supabase">The Chronicle opens when the shared world of Solara goes live.<br/><a href="/games/solara/" style="color:#a98cc0">← Back to Solara: Sunfall</a></div>';
     return;
   }
 
@@ -280,6 +281,6 @@ async function loadEchoes() {
 
 Promise.all([loadSunState(), loadShrineCount(), loadTodayRuns(), loadSeasonRuns(), loadEchoes()]);
 </script>
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>

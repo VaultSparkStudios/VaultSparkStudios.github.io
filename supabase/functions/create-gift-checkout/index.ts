@@ -1,11 +1,16 @@
 // VaultSpark Studios — Gift VaultSparked Checkout
 // Creates a one-time Stripe payment for gifting a 30-day VaultSparked subscription.
 //
+// D-S368.1: gifting is paused until it is rebuilt with a real 30-day expiry and a
+// founder-set price. Every request answers 410 {code:'gift_unavailable'} without
+// touching Stripe unless GIFT_ENABLED=true is set explicitly.
+//
 // Deploy: supabase functions deploy create-gift-checkout
 // Secrets needed:
 //   STRIPE_SECRET_KEY
-//   STRIPE_GIFT_PRICE_ID   (one-time price for a $24.99 VaultSparked gift — create in Stripe dashboard)
+//   STRIPE_GIFT_PRICE_ID   (one-time price for a VaultSparked gift; the price is founder-set, none is live)
 //   APP_URL
+//   GIFT_ENABLED           (optional, default off — only "true"/"1"/"yes"/"on" re-open gifting)
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -17,6 +22,7 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
 });
 const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
 const GIFT_PRICE_ID = Deno.env.get('STRIPE_GIFT_PRICE_ID') ?? '';
+const GIFT_ENABLED = /^(true|1|yes|on)$/i.test((Deno.env.get('GIFT_ENABLED') ?? '').trim());
 
 function buildCorsHeaders(origin: string | null) {
   const allowedOrigin = origin && origin === APP_URL ? origin : APP_URL;
@@ -31,6 +37,11 @@ function buildCorsHeaders(origin: string | null) {
 serve(async (req: Request) => {
   const cors = buildCorsHeaders(req.headers.get('Origin'));
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
+
+  // Gift subscriptions are hidden until rebuilt (D-S368.1).
+  if (!GIFT_ENABLED) {
+    return json({ error: 'Gift memberships are not available right now.', code: 'gift_unavailable' }, cors, 410);
+  }
 
   try {
     const authHeader = req.headers.get('Authorization');

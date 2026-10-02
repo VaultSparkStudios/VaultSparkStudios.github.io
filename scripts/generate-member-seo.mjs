@@ -13,6 +13,7 @@
 import { mkdirSync, writeFileSync, rmSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { ORG_REF } from './lib/org-entity.mjs';
 
 const __dir  = dirname(fileURLToPath(import.meta.url));
 const ROOT   = join(__dir, '..');
@@ -88,11 +89,7 @@ function buildPage(member) {
     name: username,
     url,
     jobTitle: rank.name,
-    memberOf: {
-      '@type': 'Organization',
-      name: 'VaultSpark Studios',
-      url: BASE + '/',
-    },
+    memberOf: ORG_REF,
     dateJoined: created_at || undefined,
   });
 
@@ -169,7 +166,7 @@ function buildPage(member) {
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
         <a href="/games/">Games</a>
-        <a href="/members/">Members</a>
+        <a href="/community/#members">Members</a>
         <a href="/community/">Community</a>
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
@@ -200,7 +197,7 @@ function buildPage(member) {
             <div class="seo-stat"><small>Joined</small><strong>${joinDate}</strong></div>
           </div>
           <a class="seo-cta" href="/member/?u=${encodeURIComponent(username)}">View Full Profile</a>
-          <a class="seo-back" href="/members/">&larr; Members Directory</a>
+          <a class="seo-back" href="/community/#members">&larr; Members Directory</a>
         </div>
       </div>
     </section>
@@ -229,7 +226,7 @@ function buildPage(member) {
         <div class="footer-col">
           <h4>Community</h4>
           <a href="/leaderboards/">Leaderboard</a>
-          <a href="/members/">Members</a>
+          <a href="/community/#members">Members</a>
           <a href="/community/">Community Hub</a>
           <a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a>
         </div>

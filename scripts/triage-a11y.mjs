@@ -81,7 +81,6 @@ const PAGE_MAP = {
   '/leaderboards/':   'leaderboards/index.html',
   '/journal/':        'journal/index.html',
   '/ranks/':          'ranks/index.html',
-  '/members/':        'members/index.html',
   '/vault-treasury/': 'vault-treasury/index.html',
   '/vaultsparked/':   'vaultsparked/index.html',
   '/join/':           'join/index.html',
@@ -93,7 +92,6 @@ const PAGE_MAP = {
   '/press/':          'press/index.html',
   '/universe/':       'universe/index.html',
   '/ignis/':          'ignis/index.html',
-  '/notebook/':       'notebook/index.html',
   '/vault-member/':   'vault-member/index.html',
   '/social/':         'social/index.html',
 };

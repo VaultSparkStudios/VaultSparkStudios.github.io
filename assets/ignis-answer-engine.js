@@ -653,7 +653,7 @@
           if (prev) prev.parentNode.removeChild(prev);
           var link = document.createElement('a');
           link.className = 'vs-ask-ignis__deepdive';
-          link.href = '/oracle/?q=' + encodeURIComponent(q.slice(0, 200));
+          link.href = '/ignis/?q=' + encodeURIComponent(q.slice(0, 200)) + '#oracle';
           link.textContent = '→ Explore this in IGNIS';
           link.setAttribute('data-track-event', 'oracle_deepdive_click');
           link.addEventListener('click', function () { try { emitUx('oracle:deepdive_click'); } catch(_){} });

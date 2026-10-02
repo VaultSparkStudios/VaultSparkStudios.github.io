@@ -92,13 +92,16 @@ test.describe('Vault portal authenticated flows', () => {
     await expect(page.locator('#vault-status-dispatch')).toContainText(/enabled|muted/);
   });
 
-  test('onboarding overlay markup is present and can be shown', async ({ page, request }) => {
+  test('Vault Initiation quest markup is present and can be shown', async ({ page, request }) => {
     await loginVaultMember(page, request);
+    // S368: one inline quest replaces the spotlight overlay + day-one tour.
+    await expect(page.locator('#onboarding-overlay')).toHaveCount(0);
     await page.evaluate(() => {
-      const overlay = document.getElementById('onboarding-overlay');
-      if (overlay) overlay.style.display = 'block';
+      const panel = document.getElementById('vault-initiation');
+      if (panel) panel.hidden = false;
     });
-    await expect(page.locator('#onboarding-card')).toBeVisible();
+    await expect(page.locator('#vault-initiation')).toBeVisible();
+    await expect(page.locator('#vi-tour')).toBeVisible();
   });
 
   test('account-backed theme sync restores after local preference is cleared', async ({ page, request }) => {
@@ -162,7 +165,9 @@ test.describe('Vault portal authenticated flows', () => {
     const sparkedOdds = await probeOddsAccess(page, request);
     await page.locator('#tab-dash-earlyaccess').click();
     await expect(page.locator('#beta-keys-list')).not.toContainText('Loading…');
-    await expect(page.locator('#gift-sub-btn')).toContainText('$24.99');
+    // D-S368.1: Gift VaultSparked is hidden until rebuilt (real 30-day expiry +
+    // founder-set price), so the portal must not render its button at all.
+    await expect(page.locator('#gift-sub-btn')).toHaveCount(0);
 
     expect(freeArchiveState).not.toBeNull();
     expect(freeArchiveState.locked).toBe(true);

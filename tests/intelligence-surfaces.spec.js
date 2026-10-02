@@ -7,9 +7,12 @@ const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 // `/` and `/membership/` intentionally dropped their pathway rails in
 // S96 (homepage reorder) and S93 (consumer-surface cleanup) respectively —
 // they keep related-rail coverage via RELATED_ONLY_PAGES below.
+// S368: /join/ is now an edge 301 to /vault-member/#register (_redirects), so it
+// carries no rails; /games/ and /universe/ are the pages that render both.
 const PATHWAY_PAGES = [
-  '/join/',
-  '/invite/'
+  '/invite/',
+  '/games/',
+  '/universe/'
 ];
 
 const RELATED_ONLY_PAGES = [
@@ -17,11 +20,10 @@ const RELATED_ONLY_PAGES = [
   '/membership/'
 ];
 
+// S368: the per-game pages (/games/vaultfront/, /games/solara/, /games/mindframe/,
+// /games/the-exodus/) no longer carry a related rail. Only the two universe
+// worlds still render world-gravity rails, each pointing at its sibling world.
 const WORLD_GRAVITY_PAGES = [
-  { route: '/games/vaultfront/', expectedHref: '/vault-member/#register' },
-  { route: '/games/solara/', expectedHref: '/vaultsparked/' },
-  { route: '/games/mindframe/', expectedHref: '/vault-member/#register' },
-  { route: '/games/the-exodus/', expectedHref: '/universe/voidfall/' },
   { route: '/universe/voidfall/', expectedHref: '/universe/dreadspike/' },
   { route: '/universe/dreadspike/', expectedHref: '/universe/voidfall/' }
 ];
@@ -60,8 +62,9 @@ test.describe('Pathways and related rails', () => {
 
   test('pathway choice is remembered across pages', async ({ page }) => {
     test.skip(IS_LOCAL, 'Pathway choice persistence requires IGNIS API data — not available in local preview');
-    // `/membership/` dropped its pathway rail in S93; use `/join/` as the origin.
-    await page.goto(BASE + '/join/');
+    // `/membership/` dropped its pathway rail in S93 and /join/ is now a redirect;
+    // /games/ carries the pathway rail, so it is the origin.
+    await page.goto(BASE + '/games/');
     await page.locator('[data-pathway-select="supporter"]').click();
     await page.goto(BASE + '/invite/');
 

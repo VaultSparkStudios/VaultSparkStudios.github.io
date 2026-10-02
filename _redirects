@@ -21,8 +21,14 @@
 /ip                                             /rights/                                           301
 /share/*                                        /social/                                           301
 /share                                          /social/                                           301
-/brand/system/*                                 /brand/                                            301
-/brand/system                                   /brand/                                            301
+# asset-diet (2026-10-02): the primary-mark black/white exports were byte-identical
+# copies of the cinematic logo; one file is published (brand/assets.json aliasOf).
+/assets/brand/logo-primary-black.png            /assets/brand/logo-cinematic.png                   301
+/assets/brand/logo-primary-white.png            /assets/brand/logo-cinematic.png                   301
+/assets/brand/logo-primary-black.webp           /assets/brand/logo-cinematic.webp                  301
+/assets/brand/logo-primary-white.webp           /assets/brand/logo-cinematic.webp                  301
+/brand/system/*                                 /press/#brand                                      301
+/brand/system                                   /press/#brand                                      301
 /ignis/roi/*                                    /ignis/#roi                                        301
 /ignis/roi                                      /ignis/#roi                                        301
 /security/trusted-types/*                       /security/#trusted-types                           301
@@ -74,3 +80,35 @@
 # season countdown and podium now live at /community/#wall. Edge 301, no stub.
 /vault-wall/*                                   /community/#wall                                   301
 /vault-wall                                     /community/#wall                                   301
+
+# S368 IA consolidation (ia-consolidation-v2): overlapping pages folded into one
+# home each. A splat mirror is added only where the retired tree has no live
+# sub-resources: /stats/ecosystem/ + /stats.json, /oracle/answers/index.json,
+# /brand/assets.json + /brand/tokens.json and the /journal/<story>/ pages stay
+# served, so those four routes retire their index page only (exact rules).
+# /ask-founders/ is exact too: its form still posts to the Worker route
+# /ask-founders/submit, which a Pages splat must never shadow.
+/stats/                                         /evidence/#numbers                                 301
+/stats                                          /evidence/#numbers                                 301
+/notebook/*                                     /studio-pulse/#forge-ledger                        301
+/notebook                                       /studio-pulse/#forge-ledger                        301
+/oracle/                                        /ignis/#oracle                                     301
+/oracle                                         /ignis/#oracle                                     301
+/atlas/*                                        /projects/                                         301
+/atlas                                          /projects/                                         301
+/ask-founders/                                  /faq/#ask                                          301
+/ask-founders                                   /faq/#ask                                          301
+/brand/                                         /press/#brand                                      301
+/brand                                          /press/#brand                                      301
+/careers/*                                      /collaborate/                                      301
+/careers                                        /collaborate/                                      301
+/members/*                                      /community/#members                                301
+/members                                        /community/#members                                301
+/journal/archive/*                              /changelog/#stories                                301
+/journal/archive                                /changelog/#stories                                301
+/journal/                                       /changelog/#stories                                301
+/journal                                        /changelog/#stories                                301
+/games/voidfall/*                               /universe/voidfall/                                301
+/games/voidfall                                 /universe/voidfall/                                301
+/games/gridiron-gm-play/*                       /games/gridiron-gm/                                301
+/games/gridiron-gm-play                         /games/gridiron-gm/                                301

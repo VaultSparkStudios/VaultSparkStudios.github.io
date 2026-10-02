@@ -45,7 +45,7 @@
         { href: '/games/', label: 'Games' },
         { href: '/universe/', label: 'Universe' },
         { href: '/membership/', label: 'Membership' },
-        { href: '/journal/', label: 'Journal' }
+        { href: '/play/', label: 'Where to play' }
       ]
     }
   };

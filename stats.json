@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-01T23:44:44.030Z",
+  "generatedAt": "2026-10-02T04:42:33.869Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -34,7 +34,7 @@
       "value": 22,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-10-01T20:56:26.009Z",
+      "computedAt": "2026-10-02T04:42:33.869Z",
       "source": "/api/ecosystem-state.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/ecosystem-state.json",
@@ -43,7 +43,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-01T20:56:26.009Z",
+      "observedThrough": "2026-10-02T04:42:33.869Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -55,7 +55,7 @@
       "value": 3,
       "unitOrDenominator": "projects marked SPARKED",
       "period": "current snapshot",
-      "computedAt": "2026-10-01T00:00:00.000Z",
+      "computedAt": "2026-10-02T00:00:00.000Z",
       "source": "/api/public-status.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/public-status.json",
@@ -64,7 +64,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-01T00:00:00.000Z",
+      "observedThrough": "2026-10-02T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -94,7 +94,7 @@
         }
       },
       "observedThrough": "2026-09-30",
-      "freshnessState": "fresh",
+      "freshnessState": "stale",
       "category": "audience",
       "format": "integer",
       "privacySafe": true,
@@ -135,7 +135,7 @@
       "value": 17,
       "unitOrDenominator": "projects marked FORGE",
       "period": "current snapshot",
-      "computedAt": "2026-10-01T00:00:00.000Z",
+      "computedAt": "2026-10-02T00:00:00.000Z",
       "source": "/api/public-status.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/public-status.json",
@@ -144,7 +144,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-01T00:00:00.000Z",
+      "observedThrough": "2026-10-02T00:00:00.000Z",
       "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
@@ -224,11 +224,11 @@
   "breakdowns": {
     "portfolioStatus": {
       "source": "/api/public-status.json",
-      "computedAt": "2026-10-01T00:00:00.000Z",
+      "computedAt": "2026-10-02T00:00:00.000Z",
       "values": {
         "sparked": 3,
         "forge": 17,
-        "vaulted": 6
+        "vaulted": 5
       }
     },
     "proofFreshness": {

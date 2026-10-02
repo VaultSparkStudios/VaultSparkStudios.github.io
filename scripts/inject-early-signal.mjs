@@ -17,7 +17,9 @@ const DRY = process.argv.includes('--dry-run');
 
 // Meta pages whose whole point IS the signup funnel — a second email form
 // would be redundant with the primary CTA.
-const EXCLUDES = new Set(['projects/vault-member', 'projects/vault-pipeline']);
+// games/mindframe is live (D-S368.3): it opens the product instead of collecting a
+// waitlist, so an 'opens soon' form there would contradict the page.
+const EXCLUDES = new Set(['projects/vault-member', 'projects/vault-pipeline', 'games/mindframe']);
 
 const TARGETS = [
   ...fs.readdirSync(path.join(ROOT, 'projects')).filter(d => {

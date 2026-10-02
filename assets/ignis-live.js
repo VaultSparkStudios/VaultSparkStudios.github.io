@@ -2,9 +2,9 @@
   'use strict';
 
   var TIERS = [
-    { max: 20000, name: 'Vaulted', color: '#94a3b8' },
-    { max: 60000, name: 'Forge',   color: '#f59e0b' },
-    { max: 85000, name: 'Sparked', color: '#fbbf24' },
+    { max: 20000, name: 'Cooling', color: '#94a3b8' },
+    { max: 60000, name: 'Warming', color: '#f59e0b' },
+    { max: 85000, name: 'Hot',     color: '#fbbf24' },
     { max: 100000, name: 'Ignited', color: '#FF7A00' }
   ];
 

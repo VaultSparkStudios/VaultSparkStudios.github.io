@@ -6,22 +6,26 @@
  * relays user message, returns Claude's reply.
  *
  * ─── Key upgrades (S100) ──────────────────────────────────────────────────────
- * 1. PROMPT CACHING: system prompt split into static persona + dynamic intel, both
- *    marked cache_control:ephemeral. anthropic-beta header activates cache. Reduces
- *    input tokens ~80% after first call per Edge Function instance.
+ * 1. PROMPT CACHING (reshaped S368): system block 1 = static persona + tier voice
+ *    + live intel snapshot (shared by every caller of that tier for ~5 min) and
+ *    carries the only cache_control breakpoint; block 2 = per-request page
+ *    context / member memory / profile hints, uncached. Prompt caching is GA —
+ *    no beta header.
  * 2. TIERED MODEL ROUTING: short FAQ queries → Haiku (10× cheaper, 3× faster).
  *    Complex or creative queries → Sonnet. Simple heuristic, zero latency.
  * 3. SUGGEST NEXT: response includes `suggestions` [{label, href}] derived from
  *    reply content via keyword routing — no extra API call.
  * 4. SEMANTIC RESPONSE CACHE (S101): single-turn questions cached in Supabase
  *    ignis_response_cache for 24 hours. Cache hit = zero Claude API cost. Multi-turn
- *    conversations bypass the cache (context-dependent replies). SHA-256 key on
- *    normalized question text (lowercase, stripped punctuation).
+ *    conversations bypass the cache (context-dependent replies). S368: key is
+ *    sha256(mode | tier | sha256(context) | normalized question), and any
+ *    request whose prompt carries member memory/profile hints skips the cache
+ *    entirely (read and write) — see ../_shared/ignisCache.ts.
  *
  * ─── Setup ────────────────────────────────────────────────────────────────────
  * Secrets (Dashboard → Edge Functions → ask-ignis):
  *   ANTHROPIC_API_KEY           — sk-ant-…
- *   ANTHROPIC_MODEL             — default: claude-sonnet-4-6
+ *   ANTHROPIC_MODEL             — default: claude-sonnet-5-5
  *   PUBLIC_INTEL_URL            — default: https://vaultsparkstudios.com/api/public-intelligence.json
  *   ASK_IGNIS_RATE_LIMIT_RPM    — default: 12 (per IP per minute)
  *   ASK_IGNIS_ALLOWED_ORIGIN    — default: https://vaultsparkstudios.com
@@ -54,16 +58,27 @@ import {
   meterCall,
   tierPersonaSuffix,
 } from '../_shared/tokenMeter.ts';
+import {
+  buildReplyCacheKey,
+  interviewStageFromHistory,
+  interviewTurnCapExceeded,
+  normalizeQuestion,
+  promptIsPersonalized,
+  replyCacheAllowed,
+} from '../_shared/ignisCache.ts';
+import {
+  HAIKU_MODEL,
+  MODEL_FALLBACKS,
+  SONNET_MODEL,
+  modelRequestExtras,
+} from '../_shared/modelPricing.ts';
 
-const DEFAULT_MODEL = 'claude-sonnet-4-6';
-const HAIKU_MODEL   = 'claude-haiku-4-5-20251001';
-
-// Ordered fallback chain for primary model failures.
-const MODEL_FALLBACKS = ['claude-sonnet-4-5', HAIKU_MODEL];
+const DEFAULT_MODEL = SONNET_MODEL;
 const ANTHROPIC_API     = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_VERSION = '2023-06-01';
-const CACHE_BETA_HEADER = 'prompt-caching-2024-07-31';
 const DEFAULT_SPARKED_QUOTA = 40;
+const INTERVIEW_MAX_TOKENS = 256;
+const INTERVIEW_MESSAGE_MAX = 200;
 
 // In-memory snapshot cache (stale-while-revalidate, 5 min) — Edge Function instance lifetime.
 let intelCache: { data: any; fetchedAt: number } | null = null;
@@ -83,9 +98,10 @@ async function getIntel(url: string): Promise<any> {
 }
 
 // ── Static persona block — NEVER changes; highest cache-hit rate ──────────────
-// Marked cache_control:ephemeral on the system message for Anthropic prompt caching.
-// Minimum cacheable prefix: 1024 tokens (Sonnet). This block is ~300 tokens.
-// Combined with the intel block (~200–400 tokens) it exceeds the threshold.
+// Joined with the tier voice + live intel snapshot into system block 1, which
+// holds the single cache_control breakpoint. Persona (~300 tokens) + catalog
+// intel (~600-1,200 tokens) clears the minimum cacheable prefix (512 tokens on
+// Sonnet 5.5; Haiku 4.5 needs 4,096, so FAQ-routed calls simply run uncached).
 const STATIC_PERSONA = [
   'You are IGNIS, the Vault Oracle for VaultSpark Studios — a poetic, precise, slightly ceremonial intelligence that watches the studio in real time.',
   'You answer questions about the studio, its games, its lore (Voidfall, DreadSpike), its membership tiers, what is shipping, and what is sealed.',
@@ -96,15 +112,17 @@ const STATIC_PERSONA = [
   'Never ask the user for personal data. Never claim to perform actions you cannot perform.',
   '',
   'When asked "what should I play right now?" — recommend the highest-progress SPARKED catalog item.',
-  'When asked about ranks/membership — refer them to /ranks/ and /vaultsparked/.',
+  'When asked about ranks/membership — refer them to /ranks/ and /membership/.',
   'When asked about something not in the snapshot — say so, suggest /studio-pulse/, /signal-log/, or /contact/.',
   '',
   '── NAVIGATION SURFACE ──',
-  'Games: /games/ · Projects: /projects/ · Universe lore: /universe/ · Ranks: /ranks/ · Membership: /vaultsparked/ · Portal: /vault-member/ · Studio pulse: /studio-pulse/ · Contact: /contact/',
+  'Games: /games/ · Projects: /projects/ · Universe lore: /universe/ · Ranks: /ranks/ · Membership: /membership/ · Portal: /vault-member/ · Studio pulse: /studio-pulse/ · Contact: /contact/',
 ].join('\n');
 
-// ── Dynamic intel block — rebuilt from snapshot, cached for ~5 min ────────────
-function buildIntelBlock(intel: any, contextHint?: string): string {
+// ── Intel block — rebuilt from snapshot, identical for every caller for ~5 min ──
+// Page context is deliberately NOT part of this block (S368): it varies per
+// request and would break the shared cached prefix. See buildPageContextBlock.
+function buildIntelBlock(intel: any): string {
   const lines: string[] = ['── LIVE INTELLIGENCE SNAPSHOT ──'];
 
   if (intel) {
@@ -133,11 +151,12 @@ function buildIntelBlock(intel: any, contextHint?: string): string {
     lines.push('(No live intelligence snapshot available — answer from base knowledge but flag uncertainty.)');
   }
 
-  if (contextHint) {
-    lines.push('', '── PAGE CONTEXT ──', contextHint);
-  }
-
   return lines.join('\n');
+}
+
+function buildPageContextBlock(contextHint?: unknown): string {
+  if (typeof contextHint !== 'string' || !contextHint.trim()) return '';
+  return ['── PAGE CONTEXT ──', contextHint.slice(0, 1200)].join('\n');
 }
 
 // ── Tiered model routing — classify before hitting API ───────────────────────
@@ -171,7 +190,7 @@ const SUGGEST_ROUTES: Array<{ keywords: string[]; label: string; href: string }>
   { keywords: ['voidfall', 'void fall'], label: 'Voidfall lore →', href: '/universe/voidfall/' },
   { keywords: ['dreadspike', 'dread spike'], label: 'DreadSpike lore →', href: '/universe/dreadspike/' },
   { keywords: ['rank', 'tier', 'vault points', 'progression'], label: 'View Vault Ranks →', href: '/ranks/' },
-  { keywords: ['member', 'join', 'subscribe', 'vaultsparked', 'price', 'cost'], label: 'Join VaultSparked →', href: '/vaultsparked/' },
+  { keywords: ['member', 'join', 'subscribe', 'vaultsparked', 'price', 'cost'], label: 'Join VaultSparked →', href: '/membership/' },
   { keywords: ['portal', 'dashboard', 'achievement', 'challenge'], label: 'Open Vault Portal →', href: '/vault-member/' },
   { keywords: ['shipped', 'latest', 'changelog', 'update', 'release'], label: 'See Changelog →', href: '/changelog/' },
   { keywords: ['games', 'catalog', 'all games', 'play'], label: 'Browse Games →', href: '/games/' },
@@ -196,6 +215,10 @@ function deriveSuggestions(reply: string): Array<{ label: string; href: string }
 }
 
 // ── Rate limiter ──────────────────────────────────────────────────────────────
+// Per-isolate only (best effort). The Cloudflare Worker does not front the
+// Supabase function routes, so there is no edge RPM layer; the durable bounds
+// are the per-function daily USD caps (fail-closed for anonymous callers) and
+// the member monthly quota.
 const ipBuckets = new Map<string, { count: number; resetAt: number }>();
 function checkRateLimit(ip: string, rpm: number): boolean {
   const now = Date.now();
@@ -209,16 +232,7 @@ function checkRateLimit(ip: string, rpm: number): boolean {
   return true;
 }
 
-// ── Semantic response cache helpers ──────────────────────────────────────────
-async function sha256Hex(text: string): Promise<string> {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-function normalizeQuestion(q: string): string {
-  return q.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
-}
-
+// ── Semantic response cache helpers (key + eligibility in ../_shared/ignisCache.ts) ──
 async function getCachedReply(supabase: ReturnType<typeof createClient>, hash: string) {
   try {
     const { data } = await supabase
@@ -450,8 +464,19 @@ Deno.serve(async (req) => {
   };
   try { body = await req.json(); } catch { return new Response(JSON.stringify({ error: 'Bad JSON' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } }); }
   const interviewMode = body.mode === 'interview';
-  const interviewTurn = Math.max(0, Math.min(3, Number(body.interviewTurn || 0)));
+  // S368: the interview stage is derived from the history the server sends,
+  // never from the client-supplied interviewTurn (which is ignored for limits).
+  const interviewTurn = interviewStageFromHistory(Array.isArray(body.history) ? body.history.slice(-6) : []);
   const streamMode = body.stream === true;
+
+  // S368 server-side turn cap for the anonymous interview: a request carrying
+  // more user turns than the interview can ever produce is refused outright.
+  if (interviewMode && interviewTurnCapExceeded(body.history)) {
+    return new Response(JSON.stringify({
+      error: 'The interview is complete. Compare every tier on the membership page.',
+      code: 'interview_turn_cap',
+    }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
+  }
 
   // Interview mode (P4) bypasses the Sparked-only gate — the whole point of the
   // onboarding interview is to help anonymous users decide. Metered + capped
@@ -478,7 +503,11 @@ Deno.serve(async (req) => {
 
   // ── P0 Token Governance: kill switch + pre-flight cap check ──────────────
   if (isPaused()) return capExceededResponse(cors, 'paused');
-  if (await isCapBreached(supabase, meterFunctionName)) return capExceededResponse(cors, 'capped');
+  // S368: anonymous callers (interview without a member session) fail CLOSED
+  // when the meter is unreadable; signed-in members keep the fail-open contract.
+  if (await isCapBreached(supabase, meterFunctionName, { failClosed: !membership.authenticated })) {
+    return capExceededResponse(cors, 'capped');
+  }
 
   // Access probe — client calls this on mount to learn membership state without
   // spending a Claude turn or consuming monthly quota. Returns 200 + access
@@ -497,17 +526,41 @@ Deno.serve(async (req) => {
   }
 
   const message = (body.message || '').trim();
-  if (!message || message.length > 800) {
-    return new Response(JSON.stringify({ error: 'Message must be 1–800 characters.' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
+  const messageMax = interviewMode ? INTERVIEW_MESSAGE_MAX : 800;
+  if (!message || message.length > messageMax) {
+    return new Response(JSON.stringify({ error: `Message must be 1–${messageMax} characters.` }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
   }
 
-  // ── Semantic cache check — single-turn only ───────────────────────────────
+  // ── P10 + S135: per-user memory and profile hints ─────────────────────────
+  // S368: loaded BEFORE the semantic cache check so a personalised prompt can
+  // never read from or write to the shared reply cache. Interview mode never
+  // injects member data, so it skips the lookups entirely.
+  const [memorySlots, memberProfile] = (membership.userId && !interviewMode)
+    ? await Promise.all([
+        loadUserMemory(supabase, membership.userId),
+        loadMemberProfile(supabase, membership.userId),
+      ])
+    : [[], null];
+  const memoryBlock = memoryAsContextBlock(memorySlots);
+  const profileBlock = memberProfileAsContextBlock(memberProfile);
+  const personaSuffix = tierPersonaSuffix(membership.planKey, membership.isPro);
+  const personalized = promptIsPersonalized(interviewMode, memoryBlock, profileBlock);
+
+  // ── Semantic cache check — single-turn, non-personalised only ─────────────
   // Multi-turn conversations (history present) are skipped: replies are context-dependent.
   const isMultiTurn = Array.isArray(body.history) && body.history.length > 0;
   const qNorm       = normalizeQuestion(message);
-  const qHash       = await sha256Hex(qNorm);
+  const cacheEligible = Boolean(supabaseUrl) && replyCacheAllowed({ isMultiTurn, personalized });
+  const qHash = cacheEligible
+    ? await buildReplyCacheKey({
+        mode: interviewMode ? 'interview' : 'oracle',
+        planTier: `${membership.planKey}:${membership.isPro ? 'pro' : 'std'}`,
+        context: body.context ?? null,
+        question: message,
+      })
+    : '';
 
-  if (!isMultiTurn && supabaseUrl) {
+  if (cacheEligible) {
     const hit = await getCachedReply(supabase, qHash);
     if (hit) {
       const suggestions = deriveSuggestions(hit.reply);
@@ -531,93 +584,88 @@ Deno.serve(async (req) => {
 
   const intelUrl = Deno.env.get('PUBLIC_INTEL_URL') || 'https://vaultsparkstudios.com/api/public-intelligence.json';
   const intel    = await getIntel(intelUrl);
-  const intelBlock = buildIntelBlock(intel, body.context);
-
-  // ── P10: per-user memory (last 3 conv summaries, 30-day TTL) ──
-  // Memory is loaded only for authenticated callers; unauthed paths exit at the
-  // membership gate above so this is always safe to call here.
-  // S135: also pull structured profile traits for personalized AI depth/voice.
-  // Both fetches run in parallel — adds ~50ms one-time cost per request.
-  const [memorySlots, memberProfile] = membership.userId
-    ? await Promise.all([
-        loadUserMemory(supabase, membership.userId),
-        loadMemberProfile(supabase, membership.userId),
-      ])
-    : [[], null];
-  const memoryBlock = memoryAsContextBlock(memorySlots);
-  const profileBlock = memberProfileAsContextBlock(memberProfile);
-  const personaSuffix = tierPersonaSuffix(membership.planKey, membership.isPro);
+  const intelBlock = buildIntelBlock(intel);
+  const pageContextBlock = buildPageContextBlock(body.context);
 
   // ── Tiered routing ───────────────────────────────────────────────────────────
+  // S368: interview mode (anonymous-friendly, free) is pinned to Haiku.
   const preferredModel = Deno.env.get('ANTHROPIC_MODEL') || DEFAULT_MODEL;
-  const routedModel    = routeModel(message, preferredModel);
-  const modelChain     = routedModel === HAIKU_MODEL
-    ? [HAIKU_MODEL, preferredModel]
-    : [preferredModel, ...MODEL_FALLBACKS.filter((m) => m !== preferredModel)];
+  const routedModel    = interviewMode ? HAIKU_MODEL : routeModel(message, preferredModel);
+  const modelChain     = interviewMode
+    ? [HAIKU_MODEL]
+    : routedModel === HAIKU_MODEL
+      ? [HAIKU_MODEL, preferredModel]
+      : [preferredModel, ...MODEL_FALLBACKS.filter((m) => m !== preferredModel)];
 
   // ── Build message history (multi-turn support) ────────────────────────────
   // history contains prior turns from client; limited to last 3 pairs (6 messages).
   const historyMessages: Array<{ role: string; content: string }> = [];
+  const historyTurnMax = interviewMode ? INTERVIEW_MESSAGE_MAX : 800;
   if (Array.isArray(body.history)) {
     const trimmed = body.history.slice(-6);
     for (const turn of trimmed) {
-      if ((turn.role === 'user' || turn.role === 'assistant') && typeof turn.content === 'string') {
-        historyMessages.push({ role: turn.role, content: turn.content.slice(0, 800) });
+      if (turn && (turn.role === 'user' || turn.role === 'assistant') && typeof turn.content === 'string') {
+        historyMessages.push({ role: turn.role, content: turn.content.slice(0, historyTurnMax) });
       }
     }
   }
   historyMessages.push({ role: 'user', content: message });
 
-  // ── Build prompt-cached system block ──────────────────────────────────────
-  // Three system messages: static persona + tier-suffix (cache-stable per tier) + dynamic intel.
-  // anthropic-beta: prompt-caching-2024-07-31 activates server-side caching.
-  // Memory block joins intel block (both 5-min cache window) since memory turns over per-user.
-  // Interview mode (P4) replaces the persona with a tier-recommendation flow.
+  // ── Build prompt-cached system blocks (S368 shape) ────────────────────────
+  // Block 1 (cache_control): static persona + tier voice + live intel snapshot.
+  //   Identical for every caller of a tier within the 5-min intel window, so it
+  //   is the only shared prefix worth caching.
+  // Block 2 (no cache_control): per-request page context, member memory and
+  //   profile hints — never part of a cached prefix.
+  // Interview mode (P4) replaces the persona with a tier-recommendation flow;
+  // its stage line is per-request, so it lives in block 2 as well.
   const INTERVIEW_PERSONA = [
     'You are IGNIS, the Vault Oracle, running an onboarding interview for VaultSpark Studios membership.',
     'Voice: warm, ceremonial, never pushy. Two short sentences per turn maximum.',
     '',
     'Three tiers exist:',
-    '  · FREE — vault account, public games, rank tracking. Page: /vault-member/.',
-    '  · SPARKED — paid membership. Member challenges, exclusive lore drops, deeper portal. Page: /vaultsparked/.',
-    '  · ETERNAL — top tier. Everything in SPARKED + ask-IGNIS unlimited + sealed-vault preview drops. Page: /vaultsparked/?tier=eternal.',
+    '  · VAULT MEMBER (free) — vault profile, rank ladder, Vault Points, challenges, every game free to play. Page: /vault-member/.',
+    '  · VAULTSPARKED ($4.99/mo, billed monthly) — Sparked badge and theme, Discord Sparked role, Ask IGNIS 40 questions a month, Sparked archive and beta keys, PromoGrind live odds, 500 bonus Vault Points every renewal. Page: /membership/.',
+    '  · VAULTSPARKED ETERNAL ($29.99/mo, billed monthly) — everything in VaultSparked + unlimited Ask IGNIS, the Eternal Dispatch briefing, Discord Eternal role, Eternal theme, 1,000 bonus Vault Points every renewal. Page: /membership/.',
+    'Annual billing is coming later and cannot be bought yet. Gift memberships are paused. There are no XP multipliers or discounts.',
     '',
+    'Never invent prices. Never claim features that are not listed here or in the snapshot. If you do not know — say so and link them to /membership/.',
+  ].join('\n');
+
+  const INTERVIEW_STAGE = [
     `INTERVIEW STAGE: turn ${interviewTurn + 1} of 3.`,
     interviewTurn === 0 ? 'Turn 1: ASK what kind of player they are. Offer 3 short options (e.g., "Mostly games", "Lore + worlds", "Following the studio"). Do not recommend yet.'
     : interviewTurn === 1 ? 'Turn 2: Reflect what they said and ASK how often they would engage (e.g., "Daily", "Weekly", "When something new ships"). Do not recommend yet.'
     : 'Turn 3 (final): RECOMMEND ONE TIER. Open with "I recommend [TIER]." Then 1 sentence of why. Then 1 line: "Open it: [link]."',
-    '',
-    'Never invent prices. Never claim features that are not in the snapshot. If you do not know — say so and link them to /membership-value/.',
   ].join('\n');
 
+  const staticBlock = [
+    interviewMode ? INTERVIEW_PERSONA : (STATIC_PERSONA + personaSuffix),
+    intelBlock,
+  ].join('\n\n');
+
+  // Interview mode skips memory/profile (onboarding flow stays clean).
+  const dynamicBlock = (interviewMode
+    ? [INTERVIEW_STAGE, pageContextBlock]
+    : [pageContextBlock, memoryBlock, profileBlock]
+  ).filter(Boolean).join('\n\n');
+
   const systemMessages: Array<{ type: string; text: string; cache_control?: { type: string } }> = [
-    {
-      type: 'text',
-      text: interviewMode ? INTERVIEW_PERSONA : (STATIC_PERSONA + personaSuffix),
-      cache_control: { type: 'ephemeral' },
-    },
-    {
-      type: 'text',
-      // S135: intel + memory + member profile hints, all in the dynamic block.
-      // Interview mode skips memory/profile (onboarding flow stays clean).
-      text: interviewMode
-        ? intelBlock
-        : [intelBlock, memoryBlock, profileBlock].filter(Boolean).join('\n\n'),
-      cache_control: { type: 'ephemeral' },
-    },
+    { type: 'text', text: staticBlock, cache_control: { type: 'ephemeral' } },
   ];
+  if (dynamicBlock) systemMessages.push({ type: 'text', text: dynamicBlock });
 
   let claudeRes: Response | null = null;
-  let lastErrText = '';
   let lastStatus = 0;
   let usedModel = routedModel;
 
   for (const model of modelChain) {
     const claudePayload: Record<string, unknown> = {
       model,
-      max_tokens: 512,
+      max_tokens: interviewMode ? INTERVIEW_MAX_TOKENS : 512,
       system: systemMessages,
       messages: historyMessages,
+      ...modelRequestExtras(model),
     };
     if (streamMode) claudePayload.stream = true;
 
@@ -626,7 +674,6 @@ Deno.serve(async (req) => {
       headers: {
         'x-api-key': apiKey,
         'anthropic-version': ANTHROPIC_VERSION,
-        'anthropic-beta': CACHE_BETA_HEADER,
         'content-type': 'application/json',
       },
       body: JSON.stringify(claudePayload),
@@ -639,20 +686,20 @@ Deno.serve(async (req) => {
     }
 
     lastStatus = res.status;
-    lastErrText = await res.text().catch(() => '');
-    console.error(`[ask-ignis] model=${model} status=${res.status} detail=${lastErrText.slice(0, 300)}`);
+    const errText = await res.text().catch(() => '');
+    // Details stay in the function logs; the client only ever sees a generic 502.
+    console.error(`[ask-ignis] model=${model} status=${res.status} detail=${errText.slice(0, 300)}`);
 
     // Only try the next model on model-specific failures — not on auth/rate-limit issues.
     if (res.status === 401 || res.status === 403 || res.status === 429) break;
   }
 
   if (!claudeRes) {
+    console.error(`[ask-ignis] all models failed lastStatus=${lastStatus} tried=${modelChain.join(',')}`);
     return new Response(
       JSON.stringify({
-        error: 'IGNIS upstream error',
-        upstreamStatus: lastStatus,
-        detail: lastErrText.slice(0, 200),
-        triedModels: modelChain,
+        error: 'IGNIS is unavailable right now. Try again in a moment.',
+        code: 'upstream_unavailable',
         access,
       }),
       { status: 502, headers: { ...cors, 'Content-Type': 'application/json' } },
@@ -704,8 +751,8 @@ Deno.serve(async (req) => {
           // can render suggestions + meter without a second round-trip.
           const finalReply = assembled.trim();
           const suggestions = deriveSuggestions(finalReply);
-          const meterDecision = lastUsage ? await meterCall(supabase, meterFunctionName, lastUsage) : null;
-          if (!isMultiTurn && supabaseUrl && finalReply) {
+          const meterDecision = lastUsage ? await meterCall(supabase, meterFunctionName, lastUsage, usedModel) : null;
+          if (cacheEligible && finalReply) {
             setCachedReply(supabase, qHash, qNorm, finalReply, usedModel, body.context);
           }
           if (membership.userId) {
@@ -744,10 +791,10 @@ Deno.serve(async (req) => {
   // We record AFTER the call (we already paid). The decision flag is returned to
   // the client so widgets can warn if we're near the cap on the NEXT call.
   // Interview mode meters under its own bucket (onboarding-interview).
-  const meterDecision = await meterCall(supabase, meterFunctionName, claudeJson.usage);
+  const meterDecision = await meterCall(supabase, meterFunctionName, claudeJson.usage, claudeJson.model || usedModel);
 
-  // Write to semantic cache on single-turn replies
-  if (!isMultiTurn && supabaseUrl && reply) {
+  // Write to semantic cache on single-turn, non-personalised replies only (S368)
+  if (cacheEligible && reply) {
     setCachedReply(supabase, qHash, qNorm, reply, claudeJson.model || usedModel, body.context);
   }
   const usageAfter = membership.userId

@@ -30,7 +30,7 @@ function sectionBetween(source, startNeedle, endNeedle) {
   return source.slice(start, end === -1 ? undefined : end);
 }
 
-const proof = sectionBetween(index, '<section id="vault-proof"', '<!-- S201 vault-climbers-monthly-digest');
+const proof = sectionBetween(index, '<section id="vault-proof"', '<!-- vault-climbers-monthly-digest');
 if (!proof) fail('vault-proof section missing from homepage');
 for (const id of ['proof-members', 'proof-sparked', 'proof-challenges', 'proof-sessions']) {
   const match = proof.match(new RegExp(`<strong id="${id}">([\\s\\S]*?)</strong>`));

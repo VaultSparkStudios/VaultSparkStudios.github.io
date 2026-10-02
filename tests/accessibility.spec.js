@@ -61,7 +61,7 @@ test.describe('Accessibility — axe-core scans', () => {
     { name: 'Leaderboards',    path: '/leaderboards/' },
     { name: 'Journal',         path: '/journal/' },
     // /ranks/ → /leaderboards/#ranks (redirect stub; canonical covered above)
-    { name: 'Members',         path: '/members/' },
+    { name: 'Members',         path: '/community/#members' },
     { name: 'Vault Treasury',  path: '/vault-treasury/' },
     // /vaultsparked/ → /membership/#tiers (redirect stub)
     // /join/ → /vault-member/#register (redirect stub)
@@ -215,17 +215,18 @@ test.describe('Accessibility — authenticated portal scans', () => {
     expect(violations).toEqual([]);
   });
 
-  test('Onboarding modal has no critical a11y violations', async ({ page, request }) => {
+  test('Vault Initiation quest has no critical a11y violations', async ({ page, request }) => {
     try {
       await loginVaultMember(page, request);
     } catch (error) {
       test.skip(true, `Vault QA login unavailable locally: ${error.message}`);
     }
+    // S368: the spotlight overlay was replaced by the inline Vault Initiation quest.
     await page.evaluate(() => {
-      const overlay = document.getElementById('onboarding-overlay');
-      if (overlay) overlay.style.display = 'block';
+      const panel = document.getElementById('vault-initiation');
+      if (panel) panel.hidden = false;
     });
-    await expect(page.locator('#onboarding-card')).toBeVisible();
+    await expect(page.locator('#vault-initiation')).toBeVisible();
     const violations = await auditPage(page);
     expect(violations).toEqual([]);
   });

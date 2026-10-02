@@ -7,12 +7,14 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ORG_REF } from './lib/org-entity.mjs';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const root = join(__dir, '..');
 const CHECK = process.argv.includes('--check');
 const PROD = 'https://vaultsparkstudios.com';
-const PUBLISHER = { '@type': 'Organization', name: 'VaultSpark Studios', url: PROD };
+// One entity graph (agent-geo-layer-v2): reference the canonical studio @id.
+const PUBLISHER = ORG_REF;
 
 function parseSchemaBlocks(html) {
   const blocks = [];

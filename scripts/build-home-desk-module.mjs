@@ -36,6 +36,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { deskDispatchCta, deskDispatchCss, DESK_DISPATCH_SCRIPT } from './lib/desk-dispatch-cta.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argValue = (flag) => {
@@ -174,6 +175,21 @@ const STYLE = [
   '      </style>',
 ];
 
+/**
+ * The Desk Dispatch signup (shared component, scripts/lib/desk-dispatch-cta.mjs)
+ * closes the live module. Server-rendered at its final size: the only element
+ * that changes after load is the status line, which reserves two lines, and a
+ * successful submit keeps the input and button in place (no layout shift).
+ * Styles are the news-desk.css dispatch region inlined so the homepage gains
+ * no stylesheet request.
+ */
+function dispatchLines() {
+  return [
+    `        <style>${deskDispatchCss()}\n.desk-showcase .desk-dispatch{margin-top:1.75rem}</style>`,
+    `        ${deskDispatchCta('home', { headingLevel: 3 })}`,
+  ];
+}
+
 const HEAD = [
   '        <div class="desk-showcase__head">',
   '          <div><p class="eyebrow">The Desk · AI news station</p><h2 id="desk-showcase-title" class="desk-showcase__title">AI news, argued by the desk.</h2></div>',
@@ -259,7 +275,9 @@ export function renderBlock(deskFeed, freshness, { hasArt = () => false } = {}) 
     ...secondaryHtml,
     secondary.length ? '          </div>' : '',
     '        </div>',
+    ...dispatchLines(),
     '      </div>',
+    DESK_DISPATCH_SCRIPT,
     '    </section>',
     END,
   ].filter((line) => line !== '').join('\n');
@@ -382,7 +400,9 @@ function selfTest() {
     try { spliceBlock('<main></main>', daily); return false; } catch { return true; }
   })());
 
-  add('the block carries no client script', !/<script/i.test(daily));
+  add('the only client script is the shared Desk Dispatch client', (daily.match(/<script/gi) || []).length === 1 && daily.includes(DESK_DISPATCH_SCRIPT));
+  add('the live module carries the Desk Dispatch signup', daily.includes('data-desk-dispatch="home"') && daily.indexOf('data-desk-dispatch') > daily.indexOf('class="desk-grid"'));
+  add('an empty desk does not ask for a newsletter it has nothing to send', !empty.includes('data-desk-dispatch'));
   // S319 regression pin. The first version used var(--surface,#15151b) and
   // var(--border,#2a2a33); neither token exists on this site, so the dark hex
   // fallbacks rendered in EVERY theme and the staging gate found 338 WCAG AA

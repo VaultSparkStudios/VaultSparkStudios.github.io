@@ -13,22 +13,27 @@
  *
  * Import-safe: side effects run only when invoked directly.
  */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 /** Build the inner nav-dropdown HTML for the Games section. */
-export function buildGameNavHtml(games) {
+// S368: matches propagate-nav's deriveGameNav exactly — a registry game whose
+// /games/<slug>/ page is retired (e.g. Voidfall, now /universe/voidfall/) leaves the
+// nav, and "Where to play" (/play/) follows All Games (the Games tab carries the current state on /play/).
+export function buildGameNavHtml(games, { exists = () => true, activeHref = null } = {}) {
   const byStatus = { sparked: [], forge: [], vaulted: [] };
   for (const [slug, g] of Object.entries(games)) {
+    if (!exists(`games/${slug}/index.html`)) continue;
     if (byStatus[g.status]) byStatus[g.status].push({ slug, name: g.name, navOrder: g.navOrder ?? 99 });
   }
   // Sort each group by navOrder so registry drives display order.
   for (const arr of Object.values(byStatus)) arr.sort((a, b) => a.navOrder - b.navOrder);
 
-  let html = '<span class="dropdown-label">Games</span><a href="/games/">All Games</a>';
+  const playActive = activeHref === '/play/' ? ' class="active" aria-current="page"' : '';
+  let html = '<span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/"' + playActive + '>Where to play</a>';
 
   if (byStatus.sparked.length) {
     html += '<div class="dropdown-divider"></div>' +
@@ -97,6 +102,8 @@ function runSelfTest() {
   assert(nav.includes('<a href="/games/game-a/">Game A</a>'), 'T1 sparked link correct');
   assert(nav.includes('dropdown-status-forge'), 'T1 forge label present');
   assert(nav.includes('dropdown-status-honored'), 'T1 honored presentation for vaulted games present');
+  assert(nav.includes('<a href="/play/">Where to play</a>') && buildGameNavHtml(games, { activeHref: '/play/' }).includes('<a href="/play/" class="active" aria-current="page">Where to play</a>'), 'T1b Where to play follows All Games and is current only on /play/');
+  assert(!buildGameNavHtml(games, { exists: (rel) => rel !== 'games/game-b/index.html' }).includes('/games/game-b/'), 'T1c a registry game with no page leaves the nav');
 
   // T2: injectGameNav replaces inner content
   const html = '<div class="nav-item has-dropdown"><a href="/games/">Games</a>' +
@@ -129,8 +136,12 @@ if (isMain) {
   const check   = args.includes('--check');
 
   const registry = JSON.parse(readFileSync(join(ROOT, 'data', 'game-registry.json'), 'utf8'));
-  const innerHtml = buildGameNavHtml(registry.games);
-  const htmlFiles = walkHtml(ROOT);
+  const exists = (rel) => existsSync(join(ROOT, rel));
+  const innerHtml = buildGameNavHtml(registry.games, { exists });
+  // --exclude=a,b skips root-level trees for one run (another lane owns them).
+  const excludeArg = args.find((a) => a.startsWith('--exclude='));
+  const exclude = new Set(excludeArg ? excludeArg.slice('--exclude='.length).split(',').map((d) => d.trim()).filter(Boolean) : []);
+  const htmlFiles = walkHtml(ROOT).filter((f) => !exclude.has(f.slice(ROOT.length + 1).split(/[\\/]/)[0]));
 
   let changed = 0, checked = 0;
   for (const f of htmlFiles) {

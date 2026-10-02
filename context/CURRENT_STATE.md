@@ -1,6 +1,21 @@
 # Current State
 
-Last updated: 2026-10-01 UTC (S367 whole-site audit)
+Last updated: 2026-10-02 UTC (S368 full audit refresh, implementation and membership truth)
+
+## S368 — Full audit refresh implemented: membership truth, Season 1, invite-led doors, new pages, Ask the Vault (2026-10-02)
+
+Audit `docs/AUDIT_2026-10-02.{json,md}` (25 items, four-zone page-by-page pass). 23 shipped, 1 blocked (real-login E2E, waiting on Obelisk), 1 deferred (publisher drift cascade). Founder rulings D-S368.1–6.
+
+- **Membership (D-S368.1).** The site sells Free, VaultSparked $4.99/mo and VaultSparked Eternal $29.99/mo, monthly only; annual is "coming later". Only enforced perks are advertised; 2×/3× XP, discounts, priority queue, co-dev and credit promises are gone. `api/membership-tiers.json` is the single source. The portal shows the real price (it said $24.99), offers an Eternal checkout, hides the gift. Server: annual rejected, a second subscription is refused (409 `already_subscribed` / `plan_change_via_billing` → billing portal), phase slots are claimed on payment, the gift endpoint returns 410, `reserve_phase_slot` and gift inserts are service-role only.
+- **Season 1 (D-S368.2).** Live probe found `award_season_xp()` referencing missing columns, so every game score, session and challenge submission insert had been rolled back. Fixed live; Season 1 — Ignition (2026-09-02 → 2026-10-14) active with five recognition tiers and `get_season_standings()`. Portal countdown, standings and results card; leaderboard "This Season" tab.
+- **Security.** Ask IGNIS cache no longer serves one member's personalised reply to others; a public read policy on `ignis_response_cache` was dropped; weekly score and follow feed check the caller; team invite codes and voter ids no longer public; AI endpoints fail closed; models on claude-sonnet-5-5 / Haiku 4.5 with per-model pricing; agent-action receipts scoped to the subject; `noai` header only for training crawlers; jsdelivr path-scoped.
+- **Doors and truth.** Enrolment is invite-led: header "Request Invite" and 104 inline CTAs go to `/contact/?topic=invite`; signed-in members never see Join. Statuses, counts and catalogs render from the registry (`scripts/derive-registry-surfaces.mjs`). Project descriptions follow D-S368.3. Operator language removed from visitor pages; a visitor-text leak patrol runs in content coherence. Hosting statements corrected to Cloudflare Pages.
+- **Structure.** 12 routes retired behind 301s (stats, oracle, notebook, atlas, ask-founders → Ask the Studio, brand, careers, members, journal, games/voidfall, gridiron-gm-play). New `/play/`, `/dispatch/`, `/collaborate/`, `/api/`, `/projects/veilos/`; roadmap is Now/Next/Later from the registry.
+- **Portal.** One Vault Initiation quest (the old checklist never rendered and the overlay never ran), since-last-visit card, nearest rival, panel feedback, one Your Games panel, admin markup and classified lore out of public HTML, investor gate no longer signs members out.
+- **Experience and AI.** Scroll-driven Vault Door below the homepage LCP; keyboard-navigable universe constellation with View Transitions; Ask the Vault (semantic-search v5) answers from cited passages with a zero-token no-answer path; one `#org` entity graph, games ItemList, agents.json actions, grounding coherence gate; root `llms.txt`, full root `llms-full.txt`, sitemap `lastmod`.
+- **The Desk.** Persona taglines, character sheets and a corpus-derived notebook; one Desk Dispatch signup on the homepage, `/news/`, every article, persona profiles and `/dispatch/`; signup function fixed and redeployed (verify 6/6). Daily digest sender (D-S368.6) built with auto-send off until the founder approves a test issue.
+- **Speed.** Duplicate logos removed (−3.85 MB); homepage scroll CLS fixed (mobile 1.08 → ~0.01).
+- **Live already:** all S368 migrations except the column-revoke follow-up; edge functions ask-ignis v18, semantic-search v5, create-checkout v27, stripe-webhook v30, create-gift-checkout v23, eternal-intelligence v9, subscribe-desk-dispatch.
 
 ## S367 — Whole-site audit, canon-true statuses, login and email hardening (2026-10-01)
 

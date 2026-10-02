@@ -11,7 +11,7 @@ const COMPLIANCE_PAGES = [
   { path: '/accessibility/', title: /Accessibility/i, h1: true },
   { path: '/rights/',        title: /Technology|Rights|Attributions/i, h1: true },
   { path: '/faq/',           title: /FAQ|Frequently/i, h1: true },
-  { path: '/careers/',       title: /Careers/i,     h1: true },
+  { path: '/collaborate/',   title: /Collaborate/i, h1: true },
   { path: '/data-deletion/', title: /Data Deletion/i, h1: true },
   { path: '/security/',      title: /Security/i,    h1: true },
   { path: '/sitemap.html',   title: /Sitemap/i,     h1: true },

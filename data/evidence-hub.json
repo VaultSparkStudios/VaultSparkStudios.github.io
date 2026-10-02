@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "_note": "S334: the studio publishes its live-data surfaces (/stats/, /stats/ecosystem/, /status/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/) that all answer versions of one question — 'is this studio real and working?' — with no front door. This file defines the spine. Each lane keeps its deep page as the canonical destination; the hub only routes and stamps freshness, so no receipt or permalink moves. S335: the /proof/ verifier was folded INTO the hub — its lane points at the on-page anchor /evidence/#verify (validateLanes accepts only anchors the generator renders) and /proof/ is an edge 301. `feed` must be a public, publicSafe JSON artifact carrying generatedAt; a lane whose feed cannot be read reports UNKNOWN rather than a stale green.",
+  "_note": "S334: the studio publishes its live-data surfaces (/stats/, /stats/ecosystem/, /status/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/) that all answer versions of one question — 'is this studio real and working?' — with no front door. This file defines the spine. Each lane keeps its deep page as the canonical destination; the hub only routes and stamps freshness, so no receipt or permalink moves. S335: the /proof/ verifier was folded INTO the hub — its lane points at the on-page anchor /evidence/#verify (validateLanes accepts only anchors the generator renders) and /proof/ is an edge 301. `feed` must be a public, publicSafe JSON artifact carrying generatedAt; a lane whose feed cannot be read reports UNKNOWN rather than a stale green. S368: /stats/ folded in as the on-page #numbers section (lane id \"scale\" so the card id never collides with the section id); /notebook/ and /oracle/ retired to /studio-pulse/#forge-ledger and /ignis/#oracle.",
   "lanes": [
     {
       "id": "live",
@@ -10,17 +10,27 @@
       "href": "/status/",
       "linkLabel": "Open System Status",
       "feed": "/api/public-status.json",
-      "also": [{ "label": "Edge + discovery health", "href": "/status/#discovery" }]
+      "also": [
+        {
+          "label": "Edge + discovery health",
+          "href": "/status/#discovery"
+        }
+      ]
     },
     {
-      "id": "numbers",
+      "id": "scale",
       "label": "Numbers",
       "question": "How big is any of this, actually?",
       "blurb": "Source-dated portfolio, audience, editorial and performance statistics — each figure carrying its own freshness, bots separated from people.",
-      "href": "/stats/",
-      "linkLabel": "Open Public Stats",
+      "href": "/evidence/#numbers",
+      "linkLabel": "See the numbers",
       "feed": "/api/ecosystem-stats.json",
-      "also": [{ "label": "Ecosystem + edge analytics", "href": "/stats/ecosystem/" }]
+      "also": [
+        {
+          "label": "Ecosystem + edge analytics",
+          "href": "/stats/ecosystem/"
+        }
+      ]
     },
     {
       "id": "proof",
@@ -30,19 +40,30 @@
       "href": "/evidence/#verify",
       "linkLabel": "Verify In Your Browser",
       "feed": "/api/deploy-currency.json",
-      "also": [{ "label": "Release gate feed", "href": "/api/release-proof.json" }]
+      "also": [
+        {
+          "label": "Release gate feed",
+          "href": "/api/release-proof.json"
+        }
+      ]
     },
     {
       "id": "motion",
       "label": "Motion",
       "question": "What is actually moving this week?",
-      "blurb": "The forge in motion — every world under construction, the commit-level notebook, and the Oracle's live read of each project.",
+      "blurb": "The forge in motion — every world under construction, the commit-level forge ledger, and IGNIS's live read of each project.",
       "href": "/studio-pulse/",
       "linkLabel": "Open Studio Pulse",
       "feed": "/api/oracle-insights.json",
       "also": [
-        { "label": "Commit-level notebook", "href": "/notebook/" },
-        { "label": "Ecosystem Oracle", "href": "/oracle/" }
+        {
+          "label": "Commit-level forge ledger",
+          "href": "/studio-pulse/#forge-ledger"
+        },
+        {
+          "label": "IGNIS's read of every project",
+          "href": "/ignis/#oracle"
+        }
       ]
     }
   ]

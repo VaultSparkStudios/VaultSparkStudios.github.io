@@ -8,7 +8,8 @@
  *
  * When no session: the script exits silently — the existing CTAs stay.
  *
- * Tier source: `vault_members.is_sparked` + `subscriptions.plan`. Free
+ * Tier source: `subscriptions.plan` by exact plan key (active + unexpired),
+ * falling back to `vault_members.plan_key` / `is_sparked`. Free
  * members get a generic "MEMBER" badge so signed-in always renders SOMETHING
  * (S160 F17 — the "still showing Create account / Join the Vault while
  * signed in" bug was the chip-only-for-paid-tier filter that S113 shipped).
@@ -19,17 +20,51 @@
 (function () {
   'use strict';
 
-  function tierLabel(member, subscription) {
-    var plan = (subscription && subscription.plan) || (member && member.plan_key) || null;
-    if (plan) {
-      var p = String(plan).toLowerCase();
-      if (p.indexOf('pro') !== -1 || p.indexOf('eternal') !== -1) return 'ETERNAL';
-      if (p.indexOf('sparked') !== -1) return 'SPARKED';
+  // D-S368.1 — tier comes from the exact plan key, never a substring match.
+  // The old indexOf('pro') test labelled PromoGrind Pro (promogrind_pro)
+  // members as ETERNAL. Plan keys are internal: vault_sparked → VaultSparked,
+  // vault_sparked_pro → VaultSparked Eternal. Anything else is a free member
+  // for the purposes of the studio chip.
+  var PLAN_TIER = { vault_sparked: 'SPARKED', vault_sparked_pro: 'ETERNAL' };
+  var TIER_NAME = { MEMBER: 'Vault Member', SPARKED: 'VaultSparked', ETERNAL: 'VaultSparked Eternal' };
+
+  function planTier(plan) {
+    if (!plan) return null;
+    var key = String(plan).trim().toLowerCase();
+    if (window.VSMembership && typeof window.VSMembership.normalizePlanKey === 'function') {
+      key = window.VSMembership.normalizePlanKey(key);
     }
+    return PLAN_TIER[key] || null;
+  }
+
+  // A subscription row only counts while it is active and its paid period has
+  // not ended. Mirrors VSMembership.isSubscriptionActive().
+  function subscriptionActive(subscription) {
+    if (!subscription) return false;
+    if (subscription.status && subscription.status !== 'active') return false;
+    if (subscription.current_period_end) {
+      var end = new Date(subscription.current_period_end).getTime();
+      if (isFinite(end) && end <= Date.now()) return false;
+    }
+    return true;
+  }
+
+  function tierLabel(member, subscription) {
+    if (subscription) {
+      // The subscription row is authoritative when it exists.
+      return subscriptionActive(subscription) ? (planTier(subscription.plan) || 'MEMBER') : 'MEMBER';
+    }
+    var fromRow = planTier(member && member.plan_key);
+    if (fromRow) return fromRow;
     if (member && member.is_sparked) return 'SPARKED';
     // Signed-in but no paid tier → still surface presence. Founder S160 ask:
     // the chip must show whenever a session exists, not only for paid users.
     return 'MEMBER';
+  }
+
+  function normalizeTier(tier) {
+    var t = String(tier || '').toUpperCase();
+    return (t === 'SPARKED' || t === 'ETERNAL') ? t : 'MEMBER';
   }
 
   function findMountPoint() {
@@ -65,12 +100,16 @@
       '.vs-account-menu__danger{color:#fca5a5}' +
       '/* hide anonymous CTAs when chip is mounted */' +
       '.nav-right:has(.vs-account-chip) .nav-signin,' +
-      '.nav-right:has(.vs-account-chip) .button.button-sm[href*="register"]{display:none !important}' +
+      '.nav-right:has(.vs-account-chip) .button.button-sm[href*="register"],' +
+      '.nav-right:has(.vs-account-chip) [data-vs-join]{display:none !important}' +
       // Older browsers without :has() fall back to a body data-attr the script sets.
       'body[data-vs-signed-in="true"] .nav-right .nav-signin,' +
       'body[data-vs-signed-in="true"] .nav-right .button.button-sm[href*="register"],' +
       'body[data-vs-signed-in="true"] .mobile-nav-footer .mobile-nav-signin,' +
-      'body[data-vs-signed-in="true"] .mobile-nav-footer .mobile-nav-join[href*="register"]{display:none !important}' +
+      'body[data-vs-signed-in="true"] .mobile-nav-footer .mobile-nav-join[href*="register"],' +
+      // S368: Join/invite CTAs carry data-vs-join so hiding never depends on the link target.
+      'body[data-vs-signed-in="true"] [data-vs-join],' +
+      'html[data-vs-signed-in="true"] [data-vs-join]{display:none !important}' +
       '';
     document.head.appendChild(st);
   }
@@ -81,7 +120,7 @@
 
     var name = profile.name || (profile.email ? profile.email.split('@')[0] : 'Member');
     var initials = (name.trim().charAt(0) || 'V').toUpperCase();
-    var tier = profile.tier || 'MEMBER';
+    var tier = normalizeTier(profile.tier);
     var email = profile.email || '';
 
     var btn = document.createElement('button');
@@ -89,10 +128,10 @@
     btn.className = 'vs-account-chip';
     btn.setAttribute('aria-haspopup', 'true');
     btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', 'Account menu — signed in as ' + name);
+    btn.setAttribute('aria-label', 'Account menu — signed in as ' + name + ' (' + TIER_NAME[tier] + ')');
     btn.innerHTML =
       '<span class="vs-account-chip__avatar" aria-hidden="true">' + escape(initials) + '</span>' +
-      '<span class="vs-account-chip__tier tier-' + escape(tier) + '">' + escape(tier) + '</span>' +
+      '<span class="vs-account-chip__tier tier-' + escape(tier) + '" title="' + escape(TIER_NAME[tier]) + '">' + escape(tier) + '</span>' +
       '<span class="vs-account-chip__caret" aria-hidden="true">▾</span>' +
       '<div class="vs-account-menu" role="menu">' +
         '<div class="vs-account-menu__head">' +
@@ -105,7 +144,8 @@
         '<a role="menuitem" href="/leaderboards/">Leaderboards</a>' +
         '<a role="menuitem" href="/vault-member/#settings">Settings</a>' +
         '<div class="vs-account-menu__sep" role="separator" aria-hidden="true"></div>' +
-        '<a role="menuitem" href="/membership/">Upgrade membership</a>' +
+        // Eternal is the top tier, so there is nothing to upgrade to.
+        (tier === 'ETERNAL' ? '' : '<a role="menuitem" href="/vault-member/#upgrade">Upgrade membership</a>') +
         '<a role="menuitem" href="/changelog/#requests">Feedback loop</a>' +
         '<div class="vs-account-menu__sep" role="separator" aria-hidden="true"></div>' +
         '<button type="button" role="menuitem" class="vs-account-menu__danger" data-vs-signout>Sign out</button>' +
@@ -190,7 +230,7 @@
         member = memberRes && memberRes.data;
       } catch (_) {}
       try {
-        var subRes = await sb.from('subscriptions').select('plan, status').eq('user_id', userId).maybeSingle();
+        var subRes = await sb.from('subscriptions').select('plan, status, current_period_end').eq('user_id', userId).maybeSingle();
         subscription = subRes && subRes.data;
       } catch (_) {}
 

@@ -61,6 +61,94 @@
       }
     })();
 
+    // ── Offer codes + #upgrade deep link (D-S368.1) ─────────────────────────
+    // Offer links arrive as /vault-member/?promo=CODE#upgrade (or the older
+    // #upgrade?promo=CODE form). The code is held in sessionStorage so it
+    // survives the sign-in step, then sent to create-checkout as promo_code.
+    const PROMO_KEY = 'vs_pending_promo';
+    function captureOfferPromo() {
+      let code = null;
+      try { code = new URLSearchParams(window.location.search).get('promo'); } catch (_) {}
+      if (!code) {
+        const m = /[?&]promo=([^&]+)/.exec(window.location.hash || '');
+        if (m) { try { code = decodeURIComponent(m[1]); } catch (_) { code = m[1]; } }
+      }
+      code = code ? String(code).trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '').slice(0, 40) : '';
+      if (code) { try { sessionStorage.setItem(PROMO_KEY, code); } catch (_) {} }
+    }
+    function readPendingPromo() {
+      try { return sessionStorage.getItem(PROMO_KEY) || null; } catch (_) { return null; }
+    }
+    function clearPendingPromo() {
+      try { sessionStorage.removeItem(PROMO_KEY); } catch (_) {}
+    }
+    // On a non-2xx response functions.invoke returns no data and carries the
+    // Response in error.context. Returns { status, body } (body null when
+    // unreadable) so the caller can classify it against the billing contract.
+    async function readCheckoutResponse(error, data) {
+      let body = data || null;
+      const ctx = error && error.context;
+      const status = ctx && typeof ctx.status === 'number' ? ctx.status : (data ? 200 : 0);
+      if (!body && ctx && typeof ctx.json === 'function') {
+        try { body = await ctx.clone().json(); } catch (_) { body = null; }
+      }
+      return { status, body };
+    }
+    function classifyCheckout(res) {
+      if (window.VSPortalLogic) return VSPortalLogic.classifyCheckoutResponse(res.status, res.body);
+      if (res.body && res.body.url) return { kind: 'redirect', url: res.body.url };
+      const code = res.body && (res.body.code || res.body.error);
+      return code === 'invalid_promo_code' ? { kind: 'invalid_promo', message: '' }
+        : { kind: 'error', message: 'Checkout is unavailable right now. Please try again in a moment.' };
+    }
+    captureOfferPromo();
+
+    // Bring the upgrade panel into view once the dashboard has rendered it.
+    (function () {
+      if (!/^#upgrade\b/.test(window.location.hash || '')) return;
+      let tries = 0;
+      const timer = setInterval(function () {
+        tries += 1;
+        const target = document.getElementById('upgrade');
+        const visible = target && target.offsetParent !== null
+          && Array.from(target.children).some(function (c) { return c.offsetParent !== null; });
+        if (visible) {
+          clearInterval(timer);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (tries > 60) {
+          clearInterval(timer);
+        }
+      }, 250);
+    })();
+
+    // Tier prices come from the canonical feed (api/membership-tiers.json), so
+    // the portal can never drift from /membership/ again. Static markup carries
+    // the same values as a no-JS fallback.
+    (function () {
+      const fallback = { vault_sparked: 4.99, vault_sparked_pro: 29.99 };
+      function paint(prices) {
+        document.querySelectorAll('[data-tier-price]').forEach(function (el) {
+          const value = prices[el.getAttribute('data-tier-price')];
+          // Markup carries the "$" outside the span; only the amount is painted.
+          if (typeof value === 'number' && value > 0) el.textContent = value.toFixed(2);
+        });
+      }
+      paint(fallback);
+      if (typeof fetch !== 'function') return;
+      fetch('/api/membership-tiers.json', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (feed) {
+          if (!feed || !Array.isArray(feed.tiers)) return;
+          const prices = Object.assign({}, fallback);
+          feed.tiers.forEach(function (t) {
+            const monthly = t && t.price && Number(t.price.monthly);
+            if (t && t.planCode && monthly > 0) prices[t.planCode] = monthly;
+          });
+          paint(prices);
+        })
+        .catch(function () {});
+    })();
+
     // ── Rank / Achievement definitions (browser mirror of canonical config) ───
     const RANK_VISUALS = {
       spark_initiate: { color: '#94a3b8', badgeClass: 'badge-ghost' },
@@ -136,7 +224,7 @@
         { id: 'vault',      emoji: '🔒', bg: 'rgba(255,196,0,0.12)',   label: 'Vault Keeper' },
         { id: 'sparked',    emoji: '🌟', bg: 'rgba(255,196,0,0.22)',   label: 'The Sparked'  },
         { id: 'runner',     emoji: '🏃', bg: 'rgba(31,162,255,0.14)',  label: 'Vault Runner' },
-        { id: 'forge',      emoji: '🔥', bg: 'rgba(255,122,0,0.14)',   label: 'Forge Guard'  },
+        { id: 'forge',      emoji: '🔥', bg: 'rgba(255,122,0,0.14)',   label: 'Forge'        },
         { id: 'unknown',    emoji: '❓', bg: 'rgba(255,255,255,0.06)', label: 'Unknown'      },
       ],
 
@@ -177,22 +265,71 @@
         showAuth();
       },
 
-      async startVaultSparkedCheckout() {
-        const btn = document.getElementById('vaultsparked-upgrade-btn');
+      // D-S368.1 — one checkout path for both paid tiers (monthly only). Plan keys
+      // stay internal: vault_sparked = VaultSparked, vault_sparked_pro =
+      // VaultSparked Eternal. A promo code carried in from an offer link
+      // (?promo=CODE, see readPendingPromo) rides along as promo_code; the edge
+      // function validates it against live Stripe promotion codes.
+      async startPlanCheckout(plan, btnId, idleLabel) {
+        const btn = document.getElementById(btnId);
+        const feedback = btn && btn.parentElement ? btn.parentElement.querySelector('[data-checkout-feedback]') : null;
+        const say = (msg) => { if (feedback) feedback.textContent = msg || ''; };
         if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
+        say('');
         try {
           const { data: { session } } = await VSSupabase.auth.getSession();
           if (!session) { showAuth(); return; }
-          const { data, error } = await VSSupabase.functions.invoke('create-checkout', {
+          const invoke = (body) => VSSupabase.functions.invoke('create-checkout', {
             headers: { Authorization: `Bearer ${session.access_token}` },
-            body: { plan: 'vault_sparked' },
+            body,
           });
-          if (error || !data?.url) throw new Error(error?.message || 'Checkout unavailable');
-          window.location.href = data.url;
+          const promo = plan === 'vault_sparked' ? readPendingPromo() : null;
+          let { data, error } = await invoke(promo ? { plan, promo_code: promo } : { plan });
+          let outcome = data?.url ? { kind: 'redirect', url: data.url } : classifyCheckout(await readCheckoutResponse(error, data));
+          // An unknown or expired offer code must not block the upgrade: say so,
+          // forget the code, and continue at the standard price. Only a rejected
+          // promo (or an unreadable body) retries; the plan-state answers below
+          // (already_subscribed, plan_change_via_billing, annual_not_offered)
+          // are final and never re-sent without the code.
+          const unreadable = outcome.kind === 'error' && !(error && error.context);
+          if (promo && (outcome.kind === 'invalid_promo' || unreadable)) {
+            clearPendingPromo();
+            say('Offer code ' + promo + ' is not active any more, so checkout continues at the standard price.');
+            ({ data, error } = await invoke({ plan }));
+            outcome = data?.url ? { kind: 'redirect', url: data.url } : classifyCheckout(await readCheckoutResponse(error, data));
+          }
+          if (outcome.kind === 'redirect') {
+            if (promo) clearPendingPromo();
+            window.location.href = outcome.url;
+            return;
+          }
+          if (btn) { btn.textContent = idleLabel; btn.disabled = false; }
+          if (outcome.kind === 'already_subscribed') {
+            say(outcome.message);
+            if (typeof showToast === 'function') showToast(outcome.message, { emoji: '✓' });
+            return;
+          }
+          if (outcome.kind === 'plan_change_via_billing') {
+            say(outcome.message);
+            if (typeof showToast === 'function') showToast(outcome.message, { emoji: '↔' });
+            await this.openCustomerPortal({ say });
+            return;
+          }
+          if (outcome.kind === 'annual_not_offered') { say(outcome.message); return; }
+          throw new Error(error?.message || 'Checkout unavailable');
         } catch (err) {
-          if (btn) { btn.textContent = 'Get VaultSparked →'; btn.disabled = false; }
+          if (btn) { btn.textContent = idleLabel; btn.disabled = false; }
+          say('Checkout is unavailable right now. Please try again in a moment.');
           if (window.Sentry) Sentry.captureException(err);
         }
+      },
+
+      startVaultSparkedCheckout() {
+        return this.startPlanCheckout('vault_sparked', 'vaultsparked-upgrade-btn', 'Get VaultSparked →');
+      },
+
+      startVaultSparkedEternalCheckout(btnId) {
+        return this.startPlanCheckout('vault_sparked_pro', btnId || 'vaultsparked-pro-upgrade-btn', 'Go Eternal →');
       },
 
       // S343 — members could not cancel. `VS.openCustomerPortal` was referenced in
@@ -208,7 +345,10 @@
       // existing startVaultSparkedCheckout() shape exactly and handles the 404 the
       // function returns for a member with no Stripe subscription, rather than
       // showing them a dead button a second time.
-      async openCustomerPortal() {
+      // opts.say: optional status writer used when checkout routes a plan
+      // change here (D-S368.1 billing contract: plan_change_via_billing).
+      async openCustomerPortal(opts) {
+        const say = opts && typeof opts.say === 'function' ? opts.say : null;
         const btn = document.getElementById('open-customer-portal-btn');
         const original = btn ? btn.textContent : '';
         if (btn) { btn.textContent = 'Opening…'; btn.disabled = true; }
@@ -221,15 +361,15 @@
           if (data?.url) { window.location.href = data.url; return; }
           // A free member has no Stripe customer; say so instead of failing blankly.
           const reason = data?.error || error?.message || '';
-          if (btn) {
-            btn.textContent = /no subscription/i.test(reason)
-              ? 'No paid plan to manage'
-              : 'Billing portal unavailable — try again';
-            btn.disabled = false;
-          }
+          const label = /no subscription/i.test(reason)
+            ? 'No paid plan to manage'
+            : 'Billing portal unavailable — try again';
+          if (btn) { btn.textContent = label; btn.disabled = false; }
+          if (say) say(label === 'No paid plan to manage' ? 'No paid plan was found to change.' : 'Billing is unavailable right now. Open Manage billing in Settings in a moment.');
           if (error && window.Sentry) Sentry.captureException(error);
         } catch (err) {
           if (btn) { btn.textContent = 'Billing portal unavailable — try again'; btn.disabled = false; }
+          if (say) say('Billing is unavailable right now. Open Manage billing in Settings in a moment.');
           if (window.Sentry) Sentry.captureException(err);
         } finally {
           if (btn && btn.textContent === 'Opening…') { btn.textContent = original; btn.disabled = false; }
@@ -280,8 +420,8 @@
         if (!_currentMember) return;
         const canvas = document.getElementById('vault-card-canvas');
         const rankName = _currentMember.rank_name || 'Vault Member';
-        const inviteCode = _currentMember.invite_code || '';
-        const refUrl = 'https://vaultsparkstudios.com/join/' + (inviteCode ? '?ref=' + _currentMember.username : '');
+        // One referral link format everywhere (matches /invite/ and the dashboard card).
+        const refUrl = 'https://vaultsparkstudios.com/vault-member/?ref=' + encodeURIComponent(_currentMember.username || '');
         const shareText = 'I\'m a ' + rankName + ' at VaultSpark Studios — join the Vault! ⚡';
 
         if (navigator.share && navigator.canShare) {
@@ -305,7 +445,7 @@
 
       copyInviteLink() {
         if (!_currentMember) return;
-        const refUrl = 'https://vaultsparkstudios.com/join/?ref=' + _currentMember.username;
+        const refUrl = 'https://vaultsparkstudios.com/vault-member/?ref=' + encodeURIComponent(_currentMember.username || '');
         navigator.clipboard.writeText(refUrl).then(() => {
           showToast('Link copied!', { icon: '📋' });
         }).catch(() => {
@@ -396,13 +536,21 @@
 
       const dispatchEnabled = member.subscribed || (member.prefs && member.prefs.updates !== false);
       const isSparked = !!opts.isSparked;
-      const sparkedPrice = (globalThis.VSMembership && VSMembership.getPriceDisplay('vault_sparked')) || '$24.99/mo';
+      // Tier names follow the plan key (D-S368.1). The price is not repeated
+      // here: a member's rate depends on the phase they joined in, and the
+      // billing portal is the place that states it exactly.
+      const isEternal = isSparked && member.plan_key === 'vault_sparked_pro';
+      const membershipStatus = isEternal
+        ? 'VaultSparked Eternal active · billed monthly'
+        : isSparked ? 'VaultSparked active · billed monthly' : 'Free Vault Member';
 
       setPanelText('vault-status-theme', themeStatus);
-      setPanelText('vault-status-membership', isSparked ? `VaultSparked active · ${sparkedPrice} tier` : 'Free Vault Member');
+      setPanelText('vault-status-membership', membershipStatus);
       setPanelText('vault-status-discord', member.discord_id ? 'Connected and ready for role sync' : 'Not connected');
       setPanelText('vault-status-dispatch', dispatchEnabled ? 'Studio updates enabled' : 'Dispatch muted');
-      setPanelText('vault-status-security', 'Password reset + export/delete tools live');
+      // Sign-in credentials live with Obelisk, the studio identity plane — this
+      // portal no longer runs its own password reset.
+      setPanelText('vault-status-security', 'Sign-in managed by Obelisk · data export + delete available');
     }
 
     function updateClaimCenter(member, opts) {
@@ -584,13 +732,6 @@
         if (notice) notice.style.display = 'none';
       });
 
-      // ── Complete Your Vault dismiss ────────────────────────────────────────
-      on('cvault-dismiss-btn', 'click', function () {
-        localStorage.setItem('vs_cvault_dismissed', '1');
-        var panel = document.getElementById('cvault-panel');
-        if (panel) panel.style.display = 'none';
-      });
-
       // ── Vault stats ────────────────────────────────────────────────────────
       on('pts-breakdown-btn', 'click', function () { if (typeof showPtsBreakdown === 'function') showPtsBreakdown(); });
 
@@ -608,10 +749,14 @@
 
       // ── Gift ───────────────────────────────────────────────────────────────
       on('gift-pts-btn',  'click', function () { if (typeof giftPoints === 'function') giftPoints(); });
-      on('gift-sub-btn',  'click', function () { if (typeof startGiftSubCheckout === 'function') startGiftSubCheckout(); });
+      // Gift VaultSparked is hidden until it is rebuilt with a real 30-day expiry
+      // and a founder-set price (D-S368.1). The create-gift-checkout function is
+      // untouched; only the portal entry point is gone.
 
-      // ── VaultSparked upgrade ───────────────────────────────────────────────
+      // ── VaultSparked / VaultSparked Eternal upgrade ────────────────────────
       on('vaultsparked-upgrade-btn', 'click', function () { VS.startVaultSparkedCheckout(); });
+      on('vaultsparked-eternal-from-free-btn', 'click', function () { VS.startVaultSparkedEternalCheckout('vaultsparked-eternal-from-free-btn'); });
+      on('vaultsparked-pro-upgrade-btn', 'click', function () { VS.startVaultSparkedEternalCheckout('vaultsparked-pro-upgrade-btn'); });
 
       // ── Claim Center ───────────────────────────────────────────────────────
       on('open-treasury-btn',  'click', function () { switchDashTab('treasury'); });
@@ -647,15 +792,8 @@
       on('toggle-newsletter', 'change', function (e) { if (typeof toggleNewsletter === 'function') toggleNewsletter(e.target.checked); });
 
       // ── Admin panel ────────────────────────────────────────────────────────
-      on('admin-pulse-btn',   'click', function () { if (typeof adminPostPulse === 'function') adminPostPulse(); });
-      on('admin-key-btn',     'click', function () { if (typeof adminPostBetaKey === 'function') adminPostBetaKey(); });
-      on('admin-file-btn',    'click', function () { if (typeof adminPostFile === 'function') adminPostFile(); });
-      on('load-analytics-btn','click', function () { if (typeof loadChallengeAnalytics === 'function') loadChallengeAnalytics(); });
-      on('admin-csv-btn',     'click', function () { if (typeof exportMemberCSV === 'function') exportMemberCSV(); });
-      on('admin-push-test-btn','click',function () { if (typeof adminTestPush === 'function') adminTestPush(); });
-      on('fanart-pending-btn', 'click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('pending'); });
-      on('fanart-approved-btn','click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('approved'); });
-      on('fanart-rejected-btn','click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('rejected'); });
+      // Vault Command markup is injected only after is_vault_admin() confirms;
+      // portal-loop.js wires its controls at that point (wireVaultCommand).
 
       // ── Rank-Up ceremony overlay ───────────────────────────────────────────
       on('ceremony-overlay',  'click', function () { if (typeof dismissCeremony === 'function') dismissCeremony(); });

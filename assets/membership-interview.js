@@ -4,9 +4,9 @@
  * Calls supabase ask-ignis with `mode: "interview"`. Anonymous-friendly: the
  * interview bypasses the Sparked-only gate (capped under onboarding-interview
  * budget instead). On Anthropic outage / cap-breach, gracefully redirects to
- * the static fallback (/vaultsparked/).
+ * the static fallback (/membership/).
  *
- * Mount target: <div id="mem-interview-mount" data-fallback="/vaultsparked/">.
+ * Mount target: <div id="mem-interview-mount" data-fallback="/membership/">.
  *
  * State machine (no framework):
  *   idle   → user clicks "Take 30-second interview"
@@ -102,8 +102,8 @@
   // instructed to start with "I recommend [TIER]." but we tolerate variation.
   function detectTier(reply) {
     var r = (reply || '').toLowerCase();
-    if (r.indexOf('eternal') !== -1) return { name: 'Eternal', href: '/vaultsparked/?tier=eternal' };
-    if (r.indexOf('sparked') !== -1) return { name: 'Sparked', href: '/vaultsparked/' };
+    if (r.indexOf('eternal') !== -1) return { name: 'Eternal', href: '/membership/#tiers' };
+    if (r.indexOf('sparked') !== -1) return { name: 'Sparked', href: '/membership/#tiers' };
     if (r.indexOf('free') !== -1) return { name: 'Free', href: '/vault-member/#register' };
     return null;
   }
@@ -229,7 +229,7 @@
   function init() {
     var mount = document.getElementById('mem-interview-mount');
     if (!mount) return;
-    var fallbackHref = mount.getAttribute('data-fallback') || '/vaultsparked/';
+    var fallbackHref = mount.getAttribute('data-fallback') || '/membership/';
     injectStyle();
     renderEntry(mount, fallbackHref);
   }

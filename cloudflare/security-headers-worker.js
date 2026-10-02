@@ -66,7 +66,6 @@ const SECURITY_HEADERS = {
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'SAMEORIGIN',
-  'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
   'Cross-Origin-Opener-Policy': 'same-origin',
@@ -77,7 +76,9 @@ const SECURITY_HEADERS = {
 
 const JSON_HEADERS = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' };
 
-const REMOVE_HEADERS = ['x-powered-by', 'server'];
+// S368: X-XSS-Protection is deprecated (the legacy auditor it toggled could be
+// abused for cross-site leaks); CSP is the control. Strip it if an origin sends it.
+const REMOVE_HEADERS = ['x-powered-by', 'server', 'x-xss-protection'];
 
 // S156 audit #29 — JSON hot-path SWR. Worker serves these instant from edge,
 // background-fetches origin to refresh. Aggressive SWR keeps the many-visitor
@@ -890,6 +891,28 @@ class MetaCspStripper {
 }
 
 // ---------------------------------------------------------------------------
+// D-S368.4: robots.txt allows search and user-fetch agents while training
+// crawlers stay disallowed. The non-standard `noai` X-Robots-Tag would tell the
+// allowed agents not to use the page, so it is kept only for training crawlers.
+// Applied per response after any edge cache read, so cached bodies stay shared.
+// ---------------------------------------------------------------------------
+
+export const AI_TRAINING_UA = /\b(GPTBot|ClaudeBot|Claude-Web|anthropic-ai|Google-Extended|PerplexityBot|CCBot|Bytespider|Applebot-Extended|meta-externalagent|cohere-ai|Diffbot|Omgilibot|ImagesiftBot)\b/i;
+
+export function scopeNoAiHeader(request, response) {
+  if (!response || !response.headers || response.status === 101 || response.webSocket) return response;
+  const tag = response.headers.get('X-Robots-Tag');
+  if (!tag || !/\bnoai\b/i.test(tag)) return response;
+  const ua = request?.headers?.get?.('User-Agent') || '';
+  if (AI_TRAINING_UA.test(ua)) return response;
+  const kept = tag.split(',').map((t) => t.trim()).filter((t) => t && !/^noai$|^noimageai$/i.test(t));
+  const out = new Response(response.body, response);
+  if (kept.length) out.headers.set('X-Robots-Tag', kept.join(', '));
+  else out.headers.delete('X-Robots-Tag');
+  return out;
+}
+
+// ---------------------------------------------------------------------------
 // Response builder
 // ---------------------------------------------------------------------------
 
@@ -1062,7 +1085,7 @@ const worker = {
   async fetch(request, env, ctx) {
     ttEnforceMode = env?.TT_ENFORCE_ENABLED === '1';
     try {
-      return await worker.handle(request, env, ctx);
+      return scopeNoAiHeader(request, await worker.handle(request, env, ctx));
     } catch (error) {
       let route = 'unparseable-url';
       try { route = new URL(request.url).pathname; } catch (_) { /* keep placeholder */ }

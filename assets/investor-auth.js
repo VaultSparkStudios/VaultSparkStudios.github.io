@@ -6,7 +6,8 @@
  * - Validates the user has an active investor record
  * - Stores profile in window.VSInvestorProfile
  * - Dispatches 'investor:ready' on success
- * - Redirects to /investor-portal/login/ on any failure
+ * - Redirects to /investor-portal/login/ when there is no session, and a
+ *   signed-in non-investor to /investor-portal/apply/ (never signs them out)
  *
  * Requires: supabase-client.js (window.VSSupabase)
  */
@@ -14,6 +15,7 @@
   'use strict';
 
   const LOGIN_URL = '/investor-portal/login/';
+  const APPLY_URL = '/investor-portal/apply/';
   const CONSENT_KEY = 'vs_inv_activity_consent';
   const CONSENT_GRANTED = 'granted';
   const CONSENT_DENIED = 'denied';
@@ -49,14 +51,16 @@
       var action = btn.getAttribute('data-inv-consent');
       writeConsent(action === 'grant' ? CONSENT_GRANTED : CONSENT_DENIED);
       if (action === 'grant') {
-        VSSupabase.rpc('log_investor_action', {
+        // PostgREST builders are thenables without .catch (calling it threw a
+        // TypeError), so fire-and-forget RPCs are wrapped in Promise.resolve.
+        Promise.resolve(VSSupabase.rpc('log_investor_action', {
           p_action: 'login',
           p_target_label: 'portal_access'
-        }).catch(function () {});
-        VSSupabase.rpc('log_investor_action', {
+        })).catch(function () {});
+        Promise.resolve(VSSupabase.rpc('log_investor_action', {
           p_action: 'consent_granted',
           p_target_label: 'activity_logging'
-        }).catch(function () {});
+        })).catch(function () {});
       }
       banner.remove();
     });
@@ -69,7 +73,8 @@
     const gate = document.createElement('div');
     gate.id = 'invPageGate';
     gate.className = 'inv-page-gate';
-    gate.innerHTML = '<img class="inv-gate-logo" src="/assets/logo.png" alt="" /><div class="inv-gate-spinner"></div>';
+    // The previous logo path never existed (404 on every investor page load).
+    gate.innerHTML = '<img class="inv-gate-logo" src="/assets/vaultspark-icon.webp" width="28" height="28" alt="" /><div class="inv-gate-spinner"></div>';
     document.body.appendChild(gate);
     document.body.classList.add('inv-loading');
   }
@@ -153,16 +158,18 @@
     const { data: profile, error: rpcError } = await VSSupabase
       .rpc('get_my_investor_profile');
 
+    // A member who is not (or not yet) an investor keeps their VaultSpark
+    // session. Signing them out here logged them out of the whole site just
+    // for opening /investor-portal/. Send them to the application instead; a
+    // transient RPC failure goes to the login page, which re-checks the
+    // profile and explains, without ending the session.
     if (rpcError || !profile) {
-      await VSSupabase.auth.signOut();
       redirect('rpc_error');
       return;
     }
 
     if (profile.error) {
-      // Not an investor or inactive
-      await VSSupabase.auth.signOut();
-      redirect('not_investor');
+      window.location.replace(APPLY_URL + '?reason=not_investor');
       return;
     }
 
@@ -171,10 +178,12 @@
 
     // 4. Log the login action (only if consent granted — GDPR opt-in)
     if (hasLoggingConsent()) {
-      VSSupabase.rpc('log_investor_action', {
+      // Wrapped: a bare builder has no .catch, and the TypeError it threw here
+      // stopped the gate before hideGate() for every consenting investor.
+      Promise.resolve(VSSupabase.rpc('log_investor_action', {
         p_action: 'login',
         p_target_label: 'portal_access'
-      }).catch(() => {});
+      })).catch(() => {});
     } else if (readConsent() === null) {
       // First-time investor — surface consent banner once auth UI settles
       setTimeout(renderConsentBanner, 600);

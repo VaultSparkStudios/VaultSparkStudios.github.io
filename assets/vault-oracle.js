@@ -351,7 +351,7 @@
           var friendly;
           if (res.status === 429) friendly = 'IGNIS is receiving too many signals — give it a minute, then ask again.';
           else if (body && body.code === 'membership_required') friendly = 'IGNIS opens for VaultSparked members. Sign in, or upgrade to enter the oracle.';
-          else if (body && body.code === 'quota_exceeded') friendly = 'Your Sparked IGNIS quota is spent for this month. Eternal unlocks unlimited access.';
+          else if (body && body.code === 'quota_exceeded') friendly = 'Your 40 VaultSparked questions are spent for this month. VaultSparked Eternal has no monthly limit.';
           else if (res.status === 502 || res.status === 503) friendly = 'IGNIS is offline right now. Try again shortly, or check the Signal Log for what the vault has been shipping.';
           else if (res.status === 400) friendly = body.error || 'IGNIS couldn\'t read that question.';
           else friendly = body.error || ('IGNIS unreachable (' + res.status + ')');
@@ -400,23 +400,23 @@
       var message;
       var pills;
       if (reason === 'signed_out') {
-        message = 'Ask IGNIS is a VaultSparked member perk. Sparked members get a monthly quota; Eternal members get unlimited access. Sign in or upgrade to open the oracle.';
+        message = 'Ask IGNIS is a VaultSparked member perk. VaultSparked members get 40 questions a month; VaultSparked Eternal members get unlimited questions. Sign in or upgrade to open the oracle.';
         pills = [
           { label: 'Sign In →', href: '/vault-member/#login' },
-          { label: 'Unlock VaultSparked →', href: '/vaultsparked/' }
+          { label: 'Unlock VaultSparked →', href: '/membership/#tiers' }
         ];
       } else {
-        message = 'Ask IGNIS is unlocked for VaultSparked members only. Sparked: monthly quota. Eternal: unlimited access.';
+        message = 'Ask IGNIS is unlocked for VaultSparked members only. VaultSparked: 40 questions a month. VaultSparked Eternal: unlimited.';
         pills = [
-          { label: 'Unlock VaultSparked →', href: '/vaultsparked/' },
-          { label: 'Go Eternal →', href: '/vaultsparked/#eternal' }
+          { label: 'Unlock VaultSparked →', href: '/vault-member/#upgrade' },
+          { label: 'Go Eternal →', href: '/vault-member/#upgrade' }
         ];
       }
       append(log, message, 'ignis');
       renderAccessPills(log, pills);
       var gatedHint = document.createElement('div');
       gatedHint.className = 'vs-oracle__hint';
-      gatedHint.textContent = 'Members only — Sparked (monthly quota) · Eternal (unlimited).';
+      gatedHint.textContent = 'Members only — VaultSparked (40 a month) · VaultSparked Eternal (unlimited).';
       wrap.appendChild(gatedHint);
       host.appendChild(wrap);
     }
@@ -540,8 +540,8 @@
     var hint = document.createElement('div');
     hint.className = 'vs-oracle__hint';
     hint.textContent = initialAccess
-      ? accessHint(initialAccess, 'Members only — Sparked (monthly quota) · Eternal (unlimited).')
-      : 'Members only — Sparked (monthly quota) · Eternal (unlimited). IGNIS reads the live vault snapshot.';
+      ? accessHint(initialAccess, 'Members only — VaultSparked (40 a month) · VaultSparked Eternal (unlimited).')
+      : 'Members only — VaultSparked (40 a month) · VaultSparked Eternal (unlimited). IGNIS reads the live vault snapshot.';
     wrap.appendChild(hint);
 
     form.addEventListener('submit', function (ev) {
@@ -600,11 +600,11 @@
         if (err && err.code === 'membership_required') {
           renderAccessPills(log, [
             { label: 'Sign In →', href: '/vault-member/#login' },
-            { label: 'Unlock VaultSparked →', href: '/vaultsparked/' }
+            { label: 'Unlock VaultSparked →', href: '/membership/#tiers' }
           ]);
         } else if (err && err.code === 'quota_exceeded') {
           renderAccessPills(log, [
-            { label: 'Go Eternal →', href: '/vaultsparked/' }
+            { label: 'Go Eternal →', href: '/vault-member/#upgrade' }
           ]);
         }
       }).finally(function () {

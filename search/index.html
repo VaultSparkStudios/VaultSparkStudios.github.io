@@ -60,7 +60,7 @@
     }
 
     /* ── Results section ── */
-    .search-results-section { padding: 2.5rem 0 5rem; }
+    .search-results-section { padding: 1.5rem 0 5rem; }
     .search-results-meta {
       font-size: 0.82rem;
       color: var(--dim);
@@ -130,6 +130,146 @@
       border-color: rgba(31,162,255,0.2);
       color: var(--text);
     }
+    .search-popular-tag:focus-visible, .vault-ask-btn:focus-visible, .vault-try-chip:focus-visible,
+    .cite-chip:focus-visible, .vault-sources a:focus-visible, .vault-feedback button:focus-visible,
+    .vault-answer__retry:focus-visible, .vault-suggest a:focus-visible {
+      outline: 2px solid var(--focus-outline, var(--gold));
+      outline-offset: 2px;
+    }
+
+    /* ── Ask the Vault ── */
+    .vault-ask-form { max-width: 640px; margin: 0 auto; }
+    .vault-ask-row { display: flex; gap: 0.5rem; align-items: stretch; }
+    .vault-ask-row .search-input-wrap { flex: 1 1 auto; max-width: none; margin: 0; min-width: 0; }
+    #searchInput { font-size: 16px; min-height: 52px; }
+    .vault-ask-btn {
+      flex: 0 0 auto;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      min-height: 52px; padding: 0 1.1rem;
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+      background: color-mix(in srgb, var(--gold) 16%, var(--panel-strong));
+      color: var(--text);
+      font-family: inherit; font-weight: 700; font-size: 0.92rem; line-height: 1;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .vault-ask-btn:hover { background: color-mix(in srgb, var(--gold) 26%, var(--panel-strong)); }
+    .vault-ask-btn:active { transform: translateY(1px); }
+    .vault-ask-btn[disabled] { opacity: 0.6; cursor: progress; }
+    .vault-ask-btn svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    .vault-ask-hint { margin: 0.75rem auto 0; max-width: 640px; color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+    .vault-try { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.45rem; margin: 0.9rem auto 0; max-width: 680px; }
+    .vault-try-chip {
+      min-height: 36px; padding: 0.35rem 0.8rem;
+      border-radius: 999px; border: 1px solid var(--line);
+      background: var(--panel); color: var(--muted);
+      font-family: inherit; font-weight: 500; font-size: 0.8rem; line-height: 1.3; cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .vault-try-chip:hover { color: var(--text); border-color: color-mix(in srgb, var(--gold) 45%, transparent); }
+
+    .vault-answer {
+      position: relative;
+      margin: 0 0 2rem;
+      padding: 1.35rem 1.4rem 1.1rem;
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--gold) 32%, var(--line));
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--gold) 7%, transparent), transparent 55%),
+        var(--panel-strong);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .vault-answer::before {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
+      background: linear-gradient(180deg, var(--gold), color-mix(in srgb, var(--gold) 20%, transparent));
+    }
+    .vault-answer[hidden], .vault-answer__foot[hidden] { display: none; }
+    .vault-answer__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem 1rem; margin-bottom: 0.8rem; }
+    .vault-answer__eyebrow { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin: 0; }
+    .vault-answer__eyebrow svg { width: 14px; height: 14px; }
+    .vault-answer__meta { font-size: 0.76rem; color: var(--dim); }
+    .vault-answer__question { margin: 0 0 0.65rem; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.3; color: var(--text); overflow-wrap: anywhere; }
+    .vault-answer__body { font-size: 1.02rem; line-height: 1.72; color: var(--text); overflow-wrap: anywhere; }
+    .vault-answer__body p { margin: 0; }
+    .vault-answer__note { margin-top: 0.6rem; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+    .vault-answer__body p + p { margin-top: 0.6rem; }
+    .vault-answer__note a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+    .cite-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 1.45em; height: 1.45em; padding: 0 0.32em; margin: 0 0.12em;
+      border-radius: 6px; vertical-align: 0.12em;
+      border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
+      background: color-mix(in srgb, var(--gold) 14%, transparent);
+      color: var(--text); font-size: 0.72em; font-weight: 800; line-height: 1;
+      text-decoration: none; font-variant-numeric: tabular-nums;
+      transition: background 0.15s;
+    }
+    .cite-chip:hover { background: color-mix(in srgb, var(--gold) 30%, transparent); }
+    .vault-sources-title { margin: 1.1rem 0 0.5rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+    .vault-sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+    .vault-sources a, .vault-suggest a {
+      display: grid; grid-template-columns: auto 1fr; gap: 0.15rem 0.65rem; align-items: baseline;
+      padding: 0.6rem 0.75rem; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--panel);
+      text-decoration: none; color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .vault-sources a:hover, .vault-suggest a:hover { border-color: color-mix(in srgb, var(--gold) 40%, var(--line)); }
+    .vault-sources__n {
+      grid-row: span 2; align-self: center;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.6rem; height: 1.6rem; border-radius: 7px;
+      background: color-mix(in srgb, var(--gold) 16%, transparent);
+      border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+      font-size: 0.78rem; font-weight: 800; font-variant-numeric: tabular-nums;
+    }
+    .vault-sources__title { font-size: 0.9rem; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+    .vault-sources__url { font-size: 0.76rem; color: var(--dim); overflow-wrap: anywhere; }
+    .vault-suggest { list-style: none; margin: 0.8rem 0 0; padding: 0; display: grid; gap: 0.4rem; }
+    .vault-suggest a { grid-template-columns: 1fr; }
+    .vault-answer__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1rem; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--line); }
+    .vault-answer__disclosure { font-size: 0.76rem; color: var(--dim); max-width: 46ch; line-height: 1.5; }
+    .vault-feedback { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--muted); }
+    .vault-feedback button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 44px; min-height: 44px; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--panel); color: var(--text);
+      font-size: 1.05rem; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .vault-feedback button:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
+    .vault-feedback button[aria-pressed="true"] { background: color-mix(in srgb, var(--gold) 20%, var(--panel)); border-color: color-mix(in srgb, var(--gold) 60%, transparent); }
+    .vault-feedback button[disabled] { cursor: default; }
+    .vault-feedback__thanks { color: var(--muted); }
+    .vault-answer__retry {
+      margin-top: 0.85rem; min-height: 44px; padding: 0 1rem; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--panel); color: var(--text);
+      font-family: inherit; font-weight: 600; font-size: 0.88rem; line-height: 1; cursor: pointer;
+    }
+    .vault-skeleton { display: grid; gap: 0.6rem; padding: 0.2rem 0 0.3rem; }
+    .vault-skeleton span {
+      display: block; height: 0.9rem; border-radius: 6px;
+      background: linear-gradient(90deg, var(--line) 0%, color-mix(in srgb, var(--gold) 14%, var(--line)) 50%, var(--line) 100%);
+      background-size: 200% 100%;
+      animation: vault-shimmer 1.4s ease-in-out infinite;
+    }
+    .vault-skeleton span:nth-child(2) { width: 92%; }
+    .vault-skeleton span:nth-child(3) { width: 64%; }
+    @keyframes vault-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+    @media (prefers-reduced-motion: reduce) { .vault-skeleton span { animation: none; } }
+    html[data-motion="reduced"] .vault-skeleton span { animation: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .search-results-heading { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin: 0 0 0.6rem; }
+    .search-results-heading[hidden] { display: none; }
+    body.light-mode .search-popular-tag { color: var(--muted); }
+    @media (max-width: 640px) {
+      .search-hero { padding: 3.2rem 0 1.6rem; }
+      .vault-ask-row { flex-direction: column; }
+      .vault-ask-btn { width: 100%; justify-content: center; }
+      .vault-answer { padding: 1.1rem 1rem 0.95rem; border-radius: 14px; }
+      .vault-answer__foot { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -181,24 +321,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -218,27 +358,46 @@
   <main id="main-content">
     <!-- intelligence-suite:start -->
 <link rel="stylesheet" href="/assets/intelligence-suite.css">
-<nav class="intel-suite" aria-label="Studio Intelligence"><b class="intel-suite__label">Studio Intelligence</b><div class="intel-suite__rail"><a href="/evidence/"><span>Evidence</span><small>· verify the claims</small></a><a href="/studio-pulse/"><span>Pulse</span><small>· live heartbeat</small></a><a href="/oracle/"><span>Oracle</span><small>· deep read</small></a><a href="/ignis/"><span>IGNIS</span><small>· intelligence engine</small></a><a href="/atlas/"><span>Atlas</span><small>· ecosystem map</small></a><a href="/status/"><span>Status</span><small>· service health</small></a><a href="/stats/"><span>Stats</span><small>· public numbers</small></a><a href="/changelog/"><span>Changelog</span><small>· what shipped</small></a><a href="/roadmap/"><span>Roadmap</span><small>· what is next</small></a><a href="/search/" aria-current="page"><span>Search</span><small>· find a signal</small></a></div></nav>
+<nav class="intel-suite" aria-label="Studio Intelligence"><b class="intel-suite__label">Studio Intelligence</b><div class="intel-suite__rail"><a href="/evidence/"><span>Evidence</span><small>· verify the claims</small></a><a href="/studio-pulse/"><span>Pulse</span><small>· live heartbeat</small></a><a href="/ignis/"><span>IGNIS</span><small>· intelligence engine</small></a><a href="/status/"><span>Status</span><small>· service health</small></a><a href="/changelog/"><span>Changelog</span><small>· what shipped</small></a><a href="/roadmap/"><span>Roadmap</span><small>· what is next</small></a><a href="/search/" aria-current="page"><span>Search</span><small>· find a signal</small></a></div></nav>
 <!-- intelligence-suite:end -->
 
     <!-- Hero + Search Input -->
     <section class="search-hero" aria-labelledby="search-heading">
       <div class="container">
         <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Search</span>
-        <h1 id="search-heading">Search</h1>
-        <div class="search-input-wrap">
-          <svg class="search-input-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-          <input
-            type="search"
-            id="searchInput"
-            placeholder="Search pages, games, features&hellip;"
-            autocomplete="off"
-            aria-label="Search VaultSpark Studios"
-            aria-controls="searchResults"
-          />
+        <h1 id="search-heading">Search &amp; Ask the Vault</h1>
+        <form class="vault-ask-form" id="vaultAskForm" role="search" aria-label="Search pages or ask the Vault">
+          <div class="vault-ask-row">
+            <div class="search-input-wrap">
+              <svg class="search-input-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <input
+                type="search"
+                id="searchInput"
+                name="q"
+                placeholder="Search pages or ask a question&hellip;"
+                autocomplete="off"
+                enterkeyhint="search"
+                maxlength="200"
+                aria-label="Search pages or ask the Vault a question"
+                aria-controls="searchResults"
+                aria-describedby="vaultAskHint"
+              />
+            </div>
+            <button type="submit" class="vault-ask-btn" id="vaultAskBtn">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5l1.9 4.6 4.6 1.9-4.6 1.9L10 15.5l-1.9-4.6L3.5 9l4.6-1.9L10 2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Ask the Vault
+            </button>
+          </div>
+          <p class="vault-ask-hint" id="vaultAskHint">Pages match as you type. Press Enter or Ask the Vault for a short answer written only from the studio&rsquo;s public pages, with a numbered source for every claim.</p>
+        </form>
+        <div class="vault-try" aria-label="Example questions">
+          <button type="button" class="vault-try-chip" data-ask="What can I play right now?">What can I play right now?</button>
+          <button type="button" class="vault-try-chip" data-ask="When does VaultFront launch?">When does VaultFront launch?</button>
+          <button type="button" class="vault-try-chip" data-ask="What is The Desk?">What is The Desk?</button>
+          <button type="button" class="vault-try-chip" data-ask="How many projects are live?">How many projects are live?</button>
         </div>
       </div>
     </section>
@@ -246,6 +405,28 @@
     <!-- Results -->
     <section class="search-results-section">
       <div class="container">
+        <section class="vault-answer" id="vaultAnswer" aria-labelledby="vaultAnswerEyebrow" hidden>
+          <div class="vault-answer__head">
+            <h2 class="vault-answer__eyebrow" id="vaultAnswerEyebrow">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5l1.9 4.6 4.6 1.9-4.6 1.9L10 15.5l-1.9-4.6L3.5 9l4.6-1.9L10 2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              Ask the Vault
+            </h2>
+            <span class="vault-answer__meta" id="vaultAnswerMeta"></span>
+          </div>
+          <p class="vault-answer__question" id="vaultAnswerQuestion"></p>
+          <div class="vault-answer__body" id="vaultAnswerBody" aria-live="polite" aria-atomic="true" aria-busy="false"></div>
+          <div id="vaultAnswerSources"></div>
+          <div class="vault-answer__foot" id="vaultAnswerFoot" hidden>
+            <p class="vault-answer__disclosure">AI-written from VaultSpark Studios&rsquo; public pages. Open a source to check any claim.</p>
+            <div class="vault-feedback" id="vaultFeedback" role="group" aria-label="Was this answer helpful?">
+              <span id="vaultFeedbackLabel">Helpful?</span>
+              <button type="button" data-reaction="useful" aria-pressed="false" aria-label="Yes, this answer was helpful">&#128077;</button>
+              <button type="button" data-reaction="not_useful" aria-pressed="false" aria-label="No, this answer was not helpful">&#128078;</button>
+            </div>
+          </div>
+        </section>
+
+        <h2 class="search-results-heading" id="searchResultsHeading" hidden>Matching pages</h2>
         <div class="search-results-meta" id="searchMeta" aria-live="polite"></div>
         <div id="searchResults" role="list" aria-label="Search results"></div>
 
@@ -253,15 +434,15 @@
         <div class="search-popular" id="popularSection">
           <div class="search-popular-title">Popular pages</div>
           <div class="search-popular-grid">
-            <button type="button" class="search-popular-tag" onclick="setQuery('games')">Games</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('vault')">Vault Member</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('leaderboard')">Leaderboard</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('discord')">Community</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('roadmap')">Roadmap</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('investor')">Investor</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('journal')">Signal Log</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('universe')">Universe</button>
-            <button type="button" class="search-popular-tag" onclick="setQuery('status')">Status</button>
+            <button type="button" class="search-popular-tag" data-q="games">Games</button>
+            <button type="button" class="search-popular-tag" data-q="vault">Vault Member</button>
+            <button type="button" class="search-popular-tag" data-q="leaderboard">Leaderboard</button>
+            <button type="button" class="search-popular-tag" data-q="discord">Community</button>
+            <button type="button" class="search-popular-tag" data-q="roadmap">Roadmap</button>
+            <button type="button" class="search-popular-tag" data-q="investor">Investor</button>
+            <button type="button" class="search-popular-tag" data-q="journal">Signal Log</button>
+            <button type="button" class="search-popular-tag" data-q="universe">Universe</button>
+            <button type="button" class="search-popular-tag" data-q="status">Status</button>
           </div>
         </div>
       </div>
@@ -279,23 +460,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -314,19 +494,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -336,7 +514,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -356,17 +534,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -380,6 +558,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -425,42 +604,37 @@
       // Base index — structural pages always present.
       var BASE_INDEX = [
         { title: 'Games Hub', url: '/games/', desc: 'All VaultSpark Studios games — explore every world in the catalog.', tags: ['games'] },
-        { title: 'Call of Doodie', url: '/games/call-of-doodie/', desc: 'Fast-paced browser-based action comedy shooter', tags: ['games', 'action', 'shooter'] },
-        { title: 'Gridiron GM', url: '/games/gridiron-gm/', desc: 'NFL franchise management simulator with 32 teams', tags: ['games', 'sports', 'simulation', 'football'] },
-        { title: 'Franchise Architect', url: '/games/franchise-architect/', desc: 'Deep NFL front-office simulation game', tags: ['games', 'sports', 'football'] },
-        { title: 'VaultFront', url: '/games/vaultfront/', desc: 'Real-time strategy game — territorial control and convoy objectives', tags: ['games', 'strategy', 'rts'] },
-        { title: 'Solara', url: '/games/solara/', desc: 'Desert survival strategy game', tags: ['games', 'strategy', 'survival'] },
-        { title: 'MindFrame', url: '/games/mindframe/', desc: 'Metacognition SaaS — 15 modes, 620+ challenges, live Mind Model', tags: ['games', 'puzzle', 'productivity'] },
-        { title: 'The Exodus', url: '/games/the-exodus/', desc: 'Engine-building card game for 2–4 players', tags: ['games', 'card', 'strategy'] },
+        { title: 'Call of Doodie', url: '/games/call-of-doodie/', desc: 'Satirical browser shooter — free to play now, no download', tags: ['games', 'action', 'shooter', 'play'] },
+        { title: 'Gridiron GM', url: '/games/gridiron-gm/', desc: 'Vaulted football franchise simulator — honored in the Vault; its systems live on in Franchise Architect', tags: ['games', 'sports', 'football', 'vaulted'] },
+        { title: 'Franchise Architect', url: '/games/franchise-architect/', desc: 'Football franchise management sim — free in your browser, playable now', tags: ['games', 'sports', 'football', 'sparked', 'play'] },
+        { title: 'VaultFront', url: '/games/vaultfront/', desc: 'Strategy game in the forge — release window to be announced', tags: ['games', 'strategy', 'forge'] },
+        { title: 'Solara', url: '/games/solara/', desc: 'Browser roguelite RPG with a shared world — every death dims the sun', tags: ['games', 'roguelite', 'rpg', 'forge'] },
+        { title: 'MindFrame', url: '/games/mindframe/', desc: 'Live metacognition platform in the forge — train how you think with a persistent Mind Model', tags: ['games', 'metacognition', 'forge'] },
+        { title: 'The Exodus', url: '/games/the-exodus/', desc: 'Engine-building card game for 2–4 players, in the forge', tags: ['games', 'card', 'strategy', 'forge'] },
         { title: 'PromoGrind', url: '/projects/promogrind/', desc: 'Sportsbook promo calculator suite — +EV and promo tracking', tags: ['projects', 'tools', 'sports'] },
         { title: 'Vorn', url: '/projects/vorn/', desc: 'Social agent platform — autonomous digital personas with memory and cross-platform presence', tags: ['projects', 'platform', 'ai', 'sparked'] },
-        { title: 'Canon', url: '/projects/canon/', desc: 'Taste identity platform — culture fingerprint that evolves with you', tags: ['projects', 'platform', 'identity'] },
-        { title: 'The Living Protocol', url: '/projects/the-living-protocol/', desc: 'Generational wellness operating system — long-term health intelligence layer', tags: ['projects', 'platform', 'wellness'] },
-        { title: 'Velaxis', url: '/projects/velaxis/', desc: 'Real-time crypto intelligence dashboard — eight tabs of market data and analysis', tags: ['projects', 'tools', 'crypto'] },
-        { title: 'IdeaForge', url: '/projects/ideaforge/', desc: 'Live private-beta idea intelligence platform — adaptive dimensions, evidence-backed scoring, Dimension Signatures', tags: ['projects', 'tools', 'ai'] },
-        { title: 'StatVault', url: '/projects/statvault/', desc: 'Sports analytics platform — advanced stat models, historical comparisons, data visualization', tags: ['projects', 'tools', 'sports'] },
-        { title: 'Signal Log', url: '/projects/signal-log/', desc: 'The VaultSpark public dev journal — build notes, dispatches, signal over noise', tags: ['projects', 'studio', 'sparked'] },
-        { title: 'Vault Pipeline', url: '/projects/vault-pipeline/', desc: 'The public VaultSpark development roadmap — every milestone visible', tags: ['projects', 'roadmap', 'sparked'] },
-        { title: 'Vault Member', url: '/projects/vault-member/', desc: 'The cross-game identity and progress layer — Vault ranks, achievements, early access', tags: ['projects', 'membership', 'sparked'] },
+        { title: 'Velaxis', url: '/projects/velaxis/', desc: 'Safety-first Solana memecoin discovery cockpit — evidence charts, thesis-required play tracking, replay', tags: ['projects', 'tools', 'crypto'] },
         { title: 'Seamline', url: '/projects/seamline/', desc: 'A VaultSpark Studios project in the forge — details revealed at launch', tags: ['projects', 'forge'] },
-        { title: 'Gridiron GM Play', url: '/games/gridiron-gm-play/', desc: 'The vaulted playable build of Gridiron GM — returning when forged', tags: ['games', 'sports', 'vaulted'] },
-        { title: 'Vault Member', url: '/vault-member/', desc: 'Join the Vault — earn points, climb ranks, access exclusive content', tags: ['membership', 'community', 'ranks'] },
-        { title: 'VaultSparked Membership', url: '/vaultsparked/', desc: 'Premium membership — $4.99/mo and up. Deeper access to every world.', tags: ['membership', 'premium', 'subscription'] },
-        { title: 'Membership Value', url: '/membership-value/', desc: 'What VaultSparked members actually get — full breakdown', tags: ['membership'] },
-        { title: 'Vault Ranks', url: '/ranks/', desc: 'All 9 Vault rank tiers, point thresholds, and perks', tags: ['membership', 'ranks', 'progression'] },
+        { title: 'Vault Member', url: '/vault-member/', desc: 'The Vault Member portal — sign in to your rank, points and achievements. Enrolment is invite-led right now.', tags: ['membership', 'community', 'ranks', 'sign in'] },
+        { title: 'Request a Vault invite', url: '/contact/?topic=invite', desc: 'Vault enrolment is invite-led — request your invite here', tags: ['membership', 'invite', 'join'] },
+        { title: 'Membership tiers', url: '/membership/#tiers', desc: 'Free, VaultSparked and VaultSparked Eternal — monthly plans and what each one includes', tags: ['membership', 'vaultsparked', 'eternal', 'subscription'] },
+        { title: 'Membership Value', url: '/membership/#benefits', desc: 'What each membership tier actually includes — full breakdown', tags: ['membership'] },
+        { title: 'Vault Ranks', url: '/leaderboards/#ranks', desc: 'All 9 Vault rank tiers and point thresholds', tags: ['membership', 'ranks', 'progression'] },
         { title: 'Leaderboards', url: '/leaderboards/', desc: 'Vault Points leaderboard — top community members ranked', tags: ['community', 'leaderboard'] },
         { title: 'Universe', url: '/universe/', desc: 'The VaultSpark universe — lore, worldbuilding, DreadSpike, Voidfall', tags: ['lore', 'universe', 'story'] },
         { title: 'DreadSpike', url: '/universe/dreadspike/', desc: 'DreadSpike — the original VaultSpark universe saga', tags: ['lore', 'universe', 'dreadspike'] },
-        { title: 'Voidfall', url: '/universe/voidfall/', desc: 'Voidfall — transmissions from the void', tags: ['lore', 'universe', 'voidfall'] },
+        { title: 'Voidfall', url: '/universe/voidfall/', desc: 'Voidfall — a nine-book saga, with transmissions from the void', tags: ['lore', 'universe', 'voidfall'] },
         { title: 'Studio', url: '/studio/', desc: 'About VaultSpark Studios — mission, story, and the forge window', tags: ['studio', 'about'] },
         { title: 'Studio Pulse', url: '/studio-pulse/', desc: 'Live studio activity — what is shipping, what is in the forge', tags: ['studio', 'updates', 'studio pulse', 'forge window'] },
         { title: 'Changelog', url: '/changelog/', desc: 'What shipped — live feed of VaultSpark updates and releases', tags: ['updates', 'changelog'] },
-        { title: 'Signal Log', url: '/journal/', desc: 'Studio signal log — dev insights and lore dispatches', tags: ['journal', 'news'] },
+        { title: 'Studio stories', url: '/changelog/#stories', desc: 'Long-form studio stories and lore dispatches', tags: ['journal', 'stories', 'news'] },
         { title: 'Ask IGNIS', url: '/ignis/', desc: 'IGNIS — the Vault Oracle. Ask anything about the studio.', tags: ['ignis', 'ai', 'oracle'] },
         { title: 'Social', url: '/social/', desc: 'VaultSpark on YouTube, Discord, X, Reddit, and more', tags: ['social', 'community'] },
         { title: 'Contact', url: '/contact/', desc: 'Get in touch with VaultSpark Studios', tags: ['contact'] },
         { title: 'Press Kit', url: '/press/', desc: 'Media assets, logos, and studio information for press', tags: ['press'] },
-        { title: 'Roadmap', url: '/roadmap/', desc: 'Upcoming features, games, and studio milestones', tags: ['roadmap'] },
+        { title: 'Roadmap', url: '/roadmap/', desc: 'Now, next and later — what the studio is building', tags: ['roadmap'] },
+        { title: 'Where to play', url: '/play/', desc: 'Every VaultSpark title you can play right now, with direct play links', tags: ['games', 'play'] },
+        { title: 'Studio Dispatch', url: '/dispatch/', desc: 'One email when something leaves the forge — plus past editions', tags: ['newsletter', 'dispatch', 'email'] },
       ];
 
       var SEARCH_INDEX = BASE_INDEX.slice();
@@ -473,16 +647,17 @@
           if (!intel || !Array.isArray(intel.catalog)) return;
           intel.catalog.forEach(function(item) {
             if (!item.name || item.status === 'sealed') return;
-            var slug = item.slug || item.name.toLowerCase().replace(/\s+/g, '-');
+            var slug = item.slug || item.id || item.name.toLowerCase().replace(/\s+/g, '-');
             var isGame = item.type === 'game';
-            var url = isGame ? '/games/' + slug + '/' : '/projects/' + slug + '/';
+            var ROUTE_ALIAS = { 'football-gm': '/games/franchise-architect/', voidfall: '/universe/voidfall/', mindframe: '/games/mindframe/' };
+            var url = ROUTE_ALIAS[slug] || (isGame ? '/games/' + slug + '/' : '/projects/' + slug + '/');
             // Skip if BASE_INDEX already covers this URL
             if (SEARCH_INDEX.some(function(b) { return b.url === url; })) return;
             SEARCH_INDEX.push({
               title: item.name,
               url: url,
-              desc: item.tagline || item.description || item.name,
-              tags: [item.type || 'project', item.status || 'forge'],
+              desc: item.tagline || item.note || item.description || item.name,
+              tags: [item.type || 'project', String(item.status || 'forge').toLowerCase()],
             });
           });
           // Re-run if there was an active search when catalog arrived
@@ -494,15 +669,17 @@
       var searchInput    = document.getElementById('searchInput');
       var searchResults  = document.getElementById('searchResults');
       var searchMeta     = document.getElementById('searchMeta');
+      var resultsHeading = document.getElementById('searchResultsHeading');
       var popularSection = document.getElementById('popularSection');
       var debounceTimer  = null;
 
       function esc(s) {
-        return String(s)
+        return String(s == null ? '' : s)
           .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
       }
 
       function runSearch(query) {
@@ -511,35 +688,38 @@
         if (!q) {
           searchResults.innerHTML = '';
           searchMeta.innerHTML = '';
+          resultsHeading.hidden = true;
           popularSection.style.display = '';
           return;
         }
 
         popularSection.style.display = 'none';
+        resultsHeading.hidden = false;
 
+        var QUESTION_WORDS = { what: 1, when: 1, where: 1, which: 1, does: 1, will: 1, with: 1, that: 1, this: 1, have: 1, about: 1, your: 1, from: 1, there: 1, their: 1, tell: 1, right: 1, many: 1, much: 1, into: 1, they: 1, them: 1 };
+        var words = q.replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter(function(w) { return w.length > 3 && !QUESTION_WORDS[w]; });
         var matches = SEARCH_INDEX.filter(function(item) {
-          return (
-            item.title.toLowerCase().includes(q) ||
-            item.desc.toLowerCase().includes(q) ||
-            item.tags.some(function(tag) { return tag.toLowerCase().includes(q); })
-          );
+          var hay = (item.title + ' ' + item.desc + ' ' + item.tags.join(' ')).toLowerCase();
+          if (hay.indexOf(q) !== -1) return true;
+          // Questions ("when does vaultfront launch?") rarely match as a whole
+          // phrase; fall back to any distinctive word in the title or tags.
+          return words.some(function(w) {
+            return item.title.toLowerCase().indexOf(w) !== -1 ||
+              item.tags.some(function(tag) { return tag.toLowerCase() === w; });
+          });
         });
 
         if (matches.length === 0) {
-          searchMeta.innerHTML = 'No results for <strong>' + esc(query.trim()) + '</strong>';
+          searchMeta.innerHTML = 'No pages match <strong>' + esc(query.trim()) + '</strong>';
           searchResults.innerHTML =
             '<div class="search-empty">' +
-              '<div style="font-size:2rem;">&#128269;</div>' +
-              '<p>No pages found matching that query.</p>' +
-              '<p style="margin-top:0.9rem;">' +
-                '<a href="/ignis/?q=' + encodeURIComponent(query.trim()) + '" class="search-oracle-cta" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:var(--gold,#d4af37);padding:0.55rem 1.1rem;border-radius:999px;font-size:0.88rem;text-decoration:none;font-family:Georgia,serif;">&#x2672; Ask IGNIS instead →</a>' +
-              '</p>' +
+              '<p>No page titles match that. Ask the Vault above for an answer drawn from every public page, or try a shorter word.</p>' +
             '</div>';
           return;
         }
 
         searchMeta.innerHTML =
-          '<strong>' + matches.length + '</strong> result' + (matches.length === 1 ? '' : 's') +
+          '<strong>' + matches.length + '</strong> page' + (matches.length === 1 ? '' : 's') +
           ' for <strong>' + esc(query.trim()) + '</strong>';
 
         searchResults.innerHTML = matches.map(function(item) {
@@ -561,8 +741,20 @@
         searchInput.focus();
       }
 
-      // Expose for inline onclick
+      // Back-compat for any external caller of the old inline handlers.
       window.setQuery = setQuery;
+
+      document.addEventListener('click', function(e) {
+        var tag = e.target.closest && e.target.closest('[data-q]');
+        if (tag) { setQuery(tag.getAttribute('data-q')); return; }
+        var chip = e.target.closest && e.target.closest('[data-ask]');
+        if (chip) {
+          var question = chip.getAttribute('data-ask');
+          searchInput.value = question;
+          runSearch(question);
+          askVault(question);
+        }
+      });
 
       searchInput.addEventListener('input', function() {
         clearTimeout(debounceTimer);
@@ -571,13 +763,218 @@
         }, 150);
       });
 
-      // Pre-fill from ?q= URL param
+      // ── Ask the Vault ─────────────────────────────────────────────────────
+      // One grounded, cited answer from supabase/functions/semantic-search.
+      // The paid model call only happens on an explicit submit (Enter or the
+      // button); typing stays on the free local index above.
+      var ASK_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/semantic-search';
+      var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+      var SITE = 'https://vaultsparkstudios.com';
+
+      var askForm     = document.getElementById('vaultAskForm');
+      var askBtn      = document.getElementById('vaultAskBtn');
+      var panel       = document.getElementById('vaultAnswer');
+      var panelMeta   = document.getElementById('vaultAnswerMeta');
+      var panelQ      = document.getElementById('vaultAnswerQuestion');
+      var panelBody   = document.getElementById('vaultAnswerBody');
+      var panelSrc    = document.getElementById('vaultAnswerSources');
+      var panelFoot   = document.getElementById('vaultAnswerFoot');
+      var feedbackBox = document.getElementById('vaultFeedback');
+      var askSeq = 0;
+      var currentAnswerKey = '';
+      var sentFeedback = {};
+
+      function safeHref(url) {
+        var u = String(url || '');
+        if (u.indexOf(SITE + '/') === 0) return u;
+        if (u.charAt(0) === '/' && u.charAt(1) !== '/') return u;
+        return '/';
+      }
+
+      function displayPath(url) {
+        var u = String(url || '');
+        return u.indexOf(SITE) === 0 ? (u.slice(SITE.length) || '/') : u;
+      }
+
+      function setBusy(busy) {
+        panelBody.setAttribute('aria-busy', busy ? 'true' : 'false');
+        askBtn.disabled = !!busy;
+      }
+
+      function resetFeedback(key) {
+        currentAnswerKey = key || '';
+        var sent = sentFeedback[currentAnswerKey];
+        Array.prototype.forEach.call(feedbackBox.querySelectorAll('button'), function(b) {
+          b.setAttribute('aria-pressed', sent === b.getAttribute('data-reaction') ? 'true' : 'false');
+          b.disabled = !!sent;
+        });
+        document.getElementById('vaultFeedbackLabel').textContent = sent ? 'Thanks, noted.' : 'Helpful?';
+      }
+
+      function showPanel(question) {
+        panel.hidden = false;
+        panelQ.textContent = question;
+        panelMeta.textContent = '';
+        panelSrc.innerHTML = '';
+        panelFoot.hidden = true;
+      }
+
+      function renderLoading(question) {
+        showPanel(question);
+        panelBody.innerHTML =
+          '<span class="sr-only">Asking the Vault&hellip;</span>' +
+          '<div class="vault-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>';
+        setBusy(true);
+      }
+
+      function renderAnswer(data) {
+        var cites = Array.isArray(data.citations) ? data.citations : [];
+        var byN = {};
+        cites.forEach(function(c) { byN[c.n] = c; });
+        var html = esc(data.answer).replace(/\[(\d{1,2})\]/g, function(m, n) {
+          var c = byN[Number(n)];
+          if (!c) return '';
+          return '<a class="cite-chip" href="' + esc(safeHref(c.url)) + '" aria-label="Source ' + n + ': ' + esc(c.title) + '">' + n + '</a>';
+        });
+        panelBody.innerHTML = '<p>' + html + '</p>';
+        panelSrc.innerHTML = cites.length
+          ? '<h3 class="vault-sources-title">Sources</h3><ol class="vault-sources">' + cites.map(function(c) {
+              return '<li><a href="' + esc(safeHref(c.url)) + '">' +
+                '<span class="vault-sources__n" aria-hidden="true">' + esc(c.n) + '</span>' +
+                '<span class="vault-sources__title">' + esc(c.title) + '</span>' +
+                '<span class="vault-sources__url">' + esc(displayPath(c.url)) + '</span>' +
+              '</a></li>';
+            }).join('') + '</ol>'
+          : '';
+        panelMeta.textContent = cites.length + ' source' + (cites.length === 1 ? '' : 's') + (data.cached ? ' · saved answer' : '');
+        panelFoot.hidden = false;
+        resetFeedback(String(data.corpusVersion || '') + '|' + panelQ.textContent.trim().toLowerCase());
+      }
+
+      function renderNoAnswer(data, question) {
+        var links = Array.isArray(data.suggestions) && data.suggestions.length
+          ? data.suggestions
+          : (Array.isArray(data.sources) ? data.sources.map(function(s) { return { title: s.title, url: s.href }; }) : []);
+        panelBody.innerHTML =
+          '<p>The Vault has no grounded answer for that yet. Nothing on the studio&rsquo;s public pages answers it closely enough, so no answer was written.</p>' +
+          '<p class="vault-answer__note">These pages are the closest matches. You can also <a class="cite-link" href="/ignis/?q=' + encodeURIComponent(question) + '">ask IGNIS in conversation</a>.</p>';
+        panelSrc.innerHTML = links.length
+          ? '<ul class="vault-suggest">' + links.slice(0, 4).map(function(l) {
+              return '<li><a href="' + esc(safeHref(l.url)) + '"><span class="vault-sources__title">' + esc(l.title) + '</span><span class="vault-sources__url">' + esc(displayPath(l.url)) + '</span></a></li>';
+            }).join('') + '</ul>'
+          : '';
+        panelMeta.textContent = 'No answer';
+      }
+
+      function renderError(kind, question) {
+        var msg = kind === 'capped'
+          ? 'Today&rsquo;s answer budget is spent, so the Vault is resting until tomorrow. Matching pages below still work.'
+          : kind === 'offline'
+            ? 'You appear to be offline. Matching pages below still work.'
+            : 'Ask the Vault could not answer right now. Matching pages below still work.';
+        panelBody.innerHTML = '<p>' + msg + '</p>' +
+          (kind === 'capped' ? '' : '<button type="button" class="vault-answer__retry" id="vaultRetry">Try again</button>');
+        panelMeta.textContent = kind === 'capped' ? 'Resting' : 'Unavailable';
+        var retry = document.getElementById('vaultRetry');
+        if (retry) retry.addEventListener('click', function() { askVault(question); });
+      }
+
+      function askVault(raw) {
+        var question = String(raw || '').replace(/\s+/g, ' ').trim().slice(0, 200);
+        if (question.length < 3) {
+          searchInput.focus();
+          return;
+        }
+        var seq = ++askSeq;
+        renderLoading(question);
+        var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+        var timer = ctrl ? setTimeout(function() { ctrl.abort(); }, 30000) : null;
+        var status = 0;
+        fetch(ASK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY },
+          body: JSON.stringify({ query: question }),
+          signal: ctrl ? ctrl.signal : undefined,
+        })
+          .then(function(res) { status = res.status; return res.json().catch(function() { return {}; }); })
+          .then(function(data) {
+            if (seq !== askSeq) return;
+            if (status === 503 && data && data.code) return renderError('capped', question);
+            if (status >= 200 && status < 300 && data) {
+              if (data.noAnswer || !data.answer) return renderNoAnswer(data, question);
+              return renderAnswer(data);
+            }
+            if (status === 502 && data && Array.isArray(data.suggestions) && data.suggestions.length) {
+              renderNoAnswer(data, question);
+              panelBody.insertAdjacentHTML('afterbegin', '<p>Ask the Vault could not write an answer right now.</p>');
+              panelMeta.textContent = 'Unavailable';
+              return;
+            }
+            renderError('error', question);
+          })
+          .catch(function() {
+            if (seq !== askSeq) return;
+            renderError(navigator.onLine === false ? 'offline' : 'error', question);
+          })
+          .then(function() {
+            if (timer) clearTimeout(timer);
+            if (seq === askSeq) setBusy(false);
+          });
+      }
+
+      askForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        runSearch(searchInput.value);
+        askVault(searchInput.value);
+      });
+
+      // ── Answer feedback → the existing page_feedback sink ──────────────────
+      // Live schema (supabase/migrations/supabase-page-feedback.sql) has no
+      // question column, so the answer surface is its own path key; the
+      // reaction uses the table's CHECK vocabulary. One vote per answer.
+      var FEEDBACK_PATH = '/search/ask-the-vault';
+      function visitDepthBucket() {
+        try {
+          var n = Number(window.localStorage.getItem('vs_visit_depth') || '1');
+          if (!isFinite(n) || n <= 1) return '1';
+          if (n <= 4) return '2-4';
+          if (n <= 10) return '5-10';
+          return '10+';
+        } catch (_) { return '1'; }
+      }
+      function askVaultFeedbackRow(reaction) {
+        return {
+          path: FEEDBACK_PATH,
+          reaction: reaction === 'useful' ? 'useful' : 'not_useful',
+          visit_depth_bucket: visitDepthBucket(),
+          ua_kind: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+        };
+      }
+      feedbackBox.addEventListener('click', function(e) {
+        var btn = e.target.closest && e.target.closest('button[data-reaction]');
+        if (!btn || !currentAnswerKey || sentFeedback[currentAnswerKey]) return;
+        var reaction = btn.getAttribute('data-reaction');
+        sentFeedback[currentAnswerKey] = reaction;
+        resetFeedback(currentAnswerKey);
+        try {
+          fetch(SB_URL + '/rest/v1/page_feedback', {
+            method: 'POST',
+            headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+            body: JSON.stringify(askVaultFeedbackRow(reaction)),
+            keepalive: true
+          }).catch(function() {});
+        } catch (_) {}
+      });
+
+      // Pre-fill from ?q= URL param; ?ask=1 also asks the Vault.
       (function() {
         var params = new URLSearchParams(window.location.search);
         var q = params.get('q');
         if (q) {
           searchInput.value = q;
           runSearch(q);
+          if (params.get('ask') === '1') askVault(q);
         }
       })();
 
@@ -588,7 +985,7 @@
 <script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>
 

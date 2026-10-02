@@ -120,12 +120,12 @@ test('homepage IGNIS proof rail and IGNIS gauge hydrate from public intelligence
   await page.goto(BASE + '/', { waitUntil: 'load' });
   await page.addScriptTag({ url: BASE + '/assets/ignis-live.js' });
   await expect(page.locator('#proof-ignis-score')).toHaveText(/^\d{1,3}(,\d{3})*$/, { timeout: 5000 });
-  await expect(page.locator('#proof-ignis-tier')).toHaveText(/^(Vaulted|Forge|Sparked|Ignited) tier$/i);
+  await expect(page.locator('#proof-ignis-tier')).toHaveText(/^(Cooling|Warming|Hot|Ignited) tier$/i);
 
   await page.goto(BASE + '/ignis/', { waitUntil: 'load' });
   await page.addScriptTag({ url: BASE + '/assets/ignis-live.js' });
   await expect(page.locator('#ignis-live-score')).toHaveText(/^\d{1,3}(,\d{3})*$/, { timeout: 5000 });
-  await expect(page.locator('#ignis-live-tier')).toHaveText(/^(Vaulted|Forge|Sparked|Ignited) tier$/i);
+  await expect(page.locator('#ignis-live-tier')).toHaveText(/^(Cooling|Warming|Hot|Ignited) tier$/i);
 });
 
 test('membership rank strip and world teaser render complete on desktop and mobile', async ({ page }) => {

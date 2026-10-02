@@ -13,8 +13,9 @@
  *   3. Alert audit — first cross of 70% (per cap) and first cross of 100% emit
  *      ignis_alerts rows that the brief renderer reads.
  *
- * Pricing is centralized in the SQL RPC `increment_ignis_meter`. Update there
- * when models change — the edge function code never embeds prices.
+ * Pricing is centralized in the SQL RPC `increment_ignis_meter`, priced per
+ * model since S368 (pass `model` to meterCall). The edge-side mirror of the
+ * price table lives in ./modelPricing.ts for estimates/logging only.
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -43,25 +44,45 @@ export function isPaused(): boolean {
  * Use this BEFORE calling Anthropic so we serve a cached/static fallback instead of
  * making a paid call we'll have to refuse anyway.
  */
+export type CapCheckOptions = {
+  /**
+   * S368 ai-endpoint-abuse-caps: true for anonymous/public callers. When the
+   * meter cannot be read (query error or exception) the call is REFUSED rather
+   * than allowed, so an outage of the meter can never become an unbounded spend
+   * window for unauthenticated traffic. Authenticated members keep the original
+   * fail-open contract (they are already bounded by a monthly quota).
+   */
+  failClosed?: boolean;
+};
+
 export async function isCapBreached(
   supabase: ReturnType<typeof createClient>,
   functionName: string,
+  options: CapCheckOptions = {},
 ): Promise<boolean> {
   if (isPaused()) return true;
+  const failClosed = options.failClosed === true;
   try {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('ignis_spend_today')
       .select('usd_today,cap_usd_daily,enabled,status')
       .eq('function_name', functionName)
       .maybeSingle();
+    if (error) {
+      console.error(`[tokenMeter] cap read failed fn=${functionName} failClosed=${failClosed}`, error.message || error);
+      return failClosed;
+    }
+    // No caps row = function not under governance; the post-call RPC still
+    // meters it against its $1.00 default cap.
     if (!data) return false;
     if (data.enabled === false) return true;
     if (data.status === 'capped') return true;
     return false;
-  } catch {
-    // Fail-open: if the meter table is unreachable, allow the call. The post-call
-    // meterCall will still record + cap once the DB recovers.
-    return false;
+  } catch (err) {
+    console.error(`[tokenMeter] cap read threw fn=${functionName} failClosed=${failClosed}`, err);
+    // Members: fail-open (post-call meterCall still records + caps once the DB
+    // recovers). Anonymous/public: fail-closed.
+    return failClosed;
   }
 }
 
@@ -74,20 +95,33 @@ export async function meterCall(
   supabase: ReturnType<typeof createClient>,
   functionName: string,
   usage: AnthropicUsage | null | undefined,
+  model?: string | null,
 ): Promise<MeterDecision | null> {
   if (!usage) return null;
   const input  = Number(usage.input_tokens || 0);
   const output = Number(usage.output_tokens || 0);
   const cacheRead   = Number(usage.cache_read_input_tokens || 0);
   const cacheCreate = Number(usage.cache_creation_input_tokens || 0);
+  const baseArgs = {
+    p_function_name: functionName,
+    p_input_tokens: input,
+    p_output_tokens: output,
+    p_cache_read: cacheRead,
+    p_cache_create: cacheCreate,
+  };
   try {
-    const { data, error } = await supabase.rpc('increment_ignis_meter', {
-      p_function_name: functionName,
-      p_input_tokens: input,
-      p_output_tokens: output,
-      p_cache_read: cacheRead,
-      p_cache_create: cacheCreate,
-    });
+    // S368: p_model prices the call per model (migration
+    // supabase-s368-ignis-meter-model-pricing.sql). If that migration has not
+    // reached this database yet, PostgREST rejects the unknown argument — retry
+    // with the legacy argument set so spend is still recorded (at Sonnet rates).
+    let { data, error } = await supabase.rpc(
+      'increment_ignis_meter',
+      model ? { ...baseArgs, p_model: model } : baseArgs,
+    );
+    if (error && model) {
+      console.error('[tokenMeter] p_model rejected, retrying legacy signature', error.message || error);
+      ({ data, error } = await supabase.rpc('increment_ignis_meter', baseArgs));
+    }
     if (error || !data || !data[0]) return null;
     return data[0] as MeterDecision;
   } catch (err) {

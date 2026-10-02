@@ -75,15 +75,23 @@ function isPublic(p) {
 // public-voice), NOT the internal ecosystem-state currentFocus/voice (those are
 // raw multi-paragraph sprint brain-dumps — proprietary internal-only per the S193
 // founder decision). The ecosystem-state contributes scores/health/structure only.
-function sanitizeProject(p, publicNote) {
+// agent-geo-layer-v2 (L1): api/public-intelligence.json is the canonical facts
+// source. For a project in the public catalog its name, vault status and
+// deployed URL win over the aggregated sibling row, so every corpus derived from
+// this artifact (llms-full shards, agents.json) agrees with it by construction —
+// check-grounding-coherence fails if any of them drift. Registry slugs that
+// differ from the catalog id are aliased.
+export const PI_ALIAS = Object.freeze({ 'franchise-architect-football': 'football-gm' });
+function sanitizeProject(p, publicNote, catalogEntry = null) {
+  const c = catalogEntry || {};
   return {
     slug: p.slug,
-    name: p.name,
+    name: c.name || p.name,
     type: p.type,
     medium: p.medium,
-    vaultStatus: p.vaultStatus,
+    vaultStatus: c.status ? String(c.status).toLowerCase() : p.vaultStatus,
     health: p.health,
-    liveUrl: p.liveUrl || p.runtimeUrl || null,
+    liveUrl: c.deployedUrl || p.liveUrl || p.runtimeUrl || null,
     // public curated copy only; truncated + jargon-scrubbed as a safety net.
     currentFocus: sanitize(publicNote).slice(0, 240),
     nextMilestone: '',
@@ -116,9 +124,11 @@ function sanitizeProject(p, publicNote) {
 const RECENCY_KEYS = ['lastUpdated', 'staleDays', 'ignisLastComputed', 'lastActivityAt', 'lastCommitAt', 'updatedAt'];
 
 function build(srcJson, publicCatalog) {
-  const noteBySlug = new Map((publicCatalog || []).map((c) => [c.id, c.note || '']));
+  const byId = new Map((publicCatalog || []).map((c) => [c.id, c]));
+  const catalogFor = (slug) => byId.get(PI_ALIAS[slug] || slug) || null;
   const publicProjects = (srcJson.projects || []).filter(isPublic)
-    .map((p) => sanitizeProject(p, noteBySlug.get(p.slug) || ''));
+    .map((p) => sanitizeProject(p, (catalogFor(p.slug) || {}).note || '', catalogFor(p.slug)))
+    .filter((p) => String(p.vaultStatus || '').toLowerCase() !== 'vaulted');
   const agg = srcJson.ignisAggregate || null;
   const publicAgg = agg ? {
     currentStudioScore: agg.currentStudioScore ?? null,
@@ -161,6 +171,15 @@ function runSelfTest() {
     { slug: 'b', name: 'B', audience: 'internal', vaultStatus: 'sparked' },
   ] }, [{ id: 'a', note: 'Playable now. Live multiplayer chaos.' }]);
   t('build uses public catalog note', sample.projects[0].currentFocus === 'Playable now. Live multiplayer chaos.');
+  const canon = build({ projects: [
+    { slug: 'franchise-architect-football', name: 'Franchise Architect: Football', audience: 'public-live', vaultStatus: 'forge', liveUrl: 'https://old.example' },
+    { slug: 'gone', name: 'Gone', audience: 'public-live', vaultStatus: 'forge' },
+  ] }, [
+    { id: 'football-gm', name: 'Franchise Architect', status: 'SPARKED', deployedUrl: 'https://new.example/', note: 'Beta.' },
+    { id: 'gone', name: 'Gone', status: 'VAULTED' },
+  ]);
+  t('catalog name/status/deployedUrl win over the sibling row (aliased slug)', canon.projects[0].name === 'Franchise Architect' && canon.projects[0].vaultStatus === 'sparked' && canon.projects[0].liveUrl === 'https://new.example/');
+  t('a project the catalog vaults never leaks', !canon.projects.some((p) => p.slug === 'gone'));
   t('build drops internal voice', sample.projects[0].voice === '');
   t('build keeps only public', sample.projects.length === 1 && sample.projects[0].slug === 'a');
   t('build zeroes blockerCount', sample.projects[0].blockerCount === 0);

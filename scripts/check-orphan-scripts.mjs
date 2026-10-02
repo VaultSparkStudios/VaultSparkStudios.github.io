@@ -73,9 +73,6 @@ const ALLOWLIST = {
     'One-shot codemod (not a gate): rewrites child_process call sites onto lib/safe-spawn.mjs so every spawn ' +
     'carries windowsHide:true (the §0 Windows window-storm guard). Run by an agent when new spawn sites appear; ' +
     'the standing enforcement is check-windows-hide, which IS in the chain.',
-  'generate-membership-access.mjs':
-    'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
-    'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',
 
   // ── Manual diagnostic probes / audit renderers (run on demand, need a browser
   //    or local preview server; never part of the unattended build). ────────────
@@ -114,8 +111,8 @@ const ALLOWLIST = {
     'S134 visitor-signal extractor — pulls per-project visitor-facing signals for the intelligence layer. Periodic data tool.',
   'synthesize-ignis-voices.mjs':
     'S134 IGNIS voice synthesizer — turns raw IGNIS output into public-safe voice lines. Periodic data tool, run on demand.',
-  'update-footer.mjs':
-    'Manual footer updater (CANON-042 auto-year footer). Run on demand when the footer template or year rolls; not a build gate.',
+  // update-footer.mjs deleted S368: a 2026-06 one-shot that pasted a hand-typed
+  // <h4> Games column; superseded by propagate-nav's registry-derived footer.
 };
 
 // ── Pure core (shared shape with check-orphan-libs) ────────────────────────────
@@ -186,6 +183,9 @@ function listTrackedScripts() {
     const tracked = out.split('\n')
       .filter(Boolean)
       .filter((p) => path.posix.dirname(p) === 'scripts')
+      // A tracked script deleted in the working tree (pending commit) is not an
+      // orphan — it no longer exists to strand. S368 hit this deleting update-footer.mjs.
+      .filter((p) => fs.existsSync(path.join(ROOT, p)))
       .map((p) => path.basename(p));
     if (tracked.length) return tracked;
   } catch { /* no git (tarball/sandbox) → fall back below */ }

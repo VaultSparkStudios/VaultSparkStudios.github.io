@@ -11,7 +11,8 @@
  * in place with local personalization — same slot count → no shift.
  *
  * Only the over-budget routes carry a `<!-- fd-ssr:start --><!-- fd-ssr:end -->` mount;
- * the homepage (0.037) and oracle (already reserved) are intentionally NOT touched.
+ * the oracle (already reserved) is intentionally NOT touched. The homepage joined in
+ * asset-diet (2026-10-02) once a scroll-pass measurement exposed the late insert.
  * Studio Pulse joined after S288 proved its panel was not reserved. Add routes by
  * placing the marker at the intended insertion point and listing them in TARGETS.
  *
@@ -38,6 +39,10 @@ const TARGETS = [
   { route: '/games/', file: 'games/index.html' },
   { route: '/studio-pulse/', file: 'studio-pulse/index.html' },
   { route: '/universe/', file: 'universe/index.html' },
+  // 2026-10-02 asset-diet: the homepage's 0.037 was a LOAD-only reading. The panel
+  // is injected by the idle ambient loader after the first scroll, so a scroll pass
+  // measured ~0.9 CLS at 390px (717px inserted above the reader). SSR'd like the rest.
+  { route: '/', file: 'index.html' },
 ];
 
 const args = process.argv.slice(2);

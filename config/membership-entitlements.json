@@ -1,5 +1,5 @@
 {
-  "version": "2026-03-31",
+  "version": "2026-10-01",
   "defaultPlan": "free",
   "planAliases": {
     "pro": "promogrind_pro"
@@ -16,15 +16,51 @@
     100000
   ],
   "ranks": [
-    { "index": 0, "key": "spark_initiate", "label": "Spark Initiate" },
-    { "index": 1, "key": "vault_runner", "label": "Vault Runner" },
-    { "index": 2, "key": "rift_scout", "label": "Rift Scout" },
-    { "index": 3, "key": "vault_guard", "label": "Vault Guard" },
-    { "index": 4, "key": "vault_breacher", "label": "Vault Breacher" },
-    { "index": 5, "key": "void_operative", "label": "Void Operative" },
-    { "index": 6, "key": "vault_keeper", "label": "Vault Keeper" },
-    { "index": 7, "key": "forge_master", "label": "Forge Master" },
-    { "index": 8, "key": "the_sparked", "label": "The Sparked" }
+    {
+      "index": 0,
+      "key": "spark_initiate",
+      "label": "Spark Initiate"
+    },
+    {
+      "index": 1,
+      "key": "vault_runner",
+      "label": "Vault Runner"
+    },
+    {
+      "index": 2,
+      "key": "rift_scout",
+      "label": "Rift Scout"
+    },
+    {
+      "index": 3,
+      "key": "vault_guard",
+      "label": "Vault Guard"
+    },
+    {
+      "index": 4,
+      "key": "vault_breacher",
+      "label": "Vault Breacher"
+    },
+    {
+      "index": 5,
+      "key": "void_operative",
+      "label": "Void Operative"
+    },
+    {
+      "index": 6,
+      "key": "vault_keeper",
+      "label": "Vault Keeper"
+    },
+    {
+      "index": 7,
+      "key": "forge_master",
+      "label": "Forge Master"
+    },
+    {
+      "index": 8,
+      "key": "the_sparked",
+      "label": "The Sparked"
+    }
   ],
   "plans": {
     "free": {
@@ -40,9 +76,20 @@
       "kind": "studio",
       "isPaid": true,
       "isSparked": true,
-      "monthlyPriceUsd": 24.99,
-      "priceDisplay": "$24.99/mo",
+      "isPro": false,
+      "monthlyPriceUsd": 4.99,
+      "priceDisplay": "$4.99/mo",
       "portalLabel": "VaultSparked"
+    },
+    "vault_sparked_pro": {
+      "label": "VaultSparked Eternal",
+      "kind": "studio",
+      "isPaid": true,
+      "isSparked": true,
+      "isPro": true,
+      "monthlyPriceUsd": 29.99,
+      "priceDisplay": "$29.99/mo",
+      "portalLabel": "VaultSparked Eternal"
     },
     "promogrind_pro": {
       "label": "PromoGrind Pro",
@@ -56,47 +103,158 @@
   "features": {
     "member_identity": {
       "label": "Cross-project member identity",
-      "rule": { "requiresAccount": true, "minPlan": "free" }
+      "rule": {
+        "requiresAccount": true,
+        "minPlan": "free"
+      }
     },
     "classified_archive": {
       "label": "Vault archive access",
-      "rule": { "requiresAccount": true, "minPlan": "free" }
+      "rule": {
+        "requiresAccount": true,
+        "minPlan": "free"
+      }
     },
     "classified_archive_full": {
       "label": "Full archive access",
-      "rule": { "requiresAccount": true, "allowedPlans": ["vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "beta_pool": {
       "label": "Development early-access pool",
-      "rule": { "requiresAccount": true, "minPlan": "free" }
+      "rule": {
+        "requiresAccount": true,
+        "minPlan": "free"
+      }
     },
     "beta_priority": {
       "label": "First-wave development access",
-      "rule": { "requiresAccount": true, "allowedPlans": ["vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "promoGrind_core": {
       "label": "PromoGrind core tools",
-      "rule": { "requiresAccount": true, "minPlan": "free" }
+      "rule": {
+        "requiresAccount": true,
+        "minPlan": "free"
+      }
     },
     "promoGrind_live_tools": {
       "label": "PromoGrind live odds tools",
-      "rule": { "requiresAccount": true, "allowedPlans": ["promogrind_pro", "vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "promogrind_pro",
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "sparked_badge": {
       "label": "VaultSparked badge",
-      "rule": { "requiresAccount": true, "allowedPlans": ["vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "sparked_discord_role": {
       "label": "VaultSparked Discord role",
-      "rule": { "requiresAccount": true, "allowedPlans": ["vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "sparked_profile_theme": {
       "label": "VaultSparked profile theme",
-      "rule": { "requiresAccount": true, "allowedPlans": ["vault_sparked"] }
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked",
+          "vault_sparked_pro"
+        ]
+      }
     },
     "project_unknown_brief": {
       "label": "Project Unknown redacted brief",
-      "rule": { "requiresAccount": true, "minPlan": "free", "minRankIndex": 2 }
+      "rule": {
+        "requiresAccount": true,
+        "minPlan": "free",
+        "minRankIndex": 2
+      }
+    },
+    "pro_cross_product": {
+      "label": "Cross-product Pro access",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      },
+      "advertised": false,
+      "note": "Not offered (D-S368.1). Key kept so existing vault-sdk gates resolve."
+    },
+    "pro_beta_builds": {
+      "label": "Pro-tier beta build access",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_discord_role": {
+      "label": "VaultSparked Eternal Discord role",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_studio_credits": {
+      "label": "Studio credits",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      },
+      "advertised": false,
+      "note": "Not offered (D-S368.1). Key kept so existing vault-sdk gates resolve."
+    },
+    "eternal_dispatch": {
+      "label": "Eternal Dispatch",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_profile_theme": {
+      "label": "VaultSparked Eternal profile theme",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
     }
   },
   "projects": {
@@ -104,57 +262,201 @@
       "label": "Call of Doodie",
       "model": "freemium",
       "publicAccess": "free",
-      "memberFeatures": ["member_identity", "beta_pool"],
-      "paidFeatures": ["beta_priority", "sparked_badge"]
+      "memberFeatures": [
+        "member_identity",
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "gridiron_gm": {
       "label": "Gridiron GM",
       "model": "freemium",
       "publicAccess": "free",
-      "memberFeatures": ["member_identity", "beta_pool"],
-      "paidFeatures": ["beta_priority", "sparked_badge"]
+      "memberFeatures": [
+        "member_identity",
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "vaultspark_football_gm": {
       "label": "Franchise Architect",
       "model": "freemium",
       "publicAccess": "free",
-      "memberFeatures": ["member_identity", "beta_pool"],
-      "paidFeatures": ["beta_priority", "sparked_badge"]
+      "memberFeatures": [
+        "member_identity",
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "vaultfront": {
       "label": "VaultFront",
       "model": "freemium",
       "publicAccess": "waitlist",
-      "memberFeatures": ["beta_pool"],
-      "paidFeatures": ["beta_priority"]
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "solara": {
       "label": "Solara",
       "model": "freemium",
       "publicAccess": "waitlist",
-      "memberFeatures": ["beta_pool"],
-      "paidFeatures": ["beta_priority"]
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "mindframe": {
       "label": "MindFrame",
       "model": "freemium",
       "publicAccess": "waitlist",
-      "memberFeatures": ["beta_pool"],
-      "paidFeatures": ["beta_priority"]
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "project_unknown": {
       "label": "Project Unknown",
       "model": "freemium",
       "publicAccess": "waitlist",
-      "memberFeatures": ["beta_pool", "project_unknown_brief"],
-      "paidFeatures": ["beta_priority"]
+      "memberFeatures": [
+        "beta_pool",
+        "project_unknown_brief"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     },
     "promogrind": {
       "label": "PromoGrind",
       "model": "freemium",
       "publicAccess": "free_member",
-      "memberFeatures": ["promoGrind_core"],
-      "paidFeatures": ["promoGrind_live_tools"]
+      "memberFeatures": [
+        "promoGrind_core"
+      ],
+      "paidFeatures": [
+        "promoGrind_live_tools",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "the_exodus": {
+      "label": "The Exodus",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "velaxis": {
+      "label": "Velaxis",
+      "model": "open",
+      "publicAccess": "free",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority"
+      ]
+    },
+    "vorn": {
+      "label": "Vorn",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "statvault": {
+      "label": "StatVault",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "canon": {
+      "label": "Canon",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "the_living_protocol": {
+      "label": "The Living Protocol",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "ideaforge": {
+      "label": "IdeaForge",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     }
   }
 }

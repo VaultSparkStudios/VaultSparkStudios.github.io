@@ -121,13 +121,23 @@ function indexFor(projects) {
   lines.push('');
   lines.push('## Canonical surfaces');
   lines.push('- Studio: https://vaultsparkstudios.com/');
-  lines.push('- Ecosystem Oracle (live cross-project intelligence): https://vaultsparkstudios.com/oracle/');
+  lines.push('- IGNIS + the Oracle (live cross-project intelligence): https://vaultsparkstudios.com/ignis/#oracle');
+  lines.push('- Where to play (every title you can open today): https://vaultsparkstudios.com/play/');
+  lines.push('- Roadmap (Now / Next / Later, from the registry): https://vaultsparkstudios.com/roadmap/');
   lines.push('- Studio Pulse (live heartbeat): https://vaultsparkstudios.com/studio-pulse/');
   lines.push('- Membership: https://vaultsparkstudios.com/membership/');
-  lines.push('- Insider Dispatches (signal log): https://vaultsparkstudios.com/journal/');
+  lines.push('- Insider Dispatches (lore transmissions): https://vaultsparkstudios.com/journal/dispatches/');
+  lines.push('- Changelog and studio stories: https://vaultsparkstudios.com/changelog/');
+  lines.push('- Developer index (every public feed): https://vaultsparkstudios.com/api/');
   lines.push('- Citation (structured, dated facts for AI agents): https://vaultsparkstudios.com/api/citation.json');
-  lines.push('- Public Stats (Analytica Feed v1): https://vaultsparkstudios.com/stats/ · https://vaultsparkstudios.com/stats.json');
+  lines.push('- Public Stats (Analytica Feed v1): https://vaultsparkstudios.com/evidence/#numbers · https://vaultsparkstudios.com/stats.json');
   lines.push('- Studio Ecosystem Analytics: https://vaultsparkstudios.com/stats/ecosystem/ · https://vaultsparkstudios.com/api/ecosystem-stats.json');
+  lines.push('');
+  // agent-geo-layer-v2 (L1): name the ONE grounding source. Shard names and
+  // statuses below are derived from it and check-grounding-coherence fails the
+  // build when this corpus, the entity graph or the Oracle answers disagree.
+  lines.push('## Canonical facts');
+  lines.push(`Project names, vault statuses (SPARKED / FORGE / VAULTED) and live URLs: ${SITE}/api/public-intelligence.json — every other corpus here is derived from it and cross-checked against it on each build. If two sources ever disagree, that file wins.`);
   lines.push('');
   lines.push('## Projects (LLM-readable shards)');
   lines.push('');
@@ -180,6 +190,8 @@ function main() {
   // Index
   const indexContent = indexFor(projects);
   writes.push({ path: join(WELL_KNOWN, 'llms.txt'), content: indexContent });
+  // Agents probe the apex first (llmstxt.org convention); serve the same index there.
+  writes.push({ path: join(ROOT, 'llms.txt'), content: indexContent });
 
   // Full concatenated corpus
   const fullCorpus = projects.map(p => shardFor(p)).join('\n\n');
@@ -192,7 +204,10 @@ function main() {
     const route = routeFor(p);
     const dir = join(ROOT, route.replace(/^\//, '').replace(/\/$/, ''));
     if (!existsSync(dir)) continue;
-    writes.push({ path: join(dir, 'llms-full.txt'), content: shardFor(p) });
+    // The apex shard IS the studio corpus: llms.txt and agents.json advertise
+    // /llms-full.txt as the source of truth, so it must not be a self-citing stub.
+    const content = route === '/' ? indexContent + '\n\n---\n\n' + fullCorpus : shardFor(p);
+    writes.push({ path: join(dir, 'llms-full.txt'), content });
   }
 
   // Apply / check

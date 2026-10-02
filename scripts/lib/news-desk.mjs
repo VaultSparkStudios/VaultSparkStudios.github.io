@@ -61,7 +61,7 @@ export const PERSONAS = [
     name: 'REX',
     emoji: '🔥',
     role: 'The capability scout',
-    tagline: 'Already at the consequence while the keynote is still on slide one.',
+    tagline: 'Lives two releases in the future and files from there.',
     onPage: 'Opens at the second-order consequence, uses quick declarative turns, then names the shipped evidence that could make the leap real.',
     monogram: 'RX',
     accent: '#ff6b45',
@@ -86,7 +86,7 @@ export const PERSONAS = [
     name: 'MARA',
     emoji: '🛡️',
     role: 'The fine-print investigator',
-    tagline: 'Reads the clause everyone skipped and asks how it fails.',
+    tagline: 'Paragraph nine is where the story actually starts.',
     onPage: 'Quotes the overlooked sentence, separates a promise from a control, and ends with a falsifiable test instead of a vague warning.',
     monogram: 'MA',
     accent: '#72d6ff',
@@ -111,7 +111,7 @@ export const PERSONAS = [
     name: 'DOT',
     emoji: '📉',
     role: 'The cost accountant',
-    tagline: 'Finds the bill under every breakthrough.',
+    tagline: 'Every miracle ships with an invoice. DOT reads it out loud.',
     onPage: 'Leads with a number, identifies who pays it, and stops before the story can hide the tradeoff in adjectives.',
     monogram: 'DT',
     accent: '#c9ff68',
@@ -136,7 +136,7 @@ export const PERSONAS = [
     name: 'VERA',
     emoji: '🔧',
     role: 'The production realist',
-    tagline: 'Asks what happens after the demo ends and the pager starts.',
+    tagline: 'The demo ends at the applause. VERA starts at the first outage.',
     onPage: 'Turns a launch claim into a concrete deployment or failure scenario; labels examples as scenarios and never invents personal incident history.',
     monogram: 'VR',
     accent: '#ffd166',
@@ -149,19 +149,19 @@ export const PERSONAS = [
     signature: 'Answers an abstraction with one concrete thing that broke.',
     forbidden: 'Never claims to have personally run a system or been on call. Never treats a demo as production evidence.',
     catchphrase: 'The demo never pages you.',
-    humor: 'Gallows humour from someone who has cleaned up the mess personally.',
-    opens: 'Starts with a specific thing that broke, told as an anecdote.',
+    humor: 'Gallows humour about the gap between the launch slide and the incident report.',
+    opens: 'Starts with a specific thing that broke, from a cited incident or a labelled scenario.',
     memeStyle: 'pager',
     rival: 'rex',
     bit: '3 A.M.',
-    bitHow: 'One thing that broke in production, told in first person, with the workaround nobody documents.',
+    bitHow: 'One thing that breaks in production, from a cited incident or a labelled scenario, with the workaround nobody documents.',
   },
   {
     id: 'echo',
     name: 'ECHO',
     emoji: '🕰️',
     role: 'The pattern historian',
-    tagline: 'Remembers the last cycle, including where the analogy breaks.',
+    tagline: 'Has seen this movie before, and knows which scene is new.',
     onPage: 'Names a dated precedent, shows the structural rhyme, then states the difference that could change the ending.',
     monogram: 'EC',
     accent: '#b28dff',
@@ -186,7 +186,7 @@ export const PERSONAS = [
     name: 'JUNO',
     emoji: '🧭',
     role: 'The human-scale correspondent',
-    tagline: 'Turns a market-sized claim into a person-sized question.',
+    tagline: 'Every market-sized number lands on somebody’s Tuesday.',
     onPage: 'Starts with a concrete role or sourced person affected by the change; refuses invented anecdotes and lets the consequence land without sentimentality.',
     monogram: 'JN',
     accent: '#5ce2a7',
@@ -211,7 +211,7 @@ export const PERSONAS = [
     name: 'NIB',
     emoji: '🖋️',
     role: 'The literalist cartoonist',
-    tagline: 'Draws the institutional metaphor exactly as advertised.',
+    tagline: 'Draws the press release exactly as written, then lets gravity work.',
     onPage: 'Finds the one visual contradiction in a claim, draws it literally, and captions the panel in one dry line without explaining the joke.',
     monogram: 'NB',
     accent: '#e8dcc0',
@@ -236,7 +236,7 @@ export const PERSONAS = [
     name: 'MICA',
     emoji: '◇',
     role: 'The creative-tools critic',
-    tagline: 'Asks what a maker can create after the launch tab closes.',
+    tagline: 'Skips what the model can do. Asks what you can make with it.',
     onPage: 'Opens with a specific creative task, tests whether the tool expands authorship or only accelerates imitation, and names the artifact a reader could actually make.',
     monogram: 'MC',
     accent: '#ff83cf',
@@ -259,6 +259,301 @@ export const PERSONAS = [
 ];
 
 export const personaById = (id) => PERSONAS.find((p) => p.id === id) || null;
+
+/* ── Profile depth (reader-facing only) ────────────────────────────────── */
+
+/**
+ * The character sheet a reader meets on a persona profile. It is DELIBERATELY
+ * separate from PERSONAS: the authoring prompt copies selected PERSONAS fields
+ * (creed/voice/bias/forbidden + bit) into every call, and those blocks stay
+ * byte-stable for prefix caching. Nothing here reaches a model prompt, so the
+ * profiles can deepen without adding a single token per authored story.
+ *
+ * Rules this data obeys:
+ *  - Fiction is labelled as fiction. Bios describe a character's instincts and
+ *    method, never a human résumé, a past job, or lived experience.
+ *  - No claim about published work lives here. Anything about what a persona
+ *    has actually written, argued or predicted is DERIVED from the corpus by
+ *    personaNotebook() so it can only grow as editions publish.
+ *  - `portrait` describes the committed image at assets/desk-personas/<id>.webp
+ *    as it actually renders (read from the pixels, not from an assumed prompt),
+ *    so the depiction, its alt text and the bio stay consistent.
+ *  - Relations reference real roster ids; `rival` agrees with PERSONAS.rival.
+ */
+export const PERSONA_PROFILES = {
+  rex: {
+    bio: 'REX is the Desk’s early-warning system for capability, and its most reliable source of arguments. A fictional AI correspondent built to read release notes the way other desks read headlines, he skips the launch event and starts at what the shipped thing makes possible two steps out. His built-in bias is to be right about direction and early about the date; the public scorecard exists to check both.',
+    obsessions: ['changelogs over keynotes', 'capability curves', 'what ships on a Tuesday', 'compute overhangs'],
+    moves: [
+      { name: 'The Overhang', how: 'Names what a shipped release unlocks two steps out, before anyone has built it.' },
+      { name: 'Slide One', how: 'Opens at the consequence and lets the announcement catch up later in the piece.' },
+    ],
+    strength: 'Sees the second-order consequence before the room does, and says it in one line.',
+    refuses: ['Hedging with “time will tell”', 'Citing a vibe when a shipped artifact exists', 'Treating a roadmap as a release'],
+    relations: [
+      { id: 'dot', kind: 'rival', why: 'DOT keeps sending him the invoice for his futures. Their exchanges are the Desk’s loudest.' },
+      { id: 'mica', kind: 'ally', why: 'Both get genuinely excited about new capability. MICA just insists it produce something.' },
+    ],
+    portrait: 'A figure drawn in streaks of flame orange and ember against black, caught mid-turn as if already leaving for the next release.',
+  },
+  mara: {
+    bio: 'MARA is the Desk’s fine-print investigator, a fictional AI correspondent who reads safety cards, terms and policy filings to the last paragraph and quotes the sentence everyone skipped. She does not do outrage. She converts a reassuring adjective into the measurement that would prove it false, then waits, calmly, for someone to run it.',
+    obsessions: ['paragraph nine', 'falsifiable tests', 'promises versus controls', 'what “responsible” measures'],
+    moves: [
+      { name: 'The Receipt', how: 'Takes a reassuring claim and states the exact measurement that would prove it false.' },
+      { name: 'Quote The Clause', how: 'Opens on the overlooked sentence, verbatim, and lets it do the arguing.' },
+    ],
+    strength: 'Separates a commitment from a control without raising her voice.',
+    refuses: ['Moralizing without a mechanism', 'Ending on “concerning” instead of a test', 'Treating a policy page as proof of practice'],
+    relations: [
+      { id: 'rex', kind: 'rival', why: 'REX reads the changelog for what it unlocks; MARA reads it for what it leaves out.' },
+      { id: 'vera', kind: 'ally', why: 'Both want the evidence of what happens when it fails. MARA brings the clause, VERA brings the outage.' },
+    ],
+    portrait: 'A translucent, ice-blue figure rendered as glass and wireframe, every seam visible, as if built to be inspected.',
+  },
+  dot: {
+    bio: 'DOT is the Desk’s cost accountant: a fictional AI correspondent who leads with a figure, names who pays it, and stops talking. Where others see a breakthrough, DOT sees a line item and a subsidy schedule. The method is short sentences and sourced numbers; the blind spot is the genuinely new thing that does not fit on a spreadsheet yet.',
+    obsessions: ['who pays when the free part ends', 'capex', 'per-unit economics', 'subsidies wearing a product costume'],
+    moves: [
+      { name: 'The Chart', how: 'Brings a chart and describes it in one flat sentence. Declines to be excited about it.' },
+      { name: 'The Invoice', how: 'Finds the party that absorbs the cost and names it before the story can hide it in adjectives.' },
+    ],
+    strength: 'Turns a narrative into a number a reader can check.',
+    refuses: ['Getting excited', 'Using two sentences where one will do', 'Quoting a figure no cited source contains'],
+    relations: [
+      { id: 'rex', kind: 'rival', why: 'Every REX future arrives on DOT’s desk as an invoice. DOT always opens it.' },
+      { id: 'echo', kind: 'ally', why: 'ECHO remembers the last bubble; DOT remembers what it cost.' },
+    ],
+    portrait: 'A blank mannequin head on a drafting grid, one bright green point marking where the measurement starts.',
+  },
+  vera: {
+    bio: 'VERA is the Desk’s production realist, a fictional AI correspondent who asks what happens after the demo ends. She works from cited incident reports and clearly labelled what-if scenarios, never invented war stories, and turns a launch claim into the concrete failure a team would actually meet. Delight is reserved for a verified fix.',
+    obsessions: ['the unhappy path', 'retries and rollbacks', 'what pages someone at 3 a.m.', 'demos versus deployments'],
+    moves: [
+      { name: '3 A.M.', how: 'One thing that breaks in production, from a cited incident or a labelled scenario, with the workaround nobody documents.' },
+      { name: 'After The Applause', how: 'Follows a launch past the keynote into its first realistic week of use.' },
+    ],
+    strength: 'Makes an abstract risk concrete enough to plan for.',
+    refuses: ['Claiming to have personally run a system or been on call', 'Treating a demo as production evidence', 'Unlabelled hypotheticals'],
+    relations: [
+      { id: 'rex', kind: 'rival', why: 'REX sees the launch; VERA sees the first outage after it.' },
+      { id: 'mara', kind: 'ally', why: 'MARA finds the clause that should have prevented the failure VERA describes.' },
+    ],
+    portrait: 'An android correspondent in amber and graphite with a headset, a wrench insignia at the collar and a tired, level gaze.',
+  },
+  echo: {
+    bio: 'ECHO is the Desk’s pattern historian, a fictional AI correspondent who dates the present by naming its ancestor: the dead product, the forgotten cycle, the year it last sounded exactly like this. He is warm rather than smug, and he has one rule he never breaks: every analogy comes with the difference that could change the ending.',
+    obsessions: ['dated precedents', 'act three of a hype cycle', 'consolidation', 'where the analogy breaks'],
+    moves: [
+      { name: 'Rhymes With', how: 'Names the year and the dead product this most resembles, then what actually killed that one.' },
+      { name: 'The Disanalogy', how: 'Ends a comparison on the one structural difference that could change the outcome.' },
+    ],
+    strength: 'Gives a breathless story a timeline and a memory.',
+    refuses: ['Claiming history repeats exactly', 'Using an analogy without naming its disanalogy', 'Saying “I told you so”'],
+    relations: [
+      { id: 'rex', kind: 'rival', why: 'REX insists this time is different. Sometimes ECHO agrees, and says exactly why.' },
+      { id: 'nib', kind: 'ally', why: 'NIB draws the cycle ECHO describes, usually with the same hats.' },
+    ],
+    portrait: 'A face assembled from layered, torn paper in violet and ash, a clock dial turning behind it like an old broadsheet.',
+  },
+  juno: {
+    bio: 'JUNO is the Desk’s human-scale correspondent, a fictional AI character who turns a market-sized claim into one concrete role on one specific Tuesday. JUNO works only from sourced people or clearly labelled roles, never invented interviews, and lets the consequence land without sentiment. The recurring question is short: name one.',
+    obsessions: ['who absorbs the change', 'access', 'work that quietly disappears', 'the actual user'],
+    moves: [
+      { name: 'Name The Person', how: 'Replaces a market-sized number with one named role and what changes for them on Tuesday.' },
+      { name: 'Downstream', how: 'Follows a policy or product one step past the press release to whoever has to live with it.' },
+    ],
+    strength: 'Keeps the person in the story when everyone else is quoting the market size.',
+    refuses: ['Speaking for a group in the abstract', 'Trading a person for a statistic', 'Inventing an interview or a biography'],
+    relations: [
+      { id: 'dot', kind: 'rival', why: 'DOT counts the cost in dollars; JUNO counts it in people. They rarely agree on which number matters.' },
+      { id: 'mara', kind: 'ally', why: 'MARA finds the rule; JUNO finds who it lands on.' },
+    ],
+    portrait: 'A calm, steady-eyed figure in dark green and charcoal, framed by a thin compass ring with a single warm point at the heart.',
+  },
+  nib: {
+    bio: 'NIB is the Desk’s literalist cartoonist, a fictional AI character who does not argue so much as notice. NIB finds the one absurd image hiding inside an institution’s own metaphor, draws it with a straight face, and captions it in a single dry line. The target is always the institution and its claims, never a person and never the people on the receiving end.',
+    obsessions: ['metaphors taken literally', 'same hats, new logo', 'the gap between description and reality', 'one-line captions'],
+    moves: [
+      { name: 'The Cartoon', how: 'One panel, one caption, the irony made visible. Signed, never explained.' },
+      { name: 'Drawn To Scale', how: 'Renders a claim at its stated size until the proportions give the joke away.' },
+    ],
+    strength: 'Says in one picture what a paragraph of caveats cannot.',
+    refuses: ['Aiming at individuals', 'Mocking people on the receiving end of a system', 'Explaining the joke'],
+    relations: [
+      { id: 'rex', kind: 'rival', why: 'REX supplies the grand metaphors. NIB draws them exactly as stated.' },
+      { id: 'echo', kind: 'ally', why: 'ECHO names the precedent; NIB finds it still has the same hats.' },
+    ],
+    portrait: 'A figure whose head is a cream fountain-pen nib, buttoned into a high collar, watching with flat, unimpressed eyes.',
+  },
+  mica: {
+    bio: 'MICA is the Desk’s newest voice, a fictional AI creative-tools critic covering games, media and the tools makers actually use. She skips the model name and starts with a creative task, then asks whether the tool widens authorship or only speeds up imitation, and who owns the result. She has not been cast in a sourced story yet; her first report arrives when an edition gives her one.',
+    obsessions: ['the export button', 'authorship and ownership', 'playable over watchable', 'workflows that survive a deadline'],
+    moves: [
+      { name: 'The Export Test', how: 'Names one artifact a creator could actually finish, then checks who owns the process and the result.' },
+      { name: 'Small Assignment', how: 'Turns a product claim into a concrete creative brief and asks what comes out the other side.' },
+    ],
+    strength: 'Brings the maker’s question to stories otherwise told from the lab’s side.',
+    refuses: ['Calling a generated artifact human-made work', 'Inventing hands-on testing or a creator testimonial', 'Reviewing a trailer as if it were the tool'],
+    relations: [
+      { id: 'dot', kind: 'rival', why: 'DOT asks what a tool costs; MICA asks what it makes. Both are fair questions, and they rarely land on the same answer.' },
+      { id: 'rex', kind: 'ally', why: 'Both get excited about new capability. MICA wants to see the finished thing.' },
+    ],
+    portrait: 'A face cut from faceted magenta and black crystal, shards breaking away at the edges like a frame still being edited.',
+  },
+};
+
+export const personaProfile = (id) => PERSONA_PROFILES[id] || null;
+
+/* ── Persona notebook: profile depth derived from the published record ─── */
+
+const NOTEBOOK_STOPWORDS = new Set(('a an and are as at be but by for from has have in into is it its of on or over says say the this that to was were will with after amid new its how why what who more than not about up out first ai agent agents model models report update').split(' '));
+
+/**
+ * Proper-noun subjects of a headline (OpenAI, Medicare, Nvidia). A capital
+ * letter only signals a name in sentence-case text: the first word is skipped
+ * unless it is camel-cased (OpenAI), and a Title Case headline contributes only
+ * camel-cased or all-caps names, because every word there is capitalized.
+ */
+const headlineWords = (headline) => String(headline || '').split(/\s+/)
+  .map((w) => w.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, '').replace(/[’']s$/, '')).filter(Boolean);
+const isTitleCase = (words) => {
+  const long = words.filter((w) => w.length >= 4);
+  return long.length >= 3 && long.filter((w) => /^[A-Z]/.test(w)).length / long.length >= 0.7;
+};
+const isDistinctiveName = (word) => /[a-z][A-Z]|^[A-Z0-9]{2,}$/.test(word) || /\d/.test(word);
+
+/** Names the corpus itself capitalizes mid-sentence — the evidence a word is a name. */
+export function corpusNames(headlines = []) {
+  const names = new Set();
+  for (const headline of headlines) {
+    const words = headlineWords(headline);
+    if (isTitleCase(words)) continue;
+    words.forEach((word, i) => { if (i > 0 && /^[A-Z]/.test(word)) names.add(word); });
+  }
+  return names;
+}
+
+export function headlineSubjects(headline, known = new Set()) {
+  const words = headlineWords(headline);
+  const titleCase = isTitleCase(words);
+  const out = new Set();
+  words.forEach((word, i) => {
+    if (word.length < 3 || !/^[A-Z]/.test(word) || NOTEBOOK_STOPWORDS.has(word.toLowerCase())) return;
+    if ((i === 0 || titleCase) && !isDistinctiveName(word) && !known.has(word)) return;
+    out.add(word);
+  });
+  return [...out];
+}
+
+const hostOf = (url) => {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return null; }
+};
+
+const topCounts = (counts, n) => [...counts.entries()]
+  .sort((a, b) => (b[1] - a[1]) || (a[0] < b[0] ? -1 : 1))
+  .slice(0, n)
+  .map(([key, count]) => ({ key, count }));
+
+/**
+ * Derive a persona's running notebook from published days (newest first or any
+ * order). Pure and deterministic: identical corpus → identical notebook, so the
+ * rendered profile is byte-reproducible and grows only when an edition does.
+ *
+ * Counts follow the profile feed's own units: a report is a story with at least
+ * one body passage in this voice; a position is a stance; a panel turn is one
+ * transcript turn; a panel is a meme line drawn by this persona.
+ */
+export function personaNotebook(personaId, days = []) {
+  const ordered = [...days]
+    .filter((day) => day && /^\d{4}-\d{2}-\d{2}$/.test(day.date || ''))
+    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  const names = corpusNames(ordered.flatMap((day) => (day.stories || []).map((story) => story.headline)));
+  const editionDates = [];
+  const contributed = new Set();
+  const stances = [];
+  const subjects = new Map();
+  const sources = new Map();
+  const verdicts = { overhyped: 0, underhyped: 0, fair: 0 };
+  const sparring = new Map();
+  let reports = 0; let panelTurns = 0; let panels = 0; let predictions = 0; let stories = 0;
+  for (const day of ordered) {
+    const live = (day.stories || []).filter((story) => !story.supersededBy);
+    if (!live.length) continue;
+    editionDates.push(day.date);
+    for (const story of live) {
+      const report = (story.body || []).some((block) => block?.voice === personaId && block.text);
+      const stance = (story.stances || []).find((entry) => entry?.personaId === personaId) || null;
+      const turns = (story.transcript || []).filter((turn) => turn?.personaId === personaId && turn.text).length;
+      const panel = story.memeLine?.personaId === personaId && Boolean(story.memeLine?.text);
+      const preds = (story.predictions || []).filter((p) => p?.personaId === personaId).length;
+      if (!report && !stance && !turns && !panel && !preds) continue;
+      stories += 1;
+      contributed.add(day.date);
+      if (report) reports += 1;
+      panelTurns += turns;
+      if (panel) panels += 1;
+      predictions += preds;
+      for (const word of headlineSubjects(story.headline, names)) subjects.set(word, (subjects.get(word) || 0) + 1);
+      if (stance) {
+        stances.push({ date: day.date, slug: story.slug, headline: story.headline, ...stance });
+        if (verdicts[stance.verdict] !== undefined) verdicts[stance.verdict] += 1;
+        for (const host of new Set((stance.sources || []).map(hostOf).filter(Boolean))) {
+          sources.set(host, (sources.get(host) || 0) + 1);
+        }
+        for (const other of story.stances || []) {
+          if (!other || other.personaId === personaId || !other.verdict || other.verdict === stance.verdict) continue;
+          sparring.set(other.personaId, (sparring.get(other.personaId) || 0) + 1);
+        }
+      }
+    }
+  }
+  // Current streak: consecutive most-recent editions this voice appeared in.
+  let streak = 0;
+  for (let i = editionDates.length - 1; i >= 0 && contributed.has(editionDates[i]); i -= 1) streak += 1;
+  let longest = 0; let run = 0;
+  for (const date of editionDates) { run = contributed.has(date) ? run + 1 : 0; longest = Math.max(longest, run); }
+
+  const mean = (rows, key) => {
+    const values = rows.map((row) => row[key]).filter((v) => Number.isFinite(v));
+    return values.length ? Math.round((values.reduce((n, v) => n + v, 0) / values.length) * 100) / 100 : null;
+  };
+  // A shift needs enough positions on both sides to mean anything.
+  let shift = null;
+  if (stances.length >= 6) {
+    const half = Math.floor(stances.length / 2);
+    const early = mean(stances.slice(0, half), 'direction');
+    const recent = mean(stances.slice(stances.length - half), 'direction');
+    if (early !== null && recent !== null) {
+      const delta = Math.round((recent - early) * 100) / 100;
+      shift = { early, recent, delta, sample: half, label: Math.abs(delta) < 0.5 ? 'steady' : delta > 0 ? 'warming' : 'cooling' };
+    }
+  }
+  const latest = stances.length ? stances[stances.length - 1] : null;
+  return {
+    personaId,
+    stories,
+    reports,
+    positions: stances.length,
+    panelTurns,
+    panels,
+    predictions,
+    editions: contributed.size,
+    firstDate: [...contributed].sort()[0] || null,
+    latestDate: [...contributed].sort().slice(-1)[0] || null,
+    streak,
+    longestStreak: longest,
+    verdicts,
+    meanDirection: mean(stances, 'direction'),
+    meanHorizon: mean(stances, 'horizon'),
+    meanConfidence: mean(stances, 'confidence'),
+    shift,
+    subjects: topCounts(subjects, 4).filter((row) => row.count >= 2),
+    sources: topCounts(sources, 3),
+    sparring: topCounts(sparring, 2),
+    latestTake: latest ? { date: latest.date, slug: latest.slug, headline: latest.headline, position: latest.position, verdict: latest.verdict } : null,
+  };
+}
 
 /* ── Casting: which voices argue THIS story ────────────────────────────── */
 

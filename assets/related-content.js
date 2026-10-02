@@ -51,10 +51,10 @@
       href: '/universe/',
     },
     journal: {
-      eyebrow: 'Signal Log',
+      eyebrow: 'Stories',
       title: 'Read what the studio ships and learns',
-      copy: 'Journal posts and dispatches explain where the vault is heading next.',
-      href: '/journal/',
+      copy: 'The stories behind the changelog — what was built, and why.',
+      href: '/changelog/#stories',
     },
     changelog: {
       eyebrow: 'Changelog',

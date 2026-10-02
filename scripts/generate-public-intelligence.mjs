@@ -35,15 +35,16 @@ const CATALOG_NOTES = {
   'call-of-doodie': 'Playable now. Satirical multiplayer chaos, live and still sharpening.',
   'franchise-architect': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
-  'solara': 'Desert survival world. Systems converging.',
+  'gridiron-gm': 'Vaulted. Paused and honored in the vault — not currently playable.',
+  'solara': 'Browser roguelite RPG with a shared world — every death dims a shared sun.',
   'vaultspark-forge': 'Crafting-and-building world in early concept. Vaulted silhouette for now.',
-  'the-exodus': 'Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.',
+  'the-exodus': 'Engine-building card game for 2–4 players (plus solo) aboard a generation ship fleeing a dying star.',
   'voidfall': 'Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.',
-  'promogrind': 'Live utility. Vault-gated promo engine, iterating on UX.',
-  'mindframe': 'Metacognition training platform. Live on external infra; identity consolidating.',
-  'velaxis': 'Solana memecoin operator cockpit — no-custody by design. Production-stable.',
+  'promogrind': 'Sportsbook promo conversion suite — calculators, tracking and a profit-and-loss ledger. 21+.',
+  'mindframe': 'Live metacognition platform — structured practice for how you think about your own thinking.',
+  'velaxis': 'Solana memecoin operator cockpit — no custody of your funds, by design.',
   'vorn': 'Social-first, agent-native platform. Give your agent a home.',
-  'veilos': 'D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.',
+  'veilos': 'A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification and a Collaborate Exchange, live at veilos.io.',
   'seamline': 'Creator portfolio hub. Your whole world, one thread.',
   'hashmark': 'Football, rewritten every week by AI.',
   'shadow': 'An operating system for artists.',
@@ -64,13 +65,13 @@ const CATALOG_CATEGORIES = {
   'franchise-architect': 'Sports Sim',
   'football-gm': 'Sports Sim',
   'gridiron-gm': 'Sports Sim',
-  'solara': 'Survival World',
+  'solara': 'Roguelite RPG',
   'vaultspark-forge': 'Crafting World',
-  'the-exodus': 'Narrative Survival',
-  'voidfall': 'Cinematic Saga',
-  'vaultfront': 'Survival World',
-  'mindframe': 'AI Intelligence',
-  'promogrind': 'Creator Tool',
+  'the-exodus': 'Card Game',
+  'voidfall': 'Cosmic-Horror Saga',
+  'vaultfront': 'Strategy',
+  'mindframe': 'Metacognition',
+  'promogrind': 'Sportsbook Promo Tool',
   'velaxis': 'Trading Intelligence',
   'vorn': 'Agent Platform',
   'veilos': 'Cognitive Civilization OS',
@@ -131,11 +132,15 @@ async function loadRegistryCatalog() {
   // registry and carry no timing; keep it that way.
   // IDs that are studio-internal tools — never surface in public constellation.
   // social-dashboard, sparkfunnel, studio-hub, ignis are ops infrastructure;
-  // gridiron-gm / gridiron-gm-play are VAULTED with no public deployedUrl.
+  // gridiron-gm-play is a VAULTED internal runtime with no public page.
+  // gridiron-gm is NOT internal (S368 registry-truth-everywhere): canon marks it
+  // VAULTED, it has a public page at /games/gridiron-gm/ and the nav lists it
+  // under Honored. Excluding it made this feed publish `vaulted: 0` while the
+  // game registry, nav and /games/ all showed a vaulted title.
   const INTERNAL_IDS = new Set([
     'studio-ops', 'social-dashboard', 'sparkfunnel',
     'vaultspark-studio-hub', 'vaultspark-ignis',
-    'gridiron-gm', 'gridiron-gm-play',
+    'gridiron-gm-play',
     'statsforge', // internal sports-analytics platform (public name: StatVault)
   ]);
 

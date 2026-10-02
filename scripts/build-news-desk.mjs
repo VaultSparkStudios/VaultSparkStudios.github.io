@@ -23,6 +23,10 @@ import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_B
 import {
   PERSONAS,
   personaById,
+  PERSONA_PROFILES,
+  personaNotebook,
+  headlineSubjects,
+  corpusNames,
   DESK_ROLES,
   roleById,
   runStandards,
@@ -1056,6 +1060,49 @@ function selfTest() {
     runStandards(light).filter((f) => /near-term/.test(f.detail)).length === 0);
 
   t('every persona owns a signature bit', PERSONAS.every((p) => p.bit && p.bitHow));
+
+  // ── Profile depth (reader-facing, never prompted) ─────────────────────────
+  t('every persona has a profile with bio, moves, boundaries and a portrait note', PERSONAS.every((p) => {
+    const pr = PERSONA_PROFILES[p.id];
+    return pr && pr.bio?.length > 120 && pr.moves?.length >= 2 && pr.refuses?.length >= 2 && pr.portrait && pr.strength && pr.obsessions?.length >= 3;
+  }));
+  t('every bio labels the persona fictional AI', PERSONAS.every((p) => /fictional AI/.test(PERSONA_PROFILES[p.id].bio)));
+  t('no bio claims lived experience or a human career', PERSONAS.every((p) => !/\b(?:years? (?:as|at|in)|former|used to work|I was|my career|on call for)\b/i.test(PERSONA_PROFILES[p.id].bio)));
+  t('profile relations point at real personas and agree with the declared rival', PERSONAS.every((p) => {
+    const rels = PERSONA_PROFILES[p.id].relations || [];
+    return rels.every((r) => personaById(r.id) && r.id !== p.id && ['rival', 'ally'].includes(r.kind))
+      && rels.some((r) => r.kind === 'rival' && r.id === p.rival);
+  }));
+  t('every profile keeps the persona editorial boundary verbatim upstream', PERSONAS.every((p) => p.forbidden && PERSONA_PROFILES[p.id].refuses.every((r) => typeof r === 'string' && r.length > 8)));
+  t('the authoring prompt fields are not duplicated into profiles', Object.values(PERSONA_PROFILES).every((pr) => !('creed' in pr) && !('voice' in pr) && !('bias' in pr)));
+  t('VERA is never instructed to tell first-person incidents', !/first person/i.test(personaById('vera').bitHow) && !/personally/i.test(personaById('vera').humor));
+
+  const nbDays = [
+    { date: '2026-09-01', stories: [{ slug: 'a', headline: 'Regulators question OpenAI over agents', body: [{ voice: 'rex', text: 'x' }],
+      stances: [{ personaId: 'rex', verdict: 'underhyped', direction: 2, horizon: 1, confidence: 0.8, position: 'p1', sources: ['https://www.example.com/a'] },
+        { personaId: 'dot', verdict: 'overhyped', direction: -1, horizon: 0, confidence: 0.7, position: 'd1', sources: ['https://b.test/x'] }],
+      transcript: [{ personaId: 'rex', text: 't' }, { personaId: 'rex', text: 'u' }], memeLine: { personaId: 'rex', text: 'm' },
+      predictions: [{ personaId: 'rex', claim: 'c' }] }] },
+    { date: '2026-09-02', stories: [{ slug: 'b', headline: 'OpenAI ships a thing', stances: [{ personaId: 'dot', verdict: 'fair', direction: 0, position: 'd2', sources: [] }] }] },
+    { date: '2026-09-03', stories: [{ slug: 'c', headline: 'Deal talk returns for OpenAI', body: [{ voice: 'rex', text: 'y' }],
+      stances: [{ personaId: 'rex', verdict: 'fair', direction: 0, horizon: -1, confidence: 0.6, position: 'p2', sources: ['https://example.com/b'] }] },
+    { slug: 'gone', supersededBy: '/x/', headline: 'Rerun', body: [{ voice: 'rex', text: 'z' }] }] },
+  ];
+  const nb = personaNotebook('rex', nbDays);
+  t('notebook counts reports, positions, panel turns, panels and predictions', nb.reports === 2 && nb.positions === 2 && nb.panelTurns === 2 && nb.panels === 1 && nb.predictions === 1);
+  t('notebook ignores superseded reruns', nb.stories === 2);
+  t('notebook streak counts consecutive latest editions only', nb.streak === 1 && nb.longestStreak === 1 && nb.editions === 2);
+  t('notebook verdict mix and means are measured', nb.verdicts.underhyped === 1 && nb.verdicts.fair === 1 && nb.meanDirection === 1 && nb.meanConfidence === 0.7);
+  t('notebook cites hosts, not URLs, and strips www', nb.sources[0]?.key === 'example.com' && nb.sources[0]?.count === 2);
+  t('notebook sparring partner is whoever split the verdict', nb.sparring[0]?.key === 'dot' && nb.sparring[0]?.count === 1);
+  t('notebook latest take is the newest stance', nb.latestTake?.slug === 'c' && nb.latestTake.position === 'p2');
+  t('notebook needs six positions before claiming a drift', nb.shift === null);
+  t('notebook subjects need two mentions', nb.subjects.some((s) => s.key === 'OpenAI' && s.count === 2));
+  const empty = personaNotebook('mica', nbDays);
+  t('an unpublished persona has an honest empty notebook', empty.stories === 0 && empty.latestTake === null && empty.streak === 0 && empty.subjects.length === 0);
+  t('notebook is deterministic regardless of day order', JSON.stringify(personaNotebook('rex', [...nbDays].reverse())) === JSON.stringify(nb));
+  t('a Title Case headline only yields known or camel-cased names', headlineSubjects('Breached Systems Face New Rules At OpenAI', new Set(['Medicare'])).join() === 'OpenAI');
+  t('corpus names learn from mid-sentence capitals', corpusNames(['Regulators question Medicare billing']).has('Medicare'));
   t('signature bits are distinct', new Set(PERSONAS.map((p) => p.bit)).size === PERSONAS.length);
   t('spectacle is castable, or roasts could never run',
     PERSONAS.some((p) => p.beats.includes('spectacle')));

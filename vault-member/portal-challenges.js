@@ -161,14 +161,17 @@
       const rankLabel = VS.getRankNameByIndex(f.rank_required);
       const uTag = f.universe_tag ? f.universe_tag.charAt(0).toUpperCase() + f.universe_tag.slice(1) : '';
 
+      // S368: classification, title, slug and universe tag are escaped
+      // (escHtml/escAttr from portal-features.js). content_html is the
+      // admin-authored lore body and stays HTML by design.
       if (f.locked) {
         return `<div class="file-card locked">
           <div class="file-card-header">
-            <span class="classification-tag ${tagClass}">${f.classification}</span>
-            <span class="file-title">${f.title}</span>
+            <span class="classification-tag ${tagClass}">${escHtml(f.classification)}</span>
+            <span class="file-title">${escHtml(f.title)}</span>
             <div class="file-meta-tags">
-              ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
-              <span class="file-rank-lock">🔒 ${rankLabel}+</span>
+              ${uTag ? `<span class="file-universe-tag">${escHtml(uTag)}</span>` : ''}
+              <span class="file-rank-lock">🔒 ${escHtml(rankLabel)}+</span>
             </div>
           </div>
         </div>`;
@@ -176,14 +179,14 @@
 
       const bm = getArchiveBookmarks();
       const isBookmarked = bm.has(f.slug);
-      return `<div class="file-card" data-slug="${f.slug}" data-title="${f.title.replace(/"/g,'&quot;')}">
+      return `<div class="file-card" data-slug="${escAttr(f.slug)}" data-title="${escAttr(f.title)}">
         <div class="file-card-header">
-          <span class="classification-tag ${tagClass}">${f.classification}</span>
-          <span class="file-title">${f.title}</span>
+          <span class="classification-tag ${tagClass}">${escHtml(f.classification)}</span>
+          <span class="file-title">${escHtml(f.title)}</span>
           <div class="file-meta-tags">
-            ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
+            ${uTag ? `<span class="file-universe-tag">${escHtml(uTag)}</span>` : ''}
             ${isRead ? '<span class="file-read-dot" title="Read"></span>' : ''}
-            <button data-member-action="bookmark-file" data-member-hover="bookmark" data-slug="${f.slug}" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;">${isBookmarked ? '🔖✓' : '🔖'}</button>
+            <button data-member-action="bookmark-file" data-member-hover="bookmark" data-slug="${escAttr(f.slug)}" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;">${isBookmarked ? '🔖✓' : '🔖'}</button>
             <span class="file-caret">▼</span>
           </div>
         </div>
@@ -191,7 +194,7 @@
           ${f.content_html}
           ${isRead
             ? '<div class="file-pts-awarded">✓ Points already earned for this file</div>'
-            : '<div class="file-pts-awarded" id="pts-' + f.slug + '" style="display:none;">⚡ +20 pts awarded</div>'}
+            : '<div class="file-pts-awarded" id="pts-' + escAttr(f.slug) + '" style="display:none;">⚡ +20 pts awarded</div>'}
         </div>
       </div>`;
     }
@@ -245,9 +248,9 @@
       el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Loading…</div>';
       try {
         const { data } = await VSSupabase
-          .from('challenge_submissions')
-          .select('challenge_id, created_at, challenges(title, points)')
-          .order('created_at', { ascending: false })
+          .from('challenge_completions')
+          .select('challenge_id, completed_at, challenges(title, points)')
+          .order('completed_at', { ascending: false })
           .limit(50);
         if (!data || data.length === 0) {
           el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">No completions yet.</div>';
@@ -256,13 +259,13 @@
         el.innerHTML = data.map(s => {
           const title = s.challenges?.title || 'Challenge';
           const pts = s.challenges?.points || 0;
-          const when = s.created_at ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+          const when = s.completed_at ? new Date(s.completed_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
           return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:1rem;flex-wrap:wrap;">
             <div>
-              <div style="font-size:0.85rem;color:var(--text);font-weight:600;">${title}</div>
-              <div style="font-size:0.75rem;color:var(--dim);">${when}</div>
+              <div style="font-size:0.85rem;color:var(--text);font-weight:600;">${escHtml(title)}</div>
+              <div style="font-size:0.75rem;color:var(--dim);">${escHtml(when)}</div>
             </div>
-            <span style="font-size:0.82rem;font-weight:700;color:var(--gold);flex-shrink:0;">+${pts} pts</span>
+            <span style="font-size:0.82rem;font-weight:700;color:var(--gold);flex-shrink:0;">+${escHtml(pts)} pts</span>
           </div>`;
         }).join('');
       } catch (_) {
@@ -349,7 +352,7 @@
             : '';
 
           return `<div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-bottom:1rem;">
-            <div style="font-weight:700;color:var(--text);margin-bottom:1rem;font-size:0.95rem;">${poll.question}</div>
+            <div style="font-weight:700;color:var(--text);margin-bottom:1rem;font-size:0.95rem;">${escHtml(poll.question)}</div>
             <div style="display:flex;flex-direction:column;gap:0.55rem;">
               ${opts.map((o, idx) => {
                 const pct = Math.round(((o.votes || 0) / total) * 100);
@@ -357,15 +360,15 @@
                 const label = typeof o === 'object' ? o.label : String(o);
                 if (hasVoted) {
                   return `<div style="display:flex;align-items:center;gap:0.75rem;">
-                    <div style="min-width:110px;font-size:0.83rem;color:${isMyVote ? 'var(--gold)' : 'var(--text)'};">${label}${isMyVote ? ' ✓' : ''}</div>
+                    <div style="min-width:110px;font-size:0.83rem;color:${isMyVote ? 'var(--gold)' : 'var(--text)'};">${escHtml(label)}${isMyVote ? ' ✓' : ''}</div>
                     <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid ${isMyVote ? 'rgba(255,196,0,0.3)' : 'rgba(255,255,255,0.07)'};border-radius:6px;overflow:hidden;position:relative;">
                       <div style="height:100%;border-radius:6px;background:${isMyVote ? 'rgba(255,196,0,0.18)' : 'rgba(255,255,255,0.06)'};width:${pct}%;transition:width 0.5s ease;"></div>
                       <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--muted);">${pct}%</span>
                     </div>
                   </div>`;
                 }
-                return `<button data-member-action="cast-vote" data-poll-id="${poll.id}" data-option-index="${idx}" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
-                  <div style="min-width:110px;font-size:0.83rem;color:var(--text);">${label}</div>
+                return `<button data-member-action="cast-vote" data-poll-id="${escAttr(poll.id)}" data-option-index="${idx}" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
+                  <div style="min-width:110px;font-size:0.83rem;color:var(--text);">${escHtml(label)}</div>
                   <div data-member-hover="poll-option" style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;position:relative;transition:border-color 0.15s;">
                     <div style="height:100%;border-radius:6px;background:rgba(255,255,255,0.06);width:${pct}%;"></div>
                     <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--dim);">${pct}%</span>
@@ -598,11 +601,11 @@
       };
       const diff = ch.difficulty || 'Medium';
       const dc = diffMap[diff] || diffMap.Medium;
-      const diffBadge = `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};white-space:nowrap;">${diff}</span>`;
+      const diffBadge = `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};white-space:nowrap;">${escHtml(diff)}</span>`;
 
       // Category badge (if not already expressed by challenge_type)
       const catBadge = (cat !== 'General' && cat.toLowerCase() !== ch.challenge_type)
-        ? `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.2);white-space:nowrap;">${cat}</span>`
+        ? `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.2);white-space:nowrap;">${escHtml(cat)}</span>`
         : '';
 
       // Expiry badge
@@ -614,13 +617,13 @@
         return `<div class="challenge-card" style="opacity:0.45;filter:grayscale(0.5);">
           <div class="challenge-card-top">
             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${escHtml(typeLabel)}</span>
               ${diffBadge}${catBadge}
             </div>
-            <span class="challenge-pts-badge">+${ch.points} pts</span>
+            <span class="challenge-pts-badge">+${escHtml(ch.points)} pts</span>
           </div>
-          <div class="challenge-title">${ch.title}</div>
-          <div class="challenge-desc">${ch.description || ''}</div>
+          <div class="challenge-title">${escHtml(ch.title)}</div>
+          <div class="challenge-desc">${escHtml(ch.description || '')}</div>
           <div class="challenge-footer">${expiryBadge}</div>
         </div>`;
       }
@@ -630,13 +633,13 @@
         return `<div class="challenge-card completed">
           <div class="challenge-card-top">
             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${escHtml(typeLabel)}</span>
               ${diffBadge}${catBadge}
             </div>
-            <span class="challenge-pts-badge">+${ch.points} pts</span>
+            <span class="challenge-pts-badge">+${escHtml(ch.points)} pts</span>
           </div>
-          <div class="challenge-title">${ch.title}</div>
-          <div class="challenge-desc">${ch.description || ''}</div>
+          <div class="challenge-title">${escHtml(ch.title)}</div>
+          <div class="challenge-desc">${escHtml(ch.description || '')}</div>
           <div class="challenge-footer">
             <span class="challenge-done">✓ Earned — ${when}</span>
             ${expiryBadge}
@@ -647,13 +650,13 @@
       return `<div class="challenge-card">
         <div class="challenge-card-top">
           <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-            <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+            <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${escHtml(typeLabel)}</span>
             ${diffBadge}${catBadge}
           </div>
-          <span class="challenge-pts-badge">+${ch.points} pts</span>
+          <span class="challenge-pts-badge">+${escHtml(ch.points)} pts</span>
         </div>
-        <div class="challenge-title">${ch.title}</div>
-        <div class="challenge-desc">${ch.description || ''}</div>
+        <div class="challenge-title">${escHtml(ch.title)}</div>
+        <div class="challenge-desc">${escHtml(ch.description || '')}</div>
         <div class="challenge-footer">
           ${expiryBadge || '<span style="color:var(--dim);font-size:0.78rem;">Complete an action to earn</span>'}
         </div>
@@ -732,23 +735,36 @@
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
         const today = new Date().toISOString().slice(0, 10);
-        const { data: row } = await VSSupabase.from('vault_members')
-          .select('challenge_streak, last_challenge_date')
-          .eq('id', session.user.id).single();
-        if (!row) return;
-
-        const lastDate = row.last_challenge_date;
-        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
         let newStreak = 1;
-        if (lastDate === today) {
-          newStreak = row.challenge_streak || 1; // already counted today
-        } else if (lastDate === yesterday) {
-          newStreak = (row.challenge_streak || 0) + 1;
-        }
 
-        await VSSupabase.from('vault_members')
-          .update({ challenge_streak: newStreak, last_challenge_date: today })
-          .eq('id', session.user.id);
+        // S368: the streak is computed server-side by record_challenge_streak()
+        // (members can no longer write challenge_streak directly). The legacy
+        // client-computed path below only runs if the RPC is not deployed yet.
+        const { data: rpcStreak, error: rpcErr } = await VSSupabase.rpc('record_challenge_streak');
+        const streakRpcMissing = window.VSPortalLogic ? VSPortalLogic.isMissingRpc(rpcErr) : !!rpcErr;
+        if (!rpcErr && rpcStreak && typeof rpcStreak === 'object') {
+          if (!rpcStreak.ok) return;
+          newStreak = Number(rpcStreak.streak) || 1;
+        } else if (!streakRpcMissing) {
+          return; // transient failure: the server keeps the streak, try next time
+        } else {
+          const { data: row } = await VSSupabase.from('vault_members')
+            .select('challenge_streak, last_challenge_date')
+            .eq('id', session.user.id).single();
+          if (!row) return;
+
+          const lastDate = row.last_challenge_date;
+          const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+          if (lastDate === today) {
+            newStreak = row.challenge_streak || 1; // already counted today
+          } else if (lastDate === yesterday) {
+            newStreak = (row.challenge_streak || 0) + 1;
+          }
+
+          await VSSupabase.from('vault_members')
+            .update({ challenge_streak: newStreak, last_challenge_date: today })
+            .eq('id', session.user.id);
+        }
 
         if (_currentMember) {
           _currentMember.challenge_streak = newStreak;
@@ -762,27 +778,42 @@
           streakBadge.style.display = '';
         }
 
-        // Streak milestone bonuses
+        // Streak milestone bonuses. award_points(p_reason, p_points, p_label,
+        // p_once_per) acts as auth.uid() and has no p_user_id parameter: the
+        // old call passed one, PostgREST found no matching function, and the
+        // 7- and 30-day bonuses never paid. record_challenge_streak() only
+        // advances the streak, so the bonus is awarded here, once per day.
         if (newStreak === 7 || newStreak === 30) {
           const bonus = newStreak === 7 ? 50 : 200;
-          await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: bonus, p_reason: 'challenge_streak_' + newStreak });
-          showXpChip(bonus, newStreak + '-day challenge streak!');
-          refreshPointsDisplay();
-        }
-
-        // First-completion micro-achievements
-        const { count } = await VSSupabase.from('challenge_submissions')
-          .select('id', { count: 'exact', head: true })
-          .eq('member_id', session.user.id);
-        const milestones = { 1: 'first_challenge', 5: 'challenge_5', 10: 'challenge_10' };
-        if (milestones[count]) {
-          // Award if not already in achievements
-          const alreadyHas = (_currentMember?.achievements || []).some(a => a.id === milestones[count]);
-          if (!alreadyHas) {
-            await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: 25, p_reason: milestones[count] });
-            const labels = { first_challenge: 'First Challenge', challenge_5: '5 Challenges', challenge_10: '10 Challenges' };
-            showXpChip(25, labels[milestones[count]] + ' milestone!');
+          const { data: bonusRes } = await Promise.resolve(VSSupabase.rpc('award_points', {
+            p_reason:   'challenge_streak_' + newStreak,
+            p_points:   bonus,
+            p_label:    newStreak + '-Day Challenge Streak',
+            p_once_per: 'day',
+          })).catch(() => ({ data: null }));
+          if (bonusRes && bonusRes.ok) {
+            showXpChip(bonus, newStreak + '-day challenge streak!');
+            refreshPointsDisplay();
           }
         }
+
+        // First-completion micro-achievements. Completions live in
+        // challenge_completions (user_id); challenge_submissions is the proof
+        // queue keyed by member_id and has never held a row.
+        const { count } = await Promise.resolve(VSSupabase.from('challenge_completions')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', session.user.id)).catch(() => ({ count: 0 }));
+        const milestones = { 1: 'first_challenge', 5: 'challenge_5', 10: 'challenge_10' };
+        if (milestones[count]) {
+          const labels = { first_challenge: 'First Challenge', challenge_5: '5 Challenges', challenge_10: '10 Challenges' };
+          const { data: microRes } = await Promise.resolve(VSSupabase.rpc('award_points', {
+            p_reason:   milestones[count],
+            p_points:   25,
+            p_label:    labels[milestones[count]] + ' milestone',
+            p_once_per: 'ever',
+          })).catch(() => ({ data: null }));
+          if (microRes && microRes.ok) showXpChip(25, labels[milestones[count]] + ' milestone!');
+        }
+        if (window.VSPortalLoop) VSPortalLoop.refreshInitiation();
       } catch (_) {}
     }

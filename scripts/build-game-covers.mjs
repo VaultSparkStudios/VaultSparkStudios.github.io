@@ -39,8 +39,8 @@ export const COVERS = [
   { cls: 'footballgm',  title: 'Franchise Architect',     eyebrow: 'NFL Front Office Sim',  hi: '#22c55e', lo: '#064e1e' },
   { cls: 'vaultfront',  title: 'VaultFront',      eyebrow: 'Real-Time Strategy',    hi: '#ffc400', lo: '#5c3d00' },
   { cls: 'solara',      title: 'Solara',          eyebrow: 'Roguelite RPG',         hi: '#c084fc', lo: '#3b0764' },
-  { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Cognitive Puzzle',      hi: '#06b6d4', lo: '#012d35' },
-  { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Narrative Survival',    hi: '#f97316', lo: '#4a1d05' },
+  { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Metacognition Platform',hi: '#06b6d4', lo: '#012d35' },
+  { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Engine-Building Card Game',hi: '#f97316', lo: '#4a1d05' },
   { cls: 'vault-sealed', title: 'Project ???',    eyebrow: 'Classified',            hi: '#64748b', lo: '#0f172a' },
   // S249 — bespoke covers for the 2 spotlit PROJECTS (not games) that S248's hero
   // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Franchise Architect);

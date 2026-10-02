@@ -56,12 +56,14 @@
     function showDashboard(member) {
       _currentMember = member;
 
-      // Reserve first-run onboarding before any login, rank, release-note, or
-      // recap timers can race it. The informational tour runs only later.
-      const needsOnboarding = !member.onboarding_completed
-        && !localStorage.getItem('onboarding_complete')
-        && member.points <= 0;
-      if (needsOnboarding) window.VSPortalAttention.claim('onboarding');
+      // A member in their first three days with Vault Initiation unfinished
+      // gets a quiet first session: the inline quest owns attention, so the
+      // rank, release-note and recap modals stay out of the way. (New members
+      // start with 10 points, so the old points <= 0 test never matched.)
+      const freshInitiate = window.VSPortalLogic
+        ? VSPortalLogic.isFreshInitiate(member)
+        : (Date.now() - new Date(member.createdAt).getTime() < 3 * 86400000);
+      if (freshInitiate) window.VSPortalAttention.claim('onboarding');
 
       document.getElementById('auth-view').style.display = 'none';
       document.getElementById('dashboard-view').style.display = 'block';
@@ -135,7 +137,9 @@
       // Referral link
       const refLink = document.getElementById('referralLink');
       if (refLink && member.username) {
-        refLink.textContent = 'https://vaultsparkstudios.com/vault-member/?ref=' + member.username;
+        refLink.textContent = window.VSPortalLogic
+          ? VSPortalLogic.referralLink(member.username)
+          : 'https://vaultsparkstudios.com/vault-member/?ref=' + encodeURIComponent(member.username);
       }
 
       const achEarned = (member.achievements || []).map(a => a.id);
@@ -309,27 +313,44 @@
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
 
-      // Feature 2: onboarding tour for new members
-      setTimeout(() => maybeStartOnboarding(member), 1200);
-
       // Feature 3: notification center
       initNotifCenter();
 
-      // Vault Command tab — VaultSpark account only
-      const isAdmin = member.username.toLowerCase() === 'vaultspark';
-      const adminTabEl    = document.getElementById('tab-dash-admin');
+      // Vault Command tab — VaultSpark account only.
+      // S368: the username match alone is a client-side claim; the tab is only
+      // revealed once the server-side is_vault_admin() RPC (security definer,
+      // supabase-investor-fix-admin.sql) confirms it. Admin data is still
+      // protected by RLS/RPC checks server-side — this only gates the UI.
+      // The Vault Command markup is not in the public portal HTML: it is
+      // fetched from /vault-member/admin/ (edge-session gated) and injected by
+      // VSPortalLoop.mountVaultCommand() only after the RPC confirms.
       const navAdminLink  = document.getElementById('nav-admin-link');
-      if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
-      if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
-      if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); loadAdminPolls(); }
+      if (navAdminLink) navAdminLink.style.display = 'none';
+      const usernameClaimsAdmin = String(member.username || '').toLowerCase() === 'vaultspark';
 
       // A #<tab> deep link (e.g. the account chip's #settings) wins over the
       // remembered tab; admin is never deep-linkable for non-admins.
       const hashTab = (window.location.hash || '').slice(1);
-      const deepTab = hashTab && document.getElementById('tab-dash-' + hashTab) && (hashTab !== 'admin' || isAdmin) ? hashTab : null;
+      const deepTab = hashTab && hashTab !== 'admin' && document.getElementById('tab-dash-' + hashTab) ? hashTab : null;
       const savedTab = localStorage.getItem('vs_active_tab');
       if (deepTab) switchDashTab(deepTab);
-      else if (savedTab && savedTab !== 'dashboard') switchDashTab(savedTab);
+      else if (savedTab && savedTab !== 'dashboard' && savedTab !== 'admin') switchDashTab(savedTab);
+
+      if (usernameClaimsAdmin) {
+        Promise.resolve(VSSupabase.rpc('is_vault_admin'))
+          .then(({ data, error }) => {
+            if (error || data !== true) return;
+            if (!window.VSPortalLoop) return;
+            return VSPortalLoop.mountVaultCommand().then((mounted) => {
+              if (!mounted) return;
+              if (navAdminLink) navAdminLink.style.display = '';
+              loadInvRequests('pending'); loadFanArtQueue('pending'); loadAdminPolls();
+              if (hashTab === 'admin' && document.getElementById('tab-dash-admin')) switchDashTab('admin');
+              else if (!deepTab && savedTab === 'admin') switchDashTab('admin');
+            });
+          })
+          .catch(() => {});
+      }
 
       // What's New modal — check for unread Studio Pulse entries
       setTimeout(() => checkWhatsNew(), 2500);
@@ -340,7 +361,9 @@
 
       // Phase 25: member spotlight + rank comparison
       setTimeout(() => loadMemberSpotlight(), 1500);
-      setTimeout(() => loadRankComparison(member), 1800);
+
+      // Return loop: since-last-visit, Vault Initiation, season, rival, games.
+      if (window.VSPortalLoop) VSPortalLoop.onDashboard(member);
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -393,6 +416,8 @@
         challenge_streak:     row.challenge_streak     || 0,
         last_challenge_date:  row.last_challenge_date  || null,
         public_profile:       row.public_profile       !== false,
+        season_xp:            row.season_xp            || 0,
+        current_season_id:    row.current_season_id    || null,
       };
     }
 
@@ -464,15 +489,29 @@
       'The Sparked':    'Maximum rank — achieved. You are the reason the vault exists. The spark is yours.',
     };
 
+    // The last celebrated rank is stored on the member (prefs.last_ceremony_rank)
+    // so a rank-up is celebrated once per account, not once per device. The
+    // per-user localStorage key is kept as a fallback and for older rows.
     function checkRankUp(member) {
       const rankIdx = VS.RANKS.findIndex(r => r.name === VS.getRank(member.points).name);
       const key = 'vs_rank_' + member._id;
-      const stored = localStorage.getItem(key);
-      if (stored !== null && rankIdx > parseInt(stored, 10)) {
-        if (showRankCeremony(VS.RANKS[rankIdx])) localStorage.setItem(key, rankIdx);
+      const prefs = window.VSPortalLoop ? VSPortalLoop.prefs : null;
+      let stored = member.prefs && member.prefs.last_ceremony_rank != null
+        && Number.isFinite(Number(member.prefs.last_ceremony_rank))
+        ? Number(member.prefs.last_ceremony_rank) : null;
+      if (stored === null) {
+        const local = localStorage.getItem(key);
+        stored = local !== null && Number.isFinite(parseInt(local, 10)) ? parseInt(local, 10) : null;
+      }
+      const persist = (idx) => {
+        localStorage.setItem(key, idx);
+        if (prefs && (!member.prefs || member.prefs.last_ceremony_rank !== idx)) prefs.save({ last_ceremony_rank: idx });
+      };
+      if (stored !== null && rankIdx > stored) {
+        if (showRankCeremony(VS.RANKS[rankIdx])) persist(rankIdx);
         return;
       }
-      localStorage.setItem(key, rankIdx);
+      if (stored === null || rankIdx > stored) persist(rankIdx);
     }
 
     function showRankCeremony(rank) {
@@ -516,150 +555,6 @@
       _releaseFocus(document.querySelector('.card-modal'));
     }
 
-    // ── Feature 2: Onboarding tour ────────────────────────────────
-    const ONBOARDING_STEPS = [
-      {
-        title:      'Welcome to the Vault',
-        desc:       'You\'re in. This is your Vault Member portal — the hub for your rank, achievements, challenges, and classified lore. Let\'s take a quick look around.',
-        targetId:   'profile-card',
-        emoji:      '🔓',
-      },
-      {
-        title:      'Your Dashboard',
-        desc:       'This rank progress bar tracks your Vault Points. Earn XP to rank up through 9 tiers — from Spark Initiate all the way to The Sparked — and unlock exclusive lore.',
-        targetId:   'profile-card',
-        emoji:      '⚡',
-      },
-      {
-        title:      'Take on Challenges',
-        desc:       'Complete challenges to earn XP fast. New challenges drop weekly — check back every Monday for a fresh set of missions.',
-        targetId:   'tab-dash-challenges',
-        emoji:      '🎯',
-      },
-      {
-        title:      'Classified Archive',
-        desc:       'Your rank unlocks classified intel files. Keep grinding — higher ranks reveal deeper secrets about the Vault universe and its entities.',
-        targetId:   'tab-dash-archive',
-        emoji:      '📁',
-      },
-      {
-        title:      'Customize Your Profile',
-        desc:       'Set your avatar and write a bio to earn your first bonus XP. Your member card is unique — download it and share your rank with the world.',
-        targetId:   'tab-dash-settings',
-        emoji:      '✍️',
-      },
-    ];
-
-    let _onboardingStep = 0;
-
-    function maybeStartOnboarding(member) {
-      // Check DB flag first (populated after SQL migration: ALTER TABLE vault_members ADD COLUMN onboarding_completed boolean DEFAULT false)
-      if (member.onboarding_completed) { localStorage.setItem('onboarding_complete', '1'); return; }
-      if (localStorage.getItem('onboarding_complete')) return;
-      if (member.points > 0) { localStorage.setItem('onboarding_complete', '1'); return; }
-      if (!window.VSPortalAttention.claim('onboarding')) return;
-      _lastFocus = document.activeElement;
-      _onboardingStep = 0;
-      renderOnboardingStep();
-      document.getElementById('onboarding-overlay').style.display = '';
-      setTimeout(() => _trapFocus(document.getElementById('onboarding-card')), 50);
-    }
-
-    function renderOnboardingStep() {
-      const step  = ONBOARDING_STEPS[_onboardingStep];
-      const total = ONBOARDING_STEPS.length;
-      const overlay = document.getElementById('onboarding-overlay');
-      if (!overlay || !step) return;
-
-      document.getElementById('onboarding-step-label').textContent = 'Step ' + (_onboardingStep + 1) + ' / ' + total;
-      document.getElementById('onboarding-title').textContent      = step.emoji + ' ' + step.title;
-      document.getElementById('onboarding-desc').textContent       = step.desc;
-      document.getElementById('onboarding-next-btn').textContent   = _onboardingStep === total - 1 ? 'Enter the Vault →' : 'Next →';
-
-      // Build step dots
-      const dotsEl = document.getElementById('onboarding-dots');
-      if (dotsEl) {
-        dotsEl.innerHTML = ONBOARDING_STEPS.map((_, i) =>
-          '<div style="width:7px;height:7px;border-radius:50%;background:' + (i === _onboardingStep ? 'var(--gold)' : 'rgba(255,255,255,0.18)') + ';transition:background 0.2s;"></div>'
-        ).join('');
-      }
-
-      // Position spotlight on target element
-      const targetEl = step.targetId ? document.getElementById(step.targetId) : null;
-      const spotlight = document.getElementById('onboarding-spotlight');
-      const card      = document.getElementById('onboarding-card');
-
-      if (targetEl && spotlight) {
-        const rect    = targetEl.getBoundingClientRect();
-        const pad     = 8;
-        spotlight.style.left   = (rect.left - pad) + 'px';
-        spotlight.style.top    = (rect.top + window.scrollY - pad) + 'px';
-        spotlight.style.width  = (rect.width + pad * 2) + 'px';
-        spotlight.style.height = (rect.height + pad * 2) + 'px';
-
-        // Position card below or above target
-        if (card) {
-          const cardH = 220;
-          const cardW = 360;
-          let cardTop  = rect.bottom + window.scrollY + 18;
-          let cardLeft = rect.left;
-          if (cardTop + cardH > window.innerHeight + window.scrollY - 20) {
-            cardTop = rect.top + window.scrollY - cardH - 18;
-          }
-          if (cardLeft + cardW > window.innerWidth - 16) {
-            cardLeft = window.innerWidth - cardW - 16;
-          }
-          if (cardLeft < 8) cardLeft = 8;
-          card.style.left = cardLeft + 'px';
-          card.style.top  = cardTop + 'px';
-          card.style.bottom = '';
-          card.style.right  = '';
-        }
-      } else if (card) {
-        // Centre card if no target
-        card.style.left   = '50%';
-        card.style.top    = '50%';
-        card.style.transform = 'translate(-50%,-50%)';
-        if (spotlight) { spotlight.style.width = '0'; spotlight.style.height = '0'; }
-      }
-
-      // Highlight the target element briefly
-      if (targetEl) {
-        targetEl.style.position = 'relative';
-        targetEl.style.zIndex   = '1103';
-      }
-    }
-
-    function onboardingNext() {
-      // Clear z-index on current target
-      const cur = ONBOARDING_STEPS[_onboardingStep];
-      if (cur && cur.targetId) {
-        const el = document.getElementById(cur.targetId);
-        if (el) { el.style.zIndex = ''; }
-      }
-
-      _onboardingStep++;
-      if (_onboardingStep >= ONBOARDING_STEPS.length) {
-        onboardingSkip();
-      } else {
-        renderOnboardingStep();
-      }
-    }
-
-    function onboardingSkip() {
-      // Clear any lingering z-index overrides
-      ONBOARDING_STEPS.forEach(s => {
-        if (s.targetId) {
-          const el = document.getElementById(s.targetId);
-          if (el) el.style.zIndex = '';
-        }
-      });
-      localStorage.setItem('onboarding_complete', '1');
-      const overlay = document.getElementById('onboarding-overlay');
-      if (overlay) overlay.style.display = 'none';
-      _releaseFocus(document.getElementById('onboarding-card'));
-      // Persist to DB so new devices skip the tour
-      VSSupabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) VSSupabase.from('vault_members').update({ onboarding_completed: true }).eq('id', session.user.id).catch(() => {});
-      });
-    }
+    // The spotlight onboarding overlay was removed (S368): new members start
+    // with 10 points, so it never ran and instead marked onboarding complete.
+    // Vault Initiation (portal-loop.js) is the single onboarding path.

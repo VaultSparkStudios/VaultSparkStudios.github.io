@@ -1,17 +1,31 @@
 // VaultSpark Studios — Stripe Checkout Session Creator
-// Plans: vault_sparked, vault_sparked_pro (phase-aware monthly),
-//        vault_sparked_annual, vault_sparked_pro_annual (fixed annual),
-//        promogrind_pro (legacy env-var).
+// Plans: vault_sparked (VaultSparked), vault_sparked_pro (VaultSparked Eternal),
+//        phase-aware monthly; promogrind_pro (legacy env-var).
+// D-S368.1: monthly only. vault_sparked_annual / vault_sparked_pro_annual are
+//        refused with 400 annual_not_offered unless ANNUAL_ENABLED=true.
+// Double billing: a caller with a live subscription gets 409 already_subscribed
+//        (same plan) or 409 plan_change_via_billing + portal:true (other plan).
+// Phase slots: the session is priced with current_phase_price(); the slot is
+//        only counted on payment, by stripe-webhook via claim_phase_slot().
 //
 // Deploy: supabase functions deploy create-checkout
 // Set secrets:
 //   supabase secrets set STRIPE_SECRET_KEY=sk_live_...
 //   supabase secrets set APP_URL=https://vaultsparkstudios.com
+// Optional (default off): ANNUAL_ENABLED=true re-opens annual checkout.
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
 import { normalizePlanKey } from '../_shared/membershipAccess.ts';
+import {
+  annualGate,
+  envFlagEnabled,
+  existingSubscriptionGate,
+  isAnnualPlan,
+  isMonthlyPhasePlan,
+  isUsablePriceId,
+} from './policy.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
@@ -19,6 +33,7 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
 });
 
 const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
+const ANNUAL_ENABLED = envFlagEnabled(Deno.env.get('ANNUAL_ENABLED'));
 
 const SUCCESS_URLS: Record<string, string> = {
   vault_sparked:          `${APP_URL}/vault-member/?checkout=success&plan=sparked`,
@@ -29,6 +44,7 @@ const SUCCESS_URLS: Record<string, string> = {
 };
 
 // Fixed annual Stripe price IDs — not phase-gated (annual is a flat rate).
+// Only reachable when ANNUAL_ENABLED is on; annual is not offered (D-S368.1).
 const ANNUAL_PRICE_IDS: Record<string, string> = {
   vault_sparked_annual:     'price_1TNJPfGMN60PfJYsHKVkjL12',
   vault_sparked_pro_annual: 'price_1TNJPtGMN60PfJYsAXZYQNVj',
@@ -72,28 +88,45 @@ serve(async (req: Request) => {
     } catch { /* no body or invalid JSON — use defaults */ }
     const plan = normalizePlanKey(requestedPlan);
 
-    // For phase-based plans, reserve a slot to get the correct price ID
+    // Annual is not offered (D-S368.1) unless explicitly re-enabled.
+    const annualRejection = annualGate(plan, ANNUAL_ENABLED);
+    if (annualRejection) return json(annualRejection.body, cors, annualRejection.status);
+
+    // Existing subscription row (one per user — stripe-webhook upserts on user_id).
+    const { data: sub } = await supabase
+      .from('subscriptions')
+      .select('stripe_customer_id, stripe_subscription_id, plan, status')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    // Double-billing guard for VaultSparked / VaultSparked Eternal.
+    if (isMonthlyPhasePlan(plan) || isAnnualPlan(plan)) {
+      const rejection = existingSubscriptionGate(plan, sub, normalizePlanKey);
+      if (rejection) return json(rejection.body, cors, rejection.status);
+    }
+
+    // Phase-based plans: read the current phase price. The slot itself is only
+    // claimed when payment completes (stripe-webhook → claim_phase_slot).
     let priceId: string;
     let enrolledPhase = 1;
 
     if (ANNUAL_PRICE_IDS[plan]) {
-      // Annual plans — fixed price, no phase slot needed.
+      // Annual plans — fixed price, no phase slot needed (ANNUAL_ENABLED only).
       priceId = ANNUAL_PRICE_IDS[plan];
-    } else if (plan === 'vault_sparked' || plan === 'vault_sparked_pro') {
-      const { data: slotData, error: slotError } = await supabase
-        .rpc('reserve_phase_slot', { p_plan_key: plan });
+    } else if (isMonthlyPhasePlan(plan)) {
+      const { data: phaseData, error: phaseError } = await supabase
+        .rpc('current_phase_price', { p_plan: plan });
 
-      if (slotError || !slotData?.ok) {
-        console.error('reserve_phase_slot error:', slotError, slotData);
+      if (phaseError || !phaseData?.ok) {
+        console.error('current_phase_price error:', phaseError, phaseData);
         return json({ error: 'Plan unavailable' }, cors, 400);
       }
 
-      priceId = slotData.stripe_price_id as string;
-      enrolledPhase = (slotData.phase as number) ?? 1;
-
-      if (!priceId) {
+      if (!isUsablePriceId(phaseData.stripe_price_id)) {
         return json({ error: 'No price ID configured for this phase' }, cors, 400);
       }
+      priceId = phaseData.stripe_price_id;
+      enrolledPhase = Number(phaseData.phase) || 1;
     } else if (plan === 'promogrind_pro') {
       // Legacy plan — still use env var
       priceId = Deno.env.get('STRIPE_PRICE_ID') ?? '';
@@ -104,12 +137,6 @@ serve(async (req: Request) => {
 
     // Look up or create Stripe customer
     let customerId: string | undefined;
-    const { data: sub } = await supabase
-      .from('subscriptions')
-      .select('stripe_customer_id')
-      .eq('user_id', user.id)
-      .maybeSingle();
-
     if (sub?.stripe_customer_id) {
       customerId = sub.stripe_customer_id;
     } else {

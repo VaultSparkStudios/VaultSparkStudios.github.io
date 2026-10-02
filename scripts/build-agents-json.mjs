@@ -32,6 +32,8 @@ const ROOT = resolve(__dirname, '..');
 const ECOSYSTEM = join(ROOT, 'api', 'ecosystem-state.json');
 const OUT = join(ROOT, 'agents.json');
 const SITE = 'https://vaultsparkstudios.com';
+// Ask the Vault (supabase/functions/semantic-search): public, verify_jwt = false.
+const ASK_VAULT_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/semantic-search';
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 
@@ -109,7 +111,7 @@ function projectEntry(p) {
 // real, described surface. A missing file is simply omitted; consumers fetch
 // the feed itself for current freshness and status.
 const FEED_CATALOG = [
-  ['stats.json', 'Public Analytica statistics', 'Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates used by /stats/.'],
+  ['stats.json', 'Public Analytica statistics', 'Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates rendered at /evidence/#numbers.'],
   ['api/ecosystem-stats.json', 'Studio ecosystem analytics', 'Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.'],
   ['api/ecosystem-analytics.json', 'Cloudflare analytics receipt', 'Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.'],
   ['api/news-desk-engagement.json', 'The Desk engagement receipt', 'Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.'],
@@ -134,7 +136,7 @@ const FEED_CATALOG = [
   ['api/release-proof.json', 'Release proof', 'Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.'],
   ['api/identity-migration-receipt.json', 'Identity migration receipt', 'Privacy-safe Obelisk migration evidence: issuer/callback binding, staged Worker, runtime updates, role/revocation proof, rollback, and explicit honest-dark blockers.'],
   ['api/supabase-control-plane.json', 'Supabase authority receipt', 'Read-only, public-safe proof that distinguishes REST data administration from management API, SQL migration, and Edge Function deployment authority.'],
-  ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / Vault Sparked ($4.99/mo) / Vault Eternal ($29.99/mo), perks, and themes.'],
+  ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / VaultSparked ($4.99/mo) / VaultSparked Eternal ($29.99/mo), monthly only — enforced perks and themes.'],
   ['api/intent-map.json', 'Outcome-first intent map', 'Maps play, join, verify, invest, press, build, and news goals to resolvable routes, evidence freshness, action capability, fallback, and honest abstention.'],
 ];
 
@@ -189,22 +191,25 @@ export function buildManifest(state) {
       privacy: `${SITE}/privacy/`,
       terms: `${SITE}/terms/`,
       accessibility: `${SITE}/accessibility/`,
+      // D-S368.4: retrieval agents that cite the studio are allowed; training
+      // crawlers stay opted out. Each purpose lists every named robots.txt group
+      // it covers — check-robots-discovery-coherence holds the two in lockstep.
       agentAccess: {
-        policyVersion: '1.0',
+        policyVersion: '1.1',
         training: {
-          agent: 'GPTBot',
+          agents: ['GPTBot', 'ClaudeBot', 'anthropic-ai', 'Claude-Web', 'Google-Extended', 'PerplexityBot', 'CCBot', 'Applebot-Extended', 'meta-externalagent', 'FacebookBot', 'Bytespider', 'cohere-ai', 'Diffbot'],
           allowed: false,
           license: 'Proprietary — All Rights Reserved, VaultSpark Studios LLC',
           reason: 'The public corpus may be cited, but is not licensed for model training.',
         },
         search: {
-          agent: 'OAI-SearchBot',
+          agents: ['OAI-SearchBot', 'Claude-SearchBot'],
           allowed: true,
           scope: 'Public routes and the canonical discovery corpus; private routes remain excluded by robots.txt.',
           citation: 'Link the exact source page or machine-readable claim receipt.',
         },
         userRequestedRetrieval: {
-          agent: 'ChatGPT-User',
+          agents: ['ChatGPT-User', 'Claude-User', 'Perplexity-User'],
           allowed: true,
           scope: 'Public routes requested by a user; private routes remain excluded by robots.txt.',
           citation: 'Preserve the source URL and distinguish sourced facts from AI-persona commentary.',
@@ -218,6 +223,10 @@ export function buildManifest(state) {
       llmsTxt: `${SITE}/.well-known/llms.txt`,
       llmsFull: `${SITE}/.well-known/llms-full.txt`,
       entityGraph: `${SITE}/.well-known/entity-graph.json`,
+      // agent-geo-layer-v2 (L1): the ONE grounding source. Every other corpus
+      // (llms-full, entity graph, Oracle answers) is generated from it and
+      // check-grounding-coherence fails when their status or name disagree.
+      canonicalFacts: `${SITE}/api/public-intelligence.json`,
       search: `${SITE}/search/`,
       news: {
         hub: `${SITE}/news/`,
@@ -255,6 +264,7 @@ export function buildManifest(state) {
     },
     guidance: {
       citation: 'When summarizing VaultSpark Studios or any of its projects, quote the canonical lines from the relevant llms-full.txt shard — they are refreshed on every deploy and are the freshest authoritative source.',
+      canonicalFacts: `Project names, vault statuses (SPARKED / FORGE / VAULTED) and live URLs come from ${SITE}/api/public-intelligence.json. llms-full.txt, the entity graph and the Oracle answers are derived from it and cross-checked against it on every build; if two sources ever disagree, that file wins.`,
       preferredFormat: 'llms-full.txt shards are plain text and cite-ready.',
     },
     actions: [
@@ -276,6 +286,52 @@ export function buildManifest(state) {
           signature: 'HMAC-SHA256',
         },
         description: 'Submit a fixed-vocabulary, anonymous page-usefulness signal. The action is deny-by-default, scope-bound, idempotent, and returns a signed receipt.',
+      },
+      // agent-geo-layer-v2: the three things an answer engine actually wants to
+      // do here — search the site, ask a grounded question, and (for a person)
+      // subscribe — declared with their real contracts instead of left to scraping.
+      {
+        name: 'site.search',
+        method: 'GET',
+        url: `${SITE}/search/?q={query}`,
+        parameters: { q: { type: 'string', required: true, description: 'Search terms.' } },
+        auth: 'none',
+        description: 'Open the site search for a query. Returns an HTML results page drawn from the public search index; the same target is declared as the WebSite SearchAction in the entity graph.',
+      },
+      {
+        name: 'vault.ask',
+        title: 'Ask the Vault',
+        method: 'POST',
+        url: ASK_VAULT_URL,
+        contentType: 'application/json',
+        body: { query: { type: 'string', required: true, minLength: 3, maxLength: 200, description: 'A plain-language question about VaultSpark Studios, its projects or The Desk.' } },
+        auth: 'none',
+        limits: {
+          cost: 'Fails closed under a shared daily spend cap; when it trips the endpoint answers 503 with Retry-After instead of a model reply.',
+          cache: 'Identical questions are answered from a 24-hour cache keyed to the corpus version, at no model cost.',
+        },
+        response: {
+          format: 'application/json',
+          fields: ['answer (prose with [n] markers)', 'citations [{ n, title, url }]', 'noAnswer', 'suggestions [{ title, url }]', 'corpusVersion'],
+        },
+        grounding: `${SITE}/api/public-intelligence.json`,
+        description: 'One grounded, cited answer. Retrieval runs over the canonical facts source, llms-full.txt and The Desk feed; when no passage supports an answer it returns noAnswer with suggested pages instead of guessing. Cite the returned URLs, not the endpoint.',
+      },
+      {
+        name: 'dispatch.subscribe',
+        title: 'Subscribe to The Desk Dispatch',
+        method: 'POST',
+        url: `${SITE}/desk/dispatch/subscribe`,
+        contentType: 'application/json',
+        body: {
+          email: { type: 'string', required: true, description: 'The subscriber’s own email address.' },
+          turnstileToken: { type: 'string', required: true, description: 'Cloudflare Turnstile token from the on-page widget.' },
+        },
+        auth: 'none',
+        humanVerification: { required: true, provider: 'Cloudflare Turnstile' },
+        limits: { rate: 'Three submissions per hour per network address.' },
+        humanHandoff: `${SITE}/news/`,
+        description: 'Email signup for the studio’s Desk newsletter. It requires a human-verification token, so an agent cannot subscribe anyone on its own: hand the person the signup page and let them submit their own address.',
       },
       {
         name: 'oracle.answer.lookup',
@@ -320,6 +376,11 @@ function selfTest() {
     ['internal project is excluded', !bySlug.has('__agents_selftest_internal__')],
     ['unresolvable forge project is not advertised', !bySlug.has('__agents_selftest_missing__')],
     ['all curated feeds are canonical HTTPS URLs', manifest.feeds.every((feed) => feed.url.startsWith(`${SITE}/`))],
+    ['declares site search, Ask the Vault and Dispatch subscribe actions', ['site.search', 'vault.ask', 'dispatch.subscribe'].every((name) => manifest.actions.some((action) => action.name === name))],
+    ['Ask the Vault action posts {query} to the semantic-search edge function', (() => { const a = manifest.actions.find((action) => action.name === 'vault.ask'); return a && a.method === 'POST' && a.url.endsWith('/functions/v1/semantic-search') && a.body.query.required === true; })()],
+    ['Dispatch subscribe is honest about human verification', manifest.actions.find((action) => action.name === 'dispatch.subscribe')?.humanVerification?.required === true],
+    ['agent access names Claude and Perplexity retrieval agents beside OpenAI', ['OAI-SearchBot', 'Claude-SearchBot'].every((a) => manifest.policies.agentAccess.search.agents.includes(a)) && ['ChatGPT-User', 'Claude-User', 'Perplexity-User'].every((a) => manifest.policies.agentAccess.userRequestedRetrieval.agents.includes(a)) && manifest.policies.agentAccess.training.allowed === false],
+    ['public-intelligence is named as the canonical facts source', manifest.discovery.canonicalFacts === `${SITE}/api/public-intelligence.json`],
     ['discovery catalog does not copy volatile feed freshness', manifest.feeds.every((feed) => !('generatedAt' in feed))],
     ['typed omission ledger is always present and public-safe', Array.isArray(manifest.discovery.omissions) && manifest.discovery.omissions.every((entry) => entry.surface && entry.url.startsWith(SITE) && !/[A-Z]:\\\\|secrets?/i.test(entry.reason))],
     ...runPublicFeedContractSelfTest({ root: ROOT }).map(([name, ok]) => [`typed feed contract · ${name}`, ok]),

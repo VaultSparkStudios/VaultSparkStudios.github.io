@@ -104,6 +104,10 @@ const SHELL_ASSETS = [
   // S358: now reads the reader changelog instead of commit sentences, and the
   // content lane could not have shipped that change to an unhashed name.
   { key: 'returningSignalStrip', source: 'assets/returning-signal-strip.js', stem: 'returning-signal-strip.shell', attribute: 'src' },
+  // Audit vault-door-hero (2026-10-02): homepage Vault Door enhancer + /universe/ constellation.
+  // Plain executable assets are withheld by the content lane, so both are content-addressed.
+  { key: 'vaultDoor', source: 'assets/vault-door.js', stem: 'vault-door.shell', attribute: 'src' },
+  { key: 'universeMap', source: 'assets/universe-map.js', stem: 'universe-map.shell', attribute: 'src' },
 ];
 
 // Parent shell assets whose SOURCE names a child shell asset by its plain path.

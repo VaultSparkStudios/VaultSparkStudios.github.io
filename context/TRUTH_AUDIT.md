@@ -1,3 +1,13 @@
+## S368 Membership, Season and Project Truth Now Come From One Source Each (2026-10-02)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | api/membership-tiers.json is the single tier source (names, monthly prices, enforced perks, annual comingLater); the live seasons table now matches data/seasons.json. |
+| Prompt/template alignment | 4 | Ask IGNIS and Ask the Vault prompts carry the ruled tiers; the repo closeout template still describes the retired /500 rubric. |
+| Public claim accuracy | 5 | Unbuilt perks, the $24.99 portal price, free-signup promises, stale project descriptions and GitHub Pages hosting claims removed; statuses render from the registry. |
+| Internal consistency | 5 | Registry-surface, grounding-coherence, entity-graph and content-coherence gates tie pages, llms files, the entity graph and Oracle answers to public-intelligence. |
+| Evidence freshness | 4 | Live probes verified seasons, caller checks and the cache privacy fix; site-wide receipts must be re-bound after the final build. |
+
 ## S367 Public Statuses Now Match Canon, and the Signup Door Was Found Closed (2026-10-01)
 
 | Dimension | Score | Evidence |

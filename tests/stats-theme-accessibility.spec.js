@@ -4,7 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 const themes = ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast'];
 const surfaces = [
   { name: 'homepage showcase', path: '/', selector: '[data-analytica-surface="showcase"]', state: '[data-analytica-surface]' },
-  { name: 'public stats report', path: '/stats/', selector: 'body', state: '[data-analytica-surface]' },
+  { name: 'public stats report', path: '/evidence/#numbers', selector: 'body', state: '[data-analytica-surface]' },
   { name: 'ecosystem stats report', path: '/stats/ecosystem/', selector: 'body', state: '[data-ecosystem-stats]' },
   { name: 'Desk reader and panel controls', path: '/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1', selector: 'body', state: null },
 ];

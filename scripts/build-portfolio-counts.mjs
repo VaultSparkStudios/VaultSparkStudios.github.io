@@ -74,7 +74,9 @@ export function injectCounts(html, counts) {
   return { html: out, changed: out !== html };
 }
 
-if (SELF_TEST) {
+const IS_MAIN = process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('scripts/build-portfolio-counts.mjs');
+
+if (IS_MAIN && SELF_TEST) {
   let fail = 0;
   const a = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } else console.log('  ✓ ' + m); };
   a(toWord(6) === 'six' && toWord(14) === 'fourteen' && toWord(0) === 'zero', 'number→word');
@@ -101,6 +103,8 @@ if (SELF_TEST) {
   process.exit(fail ? 1 : 0);
 }
 
+// Import-safe (S368): derive-registry-surfaces.mjs reuses toWord; side effects only when run directly.
+if (IS_MAIN) {
 const feed = JSON.parse(readFileSync(FEED, 'utf8'));
 const catalog = feed.catalog || [];
 const counts = countsFromCatalog(catalog, feed.portfolio?.total);
@@ -113,3 +117,4 @@ if (CHECK) {
 }
 if (changed) { writeFileSync(PRESS, next); console.log(`✓ build-portfolio-counts → press kit (${counts.sparked} sparked · ${counts.forge} forge · ${counts.vaulted} vaulted)`); }
 else console.log('build-portfolio-counts: already in sync');
+}

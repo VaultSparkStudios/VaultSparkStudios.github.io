@@ -22,6 +22,7 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { WEBSITE_REF } from './lib/org-entity.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PROD = 'https://vaultsparkstudios.com';
@@ -66,7 +67,7 @@ export function buildLd(kind, entries) {
       '@type': 'CollectionPage',
       name: 'Signal Log — VaultSpark Studios',
       url: `${PROD}/journal/`,
-      isPartOf: { '@type': 'WebSite', url: PROD },
+      isPartOf: WEBSITE_REF,
       mainEntity: itemList,
     };
   }
@@ -95,7 +96,7 @@ export function buildLd(kind, entries) {
       '@type': 'CollectionPage',
       name: 'Changelog — VaultSpark Studios',
       url: `${PROD}/changelog/`,
-      isPartOf: { '@type': 'WebSite', url: PROD },
+      isPartOf: WEBSITE_REF,
     };
   }
   throw new Error('unknown kind ' + kind);

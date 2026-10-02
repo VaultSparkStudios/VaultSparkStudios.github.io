@@ -16,51 +16,60 @@
         if (error) throw new Error(error.message);
 
         if (!data || !data.season) {
-          el.innerHTML = '<p class="season-no-data">No active season right now. Check back soon.</p>';
+          el.innerHTML = '<p class="season-no-data">No active season right now. The next season is announced before it starts.</p>';
           return;
         }
 
-        const { season, member_xp, tiers } = data;
-        const xp = member_xp || 0;
-        const maxXp = tiers && tiers.length ? tiers[tiers.length - 1].xp_required : 1;
-        const barPct = Math.min(100, Math.round((xp / maxXp) * 100));
+        // get_season_pass() returns { season, user_xp, tiers }. The client read
+        // a field the RPC never sent, so season XP always showed 0.
+        const { season, tiers } = data;
+        const xp = Number(data.user_xp ?? (_currentMember && _currentMember.season_xp) ?? 0) || 0;
+        const tierList = Array.isArray(tiers) ? tiers.slice().sort((a, b) => a.xp_required - b.xp_required) : [];
+        const maxXp = tierList.length ? tierList[tierList.length - 1].xp_required : 1;
+        const barPct = Math.min(100, Math.round((xp / Math.max(1, maxXp)) * 100));
+        const nextTier = tierList.find(t => xp < t.xp_required) || null;
+        const ended = season.end_at && Date.parse(season.end_at) <= Date.now();
 
-        const endDate = season.end_at ? new Date(season.end_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+        const endDate = season.end_at ? new Date(season.end_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : '';
 
-        const tiersHtml = (tiers || []).map(tier => {
+        const tiersHtml = tierList.map(tier => {
           const unlocked = xp >= tier.xp_required;
-          return `<div class="season-tier" style="background:${unlocked ? 'rgba(255,196,0,0.06)' : 'rgba(255,255,255,0.02)'};border:1px solid ${unlocked ? 'rgba(255,196,0,0.2)' : 'rgba(255,255,255,0.06)'};">
-            <span class="season-tier-icon">${unlocked ? '🔓' : '🔒'}</span>
+          return `<div class="season-tier${unlocked ? ' is-unlocked' : ''}">
+            <span class="season-tier-icon" aria-hidden="true">${unlocked ? '✦' : '○'}</span>
             <div class="season-tier-info">
-              <div class="season-tier-name" style="color:${unlocked ? '#fff' : 'var(--muted)'};">Tier ${tier.tier} — ${tier.reward_label}</div>
-              <div class="season-tier-xp">${tier.xp_required.toLocaleString()} XP required</div>
+              <div class="season-tier-name">Tier ${escHtml(tier.tier)} · ${escHtml(tier.reward_label)}</div>
+              <div class="season-tier-xp">${Number(tier.xp_required).toLocaleString()} season XP</div>
             </div>
-            ${unlocked ? '<span class="season-tier-unlocked">Unlocked</span>' : ''}
+            ${unlocked ? '<span class="season-tier-unlocked">Earned</span>' : ''}
           </div>`;
         }).join('');
 
         el.innerHTML = `
           <div class="season-header">
-            <div class="season-label">Active Season</div>
+            <div class="season-label">${ended ? 'Season ended' : 'Active season'}</div>
             <div class="season-name">${escHtml(season.name)}</div>
-            ${season.banner_text ? `<div class="season-banner">${escHtml(season.banner_text)}</div>` : ''}
-            ${endDate ? `<div class="season-end">Ends ${endDate}</div>` : ''}
+            ${season.banner_text && !ended ? `<div class="season-banner">${escHtml(season.banner_text)}</div>` : ''}
+            ${endDate ? `<div class="season-end">${ended ? 'Ended' : 'Ends'} ${escHtml(endDate)}</div>` : ''}
           </div>
 
           <div class="season-xp-wrap">
             <div class="season-xp-row">
-              <span class="season-xp-label">Season XP</span>
+              <span class="season-xp-label">Your season XP</span>
               <span class="season-xp-value">${xp.toLocaleString()} / ${maxXp.toLocaleString()}</span>
             </div>
-            <div class="season-xp-track">
+            <div class="season-xp-track" role="progressbar" aria-label="Season XP toward the top tier" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${barPct}">
               <div class="season-xp-fill" style="width:${barPct}%;"></div>
             </div>
+            <div class="season-xp-next">${nextTier
+              ? escHtml((nextTier.xp_required - xp).toLocaleString() + ' XP to ' + nextTier.reward_label)
+              : (tierList.length ? 'Every season tier earned.' : '')}</div>
           </div>
 
-          <div class="season-tier-label">Battle Pass Tiers</div>
-          ${tiersHtml}`;
+          <div class="season-tier-label">Season tiers · recognition</div>
+          <p class="season-tier-note">Tiers are season recognition: a badge, a title and a permanent record. Vault Point rewards for the season are shown on your dashboard standings.</p>
+          ${tiersHtml || '<p class="season-no-data">Tiers for this season are not published yet.</p>'}`;
       } catch (err) {
-        if (el) el.innerHTML = `<p class="season-error">Could not load season pass. Try again later.</p>`;
+        if (el) el.innerHTML = `<p class="season-error">Could not load the season pass. Try again later.</p>`;
       }
     }
 
@@ -349,7 +358,7 @@
         if (reg) {
           const sub = await reg.pushManager.getSubscription();
           if (sub) {
-            await VSSupabase.rpc('delete_push_subscription', { p_endpoint: sub.endpoint }).catch(() => {});
+            await Promise.resolve(VSSupabase.rpc('delete_push_subscription', { p_endpoint: sub.endpoint })).catch(() => {});
             await sub.unsubscribe();
           }
         }
@@ -504,26 +513,26 @@
       let actionHtml;
       if (info.claimed) {
         actionHtml = `
-          <div class="beta-key-code" id="key-code-${slug}">${info.claimed.key_code}</div>
+          <div class="beta-key-code" id="key-code-${escAttr(slug)}">${escHtml(info.claimed.key_code)}</div>
           <div class="beta-key-actions">
-            <button class="beta-copy-btn" data-member-action="copy-key" data-slug="${slug}">Copy Key</button>
+            <button class="beta-copy-btn" data-member-action="copy-key" data-slug="${escAttr(slug)}">Copy Key</button>
             <span class="beta-claimed-tag">✓ Claimed</span>
           </div>`;
       } else if (info.available.length > 0) {
         const requiredPlan = info.available[0].required_plan || 'free';
         const planLabel = VSMembership.getPlan(requiredPlan).label;
         actionHtml = `
-          <p class="beta-available-desc">A beta key is available for your current ${planLabel} access tier and Vault Rank.</p>
+          <p class="beta-available-desc">A beta key is available for your current ${escHtml(planLabel)} access tier and Vault Rank.</p>
           <div class="beta-key-actions">
-            <button class="beta-claim-btn" id="claim-btn-${slug}" data-member-action="claim-key" data-slug="${slug}">Claim Key →</button>
+            <button class="beta-claim-btn" id="claim-btn-${escAttr(slug)}" data-member-action="claim-key" data-slug="${escAttr(slug)}">Claim Key →</button>
           </div>`;
       } else {
         actionHtml = '<p class="beta-no-keys">No keys available right now.</p>';
       }
       return `<div class="beta-key-card">
         <div class="beta-key-game">
-          <span class="beta-key-game-icon">${icon}</span>
-          <span class="beta-key-game-name">${name}</span>
+          <span class="beta-key-game-icon">${escHtml(icon)}</span>
+          <span class="beta-key-game-name">${escHtml(name)}</span>
         </div>
         ${actionHtml}
       </div>`;
@@ -591,7 +600,7 @@
       });
 
       if (error || data?.error) {
-        list.innerHTML = `<span class="inv-error">Error: ${data?.error || error?.message}</span>`;
+        list.innerHTML = `<span class="inv-error">Error: ${escHtml(data?.error || error?.message)}</span>`;
         return;
       }
 
@@ -617,7 +626,7 @@
           <div class="inv-header">
             <strong class="inv-name">${escHtml(r.full_name)}</strong>
             <a href="mailto:${escHtml(r.email)}" class="inv-email">${escHtml(r.email)}</a>
-            <span class="inv-status-badge" style="color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${r.status}</span>
+            <span class="inv-status-badge" style="color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${escHtml(r.status)}</span>
             ${r.organization ? `<span class="inv-org">${escHtml(r.organization)}</span>` : ''}
             <span class="inv-meta">${INV_RANGE_LABELS[r.investment_range] || '—'} · ${new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
           </div>
@@ -642,9 +651,9 @@
             </div>` : ''}
           </div>
           <div class="inv-actions">
-            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="contacted" class="admin-submit-btn inv-btn-contacted">Mark Contacted</button>
-            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="approved" class="admin-submit-btn inv-btn-approve">Approve</button>
-            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="rejected" class="admin-submit-btn inv-btn-reject">Reject</button>
+            <button data-member-action="update-inv-request" data-request-id="${escAttr(r.id)}" data-status="contacted" class="admin-submit-btn inv-btn-contacted">Mark Contacted</button>
+            <button data-member-action="update-inv-request" data-request-id="${escAttr(r.id)}" data-status="approved" class="admin-submit-btn inv-btn-approve">Approve</button>
+            <button data-member-action="update-inv-request" data-request-id="${escAttr(r.id)}" data-status="rejected" class="admin-submit-btn inv-btn-reject">Reject</button>
             ${r.prior_gaming ? '<span class="inv-note-inline">· Prior gaming investor</span>' : ''}
             ${r.how_heard ? `<span class="inv-note-inline">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
           </div>
@@ -668,9 +677,56 @@
       loadInvRequests(activeFilter?.dataset.filter === 'all' ? null : activeFilter?.dataset.filter || 'pending');
     }
 
+    // ── Shared portal escaping helpers (S368 portal-xss) ─────────────
+    // Classic-script globals: portal-challenges.js (loaded after this file)
+    // uses them too. Every database-sourced string that reaches innerHTML goes
+    // through escHtml (text) or escAttr (attribute values); every
+    // database-sourced URL goes through safeUrl before escAttr.
     function escHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escAttr(str) {
+      return escHtml(str).replace(/`/g, '&#96;');
+    }
+
+    // Allows http(s) absolute URLs and same-site relative paths ("/x", "x/y").
+    // Rejects javascript:, data:, vbscript:, protocol-relative "//host" and
+    // anything else with a scheme. Returns '' when the URL is not allowed.
+    function safeUrl(url) {
+      if (url === null || url === undefined) return '';
+      const s = String(url).trim();
+      if (!s) return '';
+      // Strip ASCII control/whitespace the URL parser would ignore ("java\tscript:").
+      const probe = s.replace(/[\u0000- \u007f]/g, '');
+      if (/^\/\//.test(probe) || /^\\/.test(probe)) return '';
+      if (/^[a-z][a-z0-9+.-]*:/i.test(probe)) {
+        return /^https?:/i.test(probe) ? s : '';
+      }
+      return s;
+    }
+
+    // Storage object path → URL-safe path (each segment encoded; no traversal).
+    function safeStoragePath(path) {
+      if (path === null || path === undefined) return '';
+      const parts = String(path).split('/').filter(Boolean);
+      if (!parts.length || parts.some((p) => p === '.' || p === '..')) return '';
+      return parts.map(encodeURIComponent).join('/');
+    }
+
+    // CSV cell: neutralise spreadsheet formula injection (= + - @, tab, CR)
+    // by prefixing an apostrophe, then quote per RFC 4180.
+    function csvCell(value) {
+      let s = value === null || value === undefined ? '' : String(value);
+      if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+      if (/[",\r\n]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+      return s;
     }
 
     // ── Fan Art Moderation ────────────────────────────────────────
@@ -701,17 +757,18 @@
         if (!rows.length) { el.innerHTML = '<span class="fanart-empty">None in this category.</span>'; return; }
 
         el.innerHTML = rows.map(r => {
-          const imgUrl = `${SB_URL}/storage/v1/object/public/fan-art/${r.file_path}`;
+          const storagePath = safeStoragePath(r.file_path);
+          const imgUrl = storagePath ? safeUrl(`${SB_URL}/storage/v1/object/public/fan-art/${storagePath}`) : '';
           return `<div class="fanart-card">
-            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" class="fanart-thumb" data-hide-on-error />
+            ${imgUrl ? `<img src="${escAttr(imgUrl)}" alt="${escAttr(r.title)}" loading="lazy" class="fanart-thumb" data-hide-on-error />` : ''}
             <div class="fanart-body">
               <div class="fanart-title">${escHtml(r.title)} <span class="fanart-title-author">by @${escHtml(r.username)}</span></div>
-              <div class="fanart-meta">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+              <div class="fanart-meta">${escHtml(r.character_tag)} · ${escHtml(new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}))}</div>
               ${r.description ? `<div class="fanart-desc">${escHtml(r.description)}</div>` : ''}
               <div class="fanart-actions">
-                <button data-member-action="moderate-fan-art" data-submission-id="${r.id}" data-status="approved" class="fanart-btn-approve">✓ Approve</button>
-                <button data-member-action="moderate-fan-art" data-submission-id="${r.id}" data-status="rejected" class="fanart-btn-reject">✕ Reject</button>
-                <a href="${imgUrl}" target="_blank" rel="noreferrer" class="fanart-btn-view">View full →</a>
+                <button data-member-action="moderate-fan-art" data-submission-id="${escAttr(r.id)}" data-status="approved" class="fanart-btn-approve">✓ Approve</button>
+                <button data-member-action="moderate-fan-art" data-submission-id="${escAttr(r.id)}" data-status="rejected" class="fanart-btn-reject">✕ Reject</button>
+                ${imgUrl ? `<a href="${escAttr(imgUrl)}" target="_blank" rel="noreferrer noopener" class="fanart-btn-view">View full →</a>` : ''}
               </div>
             </div>
           </div>`;
@@ -728,7 +785,7 @@
       const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
       const body = { status, reviewed_at: new Date().toISOString() };
       if (note) body.admin_notes = note;
-      const res = await fetch(`${SB_URL}/rest/v1/fan_art_submissions?id=eq.${id}`, {
+      const res = await fetch(`${SB_URL}/rest/v1/fan_art_submissions?id=eq.${encodeURIComponent(id)}`, {
         method: 'PATCH',
         headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
         body: JSON.stringify(body)
@@ -746,7 +803,7 @@
       try {
         const [{ data: challenges }, { data: submissions }] = await Promise.all([
           VSSupabase.from('challenges').select('id,title,challenge_type,points').eq('is_active', true),
-          VSSupabase.from('challenge_submissions').select('challenge_id'),
+          VSSupabase.from('challenge_completions').select('challenge_id'),
         ]);
         if (!challenges) { listEl.textContent = 'Could not load.'; return; }
         const countMap = {};
@@ -766,8 +823,8 @@
           rows.map(r => '<tr class="analytics-tr">' +
             '<td class="analytics-td">' + escHtml(r.title) + '</td>' +
             '<td class="analytics-td-muted">' + escHtml(r.challenge_type) + '</td>' +
-            '<td class="analytics-td-gold">' + r.completions + '</td>' +
-            '<td class="analytics-td-dim">+' + r.points + '</td>' +
+            '<td class="analytics-td-gold">' + escHtml(r.completions) + '</td>' +
+            '<td class="analytics-td-dim">+' + escHtml(r.points) + '</td>' +
           '</tr>').join('') +
           '</tbody></table>';
       } catch (_) { listEl.textContent = 'Error loading analytics.'; }
@@ -783,9 +840,11 @@
           .order('points', { ascending: false });
         if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
         const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
+        // S368: every cell goes through csvCell — usernames are member-chosen
+        // and a leading = + - @ would run as a formula in a spreadsheet.
         const rows = members.map((m, i) =>
           [i+1, m.username, m.points, VS.getRank(m.points).name, m.member_number || '', m.subscribed ? 'yes' : 'no',
-           m.created_at ? m.created_at.slice(0, 10) : ''].join(',')
+           m.created_at ? m.created_at.slice(0, 10) : ''].map(csvCell).join(',')
         );
         const csv = [header, ...rows].join('\n');
         const blob = new Blob([csv], { type: 'text/csv' });

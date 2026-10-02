@@ -4,8 +4,8 @@
  *
  * Builds /evidence/, the front door for the studio's live-data surfaces.
  *
- * The site publishes eight of them — /status/, /stats/, /stats/ecosystem/,
- * /proof/, /studio-pulse/, /oracle/, /notebook/, /ignis-health/ — and every one
+ * The site publishes several of them — /status/, /stats/ecosystem/,
+ * /studio-pulse/, /ignis-health/ (and, before S368, /stats/, /oracle/, /notebook/) — and every one
  * answers a version of the same question: is this studio real and working? The
  * radical-transparency layer is the most differentiated thing here, and a
  * first-time visitor had eight unlabelled doors and no way to choose.
@@ -39,6 +39,7 @@ import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { injectSuite } from './build-intelligence-suite.mjs';
+import { ORG_REF, WEBSITE_REF } from './lib/org-entity.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -61,7 +62,7 @@ export function escapeHtml(s) {
  */
 const SELF_PATH = '/evidence/';
 /** Anchors this generator itself renders — a self-referential lane must land on one. */
-export const SELF_ANCHORS = new Set(['verify']);
+export const SELF_ANCHORS = new Set(['verify', 'numbers']);
 
 export function validateLanes(lanes, exists) {
   const problems = [];
@@ -120,6 +121,12 @@ const HUB_STYLE = `<style>
 .ev-fresh[data-state="aging"]{color:#fbbf24}
 .ev-fresh[data-state="unknown"]{color:var(--dim)}
 .ev-foot{color:var(--dim);font-size:.88rem;max-width:68ch;padding-bottom:4rem;line-height:1.7}
+.ev-numbers{padding:0 0 4.5rem;scroll-margin-top:calc(var(--nav-height,78px) + 1rem)}
+.ev-numbers h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.03em;margin:.5rem 0 .8rem;color:var(--text)}
+.ev-numbers__intro{color:var(--muted);max-width:68ch;font-size:1rem;line-height:1.7;margin-bottom:1.6rem}
+.ev-numbers__method{margin-top:1.6rem}
+.ev-numbers__method h3{font-family:Georgia,"Times New Roman",serif;font-size:1.2rem;margin:0 0 .6rem;color:var(--text)}
+.ev-numbers .analytica-status a,.ev-numbers .stats-method__link a{color:var(--gold)}
 .ev-verify{max-width:860px;padding:0 0 5rem;scroll-margin-top:calc(var(--nav-height,78px) + 1rem)}
 .ev-verify h2{font-family:Georgia,"Times New Roman",serif;font-size:1.45rem;letter-spacing:-.03em;margin:2.4rem 0 .7rem;color:var(--text)}
 .ev-verify h2:first-of-type{margin-top:.5rem}
@@ -172,15 +179,25 @@ export function buildVerifySection() {
 <h2>Live evidence right now</h2>
 <div class="proof-tiles" id="proof-tiles"></div>
 <h2>Check the raw feeds yourself</h2>
-<p>Nothing above is special access — these are the same public files any person or AI agent can fetch:</p>
-<ul class="proof-feeds">
-<li><a href="/data/staging-deploy-history.ndjson">The deploy ledger</a> — append-only, content-addressed, hash-chained</li>
-<li><a href="/api/staging-deploy-continuity.json">The digest anchor</a> — the ledger’s expected hash, depth and head</li>
-<li><a href="/api/release-proof.json">The release gate</a> — what is currently allowed to ship, and what is holding it</li>
-<li><a href="/api/worker-route-provenance.json">Edge route provenance</a> — privacy-safe probes of the live edge</li>
-<li><a href="/status/">The status board</a> — every public signal in one place</li>
-</ul>
+<p>Nothing above is special access. The verifier reads <a href="/data/staging-deploy-history.ndjson">the deploy ledger</a> and its <a href="/api/staging-deploy-continuity.json">digest anchor</a>; those two files, and every other public feed this studio publishes, are listed with a one-line description in the <a href="/api/">developer index</a>.</p>
 <p>A studio that says “trust us” is asking for something it hasn’t earned. A studio that says “check for yourself” has nothing to hide. When the release gate above reads <em>Holding</em>, that isn’t a failure — it’s the machinery refusing to promote anything that hasn’t proven itself.</p>
+</section>`;
+}
+
+/**
+ * S368 ia-consolidation-v2: /stats/ folded into this page. The Analytica grid
+ * keeps the exact data-* contract assets/stats-surface.js hydrates
+ * (data-analytica-surface / -grid / -status / -asof, data-analytics-reconciliation),
+ * so the same script and the same /stats.json feed drive it here.
+ */
+export function buildNumbersSection() {
+  return `<section id="numbers" class="container ev-numbers stats-report" data-analytica-surface="deep" data-state="loading" aria-labelledby="numbers-heading">
+<span class="eyebrow">Numbers</span>
+<h2 id="numbers-heading">The studio, measured in public.</h2>
+<p class="ev-numbers__intro">Precomputed aggregates, not live-query theatre. Every figure carries a period, a source date, a denominator and an interpretation. Project metrics for this website stay separate from the wider studio ecosystem, and when the evidence is too small this section says so.</p>
+<div class="analytica-grid" data-analytica-grid aria-live="polite"><p>Loading the public evidence feed…</p></div>
+<p class="analytica-status" data-analytica-status><span data-analytica-asof>Checking source dates…</span> · <a href="/stats.json">Inspect the Analytica Feed v1 JSON</a></p>
+<aside class="stats-method ev-numbers__method"><h3>Why the numbers differ</h3><p>Cloudflare Web Analytics measures browser page loads and visits. Cloudflare Traffic Analytics measures HTTP responses, assets, bots and threats at the edge. VaultSpark RUM (real-user monitoring) accepts performance observations. They answer different questions, so this page never adds them together or gives them the same label.</p><div class="stats-reconciliation" data-analytics-reconciliation><p>Loading measurement definitions…</p></div><p class="stats-method__link"><a href="/stats/ecosystem/">Explore the studio ecosystem analytics &rarr;</a></p></aside>
 </section>`;
 }
 
@@ -254,13 +271,14 @@ function buildJsonLd(lanes) {
     url: 'https://vaultsparkstudios.com/evidence/',
     description: 'Every live, checkable record VaultSpark Studios publishes about itself — status, numbers, in-browser proof, and work in motion.',
     hasPart: lanes.map((l) => ({ '@type': 'WebPage', name: l.question, url: `https://vaultsparkstudios.com${l.href}` })),
-    publisher: { '@type': 'Organization', name: 'VaultSpark Studios', url: 'https://vaultsparkstudios.com/' },
+    isPartOf: WEBSITE_REF,
+    publisher: ORG_REF,
   });
 }
 
 export function buildPage(lanes, chrome) {
   const depth = '../';
-  return injectSuite(`<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
+  return injectSuite(`<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence — Check Everything We Claim | VaultSpark Studios</title><meta name="description" content="Every live, checkable record VaultSpark Studios publishes about itself: real-time status, source-dated numbers, in-browser hash verification, and the forge in motion."><meta property="og:title" content="Evidence — VaultSpark Studios"><meta property="og:description" content="Do not take our word for it. Status, numbers, in-browser proof, and work in motion — each with its own freshness."><meta property="og:url" content="https://vaultsparkstudios.com/evidence/"><meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og/og-evidence.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://vaultsparkstudios.com/evidence/"><link rel="alternate" type="application/json" href="/stats.json" title="VaultSpark Studios Analytica Feed v1"><link rel="stylesheet" href="${depth}${chrome.style}">${chrome.speculation}${HUB_STYLE}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb()}</script>
 <script type="application/ld+json">${buildJsonLd(lanes)}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
@@ -273,8 +291,8 @@ ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main conten
       </a>
       ${chrome.nav}
 ${chrome.navRight}
-  </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section>${buildVerifySection()}</main>${chrome.footer}  ${chrome.ambient}
-${chrome.navSheet}<script src="${chrome.themeToggle}" defer></script><script src="${chrome.proofVerify}" defer></script>${HUB_SCRIPT}
+  </header><main id="main-content"><section class="container ev-head"><span class="eyebrow">Evidence</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem)">Check everything we claim.</h1><p class="ev-lede">Most studios ask you to believe a launch trailer. This one publishes its own status, its own numbers, its own deploy hashes, and its own unfinished work — and lets you re-compute the proof in your browser. Four doors, each with its own freshness. If a feed is stale, this page says so rather than showing you a green light.</p></section><section class="container"><div class="ev-grid">${lanes.map(buildCard).join('\n')}</div><p class="ev-foot">Every lane above is generated from a public feed and links to the page that owns it — nothing here is retyped by hand, so nothing here can quietly disagree with the source. Machine readers: the same records are enumerated in <a href="/agents.json">agents.json</a>.</p></section>${buildNumbersSection()}${buildVerifySection()}</main>${chrome.footer}  ${chrome.ambient}
+${chrome.navSheet}<script src="${chrome.themeToggle}" defer></script><script src="${chrome.proofVerify}" defer></script><script src="${chrome.statsSurface}" defer></script>${HUB_SCRIPT}
 </body></html>
 `, '/evidence/');
 }
@@ -308,7 +326,7 @@ export function validateChrome(chrome) {
 
 /** Harvest shared chrome from a page this generator does not write (S305). */
 function readChrome() {
-  const sample = readFileSync(join(ROOT, 'journal/index.html'), 'utf8');
+  const sample = readFileSync(join(ROOT, 'how-we-build/index.html'), 'utf8');
   const between = (start, end) => {
     const a = sample.indexOf(start);
     if (a < 0) return '';
@@ -345,9 +363,11 @@ function readChrome() {
   const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : { assets: {} };
   const themeToggle = manifest.assets?.themeToggle?.path ? `/${manifest.assets.themeToggle.path}` : '/assets/theme-toggle.js';
   const proofVerify = manifest.assets?.proofVerify?.path ? `/${manifest.assets.proofVerify.path}` : '/assets/proof-verify.js';
+  const statsSurface = manifest.assets?.statsSurface?.path ? `/${manifest.assets.statsSurface.path}` : '/assets/stats-surface.js';
   return validateChrome({
     themeToggle,
     proofVerify,
+    statsSurface,
     nav,
     navRight,
     footer: between('<footer class="site-footer"', '</footer>').replaceAll('../assets/', '../assets/'),
@@ -383,13 +403,15 @@ function selfTest() {
   t('a self-referential lane on an unrendered anchor is rejected',
     validateLanes([{ id: 'a', href: '/evidence/#nope', feed: '/api/x.json' }], exists).length === 1);
   const verify = buildVerifySection();
-  t('every rendered self-anchor exists in the verify section',
-    [...SELF_ANCHORS].every((a) => verify.includes(`id="${a}"`)));
+  t('every rendered self-anchor exists in the rendered sections',
+    [...SELF_ANCHORS].every((a) => (verify + buildNumbersSection()).includes(`id="${a}"`)));
+  t('the numbers section keeps the stats-surface.js hydration contract',
+    ['data-analytica-surface', 'data-analytica-grid', 'data-analytica-status', 'data-analytica-asof', 'data-analytics-reconciliation'].every((a) => buildNumbersSection().includes(a)));
   t('the verifier keeps the ids proof-verify.js looks up',
     ['proof-tiles', 'proof-run', 'proof-summary', 'proof-checks'].every((id) => verify.includes(`id="${id}"`)));
   t('the verify section is rendered inside main, before the footer', (() => {
-    const page = buildPage([], { style: 's', speculation: '', themeBoot: '', nav: '', footer: '<footer class="site-footer"></footer>', ambient: '', navSheet: '', themeToggle: '/assets/theme-toggle.js', proofVerify: '/assets/proof-verify.js' });
-    return page.indexOf('id="verify"') < page.indexOf('</main>') && page.includes('<script src="/assets/proof-verify.js" defer></script>');
+    const page = buildPage([], { style: 's', speculation: '', themeBoot: '', nav: '', footer: '<footer class="site-footer"></footer>', ambient: '', navSheet: '', themeToggle: '/assets/theme-toggle.js', proofVerify: '/assets/proof-verify.js', statsSurface: '/assets/stats-surface.js' });
+    return page.indexOf('id="verify"') < page.indexOf('</main>') && page.indexOf('id="numbers"') < page.indexOf('id="verify"') && page.includes('<script src="/assets/proof-verify.js" defer></script>') && page.includes('<script src="/assets/stats-surface.js" defer></script>');
   })());
 
   const now = Date.parse('2026-09-01T12:00:00Z');

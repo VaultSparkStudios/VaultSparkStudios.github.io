@@ -55,6 +55,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "https://vaultsparkstudios.com/#org",
   "name": "VaultSpark Studios",
   "url": "https://vaultsparkstudios.com",
   "logo": "https://vaultsparkstudios.com/assets/vaultspark-cinematic-logo.webp",
@@ -69,8 +70,10 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://vaultsparkstudios.com/#website",
   "name": "VaultSpark Studios",
   "url": "https://vaultsparkstudios.com",
+  "publisher": { "@id": "https://vaultsparkstudios.com/#org" },
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
@@ -715,7 +718,10 @@
          expanding from 0 doesn't shift the hero down for logged-in visitors. */
       contain-intrinsic-block-size: 42px;
     }
-    body[data-vs-signed-in] .member-welcome-strip { display: flex; }
+    /* "true" only: signed-in-state.js sets data-vs-signed-in="false" for every
+       anonymous visitor, and a bare attribute match showed an empty 20px strip
+       that pushed the hero down at load (asset-diet CLS pass, 2026-10-02). */
+    body[data-vs-signed-in="true"] .member-welcome-strip { display: flex; }
     .member-welcome-rank {
       font-weight: 700;
       font-size: 0.70rem;
@@ -1319,6 +1325,43 @@
       content-visibility: auto;
       contain-intrinsic-size: auto 760px;
     }
+
+    /* asset-diet (2026-10-02) scroll-CLS: these mounts hydrate from the idle
+       loader only after the first scroll, so a reader can reach them while they
+       are still empty (a scroll pass measured ~1.0 CLS at 390px). Reserve just
+       under the measured hydrated height per band, so hydration can only grow a
+       little and never shrinks. Reservation ends once real children arrive
+       (a <noscript> fallback alone does not count as content). */
+    [data-milestones-root]:not(:has(> :not(noscript))),
+    [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))),
+    [data-related-root][data-related-context="home"]:empty { display: block; }
+    [data-milestones-root]:not(:has(> :not(noscript))) { min-height: 1040px; }
+    [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))) { min-height: 1180px; }
+    [data-related-root][data-related-context="home"]:empty { min-height: 1000px; }
+    @media (min-width: 480px) {
+      [data-milestones-root]:not(:has(> :not(noscript))) { min-height: 1020px; }
+      [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))) { min-height: 980px; }
+      [data-related-root][data-related-context="home"]:empty { min-height: 880px; }
+    }
+    @media (min-width: 640px) {
+      [data-milestones-root]:not(:has(> :not(noscript))) { min-height: 510px; }
+      [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))) { min-height: 900px; }
+    }
+    @media (min-width: 900px) {
+      [data-milestones-root]:not(:has(> :not(noscript))) { min-height: 380px; }
+    }
+    @media (min-width: 960px) {
+      [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))) { min-height: 610px; }
+      [data-related-root][data-related-context="home"]:empty { min-height: 580px; }
+    }
+    /* Studio Now strip: 1.1rem top margin + one 42px pill row (studio-now.js). */
+    [data-studio-now]:empty { min-height: calc(1.1rem + 42px); }
+    /* Vault Pulse ticker: six 38px rows, rows trickle in 400ms apart. */
+    #vault-signal-section .vp-ticker { min-height: 264px; }
+    @media (min-width: 1024px) {
+      [data-trust-depth-root][data-trust-context="home"]:not(:has(> :not(noscript))) { min-height: 510px; }
+      [data-related-root][data-related-context="home"]:empty { min-height: 560px; }
+    }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -1357,6 +1400,22 @@
   </script>
   <!-- vs-speculation:end -->  <link rel="alternate" type="application/json" href="/agents.json" />
   <style data-vs-page-styles>.vsx-0047ece467{--platform-color:#7dd3fc;}.vsx-04a9126a05{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;flex-wrap:wrap;}.vsx-06ec04d82e{padding:3rem 0;}.vsx-0773fd5b68{--reveal-delay:1.66s}.vsx-09e8c5ac29{margin-top:0.4rem;}.vsx-09fffeb6d2{margin-bottom:1.4rem;}.vsx-0a6b8eda0b{font-size:0.95rem;line-height:1.45;color:var(--text);margin:0;}.vsx-0e4752cd38{width:100%;height:100%;object-fit:cover;opacity:0.72;filter:saturate(0.7) brightness(0.7);}.vsx-109162b8a0{--li:13}.vsx-119787c427{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.3rem,3vw,1.75rem);letter-spacing:-0.025em;margin-bottom:0.75rem;color:var(--text);}.vsx-12a07383b3{font-size:0.78rem;color:var(--dim);}.vsx-12b22cef88{background:#D62828;}.vsx-13e5b0b77b{position:absolute;inset:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(255,196,0,0.03),transparent);pointer-events:none;}.vsx-1448d9c374{font-style:normal;color:var(--gold);}.vsx-147f1e127a{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;}.vsx-147f2bfb8b{background:#555;border:1px solid rgba(255,255,255,0.18);}.vsx-151dd13dbf{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(255,196,0,0.7);display:inline-block;animation:sparkPulse 2s ease-in-out infinite;}.vsx-1569ebf212{--li:0}.vsx-17a0e82c9d{background:#8B5CF6;}.vsx-17f9057307{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.35;color:var(--text);max-width:48ch;margin:0 auto;letter-spacing:-0.02em;}.vsx-2108aaf69a{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:400;letter-spacing:-0.02em;margin:0;}.vsx-248e6b40c9{color:var(--muted);line-height:1.68;margin-bottom:1rem;font-size:0.98rem;}.vsx-2540071f0f{--li:5}.vsx-284778e737{--reveal-delay:1.35s}.vsx-2a175d372b{--platform-color:#ff4444;}.vsx-2afc9b7fcb{display:flex;gap:0.6rem;flex-wrap:wrap;}.vsx-2b4b1db7fe{--li:14}.vsx-2b85ef6049{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:-0.045em;line-height:1.04;margin-bottom:1rem;}.vsx-2c82527298{--li:9}.vsx-2e2405bf8d{margin-bottom:0.85rem;}.vsx-2fb30a494d{display:flex;flex-wrap:wrap;gap:0.4rem 0.8rem;margin-top:0.45rem;}.vsx-331476b054{display:flex;border-radius:6px;overflow:hidden;height:8px;gap:1px;background:rgba(255,255,255,0.04);}.vsx-39180291ca{--reveal-delay:1.8s}.vsx-3b590f376e{--platform-color:#1877f2;}.vsx-3c4398eed7{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#C9CED6;}.vsx-3ddf8eac5a{padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(135deg,rgba(255,196,0,0.025),rgba(31,162,255,0.018));}.vsx-3f21075449{--li:4}.vsx-4223210faf{margin-top:1.5rem;padding:0.9rem;border-radius:14px;background:rgba(255,196,0,0.05);border:1px solid rgba(255,196,0,0.1);}.vsx-459d08892c{font-size:0.85rem;color:#f8fbff;line-height:1.55;}.vsx-465a4a25e6{--reveal-delay:1.74s}.vsx-488d1cb36c{font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:#D62828;}.vsx-49b3fa7053{--li:8}.vsx-4d065b717d{display:flex;gap:0.75rem;flex-wrap:wrap;}.vsx-50474b1472{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);}.vsx-565c775cc1{color:#D62828;letter-spacing:0.18em;margin-bottom:1rem;}.vsx-57b80e2f9a{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:#D62828;}.vsx-5c1d72ddef{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;align-items:center;}.vsx-5febe863a3{position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.4);aspect-ratio:9/12;display:flex;align-items:center;justify-content:center;}.vsx-619d1292c5{font-size:0.78rem;color:var(--dim);letter-spacing:0.04em;}.vsx-64b1f2c1bb{--platform-color:#e60023;}.vsx-673e15837e{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin:0 0 0.9rem;text-align:center;}.vsx-69b1a23059{position:absolute;inset:-20% 0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(214,40,40,0.05),transparent 70%);filter:blur(40px);pointer-events:none;}.vsx-72988e2496{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,0.07);background:linear-gradient(135deg,rgba(200,0,0,0.06),rgba(0,0,0,0.6) 50%,rgba(31,162,255,0.05));padding:3.5rem;}.vsx-730f571836{--li:3}.vsx-73b3eed321{--platform-color:#fe2c55;}.vsx-784f6fadab{--li:2}.vsx-78b70d609e{width:7px;height:7px;border-radius:50%;background:#D62828;box-shadow:0 0 8px rgba(214,40,40,0.8);display:inline-block;animation:pulse-dot 2s ease-in-out infinite;}.vsx-79c957a3a5{margin-top:1.8rem;}.vsx-79e6cc45c0{--platform-color:#c4c9d1;}.vsx-7bbc01a80c{--li:17}.vsx-7c342e0eb8{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.4rem;}.vsx-8089d6666d{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem;}.vsx-84ad747042{--li:12}.vsx-85f9e9cbd1{background:#C85000;}.vsx-8772816126{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1FA2FF;}.vsx-87db227580{position:relative;}.vsx-89b75b46de{display:flex;align-items:center;justify-content:flex-end;gap:0.55rem;margin-top:1rem;font-size:0.78rem;color:var(--dim);}.vsx-8f91c00c97{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:2.25rem 2.4rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(13,17,28,0.9) 45%,rgba(31,162,255,0.05));border:1px solid rgba(16,185,129,0.18);}.vsx-90709422e5{font-size:0.78rem;color:var(--muted);text-decoration:underline;margin-top:auto;}.vsx-9be80e7cf5{--reveal-delay:1.94s}.vsx-9c0ec8c82c{padding:2rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(31,162,255,0.02),transparent 50%,rgba(255,196,0,0.02));}.vsx-9caea8a253{padding-top:4rem;}.vsx-a249123054{--reveal-delay:1.52s;display:inline-flex;align-items:center;gap:0.5rem;}.vsx-a33bbc1133{position:absolute;inset:-30% 55% -30% -15%;background:radial-gradient(circle,rgba(200,0,0,0.12),transparent 60%);filter:blur(60px);pointer-events:none;}.vsx-a527bac1ee{text-align:right;}.vsx-a7f7654e12{--platform-color:#f2f6fb;}.vsx-a847778823{margin-top:1.25rem;}.vsx-ab39dd34e0{--platform-color:#8b5cf6;}.vsx-ac869d00de{color:#FFB347;}.vsx-aca8f94c96{background:#06B6D4;}.vsx-ae64c2c69f{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.45rem;min-height:108px;}.vsx-ae73b7843e{display:none !important;}.vsx-b5b8533655{font-size:0.82rem;}.vsx-b9c15a766e{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}.vsx-b9d741c3bd{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.55) 100%);}.vsx-bb01bf7337{--li:1}.vsx-bb1190feb1{background:#1FA2FF;}.vsx-bbc5920c6f{flex:1 1 420px;min-width:260px;}.vsx-bbdf67ff28{--reveal-delay:2.08s}.vsx-bd4c6f2149{font-size:0.85rem;color:var(--muted);text-decoration:none;transition:color 0.15s;}.vsx-bece355826{margin-bottom:1.5rem;}.vsx-c32e878319{--platform-color:#d0d5df;}.vsx-c9bad4f86b{padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.05);}.vsx-ca578f5dec{--platform-color:#ff6314;}.vsx-cae5c157fa{--platform-color:#e1306c;}.vsx-cd8d1897d6{margin-top:1rem;text-align:right;}.vsx-cfd53b7037{margin:0.4rem 0 0;font-size:clamp(1.4rem,3vw,2rem);}.vsx-d12cb84b3a{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.55rem;}.vsx-d29d2a46e8{background:#10B981;}.vsx-db68a71114{--li:11}.vsx-df180b3111{font-size:0.85rem;font-weight:700;color:var(--gold);letter-spacing:0.02em;}.vsx-df7a4fda76{background:linear-gradient(180deg,rgba(255,196,0,0.015),transparent 30%)}.vsx-e0b98047ea{color:var(--text);}.vsx-e12b11f5b7{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem;}.vsx-e14e0bcc38{--li:15}.vsx-e3e8af3933{background:#FFC400;box-shadow:0 0 8px rgba(255,196,0,0.6);}.vsx-e4a06a3d54{background:#94a3b8;}.vsx-e6bd76fb06{--li:16}.vsx-e7fdbb33cd{position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;}.vsx-e853e7be52{--li:6}.vsx-e88851c3e6{font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);}.vsx-e967e6fdbc{position:relative;z-index:1;text-align:center;}.vsx-ea68225f57{padding:3.5rem 0;position:relative;overflow:hidden;}.vsx-ee0d9f43c9{color:var(--muted);font-size:0.94rem;line-height:1.7;margin-bottom:1rem;max-width:70ch;}.vsx-f28d9fbd78{--platform-color:#ff90e8;}.vsx-f3f739e92f{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.65rem;}.vsx-f412f07a0e{position:absolute;inset:-20% -10% -20% 65%;background:radial-gradient(circle,rgba(31,162,255,0.08),transparent 60%);filter:blur(60px);pointer-events:none;}.vsx-f59b29779a{--platform-color:#0085ff;}.vsx-f59fded7c1{position:relative;z-index:1;}.vsx-f6d8e3ef3a{padding:1rem 1.15rem;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);margin-bottom:1.6rem;font-size:0.9rem;color:var(--muted);line-height:1.62;}.vsx-f8aedff449{--li:7}.vsx-fa19840e78{padding:0.35rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--muted);font-size:0.78rem;font-family:inherit;cursor:pointer;}.vsx-faa7851dcb{--platform-color:#5865f2;}.vsx-fb570e9191{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.85rem;}.vsx-fee6135269{background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);}</style>
+  <style data-home-s368>
+    .home-portfolio-row{padding:2.4rem 0 3.2rem}
+    .home-portfolio-row__inner{display:flex;align-items:center;justify-content:space-between;gap:1.6rem 2.4rem;flex-wrap:wrap;padding:1.8rem 2rem;border-radius:var(--radius,24px);border:1px solid var(--line);border-top:3px solid var(--gold);background:var(--panel)}
+    .home-portfolio-row__copy{flex:1 1 320px;min-width:0}
+    .home-portfolio-row__copy h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.03em;margin:.45rem 0 .5rem;color:var(--text)}
+    .home-portfolio-row__copy p{color:var(--muted);line-height:1.65;max-width:56ch}
+    .home-portfolio-row__links{display:flex;flex-wrap:wrap;gap:.6rem}
+    .home-rank-line{align-self:center;padding:1.5rem 1.6rem;border-radius:var(--radius,24px);border:1px solid var(--line);background:var(--panel)}
+    .home-rank-line__eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0 0 .5rem}
+    .home-rank-line__text{font-family:Georgia,"Times New Roman",serif;font-size:1.25rem;line-height:1.4;color:var(--text);margin:0 0 .9rem}
+    .home-rank-line__link{color:var(--gold);font-weight:700}
+    #vault-membership .membership-inner{background:var(--panel);border-color:var(--line)}
+    #vault-membership .member-feature{background:var(--bg-soft,transparent)!important;border-color:var(--line)!important}
+    #vault-membership .member-feature strong{color:var(--text)!important}#vault-membership .member-feature p,#vault-membership .membership-copy > p{color:var(--muted)!important}
+    @media(max-width:640px){.home-portfolio-row__inner{padding:1.35rem}.home-portfolio-row__links{width:100%}}
+  </style>
 </head>
 <body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
@@ -1371,24 +1430,24 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/" class="active" aria-current="page">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="https://veilos.io">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/">Where to play</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/franchise-architect/">Franchise Architect</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara: Sunfall</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/games/gridiron-gm/">Gridiron GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/veilos/">VEILOS</a><a href="/projects/vorn/">Vorn</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/concurrent/">Concurrent</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ouren/">Ouren</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/seamline/">Seamline</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/velaxis/">Velaxis</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/oracle/" class="dropdown-link-intel">Oracle</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/atlas/" class="dropdown-link-intel">Atlas</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/stats/" class="dropdown-link-intel">Stats</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/careers/">Careers</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/security/">Security</a><a href="/ask-founders/">Ask the Founders</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/evidence/" class="dropdown-link-intel">Evidence</a><a href="/studio-pulse/" class="dropdown-link-intel">Pulse</a><a href="/ignis/" class="dropdown-link-intel">IGNIS</a><a href="/status/" class="dropdown-link-intel">Status</a><a href="/changelog/" class="dropdown-link-intel">Changelog</a><a href="/roadmap/" class="dropdown-link-intel">Roadmap</a><a href="/search/" class="dropdown-link-intel">Search</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/">The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/pathways/">Pathways</a><a href="/status/">Status</a><a href="/search/">Search</a><a href="/faq/">Frequently Asked Questions</a><a href="/collaborate/">Collaborate</a><a href="/rights/">Technology & Rights</a><a href="/accessibility/">Accessibility</a><a href="/how-we-build/">How We Build</a><a href="/api/">Developer API & Feeds</a><a href="/security/">Security</a><a href="/faq/#ask">Ask the Studio</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -1408,14 +1467,8 @@
   <!-- ═══ MAIN ═════════════════════════════════════════════ -->
   <main id="main-content">
 
-    <!-- Hero v2 flag-reader (S205 #3) — runs early so CSS variant activates
-         before first paint. S207: v2 GRADUATED to default (the S204 visual
-         overhaul's final piece). Kill-switch: ?hero=classic or
-         localStorage('heroClassic')='1' restores the original 3-glow hero. -->
     <script>(function(){var p=new URLSearchParams(location.search);var classic=p.get('hero')==='classic'||localStorage.getItem('heroClassic')==='1';if(!classic){document.body.dataset.heroV2='true';}}());</script>
 
-    <!-- Member welcome strip (S205 #4) — hidden until signed-in; populated by
-         vs:session-ready. Additive — anonymous visitors see no change. -->
     <div class="member-welcome-strip" id="member-welcome-strip" aria-hidden="true" aria-label="Member welcome"></div>
     <script>
     (function () {
@@ -1469,7 +1522,6 @@
         <!-- 2. Tagline — reveals after wordmark settles -->
         <p class="hero-tagline hero-reveal vsx-284778e737">The Vault <em>Is Sparked.</em></p>
 
-        <!-- 3. Eyebrow context — subtle category label (S135: truth + medium) -->
         <span class="eyebrow hero-reveal vsx-a249123054"><span aria-hidden="true" class="vsx-151dd13dbf"></span> Independent Studio &nbsp;·&nbsp; Games &nbsp;·&nbsp; Tools &nbsp;·&nbsp; Worlds &nbsp;·&nbsp; Intelligence</span>
 
         <!-- 4. Sub copy -->
@@ -1479,19 +1531,12 @@
           the forge is visible, and every release is shaped to feel like part of a larger vault.
         </p>
 
-        <!-- 4b. Hero live ticker — single newest ship from changelog (S123 hero-ticker.js) -->
         <div id="home-dynamic-spotlight" class="hero-reveal hero-ticker vsx-465a4a25e6" data-hero-ticker aria-live="polite"></div>
 
-        <!-- 5. CTA - three clear doors for first-time visitors.
-             S275: conversion hierarchy — Play (gold primary, the soul) then
-             Join The Vault (accent fill, the conversion action), with the
-             Atlas exploration door demoted to secondary. The S207 twin-doorway
-             layout had drifted: both filled buttons were exploration paths and
-             the membership action was the faintest button on the page. -->
         <div class="hero-actions hero-reveal vsx-39180291ca" data-hero-choice-group>
           <a class="button" href="/games/" data-track-event="home_hero_games_click" data-hero-choice="play">Play</a>
-          <a class="button button-accent" href="/vault-member/#register" data-track-event="home_hero_member_click" data-hero-choice="join">Join The Vault</a>
-          <a class="button-secondary" href="/atlas/" data-track-event="home_hero_atlas_click" data-hero-choice="atlas">Map the Studio</a>
+          <a class="button button-accent" data-track-event="home_hero_member_click" data-hero-choice="join" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
+          <a class="button-secondary" href="/projects/" data-track-event="home_hero_atlas_click" data-hero-choice="atlas">Map the Studio</a>
         </div>
 
         <!-- 5b. Live portfolio pulse — counts from real data (build-hero-portfolio.mjs) -->
@@ -1500,7 +1545,7 @@
 
         <!-- Living portfolio showcase — server-rendered from api/public-intelligence.json (build-hero-portfolio.mjs).
              First interface for humans AND agents: real <a> tiles + ItemList JSON-LD, instant + crawlable. -->
-        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}@supports (background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"))){.ht-mindframe .hero-tile__cover{background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"),url(/assets/covers/mindframe.webp) type("image/webp"),url(/assets/covers/mindframe.png) type("image/png"))}}.ht-veilos{--tile-accent:#22d3ee}.ht-veilos .hero-tile__cover{background-image:url(/assets/covers/veilos.png)}@supports (background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"))){.ht-veilos .hero-tile__cover{background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"),url(/assets/covers/veilos.webp) type("image/webp"),url(/assets/covers/veilos.png) type("image/png"))}}.ht-vorn{--tile-accent:#a78bfa}.ht-vorn .hero-tile__cover{background-image:url(/assets/covers/vorn.png)}@supports (background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"))){.ht-vorn .hero-tile__cover{background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"),url(/assets/covers/vorn.webp) type("image/webp"),url(/assets/covers/vorn.png) type("image/png"))}}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}@supports (background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"))){.ht-football-gm .hero-tile__cover{background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"),url(/assets/covers/footballgm.webp) type("image/webp"),url(/assets/covers/footballgm.png) type("image/png"))}}@media (max-width:600px){.hero-showcase .hero-tile{aspect-ratio:auto;min-height:150px}.hero-showcase .hero-tile__body{padding-top:2.4rem}.hero-showcase .hero-tile__kicker{font-size:.55rem;letter-spacing:.08em;line-height:1.3}}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-forge hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Playable Beta"><span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/doodie.avif" type="image/avif"><source srcset="/assets/covers/doodie.webp" type="image/webp"><img src="/assets/covers/doodie.png" fetchpriority="high" alt=""></picture></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Playable Beta</span><span class="hero-tile__body"><span class="hero-tile__kicker">Action Comedy</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://callofdoodie.wtf/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play the beta — Call of Doodie">▶ Play the beta</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><a class="hero-tile ht-mindframe is-forge has-cover" href="/games/mindframe/" data-track-event="home_hero_tile_click"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the Forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">AI Intelligence</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__cta">Explore →</span></span></a><div class="hero-tile ht-veilos is-live has-cover hero-tile--dual" role="group" aria-label="VEILOS — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Cognitive Civilization OS</span><span class="hero-tile__name">VEILOS</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://veilos.io" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — VEILOS">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/" data-track-event="home_hero_tile_details" aria-label="Details for VEILOS">Details</a></span></span></div><div class="hero-tile ht-vorn is-live has-cover hero-tile--dual" role="group" aria-label="Vorn — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Agent Platform</span><span class="hero-tile__name">Vorn</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://joinvorn.com" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — Vorn">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/vorn/" data-track-event="home_hero_tile_details" aria-label="Details for Vorn">Details</a></span></span></div><div class="hero-tile ht-football-gm is-live has-cover hero-tile--dual" role="group" aria-label="Franchise Architect — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Sports Sim</span><span class="hero-tile__name">Franchise Architect</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://playfranchisearchitect.com/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play — Franchise Architect">▶ Play</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/franchise-architect/" data-track-event="home_hero_tile_details" aria-label="Details for Franchise Architect">Details</a></span></span></div></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"In development","description":"Playable now. Satirical multiplayer chaos, live and still sharpening.","genre":"Action Comedy","image":"https://vaultsparkstudios.com/assets/covers/doodie.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://callofdoodie.wtf/"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/games/mindframe/","creativeWorkStatus":"In development","description":"Metacognition training platform. Live on external infra; identity consolidating.","genre":"AI Intelligence","image":"https://vaultsparkstudios.com/assets/covers/mindframe.png"}},{"@type":"ListItem","position":3,"item":{"@type":"CreativeWork","name":"VEILOS","url":"https://vaultsparkstudios.com/projects/","creativeWorkStatus":"Published","description":"D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.","genre":"Cognitive Civilization OS","image":"https://vaultsparkstudios.com/assets/covers/veilos.png","sameAs":"https://veilos.io"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"Vorn","url":"https://vaultsparkstudios.com/projects/vorn/","creativeWorkStatus":"Published","description":"Social-first, agent-native platform. Give your agent a home.","genre":"Agent Platform","image":"https://vaultsparkstudios.com/assets/covers/vorn.png","sameAs":"https://joinvorn.com"}},{"@type":"ListItem","position":5,"item":{"@type":"VideoGame","name":"Franchise Architect","url":"https://vaultsparkstudios.com/games/franchise-architect/","creativeWorkStatus":"Published","description":"Live beta. Deep football GM with analytics — polish rounds still in motion.","genre":"Sports Sim","image":"https://vaultsparkstudios.com/assets/covers/footballgm.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://playfranchisearchitect.com/"}}]}</script><!-- hero-showcase:end -->
+        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}@supports (background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"))){.ht-mindframe .hero-tile__cover{background-image:image-set(url(/assets/covers/mindframe.avif) type("image/avif"),url(/assets/covers/mindframe.webp) type("image/webp"),url(/assets/covers/mindframe.png) type("image/png"))}}.ht-veilos{--tile-accent:#22d3ee}.ht-veilos .hero-tile__cover{background-image:url(/assets/covers/veilos.png)}@supports (background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"))){.ht-veilos .hero-tile__cover{background-image:image-set(url(/assets/covers/veilos.avif) type("image/avif"),url(/assets/covers/veilos.webp) type("image/webp"),url(/assets/covers/veilos.png) type("image/png"))}}.ht-vorn{--tile-accent:#a78bfa}.ht-vorn .hero-tile__cover{background-image:url(/assets/covers/vorn.png)}@supports (background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"))){.ht-vorn .hero-tile__cover{background-image:image-set(url(/assets/covers/vorn.avif) type("image/avif"),url(/assets/covers/vorn.webp) type("image/webp"),url(/assets/covers/vorn.png) type("image/png"))}}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}@supports (background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"))){.ht-football-gm .hero-tile__cover{background-image:image-set(url(/assets/covers/footballgm.avif) type("image/avif"),url(/assets/covers/footballgm.webp) type("image/webp"),url(/assets/covers/footballgm.png) type("image/png"))}}@media (max-width:600px){.hero-showcase .hero-tile{aspect-ratio:auto;min-height:150px}.hero-showcase .hero-tile__body{padding-top:2.4rem}.hero-showcase .hero-tile__kicker{font-size:.55rem;letter-spacing:.08em;line-height:1.3}}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-forge hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Playable Beta"><span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/doodie.avif" type="image/avif"><source srcset="/assets/covers/doodie.webp" type="image/webp"><img src="/assets/covers/doodie.png" fetchpriority="high" alt=""></picture></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Playable Beta</span><span class="hero-tile__body"><span class="hero-tile__kicker">Action Comedy</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://callofdoodie.wtf/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play the beta — Call of Doodie">▶ Play the beta</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><a class="hero-tile ht-mindframe is-forge has-cover" href="/games/mindframe/" data-track-event="home_hero_tile_click"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the Forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">Metacognition</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__cta">Explore →</span></span></a><div class="hero-tile ht-veilos is-live has-cover hero-tile--dual" role="group" aria-label="VEILOS — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Cognitive Civilization OS</span><span class="hero-tile__name">VEILOS</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://veilos.io" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — VEILOS">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/veilos/" data-track-event="home_hero_tile_details" aria-label="Details for VEILOS">Details</a></span></span></div><div class="hero-tile ht-vorn is-live has-cover hero-tile--dual" role="group" aria-label="Vorn — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Agent Platform</span><span class="hero-tile__name">Vorn</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://joinvorn.com" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Open — Vorn">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/vorn/" data-track-event="home_hero_tile_details" aria-label="Details for Vorn">Details</a></span></span></div><div class="hero-tile ht-football-gm is-live has-cover hero-tile--dual" role="group" aria-label="Franchise Architect — Sparked"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Sparked</span><span class="hero-tile__body"><span class="hero-tile__kicker">Sports Sim</span><span class="hero-tile__name">Franchise Architect</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://playfranchisearchitect.com/" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Play — Franchise Architect">▶ Play</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/franchise-architect/" data-track-event="home_hero_tile_details" aria-label="Details for Franchise Architect">Details</a></span></span></div></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"In development","description":"Playable now. Satirical multiplayer chaos, live and still sharpening.","genre":"Action Comedy","image":"https://vaultsparkstudios.com/assets/covers/doodie.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://callofdoodie.wtf/"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/games/mindframe/","creativeWorkStatus":"In development","description":"Live metacognition platform — structured practice for how you think about your own thinking.","genre":"Metacognition","image":"https://vaultsparkstudios.com/assets/covers/mindframe.png"}},{"@type":"ListItem","position":3,"item":{"@type":"CreativeWork","name":"VEILOS","url":"https://vaultsparkstudios.com/projects/veilos/","creativeWorkStatus":"Published","description":"A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification and a Collaborate Exchange, live at veilos.io.","genre":"Cognitive Civilization OS","image":"https://vaultsparkstudios.com/assets/covers/veilos.png","sameAs":"https://veilos.io"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"Vorn","url":"https://vaultsparkstudios.com/projects/vorn/","creativeWorkStatus":"Published","description":"Social-first, agent-native platform. Give your agent a home.","genre":"Agent Platform","image":"https://vaultsparkstudios.com/assets/covers/vorn.png","sameAs":"https://joinvorn.com"}},{"@type":"ListItem","position":5,"item":{"@type":"VideoGame","name":"Franchise Architect","url":"https://vaultsparkstudios.com/games/franchise-architect/","creativeWorkStatus":"Published","description":"Live beta. Deep football GM with analytics — polish rounds still in motion.","genre":"Sports Sim","image":"https://vaultsparkstudios.com/assets/covers/footballgm.png","applicationCategory":"GameApplication","gamePlatform":"Web browser","operatingSystem":"Any (modern web browser)","sameAs":"https://playfranchisearchitect.com/"}}]}</script><!-- hero-showcase:end -->
         </div><!-- /.hero-stage -->
 
         <!-- 6. Meta strip — chips + stats -->
@@ -1518,7 +1563,7 @@
               <small>Worlds in the forge</small>
             </div>
             <div class="stat-mini">
-              <strong id="days-since-launch">211</strong>
+              <strong id="days-since-launch">212</strong>
               <small>Days since launch</small>
             </div>
           </div>
@@ -1534,6 +1579,9 @@
       </div>
     </section>
 
+    <!-- fd-ssr:start -->
+<style id="vs-flight-director-style">.vs-flight-director{padding:0 0 2.4rem}.vs-flight-director__panel{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:.75rem;padding:1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(31,162,255,.06),rgba(255,196,0,.035));box-shadow:var(--shadow)}.vs-flight-director__lead{padding:.2rem .4rem}.vs-flight-director__eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:800}.vs-flight-director h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.3vw,2rem);margin:.35rem 0 .45rem}.vs-flight-director p{color:var(--muted);font-size:.92rem;line-height:1.55}.vs-flight-card{display:flex;flex-direction:column;gap:.45rem;min-height:148px;padding:.9rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);text-decoration:none;color:inherit;position:relative}.vs-flight-card:hover{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.06)}.vs-flight-card strong{font-size:1rem}.vs-flight-card span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:800}.vs-flight-card em{margin-top:auto;font-style:normal;color:var(--dim);font-size:.8rem}.vs-flight-new{position:absolute;top:.6rem;right:.7rem;font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.18em .45em;border-radius:4px;background:var(--gold);color:#000;line-height:1}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.vs-flight-hidden{display:none}@media(max-width:860px){.vs-flight-director__panel{grid-template-columns:1fr}.vs-flight-card{min-height:0}}</style><section class="vs-flight-director" data-fd-ssr aria-label="Recommended next steps"><div class="container"><div class="vs-flight-director__panel"><div class="vs-flight-director__lead"><div class="vs-flight-director__eyebrow">Pathfinder</div><h2>Your next clean move.</h2><p>Chosen locally from your current page, saved intent, and live studio signals. No account data leaves the browser.</p></div><a class="vs-flight-card" data-fd-key="games" href="/games/"><span>Play</span><strong>Start with a live world</strong><p>Playable pages are the cleanest proof when you want to feel the studio before joining.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="membership" href="/membership/"><span>Identity</span><strong>See what membership actually unlocks</strong><p>Free identity first, deeper support only when the vault earns it.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="universe" href="/universe/"><span>Lore</span><strong>Follow the world signal</strong><p>Transmission archives and saga pages carry the story layer.</p><em>Open →</em></a></div></div></section>
+<!-- fd-ssr:end -->
     <!-- desk-showcase:start -->
     <section class="desk-showcase" aria-labelledby="desk-showcase-title" data-desk-surface="showcase" data-desk-state="live">
       <style>
@@ -1613,7 +1661,144 @@
             </a>
           </div>
         </div>
+        <style>/* The Desk Dispatch signup (scripts/lib/desk-dispatch-cta.mjs). Single source:
+   the homepage module and /dispatch/ inline THIS region verbatim, so it uses
+   only sitewide tokens (--text --muted --gold --bg --bg-soft --header-border
+   --dim) with no hex fallbacks, and works outside .desk-shell. Gold is an
+   accent (rules, borders, dot), never small body text: it fails AA as text on
+   the light themes. The button reuses the sitewide .button treatment. */
+.desk-dispatch{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(1.25rem,3vw,2.6rem);align-items:center;margin:2.9rem 0 0;padding:clamp(1.35rem,3.2vw,2.4rem);border:1px solid color-mix(in srgb,var(--gold) 38%,var(--header-border));border-radius:22px;background:linear-gradient(140deg,color-mix(in srgb,var(--gold) 9%,var(--bg-soft)),var(--bg-soft) 62%);color:var(--text);overflow:hidden}
+.desk-dispatch:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--gold),color-mix(in srgb,var(--gold) 20%,transparent))}
+.desk-dispatch-compact{margin-top:2.4rem;grid-template-columns:minmax(0,1fr)}
+.desk-dispatch-kicker{display:flex;align-items:center;gap:.55rem;margin:0 0 .55rem;color:var(--text);font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.desk-dispatch-kicker:before{content:"";flex:0 0 auto;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 22%,transparent)}
+.desk-dispatch h2,.desk-dispatch h3{margin:0 0 .6rem;color:var(--text);font:500 clamp(1.5rem,3vw,2.3rem)/1.08 Georgia,serif;letter-spacing:-.028em;text-wrap:balance}
+.desk-dispatch-compact h2,.desk-dispatch-compact h3{font-size:clamp(1.35rem,2.6vw,1.85rem)}
+.desk-dispatch-lede{margin:0;max-width:56ch;color:var(--muted);font-size:.96rem;line-height:1.66}
+.desk-dispatch-points{display:grid;gap:.45rem;margin:1rem 0 0;padding:0;list-style:none}
+.desk-dispatch-points li{position:relative;padding-left:1.15rem;color:var(--muted);font-size:.88rem;line-height:1.55}
+.desk-dispatch-points li:before{content:"";position:absolute;left:0;top:.62em;width:.5rem;height:2px;background:var(--gold)}
+.desk-dispatch-points strong{color:var(--text);font-weight:700}
+.desk-dispatch-compact .desk-dispatch-points{grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem 1rem}
+.desk-dispatch-member{display:none;margin:.9rem 0 0;color:var(--muted);font-size:.86rem;line-height:1.55}
+:is(html,body)[data-vs-signed-in="true"] .desk-dispatch .desk-dispatch-points{display:none}
+:is(html,body)[data-vs-signed-in="true"] .desk-dispatch .desk-dispatch-member{display:block}
+.desk-dispatch .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.desk-dispatch-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6rem;align-content:center}
+.desk-dispatch-form input{box-sizing:border-box;min-width:0;min-height:48px;padding:.8rem 1rem;border:1px solid var(--header-border);border-radius:12px;background:var(--bg);color:var(--text);font-size:16px;font-family:inherit}
+.desk-dispatch-form input::placeholder{color:var(--dim);opacity:1}
+.desk-dispatch-form input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.desk-dispatch-form input[aria-invalid="true"]{border-color:color-mix(in srgb,#e5484d 70%,var(--header-border))}
+.desk-dispatch-form button{min-height:48px;font-size:.95rem;white-space:nowrap}
+.desk-dispatch-form button:disabled{opacity:.7;cursor:progress;transform:none}
+.desk-dispatch-slot{grid-column:1/-1;position:relative}
+.desk-dispatch-slot:empty{display:none}
+.desk-dispatch-status{grid-column:1/-1;box-sizing:border-box;margin:0;min-height:4.5em;padding-left:0;color:var(--muted);font-size:.85rem;line-height:1.5}
+.desk-dispatch-status.is-ok,.desk-dispatch-status.is-error{padding-left:.7rem;border-left:3px solid;color:var(--text)}
+.desk-dispatch-status.is-ok{border-left-color:#2fb37c}
+.desk-dispatch-status.is-error{border-left-color:#e5484d}
+.desk-dispatch-fine{grid-column:1/-1;margin:0;color:var(--muted);font-size:.76rem;line-height:1.55}
+.desk-dispatch-fine a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
+.desk-dispatch-form.is-done input{opacity:.7}
+@media(min-width:821px){.desk-dispatch-compact .desk-dispatch-status{min-height:3em}}
+@media(max-width:820px){.desk-dispatch{grid-template-columns:minmax(0,1fr)}.desk-dispatch-compact .desk-dispatch-points{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:430px){.desk-dispatch-form{grid-template-columns:minmax(0,1fr)}.desk-dispatch-form button{width:100%}}
+.desk-showcase .desk-dispatch{margin-top:1.75rem}</style>
+        <section class="desk-dispatch" data-desk-dispatch="home" aria-labelledby="dispatch-h-home">
+    <div class="desk-dispatch-copy">
+      <p class="desk-dispatch-kicker">The Desk Dispatch · free</p>
+      <h3 id="dispatch-h-home">Get The Desk Dispatch.</h3>
+      <p class="desk-dispatch-lede">The day’s lead argument, the quiet story nobody else covered, and every prediction that came due, from The Desk’s fictional AI correspondents. Labelled as AI, sourced like news.</p>
+      <ul class="desk-dispatch-points"><li><strong>Cadence</strong> No more than one email a day, only on days the Desk publishes. The first issue is still being prepared.</li><li><strong>No spam</strong> One confirmation email. Nothing else unless you click it.</li><li><strong>Leave anytime</strong> One-click unsubscribe in every email.</li></ul>
+      <p class="desk-dispatch-member">Signed in? The Dispatch is a separate, account-free list. Enter the address you want it sent to.</p>
+    </div>
+    <form class="desk-dispatch-form" data-dispatch data-source="home" novalidate>
+      <label class="visually-hidden vs-visually-hidden" for="dispatch-email-home">Email address for The Desk Dispatch</label>
+      <input id="dispatch-email-home" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
+      <button type="submit" class="button">Subscribe free</button>
+      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
+      <p class="desk-dispatch-fine">Double opt-in. Separate from the Studio Dispatch list in the footer. See the <a href="/privacy/">privacy policy</a>.</p>
+      <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
+    </form>
+    <noscript><p class="desk-dispatch-fine">Signing up needs JavaScript. With it off, email <a href="mailto:news@vaultsparkstudios.com?subject=Subscribe%20to%20The%20Desk%20Dispatch">news@vaultsparkstudios.com</a> with the subject &ldquo;Subscribe to The Desk Dispatch&rdquo;, or follow <a href="/api/news-desk-feed.json">the JSON Feed</a>.</p></noscript>
+  </section>
       </div>
+<script>(function(){
+  var ENDPOINT="/desk/dispatch/subscribe";
+  var forms=document.querySelectorAll('form[data-dispatch]');
+  if(!forms.length)return;
+  var loads={};
+  function load(src,ready){
+    if(ready())return Promise.resolve(true);
+    if(!loads[src]){loads[src]=new Promise(function(resolve){
+      var s=document.createElement('script');s.src=src;s.async=true;
+      s.onload=function(){resolve(ready());};s.onerror=function(){resolve(false);};
+      document.head.appendChild(s);});}
+    return loads[src];
+  }
+  function deps(){return Promise.all([
+    load('/assets/csrf-token.js',function(){return !!window.VSCsrf;}),
+    load('/assets/turnstile.js',function(){return !!window.VSTurnstile;})]);}
+  var MESSAGES={invalid_email:'That does not look like a valid email address.',
+    turnstile_invalid:'Verification did not pass. Please try again.',
+    turnstile_token_missing:'Verification did not complete. Please try again.',
+    turnstile_not_configured:'Signup is temporarily unavailable. Please try again later.',
+    invalid_form_body:'Something went wrong with the form. Please reload and try again.'};
+  function post(email,source,turnstileToken,csrf){
+    return fetch(ENDPOINT,{method:'POST',credentials:'same-origin',
+      headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},
+      body:JSON.stringify({email:email,source:source,turnstileToken:turnstileToken})})
+    .then(function(r){return r.text().then(function(t){var b={};try{b=JSON.parse(t);}catch(e){b={raw:t};}return {status:r.status,ok:r.ok,body:b};});});
+  }
+  Array.prototype.forEach.call(forms,function(form){
+    var status=form.querySelector('[data-dispatch-status]');
+    var input=form.querySelector('input[name=email]');
+    var button=form.querySelector('button');
+    var label=button.textContent;
+    function say(msg,kind){status.textContent=msg;status.className='desk-dispatch-status'+(kind?' is-'+kind:'');}
+    function reset(){button.disabled=false;button.textContent=label;}
+    input.addEventListener('focus',function(){deps();},{once:true});
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(form.classList.contains('is-done'))return;
+      var email=(input.value||'').trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){say('Enter a valid email address.','error');input.setAttribute('aria-invalid','true');input.focus();return;}
+      input.removeAttribute('aria-invalid');
+      button.disabled=true;button.textContent='Sending…';say('Verifying you are human (invisible check)…');
+      var source=form.getAttribute('data-source')||'news';
+      deps().then(function(ok){
+        if(!ok[0]||!ok[1])throw {kind:'deps'};
+        return window.VSTurnstile.getToken().catch(function(){throw {kind:'verify'};});
+      }).then(function(token){
+        say('Sending your confirmation email…');
+        return window.VSCsrf.getToken().then(function(csrf){
+          return post(email,source,token,csrf).then(function(res){
+            // A stale session CSRF token answers 403 in plain text. Refresh once.
+            if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
+              window.VSCsrf.invalidate();
+              return window.VSTurnstile.getToken().then(function(t2){
+                return window.VSCsrf.getToken().then(function(c2){return post(email,source,t2,c2);});
+              });
+            }
+            return res;
+          });
+        });
+      }).then(function(res){
+        if(res.ok){form.classList.add('is-done');input.readOnly=true;button.textContent='Sent ✓';
+          say('Check your inbox for an email from news@vaultsparkstudios.com and click the link to confirm. You are subscribed only after you confirm.','ok');return;}
+        reset();
+        if(res.status===429){say('Too many signup attempts from this network. Please try again in an hour.','error');return;}
+        var code=res.body&&res.body.error;
+        say(MESSAGES[code]||(typeof code==='string'&&code.indexOf(' ')>0?code:'Something went wrong. Please try again shortly.'),'error');
+      }).catch(function(err){
+        reset();
+        if(err&&err.kind==='verify'){say('The invisible human check did not complete. Please try again.','error');return;}
+        if(err&&err.kind==='deps'){say('Signup could not load its security check. Please reload and try again.','error');return;}
+        say('Could not reach the signup service. Please try again shortly.','error');
+      });
+    });
+  });
+})();</script>
     </section>
 <!-- desk-showcase:end -->
 
@@ -1622,7 +1807,7 @@
       <div class="container">
         <div class="analytica-showcase__head">
           <div><p class="eyebrow">Studio by the numbers</p><h2 id="analytica-showcase-title">The forge, measured honestly.</h2></div>
-          <a class="button-secondary button-sm" href="/stats/" data-track-event="home_stats_deep_click">Open public stats →</a>
+          <a class="button-secondary button-sm" href="/evidence/#numbers" data-track-event="home_stats_deep_click">Open public stats →</a>
         </div>
         <p class="analytica-showcase__intro">One precomputed public feed powers this snapshot, the full report, and agent-readable analysis.</p>
         <div class="analytica-grid" data-analytica-grid aria-live="polite"><p>Loading the public evidence feed…</p></div>
@@ -1678,7 +1863,7 @@
             <span>Vault Members</span>
           </div>
           <div class="proof-stat">
-            <strong id="proof-sparked">Feed gated</strong>
+            <strong id="proof-sparked">Founding cohort</strong>
             <span>VaultSparked</span>
           </div>
           <div class="proof-stat">
@@ -1691,7 +1876,7 @@
             <div id="proof-rank-legend" class="vsx-2fb30a494d"></div>
           </div>
           <div class="proof-stat">
-            <strong id="proof-sessions">Ledger syncing</strong>
+            <strong id="proof-sessions">Counting up</strong>
             <span>Build Sessions</span>
           </div>
           <div class="proof-stat">
@@ -1706,7 +1891,188 @@
       </div>
     </section>
 
-    <!-- ── Vault Membership (S127: moved up — promoted from §12 to §3) ───────────────────────────────── -->
+    <!-- vault-door:start — signature scroll-driven reveal (below the LCP region). Static state = open door; assets/vault-door.js only enhances. -->
+    <style data-vault-door>
+      .vault-door{--vd-m1:#2a3142;--vd-m2:#0b0e18;--vd-edge:rgba(255,255,255,.2);--vd-engrave:rgba(0,0,0,.6);--vd-tick:rgba(201,206,214,.5);--vd-accent:#ffc400;--vd-glow:#ffe08a;--vd-glow-mid:rgba(255,122,0,.42);--vd-glow-out:rgba(31,162,255,.10);--vd-recess:#04050a;--vd-rim:#161b28;--vd-label:#fff3c4;--vd-halo:rgba(4,5,10,.85);--vd-spark-rgb:255,196,0;position:relative;padding:4.5rem 0 3.5rem;overflow-x:clip}
+      body.light-mode .vault-door{--vd-m1:#fffaf2;--vd-m2:#c8b9a2;--vd-edge:rgba(255,255,255,.95);--vd-engrave:rgba(22,32,51,.32);--vd-tick:rgba(22,32,51,.42);--vd-accent:#7a5c00;--vd-glow:#fff6d8;--vd-glow-mid:rgba(196,140,20,.38);--vd-glow-out:rgba(122,92,0,.06);--vd-recess:#d8ccb8;--vd-rim:#e6dccb;--vd-label:#3f2f00;--vd-halo:rgba(255,248,232,.9);--vd-spark-rgb:176,124,8}
+      body.high-contrast-mode .vault-door{--vd-m1:#141414;--vd-m2:#000;--vd-edge:#fff;--vd-engrave:#fff;--vd-tick:#fff;--vd-accent:#ffff00;--vd-glow:#ffff00;--vd-glow-mid:rgba(255,255,0,.28);--vd-glow-out:rgba(0,0,0,0);--vd-recess:#000;--vd-rim:#000;--vd-label:#fff;--vd-halo:#000;--vd-spark-rgb:255,255,0}
+      body.warm-mode .vault-door{--vd-m1:#4c3021;--vd-m2:#160b06;--vd-edge:rgba(255,214,170,.26);--vd-accent:#ffb35c;--vd-glow:#ffd9a3;--vd-glow-mid:rgba(255,122,0,.42);--vd-glow-out:rgba(255,160,90,.08);--vd-recess:#0a0503;--vd-rim:#2a1910;--vd-label:#fff1e6;--vd-halo:rgba(10,5,3,.85);--vd-spark-rgb:255,179,92;--vd-tick:rgba(255,214,170,.45)}
+      body.lava-mode .vault-door{--vd-m1:#4d1a11;--vd-m2:#140504;--vd-edge:rgba(255,170,140,.26);--vd-accent:#ff7a4d;--vd-glow:#ffc0a0;--vd-glow-mid:rgba(255,64,24,.48);--vd-glow-out:rgba(255,80,40,.08);--vd-recess:#0a0302;--vd-rim:#2a0c08;--vd-label:#fff1ea;--vd-halo:rgba(10,3,2,.85);--vd-spark-rgb:255,106,61;--vd-tick:rgba(255,170,140,.45)}
+      body.cool-mode .vault-door{--vd-m1:#25415c;--vd-m2:#07111b;--vd-edge:rgba(190,225,255,.26);--vd-accent:#7cd4ff;--vd-glow:#d4f0ff;--vd-glow-mid:rgba(56,189,248,.38);--vd-glow-out:rgba(124,212,255,.08);--vd-recess:#03080f;--vd-rim:#12243a;--vd-label:#ebf6ff;--vd-halo:rgba(3,8,15,.85);--vd-spark-rgb:124,212,255;--vd-tick:rgba(190,225,255,.45)}
+      body.ambient-mode .vault-door{--vd-m1:#1f3b4e;--vd-m2:#06121b;--vd-edge:rgba(170,210,240,.24);--vd-accent:#7fe0c8;--vd-glow:#dcfff5;--vd-glow-mid:rgba(45,212,191,.34);--vd-glow-out:rgba(150,190,235,.08);--vd-recess:#030a10;--vd-rim:#10222f;--vd-label:#e8f2ff;--vd-halo:rgba(3,10,16,.85);--vd-spark-rgb:127,224,200;--vd-tick:rgba(170,210,240,.45)}
+      .vd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
+      .vd-stage{position:relative;width:min(100%,500px);aspect-ratio:1/1;margin-inline:auto;isolation:isolate}
+      .vd-stage svg,.vd-leaf,.vd-sparks{position:absolute;inset:0;width:100%;height:100%;display:block}
+      .vd-sparks{pointer-events:none;z-index:4}
+      .vd-leaf{z-index:3;transform-origin:7% 50%;transform:perspective(1600px) rotateY(-84deg);will-change:transform}
+      .vd-leaf svg{filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+      body.light-mode .vd-leaf svg{filter:drop-shadow(0 14px 24px rgba(60,40,10,.22))}
+      .vd-frame{z-index:2}.vd-chamber{z-index:1;transform-box:view-box;transform-origin:50% 50%;opacity:1}
+      .vd-dial,.vd-wheel{transform-box:view-box;transform-origin:50% 50%}
+      .vd-dial{transform:rotate(0deg)}.vd-wheel{transform:rotate(300deg)}.vd-bolt{transform:translateY(26px)}
+      .vd-s1{stop-color:var(--vd-m1)}.vd-s2{stop-color:var(--vd-m2)}.vd-g1{stop-color:var(--vd-glow)}.vd-g2{stop-color:var(--vd-glow-mid)}.vd-g3{stop-color:var(--vd-glow-out)}.vd-g4{stop-color:var(--vd-recess)}
+      .vd-face{fill:url(#vdMetal);stroke:var(--vd-edge);stroke-width:1.5}
+      .vd-eng{fill:none;stroke:var(--vd-engrave);stroke-width:2}
+      .vd-hi{fill:none;stroke:var(--vd-edge);stroke-width:1}
+      .vd-rivets{fill:none;stroke:var(--vd-tick);stroke-width:5;stroke-linecap:round;stroke-dasharray:0 54.19}
+      .vd-band{fill:none;stroke:var(--vd-engrave);stroke-width:16;opacity:.55}
+      .vd-ticks{fill:none;stroke:var(--vd-tick);stroke-width:12;stroke-dasharray:1.2 11.157}
+      .vd-ticks-major{fill:none;stroke:var(--vd-accent);stroke-width:18;stroke-dasharray:3 58.78}
+      .vd-pointer,.vd-star{fill:var(--vd-accent)}
+      .vd-spoke{stroke:var(--vd-tick);stroke-width:9;stroke-linecap:round}
+      .vd-knob{fill:var(--vd-m1);stroke:var(--vd-edge);stroke-width:1.5}
+      .vd-hub{fill:url(#vdMetal);stroke:var(--vd-edge);stroke-width:1.5}
+      .vd-bolt{fill:var(--vd-tick);stroke:var(--vd-engrave);stroke-width:1.2}
+      .vd-rim{fill:none;stroke:var(--vd-rim);stroke-width:14}
+      .vd-recess{fill:none;stroke:var(--vd-recess);stroke-width:22}
+      .vd-fticks{fill:none;stroke:var(--vd-tick);stroke-width:6;stroke-dasharray:1 8.686}
+      .vd-fticks-major{fill:none;stroke:var(--vd-accent);stroke-width:9;stroke-dasharray:2.6 94.8}
+      .vd-core{fill:url(#vdGlow)}
+      .vd-orbit{fill:none;stroke:var(--vd-accent);stroke-width:1;opacity:.45}
+      .vd-orbit--dash{stroke-dasharray:2 6}
+      .vd-node{fill:var(--vd-accent)}
+      .vd-label{fill:var(--vd-label);font:700 11px/1 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.22em;text-anchor:middle;paint-order:stroke;stroke:var(--vd-halo);stroke-width:4px;stroke-linejoin:round}
+      .vd-copy .eyebrow{margin-bottom:.9rem}
+      .vd-copy h2{font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.04;margin:0 0 1rem}
+      .vd-copy h2 em{color:var(--gold);font-style:italic}
+      .vd-copy>p{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:46ch}
+      .vd-chambers{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:.6rem}
+      .vd-chambers a{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.85rem;min-height:56px;padding:.7rem 1rem;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text);text-decoration:none;transition:border-color .2s,background-color .2s}
+      .vd-chambers a:hover,.vd-chambers a:focus-visible{border-color:var(--gold)}
+      .vd-chambers a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+      .vd-chambers strong{display:block;font-size:.95rem}
+      .vd-chambers small{display:block;color:var(--muted);font-size:.84rem;line-height:1.45}
+      .vd-chambers .vd-glyph{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold);font:700 .72rem/1 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em}
+      .vd-chambers .vd-arrow{color:var(--gold)}
+      .vd-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+      #vault-door .vd-cta--member{display:none}
+      :is(html,body)[data-vs-signed-in="true"] #vault-door .vd-cta--member{display:inline-flex}
+      :is(html,body)[data-vs-signed-in="true"] #vault-door .vd-cta--guest{display:none}
+      .vd-note{margin-top:.9rem;color:var(--muted);font-size:.84rem}
+      :is(html,body)[data-vs-signed-in="true"] .vd-note--guest{display:none}
+      .vd-note--member{display:none}
+      :is(html,body)[data-vs-signed-in="true"] .vd-note--member{display:block}
+      /* Fallback (no scroll-driven animations): JS arms the closed state only while off screen, then opens on intersection. */
+      .vd-armed .vd-dial{transform:rotate(-150deg);transition:transform 1.3s cubic-bezier(.3,.7,.2,1)}
+      .vd-armed .vd-wheel{transform:rotate(0deg);transition:transform 1.5s cubic-bezier(.3,.7,.2,1)}
+      .vd-armed .vd-bolt{transform:translateY(0);transition:transform .5s cubic-bezier(.6,0,.4,1) 1.2s}
+      .vd-armed .vd-leaf{transform:perspective(1600px) rotateY(0deg);transition:transform 1.5s cubic-bezier(.6,0,.2,1) 1.75s}
+      .vd-armed .vd-chamber{opacity:.2;transform:scale(.9);transition:opacity 1.2s ease 1.9s,transform 1.5s ease 1.75s}
+      .vd-armed.vd-open .vd-dial{transform:rotate(0deg)}.vd-armed.vd-open .vd-wheel{transform:rotate(300deg)}.vd-armed.vd-open .vd-bolt{transform:translateY(26px)}
+      .vd-armed.vd-open .vd-leaf{transform:perspective(1600px) rotateY(-84deg)}.vd-armed.vd-open .vd-chamber{opacity:1;transform:scale(1)}
+      @supports (animation-timeline:view()){
+        @media (prefers-reduced-motion:no-preference){
+          body:not([data-motion="reduced"]) .vd-stage{view-timeline:--vd block}
+          body:not([data-motion="reduced"]) .vd-dial{animation:vd-dial linear both;animation-timeline:--vd;animation-range:entry 25% cover 58%}
+          body:not([data-motion="reduced"]) .vd-wheel{animation:vd-wheel linear both;animation-timeline:--vd;animation-range:entry 25% cover 58%}
+          body:not([data-motion="reduced"]) .vd-bolt{animation:vd-bolt linear both;animation-timeline:--vd;animation-range:entry 25% cover 58%}
+          body:not([data-motion="reduced"]) .vd-leaf{animation:vd-leaf linear both;animation-timeline:--vd;animation-range:entry 25% cover 58%}
+          body:not([data-motion="reduced"]) .vd-chamber{animation:vd-chamber linear both;animation-timeline:--vd;animation-range:entry 25% cover 58%}
+        }
+      }
+      @keyframes vd-dial{0%{transform:rotate(-150deg)}40%,100%{transform:rotate(0deg)}}
+      @keyframes vd-wheel{0%{transform:rotate(0deg)}46%,100%{transform:rotate(300deg)}}
+      @keyframes vd-bolt{0%,40%{transform:translateY(0)}58%,100%{transform:translateY(26px)}}
+      @keyframes vd-leaf{0%,56%{transform:perspective(1600px) rotateY(0deg)}100%{transform:perspective(1600px) rotateY(-84deg)}}
+      @keyframes vd-chamber{0%,50%{opacity:.2;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
+      @media (prefers-reduced-motion:reduce){.vault-door .vd-stage *{animation:none!important;transition:none!important}.vd-sparks{display:none}}
+      body[data-motion="reduced"] .vault-door .vd-stage *{animation:none!important;transition:none!important}
+      body[data-motion="reduced"] .vd-sparks{display:none}
+      @media (max-width:860px){.vd-grid{grid-template-columns:1fr;gap:2rem}.vd-stage{width:min(100%,380px)}.vault-door{padding:3rem 0 2.5rem}}
+      @media (max-width:430px){.vd-stage{width:min(100%,320px)}.vd-copy h2{font-size:clamp(1.85rem,9vw,2.3rem)}}
+    </style>
+    <section id="vault-door" class="vault-door" aria-labelledby="vault-door-heading">
+      <div class="container">
+        <div class="vd-grid">
+          <div class="vd-stage" aria-hidden="true">
+            <svg class="vd-chamber" viewBox="0 0 400 400" focusable="false">
+              <defs>
+                <radialGradient id="vdGlow" cx="50%" cy="50%" r="50%"><stop offset="0" class="vd-g1"/><stop offset=".38" class="vd-g2"/><stop offset=".78" class="vd-g3"/><stop offset="1" class="vd-g4"/></radialGradient>
+              </defs>
+              <circle class="vd-core" cx="200" cy="200" r="174"/>
+              <circle class="vd-orbit" cx="200" cy="200" r="52"/>
+              <circle class="vd-orbit vd-orbit--dash" cx="200" cy="200" r="96"/>
+              <circle class="vd-orbit" cx="200" cy="200" r="138"/>
+              <path class="vd-star" d="M200 158 L209 191 L242 200 L209 209 L200 242 L191 209 L158 200 L191 191 Z"/>
+              <circle class="vd-node" cx="262" cy="130" r="4"/>
+              <circle class="vd-node" cx="296" cy="200" r="4"/>
+              <circle class="vd-node" cx="262" cy="270" r="4"/>
+              <text class="vd-label" x="268" y="116">MEMBERS</text>
+              <text class="vd-label" x="300" y="186">RANKS</text>
+              <text class="vd-label" x="268" y="294">SEASONS</text>
+            </svg>
+            <svg class="vd-frame" viewBox="0 0 400 400" focusable="false">
+              <circle class="vd-recess" cx="200" cy="200" r="174"/>
+              <circle class="vd-rim" cx="200" cy="200" r="191"/>
+              <circle class="vd-fticks" cx="200" cy="200" r="191"/>
+              <circle class="vd-fticks-major" cx="200" cy="200" r="191"/>
+              <circle class="vd-hi" cx="200" cy="200" r="198.5"/>
+              <circle class="vd-hi" cx="200" cy="200" r="184"/>
+            </svg>
+            <div class="vd-leaf">
+              <svg viewBox="0 0 400 400" focusable="false">
+                <defs>
+                  <radialGradient id="vdMetal" cx="36%" cy="30%" r="78%"><stop offset="0" class="vd-s1"/><stop offset="1" class="vd-s2"/></radialGradient>
+                </defs>
+                <g class="vd-bolts">
+                  <g><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(45 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(90 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(135 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(180 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(225 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(270 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                  <g transform="rotate(315 200 200)"><rect class="vd-bolt" x="190" y="18" width="20" height="40" rx="5"/></g>
+                </g>
+                <circle class="vd-face" cx="200" cy="200" r="162"/>
+                <circle class="vd-hi" cx="200" cy="200" r="156"/>
+                <circle class="vd-eng" cx="200" cy="200" r="150"/>
+                <circle class="vd-rivets" cx="200" cy="200" r="138"/>
+                <g class="vd-dial">
+                  <circle class="vd-band" cx="200" cy="200" r="114"/>
+                  <circle class="vd-ticks" cx="200" cy="200" r="114"/>
+                  <circle class="vd-ticks-major" cx="200" cy="200" r="114"/>
+                  <path class="vd-pointer" d="M200 76 L207 90 L193 90 Z"/>
+                </g>
+                <circle class="vd-eng" cx="200" cy="200" r="94"/>
+                <circle class="vd-hi" cx="200" cy="200" r="90"/>
+                <g class="vd-wheel">
+                  <line class="vd-spoke" x1="200" y1="130" x2="200" y2="270"/>
+                  <line class="vd-spoke" x1="139.4" y1="165" x2="260.6" y2="235"/>
+                  <line class="vd-spoke" x1="139.4" y1="235" x2="260.6" y2="165"/>
+                  <circle class="vd-knob" cx="200" cy="130" r="9"/><circle class="vd-knob" cx="200" cy="270" r="9"/>
+                  <circle class="vd-knob" cx="139.4" cy="165" r="9"/><circle class="vd-knob" cx="260.6" cy="235" r="9"/>
+                  <circle class="vd-knob" cx="139.4" cy="235" r="9"/><circle class="vd-knob" cx="260.6" cy="165" r="9"/>
+                  <circle class="vd-hub" cx="200" cy="200" r="32"/>
+                  <circle class="vd-eng" cx="200" cy="200" r="22"/>
+                  <path class="vd-star" d="M200 186 L203.5 196.5 L214 200 L203.5 203.5 L200 214 L196.5 203.5 L186 200 L196.5 196.5 Z"/>
+                </g>
+              </svg>
+            </div>
+            <canvas class="vd-sparks" width="1" height="1"></canvas>
+          </div>
+          <div class="vd-copy">
+            <span class="eyebrow">Behind the door</span>
+            <h2 id="vault-door-heading">The Vault opens<br><em>by invitation.</em></h2>
+            <p>Behind this door is one Vault Member identity that follows you into every world we build: a rank earned by playing, a season race, and a wall that remembers who was here early. Enrolment is invite-led while we build it properly.</p>
+            <ul class="vd-chambers">
+              <li><a href="/community/#wall" data-track-event="home_vault_door_chamber_click"><span class="vd-glyph" aria-hidden="true">I</span><span><strong>Members</strong><small>The Vault Wall: who is already inside.</small></span><span class="vd-arrow" aria-hidden="true">&rarr;</span></a></li>
+              <li><a href="/leaderboards/#ranks" data-track-event="home_vault_door_chamber_click"><span class="vd-glyph" aria-hidden="true">II</span><span><strong>Ranks</strong><small>Nine ranks, Spark Initiate to The Sparked. Never bought.</small></span><span class="vd-arrow" aria-hidden="true">&rarr;</span></a></li>
+              <li><a href="/leaderboards/#global" data-track-event="home_vault_door_chamber_click"><span class="vd-glyph" aria-hidden="true">III</span><span><strong>Seasons</strong><small>Season standings: this season's Vault Points race.</small></span><span class="vd-arrow" aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+            <div class="vd-actions">
+              <a class="button vd-cta--guest" href="/contact/?topic=invite" data-vs-join data-track-event="home_vault_door_invite_click">Request your Vault invite</a>
+              <a class="button vd-cta--member" href="/vault-member/" data-track-event="home_vault_door_enter_click">Enter the Vault</a>
+            </div>
+            <p class="vd-note vd-note--guest">Request an invite and we will send the key.</p>
+            <p class="vd-note vd-note--member">You already hold a key. Your rank and season standing are inside.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/assets/vault-door.shell-20bb2584bc.js" defer></script>
+    <!-- vault-door:end -->
+
     <section id="vault-membership" data-reveal="fade-up" class="membership-section vsx-df7a4fda76" aria-labelledby="membership-heading">
       <div class="container">
         <div class="membership-inner">
@@ -1717,10 +2083,10 @@
               <p>
                 Your Studio Member profile follows you into every world we build —
                 ranking, unlocks, and exclusive access that compound as the forge
-                expands. The vault is already open. This is your key.
+                expands. Enrolment is invite-led for now — request yours and we will send the key.
               </p>
               <div class="hero-actions">
-                <a class="button" href="/vault-member/#register" data-track-event="home_membership_free_click">Create Free Account</a>
+                <a class="button" data-track-event="home_membership_free_click" href="/contact/?topic=invite" data-vs-join>Request your Vault invite</a>
                 <a class="button-secondary" href="/membership/" data-track-event="home_membership_about_click">About Vault Membership</a>
               </div>
 
@@ -1748,60 +2114,11 @@
               </div>
             </div>
 
-            <div class="rank-preview" role="group" aria-label="Vault Rank tiers">
-              <h3>Vault Rank System</h3>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-e4a06a3d54"></div>
-                <span class="rank-tier-name">Spark Initiate</span>
-                <span class="rank-tier-pts">0 – 249 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-bb1190feb1"></div>
-                <span class="rank-tier-name">Vault Runner</span>
-                <span class="rank-tier-pts">250 – 999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-d29d2a46e8"></div>
-                <span class="rank-tier-name">Rift Scout</span>
-                <span class="rank-tier-pts">1,000 – 2,999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-aca8f94c96"></div>
-                <span class="rank-tier-name">Vault Guard</span>
-                <span class="rank-tier-pts">3,000 – 7,499 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-17a0e82c9d"></div>
-                <span class="rank-tier-name">Vault Breacher</span>
-                <span class="rank-tier-pts">7,500 – 14,999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-147f2bfb8b"></div>
-                <span class="rank-tier-name">Void Operative</span>
-                <span class="rank-tier-pts">15,000 – 29,999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-85f9e9cbd1"></div>
-                <span class="rank-tier-name">Vault Keeper</span>
-                <span class="rank-tier-pts">30,000 – 59,999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-12b22cef88"></div>
-                <span class="rank-tier-name">Forge Master</span>
-                <span class="rank-tier-pts">60,000 – 99,999 pts</span>
-              </div>
-              <div class="rank-tier">
-                <div class="rank-dot vsx-e3e8af3933"></div>
-                <span class="rank-tier-name text-gold">The Sparked</span>
-                <span class="rank-tier-pts">100,000+ pts</span>
-              </div>
-              <div class="vsx-4223210faf">
-                <p class="vsx-459d08892c">
-                  Earn points by connecting games, playing sessions, unlocking achievements,
-                  and contributing to the vault community. Real game integrations arrive as each title goes live.
-                </p>
-              </div>
-            </div>
+            <aside class="home-rank-line" aria-label="Vault Ranks">
+              <p class="home-rank-line__eyebrow">Vault Ranks</p>
+              <p class="home-rank-line__text">Nine ranks, from Spark Initiate to The Sparked — earned by playing, never bought.</p>
+              <a class="home-rank-line__link" href="/leaderboards/#ranks">See the full rank ladder &rarr;</a>
+            </aside>
           </div>
         </div>
       </div>
@@ -1829,7 +2146,7 @@
       </div>
     </section>
 
-    <!-- S201 vault-climbers-monthly-digest: render-on-data (hidden if empty) -->
+    <!-- vault-climbers-monthly-digest: render-on-data (hidden if empty) -->
     <section id="vault-climbers-strip" hidden aria-label="Vault Climbers this month">
       <div class="container">
         <div id="vault-climbers-inner">
@@ -1873,30 +2190,30 @@
           <h2 id="spine-heading" class="vsx-2108aaf69a">
             Live from the studio
           </h2>
-          <a href="/oracle/" class="button-secondary button-sm vsx-b5b8533655">Enter the Oracle →</a>
+          <a href="/ignis/#oracle" class="button-secondary button-sm vsx-b5b8533655">Enter the Oracle →</a>
         </div>
         <div class="vsx-fb570e9191">
           <article class="spine-card vsx-ae64c2c69f" data-spine-card="pulse" >
             <span class="vsx-50474b1472">Latest pulse</span>
             <p data-spine-pulse class="vsx-0a6b8eda0b">Latest public dispatch publishes from the Signal Log feed.</p>
-            <a href="/journal/" class="vsx-90709422e5">Read the Signal Log →</a>
+            <a href="/changelog/#stories" class="vsx-90709422e5">Read the Signal Log →</a>
           </article>
           <article class="spine-card vsx-ae64c2c69f" data-spine-card="signal" >
             <span class="vsx-8772816126">Studio signal</span>
             <p data-spine-signal class="vsx-0a6b8eda0b">
-              <strong data-spine-active>6</strong> active projects ·
-              <strong data-spine-pulses>14</strong> in the forge
+              <!-- registry:home-spine:start --><strong data-spine-active>3</strong> live ·
+              <strong data-spine-pulses>17</strong> in the forge<!-- registry:home-spine:end -->
             </p>
-            <small data-spine-proof class="vsx-90709422e5">Proof: public status manifest refreshes this panel.</small>
+            <small data-spine-proof class="vsx-90709422e5">Updated automatically as projects move through the vault.</small>
             <a href="/studio-pulse/" class="vsx-90709422e5">See Studio Pulse →</a>
           </article>
           <article class="spine-card vsx-ae64c2c69f" data-spine-card="oracle" >
             <span class="vsx-3c4398eed7">Oracle read</span>
             <p data-spine-oracle class="vsx-0a6b8eda0b">Oracle forecast publishes from the public intelligence feed.</p>
-            <a href="/oracle/" class="vsx-90709422e5">Full forecast →</a>
+            <a href="/ignis/#oracle" class="vsx-90709422e5">Full forecast →</a>
           </article>
         </div>
-        <!-- Micro-feedback (S147 showcase-pulse-prompt): closes the loop without another form. -->
+        <!-- Micro-feedback: closes the loop without another form. -->
         <div data-spine-feedback class="vsx-89b75b46de">
           <span data-spine-feedback-prompt>Was this enough?</span>
           <button type="button" data-spine-feedback-vote="yes" class="vsx-fa19840e78">Yes</button>
@@ -1905,238 +2222,24 @@
       </div>
     </section>
 
-    <!-- ── Forged From The Vault (worlds — moved up S123) ───────────────────────────────── -->
-    <section id="vault-forged" aria-labelledby="projects-heading" class="vsx-87db227580">
-      <div aria-hidden="true" class="vsx-13e5b0b77b"></div>
-      <div class="container vsx-f59fded7c1">
-        <div class="section-head">
-          <div>
+    <section id="vault-forged" class="home-portfolio-row" aria-labelledby="projects-heading">
+      <div class="container">
+        <nav class="home-portfolio-row__inner" data-home-portfolio="registry" aria-labelledby="projects-heading">
+          <div class="home-portfolio-row__copy">
             <span class="eyebrow">Games &amp; Projects</span>
-            <h2 id="projects-heading" class="vsx-09e8c5ac29">Forged From The Vault</h2>
-            <p>Every VaultSpark world — live and playable, deep in the forge, or vaulted under pressure for what comes next.</p>
+            <h2 id="projects-heading">Everything forged from the vault</h2>
+            <p>The live worlds are in the showcase above. Browse every title by status, or jump straight to what you can play right now.</p>
           </div>
-          <div class="vsx-2afc9b7fcb">
-            <a class="button-secondary button-sm" href="/games/">All Games</a>
-            <a class="button-secondary button-sm" href="/projects/">All Projects</a>
+          <div class="home-portfolio-row__links">
+            <a class="button" href="/play/">Where to play &rarr;</a>
+            <a class="button-secondary" href="/games/">All games</a>
+            <a class="button-secondary" href="/projects/">All projects</a>
+            <a class="button-secondary" href="/roadmap/">Now · Next · Later</a>
           </div>
-        </div>
-
-        <!-- SPARKED 🔥 — Live & Playable -->
-        <div class="project-tier">
-          <div class="tier-label tier-label-sparked">
-            <h3>🔥 Sparked</h3>
-            <div class="tier-line"></div>
-          </div>
-          <div class="cards cards-3">
-            <article class="card">
-              <div class="card-art footballgm">
-                <h3>Franchise Architect</h3>
-              </div>
-              <div class="card-body">
-                <p>A deep NFL front-office simulation focused on league realism, career arcs, depth charts, and long-run franchise storytelling.</p>
-                <div class="meta">
-                  <span>Football Sim</span>
-                  <span>Front Office</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="https://playfranchisearchitect.com/" target="_blank" rel="noreferrer">Play Beta</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art vorn">
-                <h3>Vorn</h3>
-              </div>
-              <div class="card-body">
-                <p>A social-first agent platform where your AI companion learns, evolves, and connects with the world around you.</p>
-                <div class="meta">
-                  <span>Platform</span>
-                  <span>Social AI</span>
-                  <span>Agents</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="/projects/vorn/">Try Early Build</a>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <!-- IN THE FORGE ⚒️ — Under Construction -->
-        <div class="project-tier">
-          <div class="tier-label tier-label-forge">
-            <h3>⚒️ In The Forge</h3>
-            <div class="tier-line"></div>
-          </div>
-          <div class="cards cards-3">
-            <article class="card">
-              <div class="card-art doodie">
-                <h3>Call Of Doodie</h3>
-              </div>
-              <div class="card-body">
-                <p>A hilarious shooter RPG of comic mayhem where absurdity hits first and the punchline never arrives quietly.</p>
-                <div class="meta">
-                  <span>Action Comedy</span>
-                  <span>Arcade Energy</span>
-                  <span>Web Build</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="https://callofdoodie.wtf/">Play the Beta</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art promogrind">
-                <h3>PromoGrind</h3>
-              </div>
-              <div class="card-body">
-                <p>Free sportsbook promo conversion suite with 53 calculators, a P/L ledger, beta-gated AI helpers, and a launch-hardening path to public announcement.</p>
-                <div class="meta">
-                  <span>Sports Promo Tool</span>
-                  <span>Free Core</span>
-                  <span>Launch Hardening</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="https://promogrind.bet/">Launch Tool</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art velaxis">
-                <h3>Velaxis</h3>
-              </div>
-              <div class="card-body">
-                <p>A real-time crypto intelligence dashboard with 8 live data tabs, portfolio tracking, and optional AI-powered analysis.</p>
-                <div class="meta">
-                  <span>Dashboard</span>
-                  <span>Crypto</span>
-                  <span>Real-Time</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="/projects/velaxis/">Open Dashboard</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art vaultfront">
-                <h3>VaultFront</h3>
-              </div>
-              <div class="card-body">
-                <p>A strategy warfront built around convoy timing, vault captures, and swing-heavy map pressure. The dedicated runtime stack is coming online.</p>
-                <div class="meta">
-                  <span>Strategy</span>
-                  <span>Vault Warfare</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="/games/vaultfront/">View Project</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art solara">
-                <h3>Solara</h3>
-              </div>
-              <div class="card-body">
-                <p>A browser roguelite RPG where every player death dims a shared sun. Run the daily dungeon, leave your grave on the living map, and fight to keep the light alive.</p>
-                <div class="meta">
-                  <span>Roguelite RPG</span>
-                  <span>Permadeath</span>
-                  <span>Shared World</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="/games/solara/">Explore Project</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-art mindframe">
-                <h3>MindFrame</h3>
-              </div>
-              <div class="card-body">
-                <p>A cognitive puzzle experience built around the mechanics of perception. Every level is a question disguised as a room.</p>
-                <div class="meta">
-                  <span>Puzzle</span>
-                  <span>Cognitive</span>
-                  <span>Experimental</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button" href="/games/mindframe/">Try Early Build</a>
-                </div>
-              </div>
-            </article>
-
-
-            <article class="card">
-              <div class="card-art the-exodus">
-                <h3>The Exodus</h3>
-              </div>
-              <div class="card-body">
-                <p>A narrative survival game set in a world that already ended. Every decision carries weight. Every resource is a story.</p>
-                <div class="meta">
-                  <span>Survival</span>
-                  <span>Narrative</span>
-                  <span>Browser</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button-secondary" href="/games/the-exodus/">View Project</a>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- VAULTED 🔒 — Sealed & Preserved -->
-        <div class="project-tier">
-          <div class="tier-label tier-label-vaulted">
-            <h3>🔒 Vaulted</h3>
-            <div class="tier-line"></div>
-          </div>
-          <div class="cards cards-2">
-            <article class="card">
-              <div class="card-art gridiron">
-                <h3>Gridiron GM</h3>
-              </div>
-              <div class="card-body">
-                <p>Legacy football-management lineage preserved in the vault. Franchise Architect is the active SPARKED successor; Gridiron GM remains available as the archived branch.</p>
-                <div class="meta">
-                  <span>Sports Sim</span>
-                  <span>Management</span>
-                  <span>Legacy Branch</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button-secondary" href="/games/gridiron-gm/">View Gridiron GM</a>
-                  <a class="button" href="/vault-member/#register">Get Early Access</a>
-                </div>
-              </div>
-            </article>
-            <article class="card card-stub">
-              <div class="card-art vault-sealed">
-                <h3>Unannounced Vault</h3>
-              </div>
-              <div class="card-body">
-                <p>A sealed concept reserved for Vault Members once it has a real audience promise. No placeholder launch, no empty reveal.</p>
-                <div class="meta">
-                  <span>Sealed Concept</span>
-                  <span>Member-First Reveal</span>
-                </div>
-                <div class="card-actions">
-                  <a class="button-secondary" href="/#social">Follow For Updates</a>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
+        </nav>
       </div>
     </section>
 
-    <!-- ── Universe Bridge (S123 immersion strip — no CTA) ──── -->
     <section class="surface-section universe-bridge vsx-ea68225f57" data-reveal="fade-up" aria-label="Universe bridge">
       <div aria-hidden="true" class="vsx-69b1a23059"></div>
       <div class="container vsx-e967e6fdbc">
@@ -2145,7 +2248,6 @@
       </div>
     </section>
 
-    <!-- ── Universe Signal Teaser (moved up S123) ───────────────────────────────── -->
     <section id="characters" aria-labelledby="signal-heading" class="vsx-06ec04d82e">
       <div class="container">
         <div class="signal-teaser-panel vsx-72988e2496">
@@ -2231,7 +2333,6 @@
       </div>
     </section>
 
-    <!-- ── Inside The Vault (moved up S123) ───────────────────────────────── -->
     <section id="vaulted" aria-labelledby="studio-heading">
       <div class="container studio-grid">
         <div class="panel">
@@ -2266,12 +2367,12 @@
             <div class="timeline-item">
               <span class="tl-label">Vault Expansion</span>
               <strong>Character-led media experiments</strong>
-              <div class="tl-body">A debut Novel Saga is in the vault — transmission fragments already surfacing. The full story is sealed until further notice.</div>
+              <div class="tl-body">Voidfall, a nine-book cosmic-horror saga, is taking shape — <a href="/universe/voidfall/">read the opening transmission</a>.</div>
             </div>
             <div class="timeline-item">
-              <span class="tl-label">Vault Future</span>
-              <strong>Studio membership &amp; cross-game accounts</strong>
-              <div class="tl-body">One account. Every world. Real rankings, real achievements, and a community built across every title we ship.</div>
+              <span class="tl-label">Live Now</span>
+              <strong>One Vault account across every world</strong>
+              <div class="tl-body">Membership is open: one account, shared ranks and achievements, and a community built across every title we ship. <a href="/membership/">See membership</a>.</div>
             </div>
           </div>
         </div>
@@ -2289,20 +2390,18 @@
           <div class="vsx-04a9126a05">
             <span class="vsx-e88851c3e6">March 2026</span>
             <span class="vsx-12a07383b3">· 3 min read</span>
-            <span class="signal-teaser-tag">Studio OS</span>
+            <span class="signal-teaser-tag">How We Build</span>
           </div>
           <h3 class="vsx-119787c427">We Made The System Visible</h3>
-          <p class="vsx-ee0d9f43c9">Most studios hide how they operate. We decided to show it — the full Studio OS, project memory, <a href="/how-we-build/#handoff">handoff</a> documents, and the system that lets a lean team ship at a pace most studios can't match.</p>
+          <p class="vsx-ee0d9f43c9">Most studios hide how they operate. We decided to show it — how a lean team plans, remembers and ships at a pace most studios can't match.</p>
           <span class="vsx-df180b3111">Read the signal →</span>
         </a>
         <div class="vsx-cd8d1897d6">
-          <a href="/journal/" class="journal-link-inline vsx-bd4c6f2149">All dispatches →</a>
+          <a href="/changelog/#stories" class="journal-link-inline vsx-bd4c6f2149">All dispatches →</a>
         </div>
       </div>
     </section>
 
-    <!-- S127: Vault Tools section removed — duplicate of /projects/ + earlier homepage sections -->
-    <!-- S127: Vault Membership moved up — see new position after Vault Proof Stats -->
 
     <!-- ── Trust Depth ───────────────────────────────── -->
     <section class="surface-section trust-depth" data-reveal="fade-up" data-track-view="home_trust_depth_view" aria-label="Trust depth">
@@ -2321,7 +2420,6 @@
       </div>
     </section>
 
-    <!-- Related rail dropped S123: nav + footer already cover this navigation -->
 
     <!-- ── Vault Signal — Live Activity ───────────────────────────────── -->
     <section id="vault-signal-section" data-reveal="fade-up" aria-labelledby="vault-signal-heading" class="vsx-c9bad4f86b">
@@ -2331,7 +2429,7 @@
             <span class="eyebrow">Live Signal</span>
             <h2 id="vault-signal-heading" class="vsx-cfd53b7037">Vault Activity</h2>
           </div>
-          <a href="/members/" class="button-secondary button-sm">Browse Members</a>
+          <a href="/community/#members" class="button-secondary button-sm">Browse Members</a>
         </div>
         <div id="vault-signal-feed" role="list" aria-live="polite" aria-label="Recent vault member activity" class="vsx-f3f739e92f"></div>
         <div data-vault-pulse class="vsx-a847778823"></div>
@@ -2428,23 +2526,22 @@
         <div class="footer-col">
           <h2>Games</h2>
           <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/play/">Where to play</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/call-of-doodie/">Call of Doodie</a>
           <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
+          <a href="/games/solara/">Solara: Sunfall</a>
           <a href="/games/mindframe/">MindFrame</a>
           <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
           <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
-          <a href="https://veilos.io">VEILOS</a>
+          <a href="/projects/veilos/">VEILOS</a>
           <a href="/projects/vorn/">Vorn</a>
           <a href="/projects/concurrent/">Concurrent</a>
           <a href="/projects/hashmark/">Hashmark</a>
@@ -2463,19 +2560,17 @@
           <a href="/studio/">About</a>
           <a href="/evidence/">Evidence</a>
           <a href="/studio-pulse/">Pulse</a>
-          <a href="/oracle/">Oracle</a>
           <a href="/ignis/">IGNIS</a>
-          <a href="/atlas/">Atlas</a>
           <a href="/status/">Status</a>
-          <a href="/stats/">Stats</a>
           <a href="/changelog/">Changelog</a>
           <a href="/roadmap/">Roadmap</a>
           <a href="/search/">Search</a>
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -2485,7 +2580,7 @@
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -2505,17 +2600,17 @@
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">Atlas · Ecosystem Map</a>
           <a href="/pathways/">Pathways</a>
           <a href="/status/">Status</a>
           <a href="/search/">Search</a>
           <a href="/faq/">Frequently Asked Questions</a>
-          <a href="/careers/">Careers</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/rights/">Technology & Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/how-we-build/">How We Build</a>
+          <a href="/api/">Developer API & Feeds</a>
           <a href="/security/">Security</a>
-          <a href="/ask-founders/">Ask the Founders</a>
+          <a href="/faq/#ask">Ask the Studio</a>
           <a href="/sitemap-page/">Sitemap</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -2529,6 +2624,7 @@
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -2583,12 +2679,12 @@
   <script src="/assets/nav-toggle.shell-8c1f2155b5.js" defer></script>
   <script src="/assets/vault-cta.js" defer></script>
   <script src="/assets/sentry-init.shell-8b1d92d92b.js" defer></script>
-  <script src="/assets/home-idle-loader.shell-15b061f5c6.js" defer></script>
+  <script src="/assets/home-idle-loader.shell-d1839327b4.js" defer></script>
 <script src="/assets/schema-injector.shell-33115efcde.js" defer></script>
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-1732d293f8.js" defer></script>
 <script src="/assets/ambient-feature.shell-9b5baeb1ab.js" defer></script>
 <!-- vs-ambient:end -->
-<script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
+<script src="/assets/nav-sheet.shell-c0fddc0c73.js" defer></script>
 </body>
 </html>

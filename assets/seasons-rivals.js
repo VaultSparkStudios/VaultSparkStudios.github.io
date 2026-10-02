@@ -30,6 +30,59 @@
     return isNaN(d.getTime()) ? null : d;
   }
 
+  function pointsOf(row) {
+    return Number((row && (row.vault_points != null ? row.vault_points : row.points)) || 0);
+  }
+
+  // Smallest positive gap above `myPoints`. Rows at or below are ignored, and
+  // the caller's own row (is_me / same username) never counts as a rival.
+  function findNearestRival(myPoints, rows, myUsername) {
+    var mePts = Number(myPoints || 0);
+    var rival = null;
+    if (!Array.isArray(rows)) return null;
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      if (!row || row.is_me) continue;
+      if (myUsername && row.username && String(row.username).toLowerCase() === String(myUsername).toLowerCase()) continue;
+      var pts = pointsOf(row);
+      if (pts <= mePts) continue;
+      if (!rival || pts < pointsOf(rival)) rival = row;
+    }
+    return rival;
+  }
+
+  // The season a surface should talk about: the declared active one, else the
+  // most recently ended one that had a real window. Never invents a season.
+  function pickSeason(feed) {
+    var list = feed && Array.isArray(feed.seasons) ? feed.seasons : [];
+    var active = list.find(function (s) { return s && s.active; });
+    if (active) return active;
+    var ended = list.filter(function (s) { return s && parseDate(s.startedAt) && parseDate(s.endsAt || s.endedAt); });
+    ended.sort(function (a, b) { return parseDate(b.endsAt || b.endedAt) - parseDate(a.endsAt || a.endedAt); });
+    return ended[0] || null;
+  }
+
+  // 'none' | 'upcoming' | 'active' | 'ended', judged by the clock and not by
+  // the active flag alone, so a season whose endsAt has passed reads as ended
+  // before anyone edits the feed.
+  function seasonPhase(season, now) {
+    if (!season) return 'none';
+    var t = now instanceof Date ? now.getTime() : (typeof now === 'number' ? now : Date.now());
+    var start = parseDate(season.startedAt);
+    var end = parseDate(season.endsAt || season.endedAt);
+    if (!end) return season.active ? 'active' : 'none';
+    if (start && t < start.getTime()) return 'upcoming';
+    if (t >= end.getTime()) return 'ended';
+    return season.active ? 'active' : 'ended';
+  }
+
+  // Vault Points for a declared reward tier (e.g. 'participant'), else null.
+  function seasonReward(season, tier) {
+    var rewards = season && Array.isArray(season.rewards) ? season.rewards : [];
+    var hit = rewards.find(function (r) { return r && r.tier === tier; });
+    return hit && Number(hit.vaultPoints) > 0 ? Number(hit.vaultPoints) : null;
+  }
+
   function fmtDuration(ms) {
     if (ms <= 0) return 'Season ended';
     var secs = Math.floor(ms / 1000);
@@ -104,14 +157,7 @@
       return;
     }
     var mePts = Number(me.vault_points || me.points || 0);
-    // find leaderboard entry with smallest positive delta above me
-    var rival = null;
-    for (var i = 0; i < leaderboard.length; i++) {
-      var row = leaderboard[i];
-      var pts = Number(row.vault_points || row.points || 0);
-      if (pts <= mePts) continue;
-      if (!rival || pts < Number(rival.vault_points || rival.points || 0)) rival = row;
-    }
+    var rival = findNearestRival(mePts, leaderboard, me.username);
     if (!rival) {
       root.innerHTML = [
         '<div class="sr-top">',
@@ -169,6 +215,19 @@
       renderRival(rivalRoot, ctx.me, ctx.board);
     }
   }
+
+  var api = {
+    parseDate: parseDate,
+    fmtDuration: fmtDuration,
+    findNearestRival: findNearestRival,
+    pickSeason: pickSeason,
+    seasonPhase: seasonPhase,
+    seasonReward: seasonReward,
+    loadSeasons: loadSeasons,
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  window.VSSeasons = api;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });

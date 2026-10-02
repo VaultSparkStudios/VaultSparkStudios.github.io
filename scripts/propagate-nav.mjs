@@ -49,6 +49,11 @@ const SKIP_DIRS = new Set([
   'lighthouse-results'
 ]);
 const ROOT_ONLY_SKIP_DIRS = new Set(['solara']);
+// S368: `--exclude=vault-member,member` leaves root-level trees untouched for one
+// run (used when another lane owns those files mid-session; a later full run
+// brings them back into line with the catalog).
+const EXCLUDE_ARG = process.argv.find((arg) => arg.startsWith('--exclude='));
+if (EXCLUDE_ARG) EXCLUDE_ARG.slice('--exclude='.length).split(',').map((d) => d.trim()).filter(Boolean).forEach((d) => ROOT_ONLY_SKIP_DIRS.add(d));
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)
 const SKIP_FILES = new Set([
@@ -73,12 +78,11 @@ const SKIP_FILES = new Set([
 function getActiveLink(relPath) {
   const p = relPath.replace(/\\/g, '/').replace(/\/index\.html$/, '').replace(/\.html$/, '');
   if (p === '' || p === 'index') return '/';
-  if (p.startsWith('games')) return '/games/';
+  if (p.startsWith('games') || p === 'play') return '/games/';
   if (p.startsWith('projects')) return '/projects/';
   if (p.startsWith('universe')) return '/universe/';
   if (p.startsWith('studio')) return '/studio/';
   if (p.startsWith('contact')) return '/contact/';
-  if (p.startsWith('journal')) return '/journal/';
   if (p.startsWith('news')) return '/news/';
   if (p.startsWith('leaderboards')) return '/leaderboards/';
   if (p.startsWith('roadmap')) return '/roadmap/';
@@ -201,6 +205,21 @@ function footerLinks(links) {
   return links.map((link) => `<a href="${link.href}">${link.label}</a>`).join('\n          ');
 }
 
+// S368 registry-truth-everywhere: the footer Games column was a hand-typed list
+// (labels "Call Of Doodie", "Voidfall Game") that drifted from the registry the nav
+// already derives from. It now renders from the same deriveGameNav() groups, so a
+// registry add/rename/status flip reaches every footer with no hand edit.
+function footerGameLinks() {
+  const games = NAV_GAMES.flatMap((group) => group.entries);
+  return footerLinks([
+    { href: '/games/', label: 'All Games' },
+    { href: '/play/', label: 'Where to play' },
+    ...games,
+    { href: '/leaderboards/', label: 'Leaderboards' },
+    { href: '/community/', label: 'Community Hub' },
+  ]);
+}
+
 function footerProjectLinks() {
   const projects = NAV_PROJECTS.flatMap((group) => group.entries);
   return footerLinks([{ href: '/projects/', label: 'All Projects' }, ...projects]);
@@ -243,24 +262,24 @@ function buildNav(assetPrefix, activeHref) {
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         ${a('/', 'Home')}
-        <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a>${buildStatusSections(NAV_GAMES)}</div></div>
+        <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><a href="/play/"${activeAttr(activeHref === '/play/')}>Where to play</a>${buildStatusSections(NAV_GAMES)}</div></div>
         <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a>${buildStatusSections(NAV_PROJECTS)}</div></div>
         <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/community/#wall">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/"${activeAttr(activeHref === '/universe/')}>Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span>${resourceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/changelog/#stories">Stories</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/dispatch/">Studio Dispatch</a><a href="/collaborate/">Collaborate</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/press/#brand">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span>${resourceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/press/#brand">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/membership/">Membership</a>
-          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-join" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="button button-sm" href="/contact/?topic=invite" data-vs-join>Request Invite</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -331,19 +350,7 @@ function buildFooter(assetPrefix) {
         </div>
         <div class="footer-col">
           <h2>Games</h2>
-          <a href="/games/">All Games</a>
-          <a href="/games/call-of-doodie/">Call Of Doodie</a>
-          <a href="/games/gridiron-gm/">Gridiron GM</a>
-          <a href="/games/franchise-architect/">Franchise Architect</a>
-          <a href="/games/vaultfront/">VaultFront</a>
-          <a href="/games/solara/">Solara</a>
-          <a href="/games/mindframe/">MindFrame</a>
-          <a href="/games/the-exodus/">The Exodus</a>
-          <a href="/games/project-unknown/">Project Unknown</a>
-          <a href="/games/voidfall/">Voidfall Game</a>
-          <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
-          <a href="/leaderboards/">Leaderboards</a>
-          <a href="/community/">Community Hub</a>
+          ${footerGameLinks()}
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
@@ -355,10 +362,11 @@ function buildFooter(assetPrefix) {
           <a href="/studio/">About</a>
           ${footerIntelligenceLinks()}
           <a href="/news/">The Desk · News</a>
-          <a href="/journal/">Signal Log</a>
-          <a href="/notebook/">Studio Notebook</a>
+          <a href="/changelog/#stories">Stories</a>
+          <a href="/dispatch/">Studio Dispatch</a>
           <a href="/press/">Press Kit</a>
-          <a href="/brand/">Brand Kit</a>
+          <a href="/press/#brand">Brand Kit</a>
+          <a href="/collaborate/">Collaborate</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
           <a href="/vault/tombstones/">Tombstones</a>
         </div>
@@ -368,7 +376,7 @@ function buildFooter(assetPrefix) {
           <a href="/membership/#tiers">Choose Your Tier</a>
           <a href="/membership/#benefits">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
-          <a href="/members/">Member Directory</a>
+          <a href="/community/#members">Member Directory</a>
           <a href="/member/">Member Lookup</a>
           <a href="/community/#wall">Vault Wall</a>
           <a href="/leaderboards/#ranks">Vault Ranks</a>
@@ -400,6 +408,7 @@ function buildFooter(assetPrefix) {
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
+          <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">

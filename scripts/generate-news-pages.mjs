@@ -27,9 +27,11 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import sharp from 'sharp';
-import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance, factReceiptFor } from './lib/news-desk.mjs';
+import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, personaProfile, personaNotebook, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance, factReceiptFor } from './lib/news-desk.mjs';
 import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
 import { staticDeskEvidence, renderStaticDeskEvidence } from './lib/news-freshness.mjs';
+import { ORG_REF, WEBSITE_REF } from './lib/org-entity.mjs';
+import { deskDispatchCta, DESK_DISPATCH_SCRIPT } from './lib/desk-dispatch-cta.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -249,66 +251,15 @@ const AI_BANNER = `<div class="desk-ai-banner" role="note"><strong>Written by AI
 
 const DISCLOSURE = `<div class="desk-disclosure"><strong>Editorial disclosure.</strong> The Desk is an experimental, AI-generated publication from VaultSpark Studios. ${PERSONAS.map((p) => escapeHtml(p.name)).join(', ')} are <strong>AI personas — fictional characters, not people</strong>, and no human authors, ghost-writes or reviews their commentary before it publishes. Every factual claim links its cited source, every prediction is dated and publicly graded so the personas can be shown to be wrong, and every edition passes an automated quality gate. This is AI commentary, labeled as such — treat it as argument to check, not reporting to trust.</div>`;
 
-/* ── The Dispatch: identity-free newsletter capture ────────────────────── */
+/* ── The Desk Dispatch: identity-free newsletter capture ───────────────── */
 
-// Deliberately account-free. The Desk's product claim is that it needs no
-// login, so its newsletter must not smuggle one in — this posts an email to a
-// Supabase function that hands it to Brevo for DOUBLE opt-in and nothing else.
-// Copy says "confirmation email" rather than "you're subscribed" because at
-// this point the reader genuinely is not subscribed yet.
-const DISPATCH_ENDPOINT = '/desk/dispatch/subscribe';
-
-function dispatchCta(source, { compact = false } = {}) {
-  return `<section class="desk-dispatch${compact ? ' desk-dispatch-compact' : ''}" aria-labelledby="dispatch-h-${source}">
-    <div class="desk-dispatch-copy">
-      <p class="desk-dispatch-kicker">The Dispatch</p>
-      <h2 id="dispatch-h-${source}">${compact ? 'Get the desk in your inbox.' : 'Get the argument, not the noise.'}</h2>
-      <p>${compact
-        ? 'What mattered, what the desk got wrong, and which predictions came due.'
-        : 'A short email when the desk publishes: the day’s lead argument, the quiet story nobody covered, and every prediction that came due. No account required — The Desk never asks for one.'}</p>
-    </div>
-    <form class="desk-dispatch-form" data-dispatch data-source="${escapeHtml(source)}" novalidate>
-      <label class="visually-hidden" for="dispatch-email-${source}">Email address</label>
-      <input id="dispatch-email-${source}" name="email" type="email" inputmode="email" autocomplete="email"
-             placeholder="you@example.com" required spellcheck="false">
-      <div data-vs-turnstile-slot aria-live="polite"></div>
-      <button type="submit" class="button">Subscribe</button>
-      <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
-      <p class="desk-dispatch-fine">Double opt-in — we send one confirmation email and add you only when you click it. Unsubscribe any time.</p>
-    </form>
-    <noscript><p class="desk-dispatch-fine">Signing up needs JavaScript. With it off this form cannot submit, so rather than fail silently: email <a href="mailto:news@vaultsparkstudios.com?subject=Subscribe%20to%20The%20Dispatch">news@vaultsparkstudios.com</a> with the subject &ldquo;Subscribe to The Dispatch&rdquo;, or follow <a href="/api/news-desk-feed.json">the JSON Feed</a> instead.</p></noscript>
-  </section>`;
-}
-
-const DISPATCH_SCRIPT = `<script>(function(){
-  var ENDPOINT=${JSON.stringify(DISPATCH_ENDPOINT)};
-  document.querySelectorAll('form[data-dispatch]').forEach(function(form){
-    var status=form.querySelector('[data-dispatch-status]');
-    var input=form.querySelector('input[name=email]');
-    var button=form.querySelector('button');
-    function say(msg,kind){status.textContent=msg;status.className='desk-dispatch-status'+(kind?' is-'+kind:'');}
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      var email=(input.value||'').trim();
-      if(!email||email.indexOf('@')<1){say('Enter a valid email address.','error');input.focus();return;}
-      button.disabled=true;say('Sending…');
-      if(!window.VSTurnstile||!window.VSCsrf){button.disabled=false;say('Verification is still loading. Please retry.','error');return;}
-      Promise.all([window.VSTurnstile.getToken(),window.VSCsrf.getToken()]).then(function(tokens){
-        return fetch(ENDPOINT,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':tokens[1]},
-          body:JSON.stringify({email:email,source:form.getAttribute('data-source')||'news',turnstileToken:tokens[0]})});
-      })
-      .then(function(r){return r.json().catch(function(){return {};}).then(function(b){return {ok:r.ok,body:b};});})
-      .then(function(res){
-        if(res.ok){form.classList.add('is-done');
-          say('Check your inbox — we sent a confirmation link. You are subscribed once you click it.','ok');
-          input.value='';}
-        else{button.disabled=false;say(res.body&&res.body.error?res.body.error:'Something went wrong. Please try again shortly.','error');}
-      })
-      .catch(function(){button.disabled=false;say('Could not reach the mail service. Please try again shortly.','error');});
-    });
-  });
-})();</script>`;
-
+// Deliberately account-free: the form posts an email to the Worker route, which
+// verifies CSRF + Turnstile and hands it to the subscribe-desk-dispatch function
+// for Brevo DOUBLE opt-in. Markup, copy, client and styles are one shared
+// component (scripts/lib/desk-dispatch-cta.mjs) also used by the homepage Desk
+// module and /dispatch/, so the placements cannot drift apart.
+const dispatchCta = deskDispatchCta;
+const DISPATCH_SCRIPT = DESK_DISPATCH_SCRIPT;
 /* ── Story page ────────────────────────────────────────────────────────── */
 
 function breadcrumbFor(items) {
@@ -339,9 +290,10 @@ function storyJsonLd(day, story, url, image) {
       name: 'The Desk — AI personas (no human author) · VaultSpark Studios',
       url: `${PROD}/news/`,
       description: 'Experimental AI publication. Stories are generated by named AI personas; the personas are fictional characters, not people.',
+      parentOrganization: ORG_REF,
     },
     creditText: 'Written by AI personas — no human author. Experimental AI publication.',
-    publisher: { '@type': 'Organization', name: 'VaultSpark Studios', url: PROD },
+    publisher: ORG_REF,
     // Keep the generator convergent with the sitewide AEO injector. Without
     // this field, `npm run build` injects it after generation and the news
     // generator's own --check immediately reports both story pages stale.
@@ -915,6 +867,7 @@ ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</s
   ${storyToc(tocSections)}
   <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
   <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
+  ${dispatchCta('story', { compact: true, heading: 'Liked the argument? Get the next one.' })}
   <section class="desk-section" id="sources" aria-labelledby="desk-sources-title">
   <h2 class="desk-h2" id="desk-sources-title">Where this came from</h2>
   <p class="desk-section-note">Every factual claim in the piece, linked to the source it came from. Open a receipt to copy its verifiable id and hash.</p>
@@ -946,7 +899,6 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
   </section>
   ${reactionBar(story, day)}
   ${communitySection(story, day)}
-  ${dispatchCta('story', { compact: true })}
   ${moreFromDesk(day, story)}
   ${DISCLOSURE}
 </article></main><link rel="stylesheet" href="/assets/desk-comments.css"><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script><script src="${deskCommentsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
@@ -957,6 +909,35 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
 const RECENT_EDITION_LIMIT = 7;
 const publishedDays = days.filter((day) => day.stories.some((story) => !story.supersededBy));
 const archiveMonths = [...new Set(publishedDays.map((day) => day.date.slice(0, 7)))];
+
+/**
+ * agent-geo-layer-v2: the hub told answer engines it was a CollectionPage and
+ * listed nothing in it. The latest editions' articles become an ItemList so a
+ * crawler can reach every current story from the hub's structured data alone.
+ * Superseded reruns stay out — they canonicalize to their first publication.
+ */
+const HUB_ITEMLIST_EDITIONS = 3;
+function latestEditionsItemList() {
+  const items = [];
+  for (const day of days.slice(0, HUB_ITEMLIST_EDITIONS)) {
+    for (const story of day.stories) {
+      if (story.supersededBy) continue;
+      items.push({ day, story });
+    }
+  }
+  if (!items.length) return null;
+  return {
+    '@type': 'ItemList',
+    name: 'Latest editions of The Desk',
+    numberOfItems: items.length,
+    itemListElement: items.map(({ day, story }, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${PROD}/news/${day.date}/${story.slug}/`,
+      name: story.headline,
+    })),
+  };
+}
 
 function buildHubPage() {
   const allSimulated = days.length > 0 && days.every((d) => d.simulated);
@@ -984,6 +965,9 @@ function buildHubPage() {
       name: 'The Desk — VaultSpark AI Signal',
       url: `${PROD}/news/`,
       description: `AI news argued by named AI personas with public, hash-verifiable prediction track records. Latest evidence: ${freshness.latestEditionDate || 'none'}.`,
+      isPartOf: WEBSITE_REF,
+      publisher: ORG_REF,
+      ...(latestEditionsItemList() ? { mainEntity: latestEditionsItemList() } : {}),
     }),
   });
   const cast = PERSONAS.map((p) => {
@@ -996,6 +980,7 @@ function buildHubPage() {
     return `<article class="desk-panel desk-persona" data-persona="${p.id}" data-mark="${escapeHtml(p.monogram)}">
     <div class="desk-persona-head">${personaPortrait(p, 'desk-avatar')}<div><h3>${personaNameLink(p)} <span class="desk-ai-tag">AI persona</span></h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
     <p class="desk-persona-tagline">${escapeHtml(p.tagline)}</p>
+    <p class="desk-persona-pulse">${escapeHtml(notebookPulse(personaNotebook(p.id, days)))}</p>
     <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
     <p class="desk-voice"><strong>Always asks:</strong> ${escapeHtml(p.question)}</p>
     <p class="desk-bit"><span class="desk-bit-label">Their recurring bit</span><strong>${escapeHtml(p.bit)}</strong> — ${escapeHtml(p.bitHow)}</p>
@@ -1006,7 +991,7 @@ function buildHubPage() {
     <p class="desk-profile-cta"><a href="${personaHref(p)}">Read ${escapeHtml(p.name)}’s profile and feed →</a></p>
   </article>`;
   }).join('\n');
-  const dayBlocks = publishedDays.slice(0, RECENT_EDITION_LIMIT).map((day) => {
+  const dayBlockList = publishedDays.slice(0, RECENT_EDITION_LIMIT).map((day) => {
     // S329: superseded reruns stay reachable at their URL (noindex, canonical →
     // first publication) but never compete in the index listing.
     const listable = day.stories.filter((story) => !story.supersededBy);
@@ -1042,7 +1027,12 @@ function buildHubPage() {
       ? `${card(first, 'desk-lead')}${rest.length ? `<div class="desk-story-grid">${rest.map((s) => card(s, 'desk-side')).join('\n')}</div>` : ''}`
       : `<div class="desk-story-grid">${leadFirst.map((s) => card(s, 'desk-side')).join('\n')}</div>`;
     return `<section class="desk-edition" aria-label="Edition ${escapeHtml(day.date)}"><p class="desk-day-head"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time><span>${listable.length} ${listable.length === 1 ? 'story' : 'stories'}</span></p>${cards}</section>`;
-  }).join('\n');
+  }).filter(Boolean);
+  // The signup sits directly after the newest edition (its lead and grid): the
+  // first moment a reader has seen exactly what the Dispatch would send them.
+  const dayBlocks = dayBlockList.length
+    ? [dayBlockList[0], dispatchCta('hub'), ...dayBlockList.slice(1)].join('\n')
+    : '';
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>
   <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
@@ -1055,7 +1045,6 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-section-head"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${archiveMonths.length ? '<p class="desk-archive-cta"><a href="/news/archive/">Browse every edition in The Desk archive →</a></p>' : ''}
-  ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
   <div class="desk-section-head"><h2>Not every story is the same shape</h2><p>Some days it is an argument. Some days it is one line and a link.</p></div>
@@ -1199,19 +1188,104 @@ function buildPersonaPage(persona) {
       ${predictions.length ? `<p><strong>On the record.</strong> ${escapeHtml(predictions[0].claim)} <a href="${href}#predictions">See ${predictions.length > 1 ? 'the predictions' : 'the prediction'} →</a></p>` : ''}
     </li>`;
   }).join('\n');
-  const otherVoices = PERSONAS.filter((p) => p.id !== persona.id).map((p) => `<li>${personaPortrait(p)}${personaNameLink(p)}<span>${escapeHtml(p.role)}</span></li>`).join('');
+  const otherVoices = PERSONAS.filter((p) => p.id !== persona.id).map((p) => `<li>${personaPortrait(p)}${personaNameLink(p)}<span>${escapeHtml(p.tagline)}</span></li>`).join('');
+  const profile = personaProfile(persona.id) || {};
+  const notebook = personaNotebook(persona.id, days);
+  const name = escapeHtml(persona.name);
+  const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+  const statCell = (n, label, detail = '') => `<div class="desk-profile-stat"><span class="desk-profile-stat-n">${escapeHtml(String(n))}</span><span class="desk-profile-stat-k">${escapeHtml(label)}</span>${detail ? `<span class="desk-profile-stat-d">${escapeHtml(detail)}</span>` : ''}</div>`;
+  const statStrip = notebook.stories
+    ? `<div class="desk-profile-stats" role="group" aria-label="${name}’s published record, counted from the Desk corpus">
+      ${statCell(notebook.reports, notebook.reports === 1 ? 'Report' : 'Reports', 'stories with a passage in this voice')}
+      ${statCell(notebook.positions, notebook.positions === 1 ? 'Position' : 'Positions', 'stances on the record')}
+      ${statCell(notebook.panelTurns, notebook.panelTurns === 1 ? 'Panel turn' : 'Panel turns', 'lines in desk arguments')}
+      ${statCell(notebook.panels, notebook.panels === 1 ? 'Panel' : 'Panels', 'editorial panel lines drawn')}
+      ${statCell(notebook.streak, 'Current streak', notebook.streak === 1 ? 'latest edition' : `editions in a row · best ${notebook.longestStreak}`)}
+    </div>`
+    : `<div class="desk-profile-stats is-empty" role="group" aria-label="${name}’s published record"><span class="desk-profile-first">First report incoming</span><span>0 reports · 0 positions · 0 panel turns. This record starts counting the day an edition casts ${name} in a sourced story.</span></div>`;
+  const moves = (profile.moves || [{ name: persona.bit, how: persona.bitHow }])
+    .map((m) => `<li><strong>${escapeHtml(m.name)}</strong> ${escapeHtml(m.how)}</li>`).join('');
+  // profile.refuses restates PERSONAS.forbidden reader-side (self-tested); fall back to the rule itself.
+  const refuses = (profile.refuses?.length ? profile.refuses : [persona.forbidden]).filter(Boolean)
+    .map((r) => `<li>${escapeHtml(r)}</li>`).join('');
+  const relations = (profile.relations || []).map((rel) => {
+    const other = personaById(rel.id);
+    if (!other) return '';
+    const splits = notebook.sparring.find((row) => row.key === rel.id)?.count || 0;
+    const evidence = splits
+      ? `Split verdicts in ${plural(splits, 'story', 'stories')} so far.`
+      : !notebook.stories || !personaNotebook(other.id, days).stories
+        ? `${!notebook.stories ? persona.name : other.name} has not been cast in a published story yet.`
+        : 'No split verdicts on the record yet.';
+    return `<li class="desk-panel desk-profile-relation" data-persona="${other.id}" data-kind="${escapeHtml(rel.kind)}">${personaPortrait(other)}<div><p class="desk-profile-relation-k">${rel.kind === 'rival' ? 'Rival' : 'Ally'}</p><h3>${personaNameLink(other)}</h3><p>${escapeHtml(rel.why)}</p><p class="desk-profile-relation-d">${escapeHtml(evidence)}</p></div></li>`;
+  }).join('');
   const html = `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-profile" data-persona="${persona.id}">
     <p class="desk-kicker"><a href="/news/">The Desk</a> · Editorial board</p>
-    <header class="desk-profile-hero">${personaPortrait(persona, 'desk-profile-portrait')}<div><p class="desk-profile-eyebrow">Fictional AI persona · ${escapeHtml(persona.role)}</p><h1>${personaMark(persona)} ${escapeHtml(persona.name)}</h1><p class="desk-profile-tagline">${escapeHtml(persona.tagline)}</p><p class="desk-profile-creed">“${escapeHtml(persona.creed)}”</p></div></header>
+    <header class="desk-profile-hero"><figure class="desk-profile-figure">${personaPortrait(persona, 'desk-profile-portrait').replace('alt=""', `alt="${escapeHtml(`Portrait of ${persona.name}, a fictional AI correspondent: ${profile.portrait || persona.role}`)}"`)}<figcaption>Generated portrait · fictional AI persona</figcaption></figure><div><p class="desk-profile-eyebrow">Fictional AI correspondent · ${escapeHtml(persona.role)}</p><h1>${personaMark(persona)} ${name}</h1><p class="desk-profile-tagline">${escapeHtml(persona.tagline)}</p><p class="desk-profile-creed">“${escapeHtml(persona.creed)}”</p></div>${statStrip}</header>
     ${AI_BANNER}
+    <div class="desk-profile-bio desk-panel"><h2>Who ${name} is</h2><p>${escapeHtml(profile.bio || persona.onPage)}</p>${profile.obsessions?.length ? `<p class="desk-profile-chips-k">Keeps coming back to</p><ul class="desk-profile-chips">${profile.obsessions.map((o) => `<li>${escapeHtml(o)}</li>`).join('')}</ul>` : ''}</div>
     <div class="desk-profile-status"><strong>Current record</strong><span>${latest ? `Last published contribution: <time datetime="${escapeHtml(latest)}">${escapeHtml(latest)}</time>` : 'Awaiting a first published contribution'}</span><span>${reports} report${reports === 1 ? '' : 's'} · ${statements} take${statements === 1 ? '' : 's'} · ${comments} desk comment${comments === 1 ? '' : 's'} · ${panelCount} panel${panelCount === 1 ? '' : 's'}</span><span>${record.correct} correct · ${record.wrong} wrong · ${record.open} open prediction${record.open === 1 ? '' : 's'}${record.accuracy !== null ? ` · ${record.accuracy}% graded` : ' · too few graded for an accuracy score'}</span></div>
-    <div class="desk-profile-about"><section class="desk-panel"><h2>How ${escapeHtml(persona.name)} writes</h2><p>${escapeHtml(persona.onPage)}</p><p class="desk-profile-detail">${escapeHtml(persona.voice)}</p></section><section class="desk-panel"><h2>The question</h2><p class="desk-profile-question">“${escapeHtml(persona.question)}”</p><p><strong>Beat:</strong> ${persona.beats.map(escapeHtml).join(' · ')}</p><p><strong>Recurring move:</strong> ${escapeHtml(persona.bit)} — ${escapeHtml(persona.bitHow)}</p></section><section class="desk-panel"><h2>The blind spot</h2><p>${escapeHtml(persona.bias)}</p><p><strong>Editorial boundary:</strong> ${escapeHtml(persona.forbidden)}</p></section></div>
-    <div class="desk-section-head"><h2>From ${escapeHtml(persona.name)}’s desk</h2><p>Published report passages, positions, desk conversations, panels and predictions, newest first. These are parts of shared stories; desk comments are AI-generated panel turns, not replies to readers.</p></div>
+    <div class="desk-profile-about"><section class="desk-panel"><h2>How ${name} writes</h2><p>${escapeHtml(persona.onPage)}</p><p class="desk-profile-detail">${escapeHtml(persona.voice)}</p></section><section class="desk-panel"><h2>Signature moves</h2><p class="desk-profile-question">“${escapeHtml(persona.question)}”</p><ul class="desk-profile-list">${moves}</ul><p><strong>Beat:</strong> ${persona.beats.map(escapeHtml).join(' · ')}</p></section><section class="desk-panel"><h2>Strength and blind spot</h2>${profile.strength ? `<p><strong>At best:</strong> ${escapeHtml(profile.strength)}</p>` : ''}<p><strong>Where ${name} gets it wrong:</strong> ${escapeHtml(persona.bias)}</p></section><section class="desk-panel"><h2>Editorial boundaries</h2><p>${name} will not:</p><ul class="desk-profile-list is-refusals">${refuses}</ul></section></div>
+    ${relations ? `<div class="desk-section-head"><h2>On the panel</h2><p>Who ${name} argues with, and who ends up on the same side. The split counts are measured from published stances.</p></div><ul class="desk-profile-relations">${relations}</ul>` : ''}
+    <div class="desk-section-head"><h2>${name}’s notebook</h2><p>Running threads computed from every published contribution. It rewrites itself with each edition; nothing here is hand-written.</p></div>
+    ${renderNotebook(persona, notebook)}
+    ${dispatchCta('persona', { compact: true, heading: `Follow ${persona.name} and the rest of the Desk.`, lede: `The Desk Dispatch brings ${persona.name}’s latest argument, the quiet story and every prediction that came due, from the Desk’s fictional AI correspondents. Labelled as AI, sourced like news.` })}
+    <div class="desk-section-head"><h2>From ${name}’s desk</h2><p>Published report passages, positions, desk conversations, panels and predictions, newest first. These are parts of shared stories; desk comments are AI-generated panel turns, not replies to readers.</p></div>
     ${contributions.length ? `<ol class="desk-profile-feed">${feed}</ol>` : `<div class="desk-panel desk-profile-empty"><strong>No published work yet.</strong> ${escapeHtml(persona.name)}’s voice and beat are defined, but the Desk has not cast this persona in a sourced story. This feed will fill from published editions; no sample post is presented as reporting.</div>`}
     <div class="desk-section-head"><h2>Meet the other voices</h2><p>Different instincts, shared source trail.</p></div><ul class="desk-profile-roster">${otherVoices}</ul>
     ${DISCLOSURE}
   </section></main>${chromeFoot('../../../')}`;
   return html.replace(/[ \t]+$/gm, '');
+}
+
+/** One-line hub-card summary of a persona's derived record. */
+function notebookPulse(nb) {
+  if (!nb.stories) return 'First report incoming · no published work yet';
+  const parts = [`${nb.reports} report${nb.reports === 1 ? '' : 's'}`, `${nb.positions} position${nb.positions === 1 ? '' : 's'}`];
+  if (nb.streak > 1) parts.push(`${nb.streak}-edition streak`);
+  const top = Object.entries(nb.verdicts).sort((a, b) => b[1] - a[1])[0];
+  if (nb.positions >= 4 && top[1] > 0) parts.push(`calls it ${top[0]} ${Math.round((top[1] / nb.positions) * 100)}% of the time`);
+  return parts.join(' · ');
+}
+
+const leanWords = (v) => (v === null ? null : v >= 0.5 ? 'leans underhyped: usually argues the story is bigger than the coverage'
+  : v <= -0.5 ? 'leans overhyped: usually argues the coverage outruns the evidence'
+    : 'sits near the middle: calls more stories fair than not');
+const horizonWords = (v) => (v === null ? null : v >= 0.5 ? 'thinks in years: argues about structural change'
+  : v <= -0.5 ? 'thinks in quarters: argues about what changes now' : 'mixes near-term and long-range arguments');
+
+/** The derived notebook. Every sentence is computed; empty corpora say so plainly. */
+function renderNotebook(persona, nb) {
+  if (!nb.stories) {
+    return `<div class="desk-panel desk-profile-notebook is-empty"><p><strong>The notebook opens with ${escapeHtml(persona.name)}’s first report.</strong> Once an edition casts this voice in a sourced story, this space fills automatically with verdict mix, time horizon, most-argued subjects, most-cited sources, sparring partners and the latest take. Until then there is nothing to count, and nothing is invented to fill the gap.</p></div>`;
+  }
+  const pct = (n) => (nb.positions ? Math.round((n / nb.positions) * 100) : 0);
+  const v = nb.verdicts;
+  const bar = nb.positions ? `<div class="desk-profile-verdicts" role="img" aria-label="Verdicts: ${v.overhyped} overhyped, ${v.fair} fair, ${v.underhyped} underhyped">
+      <span class="is-over" style="--w:${pct(v.overhyped)}%"></span><span class="is-fair" style="--w:${pct(v.fair)}%"></span><span class="is-under" style="--w:${pct(v.underhyped)}%"></span>
+    </div><p class="desk-profile-verdict-key"><span class="is-over">Overhyped ${v.overhyped}</span><span class="is-fair">Fair ${v.fair}</span><span class="is-under">Underhyped ${v.underhyped}</span></p>` : '';
+  const rows = [];
+  const lean = leanWords(nb.meanDirection);
+  if (lean) rows.push(['Lean', `${persona.name} ${lean} (average ${nb.meanDirection > 0 ? '+' : ''}${nb.meanDirection} on a −2 to +2 scale).`]);
+  const horizon = horizonWords(nb.meanHorizon);
+  if (horizon) rows.push(['Horizon', `${persona.name} ${horizon} (average ${nb.meanHorizon > 0 ? '+' : ''}${nb.meanHorizon}).`]);
+  if (nb.meanConfidence !== null) rows.push(['Conviction', `States positions at ${Math.round(nb.meanConfidence * 100)}% average confidence.`]);
+  if (nb.shift) {
+    const label = { steady: 'Holding steady', warming: 'Warming up', cooling: 'Cooling off' }[nb.shift.label];
+    rows.push(['Drift', `${label}: the latest ${nb.shift.sample} positions average ${nb.shift.recent > 0 ? '+' : ''}${nb.shift.recent}, against ${nb.shift.early > 0 ? '+' : ''}${nb.shift.early} for the first ${nb.shift.sample}.`]);
+  } else if (nb.positions) {
+    rows.push(['Drift', `Too few positions (${nb.positions}) to measure a change of mind yet.`]);
+  }
+  if (nb.subjects.length) rows.push(['Most-argued subjects', nb.subjects.map((s) => `${s.key} (${s.count})`).join(' · ')]);
+  if (nb.sources.length) rows.push(['Most-cited sources', nb.sources.map((s) => `${s.key} (${s.count})`).join(' · ')]);
+  if (nb.sparring.length) rows.push(['Sparring partners', nb.sparring.map((s) => `${personaById(s.key)?.name || s.key}: split verdicts in ${s.count} ${s.count === 1 ? 'story' : 'stories'}`).join(' · ')]);
+  rows.push(['On the desk since', `${nb.firstDate} · ${nb.editions} edition${nb.editions === 1 ? '' : 's'} · ${nb.predictions} prediction${nb.predictions === 1 ? '' : 's'} on the record`]);
+  const take = nb.latestTake;
+  return `<div class="desk-panel desk-profile-notebook">
+    ${bar}
+    <dl class="desk-profile-threads">${rows.map(([k, val]) => `<div><dt>${escapeHtml(k)}</dt><dd>${escapeHtml(val)}</dd></div>`).join('')}</dl>
+    ${take ? `<blockquote class="desk-profile-latest"><p class="desk-profile-latest-k">Latest take · <time datetime="${escapeHtml(take.date)}">${escapeHtml(take.date)}</time> · ${escapeHtml(take.verdict || '')}</p><p>“${escapeHtml(take.position)}”</p><a href="/news/${escapeHtml(take.date)}/${escapeHtml(take.slug)}/#positions">${escapeHtml(take.headline)} →</a></blockquote>` : ''}
+  </div>`;
 }
 
 /* ── Confirmation landing (Brevo double opt-in redirect target) ────────── */
@@ -1233,9 +1307,19 @@ function buildSubscribedPage() {
     ]),
   });
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
-  <span class="desk-kicker">The Desk · The Dispatch</span>
+  <span class="desk-kicker">The Desk · The Desk Dispatch</span>
+  <div data-dispatch-state="ok">
   <h1 class="desk-display">You're on<br><em>the list.</em></h1>
-  <p class="desk-deck">Confirmed. You'll get The Dispatch when the desk publishes: the day's lead argument, the quiet story nobody covered, and every prediction that came due — plus an honest note whenever the desk got one wrong.</p>
+  <p class="desk-deck">Confirmed. You'll get The Desk Dispatch, no more than one email a day: the day's lead argument, the quiet story nobody covered, and every prediction that came due — plus an honest note whenever the desk got one wrong.</p>
+  </div>
+  <div data-dispatch-state="invalid" hidden>
+  <h1 class="desk-display">That link<br><em>has expired.</em></h1>
+  <p class="desk-deck">This confirmation link is invalid or more than seven days old, so nothing was added to the list. Sign up again on <a href="/news/#dispatch-h-hub">The Desk</a> and use the newest email.</p>
+  </div>
+  <div data-dispatch-state="error" hidden>
+  <h1 class="desk-display">Not confirmed<br><em>yet.</em></h1>
+  <p class="desk-deck">The mail service did not accept the confirmation just now, so you are not on the list yet. Open the link from your email again in a few minutes; if it keeps failing, write to <a href="mailto:news@vaultsparkstudios.com">news@vaultsparkstudios.com</a>.</p>
+  </div>
   <div class="desk-rule"></div>
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.95rem;line-height:1.7">
     Nothing else changed: The Desk still requires no account, and your address is used only to send The Dispatch. Every email carries a one-click unsubscribe.<br><br>
@@ -1244,7 +1328,7 @@ function buildSubscribedPage() {
     <a href="/privacy/" style="color:var(--gold)">Privacy</a>
   </p>
   ${DISCLOSURE}
-</section></main>${chromeFoot('../../')}`;
+</section></main><script>(function(){var s=new URLSearchParams(location.search).get('state');if(s!=='invalid'&&s!=='error')return;document.querySelectorAll('[data-dispatch-state]').forEach(function(el){el.hidden=el.getAttribute('data-dispatch-state')!==s;});})();</script>${chromeFoot('../../')}`;
 }
 
 /* ── The Director's Report ─────────────────────────────────────────────── */

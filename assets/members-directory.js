@@ -5,11 +5,15 @@
   var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var HEADERS = { apikey: KEY, Authorization: 'Bearer ' + KEY };
   var RANK_TIERS = [
-    { name: 'Spark Initiate', min: 0, max: 99, color: '#8a93b8' },
-    { name: 'Vault Runner', min: 100, max: 499, color: '#10B981' },
-    { name: 'Forge Guard', min: 500, max: 1499, color: '#8B5CF6' },
-    { name: 'Vault Keeper', min: 1500, max: 4999, color: '#1FA2FF' },
-    { name: 'The Sparked', min: 5000, max: Infinity, color: '#FFC400' }
+    { name: 'Spark Initiate', min: 0, max: 249, color: '#8a93b8' },
+    { name: 'Vault Runner', min: 250, max: 999, color: '#10B981' },
+    { name: 'Rift Scout', min: 1000, max: 2999, color: '#14b8a6' },
+    { name: 'Vault Guard', min: 3000, max: 7499, color: '#8B5CF6' },
+    { name: 'Vault Breacher', min: 7500, max: 14999, color: '#a855f7' },
+    { name: 'Void Operative', min: 15000, max: 29999, color: '#6366f1' },
+    { name: 'Vault Keeper', min: 30000, max: 59999, color: '#1FA2FF' },
+    { name: 'Forge Master', min: 60000, max: 99999, color: '#f97316' },
+    { name: 'The Sparked', min: 100000, max: Infinity, color: '#FFC400' }
   ];
 
   var allMembers = [];
