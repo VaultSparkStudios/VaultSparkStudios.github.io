@@ -1,4 +1,25 @@
 # Latest Handoff
+## Where We Left Off — S368 · 2026-10-02 UTC
+
+- Shipped: 23 of 25 audit items across 8 groups — membership truth, Season 1 repair, security, invite-led doors and registry truth, page merges and new pages, portal loop, experience and AI, The Desk.
+- Tests: unit 325 pass (26 declared = executed = tracked); build:check steps 1–150 pass; step 151 (proof surface) was being re-run after an oracle-answers regen when usage ran out — rerun `node scripts/run-build-check.mjs --from=151`.
+- Deploy: database migrations and edge functions LIVE; static site + Worker NOT yet deployed (staging overlay → content lane → Worker pending)
+
+**Outcome:** Founder-requested full audit refresh (`docs/AUDIT_2026-10-02.{json,md}`, four-zone page pass) implemented in one session, plus two mid-session founder requests (Desk personas; Desk signup everywhere). Founder rulings D-S368.1–6 recorded.
+
+**Live already (founder-authorized):** Supabase migrations `supabase-s368-{season-1-repair, ignis-meter-model-pricing, ignis-cache-privacy, caller-trust, recruiter-leaderboard, ask-vault-usage, membership-checkout-integrity}` (pre-images in `.cache/supabase-preimage-*`); edge functions ask-ignis v18, semantic-search v5 (Ask the Vault), create-checkout v27, stripe-webhook v30, create-gift-checkout v23 (410), eternal-intelligence v9, subscribe-desk-dispatch (verify 6/6). Live probes: anon cache read and weekly-score refused (42501), Season 1 active with standings, Ask the Vault cited answer / free no-answer / cache hit.
+
+**Membership (D-S368.1):** Free / VaultSparked $4.99 / VaultSparked Eternal $29.99, monthly only; enforced perks only; gift hidden. Server refuses a second subscription (409 → billing portal), claims phase slots on payment, rejects annual.
+
+**Found and fixed:** `award_season_xp()` referenced missing columns, so every score, session and challenge insert had been rolled back (challenge_submissions never held a row). A public read policy exposed `ignis_response_cache`. `reserve_phase_slot` and gift inserts were callable by anyone. supabase-js builders have no `.catch` (portal start-up and account deletion were silently broken).
+
+**Next:**
+1. Founder: approve a Desk Dispatch test issue (`node scripts/build-desk-dispatch-digest.mjs --test-to <you> --date <today>` once that day's pages are live), then set `config/desk-dispatch.json` `autoSend: true` + `approvedTestIssue`, and `gh secret set BREVO_API_KEY` (gateway capability `brevo`).
+2. Apply `supabase-s368-caller-trust-column-revokes.sql` now that the clients ship (teams_public, fan_art_vote_counts, record_login_streak).
+3. Obelisk Ark `01K3SH847CF5020D9D7209EB07` (no reply): reopen signup + test identity → flip invite copy (one constant in propagate-nav + data-vs-join CTAs) and build login E2E.
+4. Founder review recommended: legal hosting wording (privacy/security/rights/terms) and the "Eternal Credits Queue" heading in Eternal Dispatch.
+5. Publisher drift cascade (deferred audit item); QA accounts appear in public season standings.
+
 ## Where We Left Off — S367 · 2026-10-01 UTC
 
 **Outcome:** Founder-requested whole-site audit with a baseline test sweep, then the security-and-truth core. `docs/AUDIT_2026-10-01.{json,md}` holds 22 ranked items with statuses and execution logs; founder approved all gated areas for later sessions.

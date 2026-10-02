@@ -29,7 +29,11 @@ assert('portal can delete push subscription through RPC', /rpc\('delete_push_sub
 assert('portal exposes push toggle handler', /togglePushNotifications\(e\.target\.checked\)/.test(portalCore));
 assert('portal initializes push status after auth dashboard load', /registerServiceWorker\(\)\.then\(\(\) => loadPushStatus\(\)\)/.test(portalAuth));
 assert('portal has push settings anchor', /id="push"/.test(portalHtml));
-assert('portal has admin test push button', /id="admin-push-test-btn"/.test(portalHtml));
+// S368: admin markup lives in the gated template injected after is_vault_admin(),
+// and must NOT ship in the public portal HTML.
+const adminTpl = read('vault-member/admin/vault-command.tpl');
+assert('portal has admin test push button (gated admin template)', /id="admin-push-test-btn"/.test(adminTpl));
+assert('admin test push button is not in public portal HTML', !/id="admin-push-test-btn"/.test(portalHtml));
 assert('admin push test invokes send-push', /functions\.invoke\('send-push'/.test(portalFeatures));
 
 assert('service worker handles push events', /self\.addEventListener\('push'/.test(worker));

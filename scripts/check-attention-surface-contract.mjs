@@ -28,7 +28,12 @@ const checks = [
   ['journey tour and feedback both claim attention', sources.journey.includes("claim('journey-tour')") && sources.journey.includes("claim('decision-feedback')")],
   ['portal has one shared session claim', sources.portalAuth.includes('window.VSPortalAttention')],
   ['portal reserves functional onboarding first', sources.portalAuth.includes("claim('onboarding')")],
-  ['informational portal tour waits for onboarding completion', sources.portalInit.includes("localStorage.getItem('onboarding_complete')")],
+  // S368: Vault Initiation owns the first session; the informational tour is
+  // on demand only (window.openPortalTour) and never adds the open class by itself.
+  ['informational portal tour is on demand only, never automatic',
+    sources.portalInit.includes('window.openPortalTour = function')
+    && (sources.portalInit.match(/overlay\.classList\.add\('open'\)/g) || []).length === 1
+    && /window\.openPortalTour = function[\s\S]*overlay\.classList\.add\('open'\)/.test(sources.portalInit)],
   ['portal release notes defer to the shared claim', sources.portalDash.includes("claim('whats-new')")],
   ['portal recap and anniversary defer to the shared claim', sources.portalDash.includes("claim('weekly-recap')") && sources.portalDash.includes("claim('anniversary')")],
 ];
