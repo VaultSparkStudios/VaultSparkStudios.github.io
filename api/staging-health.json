@@ -1,18 +1,22 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-03T16:24:15.781Z",
+  "generatedAt": "2026-10-03T17:32:49.071Z",
   "candidateReady": false,
   "candidateFindings": [
-    "staging-artifact-root-mismatch"
+    "staging-build-sha-mismatch",
+    "/:stagingCanonicalCsp",
+    "/studio-pulse/:stagingCanonicalCsp",
+    "/membership/:stagingCanonicalCsp",
+    "/membership/:localShellParity"
   ],
-  "candidateBuildSha": "3ff84269caa816cafcadcf0ba702750fea5edaf0",
+  "candidateBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
   "stagingBuildSha": "3ff84269caa816cafcadcf0ba702750fea5edaf0",
   "artifactManifest": {
-    "candidateRoot": "607e5ead2aec0648166ea032af07351d32eef2b3caee9202eeeeb868a6b1f75c",
-    "candidateLeafCount": 53,
-    "stagingRoot": "c46511ab7602da360aa2a043b0c44e92c52a274d2887152e75d30dc81636de26",
-    "stagingLeafCount": 53,
-    "matched": false
+    "candidateRoot": "32c80aa97562240a8ba3a195eb385d4a02c54404b1fb31bf4ea748a25204e909",
+    "candidateLeafCount": 55,
+    "stagingRoot": "32c80aa97562240a8ba3a195eb385d4a02c54404b1fb31bf4ea748a25204e909",
+    "stagingLeafCount": 55,
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -20,13 +24,48 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "uncomparable",
-    "productionRoutes": null,
-    "stagingRoutes": 223,
-    "missingOnStaging": [],
-    "missingOnStagingCount": null,
-    "aheadOnStaging": [],
-    "aheadOnStagingCount": null,
+    "state": "staging-behind",
+    "productionRoutes": 220,
+    "stagingRoutes": 205,
+    "missingOnStaging": [
+      "/ask-founders/",
+      "/atlas/",
+      "/brand/",
+      "/careers/",
+      "/games/gridiron-gm-play/",
+      "/games/voidfall/",
+      "/journal/",
+      "/journal/archive/",
+      "/members/",
+      "/notebook/",
+      "/oracle/",
+      "/projects/atlas/",
+      "/projects/atlas/.ai/",
+      "/projects/canon/",
+      "/projects/ideaforge/",
+      "/projects/scriptorium/",
+      "/projects/scriptorium/.ai/",
+      "/projects/signal-log/",
+      "/projects/statvault/",
+      "/projects/statvault/.ai/",
+      "/projects/the-living-protocol/",
+      "/projects/vault-member/",
+      "/projects/vault-pipeline/",
+      "/stats/"
+    ],
+    "missingOnStagingCount": 24,
+    "aheadOnStaging": [
+      "/api/",
+      "/collaborate/",
+      "/dispatch/",
+      "/news/2026-10-02/autosynthdata-generating-training-data-for-enterprise-agents/",
+      "/news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/",
+      "/news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/",
+      "/play/",
+      "/projects/veilos/",
+      "/projects/veilos/.ai/"
+    ],
+    "aheadOnStagingCount": 9,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -34,13 +73,12 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
+      "statusParity": true,
       "shellParity": false,
-      "prodShell": [],
-      "stagingShell": [
+      "prodShell": [
         "assets/ambient-core.shell-1732d293f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
@@ -54,15 +92,33 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-539ca122bd.css",
+        "assets/style.shell-0fa853d549.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "headerParity": false,
+      "stagingShell": [
+        "assets/ambient-core.shell-1732d293f8.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+        "assets/hero-ticker.shell-550971e267.js",
+        "assets/home-idle-loader.shell-d1839327b4.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/stats-surface.shell-b33242e1cc.js",
+        "assets/style.shell-539ca122bd.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/vault-door.shell-20bb2584bc.js"
+      ],
+      "headerParity": true,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -72,13 +128,11 @@
       },
       "stagingStaticCspSafe": true,
       "stagingCspMode": "dynamic-worker",
-      "stagingCanonicalCsp": true,
+      "stagingCanonicalCsp": false,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
         "shell-mismatch",
-        "header-mismatch"
+        "staging-canonical-csp-drift"
       ]
     },
     {
@@ -104,13 +158,13 @@
       "stagingShell": [
         "assets/ambient-core.shell-1732d293f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
-        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
         "assets/pwa-nav.shell-5f63b6b75a.js",
         "assets/schema-injector.shell-33115efcde.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/studio-pulse-live.shell-f85a427911.js",
+        "assets/studio-pulse-live.shell-5fc734ef84.js",
         "assets/style.shell-539ca122bd.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
@@ -129,10 +183,11 @@
       },
       "stagingStaticCspSafe": true,
       "stagingCspMode": "dynamic-worker",
-      "stagingCanonicalCsp": true,
+      "stagingCanonicalCsp": false,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "shell-mismatch"
+        "shell-mismatch",
+        "staging-canonical-csp-drift"
       ]
     },
     {
@@ -179,10 +234,11 @@
       },
       "stagingStaticCspSafe": true,
       "stagingCspMode": "dynamic-worker",
-      "stagingCanonicalCsp": true,
+      "stagingCanonicalCsp": false,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "shell-mismatch"
+        "shell-mismatch",
+        "staging-canonical-csp-drift"
       ]
     }
   ]
