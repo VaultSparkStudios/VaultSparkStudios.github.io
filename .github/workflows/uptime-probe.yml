@@ -26,23 +26,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # S316 — see cloudflare-analytics-pull.yml. This workflow also runs
           # build-deploy-currency, whose history lookup is meaningless in a
           # depth-1 clone.
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Restore alert-dedup cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache/uptime-alerts-sent.json
           key: uptime-alerts-${{ github.run_id }}
           restore-keys: uptime-alerts-
       - name: Restore colo-sample supplement
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           # S186: accumulate synthetic colo TTFB samples across runs so a thin
           # non-US sample set can confirm the origin-migration win globally,
