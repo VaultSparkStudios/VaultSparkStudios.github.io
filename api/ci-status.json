@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T17:48:14.449Z",
+  "generatedAt": "2026-10-03T17:49:34.239Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Deployment reconciliation ledger is stale (newest receipt 3 days old); production promotion state is unobserved, not stranded. CI gates are still running.",
+  "summary": "Deployment reconciliation ledger is stale (newest receipt 3 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-29T22:16:20.227Z",
     "currentBehindStreak": 5,
     "newestGradableAt": "2026-09-29T22:16:20.227Z",
-    "newestAgeHours": 91.5,
+    "newestAgeHours": 91.6,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -47,10 +47,10 @@
     },
     {
       "name": "Accessibility Audit",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-03T17:46:41Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-03T17:48:26Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753352",
       "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
       "event": "push"
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 8.51,
+      "ageHours": 8.53,
       "staleAfterHours": 48
     },
     {
@@ -100,7 +100,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 10.75,
+      "ageHours": 10.77,
       "staleAfterHours": 48
     },
     {
@@ -135,7 +135,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.39,
+      "ageHours": 10.42,
       "staleAfterHours": 48
     },
     {
@@ -159,7 +159,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 11.05,
+      "ageHours": 11.07,
       "staleAfterHours": 48
     },
     {
@@ -183,7 +183,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.86,
+      "ageHours": 3.88,
       "staleAfterHours": 48
     },
     {
@@ -197,7 +197,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.44,
+      "ageHours": 3.46,
       "staleAfterHours": 48
     },
     {
@@ -212,7 +212,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.12,
+      "ageHours": 0.14,
       "staleAfterHours": 48
     },
     {
@@ -225,7 +225,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.91,
+      "ageHours": 10.93,
       "staleAfterHours": 48
     },
     {
@@ -240,7 +240,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.01,
+      "ageHours": 0.03,
       "staleAfterHours": 48
     },
     {
@@ -253,7 +253,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.27,
+      "ageHours": 3.29,
       "staleAfterHours": 48
     },
     {
