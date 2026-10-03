@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T17:49:34.239Z",
+  "generatedAt": "2026-10-03T17:54:37.293Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 10,
-    "healthy": 10,
-    "unknown": 5,
+    "observed": 8,
+    "healthy": 8,
+    "unknown": 7,
     "stale": 0,
     "dead": 0
   },
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-03T17:46:41Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-03T17:53:59Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753463",
       "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
       "event": "push"
@@ -57,23 +57,23 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-03T17:46:41Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-03T17:53:43Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753374",
       "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-03T17:32:11Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37140822599",
-      "headSha": "85c481d9b430c561120f47ec5336e484cfc2128d",
-      "event": "push"
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-03T17:53:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37142181770",
+      "headSha": "2ec513d87035d5f067819fd46427386d7eb7748a",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 8.53,
+      "ageHours": 8.62,
       "staleAfterHours": 48
     },
     {
@@ -100,7 +100,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 10.77,
+      "ageHours": 10.85,
       "staleAfterHours": 48
     },
     {
@@ -135,7 +135,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.42,
+      "ageHours": 10.5,
       "staleAfterHours": 48
     },
     {
@@ -151,15 +151,13 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-03T06:45:21Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 11.07,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -183,7 +181,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.88,
+      "ageHours": 3.97,
       "staleAfterHours": 48
     },
     {
@@ -197,7 +195,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.46,
+      "ageHours": 3.55,
       "staleAfterHours": 48
     },
     {
@@ -212,20 +210,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.14,
+      "ageHours": 0.23,
       "staleAfterHours": 48
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-03T06:53:43Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 10.93,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -240,7 +236,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.03,
+      "ageHours": 0.12,
       "staleAfterHours": 48
     },
     {
@@ -253,7 +249,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.29,
+      "ageHours": 3.37,
       "staleAfterHours": 48
     },
     {
