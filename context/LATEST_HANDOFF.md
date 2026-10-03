@@ -2,8 +2,8 @@
 ## Where We Left Off — S368 · 2026-10-02 UTC
 
 - Shipped: 23 of 25 audit items across 8 groups — membership truth, Season 1 repair, security, invite-led doors and registry truth, page merges and new pages, portal loop, experience and AI, The Desk.
-- Tests: unit 325 pass (26 declared = executed = tracked); build:check steps 1–150 pass; step 151 (proof surface) was being re-run after an oracle-answers regen when usage ran out — rerun `node scripts/run-build-check.mjs --from=151`.
-- Deploy: database migrations and edge functions LIVE; static site + Worker NOT yet deployed (staging overlay → content lane → Worker pending)
+- Tests: unit 325 pass (26 declared = executed = tracked); build:check passes all 517 steps; mobile audit 215/215; theme-matrix receipt bound to the final candidate.
+- Deploy: deployed to production — Pages run 37141771070 (live build e3bcdfd0c), Worker run 37142181770, staging refreshed (342 overlays), all S368 migrations incl. column revokes, 7 edge functions
 
 **Outcome:** Founder-requested full audit refresh (`docs/AUDIT_2026-10-02.{json,md}`, four-zone page pass) implemented in one session, plus two mid-session founder requests (Desk personas; Desk signup everywhere). Founder rulings D-S368.1–6 recorded.
 
@@ -15,7 +15,7 @@
 
 **Next:**
 1. Founder: approve a Desk Dispatch test issue (`node scripts/build-desk-dispatch-digest.mjs --test-to <you> --date <today>` once that day's pages are live), then set `config/desk-dispatch.json` `autoSend: true` + `approvedTestIssue`, and `gh secret set BREVO_API_KEY` (gateway capability `brevo`).
-2. Apply `supabase-s368-caller-trust-column-revokes.sql` now that the clients ship (teams_public, fan_art_vote_counts, record_login_streak).
+2. Done: column-revoke migration applied after the site deploy (anon teams.invite_code now 401).
 3. Obelisk Ark `01K3SH847CF5020D9D7209EB07` (no reply): reopen signup + test identity → flip invite copy (one constant in propagate-nav + data-vs-join CTAs) and build login E2E.
 4. Founder review recommended: legal hosting wording (privacy/security/rights/terms) and the "Eternal Credits Queue" heading in Eternal Dispatch.
 5. Publisher drift cascade (deferred audit item); QA accounts appear in public season standings.
