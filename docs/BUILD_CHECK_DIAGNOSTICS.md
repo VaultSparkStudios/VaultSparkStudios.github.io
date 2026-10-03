@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-10-02T22:01:18.774Z
-Receipt: `76beaab14bfedebe3627322b` · coverage 37/517 from step 115
+Generated: 2026-10-03T17:11:03.819Z
+Receipt: `ce9944c0ede9deaddf7cfb7d` · coverage 110/521 from step 412
 
-Latest: **36/37** passed · failed 1 · total 108.9s
-Concentration: **57.5%** in step 151 · ratchet BREACHED (>30% and ≥45s)
+Latest: **110/110** passed · failed 0 · total 127.1s
+Concentration: **12.7%** in step 496 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 151 | 62.6s | 1 | `node scripts/check-proof-surface.mjs` |
-| 144 | 7.7s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 122 | 3.4s | 0 | `node scripts/check-stale-open-tasks.mjs --check` |
-| 119 | 2.5s | 0 | `node scripts/check-press-kit-drift.mjs --check` |
-| 140 | 2.4s | 0 | `node scripts/measure-throttled-vitals.mjs --self-test` |
-| 143 | 2.2s | 0 | `node scripts/build-geo-vitals.mjs --self-test` |
-| 136 | 2.1s | 0 | `node scripts/check-mobile-contracts.mjs` |
-| 127 | 2.1s | 0 | `node scripts/csp-audit.mjs` |
-| 132 | 2.1s | 0 | `node scripts/check-render-blocking-routes.mjs` |
-| 117 | 1.8s | 0 | `node scripts/verify-journal-feed.mjs` |
+| 496 | 16.2s | 0 | `node scripts/ingest-news-art.mjs --self-test` |
+| 412 | 10.0s | 0 | `node scripts/check-build-gate-reachability.mjs` |
+| 427 | 8.1s | 0 | `node scripts/check-recovery-process-contract.mjs` |
+| 443 | 4.5s | 0 | `node scripts/build-launch-age.mjs --self-test` |
+| 494 | 3.5s | 0 | `node scripts/generate-news-art.mjs --self-test` |
+| 423 | 3.1s | 0 | `node scripts/generate-evidence-hub.mjs --check` |
+| 413 | 3.0s | 0 | `node scripts/build-changelog-narrative.mjs --check` |
+| 421 | 2.8s | 0 | `node scripts/check-site-integrity.mjs` |
+| 440 | 2.7s | 0 | `node scripts/build-hero-portfolio.mjs --self-test` |
+| 414 | 2.3s | 0 | `node scripts/build-intent-map.mjs --check` |
 
 ## Failures
 
-- Step 151: `node scripts/check-proof-surface.mjs` exited 1
+- None.

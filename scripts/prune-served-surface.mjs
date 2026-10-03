@@ -84,6 +84,12 @@ export function advertisedRoutes({ sitemap = '', agents = '', llms = '' }) {
   const routes = new Set();
   const push = (u) => {
     try {
+      // Only this site's own URLs are routes the prune can strand; an advertised
+      // off-site endpoint (e.g. a Supabase function) is not served from here (S368).
+      if (u.startsWith('http')) {
+        const parsed = new URL(u);
+        if (!/(^|\.)vaultsparkstudios\.com$/i.test(parsed.hostname)) return;
+      }
       const p = u.startsWith('http') ? new URL(u).pathname : u;
       if (p && p.startsWith('/')) routes.add(p);
     } catch { /* not a URL — ignore */ }
@@ -182,9 +188,10 @@ function selfTest() {
     ['an explicitly Worker-owned route resolves without a static file', planPrune(['index.html'], ['/api/agent-actions/v1'], { edgeRoutes: ['/api/agent-actions/v1'] }).ok],
     ['an undeclared dynamic route remains broken', !planPrune(['index.html'], ['/api/unknown/v1'], { edgeRoutes: ['/api/agent-actions/v1'] }).ok],
 
-    ['sitemap locs are extracted', advertisedRoutes({ sitemap: '<url><loc>https://x.test/press/</loc></url>' }).includes('/press/')],
-    ['agents.json urls are extracted', advertisedRoutes({ agents: '{"url":"https://x.test/api/a.json"}' }).includes('/api/a.json')],
-    ['llms.txt urls are extracted', advertisedRoutes({ llms: 'see https://x.test/ranks/ for more' }).includes('/ranks/')],
+    ['sitemap locs are extracted', advertisedRoutes({ sitemap: '<url><loc>https://vaultsparkstudios.com/press/</loc></url>' }).includes('/press/')],
+    ['agents.json urls are extracted', advertisedRoutes({ agents: '{"url":"https://vaultsparkstudios.com/api/a.json"}' }).includes('/api/a.json')],
+    ['llms.txt urls are extracted', advertisedRoutes({ llms: 'see https://vaultsparkstudios.com/ranks/ for more' }).includes('/ranks/')],
+    ['off-site advertised endpoints are not site routes', !advertisedRoutes({ agents: '{"url":"https://abc.supabase.co/functions/v1/x"}' }).includes('/functions/v1/x')],
     ['non-urls are ignored', advertisedRoutes({ agents: '{"name":"not a url"}' }).length === 0],
   ];
   const failed = cases.filter(([, ok]) => !ok);

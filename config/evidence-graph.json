@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
-  "revisedAt": "2026-09-09",
+  "revisedAt": "2026-10-02",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -1437,6 +1437,46 @@
         "--check"
       ],
       "publishCascade": true
+    },
+    {
+      "id": "api-index",
+      "output": "api/index.html",
+      "sources": [
+        "agents.json"
+      ],
+      "builder": "scripts/build-api-index.mjs",
+      "check": [
+        "node",
+        "scripts/build-api-index.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "dispatch-desk-panel",
+      "output": "dispatch/index.html",
+      "sources": [
+        "scripts/lib/desk-dispatch-cta.mjs",
+        "assets/news-desk.css"
+      ],
+      "builder": "scripts/build-dispatch-desk-panel.mjs",
+      "check": [
+        "node",
+        "scripts/build-dispatch-desk-panel.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "sitemap-page",
+      "output": "sitemap-page/index.html",
+      "sources": [
+        "sitemap.xml"
+      ],
+      "builder": "scripts/build-sitemap-page.mjs",
+      "check": [
+        "node",
+        "scripts/build-sitemap-page.mjs",
+        "--check"
+      ]
     }
   ]
 }

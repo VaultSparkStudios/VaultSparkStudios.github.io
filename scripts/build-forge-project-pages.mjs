@@ -55,7 +55,8 @@ const PROJECTS = [
   { id: 'veilos', name: 'VEILOS', category: 'Cognitive Civilization OS', teaser: 'A public Cognitive Civilization OS — a Sovereign Dashboard, Chain Verification, and a Collaborate Exchange.', liveUrl: 'https://veilos.io', sparked: true, publicLive: true },
   // Flagship creative works in the games section (D-S208.8) — teaser pages so the
   // Atlas/hero link to a real page, not the generic /games/ index.
-  { id: 'voidfall', name: 'Voidfall', section: 'games', category: 'Cinematic Saga', teaser: 'A nine-book cosmic-horror saga. Not a game — a world.', liveUrl: null },
+  // S368: /games/voidfall/ is retired behind a 301 to /universe/voidfall/ (the saga's
+  // canonical page), so this generator must not recreate it.
   { id: 'vaultspark-forge', name: 'VaultSpark Forge', section: 'games', category: 'Crafting World', teaser: 'A crafting-and-building world taking shape in the forge.', liveUrl: null },
 ];
 

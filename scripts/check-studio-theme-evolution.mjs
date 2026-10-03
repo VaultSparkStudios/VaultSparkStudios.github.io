@@ -14,7 +14,8 @@ const PAGE_CONTRACTS = {
   'games/index.html': [/shared studio standards/i, /inside the portfolio/i],
   'universe/index.html': [/universe layer/i, /lore becomes an operating system/i],
   'membership/index.html': [/identity layer/i, /free tier/i],
-  'roadmap/index.html': [/public read on studio momentum/i, /portfolio into a map/i]
+  // S368: roadmap renovated into a registry-rendered Now / Next / Later.
+  'roadmap/index.html': [/placed by where it actually stands/i, /same registry that drives/i]
 };
 
 const REQUIRED_PRIMITIVES = [

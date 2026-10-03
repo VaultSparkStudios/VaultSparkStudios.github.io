@@ -1360,3 +1360,13 @@ Daily release follow-through, October 1: a successful publisher exposed an unrea
 Ran /start, a baseline sweep (506-step gate with three drift repairs, live auth probes, extended and authenticated browser suites, email DNS/Brevo checks) and wrote `docs/AUDIT_2026-10-01`. Founder decisions: open Obelisk enrolment via Ark; keep Call of Doodie, PromoGrind and Velaxis FORGE; lifecycle redefinition to studio-ops; all gated areas approved for later. Shipped canon-true statuses across 15+ surfaces, HMAC CSP nonce, edge token renewal, settings redirect and deep links, price guard, copy sweep, generator and CSS defect fixes, and repaired tests. Visual review covered touched pages across dark, light and high-contrast at desktop and mobile.
 
 Staging follow-through: static staging deployed; first Worker upload rejected (global-scope getRandomValues), fixed lazily with a guarded test; staging Worker 622f7ba7 serves keyed nonces. Staging lacks `_redirects` parity (pre-existing).
+
+## S368 — 2026-10-02 — full audit refresh implemented: membership truth, Season 1, invite-led doors, Ask the Vault
+
+**Intent:** /start, then a full audit and plan (docs/AUDIT_2026-10-02), then /implement the full plan, /closeout, push and fully deploy.
+
+- Four-zone page-by-page audit (25 items); 23 shipped, 1 blocked (real-login E2E on Obelisk), 1 deferred (publisher drift cascade). Founder rulings D-S368.1–6: membership offering, project descriptions, AI search agents, anonymous studio, Desk digest.
+- Live probe found award_season_xp() rolling back every score, session and challenge insert; repaired live with Season 1 standings. Applied seven migrations and deployed seven edge functions with founder authorization, each with a pre-image.
+- Membership rebuilt on one tier source; server refuses double billing, rejects annual, claims phase slots on payment, closes the gift endpoint.
+- Invite-led CTAs sitewide; registry-driven statuses; 12 routes merged behind 301s; new /play/, /dispatch/, /collaborate/, /api/, /projects/veilos/; portal Vault Initiation quest and season UI; Vault Door hero and universe map; Ask the Vault cited answers; Desk personas and signup everywhere; digest sender held until a founder-approved test issue.
+- Gate: unit suite green; mobile audit 215/215 after fixing seven overflow and touch-target defects; theme matrix receipt; merged three rounds of publisher commits by regenerating conflicted artifacts.

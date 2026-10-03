@@ -36,7 +36,7 @@ jobs:
             # --autostash and no way out of a conflict: one content collision on
             # sitemap.xml left the runner detached mid-rebase and every remaining
             # attempt pushed from a branchless HEAD. Shared, gated implementation.
-            bash scripts/ci/publish-push.sh "sitemap publish"
+            bash scripts/ci/publish-push.sh "sitemap publish" --resync
           else
             echo "No changes, skipping commit"
           fi

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02",
+  "generatedAt": "2026-10-03",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 152,
+    "inspected": 150,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,28 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "657f7bc7",
+      "ts": "2026-10-02T22:14:06.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "Merge remote-tracking branch 'origin/main'",
+      "visitorFacing": false
+    },
+    {
+      "sha": "f247f6ad",
+      "ts": "2026-10-02T22:02:17.000Z",
+      "type": "chore",
+      "scope": "s368",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "closeout write-back, gate fixes (attention, push contract, footer, unit parity, oracle answers)",
+      "visitorFacing": true
+    },
     {
       "sha": "992490a7",
       "ts": "2026-10-02T21:25:33.000Z",
@@ -258,28 +280,6 @@
       "move": "Hardened",
       "tone": "forge",
       "summary": "cover Desk archive and persona receiver paths",
-      "visitorFacing": false
-    },
-    {
-      "sha": "eb94a31a",
-      "ts": "2026-10-01T08:11:10.000Z",
-      "type": "fix",
-      "scope": null,
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "restage the full Desk candidate before daily release",
-      "visitorFacing": false
-    },
-    {
-      "sha": "584d8695",
-      "ts": "2026-10-01T08:07:32.000Z",
-      "type": "fix",
-      "scope": null,
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "preserve Desk profiles and archives in daily releases",
       "visitorFacing": false
     }
   ]

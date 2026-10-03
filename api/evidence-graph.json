@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
-  "generatedAt": "2026-09-09",
-  "contractSha256": "ee612b0c0d1802ab8ee97d9d1a5705bf1c6e2a8fa6f8e89010e8eaff94ae6eff",
+  "generatedAt": "2026-10-02",
+  "contractSha256": "751e57e862038550b05ddb10f5e7646917c3ac0b9a1e67cd5f77827b1cda00d5",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 82,
+  "nodeCount": 85,
   "cascadeNodeCount": 41,
   "buildOrder": [
     "ai-canonical-pages",
@@ -22,6 +22,7 @@
     "changelog-narrative",
     "commit-map",
     "cta-readiness",
+    "dispatch-desk-panel",
     "entity-graph",
     "evidence-graph-agent",
     "evidence-graph-doc",
@@ -66,6 +67,7 @@
     "public-ecosystem",
     "security-posture",
     "shell-assets",
+    "sitemap-page",
     "studio-timeline",
     "worker-route-history",
     "canonical-destination-reachability",
@@ -82,6 +84,7 @@
     "oracle-query-clusters",
     "you-asked-shipped",
     "ai-discovery-health",
+    "api-index",
     "candidate-artifact-manifest",
     "deploy-currency",
     "intelligence-budget",
@@ -107,7 +110,8 @@
       ],
       "feeds": [
         "api/ai-discovery-health.json",
-        "api/candidate-artifact-manifest.json"
+        "api/candidate-artifact-manifest.json",
+        "api/index.html"
       ],
       "externalSources": [
         "repo-structure:public-project-routes"
@@ -217,6 +221,18 @@
       "externalSources": [
         "data/rum-history.ndjson"
       ]
+    },
+    {
+      "id": "api-index",
+      "output": "api/index.html",
+      "builder": "scripts/build-api-index.mjs",
+      "verify": "node scripts/build-api-index.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "agents.json"
+      ],
+      "feeds": [],
+      "externalSources": []
     },
     {
       "id": "ark-signature-dossier",
@@ -409,6 +425,19 @@
       ],
       "externalSources": [
         "api/build-sha.json"
+      ]
+    },
+    {
+      "id": "dispatch-desk-panel",
+      "output": "dispatch/index.html",
+      "builder": "scripts/build-dispatch-desk-panel.mjs",
+      "verify": "node scripts/build-dispatch-desk-panel.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "assets/news-desk.css",
+        "scripts/lib/desk-dispatch-cta.mjs"
       ]
     },
     {
@@ -1304,10 +1333,24 @@
       "verify": "node scripts/generate-sitemap.mjs --check",
       "publishCascade": true,
       "dependsOn": [],
-      "feeds": [],
+      "feeds": [
+        "sitemap-page/index.html"
+      ],
       "externalSources": [
         "news/"
       ]
+    },
+    {
+      "id": "sitemap-page",
+      "output": "sitemap-page/index.html",
+      "builder": "scripts/build-sitemap-page.mjs",
+      "verify": "node scripts/build-sitemap-page.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "sitemap.xml"
+      ],
+      "feeds": [],
+      "externalSources": []
     },
     {
       "id": "staging-deploy-continuity",

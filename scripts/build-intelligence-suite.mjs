@@ -36,8 +36,9 @@ export function injectSuite(html, activeHref, config = CONFIG) {
 
 function selfTest() {
   const fixture = '<main id="main-content"><h1>x</h1></main>';
-  const once = injectSuite(fixture, '/oracle/');
-  const twice = injectSuite(once, '/oracle/');
+  // /oracle/ was retired into /ignis/#oracle (S368); test against a live route.
+  const once = injectSuite(fixture, '/ignis/');
+  const twice = injectSuite(once, '/ignis/');
   if (once !== twice) throw new Error('renderer is not idempotent');
   if ((once.match(/aria-current="page"/g) || []).length !== 1) throw new Error('active route is not singular');
   if (!once.includes('/search/')) throw new Error('shared route registry is incomplete');

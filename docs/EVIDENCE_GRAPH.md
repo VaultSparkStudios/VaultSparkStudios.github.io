@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**82 nodes** · **41** participate in the publish cascade ·
+**85 nodes** · **41** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -76,6 +76,7 @@ flowchart LR
   n_assets_ambient_core_bundle_js["assets/ambient-core.bundle.js"]
   n_context_ambient_ledger_json["context/ambient-ledger.json"]
   n_api_analytics_summary_json["api/analytics-summary.json"]
+  n_api_index_html["api/index.html"]
   n_docs_ARK_SIGNATURE_FAILURE_DOSSIER_2026_06_04_md["docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md"]
   n_api_attention_pressure_json[["api/attention-pressure.json"]]
   n_brand_assets_json["brand/assets.json"]
@@ -88,6 +89,7 @@ flowchart LR
   n_api_commit_map_json[["api/commit-map.json"]]
   n__cache_cta_readiness_json[[".cache/cta-readiness.json"]]
   n_api_deploy_currency_json[["api/deploy-currency.json"]]
+  n_dispatch_index_html["dispatch/index.html"]
   n__headers["_headers"]
   n__well_known_entity_graph_json[".well-known/entity-graph.json"]
   n_api_evidence_graph_json[["api/evidence-graph.json"]]
@@ -139,6 +141,7 @@ flowchart LR
   n_api_ship_receipts_json["api/ship-receipts.json"]
   n_api_site_health_json["api/site-health.json"]
   n_sitemap_xml[["sitemap.xml"]]
+  n_sitemap_page_index_html["sitemap-page/index.html"]
   n_api_staging_deploy_continuity_json["api/staging-deploy-continuity.json"]
   n_api_staging_deploy_receipt_json["api/staging-deploy-receipt.json"]
   n_docs_STARTUP_BRIEF_md["docs/STARTUP_BRIEF.md"]
@@ -173,6 +176,7 @@ flowchart LR
   n__well_known_llms_txt --> n_api_candidate_artifact_manifest_json
   n_agents_json --> n_api_ai_discovery_health_json
   n_agents_json --> n_api_candidate_artifact_manifest_json
+  n_agents_json --> n_api_index_html
   n_api_ --> n__cache_cta_readiness_json
   n_api_ --> n_api_attention_pressure_json
   n_api_ --> n_api_candidate_artifact_manifest_json
@@ -278,6 +282,7 @@ flowchart LR
   n_assets_ --> n_assets_ambient_core_bundle_js
   n_assets_ --> n_assets_shell_manifest_json
   n_assets_ --> n_data_lqip_map_json
+  n_assets_ --> n_dispatch_index_html
   n_assets_ --> n_favicon_ico
   n_assets_ --> n_index_html
   n_assets_ambient_core_bundle_js --> n_assets_shell_manifest_json
@@ -367,6 +372,8 @@ flowchart LR
   n_scripts_ --> n_api_staging_deploy_receipt_json
   n_scripts_ --> n_config_cache_evidence_classification_json
   n_scripts_ --> n_context_ambient_ledger_json
+  n_scripts_ --> n_dispatch_index_html
+  n_sitemap_xml --> n_sitemap_page_index_html
   n_status_ --> n_api_candidate_artifact_manifest_json
   n_studio_hub_ --> n_api_studio_timeline_json
   n_studio_pulse_ --> n_api_candidate_artifact_manifest_json
@@ -381,12 +388,13 @@ flowchart LR
 
 | Node | Output | Cascade | Depends on | Feeds |
 |---|---|:--:|---|---|
-| `agents-json` | `agents.json` | yes | `.well-known/llms.txt`<br>`api/ecosystem-state.json` | `api/ai-discovery-health.json`<br>`api/candidate-artifact-manifest.json` |
+| `agents-json` | `agents.json` | yes | `.well-known/llms.txt`<br>`api/ecosystem-state.json` | `api/ai-discovery-health.json`<br>`api/candidate-artifact-manifest.json`<br>`api/index.html` |
 | `ai-canonical-pages` | `projects/vorn/.ai/index.html` | — | — | — |
 | `ai-discovery-health` | `api/ai-discovery-health.json` | — | `.well-known/llms.txt`<br>`_headers`<br>`agents.json` | `api/status-proof.json` |
 | `ambient-bundles` | `assets/ambient-core.bundle.js` | — | — | `assets/shell-manifest.json` |
 | `ambient-ledger` | `context/ambient-ledger.json` | — | — | — |
 | `analytics-summary` | `api/analytics-summary.json` | — | — | `data/stats-surface.json` |
+| `api-index` | `api/index.html` | — | `agents.json` | — |
 | `ark-signature-dossier` | `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` | — | — | — |
 | `attention-pressure` | `api/attention-pressure.json` | yes | — | `api/status-proof.json` |
 | `brand-assets` | `brand/assets.json` | — | — | — |
@@ -399,6 +407,7 @@ flowchart LR
 | `commit-map` | `api/commit-map.json` | yes | — | `api/feedback-provenance.json`<br>`api/ignis-conduit.json`<br>`api/proof-aware-projects.json`<br>`api/public-status.json`<br>`feed/forge-ledger.json` |
 | `cta-readiness` | `.cache/cta-readiness.json` | yes | — | — |
 | `deploy-currency` | `api/deploy-currency.json` | yes | `index.html` | `api/intent-map.json`<br>`api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
+| `dispatch-desk-panel` | `dispatch/index.html` | — | — | — |
 | `early-hints-headers` | `_headers` | — | `assets/shell-manifest.json` | `api/ai-discovery-health.json` |
 | `entity-graph` | `.well-known/entity-graph.json` | — | — | — |
 | `evidence-graph-agent` | `api/evidence-graph.json` | yes | — | — |
@@ -449,7 +458,8 @@ flowchart LR
 | `shell-assets` | `assets/shell-manifest.json` | — | `assets/ambient-core.bundle.js` | `_headers`<br>`api/candidate-artifact-manifest.json`<br>`pathways/builders/index.html` |
 | `ship-receipts` | `api/ship-receipts.json` | — | `api/feedback-provenance.json` | `api/intelligence-budget.json`<br>`changelog/index.html` |
 | `site-health` | `api/site-health.json` | — | — | `api/intelligence-budget.json`<br>`api/status-proof.json` |
-| `sitemap` | `sitemap.xml` | yes | — | — |
+| `sitemap` | `sitemap.xml` | yes | — | `sitemap-page/index.html` |
+| `sitemap-page` | `sitemap-page/index.html` | — | `sitemap.xml` | — |
 | `staging-deploy-continuity` | `api/staging-deploy-continuity.json` | — | `api/staging-deploy-receipt.json` | — |
 | `staging-deploy-receipt` | `api/staging-deploy-receipt.json` | — | `api/candidate-artifact-manifest.json` | `api/release-proof.json`<br>`api/staging-deploy-continuity.json` |
 | `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
@@ -474,6 +484,7 @@ flowchart LR
 | `ambient-bundles` | `scripts/build-ambient-bundle.mjs` | `node scripts/build-ambient-bundle.mjs --check` |
 | `ambient-ledger` | `scripts/build-ambient-ledger.mjs` | `node scripts/build-ambient-ledger.mjs --check` |
 | `analytics-summary` | `scripts/build-analytics-summary.mjs` | `node scripts/build-analytics-summary.mjs --check` |
+| `api-index` | `scripts/build-api-index.mjs` | `node scripts/build-api-index.mjs --check` |
 | `ark-signature-dossier` | `scripts/build-ark-signature-dossier.mjs` | `node scripts/build-ark-signature-dossier.mjs --check` |
 | `attention-pressure` | `scripts/build-attention-pressure.mjs` | `node scripts/build-attention-pressure.mjs --check` |
 | `brand-assets` | `scripts/build-brand-assets.mjs` | `node scripts/build-brand-assets.mjs --check` |
@@ -486,6 +497,7 @@ flowchart LR
 | `commit-map` | `scripts/build-commit-map.mjs` | `node scripts/build-commit-map.mjs --check` |
 | `cta-readiness` | `scripts/check-cta-readiness.mjs` | `node scripts/check-cta-readiness.mjs --check` |
 | `deploy-currency` | `scripts/build-deploy-currency.mjs` | `node scripts/build-deploy-currency.mjs --check` |
+| `dispatch-desk-panel` | `scripts/build-dispatch-desk-panel.mjs` | `node scripts/build-dispatch-desk-panel.mjs --check` |
 | `early-hints-headers` | `scripts/build-early-hints-headers.mjs` | `node scripts/build-early-hints-headers.mjs --check` |
 | `entity-graph` | `scripts/build-entity-graph.mjs` | `node scripts/build-entity-graph.mjs --check` |
 | `evidence-graph-agent` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
@@ -537,6 +549,7 @@ flowchart LR
 | `ship-receipts` | `scripts/build-ship-receipts.mjs` | `node scripts/build-ship-receipts.mjs --check` |
 | `site-health` | `scripts/build-site-health.mjs` | `node scripts/build-site-health.mjs --check` |
 | `sitemap` | `scripts/generate-sitemap.mjs` | `node scripts/generate-sitemap.mjs --check` |
+| `sitemap-page` | `scripts/build-sitemap-page.mjs` | `node scripts/build-sitemap-page.mjs --check` |
 | `staging-deploy-continuity` | `scripts/build-staging-deploy-continuity.mjs` | `node scripts/build-staging-deploy-continuity.mjs --check` |
 | `staging-deploy-receipt` | `scripts/deploy-staging.mjs` | `node scripts/check-staging-deploy-receipt.mjs` |
 | `startup-brief` | `scripts/render-startup-brief.mjs` | `node scripts/check-startup-session-coherence.mjs` |
@@ -560,7 +573,7 @@ flowchart LR
 - `.github/` → `newsroom-run`, `release-proof`
 - `.well-known/` → `security-posture`
 - `api/` → `attention-pressure`, `candidate-artifact-manifest`, `cta-readiness`, `deploy-currency`, `identity-migration-receipt`, `intent-map`, `nervous-system`, `news-critique-packets`, `newsroom-run`, `oracle-query-clusters`, `promotion-receipt`, `release-proof`, `site-health`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `ux-decision-ledger`
-- `assets/` → `ambient-bundles`, `candidate-artifact-manifest`, `favicon`, `home-desk-module`, `lqip-map`, `security-posture`, `shell-assets`
+- `assets/` → `ambient-bundles`, `candidate-artifact-manifest`, `dispatch-desk-panel`, `favicon`, `home-desk-module`, `lqip-map`, `security-posture`, `shell-assets`
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `release-dependencies`, `security-posture`, `shell-assets`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
@@ -585,7 +598,7 @@ flowchart LR
 - `projects/` → `ai-canonical-pages`, `ai-discovery-health`
 - `repo-structure:public-project-routes` → `agents-json`, `llms-full-shards`
 - `rights/` → `ignis-search-index`
-- `scripts/` → `ambient-ledger`, `cache-evidence-classification`, `rank-climbers`, `staging-deploy-receipt`
+- `scripts/` → `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `rank-climbers`, `staging-deploy-receipt`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
 - `studio-pulse/` → `candidate-artifact-manifest`
@@ -606,74 +619,77 @@ flowchart LR
 9. `changelog-narrative`
 10. `commit-map`
 11. `cta-readiness`
-12. `entity-graph`
-13. `evidence-graph-agent`
-14. `evidence-graph-doc`
-15. `evidence-hub`
-16. `favicon`
-17. `field-win-proof`
-18. `flight-director`
-19. `geo-vitals`
-20. `heartbeat`
-21. `identity-migration-receipt`
-22. `ignis-platform-status`
-23. `ignis-roi`
-24. `inp-soak-verdicts`
-25. `lqip-map`
-26. `nav-sheet-stats`
-27. `news-desk`
-28. `news-desk-engagement`
-29. `news-desk-freshness`
-30. `news-desk-reactions`
-31. `news-desk-stats`
-32. `news-visual-receipts`
-33. `newsroom-run`
-34. `oracle-velocity-public`
-35. `promotion-receipt`
-36. `public-intelligence`
-37. `rank-climbers`
-38. `release-dependencies`
-39. `site-health`
-40. `sitemap`
-41. `surface-spine`
-42. `tt-readiness`
-43. `tt-summary`
-44. `worker-route-provenance`
-45. `changelog-live`
-46. `feedback-provenance`
-47. `forge-feed`
-48. `home-desk-module`
-49. `ignis-conduit`
-50. `news-critique-packets`
-51. `news-pages`
-52. `proof-aware-projects`
-53. `public-ecosystem`
-54. `security-posture`
-55. `shell-assets`
-56. `studio-timeline`
-57. `worker-route-history`
-58. `canonical-destination-reachability`
-59. `early-hints-headers`
-60. `ignis-search-index`
-61. `llms-full-shards`
-62. `pathways-pages`
-63. `public-status`
-64. `ship-receipts`
-65. `ux-decision-ledger`
-66. `agents-json`
-67. `launch-age`
-68. `nervous-system`
-69. `oracle-query-clusters`
-70. `you-asked-shipped`
-71. `ai-discovery-health`
-72. `candidate-artifact-manifest`
-73. `deploy-currency`
-74. `intelligence-budget`
-75. `intent-map`
-76. `staging-deploy-receipt`
-77. `startup-brief`
-78. `status-proof`
-79. `citation`
-80. `release-proof`
-81. `staging-deploy-continuity`
-82. `stats-surface`
+12. `dispatch-desk-panel`
+13. `entity-graph`
+14. `evidence-graph-agent`
+15. `evidence-graph-doc`
+16. `evidence-hub`
+17. `favicon`
+18. `field-win-proof`
+19. `flight-director`
+20. `geo-vitals`
+21. `heartbeat`
+22. `identity-migration-receipt`
+23. `ignis-platform-status`
+24. `ignis-roi`
+25. `inp-soak-verdicts`
+26. `lqip-map`
+27. `nav-sheet-stats`
+28. `news-desk`
+29. `news-desk-engagement`
+30. `news-desk-freshness`
+31. `news-desk-reactions`
+32. `news-desk-stats`
+33. `news-visual-receipts`
+34. `newsroom-run`
+35. `oracle-velocity-public`
+36. `promotion-receipt`
+37. `public-intelligence`
+38. `rank-climbers`
+39. `release-dependencies`
+40. `site-health`
+41. `sitemap`
+42. `surface-spine`
+43. `tt-readiness`
+44. `tt-summary`
+45. `worker-route-provenance`
+46. `changelog-live`
+47. `feedback-provenance`
+48. `forge-feed`
+49. `home-desk-module`
+50. `ignis-conduit`
+51. `news-critique-packets`
+52. `news-pages`
+53. `proof-aware-projects`
+54. `public-ecosystem`
+55. `security-posture`
+56. `shell-assets`
+57. `sitemap-page`
+58. `studio-timeline`
+59. `worker-route-history`
+60. `canonical-destination-reachability`
+61. `early-hints-headers`
+62. `ignis-search-index`
+63. `llms-full-shards`
+64. `pathways-pages`
+65. `public-status`
+66. `ship-receipts`
+67. `ux-decision-ledger`
+68. `agents-json`
+69. `launch-age`
+70. `nervous-system`
+71. `oracle-query-clusters`
+72. `you-asked-shipped`
+73. `ai-discovery-health`
+74. `api-index`
+75. `candidate-artifact-manifest`
+76. `deploy-currency`
+77. `intelligence-budget`
+78. `intent-map`
+79. `staging-deploy-receipt`
+80. `startup-brief`
+81. `status-proof`
+82. `citation`
+83. `release-proof`
+84. `staging-deploy-continuity`
+85. `stats-surface`
