@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T17:55:25.757Z",
+  "generatedAt": "2026-10-03T18:02:37.256Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 8,
-    "healthy": 8,
-    "unknown": 7,
+    "observed": 6,
+    "healthy": 6,
+    "unknown": 9,
     "stale": 0,
     "dead": 0
   },
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-29T22:16:20.227Z",
     "currentBehindStreak": 5,
     "newestGradableAt": "2026-09-29T22:16:20.227Z",
-    "newestAgeHours": 91.7,
+    "newestAgeHours": 91.8,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-10-03T17:53:59Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753463",
-      "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-03T17:59:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37142540734",
+      "headSha": "ed5ac4ec1a22fd81dc3395697b5f3228ae452c08",
       "event": "push"
     },
     {
@@ -50,27 +50,27 @@
       "status": "failure",
       "rawStatus": "completed",
       "conclusion": "failure",
-      "updatedAt": "2026-10-03T17:48:26Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753352",
-      "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
+      "updatedAt": "2026-10-03T18:01:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37142540688",
+      "headSha": "ed5ac4ec1a22fd81dc3395697b5f3228ae452c08",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-10-03T17:53:43Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37141753374",
-      "headSha": "e3bcdfd0c88be7fa32bc5c7b559aac767dab375d",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-03T17:59:44Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37142540687",
+      "headSha": "ed5ac4ec1a22fd81dc3395697b5f3228ae452c08",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-03T17:53:43Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-03T17:56:50Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37142181770",
       "headSha": "2ec513d87035d5f067819fd46427386d7eb7748a",
       "event": "workflow_dispatch"
@@ -87,20 +87,18 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 8.63,
+      "ageHours": 8.75,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Analytics Pull",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-10-03T07:03:28Z",
-      "recentConclusions": [
-        "failure"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
-      "streak": 1,
-      "state": "healthy",
-      "ageHours": 10.87,
+      "streak": 0,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -127,15 +125,13 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-03T07:24:33Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 10.51,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -181,7 +177,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.98,
+      "ageHours": 4.1,
       "staleAfterHours": 48
     },
     {
@@ -189,13 +185,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-10-03T14:21:42Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.56,
+      "ageHours": 3.68,
       "staleAfterHours": 48
     },
     {
@@ -204,13 +199,12 @@
       "lastUpdatedAt": "2026-10-03T17:40:57Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.24,
+      "ageHours": 0.36,
       "staleAfterHours": 48
     },
     {
@@ -236,7 +230,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.13,
+      "ageHours": 0.25,
       "staleAfterHours": 48
     },
     {
@@ -249,7 +243,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.39,
+      "ageHours": 3.51,
       "staleAfterHours": 48
     },
     {
