@@ -81,6 +81,27 @@ are made by the CLI process outside the sandbox and still work. If a future Code
 network access for image generation, a run will fail with that visible in
 `codex-attempt-N.log` — pass `--allow-network` to lift only that denial, and note why.
 
+## S368 — why art silently stopped, and what now keeps it running
+
+Between 2026-09-17 and 2026-10-03 no real art was generated: 52 stories shipped on
+procedural placeholders. The worker spawned the npm `codex.cmd` shim with `shell: true`;
+under Node 24, `cmd.exe` re-parsed every argument, the sandbox probe's `node -e` script
+and `windows.sandbox="unelevated"` were mangled, the probe never printed its marker, and
+preflight reported "the Codex sandbox could not start" (correctly refusing to run). The
+worker now resolves the native `codex.exe` behind the shim (`resolveCodexBin`, override
+with `CODEX_BIN`) and spawns it without a shell, so arguments pass through verbatim.
+
+Three guards keep it from going quiet again:
+
+- **Nightly generation** — Windows scheduled task `VaultSpark Desk Art (nightly)` runs
+  `scripts/generate-news-art-codex.mjs` daily at 7:30 pm local (after the late-night
+  edition) and appends to `.cache/desk-art-staging/nightly.log`. It only stages art.
+- **Review + ingest at session start** — staged art is reviewed (look at every image)
+  and ingested by the next agent session; nothing unreviewed is published.
+- **Currency alert** — `scripts/check-desk-art-currency.mjs` runs in the daily CI Health
+  Monitor and fails when any published story has carried placeholder art for more than
+  48 hours (`npm run desk:art:check` for a local report).
+
 ## Nightly / session-start routine
 
 ```powershell

@@ -52,6 +52,10 @@ jobs:
           node-version: '24'
       - name: Check every local HTML route
         run: node scripts/crawl-all-pages.mjs
+      # S368: real Desk art is generated locally after publication; alert when any
+      # story has carried placeholder art for more than 48 hours.
+      - name: Check Desk art currency
+        run: node scripts/check-desk-art-currency.mjs
       - name: Check every live sitemap route and newest Desk edition
         run: |
           node scripts/check-live-surface-matrix.mjs --self-test

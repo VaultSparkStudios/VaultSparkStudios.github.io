@@ -224,6 +224,9 @@ export function buildPrompt(story) {
     `Keep the top ${topPct}% of the frame free of key subjects (a label bar sits there). Keep the bottom ${captionPct}% calmer, darker and less busy (a caption panel sits there). Place the main subject in the band between them, roughly centered.`,
     'ABSOLUTELY NO text, letters, numbers, logos, brand marks, watermarks, captions or UI in the image. If the scene mentions labels, signs, names or markings, depict them as unlabeled shapes, colors and objects instead.',
     'Do not depict real, identifiable people or their likeness; satirize institutions and systems, never individuals.',
+    // S368: a scene that names a person ("King Charles presses leaders") made the model stage
+    // that person in costume and setting. Context identifies a figure as surely as a face does.
+    'If the scene or headline names a real person (a monarch, head of state, executive or public figure), never show that person or a stand-in styled, costumed or placed to represent them; show their institution through objects instead (an empty chair, a seal, a building, a document). Keep any landmarks true to the story\'s country.',
     `Story headline (for context only, do not render text): ${clean(story.headline, 300)}`,
     `Scene: ${clean(story.visual?.scene)}`,
     `Satirical idea: ${clean(satire.target, 400)} / ${clean(satire.setup, 400)} / ${clean(satire.payoff, 400)}`,
@@ -239,23 +242,47 @@ export function codexChildEnv(baseEnv = process.env) {
   return env;
 }
 
-export function codexSpawnOptions({ cwd, input, timeoutMs, env = process.env, platform = process.platform }) {
+/**
+ * S368: the native codex.exe behind the npm shim. Spawning the .cmd shim needs
+ * `shell: true`, and under Node 24 cmd.exe then re-parses every argument: the
+ * sandbox probe's `node -e "<script>"` and `windows.sandbox="unelevated"` were
+ * mangled, the probe never printed its marker, and preflight reported the
+ * sandbox "could not start" — which is why Desk art silently stopped after
+ * 2026-09-17. Spawning the real executable needs no shell, so arguments pass
+ * through verbatim. CODEX_BIN overrides the lookup.
+ */
+export function resolveCodexBin({ env = process.env, platform = process.platform, exists = fs.existsSync } = {}) {
+  if (env.CODEX_BIN && exists(env.CODEX_BIN)) return env.CODEX_BIN;
+  if (platform !== 'win32') return null;
+  const dirs = String(env.PATH || env.Path || '').split(path.delimiter).filter(Boolean);
+  const vendor = ['node_modules', '@openai', 'codex', 'node_modules', '@openai', 'codex-win32-x64', 'vendor', 'x86_64-pc-windows-msvc', 'bin', 'codex.exe'];
+  for (const dir of dirs) {
+    if (!exists(path.join(dir, 'codex.cmd')) && !exists(path.join(dir, 'codex.ps1'))) continue;
+    const candidate = path.join(dir, ...vendor);
+    if (exists(candidate)) return candidate;
+  }
+  return null;
+}
+
+export function codexSpawnOptions({ cwd, input, timeoutMs, env = process.env, platform = process.platform, nativeBin = null }) {
   return {
     cwd,
     input,
     timeout: timeoutMs,
     encoding: 'utf8',
     windowsHide: true,
-    // codex is an npm .cmd shim on Windows; Node refuses to spawn .cmd without a
-    // shell. The argument vector is fixed (no user input); the prompt goes on stdin.
-    shell: platform === 'win32',
+    // Prefer the native binary (no shell, arguments verbatim). Only fall back to
+    // the npm .cmd shim — which Node refuses to spawn without a shell — when the
+    // native binary cannot be found.
+    shell: platform === 'win32' && !nativeBin,
     env: codexChildEnv(env),
     maxBuffer: 64 * 1024 * 1024,
   };
 }
 
 function defaultRun(cmd, args, { cwd = os.tmpdir(), input = undefined, timeoutMs = 60_000 } = {}) {
-  const result = spawnSync(cmd, args, codexSpawnOptions({ cwd, input, timeoutMs }));
+  const nativeBin = cmd === 'codex' ? resolveCodexBin() : null;
+  const result = spawnSync(nativeBin || cmd, args, codexSpawnOptions({ cwd, input, timeoutMs, nativeBin }));
   const timedOut = result.error?.code === 'ETIMEDOUT';
   if (timedOut && process.platform === 'win32' && result.pid) {
     // Best effort: the shell is killed on timeout but the codex grandchild may
