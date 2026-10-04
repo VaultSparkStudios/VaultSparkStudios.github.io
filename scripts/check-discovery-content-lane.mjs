@@ -7,7 +7,9 @@ import { DISCOVERY_PATHS, isDiscoveryPath, validateDiscoveryBundle } from './lib
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
 const arg = (name, fallback = '') => { const at = args.indexOf(name); return at >= 0 && args[at + 1] ? args[at + 1] : fallback; };
-const selected = arg('--paths').split(/[\s,]+/).filter(isDiscoveryPath).sort();
+// --paths-file <file>: large releases exceed the Windows ~32K command-line limit (S368).
+const pathsFile = arg('--paths-file');
+const selected = (pathsFile ? fs.readFileSync(pathsFile, 'utf8') : arg('--paths')).split(/[\s,]+/).filter(isDiscoveryPath).sort();
 
 export async function verifyServed(origin, paths) {
   const expected = { '.well-known/llms.txt': /text\/plain/i, 'agents.json': /(?:application|text)\/json/i, 'robots.txt': /text\/plain/i, 'sitemap.xml': /xml/i };

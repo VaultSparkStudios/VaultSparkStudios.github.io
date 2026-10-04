@@ -14,6 +14,7 @@
  */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { getSecret, redact } from './lib/secrets.mjs';
@@ -291,14 +292,23 @@ try {
   const removals = requested === null ? deletedContentPaths(range) : [];
   if (!promotable.length) throw new Error('no existing promotable files remain after build-receipt exclusion');
 
-  checked(
-    run(process.execPath, [
-      path.join(ROOT, 'scripts', 'check-content-hotfix-gate.mjs'),
-      '--paths', promotable.join(' '),
-      `--baseline=${baseline}`,
-    ], { timeout: 120_000 }),
-    'content reference gate',
-  );
+  // S368: pass the path list through a file. A large release (1,300+ paths) is
+  // ~80 KB as one argument, past the Windows ~32K command-line limit, so the gate
+  // never started and the deploy failed with no output.
+  const pathsFile = path.join(os.tmpdir(), `staging-content-paths-${process.pid}.txt`);
+  fs.writeFileSync(pathsFile, promotable.join('\n'));
+  try {
+    checked(
+      run(process.execPath, [
+        path.join(ROOT, 'scripts', 'check-content-hotfix-gate.mjs'),
+        `--paths-file=${pathsFile}`,
+        `--baseline=${baseline}`,
+      ], { timeout: 300_000 }),
+      'content reference gate',
+    );
+  } finally {
+    fs.rmSync(pathsFile, { force: true });
+  }
 
   let key;
   let host;
@@ -364,7 +374,13 @@ try {
   console.log(redact(deployed.stdout.trim()));
   await verifyRoutes();
   if (promotable.some(isDiscoveryPath)) {
-    checked(run(process.execPath, [path.join(ROOT, 'scripts', 'check-discovery-content-lane.mjs'), '--paths', promotable.join(' '), '--origin', STAGING_URL], { timeout: 120_000 }), 'served staging discovery verification');
+    const discoveryFile = path.join(os.tmpdir(), `staging-discovery-paths-${process.pid}.txt`);
+    fs.writeFileSync(discoveryFile, promotable.filter(isDiscoveryPath).join('\n'));
+    try {
+      checked(run(process.execPath, [path.join(ROOT, 'scripts', 'check-discovery-content-lane.mjs'), '--paths-file', discoveryFile, '--origin', STAGING_URL], { timeout: 120_000 }), 'served staging discovery verification');
+    } finally {
+      fs.rmSync(discoveryFile, { force: true });
+    }
   }
   fs.rmSync(path.join(ROOT, listRel), { force: true });
   fs.rmSync(archivePath, { force: true });

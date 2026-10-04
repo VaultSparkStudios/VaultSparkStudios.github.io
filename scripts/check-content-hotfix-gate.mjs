@@ -258,9 +258,14 @@ function selfTest() {
 
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
+  // --paths-file=<file> (one path per line, or space-separated): large releases
+  // exceed the Windows ~32K command-line limit as a --paths argument (S368).
+  const fileArg = process.argv.find((a) => a.startsWith('--paths-file='));
   const arg = process.argv.find((a) => a.startsWith('--paths='))
     || (process.argv.includes('--paths') ? `--paths=${process.argv[process.argv.indexOf('--paths') + 1] || ''}` : '');
-  const raw = arg.slice('--paths='.length);
+  const raw = fileArg
+    ? fs.readFileSync(fileArg.slice('--paths-file='.length), 'utf8').split(/\s+/).filter(Boolean).join(' ')
+    : arg.slice('--paths='.length);
   const baselineArg = process.argv.find((a) => a.startsWith('--baseline='));
   let baselineHas = null;
   if (baselineArg) {
