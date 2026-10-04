@@ -423,12 +423,23 @@ function panelReactions(story, day) {
  * inventing a parallel one means a new persona cannot end up with a panel
  * identity and no prose identity.
  */
+/**
+ * S368 — a body paragraph that names one of the studio's own pages
+ * ("vaultsparkstudios.com/ai-vs-si/") renders it as a same-site link. Only paths
+ * that exist as a page in this repo are linked, so a typo stays plain text.
+ * Runs on already-escaped HTML; the path pattern cannot contain markup.
+ */
+export function linkStudioPages(escaped, pageExists = (p) => existsSync(join(ROOT, p, 'index.html'))) {
+  return String(escaped).replace(/\b(?:https?:\/\/)?(?:www\.)?vaultsparkstudios\.com(\/[a-z0-9][a-z0-9/-]*\/)/gi, (whole, p) =>
+    (pageExists(p.slice(1, -1)) ? `<a href="${p}">${whole}</a>` : whole));
+}
+
 function bodyHtml(story) {
   let last = null;
   const blocks = (story.body || []).map((b) => {
     const heading = b.heading ? `<h2 class="desk-h2">${escapeHtml(b.heading)}</h2>` : '';
     const persona = b.voice ? personaById(b.voice) : null;
-    if (!persona) return `${heading}<p>${escapeHtml(b.text)}</p>`;
+    if (!persona) return `${heading}<p>${linkStudioPages(escapeHtml(b.text))}</p>`;
     const showByline = persona.id !== last;
     last = persona.id;
     // S356: persona-attributed prose in the article font. The persona colour is
