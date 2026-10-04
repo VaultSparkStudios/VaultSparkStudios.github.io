@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-04T03:37:00.538Z",
+  "generatedAt": "2026-10-04T13:22:12.674Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -22,6 +22,7 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch",
       "/:stagingCanonicalCsp",
       "/studio-pulse/:stagingCanonicalCsp",
       "/membership/:stagingCanonicalCsp",
@@ -31,11 +32,11 @@
     "deployedBuildSha": "3ff84269caa816cafcadcf0ba702750fea5edaf0",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "4f715ecfb97cbf6d259ec01c5762cd2be0368cd0933abb3daa60347fbf805b48",
+      "candidateRoot": "c7ad42f5dabc073030639d2ae6cc1222a8f3afd3f586ade3a1401423600c8f1e",
       "candidateLeafCount": 55,
       "stagingRoot": "4f715ecfb97cbf6d259ec01c5762cd2be0368cd0933abb3daa60347fbf805b48",
       "stagingLeafCount": 55,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -75,13 +76,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 7,
-    "ageHours": 0.5,
-    "observedAt": "2026-10-04T02:51:03.376Z",
+    "commitsBehind": 16,
+    "ageHours": 8.7,
+    "observedAt": "2026-10-04T12:56:51.782Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-04T02:51:03.376Z",
+      "observedAt": "2026-10-04T12:56:51.782Z",
       "expectedFrom": "b391d0942826a1a24b67169e7926026dad8258ee15e2d2af8aded66bbb9041dc",
       "supersededBy": null,
       "ageHours": 0,
@@ -183,7 +184,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -199,6 +200,7 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
+    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
