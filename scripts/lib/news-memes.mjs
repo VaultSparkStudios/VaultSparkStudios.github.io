@@ -323,3 +323,129 @@ export function altForMeme({ style, text, motif = null, persona = null }) {
   const who = persona ? `, signed ${persona}` : '';
   return `${scene}${who}, captioned: “${String(text).trim()}”`;
 }
+
+/* ── Satire cartoon (D-S368.7) ─────────────────────────────────────────── */
+
+/**
+ * Every Desk story carries two images: the painted, person-free BANNER (the
+ * editorial art above) and a SATIRE CARTOON, an AI-generated, clearly drawn
+ * single-panel gag in the visual register of the correspondent whose line it
+ * illustrates. The cartoon is the primary satire image; until one exists the
+ * banner panel (art + the overlay caption above) is the only image.
+ *
+ * Square (1:1) on purpose: it is the one shape every social surface shows
+ * uncropped (feed, thumbnail and story crops all keep a centred square), it is
+ * the classic single-panel gag-cartoon frame, and it is the image model's
+ * native 1024x1024 output, so nothing is resampled into the composition. A 4:5
+ * portrait would stand 25% taller in the article column for no extra joke.
+ *
+ * Everything here is pure data so the generator (prompt), ingest (alt text,
+ * receipt), build (derivatives) and page (render) read ONE definition.
+ */
+export const SATIRE_CARTOON_LABEL = 'Satire · AI-generated cartoon';
+export const SATIRE_CARTOON_CARICATURE_NOTE = 'Caricature of a real public figure: exaggerated and drawn, not a likeness, not a quote.';
+export const SATIRE_CARTOON_KIND = 'satire-cartoon';
+/** Minimum generated size, and the normalized maximum stored as the source master. */
+export const SATIRE_CARTOON_MIN = Object.freeze({ width: 1024, height: 1024 });
+export const SATIRE_CARTOON_MAX = Object.freeze({ width: 1200, height: 1200 });
+/** Rendered/derivative size (square). The img width/height attributes reserve this box. */
+export const SATIRE_CARTOON_SIZE = Object.freeze({ width: 1024, height: 1024 });
+export const SATIRE_CARTOON_ASPECT = Object.freeze({ min: 0.9, max: 1.1 });
+/**
+ * Flat-colour line art is legitimately lower-entropy than a painted banner, so
+ * the banner's real-art floor (5) would reject good cartoons. This floor only
+ * rejects blank or near-blank output.
+ */
+export const SATIRE_CARTOON_ENTROPY_FLOOR = 3;
+/** Responsive derivatives: suffix → { width, format }. Encodings reuse EDITORIAL_PANEL_ENCODINGS. */
+export const SATIRE_CARTOON_DERIVATIVES = Object.freeze({
+  '.png': Object.freeze({ width: 1024, format: 'png' }),
+  '.webp': Object.freeze({ width: 1024, format: 'webp' }),
+  '.avif': Object.freeze({ width: 1024, format: 'avif' }),
+  '--640.webp': Object.freeze({ width: 640, format: 'webp' }),
+});
+export const SATIRE_CARTOON_BUDGETS = Object.freeze({ '.png': 650_000, '.webp': 250_000, '.avif': 210_000, '--640.webp': 120_000 });
+
+/**
+ * First edition date the two-image rule applies to (D-S368.7, 2026-10-03).
+ * Earlier stories may be backfilled with --since/--story, but the currency
+ * alarm and the nightly default window never count them as missing a cartoon.
+ */
+export const SATIRE_CARTOON_ERA_START = '2026-10-03';
+/** A story may lack its cartoon for this long before the currency check fails (warning before). */
+export const SATIRE_CARTOON_GRACE_DAYS = 7;
+
+export const satireCartoonArtSource = (date, slug) => `data/news-desk/art/${date}--${slug}--satire.png`;
+export const satireCartoonAssetBase = (date, slug) => `${date}--${slug}--satire`;
+
+/**
+ * Cartoon style per persona register: the same seven voices the SVG panels
+ * drew, translated into a drawn gag. `scene` opens the derived composition
+ * (and therefore the alt text); `style` tells the image model how to draw it.
+ */
+export const SATIRE_CARTOON_STYLES = Object.freeze({
+  cartoon: Object.freeze({
+    label: 'engraved broadsheet cartoon',
+    style: 'a classic engraved broadsheet editorial cartoon: confident cross-hatched pen-and-ink line work on aged cream paper, black ink with one muted wash, the look of an early-twentieth-century newspaper cartoon. Draw the press-release metaphor literally, with a completely straight face.',
+    scene: 'An engraved broadsheet-style cartoon draws the claim literally',
+  }),
+  chart: Object.freeze({
+    label: 'deadpan chart gag',
+    style: 'a deadpan modern gag cartoon in clean flat colours: a giant, comically literal chart (a flat line, a bar that refuses to grow) dominates the scene while invented characters react with total indifference. Muted dark palette with a lime-green accent.',
+    scene: 'A deadpan cartoon is dominated by a giant, comically flat chart',
+  }),
+  receipt: Object.freeze({
+    label: 'highlighted-document gag',
+    style: 'a flat-colour gag cartoon in which an enormous document or contract dominates the scene and one paragraph is highlighted in bright cyan (drawn as a highlighted block of illegible squiggle lines, never real words) while the characters around it are oblivious.',
+    scene: 'A flat-colour cartoon shows an enormous document with one paragraph highlighted',
+  }),
+  thenNow: Object.freeze({
+    label: 'then-and-now split',
+    style: 'a single image split down the middle into two halves: the same scene in an earlier era (sepia, retro cartoon style) and today (modern flat colours, violet accent), drawn so it is obvious that almost nothing changed. No dates or numbers.',
+    scene: 'A split cartoon shows the same scene then and now, almost unchanged',
+  }),
+  pager: Object.freeze({
+    label: '3 a.m. pager gag',
+    style: 'a dim, blue-lit night-time cartoon: an invented, exhausted on-call engineer is jolted awake by a blaring pager while the shiny launch-day product falls over in the background. Amber alert accent, clean ink line art with flat colour.',
+    scene: 'A blue-lit 3 a.m. cartoon shows an on-call engineer woken by a pager while the product falls over',
+  }),
+  declare: Object.freeze({
+    label: 'big-declaration',
+    style: 'a bold, dynamic flat-colour cartoon of an over-confident announcement: a figure on a stage or cliff edge proclaiming triumph in front of a steep rocket-shaped curve, exaggerated perspective, orange-red accent.',
+    scene: 'A bold cartoon shows an over-confident announcement in front of a steep rising curve',
+  }),
+  oneperson: Object.freeze({
+    label: 'one-figure',
+    style: 'a minimal gag cartoon with a single invented ordinary person (a worker, a student, a customer) in a sparse setting, dwarfed by the consequence of the story. Soft flat colours, mint-green accent, generous negative space.',
+    scene: 'A minimal cartoon shows one ordinary person dwarfed by the consequence of the story',
+  }),
+  frame: Object.freeze({
+    label: 'tool-frame',
+    style: 'a flat-colour gag cartoon where an oversized creative-tool window (blank panels and an export button drawn as unlabeled shapes) frames the thing it helped make, contrasting the cinematic promise with a stubbornly ordinary result. Pink accent.',
+    scene: 'A flat-colour cartoon frames a stubbornly ordinary result inside an oversized creative-tool window',
+  }),
+});
+
+const cleanLine = (value, max = 400) => String(value || '').replace(/\s+/g, ' ').trim().replace(/[.\s]+$/, '').slice(0, max);
+const lowerFirst = (value) => (value ? value.charAt(0).toLowerCase() + value.slice(1) : value);
+
+/**
+ * The cartoon brief for one story: register, drawing style, the derived scene,
+ * the caption the PAGE prints (the meme line, never asked of the image model)
+ * and the alt text. The alt is derived from the same fields the prompt is built
+ * from (see altForMeme for why words must never be authored separately from the
+ * picture they describe). `persona` is the PERSONAS entry for memeLine.personaId.
+ */
+export function satireCartoonBrief({ story, persona }) {
+  if (!persona || !story?.memeLine?.text) return null;
+  const register = SATIRE_CARTOON_STYLES[persona.memeStyle] ? persona.memeStyle : 'cartoon';
+  const look = SATIRE_CARTOON_STYLES[register];
+  const satire = story.visual?.satire || {};
+  const setup = cleanLine(satire.setup);
+  const payoff = cleanLine(satire.payoff);
+  const target = cleanLine(satire.target);
+  const caption = String(story.memeLine.text).trim();
+  const scene = `${look.scene}: ${lowerFirst(setup)}, and ${lowerFirst(payoff)}`;
+  const alt = `AI-generated satirical cartoon in ${persona.name}’s ${look.label} style. ${scene}.`;
+  return { register, label: look.label, style: look.style, scene, target, setup, payoff, caption, alt, personaId: persona.id, personaName: persona.name };
+}

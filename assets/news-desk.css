@@ -288,6 +288,20 @@ body.light-mode [data-persona],body.light-mode [data-voice]{--persona-ink:color-
 .desk-meme figcaption{margin-top:.55rem;color:var(--desk-muted);font-size:.8rem;line-height:1.45;letter-spacing:0;text-transform:none}
 .desk-meme figcaption strong{color:var(--desk-ink)}
 .desk-hero-figure.is-pending img{opacity:.8}
+/* D-S368.7 satire cartoon: square, capped so it never dominates the column; the
+   label and caption are text in --desk-ink (persona accents stay decorative, so
+   pale voices like NIB never become unreadable labels in the light theme). */
+.desk-satire{--persona:var(--gold,#ffc400);width:min(100%,560px);margin:2.4rem auto 0;padding:0}
+.desk-satire-label{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem;color:var(--desk-ink);font:800 .7rem/1.3 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.desk-satire-label:before{content:"";flex:none;width:1.7rem;height:3px;border-radius:2px;background:var(--persona)}
+.desk-satire-frame{display:block;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--desk-line);border-radius:14px;background:var(--desk-panel)}
+.desk-satire-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.desk-satire figcaption{margin-top:.8rem;padding-left:.85rem;border-left:3px solid var(--persona)}
+.desk-satire-caption{margin:0;color:var(--desk-ink);font:italic 600 clamp(1.05rem,2.3vw,1.3rem)/1.45 Georgia,serif}
+.desk-satire-byline{margin:.45rem 0 0;color:var(--desk-muted);font-size:.8rem;line-height:1.55}
+.desk-satire-byline .desk-ai-tag{margin-left:.2rem}
+body.light-mode .desk-satire-byline .desk-ai-tag{border-color:var(--persona-ink,#162033);color:var(--persona-ink,#162033)}
+.desk-satire-note{margin:.4rem 0 0;color:var(--desk-muted);font-size:.78rem;font-style:italic;line-height:1.5}
 .desk-superseded{margin:1rem 0;padding:.85rem 1.1rem;border:1px solid var(--gold,#ffc400);border-radius:14px;color:var(--desk-muted)}
 .desk-superseded strong{color:var(--desk-ink)}
 .desk-superseded a{color:var(--gold,#ffc400)}

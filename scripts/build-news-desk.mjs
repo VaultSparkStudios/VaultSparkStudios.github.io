@@ -19,7 +19,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_BUDGETS, storyMemeOverlayOptions } from './lib/news-memes.mjs';
+import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_BUDGETS, storyMemeOverlayOptions, SATIRE_CARTOON_BUDGETS, SATIRE_CARTOON_DERIVATIVES, SATIRE_CARTOON_STYLES, satireCartoonAssetBase, satireCartoonBrief } from './lib/news-memes.mjs';
+import { renderSatireDerivatives } from './lib/news-satire-raster.mjs';
 import {
   PERSONAS,
   personaById,
@@ -65,6 +66,7 @@ import {
   deriveClaimsFeed,
   scoreVisualRelationships,
   validateStoryVisual,
+  validateSatireCartoon,
 } from './lib/news-desk.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -257,8 +259,61 @@ function assertArticleArtSources(days) {
         const bytes = fs.statSync(derivative).size;
         if (bytes > maxBytes) throw new Error(`${day.date}/${story.slug}: ${ext} panel is ${bytes} bytes (budget ${maxBytes})`);
       }
+      assertSatireCartoon(day, story, { seen, seenHashes, artRoot });
     }
   }
+}
+
+/**
+ * D-S368.7: a story's satire cartoon, when it has one, is held to the same
+ * evidence rules as its banner — the raster lives in data/news-desk/art/, its
+ * bytes match the reviewed receipt, its pixels are unique, and every
+ * responsive derivative exists within budget.
+ */
+function assertSatireCartoon(day, story, { seen, seenHashes, artRoot }) {
+  const cartoon = story.visual?.satireCartoon;
+  if (!cartoon) return;
+  const at = `${day.date}/${story.slug}`;
+  const source = path.resolve(ROOT, String(cartoon.artSource || ''));
+  if (!source.startsWith(artRoot)) throw new Error(`${at}: satire cartoon must live in data/news-desk/art/`);
+  if (!fs.existsSync(source)) throw new Error(`${at}: missing satire cartoon ${cartoon.artSource}`);
+  if (seen.has(source)) throw new Error(`${at}: satire cartoon file is reused`);
+  seen.add(source);
+  const hash = crypto.createHash('sha256').update(fs.readFileSync(source)).digest('hex');
+  if (cartoon.sha256 !== hash) throw new Error(`${at}: satire cartoon receipt does not match the raster SHA-256`);
+  if (seenHashes.has(hash)) throw new Error(`${at}: satire cartoon pixels duplicate other Desk art`);
+  seenHashes.add(hash);
+  const base = path.join(ROOT, 'assets', 'og', 'news', satireCartoonAssetBase(day.date, story.slug));
+  for (const [suffix, maxBytes] of Object.entries(SATIRE_CARTOON_BUDGETS)) {
+    const derivative = `${base}${suffix}`;
+    if (!fs.existsSync(derivative)) throw new Error(`${at}: missing satire cartoon derivative ${suffix}`);
+    const bytes = fs.statSync(derivative).size;
+    if (bytes > maxBytes) throw new Error(`${at}: ${suffix} satire cartoon is ${bytes} bytes (budget ${maxBytes})`);
+  }
+}
+
+/**
+ * Satire cartoon derivatives (D-S368.7). Same byte-lock as the panels: a
+ * routine rebuild creates a missing family but never re-encodes an existing
+ * one unless --refresh-art or --refresh-satire-only names the story (the
+ * ingest path for a re-rolled cartoon).
+ */
+async function rasterizeSatireCartoons(day, { refreshArt = false, refreshSatireOnly = null } = {}) {
+  const outDir = path.join(ROOT, 'assets', 'og', 'news');
+  let count = 0;
+  for (const story of day.stories) {
+    const cartoon = story.visual?.satireCartoon;
+    if (!cartoon) continue;
+    const base = path.join(outDir, satireCartoonAssetBase(day.date, story.slug));
+    const outputs = Object.keys(SATIRE_CARTOON_DERIVATIVES).map((suffix) => `${base}${suffix}`);
+    const refresh = refreshArt === true || Boolean(refreshSatireOnly?.has(`${day.date}/${story.slug}`));
+    if (artworkWritePlan(outputs, { refreshArt: refresh }).length === 0) continue;
+    fs.mkdirSync(outDir, { recursive: true });
+    const derivatives = await renderSatireDerivatives(path.resolve(ROOT, cartoon.artSource));
+    for (const [suffix, buffer] of Object.entries(derivatives)) fs.writeFileSync(`${base}${suffix}`, buffer);
+    count += 1;
+  }
+  return count;
 }
 
 export function loadResolutions() {
@@ -526,15 +581,16 @@ function simulate() {
   }
 }
 
-async function rebuild({ refreshArt = false, refreshArtOnly = null } = {}) {
+async function rebuild({ refreshArt = false, refreshArtOnly = null, refreshSatireOnly = null } = {}) {
   const days = loadPublicDays();
   if (days.length === 0) throw new Error('no real news days found; refusing to publish an empty desk');
-  if (refreshArtOnly) {
-    const known = new Set(days.flatMap((day) => day.stories.map((story) => `${day.date}/${story.slug}`)));
-    const unknown = [...refreshArtOnly].filter((id) => !known.has(id));
+  const known = new Set(days.flatMap((day) => day.stories.map((story) => `${day.date}/${story.slug}`)));
+  for (const [flag, ids] of [['--refresh-art-only', refreshArtOnly], ['--refresh-satire-only', refreshSatireOnly]]) {
+    if (!ids) continue;
+    const unknown = [...ids].filter((id) => !known.has(id));
     // A typo must fail loudly: a silently-unmatched scoped refresh would leave
     // stale derivatives bound to a replaced raster and report success.
-    if (unknown.length) throw new Error(`--refresh-art-only names unknown stories: ${unknown.join(', ')}`);
+    if (unknown.length) throw new Error(`${flag} names unknown stories: ${unknown.join(', ')}`);
   }
   for (const day of days) {
     const errors = validateDay(day, { today: day.date });
@@ -562,6 +618,7 @@ async function rebuild({ refreshArt = false, refreshArtOnly = null } = {}) {
   let cardCount = 0;
   for (const day of days) cardCount += await rasterizeCards(day, { refreshArt, refreshArtOnly });
   for (const day of days) cardCount += await rasterizeMemes(day, { refreshArt, refreshArtOnly });
+  for (const day of days) cardCount += await rasterizeSatireCartoons(day, { refreshArt, refreshSatireOnly });
   cardCount += await rasterizeDispatchCard({ refreshArt });
   cardCount += await rasterizeDirectorsCard({ refreshArt });
 
@@ -803,6 +860,25 @@ function selfTest() {
   t('persona roster is 8 and unique', PERSONAS.length === 8 && new Set(PERSONAS.map((p) => p.id)).size === 8);
   t('every voice has its own visual register',
     new Set(PERSONAS.map((p) => p.memeStyle)).size === PERSONAS.length);
+  /* D-S368.7: the satire cartoon contract. */
+  t('every voice register has a drawn satire-cartoon style', PERSONAS.every((p) => Boolean(SATIRE_CARTOON_STYLES[p.memeStyle])));
+  {
+    const satStory = {
+      slug: 'sat-story',
+      memeLine: { text: 'That is not an edge case. That is Tuesday.', personaId: 'vera' },
+      visual: { satire: { target: 'Launch-day reliability claims made on stage', setup: 'Every agent demo runs on a network nobody else will ever have', payoff: 'The pager learns the product name before the customers do', institutional: true } },
+    };
+    const brief = satireCartoonBrief({ story: satStory, persona: personaById('vera') });
+    t('satire brief: VERA draws the 3 a.m. pager gag and the alt is derived from the joke',
+      brief.register === 'pager' && brief.caption === satStory.memeLine.text && /^AI-generated satirical cartoon in VERA/.test(brief.alt)
+      && brief.alt.includes('every agent demo runs on a network') && brief.alt.length >= 80);
+    const good = { artSource: 'data/news-desk/art/2026-10-03--sat-story--satire.png', kind: 'satire-cartoon', alt: brief.alt, caption: brief.caption, persona: 'vera', register: 'pager', caricature: false, reviewer: 'operator', reviewedAt: '2026-10-03', semanticVerified: false, sha256: 'a'.repeat(64) };
+    t('a complete satire-cartoon record validates', validateSatireCartoon(good, { story: satStory, date: '2026-10-03' }).length === 0);
+    t('satire record: wrong persona, wrong register, missing caricature decision and a stray path are each rejected', [
+      { ...good, persona: 'rex' }, { ...good, register: 'declare' }, { ...good, caricature: undefined }, { ...good, artSource: 'data/news-desk/art/other.png' },
+      { ...good, caption: 'a different line' }, { ...good, alt: 'A cartoon.' }, { ...good, semanticVerified: true }, { ...good, sha256: '' },
+    ].every((record) => validateSatireCartoon(record, { story: satStory, date: '2026-10-03' }).length > 0));
+  }
   t('NIB is the cartoonist and aims at institutions, not people',
     personaById('nib')?.memeStyle === 'cartoon' && /NEVER at individuals/i.test(personaById('nib')?.forbidden || ''));
   t('founding three are retained so the ledger keeps its subjects',
@@ -1231,7 +1307,10 @@ else if (args.has('--rebuild')) Promise.resolve().then(() => {
   const onlyIndex = argv.indexOf('--refresh-art-only');
   const refreshArtOnly = onlyIndex >= 0 ? parseRefreshArtOnly(argv[onlyIndex + 1]) : null;
   if (onlyIndex >= 0 && !refreshArtOnly) throw new Error('--refresh-art-only requires <date/slug,...>');
-  return rebuild({ refreshArt: args.has('--refresh-art'), refreshArtOnly });
+  const satireIndex = argv.indexOf('--refresh-satire-only');
+  const refreshSatireOnly = satireIndex >= 0 ? parseRefreshArtOnly(argv[satireIndex + 1]) : null;
+  if (satireIndex >= 0 && !refreshSatireOnly) throw new Error('--refresh-satire-only requires <date/slug,...>');
+  return rebuild({ refreshArt: args.has('--refresh-art'), refreshArtOnly, refreshSatireOnly });
 }).catch((error) => {
   console.error(`✗ rebuild failed: ${error.message}`);
   process.exitCode = 1;
@@ -1240,7 +1319,7 @@ else if (args.has('--check')) check();
 else if (args.has('--resolve')) resolve(process.argv.slice(2));
 else if (args.has('--record')) record();
 else {
-  console.error('Usage: --self-test | --simulate | --rebuild [--refresh-art | --refresh-art-only <date/slug,...>] | --check | --record');
+  console.error('Usage: --self-test | --simulate | --rebuild [--refresh-art | --refresh-art-only <date/slug,...> | --refresh-satire-only <date/slug,...>] | --check | --record');
   console.error('       --resolve --id <predictionId> --status correct|wrong|void --note "..." [--evidence <url>] [--on YYYY-MM-DD]');
   process.exitCode = 2;
 }

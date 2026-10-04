@@ -67,15 +67,52 @@ const readJson = (f, fallback = null) => {
  * boilerplate dominates fact extraction otherwise.
  */
 export function extractText(html) {
-  return String(html || '')
+  return decodeEntities(String(html || '')
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<(nav|header|footer|aside|form)[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/<[^>]+>/g, ' '))
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+/**
+ * S368 — decode every HTML entity, numeric ones included. The old decoder knew
+ * only six named entities and `&#39;`, so CNBC's `&#x27;` survived into fact
+ * text and the renderer escaped it again ("King&amp;#x27;s Trust" on the page).
+ */
+const NAMED_ENTITIES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', ndash: '–', mdash: '—', hellip: '…' };
+export function decodeEntities(text) {
+  return String(text || '').replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, code) => {
+    if (code[0] === '#') {
+      const n = code[1].toLowerCase() === 'x' ? parseInt(code.slice(2), 16) : parseInt(code.slice(1), 10);
+      return Number.isFinite(n) && n > 0 && n <= 0x10ffff ? String.fromCodePoint(n) : whole;
+    }
+    return NAMED_ENTITIES[code.toLowerCase()] ?? whole;
+  });
+}
+
+/**
+ * S368 — publisher page chrome that sentence splitting glues onto the first
+ * real sentence: "<title> | The Verge Skip to main content The homepage The
+ * Verge The Verge logo." and CNBC's ticker bar "In this article NVDA GOOGL
+ * Follow your favorite stocks CREATE FREE ACCOUNT". Shipped as cited facts on
+ * eight stories between 2026-09-03 and 2026-09-24. Removes the chrome and keeps
+ * any claim that follows it; a "<headline> | <Outlet>" lead becomes the headline.
+ */
+export function stripPageChrome(sentence) {
+  let s = String(sentence || '');
+  s = s.replace(/^.*?\bFollow your favorite stocks\s+CREATE FREE ACCOUNT\s*/i, '');
+  const skip = s.match(/^(.*?)\s*Skip to main content\b(.*)$/i);
+  if (skip) {
+    const rest = skip[2]
+      .replace(/^\s*(Skip to navigation\b)?/i, '')
+      .replace(/^\s*The homepage\b.*?\blogo\.?\s*/i, '')
+      .trim();
+    const headline = skip[1].split(/\s+\|\s+/)[0].trim();
+    s = rest || (headline ? `${headline.replace(/[.!?]*$/, '')}.` : '');
+  }
+  return s.trim();
 }
 
 /** Prefer the publisher's article prose to unrelated page navigation and promos. */
@@ -141,7 +178,7 @@ const OFF_TOPIC_PENALTY = 4;
 export function factCandidates(text, { max = 8, topicTokens = null } = {}) {
   const sentences = String(text || '')
     .split(/(?<=[.!?])\s+(?=[A-Z])/)
-    .map((s) => s.trim())
+    .map((s) => stripPageChrome(decodeEntities(s.trim())))
     .filter((s) => s.length >= 60 && s.length <= 260);
 
   const scored = sentences.map((s) => {
@@ -1480,8 +1517,21 @@ async function selfTest() {
       { published: s357Pub, slugHistory: s357History, fetcher: fuFetch, date: '2026-08-23' },
     )).topic?.slug === 'chip-export-rules');
 
+  /* S368 — numeric entities decode; publisher chrome never reaches a fact. */
+  t('numeric and named entities decode once',
+    decodeEntities('the King&#x27;s Trust &amp; the U.K.&#39;s &rsquo;AI&lsquo; &#8212; ok') === 'the King\'s Trust & the U.K.\'s ’AI‘ — ok');
+  t('unknown entities are left untouched', decodeEntities('&bogus; &#xZZ;') === '&bogus; &#xZZ;');
+  t('CNBC ticker chrome is removed and the claim kept',
+    stripPageChrome('In this article NVDA GOOGL META Follow your favorite stocks CREATE FREE ACCOUNT The U.K.\'s King Charles is set to press leaders.') === 'The U.K.\'s King Charles is set to press leaders.');
+  t('a Verge title-plus-chrome lead becomes the headline',
+    stripPageChrome('Nvidia is buying Hugging Face for almost $13 billion | The Verge Skip to main content The homepage The Verge The Verge logo.') === 'Nvidia is buying Hugging Face for almost $13 billion.');
+  t('Guardian chrome keeps the following sentence',
+    stripPageChrome('Google says X | Google | The Guardian Skip to main content Skip to navigation Google said the hacks mattered.') === 'Google said the hacks mattered.');
+  t('a clean sentence is unchanged', stripPageChrome('Acme said revenue rose 12 percent in 2026.') === 'Acme said revenue rose 12 percent in 2026.');
+  t('extractText decodes hex entities', extractText('<p>King&#x27;s Trust</p>') === 'King\'s Trust');
+
   /* S356 E — publisher feed-summary fallback. */
-  const articleUrl = 'https://acme.example/2026/09/model';
+  const articleUrl ='https://acme.example/2026/09/model';
   const summaryText = 'Acme Labs said on Monday it will open its reasoning model to 5,000 university researchers starting in October. '
     + 'The company confirmed the program includes free compute credits for accepted research teams. '
     + 'The post Acme opens its model appeared first on Acme News.';

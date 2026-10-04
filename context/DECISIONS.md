@@ -2035,3 +2035,7 @@ Founder ruling 2026-10-02 (CANON-028): the site presents an independent, solo-fo
 ## D-S368.6 — The Desk Dispatch is a daily digest, auto-sent after a confirmed test issue
 
 Founder ruling 2026-10-02: subscribers to The Desk Dispatch (Brevo list 3, double opt-in) receive at most one email a day summarising that day's Desk editions, sent automatically. Automatic sending starts only after the founder confirms a test issue sent to their own address. Persona profiles gain taglines, character sheets and a corpus-derived notebook, all clearly labelled as fictional AI correspondents.
+
+## D-S368.7 — Each Desk story has one banner illustration and one satire cartoon
+
+Founder rulings 2026-10-03: every story carries exactly two images. (1) The **banner** is the editorial illustration: painted, person-free, institutions shown through objects, landmarks true to the story. (2) The **satire cartoon** is the comedy and irony layer: an AI-generated, clearly drawn cartoon in the voice of the correspondent who wrote the take, and it replaces the old SVG meme panel as the primary satire image (the SVG panel remains only as a fallback until the cartoon exists). Satire cartoons may caricature **real public figures** (executives, politicians, officials) as obvious, exaggerated, non-photorealistic cartoons, always labelled "Satire · AI-generated cartoon". Never private individuals, never photorealistic, never sexual, violent or degrading. Invented and animated characters are allowed in both images; real people never appear in the banner.

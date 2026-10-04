@@ -28,8 +28,17 @@
  *   node scripts/ingest-news-art.mjs --reviewed 2026-09-12--slug@9f2c1ab4  # hash-bound approval
  *   node scripts/ingest-news-art.mjs --reviewed reviewed.txt   # one id per line, # comments
  *   node scripts/ingest-news-art.mjs --self-test               # temp fixtures only
- * Options: --from <dir> · --story <ids> (filter) · --no-rebuild · --allow-reformat
- *          · --reviewer "<text>"
+ *   node scripts/ingest-news-art.mjs --kind satire --dry-run   # D-S368.7 satire cartoons (<id>/satire.png)
+ *   node scripts/ingest-news-art.mjs --kind satire --reviewed 2026-10-03--slug@9f2c1ab4+none
+ * Options: --kind banner|satire · --from <dir> · --story <ids> (filter) · --no-rebuild
+ *          · --allow-reformat · --reviewer "<text>"
+ *
+ * --kind satire writes data/news-desk/art/<id>--satire.png and records
+ * visual.satireCartoon (artSource, kind, alt, caption, persona, register,
+ * caricature, reviewer, reviewedAt, semanticVerified, sha256, size, entropy,
+ * promptSha256) under the same hash-bound review rule, plus a required
+ * +caricature/+none decision per approval; then runs
+ * `build-news-desk.mjs --rebuild --refresh-satire-only <ids>` for derivatives.
  */
 import fs from 'node:fs';
 import os from 'node:os';
@@ -37,8 +46,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { renderEditorialOverlaySvg, storyMemeOverlayOptions } from './lib/news-memes.mjs';
-import { PERSONAS, validateStoryVisual } from './lib/news-desk.mjs';
+import {
+  renderEditorialOverlaySvg,
+  storyMemeOverlayOptions,
+  SATIRE_CARTOON_ASPECT,
+  SATIRE_CARTOON_ENTROPY_FLOOR,
+  SATIRE_CARTOON_KIND,
+  SATIRE_CARTOON_MAX,
+  SATIRE_CARTOON_MIN,
+  satireCartoonArtSource,
+  satireCartoonBrief,
+} from './lib/news-memes.mjs';
+import { PERSONAS, validateStoryVisual, validateSatireCartoon } from './lib/news-desk.mjs';
+import { renderSatireDerivatives, satireBudgetFailures } from './lib/news-satire-raster.mjs';
 import {
   PANEL_WIDTH,
   PANEL_HEIGHT,
@@ -54,6 +74,7 @@ import {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const DEFAULT_FROM = path.join(ROOT, '.cache', 'desk-art-staging');
 export const DEFAULT_REVIEWER = 'codex image_generation (ChatGPT plan) + operator visual review';
+export const DEFAULT_SATIRE_REVIEWER = 'codex image_generation (ChatGPT plan) + operator satire-cartoon review';
 export const NORMALIZED_MAX = Object.freeze({ width: 1600, height: 900 });
 const ID_RE = /^(\d{4}-\d{2}-\d{2})--([a-z0-9][a-z0-9-]*)$/;
 
@@ -83,13 +104,26 @@ const HASH_RE = /^[a-f0-9]{8,64}$/;
  *     `generated` row for the id in results.ndjson). After a re-roll the plain
  *     form is refused and the @hash form is required.
  * Returns Map<id, hashPrefix|null>.
+ *
+ * D-S368.7 satire cartoons add a REVIEW DECISION suffix: `<id>[@<hash>]+caricature`
+ * (the cartoon shows a real public figure) or `+none`. It is recorded on the
+ * returned map as `.markers` (Map<id, 'caricature'|'none'>); --kind satire
+ * refuses an approval without one, so the caricature label is never a default.
  */
+export const REVIEW_MARKERS = Object.freeze(['caricature', 'none']);
 export function parseReviewed(value, { exists = fs.existsSync, read = (p) => fs.readFileSync(p, 'utf8') } = {}) {
   if (value == null || value === '') return null;
   const text = exists(value) ? read(value) : String(value);
   const entries = text.split(/\r?\n/).map((line) => line.replace(/#.*$/, '')).join(',').split(',').map((s) => s.trim()).filter(Boolean);
   const out = new Map();
-  for (const entry of entries) {
+  out.markers = new Map();
+  for (const rawEntry of entries) {
+    const plus = rawEntry.indexOf('+');
+    const entry = plus === -1 ? rawEntry : rawEntry.slice(0, plus).trim();
+    const marker = plus === -1 ? null : rawEntry.slice(plus + 1).trim().toLowerCase();
+    if (marker !== null && !REVIEW_MARKERS.includes(marker)) {
+      throw new Error(`"${rawEntry}" has an unknown review marker — expected +caricature or +none`);
+    }
     const at = entry.indexOf('@');
     const rawId = at === -1 ? entry : entry.slice(0, at);
     const hash = at === -1 ? null : entry.slice(at + 1).trim().toLowerCase();
@@ -97,6 +131,7 @@ export function parseReviewed(value, { exists = fs.existsSync, read = (p) => fs.
       throw new Error(`"${entry}" is not a valid approval — expected <id> or <id>@<sha256 prefix of 8–64 hex chars>`);
     }
     out.set(normalizeId(rawId), hash);
+    if (marker) out.markers.set(normalizeId(rawId), marker);
   }
   return out;
 }
@@ -105,17 +140,26 @@ export function parseReviewed(value, { exists = fs.existsSync, read = (p) => fs.
  * Was this story's staged image re-generated after an earlier review? Structural
  * evidence only — never a timestamp guess.
  */
-export function detectReroll({ story = null, from = null, id = '', stagedSha = '', normalizedSha = '' } = {}) {
-  const receipt = story?.visual?.pixelInspection;
-  if (receipt && receipt.reviewed === true && receipt.kind === SOURCE_RASTER_KIND
-    && /^[a-f0-9]{64}$/.test(String(receipt.sha256 || ''))
-    && receipt.sha256 !== normalizedSha && receipt.sha256 !== stagedSha) {
-    return { rerolled: true, reason: 'this story already carries a reviewed source-raster receipt for different pixels' };
+export function detectReroll({ story = null, from = null, id = '', stagedSha = '', normalizedSha = '', kind = 'banner' } = {}) {
+  const satire = kind === 'satire';
+  if (satire) {
+    const prior = story?.visual?.satireCartoon;
+    if (prior && /^[a-f0-9]{64}$/.test(String(prior.sha256 || '')) && prior.sha256 !== normalizedSha && prior.sha256 !== stagedSha) {
+      return { rerolled: true, reason: 'this story already carries a reviewed satire cartoon for different pixels' };
+    }
+  } else {
+    const receipt = story?.visual?.pixelInspection;
+    if (receipt && receipt.reviewed === true && receipt.kind === SOURCE_RASTER_KIND
+      && /^[a-f0-9]{64}$/.test(String(receipt.sha256 || ''))
+      && receipt.sha256 !== normalizedSha && receipt.sha256 !== stagedSha) {
+      return { rerolled: true, reason: 'this story already carries a reviewed source-raster receipt for different pixels' };
+    }
   }
   if (from && id) {
     const itemDir = path.join(from, id);
     if (fs.existsSync(itemDir)) {
-      const discarded = fs.readdirSync(itemDir).filter((name) => /^art\.invalid-.*\.png$/i.test(name));
+      const pattern = satire ? /^satire\.invalid-.*\.png$/i : /^art\.invalid-.*\.png$/i;
+      const discarded = fs.readdirSync(itemDir).filter((name) => pattern.test(name));
       if (discarded.length) return { rerolled: true, reason: `${discarded.length} discarded generation(s) staged alongside this image` };
     }
     const results = path.join(from, 'results.ndjson');
@@ -125,7 +169,8 @@ export function detectReroll({ story = null, from = null, id = '', stagedSha = '
         if (!line.trim()) continue;
         let row = null;
         try { row = JSON.parse(line); } catch { continue; }
-        if (row && row.id === id && row.status === 'generated') generated += 1;
+        // Satire rows carry kind:"satire"; banner rows predate the field.
+        if (row && row.id === id && row.status === 'generated' && (row.kind === 'satire') === satire) generated += 1;
       }
       if (generated > 1) return { rerolled: true, reason: `${generated} generations recorded for this id in results.ndjson` };
     }
@@ -134,7 +179,7 @@ export function detectReroll({ story = null, from = null, id = '', stagedSha = '
 }
 
 export function parseArgs(argv) {
-  const opts = { from: DEFAULT_FROM, reviewed: null, only: null, dryRun: false, selfTest: false, rebuild: true, allowReformat: false, reviewer: DEFAULT_REVIEWER };
+  const opts = { kind: 'banner', from: DEFAULT_FROM, reviewed: null, only: null, dryRun: false, selfTest: false, rebuild: true, allowReformat: false, reviewer: null };
   for (let i = 0; i < argv.length; i += 1) {
     const flag = argv[i];
     const next = () => {
@@ -143,7 +188,8 @@ export function parseArgs(argv) {
       i += 1;
       return value;
     };
-    if (flag === '--from') opts.from = path.resolve(next());
+    if (flag === '--kind') opts.kind = next();
+    else if (flag === '--from') opts.from = path.resolve(next());
     else if (flag === '--reviewed') opts.reviewed = parseReviewed(next());
     else if (flag === '--story') opts.only = new Set(next().split(',').map((s) => s.trim()).filter(Boolean).map(normalizeId));
     else if (flag === '--dry-run') opts.dryRun = true;
@@ -153,6 +199,8 @@ export function parseArgs(argv) {
     else if (flag === '--reviewer') opts.reviewer = next();
     else throw new Error(`unknown argument ${flag}`);
   }
+  if (!['banner', 'satire'].includes(opts.kind)) throw new Error('--kind must be banner or satire');
+  if (opts.reviewer == null) opts.reviewer = opts.kind === 'satire' ? DEFAULT_SATIRE_REVIEWER : DEFAULT_REVIEWER;
   return opts;
 }
 
@@ -332,12 +380,203 @@ export function rebuildCommand(ids, { root = ROOT } = {}) {
   };
 }
 
-function runRebuild(ids, { root = ROOT, run = spawnSync } = {}) {
-  const { cmd, args, options } = rebuildCommand(ids, { root });
+function runRebuild(ids, { root = ROOT, run = spawnSync, kind = 'banner' } = {}) {
+  const { cmd, args, options } = kind === 'satire' ? satireRebuildCommand(ids, { root }) : rebuildCommand(ids, { root });
   return run(cmd, args, options);
 }
 
+/* ── D-S368.7 satire cartoons ─────────────────────────────────────────── */
+
+/** Normalize a cartoon: fit inside 1200x1200 (never enlarge), PNG level 9, metadata stripped. Memoized on content. */
+const normalizedSatireCache = new Map();
+export async function normalizeSatireRaster(source, sourceSha) {
+  const hit = normalizedSatireCache.get(sourceSha);
+  if (hit) return hit;
+  const buffer = await sharp(source)
+    .resize({ width: SATIRE_CARTOON_MAX.width, height: SATIRE_CARTOON_MAX.height, fit: 'inside', withoutEnlargement: true })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+  normalizedSatireCache.set(sourceSha, buffer);
+  return buffer;
+}
+
+/**
+ * Validate + normalize every staged <id>/satire.png. Reads only. The same
+ * review rules as the banner (plain id only without a detectable re-roll,
+ * otherwise <id>@<hash>), plus one more: every approval must declare
+ * +caricature or +none, because whether a real public figure is drawn is a
+ * judgement only the reviewer can make, and it decides the page's label.
+ */
+export async function planSatireIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null } = {}) {
+  const plan = { accepted: [], skipped: [], rejected: [] };
+  if (!fs.existsSync(from)) return plan;
+  const existing = await hashIndex(path.join(root, 'data', 'news-desk', 'art'));
+  const batchHashes = new Map();
+  const dirs = fs.readdirSync(from, { withFileTypes: true }).filter((d) => d.isDirectory() && ID_RE.test(d.name)).map((d) => d.name).sort();
+  for (const id of dirs) {
+    if (only && !only.has(id)) continue;
+    const source = path.join(from, id, 'satire.png');
+    if (!fs.existsSync(source)) { plan.skipped.push({ id, reason: 'no satire.png' }); continue; }
+    const [, date, slug] = ID_RE.exec(id);
+    const reject = (reason) => plan.rejected.push({ id, reason });
+    const dayFile = path.join(root, 'data', 'news-desk', 'days', `${date}.json`);
+    const day = fs.existsSync(dayFile) ? JSON.parse(fs.readFileSync(dayFile, 'utf8')) : null;
+    const story = day?.stories?.find((s) => s.slug === slug);
+    if (!day || day.simulated !== false || !story) { reject('no committed public story with this id'); continue; }
+    const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
+    const brief = satireCartoonBrief({ story, persona });
+    if (!brief) { reject('story has no meme line with a known persona; a satire cartoon credits that voice'); continue; }
+    // The alt text is derived from the generation brief. If the story's joke
+    // changed after the cartoon was generated, the picture no longer matches.
+    const metaFile = path.join(from, id, 'satire-meta.json');
+    const meta = fs.existsSync(metaFile) ? (() => { try { return JSON.parse(fs.readFileSync(metaFile, 'utf8')); } catch { return null; } })() : null;
+    if (meta?.alt && meta.alt !== brief.alt) { reject('the story\'s satire fields or meme line changed after this cartoon was generated; re-roll it with --kind satire --story <id> --force'); continue; }
+    const m = await measureArt(source);
+    if (m.format !== 'png') { reject(`not a PNG (decoded as ${m.format})`); continue; }
+    if (!(m.width >= SATIRE_CARTOON_MIN.width && m.height >= SATIRE_CARTOON_MIN.height)) { reject(`too small ${m.width}x${m.height} (need ≥${SATIRE_CARTOON_MIN.width}x${SATIRE_CARTOON_MIN.height})`); continue; }
+    const aspect = m.width / m.height;
+    if (aspect < SATIRE_CARTOON_ASPECT.min || aspect > SATIRE_CARTOON_ASPECT.max) { reject(`aspect ${aspect.toFixed(2)} is not square (${SATIRE_CARTOON_ASPECT.min}–${SATIRE_CARTOON_ASPECT.max})`); continue; }
+    if (!(m.entropy >= SATIRE_CARTOON_ENTROPY_FLOOR)) { reject(`entropy ${m.entropy} below cartoon floor ${SATIRE_CARTOON_ENTROPY_FLOOR} (blank or near-blank)`); continue; }
+    if (batchHashes.has(m.sha256)) { reject(`identical pixels to ${batchHashes.get(m.sha256)} in this batch`); continue; }
+    batchHashes.set(m.sha256, id);
+    const buffer = await normalizeSatireRaster(source, m.sha256);
+    const n = await measureArt(buffer);
+    if (story.visual?.satireCartoon?.sha256 === n.sha256) { plan.skipped.push({ id, reason: 'already ingested (satire cartoon receipt matches)' }); continue; }
+    const duplicateOf = existing.get(m.sha256) || existing.get(n.sha256);
+    if (duplicateOf) { reject(`identical pixels to existing Desk art ${duplicateOf}`); continue; }
+    const derivatives = await renderSatireDerivatives(buffer);
+    const failures = satireBudgetFailures(derivatives);
+    if (failures.length) { reject(`satire budget preflight failed: ${failures.join('; ')}`); continue; }
+    const budget = Object.fromEntries(Object.entries(derivatives).map(([suffix, buf]) => [suffix, buf.length]));
+    const entry = { id, date, slug, dayFile, source, buffer, measured: n, original: { width: m.width, height: m.height, sha256: m.sha256 }, budget, brief, promptSha256: meta?.promptSha256 || null };
+    if (reviewed) {
+      if (!reviewed.has(id)) { plan.skipped.push({ id, reason: 'awaiting operator satire review (not listed in --reviewed)', validated: true }); continue; }
+      const marker = reviewed.markers?.get(id) || null;
+      const shortSha = n.sha256.slice(0, 16);
+      if (!marker) { reject(`declare the review decision: approve as ${id}@${shortSha}+caricature (shows a real public figure) or ${id}@${shortSha}+none`); continue; }
+      const approvedHash = reviewed.get(id);
+      if (approvedHash) {
+        if (!(n.sha256.startsWith(approvedHash) || m.sha256.startsWith(approvedHash))) {
+          reject(`staged cartoon does not match the approved hash ${approvedHash} (staged normalizes to ${shortSha}…): look at the cartoon you actually have, then approve it as ${id}@${shortSha}+${marker}`);
+          continue;
+        }
+        entry.approvedHash = approvedHash;
+      } else {
+        const reroll = detectReroll({ story, from, id, stagedSha: m.sha256, normalizedSha: n.sha256, kind: 'satire' });
+        if (reroll.rerolled) { reject(`a plain-id approval is not accepted after a re-roll (${reroll.reason}); re-review the current cartoon and approve it as ${id}@${shortSha}+${marker}`); continue; }
+      }
+      entry.caricature = marker === 'caricature';
+    }
+    plan.accepted.push(entry);
+  }
+  return plan;
+}
+
+/** The story's satire-cartoon record (data contract, D-S368.7). */
+export function satireCartoonRecord({ date, slug, measured, brief, caricature, reviewer = DEFAULT_SATIRE_REVIEWER, reviewedAt = new Date().toISOString().slice(0, 10), promptSha256 = null }) {
+  return {
+    artSource: satireCartoonArtSource(date, slug),
+    kind: SATIRE_CARTOON_KIND,
+    alt: brief.alt,
+    caption: brief.caption,
+    persona: brief.personaId,
+    register: brief.register,
+    caricature: caricature === true,
+    reviewer,
+    reviewedAt,
+    semanticVerified: false,
+    sha256: measured.sha256,
+    width: measured.width,
+    height: measured.height,
+    bytes: measured.bytes,
+    entropy: measured.entropy,
+    ...(promptSha256 ? { promptSha256 } : {}),
+  };
+}
+
+/** Write accepted cartoons + records. Same canonical-JSON and contract-regression refusals as applyIngest. */
+export async function applySatireIngest(plan, { root = ROOT, allowReformat = false, reviewer = DEFAULT_SATIRE_REVIEWER, reviewedAt } = {}) {
+  const written = [];
+  const refused = [];
+  const byDay = new Map();
+  for (const entry of plan.accepted) byDay.set(entry.dayFile, [...(byDay.get(entry.dayFile) || []), entry]);
+  for (const [dayFile, entries] of byDay) {
+    const raw = fs.readFileSync(dayFile, 'utf8');
+    const day = JSON.parse(raw);
+    if (!allowReformat && `${JSON.stringify(day, null, 2)}\n` !== raw) {
+      for (const entry of entries) refused.push({ id: entry.id, reason: `${path.basename(dayFile)} is not canonical 2-space JSON; rerun with --allow-reformat after checking the diff` });
+      continue;
+    }
+    const ok = [];
+    for (const entry of entries) {
+      if (typeof entry.caricature !== 'boolean') { refused.push({ id: entry.id, reason: 'no +caricature/+none review decision recorded' }); continue; }
+      const story = day.stories.find((s) => s.slug === entry.slug);
+      const record = satireCartoonRecord({ date: day.date, slug: entry.slug, measured: entry.measured, brief: entry.brief, caricature: entry.caricature, reviewer, reviewedAt, promptSha256: entry.promptSha256 });
+      const errors = validateSatireCartoon(record, { story, date: day.date });
+      if (errors.length) { refused.push({ id: entry.id, reason: `record fails the satire-cartoon contract: ${errors.join('; ')}` }); continue; }
+      story.visual.satireCartoon = record;
+      ok.push(entry);
+    }
+    if (!ok.length) continue;
+    const artRoot = path.resolve(root, 'data', 'news-desk', 'art') + path.sep;
+    for (const entry of ok) {
+      const story = day.stories.find((s) => s.slug === entry.slug);
+      const target = path.resolve(root, story.visual.satireCartoon.artSource);
+      if (!target.startsWith(artRoot)) throw new Error(`${entry.id}: satire artSource escapes data/news-desk/art/`);
+      fs.writeFileSync(target, entry.buffer);
+      written.push(entry.id);
+    }
+    fs.writeFileSync(dayFile, `${JSON.stringify(day, null, 2)}\n`);
+  }
+  return { written, refused };
+}
+
+export function satireRebuildCommand(ids, { root = ROOT } = {}) {
+  return {
+    cmd: process.execPath,
+    args: [path.join(root, 'scripts', 'build-news-desk.mjs'), '--rebuild', '--refresh-satire-only', ids.map((id) => id.replace('--', '/')).join(',')],
+    options: { cwd: root, stdio: 'inherit', windowsHide: true, shell: false },
+  };
+}
+
+async function mainSatire(opts) {
+  if (!opts.dryRun && !opts.reviewed) {
+    console.error('ingest-news-art --kind satire: refusing — --reviewed <id@hash+caricature|none,...> is required. Look at each staged satire.png first.');
+    return 2;
+  }
+  const plan = await planSatireIngest({ from: opts.from, reviewed: opts.dryRun ? null : opts.reviewed, only: opts.only });
+  const mark = opts.dryRun ? '(dry-run) ' : '';
+  for (const e of plan.accepted) {
+    const listed = opts.reviewed?.has(e.id) ? `reviewed${typeof e.caricature === 'boolean' ? (e.caricature ? ' +caricature' : ' +none') : ''}` : 'NOT YET REVIEWED';
+    console.log(`${mark}✓ valid satire ${e.id} ${e.original.width}x${e.original.height} → ${e.measured.width}x${e.measured.height} sha=${e.measured.sha256.slice(0, 16)} entropy=${e.measured.entropy} ${e.brief.personaName}/${e.brief.register} derivatives=${JSON.stringify(e.budget)} [${listed}]`);
+  }
+  for (const s of plan.skipped) console.log(`${mark}· skip ${s.id}: ${s.reason}`);
+  for (const r of plan.rejected) console.log(`${mark}✗ reject ${r.id}: ${r.reason}`);
+  if (opts.dryRun) return plan.rejected.length ? 1 : 0;
+  if (!plan.accepted.length) {
+    console.log('ingest-news-art --kind satire: nothing to ingest.');
+    return plan.rejected.length ? 1 : 0;
+  }
+  const { written, refused } = await applySatireIngest(plan, { allowReformat: opts.allowReformat, reviewer: opts.reviewer });
+  for (const r of refused) console.error(`✗ refused ${r.id}: ${r.reason}`);
+  if (!written.length) return 1;
+  console.log(`\nwrote ${written.length} satire cartoon(s) + records: ${written.join(', ')}`);
+  const ids = written.map((id) => id.replace('--', '/')).join(',');
+  if (opts.rebuild) {
+    const result = runRebuild(written, { kind: 'satire' });
+    if (result.status !== 0) {
+      console.error(`✗ scoped rebuild failed — cartoons + records are written; fix the error and rerun:\n  node scripts/build-news-desk.mjs --rebuild --refresh-satire-only ${ids}`);
+      return 1;
+    }
+  } else {
+    console.log(`next: node scripts/build-news-desk.mjs --rebuild --refresh-satire-only ${ids}`);
+  }
+  console.log('\nThen (see docs/DESK_ART_WORKER.md): regenerate news pages, do the CANON-053 rendered-pixel review, run build:check, commit.');
+  return refused.length ? 1 : 0;
+}
+
 async function main(opts) {
+  if (opts.kind === 'satire') return mainSatire(opts);
   if (!opts.dryRun && !opts.reviewed) {
     console.error('ingest-news-art: refusing — --reviewed <ids|file> is required. Look at each staged art.png first, then list the ids you accept.');
     return 2;
@@ -517,6 +756,80 @@ async function selfTest() {
     const unreviewedPlan = await planIngest({ root, from, reviewed: new Set([`${date}--unreviewed`]) });
     const reformat = await applyIngest(unreviewedPlan, { root });
     t('non-canonical day JSON is refused without --allow-reformat', reformat.written.length === 0 && /--allow-reformat/.test(reformat.refused[0]?.reason || ''));
+
+    /* ── D-S368.7 satire cartoons ─────────────────────────────────────── */
+    fs.writeFileSync(dayFile, `${JSON.stringify(JSON.parse(fs.readFileSync(dayFile, 'utf8')), null, 2)}\n`);
+    const markers = parseReviewed('2026-09-12--good@abcd1234+caricature, 2026-09-12/unreviewed+none, 2026-09-12--flat', { exists: () => false });
+    t('parseReviewed records +caricature/+none review decisions and keeps the hash',
+      markers.get('2026-09-12--good') === 'abcd1234' && markers.markers.get('2026-09-12--good') === 'caricature'
+      && markers.markers.get('2026-09-12--unreviewed') === 'none' && !markers.markers.has('2026-09-12--flat'));
+    let badMarker = false;
+    try { parseReviewed('2026-09-12--good+maybe', { exists: () => false }); } catch { badMarker = true; }
+    t('parseReviewed rejects an unknown review marker', badMarker);
+    const stageSatire = async (slug, buffer, meta = null) => {
+      const dir = path.join(from, `${date}--${slug}`);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'satire.png'), buffer);
+      if (meta) fs.writeFileSync(path.join(dir, 'satire-meta.json'), JSON.stringify(meta));
+    };
+    const satirePersona = PERSONAS[0];
+    const briefFor = (slug) => satireCartoonBrief({ story: JSON.parse(fs.readFileSync(dayFile, 'utf8')).stories.find((s) => s.slug === slug), persona: satirePersona });
+    await stageSatire('good', await renderSyntheticRasterFixture('satire-good', 1024, 1024), { alt: briefFor('good').alt, promptSha256: 'f'.repeat(64) });
+    await stageSatire('unreviewed', await renderSyntheticRasterFixture('satire-unreviewed', 1024, 1024));
+    await stageSatire('flat', await renderSyntheticRasterFixture('satire-wide', 1500, 1100));
+    await stageSatire('small', await renderSyntheticRasterFixture('satire-stale', 1024, 1024), { alt: 'AI-generated satirical cartoon drawn from an older version of this joke that no longer matches.' });
+    const artBeforeSatire = fs.readFileSync(path.join(artDir, `${date}--good.png`));
+    const satDry = await planSatireIngest({ root, from, reviewed: null });
+    t('satire dry-run validates staged cartoons and writes nothing',
+      satDry.accepted.some((e) => e.id === `${date}--good`) && !fs.existsSync(path.join(artDir, `${date}--good--satire.png`)));
+    t('satire derivatives pass the budget preflight (png/webp/avif/640 webp)',
+      ['.png', '.webp', '.avif', '--640.webp'].every((k) => satDry.accepted.find((e) => e.id === `${date}--good`)?.budget[k] > 0));
+    const satReason = (plan, slug) => plan.rejected.find((r) => r.id === `${date}--${slug}`)?.reason || '';
+    t('a non-square cartoon is rejected', /not square/.test(satReason(satDry, 'flat')));
+    t('a cartoon generated from an older joke is rejected (derived alt mismatch)', /changed after this cartoon was generated/.test(satReason(satDry, 'small')));
+    const noMarker = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good`, { exists: () => false }) });
+    t('a satire approval without +caricature/+none is refused with the exact approval to use',
+      noMarker.accepted.length === 0 && /\+caricature \(shows a real public figure\) or .*\+none/.test(satReason(noMarker, 'good')));
+    const satPlan = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none,${date}--unreviewed+caricature`, { exists: () => false }) });
+    t('reviewed cartoons with a decision are accepted', satPlan.accepted.map((e) => e.id).sort().join(',') === `${date}--good,${date}--unreviewed`);
+    const satApplied = await applySatireIngest(satPlan, { root, reviewedAt: '2026-10-03' });
+    const satDay = JSON.parse(fs.readFileSync(dayFile, 'utf8'));
+    const goodCartoon = satDay.stories.find((s) => s.slug === 'good').visual.satireCartoon;
+    const onDiskSatire = await measureArt(path.join(artDir, `${date}--good--satire.png`));
+    t('satire ingest writes data/news-desk/art/<id>--satire.png and binds its sha256',
+      satApplied.written.length === 2 && satApplied.refused.length === 0 && goodCartoon.sha256 === onDiskSatire.sha256
+      && goodCartoon.artSource === `data/news-desk/art/${date}--good--satire.png`);
+    t('satire record: derived alt, meme-line caption, persona + register, reviewer, kind, semanticVerified false, prompt hash',
+      goodCartoon.alt === briefFor('good').alt && goodCartoon.caption === 'The cabinet grows; the harbor stays empty.'
+      && goodCartoon.persona === satirePersona.id && goodCartoon.register === satirePersona.memeStyle && goodCartoon.reviewer === DEFAULT_SATIRE_REVIEWER
+      && goodCartoon.kind === 'satire-cartoon' && goodCartoon.semanticVerified === false && goodCartoon.promptSha256 === 'f'.repeat(64) && goodCartoon.reviewedAt === '2026-10-03');
+    t('the caricature decision is recorded exactly (+none → false, +caricature → true)',
+      goodCartoon.caricature === false && satDay.stories.find((s) => s.slug === 'unreviewed').visual.satireCartoon.caricature === true);
+    t('the satire record passes the shared contract validator', validateSatireCartoon(goodCartoon, { story: satDay.stories.find((s) => s.slug === 'good'), date }).length === 0);
+    t('satire ingest leaves the banner raster and its receipt untouched',
+      Buffer.compare(fs.readFileSync(path.join(artDir, `${date}--good.png`)), artBeforeSatire) === 0
+      && satDay.stories.find((s) => s.slug === 'good').visual.pixelInspection.sha256 === story.visual.pixelInspection.sha256);
+    t('satire day JSON stays canonical 2-space', `${JSON.stringify(satDay, null, 2)}\n` === fs.readFileSync(dayFile, 'utf8'));
+    const satAgain = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
+    t('satire re-run is idempotent (already ingested)', satAgain.skipped.some((s) => s.id === `${date}--good` && /already ingested/.test(s.reason)));
+    // A re-rolled cartoon (discarded satire.invalid-*.png) needs the @hash form.
+    await stageSatire('good', await renderSyntheticRasterFixture('satire-good-v2', 1024, 1024));
+    fs.writeFileSync(path.join(from, `${date}--good`, 'satire.invalid-1700000000000.png'), existingReal);
+    const satReroll = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
+    t('a plain-id satire approval is refused after a re-roll', /plain-id approval is not accepted after a re-roll/.test(satReason(satReroll, 'good')));
+    // Banner and satire re-roll evidence never cross-contaminate.
+    fs.writeFileSync(path.join(from, 'results.ndjson'), `${JSON.stringify({ id: `${date}--unreviewed`, kind: 'satire', status: 'generated' })}\n${JSON.stringify({ id: `${date}--unreviewed`, kind: 'satire', status: 'generated' })}\n`);
+    t('satire generation rows do not count as banner re-rolls', detectReroll({ from, id: `${date}--unreviewed` }).rerolled === false
+      && detectReroll({ from, id: `${date}--unreviewed`, kind: 'satire' }).rerolled === true);
+    fs.rmSync(path.join(from, 'results.ndjson'));
+    const satCmd = satireRebuildCommand([`${date}--good`], { root });
+    t('satire rebuild = build-news-desk --rebuild --refresh-satire-only, hidden window, no shell',
+      satCmd.args.slice(1).join(' ') === `--rebuild --refresh-satire-only ${date}/good` && satCmd.options.windowsHide === true && satCmd.options.shell === false);
+    t('parseArgs: --kind satire switches the default reviewer; a bad kind throws', (() => {
+      let bad = false;
+      try { parseArgs(['--kind', 'meme']); } catch { bad = true; }
+      return parseArgs(['--kind', 'satire']).reviewer === DEFAULT_SATIRE_REVIEWER && parseArgs([]).reviewer === DEFAULT_REVIEWER && parseArgs([]).kind === 'banner' && bad;
+    })());
 
     const command = rebuildCommand([`${date}--good`, '2026-09-11--other'], { root });
     t('scoped rebuild = build-news-desk --rebuild --refresh-art-only date/slug list, hidden window, no shell',

@@ -29,6 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderNewsCardSvg, PERSONAS } from './lib/news-desk.mjs';
+import { SATIRE_CARTOON_CARICATURE_NOTE, SATIRE_CARTOON_LABEL } from './lib/news-memes.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -60,6 +61,18 @@ export function evaluatePage(html, label) {
   const bylines = html.match(/class="desk-stance-name"[\s\S]{0,400}?<\/div>/g) || [];
   for (const b of bylines) {
     if (!/AI persona/i.test(b)) findings.push(`${label}: a persona byline omits "AI persona"`);
+  }
+  // D-S368.7: a satire cartoon must say what it is wherever it renders, and a
+  // caricature of a real public figure must say that too. The figure is
+  // matched by its class, so a cartoon rendered without the label is caught
+  // rather than skipped.
+  const cartoons = html.match(/<figure class="desk-satire"[\s\S]*?<\/figure>/g) || [];
+  for (const figure of cartoons) {
+    if (!figure.includes(SATIRE_CARTOON_LABEL)) findings.push(`${label}: a satire cartoon renders without the "${SATIRE_CARTOON_LABEL}" label`);
+    if (!/AI persona/i.test(figure)) findings.push(`${label}: a satire cartoon credits its correspondent without "AI persona"`);
+    if (/data-satire-cartoon="caricature"/.test(figure) && !figure.includes(SATIRE_CARTOON_CARICATURE_NOTE)) {
+      findings.push(`${label}: a caricature satire cartoon omits the real-public-figure caricature note`);
+    }
   }
   // schema.org author must never be a Person.
   if (/"@type"\s*:\s*"NewsArticle"/.test(html)) {
@@ -186,6 +199,14 @@ function selfTest() {
   t('a NewsArticle without creditText fails', evaluatePage(
     goodPage.replace('"creditText":"x"', ''), 'p',
   ).some((f) => /creditText/.test(f)));
+
+  const cartoon = (inner, kind = 'cartoon') => `${goodPage}<figure class="desk-satire" id="satire-cartoon" data-satire-cartoon="${kind}">${inner}</figure>`;
+  const labelled = `<p>${SATIRE_CARTOON_LABEL}</p><img alt="x"><figcaption>VERA <span>AI persona</span></figcaption>`;
+  t('a labelled satire cartoon passes', evaluatePage(cartoon(labelled), 'p').length === 0);
+  t('a satire cartoon without its label fails', evaluatePage(cartoon(labelled.replace(SATIRE_CARTOON_LABEL, 'Cartoon')), 'p').some((f) => /satire cartoon renders without/.test(f)));
+  t('a satire cartoon whose correspondent is not tagged AI persona fails', evaluatePage(cartoon(labelled.replace('AI persona', 'columnist')), 'p').some((f) => /AI persona/.test(f)));
+  t('a caricature cartoon without the public-figure note fails', evaluatePage(cartoon(labelled, 'caricature'), 'p').some((f) => /caricature note/.test(f)));
+  t('a caricature cartoon with the note passes', evaluatePage(cartoon(`${labelled}<p>${SATIRE_CARTOON_CARICATURE_NOTE}</p>`, 'caricature'), 'p').length === 0);
 
   const goodFeed = {
     authors: [{ name: 'The Desk — AI personas (no human author)' }],

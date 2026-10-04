@@ -32,6 +32,7 @@ import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
 import { staticDeskEvidence, renderStaticDeskEvidence } from './lib/news-freshness.mjs';
 import { ORG_REF, WEBSITE_REF } from './lib/org-entity.mjs';
 import { deskDispatchCta, DESK_DISPATCH_SCRIPT } from './lib/desk-dispatch-cta.mjs';
+import { SATIRE_CARTOON_CARICATURE_NOTE, SATIRE_CARTOON_LABEL, SATIRE_CARTOON_SIZE, satireCartoonAssetBase } from './lib/news-memes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -361,6 +362,33 @@ function memeFigure(story, day) {
     <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
+  </figure>`;
+}
+
+/**
+ * D-S368.7 — the story's satire cartoon: the primary satire image, drawn in
+ * the register of the correspondent whose line it illustrates. The caption is
+ * HTML (never pixels), the correspondent is credited as an AI persona, and the
+ * figure always says what it is: "Satire · AI-generated cartoon", plus a
+ * caricature note when the reviewer recorded that a real public figure is
+ * drawn. Lazy-loaded below the fold with width/height reserved (no layout
+ * shift). A story without a cartoon renders nothing here: its banner panel —
+ * the illustration above, captioned with the same line — stays the fallback.
+ */
+function satireFigure(story, day) {
+  const cartoon = story.visual?.satireCartoon;
+  const persona = personaById(cartoon?.persona);
+  if (!cartoon || !persona || !story.memeLine?.text) return '';
+  const base = `/assets/og/news/${satireCartoonAssetBase(day.date, story.slug)}`;
+  const { width, height } = SATIRE_CARTOON_SIZE;
+  const note = cartoon.caricature === true
+    ? `<p class="desk-satire-note">${escapeHtml(SATIRE_CARTOON_CARICATURE_NOTE)}</p>`
+    : '';
+  return `<figure class="desk-satire" id="satire-cartoon" data-persona="${escapeHtml(persona.id)}" data-satire-cartoon="${cartoon.caricature === true ? 'caricature' : 'cartoon'}" aria-labelledby="desk-satire-label">
+    <p class="desk-satire-label" id="desk-satire-label">${escapeHtml(SATIRE_CARTOON_LABEL)}${cartoon.caricature === true ? ' · caricature' : ''}</p>
+    <picture class="desk-satire-frame"><source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp"><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
+    <img src="${base}.png" width="${width}" height="${height}" loading="lazy" decoding="async" alt="${escapeHtml(cartoon.alt)}"></picture>
+    <figcaption><p class="desk-satire-caption">“${escapeHtml(story.memeLine.text)}”</p><p class="desk-satire-byline">Drawn in the style of ${personaNameLink(persona)} <span class="desk-ai-tag">AI persona</span> · AI-generated satire, not a photograph or a real event</p>${note}</figcaption>
   </figure>`;
 }
 
@@ -875,7 +903,7 @@ ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</s
   <p class="desk-critique-link"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
   </section>
   ${memeFigure(story, day)}
-  ${panelReactions(story, day)}
+  ${panelReactions(story, day)}${/* no line at all without a cartoon: pages stay byte-identical */ satireFigure(story, day) ? `\n  ${satireFigure(story, day)}` : ''}
   <section class="desk-section" id="positions" aria-labelledby="desk-positions-title">
   <h2 class="desk-h2" id="desk-positions-title">Where they are coming from</h2>
   ${pulseBar(story, day, heat, stats)}

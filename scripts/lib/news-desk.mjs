@@ -27,7 +27,7 @@
 
 import crypto from 'node:crypto';
 import { escapeXml, wrapTitle } from './og-template.mjs';
-import { motifKeys } from './news-memes.mjs';
+import { motifKeys, SATIRE_CARTOON_KIND, SATIRE_CARTOON_STYLES, satireCartoonArtSource } from './news-memes.mjs';
 
 /* ── The cast ──────────────────────────────────────────────────────────── */
 
@@ -1666,6 +1666,39 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
     if (String(satire[field] || '').length < 30) errors.push(`${at}: satire.${field} must be concrete (≥30 chars)`);
   }
   if (satire.institutional !== true) errors.push(`${at}: satire must explicitly target an institution/system, never an individual`);
+  if (visual?.satireCartoon !== undefined) errors.push(...validateSatireCartoon(visual.satireCartoon, { story, date }));
+  return errors;
+}
+
+/**
+ * D-S368.7 — the story's second image: an AI-generated satire cartoon in the
+ * voice of the correspondent whose line it illustrates. Optional (a story
+ * without one renders the banner panel only), but when present it must bind a
+ * reviewed raster, credit the right voice, and carry its own disclosure fields.
+ * It lives at `visual.satireCartoon` because `visual.satire` is already the
+ * story's written joke (target/setup/payoff), which the cartoon is drawn from.
+ */
+export function validateSatireCartoon(cartoon, { story, date } = {}) {
+  const errors = [];
+  const at = `satire cartoon for ${story?.slug || '?'}`;
+  const expected = satireCartoonArtSource(date, story?.slug);
+  if (cartoon?.artSource !== expected) errors.push(`${at}: artSource must be the article-bound path ${expected}`);
+  if (cartoon?.kind !== SATIRE_CARTOON_KIND) errors.push(`${at}: kind must be "${SATIRE_CARTOON_KIND}"`);
+  if (!/^[a-f0-9]{64}$/.test(String(cartoon?.sha256 || ''))) errors.push(`${at}: sha256 must bind the reviewed cartoon raster`);
+  if (!String(cartoon?.reviewer || '').trim()) errors.push(`${at}: reviewer is required`);
+  if (cartoon?.semanticVerified !== false) errors.push(`${at}: semanticVerified must remain false unless an approved vision review exists`);
+  if (typeof cartoon?.caricature !== 'boolean') errors.push(`${at}: caricature must be an explicit true/false review decision`);
+  const persona = personaById(story?.memeLine?.personaId);
+  if (!persona) errors.push(`${at}: the story has no meme-line persona to credit`);
+  else {
+    if (cartoon?.persona !== persona.id) errors.push(`${at}: persona must be the meme-line voice "${persona.id}"`);
+    const register = SATIRE_CARTOON_STYLES[persona.memeStyle] ? persona.memeStyle : 'cartoon';
+    if (cartoon?.register !== register) errors.push(`${at}: register must be ${persona.name}'s "${register}"`);
+  }
+  if (String(cartoon?.caption || '') !== String(story?.memeLine?.text || '')) errors.push(`${at}: caption must be the story's meme line`);
+  const alt = String(cartoon?.alt || '');
+  if (alt.length < 80) errors.push(`${at}: alt must describe the cartoon (≥80 chars)`);
+  if (!/^AI-generated satirical cartoon\b/.test(alt)) errors.push(`${at}: alt must be the derived description (starts "AI-generated satirical cartoon")`);
   return errors;
 }
 

@@ -28,8 +28,22 @@
  * docs/DESK_ART_WORKER.md for what was verified on win32 and what was not.
  * Resumable: a valid staged art.png is skipped unless --force.
  *
+ * TWO KINDS (D-S368.7). `--kind banner` is the painted, person-free editorial
+ * illustration above (prompt, files and result rows unchanged since S368).
+ * `--kind satire` is the story's satire cartoon: a clearly drawn, square,
+ * single-panel gag in the register of the correspondent who wrote the meme
+ * line, staged as <id>/satire.png beside art.png, with the same confinement,
+ * sandbox and ChatGPT-plan guards. It may caricature real PUBLIC figures as
+ * obvious non-photorealistic cartoons; never private individuals. With no
+ * --kind the worker runs BOTH (banner pass first, then satire) — that is what
+ * the nightly scheduled task invokes. Satire targets default to stories since
+ * max(SATIRE_CARTOON_ERA_START, today − SATIRE_CARTOON_GRACE_DAYS) that have no
+ * visual.satireCartoon yet; --since / --story widen or name them.
+ *
  * Usage:
- *   node scripts/generate-news-art-codex.mjs --dry-run                 # list fallback targets
+ *   node scripts/generate-news-art-codex.mjs --dry-run                 # list banner + satire targets
+ *   node scripts/generate-news-art-codex.mjs --kind banner             # banner only (pre-D-S368.7 behaviour)
+ *   node scripts/generate-news-art-codex.mjs --kind satire --limit 3   # satire cartoons only
  *   node scripts/generate-news-art-codex.mjs --since 2026-09-01        # fallback stories on/after a date
  *   node scripts/generate-news-art-codex.mjs --story 2026-09-12/<slug> # explicit (repeatable / comma list)
  *   node scripts/generate-news-art-codex.mjs --limit 3 --force
@@ -42,7 +56,16 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { EDITORIAL_OVERLAY_ZONES } from './lib/news-memes.mjs';
+import {
+  EDITORIAL_OVERLAY_ZONES,
+  SATIRE_CARTOON_ASPECT,
+  SATIRE_CARTOON_ENTROPY_FLOOR,
+  SATIRE_CARTOON_ERA_START,
+  SATIRE_CARTOON_GRACE_DAYS,
+  SATIRE_CARTOON_MIN,
+  satireCartoonBrief,
+} from './lib/news-memes.mjs';
+import { PERSONAS } from './lib/news-desk.mjs';
 import {
   FALLBACK_KIND,
   REAL_ART_ENTROPY_FLOOR,
@@ -70,6 +93,15 @@ export const CODEX_EXEC_BASE_ARGS = Object.freeze([
 export const GENERATOR_LABEL = 'codex exec image_generation (ChatGPT plan)';
 export const SANDBOX_PROBE_MARKER = 'DESK-ART-SANDBOX-PROBE';
 const BILLING_ENV_KEYS = ['OPENAI_API_KEY', 'CODEX_API_KEY', 'OPENAI_BASE_URL'];
+export const ART_KINDS = Object.freeze(['banner', 'satire', 'all']);
+/**
+ * Staged file names per kind. The banner names are the pre-D-S368.7 names,
+ * unchanged, so existing staging dirs, ingest and operator habits keep working.
+ */
+export const KIND_FILES = Object.freeze({
+  banner: Object.freeze({ image: 'art.png', prompt: 'prompt.txt', meta: 'meta.json', log: 'codex-attempt', invalid: 'art.invalid', work: 'attempt' }),
+  satire: Object.freeze({ image: 'satire.png', prompt: 'satire-prompt.txt', meta: 'satire-meta.json', log: 'satire-codex-attempt', invalid: 'satire.invalid', work: 'satire-attempt' }),
+});
 
 /**
  * The exact argv for one generation run.
@@ -138,7 +170,7 @@ export function parseStoryId(value) {
 }
 
 export function parseArgs(argv) {
-  const opts = { stories: [], since: null, dryRun: false, selfTest: false, force: false, limit: null, staging: DEFAULT_STAGING_DIR, timeoutMs: DEFAULT_TIMEOUT_MS, retries: DEFAULT_RETRIES, network: false };
+  const opts = { kind: 'all', stories: [], since: null, dryRun: false, selfTest: false, force: false, limit: null, staging: DEFAULT_STAGING_DIR, timeoutMs: DEFAULT_TIMEOUT_MS, retries: DEFAULT_RETRIES, network: false };
   for (let i = 0; i < argv.length; i += 1) {
     const flag = argv[i];
     const next = () => {
@@ -147,7 +179,8 @@ export function parseArgs(argv) {
       i += 1;
       return value;
     };
-    if (flag === '--story') opts.stories.push(...next().split(',').map((s) => s.trim()).filter(Boolean));
+    if (flag === '--kind') opts.kind = next();
+    else if (flag === '--story') opts.stories.push(...next().split(',').map((s) => s.trim()).filter(Boolean));
     else if (flag === '--since') opts.since = next();
     else if (flag === '--dry-run') opts.dryRun = true;
     else if (flag === '--self-test') opts.selfTest = true;
@@ -160,6 +193,7 @@ export function parseArgs(argv) {
     else if (flag === '--retries') opts.retries = Number(next());
     else throw new Error(`unknown argument ${flag}`);
   }
+  if (!ART_KINDS.includes(opts.kind)) throw new Error(`--kind must be one of ${ART_KINDS.join(', ')}`);
   if (opts.since && !/^\d{4}-\d{2}-\d{2}$/.test(opts.since)) throw new Error('--since must be YYYY-MM-DD');
   if (opts.limit != null && !(Number.isInteger(opts.limit) && opts.limit > 0)) throw new Error('--limit must be a positive integer');
   if (!(opts.timeoutMs > 0)) throw new Error('--timeout-min must be positive');
@@ -230,6 +264,67 @@ export function buildPrompt(story) {
     `Story headline (for context only, do not render text): ${clean(story.headline, 300)}`,
     `Scene: ${clean(story.visual?.scene)}`,
     `Satirical idea: ${clean(satire.target, 400)} / ${clean(satire.setup, 400)} / ${clean(satire.payoff, 400)}`,
+    'After saving, reply with only the filename.',
+    '',
+  ].join('\n');
+}
+
+/** The satire window's default start: the later of the era start and today − grace. */
+export function defaultSatireSince(now = new Date()) {
+  const windowStart = new Date(now.getTime() - SATIRE_CARTOON_GRACE_DAYS * 86_400_000).toISOString().slice(0, 10);
+  return windowStart > SATIRE_CARTOON_ERA_START ? windowStart : SATIRE_CARTOON_ERA_START;
+}
+
+/**
+ * Stories that need a satire cartoon: a meme line with a known persona (the
+ * cartoon credits that voice) and no `visual.satireCartoon` yet. --story names
+ * stories explicitly (re-roll allowed even when a cartoon exists).
+ */
+export function findSatireTargets({ root = ROOT, stories = [], since = null, now = new Date() } = {}) {
+  const days = loadPublicDays(path.join(root, 'data', 'news-desk', 'days'));
+  const explicit = new Map(stories.map((value) => { const parsed = parseStoryId(value); return [parsed.id, parsed]; }));
+  const floor = since || (explicit.size ? null : defaultSatireSince(now));
+  const seen = new Set();
+  const targets = [];
+  for (const day of days) {
+    for (const story of day.stories || []) {
+      const id = storyId(day.date, story.slug);
+      const named = explicit.has(id);
+      if (named) seen.add(id);
+      if (explicit.size && !named) continue;
+      if (floor && day.date < floor) continue;
+      const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
+      if (!persona || !story.memeLine?.text) continue;
+      if (!named && story.visual?.satireCartoon) continue;
+      targets.push({ id, date: day.date, slug: story.slug, story, persona, kind: story.visual?.satireCartoon ? 'satire-cartoon' : 'missing', entropy: null, reason: named ? 'explicit' : 'no satire cartoon' });
+    }
+  }
+  const unknown = [...explicit.keys()].filter((id) => !seen.has(id));
+  if (unknown.length) throw new Error(`unknown stories: ${unknown.join(', ')}`);
+  return targets;
+}
+
+/**
+ * The satire-cartoon prompt (D-S368.7). The page prints the caption as HTML
+ * under the image, so the model is asked for NO text; one short word is
+ * tolerated only when perfectly legible (the reviewer rejects anything else).
+ * The caricature rule is stated in full because the scene can name a public
+ * figure: obvious exaggerated cartoon of a PUBLIC figure only, never a private
+ * person, never photorealistic, never sexual, violent or degrading.
+ */
+export function buildSatirePrompt(story, persona) {
+  const brief = satireCartoonBrief({ story, persona });
+  if (!brief) throw new Error(`${story?.slug || '?'}: no meme line/persona to draw a satire cartoon for`);
+  return [
+    'Generate ONE original single-panel satirical gag cartoon and save it as a PNG file named satire.png in the current working directory.',
+    `Format: square 1:1, at least ${SATIRE_CARTOON_MIN.width}x${SATIRE_CARTOON_MIN.height}. It must read instantly as a drawn cartoon: clean ink line art and/or flat colours, comic-strip clarity, one clear focal gag. Never photorealistic, never a photograph, never a realistic 3D render.`,
+    `Visual register (the correspondent ${brief.personaName}, ${brief.label}): ${brief.style}`,
+    `Composition: ${brief.scene}.`,
+    `The joke — target: ${brief.target} / setup: ${brief.setup} / payoff: ${brief.payoff}.`,
+    `The punchline the drawing must land is this caption: "${clean(brief.caption, 200)}". The website prints that caption below the image, so do NOT draw it.`,
+    'Prefer NO text anywhere in the image: no captions, no words in speech bubbles, no labels, signs, logos, brand marks, watermarks, numbers or UI text. Only if a single very short word is essential to the gag AND you can render it perfectly legibly, you may include that one word; otherwise none.',
+    'People: invented and animated characters are welcome. A real PUBLIC figure named in the story (an executive, politician or official) may appear only as an obvious, exaggerated, non-photorealistic caricature that mocks their public role or claim. Never depict a private individual or any real person who is not a public figure. Never sexual, violent, gory or degrading imagery, and never mock anyone\'s body, ethnicity, gender, religion, disability or age. No real company logos or trademarks; show institutions through objects.',
+    `Story headline (for context only, do not render text): ${clean(story.headline, 300)}`,
     'After saving, reply with only the filename.',
     '',
   ].join('\n');
@@ -352,17 +447,24 @@ export function preflight(run = defaultRun, {
   return { ok: reasons.length === 0, version: version.stdout.trim(), reasons, sandboxMode, sandboxState, provider: provider || null };
 }
 
-async function validateGenerated(file) {
+async function validateGenerated(file, kind = 'banner') {
   const m = await measureArt(file);
   const errors = [];
   if (m.format !== 'png') errors.push(`not a PNG (decoded as ${m.format})`);
+  if (kind === 'satire') {
+    const aspect = m.width / m.height;
+    if (!(m.width >= SATIRE_CARTOON_MIN.width && m.height >= SATIRE_CARTOON_MIN.height)) errors.push(`too small (${m.width}x${m.height}; need ≥${SATIRE_CARTOON_MIN.width}x${SATIRE_CARTOON_MIN.height})`);
+    if (!(aspect >= SATIRE_CARTOON_ASPECT.min && aspect <= SATIRE_CARTOON_ASPECT.max)) errors.push(`aspect ${aspect.toFixed(2)} is not square (${SATIRE_CARTOON_ASPECT.min}–${SATIRE_CARTOON_ASPECT.max})`);
+    if (!(m.entropy >= SATIRE_CARTOON_ENTROPY_FLOOR)) errors.push(`entropy ${m.entropy} below cartoon floor ${SATIRE_CARTOON_ENTROPY_FLOOR} (blank or near-blank)`);
+    return { m, errors };
+  }
   if (!(m.width >= PANEL_WIDTH && m.height >= PANEL_HEIGHT)) errors.push(`too small (${m.width}x${m.height}; need ≥${PANEL_WIDTH}x${PANEL_HEIGHT})`);
   if (!(m.entropy >= REAL_ART_ENTROPY_FLOOR)) errors.push(`entropy ${m.entropy} below real-art floor ${REAL_ART_ENTROPY_FLOOR}`);
   return { m, errors };
 }
 
-function findProducedPng(dir) {
-  const preferred = path.join(dir, 'art.png');
+function findProducedPng(dir, preferredName = 'art.png') {
+  const preferred = path.join(dir, preferredName);
   if (fs.existsSync(preferred)) return preferred;
   const pngs = fs.existsSync(dir)
     ? fs.readdirSync(dir).filter((f) => /\.png$/i.test(f)).map((f) => path.join(dir, f))
@@ -382,46 +484,57 @@ export async function generateOne(target, {
   codexVersion = null,
   execArgs = codexExecArgs(),
   now = () => new Date(),
+  kind = 'banner',
 } = {}) {
+  // Banner rows/files are byte-for-byte the pre-D-S368.7 shape (no `kind` key);
+  // satire rows carry kind:"satire" so ingest's re-roll counter can tell them apart.
+  const satire = kind === 'satire';
+  const files = KIND_FILES[satire ? 'satire' : 'banner'];
+  const tag = satire ? { kind: 'satire' } : {};
   const itemDir = path.join(stagingDir, target.id);
-  const staged = path.join(itemDir, 'art.png');
+  const staged = path.join(itemDir, files.image);
   fs.mkdirSync(itemDir, { recursive: true });
   if (fs.existsSync(staged) && !force) {
-    const { m, errors } = await validateGenerated(staged);
-    if (!errors.length) return { id: target.id, status: 'skipped-staged', sha256: m.sha256, width: m.width, height: m.height, entropy: m.entropy };
-    fs.renameSync(staged, path.join(itemDir, `art.invalid-${now().getTime()}.png`));
+    const { m, errors } = await validateGenerated(staged, kind);
+    if (!errors.length) return { id: target.id, ...tag, status: 'skipped-staged', sha256: m.sha256, width: m.width, height: m.height, entropy: m.entropy };
+    fs.renameSync(staged, path.join(itemDir, `${files.invalid}-${now().getTime()}.png`));
   }
-  const prompt = buildPrompt(target.story);
-  fs.writeFileSync(path.join(itemDir, 'prompt.txt'), prompt);
+  const persona = satire ? (target.persona || PERSONAS.find((p) => p.id === target.story?.memeLine?.personaId)) : null;
+  const prompt = satire ? buildSatirePrompt(target.story, persona) : buildPrompt(target.story);
+  fs.writeFileSync(path.join(itemDir, files.prompt), prompt);
   const errors = [];
   for (let attempt = 1; attempt <= retries + 1; attempt += 1) {
-    const workDir = path.join(workRoot, target.id, `attempt-${attempt}-${now().getTime()}`);
+    const workDir = path.join(workRoot, target.id, `${files.work}-${attempt}-${now().getTime()}`);
     fs.mkdirSync(workDir, { recursive: true });
     const started = Date.now();
     const result = run('codex', [...execArgs], { cwd: workDir, input: prompt, timeoutMs });
     const log = `exit=${result.status} timedOut=${Boolean(result.timedOut)} error=${result.error || ''}\n--- stdout ---\n${String(result.stdout).slice(-20000)}\n--- stderr ---\n${String(result.stderr).slice(-20000)}\n`;
-    fs.writeFileSync(path.join(itemDir, `codex-attempt-${attempt}.log`), log);
+    fs.writeFileSync(path.join(itemDir, `${files.log}-${attempt}.log`), log);
     let failure = null;
-    const produced = findProducedPng(workDir);
+    const produced = findProducedPng(workDir, files.image);
     if (result.timedOut) failure = `timeout after ${Math.round(timeoutMs / 1000)}s`;
     else if (!produced) failure = `no PNG produced (exit ${result.status})`;
     else {
-      const check = await validateGenerated(produced);
+      const check = await validateGenerated(produced, kind);
       if (check.errors.length) failure = check.errors.join('; ');
       else {
         fs.copyFileSync(produced, staged);
         const meta = {
-          id: target.id, sha256: check.m.sha256, width: check.m.width, height: check.m.height, entropy: check.m.entropy, bytes: check.m.bytes,
+          id: target.id, ...tag, sha256: check.m.sha256, width: check.m.width, height: check.m.height, entropy: check.m.entropy, bytes: check.m.bytes,
           attempt, seconds: Math.round((Date.now() - started) / 1000), generatedAt: now().toISOString(), generator: GENERATOR_LABEL, codexVersion,
           promptSha256: crypto.createHash('sha256').update(prompt).digest('hex'),
         };
-        fs.writeFileSync(path.join(itemDir, 'meta.json'), `${JSON.stringify(meta, null, 2)}\n`);
+        if (satire) {
+          const brief = satireCartoonBrief({ story: target.story, persona });
+          Object.assign(meta, { persona: brief.personaId, register: brief.register, caption: brief.caption, alt: brief.alt });
+        }
+        fs.writeFileSync(path.join(itemDir, files.meta), `${JSON.stringify(meta, null, 2)}\n`);
         return { status: 'generated', ...meta };
       }
     }
     errors.push(`attempt ${attempt}: ${failure}`);
   }
-  return { id: target.id, status: 'failed', errors };
+  return { id: target.id, ...tag, status: 'failed', errors };
 }
 
 /** Root .gitignore does not list the staging dir; make it self-ignoring. */
@@ -431,18 +544,38 @@ export function ensureSelfIgnoringDir(dir) {
   if (!fs.existsSync(marker)) fs.writeFileSync(marker, '# Local Desk art staging (scripts/generate-news-art-codex.mjs) — never committed.\n*\n');
 }
 
+/** Targets for one kind, limited. */
+export async function targetsForKind(kind, opts, { root = ROOT, now = new Date() } = {}) {
+  const all = kind === 'satire'
+    ? findSatireTargets({ root, stories: opts.stories, since: opts.since, now })
+    : await findTargets({ root, stories: opts.stories, since: opts.since });
+  return all.slice(0, opts.limit || undefined);
+}
+
 async function main(opts) {
-  const targets = (await findTargets({ stories: opts.stories, since: opts.since })).slice(0, opts.limit || undefined);
+  const kinds = opts.kind === 'all' ? ['banner', 'satire'] : [opts.kind];
+  const plan = [];
+  for (const kind of kinds) plan.push({ kind, targets: await targetsForKind(kind, opts) });
   if (opts.dryRun) {
-    console.log(`generate-news-art-codex --dry-run: ${targets.length} target(s)`);
-    for (const target of targets) {
-      const staged = fs.existsSync(path.join(opts.staging, target.id, 'art.png')) ? ' [staged]' : '';
-      console.log(`  ${target.id}  kind=${target.kind} entropy=${target.entropy ?? 'n/a'} reason=${target.reason}${staged}`);
+    for (const { kind, targets } of plan) {
+      const file = KIND_FILES[kind].image;
+      // The banner header line is unchanged; the satire section is labelled.
+      console.log(kind === 'banner'
+        ? `generate-news-art-codex --dry-run: ${targets.length} target(s)`
+        : `generate-news-art-codex --dry-run --kind satire: ${targets.length} stor${targets.length === 1 ? 'y' : 'ies'} lacking a satire cartoon${opts.since || opts.stories.length ? '' : ` (since ${defaultSatireSince()})`}`);
+      for (const target of targets) {
+        const staged = fs.existsSync(path.join(opts.staging, target.id, file)) ? ' [staged]' : '';
+        console.log(kind === 'banner'
+          ? `  ${target.id}  kind=${target.kind} entropy=${target.entropy ?? 'n/a'} reason=${target.reason}${staged}`
+          : `  ${target.id}  persona=${target.persona.id} register=${target.persona.memeStyle} reason=${target.reason}${staged}`);
+      }
     }
     return 0;
   }
-  if (!targets.length) {
-    console.log('generate-news-art-codex: no fallback art to replace.');
+  if (!plan.some(({ targets }) => targets.length)) {
+    console.log(kinds.length === 1 && kinds[0] === 'banner'
+      ? 'generate-news-art-codex: no fallback art to replace.'
+      : 'generate-news-art-codex: no fallback art to replace and no story lacking a satire cartoon.');
     return 0;
   }
   const check = preflight();
@@ -453,31 +586,45 @@ async function main(opts) {
   ensureSelfIgnoringDir(opts.staging);
   const resultsFile = path.join(opts.staging, 'results.ndjson');
   const execArgs = codexExecArgs({ sandboxMode: check.sandboxMode, network: opts.network });
-  console.log(`generate-news-art-codex: ${targets.length} target(s) · ${check.version} · staging ${path.relative(ROOT, opts.staging) || opts.staging}`);
+  const total = plan.reduce((n, { targets }) => n + targets.length, 0);
+  console.log(`generate-news-art-codex: ${total} target(s) · ${check.version} · staging ${path.relative(ROOT, opts.staging) || opts.staging}`);
   console.log(`  sandbox: ${check.sandboxState}${check.sandboxMode ? ` (windows.sandbox="${check.sandboxMode}")` : ' (configured default)'} · shell network: ${opts.network ? 'ALLOWED (--allow-network)' : 'denied'}`);
-  const ok = [];
   let failed = 0;
-  for (const [index, target] of targets.entries()) {
-    console.log(`[${index + 1}/${targets.length}] ${target.id} …`);
-    const row = await generateOne(target, { stagingDir: opts.staging, timeoutMs: opts.timeoutMs, retries: opts.retries, force: opts.force, codexVersion: check.version, execArgs });
-    fs.appendFileSync(resultsFile, `${JSON.stringify({ at: new Date().toISOString(), ...row })}\n`);
-    if (row.status === 'failed') {
-      failed += 1;
-      console.error(`  ✗ ${row.errors.join(' | ')}`);
-    } else {
-      ok.push(target.id);
-      console.log(`  ✓ ${row.status} ${row.width}x${row.height} entropy=${row.entropy}`);
+  const staged = { banner: [], satire: [] };
+  for (const { kind, targets } of plan) {
+    if (!targets.length) continue;
+    console.log(`── ${kind === 'banner' ? 'banner illustrations' : 'satire cartoons'} (${targets.length}) ──`);
+    for (const [index, target] of targets.entries()) {
+      console.log(`[${index + 1}/${targets.length}] ${target.id} …`);
+      const row = await generateOne(target, { stagingDir: opts.staging, timeoutMs: opts.timeoutMs, retries: opts.retries, force: opts.force, codexVersion: check.version, execArgs, kind });
+      fs.appendFileSync(resultsFile, `${JSON.stringify({ at: new Date().toISOString(), ...row })}\n`);
+      if (row.status === 'failed') {
+        failed += 1;
+        console.error(`  ✗ ${row.errors.join(' | ')}`);
+      } else {
+        staged[kind].push(target.id);
+        console.log(`  ✓ ${row.status} ${row.width}x${row.height} entropy=${row.entropy}`);
+      }
     }
   }
-  console.log(`\n${ok.length} staged · ${failed} failed · results: ${path.relative(ROOT, resultsFile)}`);
-  if (ok.length) {
+  const from = path.relative(ROOT, opts.staging) || opts.staging;
+  console.log(`\n${staged.banner.length + staged.satire.length} staged · ${failed} failed · results: ${path.relative(ROOT, resultsFile)}`);
+  if (staged.banner.length) {
     console.log('Next: LOOK at every staged art.png (no text/logos/likenesses, fits the story), list the ones you accept, then:');
-    console.log(`  node scripts/ingest-news-art.mjs --from ${path.relative(ROOT, opts.staging) || opts.staging} --reviewed ${ok.join(',')}`);
+    console.log(`  node scripts/ingest-news-art.mjs --from ${from} --reviewed ${staged.banner.join(',')}`);
+  }
+  if (staged.satire.length) {
+    console.log('Next: LOOK at every staged satire.png (legible, obviously a cartoon, public figures only, nothing degrading, the punchline fits),');
+    console.log('      approve each as <id>@<sha>+caricature (depicts a real public figure) or <id>@<sha>+none, then:');
+    console.log(`  node scripts/ingest-news-art.mjs --kind satire --from ${from} --reviewed ${staged.satire.map((id) => `${id}+none`).join(',')}`);
   }
   return failed ? 1 : 0;
 }
 
 /* ── Self-test: mocked spawn, temp fixtures, never real repo data ─────────── */
+
+/** sha256 of buildPrompt() for the self-test fixture story — pins the banner prompt byte-for-byte. */
+const BANNER_PROMPT_FIXTURE_SHA256 = '5ae2f76f90d7387851d2079b97e41b3a3e3f7ee4b879099424e3b5f0b3fbcfe8';
 
 async function selfTest() {
   const cases = [];
@@ -492,6 +639,7 @@ async function selfTest() {
     const mkStory = (slug, reviewer, extra = {}) => ({
       slug,
       headline: `Headline for ${slug}`,
+      memeLine: { text: 'The demo never pages you.', personaId: 'vera' },
       visual: {
         artSource: `data/news-desk/art/2026-09-12--${slug}.png`,
         scene: 'A towering filing cabinet swallows a queue of tiny paper boats while a lighthouse points its beam at an empty harbor.',
@@ -624,6 +772,62 @@ async function selfTest() {
       return parsed.stories.length === 2 && parsed.since === '2026-09-01' && parsed.limit === 2 && parsed.timeoutMs === 540000;
     })());
     t('ingest follow-up script is named for operators', fs.existsSync(path.join(ROOT, 'scripts', 'ingest-news-art.mjs')));
+
+    /* ── D-S368.7 satire cartoons ─────────────────────────────────────── */
+    // Banner prompt is frozen: the satire work must not move a byte of it.
+    t('banner prompt is byte-identical to the S368 prompt (sha256 snapshot)',
+      crypto.createHash('sha256').update(buildPrompt(day.stories[0])).digest('hex') === BANNER_PROMPT_FIXTURE_SHA256);
+    t('banner result rows carry no kind key (pre-D-S368.7 row shape)', !('kind' in first) && !('kind' in resumed));
+    t('parseArgs: no --kind runs both kinds; --kind banner/satire narrow it; a bad kind throws', (() => {
+      let bad = false;
+      try { parseArgs(['--kind', 'meme']); } catch { bad = true; }
+      return parseArgs([]).kind === 'all' && parseArgs(['--kind', 'banner']).kind === 'banner' && parseArgs(['--kind', 'satire']).kind === 'satire' && bad;
+    })());
+    const vera = PERSONAS.find((p) => p.id === 'vera');
+    const satirePrompt = buildSatirePrompt(day.stories[0], vera);
+    t('satire prompt asks for satire.png, square 1:1, drawn cartoon, never photorealistic',
+      satirePrompt.includes('named satire.png in the current working directory') && satirePrompt.includes('square 1:1')
+      && /Never photorealistic, never a photograph/.test(satirePrompt));
+    t('satire prompt uses the correspondent register (VERA → 3 a.m. pager gag)', satirePrompt.includes('VERA') && satirePrompt.includes('3 a.m. pager gag') && /blaring pager/.test(satirePrompt));
+    t('satire prompt carries the joke (target/setup/payoff) and the meme line, and says the page prints the caption',
+      satirePrompt.includes('audit the harbor') && satirePrompt.includes('manifest before it may float') && satirePrompt.includes('"The demo never pages you."')
+      && /prints that caption below the image, so do NOT draw it/.test(satirePrompt));
+    t('satire prompt prefers no text; at most one perfectly legible word', /Prefer NO text anywhere/.test(satirePrompt) && /perfectly legibly/.test(satirePrompt));
+    t('satire prompt states the caricature rule: public figures only, never private people, never sexual/violent/degrading',
+      /real PUBLIC figure/.test(satirePrompt) && /obvious, exaggerated, non-photorealistic caricature/.test(satirePrompt)
+      && /Never depict a private individual/.test(satirePrompt) && /Never sexual, violent, gory or degrading/.test(satirePrompt));
+    t('every persona register has a drawn cartoon style', PERSONAS.every((p) => buildSatirePrompt({ ...day.stories[0], memeLine: { text: 'x', personaId: p.id } }, p).includes(`the correspondent ${p.name}`)));
+    t('default satire window starts at the D-S368.7 era, never before', defaultSatireSince(new Date('2026-09-14T00:00:00Z')) === SATIRE_CARTOON_ERA_START
+      && defaultSatireSince(new Date('2026-10-20T00:00:00Z')) === '2026-10-13');
+    const satNow = new Date('2026-09-14T00:00:00Z');
+    t('satire targets: pre-era stories are not targeted by default', findSatireTargets({ root, now: satNow }).length === 0);
+    t('satire targets: --since widens to every story lacking a cartoon', findSatireTargets({ root, since: '2026-09-01', now: satNow }).length === 3);
+    t('satire targets: --story names one explicitly', findSatireTargets({ root, stories: ['2026-09-12/real-story'], now: satNow }).map((x) => x.slug).join(',') === 'real-story');
+    const withCartoon = JSON.parse(fs.readFileSync(path.join(daysDir, '2026-09-12.json'), 'utf8'));
+    withCartoon.stories[1].visual.satireCartoon = { artSource: 'x' };
+    fs.writeFileSync(path.join(daysDir, '2026-09-12.json'), JSON.stringify(withCartoon, null, 2));
+    t('satire targets: a story that already has a cartoon is skipped', findSatireTargets({ root, since: '2026-09-01', now: satNow }).every((x) => x.slug !== 'real-story'));
+    fs.writeFileSync(path.join(daysDir, '2026-09-12.json'), JSON.stringify(day, null, 2));
+
+    const satTarget = findSatireTargets({ root, stories: ['2026-09-12/fallback-story'], now: satNow })[0];
+    const artBefore = fs.readFileSync(path.join(stagingDir, target.id, 'art.png'));
+    const square = await renderSyntheticRasterFixture('satire-output', 1024, 1024);
+    const satCalls = [];
+    const satWriter = (cmd, args, o) => { satCalls.push({ args, o }); fs.writeFileSync(path.join(o.cwd, 'satire.png'), square); return { status: 0, stdout: 'satire.png', stderr: '' }; };
+    const sat = await generateOne(satTarget, { stagingDir, workRoot, run: satWriter, kind: 'satire' });
+    const satMeta = JSON.parse(fs.readFileSync(path.join(stagingDir, target.id, 'satire-meta.json'), 'utf8'));
+    t('satire stages satire.png + satire-meta.json beside art.png, art.png untouched',
+      sat.status === 'generated' && sat.kind === 'satire' && fs.existsSync(path.join(stagingDir, target.id, 'satire.png'))
+      && Buffer.compare(fs.readFileSync(path.join(stagingDir, target.id, 'art.png')), artBefore) === 0);
+    t('satire meta records persona, register, caption and the derived alt',
+      satMeta.persona === 'vera' && satMeta.register === 'pager' && satMeta.caption === 'The demo never pages you.' && /^AI-generated satirical cartoon in VERA/.test(satMeta.alt));
+    t('satire uses the same sandboxed exec args and sends the satire prompt',
+      satCalls[0].args.join(' ') === codexExecArgs().join(' ') && satCalls[0].o.input === buildSatirePrompt(satTarget.story, vera)
+      && fs.readFileSync(path.join(stagingDir, target.id, 'satire-prompt.txt'), 'utf8') === satCalls[0].o.input);
+    const satResumed = await generateOne(satTarget, { stagingDir, workRoot, run: () => { throw new Error('must not spawn'); }, kind: 'satire' });
+    t('satire is resumable: a valid staged satire.png is skipped without spawning', satResumed.status === 'skipped-staged' && satResumed.kind === 'satire');
+    const wide = await generateOne(satTarget, { stagingDir: path.join(tmp, 'staging-sat-wide'), workRoot, retries: 0, kind: 'satire', run: (cmd, args, o) => { fs.writeFileSync(path.join(o.cwd, 'satire.png'), realBuffer); return { status: 0, stdout: '', stderr: '' }; } });
+    t('a non-square satire output is rejected', wide.status === 'failed' && /not square/.test(wide.errors[0]));
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
