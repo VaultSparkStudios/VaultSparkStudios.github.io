@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S368 full audit refresh implemented (docs/AUDIT_2026-10-02): membership truth (Free / VaultSparked $4.99 / VaultSparked Eternal $29.99), Season 1 repair live, invite-led doors, registry-driven statuses, 12 page merges and new /play/ /dispatch/ /collaborate/ /api/, Ask the Vault, Desk personas and signup.",
+  "currentFocus": "S368 continued: Desk banner art restored and kept current (nightly worker + 48h alarm); every story carries a reviewed satire cartoon (D-S368.7); hybrid AI & Synthetic Intelligence (SI) positioning with /synthetic-intelligence/ and /ai-vs-si/ (D-S368.8) and a four-story AI→SI Desk report.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Founder approves a Desk Dispatch test issue to arm the daily digest; apply the caller-trust column-revoke migration; act on the Obelisk Ark reply to reopen signup and enable login E2E.",
+  "nextMilestone": "Founder approves a Desk Dispatch test issue to arm the daily digest; reword and regenerate satire cartoons for the six fallback stories; act on the Obelisk Ark reply to reopen signup and enable login E2E.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -25,15 +25,15 @@
     "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
   ],
-  "lastUpdated": "2026-10-03",
+  "lastUpdated": "2026-10-04",
   "currentSession": 368,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-02",
-  "silScore": 954,
+  "silScore": 935,
   "silAvg3": 956,
   "silVelocity": 23,
   "silDebt": "down",
-  "silLastSession": 368,
+  "silLastSession": "S368",
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -89,16 +89,16 @@
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 95,
-    "creativeAlignment": 96,
-    "momentum": 97,
-    "engagement": 95,
-    "processQuality": 93,
-    "crossRepoCoherence": 97,
-    "securityPosture": 97,
-    "ecosystemIntegration": 95,
+    "devHealth": 92,
+    "creativeAlignment": 95,
+    "momentum": 95,
+    "engagement": 94,
+    "processQuality": 88,
+    "crossRepoCoherence": 95,
+    "securityPosture": 95,
+    "ecosystemIntegration": 94,
     "capitalEfficiency": 95,
-    "automationCoverage": 94
+    "automationCoverage": 92
   },
   "silCategoriesUpdatedSession": 368,
   "silScoreV3MigratedAt": "2026-04-21",
@@ -260,5 +260,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "206c6218fdcd601e77ae28a6",
   "testsSourceFingerprint": "bd95b3293aad0278acece3a0",
-  "lastSessionSummary": "S368: 23 of 25 audit items shipped; membership ruling, Season 1 database repair, security fixes and edge functions live; site deploy through the release lanes."
+  "lastSessionSummary": "Desk art outage fixed (58 stories), satire cartoon system with 95 reviewed cartoons, hybrid AI & SI studio positioning and cornerstone pages, AI→SI Desk special report, 55 facts repaired; deployed to staging and production."
 }

@@ -1,4 +1,20 @@
 # Latest Handoff
+## Where We Left Off — S368 continued · 2026-10-04 UTC
+
+- Shipped: Desk banner art restored for 58 stories; two-image stories with 95 reviewed satire cartoons; hybrid AI & Synthetic Intelligence (SI) positioning with `/synthetic-intelligence/` and `/ai-vs-si/`; four-story AI→SI Desk special report; 55 garbled facts repaired; staging deploy path-list fix.
+- Tests: Desk checks green (claim parity exact, AI disclosure 116 pages, article layout 101, art currency ok); csp-audit 263 files; content coherence 258 pages; footer contract; sitemap 213 routes; self-tests for every touched script. Full `npm run build:check` was not run this stretch; pushes passed the pre-push evidence-graph coherence.
+- Deploy: deployed to production — Pages run 37240419736 (serving `main` incl. `70235a513`); staging content lane verified 1,146 overlays.
+
+**Outcome:** Founder asked why Desk art stopped, then for satire cartoons (one banner + one satire image per story, caricatures of public figures allowed), then for a hybrid AI/SI studio identity plus Desk coverage of the federal AI→SI rename. All shipped and verified live. Rulings D-S368.7 and D-S368.8.
+
+**How the Desk art loop works now:** CI publishes a procedural fallback; the nightly Windows task "VaultSpark Desk Art (nightly)" runs `node scripts/generate-news-art-codex.mjs` (banner then satire) and only stages; a human/agent reviews each image and ingests with `--reviewed <id>@<sha16>` (satire adds `+caricature|+none`). Re-rolls need the new hash. `check-desk-art-currency` alarms at 48h (banner) / 7 days (satire, stories since 2026-10-03).
+
+**Next:**
+1. Six older stories lack satire cartoons (Nvidia/Hugging Face, Nscale board, King Charles, two Australia stories, Pentagon designation): reword their satire scenes (logo, celebrity look-alikes, absent executives, wrong-country landmarks, off-subject real person) and regenerate.
+2. Founder items still open from S368: approve Desk digest test → `autoSend` + `BREVO_API_KEY`; one manual Desk signup; Obelisk Ark nudge; legal hosting wording; "Eternal Credits Queue" heading.
+3. The root worktree's pre-closeout local changes are in `git stash@{0}` ("s368 pre-closeout") — stale copies already on main plus cache churn; drop after a glance.
+4. Publisher drift cascade (deferred) and QA accounts in public standings carry over.
+
 ## Where We Left Off — S368 · 2026-10-02 UTC
 
 - Shipped: 23 of 25 audit items across 8 groups — membership truth, Season 1 repair, security, invite-led doors and registry truth, page merges and new pages, portal loop, experience and AI, The Desk.

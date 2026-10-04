@@ -2759,3 +2759,23 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** Real-login E2E remains blocked on Obelisk; the Desk digest sends nothing until the founder approves a test issue; the column-revoke migration waits for the site deploy.
 
 **Brainstorm → TASK_BOARD:** Make the repo closeout template render from the canonical SIL v3 rubric so prompts/closeout.md can never score /500 again; add a release-time synthetic member journey (sign in → season standings → checkout 409 path) once an Obelisk test identity exists.
+
+
+## 2026-10-04 UTC — Session 368 continued (Desk art restored, satire cartoons, hybrid AI & SI positioning) | Total: 935/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 92 | Every touched script self-tested (codex worker 57/57, ingest 51/51, desk 181/181, draft 127/127, currency 13/13); full build:check not run this stretch. |
+| Creative Alignment | 95 | One banner + one satire image per story as directed; 130+ images reviewed by eye, nine rejected for likeness, logo, landmark or subject errors. |
+| Momentum | 95 | Art outage diagnosed and closed; satire system, AI & SI positioning, four-story special report and fixes all live within the session. |
+| Engagement | 94 | Every recent story now carries a cartoon in its correspondent's voice; AI→SI explainer pages target fresh search demand. |
+| Process Quality | 88 | One approval helper ingested two unreviewed cartoons (reviewed after, script narrowed to explicit ids); many manual push-loop edits before using the evidence graph's own builders. |
+| Cross-Repo Coherence | 95 | No sibling repo edits; secrets via the gateway; studio-ops scripts used from the root tree only. |
+| Security Posture | 95 | No new surfaces beyond static pages; caricature and likeness rules enforced per image with hash-bound approvals. |
+| Ecosystem Integration | 94 | Reused the Codex worker, ingest, raster and Desk publisher paths; new pages use the existing shell, nav and registries. |
+| Capital Efficiency | 95 | All images on the ChatGPT plan through the local worker; no paid API spend. |
+| Automation Coverage | 92 | Nightly banner + satire staging and a CI currency alarm; review remains a deliberate human/agent step. |
+
+**Audit:** Six older stories still lack cartoons; founder items from S368 remain open; the root worktree's stale changes sit in stash@{0}.
+
+**Brainstorm → TASK_BOARD:** A satire review aid that renders contact sheets and requires an explicit id list; a push helper that runs each affected evidence-graph builder before pushing.

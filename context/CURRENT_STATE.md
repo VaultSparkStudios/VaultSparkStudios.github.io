@@ -1,6 +1,16 @@
 # Current State
 
-Last updated: 2026-10-02 UTC (S368 full audit refresh, implementation and membership truth)
+Last updated: 2026-10-04 UTC (S368 continued: Desk art restored, satire cartoons, hybrid AI & SI positioning)
+
+## S368 continued — Desk art restored, two-image stories, hybrid AI & Synthetic Intelligence (SI) studio (2026-10-03 → 10-04)
+
+- **Desk banner art restored.** A Windows spawn regression had silently broken the local art worker's sandbox check since 2026-09-17, so 58 stories shipped on procedural placeholders. Fixed (native `codex.exe` resolution), all 58 regenerated and visually reviewed; three re-rolled (staged likeness of King Charles, wrong-country landmarks). Worker rule: never depict a named person or a stand-in; landmarks true to the story's country. Nightly Windows task "VaultSpark Desk Art (nightly)" stages art; `check-desk-art-currency` runs in the daily CI Health Monitor and fails any placeholder older than 48h.
+- **Two images per story (D-S368.7).** Each story now has a person-free banner plus an AI-generated satire cartoon in the correspondent's register (`visual.satireCartoon`), labelled "Satire · AI-generated cartoon"; public figures named in the story may appear only as obvious caricatures, recorded per approval (`+caricature`/`+none`, hash-bound). 95 stories have reviewed cartoons; six older stories keep the banner-panel fallback after repeated logo, look-alike, wrong-landmark or off-subject renders. Derivatives step down a fixed quality ladder to meet budgets.
+- **Hybrid AI & SI positioning (D-S368.8).** The studio describes itself as "an AI & Synthetic Intelligence (SI) studio" alongside its AI wording (slogan "From Artificial Intelligence to Synthetic Intelligence."). New cornerstone pages `/synthetic-intelligence/` and `/ai-vs-si/` (cited sources, FAQPage and DefinedTermSet JSON-LD). Studio description, slogan and knowsAbout live once in `scripts/lib/org-entity.mjs` and feed homepage, `/studio/`, `agents.json`, `llms.txt` and llms-full shards. Disclosure wording ("AI-generated", "AI persona") is unchanged; the site never claims superintelligence.
+- **The Desk AI→SI special report.** Four sourced 2026-10-04 stories on the federal "Super Intelligence (SI)" executive order, the industry accord, AI vs. SI for builders, and the 60-day statutory clock. Desk prose now links the studio's own pages when it names one that exists.
+- **Source text repaired.** The fact extractor decoded only six named entities; 48 facts carried `&#x27;` (rendered "King&amp;#x27;s") and eight carried publisher page chrome. Extractor now decodes all entities and strips chrome; 55 facts across 23 days repaired with their quoted anchors.
+- **Deploy tooling.** Staging deploys of 1,000+ paths failed silently (the path list exceeded the Windows command-line limit); the content gate and discovery verifier now take `--paths-file`.
+- **Live:** production build `0a878de`+ through Pages run 37240419736; staging verified at 1,146 overlays.
 
 ## S368 — Full audit refresh implemented: membership truth, Season 1, invite-led doors, new pages, Ask the Vault (2026-10-02)
 

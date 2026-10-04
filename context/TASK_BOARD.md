@@ -1,6 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-10-02 UTC (S368)
+Last updated: 2026-10-04 UTC (S368 continued)
+
+## S368 continued — Desk art, satire cartoons, AI & SI positioning
+
+- [x] Desk banner art restored (58 stories) + nightly worker + 48h currency alarm.
+- [x] Satire cartoon pipeline (D-S368.7); 95 stories reviewed and live.
+- [x] Hybrid AI & SI positioning + `/synthetic-intelligence/` + `/ai-vs-si/` (D-S368.8); four-story AI→SI Desk report.
+- [x] Fact extractor entity/chrome repair (55 facts); staging `--paths-file` fix; Desk prose links studio pages.
+- [ ] **[P2]** Reword satire scenes and regenerate cartoons for the six fallback stories (see LATEST_HANDOFF).
+- [ ] **[SIL/P2]** Satire approval review aid: render a per-batch contact sheet from `ingest-news-art --kind satire --dry-run` and require an explicit id list (never "all staged") — the S368 approval helper briefly ingested two unreviewed cartoons.
+- [ ] **[SIL/P3]** `push` helper that runs `pre-push-scan` coherence nodes' builders before pushing (the evidence graph already names each builder), so publisher races stop costing manual loop edits.
 
 ## S368 — Audit 2026-10-02
 

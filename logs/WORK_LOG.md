@@ -1370,3 +1370,15 @@ Staging follow-through: static staging deployed; first Worker upload rejected (g
 - Membership rebuilt on one tier source; server refuses double billing, rejects annual, claims phase slots on payment, closes the gift endpoint.
 - Invite-led CTAs sitewide; registry-driven statuses; 12 routes merged behind 301s; new /play/, /dispatch/, /collaborate/, /api/, /projects/veilos/; portal Vault Initiation quest and season UI; Vault Door hero and universe map; Ask the Vault cited answers; Desk personas and signup everywhere; digest sender held until a founder-approved test issue.
 - Gate: unit suite green; mobile audit 215/215 after fixing seven overflow and touch-target defects; theme matrix receipt; merged three rounds of publisher commits by regenerating conflicted artifacts.
+
+
+## S368 continued — 2026-10-03 → 10-04 — Desk art restored, satire cartoons, hybrid AI & Synthetic Intelligence (SI) studio
+
+**Intent:** founder questions and requests after the S368 deploy: why Desk art stopped; one banner plus one satire cartoon per story (caricatures of public figures allowed); a hybrid AI/SI identity and Desk coverage of the federal AI→SI rename; commit, deploy, closeout.
+
+- Root cause of missing art: Node 24 `shell: true` mangled Codex arguments on Windows, so the local worker's sandbox preflight failed from 2026-09-17. Native `codex.exe` resolution; 58 stories regenerated and reviewed; nightly task; 48h currency alarm in CI Health Monitor.
+- Satire pipeline (`--kind satire`, `visual.satireCartoon`, hash-bound review with caricature decision); 95 cartoons reviewed and shipped, six rejected renders left on the fallback.
+- Hybrid positioning: org-entity constants, homepage/studio copy, agents.json and llms.txt terminology, two cornerstone pages; four sourced Desk stories (Axios refused the fetcher, uncited).
+- Fixed along the way: entity-encoded and chrome-polluted facts (55), staging path-list over the Windows command-line limit, satire budget ladder, Desk prose links, mobile hero eyebrow wrap.
+- Process: worked in an isolated worktree while the root tree held stale state; repeated memory-pressure kills of background jobs; pre-push coherence loop now repairs every affected evidence-graph node by its builder.
+- Deployed: staging content lane (1,146 overlays) and production Pages run 37240419736.
