@@ -29,7 +29,7 @@ const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').
 
 /** Section order + which first path segments belong to each. Anything unmatched lands in "More". */
 export const GROUPS = [
-  ['main', '🏠', 'Studio', ['', 'studio', 'how-we-build', 'roadmap', 'changelog', 'press', 'collaborate', 'contact', 'faq', 'search', 'sitemap-page']],
+  ['main', '🏠', 'Studio', ['', 'studio', 'how-we-build', 'synthetic-intelligence', 'ai-vs-si', 'roadmap', 'changelog', 'press', 'collaborate', 'contact', 'faq', 'search', 'sitemap-page']],
   ['play', '🎮', 'Games & play', ['games', 'play', 'leaderboards']],
   ['projects', '🛠️', 'Projects', ['projects']],
   ['worlds', '🌌', 'Worlds & stories', ['universe', 'journal', 'vault']],

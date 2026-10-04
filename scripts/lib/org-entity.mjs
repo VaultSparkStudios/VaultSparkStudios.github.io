@@ -45,6 +45,28 @@ export const ORG_SAME_AS = Object.freeze([
   'https://suno.com/@VaultSparkStudios',
 ]);
 
+/**
+ * D-S368.8 — the studio's ONE self-description. Hybrid positioning: an AI &
+ * Synthetic Intelligence (SI) studio. "SI" is spelled out on first reference
+ * because it is ambiguous (Super Intelligence is the 2026 U.S. federal term).
+ * Never claim VaultSpark systems are superintelligent. agents.json, llms.txt,
+ * the llms-full shards and the entity graph all read these constants, so the
+ * description changes in one place.
+ */
+export const STUDIO_DESCRIPTION = 'Independent AI & Synthetic Intelligence (SI) studio building browser games, intelligence tools, and worlds. The Vault is sparked.';
+export const STUDIO_CONTEXT_LINE = 'an independent AI & Synthetic Intelligence (SI) studio building browser games, intelligence tools, and worlds';
+export const STUDIO_SLOGAN = 'From Artificial Intelligence to Synthetic Intelligence.';
+export const STUDIO_KNOWS_ABOUT = Object.freeze([
+  'Artificial Intelligence',
+  'Agentic AI',
+  'Synthetic Intelligence',
+  'Super Intelligence',
+  'AI agents',
+  'Browser games',
+  'Game development',
+  'Worldbuilding',
+]);
+
 /** The single full Organization definition. Extra fields merge on top (never replace @id). */
 export function orgNode(extra = {}) {
   return {
@@ -55,6 +77,9 @@ export function orgNode(extra = {}) {
     legalName: 'VaultSpark Studios LLC',
     url: `${ORIGIN}/`,
     logo: ORG_LOGO,
+    description: STUDIO_DESCRIPTION,
+    slogan: STUDIO_SLOGAN,
+    knowsAbout: [...STUDIO_KNOWS_ABOUT],
     sameAs: [...ORG_SAME_AS],
   };
 }

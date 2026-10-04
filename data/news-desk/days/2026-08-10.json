@@ -50,21 +50,69 @@
         "artSource": "data/news-desk/art/2026-08-10--the-intruder-was-an-agent-and-so-was-the-detector.png",
         "scene": "A red swarm crosses short-lived sandbox pods through a midnight server facility while a blue sentinel reconstructs the trail from a torrent of security events beside a lone on-call engineer.",
         "alt": "In a storm-dark server facility, red signals race through floating sandbox pods toward a blue forensic sentinel rebuilding their trail as an on-call engineer watches.",
-        "anchors": ["short-lived sandboxes", "17,000 recorded events", "LLM-based triage"],
-        "relationships": [{
-          "id": "sentinel-reconstructs-intruder-trail",
-          "subject": ["autonomous agent", "blue sentinel", "forensic sentinel", "another agent"],
-          "action": ["find out", "reconstructs", "rebuilding", "explain"],
-          "object": ["autonomous agent", "trail", "red signals", "agent"],
-          "evidenceAnchorRefs": ["short-lived sandboxes", "17,000 recorded events", "LLM-based triage"]
-        }],
-        "pixelInspection": { "sha256": "941333f0fe918d3a20225b1893148473d9333255e214a85b80d827ba683a7b32", "reviewed": true, "reviewer": "codex image-capable editorial review", "semanticVerified": false },
+        "anchors": [
+          "short-lived sandboxes",
+          "17,000 recorded events",
+          "LLM-based triage"
+        ],
+        "relationships": [
+          {
+            "id": "sentinel-reconstructs-intruder-trail",
+            "subject": [
+              "autonomous agent",
+              "blue sentinel",
+              "forensic sentinel",
+              "another agent"
+            ],
+            "action": [
+              "find out",
+              "reconstructs",
+              "rebuilding",
+              "explain"
+            ],
+            "object": [
+              "autonomous agent",
+              "trail",
+              "red signals",
+              "agent"
+            ],
+            "evidenceAnchorRefs": [
+              "short-lived sandboxes",
+              "17,000 recorded events",
+              "LLM-based triage"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "941333f0fe918d3a20225b1893148473d9333255e214a85b80d827ba683a7b32",
+          "reviewed": true,
+          "reviewer": "codex image-capable editorial review",
+          "semanticVerified": false
+        },
         "generatedArt": true,
         "satire": {
           "target": "Security operations that expect human-speed review to catch machine-speed intrusions",
           "setup": "An autonomous intruder executes thousands of weekend actions through disposable sandboxes.",
           "payoff": "The only responder fast enough to explain the agent is another agent reading the logs.",
           "institutional": true
+        },
+        "satireCartoon": {
+          "artSource": "data/news-desk/art/2026-08-10--the-intruder-was-an-agent-and-so-was-the-detector--satire.png",
+          "kind": "satire-cartoon",
+          "alt": "AI-generated satirical cartoon in NIB’s engraved broadsheet cartoon style. An engraved broadsheet-style cartoon draws the claim literally: an autonomous intruder executes thousands of weekend actions through disposable sandboxes, and the only responder fast enough to explain the agent is another agent reading the logs.",
+          "caption": "We have deployed an autonomous agent to find out what the autonomous agent did.",
+          "persona": "nib",
+          "register": "cartoon",
+          "caricature": false,
+          "reviewer": "codex image_generation (ChatGPT plan) + operator satire-cartoon review",
+          "reviewedAt": "2026-10-04",
+          "semanticVerified": false,
+          "sha256": "4f2aec9a3d336a0043f0d445fa9a5bb577533147b49e1d83fc7521eab619da6a",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 3367519,
+          "entropy": 7.46,
+          "promptSha256": "39f6f492a1cc36c5ff243bede61b51683ac59c25e9ac126878ffab0bb6ef5e03"
         }
       },
       "body": [
@@ -133,21 +181,64 @@
         "artSource": "data/news-desk/art/2026-08-10--two-million-rows-and-the-engineer-nobody-named.png",
         "scene": "A database city collapses into a Terraform deletion void while a quiet support engineer opens a hidden archival vault and finds the intact recovery snapshot behind the customer console.",
         "alt": "A red deletion storm tears through a city of database records while, in the foreground, a support engineer opens a concealed golden vault containing the recovery snapshot.",
-        "anchors": ["terraform destroy", "1,943,200 rows", "snapshot that was not available"],
-        "relationships": [{
-          "id": "engineer-recovers-deleted-records",
-          "subject": ["engineer", "support engineer"],
-          "action": ["found", "finds", "opens"],
-          "object": ["snapshot", "recovery snapshot"],
-          "evidenceAnchorRefs": ["terraform destroy", "1,943,200 rows", "snapshot that was not available"]
-        }],
-        "pixelInspection": { "sha256": "f50d0a11de16b8e37f90f4136b5f9c528507c3eec9e4f276e030e6591de2b08a", "reviewed": true, "reviewer": "codex image-capable editorial review", "semanticVerified": false },
+        "anchors": [
+          "terraform destroy",
+          "1,943,200 rows",
+          "snapshot that was not available"
+        ],
+        "relationships": [
+          {
+            "id": "engineer-recovers-deleted-records",
+            "subject": [
+              "engineer",
+              "support engineer"
+            ],
+            "action": [
+              "found",
+              "finds",
+              "opens"
+            ],
+            "object": [
+              "snapshot",
+              "recovery snapshot"
+            ],
+            "evidenceAnchorRefs": [
+              "terraform destroy",
+              "1,943,200 rows",
+              "snapshot that was not available"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "f50d0a11de16b8e37f90f4136b5f9c528507c3eec9e4f276e030e6591de2b08a",
+          "reviewed": true,
+          "reviewer": "codex image-capable editorial review",
+          "semanticVerified": false
+        },
         "generatedArt": true,
         "satire": {
           "target": "Coverage incentives that celebrate spectacular deletion and ignore skilled recovery work",
           "setup": "Automation destroys the production stack and nearly two million course records dominate the headline.",
           "payoff": "The actual ending sits quietly in a hidden snapshot found by an unnamed support engineer.",
           "institutional": true
+        },
+        "satireCartoon": {
+          "artSource": "data/news-desk/art/2026-08-10--two-million-rows-and-the-engineer-nobody-named--satire.png",
+          "kind": "satire-cartoon",
+          "alt": "AI-generated satirical cartoon in JUNO’s one-figure style. A minimal cartoon shows one ordinary person dwarfed by the consequence of the story: automation destroys the production stack and nearly two million course records dominate the headline, and the actual ending sits quietly in a hidden snapshot found by an unnamed support engineer.",
+          "caption": "1,943,200 rows deleted. One engineer found the snapshot. Zero coverage named him.",
+          "persona": "juno",
+          "register": "oneperson",
+          "caricature": false,
+          "reviewer": "codex image_generation (ChatGPT plan) + operator satire-cartoon review",
+          "reviewedAt": "2026-10-04",
+          "semanticVerified": false,
+          "sha256": "f7a252f5e3224a9fdc901a9ef630a9950d4fd993452416d197d259da76d60db6",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 1879883,
+          "entropy": 7.017,
+          "promptSha256": "b38bf12748eaa67c1627e6fc36ed21de58e4975a310459f943c5e8cd0041cc8d"
         }
       },
       "body": [

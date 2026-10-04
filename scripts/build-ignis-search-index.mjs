@@ -166,7 +166,7 @@ function build() {
       `The site is protected by ${labels.join(', ')}. ${security.controls.map((c) => c.detail).filter(Boolean).slice(0, 2).join(' ')}`);
   }
 
-  ['privacy/index.html', 'terms/index.html', 'rights/index.html', 'membership/index.html', 'games/index.html', 'universe/index.html', 'oracle/index.html'].forEach((rel) => {
+  ['privacy/index.html', 'terms/index.html', 'rights/index.html', 'membership/index.html', 'games/index.html', 'universe/index.html', 'oracle/index.html', 'synthetic-intelligence/index.html', 'ai-vs-si/index.html'].forEach((rel) => {
     const html = read(rel);
     const pageSlug = rel.replace('/index.html', '');
     if (html) add(pageSlug, '/' + rel.replace('index.html', ''), html, metaDescription(html), STATIC_ENTITY[pageSlug] || null);
