@@ -9,11 +9,12 @@
 
 **How the Desk art loop works now:** CI publishes a procedural fallback; the nightly Windows task "VaultSpark Desk Art (nightly)" runs `node scripts/generate-news-art-codex.mjs` (banner then satire) and only stages; a human/agent reviews each image and ingests with `--reviewed <id>@<sha16>` (satire adds `+caricature|+none`). Re-rolls need the new hash. `check-desk-art-currency` alarms at 48h (banner) / 7 days (satire, stories since 2026-10-03).
 
+**Post-closeout follow-through (same day):** the six fallback stories got per-story `visual.satireDirection` art direction plus a general prompt rule (no extra real people or look-alikes, no mascot logos, landmarks from the story's country); all six plus today's new story were reviewed and are live. New tools: `npm run desk:satire:review` (`scripts/review-satire-batch.mjs`) and `npm run repair:evidence` (`scripts/repair-evidence-graph.mjs`). Obelisk follow-up Ark `01K44K376G48C0C29395D31FE9`. The pre-closeout stash was compared file by file against main (nothing unique except two untracked Sep 30 perf traces, restored byte-exact) and dropped.
+
 **Next:**
-1. Six older stories lack satire cartoons (Nvidia/Hugging Face, Nscale board, King Charles, two Australia stories, Pentagon designation): reword their satire scenes (logo, celebrity look-alikes, absent executives, wrong-country landmarks, off-subject real person) and regenerate.
-2. Founder items still open from S368: approve Desk digest test → `autoSend` + `BREVO_API_KEY`; one manual Desk signup; Obelisk Ark nudge; legal hosting wording; "Eternal Credits Queue" heading.
-3. The root worktree's pre-closeout local changes are in `git stash@{0}` ("s368 pre-closeout") — stale copies already on main plus cache churn; drop after a glance.
-4. Publisher drift cascade (deferred) and QA accounts in public standings carry over.
+1. Founder items still open from S368: approve Desk digest test → `autoSend` + `BREVO_API_KEY`; one manual Desk signup; legal hosting wording; "Eternal Credits Queue" heading.
+2. Watch for Obelisk's reply to Ark `01K44K376G48C0C29395D31FE9` (reopen signup + test identity → login E2E).
+3. Publisher drift cascade (deferred) and QA accounts in public standings carry over.
 
 ## Where We Left Off — S368 · 2026-10-02 UTC
 

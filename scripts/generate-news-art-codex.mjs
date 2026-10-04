@@ -324,6 +324,10 @@ export function buildSatirePrompt(story, persona) {
     `The punchline the drawing must land is this caption: "${clean(brief.caption, 200)}". The website prints that caption below the image, so do NOT draw it.`,
     'Prefer NO text anywhere in the image: no captions, no words in speech bubbles, no labels, signs, logos, brand marks, watermarks, numbers or UI text. Only if a single very short word is essential to the gag AND you can render it perfectly legibly, you may include that one word; otherwise none.',
     'People: invented and animated characters are welcome. A real PUBLIC figure named in the story (an executive, politician or official) may appear only as an obvious, exaggerated, non-photorealistic caricature that mocks their public role or claim. Never depict a private individual or any real person who is not a public figure. Never sexual, violent, gory or degrading imagery, and never mock anyone\'s body, ethnicity, gender, religion, disability or age. No real company logos or trademarks; show institutions through objects.',
+    // S368: reviewers rejected renders that added famous executives or celebrities
+    // absent from the story, mascot-logos, and another country's landmarks.
+    'Only a real person named in the headline may appear; never add any other real executive, celebrity or politician, and no famous-looking stand-ins. Never draw a company mascot or logo character. Any landmark, flag or emblem must belong to the country the story is about.',
+    ...(story.visual?.satireDirection ? [`Art direction for this story: ${clean(story.visual.satireDirection, 400)}`] : []),
     `Story headline (for context only, do not render text): ${clean(story.headline, 300)}`,
     'After saving, reply with only the filename.',
     '',

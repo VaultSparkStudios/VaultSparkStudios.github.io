@@ -8,9 +8,10 @@ Last updated: 2026-10-04 UTC (S368 continued)
 - [x] Satire cartoon pipeline (D-S368.7); 95 stories reviewed and live.
 - [x] Hybrid AI & SI positioning + `/synthetic-intelligence/` + `/ai-vs-si/` (D-S368.8); four-story AI→SI Desk report.
 - [x] Fact extractor entity/chrome repair (55 facts); staging `--paths-file` fix; Desk prose links studio pages.
-- [ ] **[P2]** Reword satire scenes and regenerate cartoons for the six fallback stories (see LATEST_HANDOFF).
-- [ ] **[SIL/P2]** Satire approval review aid: render a per-batch contact sheet from `ingest-news-art --kind satire --dry-run` and require an explicit id list (never "all staged") — the S368 approval helper briefly ingested two unreviewed cartoons.
-- [ ] **[SIL/P3]** `push` helper that runs `pre-push-scan` coherence nodes' builders before pushing (the evidence graph already names each builder), so publisher races stop costing manual loop edits.
+- [x] Six fallback stories regenerated with per-story `visual.satireDirection` plus a general no-extra-real-people / no-mascot / correct-country prompt rule; all reviewed and live (102 stories with cartoons).
+- [x] **[SIL]** `scripts/review-satire-batch.mjs` (`npm run desk:satire:review`): contact sheets + explicit-id approval bound to live hashes.
+- [x] **[SIL]** `scripts/repair-evidence-graph.mjs` (`npm run repair:evidence`): rebuilds and stages every stale node the pre-push coherence gate would reject.
+- [x] Obelisk follow-up shipped via Ark `01K44K376G48C0C29395D31FE9` (supersedes `01K3SH847CF5020D9D7209EB07`).
 
 ## S368 — Audit 2026-10-02
 

@@ -295,6 +295,23 @@ The workflow's "mutated reviewed artwork" lock (`git diff --diff-filter=MD -- as
 checks what a scheduled run changes inside its own checkout. A local commit becomes that checkout's
 `HEAD`, so later scheduled runs see no diff. **The workflow doesn't need to change.**
 
+## Reviewing a batch of satire cartoons (S368)
+
+```powershell
+npm run desk:satire:review            # contact sheets → .cache/desk-art-staging/_review/
+node scripts/review-satire-batch.mjs --approve <id,id,...> --caricature <ids that show a real public figure>
+```
+
+Approve only ids you looked at. The tool binds each id to the hash staged right now and never
+approves a cartoon you did not list, so a worker staging new cartoons mid-review cannot slip one in.
+
+When a story keeps producing the same rejected render (a logo character, famous look-alikes,
+another country's landmark), set `visual.satireDirection` on that story to one sentence of art
+direction and regenerate it with `--kind satire --force --story <date>/<slug>`.
+
+Before pushing, `npm run repair:evidence` rebuilds and stages every derived output the pre-push
+coherence gate would reject (`--check` reports without writing).
+
 ## Scheduling (Windows Task Scheduler, hidden window)
 
 Schedule **generation only**. Review and ingest stay manual. Codex's ChatGPT login lives in your user
