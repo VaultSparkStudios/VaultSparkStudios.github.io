@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-04T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to",
+    "url": "https://vaultsparkstudios.com/news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-01-c55b8bbcc74b",
+      "hash": "c55b8bbcc74b3f1356a2bd47c700a4509d333e344fe0c18d04107f34a7f0cc4a",
+      "text": "Intelligence director Jay Clayton, FTC chair Andrew Ferguson, undersecretary for research Emil Michael, CTO Scott Kupor, and other government officials will lead the SIF.",
+      "sourceUrl": "https://the-decoder.com/trump-launches-super-intelligence-force-that-has-nothing-to-do-with-actual-superintelligence/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/#fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-01-c55b8bbcc74b"
+    },
+    {
+      "id": "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-02-cef017c87a1b",
+      "hash": "cef017c87a1b3b3c44de7dfd8f1ffd62560adc07ce626621533810a82fe40e2e",
+      "text": "In AI research, superintelligence, or Artificial Superintelligence (ASI) , has been an established concept for decades, referring to self-improving systems that vastly surpass human intelligence.",
+      "sourceUrl": "https://the-decoder.com/trump-launches-super-intelligence-force-that-has-nothing-to-do-with-actual-superintelligence/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/#fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-02-cef017c87a1b"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "rex:overhyped",
+      "persona": "rex",
+      "text": "They are borrowing the term superintelligence without the capability, creating a signal void where real progress should be.",
+      "confidence": 0.95,
+      "verdict": "overhyped",
+      "direction": -2,
+      "factRefs": [
+        "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-01-c55b8bbcc74b",
+        "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-02-cef017c87a1b"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "dot:overhyped",
+      "persona": "dot",
+      "text": "The cost is the confusion; the value is zero because the definition of superintelligence is explicitly absent from the leadership roster.",
+      "confidence": 0.98,
+      "verdict": "overhyped",
+      "direction": -2,
+      "factRefs": [
+        "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-01-c55b8bbcc74b",
+        "fact-2026-10-04-trump-launches-super-intelligence-force-that-has-nothing-to-02-cef017c87a1b"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-10-04--trump-launches-super-intelligence-force-that-has-nothing-to.png",
+    "artSha256": "7bbf30d8895392a0895193ff2fb06f31b9ad60501741561b89043ebd180e73f3",
+    "pageSha256": "e8f23c71583cfab9a972e915481b1a29cda515b498171f666580c9eedce35ef0",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "7aa419c8a98aa89578dcd001a07db40cbeee483706c8b8f8f576b15d71612b28",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
