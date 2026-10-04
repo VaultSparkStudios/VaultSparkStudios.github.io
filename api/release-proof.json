@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-04T02:03:56.542Z",
+  "generatedAt": "2026-10-04T02:27:31.160Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,15 +14,12 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
       "shell-mismatch",
-      "staging-canonical-csp-drift",
-      "status-mismatch"
+      "staging-canonical-csp-drift"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
       "/:stagingCanonicalCsp",
       "/studio-pulse/:stagingCanonicalCsp",
       "/membership/:stagingCanonicalCsp",
@@ -34,9 +31,9 @@
     "artifactManifest": {
       "candidateRoot": "4f715ecfb97cbf6d259ec01c5762cd2be0368cd0933abb3daa60347fbf805b48",
       "candidateLeafCount": 55,
-      "stagingRoot": "32c80aa97562240a8ba3a195eb385d4a02c54404b1fb31bf4ea748a25204e909",
+      "stagingRoot": "4f715ecfb97cbf6d259ec01c5762cd2be0368cd0933abb3daa60347fbf805b48",
       "stagingLeafCount": 55,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -184,7 +181,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -200,7 +197,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
