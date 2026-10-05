@@ -28,6 +28,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export function pushFiles(base, git) {
   return [...new Set([
     ...git(['diff', '--name-only', `${base}...HEAD`]),
+    // S368: pre-push diffs the pushed range against the remote tip, which also
+    // carries sources a merged publisher commit changed. Two-dot covers that.
+    ...git(['diff', '--name-only', base, 'HEAD']),
     ...git(['diff', '--name-only', '--cached']),
     ...git(['diff', '--name-only']),
   ])];
@@ -70,10 +73,12 @@ function defaultGit(args) {
 }
 
 function selfTest() {
-  const fakeGit = (args) => (args[0] === 'diff' && args[2]?.includes('...') ? ['a.json', 'b.json'] : args.includes('--cached') ? ['b.json', 'c.json'] : ['d.json']);
+  const fakeGit = (args) => (args[2]?.includes('...') ? ['a.json', 'b.json']
+    : args[3] === 'HEAD' ? ['b.json', 'm.json']
+      : args.includes('--cached') ? ['b.json', 'c.json'] : ['d.json']);
   const files = pushFiles('origin/main', fakeGit);
   const cases = [
-    ['push set unions ahead, staged and unstaged without duplicates', files.join(',') === 'a.json,b.json,c.json,d.json'],
+    ['push set unions ahead, remote-tip, staged and unstaged without duplicates', files.join(',') === 'a.json,b.json,m.json,c.json,d.json'],
     ['stage paths include output and alsoStage', stagePaths({ output: 'api/x.json', alsoStage: ['docs/X.md'] }).join(',') === 'api/x.json,docs/X.md'],
     ['a node without outputs stages nothing', stagePaths({}).length === 0],
   ];
