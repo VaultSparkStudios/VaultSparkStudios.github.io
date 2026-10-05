@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T01:00:56.449Z",
+  "generatedAt": "2026-10-05T01:02:57.647Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Deployment reconciliation ledger is stale (newest receipt 5 days old); production promotion state is unobserved, not stranded. CI gates are still running.",
+  "summary": "Deployment reconciliation ledger is stale (newest receipt 5 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-29T22:16:20.227Z",
     "currentBehindStreak": 5,
     "newestGradableAt": "2026-09-29T22:16:20.227Z",
-    "newestAgeHours": 122.7,
+    "newestAgeHours": 122.8,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -47,10 +47,10 @@
     },
     {
       "name": "Accessibility Audit",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-05T00:59:37Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-05T01:01:47Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37249617201",
       "headSha": "178e692884734359ca14c418364ec0f7941655eb",
       "event": "push"
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.4,
+      "ageHours": 1.44,
       "staleAfterHours": 48
     },
     {
@@ -223,7 +223,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.41,
+      "ageHours": 0.45,
       "staleAfterHours": 48
     },
     {
