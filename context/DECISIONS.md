@@ -2048,3 +2048,8 @@ Founder direction 2026-10-04. On 2026-09-29 the White House order "Inaugurating 
 
 Founder delegation 2026-10-05 ("do those for me"). (1) The privacy policy now names Brevo as the delivery provider for The Desk Dispatch and transactional mail, alongside Kit (Studio Dispatch) and Resend (operational notices); /security/ now states that member sign-in runs through Obelisk with Supabase holding member data behind a short-lived edge session, replacing the outdated "Supabase Auth with bcrypt" claim; /rights/ labels Supabase as the member database. (2) The "Eternal Credits Queue" section is removed from the Eternal Dispatch panel instead of renamed, because game/studio credits are listed under notOffered in api/membership-tiers.json (D-S368.1). (3) The Desk Dispatch Brevo key is set as a GitHub Actions secret; switching config/desk-dispatch.json to autoSend was refused by the session's safety classifier and is left for the founder to flip.
 
+
+## D-S368.10 — Desk art goes live on the automated reviewer's approval
+
+Founder ruling 2026-10-05: "Images and art/cartoons should always go live by your own approval and not mine - I can then review and request a different change." This supersedes the human-review step of D-S368.7. scripts/desk-art-autopilot.mjs generates, reviews each image with the Codex CLI on the ChatGPT plan against a strict rubric (likeness, text, logos, landmarks, fit), re-rolls failures up to twice, ingests passes with hash-bound approvals, and publishes through the existing CI release (desk-content-release.yml, staging-first). It runs every 2 hours from the founder's PC in a private worktree; the founder explicitly authorized the unattended push-and-deploy. The founder reviews what is live and requests re-rolls.
+

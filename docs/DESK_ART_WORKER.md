@@ -295,6 +295,41 @@ The workflow's "mutated reviewed artwork" lock (`git diff --diff-filter=MD -- as
 checks what a scheduled run changes inside its own checkout. A local commit becomes that checkout's
 `HEAD`, so later scheduled runs see no diff. **The workflow doesn't need to change.**
 
+## Autopilot: art goes live on the automated reviewer's approval (D-S368.10)
+
+Founder ruling 2026-10-05: images never wait for the founder. `scripts/desk-art-autopilot.mjs`
+(`npm run desk:art:auto`) runs every 2 hours from the Windows task "VaultSpark Desk Art (nightly)":
+
+1. Works in a private worktree, `.cache/desk-art-staging/_wt`, reset to `origin/main` each run.
+   The founder's checkout is never read for targets, written or pushed.
+2. Generates pending banners and satire cartoons with the Codex worker on the ChatGPT plan.
+3. Reviews each image with the same Codex CLI (image input, read-only sandbox, strict JSON schema).
+   - Banner checks: no text, no real person or stand-in, landmarks from the story's country, fits the
+     story, not a placeholder.
+   - Satire checks: drawn cartoon, no readable text beyond one essential word (wavy lines standing in
+     for text are fine), only public figures named in the headline as caricature, nothing degrading,
+     no logos or mascots, correct-country landmarks, the punchline fits.
+   - Anything uncertain or unparseable fails. Verdicts are written to `<id>/review.json`.
+4. A failed image is re-rolled up to twice. After that the story keeps its fallback, and
+   `check-desk-art-currency` reports it.
+5. Ingests passing images with hash-bound approvals (`reviewer: auto-review:codex (D-S368.10)`).
+6. Regenerates the Desk outputs, runs the guard checks, and refuses to publish if anything outside the
+   art/output paths changed.
+7. Commits, merges `origin/main` (generated-file conflicts are regenerated; anything else aborts),
+   runs `repair-evidence-graph`, pushes, and dispatches `desk-content-release.yml`. CI then
+   deploys staging first, then production, so the PC never touches the servers itself.
+
+Log: `.cache/desk-art-staging/autopilot.log`.
+
+**When the founder asks for a change** ("re-roll the Clayton cartoon"), run:
+
+```powershell
+node scripts/desk-art-autopilot.mjs --story 2026-10-05/<slug> --kind satire --force
+```
+
+If the same problem keeps coming back, add `visual.satireDirection` to the story first.
+`--dry-run` generates and reviews without publishing; `--no-deploy` pushes without dispatching the release.
+
 ## Reviewing a batch of satire cartoons (S368)
 
 ```powershell
