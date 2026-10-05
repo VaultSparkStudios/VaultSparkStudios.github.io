@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-04T23:47:12.670Z",
+  "generatedAt": "2026-10-05T00:35:58.803Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -22,7 +22,6 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
       "/:stagingCanonicalCsp",
       "/studio-pulse/:stagingCanonicalCsp",
       "/membership/:stagingCanonicalCsp",
@@ -34,9 +33,9 @@
     "artifactManifest": {
       "candidateRoot": "28459e2199a298d7b93ddf4ea60aacc60c7a18ddc8fd4dcd6ee84043304d303e",
       "candidateLeafCount": 55,
-      "stagingRoot": "e93eebdec7f0fbab3dbd014603d6154e71c67377c495edf9959bdf2b8289a3ff",
+      "stagingRoot": "28459e2199a298d7b93ddf4ea60aacc60c7a18ddc8fd4dcd6ee84043304d303e",
       "stagingLeafCount": 55,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -76,13 +75,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 13,
-    "ageHours": 0.7,
-    "observedAt": "2026-10-04T23:38:18.339Z",
+    "commitsBehind": 3,
+    "ageHours": 0.2,
+    "observedAt": "2026-10-05T00:35:58.803Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-04T23:38:18.339Z",
+      "observedAt": "2026-10-05T00:35:58.803Z",
       "expectedFrom": "b391d0942826a1a24b67169e7926026dad8258ee15e2d2af8aded66bbb9041dc",
       "supersededBy": null,
       "ageHours": 0,
@@ -184,7 +183,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -200,7 +199,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
