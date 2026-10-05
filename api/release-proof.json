@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-05T20:24:57.823Z",
+  "generatedAt": "2026-10-05T20:40:07.886Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,21 +21,20 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch",
       "/:stagingCanonicalCsp",
       "/studio-pulse/:stagingCanonicalCsp",
-      "/membership/:stagingCanonicalCsp",
-      "/membership/:localShellParity"
+      "/membership/:stagingCanonicalCsp"
     ],
     "candidateBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
-    "deployedBuildSha": "3ff84269caa816cafcadcf0ba702750fea5edaf0",
-    "candidateShaBound": false,
+    "deployedBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
+    "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "5a79a6c97e42619c6937fb3403ce8cf6e9e3cee87ac2cdf7e5c2e1bbcb1df5fb",
+      "candidateRoot": "1090a17cd416a9953dbfcb9883eaaab92eb9b70f516ca606133062959aea3a67",
       "candidateLeafCount": 55,
-      "stagingRoot": "5a79a6c97e42619c6937fb3403ce8cf6e9e3cee87ac2cdf7e5c2e1bbcb1df5fb",
+      "stagingRoot": "ae05df1bcd8c05c413aa26061cfbd9f862bbac5b90d73f797ce5060203833bb5",
       "stagingLeafCount": 55,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -75,13 +74,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 9,
-    "ageHours": 0.5,
-    "observedAt": "2026-10-05T15:13:18.289Z",
+    "commitsBehind": 13,
+    "ageHours": 3.9,
+    "observedAt": "2026-10-05T20:23:43.572Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-05T15:13:18.289Z",
+      "observedAt": "2026-10-05T20:23:43.572Z",
       "expectedFrom": "b391d0942826a1a24b67169e7926026dad8258ee15e2d2af8aded66bbb9041dc",
       "supersededBy": null,
       "ageHours": 0,
@@ -182,7 +181,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": false,
+    "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -198,7 +197,6 @@
   },
   "blockers": [
     "stagingCandidateReady",
-    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
