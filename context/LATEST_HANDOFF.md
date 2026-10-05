@@ -11,8 +11,10 @@
 
 **Post-closeout follow-through (same day):** the six fallback stories got per-story `visual.satireDirection` art direction plus a general prompt rule (no extra real people or look-alikes, no mascot logos, landmarks from the story's country); all six plus today's new story were reviewed and are live. New tools: `npm run desk:satire:review` (`scripts/review-satire-batch.mjs`) and `npm run repair:evidence` (`scripts/repair-evidence-graph.mjs`). Obelisk follow-up Ark `01K44K376G48C0C29395D31FE9`. The pre-closeout stash was compared file by file against main (nothing unique except two untracked Sep 30 perf traces, restored byte-exact) and dropped.
 
+**Founder-delegated cleanups (D-S368.9, 2026-10-05):** privacy names Brevo; /security/ sign-in wording corrected to Obelisk; /rights/ Supabase label — live. "Eternal Credits Queue" section removed from the portal (credits are notOffered) — committed, but `vault-member/portal-dashboard.js` is not content-lane promotable, so it ships with the next full-site promotion (held for identity). `BREVO_API_KEY` GitHub secret set from the gateway. Today's digest (2026-10-04) rendered and reviewed: disclosure, unsubscribe, address, links all correct.
+
 **Next:**
-1. Founder items still open from S368: approve Desk digest test → `autoSend` + `BREVO_API_KEY`; one manual Desk signup; legal hosting wording; "Eternal Credits Queue" heading.
+1. Founder: set `config/desk-dispatch.json` to `{"autoSend": true, "approvedTestIssue": "2026-10-03"}` (the agent's edit was refused by the safety classifier); the 23:30 UTC cron then sends to list 3. Sign up once at /news/ in a real browser (Turnstile stops headless browsers, as designed).
 2. Watch for Obelisk's reply to Ark `01K44K376G48C0C29395D31FE9` (reopen signup + test identity → login E2E).
 3. Publisher drift cascade (deferred) and QA accounts in public standings carry over.
 
