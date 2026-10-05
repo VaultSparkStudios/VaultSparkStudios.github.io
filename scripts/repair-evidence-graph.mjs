@@ -49,6 +49,11 @@ export async function repair({ base = 'origin/main', checkOnly = false, passes =
       const node = nodes.get(check.id);
       if (!node?.builder) { log(`✗ ${check.id}: stale and the graph names no builder`); continue; }
       run(process.execPath, [node.builder], { cwd: ROOT, stdio: 'ignore', windowsHide: true });
+      // Some builders only report unless told to write (generate-pathways needs
+      // --apply). If the plain run left the check failing, run it again with --apply.
+      if (run(check.command[0], check.command.slice(1), { cwd: ROOT, encoding: 'utf8', windowsHide: true }).status !== 0) {
+        run(process.execPath, [node.builder, '--apply'], { cwd: ROOT, stdio: 'ignore', windowsHide: true });
+      }
       const paths = stagePaths(node);
       if (paths.length) run('git', ['add', '--', ...paths], { cwd: ROOT, stdio: 'ignore' });
       log(`↻ pass ${pass}: rebuilt ${check.id}`);
