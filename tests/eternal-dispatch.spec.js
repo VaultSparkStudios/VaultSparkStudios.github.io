@@ -31,6 +31,7 @@ test.describe('Eternal intelligence surface', () => {
     await expect(panel).toBeVisible();
     await expect(panel.locator('#eternal-intelligence-content')).toContainText('Eternal Dispatch', { timeout: 20000 });
     await expect(panel.locator('#eternal-intelligence-content')).toContainText('48-Hour Reveal Window');
-    await expect(panel.locator('#eternal-intelligence-content')).toContainText('Eternal Credits Queue');
+    // D-S368.1: game/studio credits are not offered, so the panel shows no credits queue.
+    await expect(panel.locator('#eternal-intelligence-content')).not.toContainText('Credits Queue');
   });
 });

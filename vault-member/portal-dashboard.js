@@ -1840,7 +1840,6 @@
         const dispatch = body.dispatch || {};
         const sections = Array.isArray(dispatch.sections) ? dispatch.sections : [];
         const reveals = Array.isArray(body.reveals) ? body.reveals : [];
-        const credits = Array.isArray(body.credits) ? body.credits : [];
 
         const sectionHtml = sections.map(function (section) {
           return '<div style="padding:0.85rem 0.95rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">'
@@ -1864,15 +1863,6 @@
             }).join('')
           : '<div style="padding:0.85rem 0.95rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:var(--muted);">No sealed projects are inside the 48-hour reveal window yet.</div>';
 
-        const creditHtml = credits.length
-          ? '<div style="display:flex;flex-wrap:wrap;gap:0.45rem;">'
-            + credits.map(function (entry) {
-                var label = entry.game ? (entry.handle + ' · ' + entry.game) : entry.handle;
-                return '<span style="display:inline-flex;align-items:center;padding:0.35rem 0.65rem;border-radius:999px;background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.18);font-size:0.75rem;color:var(--gold);">' + escHtml(label || 'Eternal Member') + '</span>';
-              }).join('')
-            + '</div>'
-          : '<div style="font-size:0.82rem;color:var(--muted);">No shipped-title credits are queued yet.</div>';
-
         el.innerHTML = '<div style="display:grid;gap:0.95rem;">'
           + '<div style="padding:1rem 1.05rem;border-radius:16px;background:linear-gradient(145deg,rgba(55,24,89,0.35),rgba(14,18,32,0.92));border:1px solid rgba(192,132,252,0.18);">'
           + '<div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#c084fc;margin-bottom:0.38rem;">' + escHtml(dispatch.title || 'Eternal Dispatch') + '</div>'
@@ -1883,10 +1873,9 @@
           + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#7EC9FF;margin-bottom:0.45rem;">48-Hour Reveal Window</div>'
           + '<div style="display:grid;gap:0.65rem;">' + revealHtml + '</div>'
           + '</div>'
-          + '<div>'
-          + '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.45rem;">Eternal Credits Queue</div>'
-          + creditHtml
-          + '</div>'
+          // S368: no "Eternal Credits Queue" — game/studio credits are listed under
+          // notOffered in api/membership-tiers.json (D-S368.1), so the panel must not
+          // present a queue for a perk the membership page says is not offered.
           + '</div>';
       } catch (err) {
         el.innerHTML = '<div style="padding:0.9rem 1rem;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:var(--muted);">'

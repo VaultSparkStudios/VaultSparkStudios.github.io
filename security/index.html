@@ -209,7 +209,7 @@
       <div class="container">
         <div class="policy-body">
 
-          <span class="policy-updated">Last updated: October 2, 2026</span>
+          <span class="policy-updated">Last updated: October 4, 2026</span>
 
           <p>The security of our users, their data, and our systems is a top priority at VaultSpark Studios. This page explains how to report security vulnerabilities and describes the security measures we have in place.</p>
 
@@ -281,8 +281,9 @@
 
           <h3>Authentication</h3>
           <ul>
-            <li>Vault Member authentication is handled by Supabase Auth with bcrypt password hashing</li>
-            <li>Session tokens are stored securely and rotated on refresh</li>
+            <li>Vault Member sign-in is handled by Obelisk, the VaultSpark identity service; this website does not store your password</li>
+            <li>Obelisk sign-in callbacks end at our Cloudflare edge, which issues a short-lived session for member data stored in Supabase behind row-level security</li>
+            <li>Sessions renew from the edge before they expire, and a session revoked at the edge signs the browser tab out</li>
             <li>Rate limiting is applied to authentication endpoints</li>
           </ul>
 
