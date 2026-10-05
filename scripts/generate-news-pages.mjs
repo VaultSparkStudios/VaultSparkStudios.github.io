@@ -33,6 +33,9 @@ import { staticDeskEvidence, renderStaticDeskEvidence } from './lib/news-freshne
 import { ORG_REF, WEBSITE_REF } from './lib/org-entity.mjs';
 import { deskDispatchCta, DESK_DISPATCH_SCRIPT } from './lib/desk-dispatch-cta.mjs';
 import { SATIRE_CARTOON_CARICATURE_NOTE, SATIRE_CARTOON_LABEL, SATIRE_CARTOON_SIZE, satireCartoonAssetBase } from './lib/news-memes.mjs';
+import { loadPublishTimeLedger, resolveStoryTime, formatDeskTime, deskTimeHtml } from './lib/news-publish-time.mjs';
+import { buildSearchIndex, shardSearchIndex, serializeSearchIndex, SEARCH_INDEX_PATH } from './lib/news-search-index.mjs';
+import { deskFinderHtml, deskFinderScript } from './lib/desk-finder.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -73,6 +76,11 @@ const reactionsFeed = existsSync(join(ROOT, 'api/news-desk-reactions.json'))
 const ledger = existsSync(join(ROOT, 'data/news-desk/prediction-ledger.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'data/news-desk/prediction-ledger.json'), 'utf8'))
   : { entries: [] };
+// Founder request 2026-10-05: every card and article shows the real publish
+// date and time. scripts/lib/news-publish-time.mjs owns the source order
+// (recorded publish stamp → commit ledger → authoring stamp → edition slot).
+const publishTimes = loadPublishTimeLedger(ROOT);
+const storyTime = (day, story) => resolveStoryTime(day, story, publishTimes);
 
 /* ── Harvest shared chrome from a live sibling page ────────────────────── */
 
@@ -138,7 +146,8 @@ const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage[
 
 // S355: one escape function shared with check-news-claim-parity.mjs.
 const escapeHtml = escapeNewsHtml;
-const clamp = (s, max) => (String(s).length <= max ? String(s) : `${String(s).slice(0, max - 1)}…`);
+const storyTimeHtml = (day, story, className) => deskTimeHtml(storyTime(day, story), { escape: escapeHtml, ...(className ? { className } : {}) });
+const clamp =(s, max) => (String(s).length <= max ? String(s) : `${String(s).slice(0, max - 1)}…`);
 
 /**
  * Clamp on a WORD boundary, never mid-word, with a real ellipsis character.
@@ -276,8 +285,10 @@ function storyJsonLd(day, story, url, image) {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: story.headline,
-    datePublished: day.date,
-    dateModified: day.date,
+    // A recorded instant when one exists; an edition-slot estimate stays a
+    // plain date so structured data never asserts a time nobody recorded.
+    datePublished: storyTime(day, story).precise ? storyTime(day, story).iso : day.date,
+    dateModified: storyTime(day, story).precise ? storyTime(day, story).iso : day.date,
     description: metaDescription(story),
     image: [image],
     mainEntityOfPage: url,
@@ -527,7 +538,7 @@ function bylineRow(story, day, stats) {
   const names = listNames(personas.map((p) => personaNameLink(p)));
   return `<div class="desk-byline">
     ${avatars ? `<span class="desk-byline-avatars" aria-hidden="true">${avatars}</span>` : ''}
-    <p class="desk-byline-text"><span class="desk-byline-by">By ${names || '<strong>The Desk</strong>'} <a class="desk-ai-pill" href="#how-this-was-written">AI-written</a></span><span class="desk-byline-meta"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time> · ~${stats.minutes} min read</span></p>
+    <p class="desk-byline-text"><span class="desk-byline-by">By ${names || '<strong>The Desk</strong>'} <a class="desk-ai-pill" href="#how-this-was-written">AI-written</a></span><span class="desk-byline-meta">${storyTimeHtml(day, story)} · ~${stats.minutes} min read</span></p>
   </div>
   <p class="desk-ai-line"><strong>Written by AI personas — no human wrote this.</strong> <a href="#how-this-was-written">How this story was made</a></p>`;
 }
@@ -560,7 +571,7 @@ function moreFromDesk(currentDay, current) {
     const edition = EDITIONS.find((e) => e.id === s.edition)?.name;
     return `<li><a class="desk-more-card" href="/news/${d.date}/${s.slug}/">
       ${isFallbackArt(s) ? pendingArt(s, 'desk-more-art') : `<picture class="desk-more-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture>`}
-      <span class="desk-more-copy"><span class="desk-more-meta">${escapeHtml([edition, d.date].filter(Boolean).join(' · '))}</span><span class="desk-more-title">${escapeHtml(s.headline)}</span></span>
+      <span class="desk-more-copy"><span class="desk-more-meta">${edition ? `${escapeHtml(edition)} · ` : ''}${storyTimeHtml(d, s)}</span><span class="desk-more-title">${escapeHtml(s.headline)}</span></span>
     </a></li>`;
   }).join('\n');
   return `<section class="desk-more" aria-labelledby="desk-more-title"><h2 class="desk-h2" id="desk-more-title">More from The Desk</h2><ul class="desk-more-grid">${cards}</ul></section>`;
@@ -950,6 +961,34 @@ const publishedDays = days.filter((day) => day.stories.some((story) => !story.su
 const archiveMonths = [...new Set(publishedDays.map((day) => day.date.slice(0, 7)))];
 
 /**
+ * Founder request 2026-10-05: search + filters across EVERY edition, not only
+ * the seven the hub lists. The index (api/news-desk-search.json + one shard per
+ * month) is derived here from the same corpus as the pages, so a story can
+ * never be on the site but missing from search. Superseded reruns stay out,
+ * exactly as they stay out of the listings.
+ */
+const searchEntries = publishedDays.flatMap((day) => day.stories
+  .filter((story) => !story.supersededBy)
+  .map((story) => {
+    const resolved = storyTime(day, story);
+    const voices = deriveStoryStats(story, day, { ledger }).voices;
+    return {
+      day,
+      story,
+      time: { iso: resolved.iso, source: resolved.source, label: formatDeskTime(resolved.iso) },
+      personaIds: [...(voices.length ? voices : [story.memeLine?.personaId]), ...(story.stances || []).map((s) => s.personaId)].filter(Boolean),
+      hasArt: !isFallbackArt(story),
+      formatId: formatFor(story).id,
+    };
+  })
+  .sort((a, b) => (a.time.iso < b.time.iso ? 1 : a.time.iso > b.time.iso ? -1 : 0)));
+const searchIndex = buildSearchIndex(searchEntries, {
+  personas: PERSONAS.map((p) => [p.id, p.name]),
+  formats: STORY_FORMATS.map((f) => [f.id, f.name]),
+  editions: EDITIONS.map((e) => [e.id, e.name]),
+});
+
+/**
  * agent-geo-layer-v2: the hub told answer engines it was a CollectionPage and
  * listed nothing in it. The latest editions' articles become an ItemList so a
  * crawler can reach every current story from the hub's structured data alone.
@@ -1053,7 +1092,8 @@ function buildHubPage() {
       return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${variant}">
         ${isFallbackArt(story) ? pendingArt(story, 'desk-story-art') : `<picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>`}
         <div class="desk-story-copy">
-          <div class="desk-story-meta"><span class="desk-story-edition">${label || escapeHtml(formatFor(story).name)}</span><span>${escapeHtml(formatFor(story).name)}</span></div>${cardReach(story, day)}
+          <div class="desk-story-meta"><span class="desk-story-edition">${label || escapeHtml(formatFor(story).name)}</span><span>${escapeHtml(formatFor(story).name)}</span></div>
+          <span class="desk-story-when">${storyTimeHtml(day, story)}</span>${cardReach(story, day)}
           <h3>${escapeHtml(story.headline)}</h3>
           <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
           <div class="desk-story-foot">${by}<span class="desk-story-split" data-heat="${heatBand(heat)}">${escapeHtml(stats.label)}</span></div>
@@ -1083,8 +1123,19 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${deskStatsPanel()}
   <div class="desk-rule"></div>
   <div class="desk-section-head"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
+  ${searchEntries.length ? deskFinderHtml({
+    escape: escapeHtml,
+    storyCount: searchEntries.length,
+    personas: PERSONAS.map((p) => [p.id, p.name]),
+    topics: searchIndex.topics,
+    editions: EDITIONS.map((e) => [e.id, e.name]),
+    formats: STORY_FORMATS.map((f) => [f.id, f.name]),
+    months: archiveMonths.map((month) => [month, monthLabel(month)]),
+  }) : ''}
+  <div class="desk-latest" data-desk-latest>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${archiveMonths.length ? '<p class="desk-archive-cta"><a href="/news/archive/">Browse every edition in The Desk archive →</a></p>' : ''}
+  </div>
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
   <div class="desk-section-head"><h2>Not every story is the same shape</h2><p>Some days it is an argument. Some days it is one line and a link.</p></div>
@@ -1113,7 +1164,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   })()}</p>
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/evidence/#verify" style="color:var(--gold)">VaultSpark Evidence</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
-</section></main>${DISPATCH_SCRIPT}${chromeFoot('../')}`;
+</section></main>${DISPATCH_SCRIPT}${searchEntries.length ? deskFinderScript() : ''}${chromeFoot('../')}`;
 }
 
 function monthLabel(month) {
@@ -1165,7 +1216,7 @@ function buildArchiveMonthPage(month) {
   });
   const editions = monthDays.map((day) => {
     const stories = day.stories.filter((story) => !story.supersededBy);
-    const links = stories.map((story) => `<li><a href="/news/${day.date}/${story.slug}/">${escapeHtml(story.headline)}</a><span>${escapeHtml(formatFor(story).name)}</span></li>`).join('');
+    const links = stories.map((story) => `<li><a href="/news/${day.date}/${story.slug}/">${escapeHtml(story.headline)}</a><span class="desk-archive-meta">${storyTimeHtml(day, story)} · ${escapeHtml(formatFor(story).name)}</span></li>`).join('');
     return `<section class="desk-archive-edition" aria-label="Edition ${escapeHtml(day.date)}"><h2 class="desk-day-head"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time><span>${stories.length} ${stories.length === 1 ? 'story' : 'stories'}</span></h2><ol class="desk-archive-stories">${links}</ol></section>`;
   }).join('');
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap desk-archive">
@@ -1219,7 +1270,7 @@ function buildPersonaPage(persona) {
     const href = `/news/${day.date}/${story.slug}/`;
     const tags = [report.length && 'Report', stance && 'Take', turns.length && 'Desk comments', panel && 'Panel', predictions.length && 'Prediction'].filter(Boolean);
     return `<li class="desk-profile-entry">
-      <div class="desk-profile-entry-top"><time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time><span>${tags.join(' · ')}</span></div>
+      <div class="desk-profile-entry-top">${storyTimeHtml(day, story)}<span>${tags.join(' · ')}</span></div>
       <h3><a href="${href}">${escapeHtml(story.headline)}</a></h3>
       ${report.length ? `<p><strong>In the report.</strong> ${escapeHtml(clampWords(report[0].text, 235))} <a href="${href}#story">Read the passage →</a></p>` : ''}
       ${stance ? `<blockquote><strong>The take.</strong> “${escapeHtml(stance.position)}” <a href="${href}#positions">Read the argument →</a></blockquote>` : ''}
@@ -1535,6 +1586,14 @@ for (const target of targets) {
       throw new Error(`${target.path}: generated News head is missing the VaultSpark icon contract`);
     }
   }
+}
+
+// The search index is data, not a page: it joins the targets after the HTML
+// head-contract assertion above. Manifest + one shard per publication month.
+if (searchEntries.length) {
+  const { manifest, shards } = shardSearchIndex(searchIndex);
+  targets.push({ path: SEARCH_INDEX_PATH, html: serializeSearchIndex(manifest) });
+  for (const shard of shards) targets.push({ path: shard.path, html: serializeSearchIndex(shard.body) });
 }
 
 let stale = 0;

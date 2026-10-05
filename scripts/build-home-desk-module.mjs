@@ -37,6 +37,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deskDispatchCta, deskDispatchCss, DESK_DISPATCH_SCRIPT } from './lib/desk-dispatch-cta.mjs';
+import { loadPublishTimeLedger, resolveStoryTime, deskTimeHtml } from './lib/news-publish-time.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argValue = (flag) => {
@@ -46,6 +47,7 @@ const argValue = (flag) => {
 const HOME = argValue('--home') ? path.resolve(argValue('--home')) : path.join(ROOT, 'index.html');
 const DESK_FEED = path.join(ROOT, 'api', 'news-desk.json');
 const FRESHNESS_FEED = path.join(ROOT, 'api', 'news-desk-freshness.json');
+const DAYS_DIR = path.join(ROOT, 'data', 'news-desk', 'days');
 
 export const START = '<!-- desk-showcase:start -->';
 export const END = '<!-- desk-showcase:end -->';
@@ -232,7 +234,11 @@ export function renderBlock(deskFeed, freshness, { hasArt = () => false } = {}) 
   const art = base && hasArt(base) === true ? base : null;
   const leadPersona = personaName(lead);
   const storyCount = Number.isInteger(lead.storyCount) && lead.storyCount > 1 ? `${lead.storyCount} stories` : null;
-  const leadKicker = [`Lead story · ${lead.date}`, leadPersona && `${leadPersona}’s take`, storyCount].filter(Boolean).join(' · ');
+  // Founder request 2026-10-05: cards show the full publish date and time with
+  // a machine-readable <time>. build() attaches `published` from the day
+  // artifact + publish-time ledger; a card without it keeps its edition date.
+  const when = (card) => (card.published ? cardTimeHtml(card.published) : escapeHtml(card.date));
+  const leadKicker = [`Lead story · ${when(lead)}`, leadPersona && escapeHtml(`${leadPersona}’s take`), storyCount && escapeHtml(storyCount)].filter(Boolean).join(' · ');
 
   const artHtml = art ? [
     '            <picture class="desk-lead__art">',
@@ -246,7 +252,7 @@ export function renderBlock(deskFeed, freshness, { hasArt = () => false } = {}) 
     const persona = personaName(card);
     return [
       `            <a class="desk-mini" href="${escapeHtml(card.href)}">`,
-      `              <span class="desk-mini__meta">Edition ${escapeHtml(card.date)}${persona ? ` · ${escapeHtml(persona)}’s take` : ''}</span>`,
+      `              <span class="desk-mini__meta">${card.published ? when(card) : `Edition ${escapeHtml(card.date)}`}${persona ? ` · ${escapeHtml(persona)}’s take` : ''}</span>`,
       `              <span class="desk-mini__headline">${escapeHtml(card.headline)}</span>`,
       card.hook ? `              <span class="desk-mini__hook">${escapeHtml(card.hook)}</span>` : '',
       '            </a>',
@@ -264,7 +270,7 @@ export function renderBlock(deskFeed, freshness, { hasArt = () => false } = {}) 
     `          <a class="desk-lead" href="${escapeHtml(lead.href)}" data-track-event="home_desk_lead_click">`,
     ...artHtml,
     '            <div class="desk-lead__body">',
-    `              <p class="desk-lead__kicker">${escapeHtml(leadKicker)}</p>`,
+    `              <p class="desk-lead__kicker">${leadKicker}</p>`,
     `              <h3 class="desk-lead__headline">${escapeHtml(lead.headline)}</h3>`,
     lead.hook ? `              <p class="desk-lead__hook">${escapeHtml(lead.hook)}</p>` : '',
     '              <span class="desk-lead__read">Read the story →</span>',
@@ -310,9 +316,33 @@ export function spliceBlock(html, block) {
   return `${clean.slice(0, anchorIndex)}${block}\n\n${safeIndent}${clean.slice(anchorIndex)}`;
 }
 
+/** A card's <time>, rendered by the shared Desk time helper (same text as /news/). */
+export function cardTimeHtml(published) {
+  return deskTimeHtml(published, { escape: escapeHtml });
+}
+
+/**
+ * Attach each card's resolved publish time from its committed day artifact.
+ * A card whose day or story cannot be found keeps no `published` field and
+ * renders its edition date, never a guessed time.
+ */
+export function withPublishTimes(feed, { daysDir = DAYS_DIR, root = ROOT } = {}) {
+  if (!Array.isArray(feed?.cards)) return feed;
+  const ledger = loadPublishTimeLedger(root);
+  return {
+    ...feed,
+    cards: feed.cards.map((card) => {
+      if (!DATE_RE.test(card?.date || '') || !SLUG_RE.test(card?.slug || '')) return card;
+      const day = readJson(path.join(daysDir, `${card.date}.json`));
+      const story = day?.stories?.find((s) => s.slug === card.slug);
+      return story ? { ...card, published: resolveStoryTime(day, story, ledger) } : card;
+    }),
+  };
+}
+
 function build() {
   const html = fs.readFileSync(HOME, 'utf8');
-  const block = renderBlock(readJson(DESK_FEED), readJson(FRESHNESS_FEED), { hasArt: (base) => diskHasArt(base) });
+  const block = renderBlock(withPublishTimes(readJson(DESK_FEED)), readJson(FRESHNESS_FEED), { hasArt: (base) => diskHasArt(base) });
   return spliceBlock(html, block);
 }
 
@@ -344,6 +374,14 @@ function selfTest() {
   add('cards beyond the secondary budget are not rendered', !daily.includes('F headline') && daily.includes('E headline'));
   add('a card without art or persona still renders', daily.includes('C headline'));
   add('persona and edition labels render', daily.includes('VERA’s take') && daily.includes('Edition 2026-08-10 · REX’s take') && daily.includes('3 stories'));
+  const timed = renderBlock({ ...feed, cards: feed.cards.map((card, i) => (i < 2 ? { ...card, published: { iso: '2026-08-11T02:07:00Z', source: 'authored', precise: true } } : card)) }, { state: 'daily', latestEditionDate: '2026-08-11', ageDays: 0 }, withArt);
+  add('cards with a resolved publish time show date, time and timezone in a <time>', timed.includes('Lead story · <time class="desk-time" datetime="2026-08-11T02:07:00Z"')
+    && timed.includes('>Mon, Aug 10, 2026 · 10:07 PM ET</time> · REX’s take'));
+  add('cards without a resolved time keep their edition date', timed.includes('Edition 2026-08-09'));
+  add('the real feed resolves times from committed day artifacts', (() => {
+    const real = withPublishTimes(readJson(DESK_FEED));
+    return !real?.cards?.length || real.cards.every((card) => card.published && /^\d{4}-\d{2}-\d{2}/.test(card.published.iso));
+  })());
 
   // Image contract (S356): the ONLY image is the lead's lazy <picture>.
   const img = (daily.match(/<img\b[^>]*>/g) || []);

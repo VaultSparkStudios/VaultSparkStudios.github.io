@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**85 nodes** · **41** participate in the publish cascade ·
+**86 nodes** · **42** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -121,6 +121,7 @@ flowchart LR
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
   n_api_news_desk_freshness_json[["api/news-desk-freshness.json"]]
   n_api_news_desk_reactions_json[["api/news-desk-reactions.json"]]
+  n_api_news_desk_search_json[["api/news-desk-search.json"]]
   n_api_news_desk_stats_json[["api/news-desk-stats.json"]]
   n_news_index_html[["news/index.html"]]
   n_api_news_visual_receipts_json[["api/news-visual-receipts.json"]]
@@ -314,6 +315,7 @@ flowchart LR
   n_data_ --> n_api_news_desk_freshness_json
   n_data_ --> n_api_news_desk_json
   n_data_ --> n_api_news_desk_reactions_json
+  n_data_ --> n_api_news_desk_search_json
   n_data_ --> n_api_news_desk_stats_json
   n_data_ --> n_api_news_visual_receipts_json
   n_data_ --> n_api_oracle_insights_json
@@ -332,6 +334,7 @@ flowchart LR
   n_data_ --> n_data_lqip_map_json
   n_data_ --> n_data_stats_surface_json
   n_data_ --> n_evidence_index_html
+  n_data_ --> n_index_html
   n_data_ --> n_membership_index_html
   n_data_ --> n_news_index_html
   n_data_ --> n_pathways_builders_index_html
@@ -439,6 +442,7 @@ flowchart LR
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
 | `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `index.html`<br>`news/index.html` |
 | `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | `news/index.html` |
+| `news-desk-search` | `api/news-desk-search.json` | yes | — | — |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `data/stats-surface.json`<br>`news/index.html` |
 | `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | — |
 | `news-visual-receipts` | `api/news-visual-receipts.json` | yes | — | `api/news-critique-packets.json` |
@@ -529,6 +533,7 @@ flowchart LR
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
 | `news-desk-freshness` | `scripts/build-news-freshness.mjs` | `node scripts/build-news-freshness.mjs --check` |
 | `news-desk-reactions` | `scripts/build-news-desk-reactions.mjs` | `node scripts/build-news-desk-reactions.mjs --check` |
+| `news-desk-search` | `scripts/generate-news-pages.mjs` | `node scripts/generate-news-pages.mjs --check` |
 | `news-desk-stats` | `scripts/build-news-desk-stats.mjs` | `node scripts/build-news-desk-stats.mjs --check` |
 | `news-pages` | `scripts/generate-news-pages.mjs` | `node scripts/generate-news-pages.mjs --check` |
 | `news-visual-receipts` | `scripts/build-news-visual-receipts.mjs` | `node scripts/build-news-visual-receipts.mjs --check` |
@@ -577,7 +582,7 @@ flowchart LR
 - `cloudflare/` → `identity-migration-receipt`, `security-posture`, `worker-route-provenance`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `release-dependencies`, `security-posture`, `shell-assets`
 - `context/` → `heartbeat`, `identity-migration-receipt`, `ignis-conduit`, `intelligence-budget`, `nervous-system`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
+- `data/` → `analytics-summary`, `changelog-narrative`, `evidence-hub`, `feedback-provenance`, `field-win-proof`, `flight-director`, `home-desk-module`, `ignis-search-index`, `inp-soak-verdicts`, `lqip-map`, `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-search`, `news-desk-stats`, `news-pages`, `news-visual-receipts`, `oracle-query-clusters`, `pathways-pages`, `promotion-receipt`, `proof-aware-projects`, `release-proof`, `ship-receipts`, `site-health`, `staging-deploy-continuity`, `staging-deploy-receipt`, `stats-surface`, `surface-spine`, `tt-summary`, `ux-decision-ledger`, `worker-route-history`
 - `docs/` → `ignis-roi`, `ship-receipts`
 - `external:build-vantage-worker-routes` → `worker-route-provenance`
 - `external:founder-brand-masters` → `brand-assets`
@@ -639,57 +644,58 @@ flowchart LR
 29. `news-desk-engagement`
 30. `news-desk-freshness`
 31. `news-desk-reactions`
-32. `news-desk-stats`
-33. `news-visual-receipts`
-34. `newsroom-run`
-35. `oracle-velocity-public`
-36. `promotion-receipt`
-37. `public-intelligence`
-38. `rank-climbers`
-39. `release-dependencies`
-40. `site-health`
-41. `sitemap`
-42. `surface-spine`
-43. `tt-readiness`
-44. `tt-summary`
-45. `worker-route-provenance`
-46. `changelog-live`
-47. `feedback-provenance`
-48. `forge-feed`
-49. `home-desk-module`
-50. `ignis-conduit`
-51. `news-critique-packets`
-52. `news-pages`
-53. `proof-aware-projects`
-54. `public-ecosystem`
-55. `security-posture`
-56. `shell-assets`
-57. `sitemap-page`
-58. `studio-timeline`
-59. `worker-route-history`
-60. `canonical-destination-reachability`
-61. `early-hints-headers`
-62. `ignis-search-index`
-63. `llms-full-shards`
-64. `pathways-pages`
-65. `public-status`
-66. `ship-receipts`
-67. `ux-decision-ledger`
-68. `agents-json`
-69. `launch-age`
-70. `nervous-system`
-71. `oracle-query-clusters`
-72. `you-asked-shipped`
-73. `ai-discovery-health`
-74. `api-index`
-75. `candidate-artifact-manifest`
-76. `deploy-currency`
-77. `intelligence-budget`
-78. `intent-map`
-79. `staging-deploy-receipt`
-80. `startup-brief`
-81. `status-proof`
-82. `citation`
-83. `release-proof`
-84. `staging-deploy-continuity`
-85. `stats-surface`
+32. `news-desk-search`
+33. `news-desk-stats`
+34. `news-visual-receipts`
+35. `newsroom-run`
+36. `oracle-velocity-public`
+37. `promotion-receipt`
+38. `public-intelligence`
+39. `rank-climbers`
+40. `release-dependencies`
+41. `site-health`
+42. `sitemap`
+43. `surface-spine`
+44. `tt-readiness`
+45. `tt-summary`
+46. `worker-route-provenance`
+47. `changelog-live`
+48. `feedback-provenance`
+49. `forge-feed`
+50. `home-desk-module`
+51. `ignis-conduit`
+52. `news-critique-packets`
+53. `news-pages`
+54. `proof-aware-projects`
+55. `public-ecosystem`
+56. `security-posture`
+57. `shell-assets`
+58. `sitemap-page`
+59. `studio-timeline`
+60. `worker-route-history`
+61. `canonical-destination-reachability`
+62. `early-hints-headers`
+63. `ignis-search-index`
+64. `llms-full-shards`
+65. `pathways-pages`
+66. `public-status`
+67. `ship-receipts`
+68. `ux-decision-ledger`
+69. `agents-json`
+70. `launch-age`
+71. `nervous-system`
+72. `oracle-query-clusters`
+73. `you-asked-shipped`
+74. `ai-discovery-health`
+75. `api-index`
+76. `candidate-artifact-manifest`
+77. `deploy-currency`
+78. `intelligence-budget`
+79. `intent-map`
+80. `staging-deploy-receipt`
+81. `startup-brief`
+82. `status-proof`
+83. `citation`
+84. `release-proof`
+85. `staging-deploy-continuity`
+86. `stats-surface`

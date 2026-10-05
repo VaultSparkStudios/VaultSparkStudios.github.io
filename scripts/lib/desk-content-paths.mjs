@@ -24,7 +24,7 @@ export function deskContentPartition(paths) {
 }
 
 export function selfTestDeskContentPaths() {
-  const allow = ['index.html', 'news/index.html', 'news/2026-09-30/story/index.html', 'news/archive/index.html', 'news/archive/2026-09/index.html', 'news/personas/rex/index.html', 'news/directors-report/index.html', 'assets/desk-personas/rex.webp', 'assets/news-desk.css', 'assets/og/og-news-archive-2026-09.png', 'assets/og/news/2026-09-30--story--meme--640.avif', 'api/news-desk-feed.json', 'api/news-desk-claims.ndjson', 'api/news-visual-receipts.json', 'sitemap.xml'];
+  const allow = ['index.html', 'news/index.html', 'news/2026-09-30/story/index.html', 'news/archive/index.html', 'news/archive/2026-09/index.html', 'news/personas/rex/index.html', 'news/directors-report/index.html', 'assets/desk-personas/rex.webp', 'assets/news-desk.css', 'assets/og/og-news-archive-2026-09.png', 'assets/og/news/2026-09-30--story--meme--640.avif', 'api/news-desk-feed.json', 'api/news-desk-search.json', 'api/news-desk-search-2026-10.json', 'api/news-desk-claims.ndjson', 'api/news-visual-receipts.json', 'sitemap.xml'];
   const deny = ['auth/index.html', 'membership/index.html', 'assets/app.js', 'assets/desk-personas/rex.js', 'news/archive/../../auth/index.html', 'news/personas/../../auth/index.html', 'sw.js', '_headers', 'api/security-posture.json', 'news/2026-09-30/story/critique.json', 'news/../../auth/index.html', 'data/news-desk/art/story.png'];
   for (const value of allow) if (!isDeskContentPath(value)) throw new Error(`Desk path rejected: ${value}`);
   for (const value of deny) if (isDeskContentPath(value)) throw new Error(`Desk path allowed: ${value}`);

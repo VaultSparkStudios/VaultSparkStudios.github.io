@@ -474,6 +474,7 @@
       "output": "news/index.html",
       "sources": [
         "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json",
         "api/news-desk-engagement.json",
         "api/news-desk-stats.json",
         "api/news-desk-reactions.json",
@@ -486,7 +487,23 @@
         "--check"
       ],
       "publishCascade": true,
-      "note": "S318: rendered Desk pages depend on engagement, stats, reactions, and cadence truth; any feed refresh must regenerate the public pages."
+      "note": "S318: rendered Desk pages depend on engagement, stats, reactions, and cadence truth; any feed refresh must regenerate the public pages. 2026-10-05: card/article publish times resolve through scripts/lib/news-publish-time.mjs (day artifact stamps + the publish-times ledger)."
+    },
+    {
+      "id": "news-desk-search",
+      "output": "api/news-desk-search.json",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json"
+      ],
+      "builder": "scripts/generate-news-pages.mjs",
+      "check": [
+        "node",
+        "scripts/generate-news-pages.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "2026-10-05 founder request: The Desk search index (manifest) plus one shard per publication month at api/news-desk-search-YYYY-MM.json, written and byte-checked by the same generator as the pages so search can never miss a published story. Lazy-loaded by the /news/ finder."
     },
     {
       "id": "home-desk-module",
@@ -494,6 +511,8 @@
       "sources": [
         "api/news-desk.json",
         "api/news-desk-freshness.json",
+        "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json",
         "assets/og/news/*--meme.avif",
         "assets/og/news/*--meme.webp",
         "assets/og/news/*--meme.png"

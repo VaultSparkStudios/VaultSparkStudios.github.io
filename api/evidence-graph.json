@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "751e57e862038550b05ddb10f5e7646917c3ac0b9a1e67cd5f77827b1cda00d5",
+  "contractSha256": "14947ff7bc353587dd6d0bbd5b77c299cafe5354628391da900c552b975b6ee8",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 85,
-  "cascadeNodeCount": 41,
+  "nodeCount": 86,
+  "cascadeNodeCount": 42,
   "buildOrder": [
     "ai-canonical-pages",
     "ambient-bundles",
@@ -42,6 +42,7 @@
     "news-desk-engagement",
     "news-desk-freshness",
     "news-desk-reactions",
+    "news-desk-search",
     "news-desk-stats",
     "news-visual-receipts",
     "newsroom-run",
@@ -632,7 +633,9 @@
       "externalSources": [
         "assets/og/news/*--meme.avif",
         "assets/og/news/*--meme.png",
-        "assets/og/news/*--meme.webp"
+        "assets/og/news/*--meme.webp",
+        "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json"
       ]
     },
     {
@@ -953,6 +956,19 @@
       ]
     },
     {
+      "id": "news-desk-search",
+      "output": "api/news-desk-search.json",
+      "builder": "scripts/generate-news-pages.mjs",
+      "verify": "node scripts/generate-news-pages.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json"
+      ]
+    },
+    {
       "id": "news-desk-stats",
       "output": "api/news-desk-stats.json",
       "builder": "scripts/build-news-desk-stats.mjs",
@@ -982,7 +998,8 @@
       ],
       "feeds": [],
       "externalSources": [
-        "data/news-desk/days/*.json"
+        "data/news-desk/days/*.json",
+        "data/news-desk/publish-times.json"
       ]
     },
     {
