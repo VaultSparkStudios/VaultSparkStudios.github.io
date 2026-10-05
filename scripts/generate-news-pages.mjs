@@ -1076,6 +1076,7 @@ function buildHubPage() {
   <span class="desk-kicker">The Desk · AI signal</span>
   <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
   <p class="desk-deck">AI news with teeth: ${CAST_WORD} fictional correspondents investigate the day’s real sources, argue in character, draw the joke, and leave every prediction on a public scorecard. Read the brief, enjoy the hit, then check the receipts.</p>
+  ${dispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' })}
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${renderStaticDeskEvidence(days)}

@@ -400,7 +400,7 @@ function buildFooter(assetPrefix) {
         </div>
         <div class="footer-col footer-col--dispatch">
           <h2>Studio Dispatch</h2>
-          <p class="footer-dispatch-sub">One email when something leaves the forge — new games, tools, and reveals. No account needed, no spam.</p>
+          <p class="footer-dispatch-sub">Studio news: one email when something leaves the forge — new games, tools, and reveals. No account needed, no spam.</p>
           <form class="footer-dispatch-form" id="footer-email-form" data-source="footer" novalidate>
             <label class="vs-visually-hidden" for="footer-email-input">Email address</label>
             <input id="footer-email-input" type="email" autocomplete="email" placeholder="you@email.com" required />
@@ -409,6 +409,7 @@ function buildFooter(assetPrefix) {
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
           <a class="footer-dispatch-home" href="/dispatch/">Past editions &amp; the Dispatch home &rarr;</a>
+          <a class="footer-dispatch-home" href="/news/#desk-dispatch">Want daily AI news instead? Get The Desk Dispatch &rarr;</a>
         </div>
       </div>
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
@@ -441,6 +442,10 @@ function findHtmlFiles(dir, base = dir) {
 
     if (SKIP_DIRS.has(entry) || ROOT_ONLY_SKIP_DIRS.has(rel)) continue;
     if (statSync(full).isDirectory()) {
+      // S368: a directory with its own `.git` (file or dir) is another checkout —
+      // a git worktree such as .cache/desk-personas/ — and never this site's page.
+      // Walking it rewrote 209 pages on another branch's working tree.
+      if (existsSync(join(full, '.git'))) continue;
       results.push(...findHtmlFiles(full, base));
     } else if (entry.endsWith('.html')) {
       if (SKIP_FILES.has(rel)) continue;

@@ -56,9 +56,35 @@ export const DISPATCH_COPY = {
  * @param {string} source  provenance tag + id suffix (unique per page)
  * @param {{compact?: boolean, heading?: string, lede?: string, headingLevel?: 2|3}} [options]
  */
-export function deskDispatchCta(source, { compact = false, heading = null, lede = null, headingLevel = 2 } = {}) {
+export const DISPATCH_BAR_COPY = {
+  heading: 'Get The Desk Dispatch: the day’s AI news in one email.',
+  lede: 'Free, at most once a day, written by The Desk’s fictional AI correspondents. This is the Desk’s own list, not the Studio Dispatch in the footer.',
+};
+
+export function deskDispatchCta(source, { compact = false, bar = false, anchor = null, heading = null, lede = null, headingLevel = 2 } = {}) {
   if (!SOURCE_RE.test(String(source))) throw new Error(`desk dispatch source must match ${SOURCE_RE}: ${source}`);
+  if (anchor !== null && !SOURCE_RE.test(String(anchor))) throw new Error(`desk dispatch anchor must match ${SOURCE_RE}: ${anchor}`);
   const h = headingLevel === 3 ? 'h3' : 'h2';
+  // S368: a slim bar for the top of /news/ — the full block below the newest
+  // edition was hard to find, and readers mistook the footer's Studio Dispatch
+  // form for it. Same form, same client, same endpoint; just less copy.
+  if (bar) {
+    return `<section class="desk-dispatch desk-dispatch-bar"${anchor ? ` id="${esc(anchor)}"` : ''} data-desk-dispatch="${esc(source)}" aria-labelledby="dispatch-h-${esc(source)}">
+    <div class="desk-dispatch-copy">
+      <p class="desk-dispatch-kicker">${esc(DISPATCH_COPY.kicker)}</p>
+      <${h} id="dispatch-h-${esc(source)}">${esc(heading || DISPATCH_BAR_COPY.heading)}</${h}>
+      <p class="desk-dispatch-lede">${esc(lede || DISPATCH_BAR_COPY.lede)}</p>
+    </div>
+    <form class="desk-dispatch-form" data-dispatch data-source="${esc(source)}" novalidate>
+      <label class="visually-hidden vs-visually-hidden" for="dispatch-email-${esc(source)}">Email address for The Desk Dispatch</label>
+      <input id="dispatch-email-${esc(source)}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
+      <button type="submit" class="button">${esc(DISPATCH_COPY.button)}</button>
+      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
+      <p class="desk-dispatch-fine">Double opt-in: we email you a link to confirm. <a href="/privacy/">Privacy policy</a>.</p>
+      <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
+    </form>
+  </section>`;
+  }
   const points = DISPATCH_COPY.points
     .map(([k, v]) => `<li><strong>${esc(k)}</strong> ${esc(v)}</li>`).join('');
   return `<section class="desk-dispatch${compact ? ' desk-dispatch-compact' : ''}" data-desk-dispatch="${esc(source)}" aria-labelledby="dispatch-h-${esc(source)}">
@@ -191,6 +217,10 @@ export function selfTest() {
   t('no inline style attributes', !/\sstyle="/i.test(full + compact));
   t('ids are unique per source', full.includes('id="dispatch-email-hub"') && compact.includes('id="dispatch-email-story"'));
   t('a hostile source is refused', (() => { try { deskDispatchCta('"><x'); return false; } catch { return true; } })());
+  const bar = deskDispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' });
+  t('bar variant carries the anchor, the shared form and a Turnstile slot', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && bar.includes('data-vs-turnstile-slot'));
+  t('bar variant tells the two lists apart', /not the Studio Dispatch/.test(bar));
+  t('a hostile anchor is refused', (() => { try { deskDispatchCta('x', { bar: true, anchor: '"><x' }); return false; } catch { return true; } })());
   t('success copy never claims a confirmed subscription', /subscribed only after you confirm/.test(DESK_DISPATCH_SCRIPT));
   t('verification failure is not reported as a mail outage', /invisible human check did not complete/.test(DESK_DISPATCH_SCRIPT));
   t('a stale CSRF token is refreshed once', /VSCsrf\.invalidate\(\)/.test(DESK_DISPATCH_SCRIPT));
