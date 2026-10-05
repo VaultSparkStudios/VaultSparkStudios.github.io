@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T01:20:34.795Z",
+  "generatedAt": "2026-10-05T01:24:32.293Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 12,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-05T01:17:22Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-05T01:23:26Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37250836570",
       "headSha": "c325bf0db239c10cc8b3e5eae8e9feece1557938",
       "event": "push"
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.73,
+      "ageHours": 1.8,
       "staleAfterHours": 48
     },
     {
@@ -180,13 +180,15 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-05T01:23:09Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.02,
       "staleAfterHours": 48
     },
     {
@@ -199,7 +201,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.08,
+      "ageHours": 0.15,
       "staleAfterHours": 48
     },
     {
@@ -225,7 +227,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.74,
+      "ageHours": 0.81,
       "staleAfterHours": 48
     },
     {
