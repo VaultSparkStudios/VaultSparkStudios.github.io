@@ -114,8 +114,26 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
  * does not already carry them (the homepage and /dispatch/ do not), on first
  * focus so the invisible challenge is warm before submit.
  */
+/** The site's Turnstile site key, read from the shared helper so the two cannot drift. */
+export function turnstileSiteKey(root = ROOT) {
+  const src = fs.readFileSync(path.join(root, 'assets', 'turnstile.js'), 'utf8');
+  const m = src.match(/var SITE_KEY\s*=\s*'([^']+)'/);
+  if (!m) throw new Error('assets/turnstile.js has no SITE_KEY');
+  return m[1];
+}
+
+/*
+ * S368 — each Dispatch form renders its OWN Turnstile widget into its own slot.
+ * The shared VSTurnstile helper keeps one page-wide widget in the first visible
+ * slot with a 12 s timeout. With two forms on /news/ an interactive challenge
+ * could surface in the form the reader was not using, and 12 s is too short to
+ * solve one anyway, so real readers saw "The invisible human check did not
+ * complete". Here the widget lives in the submitting form; when Turnstile needs
+ * the reader, the form says so and waits up to two minutes.
+ */
 export const DESK_DISPATCH_SCRIPT = `<script>(function(){
   var ENDPOINT=${JSON.stringify(DESK_DISPATCH_ENDPOINT)};
+  var SITE_KEY=${JSON.stringify(turnstileSiteKey())};
   var forms=document.querySelectorAll('form[data-dispatch]');
   if(!forms.length)return;
   var loads={};
@@ -130,6 +148,30 @@ export const DESK_DISPATCH_SCRIPT = `<script>(function(){
   function deps(){return Promise.all([
     load('/assets/csrf-token.js',function(){return !!window.VSCsrf;}),
     load('/assets/turnstile.js',function(){return !!window.VSTurnstile;})]);}
+  function turnstileApi(){return new Promise(function(resolve){var n=0;(function poll(){
+    if(window.turnstile&&window.turnstile.render)return resolve(true);
+    if(++n>150)return resolve(false);setTimeout(poll,100);})();});}
+  var widgets={};
+  function formToken(form,onInteractive){
+    return turnstileApi().then(function(ok){
+      if(!ok)throw {kind:'deps'};
+      return new Promise(function(resolve,reject){
+        var key=form.getAttribute('data-source')||'news';
+        var w=widgets[key]||(widgets[key]={});
+        var timer=setTimeout(function(){w.done=null;reject({kind:'verify'});},20000);
+        w.done=function(err,token){clearTimeout(timer);w.done=null;if(err)reject({kind:'verify'});else resolve(token);};
+        w.interactive=function(){clearTimeout(timer);onInteractive();
+          timer=setTimeout(function(){if(w.done)w.done(true);},120000);};
+        if(w.id!==undefined){try{window.turnstile.reset(w.id);return;}catch(e){w.id=undefined;}}
+        var slot=form.querySelector('[data-vs-turnstile-slot]');
+        w.id=window.turnstile.render(slot,{sitekey:SITE_KEY,appearance:'interaction-only',
+          callback:function(t){if(w.done)w.done(null,t);},
+          'error-callback':function(){if(w.done)w.done(true);return true;},
+          'expired-callback':function(){},
+          'before-interactive-callback':function(){if(w.interactive)w.interactive();}});
+      });
+    });
+  }
   var MESSAGES={invalid_email:'That does not look like a valid email address.',
     turnstile_invalid:'Verification did not pass. Please try again.',
     turnstile_token_missing:'Verification did not complete. Please try again.',
@@ -157,9 +199,10 @@ export const DESK_DISPATCH_SCRIPT = `<script>(function(){
       input.removeAttribute('aria-invalid');
       button.disabled=true;button.textContent='Sending…';say('Verifying you are human (invisible check)…');
       var source=form.getAttribute('data-source')||'news';
+      var ask=function(){return formToken(form,function(){say('Please complete the quick check below to continue.');});};
       deps().then(function(ok){
-        if(!ok[0]||!ok[1])throw {kind:'deps'};
-        return window.VSTurnstile.getToken().catch(function(){throw {kind:'verify'};});
+        if(!ok[0])throw {kind:'deps'};
+        return ask();
       }).then(function(token){
         say('Sending your confirmation email…');
         return window.VSCsrf.getToken().then(function(csrf){
@@ -167,7 +210,7 @@ export const DESK_DISPATCH_SCRIPT = `<script>(function(){
             // A stale session CSRF token answers 403 in plain text. Refresh once.
             if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
               window.VSCsrf.invalidate();
-              return window.VSTurnstile.getToken().then(function(t2){
+              return ask().then(function(t2){
                 return window.VSCsrf.getToken().then(function(c2){return post(email,source,t2,c2);});
               });
             }
@@ -220,6 +263,9 @@ export function selfTest() {
   const bar = deskDispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' });
   t('bar variant carries the anchor, the shared form and a Turnstile slot', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && bar.includes('data-vs-turnstile-slot'));
   t('bar variant tells the two lists apart', /not the Studio Dispatch/.test(bar));
+  t('each form renders its own Turnstile widget in its own slot', /form\.querySelector\('\[data-vs-turnstile-slot\]'\)/.test(DESK_DISPATCH_SCRIPT) && /window\.turnstile\.render\(slot/.test(DESK_DISPATCH_SCRIPT));
+  t('an interactive challenge pauses the timeout and tells the reader', /before-interactive-callback/.test(DESK_DISPATCH_SCRIPT) && /120000/.test(DESK_DISPATCH_SCRIPT) && /complete the quick check/.test(DESK_DISPATCH_SCRIPT));
+  t('the site key is the shared helper key', DESK_DISPATCH_SCRIPT.includes(JSON.stringify(turnstileSiteKey())));
   t('a hostile anchor is refused', (() => { try { deskDispatchCta('x', { bar: true, anchor: '"><x' }); return false; } catch { return true; } })());
   t('success copy never claims a confirmed subscription', /subscribed only after you confirm/.test(DESK_DISPATCH_SCRIPT));
   t('verification failure is not reported as a mail outage', /invisible human check did not complete/.test(DESK_DISPATCH_SCRIPT));
