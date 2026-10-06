@@ -1671,7 +1671,7 @@
     
     if (loading) return loading;
     var css=document.querySelector('[data-spark-style]');
-    var cssReady=new Promise(function(resolve,reject){if(css&&css.sheet){resolve();return;}if(!css){css=document.createElement('link');css.rel='stylesheet';css.href='/assets/spark-compass.shell-03ecbbaae9.css';css.dataset.sparkStyle='true';document.head.appendChild(css);}css.onload=resolve;css.onerror=function(){css.remove();reject(new Error('Spark style unavailable'));};});
+    var cssReady=new Promise(function(resolve,reject){if(css&&css.sheet){resolve();return;}if(!css){css=document.createElement('link');css.rel='stylesheet';css.href='/assets/spark-compass.shell-f03dd62f3f.css';css.dataset.sparkStyle='true';document.head.appendChild(css);}css.onload=resolve;css.onerror=function(){css.remove();reject(new Error('Spark style unavailable'));};});
     loading = Promise.all([cssReady,new Promise(function (resolve, reject) {
       if(loaded()){resolve();return;}
       var script = document.createElement('script');
