@@ -1407,3 +1407,8 @@ Desk signup recovery (2026-10-06): production trace confirmed shared KV daily wr
 ### S369 newsletter evidence update
 
 Founder reports the regular Desk signup worked correctly. New requested follow-through removes newsletter Turnstile friction for humans and AI agents, preserves email double opt-in, and adds recipient24h/globalUTC100 send limits inside the email function so direct callers cannot bypass them. Premium confirmation HTML/plain-text emails include signed cancel/unsubscribe links and one-click headers; daily digest masthead is upgraded. The welcome page has a colorful moving sphere, newsroom/profile/feed links, seven themes, reduced motion and explicit unsubscribe/error states. Scoped canonical staging verified145 HTML/art/discovery files; newsletter backend deployed with no-send6/6 and real database rollback assertions passing. Production Worker/Pages publication of this follow-through is pending final checks. Sender is active from a provider read; mail HTML, plain text and headers are fixture-verified. A rendered browser email preview is not evidence of real mailbox rendering or delivery.
+
+
+### S369 newsletter production edge acceptance
+
+Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after11/11 release-ceremony checks. An actual curl-User-Agent POST with valid signed CSRF returned400 invalid_email without a challenge or email send. Independent edge review passed84/84; newsletter suites23/23. Current homepage mobile regression passed5/5 widths; unchanged210 prior cells were retained only after exact source/capture hash checks. Frontend publication remains pending until the confirmed Pages content deployment lands. New-template mailbox delivery remains unverified.

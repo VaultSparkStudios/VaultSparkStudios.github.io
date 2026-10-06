@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **912/1000**
 - CI health: **check gh run list**
-- Current focus: S369 Spark and premium Desk live; agent-friendly newsletter and immersive welcome staged, final production publication pending.
+- Current focus: S369 newsletter backend/agent-friendly production edge live; premium signup and immersive welcome pending confirmed Pages publication.
 
 ## Strategic Read
 
