@@ -606,7 +606,7 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 
 ### S369 requested newsletter experience
 
-- [ ] Publish and verify agent-friendly Desk signup, premium confirmation/digest emails, signed invitation cancellation and immersive seven-theme welcome page. Source197e7c604;145 scoped staging files verified; final publication pending.
+- [x] Publish and verify agent-friendly Desk signup, premium confirmation/digest emails, signed cancellation and immersive welcome. Pages37548337150/source d607927ec and Worker d12535f4 live;530/530 checks and desktop/mobile production pixels pass. New-template mailbox delivery stays separately unverified.
 - [ ] [SIL] Check upgraded invite/unsubscribe in a real mailbox during the next authorized signup; new-template delivery remains unverified.
 - [ ] [SIL] Evaluate explicit confirmation POST to avoid mail-scanner opt-in while preserving a simple agent workflow; existing confirmation GET retained in this release.
 
