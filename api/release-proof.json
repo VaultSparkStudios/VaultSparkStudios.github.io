@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T15:12:52.016Z",
+  "generatedAt": "2026-10-06T15:39:56.026Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,17 +18,20 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "27d342f3dfa14562a489dc6d62026ada6e35271f",
-    "deployedBuildSha": "27d342f3dfa14562a489dc6d62026ada6e35271f",
-    "candidateShaBound": true,
+    "deployedBuildSha": "199482b34a93bf9de91ab7aabf60a0dbfab8c72f",
+    "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "0b7052d3b517b09f960fa3d1eed1d826d7a6f7ac3f4aefeaf292e4ea6f89326f",
       "candidateLeafCount": 62,
-      "stagingRoot": "0b7052d3b517b09f960fa3d1eed1d826d7a6f7ac3f4aefeaf292e4ea6f89326f",
+      "stagingRoot": "cd61e6507efbbd41a97f62fdf7536d2e9631e3ef2d2fd8ff85017ea4848ceecf",
       "stagingLeafCount": 62,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -41,8 +44,8 @@
       "sourceFingerprint": "8c474ea911e7ea3f971ec826",
       "archiveSha256": "d280e8136d386ba8f77cede827eca09de972336f20e0d8cb158edbb1cb26539e",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 98,
@@ -68,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 127,
-    "ageHours": 9.7,
-    "observedAt": "2026-10-06T15:12:52.016Z",
+    "commitsBehind": 128,
+    "ageHours": 10.3,
+    "observedAt": "2026-10-06T15:39:56.026Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-06T15:12:52.016Z",
+      "observedAt": "2026-10-06T15:39:56.026Z",
       "expectedFrom": "4ac5127b22ab77a021e5f4e6a69b186a0e9adadf731f1486f4209277f1653529",
       "supersededBy": null,
       "ageHours": 0,
@@ -182,10 +185,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
-    "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -198,6 +201,10 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
