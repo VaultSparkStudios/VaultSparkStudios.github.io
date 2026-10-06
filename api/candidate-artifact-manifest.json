@@ -28,10 +28,16 @@
         "builtAt"
       ]
     },
-    "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident"
+    "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident",
+    "observedFields": {
+      "api/public-intelligence.json": [
+        "ciHealth"
+      ]
+    },
+    "observedFieldsReason": "live CI observations are excluded from the source root; complete raw mixed-feed bytes remain hashed in observedRoot; hosted release checks remain separate"
   },
-  "candidateSha": "ab0ff65b22d0cc823e7bcf27bf2226c667bea7c3",
-  "root": "819eb0c036e638a4913e7caba561c5d4f94b1b5ba781a584dd4032088a83039c",
+  "candidateSha": "27d342f3dfa14562a489dc6d62026ada6e35271f",
+  "root": "0b7052d3b517b09f960fa3d1eed1d826d7a6f7ac3f4aefeaf292e4ea6f89326f",
   "leafCount": 62,
   "totalBytes": 1371277,
   "leaves": [
@@ -50,8 +56,8 @@
     {
       "path": "api/build-sha.json",
       "bytes": 322,
-      "sha256": "f6294dccd06e38f128dc5821a9652f5ed663d46d8bd7e83ba516965e0aa276bf",
-      "leafHash": "278cb86a7816db1770930fbf6840f0020a7c8fbfec4bd07aa3b320465bfaf9bb",
+      "sha256": "d10354a6b1f365f40bcea18e21dbf3c3a4e98c7fbbf43f7d6b44c5a10c379942",
+      "leafHash": "26ddcdd3c23841a0c99a7e9950c680152eb17efed734d9f837c1c5ea5f0d25a6",
       "volatileFieldsStripped": [
         "builtAt"
       ]
@@ -59,10 +65,13 @@
     {
       "path": "api/public-intelligence.json",
       "bytes": 27887,
-      "sha256": "acc3d9938f60a704b2751677e378e92b341eccc7a3dbb9ff4bbbbb921e4f6e6d",
-      "leafHash": "f58fc40954fc551b6484e003a3ae7e112961c16a69fa64faaa3b4dcaea2cbd7c",
+      "sha256": "732be120202be8018914fea3dce7e13550e79ad7c469f66166637525fa3a8b39",
+      "leafHash": "e89722317aa932fd14c9e1591b62329f9a221f4435105a2ec72bb92a5ecf373b",
       "volatileFieldsStripped": [
         "generatedAt"
+      ],
+      "observedFieldsExtracted": [
+        "ciHealth"
       ]
     },
     {
@@ -417,9 +426,15 @@
       "leafHash": "d8db9f6d532c23cf0793c9b3d5c2e51e555d4c0d939c87af4caffb6b2bbbf49e"
     }
   ],
-  "observedRoot": "adcc2809ecccd9a8b6177dddb52a128ce57ff0ec4eb4e0e078f0a46749835988",
-  "observedLeafCount": 2,
+  "observedRoot": "4e5829c7820e2cbb98361369b049a7792b24a7732743e2aa45e2907f057025f2",
+  "observedLeafCount": 3,
   "observedLeaves": [
+    {
+      "path": "api/public-intelligence.json",
+      "bytes": 27887,
+      "sha256": "92e3a42a129e211f6e1ebb097787a9e74b2bbabf68f63969d8a66a08e3e29c55",
+      "leafHash": "2e1bed9980292a29c4942ab3d035b01b8faf8147eb56a7b03f75cfb7ea356dcb"
+    },
     {
       "path": "api/uptime.json",
       "bytes": 26081,
