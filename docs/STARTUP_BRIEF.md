@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S369) - WHAT SHIPPED ══════════════════════════╗
-║  S369 Spark Vault Compass candidate: opt-in living sphere, both  ║
+║  S369 Spark and premium AI News Desk are deployed: Pages 375159  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,18 +77,18 @@
 ║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   2d                                             ║
-║  ✓  IGNIS         46119 FORGE  ·  6d old                         ║
+║  ✓  IGNIS         46114 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▆▆▁                             ║
+║  ⛔  Compliance   32/38 (84%) ↓ ▆▆▆▆▆▆▆▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  4d old (2026-10-02)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Retire the bottom-left Resume World Builde  ║
-║        Retire the bottom-left Resume World Builder compass and   ║
+║   96  [PRODUCT]      Confirm the art autopilot's first schedule  ║
+║        Confirm the art autopilot's first scheduled publish (.ca  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Confirm the art autopilot's first schedule  ║
-║        Confirm the art autopilot's first scheduled publish (.ca  ║
-║                                                                  ║
-║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
+║   93  [PRODUCT]      Push helper as a repo script (scripts/push  ║
 ║        Push helper as a repo script (scripts/push-main.mjs): au  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Build the named Spark entry, living sphere  ║
-║        Build the named Spark entry, living sphere, shared palet  ║
+║   87  [PRODUCT]      Approve Desk digest test → autoSend; apply  ║
+║        Approve Desk digest test is open, local, and unblocked —  ║
+║                                                                  ║
+║   84  [PRODUCT]      Observe the next scheduled publisher-to-re  ║
+║        Observe the next scheduled publisher-to-release trigger   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

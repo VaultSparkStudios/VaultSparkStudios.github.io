@@ -42,3 +42,20 @@ S346 final local recovery verification (2026-09-09): full build suite 390/390, m
 ### S364 deployment completion
 
 Production Worker and static source deployed; protected signup returns intended 403 validation instead of 503. Receipt hashes must match Git LF bytes, not Windows mixed-line-ending working copies. Article performance exception is release-specific; the threshold remains 90. No real email sent.
+
+
+## S369 durable discovery and news rules
+
+S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56fad17326fcf0fd733b11669e4735e9), Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Desk 12/12, Spark 10/10 and returning Membership 14/14 passed; full build 530/530. Detailed acceptance: docs/SPARK_RELEASE_2026-10-06.md. Identity holds remain distinct from this scoped release.
+
+- Spark opens on request; moving artwork never displaces stationary controls. Preserve reduced motion, map/list parity, local saved routes and public-only agent itineraries.
+- News Briefs preserve source claims; personas analyse separately. Early art and public image threads stay distinct from late satire and its thread. Readership counts require the privacy floor and must never masquerade as unique visitors.
+- MindFrame discovery opens the studio catalog page; its launch action uses usemindframe.com.
+- Deploy content first, then bounded edge asset mappings. Main push alone does not deploy routed production. Preserve known identity holds and historical observations.
+- Closeout metadata must name Codex, use the project runtime URL and include all later founder directives. Reconcile repeated closeout without another SIL score.
+
+
+
+### Desk signup recovery
+
+Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry.

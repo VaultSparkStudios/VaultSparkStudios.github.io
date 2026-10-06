@@ -1887,3 +1887,26 @@ Closeout also fixed the standalone build-check entrypoint's known step-81 Oracle
 The post-closeout hosted compliance run found two new edition art files missing from `data/lqip-map.json`: the Desk publisher derived the map before staging its new art, while the map generator scans Git's index. The map is regenerated, the publisher now stages art before map derivation, and its ordering guard passes. The corrected tree passed the full 505/505 local build gate and hosted E2E/compliance. A fresh Lighthouse local rerun passed after one isolated `/community/` dip.
 
 The Desk's four scheduled slots ran successfully on 2026-09-29. Canonical staging served the late-night homepage and article through the scoped content lane; production run `36648112113` promoted 125 content-pure paths. The live homepage lead, News index, and late-night OpenAI article now match, with content head `90a79ff6a7afabf966efa8a0bd03bd2facb15314`. Future daily live updates are a release-policy decision: `confirm_content` is deliberately manual and CI has no staging deploy credential. Do not silently bypass that interlock or the identity/full-site holds.
+
+
+---
+<!-- archived: 2026-10-06 -->
+
+## Where We Left Off — S368 final · 2026-10-05
+
+- Shipped (all live): /news/ full-text search + filters + shareable URLs (month-sharded index loaded on first search); full publish date+time on every Desk card and byline (`scripts/lib/news-publish-time.mjs`, ledger `data/news-desk/publish-times.json`); Desk Dispatch signup bar at the top of /news/ (#desk-dispatch) and a footer pointer that separates it from the Studio Dispatch; per-form Turnstile widget (the shared helper's single 12 s widget made signups fail); privacy/security/rights wording (D-S368.9); Eternal Credits Queue removed (ships with the next full promotion); daily digest armed by the founder (autoSend) with `BREVO_API_KEY` set.
+- **Art autopilot (D-S368.10):** `scripts/desk-art-autopilot.mjs` generates, AI-reviews (Codex, strict rubric), re-rolls up to twice, ingests, pushes from a private worktree (`.cache/desk-art-staging/_wt`) and dispatches `desk-content-release.yml`. Windows task "VaultSpark Desk Art (nightly)" runs it daily at 07:45, 13:45, 19:45 and 23:45 UTC. Founder approved unattended push+deploy. **First real run not yet observed** — check `.cache/desk-art-staging/autopilot.log`.
+- **Release path repaired:** desk-content-release had failed 3× ("archive file limit exceeded") because staging's baseline was stale; a full staging deploy plus content overlay re-stamped staging at main and run 37355155678 succeeded.
+- Tools: `scripts/review-satire-batch.mjs`, `scripts/repair-evidence-graph.mjs` (now also diffs against the remote tip and retries report-only builders with --apply); propagate-nav skips nested checkouts.
+- Visual QA receipt refreshed (84 captures). Old `.cache/desk-personas` worktree and `%TEMP%\vs-stage` removed (branch `codex/desk-release-record-final` kept).
+
+- After that: JSON Feed carries real publish times; the autopilot live-checks published art; 46 stashes archived (`refs/stash-archive/`, restore with `git stash apply <sha>`) and the stash list cleared.
+
+**Next:** confirm the autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`; first run 2026-10-06 07:45 UTC); Obelisk reply to Ark `01K44K376G48C0C29395D31FE9`; the Eternal-credits removal and other held portal changes ride the next full-site promotion; a full `npm run build:check` has not run this stretch.
+
+
+## S369 final record reconciliation — 2026-10-06T21:06:30.871Z
+
+S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56fad17326fcf0fd733b11669e4735e9), Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Desk 12/12, Spark 10/10 and returning Membership 14/14 passed; full build 530/530. Detailed acceptance: docs/SPARK_RELEASE_2026-10-06.md. Identity holds remain distinct from this scoped release.
+
+Deploy: production content and edge update verified. Earlier candidate/pending paragraphs in this file are historical checkpoints superseded by the live acceptance above. The next session must not repeat completed Spark/Desk implementation or count this repeated closeout as a new scoring session.

@@ -5,10 +5,10 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Spark is live: one opt-in Vault Compass replaces competing guides, and MindFrame           ║
-║    launches at its canonical domain.                                                          ║
+║    Spark and the premium AI News Desk are live; both guides retired, Super Intelligence       ║
+║    hero and MindFrame launch corrected. Desk signup quota failure fixed and deployed.         ║
 ║                                                                                               ║
-║  PROJECT IMPACT     ████████▌░   85/100                                                       ║
+║  PROJECT IMPACT     ████████▌░   88/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███████░░░   70/100                                                       ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
@@ -22,6 +22,20 @@
          sigils and public agent itinerary export. Both pictured guides are absent in actual
          live returning-visitor tests, including legacy Membership.
          → docs/SPARK_RELEASE_2026-10-06.md; docs/visual-qa/SPARK_HELD_MEMBERSHIP.json
+
+  [#3]  premium-news-desk                                         PROJ 9  ·  ECOS 7
+         ── ui-ux-feedback ──────────────────────────────────────────────────────────────────
+         Premium masthead and mini navigation, linked anchor profiles, factual News Briefs,
+         evidence-versus-hype takes, early public image discussion, late satire and
+         thresholded readership metrics are verified live.
+         → docs/SPARK_RELEASE_2026-10-06.md; docs/visual-qa/DESK_ARTWORK.json; docs/visual-qa/DESK_PROFILES.json
+
+  [#4]  desk-signup-recovery                                      PROJ 9  ·  ECOS 7
+         ── features-depth ──────────────────────────────────────────────────────────────────
+         Isolated atomic counters preserve three hourly attempts, CSRF and bot validation.
+         Production no-send route and provider checks pass; founder will retry the normal
+         form, so email delivery is still unverified.
+         → docs/SPARK_RELEASE_2026-10-06.md
 
   [#2]  mindframe-launch                                          PROJ 8  ·  ECOS 7
          ── features-depth ──────────────────────────────────────────────────────────────────
@@ -40,7 +54,7 @@
     (none)
 
   ACTION GATE
-    2 items shipped · ready to commit & push? [y/N]
+    4 items shipped · ready to commit & push? [y/N]
 
 ```
 

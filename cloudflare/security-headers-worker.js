@@ -24,6 +24,8 @@
  */
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
+import { checkDurableFormRateLimit } from './public-form-rate-limit.mjs';
+export { PublicFormRateLimiter } from './public-form-rate-limit.mjs';
 import guideShellManifest from '../assets/shell-manifest.json' with { type: 'json' };
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
 import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
@@ -264,6 +266,7 @@ function generateWindowNonce(env) {
 // ---------------------------------------------------------------------------
 
 async function checkRateLimit(env, ip, path) {
+  if (env.FORM_RATE_LIMIT) return checkDurableFormRateLimit(env, ip, path);
   if (!env.RATE_LIMIT) return { allowed: true, remaining: RATE_LIMIT_MAX };
   const key = `rl:${path}:${ip}:${Math.floor(Date.now() / (RATE_LIMIT_WINDOW_SEC * 1000))}`;
   const current = Number(await env.RATE_LIMIT.get(key)) || 0;

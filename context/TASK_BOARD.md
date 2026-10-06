@@ -601,3 +601,12 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 - [x] Source-attributed News Brief, reader-impact take labels, late satire and separate public image threads; verify source parity and comment isolation.
 - [x] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
 - [x] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.
+
+
+### S369 closeout record reconciliation
+
+- [x] Reconcile deployed acceptance, creative direction, repository and Codex memory, status metadata and the final closeout brief. Preserve the recorded score and history.
+
+
+- [x] Fix Desk signup shared-KV quota 503; isolate rate counters, preserve security checks, deploy staging and production and verify no-send route.
+- [ ] Observe founder regular signup confirmation and delivery; no direct address enrollment requested.

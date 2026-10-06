@@ -106,7 +106,7 @@ function canonicalLiveUrl() {
   ].filter(Boolean);
   if (candidates.length > 0) {
     const url = candidates[0];
-    const vs = (entry?.vaultStatus || '').toUpperCase();
+    const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
     const isLive = vs === 'SPARKED';
     return { url, badge: isLive ? '🌐 LIVE' : 'preview', type: 'production' };
   }
@@ -134,7 +134,7 @@ function deploymentRows() {
   const stagingType = status?.stagingType ?? entry?.stagingType;
   const stagingUrl = status?.stagingUrl ?? entry?.stagingUrl;
   const liveUrl = status?.runtimeUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
-  const vs = (entry?.vaultStatus || '').toUpperCase();
+  const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
 
   // Staging row
   let staging;
@@ -309,6 +309,12 @@ function gitChangeSummary() {
 }
 
 function agentMemoryRecentlyTouched() {
+  const status = readJson(STATUS_PATH);
+  if (status?.lastAgent === 'codex') {
+    const file = path.join(os.homedir(), '.codex', 'memory', `${status.slug}.md`);
+    try { return Boolean(file && fs.statSync(file).mtimeMs > Date.now() - 24 * 3600_000); }
+    catch { return false; }
+  }
   // Check whether agent memory (~/.claude/projects/<slug>/memory) has files
   // modified within the last 24h. Best-effort — cross-platform path resolution
   // varies; absence is reported as "·" rather than failing.
@@ -358,7 +364,7 @@ function writeBackCoverage() {
   const result = TARGETS.map((t) => ({ file: t, touched: touched.has(t) }));
   // 10th item (per closeout spec): agent memory at ~/.claude/projects/<slug>/memory/
   result.push({
-    file: 'agent memory (~/.claude/projects/<slug>/memory/)',
+    file: readJson(STATUS_PATH)?.lastAgent === 'codex' ? 'Codex agent memory' : 'agent memory (~/.claude/projects/<slug>/memory/)',
     touched: agentMemoryRecentlyTouched(),
   });
   return result;

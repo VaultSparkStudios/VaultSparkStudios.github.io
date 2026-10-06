@@ -2094,3 +2094,13 @@ Founder direction expands The Desk to a premium AI news homepage, with direct pr
 ### D369.8 — Bounded anchor history
 
 Anchor profiles publish 12 contributions per linked page. Global statistics retain the full corpus; stable canonical URLs, chronological order and every existing contribution remain available. This keeps growing profiles below the existing 200 KiB HTML release budget.
+
+
+### D-S369.9 — Closeout records reflect the verified scoped release
+
+Preserve all earlier candidate observations and the recorded 912/1000 score. Add final deployed dispositions and the expanded founder direction, correct the acting agent and live URL, and keep existing identity holds separate. The repeated closeout is a reconciliation of S369, not another shipped/scored session.
+
+
+### D-S369.10 — Isolate public-form rate counters
+
+Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry. SQLite Durable Objects are available on Workers Free; no paid plan or provider spend was enabled. Legacy hourly attempts seed the migration by read only. Durable counter outages fail closed.

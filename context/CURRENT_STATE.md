@@ -363,3 +363,13 @@ The synchronized local candidate passed the complete 479/479 build gate from ste
 The release gap found during production verification is closed. The content lane now carries the dynamically imported Vault Pulse module as immutable `assets/vault-pulse.shell-8204990170.js`; its fingerprinted parent loader references that exact child. The homepage ticker's previously missing `/api/recent-ships.json` fallback is now a deterministic projection of the public Changelog narrative, eliminating the staging 404 pair without broadening the content-only promotion scope.
 
 The final rebased candidate passed the 479/479 repository gate, a retry-free 215/215 mobile matrix, 14/14 manually inspected Changelog theme captures, and the canonical release ceremony 10/10. Hetzner staging receipt `5d2df635546d213dbd236c80` is verified at lineage depth 71. Production content promotion run `34508529884` serves baseline `7ea9b3c579e5` plus content head `761ebb3ddd536755380f16120034838feb33f79a`; live smoke is 6/6 and the production seven-theme UI sweep passes Chromium, Firefox, and WebKit. The push-time sitemap drift exposed after a publisher rebase was regenerated to 147 indexable routes and landed by the canonical publisher.
+
+
+## S369 requested closeout reconciliation — 2026-10-06T21:06:30.871Z
+
+S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56fad17326fcf0fd733b11669e4735e9), Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Desk 12/12, Spark 10/10 and returning Membership 14/14 passed; full build 530/530. Detailed acceptance: docs/SPARK_RELEASE_2026-10-06.md. Identity holds remain distinct from this scoped release. Context, creative direction and memory now include the expanded Desk and hero directives; prior candidate observations remain historical.
+
+
+### Desk signup recovery
+
+Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry.

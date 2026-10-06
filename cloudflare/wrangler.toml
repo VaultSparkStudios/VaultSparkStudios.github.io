@@ -3,6 +3,18 @@ main = "security-headers-worker.js"
 compatibility_date = "2025-01-01"
 account_id = "2d737158a4dde61a7a476a9fda51af2f"
 
+[[migrations]]
+tag = "public-form-counters-v1"
+new_sqlite_classes = ["PublicFormRateLimiter"]
+
+[[env.production.durable_objects.bindings]]
+name = "FORM_RATE_LIMIT"
+class_name = "PublicFormRateLimiter"
+
+[[env.staging.durable_objects.bindings]]
+name = "FORM_RATE_LIMIT"
+class_name = "PublicFormRateLimiter"
+
 [env.production]
 routes = [
   { pattern = "vaultsparkstudios.com/*",     zone_name = "vaultsparkstudios.com" },

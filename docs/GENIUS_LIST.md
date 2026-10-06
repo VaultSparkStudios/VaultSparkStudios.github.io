@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **912/1000**
 - CI health: **check gh run list**
-- Current focus: S369 Spark Vault Compass candidate: opt-in living sphere, both corner guides retired, public route manifest and MindFrame canonical launch correction; staging-first release verification ongoing.
+- Current focus: S369 Spark and premium AI News Desk live: opt-in Compass, retired corner guides, source-backed briefs, public image discussion, anchor profiles and honest readership metrics.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Retire the bottom-left Resume World Builder compass and bottom-right …
+#### 1. [PRODUCT] Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
 Final score: **96**
-[P1 · release acceptance pending] Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in docs/VAULT_COMPASS_PLAN_2026-10-06.md; neither guide reappears in the served release.
-Why it matters: Retire the bottom-left Resume World Builder compass and bottom-right Y is open, local, and unblocked — can ship this session.
+[P1] Confirm the art autopilot's first scheduled publish (.cache/desk-art-staging/autopilot.log); fix anything it aborted on.
+Why it matters: Confirm the art autopilot's first scheduled publish (.cache/desk-art-s is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,63 +34,65 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
-Final score: **90**
-[P1] Confirm the art autopilot's first scheduled publish (.cache/desk-art-staging/autopilot.log); fix anything it aborted on.
-Why it matters: Confirm the art autopilot's first scheduled publish (.cache/desk-art-s is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-Final score: **87**
+#### 3. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+Final score: **93**
 [SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
 Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Build the named Spark entry, living sphere, shared palette/map/list a…
-Final score: **81**
-[P1 · Spark implementation] Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation complete locally; canonical staging and live acceptance pending.
-Why it matters: Build the named Spark entry, living sphere, shared palette/map/list an is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-Final score: **81**
+#### 4. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+Final score: **87**
 [P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
 Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
-Final score: **78**
+### NEXT
+
+#### 1. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
+Final score: **84**
 [DESK/RELEASE/P2] Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
 Why it matters: Observe the next scheduled publisher-to-release trigger after the Octo is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
-Final score: **75**
+#### 2. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+Final score: **81**
 [DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-Final score: **74**
+#### 3. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+Final score: **80**
 [AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
 Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 369-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### LATER
-
-#### 1. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **69**
+#### 4. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
+Final score: **75**
 [QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
 Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **66**
+#### 5. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
+Final score: **72**
 [S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **62**
+### LATER
+
+#### 1. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
+Final score: **68**
 [DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
 Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 369-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
+
+#### 2. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
+Final score: **63**
+[S365][OPS/P2] Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs --allow-wipe; keep unarchived deletion blocking.
+Why it matters: Teach the closeout wipe guard to recognize a byte-preserving work-log  is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Make staging deployment regenerate its continuity summary before a re…
+Final score: **59**
+[S365][CI/P2] Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
+Why it matters: Make staging deployment regenerate its continuity summary before a rel is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
@@ -136,18 +138,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Retire the bottom-left Resume World Builder compass and bottom-right …
+1. Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
 2. Post-push CI confirmation
-3. Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
-4. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-5. Build the named Spark entry, living sphere, shared palette/map/list a…
-6. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-7. Observe the next scheduled publisher-to-release trigger after the Oct…
-8. Add a generated-fixture check for month rollover so a future edition …
-9. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-10. Review measured Linux screenshots before refreshing visual-regression…
-11. Track growth of the Desk overlay from the production baseline; arrang…
-12. Verify prior-overlay path preservation automatically before scoped Pa…
+3. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+4. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+5. Observe the next scheduled publisher-to-release trigger after the Oct…
+6. Add a generated-fixture check for month rollover so a future edition …
+7. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+8. Review measured Linux screenshots before refreshing visual-regression…
+9. Track growth of the Desk overlay from the production baseline; arrang…
+10. Verify prior-overlay path preservation automatically before scoped Pa…
+11. Teach the closeout wipe guard to recognize a byte-preserving work-log…
+12. Make staging deployment regenerate its continuity summary before a re…
 
 ## Best Immediate Move
 

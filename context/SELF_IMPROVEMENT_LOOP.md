@@ -2829,3 +2829,13 @@ SIL v3, ten categories /1000: devHealth 90 · creativeAlignment 95 · momentum 8
 ### S369 final verification disposition
 
 Production content lane: Pages run 37515965605, source 61efa22a56fad17326fcf0fd733b11669e4735e9; edge Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Spark 10/10 and seeded-history Membership 14/14 (seven themes × desktop/mobile) verified. Both old corner guides remain absent. MindFrame launches at https://usemindframe.com/. Full local build 530/530, mobile contract 215/215, staging ceremony 11/11; actual receipts and images are linked in docs/SPARK_RELEASE_2026-10-06.md. Existing identity/Supabase holds remain unchanged. The Desk ships a premium AI news masthead, clickable anchor profiles, mini navigation and a sitewide AI News/subscribe strip. Articles lead with artwork and version-bound public image threads beside it, then source-attributed News Briefs, The Desk’s Take and the signal-versus-hype axis. Satire follows all persona discussion before the full AI disclosure and subscription area. Readership cards expose thresholded recorded homepage/article loads and engaged reading evidence; missing values stay Collecting. Verification: 22/22 browser cases, 7/7 verification-helper cases, 33/33 metric cases, exact claim parity, 210 Desk captures reviewed in seven themes, including profile pagination preserving every contribution and 215/215 full mobile checks. The existing 912/1000 score and candidate observations are preserved as recorded; all twelve selected L2 outcomes now have live acceptance.
+
+
+### S369 closeout reconciliation — unscored addendum
+
+S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56fad17326fcf0fd733b11669e4735e9), Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Desk 12/12, Spark 10/10 and returning Membership 14/14 passed; full build 530/530. Detailed acceptance: docs/SPARK_RELEASE_2026-10-06.md. Identity holds remain distinct from this scoped release. The two earlier S369 candidate score representations describe the same 912/1000 session; this addendum adds no score, velocity or genome session. The final verified disposition supersedes their pending-release statements. Lesson: generated closeout views must read the acting agent and project-owned lifecycle metadata.
+
+
+### S369 signup recovery — unscored addendum
+
+Shared observability KV write capacity must not gate visitor communication. Preserve rate enforcement while isolating storage, and distinguish rejection-path evidence from actual delivery. No new session score.

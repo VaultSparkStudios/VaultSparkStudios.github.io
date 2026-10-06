@@ -6,15 +6,16 @@
 ```
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S369 ═══════╗
 ║  Date: 2026-10-06  ·  SIL: 912/1000  ·  Velocity: 12 down        ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Autopilot: unknown (S369) — receipt ledger unreadable, NOT che  ║
+║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ Bind verified release to current public feed observations     ║
+║  ✓ Reconcile final release evidence with deployed content recei  ║
 ║  ✓ chore: update CI status beacon [skip ci]                      ║
-║  ✓ Record full 530-step verification of Spark and premium Desk   ║
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ Align checked session freshness and reviewed candidate obser  ║
+║  ✓ Close out verified live Spark and premium AI News Desk relea  ║
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ Bind verified release to current public feed observations     ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 912/1000 ═══════════════════════════════════════╗
 ║    Dev Health         90   █████████░                            ║
@@ -33,28 +34,28 @@
 ║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
+║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
-║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
+║  ✓ Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 193 files  ·  M:44 A:0 D:0 ?:149                       ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 216 files  ·  M:88 A:4 D:0 ?:124                       ║
+║  Ahead: 0  ·  Behind: 4                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
-║  Live:     N/A — pre-deploy (FORGE)                              ║
+║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        15/17                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         530/530                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         7d ago                                           ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

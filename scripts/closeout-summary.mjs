@@ -69,8 +69,9 @@ function countDeferred(taskBoard) {
 function countMemoryEntries() {
   const localMem = path.join(projectRoot, 'memory');
   const codexMem = path.join(process.env.USERPROFILE || '', '.codex', 'memories');
+  const codexMemory = path.join(process.env.USERPROFILE || '', '.codex', 'memory');
   let count = 0;
-  for (const dir of [localMem, codexMem]) {
+  for (const dir of [localMem, codexMem, codexMemory]) {
     try {
       const stack = [dir];
       while (stack.length) {
