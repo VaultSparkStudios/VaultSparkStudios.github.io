@@ -49,3 +49,8 @@ Desk signup recovery (2026-10-06): production trace confirmed shared KV daily wr
 ### Final closeout verification
 
 Final single-run repository verification: 530/530 passed, receipt a495599c54b44ecd43cca2a4. Both complete runs in requested-closeout-autopilot-6 completed; subsequent receipt validation passed. Retained the established full-staging build anchor while publishing scoped content/edge recovery; no identity hold is released.
+
+
+### S369 newsletter production edge acceptance
+
+Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after11/11 release-ceremony checks. An actual curl-User-Agent POST with valid signed CSRF returned400 invalid_email without a challenge or email send. Independent edge review passed84/84; newsletter suites23/23. Current homepage mobile regression passed5/5 widths; unchanged210 prior cells were retained only after exact source/capture hash checks. Frontend publication remains pending until the confirmed Pages content deployment lands. New-template mailbox delivery remains unverified.

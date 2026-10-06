@@ -373,3 +373,13 @@ S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56f
 ### Desk signup recovery
 
 Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry.
+
+
+### S369 newsletter follow-through checkpoint
+
+Founder reports the regular Desk signup worked correctly. New requested follow-through removes newsletter Turnstile friction for humans and AI agents, preserves email double opt-in, and adds recipient24h/globalUTC100 send limits inside the email function so direct callers cannot bypass them. Premium confirmation HTML/plain-text emails include signed cancel/unsubscribe links and one-click headers; daily digest masthead is upgraded. The welcome page has a colorful moving sphere, newsroom/profile/feed links, seven themes, reduced motion and explicit unsubscribe/error states. Scoped canonical staging verified145 HTML/art/discovery files; newsletter backend deployed with no-send6/6 and real database rollback assertions passing. Production Worker/Pages publication of this follow-through is pending final checks.
+
+
+### S369 newsletter production edge acceptance
+
+Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after11/11 release-ceremony checks. An actual curl-User-Agent POST with valid signed CSRF returned400 invalid_email without a challenge or email send. Independent edge review passed84/84; newsletter suites23/23. Current homepage mobile regression passed5/5 widths; unchanged210 prior cells were retained only after exact source/capture hash checks. Frontend publication remains pending until the confirmed Pages content deployment lands. New-template mailbox delivery remains unverified.

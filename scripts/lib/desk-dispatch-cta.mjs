@@ -8,7 +8,7 @@
  * five placements cannot drift into five slightly different signups.
  *
  * Flow (unchanged backend): form → POST /desk/dispatch/subscribe (Worker:
- * CSRF + Turnstile + rate limit) → Supabase subscribe-desk-dispatch → Brevo
+ * CSRF + rate limits + recipient cooldown) → Supabase subscribe-desk-dispatch → Brevo
  * transactional confirmation email → reader clicks → contact added to the
  * "The Desk Dispatch" list → /news/subscribed/. Double opt-in, account-free,
  * and a separate list from the Studio Dispatch (Kit) in the site footer.
@@ -79,7 +79,6 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
       <label class="visually-hidden vs-visually-hidden" for="dispatch-email-${esc(source)}">Email address for The Desk Dispatch</label>
       <input id="dispatch-email-${esc(source)}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
       <button type="submit" class="button">${esc(DISPATCH_COPY.button)}</button>
-      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
       <p class="desk-dispatch-fine">Double opt-in: we email you a link to confirm. <a href="/privacy/">Privacy policy</a>.</p>
       <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
     </form>
@@ -99,7 +98,6 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
       <label class="visually-hidden vs-visually-hidden" for="dispatch-email-${esc(source)}">Email address for The Desk Dispatch</label>
       <input id="dispatch-email-${esc(source)}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
       <button type="submit" class="button">${esc(DISPATCH_COPY.button)}</button>
-      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
       <p class="desk-dispatch-fine">${DISPATCH_COPY.fine}</p>
       <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
     </form>
@@ -107,33 +105,9 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
   </section>`;
 }
 
-/**
- * The client. Inline (the Worker nonces it; CSP nonce + strict-dynamic) so it
- * rides the content lane with the pages that need it and rotates no shell hash.
- * It lazy-loads the site's existing csrf-token.js and turnstile.js when a page
- * does not already carry them (the homepage and /dispatch/ do not), on first
- * focus so the invisible challenge is warm before submit.
- */
-/** The site's Turnstile site key, read from the shared helper so the two cannot drift. */
-export function turnstileSiteKey(root = ROOT) {
-  const src = fs.readFileSync(path.join(root, 'assets', 'turnstile.js'), 'utf8');
-  const m = src.match(/var SITE_KEY\s*=\s*'([^']+)'/);
-  if (!m) throw new Error('assets/turnstile.js has no SITE_KEY');
-  return m[1];
-}
-
-/*
- * S368 — each Dispatch form renders its OWN Turnstile widget into its own slot.
- * The shared VSTurnstile helper keeps one page-wide widget in the first visible
- * slot with a 12 s timeout. With two forms on /news/ an interactive challenge
- * could surface in the form the reader was not using, and 12 s is too short to
- * solve one anyway, so real readers saw "The invisible human check did not
- * complete". Here the widget lives in the submitting form; when Turnstile needs
- * the reader, the form says so and waits up to two minutes.
- */
+/** Shared newsletter client: same-origin CSRF and inbox consent, with no human challenge. */
 export const DESK_DISPATCH_SCRIPT = `<script>(function(){
   var ENDPOINT=${JSON.stringify(DESK_DISPATCH_ENDPOINT)};
-  var SITE_KEY=${JSON.stringify(turnstileSiteKey())};
   var forms=document.querySelectorAll('form[data-dispatch]');
   if(!forms.length)return;
   var loads={};
@@ -145,42 +119,16 @@ export const DESK_DISPATCH_SCRIPT = `<script>(function(){
       document.head.appendChild(s);});}
     return loads[src];
   }
-  function deps(){return Promise.all([
-    load('/assets/csrf-token.js',function(){return !!window.VSCsrf;}),
-    load('/assets/turnstile.js',function(){return !!window.VSTurnstile;})]);}
-  function turnstileApi(){return new Promise(function(resolve){var n=0;(function poll(){
-    if(window.turnstile&&window.turnstile.render)return resolve(true);
-    if(++n>150)return resolve(false);setTimeout(poll,100);})();});}
-  var widgets={};
-  function formToken(form,onInteractive){
-    return turnstileApi().then(function(ok){
-      if(!ok)throw {kind:'deps'};
-      return new Promise(function(resolve,reject){
-        var key=form.getAttribute('data-source')||'news';
-        var w=widgets[key]||(widgets[key]={});
-        var timer=setTimeout(function(){w.done=null;reject({kind:'verify'});},20000);
-        w.done=function(err,token){clearTimeout(timer);w.done=null;if(err)reject({kind:'verify'});else resolve(token);};
-        w.interactive=function(){clearTimeout(timer);onInteractive();
-          timer=setTimeout(function(){if(w.done)w.done(true);},120000);};
-        if(w.id!==undefined){try{window.turnstile.reset(w.id);return;}catch(e){w.id=undefined;}}
-        var slot=form.querySelector('[data-vs-turnstile-slot]');
-        w.id=window.turnstile.render(slot,{sitekey:SITE_KEY,appearance:'interaction-only',
-          callback:function(t){if(w.done)w.done(null,t);},
-          'error-callback':function(){if(w.done)w.done(true);return true;},
-          'expired-callback':function(){},
-          'before-interactive-callback':function(){if(w.interactive)w.interactive();}});
-      });
-    });
-  }
+  function deps(){return load('/assets/csrf-token.js',function(){return !!window.VSCsrf;});}
   var MESSAGES={invalid_email:'That does not look like a valid email address.',
     turnstile_invalid:'Verification did not pass. Please try again.',
     turnstile_token_missing:'Verification did not complete. Please try again.',
     turnstile_not_configured:'Signup is temporarily unavailable. Please try again later.',
     invalid_form_body:'Something went wrong with the form. Please reload and try again.'};
-  function post(email,source,turnstileToken,csrf){
+  function post(email,source,csrf){
     return fetch(ENDPOINT,{method:'POST',credentials:'same-origin',
       headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},
-      body:JSON.stringify({email:email,source:source,turnstileToken:turnstileToken})})
+      body:JSON.stringify({email:email,source:source})})
     .then(function(r){return r.text().then(function(t){var b={};try{b=JSON.parse(t);}catch(e){b={raw:t};}return {status:r.status,ok:r.ok,body:b};});});
   }
   Array.prototype.forEach.call(forms,function(form){
@@ -197,31 +145,24 @@ export const DESK_DISPATCH_SCRIPT = `<script>(function(){
       var email=(input.value||'').trim();
       if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){say('Enter a valid email address.','error');input.setAttribute('aria-invalid','true');input.focus();return;}
       input.removeAttribute('aria-invalid');
-      button.disabled=true;button.textContent='Sending…';say('Verifying you are human (invisible check)…');
+      button.disabled=true;button.textContent='Sending…';say('Sending your confirmation email…');
       var source=form.getAttribute('data-source')||'news';
-      var ask=function(){return formToken(form,function(){say('Please complete the quick check below to continue.');});};
       deps().then(function(ok){
-        if(!ok[0])throw {kind:'deps'};
-        return ask();
-      }).then(function(token){
-        say('Sending your confirmation email…');
-        return window.VSCsrf.getToken().then(function(csrf){
-          return post(email,source,token,csrf).then(function(res){
-            // A stale session CSRF token answers 403 in plain text. Refresh once.
-            if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
-              window.VSCsrf.invalidate();
-              return ask().then(function(t2){
-                return window.VSCsrf.getToken().then(function(c2){return post(email,source,t2,c2);});
-              });
-            }
-            return res;
-          });
+        if(!ok)throw {kind:'deps'};
+        return window.VSCsrf.getToken();
+      }).then(function(csrf){
+        return post(email,source,csrf).then(function(res){
+          if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
+            window.VSCsrf.invalidate();
+            return window.VSCsrf.getToken().then(function(c2){return post(email,source,c2);});
+          }
+          return res;
         });
       }).then(function(res){
         if(res.ok){form.classList.add('is-done');input.readOnly=true;button.textContent='Sent ✓';
           say('Check your inbox for an email from news@vaultsparkstudios.com and click the link to confirm. You are subscribed only after you confirm.','ok');return;}
         reset();
-        if(res.status===429){say('Too many signup attempts from this network. Please try again in an hour.','error');return;}
+        if(res.status===429){say('Signup is temporarily rate limited. Please try again later.','error');return;}
         var code=res.body&&res.body.error;
         say(MESSAGES[code]||(typeof code==='string'&&code.indexOf(' ')>0?code:'Something went wrong. Please try again shortly.'),'error');
       }).catch(function(err){
@@ -250,7 +191,7 @@ export function selfTest() {
   const compact = deskDispatchCta('story', { compact: true, heading: 'H <x>' });
   t('posts to the protected Worker route', DESK_DISPATCH_SCRIPT.includes(JSON.stringify(DESK_DISPATCH_ENDPOINT)));
   t('form is marked for the shared client', /<form class="desk-dispatch-form" data-dispatch data-source="hub"/.test(full));
-  t('carries a Turnstile slot', full.includes('data-vs-turnstile-slot'));
+  t('newsletter has no human-challenge slot', !full.includes('data-vs-turnstile-slot'));
   t('states cadence, no spam and unsubscribe', /Cadence/.test(full) && /No spam/.test(full) && /unsubscribe/i.test(full));
   t('names the list and keeps it separate from the Studio Dispatch', /The Desk Dispatch/.test(full) && /Separate from the Studio Dispatch/.test(full));
   t('discloses fictional AI correspondents', /fictional AI correspondents/.test(full));
@@ -261,17 +202,14 @@ export function selfTest() {
   t('ids are unique per source', full.includes('id="dispatch-email-hub"') && compact.includes('id="dispatch-email-story"'));
   t('a hostile source is refused', (() => { try { deskDispatchCta('"><x'); return false; } catch { return true; } })());
   const bar = deskDispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' });
-  t('bar variant carries the anchor, the shared form and a Turnstile slot', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && bar.includes('data-vs-turnstile-slot'));
+  t('bar variant carries the anchor and shared form without a human challenge', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && !bar.includes('data-vs-turnstile-slot'));
   t('bar variant tells the two lists apart', /not the Studio Dispatch/.test(bar));
-  t('each form renders its own Turnstile widget in its own slot', /form\.querySelector\('\[data-vs-turnstile-slot\]'\)/.test(DESK_DISPATCH_SCRIPT) && /window\.turnstile\.render\(slot/.test(DESK_DISPATCH_SCRIPT));
-  t('an interactive challenge pauses the timeout and tells the reader', /before-interactive-callback/.test(DESK_DISPATCH_SCRIPT) && /120000/.test(DESK_DISPATCH_SCRIPT) && /complete the quick check/.test(DESK_DISPATCH_SCRIPT));
-  t('the site key is the shared helper key', DESK_DISPATCH_SCRIPT.includes(JSON.stringify(turnstileSiteKey())));
   t('a hostile anchor is refused', (() => { try { deskDispatchCta('x', { bar: true, anchor: '"><x' }); return false; } catch { return true; } })());
   t('success copy never claims a confirmed subscription', /subscribed only after you confirm/.test(DESK_DISPATCH_SCRIPT));
-  t('verification failure is not reported as a mail outage', /invisible human check did not complete/.test(DESK_DISPATCH_SCRIPT));
+  t('newsletter welcomes agents without a human challenge', !/turnstile\.render|Verifying you are human/.test(DESK_DISPATCH_SCRIPT));
   t('a stale CSRF token is refreshed once', /VSCsrf\.invalidate\(\)/.test(DESK_DISPATCH_SCRIPT));
   t('rate limit has its own message', /res\.status===429/.test(DESK_DISPATCH_SCRIPT));
-  t('lazy-loads the existing security helpers instead of forking them', DESK_DISPATCH_SCRIPT.includes("'/assets/csrf-token.js'") && DESK_DISPATCH_SCRIPT.includes("'/assets/turnstile.js'"));
+  t('lazy-loads the existing security helpers instead of forking them', DESK_DISPATCH_SCRIPT.includes("'/assets/csrf-token.js'") && !DESK_DISPATCH_SCRIPT.includes("'/assets/turnstile.js'"));
   t('the done state keeps the form box (no layout shift)', !/is-done[^{]*\{[^}]*display:\s*none/.test(deskDispatchCss()));
   const css = deskDispatchCss();
   t('dispatch CSS region exists', css.length > 200);

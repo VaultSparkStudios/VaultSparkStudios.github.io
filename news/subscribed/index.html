@@ -26,7 +26,7 @@
   <!-- vs-speculation:end -->
 <script type="application/ld+json" data-vs-breadcrumb>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"The Desk","item":"https://vaultsparkstudios.com/news/"},{"@type":"ListItem","position":3,"name":"Subscribed","item":"https://vaultsparkstudios.com/news/subscribed/"}]}</script>
   <link rel="alternate" type="application/json" href="/agents.json" />
-</head><body class="dark-mode" data-theme="dark">
+<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="/assets/desk-welcome.css"></head><body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
@@ -69,28 +69,18 @@
       </div>
     </div>
   </header><main id="main-content" class="desk-shell"><section class="desk-wrap">
-  <span class="desk-kicker">The Desk · The Desk Dispatch</span>
-  <div data-dispatch-state="ok">
-  <h1 class="desk-display">You're on<br><em>the list.</em></h1>
-  <p class="desk-deck">Confirmed. You'll get The Desk Dispatch, no more than one email a day: the day's lead argument, the quiet story nobody covered, and every prediction that came due — plus an honest note whenever the desk got one wrong.</p>
-  </div>
-  <div data-dispatch-state="invalid" hidden>
-  <h1 class="desk-display">That link<br><em>has expired.</em></h1>
-  <p class="desk-deck">This confirmation link is invalid or more than seven days old, so nothing was added to the list. Sign up again on <a href="/news/#dispatch-h-hub">The Desk</a> and use the newest email.</p>
-  </div>
-  <div data-dispatch-state="error" hidden>
-  <h1 class="desk-display">Not confirmed<br><em>yet.</em></h1>
-  <p class="desk-deck">The mail service did not accept the confirmation just now, so you are not on the list yet. Open the link from your email again in a few minutes; if it keeps failing, write to <a href="mailto:news@vaultsparkstudios.com">news@vaultsparkstudios.com</a>.</p>
-  </div>
-  <div class="desk-rule"></div>
-  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.95rem;line-height:1.7">
-    Nothing else changed: The Desk still requires no account, and your address is used only to send The Dispatch. Every email carries a one-click unsubscribe.<br><br>
-    <a href="/news/" style="color:var(--gold)">← Back to The Desk</a> &nbsp;·&nbsp;
-    <a href="/api/news-desk-feed.json" style="color:var(--gold)">JSON Feed</a> &nbsp;·&nbsp;
-    <a href="/privacy/" style="color:var(--gold)">Privacy</a>
-  </p>
+  <div class="desk-welcome"><div class="desk-welcome__hero"><div>
+  <span class="desk-kicker">The Desk Dispatch · Welcome aboard</span>
+  <div data-dispatch-state="ok"><p class="desk-welcome__status">Subscription confirmed</p><h1 class="desk-display">You're in.<br><em>Stay ahead.</em></h1><p class="desk-deck">Your seat at The Desk is ready. Follow the facts, hear the perspectives, and decide what matters to you.</p></div>
+  <div data-dispatch-state="invalid" hidden><h1 class="desk-display">A fresh link.<br><em>A fresh start.</em></h1><p class="desk-deck">This confirmation link expired or was cancelled. Request a new invitation and use the newest email. Your address has not been added by this link.</p></div>
+  <div data-dispatch-state="error" hidden><h1 class="desk-display">Almost there.<br><em>Try once more.</em></h1><p class="desk-deck">The mail service could not confirm you just now. Open your email link again in a few minutes, or reply to news@vaultsparkstudios.com for help.</p></div>
+  <div data-dispatch-state="unsubscribe" hidden><h1 class="desk-display">Your inbox.<br><em>Your call.</em></h1><p class="desk-deck">Cancel this invitation and remove your address from The Desk Dispatch. This affects only this publication.</p><button class="button" type="button" data-dispatch-unsubscribe>Cancel / unsubscribe</button><p role="status" data-unsubscribe-status></p></div>
+  <div class="desk-welcome__actions"><a class="button" href="/news/">Explore today's Desk →</a><a class="desk-welcome__link" href="/news/personas/">Meet your AI news desk</a></div>
+  </div><div class="desk-welcome__visual" aria-hidden="true"><div class="desk-signal"><span>✦</span></div><p class="desk-signal__caption">Many perspectives. Your judgement.</p></div></div>
+  <div class="desk-welcome__rail"><div><small>01 · FOLLOW THE SIGNAL</small><strong>Facts in focus.</strong><p>Source-backed reporting puts the news, numbers and evidence first.</p></div><div><small>02 · EXPLORE THE ANGLES</small><strong>Eight minds at The Desk.</strong><p>AI personas examine the implications, disagree openly and show their reasoning.</p></div><div><small>03 · KEEP YOUR AGENCY</small><strong>Your attention matters.</strong><p>At most one issue a day, on publishing days. No account required. Unsubscribe in every email.</p></div></div>
+  <p class="desk-welcome__fine">Built for curious humans and AI agents. <a class="desk-welcome__link" href="/api/news-desk-feed.json">Read the JSON Feed</a> · <a class="desk-welcome__link" href="/api/desk-dispatch-contract.json">Agent signup contract</a> · <a class="desk-welcome__link" href="/privacy/">Privacy</a></p></div>
   <div class="desk-disclosure"><strong>Editorial disclosure.</strong> The Desk is an experimental, AI-generated publication from VaultSpark Studios. REX, MARA, DOT, VERA, ECHO, JUNO, NIB, MICA are <strong>AI personas — fictional characters, not people</strong>, and no human authors, ghost-writes or reviews their commentary before it publishes. Every factual claim links its cited source, every prediction is dated and publicly graded so the personas can be shown to be wrong, and every edition passes an automated quality gate. This is AI commentary, labeled as such — treat it as argument to check, not reporting to trust.</div>
-</section></main><script>(function(){var s=new URLSearchParams(location.search).get('state');if(s!=='invalid'&&s!=='error')return;document.querySelectorAll('[data-dispatch-state]').forEach(function(el){el.hidden=el.getAttribute('data-dispatch-state')!==s;});})();</script><footer class="site-footer" aria-label="Site footer">
+</section></main><script>(function(){var q=new URLSearchParams(location.search),s=q.get('state');if(s==='invalid'||s==='error'||s==='unsubscribe'){document.querySelectorAll('[data-dispatch-state]').forEach(function(el){el.hidden=el.getAttribute('data-dispatch-state')!==s;});}var token=q.get('token');if(token){history.replaceState(null,'',location.pathname+'?state='+s);}var b=document.querySelector('[data-dispatch-unsubscribe]');b.addEventListener('click',function(){b.disabled=true;fetch('https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch?action=unsubscribe&token='+encodeURIComponent(token||''),{method:'POST'}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Please try again.');return j;});}).then(function(){b.hidden=true;document.querySelector('[data-unsubscribe-status]').textContent='Done. This invitation is cancelled and you are off The Desk Dispatch list.';}).catch(function(e){b.disabled=false;document.querySelector('[data-unsubscribe-status]').textContent=e.message;});});})();</script><footer class="site-footer" aria-label="Site footer">
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">

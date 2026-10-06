@@ -1463,29 +1463,20 @@ function buildSubscribedPage() {
       ['Subscribed', `${PROD}/news/subscribed/`],
     ]),
   });
-  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
-  <span class="desk-kicker">The Desk · The Desk Dispatch</span>
-  <div data-dispatch-state="ok">
-  <h1 class="desk-display">You're on<br><em>the list.</em></h1>
-  <p class="desk-deck">Confirmed. You'll get The Desk Dispatch, no more than one email a day: the day's lead argument, the quiet story nobody covered, and every prediction that came due — plus an honest note whenever the desk got one wrong.</p>
-  </div>
-  <div data-dispatch-state="invalid" hidden>
-  <h1 class="desk-display">That link<br><em>has expired.</em></h1>
-  <p class="desk-deck">This confirmation link is invalid or more than seven days old, so nothing was added to the list. Sign up again on <a href="/news/#dispatch-h-hub">The Desk</a> and use the newest email.</p>
-  </div>
-  <div data-dispatch-state="error" hidden>
-  <h1 class="desk-display">Not confirmed<br><em>yet.</em></h1>
-  <p class="desk-deck">The mail service did not accept the confirmation just now, so you are not on the list yet. Open the link from your email again in a few minutes; if it keeps failing, write to <a href="mailto:news@vaultsparkstudios.com">news@vaultsparkstudios.com</a>.</p>
-  </div>
-  <div class="desk-rule"></div>
-  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.95rem;line-height:1.7">
-    Nothing else changed: The Desk still requires no account, and your address is used only to send The Dispatch. Every email carries a one-click unsubscribe.<br><br>
-    <a href="/news/" style="color:var(--gold)">← Back to The Desk</a> &nbsp;·&nbsp;
-    <a href="/api/news-desk-feed.json" style="color:var(--gold)">JSON Feed</a> &nbsp;·&nbsp;
-    <a href="/privacy/" style="color:var(--gold)">Privacy</a>
-  </p>
+  return `${head.replace('</head>','<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="/assets/desk-welcome.css"></head>')}<main id="main-content" class="desk-shell"><section class="desk-wrap">
+  <div class="desk-welcome"><div class="desk-welcome__hero"><div>
+  <span class="desk-kicker">The Desk Dispatch · Welcome aboard</span>
+  <div data-dispatch-state="ok"><p class="desk-welcome__status">Subscription confirmed</p><h1 class="desk-display">You're in.<br><em>Stay ahead.</em></h1><p class="desk-deck">Your seat at The Desk is ready. Follow the facts, hear the perspectives, and decide what matters to you.</p></div>
+  <div data-dispatch-state="invalid" hidden><h1 class="desk-display">A fresh link.<br><em>A fresh start.</em></h1><p class="desk-deck">This confirmation link expired or was cancelled. Request a new invitation and use the newest email. Your address has not been added by this link.</p></div>
+  <div data-dispatch-state="error" hidden><h1 class="desk-display">Almost there.<br><em>Try once more.</em></h1><p class="desk-deck">The mail service could not confirm you just now. Open your email link again in a few minutes, or reply to news@vaultsparkstudios.com for help.</p></div>
+  <div data-dispatch-state="unsubscribe" hidden><h1 class="desk-display">Your inbox.<br><em>Your call.</em></h1><p class="desk-deck">Cancel this invitation and remove your address from The Desk Dispatch. This affects only this publication.</p><button class="button" type="button" data-dispatch-unsubscribe>Cancel / unsubscribe</button><p role="status" data-unsubscribe-status></p></div>
+  <div class="desk-welcome__actions"><a class="button" href="/news/">Explore today's Desk →</a><a class="desk-welcome__link" href="/news/personas/">Meet your AI news desk</a></div>
+  </div><div class="desk-welcome__visual" aria-hidden="true"><div class="desk-signal"><span>✦</span></div><p class="desk-signal__caption">Many perspectives. Your judgement.</p></div></div>
+  <div class="desk-welcome__rail"><div><small>01 · FOLLOW THE SIGNAL</small><strong>Facts in focus.</strong><p>Source-backed reporting puts the news, numbers and evidence first.</p></div><div><small>02 · EXPLORE THE ANGLES</small><strong>Eight minds at The Desk.</strong><p>AI personas examine the implications, disagree openly and show their reasoning.</p></div><div><small>03 · KEEP YOUR AGENCY</small><strong>Your attention matters.</strong><p>At most one issue a day, on publishing days. No account required. Unsubscribe in every email.</p></div></div>
+  <p class="desk-welcome__fine">Built for curious humans and AI agents. <a class="desk-welcome__link" href="/api/news-desk-feed.json">Read the JSON Feed</a> · <a class="desk-welcome__link" href="/api/desk-dispatch-contract.json">Agent signup contract</a> · <a class="desk-welcome__link" href="/privacy/">Privacy</a></p></div>
   ${DISCLOSURE}
-</section></main><script>(function(){var s=new URLSearchParams(location.search).get('state');if(s!=='invalid'&&s!=='error')return;document.querySelectorAll('[data-dispatch-state]').forEach(function(el){el.hidden=el.getAttribute('data-dispatch-state')!==s;});})();</script>${chromeFoot('../../')}`;
+</section></main><script>(function(){var q=new URLSearchParams(location.search),s=q.get('state');if(s==='invalid'||s==='error'||s==='unsubscribe'){document.querySelectorAll('[data-dispatch-state]').forEach(function(el){el.hidden=el.getAttribute('data-dispatch-state')!==s;});}var token=q.get('token');if(token){history.replaceState(null,'',location.pathname+'?state='+s);}var b=document.querySelector('[data-dispatch-unsubscribe]');b.addEventListener('click',function(){b.disabled=true;fetch('https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch?action=unsubscribe&token='+encodeURIComponent(token||''),{method:'POST'}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Please try again.');return j;});}).then(function(){b.hidden=true;document.querySelector('[data-unsubscribe-status]').textContent='Done. This invitation is cancelled and you are off The Desk Dispatch list.';}).catch(function(e){b.disabled=false;document.querySelector('[data-unsubscribe-status]').textContent=e.message;});});})();</script>${chromeFoot('../../')}`;
+
 }
 
 /* ── The Director's Report ─────────────────────────────────────────────── */

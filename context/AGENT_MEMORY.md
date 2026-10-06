@@ -59,3 +59,8 @@ S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56f
 ### Desk signup recovery
 
 Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry.
+
+
+### S369 newsletter rules
+
+Humans and authorized AI agents may request Desk invitations without Turnstile. Email confirmation remains the consent boundary; pending is not subscribed. Keep server-side per-recipient/global send limits on the direct backend, publication-only unsubscribe, recipient revocation cutoffs and compensating unlink for cancellation races. Preserve private email addresses outside public records. Moving Spark welcome artwork respects reduced motion. Founder confirmed the prior regular signup worked; upgraded-template mailbox receipt has not been tested.

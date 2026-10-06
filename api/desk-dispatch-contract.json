@@ -1,0 +1,48 @@
+{
+  "version": "2026-10-06",
+  "audiences": [
+    "humans",
+    "AI agents"
+  ],
+  "purpose": "Request The Desk Dispatch for an inbox you control or are authorized to manage.",
+  "steps": [
+    {
+      "method": "GET",
+      "url": "https://vaultsparkstudios.com/_csrf",
+      "response": "Read the token field from the JSON response."
+    },
+    {
+      "method": "POST",
+      "url": "https://vaultsparkstudios.com/desk/dispatch/subscribe",
+      "headers": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<token from /_csrf>"
+      },
+      "body": {
+        "email": "<authorized inbox address>"
+      }
+    },
+    {
+      "action": "Read the confirmation email in that inbox and follow its signed confirmation link. A pending-confirmation response alone does not activate a subscription."
+    }
+  ],
+  "humanChallengeRequired": false,
+  "consent": "Email double opt-in. No studio account is created.",
+  "limits": {
+    "networkAttemptsPerHour": 3,
+    "recipientInvitationsPerDay": 1,
+    "globalInvitationsPerUtcDay": 100
+  },
+  "responses": {
+    "200": "pending-confirmation; includes duplicate requests suppressed by the recipient cooldown",
+    "400": "Invalid request",
+    "403": "Refresh the CSRF token once",
+    "429": "Wait before retrying; do not rotate network addresses to bypass limits",
+    "503": "Service unavailable; retry later"
+  },
+  "unsubscribe": "Each issue includes the publication's unsubscribe link. The confirmation invitation includes an explicit cancel/unsubscribe action.",
+  "privacy": "https://vaultsparkstudios.com/privacy/",
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-06T23:22:25.142Z"
+}

@@ -2839,3 +2839,8 @@ S369 Spark and premium AI News Desk are deployed: Pages 37515965605 (61efa22a56f
 ### S369 signup recovery — unscored addendum
 
 Shared observability KV write capacity must not gate visitor communication. Preserve rate enforcement while isolating storage, and distinguish rejection-path evidence from actual delivery. No new session score.
+
+
+### S369 unscored newsletter follow-through
+
+Founder reports the regular Desk signup worked correctly. New requested follow-through removes newsletter Turnstile friction for humans and AI agents, preserves email double opt-in, and adds recipient24h/globalUTC100 send limits inside the email function so direct callers cannot bypass them. Premium confirmation HTML/plain-text emails include signed cancel/unsubscribe links and one-click headers; daily digest masthead is upgraded. The welcome page has a colorful moving sphere, newsroom/profile/feed links, seven themes, reduced motion and explicit unsubscribe/error states. Scoped canonical staging verified145 HTML/art/discovery files; newsletter backend deployed with no-send6/6 and real database rollback assertions passing. Production Worker/Pages publication of this follow-through is pending final checks. Existing912/1000 session score is retained. Independent review caught canonical-token/revocation/race defects before the function deployment; all were fixed. Improvement: email-layer limits must survive direct backend access. Mailbox-client unsubscribe and scanner-safe confirmation remain honestly separate future acceptance items.

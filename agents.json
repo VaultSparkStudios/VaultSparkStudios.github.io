@@ -359,23 +359,23 @@
           "type": "string",
           "required": true,
           "description": "The subscriber’s own email address."
-        },
-        "turnstileToken": {
-          "type": "string",
-          "required": true,
-          "description": "Cloudflare Turnstile token from the on-page widget."
         }
       },
       "auth": "none",
       "humanVerification": {
-        "required": true,
-        "provider": "Cloudflare Turnstile"
+        "required": false,
+        "method": "Email double opt-in for humans and agents."
       },
       "limits": {
-        "rate": "Three submissions per hour per network address."
+        "rate": "Three submissions per hour per network address; one invitation per recipient per day; bounded daily send budget."
+      },
+      "contract": "https://vaultsparkstudios.com/api/desk-dispatch-contract.json",
+      "csrf": {
+        "tokenUrl": "https://vaultsparkstudios.com/_csrf",
+        "header": "X-CSRF-Token"
       },
       "humanHandoff": "https://vaultsparkstudios.com/news/",
-      "description": "Email signup for the studio’s Desk newsletter. It requires a human-verification token, so an agent cannot subscribe anyone on its own: hand the person the signup page and let them submit their own address."
+      "description": "Humans and agents may request an invitation for an inbox they control or are authorized to manage. GET /_csrf, POST JSON email with X-CSRF-Token, then follow the signed confirmation link from that inbox. Pending is not subscribed."
     },
     {
       "name": "oracle.answer.lookup",

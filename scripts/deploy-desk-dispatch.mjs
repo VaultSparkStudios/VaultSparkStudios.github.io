@@ -59,7 +59,7 @@ const DISPATCH_SENDER = 'news@vaultsparkstudios.com';
 export function projectRef() { return PROJECT_REF; }
 
 export function parseOptions(argv) {
-  const modes = argv.filter((arg) => ['--all', '--secrets', '--deploy', '--verify'].includes(arg));
+  const modes = argv.filter((arg) => ['--all', '--secrets', '--deploy', '--verify', '--limits'].includes(arg));
   if (modes.length !== 1) throw new Error('Specify exactly one mode: --secrets | --deploy | --verify | --all');
   const live = argv.filter((arg) => arg.startsWith('--live-email='));
   if (live.length > 1 || (live.length && argv.includes('--no-live'))) throw new Error('--live-email must appear once and cannot be combined with --no-live');
@@ -136,6 +136,14 @@ async function deploy() {
   return true;
 }
 
+async function deployLimits() {
+  const query = fs.readFileSync(path.join(ROOT,'supabase/migrations/20261006230000_desk_dispatch_limits.sql'),'utf8');
+  const res = await mgmt(`/projects/${PROJECT_REF}/database/query`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+  if (!res.ok) throw new Error(redact(`Dispatch limits migration rejected (${res.status}): ${res.text.slice(0,160)}`));
+  console.log('✓ newsletter recipient cooldown and global send cap installed');
+  return true;
+}
+
 /**
  * Verify against the LIVE endpoint, not the repo. Three independent checks,
  * including two negative controls — a probe that only ever sends a good
@@ -145,13 +153,13 @@ export function currentConfirmation(rows, email, startedAt, existingIds = []) {
   const known = new Set(existingIds);
   return rows.find((row) => row.email === email
     && typeof row.messageId === 'string' && row.messageId && !known.has(row.messageId)
-    && Number(row.templateId) === Number(DISPATCH_DOI_TEMPLATE_ID)
+    && (Number(row.templateId) === Number(DISPATCH_DOI_TEMPLATE_ID) || row.subject === 'Your signal starts here — confirm The Desk Dispatch')
     && Number.isFinite(Date.parse(row.date))
     && Date.parse(row.date) >= Math.floor(startedAt / 1000) * 1000) || null;
 }
 
 async function confirmationLog() {
-  const res = await fetch(`${BREVO_API}/smtp/emails?templateId=${DISPATCH_DOI_TEMPLATE_ID}&limit=20`, {
+  const res = await fetch(`${BREVO_API}/smtp/emails?limit=100`, {
     headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' },
   });
   if (!res.ok) throw new Error(`Confirmation log unreadable (HTTP ${res.status})`);
@@ -195,14 +203,12 @@ async function verify({ liveEmail = null } = {}) {
   // The sending identity lives in Brevo, not in this repo, so nothing in the
   // build can catch it drifting back to founder@. Read it from the provider.
   try {
-    const tpl = await fetch(`${BREVO_API}/smtp/templates/${DISPATCH_DOI_TEMPLATE_ID}`, {
-      headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' },
-    });
-    const body = tpl.ok ? await tpl.json() : null;
-    const from = body?.sender?.email || null;
-    results.push([`confirmation mail sends as ${DISPATCH_SENDER} (provider-read, got ${from || 'unknown'})`,
-      from === DISPATCH_SENDER]);
-    results.push(['confirmation mail is reply-capable', Boolean(body?.replyTo)]);
+    const response = await fetch(BREVO_API+'/senders',{headers:{'api-key':getSecret('BREVO_API_KEY','brevo'),accept:'application/json'}});
+    const body = response.ok ? await response.json() : null;
+    const sender = body?.senders?.find(row=>row.email===DISPATCH_SENDER);
+    results.push(['publication sender is active (provider-read)',sender?.active===true]);
+    const source = fs.readFileSync(path.join(ROOT,ENTRYPOINT),'utf8');
+    results.push(['confirmation explicitly uses the publication reply address',source.includes("replyTo: {email:'news@vaultsparkstudios.com'}")]);
   } catch (err) {
     results.push([`sender identity readable from Brevo (${String(err).slice(0, 60)})`, false]);
   }
@@ -233,7 +239,7 @@ async function verify({ liveEmail = null } = {}) {
       await new Promise((r) => setTimeout(r, 4000));
       const logRes = await fetch(
         // templateId + email together returns nothing on this API; filter client-side.
-        `https://api.brevo.com/v3/smtp/emails?templateId=${DISPATCH_DOI_TEMPLATE_ID}&limit=20`,
+        `https://api.brevo.com/v3/smtp/emails?limit=100`,
         { headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' } },
       );
       const log = logRes.ok ? await logRes.json() : {};
@@ -254,7 +260,7 @@ async function verify({ liveEmail = null } = {}) {
 
 export async function main(argv = process.argv.slice(2), operations = {}) {
   const options = parseOptions(argv);
-  const ops = { assertProject, setSecrets, deploy, verify,
+  const ops = { assertProject, setSecrets, deploy, deployLimits, verify,
     settle: () => new Promise((r) => setTimeout(r, 4000)), ...operations };
   await ops.assertProject();
   if (options.mode === '--all') {
@@ -266,6 +272,7 @@ export async function main(argv = process.argv.slice(2), operations = {}) {
   }
   if (options.mode === '--secrets') return ops.setSecrets();
   if (options.mode === '--deploy') return ops.deploy();
+  if (options.mode === '--limits') return ops.deployLimits();
   return ops.verify(options);
 }
 
@@ -273,5 +280,3 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   try { await main(); }
   catch (error) { console.error(redact(error.message)); process.exitCode = 1; }
 }
-
-

@@ -1,0 +1,23 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import {transformSync} from 'esbuild';
+const source=transformSync(fs.readFileSync('supabase/functions/subscribe-desk-dispatch/index.ts','utf8'),{loader:'ts',format:'cjs'}).code;
+function fixture(claim='allowed',fail=false,race=false){let handler,revoked=false,tokenReads=0;const calls=[],config={SUPABASE_URL:'https://fixture.supabase.co',SUPABASE_SERVICE_ROLE_KEY:'fixture-service-key',BREVO_API_KEY:'fixture-mail-key',DISPATCH_LIST_ID:'3',DISPATCH_DOI_TEMPLATE_ID:'1',DISPATCH_TOKEN_SECRET:'fixture-signing-key'};const context={module:{exports:{}},exports:{},Response,Request,URL,TextEncoder,crypto,btoa,atob,console,Deno:{env:{get:n=>config[n]},serve:f=>{handler=f;}},fetch:async(url,init)=>{calls.push([url,JSON.parse(init.body)]);if(String(url).includes('/rpc/desk_dispatch_token_allowed')){if(JSON.parse(init.body).p_revoke)revoked=true;else tokenReads++;return Response.json(!revoked&&!(race&&tokenReads>1));}if(String(url).includes('/rpc/'))return fail?new Response('',{status:503}):Response.json(claim);return new Response('',{status:201});}};vm.runInNewContext(source,context);return{handler,calls};}
+const request=()=>new Request('https://fixture.supabase.co/functions/v1/subscribe-desk-dispatch',{method:'POST',body:JSON.stringify({email:'reader@example.com'})});
+test('confirmation mail has branded responsive HTML, plain text, reply identity and signed unsubscribe headers',async()=>{const f=fixture();const r=await f.handler(request());assert.equal(r.status,200);assert.equal(f.calls.length,2);const body=f.calls[1][1];assert.equal(body.sender.email,'news@vaultsparkstudios.com');assert.equal(body.replyTo.email,'news@vaultsparkstudios.com');assert.match(body.htmlContent,/Cancel this request \/ unsubscribe/);assert.match(body.htmlContent,/max-width:600px/);assert.match(body.textContent,/Cancel \/ unsubscribe/);assert.equal(body.headers['List-Unsubscribe-Post'],'List-Unsubscribe=One-Click');assert.match(body.headers['List-Unsubscribe'],/action=unsubscribe/);assert.equal(body.templateId,undefined);});
+test('direct-function duplicates do not send another email or enumerate subscribers',async()=>{const f=fixture('duplicate');const r=await f.handler(request());assert.equal(r.status,200);assert.equal((await r.json()).state,'pending-confirmation');assert.equal(f.calls.length,1);assert.match(f.calls[0][1].p_hash,/^[a-f0-9]{64}$/);assert.ok(!JSON.stringify(f.calls[0][1]).includes('reader@'));});
+test('global send limit and storage failures prevent confirmation sends',async()=>{for(const [claim,fail,status] of [['limited',false,429],['allowed',true,503]]){const f=fixture(claim,fail);assert.equal((await f.handler(request())).status,status);assert.equal(f.calls.length,1);}});
+test('malformed addresses never consume the daily send budget',async()=>{const f=fixture();const r=await f.handler(new Request(request().url,{method:'POST',body:JSON.stringify({email:'bad'})}));assert.equal(r.status,400);assert.equal(f.calls.length,0);});
+test('unsubscribe GET is a non-mutating redirect to explicit consent UI',async()=>{const f=fixture();const r=await f.handler(new Request(request().url+'?action=unsubscribe&token=fixture'));assert.equal(r.status,302);assert.match(r.headers.get('location'),/state=unsubscribe/);assert.equal(f.calls.length,0);});
+
+test('cancellation revokes signed invites, and extra token segments cannot bypass validation',async()=>{
+ const f=fixture();await f.handler(request());const unsub=f.calls[1][1].headers['List-Unsubscribe'].slice(1,-1),link=new URL(unsub);link.searchParams.delete('action');
+ assert.equal((await f.handler(new Request(unsub,{method:'POST'}))).status,200);
+ const r=await f.handler(new Request(link));assert.match(r.headers.get('location'),/state=invalid/);
+ link.searchParams.set('token',link.searchParams.get('token')+'.extra');const before=f.calls.length;
+ assert.match((await f.handler(new Request(link))).headers.get('location'),/state=invalid/);assert.equal(f.calls.length,before);
+ assert.equal(f.calls.filter(([u])=>u==='https://api.brevo.com/v3/contacts').length,0);
+});
+test('unsubscribe racing contact creation triggers compensating unlink before reporting confirmation',async()=>{
+ const f=fixture('allowed',false,true);await f.handler(request());const link=new URL(f.calls[1][1].headers['List-Unsubscribe'].slice(1,-1));link.searchParams.delete('action');
+ const r=await f.handler(new Request(link));assert.match(r.headers.get('location'),/state=invalid/);
+ const last=f.calls.at(-1);assert.match(last[0],/contacts\/reader%40example.com/);assert.deepEqual(last[1].unlinkListIds,[3]);
+});

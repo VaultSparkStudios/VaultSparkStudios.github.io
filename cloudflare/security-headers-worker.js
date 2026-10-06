@@ -118,7 +118,7 @@ const BLOCKED_UA_PATTERNS = [
 // Generic HTTP client libraries (curl, wget, requests, go-http). These are the
 // default UAs of legitimate AI agents + API clients, so the dual-audience site
 // (CANON-048) MUST let them read public content. They stay blocked on gated
-// surfaces and on any write method — handled in isBlockedRequest().
+// surfaces and writes except the consent-protected Desk signup endpoint.
 const GENERIC_HTTP_CLIENT_PATTERNS = [
   /python-requests\/[0-9]/i, /go-http-client\/[0-9]/i,
   /curl\/[0-9]/i, /wget\//i,
@@ -191,10 +191,11 @@ function isBlockedRequest(request) {
   if (!ua && !accept) return true;
   for (const pat of BLOCKED_UA_PATTERNS) if (pat.test(ua)) return true;
   for (const pat of BLOCKED_PATH_PATTERNS) if (pat.test(url.pathname)) return true;
-  // Generic HTTP clients (curl/wget/requests/go-http) may READ public content,
-  // but are still blocked on gated surfaces or any non-safe (write) method.
+  // Agents can request an email invitation using the same CSRF, network and
+  // recipient limits as browsers. This exception grants no portal access.
   if (GENERIC_HTTP_CLIENT_PATTERNS.some((p) => p.test(ua))) {
-    if (!SAFE_METHODS.has(request.method) || isGatedPath(url.pathname)) return true;
+    const deskInvitation = request.method === 'POST' && url.pathname === '/desk/dispatch/subscribe';
+    if (isGatedPath(url.pathname) || (!SAFE_METHODS.has(request.method) && !deskInvitation)) return true;
   }
   return false;
 }
@@ -965,10 +966,12 @@ async function handleProtectedPublicForm(request, env, ip) {
   } catch {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_form_body' }), { status: 400, headers: JSON_HEADERS });
   }
-  const token = isDispatch ? payload?.turnstileToken : payload.get('cf-turnstile-response');
-  const turnstile = await verifyTurnstileToken({ token, ip, secret: env.TURNSTILE_SECRET_KEY });
-  if (!turnstile.ok) {
-    return new Response(JSON.stringify({ ok: false, error: turnstile.error }), { status: 403, headers: JSON_HEADERS });
+  if (!isDispatch) {
+    const token = payload.get('cf-turnstile-response');
+    const turnstile = await verifyTurnstileToken({ token, ip, secret: env.TURNSTILE_SECRET_KEY });
+    if (!turnstile.ok) {
+      return new Response(JSON.stringify({ ok: false, error: turnstile.error }), { status: 403, headers: JSON_HEADERS });
+    }
   }
 
   if (isDispatch) {

@@ -2104,3 +2104,8 @@ Preserve all earlier candidate observations and the recorded 912/1000 score. Add
 ### D-S369.10 — Isolate public-form rate counters
 
 Desk signup recovery (2026-10-06): production trace confirmed shared KV daily write exhaustion caused edge_handler_unavailable before Turnstile or the email provider. Public-form counters now use their isolated SQLite Durable Object binding, retaining atomic three attempts per IP/form per fixed hour, CSRF and Turnstile. Current production Worker 13980895-7780-4963-9e42-c7b7f5f3fa3a; staging dfc45f3e-949e-4277-a5c4-72a4de5f6a8d. Focused Worker/counter tests 78/78 passed; independent review passed; staging and production empty no-send requests return expected 403 turnstile_token_missing rather than 503. Provider no-send checks 6/6 passed. No confirmation email was sent by the agent; founder will test through the normal public form. Delivery remains unverified until that retry. SQLite Durable Objects are available on Workers Free; no paid plan or provider spend was enabled. Legacy hourly attempts seed the migration by read only. Durable counter outages fail closed.
+
+
+### D369.11 — Inclusive newsletter consent and bounded invitations
+
+Founder explicitly requests easy human/agent signup. Remove Turnstile only from Desk invitations; retain browser CSRF, per-network limits and other public-form protections. Enforce atomic hashed-recipient cooldown and daily send budget at the backend. Signed unsubscribe revokes all earlier invitations for that recipient, including cancellation races. No identity-plane change. Premium emails use self-contained inline table HTML and a plain-text alternative.

@@ -110,9 +110,11 @@ if (DRY) {
 // ── Step 2: Refresh startup brief ────────────────────────────────────────────
 header('Step 2 · Refresh startup brief for next session');
 if (DRY) {
-  console.log(`(dry-run) would run: node ${path.join(STUDIO_ROOT, 'scripts', 'render-startup-brief.mjs')}`);
+  console.log(`(dry-run) would run: node ${path.join(PROJECT_ROOT, 'scripts', 'render-startup-brief.mjs')}`);
 } else {
-  const r = shStudio('render-startup-brief.mjs');
+  // This derived brief belongs to the current project, never the Ops owner.
+  const result = spawnSync(process.execPath,[path.join(PROJECT_ROOT,'scripts','render-startup-brief.mjs')],{cwd:PROJECT_ROOT,encoding:'utf8'});
+  const r = {code:result.status,out:result.stdout||'',err:result.stderr||''};
   process.stdout.write(r.out);
   if (r.code !== 0) {
     console.error('⚠ Brief render failed:', redact(r.err));
