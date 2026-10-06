@@ -298,7 +298,7 @@ checks what a scheduled run changes inside its own checkout. A local commit beco
 ## Autopilot: art goes live on the automated reviewer's approval (D-S368.10)
 
 Founder ruling 2026-10-05: images never wait for the founder. `scripts/desk-art-autopilot.mjs`
-(`npm run desk:art:auto`) runs every 2 hours from the Windows task "VaultSpark Desk Art (nightly)":
+(`npm run desk:art:auto`) runs four times a day from the Windows task "VaultSpark Desk Art (nightly)", about 1.5 h after each edition slot (07:45, 13:45, 19:45 and 23:45 UTC); a run with nothing to illustrate takes about a minute:
 
 1. Works in a private worktree, `.cache/desk-art-staging/_wt`, reset to `origin/main` each run.
    The founder's checkout is never read for targets, written or pushed.
