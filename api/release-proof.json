@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T06:21:12.424Z",
+  "generatedAt": "2026-10-06T06:56:45.583Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -16,24 +16,26 @@
       "header-mismatch",
       "prod-forbidden",
       "shell-mismatch",
-      "staging-canonical-csp-drift",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "/:stagingCanonicalCsp",
-      "/studio-pulse/:stagingCanonicalCsp",
-      "/membership/:stagingCanonicalCsp"
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch",
+      "staging-artifact-leaf-count-mismatch",
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
     ],
     "candidateBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
-    "deployedBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
-    "candidateShaBound": true,
+    "deployedBuildSha": "8c672f5bb8101af387bccab84da3233c8f34af32",
+    "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "80bc975bcf577b15f497b4bec15f770c67bda9d8b14f5760dc9f09e982b02358",
       "candidateLeafCount": 55,
-      "stagingRoot": "80bc975bcf577b15f497b4bec15f770c67bda9d8b14f5760dc9f09e982b02358",
-      "stagingLeafCount": 55,
-      "matched": true
+      "stagingRoot": "1719e72de6aa9e3f4663de1640bddec590bbbc3740f5c6e11b9e85fcdd2976cf",
+      "stagingLeafCount": 61,
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -73,13 +75,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 5,
-    "ageHours": 0.7,
-    "observedAt": "2026-10-06T06:21:12.424Z",
+    "commitsBehind": 7,
+    "ageHours": 1.8,
+    "observedAt": "2026-10-06T06:56:45.583Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-06T06:21:12.424Z",
+      "observedAt": "2026-10-06T06:56:45.583Z",
       "expectedFrom": "b391d0942826a1a24b67169e7926026dad8258ee15e2d2af8aded66bbb9041dc",
       "supersededBy": null,
       "ageHours": 0,
@@ -180,8 +182,8 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
+    "stagingCandidateShaBound": false,
+    "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -196,6 +198,8 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
+    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
