@@ -1,48 +1,48 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T10:03:12.311Z",
+  "generatedAt": "2026-10-06T10:23:24.639Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
-  "state": "rejected",
+  "state": "passed",
   "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
   "steps": [
     {
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 420
+      "durationMs": 384
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 0,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
     {
       "id": "staging-deploy-lineage",
-      "state": "rejected",
-      "exitCode": 1,
-      "durationMs": 234
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 497
     },
     {
       "id": "lane-held-asset-drift",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1603
+      "durationMs": 1344
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 52489
+      "durationMs": 49564
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 0,
+      "durationMs": 1,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -59,13 +59,13 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 32784
+      "durationMs": 33133
     },
     {
       "id": "attention-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 0,
+      "durationMs": 1,
       "passed": 15,
       "expected": 15,
       "skipped": 0,
@@ -102,16 +102,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1474,
+      "durationMs": 1327,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
       "observedDate": "2026-10-06"
     }
   ],
-  "evidenceSha256": "396048c9096b3c60b852d00e822d62a076d1862dc6cd1f13620dc50193ae7d83",
+  "evidenceSha256": "f7dbb1e7e99ef3aa9b021e081ceb1c75bbf0e60b7492e147227c753942568d3e",
   "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
   "chain": {
-    "previousReceiptSha256": "1489090a1df85dd4e36520c44a5a28b99efc53090520772da4b18e894100f703"
+    "previousReceiptSha256": "990ad7c0db7c37187feda046b87481b08dc4c80b250d7421d14b9e2811e52b94"
   },
   "privacy": {
     "stdoutRetained": false,
