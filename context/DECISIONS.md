@@ -2077,3 +2077,8 @@ The approved guide removal also covers baseline Membership markup, which still r
 
 The public intelligence feed embeds live CI observations. Those fields belong in the observed artifact root, while its reproducible content stays in the source root. The complete raw feed remains hashed for auditability; actual hosted CI and release gates remain mandatory. This prevents unchanged runtime code from losing staging parity when a status observation changes.
 
+
+## D-S369.5 — Founder-directed Super Intelligence hero
+
+Explicit founder direction on 2026-10-06 replaces Synthetic Intelligence with Super Intelligence in the homepage hero eyebrow. Spell out Super Intelligence (SI) on that surface. This supersedes D-S369.2's unresolved hero disposition only; the established Synthetic Intelligence explainers and machine-readable organization description remain separate. This is positioning copy, with no new capability, policy or launch promise.
+

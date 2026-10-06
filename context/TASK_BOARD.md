@@ -8,7 +8,7 @@ Last updated: 2026-10-06 UTC (S369 implementation)
 - [x] Expand the accepted companion direction into Spark plan v2: visual identity, motion states, personality, mobile composition, public agent itineraries and explicit removal criteria for both pictured guides.
 - [ ] **[P1 · release acceptance pending]** Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; neither guide reappears in the served release.
 - [ ] **[P1 · Spark implementation]** Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation complete locally; canonical staging and live acceptance pending.
-- [ ] **[P2 · positioning review]** Homepage hero wording: current Synthetic Intelligence follows D-S368.8; Super Intelligence is the verified federal term but a different studio positioning choice. Recommendation: retain current term or use outcome-based hero copy. No terminology decision changed.
+- [x] **[P2 · founder-directed hero wording]** Homepage hero eyebrow now says “AI & Super Intelligence (SI) Studio” per explicit founder direction on 2026-10-06. This bounded hero edit does not rewrite the separate Synthetic Intelligence explainers or assert a demonstrated superintelligent capability.
 
 ## S368 final — open follow-ups (2026-10-05)
 
