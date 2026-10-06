@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-05T15:30:08.297Z",
+  "generatedAt": "2026-10-05T23:24:01.692Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
-  "hasScheduledStale": true,
+  "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 2,
-    "healthy": 0,
-    "unknown": 13,
-    "stale": 2,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 11,
+    "stale": 0,
     "dead": 0
   },
   "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Deployment reconciliation ledger is stale (newest receipt 5 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Deployment reconciliation ledger is stale (newest receipt 6 days old); production promotion state is unobserved, not stranded. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "unobserved",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-09-29T22:16:20.227Z",
     "currentBehindStreak": 5,
     "newestGradableAt": "2026-09-29T22:16:20.227Z",
-    "newestAgeHours": 137.2,
+    "newestAgeHours": 145.1,
     "maxAgeHours": 48,
     "stale": true,
     "strandedAlert": false
@@ -40,9 +40,9 @@
       "status": "failure",
       "rawStatus": "completed",
       "conclusion": "failure",
-      "updatedAt": "2026-04-02T06:36:40Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/23887167273",
-      "headSha": "8988636a0e8c971c31152c710d90e295639b7d8d",
+      "updatedAt": "2026-10-05T23:13:28Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37386539667",
+      "headSha": "922fa3c7d7c82e4d12e717b927821bac1a4f04f4",
       "event": "push"
     },
     {
@@ -50,19 +50,19 @@
       "status": "failure",
       "rawStatus": "completed",
       "conclusion": "failure",
-      "updatedAt": "2026-04-02T06:25:46Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/23887167265",
-      "headSha": "8988636a0e8c971c31152c710d90e295639b7d8d",
+      "updatedAt": "2026-10-05T23:08:45Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37386539346",
+      "headSha": "922fa3c7d7c82e4d12e717b927821bac1a4f04f4",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
+      "status": "success",
       "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-04-02T06:27:15Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/23887167284",
-      "headSha": "8988636a0e8c971c31152c710d90e295639b7d8d",
+      "conclusion": "success",
+      "updatedAt": "2026-10-05T23:22:31Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37386539433",
+      "headSha": "922fa3c7d7c82e4d12e717b927821bac1a4f04f4",
       "event": "push"
     },
     {
@@ -112,15 +112,13 @@
     },
     {
       "name": "Monthly Investor Digest",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-04-01T10:03:12Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "stale",
-      "ageHours": 4493.45,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -147,16 +145,13 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-04-02T07:40:08Z",
-      "recentConclusions": [
-        "success",
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "stale",
-      "ageHours": 4471.83,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -172,35 +167,42 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-05T22:24:29Z",
+      "recentConclusions": [
+        "success",
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.99,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-05T18:54:35Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 4.49,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-10-05T20:50:04Z",
+      "recentConclusions": [
+        "failure"
+      ],
       "dead": false,
-      "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "streak": 1,
+      "state": "healthy",
+      "ageHours": 2.57,
       "staleAfterHours": 48
     },
     {
@@ -216,13 +218,17 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-05T23:12:01Z",
+      "recentConclusions": [
+        "success",
+        "success",
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.2,
       "staleAfterHours": 48
     },
     {
