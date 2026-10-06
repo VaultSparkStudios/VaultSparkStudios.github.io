@@ -3,12 +3,12 @@ const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
 // SPARKED — live and playable
 const SPARKED_GAMES = [
-  { slug: 'call-of-doodie', title: /Call of Doodie/ },
   { slug: 'franchise-architect', title: /Franchise Architect/ },
 ];
 
 // FORGE — in development, may have waitlist
 const FORGE_GAMES = [
+  { slug: 'call-of-doodie', title: /Call of Doodie/ },
   { slug: 'vaultfront', title: /VaultFront/ },
   { slug: 'solara', title: /Solara/ },
   { slug: 'mindframe', title: /MindFrame/ },
@@ -46,6 +46,7 @@ test.describe('FORGE game pages', () => {
       await expect(page).toHaveTitle(game.title);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('footer.site-footer')).toBeVisible();
+      await expect(page.locator('.status-forge')).toBeVisible();
     });
   }
 });

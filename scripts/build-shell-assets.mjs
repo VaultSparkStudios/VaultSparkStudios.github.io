@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { compactCssTransport } from './lib/css-transport.mjs';
 
 const root = process.cwd();
 const checkMode = process.argv.includes('--check');
@@ -150,7 +151,8 @@ function read(filePath) {
 }
 
 function readShellAssetContent(filePath) {
-  return Buffer.from(fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n'), 'utf8');
+  const source = fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n');
+  return Buffer.from(filePath.endsWith('.css') ? compactCssTransport(source) + '\n' : source, 'utf8');
 }
 
 /** Pure over two texts, so it can be exercised with fixtures. */
