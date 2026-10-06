@@ -20,6 +20,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PERSONAS } from './lib/news-desk.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DAYS_DIR = join(ROOT, 'data', 'news-desk', 'days');
@@ -130,6 +131,33 @@ for (const month of monthKeys) {
 }
 if (Buffer.byteLength(hub) > 200 * 1024) errors.push('news/index.html: exceeds the 200 KiB HTML budget');
 if (Buffer.byteLength(archiveIndex) > 200 * 1024) errors.push('news/archive/index.html: exceeds the 200 KiB HTML budget');
+
+// Growing profile histories must remain complete without making one page unbounded.
+for (const persona of PERSONAS) {
+  const base = `news/personas/${persona.id}/`;
+  const pageDir = join(ROOT, base, 'page');
+  const profilePaths = [base + 'index.html', ...(existsSync(pageDir) ? readdirSync(pageDir).filter(n => /^\d+$/.test(n)).sort((a,b) => Number(a)-Number(b)).map(n => `${base}page/${n}/index.html`) : [])];
+  const expected = [...days].sort((a,b) => b.date.localeCompare(a.date)).flatMap(day => (day.stories || []).filter(story => !story.supersededBy && (
+    story.body?.some(block => block.voice === persona.id && block.text) || story.stances?.some(stance => stance.personaId === persona.id) ||
+    story.transcript?.some(turn => turn.personaId === persona.id && turn.text) || (story.memeLine?.personaId === persona.id && story.memeLine?.text) ||
+    story.predictions?.some(prediction => prediction.personaId === persona.id)
+  )).map(story => `/news/${day.date}/${story.slug}/`));
+  const actual = [];
+  for (const rel of profilePaths) {
+    const html = readFileSync(join(ROOT, rel), 'utf8');
+    if (Buffer.byteLength(html) > 200 * 1024) errors.push(`${rel}: exceeds the 200 KiB HTML budget`);
+    const feed = html.match(/<ol class="desk-profile-feed"[^>]*>([\s\S]*?)<\/ol>/)?.[1] || '';
+    const links = [...feed.matchAll(/<h3><a href="([^"]+)">/g)].map(match => match[1]);
+    if (links.length > 12) errors.push(`${rel}: unbounded profile feed`);
+    actual.push(...links);
+    for (const match of html.matchAll(/href="(\/news\/personas\/[^"#]+)(?:#profile-work)?"/g)) {
+      if (!existsSync(join(ROOT, match[1], 'index.html'))) errors.push(`${rel}: missing profile pagination destination ${match[1]}`);
+    }
+    const canonical = rel.slice(0, -'index.html'.length);
+    if (!html.includes(`rel="canonical" href="https://vaultsparkstudios.com/${canonical}"`)) errors.push(`${rel}: incorrect profile canonical`);
+  }
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) errors.push(`${base}: profile history has missing, duplicate or out-of-order contributions`);
+}
 
 if (errors.length) {
   console.error(`test-news-article-layout: ${errors.length} problem(s)`);

@@ -2090,3 +2090,7 @@ Founder direction 2026-10-06 replaces the Desk hub headline with “The AI News 
 ## D-S369.7 — Evidence-first briefs and readership metrics
 
 Founder direction expands The Desk to a premium AI news homepage, with direct profile navigation and a sitewide AI News strip linking the full Desk and subscription area. News Brief renders the complete published source claims with attribution and receipts, without inventing new claims. The Desk’s Take replaces the former positions heading. Its signal-versus-hype axis preserves the recorded persona directions and explains the relationship between coverage, cited evidence and potential practical impact; it is not a reader-value measurement. Readership shows recorded browser loads, thresholded reading observations and weighted engaged time from the existing evidence pipeline. Article totals are lower bounds over qualifying articles; homepage counts share the five-load privacy floor. Missing counts remain collecting. No unique-reader or completion claims are made.
+
+### D369.8 — Bounded anchor history
+
+Anchor profiles publish 12 contributions per linked page. Global statistics retain the full corpus; stable canonical URLs, chronological order and every existing contribution remain available. This keeps growing profiles below the existing 200 KiB HTML release budget.

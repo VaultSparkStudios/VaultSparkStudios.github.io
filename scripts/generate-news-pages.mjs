@@ -1289,16 +1289,23 @@ function personaContributions(persona) {
     .filter((entry) => entry.report.length || entry.stance || entry.comments.length || entry.panel || entry.predictions.length));
 }
 
-function buildPersonaPage(persona) {
+const PROFILE_PAGE_SIZE = 12;
+const personaWorkHref = (persona, page) => page === 1 ? personaHref(persona) : `${personaHref(persona)}page/${page}/`;
+
+function buildPersonaPage(persona, page = 1) {
   const contributions = personaContributions(persona);
+  const pageCount = Math.max(1, Math.ceil(contributions.length / PROFILE_PAGE_SIZE));
+  const offset = (page - 1) * PROFILE_PAGE_SIZE;
+  const visibleContributions = contributions.slice(offset, offset + PROFILE_PAGE_SIZE);
   const record = personaTrackRecords(ledger)[persona.id] || { correct: 0, wrong: 0, open: 0, accuracy: null };
-  const url = `${PROD}${personaHref(persona)}`;
+  const url = `${PROD}${personaWorkHref(persona, page)}`;
+  const depth = page === 1 ? '../../../' : '../../../../../';
   const head = chromeHead({
-    title: `${persona.name} — ${persona.role} · The Desk`,
+    title: `${persona.name} — ${persona.role} · The Desk${page > 1 ? ` · Work page ${page}` : ''}`,
     description: clampWords(`${persona.name} is a fictional AI correspondent at The Desk. ${persona.tagline} Browse published reports, arguments and predictions.`, 155),
     canonical: url,
     ogImage: `${PROD}/assets/desk-personas/${persona.id}.webp`,
-    depth: '../../../',
+    depth,
     noindex: false,
     breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], [persona.name, url]]),
     jsonLd: JSON.stringify({ '@context': 'https://schema.org', '@type': 'ProfilePage', name: `${persona.name} · The Desk`, url,
@@ -1310,7 +1317,12 @@ function buildPersonaPage(persona) {
   const statements = contributions.filter((entry) => entry.stance).length;
   const panelCount = contributions.filter((entry) => entry.panel).length;
   const comments = contributions.reduce((count, entry) => count + entry.comments.length, 0);
-  const feed = contributions.map(({ day, story, report, stance, comments: turns, panel, predictions }) => {
+  const pager = pageCount > 1 ? `<nav class="desk-finder-results-head desk-profile-pages" aria-label="Published work pages">
+    ${page > 1 ? `<a class="button button-secondary" href="${personaWorkHref(persona, page - 1)}#profile-work">← Newer</a>` : '<span>Newest</span>'}
+    <span><span class="visually-hidden">Page </span>${page}&nbsp;of&nbsp;${pageCount}</span>
+    ${page < pageCount ? `<a class="button button-secondary" href="${personaWorkHref(persona, page + 1)}#profile-work">Older →</a>` : `<a class="button button-secondary" href="${personaHref(persona)}#profile-work">Latest →</a>`}
+  </nav>` : '';
+  const feed = visibleContributions.map(({ day, story, report, stance, comments: turns, panel, predictions }) => {
     const href = `/news/${day.date}/${story.slug}/`;
     const tags = [report.length && 'Report', stance && 'Take', turns.length && 'Desk comments', panel && 'Panel', predictions.length && 'Prediction'].filter(Boolean);
     return `<li class="desk-profile-entry">
@@ -1319,7 +1331,7 @@ function buildPersonaPage(persona) {
       ${report.length ? `<p><strong>In the report.</strong> ${escapeHtml(clampWords(report[0].text, 235))} <a href="${href}#story">Read the passage →</a></p>` : ''}
       ${stance ? `<blockquote><strong>The take.</strong> “${escapeHtml(stance.position)}” <a href="${href}#positions">Read the argument →</a></blockquote>` : ''}
       ${turns.length ? `<p><strong>From the desk conversation.</strong> “${escapeHtml(clampWords(turns[0].text, 190))}” <a href="${href}#argument">${turns.length > 1 ? `Read all ${turns.length} turns` : 'Read the exchange'} →</a></p>` : ''}
-      ${panel ? `<p><strong>The panel line.</strong> “${escapeHtml(panel)}” <a href="${href}#editorial-illustration-1">See the panel →</a></p>` : ''}
+      ${panel ? `<p><strong>The panel line.</strong> “${escapeHtml(panel)}” <a href="${href}#satire-cartoon">See the panel →</a></p>` : ''}
       ${predictions.length ? `<p><strong>On the record.</strong> ${escapeHtml(predictions[0].claim)} <a href="${href}#predictions">See ${predictions.length > 1 ? 'the predictions' : 'the prediction'} →</a></p>` : ''}
     </li>`;
   }).join('\n');
@@ -1365,11 +1377,12 @@ function buildPersonaPage(persona) {
     <div class="desk-section-head"><h2>${name}’s notebook</h2><p>Running threads computed from every published contribution. It rewrites itself with each edition; nothing here is hand-written.</p></div>
     ${renderNotebook(persona, notebook)}
     ${dispatchCta('persona', { compact: true, heading: `Follow ${persona.name} and the rest of the Desk.`, lede: `The Desk Dispatch brings ${persona.name}’s latest argument, the quiet story and every prediction that came due, from the Desk’s fictional AI correspondents. Labelled as AI, sourced like news.` })}
-    <div class="desk-section-head"><h2>From ${name}’s desk</h2><p>Published report passages, positions, desk conversations, panels and predictions, newest first. These are parts of shared stories; desk comments are AI-generated panel turns, not replies to readers.</p></div>
-    ${contributions.length ? `<ol class="desk-profile-feed">${feed}</ol>` : `<div class="desk-panel desk-profile-empty"><strong>No published work yet.</strong> ${escapeHtml(persona.name)}’s voice and beat are defined, but the Desk has not cast this persona in a sourced story. This feed will fill from published editions; no sample post is presented as reporting.</div>`}
+    <div class="desk-section-head" id="profile-work"><h2>From ${name}’s desk</h2><p>Published report passages, positions, desk conversations, panels and predictions, newest first. These are parts of shared stories; desk comments are AI-generated panel turns, not replies to readers.${contributions.length ? ` Showing ${offset + 1}–${offset + visibleContributions.length} of ${contributions.length} contributions.` : ''}</p></div>
+    ${pager}
+    ${contributions.length ? `<ol class="desk-profile-feed" start="${offset + 1}">${feed}</ol>${pager}` : `<div class="desk-panel desk-profile-empty"><strong>No published work yet.</strong> ${escapeHtml(persona.name)}’s voice and beat are defined, but the Desk has not cast this persona in a sourced story. This feed will fill from published editions; no sample post is presented as reporting.</div>`}
     <div class="desk-section-head"><h2>Meet the other voices</h2><p>Different instincts, shared source trail.</p></div><ul class="desk-profile-roster">${otherVoices}</ul>
     ${DISCLOSURE}
-  </section></main>${chromeFoot('../../../')}`;
+  </section></main>${chromeFoot(depth)}`;
   return html.replace(/[ \t]+$/gm, '').replace(/\n[ \t]+/g, '\n');
 }
 
@@ -1610,7 +1623,10 @@ const targets = [
   { path: 'news/index.html', html: buildHubPage() },
   { path: 'news/archive/index.html', html: buildArchiveIndexPage() },
   ...archiveMonths.map((month) => ({ path: `news/archive/${month}/index.html`, html: buildArchiveMonthPage(month) })),
-  ...PERSONAS.map((persona) => ({ path: `news/personas/${persona.id}/index.html`, html: buildPersonaPage(persona) })),
+  ...PERSONAS.flatMap((persona) => Array.from({ length: Math.max(1, Math.ceil(personaContributions(persona).length / PROFILE_PAGE_SIZE)) }, (_, index) => {
+    const page = index + 1;
+    return { path: `${personaWorkHref(persona, page).slice(1)}index.html`, html: buildPersonaPage(persona, page) };
+  })),
   { path: 'news/subscribed/index.html', html: buildSubscribedPage() },
   ...(buildDirectorsReportPage() ? [{ path: 'news/directors-report/index.html', html: buildDirectorsReportPage() }] : []),
 ];
