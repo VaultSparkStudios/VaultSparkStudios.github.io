@@ -7,7 +7,8 @@ Last updated: 2026-10-04 UTC (S368 continued: Desk art restored, satire cartoons
 - /news/ has full-text search across every edition (headlines, summaries, body, facts, personas) with correspondent, topic, edition, format, month and has-prediction filters, sorting and shareable URL parameters. The index (`api/news-desk-search*.json`, month-sharded) loads only on first search.
 - Every Desk card, archive list, persona feed, homepage Desk card and article byline shows the publish date and time in ET inside `<time datetime>`; source order: story.publishedAt, first-commit ledger, authoredBy.at, edition slot ("Scheduled").
 - The Desk Dispatch signup sits at the top of /news/ (#desk-dispatch); each signup form renders its own Turnstile widget and waits up to two minutes for an interactive check. The daily digest is armed (autoSend) and sends at 23:30 UTC.
-- Desk art publishes without founder review (D-S368.10): `scripts/desk-art-autopilot.mjs` runs four times a day from the founder's PC and deploys through `desk-content-release.yml`.
+- Desk art publishes without founder review (D-S368.10): `scripts/desk-art-autopilot.mjs` runs four times a day from the founder's PC and deploys through `desk-content-release.yml`, then checks the art is served live.
+- The JSON Feed (`api/news-desk-feed.json`) carries each story's real publish instant.
 
 ## S368 continued — Desk art restored, two-image stories, hybrid AI & Synthetic Intelligence (SI) studio (2026-10-03 → 10-04)
 

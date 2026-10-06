@@ -1382,3 +1382,16 @@ Staging follow-through: static staging deployed; first Worker upload rejected (g
 - Fixed along the way: entity-encoded and chrome-polluted facts (55), staging path-list over the Windows command-line limit, satire budget ladder, Desk prose links, mobile hero eyebrow wrap.
 - Process: worked in an isolated worktree while the root tree held stale state; repeated memory-pressure kills of background jobs; pre-push coherence loop now repairs every affected evidence-graph node by its builder.
 - Deployed: staging content lane (1,146 overlays) and production Pages run 37240419736.
+
+
+## S368 final — 2026-10-04 → 10-06 — Desk search, publish times, signup fixes, art autopilot
+
+**Intent:** founder follow-ups after the S368 closeout: finish the satire backlog and tooling, delegated founder items, Desk signup placement and Turnstile failure, news search/filters/timestamps, art going live on agent approval, cleanup, closeout.
+
+- Six fallback satire stories regenerated with per-story art direction; review aid and evidence-graph repair tools; Obelisk follow-up via Ark.
+- Delegated items: Brevo key set from the gateway; privacy/security/rights wording; Eternal Credits Queue removed (held for full promotion). The founder armed autoSend themselves after the agent's edit was refused by the classifier.
+- /news/: top signup bar; per-form Turnstile widget (the shared helper's single 12 s widget caused "invisible human check did not complete"); full-text search + filters + shareable URLs; publish date/time on cards, bylines, feed.
+- Art autopilot (D-S368.10): generate → Codex review → re-roll → ingest → push from a private worktree → CI release → live check; four runs a day. Built after the founder lifted auto mode.
+- Root-cause fixes: staging content gate path list over the Windows command line limit; desk-content-release failing on a stale staging baseline (archive limit); propagate-nav walking a nested worktree; repair-evidence-graph missing remote-tip diffs and report-only builders.
+- Cleanup: two temporary worktrees removed (junctions first); 46 stashes archived under refs/stash-archive/ and cleared.
+- Deployed: staging content lane and production Pages throughout; desk-content-release recovered (run 37355155678).

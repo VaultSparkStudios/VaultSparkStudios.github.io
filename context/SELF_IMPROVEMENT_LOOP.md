@@ -2779,3 +2779,23 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** Six older stories still lack cartoons; founder items from S368 remain open; the root worktree's stale changes sit in stash@{0}.
 
 **Brainstorm → TASK_BOARD:** A satire review aid that renders contact sheets and requires an explicit id list; a push helper that runs each affected evidence-graph builder before pushing.
+
+
+## 2026-10-06 UTC — Session 368 final (Desk search, publish times, signup fixes, art autopilot) | Total: 929/1000 (v3.0) | Velocity: 12 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 92 | Self-tests for every new script (autopilot 17/17, publish-time 15/15, search index 16/16, finder 22/22, dispatch CTA 28/28); full build:check not run. |
+| Creative Alignment | 95 | Founder direction applied as stated: one banner + one satire per story, art live on agent approval, search reaching the archive. |
+| Momentum | 95 | Every requested item shipped and verified live; delegated founder items handled. |
+| Engagement | 94 | Signup moved to the top of /news/ and fixed for real readers; findability via search/filters; honest publish times. |
+| Process Quality | 85 | Push helper tripped four times (dirty-tree merge, missing assets path, amend step, unresolved generated conflict); a footer propagation rewrote 209 files in a nested worktree before the guard existed. |
+| Cross-Repo Coherence | 94 | Ark follow-up to Obelisk; no sibling edits. |
+| Security Posture | 94 | Classifier gates respected (no workaround); unattended deploy only after explicit founder authorization; secrets via gateway only. |
+| Ecosystem Integration | 95 | Autopilot reuses the CI release path instead of deploying from the PC; no paid API. |
+| Capital Efficiency | 95 | All generation and review on the ChatGPT plan; four autopilot runs a day, no-op runs ~1 minute. |
+| Automation Coverage | 90 | Art fully automated end-to-end; desk-content-release repaired; push helper still session-local. |
+
+**Audit:** autopilot's first scheduled publish not yet observed; full build:check not run; held portal changes wait on the next full promotion.
+
+**Brainstorm → TASK_BOARD:** promote the session push helper to a repo script (autostash, regenerate conflicts, repair graph, push) so publisher races stop costing hand fixes.

@@ -7,7 +7,9 @@
 - Tools: `scripts/review-satire-batch.mjs`, `scripts/repair-evidence-graph.mjs` (now also diffs against the remote tip and retries report-only builders with --apply); propagate-nav skips nested checkouts.
 - Visual QA receipt refreshed (84 captures). Old `.cache/desk-personas` worktree and `%TEMP%\vs-stage` removed (branch `codex/desk-release-record-final` kept).
 
-**Next:** confirm the autopilot's first publish; optional live-art check step in the autopilot; JSON Feed `date_published` still midnight UTC; Obelisk reply to Ark `01K44K376G48C0C29395D31FE9`; the Eternal-credits removal and other held portal changes ride the next full-site promotion.
+- After that: JSON Feed carries real publish times; the autopilot live-checks published art; 46 stashes archived (`refs/stash-archive/`, restore with `git stash apply <sha>`) and the stash list cleared.
+
+**Next:** confirm the autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`; first run 2026-10-06 07:45 UTC); Obelisk reply to Ark `01K44K376G48C0C29395D31FE9`; the Eternal-credits removal and other held portal changes ride the next full-site promotion; a full `npm run build:check` has not run this stretch.
 
 ## Where We Left Off — S368 continued · 2026-10-04 UTC
 

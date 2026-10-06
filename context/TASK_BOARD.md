@@ -5,8 +5,10 @@ Last updated: 2026-10-04 UTC (S368 continued)
 ## S368 final — open follow-ups (2026-10-05)
 
 - [ ] **[P1]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
-- [ ] **[P2]** Autopilot: after the release run, fetch the live article and confirm the new art URL returns 200.
-- [ ] **[P3]** JSON Feed `date_published` uses the real publish time (news-publish-time.mjs) instead of midnight UTC.
+- [x] Autopilot verifies every published image and its article are served live (one retry for CDN lag).
+- [x] JSON Feed `date_published` carries the real publish instant (all 106 items).
+- [x] 46 old stashes archived under `refs/stash-archive/` and the stash list cleared.
+- [ ] **[SIL/P2]** Push helper as a repo script (`scripts/push-main.mjs`): autostash merge, regenerate conflicted generated outputs, `repair-evidence-graph`, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
 - [x] /news/ search + filters, card timestamps, Desk signup bar, per-form Turnstile, legal wording, digest armed, art autopilot (D-S368.10), staging baseline reset.
 
 ## S368 continued — Desk art, satire cartoons, AI & SI positioning
