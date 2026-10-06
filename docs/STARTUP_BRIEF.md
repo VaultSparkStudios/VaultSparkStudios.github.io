@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S369) - WHAT SHIPPED ══════════════════════════╗
-║  S369 Spark and premium Desk live; agent-friendly newsletter an  ║
+║  S369 Spark/premium Desk remain live. Founder confirms regular   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝

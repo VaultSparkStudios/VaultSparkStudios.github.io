@@ -4,7 +4,7 @@
   "purpose": "Request The Desk Dispatch for an inbox you control or are authorized to manage.",
   "steps": [
     {"method": "GET", "url": "https://vaultsparkstudios.com/_csrf", "response": "Read the token field from the JSON response."},
-    {"method": "POST", "url": "https://vaultsparkstudios.com/desk/dispatch/subscribe", "headers": {"Content-Type": "application/json", "X-CSRF-Token": "<token from /_csrf>"}, "body": {"email": "<authorized inbox address>"}},
+    {"method": "POST", "url": "https://vaultsparkstudios.com/desk/dispatch/subscribe", "headers": {"Accept": "application/json", "Content-Type": "application/json", "X-CSRF-Token": "<token from /_csrf>"}, "body": {"email": "<authorized inbox address>"}},
     {"action": "Read the confirmation email in that inbox and follow its signed confirmation link. A pending-confirmation response alone does not activate a subscription."}
   ],
   "humanChallengeRequired": false,
