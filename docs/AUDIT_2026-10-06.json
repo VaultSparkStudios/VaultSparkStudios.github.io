@@ -1,0 +1,824 @@
+{
+  "schemaVersion": "2.1",
+  "session": 369,
+  "generatedAt": "2026-10-06T05:27:01.155Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios — discovery and popup audit"
+  },
+  "scope": "Accepted full-plan implementation is complete locally. Final release checks, canonical staging and production acceptance remain pending; no live removal is claimed.",
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 2,
+      "slug": "durable-quiet-control",
+      "axis": "ui-ux-feedback",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 6,
+      "title": "Make dismissal a durable preference",
+      "why": "Journey offers are keyed by family and route, and repeat claims by the same name are allowed.",
+      "recipe": "Add one versioned local preference: quiet, normal, immersive. Close never schedules another offer; quiet applies across routes and survives reload.",
+      "informationFindingOutcome": "Keep visitors in control while retaining manual help.",
+      "tier": "🔥",
+      "priority": 52.23,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.776Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Journey offers are keyed by family and route, and repeat claims by the same name are allowed.",
+          "adapter": "file-content",
+          "target": "assets/ambient-loader.js",
+          "pattern": "return current === name",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Remember quiet locally and expose reset."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Migrate existing dismissals conservatively and share preferences across tabs."
+        },
+        "L3": {
+          "effortHours": 7,
+          "recipe": "Exercise denied storage, old schemas and cross-tab changes without reopening."
+        }
+      },
+      "acceptanceChecks": [
+        "Keep visitors in control while retaining manual help.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Migrate existing dismissals conservatively and share preferences across tabs."
+      ]
+    },
+    {
+      "id": 1,
+      "slug": "stop-automatic-discovery",
+      "axis": "ui-ux-feedback",
+      "effortHours": 5,
+      "impact": 10,
+      "innovation": 5,
+      "title": "Retire both pictured corner guides and their automatic render paths",
+      "why": "The constellation compass appends a fixed card without an attention claim.",
+      "recipe": "Retire fixed Resume World Builder compass and Your route guide render paths; remove their automatic triggers and constellation corner toasts. Preserve progress inside Spark; rebuild hashed shell assets and service-worker references, then verify the served release.",
+      "informationFindingOutcome": "Browse the catalog without covering its controls.",
+      "tier": "🔥",
+      "priority": 44.53,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The constellation compass appends a fixed card without an attention claim.",
+          "adapter": "file-content",
+          "target": "assets/constellation-tracker.js",
+          "pattern": "function showCompass(candidate)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Disable automatic discovery offers; keep inline links."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Retire fixed Resume World Builder compass and Your route guide render paths; remove their automatic triggers and constellation corner toasts. Preserve progress inside Spark; rebuild hashed shell assets and service-worker references, then verify the served release."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Add browser scenarios for every producer and consent precedence."
+        }
+      },
+      "acceptanceChecks": [
+        "No pictured bottom-left or bottom-right guide after arrival, scroll, page sequences, palette actions, route changes or multiple completions.",
+        "Fresh and legacy storage preserve completion but never auto-start a Spark quest.",
+        "Generated assets and served deployment cannot resurrect legacy panels."
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "rendered-release-proof",
+      "axis": "ui-ux-feedback",
+      "effortHours": 10,
+      "impact": 9,
+      "innovation": 6,
+      "title": "Verify the Compass in every theme and viewport",
+      "why": "The site exposes seven themes and current compass styles hardcode dark surfaces.",
+      "recipe": "Capture before/after at desktop >=1280 and mobile <=430 in all seven themes; inspect launcher, dialog, map, list, empty and stale states. Produce hash-bound visual receipt and run staging release gates.",
+      "informationFindingOutcome": "Deliver readable and usable navigation on desktop and mobile.",
+      "tier": "⚡",
+      "priority": 37.66,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The site exposes seven themes and current compass styles hardcode dark surfaces.",
+          "adapter": "file-content",
+          "target": "assets/theme-toggle.js",
+          "pattern": "value: 'high-contrast'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 5,
+          "recipe": "Verify static list, focus order, Escape and close focus return."
+        },
+        "L2": {
+          "effortHours": 10,
+          "recipe": "Inspect all theme/state captures, fix defects and bind docs/visual-qa/LATEST.json."
+        },
+        "L3": {
+          "effortHours": 18,
+          "recipe": "Include zoom, touch, screen reader, slow network and suspended tab checks."
+        }
+      },
+      "acceptanceChecks": [
+        "Deliver readable and usable navigation on desktop and mobile.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Inspect all theme/state captures, fix defects and bind docs/visual-qa/LATEST.json."
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "lazy-visual-budget",
+      "axis": "speed-organization-efficiency",
+      "effortHours": 6,
+      "impact": 8,
+      "innovation": 6,
+      "title": "Load the cinematic layer only when opened",
+      "why": "Current route and constellation modules are independently loaded.",
+      "recipe": "Reuse the palette loader; ship a small static launcher and defer map art until activation. Use SVG/CSS and responsive images before considering any 3D dependency.",
+      "informationFindingOutcome": "Keep first-page reading and game selection fast.",
+      "tier": "⚡",
+      "priority": 32,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Current route and constellation modules are independently loaded.",
+          "adapter": "file-content",
+          "target": "assets/ambient-loader.js",
+          "pattern": "src: '/assets/constellation-tracker.js'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Lazy-load the combined dialog."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Measure added transfer, interaction latency and layout shift on representative devices."
+        },
+        "L3": {
+          "effortHours": 11,
+          "recipe": "Tune idle pauses, image sizes and low-power static rendering from traces."
+        }
+      },
+      "acceptanceChecks": [
+        "Keep first-page reading and game selection fast.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Measure added transfer, interaction latency and layout shift on representative devices."
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "shared-agent-itinerary",
+      "axis": "ai-intelligence",
+      "effortHours": 10,
+      "impact": 9,
+      "innovation": 9,
+      "title": "One itinerary for humans and AI agents",
+      "why": "The command palette already consumes a public intent map.",
+      "recipe": "Generate the Compass list and machine-readable itinerary from one manifest. Include canonical URL, availability, prerequisites, source and freshness; export public itinerary JSON on request.",
+      "informationFindingOutcome": "Agents and humans reach the same valid outcome.",
+      "tier": "💡",
+      "priority": 22.59,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The command palette already consumes a public intent map.",
+          "adapter": "file-content",
+          "target": "assets/command-palette.js",
+          "pattern": "var INTENT_URL = '/api/intent-map.json'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 5,
+          "recipe": "Expose existing public destinations with stable IDs."
+        },
+        "L2": {
+          "effortHours": 10,
+          "recipe": "Add schema validation, itinerary export and agents.json discovery links."
+        },
+        "L3": {
+          "effortHours": 18,
+          "recipe": "Support explainable route composition with a visible human approval preview."
+        }
+      },
+      "acceptanceChecks": [
+        "Agents and humans reach the same valid outcome.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Add schema validation, itinerary export and agents.json discovery links."
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "proof-orbit",
+      "axis": "gamification-immersion",
+      "effortHours": 8,
+      "impact": 8,
+      "innovation": 9,
+      "title": "Proof Orbit: reveal evidence inside each destination",
+      "why": "The tutorial currently sends visitors to proof through a separate static step.",
+      "recipe": "Give each Compass destination an optional evidence orbit: status, dated change and canonical source. Use real receipts; no synthetic live counters.",
+      "informationFindingOutcome": "Assess a destination before following it.",
+      "tier": "💡",
+      "priority": 21.67,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The tutorial currently sends visitors to proof through a separate static step.",
+          "adapter": "file-content",
+          "target": "assets/journey-conductor.js",
+          "pattern": "['Verify the work'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 4,
+          "recipe": "Show status and source links."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "Build an expandable evidence orbit with timestamps and stale states."
+        },
+        "L3": {
+          "effortHours": 14,
+          "recipe": "Animate evidence connections while retaining identical keyboard list content."
+        }
+      },
+      "acceptanceChecks": [
+        "Assess a destination before following it.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Build an expandable evidence orbit with timestamps and stale states."
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "vault-compass-shell",
+      "axis": "features-depth",
+      "effortHours": 24,
+      "impact": 9,
+      "innovation": 7,
+      "title": "Build Spark: living sphere and one Vault Compass",
+      "why": "Pathfinder already ranks intent nodes and the palette already reads an intent map.",
+      "recipe": "Extend existing palette with Spark header entry, one dialog and shared map/list. Add translucent sphere, gold core, offset orbital rings and labeled Play/Explore/Build/Verify regions. Keep controls stationary; list works immediately; motion pauses when hidden and reduces to static states when requested.",
+      "informationFindingOutcome": "Reach a playable game, project, story or proof within two choices.",
+      "tier": "🔥",
+      "priority": 20.1,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Pathfinder already ranks intent nodes and the palette already reads an intent map.",
+          "adapter": "file-content",
+          "target": "assets/command-palette.js",
+          "pattern": "var INTENT_URL = '/api/intent-map.json'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 7,
+          "recipe": "Combine existing route and resume lists behind one entry."
+        },
+        "L2": {
+          "effortHours": 24,
+          "recipe": "Extend existing palette with Spark header entry, one dialog and shared map/list. Add translucent sphere, gold core, offset orbital rings and labeled Play/Explore/Build/Verify regions. Keep controls stationary; list works immediately; motion pauses when hidden and reduces to static states when requested."
+        },
+        "L3": {
+          "effortHours": 40,
+          "recipe": "Polish Spark across motion states and all themes, integrate Proof Orbit and deterministic route previews; introduce more complex rendering only when prototype evidence justifies it."
+        }
+      },
+      "acceptanceChecks": [
+        "One manual entry and one shared dialog; no automatic opening.",
+        "Stationary keyboard/touch targets with moving decorative sphere.",
+        "Usable search/list without artwork or animation; responsive mobile sheet.",
+        "Inspected moving/static frames and all theme/state screenshots bound to implementation."
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "signal-mixing",
+      "axis": "gamification-immersion",
+      "effortHours": 8,
+      "impact": 7,
+      "innovation": 9,
+      "title": "Signal Mixing: compose an optional exploration path",
+      "why": "Current constellations are predefined page sequences.",
+      "recipe": "Let a visitor select two interests, such as strategy and worldbuilding, and preview a curated three-stop path from existing metadata. Completion is optional and decorative.",
+      "informationFindingOutcome": "Discover a relevant world without another tutorial.",
+      "tier": "💡",
+      "priority": 18.96,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Current constellations are predefined page sequences.",
+          "adapter": "file-content",
+          "target": "assets/constellation-tracker.js",
+          "pattern": "var required = c.pages.map(normPath)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 4,
+          "recipe": "Curate six dual-interest paths."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "Select two interests and deterministically compose a validated route."
+        },
+        "L3": {
+          "effortHours": 14,
+          "recipe": "Add a local collectible route sigil with share preview and explicit export."
+        }
+      },
+      "acceptanceChecks": [
+        "Discover a relevant world without another tutorial.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Select two interests and deterministically compose a validated route."
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "no-model-on-arrival",
+      "axis": "token-cost",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 5,
+      "title": "Keep default routing deterministic and cost-neutral",
+      "why": "Pathfinder uses local scoring rather than a model call.",
+      "recipe": "Preserve deterministic scoring and cache public data. Any later natural-language guidance requires an explicit Ask action and a separately authorized cost budget.",
+      "informationFindingOutcome": "Find a route instantly with no paid call on arrival.",
+      "tier": "⚡",
+      "priority": 17.23,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Pathfinder uses local scoring rather than a model call.",
+          "adapter": "file-content",
+          "target": "assets/intent-flight-director.js",
+          "pattern": "function scoreNode(",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Retain existing scoring."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Measure network calls per arrival and per Compass open; assert zero model calls."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Document bounded optional inference, caching and graceful budget exhaustion."
+        }
+      },
+      "acceptanceChecks": [
+        "Find a route instantly with no paid call on arrival.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Measure network calls per arrival and per Compass open; assert zero model calls."
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "attention-outcome-metrics",
+      "axis": "observability-honesty",
+      "effortHours": 5,
+      "impact": 8,
+      "innovation": 6,
+      "title": "Measure task success and interruptions honestly",
+      "why": "The tracker records compass shown/followed/dismissed events, but lacks a unified session outcome.",
+      "recipe": "Add allowlisted aggregate events for manual open, quiet enabled, destination followed, task completed and unexpected auto-expansion. Report exposure counts and denominators.",
+      "informationFindingOutcome": "Prove easier discovery rather than more prompt impressions.",
+      "tier": "⚡",
+      "priority": 17.1,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The tracker records compass shown/followed/dismissed events, but lacks a unified session outcome.",
+          "adapter": "file-content",
+          "target": "assets/constellation-tracker.js",
+          "pattern": "sendCompass('shown')",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Count unsolicited expansions and manual follows."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Compare catalog task success and quiet preference with a measured baseline."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Run a bounded opt-in usability study and confidence-aware aggregate analysis."
+        }
+      },
+      "acceptanceChecks": [
+        "Prove easier discovery rather than more prompt impressions.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Compare catalog task success and quiet preference with a measured baseline."
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "local-data-boundary",
+      "axis": "security",
+      "effortHours": 5,
+      "impact": 8,
+      "innovation": 5,
+      "title": "Keep private journey state out of agent exports",
+      "why": "Constellation browsing history is persisted locally.",
+      "recipe": "Allowlist public manifest fields. Export only explicitly selected destination IDs; exclude history, membership, tokens and account fields. Render labels safely and restrict URLs to approved destinations.",
+      "informationFindingOutcome": "Share a route safely without exposing visitor history.",
+      "tier": "⚡",
+      "priority": 14.25,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "Constellation browsing history is persisted locally.",
+          "adapter": "file-content",
+          "target": "assets/constellation-tracker.js",
+          "pattern": "var STORAGE_KEY = 'vs_cst_visited'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Use public manifest fields only."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "Validate schema, URLs and DOM sinks; add clear-history control."
+        },
+        "L3": {
+          "effortHours": 9,
+          "recipe": "Add malicious-label and poisoned-storage cases plus authorization boundary checks."
+        }
+      },
+      "acceptanceChecks": [
+        "Share a route safely without exposing visitor history.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Validate schema, URLs and DOM sinks; add clear-history control."
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "behavioral-collision-tests",
+      "axis": "sil-debt",
+      "effortHours": 7,
+      "impact": 9,
+      "innovation": 5,
+      "title": "Replace source-string confidence with collision scenarios",
+      "why": "The attention contract reads a fixed source set that excludes constellation-tracker.",
+      "recipe": "Extend the existing browser suite to navigate Games, Roadmap and Community with stored history and dismissed tours; assert zero unsolicited discovery panels and one open dialog maximum.",
+      "informationFindingOutcome": "Prevent a future release from restoring competing prompts.",
+      "tier": "⚡",
+      "priority": 14.2,
+      "status": "pending",
+      "executionLog": [
+        {
+          "at": "2026-10-06T06:38:21.777Z",
+          "status": "pending",
+          "note": "Selected L2 implemented locally with focused browser verification and two independent review rounds; release acceptance pending."
+        }
+      ],
+      "premises": [
+        {
+          "claim": "The attention contract reads a fixed source set that excludes constellation-tracker.",
+          "adapter": "file-content",
+          "target": "scripts/check-attention-surface-contract.mjs",
+          "pattern": "returning: read('assets/returning-visitor-digest.js')",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Add constellation coverage to the existing contract."
+        },
+        "L2": {
+          "effortHours": 7,
+          "recipe": "Test interactions, route changes, rapid opens, dismissed state and storage failures."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "Add visual overlap assertions and controlled source-load-order permutations."
+        }
+      },
+      "acceptanceChecks": [
+        "Prevent a future release from restoring competing prompts.",
+        "No unsolicited discovery expansion; one explicitly opened shared surface maximum.",
+        "Test interactions, route changes, rapid opens, dismissed state and storage failures."
+      ]
+    }
+  ],
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [
+        "vault-compass-shell"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "second-search-engine",
+          "premise": "The palette already indexes public routes and intent outcomes. Reuse it instead of duplicating search.",
+          "evidence": "assets/command-palette.js: INTENT_URL and intentMap.intents"
+        }
+      ]
+    },
+    "ui-ux-feedback": {
+      "surviving": [
+        "stop-automatic-discovery",
+        "durable-quiet-control",
+        "rendered-release-proof"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "one-large-automatic-popup",
+          "premise": "A larger automatic replacement retains the interruption evidenced in the supplied screenshot.",
+          "evidence": "Screenshot: both bottom corners contain discovery prompts."
+        }
+      ]
+    },
+    "gamification-immersion": {
+      "surviving": [
+        "proof-orbit",
+        "signal-mixing"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "more-unlock-toasts",
+          "premise": "Additional automatic badge cards would repeat existing toast interruptions.",
+          "evidence": "assets/constellation-tracker.js: showToast and staggered newOnes"
+        }
+      ]
+    },
+    "ai-intelligence": {
+      "surviving": [
+        "shared-agent-itinerary"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "mandatory-chat-first",
+          "premise": "The existing deterministic intent graph already handles route suggestions.",
+          "evidence": "assets/intent-flight-director.js: scoreNode"
+        }
+      ]
+    },
+    "security": {
+      "surviving": [
+        "local-data-boundary"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "automatic-profile-export",
+          "premise": "Local journey history is not public route data; no need to expose it.",
+          "evidence": "assets/constellation-tracker.js: readVisited"
+        }
+      ]
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "lazy-visual-budget"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "always-on-webgl-world",
+          "premise": "The screenshot does not demonstrate a need for a persistent GPU scene.",
+          "evidence": "Existing map and palette data support SVG/list rendering."
+        }
+      ]
+    },
+    "token-cost": {
+      "surviving": [
+        "no-model-on-arrival"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "paid-model-routing",
+          "premise": "Arrival recommendations already run locally; a model call adds an unnecessary paid dependency.",
+          "evidence": "assets/intent-flight-director.js: local scoreNode"
+        }
+      ]
+    },
+    "observability-honesty": {
+      "surviving": [
+        "attention-outcome-metrics"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "infer-conversion-loss",
+          "premise": "No measured abandonment or conversion-loss rate was supplied.",
+          "evidence": "Screenshot and source establish obstruction, not a conversion percentage."
+        }
+      ]
+    },
+    "sil-debt": {
+      "surviving": [
+        "behavioral-collision-tests"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "tests-prove-no-collisions",
+          "premise": "Passing string checks are insufficient evidence for the pictured runtime overlap.",
+          "evidence": "Attention contract 15/15 and journey contract 15/15 pass despite constellation omission."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "count": 12,
+    "priority": 312.52,
+    "top3": [
+      "durable-quiet-control",
+      "stop-automatic-discovery",
+      "rendered-release-proof"
+    ]
+  },
+  "innovationReserve": [
+    "shared-agent-itinerary",
+    "proof-orbit",
+    "signal-mixing"
+  ],
+  "skipped": [
+    {
+      "slug": "second-search-engine",
+      "reason": "The palette already indexes public routes and intent outcomes. Reuse it instead of duplicating search."
+    },
+    {
+      "slug": "one-large-automatic-popup",
+      "reason": "A larger automatic replacement retains the interruption evidenced in the supplied screenshot."
+    },
+    {
+      "slug": "more-unlock-toasts",
+      "reason": "Additional automatic badge cards would repeat existing toast interruptions."
+    },
+    {
+      "slug": "mandatory-chat-first",
+      "reason": "The existing deterministic intent graph already handles route suggestions."
+    },
+    {
+      "slug": "automatic-profile-export",
+      "reason": "Local journey history is not public route data; no need to expose it."
+    },
+    {
+      "slug": "always-on-webgl-world",
+      "reason": "The screenshot does not demonstrate a need for a persistent GPU scene."
+    },
+    {
+      "slug": "paid-model-routing",
+      "reason": "Arrival recommendations already run locally; a model call adds an unnecessary paid dependency."
+    },
+    {
+      "slug": "infer-conversion-loss",
+      "reason": "No measured abandonment or conversion-loss rate was supplied."
+    },
+    {
+      "slug": "tests-prove-no-collisions",
+      "reason": "Passing string checks are insufficient evidence for the pictured runtime overlap."
+    }
+  ],
+  "notes": "Version 2: Spark living-sphere direction accepted; explicit retirement of both pictured corner guides is mandatory first-wave work. Full design specification: docs/VAULT_COMPASS_PLAN_2026-10-06.md. Revised L2 effort totals 95 hours, an estimate rather than a deadline. Current work expands the plan; implementation and deployment are pending.",
+  "designVersion": 2,
+  "companion": {
+    "name": "Spark",
+    "experience": "Vault Compass",
+    "entry": "Named header control and existing Ctrl/Command + K",
+    "automaticExpansion": false,
+    "visual": "Translucent sphere, irregular gold core, two offset orbital rings, colorful constellation traces",
+    "firstRelease": [
+      "Retire both pictured corner guide render paths",
+      "Shared palette/list/search",
+      "Living sphere and four regions",
+      "Conservative saved-path migration",
+      "Proof Orbit"
+    ],
+    "laterOptions": [
+      "Signal Mixing",
+      "Earned sigils",
+      "Seasonal art",
+      "Explicit conversational AI"
+    ]
+  }
+}

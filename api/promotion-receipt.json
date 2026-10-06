@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "dafe6fbafc15b2cb5cef70f4a37c527c161e5152",
+    "sha": "8c672f5bb8101af387bccab84da3233c8f34af32",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "353c8e17d98a6b75413ac01a209f51cbbcfa0b06",
-    "contentLaneHead": "c46f22fa36d52901e505f2a99433cef9276fbbd0",
+    "sha": "f3b729a16798ddf419d0bc936ccb81c8a8e19331",
+    "contentLaneHead": null,
     "reachable": true,
     "reconciliation": "behind",
     "shellParity": {
-      "state": "matched",
-      "observedAt": "2026-09-29T20:39:50.760Z",
-      "ageHours": 1.6,
+      "state": "unobserved",
+      "observedAt": "2026-10-06T05:40:56.927Z",
+      "ageHours": 2.7,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,12 +33,13 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 8,
     "workerRouteErrors": 7,
-    "signalCardinality": 6,
+    "signalCardinality": 7,
     "signalEndpoints": [
       "api/ecosystem-state.json",
       "api/ignis-conduit.json",
+      "api/membership-tiers.json",
       "api/public-intelligence.json",
       "api/rank-climbers.json",
       "api/recent-ships.json",
@@ -66,14 +67,16 @@
         "captured": true,
         "consoleErrors": 1,
         "workerRouteErrors": 1,
-        "signalCardinality": 0,
-        "signalEndpoints": []
+        "signalCardinality": 1,
+        "signalEndpoints": [
+          "api/membership-tiers.json"
+        ]
       },
       {
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 1,
+        "consoleErrors": 2,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -86,18 +89,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves 353c8e17, repo build-sha is dafe6fba — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
+    "the repo has advanced past the last promotion: production serves f3b729a1, repo build-sha is 8c672f5b — a promotion backlog, not a stranded deploy (shell parity is 'unobserved', not drift)",
+    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
   ],
-  "generatedAt": "2026-09-29T22:16:20.227Z",
+  "generatedAt": "2026-10-06T08:21:14.717Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-09-29T22:16:20.227Z",
-    "currentBehindStreak": 5,
-    "newestGradableAt": "2026-09-29T22:16:20.227Z",
+    "lastStrandedAt": "2026-10-06T08:21:14.717Z",
+    "currentBehindStreak": 7,
+    "newestGradableAt": "2026-10-06T08:21:14.717Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

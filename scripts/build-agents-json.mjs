@@ -25,6 +25,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inspectTypedPublicFeed, runPublicFeedContractSelfTest } from './lib/public-feed-contracts.mjs';
+import { writeSparkManifest } from './build-spark-manifest.mjs';
 import { writeIntentMap } from './build-intent-map.mjs';
 import { STUDIO_DESCRIPTION, STUDIO_SLOGAN } from './lib/org-entity.mjs';
 
@@ -248,6 +249,7 @@ export function buildManifest(state) {
       statusProof: `${SITE}/api/status-proof.json`,
       citation: `${SITE}/api/citation.json`,
       intentMap: advertised('api/intent-map.json'),
+      sparkCompass: { url: SITE + '/api/spark-manifest.json', description: 'The same public destination, evidence and availability contract used by Spark. Read-only navigation; selected itinerary exports exclude private journey state.' },
       // S293: how the published evidence is actually produced. An agent that can
       // read the numbers but not their derivation cannot audit them.
       evidenceGraph: `${SITE}/api/evidence-graph.json`,
@@ -409,7 +411,7 @@ function main() {
     console.error(`[agents-json] required public source missing: ${ECOSYSTEM.replace(ROOT, '.')}`);
     process.exit(1);
   }
-  try { writeIntentMap({ check: CHECK }); }
+  try { writeIntentMap({ check: CHECK }); writeSparkManifest({check:CHECK}); }
   catch (error) { console.error(`[agents-json] intent map invalid: ${error.message}`); process.exit(1); }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
   if (state.publicSafe !== true || !Array.isArray(state.projects)) {

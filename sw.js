@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-5c4d6d8c5209a17e';
+const CACHE_NAME = 'vaultspark-shell-6d52e69d9f2bfe47';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -20,7 +20,10 @@ const MAX_PAGE_ENTRIES = 60;
 const PAGE_CACHE = CACHE_NAME + '-pages';
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-539ca122bd.css',
+  '/assets/spark-compass.shell-25944c62db.js',
+  '/assets/spark-compass.shell-03ecbbaae9.css',
+  '/assets/pwa-install.shell-30b48f0ae6.js',
+  '/assets/style.shell-174cbb1a9f.css',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
@@ -29,7 +32,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/home-idle-loader.shell-d1839327b4.js',
-  '/assets/ambient-core.shell-1732d293f8.js',
+  '/assets/ambient-core.shell-61cb4a569b.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
@@ -41,7 +44,8 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/stats-surface.shell-b33242e1cc.js',
   '/assets/ecosystem-stats.shell-e6b0b21c77.js',
   '/assets/hero-choice-tracking.shell-8dd57eb3a3.js',
-  '/assets/journey-conductor.shell-9b61d0c064.js',
+  '/assets/journey-conductor.shell-9fb978eca9.js',
+  '/assets/constellation-tracker.shell-bc8a879068.js',
   '/assets/desk-wire.shell-5dbc8ab14d.js',
   '/assets/changelog-reactions.shell-1ddedc6d81.js',
   '/assets/countdown.shell-f058757524.js',
@@ -65,6 +69,9 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/universe-map.shell-d55870922b.js',
 ];
 const NON_CACHEABLE_SHELL_SOURCES = [
+  '/assets/spark-compass.js',
+  '/assets/spark-compass.css',
+  '/assets/pwa-install.js',
   '/assets/style.css',
   '/assets/theme-toggle.js',
   '/assets/nav-toggle.js',
@@ -87,6 +94,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/ecosystem-stats.js',
   '/assets/hero-choice-tracking.js',
   '/assets/journey-conductor.js',
+  '/assets/constellation-tracker.js',
   '/assets/desk-wire.js',
   '/assets/changelog-reactions.js',
   '/assets/countdown.js',
@@ -111,9 +119,9 @@ const NON_CACHEABLE_SHELL_SOURCES = [
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-539ca122bd.css',
+  '/assets/style.shell-174cbb1a9f.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-1732d293f8.js',
+  '/assets/ambient-core.shell-61cb4a569b.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/kit.js',
   '/assets/icon-32.png',

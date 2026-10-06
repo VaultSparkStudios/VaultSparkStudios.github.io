@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -11,8 +12,25 @@ const MANIFEST = path.join(ROOT, 'assets', 'shell-manifest.json');
 const SW = path.join(ROOT, 'sw.js');
 const before = fs.readFileSync(MANIFEST, 'utf8');
 const swBefore = fs.readFileSync(SW, 'utf8');
-const { predicatesMissingShellAsset } = await import('../scripts/build-shell-assets.mjs');
+const { predicatesMissingShellAsset, findHtmlFiles } = await import('../scripts/build-shell-assets.mjs');
 const bundle = (entries) => `const CONTENT_ADDRESSED_PREDICATE_SRCS = [\n${entries}\n];`;
+
+test('shell scan preserves cache snapshots and finds public nested pages', () => {
+  const temporaryRoot = path.resolve(os.tmpdir());
+  const fixture = fs.mkdtempSync(path.join(temporaryRoot, 'vs-shell-scan-'));
+  try {
+    for (const dir of ['.cache/old-staging', '.ops-cache/replay', 'games/example']) {
+      fs.mkdirSync(path.join(fixture, dir), { recursive: true });
+      fs.writeFileSync(path.join(fixture, dir, 'index.html'), '<link href="old.css">');
+    }
+    fs.writeFileSync(path.join(fixture, 'index.html'), '<main>Public home</main>');
+    assert.deepEqual(findHtmlFiles(fixture).map(file => path.relative(fixture, file).replaceAll('\\', '/')).sort(), ['games/example/index.html', 'index.html']);
+    assert.equal(fs.readFileSync(path.join(fixture, '.cache/old-staging/index.html'), 'utf8'), '<link href="old.css">');
+  } finally {
+    assert.ok(path.resolve(fixture).startsWith(temporaryRoot + path.sep));
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
 
 test('importing build-shell-assets does not run the build', () => {
   // main() regenerates the manifest (fresh generatedAt) and rewrites pages; an
@@ -60,6 +78,17 @@ test('the service-worker precache has no duplicate requests (Cache.addAll reject
   assert.ok(urls.length > 20, 'precache list parsed');
   const dupes = urls.filter((u, i) => urls.indexOf(u) !== i);
   assert.deepEqual(dupes, [], 'duplicate precache entries: ' + dupes.join(', '));
+});
+
+test('install-banner retirement ships through a versioned content-lane asset', () => {
+  const asset = JSON.parse(fs.readFileSync(MANIFEST, 'utf8')).assets.pwaInstall;
+  assert.match(asset.path, /^assets\/pwa-install\.shell-[a-f0-9]{10}\.js$/);
+  assert.equal(fs.readFileSync(path.join(ROOT, asset.path), 'utf8'), fs.readFileSync(path.join(ROOT, asset.source), 'utf8').replaceAll('\r\n', '\n'));
+  for (const page of ['index.html', 'games/index.html', 'games/mindframe/index.html']) {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    assert.ok(html.includes('/' + asset.path), page + ' must load the retired-banner replacement');
+    assert.equal(html.includes('src="/assets/pwa-install.js"'), false);
+  }
 });
 
 test('a duplicate precache entry is caught by the same parser (negative control)', () => {

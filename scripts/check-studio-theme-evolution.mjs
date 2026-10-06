@@ -8,8 +8,9 @@ const ROOT = path.resolve(__dirname, '..');
 const SELF_TEST = process.argv.includes('--self-test');
 
 const PAGE_CONTRACTS = {
-  'index.html': [/professional operating rhythm/i, /portfolio is alive/i],
-  'studio/index.html': [/professional creative studio/i, /Studio OS keeps the work visible/i],
+  // D-S368.8 selected the AI & Synthetic Intelligence studio positioning.
+  'index.html': [/Synthetic Intelligence/i, /portfolio is alive/i],
+  'studio/index.html': [/Synthetic Intelligence/i, /Studio OS keeps the work visible/i],
   'projects/index.html': [/project portfolio/i, /infrastructure of the vault/i],
   'games/index.html': [/shared studio standards/i, /inside the portfolio/i],
   'universe/index.html': [/universe layer/i, /lore becomes an operating system/i],

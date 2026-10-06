@@ -67,6 +67,8 @@ export const CRON_WRITE_EXEMPT = Object.freeze({
   'membership/index.html': 'Scheduled publishers re-render this shared intent surface only after committed source feeds move; changed bytes are visitor-facing content and must invalidate the candidate.',
   'studio-pulse/index.html': 'Scheduled publishers re-render the portfolio pulse from committed source changes; changed bytes are real public content, not a wall-clock-only observation.',
   'agents.json': 'Scheduled publishers regenerate the agent manifest from committed public catalog/discovery inputs; changed bytes are a real contract change that must invalidate the candidate.',
+  'api/spark-manifest.json': 'Scheduled builders project committed public navigation sources; changed routes, availability or shipping evidence are content changes and must invalidate the candidate.',
+  'games/index.html': 'Scheduled registry projections change the public catalog only when committed source content changes; those changes must invalidate the candidate.',
   '.well-known/llms.txt': 'Scheduled publishers regenerate the agent discovery index from committed project inventory; changed bytes are a real discovery-contract change, not time drift.',
 });
 
@@ -161,10 +163,13 @@ export function evaluateArtifact({ id, hashedLeaves, observedLeaves, volatileFie
 
     // Hazard 2 — the leaf's own bytes carry a machine stamp. Measured, not inferred.
     const body = (leafContents || {})[leaf];
-    if (body != null && !declared && MACHINE_STAMP_RE.test(String(body))) {
+    // Authored/first-commit publication instants are content, not build clocks.
+    // Remove only the marked datetime attribute; any other machine stamp still fails.
+    const clockBody = String(body ?? '').replace(/<time\b(?=[^>]*\bdata-time-source="(?:authored|first-commit)")[^>]*>/gi, tag => tag.replace(/\bdatetime="[^"]*"/i, ''));
+    if (body != null && !declared && MACHINE_STAMP_RE.test(clockBody)) {
       findings.push({
         leaf, hazard: 'machine-stamp',
-        detail: `hashed into ${id} but its bytes contain a machine timestamp (${String(body).match(MACHINE_STAMP_RE)[0]}) — declare the field in VOLATILE_FIELDS so identical source cannot produce different roots`,
+        detail: `hashed into ${id} but its bytes contain a machine timestamp (${clockBody.match(MACHINE_STAMP_RE)[0]}) — declare the field in VOLATILE_FIELDS so identical source cannot produce different roots`,
       });
     }
   }
@@ -207,6 +212,11 @@ async function loadLive() {
 function selfTest() {
   const t = [];
   const add = (name, ok) => t.push([name, ok]);
+  const clockFindings = body => evaluateArtifact({id:'publication-fixture',hashedLeaves:['page.html'],observedLeaves:[],volatileFields:{},scheduledWrites:[],leafContents:{'page.html':body}}).findings.length;
+  add('marked authored publication time is stable content', clockFindings('<time datetime="2026-10-05T22:24:08Z" data-time-source="authored">Published</time>') === 0);
+  add('marked first-commit time is stable content', clockFindings('<time data-time-source="first-commit" datetime="2026-10-05T22:24:08Z">Published</time>') === 0);
+  add('unmarked datetime still fails', clockFindings('<time datetime="2026-10-05T22:24:08Z">Updated</time>') === 1);
+  add('a build stamp beside authored content still fails', clockFindings('<time datetime="2026-10-05T22:24:08Z" data-time-source="authored">Published</time> Built 2026-10-06T06:00') === 1);
 
   const workflows = {
     'uptime-probe.yml': 'on:\n  schedule:\n    - cron: "0 * * * *"\njobs:\n  x:\n    steps:\n      - run: |\n          git add api/uptime.json api/citation.json\n',

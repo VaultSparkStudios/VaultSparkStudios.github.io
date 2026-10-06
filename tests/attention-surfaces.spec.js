@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const BASE = process.env.BASE_URL || 'http://127.0.0.1:4181';
-const SURFACES = '#cookieConsent, #pwa-install-banner, .vs-exit-panel, .vs-vd, .vs-journey';
+const SURFACES = '#cookieConsent, #pwa-install-banner, .vs-exit-panel, .vs-vd, .vs-journey, .vs-cst-compass, .vs-cst-toast, #spark-compass[open]';
 const PROFILES = [
   { name: 'desktop', viewport: { width: 1440, height: 900 } },
   { name: 'mobile', viewport: { width: 390, height: 844 } },
@@ -48,7 +48,7 @@ for (const profile of PROFILES) {
     await capture(page, `new-${profile.name}`);
   });
 
-  test(`engaged returning visitor gets at most one automatic surface on ${profile.name}`, async ({ page }) => {
+  test(`engaged returning visitor gets no automatic discovery surface on ${profile.name}`, async ({ page }) => {
     // WebKit on the remote staging tenant can spend >20 s in TLS/font startup
     // before the PWA eligibility timer begins. Keep the assertion strict while
     // giving the real browser enough wall-clock budget to avoid retry-only green.
@@ -65,10 +65,9 @@ for (const profile of PROFILES) {
     await page.goto(BASE + '/', { waitUntil: 'load' });
     await dispatchInstallPrompt(page);
 
-    await expect(page.locator('#pwa-install-banner')).toBeVisible({ timeout: 12000 });
-    await expect(page.locator(SURFACES)).toHaveCount(1);
-    await expect.poll(() => page.evaluate(() => sessionStorage.getItem('vs_attention_surface_v1')))
-      .toBe('pwa-install');
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * .6));
+    await page.waitForTimeout(2500);
+    await expect(page.locator(SURFACES)).toHaveCount(0);
     await capture(page, `returning-${profile.name}`);
   });
 }

@@ -54,6 +54,7 @@ export function auditProject(item, exists) {
   if (item.status === 'SPARKED' && live) {
     if (live.dev) issues.push({ level: 'error', msg: `SPARKED links to a dev/staging host: ${live.url}` });
   }
+  if(item.deployedUrl && /steadfast-determination-production\.up\.railway\.app/i.test(item.deployedUrl)) issues.push({level:'error',msg:'Retired MindFrame destination in public catalog'});
   // The "Details"/studio destination — must exist if used.
   if (!page && !(item.status === 'SPARKED' && live && !live.dev)) {
     issues.push({ level: 'warn', msg: `no on-site page and no live URL → falls back to generic /${item.type === 'game' ? 'games' : 'projects'}/` });

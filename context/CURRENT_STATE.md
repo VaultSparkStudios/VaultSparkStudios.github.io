@@ -1,5 +1,11 @@
 # Current State
 
+## S369 — Spark implementation candidate (2026-10-06)
+
+Spark replaces the competing discovery guides with one manually opened Vault Compass. Its colorful CSS sphere, stationary region controls, map/list/search, Proof Orbit, interest mixing, saved three-stop routes, arrival-earned local sigils and public itinerary export share a validated 26-destination manifest. Quiet/still controls and reduced motion are supported; no model requests are made. Old progress remains readable and neither corner guide is scheduled. MindFrame now launches at https://usemindframe.com/ throughout the public registry and generated discovery surfaces. This is a candidate, not yet a verified production release.
+
+Canonical staging: Spark 10/10, mobile 215/215, release ceremony 11/11 (three browser cases executed; three identity cases explicitly held). All 140 final Compass captures reviewed in seven themes; 28 entry/bridge images also reviewed. Cold list opening measured 141–249ms and warm opening 54ms in three unthrottled headless Chromium samples; this is lab evidence, not field performance. Full single-run repository verification and production promotion remain pending.
+
 Last updated: 2026-10-04 UTC (S368 continued: Desk art restored, satire cartoons, hybrid AI & SI positioning)
 
 ## S368 final — Desk search, publish times, signup fixes, art autopilot (2026-10-05)

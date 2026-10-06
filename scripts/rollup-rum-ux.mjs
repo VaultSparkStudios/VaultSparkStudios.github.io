@@ -68,6 +68,7 @@ const TRACKED_CTA_FAMILIES = CTA_CONTRACTS.map((contract) => ({
 }));
 
 const FAMILIES = [
+  {family:'spark',parts:['opened','closed','quiet','followed','proof','saved','started','completed','exported','feedback_clarity','feedback_proof','feedback_value'],rate:['followed','opened'],label:'Spark discovery follow-through',epoch:'2026-10-06'},
   ...TRACKED_CTA_FAMILIES,
   { family: 'oracle-chip', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'Oracle seed-chip click-through' },
   { family: 'ignis-hint', parts: ['shown', 'click', 'dismissed'], rate: ['click', 'shown'], label: 'proactive hint click-through' },

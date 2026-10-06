@@ -1,6 +1,6 @@
-# Genius Hit List — Session 368
+# Genius Hit List — Session 369
 
-Generated: 2026-10-03
+Generated: 2026-10-06
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **80/100**
 - Health: **yellow**
-- Current SIL: **954/1000**
+- Current SIL: **912/1000**
 - CI health: **check gh run list**
-- Current focus: S368 full audit refresh implemented (docs/AUDIT_2026-10-02): membership truth (Free / VaultSparked $4.99 / VaultSparked Eternal $29.99), Season 1 repair live, invite-led doors, registry-driven statuses, 12 page merges and new /play/ /dispatch/ /collaborate/ /api/, Ask the Vault, Desk personas and signup.
+- Current focus: S369 Spark Vault Compass candidate: opt-in living sphere, both corner guides retired, public route manifest and MindFrame canonical launch correction; staging-first release verification ongoing.
 
 ## Strategic Read
 
@@ -22,81 +22,73 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Post-push CI confirmation
+#### 1. [PRODUCT] Retire the bottom-left Resume World Builder compass and bottom-right …
+Final score: **96**
+[P1 · release acceptance pending] Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in docs/VAULT_COMPASS_PLAN_2026-10-06.md; neither guide reappears in the served release.
+Why it matters: Retire the bottom-left Resume World Builder compass and bottom-right Y is open, local, and unblocked — can ship this session.
+
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 2. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-Final score: **93**
-[P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
-Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
+#### 3. [PRODUCT] Homepage hero wording: current Synthetic Intelligence follows D-S368.…
 Final score: **90**
-[DESK/RELEASE/P2] Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
-Why it matters: Observe the next scheduled publisher-to-release trigger after the Octo is open, local, and unblocked — can ship this session.
+[P2 · positioning review] Homepage hero wording: current Synthetic Intelligence follows D-S368.8; Super Intelligence is the verified federal term but a different studio positioning choice. Recommendation: retain current term or use outcome-based hero copy. No terminology decision changed.
+Why it matters: Homepage hero wording: current Synthetic Intelligence follows D-S368.8 is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+#### 4. [PRODUCT] Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
 Final score: **87**
-[DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
-Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
+[P1] Confirm the art autopilot's first scheduled publish (.cache/desk-art-staging/autopilot.log); fix anything it aborted on.
+Why it matters: Confirm the art autopilot's first scheduled publish (.cache/desk-art-s is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
+#### 1. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+Final score: **84**
+[SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
+Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Build the named Spark entry, living sphere, shared palette/map/list a…
+Final score: **81**
+[P1 · Spark implementation] Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation complete locally; canonical staging and live acceptance pending.
+Why it matters: Build the named Spark entry, living sphere, shared palette/map/list an is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+Final score: **78**
+[P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
+Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
+Final score: **75**
+[DESK/RELEASE/P2] Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
+Why it matters: Observe the next scheduled publisher-to-release trigger after the Octo is open, local, and unblocked — can ship this session.
+
+#### 5. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+Final score: **72**
+[DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
+Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
+
+### LATER
+
 #### 1. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-Final score: **86**
+Final score: **71**
 [AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
-Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 368-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 369-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 2. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **81**
+Final score: **66**
 [QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
 Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
 
 #### 3. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **78**
+Final score: **63**
 [S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
-
-#### 4. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **74**
-[DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
-Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 368-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
-
-#### 5. [VERIFY] Make staging deployment regenerate its continuity summary before a re…
-Final score: **72**
-[S365][CI/P2] Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
-Why it matters: Make staging deployment regenerate its continuity summary before a rel was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-### LATER
-
-#### 1. [VERIFY] Watch the next three article Lighthouse runs for stability at the unc…
-Final score: **69**
-[S365][PERF/P3] Watch the next three article Lighthouse runs for stability at the unchanged 0.90 floor. Investigate if the median falls below the threshold again; preserve the reader-first order and theme evidence.
-Why it matters: Watch the next three article Lighthouse runs for stability at the unch was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
-Final score: **69**
-[S365][OPS/P2] Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs --allow-wipe; keep unarchived deletion blocking.
-Why it matters: Teach the closeout wipe guard to recognize a byte-preserving work-log  is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Decode literal HTML entities in a few older Desk source-receipt excer…
-Final score: **63**
-[S365][DESK/P3] Decode literal HTML entities in a few older Desk source-receipt excerpts (&#x27;, &#8217;), then regenerate and visually verify those pages. The S365 post-edition visual matrix exposed the artifacts in mobile source cards.
-Why it matters: Decode literal HTML entities in a few older Desk source-receipt excerp was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check`
 
 ### DEFERRED / GATED
 
@@ -142,18 +134,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Post-push CI confirmation
-2. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-3. Observe the next scheduled publisher-to-release trigger after the Oct…
-4. Add a generated-fixture check for month rollover so a future edition …
-5. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-6. Review measured Linux screenshots before refreshing visual-regression…
-7. Track growth of the Desk overlay from the production baseline; arrang…
-8. Verify prior-overlay path preservation automatically before scoped Pa…
-9. Make staging deployment regenerate its continuity summary before a re…
-10. Watch the next three article Lighthouse runs for stability at the unc…
-11. Teach the closeout wipe guard to recognize a byte-preserving work-log…
-12. Decode literal HTML entities in a few older Desk source-receipt excer…
+1. Retire the bottom-left Resume World Builder compass and bottom-right …
+2. Post-push CI confirmation
+3. Homepage hero wording: current Synthetic Intelligence follows D-S368.…
+4. Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
+5. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+6. Build the named Spark entry, living sphere, shared palette/map/list a…
+7. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+8. Observe the next scheduled publisher-to-release trigger after the Oct…
+9. Add a generated-fixture check for month rollover so a future edition …
+10. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+11. Review measured Linux screenshots before refreshing visual-regression…
+12. Track growth of the Desk overlay from the production baseline; arrang…
 
 ## Best Immediate Move
 

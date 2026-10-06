@@ -217,7 +217,7 @@ function checkStylesheetShell(route) {
     const tag = match[0];
     const attrs = match[1] || '';
     if (!/\brel=["'][^"']*\bstylesheet\b[^"']*["']/i.test(attrs)) continue;
-    if (!/\bhref=["'](?:\/|\.\.\/)?assets\/style\.shell-[a-f0-9]{10}\.css/i.test(attrs)) continue;
+    if (!/\bhref=["'](?:\/|(?:\.\.\/)+)?assets\/style\.shell-[a-f0-9]{10}\.css/i.test(attrs)) continue;
     const isAsync = /\bmedia=["']print["']/i.test(attrs) && /\bdata-vs-async-css\b/i.test(attrs);
     if (isAsync) sawAsyncShell = true;
     else sawBlockingShell = true;

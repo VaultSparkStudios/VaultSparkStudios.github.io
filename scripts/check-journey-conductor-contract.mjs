@@ -9,18 +9,18 @@ export function inspect({ journeySource, loaderSource, paletteSource, constellat
   return [
     ['old arrival offer is not loaded', !loaderSource.includes("src: '/assets/smart-trial-offer.js'")],
     ['journey conductor is predicate-loaded', loaderSource.includes("src: '/assets/journey-conductor.js'")],
-    ['immediate arrival cannot qualify', /if \(secondPage\) offer\('second-page'\)/.test(journeySource) && /STARTED_AT < 2200/.test(journeySource)],
-    ['four explicit intent triggers exist', ['second-page', 'command-palette', 'engaged-scroll', 'project-action'].every((token) => journeySource.includes(token))],
-    ['four route-aware tours exist', ['game:', 'membership:', 'studio:', 'general:'].every((token) => journeySource.includes(token))],
-    ['onboarding lifecycle is complete', ['onboard_offered', 'onboard_started', 'onboard_completed', 'onboard_dismissed'].every((token) => journeySource.includes(token))],
+    ['journey produces no floating guides', !journeySource.includes('showModal') && !journeySource.includes('vs-journey')],
+    ['Spark owns requested navigation', paletteSource.includes('Spark') && paletteSource.includes('data-vs-palette-loader-trigger')],
+    ['no engagement timers start guides', !journeySource.includes('setTimeout')],
+    ['no scroll triggers start guides', !journeySource.includes("addEventListener('scroll'")],
     ['game bridge keeps source attribution', journeySource.includes("'/membership/?from='") && journeySource.includes("'/proof/?from='")],
-    ['feedback is post-decision and cooled down', journeySource.includes('vs:decision-complete') && journeySource.includes('7 * 86400000')],
-    ['feedback has three bounded choices', ['clarity', 'proof', 'value'].every((token) => journeySource.includes("['" + token + "'"))],
-    ['feedback promise names threshold five', journeySource.includes('at least five responses')],
-    ['command palette publishes intent', paletteSource.includes('vs:command-palette-intent')],
-    ['resume compass skips first page', constellationSource.includes('if (visited.length < 2) return null')],
-    ['resume compass is local-only', constellationSource.includes('COMPASS_DISMISSED_KEY') && !constellationSource.includes("fetch('/api/constellation-progress")],
-    ['reduced motion is respected', journeySource.includes('prefers-reduced-motion')],
+    ['journey delegates requested feedback', journeySource.includes('window.VSSpark.open()')],
+    ['legacy achievements remain readable', constellationSource.includes('vs_cst_unlocked')],
+    ['constellations have no automatic UI', !constellationSource.includes('createElement')],
+    ['command control is explicit', paletteSource.includes('openPalette')],
+    ['resume compass is retired', !constellationSource.includes('renderCompass')],
+    ['constellations have no network requests', !constellationSource.includes('fetch(')],
+    ['Spark owns reduced motion', readFileSync('assets/spark-compass.js','utf8').includes('prefers-reduced-motion')],
     ['no visitor identity endpoint', !/supabase|obelisk\/session|\/auth\/me/i.test(journeySource)],
   ];
 }
@@ -28,14 +28,14 @@ export function inspect({ journeySource, loaderSource, paletteSource, constellat
 const sources = {
   journeySource: readFileSync('assets/journey-conductor.js', 'utf8'),
   loaderSource: readFileSync('assets/ambient-loader.js', 'utf8'),
-  paletteSource: readFileSync('assets/command-palette.js', 'utf8'),
+  paletteSource: readFileSync('assets/command-palette-loader.js', 'utf8'),
   constellationSource: readFileSync('assets/constellation-tracker.js', 'utf8'),
 };
 const checks = inspect(sources);
 const failures = checks.filter(([, ok]) => !ok);
 if (process.argv.includes('--self-test')) {
   const synthetic = inspect({ journeySource: '', loaderSource: "src: '/assets/smart-trial-offer.js'", paletteSource: '', constellationSource: '' });
-  if (synthetic.filter(([, ok]) => !ok).length < 12) throw new Error('negative fixture did not fail closed');
+  if (synthetic.filter(([, ok]) => !ok).length < 5) throw new Error('negative fixture did not fail closed');
 }
 checks.forEach(([name, ok]) => console.log(`${ok ? '✓' : '✗'} ${name}`));
 console.log(`journey conductor contract: ${checks.length - failures.length}/${checks.length} passing`);

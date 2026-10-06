@@ -1395,3 +1395,8 @@ Staging follow-through: static staging deployed; first Worker upload rejected (g
 - Root-cause fixes: staging content gate path list over the Windows command line limit; desk-content-release failing on a stale staging baseline (archive limit); propagate-nav walking a nested worktree; repair-evidence-graph missing remote-tip diffs and report-only builders.
 - Cleanup: two temporary worktrees removed (junctions first); 46 stashes archived under refs/stash-archive/ and cleared.
 - Deployed: staging content lane and production Pages throughout; desk-content-release recovered (run 37355155678).
+
+
+## S369 — Spark and project link correction — 2026-10-06
+
+Implemented the accepted Vault Compass direction and corrected MindFrame's retired Railway launch URL. Focused browser suite passed 15/15; independent review defects fixed. Release candidate verification is ongoing; no production deployment claimed here.

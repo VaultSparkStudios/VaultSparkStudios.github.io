@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "14947ff7bc353587dd6d0bbd5b77c299cafe5354628391da900c552b975b6ee8",
+  "contractSha256": "82e853c4d5f2a967c5beed0284fc3ecfc9e5caade05a1543d3a852669fdf1301",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 86,
+  "nodeCount": 88,
   "cascadeNodeCount": 42,
   "buildOrder": [
     "ai-canonical-pages",
@@ -37,6 +37,7 @@
     "ignis-roi",
     "inp-soak-verdicts",
     "lqip-map",
+    "membership-access",
     "nav-sheet-stats",
     "news-desk",
     "news-desk-engagement",
@@ -95,6 +96,7 @@
     "status-proof",
     "citation",
     "release-proof",
+    "spark-manifest",
     "staging-deploy-continuity",
     "stats-surface"
   ],
@@ -780,7 +782,9 @@
         "api/public-status.json",
         "api/worker-route-provenance.json"
       ],
-      "feeds": [],
+      "feeds": [
+        "api/spark-manifest.json"
+      ],
       "externalSources": [
         "api/membership-tiers.json",
         "api/og-coverage.json"
@@ -837,6 +841,23 @@
         "assets/og/",
         "assets/og/news/",
         "data/news-desk/art/"
+      ]
+    },
+    {
+      "id": "membership-access",
+      "output": "assets/membership-access.js",
+      "builder": "scripts/generate-membership-access.mjs",
+      "verify": "node scripts/generate-membership-access.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "supabase/functions/_shared/membershipAccess.ts"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "api/membership-tiers.json",
+        "config/membership-entitlements.json",
+        "scripts/generate-membership-access.mjs"
       ]
     },
     {
@@ -1157,6 +1178,7 @@
         "api/nervous-system.json",
         "api/oracle-insights.json",
         "api/public-status.json",
+        "api/spark-manifest.json",
         "api/studio-timeline.json",
         "changelog/index.html",
         "data/ignis-search-index.json"
@@ -1368,6 +1390,26 @@
       ],
       "feeds": [],
       "externalSources": []
+    },
+    {
+      "id": "spark-manifest",
+      "output": "api/spark-manifest.json",
+      "builder": "scripts/build-spark-manifest.mjs",
+      "verify": "node scripts/build-spark-manifest.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/intent-map.json",
+        "api/public-intelligence.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "_redirects",
+        "data/game-registry.json",
+        "games/*/index.html",
+        "repo-structure:public-project-routes",
+        "scripts/build-route-consolidation.mjs",
+        "scripts/build-spark-manifest.mjs"
+      ]
     },
     {
       "id": "staging-deploy-continuity",

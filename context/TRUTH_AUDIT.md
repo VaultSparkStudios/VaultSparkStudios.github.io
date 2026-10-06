@@ -1382,3 +1382,8 @@ The latest publisher created the 90th story, but its first downstream run failed
 ## Post-S366 News archive release truth — 2026-10-01
 
 PR #134 merged and Pages run `36813693699` succeeded. The public News hub, archive index, August/September month pages and sampled profile routes return 200. Its 153-path overlay includes all 147 paths in the preceding Desk release; canonical staging and the Pages origin match the released source bytes at every path. The archive and hub retain links to all 89 nonsuperseded stories, while the hub itself is 92,390 source bytes. The baseline SHA remains `c46f22fa36d52901e505f2a99433cef9276fbbd0` because this was another content overlay. No full-site identity/provider acceptance is inferred from this release.
+
+
+## 2026-10-06 — S369 candidate source changes
+
+MindFrame's public launch truth is https://usemindframe.com/. Spark's source is api/spark-manifest.json, generated from public project/game/intelligence inputs with safe URL and availability validation. Browser-local progress is not studio telemetry or proof of shipping. Source publication, staging acceptance and production delivery must be reported separately. Candidate manifest now binds Spark feed and both MindFrame surfaces.

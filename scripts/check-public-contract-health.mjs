@@ -38,11 +38,22 @@ function evaluate(name, text) {
   if (name.endsWith('.json')) {
     try {
       const parsed = JSON.parse(text);
-      if (!legacy && !parsed.schemaVersion) findings.push('missing schemaVersion');
+      // These deterministic indexes identify their contract/content without a
+      // build-clock timestamp. Publication times belong to their source rows.
+      const compactSearch = /^api\/news-desk-search(?:-\d{4}-\d{2})?\.json$/.test(norm(name))
+        && parsed.v === 1
+        && (norm(name) === 'api/news-desk-search.json'
+          ? Array.isArray(parsed.row) && parsed.row[1] === 'slug' && Number.isInteger(parsed.storyCount) && Array.isArray(parsed.shards)
+          : /^\d{4}-\d{2}$/.test(parsed.month || '') && Array.isArray(parsed.stories));
+      const revisionedNavigation = norm(name) === 'api/spark-manifest.json'
+        && parsed.schemaVersion === 1 && parsed.kind === 'public-navigation'
+        && /^[a-f0-9]{16}$/.test(parsed.revision || '')
+        && parsed.publicSafe === true && Array.isArray(parsed.destinations);
+      if (!legacy && !parsed.schemaVersion && !compactSearch) findings.push('missing schemaVersion');
       const honestlyUnobserved = parsed.state === 'unobserved'
         && parsed.generatedAt === null
         && parsed.observedAt === null;
-      if (!legacy && !parsed.generatedAt && !honestlyUnobserved && !['ci-status.json'].includes(path.basename(name))) findings.push('missing generatedAt');
+      if (!legacy && !parsed.generatedAt && !honestlyUnobserved && !compactSearch && !revisionedNavigation && !['ci-status.json'].includes(path.basename(name))) findings.push('missing generatedAt');
     } catch {
       findings.push('invalid JSON');
     }
@@ -121,6 +132,10 @@ if (SELF_TEST) {
   const good = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":"2026-05-27","publicSafe":true}');
   const bad = evaluate('api/x.json', '{"generatedAt":"2026-05-27","note":"api key"}');
   const unobserved = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":null,"observedAt":null,"state":"unobserved","publicSafe":true}');
+  const navigation = evaluate('api/spark-manifest.json', JSON.stringify({schemaVersion:1,kind:'public-navigation',revision:'1234567890abcdef',publicSafe:true,destinations:[]}));
+  const invalidNavigation = evaluate('api/spark-manifest.json', JSON.stringify({schemaVersion:1,kind:'public-navigation',revision:'invalid',publicSafe:true,destinations:[]}));
+  const compact = evaluate('api/news-desk-search-2026-10.json', JSON.stringify({v:1,month:'2026-10',stories:[]}));
+  const invalidCompact = evaluate('api/news-desk-search-2026-10.json', JSON.stringify({v:2,month:'2026-10',stories:[]}));
   const deskCoverage = deskEngagementCoverage(
     { stories: [{ url: '/news/a/' }, { url: '/news/b/' }] },
     { items: [{ url: 'https://example.test/news/a/' }, { url: 'https://example.test/news/b/' }] },
@@ -132,9 +147,11 @@ if (SELF_TEST) {
   console.log(`  ${good.length === 0 ? 'ok' : 'fail'} good contract`);
   console.log(`  ${bad.length >= 2 ? 'ok' : 'fail'} bad contract`);
   console.log(`  ${unobserved.length === 0 ? 'ok' : 'fail'} honest-dark contract`);
+  console.log(`  ${navigation.length === 0 && invalidNavigation.length > 0 ? 'ok' : 'fail'} revisioned navigation is narrow`);
+  console.log(`  ${compact.length === 0 && invalidCompact.length > 0 ? 'ok' : 'fail'} compact search is version and shape checked`);
   console.log(`  ${deskCoverage.length === 0 ? 'ok' : 'fail'} Desk coverage tracks the live corpus`);
   console.log(`  ${deskDrift.length === 1 ? 'ok' : 'fail'} Desk coverage catches a newly published story without engagement`);
-  process.exit(good.length === 0 && bad.length >= 2 && unobserved.length === 0 && deskCoverage.length === 0 && deskDrift.length === 1 ? 0 : 1);
+  process.exit(good.length === 0 && bad.length >= 2 && unobserved.length === 0 && navigation.length === 0 && invalidNavigation.length > 0 && compact.length === 0 && invalidCompact.length > 0 && deskCoverage.length === 0 && deskDrift.length === 1 ? 0 : 1);
 }
 
 const targets = [];

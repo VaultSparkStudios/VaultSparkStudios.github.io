@@ -119,6 +119,8 @@ const BUNDLES = [
  * new URL, on a path the lane promotes.
  */
 const CONTENT_ADDRESSED_PREDICATE_SRCS = [
+  'assets/spark-compass.js',
+  'assets/constellation-tracker.js',
   'assets/journey-conductor.js',
   'assets/desk-wire.js',
   'assets/studio-now.js',
@@ -149,6 +151,8 @@ function contentAddressPredicateSrcs(src) {
     const stem = rel.replace(/^assets\//, '').replace(/\.js$/, '');
     out = out.split(`/${rel}`).join(`/assets/${stem}.shell-${hash}.js`);
   }
+  const sparkCssHash = shellHash('assets/spark-compass.css');
+  if (sparkCssHash) out = out.split('/assets/spark-compass.css').join(`/assets/spark-compass.shell-${sparkCssHash}.css`);
   return out;
 }
 

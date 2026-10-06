@@ -2799,3 +2799,28 @@ The subsequent full build exposed a stale-source versus dead-publisher confusion
 **Audit:** autopilot's first scheduled publish not yet observed; full build:check not run; held portal changes wait on the next full promotion.
 
 **Brainstorm → TASK_BOARD:** promote the session push helper to a repo script (autostash, regenerate conflicts, repair graph, push) so publisher races stop costing hand fixes.
+
+
+## Session 369 — 2026-10-06 — Spark implementation candidate
+
+SIL v3, ten categories /1000: devHealth 90 · creativeAlignment 95 · momentum 89 · engagement 91 · processQuality 85 · crossRepoCoherence 92 · securityPosture 94 · ecosystemIntegration 91 · capitalEfficiency 94 · automationCoverage 91. Total **912/1000**. Candidate-only score; production evidence still pending. Creative alignment: accepted sphere, quiet interaction and dual-audience route contract. Website rubric: theme pixels and interaction coverage measured; field Core Web Vitals and conversion gains unmeasured. Process deduction: repeated generated-evidence repairs prolonged verification. Follow-ups committed to TASK_BOARD: availability re-probe and fresh Spark cohort review. Velocity: 12 implementation outcomes locally; live acceptance pending. Debt: down in discovery UI; existing identity/deploy holds retained.
+
+
+## 2026-10-06 UTC — Session 369 (Spark candidate and MindFrame launch correction) | Total: 912/1000 (v3.0) | Velocity: 12 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 90 | Unit suite: 366 pass, zero failures, one existing TODO; focused Spark and attention checks passed. Full release suite pending. |
+| Creative Alignment | 95 | Accepted living sphere, one opt-in companion, quiet/still preferences and both corner guides retired in source. |
+| Momentum | 89 | Twelve selected outcomes implemented locally; staging and production acceptance pending. |
+| Engagement | 91 | Search, interest mixing, saved paths, arrival progress, feedback and public itinerary export; conversion gains unmeasured. |
+| Process Quality | 85 | Two independent review rounds fixed 8 then 3 findings; generated-evidence repairs prolonged verification. |
+| Cross-Repo Coherence | 92 | Public canonical registry reused, MindFrame launch corrected throughout discovery; identity holds retained. |
+| Security Posture | 94 | Manifest and URL validation, denied-storage fallback, consent-aware aggregate events, no new auth flow. |
+| Ecosystem Integration | 91 | Shared public manifest supports humans and agents; existing palette, shell and inline bridge integrated. |
+| Capital Efficiency | 94 | CSS motion and deterministic navigation make no paid model requests; no runtime token spend. |
+| Automation Coverage | 91 | Focused browser regressions, seven-theme capture harness and full destination probe; live release proof pending. |
+
+**Audit:** Field Core Web Vitals and conversion improvement remain unmeasured. Website intelligence was refreshed using the canonical IGNIS CLI with this repo explicitly selected; the legacy touched-project shim targets Studio Ops and needs an Ark repair request.
+
+**Brainstorm → TASK_BOARD:** Re-probe the two uncertain external destinations; review aggregate Spark usage after a fresh consented cohort exists.

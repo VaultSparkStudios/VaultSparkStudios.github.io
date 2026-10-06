@@ -1,22 +1,22 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         505/505 passing (2026-09-30)                   ║
-║  ✓  Velocity      23 ↑  ·  Debt: ↓                               ║
+║  ✓  Tests         530/530 passing (2026-10-06)                   ║
+║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ✓  Context age   1d                                             ║
-║  ✓  IGNIS         46119 FORGE  ·  3d old                         ║
+║  ✓  Context age   2d                                             ║
+║  ✓  IGNIS         46119 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   33/36 (92%) ↑ ▆▆▆▆▆▆▆▆                          ║
-║  ✓  Genome dims   all stable  (24/25)                            ║
+║  ⛔  Compliance   33/38 (87%) ↓ ▆▆▆▆▆▆▆▆                          ║
+║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  1d old (2026-10-02)                            ║
+║  ✓  Revenue sig.  4d old (2026-10-02)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
-║  ⚠  Canon adopt.  4/54 pending review                            ║
+║  ✓  Codex trust   trusted project active                         ║
+║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  Open current tasks 37 / Human-action entries 7                  ║
 ║  Unchecked tasks require task-level triage.                      ║
-║  ✓  Cost          real $0.00/7d · real metered total $0.7409…    ║
+║  ✓  Cost          real $0.00/7d · real metered total $0.7548…    ║
 ╚════════════════════════════════════════════════════════════════╝

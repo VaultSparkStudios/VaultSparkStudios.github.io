@@ -1,11 +1,12 @@
-# Implementation plan — S365
+# Spark implementation — S369
 
-Scope: complete the website arc from the current main branch through a verified production release. Audit: `docs/AUDIT_2026-09-28.md`.
+Selected contract: `docs/AUDIT_2026-10-06.json` and Spark plan v2. All 12 items at L2, including Signal Mixing and sigils under the user's full-plan instruction. Future optional paid chat, voice and seasonal art remain explicitly optional in the contract.
 
-1. Extract publisher article prose before fact selection, with a conservative fallback for pages without a recognizable article body. Verify the observed TechCrunch shape and ordinary article shapes in the fetcher self-test.
-2. Correct the 2026-09-28 Desk edition's page-chrome facts, regenerate claims and pages, and gate the observed contamination in the editorial quality check. Verify copy quality and claim parity.
-3. Prioritize the article hero illustration, the observed Largest Contentful Paint element. Keep the Lighthouse 0.90 floor and verify a new hosted candidate run.
-4. Rebuild dependent public proof feeds and run the full build gate. Capture desktop and mobile screenshots in all seven themes for touched article routes, inspect rendered pixels, and bind the final visual and mobile receipts.
-5. Commit and push main, deploy the exact candidate to staging, run the release ceremony and hosted gates, then deploy and verify production. Close out the Studio OS write-back.
+- [x] Wave 1 · Retire both corner guides, their triggers and other automatic discovery promotions; preserve progress.
+- [x] Wave 2 · Build shared public route manifest, safe itinerary contract and durable preference/migration state.
+- [x] Wave 3 · Build Spark sphere, one palette/Compass, map/list/search, Proof Orbit, Signal Mixing and earned sigils.
+- [x] Wave 4 · Verify interactions, collisions, privacy boundaries, performance and all theme/viewport/state pixels.
+- [ ] Wave 5 · Independent reviewer, full applicable checks, staging-first production promotion, live verification.
+- [ ] Wave 6 · /closeout write-back, commit/push remote main and final deploy currency evidence.
 
-Acceptance: sourced facts link to supporting article prose; the current edition and derived claims agree; the article passes its unchanged Lighthouse floor; full local and hosted gates pass; staging and production serve the released candidate with current receipts.
+Dependencies determine execution order; token-cost measurement follows the finished implementation. Each item remains pending until actual acceptance evidence is recorded. Existing unrelated worktree residue is preserved; no private data, credentials, auth semantics or membership promises are part of the change.

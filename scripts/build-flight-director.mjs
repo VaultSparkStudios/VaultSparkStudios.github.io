@@ -68,7 +68,7 @@ function run(write) {
     const abs = path.join(ROOT, file);
     const html = fs.readFileSync(abs, 'utf8');
     const cards = defaultCards(graph, routeContext(route));
-    const panel = renderFlightPanel(cards);
+    const panel = '<section class="container" aria-label="Explore with Spark"><button type="button" class="button button-secondary" data-spark-open>Find your next world with Spark ↗</button></section>';
     const next = injectPanel(html, panel);
     if (next == null) {
       console.error(`  ✗ flight-director: no fd-ssr marker block in ${file}`);

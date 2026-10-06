@@ -159,14 +159,14 @@
     {
       src: '/assets/exit-intent.js',
       when: function () {
-        return !document.documentElement.hasAttribute('data-vs-signed-in') && !window.matchMedia('(pointer: coarse)').matches;
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },
     {
       src: '/assets/visit-depth.js',
       when: function () {
-        return !document.documentElement.hasAttribute('data-vs-signed-in');
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },
@@ -209,8 +209,7 @@
       // the script re-checks eligibility and bails honestly when <2 ships landed.
       src: '/assets/returning-visitor-digest.js',
       when: function () {
-        try { return parseInt(localStorage.getItem('vs_visit_count') || '0', 10) >= 1; }
-        catch (_) { return false; }
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },
@@ -330,8 +329,7 @@
       // information-finding routes, so keep it off every other cold page.
       src: '/assets/intent-flight-director.js',
       when: function () {
-        var p = location.pathname || '/';
-        return ['/', '/membership/', '/games/', '/universe/', '/studio-pulse/', '/oracle/'].indexOf(p) !== -1;
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },
@@ -340,9 +338,7 @@
       // ignis-lens: Ask IGNIS floating pill — game/project/universe pages only.
       src: '/assets/ignis-lens.js',
       when: function () {
-        var p = location.pathname || '/';
-        if (document.querySelector('[data-vault-oracle]')) return false;
-        return /^\/(games|projects|universe|ignis|search)/.test(p);
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },
@@ -385,8 +381,7 @@
       // rate-page: emoji feedback widget — content pages, skip portals/admin/api.
       src: '/assets/rate-page.js',
       when: function () {
-        var p = location.pathname || '/';
-        return !/^\/(vault-member|investor-portal|admin|api)\//.test(p);
+        return false; // Spark owns requested discovery.
       },
       idle: true
     },

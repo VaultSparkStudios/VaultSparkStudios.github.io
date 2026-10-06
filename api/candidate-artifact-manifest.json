@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.1",
   "generatedBy": "scripts/build-candidate-artifact-manifest.mjs",
-  "generatedAt": "2026-10-02",
+  "generatedAt": "2026-10-06",
   "publicSafe": true,
   "algorithm": {
     "digest": "SHA-256",
@@ -30,46 +30,52 @@
     },
     "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident"
   },
-  "candidateSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
-  "root": "80bc975bcf577b15f497b4bec15f770c67bda9d8b14f5760dc9f09e982b02358",
-  "leafCount": 55,
-  "totalBytes": 1239715,
+  "candidateSha": "8c672f5bb8101af387bccab84da3233c8f34af32",
+  "root": "adc3ace5cf41639feca253afbe4b7be34889eddfa007cfcb4f60dacd011ceac8",
+  "leafCount": 62,
+  "totalBytes": 1424991,
   "leaves": [
     {
       "path": ".well-known/llms.txt",
-      "bytes": 5783,
-      "sha256": "ce37a38ee136b04d1efe406e59d24ab956a68887c78e0ffc8ca9964c757212b0",
-      "leafHash": "c1f1275d1173bfcfc3932d03535f9d446f0df5379d6a3d9d7ba53f067135b407"
+      "bytes": 5688,
+      "sha256": "2a433898235764fd329c563f860e79bb02293bc76f5d313d96faf2e65cb265e6",
+      "leafHash": "642f2c17d26848d989be4d473b87b573778ef29e1bbf163b203d07a3204d4f80"
     },
     {
       "path": "agents.json",
-      "bytes": 26059,
-      "sha256": "1309d951ff11bb8953bf07d5ce3997af929cf4865f38fe287cfae2c2f62451ff",
-      "leafHash": "1cfd101a91f6df9b287257d8f99bfee618b3fe7464771e66e889bc9fa0da00fb"
+      "bytes": 26195,
+      "sha256": "5258b78f1c768e559648e71584dfcc916201ee43697df7bae7c52a64e7b4a603",
+      "leafHash": "61db79bc0e0db3da56ef7055de900f533bde688a5acfd2a73cc47d650a094955"
     },
     {
       "path": "api/build-sha.json",
       "bytes": 322,
-      "sha256": "b72fe89b340d1f56b1fb135c6eb1985544f63d76e654c4aba4bb2c9c465e1594",
-      "leafHash": "93c2512e1fe8d2812c48e3510010ad351f64a28ed8e4947073a587b9aeed1069",
+      "sha256": "491494867d94626b2907efbdf6f275eacd1f73fe22d35c56ee9a4c6f062cfb79",
+      "leafHash": "0361d8065f90193a26a6af1eb288cb2728fe0903e51e17908b404a10964aad5a",
       "volatileFieldsStripped": [
         "builtAt"
       ]
     },
     {
       "path": "api/public-intelligence.json",
-      "bytes": 28175,
-      "sha256": "70f84a5273f5558eb566ae50dc5d96fab58249fcb3ddc8ad2d6505a4aabc3e2a",
-      "leafHash": "efbb66763fbf9a2622772ad2cd70bc671067e7dc98b0bc3a3c5eb111e7f6c033",
+      "bytes": 27997,
+      "sha256": "7bde4dd54b55fba99e4e73231313c1e974937c706acee2872c1bb14322dd6158",
+      "leafHash": "03922624123b1614aa51a58d3ecaa8ae6045bbaf39f96674b2b67ef1aff98c02",
       "volatileFieldsStripped": [
         "generatedAt"
       ]
     },
     {
-      "path": "assets/ambient-core.shell-1732d293f8.js",
-      "bytes": 77332,
-      "sha256": "1732d293f8728bd0eddcb9dbba47dafc5fd4007a0606735eaa3f079d964979b4",
-      "leafHash": "aa34269de0e642b0796bf8777d2f0763d095626e4d52835cd9c7ddcbc2235390"
+      "path": "api/spark-manifest.json",
+      "bytes": 24261,
+      "sha256": "348bff1469c8a67cd3f28b4a01c6f8cfe3c237879801fab3892b9aca9a5b3451",
+      "leafHash": "9da1087be9f6196a431f9b9eda3304c97e0394382723041efcec4bdc191be755"
+    },
+    {
+      "path": "assets/ambient-core.shell-61cb4a569b.js",
+      "bytes": 79275,
+      "sha256": "61cb4a569b53ddc8c8e16bd3df14a9dcee11cc265905b732ec65a4f5aff9004d",
+      "leafHash": "9a5bbba4ea6d070daac9b38190324abeb6f95d027e7c6d56441ac7c802de0315"
     },
     {
       "path": "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -82,6 +88,12 @@
       "bytes": 12343,
       "sha256": "1ddedc6d812991f7bb72c2ee9405779a897d33fbedaab81784e3df96123d7528",
       "leafHash": "b96e0e9f30a874f5b1e9b2749f99913b47e4c79e8113da4fade96b0032cba4bd"
+    },
+    {
+      "path": "assets/constellation-tracker.shell-bc8a879068.js",
+      "bytes": 316,
+      "sha256": "bc8a8790684af9adc1a0600c7060be088eefc82d8720ea38b8d1f7fe3426a25a",
+      "leafHash": "25b9c16625de937c9cf928f6951e7c802ef8e84f5686d11ae14101d03362c150"
     },
     {
       "path": "assets/countdown.shell-f058757524.js",
@@ -174,10 +186,10 @@
       "leafHash": "0e24308e771f23a69d03a4cbb2f9145a02b68d6d939937875d102029649d3830"
     },
     {
-      "path": "assets/journey-conductor.shell-9b61d0c064.js",
-      "bytes": 16084,
-      "sha256": "9b61d0c064aabdbf7fcf9f001ddd8c1031c1204cd4ca10240c30b4172cfa84ac",
-      "leafHash": "fae7c90b2c473b9a7ed4d0a44917fa32b8143b94c49c4dbf36e23d2215436a64"
+      "path": "assets/journey-conductor.shell-9fb978eca9.js",
+      "bytes": 1515,
+      "sha256": "9fb978eca9c886d26e1a65246c7223fd4e6f3a65b85d576b7773a7723cbc27df",
+      "leafHash": "d781a9cb646439d00519ccb5ef57a48a44c0b6a220ee9ccaa29af3caf8f305bf"
     },
     {
       "path": "assets/nav-sheet.shell-c0fddc0c73.js",
@@ -234,6 +246,12 @@
       "leafHash": "9b8d0cf9a562b86ec77a3b316c2663a38fdd2768bebb26c3f9aee08287cb3a45"
     },
     {
+      "path": "assets/pwa-install.shell-30b48f0ae6.js",
+      "bytes": 248,
+      "sha256": "30b48f0ae64726522b794348423067441dfce869164a978c0187e94ae2cdfff5",
+      "leafHash": "15841e1918f36f2baf3935349844db14ef8eee75bf591de3da5a3647daa1a53c"
+    },
+    {
       "path": "assets/pwa-nav.shell-5f63b6b75a.js",
       "bytes": 2048,
       "sha256": "5f63b6b75a3bbc3329565b5e4f77792c31208cf0a14de227a66950f4cedd6d20",
@@ -283,12 +301,24 @@
     },
     {
       "path": "assets/shell-manifest.json",
-      "bytes": 7443,
-      "sha256": "19f8e2a7085727c7032b1b853183726261406bc21de407b7559d98e0d2b7ae2e",
-      "leafHash": "c4cacaf8155ff975b1f238a8d22266bd6cfec1374264315e16154fe1e89a98fd",
+      "bytes": 8135,
+      "sha256": "377f1540a3b4857b83d1269ff6b4f839d05f052bead1cf8c2264ca61697e429f",
+      "leafHash": "1978593b88bef074204fccde5354c1af53b32afd0cbcd0c447b247493be36ed9",
       "volatileFieldsStripped": [
         "generatedAt"
       ]
+    },
+    {
+      "path": "assets/spark-compass.shell-03ecbbaae9.css",
+      "bytes": 13647,
+      "sha256": "03ecbbaae990abdae8b8fc2ecdac71a26214db2e4aaf6981b5a18b4a08ef56b5",
+      "leafHash": "075f4b9a4a8faf77a87a5363f8b8fb63d124f5c69ab1f5651f709a3c09e1baf6"
+    },
+    {
+      "path": "assets/spark-compass.shell-25944c62db.js",
+      "bytes": 23419,
+      "sha256": "25944c62db3720bf3ca3cceef58c5f6b466c018194e2923c1bcaffb0ec56e712",
+      "leafHash": "0e718521f9136d708426f12f1324bafaf86f53cfd6ec0845b75c847f25f8880a"
     },
     {
       "path": "assets/stats-surface.shell-b33242e1cc.js",
@@ -309,10 +339,10 @@
       "leafHash": "e7e1df9b95e564874403b6f40fd9e062ffd6d7896476a68af688659030f3b59c"
     },
     {
-      "path": "assets/style.shell-539ca122bd.css",
-      "bytes": 205112,
-      "sha256": "539ca122bda48039a29d3399f93e9587a4f2af213a0ad65665fdd3a57ff84e9b",
-      "leafHash": "b160c98d939fe5d1b90111d78a2a8af31d6a1714f7e4ebf206817ff415852ef3"
+      "path": "assets/style.shell-174cbb1a9f.css",
+      "bytes": 205521,
+      "sha256": "174cbb1a9f0351f0372b5b706748d76903e1f667fd4082bd6d69b4b890e39aaa",
+      "leafHash": "c7af6dbe66a51926c0101692ff65ffd13ff3d37176754e872860298a1ed3c413"
     },
     {
       "path": "assets/supabase-client.shell-bd7ccf3b3d.js",
@@ -351,31 +381,43 @@
       "leafHash": "587c242596cbf72150b3b3c088465ad14dbdbfa269137496cfb2d2166ca2c833"
     },
     {
+      "path": "games/index.html",
+      "bytes": 87965,
+      "sha256": "ad9d4ae2d2aa7de86780b5d881f9d48cf190abc6c871340d0cc18633592ef9e5",
+      "leafHash": "d531ad56b5449d0f2ec157a327f0f48465655068f426d436b1216897b7efcfc6"
+    },
+    {
+      "path": "games/mindframe/index.html",
+      "bytes": 55060,
+      "sha256": "f779afa0f80fb3b1245e57beb2b85897f395e868c0e62824de3859a3d52e11fd",
+      "leafHash": "b459b79aec9dcac0a5bc9ff609d4b9f967fc3c02669ac014dbcfa0896561c626"
+    },
+    {
       "path": "index.html",
-      "bytes": 190934,
-      "sha256": "a2095260a227c59285844fb10b125f4746397e131178863f7bf2b1776721487e",
-      "leafHash": "9b054a17364fe51e7fecddeb44b6dc17a63ed011c7abeb7878d34e4bb608ea27"
+      "bytes": 188323,
+      "sha256": "9d63114f459048c4e78827d64a6112e4cae7d9f8e38bceb7f169c0b45d6f942a",
+      "leafHash": "9ea87355ee00cfb6a625a11285f82d3481204aa6e9ce256cc2d83cff21203406"
     },
     {
       "path": "membership/index.html",
-      "bytes": 122282,
-      "sha256": "11b2742ef229696e33d0f65daf7467f0feee5467962f3d8d1d41dc5322cf0325",
-      "leafHash": "beb77980c680fa09104702e95caebf033ca5c4e1022c1e2bffbb89e3a4d4c92c"
+      "bytes": 119589,
+      "sha256": "197e6dd367d6de3decd5a2e4bb138922257184d1ad70a930c39f03b0c61c5418",
+      "leafHash": "5ba6e3b1f9374218669d8e770396876a6a649175d90f2352f12f9872819f2d2e"
     },
     {
       "path": "status/index.html",
-      "bytes": 88382,
-      "sha256": "396392758c9a968d7b5ac30043069589fb6294ed995d68cf774d740fd5481ddd",
-      "leafHash": "81f7fc1f69d936433af256334f5cc939ca341015e11e5cf914de3df19865abbf"
+      "bytes": 88399,
+      "sha256": "c9b612c9797162b7e4f79afdf2b04253a38a0fb2afc664e14262d05b6c27acfd",
+      "leafHash": "939e4f67febbfcf944a0aa181e6d40c93e08b1b2706949cb5fdcb41bc0272e88"
     },
     {
       "path": "studio-pulse/index.html",
-      "bytes": 67405,
-      "sha256": "e23792740c7cd79292e091ab3f4f7959aa9cc19d374b02ef75b66688e54fae14",
-      "leafHash": "d058db691f524c16b33c5e0bad52843e1e8657ed85aa960595dbd118a878de74"
+      "bytes": 64714,
+      "sha256": "104814566be348287c41be6f41e1a367d557fc217994d5713184e5e73ec5da80",
+      "leafHash": "26b6eb89e1e90dac792faa024fdaf129c42384ac8d4c57d9d338aee63792ac19"
     }
   ],
-  "observedRoot": "edb713d8409873447641d7ac93efd53e25a9de3bb23dc1b6a57663928311d0d6",
+  "observedRoot": "cb16a9c5c1710d4af22da6479c06edf68999247ebe9930b4584bda088289a091",
   "observedLeafCount": 2,
   "observedLeaves": [
     {
@@ -387,8 +429,8 @@
     {
       "path": "api/worker-route-provenance.json",
       "bytes": 3152,
-      "sha256": "45b2b59a4cc47d6649f832300461d85976535cc1dd82b1f8c5af3f26b2def698",
-      "leafHash": "e471aa47930bd61b5ffc9f25aafd12c9fa889864def3cca0247a92e92a399d9d"
+      "sha256": "392129b68bb20bdb55754b235e49ee5e8e1b36cd51a2b09aa4bced9a060ba83a",
+      "leafHash": "85c1aae08e0667a8352462357d43a6d36840981753930790ac6390c2611e7f48"
     }
   ]
 }

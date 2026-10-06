@@ -35,3 +35,15 @@ The article/static candidate is scoped away from the standing identity and Worke
 ## Daily Desk follow-through — 2026-09-29 late-night edition
 
 The four scheduled Desk slots completed successfully, and the source homepage acquired the late-night OpenAI lead. After repairing the publisher's art-to-placeholder order, the corrected tree passed 505/505 locally and hosted E2E/compliance; a fresh Lighthouse local run passed. Canonical staging's scoped content deploy verified exact News article, feed, and claim bytes, then visibly served the new homepage lead. Production content-lane run `36648112113` promoted 125 content-pure paths over the held baseline. Live Pages metadata names content head `90a79ff6a7afabf966efa8a0bd03bd2facb15314`; the canonical homepage, News index, and article serve the late-night edition. Automated daily live promotion is not enabled: the existing explicit confirmation gate and staging credential boundary remain in force.
+
+## Spark / Vault Compass — staging acceptance, 2026-10-06
+
+The candidate replaces both automatic corner guides with one explicitly opened Compass. Canonical staging receipt 11b597d33ca6b527bd7833e1 serves the replacement constellation tracker under its content-addressed URL, preserving stored achievements. The staged Spark suite passed 10/10 cases, including returning-visitor guide absence and the MindFrame launch domain. The local mobile suite passed 215/215.
+
+All 140 final Compass captures were manually inspected across seven themes, desktop 1366 and mobile 390 pixels; LATEST.json binds them to the captured source. SPARK_PARITY.json separately records tested widths 360, 390, 414, 768 and landscape 844×390, plus the 28 reviewed entry/bridge images. Map, list, mixing, saving, closing and scroll restoration passed without horizontal overflow. Reduced motion and still preferences were exercised; no measured frame-rate claim is made.
+
+The staging release ceremony passed 11/11 checks. Three browser cases executed and passed; three identity cases remain explicitly held. All 15 attention checks executed and passed. This static discovery change does not clear the standing identity release hold. Native app parity is not applicable to this responsive website. Production promotion and its actual served revision remain pending. Staging rollback: /opt/studio/staging/website/.rollback/20261006065247.
+
+Spark explicit opening latency: three cold samples 182/249/141ms; three warm samples 54ms each, measured in unthrottled headless Chromium at 390×844 on staging. One cold sample exceeded the proposed 200ms target. Locator overhead is included; representative-device and field latency are unmeasured. Added deferred payload: JavaScript 7,578 gzip bytes and CSS 3,942 gzip bytes; zero runtime model calls.
+
+Prior visual review receipt preserved byte-for-byte in `docs/visual-qa/PRE_SPARK_S368.json` (SHA-256 d0486c8b9f638093571adf282caa4ebaa1baa2903e381d722c7c48a350eaf1cf, 150281 bytes). The latest review pointer now covers the selected Spark matrix; replacement of that generated pointer is intentional and does not delete prior review history.

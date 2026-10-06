@@ -101,5 +101,7 @@ function main() {
   console.log(`build-route-consolidation: check passed · ${(config.redirects || []).length} retired route(s) owned by _redirects, zero stubs, zero meta-refresh pages`);
 }
 
-if (process.argv.includes('--self-test')) selfTest();
-else main();
+if(process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (process.argv.includes('--self-test')) selfTest();
+  else main();
+}

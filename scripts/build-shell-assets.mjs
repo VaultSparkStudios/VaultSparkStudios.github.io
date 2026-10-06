@@ -7,6 +7,9 @@ const root = process.cwd();
 const checkMode = process.argv.includes('--check');
 
 const SHELL_ASSETS = [
+  { key: 'sparkCompanion', source: 'assets/spark-compass.js', stem: 'spark-compass.shell', attribute: 'src' },
+  { key: 'sparkStyle', source: 'assets/spark-compass.css', stem: 'spark-compass.shell', attribute: 'href' },
+  { key: 'pwaInstall', source: 'assets/pwa-install.js', stem: 'pwa-install.shell', attribute: 'src' },
   { key: 'style', source: 'assets/style.css', stem: 'style.shell', attribute: 'href' },
   { key: 'themeToggle', source: 'assets/theme-toggle.js', stem: 'theme-toggle.shell', attribute: 'src' },
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },
@@ -71,6 +74,9 @@ const SHELL_ASSETS = [
   // Content-addressing makes it promotable; build-ambient-bundle rewrites the
   // loader's reference to this hashed path at bundle time.
   { key: 'journeyConductor', source: 'assets/journey-conductor.js', stem: 'journey-conductor.shell', attribute: 'src' },
+  // The legacy progress keeper must ship exact bytes, so stale plain assets
+  // cannot restore its retired corner guide on staging or production.
+  { key: 'constellationTracker', source: 'assets/constellation-tracker.js', stem: 'constellation-tracker.shell', attribute: 'src' },
   // S356: The Desk wire strip. Predicate-loaded from ambient-loader.js (like
   // journeyConductor), so it must be content-addressed to be promotable through
   // the content lane.
@@ -119,6 +125,8 @@ const NESTED_SHELL_REFERENCES = {
 
 const HTML_SKIP_DIRS = new Set([
   '.ai',
+  '.cache',
+  '.ops-cache',
   '.claude',
   '.git',
   '.well-known',
@@ -182,7 +190,7 @@ function writeIfChanged(filePath, next) {
   return true;
 }
 
-function findHtmlFiles(dir, files = []) {
+export function findHtmlFiles(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.isDirectory()) {
       if (!HTML_SKIP_DIRS.has(entry.name)) {

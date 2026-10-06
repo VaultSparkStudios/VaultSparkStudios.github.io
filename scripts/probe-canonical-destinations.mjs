@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = path.join(ROOT, 'api', 'ecosystem-state.json');
 const OUT = path.join(ROOT, 'api', 'canonical-destination-reachability.json');
-const MAX_DESTINATIONS = 12;
+const MAX_DESTINATIONS = 1000; // Full public portfolio; never silently truncate.
 const MAX_AGE_HOURS = 36;
 const TIMEOUT_MS = 8000;
 

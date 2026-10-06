@@ -4,6 +4,23 @@
   "revisedAt": "2026-10-02",
   "nodes": [
     {
+      "id": "membership-access",
+      "output": "assets/membership-access.js",
+      "alsoStage": ["supabase/functions/_shared/membershipAccess.ts"],
+      "sources": ["config/membership-entitlements.json", "api/membership-tiers.json", "scripts/generate-membership-access.mjs"],
+      "builder": "scripts/generate-membership-access.mjs",
+      "check": ["node", "scripts/generate-membership-access.mjs", "--check"],
+      "note": "Models the existing generated helpers; this entry changes no tier or entitlement."
+    },
+    {
+      "id": "spark-manifest",
+      "output": "api/spark-manifest.json",
+      "sources": ["data/game-registry.json", "api/public-intelligence.json", "api/intent-map.json", "_redirects", "games/*/index.html", "repo-structure:public-project-routes", "scripts/build-spark-manifest.mjs", "scripts/build-route-consolidation.mjs"],
+      "builder": "scripts/build-spark-manifest.mjs",
+      "check": ["node", "scripts/build-spark-manifest.mjs", "--check"],
+      "note": "Deterministic public navigation and dated public-ship evidence shared by humans and agents."
+    },
+    {
       "id": "public-intelligence",
       "output": "api/public-intelligence.json",
       "sources": [

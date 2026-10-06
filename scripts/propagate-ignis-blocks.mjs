@@ -64,6 +64,7 @@ const PAGES = [
 // Migrated/old URLs that should be replaced wherever they appear → canonical lookup by page
 // Hand-mapped to the slug, then resolved at runtime to liveUrl.
 const STALE_URL_PATTERNS = [
+  /https:\/\/steadfast-determination-production\.up\.railway\.app[^"'<>\s)]*/g, // MindFrame retired host
   /https:\/\/app-dun-six-76\.vercel\.app[^"'<>\s)]*/g,    // ideaforge old
   /https:\/\/the-exodus-client\.vercel\.app[^"'<>\s)]*/g, // exodus old
   /https:\/\/[a-z0-9-]+\.pages\.dev[^"'<>\s)]*/g,         // generic CF preview hosts in CTAs
@@ -77,8 +78,8 @@ function siblingLiveUrl(folder) {
 
 // The public catalog (api/public-intelligence.json) is the canonical facts
 // source: its deployedUrl wins over a sibling repo's PROJECT_STATUS liveUrl,
-// which can lag a domain move (MindFrame's retired usemindframe.com kept
-// coming back on every rerun until this lookup came first).
+// after its registry source has been reconciled against the product's current
+// destination. Retired hosts must not return on subsequent builds.
 const PI_ALIAS = { 'franchise-architect-football': 'football-gm', 'franchise-architect': 'football-gm' };
 const publicCatalog = readJSON(path.join(repoRoot, 'api', 'public-intelligence.json'))?.catalog ?? [];
 const deployedUrlById = new Map(publicCatalog.filter((c) => c && c.deployedUrl).map((c) => [c.id, c.deployedUrl]));
@@ -88,6 +89,15 @@ function canonicalUrl(slug, folder) {
 }
 
 function ensureAsset(html, tag, href) {
+  if (href === '/assets/ignis-project-block.js') {
+    let found = false;
+    html = html.replace(/<script\b[^>]*\bsrc=["']\/assets\/ignis-project-block(?:\.shell-[a-f0-9]{10})?\.js["'][^>]*>\s*<\/script>/gi, match => {
+      if (found) return '';
+      found = true;
+      return match;
+    });
+    if (found) return html;
+  }
   if (html.includes(href)) return html;
   // inject before </head>
   return html.replace(/<\/head>/i, `  ${tag}\n</head>`);

@@ -2016,3 +2016,39 @@ Implementation checkboxes below mean source implemented and focused-tested only.
 - [x] **[SIL][S361][OBS/P2]** Real service-worker install check in a gate — **DONE S362** (D-S362.4): `tests/service-worker-install.spec.js` registers `/sw.js`, requires `activated` and verifies the precache; blocking in the E2E compliance job, in the `verify:local` core tier, mutation-tested with a 404 entry.
 - [x] **[SIL][S361][PERF/P3]** Review the 100-entry precache — **DONE S362** (D-S362.5): 100 entries, 3.2 MB raw / about 779 KB brotli, background-fetched only for members who opt into offline and push. Kept; no trim justified by the numbers.
 - [x] **[S341][OPS/P1]** Decide whether to arm the Monthly Member Newsletter — **RESOLVED S362 without arming** (D-S362.3): the schedule now holds (held annotation, exit 0) unless `NEWSLETTER_ARMED=true`, so a deliberate hold no longer reads as a broken cron. Arming remains a founder decision.
+
+
+## S369 lossless archive of completed S30–S69 history
+
+## Done (recent)
+
+- [x] **S69: repo-wide CSP cleanup + live Worker deploy** — legacy public-route inline-handler debt burned down across the audit batches; `assets/public-page-handlers.js` + `assets/error-pages.js` added for shared runtime; canonical/Worker CSP synchronized; `node scripts/csp-audit.mjs` now passes across 93 HTML files; Worker redeployed live via Wrangler (`f0c9672a-25ae-413f-b131-e0ee9027b69b`) and production headers verified on `/` + `/vaultsparked/`.
+- [x] **S55: 10-item website improvements batch** — press kit, studio pulse, vault wall, invite page, social proof strip, daily loop widget, founding badge SQL, game conversion section, theme picker bug fix, nav propagated (75 pages)
+- [x] **QR code CDN 404 fix + theme picker breakpoint fix + tile color improvements (S54)** — qrcode@1.5.3→@1.5.0; picker CSS moved from 980px→640px breakpoint; tileColor field; CF-SECRETS + CSP-VERIFY HAR cleared
+- [x] **CSP hardening: 'unsafe-inline' removed, SHA-256 hashes, portal-init.js extracted, DreadSpike/Voidfall lore, CF cache purge workflow (S53)**
+- [x] **Auth tab hash routing + CSP Worker fix + theme tile picker + PromoGrind sign-in (S52)**
+- [x] **Voidfall dispatch GA4 + Fragment 004 (S51)**
+- [x] **CSP Turnstile fix + 3 SIL items (S50)** — canonical CSP updated with challenges.cloudflare.com (Turnstile); re-propagated 85 pages; join form GA4 form_error; Voidfall Chapter I excerpt; light-mode screenshot CI
+- [x] **CSP propagated + CI check + GA4 events (S49)** — 85 pages synced; e2e.yml CSP dry-run gate; contact form_submit/form_error events
+- [x] **Full audit implementation — 9 items (S47)** — portal admin link, referral attribution wire (3 RPC call sites), CSP propagation script, staging smoke test, IGNIS delta field, light-mode screenshot spec, Voidfall page expansion (4 new sections), Sentry release workflow
+- [x] **SIL Now queue — 5 items (S46)** — robots.txt note, closeout.md sync, theme-persistence spec fix, nav backdrop opacity var, swatch-pulse animation
+- [x] **Portal auth tab switching on referral link (S45)** — added missing portal nav HTML (`nav-account-wrap`, notif bell, `nav-signin-link`, `nav-join-btn`); null guards in `showAuth`/`showDashboard`; `?ref=` referral banner + sessionStorage tracking; theme picker hover-preview + DEFAULT badge + confirmation flash
+- [x] **Mobile nav blur + clicks fix, theme FOUC, premium picker (S44)** — removed backdrop-filter from #nav-backdrop (iOS compositing root cause); injected inline theme script at body start across 72 pages; redesigned mobile nav; replaced select with custom picker; light mode CSS fixes
+- [x] **Rights posture correction (S43)** — replaced public MIT/open-source claims with a proprietary IP notice + third-party attributions page; propagated footer/resource label to `Technology & Rights`; updated sitemap labels and compliance-page title expectation
+- [x] **Dark-panel contrast hardening (S42)** — restored white copy on intentionally dark membership/rank/character sections in light mode; fixed homepage Vault-Forge paragraph and public `/ranks/` dark cards; updated `assets/style.css`, `index.html`, `ranks/index.html`, and `vault-member/portal.css`
+- [x] **Light-mode contrast cleanup follow-up (S41)** — darkened light-mode support text tokens, fixed unreadable titles over dark project/game art, and converted shared dark card/panel patterns to real light surfaces in `assets/style.css`
+- [x] **Refined shared light mode (S40)** — overhauled light palette and component surfaces in `assets/style.css`; fixed low-contrast `--steel`/muted text issues; updated browser theme color in `assets/theme-toggle.js`
+- [x] **SIL Now items — polish + CI reliability (S39)** — mobile nav entrance animation (@keyframes nav-enter); .hero-art > .status CSS guard; Lighthouse wait-on deployment timing
+- [x] **Mobile nav iOS blur — root fix (S38)** — disabled .site-header::before backdrop-filter at ≤980px; S36 fix removed overlay blur but header's ::before still promoted GPU layer containing fixed nav on iOS Safari
+- [x] **IGNIS scored + staging confirmed (S37)** — 47,091/100,000 · FORGE tier (rescored S38); staging HTTP 200 confirmed
+- [x] **STRIPE_GIFT_PRICE_ID + GSC (S37)** — gift product + $24.99 price created via Stripe API; secret set; GSC sitemap submitted + verified
+- [x] **UI bug fixes (S36)** — mobile nav blur partial fix (backdrop-filter on overlay removed); status badge DOM position fixed on 8 project pages
+- [x] **CI fixes (S35)** — Lighthouse SEO (robots-txt off, vault-member removed, link-text aria-label), axe ChromeDriver mismatch fixed
+- [x] **Protocol restore (S34)** — CLAUDE.md session aliases, AGENTS.md, prompts/start.md v2.4, context files restored
+- [x] **Cloudflare security hardening (S33)** — .nojekyll, security.txt, robots.txt (14 AI crawlers), CSP patch, X-Robots-Tag, Worker redeployed
+- [x] **Voidfall teaser page (S32)** — /universe/voidfall/ + sitemap entries
+- [x] **Universe dropdown (S32)** — 72 files updated with DreadSpike + Voidfall dropdown
+- [x] **Portal onboarding tour (S32)** — 3-step overlay gated on vs_onboarding_done
+- [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
+- [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
+- [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE

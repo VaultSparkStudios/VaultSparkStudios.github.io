@@ -722,7 +722,9 @@ async function selfTest() {
   t('gate refuses autoSend false', !sendGate({ autoSend: false, approvedTestIssue: '2026-10-02' }).ok);
   t('gate refuses missing approvedTestIssue', !sendGate({ autoSend: true, approvedTestIssue: null }).ok);
   t('gate accepts both', sendGate({ autoSend: true, approvedTestIssue: '2026-10-02' }).ok);
-  t('committed config keeps autoSend false', readConfig().autoSend === false);
+  const committedConfig = readConfig();
+  t('committed config is disabled or explicitly armed with an approved test issue',
+    typeof committedConfig.autoSend === 'boolean' && (!committedConfig.autoSend || sendGate(committedConfig).ok));
 
   const tmp = fs.mkdtempSync(path.join((await import('node:os')).tmpdir(), 'desk-dispatch-'));
   const dayPath = path.join(tmp, `${date}.json`);

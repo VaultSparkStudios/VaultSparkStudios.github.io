@@ -199,7 +199,9 @@ test('real corpus: on-topic questions retrieve, off-topic ones short-circuit, bi
 
   const voidfall = selectPassages('voidfall lore', index);
   assert.ok(voidfall.answerable);
-  assert.equal(voidfall.passages[0].id, 'project:voidfall');
+  // The live corpus includes the related companion app; BM25 may rank it first.
+  // The world itself must still be retrieved with its actual canonical route.
+  assert.ok(voidfall.passages.some(p => p.id === 'project:voidfall' && p.url === SITE_ORIGIN + '/universe/voidfall/'));
 
   for (const q of ['what is the weather in paris', 'cheap flights to rome', 'asdf qwerty zxcv']) {
     assert.equal(selectPassages(q, index).answerable, false, q);

@@ -241,7 +241,8 @@ function loadLiveContextMeter() {
         live: true,
         usedTokens: meter.usedTokens,
         limit: meter.limit,
-        pctUsed: meter.pctUsed,
+        // context-meter emits percentage points; this renderer uses fractions.
+        pctUsed: meter.pctUsed == null ? null : meter.pctUsed / 100,
         turnsToCompact: meter.turnsToCompact,
         continueCostPerTurn: meter.continueCostPerTurn,
         cacheHitRate: meter.cacheHitRate,

@@ -469,6 +469,7 @@ const RUM_UX_EVENTS = new Set([
   // S332: one fixed event plus a separately validated surface|visit-depth label.
   // The label never accepts free text and is stored only for this event.
   'attention:claimed',
+  'spark:opened', 'spark:closed', 'spark:quiet', 'spark:followed', 'spark:proof', 'spark:saved', 'spark:started', 'spark:completed', 'spark:exported', 'spark:feedback_clarity', 'spark:feedback_proof', 'spark:feedback_value',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

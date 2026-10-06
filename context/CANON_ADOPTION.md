@@ -1,11 +1,11 @@
-# Canon Adoption — vaultsparkstudios.github.io
+# Canon Adoption — VaultSparkStudios.github.io
 
 > ACTIVELY CHECKED against the live `vaultspark-studio-ops/docs/STUDIO_CANON.md` (founder directive S183).
 > Refresh: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --write`.
 > Suggest: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --suggest` uses conformance evidence to pre-fill safe suggestions.
 > Mark each: **adopted** · **pending** · **review** · **exempt (reason)**. This file is maintained, not auto-trusted.
 
-Audience: public-live · Live ACTIVE canons: 54 · Pending review: 4
+Audience: public-live · Live ACTIVE canons: 55 · Pending review: 5
 
 | Canon | Title | Status | Evidence / note |
 |---|---|---|---|
@@ -63,4 +63,5 @@ Audience: public-live · Live ACTIVE canons: 54 · Pending review: 4
 | CANON-053 | Rendered-Pixel UI Discipline: look at the real interface whi | adopted | S304 (evidence corrected S329): docs/visual-qa/LATEST.json emitted by capture-theme-matrix.mjs --receipt (hash-bound captures, 7 themes, desktop+mobile) — verified by check-visual-review-receipt.mjs (wired in build:check; the previously cited check-visual-qa.mjs never existed in this repo). The S303 matrix review caught and fixed the sitewide theme-boot defect; regression-gated by check-theme-boot-contract.mjs. Re-run the harness with --receipt after any UI change. |
 | CANON-054 | Public Stats Surface: every website reports and analyzes its | adopted (suggested) | Conformance checker passed: } |
 | CANON-055 | Surface Follow-Through: every project change reaches the thi | adopted (suggested) | Conformance checker passed: } |
+| CANON-056 | AI + SI Hybrid Terminology: keep AI, add Synthetic Intellige | review |  |
 
