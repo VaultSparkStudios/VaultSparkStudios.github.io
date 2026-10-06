@@ -1586,9 +1586,10 @@ const worker = {
       // S240 clone audit: HTML can be cached twice even outside nonce mode
       // (primary cache + disaster-recovery copy). Buffer it so clones are body
       // copies, not competing ReadableStream tees, regardless of env flags.
-      const htmlBody = await new HTMLRewriter()
-        .on('script[src]', new LegacyGuideScriptRewriter(guideShellManifest.assets))
-        .transform(upstream).arrayBuffer();
+      const originHtmlBody = await upstream.arrayBuffer();
+      const bufferedUpstream = new Response(originHtmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers });
+      const rewriter = new HTMLRewriter().on('script[src]', new LegacyGuideScriptRewriter(guideShellManifest.assets));
+      const htmlBody = await rewriter.transform(bufferedUpstream).arrayBuffer();
       bufferedHtmlBody = htmlBody;
       finalResponse = withSecurityHeaders(
         new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
