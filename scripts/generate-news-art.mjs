@@ -258,7 +258,10 @@ export async function renderSyntheticRasterFixture(seed = 'fixture', width = 153
   for (let i = 0; i < raw.length; i += 1) raw[i] = Math.floor(rnd() * 256);
   return sharp(raw, { raw: { width: lw, height: lh, channels: 3 } })
     .resize(width, height, { kernel: 'cubic' })
-    .png({ compressionLevel: 9 })
+    // Fixtures are temporary inputs, not shipped derivatives. Lossless level 1
+    // preserves their exact decoded pixels without spending the test budget on
+    // maximum compression before the real normalization pipeline runs.
+    .png({ compressionLevel: 1 })
     .toBuffer();
 }
 
