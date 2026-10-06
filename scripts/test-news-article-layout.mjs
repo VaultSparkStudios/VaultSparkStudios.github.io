@@ -41,6 +41,15 @@ for (const day of days) {
     pages += 1;
     const html = readFileSync(file, 'utf8');
     const article = html.slice(html.indexOf('<article class="desk-article">'), html.indexOf('</article>'));
+    const leadPicture = article.match(/id="editorial-illustration-1"[\s\S]*?<picture>([\s\S]*?)<\/picture>/)?.[1];
+    const hints = [...html.slice(0, html.indexOf('</head>')).matchAll(/<link[^>]*data-desk-editorial-preload[^>]*>/g)].map(m => m[0]);
+    if (leadPicture && !hints.length) errors.push(rel + ': lead image discovery hint missing');
+    for (const hint of hints) {
+      const href = hint.match(/href="([^"]+)"/)?.[1];
+      if (!href || !leadPicture?.includes('srcset="' + href + '"') || !existsSync(join(ROOT, href))) errors.push(rel + ': preload does not match an available lead picture source');
+      if (!hint.includes('fetchpriority="high"') || !hint.includes('as="image"')) errors.push(rel + ': lead hint priority/type missing');
+    }
+    if (new Set(hints.map(h => h.match(/href="([^"]+)"/)?.[1])).size !== hints.length || hints.length > 2) errors.push(rel + ': duplicate or excess lead image preloads');
     const at = (needle) => article.indexOf(needle);
     const order = [
       ['<h1>', 'headline'],

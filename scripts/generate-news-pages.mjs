@@ -214,9 +214,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, ogTitle = null, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, ogTitle = null, depth, noindex, breadcrumb, jsonLd, imagePreload = '' }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title>${ogTitle ? `<meta property="og:title" content="${escapeHtml(ogTitle)}">` : ''}<meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title>${ogTitle ? `<meta property="og:title" content="${escapeHtml(ogTitle)}">` : ''}<meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json">${imagePreload}<link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
@@ -358,6 +358,14 @@ function isFallbackArt(story) {
 /** Text-forward stand-in for fallback art on cards: headline over the brand gradient. */
 function pendingArt(story, className) {
   return `<span class="${className} desk-art-pending" aria-hidden="true"><span class="desk-art-pending-k">The Desk · illustration pending</span><span class="desk-art-pending-h">${escapeHtml(story.headline)}</span></span>`;
+}
+
+function editorialImagePreload(story, day) {
+  if (!personaById(story.memeLine?.personaId) || !story.memeLine?.text) return '';
+  const base = escapeHtml('/assets/og/news/' + day.date + '--' + story.slug + '--meme');
+  const hint = (href, type, media = '') => '<link rel="preload" as="image" href="' + href + '" type="' + type + '" fetchpriority="high"' + (media ? ' media="' + media + '"' : '') + ' data-desk-editorial-preload>';
+  if (isFallbackArt(story)) return hint(base + '.avif', 'image/avif');
+  return hint(base + '--640.webp', 'image/webp', '(max-width: 600px)') + hint(base + '.avif', 'image/avif', '(min-width: 601px)');
 }
 
 function memeFigure(story, day) {
@@ -910,6 +918,7 @@ function buildStoryPage(day, story) {
       [story.headline, url],
     ]),
     jsonLd: storyJsonLd(day, story, url, image),
+    imagePreload: editorialImagePreload(story, day),
   });
   const stats = deriveStoryStats(story, day, { ledger });
   const transcript = (story.transcript || []).map((turn) => {
