@@ -1,16 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T16:19:11.317Z",
-  "candidateReady": true,
-  "candidateFindings": [],
-  "candidateBuildSha": "987829634894505458e11b6d2b8f9863de201d5d",
-  "stagingBuildSha": "987829634894505458e11b6d2b8f9863de201d5d",
+  "generatedAt": "2026-10-06T16:14:48.140Z",
+  "candidateReady": false,
+  "candidateFindings": [
+    "staging-build-sha-mismatch",
+    "staging-artifact-root-mismatch"
+  ],
+  "candidateBuildSha": "27d342f3dfa14562a489dc6d62026ada6e35271f",
+  "stagingBuildSha": "199482b34a93bf9de91ab7aabf60a0dbfab8c72f",
   "artifactManifest": {
-    "candidateRoot": "3d5469c5c93a1237a02baf2ce93481085e76fee7be839164709e03aacfd31346",
-    "candidateLeafCount": 63,
-    "stagingRoot": "3d5469c5c93a1237a02baf2ce93481085e76fee7be839164709e03aacfd31346",
-    "stagingLeafCount": 63,
-    "matched": true
+    "candidateRoot": "0b7052d3b517b09f960fa3d1eed1d826d7a6f7ac3f4aefeaf292e4ea6f89326f",
+    "candidateLeafCount": 62,
+    "stagingRoot": "cd61e6507efbbd41a97f62fdf7536d2e9631e3ef2d2fd8ff85017ea4848ceecf",
+    "stagingLeafCount": 62,
+    "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -18,15 +21,13 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "staging-ahead",
-    "productionRoutes": 218,
+    "state": "uncomparable",
+    "productionRoutes": null,
     "stagingRoutes": 219,
     "missingOnStaging": [],
-    "missingOnStagingCount": 0,
-    "aheadOnStaging": [
-      "/news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/"
-    ],
-    "aheadOnStagingCount": 1,
+    "missingOnStagingCount": null,
+    "aheadOnStaging": [],
+    "aheadOnStagingCount": null,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -34,29 +35,12 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
+      "statusParity": false,
       "shellParity": false,
-      "prodShell": [
-        "assets/ambient-core.shell-1732d293f8.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
-        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-d1839327b4.js",
-        "assets/nav-sheet.shell-c0fddc0c73.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/public-intelligence.shell-c86a6ecc39.js",
-        "assets/pwa-nav.shell-5f63b6b75a.js",
-        "assets/schema-injector.shell-33115efcde.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-539ca122bd.css",
-        "assets/theme-toggle.shell-8221605898.js",
-        "assets/vault-door.shell-20bb2584bc.js"
-      ],
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-fc8866d8a7.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -72,16 +56,16 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-7f501cc04e.css",
+        "assets/style.shell-99d25f3ae8.css",
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "headerParity": true,
+      "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -94,7 +78,10 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "shell-mismatch"
+        "status-mismatch",
+        "prod-forbidden",
+        "shell-mismatch",
+        "header-mismatch"
       ]
     },
     {
@@ -127,7 +114,7 @@
         "assets/schema-injector.shell-33115efcde.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/studio-pulse-live.shell-5fc734ef84.js",
-        "assets/style.shell-7f501cc04e.css",
+        "assets/style.shell-99d25f3ae8.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "headerParity": true,
@@ -176,7 +163,7 @@
         "assets/public-intelligence.shell-c86a6ecc39.js",
         "assets/pwa-nav.shell-5f63b6b75a.js",
         "assets/schema-injector.shell-33115efcde.js",
-        "assets/style.shell-7f501cc04e.css",
+        "assets/style.shell-99d25f3ae8.css",
         "assets/theme-toggle.shell-8221605898.js",
         "assets/trust-depth.shell-bad58045cc.js"
       ],
