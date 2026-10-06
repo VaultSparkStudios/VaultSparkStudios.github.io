@@ -234,6 +234,17 @@ function hashIndex(artDir) {
  * a pure function: the bytes and every assertion made about them are unchanged.
  */
 const normalizedCache = new Map();
+// Pure encodings repeat across review plans. Keep validation outside the cache,
+// and bind banner results to the complete overlay as well as the raster bytes.
+const panelDerivativeCache = new Map();
+const satireDerivativeCache = new Map();
+export async function cachedDerivatives(cache, key, render) {
+  if (cache.has(key)) return cache.get(key);
+  const result = await render(); // a rejected render never enters the cache
+  if (cache.size >= 16) cache.delete(cache.keys().next().value);
+  cache.set(key, result);
+  return result;
+}
 export async function normalizeRaster(source, sourceSha) {
   const hit = normalizedCache.get(sourceSha);
   if (hit) return hit;
@@ -281,7 +292,8 @@ export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = 
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     let budget = 'skipped (story has no meme line; build renders no panel)';
     if (persona && story.memeLine?.text) {
-      const derivatives = await renderPanelDerivatives(buffer, renderEditorialOverlaySvg(storyMemeOverlayOptions({ date, text: story.memeLine.text, persona })));
+      const overlay = renderEditorialOverlaySvg(storyMemeOverlayOptions({ date, text: story.memeLine.text, persona }));
+      const derivatives = await cachedDerivatives(panelDerivativeCache, `${n.sha256}\n${overlay}`, () => renderPanelDerivatives(buffer, overlay));
       const failures = panelBudgetFailures(derivatives);
       if (failures.length) { reject(`panel budget preflight failed: ${failures.join('; ')}`); continue; }
       budget = Object.fromEntries(Object.entries(derivatives).map(([ext, buf]) => [ext, buf.length]));
@@ -444,7 +456,7 @@ export async function planSatireIngest({ root = ROOT, from = DEFAULT_FROM, revie
     if (story.visual?.satireCartoon?.sha256 === n.sha256) { plan.skipped.push({ id, reason: 'already ingested (satire cartoon receipt matches)' }); continue; }
     const duplicateOf = existing.get(m.sha256) || existing.get(n.sha256);
     if (duplicateOf) { reject(`identical pixels to existing Desk art ${duplicateOf}`); continue; }
-    const derivatives = await renderSatireDerivatives(buffer);
+    const derivatives = await cachedDerivatives(satireDerivativeCache, n.sha256, () => renderSatireDerivatives(buffer));
     const failures = satireBudgetFailures(derivatives);
     if (failures.length) { reject(`satire budget preflight failed: ${failures.join('; ')}`); continue; }
     const budget = Object.fromEntries(Object.entries(derivatives).map(([suffix, buf]) => [suffix, buf.length]));
@@ -622,6 +634,18 @@ async function main(opts) {
 async function selfTest() {
   const cases = [];
   const t = (name, ok) => cases.push({ name, ok: Boolean(ok) });
+  const memo = new Map();
+  let renders = 0;
+  const render = async () => ({ png: Buffer.from(String(++renders)) });
+  const first = await cachedDerivatives(memo, 'raster\noverlay-a', render);
+  const repeated = await cachedDerivatives(memo, 'raster\noverlay-a', render);
+  const changed = await cachedDerivatives(memo, 'raster\noverlay-b', render);
+  t('derivative cache reuses only identical raster and overlay inputs', first === repeated && first !== changed && renders === 2);
+  for (let i = 0; i < 16; i++) await cachedDerivatives(memo, `other-${i}`, render);
+  t('derivative cache remains bounded and evicts the oldest encoding', memo.size === 16 && !memo.has('raster\noverlay-a'));
+  let rejected = false;
+  try { await cachedDerivatives(memo, 'failed', async () => { throw new Error('fixture encoder failure'); }); } catch { rejected = true; }
+  t('failed encodings are not cached', rejected && !memo.has('failed'));
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'desk-art-ingest-selftest-'));
   try {
     const root = path.join(tmp, 'repo');
