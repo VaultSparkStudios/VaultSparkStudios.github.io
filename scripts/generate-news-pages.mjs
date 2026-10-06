@@ -105,7 +105,7 @@ const newsHeaderBlock = headerBlock.replace(
 );
 const footerBlock = slice('<footer class="site-footer"', '</footer>', 9);
 const ambientBlock = slice('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->', '<!-- vs-ambient:end -->'.length);
-const deskAmbientBlock = ambientBlock.replace(
+let deskAmbientBlock = ambientBlock.replace(
   '<!-- vs-ambient:end -->',
   '<script src="/assets/csrf-token.js" defer></script>\n<script src="/assets/turnstile.js" defer></script>\n<!-- vs-ambient:end -->',
 );
@@ -125,6 +125,7 @@ const navSheetTag = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0
 const shellManifest = existsSync(join(ROOT, 'assets/shell-manifest.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'assets/shell-manifest.json'), 'utf8'))
   : { assets: {} };
+if (shellManifest.assets?.turnstile?.path) deskAmbientBlock = deskAmbientBlock.replace('/assets/turnstile.js', `/${shellManifest.assets.turnstile.path}`);
 // The inline theme boot restores colors; this controller supplies visitor controls.
 const navToggleSrc = shellManifest.assets?.navToggle?.path
   ? `/${shellManifest.assets.navToggle.path}`
@@ -966,7 +967,6 @@ ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</s
   ${story.stances.map(stanceCard).join('\n')}
   </section>
   ${reactionBar(story, day)}
-  ${satireFigure(story, day) ? `<section class="desk-art-stage desk-satire-stage" aria-label="Satire cartoon and public image comments"><div class="desk-art-gallery">${satireFigure(story,day)}</div><aside class="desk-art-feedback" aria-label="Cartoon comments">${imageDiscussion(story,day,'satire-cartoon','the cartoon')}</aside></section>` : ''}
 ${/* Only the formats that make a claim about the future carry this section. A
      Quick Take or a Roast has no predictions, and rendering the heading anyway
      printed "What they are betting on" above an empty list — advertising
@@ -978,6 +978,7 @@ ${/* Only the formats that make a claim about the future carry this section. A
   <ul class="desk-predictions">${story.predictions.map(predictionRow).join('\n')}</ul>
   </section>` : ''}
 ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><summary>${argumentLabel}</summary>${transcript}</details>` : ''}
+  ${satireFigure(story, day) ? `<section class="desk-art-stage desk-satire-stage" aria-label="Satire cartoon and public image comments"><div class="desk-art-gallery">${satireFigure(story,day)}</div><aside class="desk-art-feedback" aria-label="Cartoon comments">${imageDiscussion(story,day,'satire-cartoon','the cartoon')}</aside></section>` : ''}
   <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
   ${dispatchCta('story', { compact: true, heading: 'The next AI story, in your inbox.' })}
   <section class="desk-section desk-activity" aria-labelledby="desk-activity-title">
