@@ -256,7 +256,7 @@ export async function normalizeRaster(source, sourceSha) {
   return buffer;
 }
 
-export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null } = {}) {
+export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null, renderDerivatives = renderPanelDerivatives } = {}) {
   const plan = { accepted: [], skipped: [], rejected: [] };
   if (!fs.existsSync(from)) return plan;
   const artDir = path.join(root, 'data', 'news-desk', 'art');
@@ -293,7 +293,9 @@ export async function planIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = 
     let budget = 'skipped (story has no meme line; build renders no panel)';
     if (persona && story.memeLine?.text) {
       const overlay = renderEditorialOverlaySvg(storyMemeOverlayOptions({ date, text: story.memeLine.text, persona }));
-      const derivatives = await cachedDerivatives(panelDerivativeCache, `${n.sha256}\n${overlay}`, () => renderPanelDerivatives(buffer, overlay));
+      const derivatives = renderDerivatives === renderPanelDerivatives
+        ? await cachedDerivatives(panelDerivativeCache, `${n.sha256}\n${overlay}`, () => renderPanelDerivatives(buffer, overlay))
+        : await renderDerivatives(buffer, overlay);
       const failures = panelBudgetFailures(derivatives);
       if (failures.length) { reject(`panel budget preflight failed: ${failures.join('; ')}`); continue; }
       budget = Object.fromEntries(Object.entries(derivatives).map(([ext, buf]) => [ext, buf.length]));
@@ -419,7 +421,7 @@ export async function normalizeSatireRaster(source, sourceSha) {
  * +caricature or +none, because whether a real public figure is drawn is a
  * judgement only the reviewer can make, and it decides the page's label.
  */
-export async function planSatireIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null } = {}) {
+export async function planSatireIngest({ root = ROOT, from = DEFAULT_FROM, reviewed = null, only = null, renderDerivatives = renderSatireDerivatives } = {}) {
   const plan = { accepted: [], skipped: [], rejected: [] };
   if (!fs.existsSync(from)) return plan;
   const existing = await hashIndex(path.join(root, 'data', 'news-desk', 'art'));
@@ -456,7 +458,9 @@ export async function planSatireIngest({ root = ROOT, from = DEFAULT_FROM, revie
     if (story.visual?.satireCartoon?.sha256 === n.sha256) { plan.skipped.push({ id, reason: 'already ingested (satire cartoon receipt matches)' }); continue; }
     const duplicateOf = existing.get(m.sha256) || existing.get(n.sha256);
     if (duplicateOf) { reject(`identical pixels to existing Desk art ${duplicateOf}`); continue; }
-    const derivatives = await cachedDerivatives(satireDerivativeCache, n.sha256, () => renderSatireDerivatives(buffer));
+    const derivatives = renderDerivatives === renderSatireDerivatives
+      ? await cachedDerivatives(satireDerivativeCache, n.sha256, () => renderSatireDerivatives(buffer))
+      : await renderDerivatives(buffer);
     const failures = satireBudgetFailures(derivatives);
     if (failures.length) { reject(`satire budget preflight failed: ${failures.join('; ')}`); continue; }
     const budget = Object.fromEntries(Object.entries(derivatives).map(([suffix, buf]) => [suffix, buf.length]));
@@ -634,6 +638,21 @@ async function main(opts) {
 async function selfTest() {
   const cases = [];
   const t = (name, ok) => cases.push({ name, ok: Boolean(ok) });
+  // Exercise each real full-size codec pipeline once. Review, receipt, reroll,
+  // duplicate and write-policy cases reuse those known-good encoded fixtures;
+  // they still measure and normalize every candidate's actual source pixels.
+  // Injected fixtures never enter the production derivative caches.
+  let bannerEncoding, satireEncoding, bannerEncodes = 0, satireEncodes = 0;
+  const policyBanner = async (buffer, overlay) => {
+    if (!bannerEncoding) { bannerEncodes++; bannerEncoding = await renderPanelDerivatives(buffer, overlay); }
+    return bannerEncoding;
+  };
+  const policySatire = async (buffer) => {
+    if (!satireEncoding) { satireEncodes++; satireEncoding = await renderSatireDerivatives(buffer); }
+    return satireEncoding;
+  };
+  const policyPlanIngest = (options) => planIngest({ ...options, renderDerivatives: policyBanner });
+  const policyPlanSatireIngest = (options) => planSatireIngest({ ...options, renderDerivatives: policySatire });
   const memo = new Map();
   let renders = 0;
   const render = async () => ({ png: Buffer.from(String(++renders)) });
@@ -699,11 +718,13 @@ async function selfTest() {
 
     const dayRawBefore = fs.readFileSync(dayFile, 'utf8');
     const goodArtBefore = fs.readFileSync(path.join(artDir, `${date}--good.png`));
-    const dry = await planIngest({ root, from, reviewed: null });
+    const dry = await policyPlanIngest({ root, from, reviewed: null });
+    const missingBannerFormats = await planIngest({ root, from, renderDerivatives: async () => ({}) });
+    t('an injected encoder cannot bypass the banner format budgets', missingBannerFormats.rejected.some((r) => r.id === `${date}--good` && /budget preflight/.test(r.reason)));
     t('dry-run plan writes nothing', fs.readFileSync(dayFile, 'utf8') === dayRawBefore && Buffer.compare(fs.readFileSync(path.join(artDir, `${date}--good.png`)), goodArtBefore) === 0);
     t('dry-run validates unreviewed images too', dry.accepted.some((e) => e.id.endsWith('--unreviewed')));
 
-    const plan = await planIngest({ root, from, reviewed });
+    const plan = await policyPlanIngest({ root, from, reviewed });
     const reason = (id) => plan.rejected.find((r) => r.id === `${date}--${id}`)?.reason || '';
     t('reviewed + valid image is accepted', plan.accepted.map((e) => e.id).join(',') === `${date}--good`);
     t('unreviewed image is skipped, awaiting review', plan.skipped.some((s) => s.id === `${date}--unreviewed` && /awaiting operator visual review/.test(s.reason)));
@@ -727,7 +748,7 @@ async function selfTest() {
       && story.visual.pixelInspection.entropy >= REAL_ART_ENTROPY_FLOOR && story.visual.pixelInspection.reviewedAt === '2026-09-14');
     t('other stories are untouched', JSON.stringify(after.stories.find((s) => s.slug === 'unreviewed')) === JSON.stringify(day.stories.find((s) => s.slug === 'unreviewed')));
     t('day JSON stays canonical 2-space', `${JSON.stringify(after, null, 2)}\n` === fs.readFileSync(dayFile, 'utf8'));
-    const again = await planIngest({ root, from, reviewed });
+    const again = await policyPlanIngest({ root, from, reviewed });
     t('re-running is idempotent (already ingested)', again.accepted.length === 0 && again.skipped.some((s) => s.id === `${date}--good` && /already ingested/.test(s.reason)));
 
     /* ── Hash-bound approval (the --force re-roll hole) ─────────────────── */
@@ -740,28 +761,28 @@ async function selfTest() {
     t('parseReviewed rejects a malformed sha256 prefix', badHash);
 
     const unreviewedId = `${date}--unreviewed`;
-    const plainPlan = await planIngest({ root, from, reviewed: new Map([[unreviewedId, null]]) });
+    const plainPlan = await policyPlanIngest({ root, from, reviewed: new Map([[unreviewedId, null]]) });
     const stagedSha = plainPlan.accepted.find((e) => e.id === unreviewedId)?.measured.sha256 || '';
     t('plain id with no re-roll is still accepted', Boolean(stagedSha));
 
-    const matched = await planIngest({ root, from, reviewed: new Map([[unreviewedId, stagedSha.slice(0, 12)]]) });
+    const matched = await policyPlanIngest({ root, from, reviewed: new Map([[unreviewedId, stagedSha.slice(0, 12)]]) });
     t('approved id@hash matching the staged image ingests', matched.accepted.some((e) => e.id === unreviewedId && e.approvedHash === stagedSha.slice(0, 12)));
 
-    const mismatched = await planIngest({ root, from, reviewed: new Map([[unreviewedId, 'deadbeefdeadbeef']]) });
+    const mismatched = await policyPlanIngest({ root, from, reviewed: new Map([[unreviewedId, 'deadbeefdeadbeef']]) });
     t('hash mismatch is refused with the hash to re-approve',
       mismatched.accepted.length === 0
       && /does not match the approved hash deadbeefdeadbeef/.test(mismatched.rejected.find((r) => r.id === unreviewedId)?.reason || '')
       && new RegExp(`approve it as ${unreviewedId}@`).test(mismatched.rejected.find((r) => r.id === unreviewedId)?.reason || ''));
 
     const rerollId = `${date}--reroll`;
-    const rerollPlain = await planIngest({ root, from, reviewed: new Map([[rerollId, null]]) });
+    const rerollPlain = await policyPlanIngest({ root, from, reviewed: new Map([[rerollId, null]]) });
     t('plain id is refused after a discarded generation (re-roll)',
       rerollPlain.accepted.length === 0 && /plain-id approval is not accepted after a re-roll/.test(rerollPlain.rejected.find((r) => r.id === rerollId)?.reason || ''));
     const rerollSha = (await measureArt(await sharp(path.join(from, rerollId, 'art.png'))
       .resize({ width: NORMALIZED_MAX.width, height: NORMALIZED_MAX.height, fit: 'inside', withoutEnlargement: true })
       .png({ compressionLevel: 9, adaptiveFiltering: true })
       .toBuffer())).sha256;
-    const rerollHashed = await planIngest({ root, from, reviewed: new Map([[rerollId, rerollSha.slice(0, 16)]]) });
+    const rerollHashed = await policyPlanIngest({ root, from, reviewed: new Map([[rerollId, rerollSha.slice(0, 16)]]) });
     t('the same re-rolled image ingests once it is approved by hash', rerollHashed.accepted.some((e) => e.id === rerollId));
 
     // A story that already carries a reviewed source-raster receipt for other
@@ -771,13 +792,13 @@ async function selfTest() {
       sha256: 'a'.repeat(64), reviewed: true, reviewer: DEFAULT_REVIEWER, semanticVerified: false, kind: SOURCE_RASTER_KIND,
     };
     fs.writeFileSync(dayFile, `${JSON.stringify(patched, null, 2)}\n`);
-    const afterReview = await planIngest({ root, from, reviewed: new Map([[rerollId, null]]) });
+    const afterReview = await policyPlanIngest({ root, from, reviewed: new Map([[rerollId, null]]) });
     t('plain id is refused when a prior reviewed receipt binds different pixels',
       /already carries a reviewed source-raster receipt/.test(afterReview.rejected.find((r) => r.id === rerollId)?.reason || ''));
     fs.writeFileSync(dayFile, `${JSON.stringify(JSON.parse(fs.readFileSync(dayFile, 'utf8')), null, 2)}\n`);
 
     fs.writeFileSync(dayFile, JSON.stringify(JSON.parse(fs.readFileSync(dayFile, 'utf8'))));
-    const unreviewedPlan = await planIngest({ root, from, reviewed: new Set([`${date}--unreviewed`]) });
+    const unreviewedPlan = await policyPlanIngest({ root, from, reviewed: new Set([`${date}--unreviewed`]) });
     const reformat = await applyIngest(unreviewedPlan, { root });
     t('non-canonical day JSON is refused without --allow-reformat', reformat.written.length === 0 && /--allow-reformat/.test(reformat.refused[0]?.reason || ''));
 
@@ -803,7 +824,9 @@ async function selfTest() {
     await stageSatire('flat', await renderSyntheticRasterFixture('satire-wide', 1500, 1100));
     await stageSatire('small', await renderSyntheticRasterFixture('satire-stale', 1024, 1024), { alt: 'AI-generated satirical cartoon drawn from an older version of this joke that no longer matches.' });
     const artBeforeSatire = fs.readFileSync(path.join(artDir, `${date}--good.png`));
-    const satDry = await planSatireIngest({ root, from, reviewed: null });
+    const satDry = await policyPlanSatireIngest({ root, from, reviewed: null });
+    const missingSatireFormats = await planSatireIngest({ root, from, renderDerivatives: async () => ({}) });
+    t('an injected encoder cannot bypass the satire format budgets', missingSatireFormats.rejected.some((r) => r.id === `${date}--good` && /budget preflight/.test(r.reason)));
     t('satire dry-run validates staged cartoons and writes nothing',
       satDry.accepted.some((e) => e.id === `${date}--good`) && !fs.existsSync(path.join(artDir, `${date}--good--satire.png`)));
     t('satire derivatives pass the budget preflight (png/webp/avif/640 webp)',
@@ -811,10 +834,10 @@ async function selfTest() {
     const satReason = (plan, slug) => plan.rejected.find((r) => r.id === `${date}--${slug}`)?.reason || '';
     t('a non-square cartoon is rejected', /not square/.test(satReason(satDry, 'flat')));
     t('a cartoon generated from an older joke is rejected (derived alt mismatch)', /changed after this cartoon was generated/.test(satReason(satDry, 'small')));
-    const noMarker = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good`, { exists: () => false }) });
+    const noMarker = await policyPlanSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good`, { exists: () => false }) });
     t('a satire approval without +caricature/+none is refused with the exact approval to use',
       noMarker.accepted.length === 0 && /\+caricature \(shows a real public figure\) or .*\+none/.test(satReason(noMarker, 'good')));
-    const satPlan = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none,${date}--unreviewed+caricature`, { exists: () => false }) });
+    const satPlan = await policyPlanSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none,${date}--unreviewed+caricature`, { exists: () => false }) });
     t('reviewed cartoons with a decision are accepted', satPlan.accepted.map((e) => e.id).sort().join(',') === `${date}--good,${date}--unreviewed`);
     const satApplied = await applySatireIngest(satPlan, { root, reviewedAt: '2026-10-03' });
     const satDay = JSON.parse(fs.readFileSync(dayFile, 'utf8'));
@@ -834,12 +857,12 @@ async function selfTest() {
       Buffer.compare(fs.readFileSync(path.join(artDir, `${date}--good.png`)), artBeforeSatire) === 0
       && satDay.stories.find((s) => s.slug === 'good').visual.pixelInspection.sha256 === story.visual.pixelInspection.sha256);
     t('satire day JSON stays canonical 2-space', `${JSON.stringify(satDay, null, 2)}\n` === fs.readFileSync(dayFile, 'utf8'));
-    const satAgain = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
+    const satAgain = await policyPlanSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
     t('satire re-run is idempotent (already ingested)', satAgain.skipped.some((s) => s.id === `${date}--good` && /already ingested/.test(s.reason)));
     // A re-rolled cartoon (discarded satire.invalid-*.png) needs the @hash form.
     await stageSatire('good', await renderSyntheticRasterFixture('satire-good-v2', 1024, 1024));
     fs.writeFileSync(path.join(from, `${date}--good`, 'satire.invalid-1700000000000.png'), existingReal);
-    const satReroll = await planSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
+    const satReroll = await policyPlanSatireIngest({ root, from, reviewed: parseReviewed(`${date}--good+none`, { exists: () => false }) });
     t('a plain-id satire approval is refused after a re-roll', /plain-id approval is not accepted after a re-roll/.test(satReason(satReroll, 'good')));
     // Banner and satire re-roll evidence never cross-contaminate.
     fs.writeFileSync(path.join(from, 'results.ndjson'), `${JSON.stringify({ id: `${date}--unreviewed`, kind: 'satire', status: 'generated' })}\n${JSON.stringify({ id: `${date}--unreviewed`, kind: 'satire', status: 'generated' })}\n`);
@@ -862,6 +885,8 @@ async function selfTest() {
     runRebuild([`${date}--good`], { root, run: (cmd, args, options) => { captured = { cmd, args, options }; return { status: 0 }; } });
     t('rebuild runner is invoked with node + the scoped args', captured?.cmd === process.execPath && captured.args.includes('--refresh-art-only'));
     t('art worker script exists alongside (generate-news-art-codex.mjs)', fs.existsSync(path.join(ROOT, 'scripts', 'generate-news-art-codex.mjs')));
+    t('policy fixtures exercise the real banner codec pipeline exactly once', bannerEncodes === 1);
+    t('policy fixtures exercise the real satire codec pipeline exactly once', satireEncodes === 1);
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }

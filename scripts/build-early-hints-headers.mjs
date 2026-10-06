@@ -41,6 +41,7 @@ for (const p of PRELOADS) {
   if (!asset) continue;
   lines.push(`  Link: </${asset.path.replace(/\\/g, '/')}>; rel=preload; as=${p.as}`);
 }
+lines.push('/news/*', '  Link: </assets/news-desk.css>; rel=preload; as=style');
 const content = lines.join('\n') + '\n';
 
 if (CHECK) {

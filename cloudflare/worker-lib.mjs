@@ -1,3 +1,9 @@
+export function appendDeskStylesheetPreload(headers, pathname) {
+  if (!pathname.startsWith('/news/')) return;
+  const preload = '</assets/news-desk.css>; rel=preload; as=style';
+  if (!(headers.get('Link') || '').includes(preload)) headers.append('Link', preload);
+}
+
 export class LegacyGuideScriptRewriter {
   constructor(assets) {
     const families = { ambientCore: 'ambient-core', journeyConductor: 'journey-conductor', constellationTracker: 'constellation-tracker', pwaInstall: 'pwa-install' };

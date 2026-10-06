@@ -16,6 +16,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/security-headers-worker.js';
+test('Desk stylesheet preload preserves existing discovery links and applies once only to news', () => {
+  const headers = new Headers({ Link: '</agents.json>; rel=alternate' });
+  appendDeskStylesheetPreload(headers, '/membership/');
+  assert.equal(headers.get('Link'), '</agents.json>; rel=alternate');
+  appendDeskStylesheetPreload(headers, '/news/2026-08-11/a-story/');
+  appendDeskStylesheetPreload(headers, '/news/2026-08-11/a-story/');
+  assert.equal(headers.get('Link'), '</agents.json>; rel=alternate, </assets/news-desk.css>; rel=preload; as=style');
+});
 import { validateAgentAction } from '../cloudflare/agent-actions.js';
 import {
   toOrigin,
@@ -33,6 +41,7 @@ import {
   portalGateRedirect,
   independentBufferedResponse,
   LegacyGuideScriptRewriter,
+  appendDeskStylesheetPreload,
   OBELISK_VERIFY_DEFAULT_ENDPOINT,
   cleanSlug,
   validReaction,

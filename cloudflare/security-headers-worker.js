@@ -32,6 +32,7 @@ import {
   drKeyFor,
   independentBufferedResponse,
   LegacyGuideScriptRewriter,
+  appendDeskStylesheetPreload,
   createOriginFetch,
   issueCsrfToken,
   verifyCsrfToken,
@@ -1600,6 +1601,10 @@ const worker = {
     } else {
       finalResponse = withSecurityHeaders(upstream, { ttl, csp: WORKER_CSP });
     }
+
+    // Content-lane Pages deployments retain baseline headers. Supply the same
+    // render-critical Desk preload at the edge so the improvement reaches live.
+    if (isHtml) appendDeskStylesheetPreload(finalResponse.headers, new URL(request.url).pathname);
 
     // --- Layer 6: Cache successful 200 responses ---
     // HTML in nonce mode: cache under the window-keyed request for HTML_NONCE_WINDOW_SEC.
