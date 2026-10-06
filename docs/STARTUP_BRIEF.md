@@ -126,14 +126,14 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Homepage hero wording: current Synthetic I  ║
-║        Homepage hero wording: current Synthetic Intelligence fo  ║
-║                                                                  ║
-║   87  [PRODUCT]      Confirm the art autopilot's first schedule  ║
+║   90  [PRODUCT]      Confirm the art autopilot's first schedule  ║
 ║        Confirm the art autopilot's first scheduled publish (.ca  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Push helper as a repo script (scripts/push  ║
+║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
 ║        Push helper as a repo script (scripts/push-main.mjs): au  ║
+║                                                                  ║
+║   81  [PRODUCT]      Build the named Spark entry, living sphere  ║
+║        Build the named Spark entry, living sphere, shared palet  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
