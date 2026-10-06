@@ -883,7 +883,7 @@
       // pages (the reader is already on the Desk), [data-no-strip] pages, pages
       // without the slot, and <=430px where the strip is display:none — no fetch
       // for a surface nobody can see. The static fallback link stays everywhere.
-      src: '/assets/desk-wire.shell-5dbc8ab14d.js',
+      src: '/assets/desk-wire.shell-aadb90966d.js',
       when: function () {
         var p = location.pathname || '/';
         if (/^\/(vault-member|investor-portal|admin|api)\//.test(p)) return false;

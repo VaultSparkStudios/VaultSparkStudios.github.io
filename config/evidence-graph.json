@@ -6,18 +6,41 @@
     {
       "id": "membership-access",
       "output": "assets/membership-access.js",
-      "alsoStage": ["supabase/functions/_shared/membershipAccess.ts"],
-      "sources": ["config/membership-entitlements.json", "api/membership-tiers.json", "scripts/generate-membership-access.mjs"],
+      "alsoStage": [
+        "supabase/functions/_shared/membershipAccess.ts"
+      ],
+      "sources": [
+        "config/membership-entitlements.json",
+        "api/membership-tiers.json",
+        "scripts/generate-membership-access.mjs"
+      ],
       "builder": "scripts/generate-membership-access.mjs",
-      "check": ["node", "scripts/generate-membership-access.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/generate-membership-access.mjs",
+        "--check"
+      ],
       "note": "Models the existing generated helpers; this entry changes no tier or entitlement."
     },
     {
       "id": "spark-manifest",
       "output": "api/spark-manifest.json",
-      "sources": ["data/game-registry.json", "api/public-intelligence.json", "api/intent-map.json", "_redirects", "games/*/index.html", "repo-structure:public-project-routes", "scripts/build-spark-manifest.mjs", "scripts/build-route-consolidation.mjs"],
+      "sources": [
+        "data/game-registry.json",
+        "api/public-intelligence.json",
+        "api/intent-map.json",
+        "_redirects",
+        "games/*/index.html",
+        "repo-structure:public-project-routes",
+        "scripts/build-spark-manifest.mjs",
+        "scripts/build-route-consolidation.mjs"
+      ],
       "builder": "scripts/build-spark-manifest.mjs",
-      "check": ["node", "scripts/build-spark-manifest.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-spark-manifest.mjs",
+        "--check"
+      ],
       "note": "Deterministic public navigation and dated public-ship evidence shared by humans and agents."
     },
     {
@@ -1384,7 +1407,10 @@
         "assets/hero-choice-tracking.js",
         "assets/journey-conductor.js",
         "config/route-consolidation.json",
-        "**/index.html"
+        "**/index.html",
+        "assets/desk-wire.js",
+        "assets/desk-comments.js",
+        "assets/turnstile.js"
       ],
       "builder": "scripts/build-shell-assets.mjs",
       "check": [
@@ -1512,6 +1538,50 @@
         "node",
         "scripts/build-sitemap-page.mjs",
         "--check"
+      ]
+    },
+    {
+      "id": "ambient-bundle",
+      "output": "assets/ambient-core.bundle.js",
+      "sources": [
+        "assets/tt-default-policy.js",
+        "assets/native-feel.js",
+        "assets/scroll-reveal.js",
+        "assets/scroll-depth.js",
+        "assets/breadcrumb-render.js",
+        "assets/signed-in-state.js",
+        "assets/account-chip-loader.js",
+        "assets/ambient-loader.js",
+        "assets/hover-prefetch.js",
+        "assets/edge-swipe-nav.js",
+        "assets/pointerdown-warm.js",
+        "assets/command-palette-loader.js",
+        "assets/adaptive-speculation.js",
+        "assets/rum-beacon.js",
+        "assets/page-sigil.js",
+        "assets/vault-atlas.js",
+        "assets/spark-compass.js",
+        "assets/constellation-tracker.js",
+        "assets/journey-conductor.js",
+        "assets/desk-wire.js",
+        "assets/studio-now.js",
+        "assets/public-intelligence.js",
+        "assets/exit-intent.js",
+        "assets/honest-traction-scoreboard.js",
+        "assets/ignis-lens.js",
+        "assets/rate-page.js",
+        "assets/security-posture.js",
+        "assets/returning-signal-strip.js",
+        "scripts/build-ambient-bundle.mjs"
+      ],
+      "builder": "scripts/build-ambient-bundle.mjs",
+      "check": [
+        "node",
+        "scripts/build-ambient-bundle.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "assets/ambient-feature.bundle.js"
       ]
     }
   ]
