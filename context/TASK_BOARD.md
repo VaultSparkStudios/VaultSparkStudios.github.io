@@ -2,6 +2,13 @@
 
 Last updated: 2026-10-04 UTC (S368 continued)
 
+## S368 final — open follow-ups (2026-10-05)
+
+- [ ] **[P1]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
+- [ ] **[P2]** Autopilot: after the release run, fetch the live article and confirm the new art URL returns 200.
+- [ ] **[P3]** JSON Feed `date_published` uses the real publish time (news-publish-time.mjs) instead of midnight UTC.
+- [x] /news/ search + filters, card timestamps, Desk signup bar, per-form Turnstile, legal wording, digest armed, art autopilot (D-S368.10), staging baseline reset.
+
 ## S368 continued — Desk art, satire cartoons, AI & SI positioning
 
 - [x] Desk banner art restored (58 stories) + nightly worker + 48h currency alarm.

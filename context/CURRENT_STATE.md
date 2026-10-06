@@ -2,6 +2,13 @@
 
 Last updated: 2026-10-04 UTC (S368 continued: Desk art restored, satire cartoons, hybrid AI & SI positioning)
 
+## S368 final — Desk search, publish times, signup fixes, art autopilot (2026-10-05)
+
+- /news/ has full-text search across every edition (headlines, summaries, body, facts, personas) with correspondent, topic, edition, format, month and has-prediction filters, sorting and shareable URL parameters. The index (`api/news-desk-search*.json`, month-sharded) loads only on first search.
+- Every Desk card, archive list, persona feed, homepage Desk card and article byline shows the publish date and time in ET inside `<time datetime>`; source order: story.publishedAt, first-commit ledger, authoredBy.at, edition slot ("Scheduled").
+- The Desk Dispatch signup sits at the top of /news/ (#desk-dispatch); each signup form renders its own Turnstile widget and waits up to two minutes for an interactive check. The daily digest is armed (autoSend) and sends at 23:30 UTC.
+- Desk art publishes without founder review (D-S368.10): `scripts/desk-art-autopilot.mjs` runs four times a day from the founder's PC and deploys through `desk-content-release.yml`.
+
 ## S368 continued — Desk art restored, two-image stories, hybrid AI & Synthetic Intelligence (SI) studio (2026-10-03 → 10-04)
 
 - **Desk banner art restored.** A Windows spawn regression had silently broken the local art worker's sandbox check since 2026-09-17, so 58 stories shipped on procedural placeholders. Fixed (native `codex.exe` resolution), all 58 regenerated and visually reviewed; three re-rolled (staged likeness of King Charles, wrong-country landmarks). Worker rule: never depict a named person or a stand-in; landmarks true to the story's country. Nightly Windows task "VaultSpark Desk Art (nightly)" stages art; `check-desk-art-currency` runs in the daily CI Health Monitor and fails any placeholder older than 48h.
