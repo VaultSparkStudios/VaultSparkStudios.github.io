@@ -26,6 +26,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install derived-artifact build dependencies
+        # build-shell-assets uses the existing Wrangler/esbuild toolchain.
+        run: npm install --no-audit --no-fund
       - name: Pull complete-day Cloudflare aggregates
         env:
           CLOUDFLARE_ANALYTICS_READ_TOKEN: ${{ secrets.CLOUDFLARE_ANALYTICS_READ_TOKEN }}
