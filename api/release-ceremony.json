@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T08:48:11.713Z",
+  "generatedAt": "2026-10-06T08:51:11.131Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
-  "state": "rejected",
+  "state": "passed",
   "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
   "steps": [
     {
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 426
+      "durationMs": 562
     },
     {
       "id": "redirect-readiness",
@@ -22,21 +22,21 @@
     },
     {
       "id": "staging-deploy-lineage",
-      "state": "rejected",
-      "exitCode": 1,
-      "durationMs": 216
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 227
     },
     {
       "id": "lane-held-asset-drift",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1655
+      "durationMs": 1219
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 48199
+      "durationMs": 35108
     },
     {
       "id": "staging-browser-receipt",
@@ -59,7 +59,7 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 36984
+      "durationMs": 34538
     },
     {
       "id": "attention-browser-receipt",
@@ -76,7 +76,7 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 345
+      "durationMs": 238
     },
     {
       "id": "promotion-ready",
@@ -102,16 +102,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1704,
+      "durationMs": 1394,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
       "observedDate": "2026-10-06"
     }
   ],
-  "evidenceSha256": "93a36d1458372566c85d9b0dba4bf9b5c6a9b5331487cdc4fbb2b3ab10d8c091",
+  "evidenceSha256": "90581436a6a05b0ea9401022b5be94db83465c1b05adbc27a2881bd55011c63a",
   "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
   "chain": {
-    "previousReceiptSha256": "1e6b526ccc8b98cb0e8eee0cf1c6ad6828d1735d3b5637ff34d5d7aa781f9255"
+    "previousReceiptSha256": "4e4c8d2006c6eb9d92bb794c67a2c38abea2f936991238921aff3b8fa85b6878"
   },
   "privacy": {
     "stdoutRetained": false,
