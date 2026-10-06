@@ -36,6 +36,7 @@
  *   node scripts/check-content-hotfix-gate.mjs --self-test
  */
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
@@ -110,6 +111,23 @@ export function isSensitive(p) {
  * 'content'  — promotable in a hotfix
  * 'blocked'  — anything sensitive, executable, or simply unrecognised
  */
+// Public article receipts are an exact corpus-derived exception, not a JSON directory allowance.
+export function isPublishedDeskCritique(t, root = ROOT) {
+  const match = /^news\/(\d{4}-\d{2}-\d{2})\/([a-z0-9]+(?:-[a-z0-9]+)*)\/critique\.json$/.exec(t);
+  if (!match) return false;
+  try {
+    const [, date, slug] = match;
+    const day = JSON.parse(fs.readFileSync(path.join(root, 'data/news-desk/days', date + '.json'), 'utf8'));
+    if (day.simulated !== false || !day.stories?.some(story => story.slug === slug)) return false;
+    const packet = JSON.parse(fs.readFileSync(path.join(root, t), 'utf8'));
+    const article = fs.readFileSync(path.join(root, 'news', date, slug, 'index.html'));
+    return packet.schemaVersion === 1 && packet.generatedBy === 'scripts/build-news-critique-packets.mjs'
+      && packet.story?.url === 'https://vaultsparkstudios.com/news/' + date + '/' + slug + '/'
+      && article.toString('utf8').includes('href="/' + t + '"')
+      && packet.visualEvidence?.pageSha256 === crypto.createHash('sha256').update(article).digest('hex');
+  } catch { return false; }
+}
+
 export function classifyPath(p) {
   const t = norm(p);
   if (!t || t.includes('..')) return 'blocked';
@@ -132,6 +150,7 @@ export function classifyPath(p) {
   // anchor names by servedPath or canonical feed URL. Named files only — root
   // JSON and data/ as classes stay blocked because they may hold internal state.
   if (PUBLIC_DATA_ARTIFACTS.includes(t)) return 'content';
+  if (isPublishedDeskCritique(t)) return 'content';
   // Everything else — .js, .mjs, .json elsewhere, extensionless, unknown — is blocked.
   return 'blocked';
 }
@@ -193,6 +212,9 @@ function selfTest() {
     ['a generated public feed is allowed', classifyPath('api/citation.json') === 'content'],
     ['the canonical Desk claims feed is allowed BY EXACT PATH', classifyPath('api/news-desk-claims.ndjson') === 'content'],
     ['the canonical public Stats feed is allowed BY EXACT PATH', classifyPath('stats.json') === 'content'],
+    ['published Desk critique is allowed only with matching article evidence', classifyPath('news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/critique.json') === 'content'],
+    ['other story JSON remains blocked', classifyPath('news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/private.json') === 'blocked'],
+    ['unknown story critique remains blocked', classifyPath('news/2026-08-11/unpublished-private-story/critique.json') === 'blocked'],
     ['BROWSER-EXECUTABLE JS IS BLOCKED', classifyPath('assets/analytics.js') === 'blocked'],
     ['a module is blocked', classifyPath('franchise-architect/setup.js') === 'blocked'],
     ['the service worker is blocked', classifyPath('sw.js') === 'blocked'],

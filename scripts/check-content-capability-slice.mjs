@@ -105,7 +105,8 @@ function main() {
     if (exact >= 0) return process.argv[exact + 1] || '';
     return process.argv.find((value) => value.startsWith(`${name}=`))?.slice(name.length + 1) || '';
   };
-  const paths = (arg('--paths') || process.env.LANE_PATHS || '').split(/\s+/).filter(Boolean);
+  const pathsFile = arg('--paths-file');
+  const paths = (pathsFile ? fs.readFileSync(pathsFile, 'utf8') : arg('--paths') || process.env.LANE_PATHS || '').split(/\s+/).filter(Boolean);
   if (!paths.length) {
     console.error('content-capability-slice: --paths or LANE_PATHS is required');
     process.exit(2);

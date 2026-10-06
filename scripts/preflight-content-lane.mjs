@@ -34,7 +34,7 @@ function run(script, scriptArgs) {
   const result = spawnSync(process.execPath, [path.join(ROOT, 'scripts', script), ...scriptArgs], {
     cwd: ROOT, encoding: 'utf8',
   });
-  return { status: result.status ?? 1, stdout: result.stdout || '', stderr: result.stderr || '' };
+  return { status: result.status ?? 1, stdout: result.stdout || '', stderr: result.stderr || result.error?.message || '' };
 }
 
 export function parsePromotable(purityStdout) {
@@ -94,12 +94,14 @@ function main() {
   const laneMatch = /^paths=(.*)$/m.exec(emitted);
   const lanePaths = laneMatch ? laneMatch[1].trim() : '';
   if (!lanePaths) return exit(1, '⛔ preflight-content-lane: partition emitted no paths= line — cannot mirror the workflow');
-  const gate = run('check-content-hotfix-gate.mjs', ['--paths', lanePaths, `--baseline=${baseline}`]);
+  const laneFile = path.join(ROOT, '.cache', 'preflight-lane-paths.txt');
+  fs.writeFileSync(laneFile, lanePaths.split(/\s+/).join('\n'));
+  const gate = run('check-content-hotfix-gate.mjs', [`--paths-file=${laneFile}`, `--baseline=${baseline}`]);
   const gateOut = gate.stdout + gate.stderr;
   const promotableLine = /check-content-hotfix-gate: (\d+) path\(s\) promotable/.exec(gateOut);
 
   if (gate.status === 0 && promotableLine) {
-    const capability = run('check-content-capability-slice.mjs', ['--paths', lanePaths, '--json-out', '.cache/content-capability-slice.json']);
+    const capability = run('check-content-capability-slice.mjs', ['--paths-file', laneFile, '--json-out', '.cache/content-capability-slice.json']);
     if (capability.status !== 0) {
       return exit(1, `⛔ preflight-content-lane: browser/Worker capability slice is incomplete. Gate output:\n${(capability.stdout + capability.stderr).slice(-800)}`);
     }
