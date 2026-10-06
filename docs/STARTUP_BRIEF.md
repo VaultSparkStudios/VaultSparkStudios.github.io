@@ -68,8 +68,8 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ████████████░░░░░░░░░░░░   52% used                          ║
-║     140,067 / 272,000 tok  ·  codex/codex-272k  · …              ║
-║     ~70,034 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
+║     140,101 / 272,000 tok  ·  codex/codex-272k  · …              ║
+║     ~70,051 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
 ║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
