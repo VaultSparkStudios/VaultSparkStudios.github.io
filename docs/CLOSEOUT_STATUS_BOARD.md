@@ -11,11 +11,11 @@
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ fix: isolate Desk signup counters and reconcile S369 closeou  ║
 ║  ✓ Reconcile final release evidence with deployed content recei  ║
 ║  ✓ chore: update CI status beacon [skip ci]                      ║
 ║  ✓ Close out verified live Spark and premium AI News Desk relea  ║
-║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ Bind verified release to current public feed observations     ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 912/1000 ═══════════════════════════════════════╗
 ║    Dev Health         90   █████████░                            ║
@@ -30,20 +30,20 @@
 ║    Automation         91   █████████░                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  ✓ Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 216 files  ·  M:88 A:4 D:0 ?:124                       ║
-║  Ahead: 0  ·  Behind: 4                                          ║
+║  Changes: 181 files  ·  M:53 A:0 D:0 ?:128                       ║
+║  Ahead: 2  ·  Behind: 4                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -58,7 +58,7 @@
 ║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║  shells:        19 started · 19 closed · 0 running               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
