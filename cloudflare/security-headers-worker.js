@@ -965,10 +965,12 @@ async function handleProtectedPublicForm(request, env, ip) {
   } catch {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_form_body' }), { status: 400, headers: JSON_HEADERS });
   }
-  const token = isDispatch ? payload?.turnstileToken : payload.get('cf-turnstile-response');
-  const turnstile = await verifyTurnstileToken({ token, ip, secret: env.TURNSTILE_SECRET_KEY });
-  if (!turnstile.ok) {
-    return new Response(JSON.stringify({ ok: false, error: turnstile.error }), { status: 403, headers: JSON_HEADERS });
+  if (!isDispatch) {
+    const token = payload.get('cf-turnstile-response');
+    const turnstile = await verifyTurnstileToken({ token, ip, secret: env.TURNSTILE_SECRET_KEY });
+    if (!turnstile.ok) {
+      return new Response(JSON.stringify({ ok: false, error: turnstile.error }), { status: 403, headers: JSON_HEADERS });
+    }
   }
 
   if (isDispatch) {

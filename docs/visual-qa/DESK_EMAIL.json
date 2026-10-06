@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-06T22:50:55.329Z",
+  "source": {
+    "files": [
+      {
+        "file": "supabase/functions/subscribe-desk-dispatch/index.ts",
+        "sha256": "0d5d714c760e4861654ebb9b5f651b7aabcf1b6299e95be9af677c8aae9cef84"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "file": "desk-email-light-600.png",
+      "sha256": "c338cee420f37ae5fec2945f66d0376c2772d56fcc64942cc1ce7f84de842abb",
+      "viewport": {
+        "width": 600,
+        "height": 1000
+      },
+      "scheme": "light",
+      "page": "Desk confirmation email (local preview)",
+      "state": "confirmation"
+    },
+    {
+      "file": "desk-email-light-390.png",
+      "sha256": "b6cb1ef8ce303161bc2a330151312257d339863de76117832f08abce4a2fe1c3",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "scheme": "light",
+      "page": "Desk confirmation email (local preview)",
+      "state": "confirmation"
+    },
+    {
+      "file": "desk-email-dark-600.png",
+      "sha256": "c338cee420f37ae5fec2945f66d0376c2772d56fcc64942cc1ce7f84de842abb",
+      "viewport": {
+        "width": 600,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "page": "Desk confirmation email (local preview)",
+      "state": "confirmation"
+    },
+    {
+      "file": "desk-email-dark-390.png",
+      "sha256": "b6cb1ef8ce303161bc2a330151312257d339863de76117832f08abce4a2fe1c3",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "page": "Desk confirmation email (local preview)",
+      "state": "confirmation"
+    }
+  ],
+  "inspection": {
+    "renderedPixelsReviewed": true,
+    "reviewer": "Codex rendered-image review",
+    "findings": [
+      "Reviewed all seven theme contact sheets covering desktop/mobile success, invalid, service error and explicit unsubscribe. No horizontal overflow. Clear text, stable buttons and readable light-theme contrast.",
+      "Confirmation email reviewed at mobile390 and desktop600; inline table layout provides a readable fallback without scripting."
+    ],
+    "fixesApplied": [
+      "Corrected welcome border token to --desk-line.",
+      "Reduced-motion preference disables sphere rotation.",
+      "Signed token is removed from the visible browser URL and page referrers are suppressed."
+    ],
+    "blockingDefectsOpen": 0
+  },
+  "note": "Browser rendering of inline email HTML; no actual mail sent and no mailbox-client rendering proof claimed."
+}

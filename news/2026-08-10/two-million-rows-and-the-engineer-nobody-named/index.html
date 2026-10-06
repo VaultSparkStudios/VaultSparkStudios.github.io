@@ -216,7 +216,6 @@
   <div class="desk-disclosure"><strong>Editorial disclosure.</strong> The Desk is an experimental, AI-generated publication from VaultSpark Studios. REX, MARA, DOT, VERA, ECHO, JUNO, NIB, MICA are <strong>AI personas — fictional characters, not people</strong>, and no human authors, ghost-writes or reviews their commentary before it publishes. Every factual claim links its cited source, every prediction is dated and publicly graded so the personas can be shown to be wrong, and every edition passes an automated quality gate. This is AI commentary, labeled as such — treat it as argument to check, not reporting to trust.</div>
 </article></main><link rel="stylesheet" href="/assets/desk-comments.css"><script src="/assets/desk-reactions.shell-523b04a01e.js" defer></script><script src="/assets/desk-presence.shell-b33c76422e.js" defer></script><script src="/assets/desk-comments.shell-e292fb59d7.js" defer></script><script>(function(){
   var ENDPOINT="/desk/dispatch/subscribe";
-  var SITE_KEY="0x4AAAAAACwZy-GkGqvHhc-u";
   var forms=document.querySelectorAll('form[data-dispatch]');
   if(!forms.length)return;
   var loads={};
@@ -228,42 +227,16 @@
       document.head.appendChild(s);});}
     return loads[src];
   }
-  function deps(){return Promise.all([
-    load('/assets/csrf-token.js',function(){return !!window.VSCsrf;}),
-    load('/assets/turnstile.js',function(){return !!window.VSTurnstile;})]);}
-  function turnstileApi(){return new Promise(function(resolve){var n=0;(function poll(){
-    if(window.turnstile&&window.turnstile.render)return resolve(true);
-    if(++n>150)return resolve(false);setTimeout(poll,100);})();});}
-  var widgets={};
-  function formToken(form,onInteractive){
-    return turnstileApi().then(function(ok){
-      if(!ok)throw {kind:'deps'};
-      return new Promise(function(resolve,reject){
-        var key=form.getAttribute('data-source')||'news';
-        var w=widgets[key]||(widgets[key]={});
-        var timer=setTimeout(function(){w.done=null;reject({kind:'verify'});},20000);
-        w.done=function(err,token){clearTimeout(timer);w.done=null;if(err)reject({kind:'verify'});else resolve(token);};
-        w.interactive=function(){clearTimeout(timer);onInteractive();
-          timer=setTimeout(function(){if(w.done)w.done(true);},120000);};
-        if(w.id!==undefined){try{window.turnstile.reset(w.id);return;}catch(e){w.id=undefined;}}
-        var slot=form.querySelector('[data-vs-turnstile-slot]');
-        w.id=window.turnstile.render(slot,{sitekey:SITE_KEY,appearance:'interaction-only',
-          callback:function(t){if(w.done)w.done(null,t);},
-          'error-callback':function(){if(w.done)w.done(true);return true;},
-          'expired-callback':function(){},
-          'before-interactive-callback':function(){if(w.interactive)w.interactive();}});
-      });
-    });
-  }
+  function deps(){return load('/assets/csrf-token.js',function(){return !!window.VSCsrf;});}
   var MESSAGES={invalid_email:'That does not look like a valid email address.',
     turnstile_invalid:'Verification did not pass. Please try again.',
     turnstile_token_missing:'Verification did not complete. Please try again.',
     turnstile_not_configured:'Signup is temporarily unavailable. Please try again later.',
     invalid_form_body:'Something went wrong with the form. Please reload and try again.'};
-  function post(email,source,turnstileToken,csrf){
+  function post(email,source,csrf){
     return fetch(ENDPOINT,{method:'POST',credentials:'same-origin',
       headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},
-      body:JSON.stringify({email:email,source:source,turnstileToken:turnstileToken})})
+      body:JSON.stringify({email:email,source:source})})
     .then(function(r){return r.text().then(function(t){var b={};try{b=JSON.parse(t);}catch(e){b={raw:t};}return {status:r.status,ok:r.ok,body:b};});});
   }
   Array.prototype.forEach.call(forms,function(form){
@@ -280,31 +253,24 @@
       var email=(input.value||'').trim();
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){say('Enter a valid email address.','error');input.setAttribute('aria-invalid','true');input.focus();return;}
       input.removeAttribute('aria-invalid');
-      button.disabled=true;button.textContent='Sending…';say('Verifying you are human (invisible check)…');
+      button.disabled=true;button.textContent='Sending…';say('Sending your confirmation email…');
       var source=form.getAttribute('data-source')||'news';
-      var ask=function(){return formToken(form,function(){say('Please complete the quick check below to continue.');});};
       deps().then(function(ok){
-        if(!ok[0])throw {kind:'deps'};
-        return ask();
-      }).then(function(token){
-        say('Sending your confirmation email…');
-        return window.VSCsrf.getToken().then(function(csrf){
-          return post(email,source,token,csrf).then(function(res){
-            // A stale session CSRF token answers 403 in plain text. Refresh once.
-            if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
-              window.VSCsrf.invalidate();
-              return ask().then(function(t2){
-                return window.VSCsrf.getToken().then(function(c2){return post(email,source,t2,c2);});
-              });
-            }
-            return res;
-          });
+        if(!ok)throw {kind:'deps'};
+        return window.VSCsrf.getToken();
+      }).then(function(csrf){
+        return post(email,source,csrf).then(function(res){
+          if(res.status===403&&res.body&&res.body.raw!==undefined&&window.VSCsrf.invalidate){
+            window.VSCsrf.invalidate();
+            return window.VSCsrf.getToken().then(function(c2){return post(email,source,c2);});
+          }
+          return res;
         });
       }).then(function(res){
         if(res.ok){form.classList.add('is-done');input.readOnly=true;button.textContent='Sent ✓';
           say('Check your inbox for an email from news@vaultsparkstudios.com and click the link to confirm. You are subscribed only after you confirm.','ok');return;}
         reset();
-        if(res.status===429){say('Too many signup attempts from this network. Please try again in an hour.','error');return;}
+        if(res.status===429){say('Signup is temporarily rate limited. Please try again later.','error');return;}
         var code=res.body&&res.body.error;
         say(MESSAGES[code]||(typeof code==='string'&&code.indexOf(' ')>0?code:'Something went wrong. Please try again shortly.'),'error');
       }).catch(function(err){

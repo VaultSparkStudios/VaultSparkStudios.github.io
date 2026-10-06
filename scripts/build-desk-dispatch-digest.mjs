@@ -306,12 +306,13 @@ ${lead.image ? `<tr><td class="dd-pad" style="padding:0 32px;">
 <tr><td align="center" style="padding:24px 12px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="dd-card" style="max-width:600px;background:#ffffff;border:1px solid #e6e1d4;border-radius:16px;">
 ${testNote ? `<tr><td class="dd-pad" style="padding:14px 32px 0;"><p style="margin:0;padding:8px 12px;background:#fff4cc;border-radius:8px;font:700 12px/1.5 ${FONT_SANS};color:#5c4600;">Test issue — sent only to you for approval. The unsubscribe link below is inert in test copies.</p></td></tr>` : ''}
-<tr><td class="dd-pad" style="padding:28px 32px 6px;">
+<tr><td class="dd-pad" style="padding:32px 32px 24px;background:#101323;border-radius:16px 16px 0 0;">
+  <p style="margin:0 0 16px;color:#ffdb4d;font:800 10px/1.5 Arial,sans-serif;letter-spacing:.16em;">VAULTSPARK STUDIOS · THE DESK</p>
   <div style="height:4px;line-height:4px;font-size:4px;background:#ffc400;border-radius:4px;width:56px;">&nbsp;</div>
-  <h1 class="dd-mast" style="margin:16px 0 0;font:700 36px/1.05 ${FONT_SERIF};letter-spacing:-.02em;color:#12141a;"><a class="dd-ink" href="${e(issue.deskUrl)}" style="color:#12141a;text-decoration:none;">The Desk Dispatch</a></h1>
-  <p class="dd-meta" style="margin:8px 0 0;font:600 13px/1.5 ${FONT_SANS};color:#5b5f6b;">${e(longDate(issue.date))}</p>
-  <p class="dd-meta" style="margin:2px 0 0;font:400 13px/1.5 ${FONT_SANS};color:#5b5f6b;">${editionLine}</p>
-  <p class="dd-kicker" style="margin:12px 0 0;font:800 10px/1.4 ${FONT_SANS};letter-spacing:.12em;text-transform:uppercase;color:#7a5d00;">Written by AI personas — no human wrote&nbsp;this</p>
+  <h1 class="dd-mast" style="margin:16px 0 0;font:700 36px/1.05 ${FONT_SERIF};letter-spacing:-.02em;color:#f7f4ed;"><a href="${e(issue.deskUrl)}" style="color:#f7f4ed;text-decoration:none;">The Desk Dispatch</a></h1>
+  <p class="dd-meta" style="margin:8px 0 0;font:600 13px/1.5 ${FONT_SANS};color:#c6cce1;">${e(longDate(issue.date))}</p>
+  <p class="dd-meta" style="margin:2px 0 0;font:400 13px/1.5 ${FONT_SANS};color:#c6cce1;">${editionLine}</p>
+  <p class="dd-kicker" style="margin:12px 0 0;font:800 10px/1.4 ${FONT_SANS};letter-spacing:.12em;text-transform:uppercase;color:#ffdb4d;">Written by AI personas — no human wrote&nbsp;this</p>
 </td></tr>
 <tr><td class="dd-pad" style="padding:0 32px;"><div class="dd-rule" style="height:1px;line-height:1px;font-size:1px;background:#e6e1d4;margin:18px 0 22px;">&nbsp;</div></td></tr>
 ${leadBlock}
