@@ -24,12 +24,14 @@
  */
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
+import guideShellManifest from '../assets/shell-manifest.json' with { type: 'json' };
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
 import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
 import { handleAgentActions } from './agent-actions.js';
 import {
   drKeyFor,
   independentBufferedResponse,
+  LegacyGuideScriptRewriter,
   createOriginFetch,
   issueCsrfToken,
   verifyCsrfToken,
@@ -245,7 +247,7 @@ function clampSampleRate(value) {
 // security argument is unchanged in kind — the site is static and Trusted
 // Types reporting watches injection sinks.
 const HTML_NONCE_WINDOW_SEC = 300;
-const HTML_CACHE_VERSION = 'ct5-2026-07-22';
+const HTML_CACHE_VERSION = 'ct6-spark-2026-10-06';
 // S367: keyed, not clock-derived — see deriveWindowNonce in worker-lib.mjs.
 function generateWindowNonce(env) {
   const windowId = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
@@ -1566,6 +1568,7 @@ const worker = {
       const rewriter = new HTMLRewriter()
         .on('meta', new MetaCspStripper())
         .on('script,style', new NonceInjector(nonce))
+        .on('script[src]', new LegacyGuideScriptRewriter(guideShellManifest.assets))
         .on('head', new NonceInjector(nonce));
       // S239 deadlock fix: buffer the rewritten HTML before returning.
       // Cloning a streaming HTMLRewriter response twice (primary nonce-window cache
@@ -1583,7 +1586,9 @@ const worker = {
       // S240 clone audit: HTML can be cached twice even outside nonce mode
       // (primary cache + disaster-recovery copy). Buffer it so clones are body
       // copies, not competing ReadableStream tees, regardless of env flags.
-      const htmlBody = await upstream.arrayBuffer();
+      const htmlBody = await new HTMLRewriter()
+        .on('script[src]', new LegacyGuideScriptRewriter(guideShellManifest.assets))
+        .transform(upstream).arrayBuffer();
       bufferedHtmlBody = htmlBody;
       finalResponse = withSecurityHeaders(
         new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
@@ -1621,4 +1626,3 @@ const worker = {
 };
 
 export default worker;
-

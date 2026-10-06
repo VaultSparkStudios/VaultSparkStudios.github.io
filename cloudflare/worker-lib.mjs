@@ -1,3 +1,21 @@
+export class LegacyGuideScriptRewriter {
+  constructor(assets) {
+    const families = { ambientCore: 'ambient-core', journeyConductor: 'journey-conductor', constellationTracker: 'constellation-tracker', pwaInstall: 'pwa-install' };
+    this.targets = Object.entries(families).map(([key, stem]) => {
+      const path = assets?.[key]?.path;
+      if (!new RegExp(`^assets/${stem}\\.shell-[a-f0-9]{10}\\.js$`).test(path || '')) throw new Error(`Invalid guide asset: ${key}`);
+      return { pattern: new RegExp(`^/assets/${stem}(?:\\.shell-[a-f0-9]{10})?\\.js$`), path: '/' + path };
+    });
+  }
+  element(element) {
+    // Never weaken an integrity-bound script or rewrite identity/foreign assets.
+    if (element.getAttribute('integrity') !== null) return;
+    const src = element.getAttribute('src');
+    const target = this.targets.find(entry => entry.pattern.test(src || ''));
+    if (target && src !== target.path) element.setAttribute('src', target.path);
+  }
+}
+
 /**
  * worker-lib.mjs — pure, testable primitives extracted from
  * `security-headers-worker.js` so the outage-critical origin-failover path and

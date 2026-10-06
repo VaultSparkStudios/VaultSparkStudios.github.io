@@ -32,6 +32,7 @@ import {
   verifyObeliskSession,
   portalGateRedirect,
   independentBufferedResponse,
+  LegacyGuideScriptRewriter,
   OBELISK_VERIFY_DEFAULT_ENDPOINT,
   cleanSlug,
   validReaction,
@@ -47,6 +48,25 @@ import {
   isAllowedWebPushEndpoint,
   validatePushSubscription,
 } from '../cloudflare/worker-lib.mjs';
+
+test('legacy guide rewrite updates only four discovery script families', () => {
+  const families = { ambientCore: 'ambient-core', journeyConductor: 'journey-conductor', constellationTracker: 'constellation-tracker', pwaInstall: 'pwa-install' };
+  const assets = Object.fromEntries(Object.entries(families).map(([key, stem]) => [key, { path: `assets/${stem}.shell-aaaaaaaaaa.js` }]));
+  const rewriter = new LegacyGuideScriptRewriter(assets);
+  const rewrite = (src, integrity = null) => {
+    let actual = src;
+    rewriter.element({ getAttribute: name => name === 'src' ? actual : name === 'integrity' ? integrity : null, setAttribute: (name, value) => { assert.equal(name, 'src'); actual = value; } });
+    return actual;
+  };
+  for (const stem of Object.values(families)) {
+    assert.equal(rewrite(`/assets/${stem}.js`), `/assets/${stem}.shell-aaaaaaaaaa.js`);
+    assert.equal(rewrite(`/assets/${stem}.shell-bbbbbbbbbb.js`), `/assets/${stem}.shell-aaaaaaaaaa.js`);
+  }
+  for (const path of ['/assets/obelisk-auth.js', '/assets/auth.shell-bbbbbbbbbb.js', 'https://other.example/assets/ambient-core.js', null]) assert.equal(rewrite(path), path);
+  assert.equal(rewrite('/assets/ambient-core.js', 'sha384-bound'), '/assets/ambient-core.js');
+  assert.throws(() => new LegacyGuideScriptRewriter({}), /Invalid guide asset/);
+  assert.throws(() => new LegacyGuideScriptRewriter({ ...assets, ambientCore: { path: 'assets/obelisk-auth.shell-aaaaaaaaaa.js' } }), /Invalid guide asset/);
+});
 
 test('agent action contract is scope-bound and fixed-vocabulary', () => {
   const scopes = new Set(['vaultspark:feedback:write']);

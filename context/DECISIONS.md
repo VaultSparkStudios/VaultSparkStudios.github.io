@@ -2068,3 +2068,7 @@ Retire the pictured constellation resume card and journey tour and their automat
 ## D-S369.2 — MindFrame canonical launch destination
 
 Use https://usemindframe.com/ from the project's canonical registry/status and current official site; reject retired Railway hosts even on FORGE entries. Check all external portfolio destinations rather than truncating the probe to twelve. Scriptorium 401 and VaultFront 503 remain distinct availability observations. Existing Synthetic Intelligence positioning under D-S368.8 remains unchanged; the hero question did not establish a replacement positioning decision.
+
+## D-S369.3 — Guide retirement reaches held public markup
+
+The approved guide removal also covers baseline Membership markup, which still references the old ambient loader and its guide children. The existing edge HTML rewriter updates only ambient-core, journey-conductor, constellation-tracker and pwa-install script references to their canonical content-addressed assets. Integrity-bound and foreign scripts are excluded. The body, membership logic, identity handlers, cookies and security policy retain their existing contracts. Old hash-named files remain intact; the HTML cache version advances so cached markup cannot hide the retirement. The four target families are fixed in code and validated against the build manifest. Verify both nonce modes with unit checks, compile the Worker, then test staged and live pages with returning-visitor history.
