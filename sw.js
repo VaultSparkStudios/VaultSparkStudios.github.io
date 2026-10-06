@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-efcdb985bb75f555';
+const CACHE_NAME = 'vaultspark-shell-4e42c3c43049e98f';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -32,7 +32,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/home-idle-loader.shell-d1839327b4.js',
-  '/assets/ambient-core.shell-fc8866d8a7.js',
+  '/assets/ambient-core.shell-638df012f8.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
@@ -123,7 +123,7 @@ const STATIC_ASSETS = [
   '/',
   '/assets/style.shell-7f501cc04e.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-fc8866d8a7.js',
+  '/assets/ambient-core.shell-638df012f8.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/kit.js',
   '/assets/icon-32.png',

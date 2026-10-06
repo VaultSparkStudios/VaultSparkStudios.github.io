@@ -5,7 +5,7 @@
 ║  ✓  Context age   2d                                             ║
 ║  ✓  IGNIS         46119 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   33/38 (87%) ↓ ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/38 (84%) ↓ ▆▆▆▆▆▆▆▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.229  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
