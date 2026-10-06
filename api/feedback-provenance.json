@@ -4,7 +4,7 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 2,
+  "themeCount": 3,
   "themes": [
     {
       "key": "conversion",
@@ -28,10 +28,31 @@
       ]
     },
     {
+      "key": "speed",
+      "label": "Speed",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "be9fe433",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "complete the existing ambient bundle dependency graph",
+          "ts": "2026-10-06T16:30:04.000Z"
+        }
+      ]
+    },
+    {
       "key": "frontdoor",
       "label": "Front door",
-      "count": 2,
+      "count": 3,
       "commits": [
+        {
+          "sha": "7555adfb",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "rebuild Desk header dependencies before shell hashing",
+          "ts": "2026-10-06T16:29:15.000Z"
+        },
         {
           "sha": "ed9ef308",
           "move": "Tended",

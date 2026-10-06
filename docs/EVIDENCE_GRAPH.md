@@ -385,6 +385,7 @@ flowchart LR
   n_scripts_ --> n_api_rank_climbers_json
   n_scripts_ --> n_api_spark_manifest_json
   n_scripts_ --> n_api_staging_deploy_receipt_json
+  n_scripts_ --> n_assets_ambient_core_bundle_js
   n_scripts_ --> n_assets_membership_access_js
   n_scripts_ --> n_config_cache_evidence_classification_json
   n_scripts_ --> n_context_ambient_ledger_json
@@ -621,7 +622,7 @@ flowchart LR
 - `projects/` → `ai-canonical-pages`, `ai-discovery-health`
 - `repo-structure:public-project-routes` → `agents-json`, `llms-full-shards`, `spark-manifest`
 - `rights/` → `ignis-search-index`
-- `scripts/` → `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `membership-access`, `rank-climbers`, `spark-manifest`, `staging-deploy-receipt`
+- `scripts/` → `ambient-bundles`, `ambient-ledger`, `cache-evidence-classification`, `dispatch-desk-panel`, `membership-access`, `rank-climbers`, `spark-manifest`, `staging-deploy-receipt`
 - `status/` → `candidate-artifact-manifest`
 - `studio-hub/` → `studio-timeline`
 - `studio-pulse/` → `candidate-artifact-manifest`
