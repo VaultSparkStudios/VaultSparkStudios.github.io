@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T10:47:10.014Z",
+  "generatedAt": "2026-10-06T11:11:45.626Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,17 +13,20 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
-    "candidateBuildSha": "78b420ba8eeaccc1028137a546a21ef9eabab281",
-    "deployedBuildSha": "78b420ba8eeaccc1028137a546a21ef9eabab281",
+    "candidateBuildSha": "d27b48b46dd8296967aec1d1105014d7b71a48ce",
+    "deployedBuildSha": "d27b48b46dd8296967aec1d1105014d7b71a48ce",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "928b25c632da391d85bf1347b80e4da9ebad7a252414d0b77ec605006d02e564",
+      "candidateRoot": "46e5ef66dd306e0ff8321895c115510406e27cc3a79dd8b38fd0f76e82ae37b4",
       "candidateLeafCount": 62,
-      "stagingRoot": "928b25c632da391d85bf1347b80e4da9ebad7a252414d0b77ec605006d02e564",
+      "stagingRoot": "46e5ef66dd306e0ff8321895c115510406e27cc3a79dd8b38fd0f76e82ae37b4",
       "stagingLeafCount": 62,
       "matched": true
     },
@@ -65,13 +68,13 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 27,
-    "ageHours": 4.3,
-    "observedAt": "2026-10-06T09:42:01.508Z",
+    "commitsBehind": 71,
+    "ageHours": 6.1,
+    "observedAt": "2026-10-06T11:11:45.626Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-06T09:42:01.508Z",
+      "observedAt": "2026-10-06T11:11:45.626Z",
       "expectedFrom": "203f930e1028a4395f9ed5a0ea2eb7ebcdd2a0fc5e746d370f7a8179fec03e30",
       "supersededBy": null,
       "ageHours": 0,
@@ -181,7 +184,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -195,7 +198,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
