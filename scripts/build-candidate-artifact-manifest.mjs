@@ -80,6 +80,12 @@ export const VOLATILE_FIELDS = Object.freeze({
   'api/build-sha.json': Object.freeze(['builtAt']),
 });
 
+// Mixed feeds also embed live observations. Preserve their complete raw bytes
+// in observedRoot, while keeping commit-derived content in the promotion root.
+export const OBSERVED_FIELDS = Object.freeze({
+  'api/public-intelligence.json': Object.freeze(['ciHealth']),
+});
+
 const hash = (value) => crypto.createHash('sha256').update(value).digest('hex');
 const normalize = (relative) => relative.replaceAll('\\', '/').replace(/^\/+/, '');
 
@@ -90,7 +96,7 @@ const normalize = (relative) => relative.replaceAll('\\', '/').replace(/^\/+/, '
  * canonicalised into agreement.
  */
 export function canonicalizeLeaf(relative, bytes) {
-  const fields = VOLATILE_FIELDS[normalize(relative)];
+  const fields = [...(VOLATILE_FIELDS[normalize(relative)] || []), ...(OBSERVED_FIELDS[normalize(relative)] || [])];
   const buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
   if (!fields || !fields.length) return buffer;
   let parsed;
@@ -135,11 +141,11 @@ function shellPaths() {
   return values;
 }
 
-function toLeaves(files) {
+function toLeaves(files, observed = false) {
   return [...files.entries()]
     .map(([relative, bytes]) => {
       const raw = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
-      const canonical = canonicalizeLeaf(relative, raw);
+      const canonical = observed ? raw : canonicalizeLeaf(relative, raw);
       const contentHash = hash(canonical);
       const stripped = !canonical.equals(raw);
       return {
@@ -147,7 +153,8 @@ function toLeaves(files) {
         bytes: raw.byteLength,
         sha256: contentHash,
         leafHash: leafHash(relative, contentHash, canonical.byteLength),
-        ...(stripped ? { volatileFieldsStripped: [...VOLATILE_FIELDS[normalize(relative)]] } : {}),
+        ...(stripped ? { volatileFieldsStripped: [...(VOLATILE_FIELDS[normalize(relative)] || [])] } : {}),
+        ...(!observed && OBSERVED_FIELDS[normalize(relative)] ? { observedFieldsExtracted: [...OBSERVED_FIELDS[normalize(relative)]] } : {}),
       };
     })
     .sort((a, b) => a.path.localeCompare(b.path));
@@ -155,7 +162,11 @@ function toLeaves(files) {
 
 export function buildManifest(files, candidateSha = null, generatedAt = null, observedFiles = new Map()) {
   const leaves = toLeaves(files);
-  const observedLeaves = toLeaves(observedFiles);
+  const observations = new Map(observedFiles);
+  for (const [relative, bytes] of files) {
+    if (OBSERVED_FIELDS[normalize(relative)]) observations.set(relative, bytes);
+  }
+  const observedLeaves = toLeaves(observations, true);
   return {
     schemaVersion: '1.1',
     generatedBy: 'scripts/build-candidate-artifact-manifest.mjs',
@@ -176,6 +187,8 @@ export function buildManifest(files, candidateSha = null, generatedAt = null, ob
       observedReason: 'live measurements rewritten on a schedule by .github/workflows/uptime-probe.yml; a function of the world at probe time, not of the commit',
       volatileFields: Object.fromEntries(Object.entries(VOLATILE_FIELDS).map(([leaf, fields]) => [leaf, [...fields]])),
       volatileReason: 'wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident',
+      observedFields: Object.fromEntries(Object.entries(OBSERVED_FIELDS).map(([leaf, fields]) => [leaf, [...fields]])),
+      observedFieldsReason: 'live CI observations are excluded from the source root; complete raw mixed-feed bytes remain hashed in observedRoot; hosted release checks remain separate',
     },
     candidateSha,
     root: merkleRoot(leaves),
@@ -263,6 +276,10 @@ function selfTest() {
   const observedFiles = (body) => new Map([['api/uptime.json', body]]);
   const obsA = buildManifest(files, null, observed, observedFiles('{"overall":"up"}'));
   const obsB = buildManifest(files, null, observed, observedFiles('{"overall":"down"}'));
+  const intelligence = (status, title = 'Studio') => new Map([['api/public-intelligence.json', JSON.stringify({ title, ciHealth: { status } })]]);
+  const ciA = buildManifest(intelligence('success'), null, observed);
+  const ciB = buildManifest(intelligence('failure'), null, observed);
+  const ciContent = buildManifest(intelligence('success', 'Changed'), null, observed);
 
   const cases = [
     ['deterministic across input order', first.root === second.root],
@@ -286,6 +303,10 @@ function selfTest() {
     ['observed leaves are still published, not dropped', obsA.observedLeafCount === 1 && obsA.observedLeaves[0].path === 'api/uptime.json'],
     ['observed and source path sets are disjoint', !CORE_PATHS.some((p) => OBSERVED_PATHS.includes(p))],
     ['every cron-owned leaf is classified observed', ['api/uptime.json', 'api/worker-route-provenance.json'].every((p) => OBSERVED_PATHS.includes(p))],
+    ['embedded CI observations do not move the source root', ciA.root === ciB.root],
+    ['embedded CI observations remain tamper-evident in observedRoot', ciA.observedRoot !== ciB.observedRoot],
+    ['mixed-feed source content still moves the source root', ciA.root !== ciContent.root],
+    ['complete mixed-feed raw bytes remain hashed', ciA.observedLeaves[0].sha256 === hash(intelligence('success').get('api/public-intelligence.json'))],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);

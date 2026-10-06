@@ -2072,3 +2072,8 @@ Use https://usemindframe.com/ from the project's canonical registry/status and c
 ## D-S369.3 — Guide retirement reaches held public markup
 
 The approved guide removal also covers baseline Membership markup, which still references the old ambient loader and its guide children. The existing edge HTML rewriter updates only ambient-core, journey-conductor, constellation-tracker and pwa-install script references to their canonical content-addressed assets. Integrity-bound and foreign scripts are excluded. The body, membership logic, identity handlers, cookies and security policy retain their existing contracts. Old hash-named files remain intact; the HTML cache version advances so cached markup cannot hide the retirement. The four target families are fixed in code and validated against the build manifest. Verify both nonce modes with unit checks, compile the Worker, then test staged and live pages with returning-visitor history.
+
+### D-S369.4 — Mixed-feed CI observations
+
+The public intelligence feed embeds live CI observations. Those fields belong in the observed artifact root, while its reproducible content stays in the source root. The complete raw feed remains hashed for auditability; actual hosted CI and release gates remain mandatory. This prevents unchanged runtime code from losing staging parity when a status observation changes.
+
