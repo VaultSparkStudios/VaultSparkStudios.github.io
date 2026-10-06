@@ -37,6 +37,7 @@
  */
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
@@ -200,6 +201,33 @@ export function gate(paths, {
   };
 }
 
+function critiqueMutationCases() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'vss-critique-gate-'));
+  const rel = 'news/2026-08-11/receipt-test/critique.json';
+  const packetPath = path.join(root, rel), pagePath = path.join(root, path.dirname(rel), 'index.html');
+  const dayPath = path.join(root, 'data/news-desk/days/2026-08-11.json');
+  fs.mkdirSync(path.dirname(packetPath), { recursive: true });
+  fs.mkdirSync(path.dirname(dayPath), { recursive: true });
+  const article = '<a href="/' + rel + '">Public critique</a>';
+  const day = { simulated: false, stories: [{ slug: 'receipt-test' }] };
+  const packet = { schemaVersion: 1, generatedBy: 'scripts/build-news-critique-packets.mjs', story: { url: 'https://vaultsparkstudios.com/news/2026-08-11/receipt-test/' }, visualEvidence: { pageSha256: crypto.createHash('sha256').update(article).digest('hex') } };
+  const write = (d = day, p = packet, a = article) => { fs.writeFileSync(dayPath, JSON.stringify(d)); fs.writeFileSync(packetPath, JSON.stringify(p)); fs.writeFileSync(pagePath, a); };
+  const cases = [];
+  try {
+    write(); cases.push(['registered linked packet is allowed', isPublishedDeskCritique(rel, root)]);
+    write(day, { ...packet, visualEvidence: { pageSha256: '0'.repeat(64) } }); cases.push(['stale packet hash blocks publication', !isPublishedDeskCritique(rel, root)]);
+    write({ ...day, simulated: true }); cases.push(['simulated edition cannot promote its packet', !isPublishedDeskCritique(rel, root)]);
+    write({ ...day, stories: [] }); cases.push(['unregistered story cannot promote its packet', !isPublishedDeskCritique(rel, root)]);
+    write(day, packet, article + '<p>changed</p>'); cases.push(['changed article requires a fresh packet', !isPublishedDeskCritique(rel, root)]);
+    write(day, { ...packet, story: { url: 'https://example.com/' } }); cases.push(['foreign packet URL blocks publication', !isPublishedDeskCritique(rel, root)]);
+    write(day, { ...packet, generatedBy: 'unknown' }); cases.push(['unknown packet producer blocks publication', !isPublishedDeskCritique(rel, root)]);
+    return cases;
+  } finally {
+    if (path.dirname(path.resolve(root)) !== path.resolve(os.tmpdir()) || !path.basename(root).startsWith('vss-critique-gate-')) throw new Error('Fixture cleanup scope mismatch');
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+}
+
 function selfTest() {
   const exists = () => true;
   const g = (paths) => gate(paths, { exists });
@@ -269,6 +297,7 @@ function selfTest() {
     ['an asset already in the deployed tree satisfies it', gate(['a.html'], { exists: () => true, read: () => '<link href="/assets/old.css">', baselineHas: (p) => p === 'assets/old.css' }).allowed === true],
     ['reference check reports when it did NOT run', gate(['a.html'], { exists: () => true, read: () => '' }).referenceCheckRan === false],
   ];
+  cases.push(...critiqueMutationCases());
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
   if (failed.length) {
