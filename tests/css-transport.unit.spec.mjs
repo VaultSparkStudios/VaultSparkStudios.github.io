@@ -31,3 +31,11 @@ test('main shell CSS transfers materially fewer compressed bytes', () => {
   const compactBytes = zlib.gzipSync(compact).length;
   assert.ok(compactBytes <= originalBytes * 0.8, `${compactBytes} must be at least 20% below ${originalBytes}`);
 });
+
+test('ambient Spark loader uses the stylesheet artifact hash', () => {
+  const manifest = JSON.parse(fs.readFileSync(new URL('../assets/shell-manifest.json', import.meta.url), 'utf8'));
+  const core = fs.readFileSync(new URL('../' + manifest.assets.ambientCore.path, import.meta.url), 'utf8');
+  const style = manifest.assets.sparkStyle.path;
+  assert.ok(core.includes('/' + style), 'lazy stylesheet must match the generated compacted bytes');
+  assert.equal(core.match(/\/assets\/spark-compass\.shell-[a-f0-9]{10}\.css/g)?.every(url => url === '/' + style), true);
+});

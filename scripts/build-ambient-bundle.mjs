@@ -28,6 +28,7 @@
  *   node scripts/build-ambient-bundle.mjs --check    # exit 1 if bundles drift from sources
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { compactCssTransport } from './lib/css-transport.mjs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -139,7 +140,8 @@ const CONTENT_ADDRESSED_PREDICATE_SRCS = [
 function shellHash(relPath) {
   const full = join(ROOT, relPath);
   if (!existsSync(full)) return null;
-  const normalized = readFileSync(full, 'utf-8').replace(/\r\n/g, '\n');
+  const source = readFileSync(full, 'utf-8').replace(/\r\n/g, '\n');
+  const normalized = relPath.endsWith('.css') ? compactCssTransport(source) + '\n' : source;
   return createHash('sha256').update(Buffer.from(normalized, 'utf8')).digest('hex').slice(0, 10);
 }
 
