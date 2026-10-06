@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-06T12:17:02.025Z",
+  "generatedAt": "2026-10-06T12:26:14.766Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "3a8805cd2a7205f472f560ecb9f8f580dee13c3d",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "scheduled_unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 8 consecutive receipts. Push gates green, but scheduled-workflow evidence is incomplete (1/15 observed).",
+  "summary": "Production deployment is stranded for 8 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 8,
     "newestGradableAt": "2026-10-06T08:31:14.471Z",
-    "newestAgeHours": 3.8,
+    "newestAgeHours": 3.9,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-06T12:08:22Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37459894762",
-      "headSha": "3a8805cd2a7205f472f560ecb9f8f580dee13c3d",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-06T12:22:37Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37462722822",
+      "headSha": "f704f84ec6f2246f1cbdf1b77d320a2fa29e4599",
       "event": "push"
     },
     {
@@ -50,30 +50,30 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-06T12:00:15Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37459894871",
-      "headSha": "3a8805cd2a7205f472f560ecb9f8f580dee13c3d",
+      "updatedAt": "2026-10-06T12:24:32Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37462722831",
+      "headSha": "f704f84ec6f2246f1cbdf1b77d320a2fa29e4599",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-06T12:15:04Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37459894695",
-      "headSha": "3a8805cd2a7205f472f560ecb9f8f580dee13c3d",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-06T12:22:03Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37462723310",
+      "headSha": "f704f84ec6f2246f1cbdf1b77d320a2fa29e4599",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-06T10:33:43Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37450454076",
-      "headSha": "3a171ac40e95ed3da6921981186da7b84816d21a",
-      "event": "push"
+      "status": "unknown",
+      "rawStatus": "unknown",
+      "conclusion": null,
+      "updatedAt": null,
+      "url": null,
+      "headSha": null,
+      "event": null
     }
   ],
   "scheduledWorkflows": [
@@ -211,17 +211,17 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-06T11:40:38Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-10-06T12:18:19Z",
       "recentConclusions": [
+        "failure",
         "success",
-        "success",
-        "failure"
+        "success"
       ],
       "dead": false,
-      "streak": 0,
+      "streak": 1,
       "state": "healthy",
-      "ageHours": 0.61,
+      "ageHours": 0.13,
       "staleAfterHours": 48
     },
     {
