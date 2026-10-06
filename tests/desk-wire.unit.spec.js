@@ -79,7 +79,7 @@ test('deskWireLabel only claims "Live" when the freshness feed measures daily', 
   assert.equal(daily.label, LIVE_LABEL);
   assert.equal(daily.state, 'live');
   assert.equal(daily.pulse, true);
-  assert.equal(LIVE_LABEL, 'Live on The Desk');
+  assert.equal(LIVE_LABEL, 'The Desk · AI News');
 });
 
 test('deskWireLabel downgrades to "Latest" with no pulse for every non-daily state', () => {
@@ -98,7 +98,7 @@ test('deskWireLabel downgrades to "Latest" with no pulse for every non-daily sta
     assert.equal(badge.state, 'latest', where);
     assert.equal(badge.pulse, false, where);
   }
-  assert.equal(LATEST_LABEL, 'Latest · The Desk');
+  assert.equal(LATEST_LABEL, 'The Desk · AI News');
 });
 
 test('selectLatest keeps feed order on ties and truncates to the budget', () => {
@@ -154,7 +154,7 @@ test('browser mount swaps text only, via textContent/setAttribute, and marks the
   assert.deepEqual(requested.sort(), ['/api/news-desk-freshness.json', '/api/news-desk.json']);
   assert.equal(link.getAttribute('href'), '/news/2026-09-12/a/');
   assert.equal(headline.textContent, 'The newest headline');
-  assert.equal(label.textContent, 'Live on The Desk');
+  assert.equal(label.textContent, 'The Desk · AI News');
   assert.equal(attrs.get('data-desk-wire-state'), 'live');
 });
 
@@ -184,7 +184,7 @@ test('a periodic desk shows the headline but neither claims "Live" nor pulses', 
   vm.runInNewContext(SOURCE, sandbox, { filename: 'desk-wire.js' });
   for (let i = 0; i < 6; i++) await new Promise((resolve) => setImmediate(resolve));
   assert.equal(headline.textContent, 'Two days old', 'the headline still ships');
-  assert.equal(label.textContent, 'Latest · The Desk');
+  assert.equal(label.textContent, 'The Desk · AI News');
   assert.equal(attrs.get('data-desk-wire-state'), 'latest', 'only "live" pulses in CSS');
 });
 
@@ -212,7 +212,7 @@ test('an unreadable freshness feed is not evidence of a daily desk', async () =>
   vm.runInNewContext(SOURCE, sandbox, { filename: 'desk-wire.js' });
   for (let i = 0; i < 6; i++) await new Promise((resolve) => setImmediate(resolve));
   assert.equal(headline.textContent, 'Headline without cadence evidence');
-  assert.equal(label.textContent, 'Latest · The Desk');
+  assert.equal(label.textContent, 'The Desk · AI News');
   assert.equal(attrs.get('data-desk-wire-state'), 'latest');
 });
 

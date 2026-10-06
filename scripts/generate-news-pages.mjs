@@ -339,8 +339,8 @@ const PANEL_REACTIONS = [
  *
  * S356 reader-first layout: the illustration is the story's hero image, so it
  * sits directly under the byline and loads eagerly (it is the article LCP).
- * Its reactions render separately, after the body — eight buttons between the
- * picture and the short version pushed the story off a phone's first screen.
+ * Its reactions and image threads occupy the desktop side panel. The optional
+ * satire cartoon stays in a native disclosure below the lead illustration.
  */
 /**
  * True when the story's art is the procedural fallback rather than a drawn
@@ -371,7 +371,7 @@ function memeFigure(story, day) {
     : `AI-generated editorial illustration, attributed to ${personaNameLink(persona)} (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
     <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
-    <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
+    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
 }
@@ -554,6 +554,30 @@ function communitySection(story, day) {
   return `<section class="desk-comments" id="community" data-desk-comments data-slug="${escapeHtml(`${day.date}/${story.slug}`)}" aria-labelledby="desk-comments-title"><h2 id="desk-comments-title">Community</h2><p class="desk-comments-fallback">Comments are loading…</p></section>`;
 }
 
+/** Image threads use a deterministic reserved namespace within the existing
+ * comment slug contract. No schema, authentication or moderation change. */
+function imageDiscussion(story, day, target, label) {
+  const asset = target === 'satire-cartoon' ? satireCartoonAssetBase(day.date, story.slug) : `${day.date}--${story.slug}--meme`;
+  const assetPath = join(ROOT, 'assets', 'og', 'news', `${asset}.png`);
+  if (!existsSync(assetPath)) return '';
+  const version = createHash('sha256').update(readFileSync(assetPath)).digest('hex');
+  const key = createHash('sha256').update(`${day.date}/${story.slug}#${target}:${version}`).digest('hex').slice(0, 32);
+  const id = `comments-${target}`;
+  return `<details class="desk-art-discussion" name="desk-image-comments"><summary>Comment on ${label}</summary><p class="desk-art-comment-note">Public comments on this image version. The story discussion stays separate.</p><section class="desk-comments" id="${id}" data-desk-comments data-slug="${day.date}/art-${key}" data-comment-target="${escapeHtml(target)}" data-image-sha256="${version}" aria-labelledby="${id}-title"><h2 id="${id}-title">${label === 'the illustration' ? 'Illustration comments' : 'Cartoon comments'}</h2><p class="desk-comments-fallback">Open this panel to load image comments.</p></section></details>`;
+}
+
+function artworkStage(story, day) {
+  const illustration = memeFigure(story, day);
+  if (!illustration) return '';
+  return `<section class="desk-art-stage" aria-label="Story artwork and image discussion"><div class="desk-art-gallery">${illustration}</div><aside class="desk-art-feedback" aria-label="Artwork reactions and public comments">${panelReactions(story, day)}${imageDiscussion(story, day, 'editorial-illustration-1', 'the illustration')}</aside></section>`;
+}
+
+function newsBrief(story, day) {
+  const facts = (story.facts || []).filter(f => f.sourceUrl);
+  const publishers = new Set(facts.map(publisherFor));
+  return `<section class="desk-tldr desk-news-brief" aria-labelledby="desk-short-title"><div class="desk-brief-head"><h2 class="desk-tldr-k" id="desk-short-title">News Brief</h2><span>${facts.length} cited claims · ${publishers.size} publisher${publishers.size === 1 ? '' : 's'}</span></div><p class="desk-brief-intro">The source record first. The Desk’s interpretation follows.</p><ol class="desk-brief-facts">${facts.map((f,index)=>`<li><p>${escapeHtml(f.text)}</p><a href="${escapeHtml(f.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(publisherFor(f))}${f.sourceKind === 'feed-summary' ? ' · feed summary' : ''} ↗</a> <a class="desk-brief-receipt" href="#${factReceiptFor(day,story,f,index).anchor}">Claim receipt</a></li>`).join('')}</ol><p class="desk-brief-note">These are attributed source claims, distinct from the AI personas’ opinions below.</p></section>`;
+}
+
 /** Three recent, listable stories other than this one. */
 function moreFromDesk(currentDay, current) {
   const picks = [];
@@ -619,7 +643,8 @@ function stanceAxis(stats) {
   }).join('');
   return `<div class="desk-axis" role="img" aria-label="${escapeHtml(`Desk positions — ${stats.positions.map((p) => `${personaById(p.personaId)?.name || p.personaId} ${p.verdict || ''} ${p.direction > 0 ? '+' : ''}${p.direction}`).join('; ')}`)}">
     <div class="desk-axis-line"><span class="desk-axis-zero" aria-hidden="true"></span>${dots}</div>
-    <div class="desk-axis-ends" aria-hidden="true"><span>overhyped</span><span>fairly valued</span><span>underhyped</span></div>
+    <div class="desk-axis-ends" aria-hidden="true"><span>More hype than evidence</span><span>In proportion</span><span>Impact under-recognized</span></div>
+    <p class="desk-axis-note">Signal vs. hype: the personas weigh the coverage against the cited evidence and potential reader impact. This is their assessment, not a reader vote or a measured value score.</p>
   </div>`;
 }
 
@@ -797,8 +822,11 @@ function deskStatsPanel() {
     ? `<li class="desk-stat"><span class="desk-stat-n">Not yet</span><span class="desk-stat-k">graded accuracy</span><span class="desk-stat-d">${escapeHtml(p.accuracyBasis)}</span></li>`
     : `<li class="desk-stat"><span class="desk-stat-n">${p.accuracy}%</span><span class="desk-stat-k">graded accuracy</span><span class="desk-stat-d">${escapeHtml(p.accuracyBasis)}</span></li>`;
   const span = d.firstDate === d.latestDate ? d.firstDate : `${d.firstDate} → ${d.latestDate}`;
-  return `<section class="desk-stats desk-stats-wide" aria-label="The Desk in numbers">
-    <p class="desk-stats-title">The desk in numbers <span>every figure below is computed from the published stories, not typed in — <a href="/api/news-desk-stats.json">check the feed</a></span></p>
+  const audience = engagementFeed.audienceSummary || {};
+  const recorded = value => value == null ? 'Collecting' : Number(value).toLocaleString('en-US');
+  return `<section class="desk-stats desk-stats-wide" id="numbers" aria-labelledby="desk-numbers-title">
+    <div class="desk-section-head"><h2 id="desk-numbers-title">The Desk in numbers</h2><p>The published record. The recorded readership. Every number has a source.</p></div>
+    <h3 class="desk-metric-heading">The editorial record <a href="/api/news-desk-stats.json">Inspect the data ↗</a></h3>
     <ul class="desk-stat-grid">
       ${statChip(d.stories, d.stories === 1 ? 'story published' : 'stories published', span)}
       ${statChip(d.voices, 'voices writing', d.voiceIds.map((v) => personaById(v)?.name || v).join(' · '))}
@@ -809,6 +837,14 @@ function deskStatsPanel() {
       ${accuracy}
       ${statChip(d.minutes, 'minutes of reading', `${d.words.toLocaleString('en-US')} words`)}
     </ul>
+    <h3 class="desk-metric-heading">The readership record <span>30-day evidence window</span></h3>
+    <ul class="desk-stat-grid desk-readership-grid">
+      ${statChip(recorded(audience.recordedArticleViews), 'recorded article views', `${audience.articlesWithPublishedViews || 0} articles above the five-load publication floor`)}
+      ${statChip(recorded(audience.recordedHomepageViews), 'recorded Desk homepage views', 'browser loads; reloads count again')}
+      ${statChip(audience.averageEngagedSeconds == null ? 'Collecting' : formatSeconds(audience.averageEngagedSeconds), 'average engaged reading', 'visible and focused time; not completion')}
+      ${statChip(recorded(audience.completedReadingObservations), 'completed reading observations', 'thresholded browser summaries, not unique readers')}
+    </ul>
+    <p class="desk-metric-note">${escapeHtml(audience.definition || 'Counts publish after the privacy floor is met. Missing evidence stays collecting, never zero.')} ${engagementFeed.observedThrough ? `Evidence through ${escapeHtml(engagementFeed.observedThrough.slice(0,10))}.` : 'No qualifying readership receipt yet.'} <a href="/api/news-desk-engagement.json">Check the readership receipt →</a></p>
   </section>`;
 }
 
@@ -896,7 +932,7 @@ function buildStoryPage(day, story) {
   const tocSections = [
     ['story', 'The story'],
     ['sources', 'Where this came from'],
-    ['positions', 'Where they are coming from'],
+    ['positions', 'The Desk’s Take'],
     ...(hasPredictions ? [['predictions', 'What they are betting on']] : []),
     ...(hasTranscript ? [['argument', argumentLabel]] : []),
   ];
@@ -913,24 +949,24 @@ ${followUp ? `  ${followUp}\n` : ''}
   </header>
 ${day.simulated ? PREVIEW_BANNER : ''}
 ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
-  <section class="desk-tldr" aria-labelledby="desk-short-title"><h2 class="desk-tldr-k" id="desk-short-title">The short version</h2><p class="desk-standfirst">${escapeHtml(story.tldr)}</p></section>
+  ${artworkStage(story, day)}
+  ${newsBrief(story, day)}
   ${storyToc(tocSections)}
   <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
-  <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
-  ${dispatchCta('story', { compact: true, heading: 'Liked the argument? Get the next one.' })}
   <section class="desk-section" id="sources" aria-labelledby="desk-sources-title">
   <h2 class="desk-h2" id="desk-sources-title">Where this came from</h2>
   <p class="desk-section-note">Every factual claim in the piece, linked to the source it came from. Open a receipt to copy its verifiable id and hash.</p>
   <ol class="desk-panel desk-facts">${facts}</ol>
   <p class="desk-critique-link"><a href="/news/${escapeHtml(day.date)}/${escapeHtml(story.slug)}/critique.json">Open the claim/evidence critique packet →</a> <span>Facts, arguments, predictions, and visual provenance; generated without a runtime model call.</span></p>
   </section>
-  ${memeFigure(story, day)}
-  ${panelReactions(story, day)}${/* no line at all without a cartoon: pages stay byte-identical */ satireFigure(story, day) ? `\n  ${satireFigure(story, day)}` : ''}
   <section class="desk-section" id="positions" aria-labelledby="desk-positions-title">
-  <h2 class="desk-h2" id="desk-positions-title">Where they are coming from</h2>
+  <h2 class="desk-h2" id="desk-positions-title">The Desk’s Take</h2>
+  <p class="desk-section-note">What deserves your attention? The personas argue the practical impact, the evidence and the gaps. Their positions are opinions; the source record is above.</p>
   ${pulseBar(story, day, heat, stats)}
   ${story.stances.map(stanceCard).join('\n')}
   </section>
+  ${reactionBar(story, day)}
+  ${satireFigure(story, day) ? `<section class="desk-art-stage desk-satire-stage" aria-label="Satire cartoon and public image comments"><div class="desk-art-gallery">${satireFigure(story,day)}</div><aside class="desk-art-feedback" aria-label="Cartoon comments">${imageDiscussion(story,day,'satire-cartoon','the cartoon')}</aside></section>` : ''}
 ${/* Only the formats that make a claim about the future carry this section. A
      Quick Take or a Roast has no predictions, and rendering the heading anyway
      printed "What they are betting on" above an empty list — advertising
@@ -942,12 +978,13 @@ ${/* Only the formats that make a claim about the future carry this section. A
   <ul class="desk-predictions">${story.predictions.map(predictionRow).join('\n')}</ul>
   </section>` : ''}
 ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><summary>${argumentLabel}</summary>${transcript}</details>` : ''}
+  <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
+  ${dispatchCta('story', { compact: true, heading: 'The next AI story, in your inbox.' })}
   <section class="desk-section desk-activity" aria-labelledby="desk-activity-title">
   <h2 class="desk-h2" id="desk-activity-title">Reader activity</h2>
   ${storyAudienceSummary(story, day)}
   ${engagementPanel(story, day)}
   </section>
-  ${reactionBar(story, day)}
   ${communitySection(story, day)}
   ${moreFromDesk(day, story)}
   ${DISCLOSURE}
@@ -1113,16 +1150,22 @@ function buildHubPage() {
     ? [dayBlockList[0], dispatchCta('hub'), ...dayBlockList.slice(1)].join('\n')
     : '';
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
-  <span class="desk-kicker">The Desk · AI signal</span>
-  <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
-  <p class="desk-deck">AI news with teeth: ${CAST_WORD} fictional correspondents investigate the day’s real sources, argue in character, draw the joke, and leave every prediction on a public scorecard. Read the brief, enjoy the hit, then check the receipts.</p>
+  <nav class="desk-mini-nav" aria-label="The Desk navigation"><a href="#latest">Latest</a><a href="#anchors">AI anchors</a><a href="/news/archive/">Archive</a><a href="#numbers">In numbers</a><a href="#ledger">Scorecard</a><a href="/news/directors-report/">Director’s report</a><a href="#desk-dispatch">Subscribe ↗</a></nav>
+  <header class="desk-masthead">
+  <div><span class="desk-kicker">VaultSpark Studios · The Desk</span>
+  <h1 class="desk-display">The AI<br><em>News Desk.</em></h1>
+  <p class="desk-deck">The source record first. The sharp perspectives after. AI news, evidence-linked briefs and ${CAST_WORD} fictional editorial personalities — with their predictions kept on the record.</p>
+  <div class="desk-masthead-links"><a href="#latest">Read the latest ↓</a><a href="/api/news-desk-feed.json">Agent-readable feed ↗</a></div></div>
+  <aside class="desk-masthead-card"><p class="desk-kicker">Your route through the story</p><ol><li><strong>The News Brief</strong><span>Reported claims, numbers and linked sources.</span></li><li><strong>The Desk’s Take</strong><span>Distinct AI perspectives, evidence and practical impact.</span></li><li><strong>The public record</strong><span>Source receipts, predictions and reader discussion.</span></li></ol><a href="#anchors">Meet the AI anchors →</a></aside>
+  </header>
+  <div class="desk-anchor-rail" aria-label="AI persona profile links">${PERSONAS.map(p => `<a href="${personaHref(p)}">${personaPortrait(p)}<span><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.role)}</small></span></a>`).join('')}</div>
   ${dispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' })}
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${renderStaticDeskEvidence(days)}
   ${deskStatsPanel()}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
+  <div class="desk-section-head" id="latest"><h2>Latest editions</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${searchEntries.length ? deskFinderHtml({
     escape: escapeHtml,
     storyCount: searchEntries.length,
@@ -1136,7 +1179,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${archiveMonths.length ? '<p class="desk-archive-cta"><a href="/news/archive/">Browse every edition in The Desk archive →</a></p>' : ''}
   </div>
-  <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
+  <div class="desk-section-head" id="anchors"><h2>The AI anchors &amp; editorial roster</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Open a profile to explore their published work, arguments and predictions.</p></div>
   <div class="desk-cast">${cast}</div>
   <div class="desk-section-head"><h2>Not every story is the same shape</h2><p>Some days it is an argument. Some days it is one line and a link.</p></div>
   <p class="desk-legend"><strong>Today’s lead</strong> is the story the Desk put first that day. <strong>The quiet story</strong> is the long-horizon piece nobody else covered — deliberately published alongside the lead, not beneath it. Everything else carries just its date.</p>

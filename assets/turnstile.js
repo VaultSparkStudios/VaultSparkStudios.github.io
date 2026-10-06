@@ -94,12 +94,12 @@
   // Always create a fresh container element. Old containers (post-teardown)
   // are detached but never reused — that's how we avoid calling
   // turnstile.remove() (see header).
-  function _placeFreshContainer() {
+  function _placeFreshContainer(requestedSlot) {
     _container = document.createElement('div');
     _container.id = 'vs-turnstile';
     _container.setAttribute('data-vs-turnstile-host', '');
     _container.style.cssText = HIDDEN_STYLE;
-    var slot = _findVisibleSlot();
+    var slot = requestedSlot || _findVisibleSlot();
     if (slot) {
       slot.appendChild(_container);
     } else {
@@ -122,10 +122,11 @@
 
   // Widget is still usable if its container is in the DOM and its parent
   // is currently laid out (i.e., the tab hosting the slot is active).
-  function _containerStillUsable() {
+  function _containerStillUsable(requestedSlot) {
     if (_widgetId === null || !_container || !_container.isConnected) return false;
     var p = _container.parentNode;
     if (!p) return false;
+    if (requestedSlot && p !== requestedSlot) return false;
     if (p === document.body) return true;
     return p.offsetParent !== null;
   }
@@ -195,14 +196,14 @@
     }
   }
 
-  function _ensureWidget() {
+  function _ensureWidget(requestedSlot) {
     // If a widget exists but its slot is no longer visible (tab switched),
     // tear it down and re-render fresh in the new visible slot.
-    if (_widgetId !== null && !_containerStillUsable()) {
+    if (_widgetId !== null && !_containerStillUsable(requestedSlot)) {
       _teardownWidget();
     }
     if (_widgetId !== null) return;
-    var container = _placeFreshContainer();
+    var container = _placeFreshContainer(requestedSlot);
     _widgetId = window.turnstile.render(container, {
       sitekey:           SITE_KEY,
       // appearance:'interaction-only' keeps the widget invisible until
@@ -223,7 +224,8 @@
      * Serves a cached token when fresh; otherwise resets (or rebuilds) the
      * widget into the currently-visible slot.
      */
-    getToken: function () {
+    getToken: function (requestedSlot) {
+      requestedSlot = requestedSlot && requestedSlot.isConnected ? requestedSlot : null;
       if (SITE_KEY === 'TURNSTILE_SITE_KEY_PLACEHOLDER') {
         return Promise.resolve('');
       }
@@ -247,15 +249,15 @@
             _pendingTimer = setTimeout(_onTimeout, TOKEN_TIMEOUT_MS);
           }
 
-          if (_containerStillUsable()) {
+          if (_containerStillUsable(requestedSlot)) {
             try {
               window.turnstile.reset(_widgetId);
             } catch (_) {
               _teardownWidget();
-              _ensureWidget();
+              _ensureWidget(requestedSlot);
             }
           } else {
-            _ensureWidget();
+            _ensureWidget(requestedSlot);
           }
         });
       });
@@ -269,5 +271,3 @@
     ensureLoaded();
   }
 })(window);
-
-

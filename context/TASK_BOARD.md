@@ -594,3 +594,10 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 
 - [ ] **[SIL][S369][P2]** Re-probe Scriptorium (HTTP 401) and VaultFront (HTTP 503); treat these as authentication/availability observations, not proven abandoned URLs.
 - [ ] **[SIL][S369][P2]** Review Spark aggregate usage only after a fresh consented cohort exists; no conversion improvement is claimed from lab tests.
+
+### S369 — Expanded Desk delivery
+
+- [ ] Premium Desk masthead, AI anchor profile navigation and header News/subscribe links; verify desktop/mobile in every theme.
+- [ ] Source-attributed News Brief, reader-impact take labels, late satire and separate public image threads; verify source parity and comment isolation.
+- [ ] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
+- [ ] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.

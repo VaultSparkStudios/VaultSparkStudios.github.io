@@ -133,6 +133,21 @@ test('switching to another form tab re-renders into the newly visible slot', asy
   } finally { await f.close(); }
 });
 
+test('an explicit requesting slot switches challenge between simultaneously visible forms', async () => {
+  const { f } = await setup();
+  try {
+    await f.page.evaluate(() => { document.getElementById('tabB').hidden = false; window.VSTurnstile.getToken(document.getElementById('slotB')); });
+    await waitFor(async () => (await renders(f.page)) === 1);
+    assert.equal(await f.page.evaluate(() => window.__ts.renders[0].el.parentNode.id), 'slotB');
+    await callOpt(f.page, 'callback', 'tok-B');
+    await f.page.evaluate(() => { window.VSTurnstile.getToken(document.getElementById('slotA')).then(t => { window.__explicitToken = t; }); });
+    await waitFor(async () => (await renders(f.page)) === 2);
+    assert.deepEqual(await f.page.evaluate(() => [window.__ts.renders[1].el.parentNode.id, document.querySelectorAll('#vs-turnstile').length, window.__ts.removes]), ['slotA',1,0]);
+    await callOpt(f.page, 'callback', 'tok-A');
+    await waitFor(() => f.page.evaluate(() => window.__explicitToken === 'tok-A'));
+  } finally { await f.close(); }
+});
+
 test('an unanswered challenge times out after 12s with an actionable message', async () => {
   const { f } = await setup({ clock: true });
   try {
@@ -172,6 +187,4 @@ test('two sequential getToken() calls never hand out the same single-use token',
     assert.deepEqual(await result(f.page), { ok: true, t: 'tok-2' });
   } finally { await f.close(); }
 });
-
-
 

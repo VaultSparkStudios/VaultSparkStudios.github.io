@@ -4933,7 +4933,12 @@ body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--mu
   height: 100%;
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
+.desk-wire__brand{flex:0 0 9.5rem;display:flex;align-items:center;height:100%;color:var(--text);text-decoration:none}
+.desk-wire__subscribe{flex:0 0 auto;display:flex;align-items:center;height:100%;padding-inline:.8rem;border-left:1px solid var(--header-border);color:var(--text);font-size:.72rem;font-weight:700;white-space:nowrap;text-decoration:none}
+.desk-wire__brand:focus-visible,.desk-wire__subscribe:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.desk-wire__subscribe:hover{background:color-mix(in srgb,var(--gold) 10%,transparent)}
 .desk-wire__link {
   display: flex;
   align-items: center;

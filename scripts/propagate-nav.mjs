@@ -287,11 +287,12 @@ function buildNav(assetPrefix, activeHref) {
     </div>
     <div class="desk-wire" data-desk-wire>
       <div class="container desk-wire__inner">
+        <a class="desk-wire__brand" href="/news/"><span class="desk-wire__label"><span class="desk-wire__dot" aria-hidden="true"></span><span data-desk-wire-label>The Desk · AI News</span></span></a>
         <a class="desk-wire__link" href="/news/" data-desk-wire-link data-track-event="desk_wire_click">
-          <span class="desk-wire__label"><span class="desk-wire__dot" aria-hidden="true"></span><span data-desk-wire-label>The Desk</span></span>
           <span class="desk-wire__headline" data-desk-wire-headline>Latest AI signal from the newsroom</span>
           <span class="desk-wire__cta" aria-hidden="true">Read &rarr;</span>
         </a>
+        <a class="desk-wire__subscribe" href="/news/#desk-dispatch">Subscribe &rarr;</a>
       </div>
     </div>
   </header>`;

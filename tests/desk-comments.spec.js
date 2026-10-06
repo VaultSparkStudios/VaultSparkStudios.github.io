@@ -61,6 +61,10 @@ const ASSETS = {
   '/assets/style.css': ['assets/style.css', 'text/css; charset=utf-8'],
   '/assets/news-desk.css': ['assets/news-desk.css', 'text/css; charset=utf-8'],
 };
+// The fixture is reconciled to the current content-addressed production script.
+// Serve that path as well as the source path on the isolated test origin.
+const commentsAsset = JSON.parse(read('assets/shell-manifest.json')).assets.deskComments;
+ASSETS[`/${commentsAsset.path}`] = ['assets/desk-comments.js', 'application/javascript; charset=utf-8'];
 
 async function setup(page, options = {}) {
   const {

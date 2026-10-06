@@ -140,6 +140,10 @@ export function deriveSnapshot(rawRows, allowedStories, now = new Date()) {
     minPageloads: MIN_PAGELOADS,
     stories,
     reach,
+    hubReach: (() => {
+      const count = rawRows.filter(row => row && !row.ux && !row.measurement && row.route === '/news/' && new Date(row.ts) >= start && new Date(row.ts) < end).length;
+      return { pageloads: count >= MIN_PAGELOADS ? count : null, belowFloor: count < MIN_PAGELOADS };
+    })(),
   };
   return { ...payload, receiptId: crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 20) };
 }
@@ -234,6 +238,20 @@ export function deriveFeed(stories, historyRows) {
     sourceReceiptId: latest && latest.receiptId || null,
     observedThrough: latest && latest.observedThrough || null,
     qualification: deriveQualification(historyRows),
+    audienceSummary: (() => {
+      const reach = (latest?.reach || []).filter(row => Number.isFinite(row.pageloads) && row.pageloads >= MIN_PAGELOADS);
+      const readings = (latest?.stories || []).filter(row => row.observations >= MIN_OBSERVATIONS);
+      const observations = readings.reduce((sum,row) => sum + row.observations, 0);
+      return {
+        windowDays: WINDOW_DAYS,
+        recordedArticleViews: reach.length ? reach.reduce((sum,row) => sum + row.pageloads, 0) : null,
+        articlesWithPublishedViews: reach.length,
+        recordedHomepageViews: Number.isFinite(latest?.hubReach?.pageloads) && latest.hubReach.pageloads >= MIN_PAGELOADS ? latest.hubReach.pageloads : null,
+        completedReadingObservations: observations || null,
+        averageEngagedSeconds: observations ? Math.round(readings.reduce((sum,row) => sum + row.totalEngagedSeconds, 0) / observations) : null,
+        definition: 'Recorded browser loads in the sampled 30-day evidence window; article total is a lower bound over articles reaching the five-load publication floor. Reloads count again. These are not unique people or complete site traffic.',
+      };
+    })(),
     stories: stories.map((story) => {
       const measured = bySlug.get(story.slug);
       const reachRow = reachBySlug.get(story.slug) || null;
@@ -318,6 +336,10 @@ function selfTest() {
   ]);
 
   const checks = [
+    ['malformed historical hub counts cannot bypass the privacy floor', [1,4,'5',null].every(pageloads => deriveFeed(stories,[{hubReach:{pageloads}}]).audienceSummary.recordedHomepageViews === null)],
+    ['hub counts exclude UX and current-day rows', deriveSnapshot([...Array.from({length:5},()=>({route:'/news/',ts:'2026-01-20T12:00:00Z'})),{route:'/news/',ts:'2026-01-20T12:00:00Z',ux:'click'},{route:'/news/',ts:'2026-01-25T12:00:00Z'}],stories,new Date('2026-01-25T12:00:00Z')).hubReach.pageloads === 5],
+    ['hub below privacy floor stays suppressed', deriveSnapshot([{route:'/news/',ts:'2026-01-20T12:00:00Z'}],stories,new Date('2026-01-25')).hubReach.pageloads === null],
+    ['audience total excludes suppressed article counts', reachFeed.audienceSummary.recordedArticleViews === 5 && reachFeed.audienceSummary.articlesWithPublishedViews === 1],
     ['five observations publish', snap.stories.length === 1 && snap.stories[0].observations === 5],
     ['four observations stay private', feed.stories.find((row) => row.slug.endsWith('/b')).observations === null],
     ['unknown slug rejected', !snap.stories.some((row) => row.slug === 'unknown')],
@@ -386,7 +408,7 @@ if (args.includes('--check')) {
 
 const snapshot = deriveSnapshot(loadRaw(RAW), stories);
 const previous = history.at(-1);
-if (snapshot.stories.length && (!previous || previous.receiptId !== snapshot.receiptId)) {
+if ((snapshot.stories.length || snapshot.reach.some(row => row.pageloads != null) || snapshot.hubReach.pageloads != null) && (!previous || previous.receiptId !== snapshot.receiptId)) {
   fs.appendFileSync(HISTORY, JSON.stringify(snapshot) + '\n');
   history.push(snapshot);
 }

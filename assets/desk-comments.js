@@ -155,13 +155,21 @@
   // Guests (and every reporter) carry a Turnstile token; a signed-in member
   // does not, because the edge accepts their session cookie instead and never
   // verifies a challenge for them.
-  function getTokens(needTurnstile) {
+  function getTokens(needTurnstile, section) {
     if (!window.VSCsrf || (needTurnstile && !window.VSTurnstile)) {
       var err = new Error('verification_loading');
       err.code = 'verification_loading';
       return Promise.reject(err);
     }
-    var turnstile = needTurnstile ? window.VSTurnstile.getToken() : Promise.resolve('');
+    // The shared verification helper uses the first laid-out slot. Close other
+    // image accordions before verification so the challenge belongs to the
+    // thread the reader is actually submitting, including the story thread.
+    if (needTurnstile && section) {
+      document.querySelectorAll('.desk-art-discussion[open]').forEach(function (panel) {
+        if (!panel.contains(section)) panel.open = false;
+      });
+    }
+    var turnstile = needTurnstile ? window.VSTurnstile.getToken(section && section.querySelector('[data-vs-turnstile-slot]')) : Promise.resolve('');
     return Promise.all([turnstile, window.VSCsrf.getToken()]);
   }
 
@@ -337,7 +345,7 @@
     function sendReport(comment, reason, status, sendButton, panel, reportButton) {
       sendButton.disabled = true;
       say(status, 'Sending…', '');
-      getTokens(true).then(function (tokens) {
+      getTokens(true, section).then(function (tokens) {
         return fetch(REPORT_ENDPOINT, {
           method: 'POST',
           credentials: 'same-origin',
@@ -502,7 +510,7 @@
       state.busy = true;
       submit.disabled = true;
       say(formStatus, 'Posting…', '');
-      getTokens(!state.member).then(function (tokens) {
+      getTokens(!state.member, section).then(function (tokens) {
         var payload = { slug: slug, body: textarea.value.trim(), turnstileToken: tokens[0] };
         if (!state.member) payload.displayName = nameInput.value.trim();
         if (state.replyTo) payload.parentId = state.replyTo.id;

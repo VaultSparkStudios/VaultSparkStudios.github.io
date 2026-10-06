@@ -29,8 +29,8 @@
   // 1366px in the real font stack AND in a serif fallback, so swapping one for
   // the other cannot clip or move a box. style.css also gives the label an
   // ellipsis as a last resort.
-  var LIVE_LABEL = 'Live on The Desk';
-  var LATEST_LABEL = 'Latest · The Desk';
+  var LIVE_LABEL = 'The Desk · AI News';
+  var LATEST_LABEL = 'The Desk · AI News';
 
   /** Collapse whitespace and truncate at a word boundary with an ellipsis. */
   function truncateHeadline(text, max) {
