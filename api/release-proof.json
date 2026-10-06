@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T08:16:46.512Z",
+  "generatedAt": "2026-10-06T08:46:58.542Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,48 +13,38 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch",
-      "/:localShellParity",
-      "/studio-pulse/:localShellParity",
-      "/membership/:localShellParity"
-    ],
-    "candidateBuildSha": "657f7bc782ee21f309a680cb408d95457d4cfb22",
+    "candidateReady": true,
+    "candidateFindings": [],
+    "candidateBuildSha": "8c672f5bb8101af387bccab84da3233c8f34af32",
     "deployedBuildSha": "8c672f5bb8101af387bccab84da3233c8f34af32",
-    "candidateShaBound": false,
+    "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "80bc975bcf577b15f497b4bec15f770c67bda9d8b14f5760dc9f09e982b02358",
-      "candidateLeafCount": 55,
-      "stagingRoot": "1719e72de6aa9e3f4663de1640bddec590bbbc3740f5c6e11b9e85fcdd2976cf",
-      "stagingLeafCount": 61,
-      "matched": false
+      "candidateRoot": "6bb895375de112284229e104a799157321e23b874f75e1f06f5464b32d3d3c7b",
+      "candidateLeafCount": 62,
+      "stagingRoot": "6bb895375de112284229e104a799157321e23b874f75e1f06f5464b32d3d3c7b",
+      "stagingLeafCount": 62,
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
-      "receiptId": "11b597d33ca6b527bd7833e1",
+      "receiptId": "34a4cfa78f97f8a65ac6ab18",
       "state": "verified",
-      "deployId": "20261006065247",
-      "manifestFileCount": 9027,
-      "remoteFileCount": 9027,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20261006065247",
-      "sourceFingerprint": "2d097bcd517f81649210be36",
-      "archiveSha256": "377b1d1a5c9b2fc7a75e09d0933eaf575f495596066c21a6ee89c9bb6f296b40",
+      "deployId": "20261006084428",
+      "manifestFileCount": 9218,
+      "remoteFileCount": 9218,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20261006084428",
+      "sourceFingerprint": "fea31f5b4b2c776f995cc000",
+      "archiveSha256": "f4ecd4c22af7ab678d715094a05f740f215599882c89398a692c2eb284f92133",
       "remoteVerified": true,
-      "attested": false,
-      "reason": "receipt facts do not match current staging evidence"
+      "attested": true,
+      "reason": null
     },
     "deployHistory": {
-      "depth": 90,
-      "headReceiptId": "11b597d33ca6b527bd7833e1",
-      "previousReceiptId": "7318b5e597bfc3b5997b9f0d",
+      "depth": 91,
+      "headReceiptId": "34a4cfa78f97f8a65ac6ab18",
+      "previousReceiptId": "11b597d33ca6b527bd7833e1",
       "bound": true,
       "reason": null
     }
@@ -181,10 +171,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
-    "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
-    "stagingDeployAttested": false,
+    "stagingCandidateReady": true,
+    "stagingCandidateShaBound": true,
+    "stagingArtifactManifestBound": true,
+    "stagingDeployAttested": true,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -197,10 +187,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
-    "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",

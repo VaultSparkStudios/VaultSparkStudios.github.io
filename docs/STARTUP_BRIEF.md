@@ -67,10 +67,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ████████████░░░░░░░░░░░░   52% used                          ║
-║     140,101 / 272,000 tok  ·  codex/codex-272k  · …              ║
-║     ~70,051 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
+║     no session lock — agent identity unavailable, so there is…   ║
+║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗

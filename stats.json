@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T08:42:18.941Z",
+  "generatedAt": "2026-10-06T08:47:26.854Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -34,7 +34,7 @@
       "value": 22,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-10-02T23:29:41.296Z",
+      "computedAt": "2026-10-05T03:26:21.139Z",
       "source": "/api/ecosystem-state.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/ecosystem-state.json",
@@ -43,11 +43,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-02T23:29:41.296Z",
-      "freshnessState": "stale",
+      "observedThrough": "2026-10-05T03:26:21.139Z",
+      "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
-      "interpretation": "14 are currently green and 7 yellow; private and sealed work is excluded."
+      "interpretation": "11 are currently green and 8 yellow; private and sealed work is excluded."
     },
     {
       "id": "sparked-projects",
@@ -174,10 +174,10 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 72,
+      "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-10-06T08:42:18.941Z",
+      "computedAt": "2026-10-06T08:47:26.854Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -186,11 +186,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-06T08:42:18.941Z",
+      "observedThrough": "2026-10-06T08:47:26.854Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
-      "interpretation": "13 of 18 proof feeds are within their declared freshness windows; 5 are stale, not silently treated as green."
+      "interpretation": "15 of 18 proof feeds are within their declared freshness windows; 3 are stale, not silently treated as green."
     },
     {
       "id": "performance-samples-7d",
@@ -198,7 +198,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-10-02T20:32:53.617Z",
+      "computedAt": "2026-10-06T08:31:20.126Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -207,14 +207,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-02",
-      "freshnessState": "stale",
+      "observedThrough": "2026-10-06",
+      "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-09-25",
-        "endExclusive": "2026-10-02",
+        "start": "2026-09-29",
+        "endExclusive": "2026-10-06",
         "days": 7,
         "timezone": "UTC"
       },
@@ -233,10 +233,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-10-06T08:42:18.941Z",
+      "computedAt": "2026-10-06T08:47:26.854Z",
       "values": {
-        "fresh": 13,
-        "stale": 5,
+        "fresh": 15,
+        "stale": 3,
         "total": 18
       }
     },
@@ -254,7 +254,7 @@
   "history": {
     "performanceSamplesDaily": [],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-10-02T20:32:53.617Z",
+    "computedAt": "2026-10-06T08:31:20.126Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {

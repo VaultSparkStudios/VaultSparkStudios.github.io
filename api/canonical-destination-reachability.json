@@ -1,26 +1,26 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T08:42:09.164Z",
+  "generatedAt": "2026-10-06T08:47:09.640Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
     "path": "api/ecosystem-state.json",
     "generatedBy": "scripts/build-public-ecosystem.mjs",
-    "digest": "0ec83eb3ed72da4d58971f4140f84021cc22c9520055cb7505c0a5e69f5ba3c5"
+    "digest": "ba1775f3d8d5d62c9e706398a254196290d3e59ebd6ecf1f0dcc1fe07eddf51f"
   },
   "sampling": {
     "deterministic": true,
-    "maximumDestinations": 12,
+    "maximumDestinations": 1000,
     "maximumAttemptsPerDestination": 2,
     "timeoutMs": 8000,
     "deadVerdictRequiresRepeatedNotFound": true
   },
   "counts": {
-    "total": 12,
-    "passed": 10,
-    "failed": 1,
-    "unknown": 1,
-    "longestUnknownStreak": 37,
+    "total": 20,
+    "passed": 18,
+    "failed": 0,
+    "unknown": 2,
+    "longestUnknownStreak": 38,
     "neverKnownGood": 2
   },
   "results": [
@@ -38,7 +38,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -55,7 +55,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -72,7 +72,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -89,7 +89,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -106,7 +106,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -123,30 +123,42 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "mindframe",
-      "destination": "https://steadfast-determination-production.up.railway.app/",
-      "verdict": "failed",
-      "reason": "confirmed-not-found",
-      "attemptCount": 2,
+      "destination": "https://usemindframe.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
       "attempts": [
         {
-          "status": 404,
+          "status": 200,
           "redirected": false,
-          "outcome": "not-found"
-        },
-        {
-          "status": 404,
-          "redirected": false,
-          "outcome": "not-found"
+          "outcome": "reachable"
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": null,
-      "lastKnownGoodAgeHours": null
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "ouren",
+      "destination": "https://ouren-workbench.pages.dev/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "promogrind",
@@ -162,7 +174,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -173,7 +185,7 @@
       "attemptCount": 2,
       "attempts": [
         {
-          "status": 403,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         },
@@ -183,7 +195,7 @@
           "outcome": "unknown"
         }
       ],
-      "unknownStreak": 37,
+      "unknownStreak": 38,
       "lastKnownGoodAt": null,
       "lastKnownGoodAgeHours": null
     },
@@ -201,7 +213,7 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -218,7 +230,24 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "solara",
+      "destination": "https://solara.vaultsparkstudios.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 206,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     },
     {
@@ -235,7 +264,114 @@
         }
       ],
       "unknownStreak": 0,
-      "lastKnownGoodAt": "2026-10-06T08:42:09.164Z",
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "syntha",
+      "destination": "https://syntha.music/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "vaultfront",
+      "destination": "https://vaultfront.io/",
+      "verdict": "unknown",
+      "reason": "transient-or-blocked",
+      "attemptCount": 2,
+      "attempts": [
+        {
+          "status": 503,
+          "redirected": false,
+          "outcome": "unknown"
+        },
+        {
+          "status": 503,
+          "redirected": false,
+          "outcome": "unknown"
+        }
+      ],
+      "unknownStreak": 1,
+      "lastKnownGoodAt": null,
+      "lastKnownGoodAgeHours": null
+    },
+    {
+      "slug": "veilos",
+      "destination": "https://veilos.io/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "velaxis",
+      "destination": "https://velaxis.markets/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 206,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "voidfall-companion",
+      "destination": "https://staging.voidfall-companion.pages.dev/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
+      "lastKnownGoodAgeHours": 0
+    },
+    {
+      "slug": "vorn",
+      "destination": "https://joinvorn.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-10-06T08:47:09.640Z",
       "lastKnownGoodAgeHours": 0
     }
   ],
