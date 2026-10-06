@@ -1326,7 +1326,7 @@ function buildPersonaPage(persona) {
     <div class="desk-section-head"><h2>Meet the other voices</h2><p>Different instincts, shared source trail.</p></div><ul class="desk-profile-roster">${otherVoices}</ul>
     ${DISCLOSURE}
   </section></main>${chromeFoot('../../../')}`;
-  return html.replace(/[ \t]+$/gm, '');
+  return html.replace(/[ \t]+$/gm, '').replace(/\n[ \t]+/g, '\n');
 }
 
 /** One-line hub-card summary of a persona's derived record. */
