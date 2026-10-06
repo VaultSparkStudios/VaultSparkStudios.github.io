@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S369) - WHAT SHIPPED ══════════════════════════╗
-║  S369 newsletter backend/agent-friendly production edge live; p  ║
+║  S369 complete: Spark, premium AI News Desk, inclusive newslett  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝

@@ -383,3 +383,8 @@ Founder reports the regular Desk signup worked correctly. New requested follow-t
 ### S369 newsletter production edge acceptance
 
 Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after11/11 release-ceremony checks. An actual curl-User-Agent POST with valid signed CSRF returned400 invalid_email without a challenge or email send. Independent edge review passed84/84; newsletter suites23/23. Current homepage mobile regression passed5/5 widths; unchanged210 prior cells were retained only after exact source/capture hash checks. Frontend publication remains pending until the confirmed Pages content deployment lands. New-template mailbox delivery remains unverified.
+
+
+### S369 final newsletter publication
+
+Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c70388ea, confirmed Pages run37548337150 (successful actual deploy), production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a after11/11 ceremony checks. The uninterrupted full suite passed530/530, with zero secret findings. Live desktop1366/mobile390 welcome screens were captured and inspected; the served content head matches, all newsletter challenge slots are absent and the human/agent contract is available. Backend recipient/global limits, premium confirmation/plain-text emails and signed cancellation are deployed; the digest design is updated. No extra real emails were sent. Founder confirmed the prior regular signup; delivery/rendering of the upgraded email in a real mailbox remains unverified. All four temporarily paused publishers are active again. Existing identity holds remain separate.
