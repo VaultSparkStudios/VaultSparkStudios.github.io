@@ -94,7 +94,7 @@ const redirectRules = (() => {
 function getExtraHeaders(pathname) {
   const extra = [];
   for (const [pattern, hdrs] of Object.entries(headersRules)) {
-    if (pattern === '/*' || pathname === pattern) extra.push(...hdrs);
+    if (pattern === '/*' || pathname === pattern || (pattern.endsWith('/*') && pathname.startsWith(pattern.slice(0, -1)))) extra.push(...hdrs);
   }
   return extra;
 }
