@@ -5,7 +5,9 @@
  * Reads the RENDERED story pages (never the generator source) and asserts the
  * reading order and the contracts other agents build against:
  *   - first screen order: h1 → deck → byline (+ AI-written line) → illustration
- *     → "The short version", with reader-activity numbers after the story body
+ *     → News Brief, with reader-activity numbers after the story body
+ *   - the satire cartoon follows persona analysis and The Desk's Take, before
+ *     the full authorship disclosure and subscription area
  *   - every fact <li> keeps id + data-fact-hash and folds its receipt into a
  *     <details class="desk-receipt">
  *   - the community slot matches the desk-comments.js contract exactly
@@ -44,10 +46,11 @@ for (const day of days) {
       ['class="desk-article-deck"', 'deck'],
       ['class="desk-byline"', 'byline'],
       ['class="desk-ai-line"', 'AI-written line'],
-      ['id="desk-short-title"', 'short version'],
+      ['id="editorial-illustration-1"', 'illustration'],
+      ['id="desk-short-title"', 'News Brief'],
       ['id="story"', 'story body'],
       ['id="sources"', 'sources'],
-      ['id="editorial-illustration-1"', 'illustration'],
+      ['id="positions"', "The Desk's Take"],
       ['data-story-signals', 'reader views summary'],
       ['data-desk-engagement=', 'reader activity panel'],
       ['id="community"', 'community'],
@@ -61,6 +64,17 @@ for (const day of days) {
     }
     if (!/Written by AI personas — no human wrote this\./.test(article)) errors.push(`${rel}: short AI authorship line missing`);
     if (!article.includes('class="desk-ai-banner"')) errors.push(`${rel}: full AI banner copy missing`);
+    if (!article.includes('>News Brief</h2>')) errors.push(`${rel}: News Brief heading missing`);
+    if (!article.includes('The Desk’s Take')) errors.push(`${rel}: updated persona-analysis heading missing`);
+    if (at('id="satire-cartoon"') >= 0) {
+      const cartoon = at('id="satire-cartoon"');
+      for (const needle of ['id="positions"', 'id="predictions"', 'id="argument"']) {
+        if (at(needle) >= 0 && cartoon < at(needle)) errors.push(`${rel}: satire precedes persona analysis`);
+      }
+      for (const needle of ['id="how-this-was-written"', 'data-desk-dispatch="story"']) {
+        if (at(needle) < 0 || cartoon > at(needle)) errors.push(`${rel}: satire follows or lacks authorship/subscription area`);
+      }
+    }
 
     const community = `<section class="desk-comments" id="community" data-desk-comments data-slug="${day.date}/${story.slug}" aria-labelledby="desk-comments-title"><h2 id="desk-comments-title">Community</h2><p class="desk-comments-fallback">Comments are loading…</p></section>`;
     if (!article.includes(community)) errors.push(`${rel}: community slot does not match the desk-comments contract`);
