@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-935f00115d6a57d7';
+const CACHE_NAME = 'vaultspark-shell-efcdb985bb75f555';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -23,7 +23,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/spark-compass.shell-25944c62db.js',
   '/assets/spark-compass.shell-f03dd62f3f.css',
   '/assets/pwa-install.shell-30b48f0ae6.js',
-  '/assets/style.shell-99d25f3ae8.css',
+  '/assets/style.shell-7f501cc04e.css',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
@@ -37,7 +37,8 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/proof-verify.shell-4b68e2855f.js',
   '/assets/desk-reactions.shell-523b04a01e.js',
   '/assets/desk-presence.shell-b33c76422e.js',
-  '/assets/desk-comments.shell-2ae95371be.js',
+  '/assets/desk-comments.shell-e292fb59d7.js',
+  '/assets/turnstile.shell-3fab54aa82.js',
   '/assets/hero-ticker.shell-550971e267.js',
   '/assets/public-intelligence.shell-c86a6ecc39.js',
   '/assets/studio-now.shell-fef717e631.js',
@@ -46,7 +47,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/hero-choice-tracking.shell-8dd57eb3a3.js',
   '/assets/journey-conductor.shell-9fb978eca9.js',
   '/assets/constellation-tracker.shell-bc8a879068.js',
-  '/assets/desk-wire.shell-5dbc8ab14d.js',
+  '/assets/desk-wire.shell-aadb90966d.js',
   '/assets/changelog-reactions.shell-1ddedc6d81.js',
   '/assets/countdown.shell-f058757524.js',
   '/assets/exit-intent.shell-91a127bb4a.js',
@@ -87,6 +88,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/desk-reactions.js',
   '/assets/desk-presence.js',
   '/assets/desk-comments.js',
+  '/assets/turnstile.js',
   '/assets/hero-ticker.js',
   '/assets/public-intelligence.js',
   '/assets/studio-now.js',
@@ -119,7 +121,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-99d25f3ae8.css',
+  '/assets/style.shell-7f501cc04e.css',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/ambient-core.shell-fc8866d8a7.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
@@ -142,7 +144,7 @@ const STATIC_ASSETS = [
   '/assets/analytics.js',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/vault-score.js',
-  '/assets/turnstile.js',
+  '/assets/turnstile.shell-3fab54aa82.js',
   '/assets/hover-prefetch.js',
   '/assets/edge-swipe-nav.js',
   '/assets/dispatch-voice.js',
