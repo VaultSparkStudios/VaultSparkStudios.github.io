@@ -21,6 +21,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { renderEditorialOverlaySvg, EDITORIAL_PANEL_ENCODINGS, EDITORIAL_PANEL_BUDGETS, storyMemeOverlayOptions, SATIRE_CARTOON_BUDGETS, SATIRE_CARTOON_DERIVATIVES, SATIRE_CARTOON_STYLES, satireCartoonAssetBase, satireCartoonBrief } from './lib/news-memes.mjs';
 import { renderSatireDerivatives } from './lib/news-satire-raster.mjs';
+import { loadPublishTimeLedger, resolveStoryTime } from './lib/news-publish-time.mjs';
 import {
   PERSONAS,
   personaById,
@@ -76,6 +77,21 @@ const RESOLUTIONS_PATH = path.join(ROOT, 'data', 'news-desk', 'resolutions.json'
 const CAROUSEL_PATH = path.join(ROOT, 'api', 'news-desk.json');
 const FEED_PATH = path.join(ROOT, 'api', 'news-desk-feed.json');
 const SITE = 'https://vaultsparkstudios.com';
+
+/**
+ * S368 — the JSON Feed carries each story's real publish instant (the same one
+ * the cards and bylines show), not midnight UTC. A story with only a slot or a
+ * date keeps the midnight stamp: the feed must not present a guess as a time.
+ */
+let PUBLISH_LEDGER = null;
+export function feedDatePublished(day, story, ledger) {
+  const resolved = resolveStoryTime(day, story, ledger);
+  return resolved.precise ? resolved.iso : `${day.date}T00:00:00.000Z`;
+}
+function feedDate(day, story) {
+  if (!PUBLISH_LEDGER) PUBLISH_LEDGER = loadPublishTimeLedger(ROOT);
+  return feedDatePublished(day, story, PUBLISH_LEDGER);
+}
 
 /* ── Fixture day (Phase 0 proof + permanent simulate corpus) ───────────── */
 
@@ -399,7 +415,7 @@ export function buildNewsFeed(days = loadPublicDays()) {
       summary: story.hook,
       content_text: story.tldr,
       image: `${SITE}/assets/og/news/${day.date}--${story.slug}.png`,
-      date_published: `${day.date}T00:00:00.000Z`,
+      date_published: feedDate(day, story),
       // Per-item authorship too: an item can be syndicated away from the feed
       // header, and a story quoting "REX" with no byline reads like a columnist.
       authors: [{ name: 'The Desk — AI personas (no human author)', url: `${SITE}/news/` }],
