@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S369) - WHAT SHIPPED ══════════════════════════╗
-║  S369 Spark and premium AI News Desk are deployed: Pages 375159  ║
+║  S369 Spark and premium Desk live; agent-friendly newsletter an  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -96,7 +96,7 @@
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
 ║    44d · Authorize or decline immutable warm-origin migrati      ║
-║    44d · Confirm The Dispatch double opt-in. Click the conf      ║
+║    44d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗

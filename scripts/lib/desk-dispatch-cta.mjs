@@ -79,7 +79,6 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
       <label class="visually-hidden vs-visually-hidden" for="dispatch-email-${esc(source)}">Email address for The Desk Dispatch</label>
       <input id="dispatch-email-${esc(source)}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
       <button type="submit" class="button">${esc(DISPATCH_COPY.button)}</button>
-      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
       <p class="desk-dispatch-fine">Double opt-in: we email you a link to confirm. <a href="/privacy/">Privacy policy</a>.</p>
       <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
     </form>
@@ -99,7 +98,6 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
       <label class="visually-hidden vs-visually-hidden" for="dispatch-email-${esc(source)}">Email address for The Desk Dispatch</label>
       <input id="dispatch-email-${esc(source)}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required spellcheck="false">
       <button type="submit" class="button">${esc(DISPATCH_COPY.button)}</button>
-      <div class="desk-dispatch-slot" data-vs-turnstile-slot aria-live="polite"></div>
       <p class="desk-dispatch-fine">${DISPATCH_COPY.fine}</p>
       <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
     </form>
@@ -107,30 +105,7 @@ export function deskDispatchCta(source, { compact = false, bar = false, anchor =
   </section>`;
 }
 
-/**
- * The client. Inline (the Worker nonces it; CSP nonce + strict-dynamic) so it
- * rides the content lane with the pages that need it and rotates no shell hash.
- * It lazy-loads the site's existing csrf-token.js and turnstile.js when a page
- * does not already carry them (the homepage and /dispatch/ do not), on first
- * focus so the invisible challenge is warm before submit.
- */
-/** The site's Turnstile site key, read from the shared helper so the two cannot drift. */
-export function turnstileSiteKey(root = ROOT) {
-  const src = fs.readFileSync(path.join(root, 'assets', 'turnstile.js'), 'utf8');
-  const m = src.match(/var SITE_KEY\s*=\s*'([^']+)'/);
-  if (!m) throw new Error('assets/turnstile.js has no SITE_KEY');
-  return m[1];
-}
-
-/*
- * S368 — each Dispatch form renders its OWN Turnstile widget into its own slot.
- * The shared VSTurnstile helper keeps one page-wide widget in the first visible
- * slot with a 12 s timeout. With two forms on /news/ an interactive challenge
- * could surface in the form the reader was not using, and 12 s is too short to
- * solve one anyway, so real readers saw "The invisible human check did not
- * complete". Here the widget lives in the submitting form; when Turnstile needs
- * the reader, the form says so and waits up to two minutes.
- */
+/** Shared newsletter client: same-origin CSRF and inbox consent, with no human challenge. */
 export const DESK_DISPATCH_SCRIPT = `<script>(function(){
   var ENDPOINT=${JSON.stringify(DESK_DISPATCH_ENDPOINT)};
   var forms=document.querySelectorAll('form[data-dispatch]');
@@ -216,7 +191,7 @@ export function selfTest() {
   const compact = deskDispatchCta('story', { compact: true, heading: 'H <x>' });
   t('posts to the protected Worker route', DESK_DISPATCH_SCRIPT.includes(JSON.stringify(DESK_DISPATCH_ENDPOINT)));
   t('form is marked for the shared client', /<form class="desk-dispatch-form" data-dispatch data-source="hub"/.test(full));
-  t('carries a Turnstile slot', full.includes('data-vs-turnstile-slot'));
+  t('newsletter has no human-challenge slot', !full.includes('data-vs-turnstile-slot'));
   t('states cadence, no spam and unsubscribe', /Cadence/.test(full) && /No spam/.test(full) && /unsubscribe/i.test(full));
   t('names the list and keeps it separate from the Studio Dispatch', /The Desk Dispatch/.test(full) && /Separate from the Studio Dispatch/.test(full));
   t('discloses fictional AI correspondents', /fictional AI correspondents/.test(full));
@@ -227,7 +202,7 @@ export function selfTest() {
   t('ids are unique per source', full.includes('id="dispatch-email-hub"') && compact.includes('id="dispatch-email-story"'));
   t('a hostile source is refused', (() => { try { deskDispatchCta('"><x'); return false; } catch { return true; } })());
   const bar = deskDispatchCta('hub-top', { bar: true, anchor: 'desk-dispatch' });
-  t('bar variant carries the anchor, the shared form and a Turnstile slot', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && bar.includes('data-vs-turnstile-slot'));
+  t('bar variant carries the anchor and shared form without a human challenge', bar.includes('id="desk-dispatch"') && /<form class="desk-dispatch-form" data-dispatch data-source="hub-top"/.test(bar) && !bar.includes('data-vs-turnstile-slot'));
   t('bar variant tells the two lists apart', /not the Studio Dispatch/.test(bar));
   t('a hostile anchor is refused', (() => { try { deskDispatchCta('x', { bar: true, anchor: '"><x' }); return false; } catch { return true; } })());
   t('success copy never claims a confirmed subscription', /subscribed only after you confirm/.test(DESK_DISPATCH_SCRIPT));

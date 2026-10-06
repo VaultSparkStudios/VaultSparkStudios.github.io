@@ -1418,3 +1418,8 @@ Desk signup recovery (2026-10-06): production trace confirmed shared KV daily wr
 
 
 Final single-run repository verification: 530/530 passed, receipt a495599c54b44ecd43cca2a4. Both complete runs in requested-closeout-autopilot-6 completed; subsequent receipt validation passed. Retained the established full-staging build anchor while publishing scoped content/edge recovery; no identity hold is released.
+
+
+### S369 newsletter follow-through
+
+Founder reports the regular Desk signup worked correctly. New requested follow-through removes newsletter Turnstile friction for humans and AI agents, preserves email double opt-in, and adds recipient24h/globalUTC100 send limits inside the email function so direct callers cannot bypass them. Premium confirmation HTML/plain-text emails include signed cancel/unsubscribe links and one-click headers; daily digest masthead is upgraded. The welcome page has a colorful moving sphere, newsroom/profile/feed links, seven themes, reduced motion and explicit unsubscribe/error states. Scoped canonical staging verified145 HTML/art/discovery files; newsletter backend deployed with no-send6/6 and real database rollback assertions passing. Production Worker/Pages publication of this follow-through is pending final checks.

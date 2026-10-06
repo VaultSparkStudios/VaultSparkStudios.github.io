@@ -16,7 +16,7 @@
 ║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
-║  Open current tasks 37 / Human-action entries 7                  ║
+║  Open current tasks 37 / Human-action entries 6                  ║
 ║  Unchecked tasks require task-level triage.                      ║
 ║  ✓  Cost          real $0.00/7d · real metered total $0.7548…    ║
 ╚════════════════════════════════════════════════════════════════╝

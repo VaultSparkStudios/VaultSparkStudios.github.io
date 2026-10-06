@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **912/1000**
 - CI health: **check gh run list**
-- Current focus: S369 Spark and premium AI News Desk live: opt-in Compass, retired corner guides, source-backed briefs, public image discussion, anchor profiles and honest readership metrics.
+- Current focus: S369 Spark and premium Desk live; agent-friendly newsletter and immersive welcome staged, final production publication pending.
 
 ## Strategic Read
 
