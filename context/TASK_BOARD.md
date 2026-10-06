@@ -6,8 +6,8 @@ Last updated: 2026-10-06 UTC (S369 implementation)
 
 - [x] Audit competing route/resume popups and produce `docs/AUDIT_2026-10-06.json`, derived Markdown and `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; 12/12 typed source premises verified.
 - [x] Expand the accepted companion direction into Spark plan v2: visual identity, motion states, personality, mobile composition, public agent itineraries and explicit removal criteria for both pictured guides.
-- [ ] **[P1 · release acceptance pending]** Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; neither guide reappears in the served release.
-- [ ] **[P1 · Spark implementation]** Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation complete locally; canonical staging and live acceptance pending.
+- [x] **[P1 · verified live]** Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; neither guide reappears in the served release.
+- [x] **[P1 · Spark verified live]** Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation and canonical staging/live acceptance complete.
 - [x] **[P2 · founder-directed hero wording]** Homepage hero eyebrow now says “AI & Super Intelligence (SI) Studio” per explicit founder direction on 2026-10-06. This bounded hero edit does not rewrite the separate Synthetic Intelligence explainers or assert a demonstrated superintelligent capability.
 
 ## S368 final — open follow-ups (2026-10-05)
@@ -597,7 +597,7 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 
 ### S369 — Expanded Desk delivery
 
-- [ ] Premium Desk masthead, AI anchor profile navigation and header News/subscribe links; verify desktop/mobile in every theme.
-- [ ] Source-attributed News Brief, reader-impact take labels, late satire and separate public image threads; verify source parity and comment isolation.
-- [ ] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
-- [ ] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.
+- [x] Premium Desk masthead, AI anchor profile navigation and header News/subscribe links; verify desktop/mobile in every theme.
+- [x] Source-attributed News Brief, reader-impact take labels, late satire and separate public image threads; verify source parity and comment isolation.
+- [x] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
+- [x] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.

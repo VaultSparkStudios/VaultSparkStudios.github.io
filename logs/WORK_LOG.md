@@ -1400,3 +1400,8 @@ Staging follow-through: static staging deployed; first Worker upload rejected (g
 ## S369 — Spark and project link correction — 2026-10-06
 
 Implemented the accepted Vault Compass direction and corrected MindFrame's retired Railway launch URL. Focused browser suite passed 15/15; independent review defects fixed. Release candidate verification is ongoing; no production deployment claimed here.
+
+
+## S369 final delivery — 2026-10-06T19:13:21.847Z
+
+Production content lane: Pages run 37515965605, source 61efa22a56fad17326fcf0fd733b11669e4735e9; edge Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Spark 10/10 and seeded-history Membership 14/14 (seven themes × desktop/mobile) verified. Both old corner guides remain absent. MindFrame launches at https://usemindframe.com/. Full local build 530/530, mobile contract 215/215, staging ceremony 11/11; actual receipts and images are linked in docs/SPARK_RELEASE_2026-10-06.md. Existing identity/Supabase holds remain unchanged. The Desk ships a premium AI news masthead, clickable anchor profiles, mini navigation and a sitewide AI News/subscribe strip. Articles lead with artwork and version-bound public image threads beside it, then source-attributed News Briefs, The Desk’s Take and the signal-versus-hype axis. Satire follows all persona discussion before the full AI disclosure and subscription area. Readership cards expose thresholded recorded homepage/article loads and engaged reading evidence; missing values stay Collecting. Verification: 22/22 browser cases, 7/7 verification-helper cases, 33/33 metric cases, exact claim parity, 210 Desk captures reviewed in seven themes, including profile pagination preserving every contribution and 215/215 full mobile checks.

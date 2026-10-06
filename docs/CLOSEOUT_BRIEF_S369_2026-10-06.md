@@ -5,8 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Spark candidate replaces competing guides; MindFrame launch corrected. Release             ║
-║    acceptance remains pending.                                                                ║
+║    Spark is live: one opt-in Vault Compass replaces competing guides, and MindFrame           ║
+║    launches at its canonical domain.                                                          ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████▌░   85/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███████░░░   70/100                                                       ║
@@ -18,9 +18,10 @@
 
   [#1]  spark-compass                                             PROJ 9  ·  ECOS 7
          ── ui-ux-feedback ──────────────────────────────────────────────────────────────────
-         A colorful sphere opens on request, with map/list parity, saved routes and public
-         itinerary export. Both pictured corner guides are retired in source.
-         → tests/spark-compass.spec.js; docs/visual-qa/LATEST.json
+         A colorful sphere opens on request with accessible map/list/search, saved routes,
+         sigils and public agent itinerary export. Both pictured guides are absent in actual
+         live returning-visitor tests, including legacy Membership.
+         → docs/SPARK_RELEASE_2026-10-06.md; docs/visual-qa/SPARK_HELD_MEMBERSHIP.json
 
   [#2]  mindframe-launch                                          PROJ 8  ·  ECOS 7
          ── features-depth ──────────────────────────────────────────────────────────────────
@@ -32,8 +33,8 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Complete canonical staging and live release acceptance before claiming these changes are published.
     • Re-probe Scriptorium 401 and VaultFront 503.
+    • Review aggregate Spark usage only after a fresh consented cohort exists.
 
   BLOCKERS
     (none)
