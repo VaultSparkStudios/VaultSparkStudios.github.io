@@ -1,6 +1,6 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         530/530 passing (2026-10-06)                   ║
-║  ✓  Velocity      2 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   3d                                             ║
 ║  ✓  IGNIS         46114 FORGE  ·  1d old                         ║
@@ -13,7 +13,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  5d old (2026-10-02)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ⚠  Doctor        14/17 (82%)  ·  3 warn: 3 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  Open current tasks 37 / Human-action entries 6                  ║
