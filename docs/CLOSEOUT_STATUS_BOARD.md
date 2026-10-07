@@ -1,33 +1,33 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-06 (Session 369 closeout) -->
+<!-- generated-at: 2026-10-07 (Session 370 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S369 ═══════╗
-║  Date: 2026-10-06  ·  SIL: 912/1000  ·  Velocity: 12 down        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S370 ═══════╗
+║  Date: 2026-10-07  ·  SIL: 916/1000  ·  Velocity: 2 stable       ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S369)                                        ║
+║  Autopilot: BYPASSED (S370) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore: record verified S369 signup recovery closeout          ║
-║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ fix: isolate Desk signup counters and reconcile S369 closeou  ║
+║  ✓ chore(S370): close verified publication evidence arc          ║
 ║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
 ║  ✓ chore: refresh live data feeds [skip ci]                      ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 912/1000 ═══════════════════════════════════════╗
-║    Dev Health         90   █████████░                            ║
+╔══ SCORES · SIL 916/1000 ═══════════════════════════════════════╗
+║    Dev Health         87   █████████░                            ║
 ║    Alignment          95   ██████████                            ║
-║    Momentum           89   █████████░                            ║
+║    Momentum           90   █████████░                            ║
 ║    Engagement         91   █████████░                            ║
-║    Process Qual       85   █████████░                            ║
+║    Process Qual       87   █████████░                            ║
 ║    Coherence          92   █████████░                            ║
 ║    Security           94   █████████░                            ║
 ║    Ecosystem          91   █████████░                            ║
 ║    Capital            94   █████████░                            ║
-║    Automation         91   █████████░                            ║
+║    Automation         95   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -38,12 +38,12 @@
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  ✓ Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 166 files  ·  M:36 A:0 D:0 ?:130                       ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 221 files  ·  M:25 A:0 D:0 ?:196                       ║
+║  Ahead: 2  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -51,14 +51,14 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/17                                            ║
+║  Doctor:        14/17                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         530/530                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         1d ago                                           ║
+║  IGNIS:         2d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        24 started · 24 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
