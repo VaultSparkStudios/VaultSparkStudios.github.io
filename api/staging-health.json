@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-06T22:52:09.425Z",
+  "generatedAt": "2026-10-07T00:18:02.926Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-artifact-root-mismatch"
@@ -8,7 +8,7 @@
   "candidateBuildSha": "be9fe433d7a7fe9bb8e537617e912bb696b6d147",
   "stagingBuildSha": "be9fe433d7a7fe9bb8e537617e912bb696b6d147",
   "artifactManifest": {
-    "candidateRoot": "5a1de4cf6ac6f00f892032bd49c1955d62ea3c157d3f9e225486445a8b4138c1",
+    "candidateRoot": "626836eafab4908b689019b23b05c3231f37a1d9042abe4290efb9923780ca8e",
     "candidateLeafCount": 63,
     "stagingRoot": "d41082b4cb913811461cc53bc875073c2e5803941394083c31b551ccd3a846de",
     "stagingLeafCount": 63,
@@ -20,16 +20,13 @@
   "staging": "https://website.staging.vaultsparkstudios.com",
   "status": "yellow",
   "surfaceParity": {
-    "state": "staging-ahead",
-    "productionRoutes": 234,
+    "state": "uncomparable",
+    "productionRoutes": null,
     "stagingRoutes": 236,
     "missingOnStaging": [],
-    "missingOnStagingCount": 0,
-    "aheadOnStaging": [
-      "/news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/",
-      "/news/personas/dot/page/4/"
-    ],
-    "aheadOnStagingCount": 2,
+    "missingOnStagingCount": null,
+    "aheadOnStaging": [],
+    "aheadOnStagingCount": null,
     "gating": true,
     "gatingSince": "S339",
     "remedy": "node scripts/deploy-staging-content.mjs --baseline <served-staging-build-sha>"
@@ -37,30 +34,12 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
-      "shellParity": true,
-      "prodShell": [
-        "assets/ambient-core.shell-638df012f8.js",
-        "assets/ambient-feature.shell-9b5baeb1ab.js",
-        "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
-        "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-d1839327b4.js",
-        "assets/nav-sheet.shell-c0fddc0c73.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/public-intelligence.shell-c86a6ecc39.js",
-        "assets/pwa-install.shell-30b48f0ae6.js",
-        "assets/pwa-nav.shell-5f63b6b75a.js",
-        "assets/schema-injector.shell-33115efcde.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-7f501cc04e.css",
-        "assets/theme-toggle.shell-8221605898.js",
-        "assets/vault-door.shell-20bb2584bc.js"
-      ],
+      "statusParity": false,
+      "shellParity": false,
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-638df012f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -80,12 +59,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "headerParity": true,
+      "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -97,7 +76,12 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "status-mismatch",
+        "prod-forbidden",
+        "shell-mismatch",
+        "header-mismatch"
+      ]
     },
     {
       "route": "/studio-pulse/",
@@ -157,7 +141,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": false,
+      "shellParity": true,
       "prodShell": [
         "assets/ambient-core.shell-638df012f8.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -165,7 +149,7 @@
         "assets/public-intelligence.shell-c86a6ecc39.js",
         "assets/pwa-nav.shell-5f63b6b75a.js",
         "assets/schema-injector.shell-33115efcde.js",
-        "assets/style.shell-539ca122bd.css",
+        "assets/style.shell-7f501cc04e.css",
         "assets/theme-toggle.shell-8221605898.js",
         "assets/trust-depth.shell-bad58045cc.js"
       ],
@@ -197,9 +181,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "shell-mismatch"
-      ]
+      "reasonCodes": []
     }
   ]
 }
