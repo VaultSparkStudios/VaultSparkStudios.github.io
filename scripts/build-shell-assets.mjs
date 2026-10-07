@@ -344,6 +344,16 @@ function updateHtmlReferences(html, manifest, relPath) {
     });
   }
 
+  // The legacy edge adapter retains its own older guide manifest. Bind this
+  // content-addressed entry point to its bytes so it preserves the candidate
+  // reference instead of substituting the retired guide bundle.
+  const core = manifest.assets.ambientCore;
+  const integrity = 'sha384-' + crypto.createHash('sha384')
+    .update(fs.readFileSync(path.join(root, core.path))).digest('base64');
+  next = next.replace(/<script\b[^>]*\bsrc=["'][^"']*assets\/ambient-core\.shell-[a-f0-9]{10}\.js["'][^>]*>/g,
+    tag => tag.replace(/\s+(?:integrity|crossorigin)=["'][^"']*["']/g, '')
+      .replace(/>$/, ` integrity="${integrity}" crossorigin="anonymous">`));
+
   next = normalizeAsyncStylesheet(next, relPath);
   next = normalizeThemeBootstrap(next);
 

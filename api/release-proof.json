@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-07T22:25:32.467Z",
+  "generatedAt": "2026-10-07T22:41:03.061Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
     "sha": "d0963841551557fe31bec85c855c46106f97bac2",
-    "shellVersion": "25944c62db-f03dd62f3f-30b48f0ae6-7f501cc04e-8221605898-8c1f2155b5-0995bd7945-c0fddc0c73-bd7ccf3b3d-8b1d92d92b-141c057d30-d1839327b4-638df012f8-9b5baeb1ab-4b68e2855f-523b04a01e-b33c76422e-e292fb59d7-3fab54aa82-550971e267-c86a6ecc39-fef717e631-b33242e1cc-e6b0b21c77-8dd57eb3a3-9fb978eca9-bc8a879068-aadb90966d-1ddedc6d81-f058757524-91a127bb4a-6abbb39184-37d24392f4-6b434171f8-d369cfd082-0fbab844d7-a71c845b99-355aaa84cf-1af2012142-5f63b6b75a-7ca5d9e98f-33115efcde-cb874aa5e8-5fc734ef84-bad58045cc-d927bf3c2d-20bb2584bc-d55870922b"
+    "shellVersion": "1220404832-59bed42877-30b48f0ae6-7f501cc04e-8221605898-8c1f2155b5-0995bd7945-c0fddc0c73-bd7ccf3b3d-8b1d92d92b-141c057d30-d1839327b4-5b2e3a4faa-9b5baeb1ab-4b68e2855f-523b04a01e-b33c76422e-e292fb59d7-3fab54aa82-550971e267-c86a6ecc39-fef717e631-b33242e1cc-e6b0b21c77-8dd57eb3a3-9fb978eca9-bc8a879068-aadb90966d-1ddedc6d81-f058757524-91a127bb4a-6abbb39184-37d24392f4-6b434171f8-d369cfd082-0fbab844d7-a71c845b99-355aaa84cf-1af2012142-5f63b6b75a-7ca5d9e98f-33115efcde-cb874aa5e8-5fc734ef84-bad58045cc-d927bf3c2d-20bb2584bc-d55870922b"
   },
   "staging": {
     "status": "yellow",
@@ -70,21 +70,21 @@
     "sourceContractSha256": "99befc990094ef7c9b5600dcafb2b6fa0a564c07b14fb6a918e9823113beca3c"
   },
   "productionDeploy": {
-    "state": "content-current",
-    "commitsBehind": 32,
-    "ageHours": 5.6,
-    "observedAt": "2026-10-07T22:07:00.052Z",
+    "state": "behind",
+    "commitsBehind": 148,
+    "ageHours": 27.6,
+    "observedAt": "2026-10-07T22:36:06.314Z",
     "shellParity": {
-      "state": "matched",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-07T22:07:00.052Z",
-      "expectedFrom": "00842d0876a0753bccc075081c57f358a90cb08163f469d7d2934e8f2238219c",
+      "observedAt": "2026-10-07T22:36:06.314Z",
+      "expectedFrom": "b3f6521d99d25e87e0e84c39ccd3a6ba26c00d9790e5af69849eda56e51d5f38",
       "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
-        "assets/ambient-core.shell-638df012f8.js",
+        "assets/ambient-core.shell-5b2e3a4faa.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -121,8 +121,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/ambient-core.shell-5b2e3a4faa.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-638df012f8.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -186,7 +190,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": true,
+    "productionShellParityMatched": false,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -199,6 +203,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
+    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
