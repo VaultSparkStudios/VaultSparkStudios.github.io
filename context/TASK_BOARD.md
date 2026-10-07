@@ -621,3 +621,11 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 
 
 Eight older completed technical tasks are preserved in context/archive/TASK_BOARD_ARCHIVE.md.
+
+### 2026-10-07 requested follow-through
+- [x] Implement Super Intelligence homepage title.
+- [x] Implement animated corner Spark buddy and popup with corner/motion controls.
+- [x] Restore Story Overview and full illustration reaction labels across generated articles.
+- [x] Inspect confirmed subscription and diagnose the scheduled Dispatch failures; remove rejected optional campaign tag.
+- [ ] Verify current rendered pixels, mobile regressions, staging, hosted release and production.
+- [ ] Observe the next regular digest's provider acceptance/delivery; no off-schedule send requested.

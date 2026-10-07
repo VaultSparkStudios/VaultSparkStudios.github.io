@@ -46,3 +46,15 @@ test('mobile artwork fits; sourced brief and commentary precede satire and discl
  await expect(page.getByRole('heading',{name:'The Desk’s Take',exact:true})).toBeVisible();
  await expect(page.locator('.desk-art-feedback').first()).toBeVisible();
 });
+
+test('expanded story overview leads artwork and illustration labels stay fully visible',async({page})=>{
+ for(const width of [1366,1024,390,320]){
+  await page.setViewportSize({width,height:844});await page.goto(ROUTE);
+  const overview=page.locator('.desk-story-overview');await expect(overview.getByRole('heading',{name:'Story Overview'})).toBeVisible();
+  expect((await overview.locator('.desk-overview-text').textContent()).length).toBeGreaterThan(100);
+  const y=selector=>page.locator(selector).first().evaluate(n=>n.getBoundingClientRect().top+scrollY);
+  expect(await y('.desk-story-overview')).toBeLessThan(await y('#editorial-illustration-1'));
+  const labels=page.locator('.desk-panel-react .desk-react-k');expect(await labels.allTextContents()).toEqual(['Like','Fire','Laugh','Mind-blown','Hmm','Yikes','Watching','Nailed it']);
+  expect(await labels.evaluateAll(ns=>ns.every(n=>n.scrollWidth<=n.clientWidth+1&&getComputedStyle(n).textOverflow!=='ellipsis'))).toBe(true);
+ }
+});

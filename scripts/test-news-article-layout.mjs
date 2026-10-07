@@ -56,6 +56,7 @@ for (const day of days) {
       ['class="desk-article-deck"', 'deck'],
       ['class="desk-byline"', 'byline'],
       ['class="desk-ai-line"', 'AI-written line'],
+      ['id="desk-overview-title"', 'Story Overview'],
       ['id="editorial-illustration-1"', 'illustration'],
       ['id="desk-short-title"', 'News Brief'],
       ['id="story"', 'story body'],

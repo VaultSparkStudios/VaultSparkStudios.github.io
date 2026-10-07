@@ -678,3 +678,13 @@ body.light-mode .desk-finder-bar:focus-within{border-color:var(--desk-ink);box-s
 .desk-axis-ends{gap:.65rem}.desk-axis-ends span{max-width:34%;white-space:normal}.desk-axis-note{font-size:.75rem;line-height:1.6;color:var(--desk-muted);margin:.8rem 0 0}
 .desk-satire-stage .desk-meme{margin:0}.desk-satire-stage img{max-width:100%;height:auto}
 @media(max-width:700px){.desk-masthead{grid-template-columns:1fr;gap:1.2rem}.desk-masthead-card{padding:1.25rem}.desk-mini-nav{margin-bottom:1.5rem}.desk-mini-nav a{padding:.35rem .6rem}.desk-masthead .desk-display{font-size:3.4rem}.desk-news-brief{padding:1.1rem}.desk-metric-heading{font-size:.76rem}}
+
+/* Full illustration labels in the narrow article side panel. */
+.desk-art-feedback .desk-panel-react-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+.desk-panel-react .desk-react-k{overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:normal;word-break:normal;flex:1;min-width:0}
+.desk-art-feedback .desk-panel-react{gap:.4rem;padding:.55rem .65rem}
+.desk-panel-react .desk-react-n{flex-shrink:0}
+@media(max-width:900px) and (min-width:641px){.desk-art-feedback .desk-panel-react-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:640px){.desk-art-feedback .desk-panel-react-row{grid-template-columns:repeat(2,minmax(0,1fr))}.desk-art-feedback .desk-panel-react{flex-direction:row;min-height:48px;text-align:left}.desk-art-feedback .desk-react-k{font-size:.8rem}}
+
+.desk-story-overview{margin:1.5rem 0 2rem;padding:1.3rem 1.5rem;border:1px solid var(--desk-line);border-left:3px solid var(--gold,#ffc400);border-radius:0 16px 16px 0;background:var(--desk-panel)}.desk-story-overview h2{margin:0 0 .6rem;font:600 1.25rem Georgia,serif;color:var(--desk-ink)}.desk-overview-context{margin:0 0 .7rem;font-size:.76rem;line-height:1.5;color:var(--desk-muted)}.desk-overview-text{margin:0;font-size:1rem;line-height:1.75;color:var(--desk-ink)}@media(max-width:640px){.desk-story-overview{padding:1rem 1.1rem}.desk-overview-text{font-size:.94rem}}

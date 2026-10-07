@@ -2118,3 +2118,10 @@ The art autopilot passes an immutable art_head_sha to the existing staging-first
 ## D-S370.2 — retain compatible propagation contracts
 
 Startup canon sync removed local capability exports needed by existing verification. Preserve the incoming copies for reconciliation and retain the tested local runtime tooling rather than shipping an incomplete propagation. The canonical adoption sync remains recorded. Conformance checker parse errors and standing STRONG gaps remain advisory to this scoped operational release; canonical staging, live stats and explicit identity holds are independently checked. No canon decision or identity hold is changed.
+
+### 2026-10-07 — Requested site follow-through
+- Founder requests the homepage title expand SI as Super Intelligence. The title now follows that wording.
+- Spark is an animated corner companion with a nonmodal navigation popup, remembered left/right placement, motion preference and a session tuck-away control. The header recalls navigation; consent and other modal surfaces take precedence.
+- Restore every article's full stored summary as Story Overview before artwork. Keep the separate attributed News Brief and persona analysis.
+- Illustration reaction labels must wrap visibly at every width rather than truncate.
+- Remove the optional Brevo campaign tag: live scheduled runs returned HTTP 405 because the account cannot use it. Keep the existing once-daily UTC schedule and double opt-in. No additional campaign or test email is sent by this work.

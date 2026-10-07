@@ -428,7 +428,6 @@ export function campaignPayload(issue, html) {
     replyTo: REPLY_TO,
     htmlContent: html,
     recipients: { listIds: [DISPATCH_LIST_ID] },
-    tag: 'desk-dispatch',
   };
 }
 
@@ -651,6 +650,7 @@ async function selfTest() {
   const date = '2026-10-02';
 
   // 1. No editions → no email, and no network even in --send mode.
+  t('campaign uses no optional account-restricted tag', !Object.hasOwn(campaignPayload({name:'test',subject:'test',preheader:'test'},'<p>test</p>'),'tag'));
   t('missing day → skip', buildDigest(null, { date }).skip);
   t('empty day → skip', buildDigest({ date, simulated: false, stories: [] }, { date }).skip);
   t('simulated day → skip', buildDigest({ date, simulated: true, stories: [fixtureStory('a')] }, { date }).skip);

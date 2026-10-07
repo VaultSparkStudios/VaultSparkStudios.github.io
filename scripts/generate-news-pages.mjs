@@ -581,6 +581,11 @@ function artworkStage(story, day) {
   return `<section class="desk-art-stage" aria-label="Story artwork and image discussion"><div class="desk-art-gallery">${illustration}</div><aside class="desk-art-feedback" aria-label="Artwork reactions and public comments">${panelReactions(story, day)}${imageDiscussion(story, day, 'editorial-illustration-1', 'the illustration')}</aside></section>`;
 }
 
+function storyOverview(story) {
+  const overview = typeof story.tldr === 'string' && story.tldr.trim() ? story.tldr.trim() : story.hook;
+  return `<section class="desk-story-overview" aria-labelledby="desk-overview-title"><h2 id="desk-overview-title">Story Overview</h2><p class="desk-overview-context">What happened, what is being reported, and the context before The Desk’s take.</p><p class="desk-overview-text">${escapeHtml(overview || story.headline)}</p></section>`;
+}
+
 function newsBrief(story, day) {
   const facts = (story.facts || []).filter(f => f.sourceUrl);
   const publishers = new Set(facts.map(publisherFor));
@@ -959,6 +964,7 @@ ${followUp ? `  ${followUp}\n` : ''}
   </header>
 ${day.simulated ? PREVIEW_BANNER : ''}
 ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
+  ${storyOverview(story)}
   ${artworkStage(story, day)}
   ${newsBrief(story, day)}
   ${storyToc(tocSections)}

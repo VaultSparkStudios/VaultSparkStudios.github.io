@@ -402,3 +402,6 @@ Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after
 ### S369 final newsletter publication
 
 Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c70388ea, confirmed Pages run37548337150 (successful actual deploy), production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a after11/11 ceremony checks. The uninterrupted full suite passed530/530, with zero secret findings. Live desktop1366/mobile390 welcome screens were captured and inspected; the served content head matches, all newsletter challenge slots are absent and the human/agent contract is available. Backend recipient/global limits, premium confirmation/plain-text emails and signed cancellation are deployed; the digest design is updated. No extra real emails were sent. Founder confirmed the prior regular signup; delivery/rendering of the upgraded email in a real mailbox remains unverified. All four temporarily paused publishers are active again. Existing identity holds remain separate.
+
+### 2026-10-07 follow-through candidate
+Homepage title uses Super Intelligence. Spark's floating animated buddy opens an optional corner popup. Article pages restore Story Overview above artwork and show full illustration reaction labels. The daily Dispatch campaign payload omits the provider-rejected optional tag. Staging and production verification pending.

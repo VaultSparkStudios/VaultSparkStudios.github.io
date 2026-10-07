@@ -3,11 +3,11 @@ const {test,expect}=require('@playwright/test');
 test.beforeEach(async({page})=>{
   await page.addInitScript(()=>{localStorage.setItem('vs_cookie_consent','declined');localStorage.setItem('vs_journey_pages_v1',JSON.stringify(['/studio/','/roadmap/']));localStorage.setItem('vs_cst_visited',JSON.stringify(['/games/','/roadmap/']));});
 });
-async function open(page){await page.getByRole('button',{name:'Open Spark — Vault Compass'}).click();await expect(page.locator('#spark-compass')).toBeVisible();await expect(page.locator('.spark-card').first()).toBeVisible();}
+async function open(page){await page.getByRole('button',{name:'Open Spark navigation'}).click();await expect(page.locator('#spark-compass')).toBeVisible();await expect(page.locator('.spark-card').first()).toBeVisible();}
 test('qualifying browse history, scroll and palette interaction cannot restore corner guides',async({page})=>{
   const paid=[];page.on('request',r=>{if(/semantic-search|api.openai|api.anthropic/.test(r.url()))paid.push(r.url());});
   for(const route of ['/games/','/roadmap/','/community/']){await page.goto(route);await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight*.6));await page.waitForTimeout(2500);await expect(page.locator('.vs-cst-compass,.vs-cst-toast,.vs-journey,.vs-exit-panel,.vs-vd,.vs-lens')).toHaveCount(0);await expect(page.locator('#spark-compass[open]')).toHaveCount(0);}
-  await open(page);await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Open Spark — Vault Compass'})).toBeFocused();await page.keyboard.press('Control+k');await expect(page.locator('#spark-compass')).toBeVisible();await expect(page.locator('dialog[open]')).toHaveCount(1);expect(paid).toEqual([]);
+  await open(page);await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Open Spark navigation'})).toBeFocused();await page.keyboard.press('Control+k');await expect(page.locator('#spark-compass')).toBeVisible();await expect(page.locator('dialog[open]')).toHaveCount(1);expect(paid).toEqual([]);
 });
 test('search, proof, quiet preference and reduced motion remain useful',async({page})=>{
   await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/games/');await open(page);
@@ -23,7 +23,7 @@ test('malformed manifests cannot inject destinations; network failure has ordina
   await page.route('**/api/spark-manifest.json',r=>r.fulfill({json:{schemaVersion:1,revision:'bad',regions:[],destinations:[{id:'evil',url:'javascript:alert(1)'}]}}));await page.goto('/games/');await page.getByRole('button',{name:'Open Spark — Vault Compass'}).click();await expect(page.getByText('This source is unavailable. You can still browse.')).toBeVisible();await expect(page.locator('#spark-compass').getByRole('link',{name:'Games',exact:true})).toHaveAttribute('href','/games/');
 });
 test('consent takes precedence and no guide overlaps it',async({page})=>{
-  await page.addInitScript(()=>localStorage.removeItem('vs_cookie_consent'));await page.goto('/games/');await expect(page.locator('#cookieConsent')).toBeVisible();await page.getByRole('button',{name:'Open Spark — Vault Compass'}).click();await expect(page.locator('#spark-compass[open]')).toHaveCount(0);await expect(page.locator('.vs-cst-compass,.vs-journey')).toHaveCount(0);
+  await page.addInitScript(()=>localStorage.removeItem('vs_cookie_consent'));await page.goto('/games/');await expect(page.locator('#cookieConsent')).toBeVisible();await expect(page.locator('.spark-buddy')).toBeHidden();await page.getByRole('button',{name:'Open Spark navigation'}).click();await expect(page.locator('#spark-compass[open]')).toHaveCount(0);await expect(page.locator('.vs-cst-compass,.vs-journey')).toHaveCount(0);
 });
 
 test('every consumed manifest field is validated before rendering',async({page})=>{
@@ -47,9 +47,22 @@ test('route progress is earned only when its destination actually loads',async({
 });
 
 test('style loading failure retries even when the script already loaded',async({page})=>{
-  let first=true;await page.route(/\/assets\/spark-compass.*\.css$/,r=>{if(first){first=false;return r.abort();}return r.continue();});await page.goto('/games/');const trigger=page.locator('[data-vs-palette-loader-trigger]');await trigger.click();await expect(trigger).toHaveAttribute('aria-label','Spark unavailable — try again');await expect(page.locator('#spark-compass[open]')).toHaveCount(0);await trigger.click();await expect(page.locator('#spark-compass')).toBeVisible();expect(await page.locator('#spark-compass').evaluate(n=>getComputedStyle(n).borderRadius)).toBe('28px');
+  let first=true;await page.route(/\/assets\/spark-compass.*\.css$/,r=>{if(first){first=false;return r.abort();}return r.continue();});await page.goto('/games/');const trigger=page.locator('[data-vs-palette-loader-trigger]');await trigger.click();await expect(trigger).toHaveAttribute('aria-label','Spark unavailable — try again');await expect(page.locator('#spark-compass[open]')).toHaveCount(0);await trigger.click();await expect(page.locator('#spark-compass')).toBeVisible();expect(await page.locator('#spark-compass').evaluate(n=>getComputedStyle(n).borderRadius)).toBe('24px');
 });
 
 test('MindFrame launch destinations use its current domain',async({page})=>{
   for(const route of ['/play/','/games/mindframe/']){await page.goto(route);expect(await page.locator('a[href*="steadfast-determination"]').count()).toBe(0);expect(await page.locator('a[href^="https://usemindframe.com"]').count()).toBeGreaterThan(0);}
+});
+
+test('corner buddy animates, opens a nonmodal popup and remembers placement',async({page})=>{
+  await page.setViewportSize({width:360,height:640});await page.goto('/games/');
+  const buddy=page.getByRole('button',{name:'Open Spark — Vault Compass'});await expect(buddy).toBeVisible();
+  const box=await buddy.boundingBox();expect(box.x+box.width).toBeLessThanOrEqual(360);
+  expect(await page.locator('.spark-buddy-orb').evaluate(n=>getComputedStyle(n).animationName)).toBe('spark-buddy-float');
+  await buddy.click();await expect(page.locator('.spark-card').first()).toBeVisible();expect(await page.locator('#spark-compass').evaluate(n=>n.matches(':modal'))).toBe(false);
+  await page.getByLabel('Spark corner').selectOption('left');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
+  await page.getByLabel('Spark motion',{exact:true}).selectOption('still');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-motion','still');
+  await page.keyboard.press('Escape');await expect(buddy).toBeFocused();await page.reload();await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
+  await page.getByRole('button',{name:'Tuck Spark away for this visit'}).click();await expect(page.locator('.spark-buddy')).toBeHidden();
+  await page.getByRole('button',{name:'Open Spark navigation'}).click();await expect(page.locator('#spark-compass')).toBeVisible();
 });
