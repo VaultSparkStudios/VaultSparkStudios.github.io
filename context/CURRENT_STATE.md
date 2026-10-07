@@ -1,3 +1,9 @@
+## S370 — publication evidence candidate (2026-10-07)
+
+S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes.
+
+Independent review passed after two fix rounds; focused self-tests 39/39 and workflow guards passed. Staging/hosted release acceptance is pending. Scheduled art runs 37549313182 and 37590125126 succeeded with live image checks; scheduled publisher release 37622619279 succeeded. The subsequent automation commits are recorded here rather than treated as an interrupted human session. Existing identity and credential holds remain separate.
+
 # Current State
 
 ## S369 — Spark live release (2026-10-06)

@@ -2109,3 +2109,12 @@ Desk signup recovery (2026-10-06): production trace confirmed shared KV daily wr
 ### D369.11 — Inclusive newsletter consent and bounded invitations
 
 Founder explicitly requests easy human/agent signup. Remove Turnstile only from Desk invitations; retain browser CSRF, per-network limits and other public-form protections. Enforce atomic hashed-recipient cooldown and daily send budget at the backend. Signed unsubscribe revokes all earlier invitations for that recipient, including cancellation races. No identity-plane change. Premium emails use self-contained inline table HTML and a plain-text alternative.
+
+
+## D-S370.1 — publication must prove its candidate
+
+The art autopilot passes an immutable art_head_sha to the existing staging-first workflow. Actual checkout must equal that input; run-name identifies pinned art runs, and discovery/view require a new matching manual run, head SHA and display title. Missing, ambiguous, failed or unobservable release evidence is nonpassing. Live derivatives are hashed before publication and checked against served bytes and article references. Existing scheduled/manual latest-main semantics outside the pinned art lane are preserved.
+
+## D-S370.2 — retain compatible propagation contracts
+
+Startup canon sync removed local capability exports needed by existing verification. Preserve the incoming copies for reconciliation and retain the tested local runtime tooling rather than shipping an incomplete propagation. The canonical adoption sync remains recorded. Conformance checker parse errors and standing STRONG gaps remain advisory to this scoped operational release; canonical staging, live stats and explicit identity holds are independently checked. No canon decision or identity hold is changed.

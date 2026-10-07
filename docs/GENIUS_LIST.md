@@ -1,16 +1,16 @@
-# Genius Hit List — Session 369
+# Genius Hit List — Session 370
 
-Generated: 2026-10-06
+Generated: 2026-10-07
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **81/100**
 - Health: **yellow**
-- Current SIL: **912/1000**
+- Current SIL: **916/1000**
 - CI health: **check gh run list**
-- Current focus: S369 complete: Spark, premium AI News Desk, inclusive newsletter signup and immersive welcome published and verified.
+- Current focus: S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes. Release acceptance pending.
 
 ## Strategic Read
 
@@ -22,77 +22,77 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
-Final score: **96**
-[P1] Confirm the art autopilot's first scheduled publish (.cache/desk-art-staging/autopilot.log); fix anything it aborted on.
-Why it matters: Confirm the art autopilot's first scheduled publish (.cache/desk-art-s is open, local, and unblocked — can ship this session.
+#### 1. [COHESION] Preserve project-local capability contracts during incoming propagati…
+Final score: **98**
+[SIL/P2 · next scope] Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
+Why it matters: Preserve project-local capability contracts during incoming propagatio is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
-#### 2. [VERIFY] Post-push CI confirmation
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [PRODUCT] Wave 3: staging, hosted checks, pinned production publication and fin…
+Final score: **96**
+Wave 3: staging, hosted checks, pinned production publication and final closeout evidence.
+Why it matters: Wave 3: staging, hosted checks, pinned production publication and fina is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-Final score: **93**
-[SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
-Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-Final score: **87**
-[P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
-Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
+#### 4. [PRODUCT] Add a routine receipt for out-of-session Desk art commits so write-ba…
+Final score: **90**
+[SIL/P2 · next scope] Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
+Why it matters: Add a routine receipt for out-of-session Desk art commits so write-bac is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Observe the next scheduled publisher-to-release trigger after the Oct…
-Final score: **84**
-[DESK/RELEASE/P2] Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
-Why it matters: Observe the next scheduled publisher-to-release trigger after the Octo is open, local, and unblocked — can ship this session.
+#### 1. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+Final score: **87**
+[SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
+Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+#### 2. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
 Final score: **81**
+[P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
+Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+Final score: **78**
 [DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-Final score: **80**
+#### 4. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+Final score: **74**
 [AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
-Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 369-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 4. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **75**
+#### 5. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
+Final score: **72**
 [QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
 Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **72**
+### LATER
+
+#### 1. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
+Final score: **69**
 [S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **68**
+#### 2. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
+Final score: **65**
 [DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
-Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 369-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-#### 2. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
-Final score: **63**
+#### 3. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
+Final score: **60**
 [S365][OPS/P2] Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs --allow-wipe; keep unarchived deletion blocking.
 Why it matters: Teach the closeout wipe guard to recognize a byte-preserving work-log  is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Make staging deployment regenerate its continuity summary before a re…
-Final score: **59**
-[S365][CI/P2] Make staging deployment regenerate its continuity summary before a release ceremony can read it. The first S365 ceremony ran before that summary and rejected only lineage; the settled rerun passed 11/11.
-Why it matters: Make staging deployment regenerate its continuity summary before a rel is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
@@ -138,18 +138,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Confirm the art autopilot's first scheduled publish (.cache/desk-art-…
-2. Post-push CI confirmation
-3. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-4. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-5. Observe the next scheduled publisher-to-release trigger after the Oct…
-6. Add a generated-fixture check for month rollover so a future edition …
-7. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-8. Review measured Linux screenshots before refreshing visual-regression…
-9. Track growth of the Desk overlay from the production baseline; arrang…
-10. Verify prior-overlay path preservation automatically before scoped Pa…
-11. Teach the closeout wipe guard to recognize a byte-preserving work-log…
-12. Make staging deployment regenerate its continuity summary before a re…
+1. Preserve project-local capability contracts during incoming propagati…
+2. Wave 3: staging, hosted checks, pinned production publication and fin…
+3. Post-push CI confirmation
+4. Add a routine receipt for out-of-session Desk art commits so write-ba…
+5. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+6. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+7. Add a generated-fixture check for month rollover so a future edition …
+8. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+9. Review measured Linux screenshots before refreshing visual-regression…
+10. Track growth of the Desk overlay from the production baseline; arrang…
+11. Verify prior-overlay path preservation automatically before scoped Pa…
+12. Teach the closeout wipe guard to recognize a byte-preserving work-log…
 
 ## Best Immediate Move
 

@@ -1,0 +1,274 @@
+{
+  "session": 370,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Supported-release stabilization of art publication evidence, canonical propagated startup updates, staging-first production follow-through. Identity holds remain applicable.",
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 1,
+    "sil-debt": 1
+  },
+  "axisCoverage": {
+    "features-depth": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "desk-search-present",
+          "premise": "The Desk lacks archive search",
+          "evidence": "assets/news-desk-search.js and S368 full-text search already cover the corpus."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "ui-ux-feedback": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "persona-history-missing",
+          "premise": "Correspondent history is truncated",
+          "evidence": "news/personas/rex/page/9/index.html retains chronological pagination."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "gamification-immersion": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "journey-progress-missing",
+          "premise": "Local discovery progress needs replacement",
+          "evidence": "S369 Spark retains legacy achievements and adds arrival-earned local sigils."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "ai-intelligence": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "art-publisher-unproven",
+          "premise": "Scheduled art never reaches production",
+          "evidence": "autopilot.log records successful runs 37549313182 and 37590125126 followed by live checks for both images."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "security": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "signup-counter-outage",
+          "premise": "Signup counters still share exhausted KV writes",
+          "evidence": "D-S369.10 and tests/public-form-rate-limit.unit.spec.js document isolated atomic Durable Object counters."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "speed-organization-efficiency": {
+      "surviving": [
+        "bind-art-release-run"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "replace-release-pipeline",
+          "premise": "Staging-first art delivery needs a replacement",
+          "evidence": "Existing desk-content-release.yml and runs 37549313182/37590125126 already deliver staging-first releases."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "token-cost": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "paid-art-review-required",
+          "premise": "Art review requires paid API calls",
+          "evidence": "desk-art-autopilot uses subscription Codex exec; no additional paid model is needed."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "observability-honesty": {
+      "surviving": [
+        "verify-served-art-bytes"
+      ],
+      "rejectedOnVerify": [
+        {
+          "slug": "feed-time-missing",
+          "premise": "JSON Feed has no true publish instant",
+          "evidence": "S368 ships date_published derived from story publish-time evidence."
+        }
+      ],
+      "examinedCandidates": 2
+    },
+    "sil-debt": {
+      "surviving": [],
+      "rejectedOnVerify": [
+        {
+          "slug": "repeat-new-overlay",
+          "premise": "S369 discovery replacement still needs implementation",
+          "evidence": "docs/AUDIT_2026-10-06.json records all twelve accepted outcomes shipped with staging and live acceptance. Unrelated push helper remains queued."
+        }
+      ],
+      "examinedCandidates": 2
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "bind-art-release-run",
+      "axis": "speed-organization-efficiency",
+      "title": "Bind art publication to a confirmed release run",
+      "why": "A missing observed run currently returns success and selection uses only the newest run ID.",
+      "recipe": "Capture prior IDs, dispatch at the pushed SHA, and accept only one new manual run for that SHA. Missing, ambiguous, unreadable and failed runs fail closed.",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 16,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "executionLog": [],
+      "informationFindingOutcome": "Only report successful publication when the intended release and intended image bytes are proven.",
+      "acceptance": "Deterministic missing/ambiguous/failed run and stale-byte tests; existing art self-tests; hosted release and live artifact evidence.",
+      "premises": [
+        {
+          "claim": "A missing observed run currently returns success and selection uses only the newest run ID.",
+          "adapter": "file-content",
+          "target": "scripts/desk-art-autopilot.mjs",
+          "pattern": "if (!id) { log('release dispatched; run id not found'); return 0; }",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Reject unobserved success."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Capture prior IDs, dispatch at the pushed SHA, and accept only one new manual run for that SHA. Missing, ambiguous, unreadable and failed runs fail closed."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Add a durable cross-run release ledger; deferred beyond this selected stabilization scope."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "verify-served-art-bytes",
+      "axis": "observability-honesty",
+      "title": "Verify the served derivative matches approved publication bytes",
+      "why": "HTTP success, image MIME and a referenced URL can all be true for stale art.",
+      "recipe": "Pin derivative hashes before publication; compare fetched bytes and article references, and reject a missing local artifact or a stale response.",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 16,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "executionLog": [],
+      "informationFindingOutcome": "Only report successful publication when the intended release and intended image bytes are proven.",
+      "acceptance": "Deterministic missing/ambiguous/failed run and stale-byte tests; existing art self-tests; hosted release and live artifact evidence.",
+      "premises": [
+        {
+          "claim": "HTTP success, image MIME and a referenced URL can all be true for stale art.",
+          "adapter": "file-content",
+          "target": "scripts/desk-art-autopilot.mjs",
+          "pattern": "html.includes(url.replace('https://vaultsparkstudios.com', ''))",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Reject unobserved success."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Pin derivative hashes before publication; compare fetched bytes and article references, and reject a missing local artifact or a stale response."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Add a durable cross-run release ledger; deferred beyond this selected stabilization scope."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 32,
+    "top3": [
+      "bind-art-release-run",
+      "verify-served-art-bytes"
+    ]
+  },
+  "innovationReserve": [],
+  "skipped": [
+    {
+      "slug": "desk-search-present",
+      "reason": "assets/news-desk-search.js and S368 full-text search already cover the corpus."
+    },
+    {
+      "slug": "new-discovery-surface",
+      "reason": "S369 Spark ships the accepted opt-in discovery surface; another overlay conflicts with that direction."
+    },
+    {
+      "slug": "persona-history-missing",
+      "reason": "news/personas/rex/page/9/index.html retains chronological pagination."
+    },
+    {
+      "slug": "journey-progress-missing",
+      "reason": "S369 Spark retains legacy achievements and adds arrival-earned local sigils."
+    },
+    {
+      "slug": "art-publisher-unproven",
+      "reason": "autopilot.log records successful runs 37549313182 and 37590125126 followed by live checks for both images."
+    },
+    {
+      "slug": "signup-counter-outage",
+      "reason": "D-S369.10 and tests/public-form-rate-limit.unit.spec.js document isolated atomic Durable Object counters."
+    },
+    {
+      "slug": "paid-art-review-required",
+      "reason": "desk-art-autopilot uses subscription Codex exec; no additional paid model is needed."
+    },
+    {
+      "slug": "repeat-new-overlay",
+      "reason": "docs/AUDIT_2026-10-06.json records all twelve accepted outcomes shipped with staging and live acceptance. Unrelated push helper remains queued."
+    },
+    {
+      "slug": "feed-time-missing",
+      "reason": "S368 ships date_published derived from story publish-time evidence."
+    }
+  ],
+  "candidateIdeas": [
+    {
+      "title": "Art version lineage per story",
+      "disposition": "Deferred: current byte check addresses the demonstrated issue."
+    },
+    {
+      "title": "Release queue conflict forecast",
+      "disposition": "Deferred: not needed to verify this release."
+    },
+    {
+      "title": "Consent-cohort journey replay",
+      "disposition": "Deferred: requires a fresh cohort, no synthetic field claims."
+    }
+  ],
+  "schemaVersion": "2.1",
+  "generatedAt": "2026-10-07T13:46:35.458Z"
+}

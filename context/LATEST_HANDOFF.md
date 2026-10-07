@@ -1,3 +1,11 @@
+## Where We Left Off — S370 (2026-10-07)
+
+Session Intent: /arc, followed by authorized direct main commit/push and full deployment.
+
+S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes.
+
+Wave 1 complete; Wave 2 complete locally; Wave 3 in progress. Audit: docs/AUDIT_2026-10-07.json. Independent review passed; 39/39 self-tests and workflow checks passed. Full repository verification, canonical staging and hosted/live production acceptance remain pending. Previous cache residue is preserved in stash arc-start-cache-preservation. No new model spend or newsletter sends were requested. Existing identity migration holds remain enforced.
+
 # Latest Handoff
 ## Where We Left Off — S369 Spark shipped
 

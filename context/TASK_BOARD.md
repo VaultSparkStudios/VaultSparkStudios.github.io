@@ -1,5 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
+## S370 arc
+
+- [x] Wave 1: preserve residue, sync, reconcile canon and verify the two publication premises.
+- [x] Wave 2: implement both L2 outcomes, fix independent review findings, pass 39/39 focused checks.
+- [ ] Wave 3: staging, hosted checks, pinned production publication and final closeout evidence.
+- [ ] **[SIL/P2 · next scope]** Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
+- [ ] **[SIL/P2 · next scope]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
+
 Last updated: 2026-10-06 UTC (S369 implementation)
 
 ## S369 — Spark candidate and release
@@ -12,7 +20,7 @@ Last updated: 2026-10-06 UTC (S369 implementation)
 
 ## S368 final — open follow-ups (2026-10-05)
 
-- [ ] **[P1]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
+- [x] **[P1 · S370 verified runs 37549313182/37590125126]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
 - [x] Autopilot verifies every published image and its article are served live (one retry for CDN lag).
 - [x] JSON Feed `date_published` carries the real publish instant (all 106 items).
 - [x] 46 old stashes archived under `refs/stash-archive/` and the stash list cleared.
@@ -40,7 +48,7 @@ Last updated: 2026-10-06 UTC (S369 implementation)
 - [x] Archive 90 stories by month; seven recent editions keep the hub below 200 KiB.
 - [x] PR #134 and Pages run `36813693699`: 153-path staging/production parity preserves all 147 prior Desk paths; hosted and browser checks pass.
 - [x] Repair the daily Desk lane's staging ancestry, 24 withheld persona/archive paths and restricted receiver rules; recovery `36835514861` and Pages `36835622726` passed with 159/159 production bytes.
-- [ ] **[DESK/RELEASE/P2]** Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
+- [x] **[DESK/RELEASE/P2 · S370 verified run 37622619279]** Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
 - [ ] **[DESK/QA/P2]** Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 
 ## Desk persona follow-up — 2026-09-30

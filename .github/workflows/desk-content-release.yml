@@ -1,10 +1,17 @@
 name: The Desk — Staging-First Content Release
+run-name: ${{ inputs.art_head_sha && format('Desk art {0}', inputs.art_head_sha) || 'The Desk — Staging-First Content Release' }}
 
 on:
   workflow_run:
     workflows: ["The Desk — Scheduled Publish"]
     types: [completed]
   workflow_dispatch:
+    inputs:
+      art_head_sha:
+        description: "Immutable pushed candidate for the art autopilot (blank preserves the scheduled/manual latest-main lane)"
+        required: false
+        default: ""
+        type: string
 
 concurrency:
   group: desk-content-release
@@ -21,8 +28,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ inputs.art_head_sha || 'main' }}
           fetch-depth: 0
+
+      - name: Verify the pinned art candidate
+        if: github.event_name == 'workflow_dispatch' && inputs.art_head_sha != ''
+        env:
+          ART_HEAD_SHA: ${{ inputs.art_head_sha }}
+        run: |
+          [[ "$ART_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "Invalid art candidate SHA" >&2; exit 1; }
+          test "$(git rev-parse HEAD)" = "$ART_HEAD_SHA"
 
       - uses: actions/setup-node@v4
         with:

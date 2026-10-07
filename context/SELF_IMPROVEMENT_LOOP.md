@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁▄▆▅▅
-Avgs — 3: 955.7 | 5: 940.2 | 10: — (S350–S353 entries are outside the active ledger) | 25: — | all: 982.7
-History scope: 202 recorded /1000 entries across the active ledger and preserved SIL archives.
-Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
-Last session: 2026-10-02 | Session 368 | Total: 954/1000 | Velocity: 23 | protocolVelocity: 0
+Sparkline (last 5 totals): ███▇▇
+Avgs — 3: 919.0 | 5: 934.0 | 10: 946.3 | 25: 965.3 | all: unmeasured (archived history not re-scored)
+History scope: latest scored entry per session in the active append-only ledger.
+Velocity trend: → | Protocol velocity: → | Debt: →
+Last session: 2026-10-07 | Session 370 | Total: 916/1000 | Velocity: 2 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2849,3 +2849,14 @@ Founder reports the regular Desk signup worked correctly. New requested follow-t
 ### S369 newsletter acceptance complete — unscored addendum
 
 Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c70388ea, confirmed Pages run37548337150 (successful actual deploy), production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a after11/11 ceremony checks. The uninterrupted full suite passed530/530, with zero secret findings. Live desktop1366/mobile390 welcome screens were captured and inspected; the served content head matches, all newsletter challenge slots are absent and the human/agent contract is available. Backend recipient/global limits, premium confirmation/plain-text emails and signed cancellation are deployed; the digest design is updated. No extra real emails were sent. Founder confirmed the prior regular signup; delivery/rendering of the upgraded email in a real mailbox remains unverified. All four temporarily paused publishers are active again. Existing identity holds remain separate. Existing912/1000 score and session369 are retained. Follow-through evidence distinguishes source verification, production publication and mailbox delivery.
+
+
+## 2026-10-07 UTC — Session 370 (publication evidence stabilization) | Total: 916/1000 (v3.0) | Velocity: 2 | Debt: →
+
+Dev Health 87; Creative Alignment 95; Momentum 90; Engagement 91; Process Quality 87; Cross-Repo Coherence 92; Security Posture 94; Ecosystem Integration 91; Capital Efficiency 94; Automation Coverage 95. Scores reflect focused implementation and caught evidence races; broad release acceptance remains pending.
+
+S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes.
+
+Independent review found two races and both were fixed; 39/39 focused checks passed. Two existing verification carries resolved with hosted evidence. The automated art commits after S369 are explicitly recorded. Full-suite, staging and production disposition will be appended when observed.
+
+Brainstorm: propagation pre-apply project-contract smoke; typed routine receipts for unattended art commits; future per-story version lineage. The first two are recorded as next-scope SIL items, not automatic new implementation.
