@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
 - Current SIL: **916/1000**
 - CI health: **check gh run list**
-- Current focus: S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes. Release acceptance pending.
+- Current focus: S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate.
 
 ## Strategic Read
 
@@ -23,40 +23,42 @@ The strongest near-term leverage is release confidence first, then cross-surface
 ### NOW
 
 #### 1. [COHESION] Preserve project-local capability contracts during incoming propagati…
-Final score: **98**
+Final score: **100**
 [SIL/P2 · next scope] Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
 Why it matters: Preserve project-local capability contracts during incoming propagatio is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 2. [PRODUCT] Wave 3: staging, hosted checks, pinned production publication and fin…
-Final score: **96**
-Wave 3: staging, hosted checks, pinned production publication and final closeout evidence.
-Why it matters: Wave 3: staging, hosted checks, pinned production publication and fina is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Post-push CI confirmation
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 4. [PRODUCT] Add a routine receipt for out-of-session Desk art commits so write-ba…
-Final score: **90**
+#### 3. [PRODUCT] Add a routine receipt for out-of-session Desk art commits so write-ba…
+Final score: **93**
 [SIL/P2 · next scope] Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
 Why it matters: Add a routine receipt for out-of-session Desk art commits so write-bac is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+#### 4. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
 Final score: **87**
 [SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
 Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+### NEXT
+
+#### 1. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
 Final score: **81**
 [P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
 Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
+
+#### 2. [VERIFY] Restrict the optional Open Graph regeneration publisher to a writable…
+Final score: **80**
+[CI/P2 · future maintenance] Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
+Why it matters: Restrict the optional Open Graph regeneration publisher to a writable  is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 3. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
 Final score: **78**
@@ -139,11 +141,11 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 ## Recommended Build Order
 
 1. Preserve project-local capability contracts during incoming propagati…
-2. Wave 3: staging, hosted checks, pinned production publication and fin…
-3. Post-push CI confirmation
-4. Add a routine receipt for out-of-session Desk art commits so write-ba…
-5. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-6. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+2. Post-push CI confirmation
+3. Add a routine receipt for out-of-session Desk art commits so write-ba…
+4. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+5. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+6. Restrict the optional Open Graph regeneration publisher to a writable…
 7. Add a generated-fixture check for month rollover so a future edition …
 8. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
 9. Review measured Linux screenshots before refreshing visual-regression…

@@ -7,7 +7,7 @@
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▆▆▆▆▆▆▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.229  (healthy)                               ║
+║  ✓  Entropy       0.203  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║

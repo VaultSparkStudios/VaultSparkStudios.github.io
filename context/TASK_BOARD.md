@@ -4,9 +4,10 @@
 
 - [x] Wave 1: preserve residue, sync, reconcile canon and verify the two publication premises.
 - [x] Wave 2: implement both L2 outcomes, fix independent review findings, pass 39/39 focused checks.
-- [ ] Wave 3: staging, hosted checks, pinned production publication and final closeout evidence.
+- [x] Wave 3: canonical staging, hosted checks, pinned production publication and final closeout evidence verified in docs/S370_RELEASE_2026-10-07.md.
 - [ ] **[SIL/P2 · next scope]** Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
 - [ ] **[SIL/P2 · next scope]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
+- [ ] **[CI/P2 · future maintenance]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
 
 Last updated: 2026-10-06 UTC (S369 implementation)
 

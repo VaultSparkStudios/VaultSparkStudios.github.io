@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S370) - WHAT SHIPPED ══════════════════════════╗
-║  S370 hardens automated Desk publication: pinned candidate chec  ║
+║  S370 publication evidence is shipped: the art release pins che  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -81,7 +81,7 @@
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▆▆▆▆▆▆▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.229  (healthy)                               ║
+║  ✓  Entropy       0.203  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   98  [COHESION]     Preserve project-local capability contract  ║
+║  100  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
-║                                                                  ║
-║   96  [PRODUCT]      Wave 3: staging, hosted checks, pinned pro  ║
-║        Wave 3: staging, hosted checks, pinned production public  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Add a routine receipt for out-of-session D  ║
+║   93  [PRODUCT]      Add a routine receipt for out-of-session D  ║
 ║        Add a routine receipt for out-of-session Desk art commit  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
+║   90  [PRODUCT]      Push helper as a repo script (scripts/push  ║
 ║        Push helper as a repo script (scripts/push-main.mjs): au  ║
+║                                                                  ║
+║   84  [PRODUCT]      Approve Desk digest test → autoSend; apply  ║
+║        Approve Desk digest test is open, local, and unblocked —  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

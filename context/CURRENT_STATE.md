@@ -1,3 +1,11 @@
+## S370 — publication evidence shipped (2026-10-07)
+
+S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate.
+
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced.
+
+Acceptance: docs/S370_RELEASE_2026-10-07.md. Earlier candidate checkpoints below are superseded by this observed release.
+
 ## S370 — publication evidence candidate (2026-10-07)
 
 S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes.

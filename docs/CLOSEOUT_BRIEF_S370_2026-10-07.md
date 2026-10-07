@@ -5,11 +5,16 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound     ║
-║    run confirmation; served banner and satire derivatives must match the pinned bytes.        ║
+║    S370 publication evidence is shipped: the art release pins checkout to its requested       ║
+║    SHA, confirms the matching workflow run, and verifies served banner and satire bytes       ║
+║    against the candidate.                                                                     ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   80/100                                                       ║
 ║  ECOSYSTEM IMPACT   ████████░░   80/100                                                       ║
+║  SIL DELTA          912 → 916  (+4)                                                           ║
+║  CHECKS             39 focused; 215 mobile; 28 visual                                         ║
+║  PUBLICATION        Hosted and live acceptance verified                                       ║
+║  HONESTY            Existing identity holds retained; field impact unmeasured                 ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -17,21 +22,21 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   [#1]  bind-art-release-run                                      PROJ 8  ·  ECOS 8
-         ── speed ───────────────────────────────────────────────────────────────────────────
-         A release must prove which candidate it checked out. The workflow pins that source
-         and the observer refuses unrelated or unobserved runs.
-         → scripts/desk-art-autopilot.mjs; .github/workflows/desk-content-release.yml; 39/39 self-tests
+         ── speed-organization-efficiency ───────────────────────────────────────────────────
+         The workflow checks out the requested candidate. The observer accepts only its new
+         SHA/title-bound manual run and confirmed success.
+         → Run 37651535578; docs/S370_RELEASE_2026-10-07.md; 39/39 focused checks
 
   [#2]  verify-served-art-bytes                                   PROJ 8  ·  ECOS 8
-         ── organization ────────────────────────────────────────────────────────────────────
-         A successful image response can still serve stale artwork. Live acceptance now
-         compares the derivative bytes captured before publication.
-         → Banner/satire positive and stale-byte regression cases; independent final review passed
+         ── observability-honesty ───────────────────────────────────────────────────────────
+         A successful image response may carry stale artwork. The published derivatives now
+         have to match the bytes pinned before publication.
+         → Run 37651535578; docs/S370_RELEASE_2026-10-07.md; 39/39 focused checks
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Hosted and live acceptance pending; prior identity holds remain separate.
+    • Propagation contract protection and routine automation receipts remain next-scope SIL proposals.
 
   BLOCKERS
     (none)

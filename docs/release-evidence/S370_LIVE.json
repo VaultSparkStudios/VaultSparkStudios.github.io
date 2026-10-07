@@ -1,0 +1,4141 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-07T16:32:58.089Z",
+  "publicSafe": true,
+  "passed": true,
+  "candidate": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+  "deskRun": 37651535578,
+  "productionRun": 37651733967,
+  "contentRun": 37652265810,
+  "hostedSuccess": true,
+  "runs": {
+    "desk": {
+      "conclusion": "success",
+      "databaseId": 37651535578,
+      "displayTitle": "Desk art 8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "event": "workflow_dispatch",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:28:02Z",
+          "conclusion": "success",
+          "databaseId": 112895832339,
+          "name": "release",
+          "startedAt": "2026-10-07T16:22:46Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:22:48Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:22:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:45Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:22:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:45Z",
+              "conclusion": "success",
+              "name": "Verify the pinned art candidate",
+              "number": 3,
+              "startedAt": "2026-10-07T16:23:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:46Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 4,
+              "startedAt": "2026-10-07T16:23:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:54Z",
+              "conclusion": "success",
+              "name": "Install existing project dependencies",
+              "number": 5,
+              "startedAt": "2026-10-07T16:23:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:57Z",
+              "conclusion": "success",
+              "name": "Verify the published Desk corpus",
+              "number": 6,
+              "startedAt": "2026-10-07T16:23:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:58Z",
+              "conclusion": "success",
+              "name": "Plan the exact production Desk partition",
+              "number": 7,
+              "startedAt": "2026-10-07T16:23:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:58Z",
+              "conclusion": "success",
+              "name": "Plan the staging delta",
+              "number": 8,
+              "startedAt": "2026-10-07T16:23:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:23:58Z",
+              "conclusion": "success",
+              "name": "Prepare the restricted staging key",
+              "number": 9,
+              "startedAt": "2026-10-07T16:23:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:24:02Z",
+              "conclusion": "success",
+              "name": "Deploy the Desk delta to canonical staging",
+              "number": 10,
+              "startedAt": "2026-10-07T16:23:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:24:08Z",
+              "conclusion": "success",
+              "name": "Verify every production candidate path on staging",
+              "number": 11,
+              "startedAt": "2026-10-07T16:24:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:58Z",
+              "conclusion": "success",
+              "name": "Dispatch the pinned production content lane",
+              "number": 12,
+              "startedAt": "2026-10-07T16:24:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:58Z",
+              "conclusion": "success",
+              "name": "Release summary",
+              "number": 13,
+              "startedAt": "2026-10-07T16:27:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:58Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 25,
+              "startedAt": "2026-10-07T16:27:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:58Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 26,
+              "startedAt": "2026-10-07T16:27:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:59Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 27,
+              "startedAt": "2026-10-07T16:27:58Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37651535578/job/112895832339"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37651535578"
+    },
+    "production": {
+      "conclusion": "success",
+      "databaseId": 37651733967,
+      "displayTitle": "Desk content 8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "event": "workflow_dispatch",
+      "headSha": "624f7a7f4321e6c4d6b7c52f780109fdbe39aad2",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:27:44Z",
+          "conclusion": "success",
+          "databaseId": 112896511088,
+          "name": "deploy",
+          "startedAt": "2026-10-07T16:24:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:24:16Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:24:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:18Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:24:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:18Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:25:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "success",
+              "name": "Evaluate production promotion gate",
+              "number": 4,
+              "startedAt": "2026-10-07T16:25:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "skipped",
+              "name": "Install release-ceremony browser dependencies",
+              "number": 5,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "skipped",
+              "name": "Run canonical release ceremony",
+              "number": 6,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "skipped",
+              "name": "Upload release-ceremony evidence on failure",
+              "number": 7,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "skipped",
+              "name": "Evaluate content hotfix gate",
+              "number": 8,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "success",
+              "name": "Evaluate content lane (auto-scoped purity partition)",
+              "number": 9,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:19Z",
+              "conclusion": "success",
+              "name": "Resolve content-lane references against the deployed tree",
+              "number": 10,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "success",
+              "name": "Verify automated Desk staging parity",
+              "number": 11,
+              "startedAt": "2026-10-07T16:25:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "success",
+              "name": "Validate caller and Worker capability slice",
+              "number": 12,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "skipped",
+              "name": "Promotion held — no production mutation",
+              "number": 13,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "success",
+              "name": "Validate discovery content partition",
+              "number": 14,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "skipped",
+              "name": "Build clean dist (git-tracked files only)",
+              "number": 15,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "skipped",
+              "name": "Stamp honest deployed SHA into build-sha.json",
+              "number": 16,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:28Z",
+              "conclusion": "skipped",
+              "name": "Build hotfix dist (deployed tree + authorised content overlay)",
+              "number": 17,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:37Z",
+              "conclusion": "success",
+              "name": "Build content-lane dist (deployed tree + content-pure overlay)",
+              "number": 18,
+              "startedAt": "2026-10-07T16:25:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:56Z",
+              "conclusion": "success",
+              "name": "Deploy to Cloudflare Pages",
+              "number": 19,
+              "startedAt": "2026-10-07T16:25:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:56Z",
+              "conclusion": "success",
+              "name": "Purge edge HTML cache",
+              "number": 20,
+              "startedAt": "2026-10-07T16:25:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:25:58Z",
+              "conclusion": "success",
+              "name": "Purge promoted URLs by file (URL-keyed edge entries)",
+              "number": 21,
+              "startedAt": "2026-10-07T16:25:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:26:01Z",
+              "conclusion": "success",
+              "name": "Post-purge edge liveness check",
+              "number": 22,
+              "startedAt": "2026-10-07T16:25:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:26:03Z",
+              "conclusion": "success",
+              "name": "Served feed contract (status + content-type)",
+              "number": 23,
+              "startedAt": "2026-10-07T16:26:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:26:04Z",
+              "conclusion": "success",
+              "name": "Verify served discovery content partition",
+              "number": 24,
+              "startedAt": "2026-10-07T16:26:03Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:26:59Z",
+              "conclusion": "success",
+              "name": "Exact live News freshness (description, icon contract, art bytes)",
+              "number": 25,
+              "startedAt": "2026-10-07T16:26:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:41Z",
+              "conclusion": "success",
+              "name": "Finalize durable News release verification",
+              "number": 26,
+              "startedAt": "2026-10-07T16:26:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:41Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 51,
+              "startedAt": "2026-10-07T16:27:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:41Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 52,
+              "startedAt": "2026-10-07T16:27:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:27:41Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 53,
+              "startedAt": "2026-10-07T16:27:41Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37651733967/job/112896511088"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37651733967"
+    },
+    "content": {
+      "conclusion": "success",
+      "databaseId": 37652265810,
+      "displayTitle": "Cloudflare Pages Deploy",
+      "event": "workflow_dispatch",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:31:13Z",
+          "conclusion": "success",
+          "databaseId": 112898358583,
+          "name": "deploy",
+          "startedAt": "2026-10-07T16:28:13Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:28:14Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:28:13Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:27Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:28:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:29:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "success",
+              "name": "Evaluate production promotion gate",
+              "number": 4,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Install release-ceremony browser dependencies",
+              "number": 5,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Run canonical release ceremony",
+              "number": 6,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Upload release-ceremony evidence on failure",
+              "number": 7,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Evaluate content hotfix gate",
+              "number": 8,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "success",
+              "name": "Evaluate content lane (auto-scoped purity partition)",
+              "number": 9,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "success",
+              "name": "Resolve content-lane references against the deployed tree",
+              "number": 10,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Verify automated Desk staging parity",
+              "number": 11,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "success",
+              "name": "Validate caller and Worker capability slice",
+              "number": 12,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:28Z",
+              "conclusion": "skipped",
+              "name": "Promotion held — no production mutation",
+              "number": 13,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:29Z",
+              "conclusion": "success",
+              "name": "Validate discovery content partition",
+              "number": 14,
+              "startedAt": "2026-10-07T16:29:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:29Z",
+              "conclusion": "skipped",
+              "name": "Build clean dist (git-tracked files only)",
+              "number": 15,
+              "startedAt": "2026-10-07T16:29:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:29Z",
+              "conclusion": "skipped",
+              "name": "Stamp honest deployed SHA into build-sha.json",
+              "number": 16,
+              "startedAt": "2026-10-07T16:29:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:29Z",
+              "conclusion": "skipped",
+              "name": "Build hotfix dist (deployed tree + authorised content overlay)",
+              "number": 17,
+              "startedAt": "2026-10-07T16:29:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:37Z",
+              "conclusion": "success",
+              "name": "Build content-lane dist (deployed tree + content-pure overlay)",
+              "number": 18,
+              "startedAt": "2026-10-07T16:29:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:55Z",
+              "conclusion": "success",
+              "name": "Deploy to Cloudflare Pages",
+              "number": 19,
+              "startedAt": "2026-10-07T16:29:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:56Z",
+              "conclusion": "success",
+              "name": "Purge edge HTML cache",
+              "number": 20,
+              "startedAt": "2026-10-07T16:29:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:29:58Z",
+              "conclusion": "success",
+              "name": "Purge promoted URLs by file (URL-keyed edge entries)",
+              "number": 21,
+              "startedAt": "2026-10-07T16:29:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:30:01Z",
+              "conclusion": "success",
+              "name": "Post-purge edge liveness check",
+              "number": 22,
+              "startedAt": "2026-10-07T16:29:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:30:04Z",
+              "conclusion": "success",
+              "name": "Served feed contract (status + content-type)",
+              "number": 23,
+              "startedAt": "2026-10-07T16:30:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:30:05Z",
+              "conclusion": "success",
+              "name": "Verify served discovery content partition",
+              "number": 24,
+              "startedAt": "2026-10-07T16:30:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:30:38Z",
+              "conclusion": "success",
+              "name": "Exact live News freshness (description, icon contract, art bytes)",
+              "number": 25,
+              "startedAt": "2026-10-07T16:30:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:31:12Z",
+              "conclusion": "success",
+              "name": "Finalize durable News release verification",
+              "number": 26,
+              "startedAt": "2026-10-07T16:30:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:31:12Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 51,
+              "startedAt": "2026-10-07T16:31:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:31:12Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 52,
+              "startedAt": "2026-10-07T16:31:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:31:12Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 53,
+              "startedAt": "2026-10-07T16:31:12Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37652265810/job/112898358583"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37652265810"
+    },
+    "e2e": {
+      "conclusion": "success",
+      "databaseId": 37649395397,
+      "displayTitle": "Merge remote-tracking branch 'origin/main'",
+      "event": "push",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:16:58Z",
+          "conclusion": "success",
+          "databaseId": 112888444023,
+          "name": "compliance",
+          "startedAt": "2026-10-07T16:06:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:24Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:25Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:52Z",
+              "conclusion": "success",
+              "name": "Install dependencies",
+              "number": 4,
+              "startedAt": "2026-10-07T16:07:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:52Z",
+              "conclusion": "success",
+              "name": "CSP sync check",
+              "number": 5,
+              "startedAt": "2026-10-07T16:07:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:53Z",
+              "conclusion": "success",
+              "name": "CSP integrity audit",
+              "number": 6,
+              "startedAt": "2026-10-07T16:07:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:58Z",
+              "conclusion": "success",
+              "name": "Start local preview server",
+              "number": 7,
+              "startedAt": "2026-10-07T16:07:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:01Z",
+              "conclusion": "success",
+              "name": "Wait for local preview",
+              "number": 8,
+              "startedAt": "2026-10-07T16:07:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:01Z",
+              "conclusion": "success",
+              "name": "HTTP smoke pre-gate",
+              "number": 9,
+              "startedAt": "2026-10-07T16:08:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:24Z",
+              "conclusion": "success",
+              "name": "Mobile rendered-runtime release contract",
+              "number": 10,
+              "startedAt": "2026-10-07T16:08:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:27Z",
+              "conclusion": "success",
+              "name": "Public intelligence sync check",
+              "number": 11,
+              "startedAt": "2026-10-07T16:13:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:41Z",
+              "conclusion": "success",
+              "name": "Run compliance tests",
+              "number": 12,
+              "startedAt": "2026-10-07T16:15:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:43Z",
+              "conclusion": "success",
+              "name": "Service worker install",
+              "number": 13,
+              "startedAt": "2026-10-07T16:15:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:46Z",
+              "conclusion": "success",
+              "name": "Computed render smoke",
+              "number": 14,
+              "startedAt": "2026-10-07T16:15:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:16Z",
+              "conclusion": "success",
+              "name": "CLS regression budget",
+              "number": 15,
+              "startedAt": "2026-10-07T16:15:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:22Z",
+              "conclusion": "success",
+              "name": "Homepage shell regression",
+              "number": 16,
+              "startedAt": "2026-10-07T16:16:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:28Z",
+              "conclusion": "success",
+              "name": "VaultSparked CSP smoke",
+              "number": 17,
+              "startedAt": "2026-10-07T16:16:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:34Z",
+              "conclusion": "success",
+              "name": "Vault Wall smoke",
+              "number": 18,
+              "startedAt": "2026-10-07T16:16:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:48Z",
+              "conclusion": "success",
+              "name": "Light-mode screenshot baseline",
+              "number": 19,
+              "startedAt": "2026-10-07T16:16:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:48Z",
+              "conclusion": "success",
+              "name": "Stop local preview",
+              "number": 20,
+              "startedAt": "2026-10-07T16:16:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:48Z",
+              "conclusion": "success",
+              "name": "Upload compliance results",
+              "number": 21,
+              "startedAt": "2026-10-07T16:16:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:55Z",
+              "conclusion": "success",
+              "name": "Upload mobile runtime proof",
+              "number": 22,
+              "startedAt": "2026-10-07T16:16:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:56Z",
+              "conclusion": "success",
+              "name": "Upload light-mode screenshots",
+              "number": 23,
+              "startedAt": "2026-10-07T16:16:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:56Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 45,
+              "startedAt": "2026-10-07T16:16:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:57Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 46,
+              "startedAt": "2026-10-07T16:16:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:16:57Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 47,
+              "startedAt": "2026-10-07T16:16:57Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395397/job/112888444023"
+        },
+        {
+          "completedAt": "2026-10-07T16:08:12Z",
+          "conclusion": "success",
+          "databaseId": 112888444326,
+          "name": "e2e",
+          "startedAt": "2026-10-07T16:06:13Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:28Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:28Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:58Z",
+              "conclusion": "success",
+              "name": "Install dependencies",
+              "number": 4,
+              "startedAt": "2026-10-07T16:07:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:03Z",
+              "conclusion": "success",
+              "name": "Start local preview server",
+              "number": 5,
+              "startedAt": "2026-10-07T16:07:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:06Z",
+              "conclusion": "success",
+              "name": "Wait for local preview",
+              "number": 6,
+              "startedAt": "2026-10-07T16:08:03Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:06Z",
+              "conclusion": "success",
+              "name": "HTTP smoke pre-gate",
+              "number": 7,
+              "startedAt": "2026-10-07T16:08:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Run E2E tests",
+              "number": 8,
+              "startedAt": "2026-10-07T16:08:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Stop local preview",
+              "number": 9,
+              "startedAt": "2026-10-07T16:08:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Upload test results",
+              "number": 10,
+              "startedAt": "2026-10-07T16:08:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 19,
+              "startedAt": "2026-10-07T16:08:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 20,
+              "startedAt": "2026-10-07T16:08:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:09Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 21,
+              "startedAt": "2026-10-07T16:08:09Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395397/job/112888444326"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395397"
+    },
+    "lighthouse": {
+      "conclusion": "success",
+      "databaseId": 37649395196,
+      "displayTitle": "Merge remote-tracking branch 'origin/main'",
+      "event": "push",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:14:01Z",
+          "conclusion": "success",
+          "databaseId": 112888443362,
+          "name": "lighthouse",
+          "startedAt": "2026-10-07T16:06:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:19Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:53Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:58Z",
+              "conclusion": "success",
+              "name": "Start local preview server",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:07Z",
+              "conclusion": "success",
+              "name": "Wait for local preview",
+              "number": 4,
+              "startedAt": "2026-10-07T16:07:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:07Z",
+              "conclusion": "success",
+              "name": "Warm up local preview",
+              "number": 5,
+              "startedAt": "2026-10-07T16:08:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:55Z",
+              "conclusion": "success",
+              "name": "Run Lighthouse CI",
+              "number": 6,
+              "startedAt": "2026-10-07T16:08:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:55Z",
+              "conclusion": "success",
+              "name": "Collect Lighthouse JSON results",
+              "number": 7,
+              "startedAt": "2026-10-07T16:13:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:55Z",
+              "conclusion": "success",
+              "name": "Check Lighthouse trend",
+              "number": 8,
+              "startedAt": "2026-10-07T16:13:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:55Z",
+              "conclusion": "success",
+              "name": "Check Lighthouse route tiers",
+              "number": 9,
+              "startedAt": "2026-10-07T16:13:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:57Z",
+              "conclusion": "success",
+              "name": "Update Lighthouse trend ledger",
+              "number": 10,
+              "startedAt": "2026-10-07T16:13:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:57Z",
+              "conclusion": "success",
+              "name": "Stop local preview",
+              "number": 11,
+              "startedAt": "2026-10-07T16:13:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:58Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 22,
+              "startedAt": "2026-10-07T16:13:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:13:58Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-07T16:13:58Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395196/job/112888443362"
+        },
+        {
+          "completedAt": "2026-10-07T16:22:19Z",
+          "conclusion": "success",
+          "databaseId": 112891968369,
+          "name": "lighthouse-staging",
+          "startedAt": "2026-10-07T16:14:03Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:14:09Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:14:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:25Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:14:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:33Z",
+              "conclusion": "success",
+              "name": "Wait for staging reachability",
+              "number": 3,
+              "startedAt": "2026-10-07T16:15:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:15:34Z",
+              "conclusion": "success",
+              "name": "Warm up staging server",
+              "number": 4,
+              "startedAt": "2026-10-07T16:15:33Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:22:17Z",
+              "conclusion": "success",
+              "name": "Run Lighthouse against staging",
+              "number": 5,
+              "startedAt": "2026-10-07T16:15:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:22:17Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 10,
+              "startedAt": "2026-10-07T16:22:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:22:17Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 11,
+              "startedAt": "2026-10-07T16:22:17Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395196/job/112891968369"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395196"
+    },
+    "secretLint": {
+      "conclusion": "success",
+      "databaseId": 37649395126,
+      "displayTitle": "Merge remote-tracking branch 'origin/main'",
+      "event": "push",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:07:33Z",
+          "conclusion": "success",
+          "databaseId": 112888443159,
+          "name": "Check for secret-adjacent strings",
+          "startedAt": "2026-10-07T16:06:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:29Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:30Z",
+              "conclusion": "success",
+              "name": "Scan for risky patterns outside approved paths",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 6,
+              "startedAt": "2026-10-07T16:07:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:30Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 7,
+              "startedAt": "2026-10-07T16:07:30Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395126/job/112888443159"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649395126"
+    },
+    "accessibility": {
+      "conclusion": "success",
+      "databaseId": 37649394976,
+      "displayTitle": "Merge remote-tracking branch 'origin/main'",
+      "event": "push",
+      "headSha": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+      "jobs": [
+        {
+          "completedAt": "2026-10-07T16:09:09Z",
+          "conclusion": "success",
+          "databaseId": 112888443850,
+          "name": "playwright-axe",
+          "startedAt": "2026-10-07T16:06:15Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:17Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:46Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:47Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:55Z",
+              "conclusion": "success",
+              "name": "Install dependencies",
+              "number": 4,
+              "startedAt": "2026-10-07T16:07:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:25Z",
+              "conclusion": "success",
+              "name": "Install Playwright browsers",
+              "number": 5,
+              "startedAt": "2026-10-07T16:07:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:30Z",
+              "conclusion": "success",
+              "name": "Start local preview server",
+              "number": 6,
+              "startedAt": "2026-10-07T16:08:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:08:33Z",
+              "conclusion": "success",
+              "name": "Wait for local preview",
+              "number": 7,
+              "startedAt": "2026-10-07T16:08:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:05Z",
+              "conclusion": "success",
+              "name": "Run axe accessibility tests via Playwright",
+              "number": 8,
+              "startedAt": "2026-10-07T16:08:33Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:05Z",
+              "conclusion": "success",
+              "name": "Stop local preview",
+              "number": 9,
+              "startedAt": "2026-10-07T16:09:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:06Z",
+              "conclusion": "success",
+              "name": "Upload Playwright report",
+              "number": 10,
+              "startedAt": "2026-10-07T16:09:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:06Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 19,
+              "startedAt": "2026-10-07T16:09:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:06Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 20,
+              "startedAt": "2026-10-07T16:09:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:09:06Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 21,
+              "startedAt": "2026-10-07T16:09:06Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649394976/job/112888443850"
+        },
+        {
+          "completedAt": "2026-10-07T16:07:51Z",
+          "conclusion": "success",
+          "databaseId": 112888444485,
+          "name": "axe-cli",
+          "startedAt": "2026-10-07T16:06:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-07T16:06:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-07T16:06:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:21Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-07T16:06:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:24Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-10-07T16:07:21Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:29Z",
+              "conclusion": "success",
+              "name": "Install axe-cli",
+              "number": 4,
+              "startedAt": "2026-10-07T16:07:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:36Z",
+              "conclusion": "success",
+              "name": "Install matching Chrome + ChromeDriver",
+              "number": 5,
+              "startedAt": "2026-10-07T16:07:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:48Z",
+              "conclusion": "success",
+              "name": "Run axe accessibility audit (supplementary — non-blocking)",
+              "number": 6,
+              "startedAt": "2026-10-07T16:07:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:48Z",
+              "conclusion": "success",
+              "name": "Upload axe results",
+              "number": 7,
+              "startedAt": "2026-10-07T16:07:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:48Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 13,
+              "startedAt": "2026-10-07T16:07:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:48Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 14,
+              "startedAt": "2026-10-07T16:07:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-07T16:07:48Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 15,
+              "startedAt": "2026-10-07T16:07:48Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649394976/job/112888444485"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37649394976"
+    }
+  },
+  "staging": {
+    "candidate": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+    "total": 369,
+    "passed": 369
+  },
+  "productionBytes": {
+    "total": 369,
+    "passed": 369,
+    "results": [
+      {
+        "path": "agents.json",
+        "status": 200,
+        "expected": "e37286cf63926319f302952c406311fa5fd3630cf27f514ea229d4bcc93a2fc2",
+        "actual": "e37286cf63926319f302952c406311fa5fd3630cf27f514ea229d4bcc93a2fc2",
+        "ok": true
+      },
+      {
+        "path": "api/ai-discovery-health.json",
+        "status": 200,
+        "expected": "13de3d3656a53a40cd469e29d94422136a82184b43ffbe9d8489db6f09a0e900",
+        "actual": "13de3d3656a53a40cd469e29d94422136a82184b43ffbe9d8489db6f09a0e900",
+        "ok": true
+      },
+      {
+        "path": "api/candidate-artifact-manifest.json",
+        "status": 200,
+        "expected": "60bc2254a3889592efe1cf97ad7b2b714c1f05114e5a148e5661f24d66f4db15",
+        "actual": "60bc2254a3889592efe1cf97ad7b2b714c1f05114e5a148e5661f24d66f4db15",
+        "ok": true
+      },
+      {
+        "path": "api/build-check-diagnostics.json",
+        "status": 200,
+        "expected": "6a5cc2d6d52b35f56f83f24dbc9b312dfcbf72b60bf893be41e5824d14dc040a",
+        "actual": "6a5cc2d6d52b35f56f83f24dbc9b312dfcbf72b60bf893be41e5824d14dc040a",
+        "ok": true
+      },
+      {
+        "path": "api/analytics-summary.json",
+        "status": 200,
+        "expected": "c8c421be79189e6bfd65534c97d0759e553d289d431729613c29a838273f7bb0",
+        "actual": "c8c421be79189e6bfd65534c97d0759e553d289d431729613c29a838273f7bb0",
+        "ok": true
+      },
+      {
+        "path": "api/constellation-activity.json",
+        "status": 200,
+        "expected": "9eb8b395aab0fb86e99a6a4a6775f75d8cfb359ba5210431eba7cb79ce12307a",
+        "actual": "9eb8b395aab0fb86e99a6a4a6775f75d8cfb359ba5210431eba7cb79ce12307a",
+        "ok": true
+      },
+      {
+        "path": "api/canonical-destination-reachability.json",
+        "status": 200,
+        "expected": "3dcd25e13dc4d9e3e5ec611fab31d20462a2c5fbfd6e56254aef77da8f341881",
+        "actual": "3dcd25e13dc4d9e3e5ec611fab31d20462a2c5fbfd6e56254aef77da8f341881",
+        "ok": true
+      },
+      {
+        "path": "api/commit-map.json",
+        "status": 200,
+        "expected": "1e3f879e8132114935224b1ff257b7206023edfaa57f6ccbd7f59c7fad345175",
+        "actual": "1e3f879e8132114935224b1ff257b7206023edfaa57f6ccbd7f59c7fad345175",
+        "ok": true
+      },
+      {
+        "path": "api/attention-pressure.json",
+        "status": 200,
+        "expected": "f63b521dc663e7fadd55507ba3431caf7279925d1b474d1d68d4914f535f5ae6",
+        "actual": "f63b521dc663e7fadd55507ba3431caf7279925d1b474d1d68d4914f535f5ae6",
+        "ok": true
+      },
+      {
+        "path": "api/citation.json",
+        "status": 200,
+        "expected": "b4af05222c7af3003fa418a4da4bd444a7a25393aaed326de0659a65d48f650c",
+        "actual": "b4af05222c7af3003fa418a4da4bd444a7a25393aaed326de0659a65d48f650c",
+        "ok": true
+      },
+      {
+        "path": "api/ci-status.json",
+        "status": 200,
+        "expected": "40f5a9b89944668249b7662099efe5981dbb49b5a31873f7d92dde53a4a06b45",
+        "actual": "40f5a9b89944668249b7662099efe5981dbb49b5a31873f7d92dde53a4a06b45",
+        "ok": true
+      },
+      {
+        "path": "api/dead-ctas.json",
+        "status": 200,
+        "expected": "d7a602e486ac925a4de81125507ddb75e7e83286566b5612c1c41435a1351162",
+        "actual": "d7a602e486ac925a4de81125507ddb75e7e83286566b5612c1c41435a1351162",
+        "ok": true
+      },
+      {
+        "path": "api/desk-dispatch-contract.json",
+        "status": 200,
+        "expected": "c153a571581b9a402ac21d0532fc68c327a525dc6b74ce1029b19d2c2758972b",
+        "actual": "c153a571581b9a402ac21d0532fc68c327a525dc6b74ce1029b19d2c2758972b",
+        "ok": true
+      },
+      {
+        "path": "api/deploy-currency.json",
+        "status": 200,
+        "expected": "e8fd019560252536d01c095e6aa8b25aa1b196aa37d56903ecd01a18fc761ee2",
+        "actual": "e8fd019560252536d01c095e6aa8b25aa1b196aa37d56903ecd01a18fc761ee2",
+        "ok": true
+      },
+      {
+        "path": "api/ecosystem-velocity.json",
+        "status": 200,
+        "expected": "3a84cc80bad8badf25280da3786904296d65968a5331ad6c4456c60dfb624411",
+        "actual": "3a84cc80bad8badf25280da3786904296d65968a5331ad6c4456c60dfb624411",
+        "ok": true
+      },
+      {
+        "path": "api/field-win.json",
+        "status": 200,
+        "expected": "b78e73ef8fe3288cf677f7115603e3ba9cb35e0a1044a40fa5663a10e4c76f4d",
+        "actual": "b78e73ef8fe3288cf677f7115603e3ba9cb35e0a1044a40fa5663a10e4c76f4d",
+        "ok": true
+      },
+      {
+        "path": "api/ecosystem-state.json",
+        "status": 200,
+        "expected": "737add20cfc272639994de782932f56aa5cd9e8b79b12579b858678f489ab8d3",
+        "actual": "737add20cfc272639994de782932f56aa5cd9e8b79b12579b858678f489ab8d3",
+        "ok": true
+      },
+      {
+        "path": "api/ecosystem-stats.json",
+        "status": 200,
+        "expected": "e24f76189cca87accf69eb7c07ba105c480bed11a7e7d2d1a1365057e7f8a37d",
+        "actual": "e24f76189cca87accf69eb7c07ba105c480bed11a7e7d2d1a1365057e7f8a37d",
+        "ok": true
+      },
+      {
+        "path": "api/evidence-graph.json",
+        "status": 200,
+        "expected": "d57dccdf1955de663628100b5ae378c15933804a25e56b510cc6694337bfd3b6",
+        "actual": "d57dccdf1955de663628100b5ae378c15933804a25e56b510cc6694337bfd3b6",
+        "ok": true
+      },
+      {
+        "path": "api/ecosystem-analytics.json",
+        "status": 200,
+        "expected": "318b294b7dc1480bbc4c3099e48c438d24b38da00ce65fdd2a3e438e99f756ba",
+        "actual": "318b294b7dc1480bbc4c3099e48c438d24b38da00ce65fdd2a3e438e99f756ba",
+        "ok": true
+      },
+      {
+        "path": "api/feedback-provenance.json",
+        "status": 200,
+        "expected": "320cbdd03f0335a2dbc6590ff616c0939180c5455475e825d499170c2b118fa1",
+        "actual": "320cbdd03f0335a2dbc6590ff616c0939180c5455475e825d499170c2b118fa1",
+        "ok": true
+      },
+      {
+        "path": "api/geo-vitals.json",
+        "status": 200,
+        "expected": "be2732d04c7df0effe0dc18c522de855e12293502ba307a35c077d8056ef2ed2",
+        "actual": "be2732d04c7df0effe0dc18c522de855e12293502ba307a35c077d8056ef2ed2",
+        "ok": true
+      },
+      {
+        "path": "api/ignis-conduit.json",
+        "status": 200,
+        "expected": "5dc1d184fbfc59cf39fa9acb39d353a62375f4303a1106f00f0c018dc00a7223",
+        "actual": "5dc1d184fbfc59cf39fa9acb39d353a62375f4303a1106f00f0c018dc00a7223",
+        "ok": true
+      },
+      {
+        "path": "api/heartbeat.json",
+        "status": 200,
+        "expected": "456d6b4f5e5b272d0d5de03f9be57a333924a772981d79f7aff92ed7835c5991",
+        "actual": "456d6b4f5e5b272d0d5de03f9be57a333924a772981d79f7aff92ed7835c5991",
+        "ok": true
+      },
+      {
+        "path": "api/funnel-summary.json",
+        "status": 200,
+        "expected": "88c2f79bbf7917308c9da8d7c9d9186573984e18744a6abe17d1d0015eac28c8",
+        "actual": "88c2f79bbf7917308c9da8d7c9d9186573984e18744a6abe17d1d0015eac28c8",
+        "ok": true
+      },
+      {
+        "path": "api/ignis-platform-status.json",
+        "status": 200,
+        "expected": "1389bffb615e1c204fb4c249ceb67f8f71d17aab7972da7f440e024f2112004e",
+        "actual": "1389bffb615e1c204fb4c249ceb67f8f71d17aab7972da7f440e024f2112004e",
+        "ok": true
+      },
+      {
+        "path": "api/inp-soak-verdicts.json",
+        "status": 200,
+        "expected": "21a56e6ef280e0d5f4956f1f557251be48e005eb07acf0b1e282550ad591dba7",
+        "actual": "21a56e6ef280e0d5f4956f1f557251be48e005eb07acf0b1e282550ad591dba7",
+        "ok": true
+      },
+      {
+        "path": "api/ignis-roi.json",
+        "status": 200,
+        "expected": "d4ade9f6bf959562365dea6bd72a80827658b019bdfc4fd4266fe5a17e13a771",
+        "actual": "d4ade9f6bf959562365dea6bd72a80827658b019bdfc4fd4266fe5a17e13a771",
+        "ok": true
+      },
+      {
+        "path": "api/intent-map.json",
+        "status": 200,
+        "expected": "e13cebd5355a6d6609931f8daeae9e7359d264adeffcdabf8a5f992f552281c1",
+        "actual": "e13cebd5355a6d6609931f8daeae9e7359d264adeffcdabf8a5f992f552281c1",
+        "ok": true
+      },
+      {
+        "path": "api/nav-sheet-stats.json",
+        "status": 200,
+        "expected": "cc10b2613d2da1741f8e55476dbc4f3921f49ec1a6537506e1f73ae5c3309bc0",
+        "actual": "cc10b2613d2da1741f8e55476dbc4f3921f49ec1a6537506e1f73ae5c3309bc0",
+        "ok": true
+      },
+      {
+        "path": "api/intelligence-budget.json",
+        "status": 200,
+        "expected": "2ab274f96638de293b12c5f53720282eee7881904da46c876b049ac82c67b368",
+        "actual": "2ab274f96638de293b12c5f53720282eee7881904da46c876b049ac82c67b368",
+        "ok": true
+      },
+      {
+        "path": "api/nervous-system.json",
+        "status": 200,
+        "expected": "c036cf09c043fe06921b98307a6b4fe9bf93022388e13a17db795cbd89cbc677",
+        "actual": "c036cf09c043fe06921b98307a6b4fe9bf93022388e13a17db795cbd89cbc677",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-freshness.json",
+        "status": 200,
+        "expected": "06821a85422fb09e9e0526ef4ac6095bc89ad8f4de1a8476a70361a434b30213",
+        "actual": "06821a85422fb09e9e0526ef4ac6095bc89ad8f4de1a8476a70361a434b30213",
+        "ok": true
+      },
+      {
+        "path": "api/news-critique-packets.json",
+        "status": 200,
+        "expected": "8fdf49e2eece19e708bacd03e99028d4987d3ae7d693ccee6e5cc895913e4f76",
+        "actual": "8fdf49e2eece19e708bacd03e99028d4987d3ae7d693ccee6e5cc895913e4f76",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-engagement.json",
+        "status": 200,
+        "expected": "152591ccbf1e2b6c57bb5b5b5d114e7c9e3af59771bfd595345a1845e0aed4be",
+        "actual": "152591ccbf1e2b6c57bb5b5b5d114e7c9e3af59771bfd595345a1845e0aed4be",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-reactions.json",
+        "status": 200,
+        "expected": "6a79e2794cb5421053dba6773621682c6b3dec5792645ffb684775f9df110abd",
+        "actual": "6a79e2794cb5421053dba6773621682c6b3dec5792645ffb684775f9df110abd",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-search.json",
+        "status": 200,
+        "expected": "cf79edf0b9eab3c7d7516dfeb6182f77794d2bc5826d9890e088cd1bd88778a9",
+        "actual": "cf79edf0b9eab3c7d7516dfeb6182f77794d2bc5826d9890e088cd1bd88778a9",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-claims.ndjson",
+        "status": 200,
+        "expected": "dab6f3f147cdcdda2d96063691e46701af7012e0b75aa485108d26ef29c750a3",
+        "actual": "dab6f3f147cdcdda2d96063691e46701af7012e0b75aa485108d26ef29c750a3",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-feed.json",
+        "status": 200,
+        "expected": "1f2cd38f575a398eb640a116f14f5dce40f99737bb392c8bf2c7db4d9050ee50",
+        "actual": "1f2cd38f575a398eb640a116f14f5dce40f99737bb392c8bf2c7db4d9050ee50",
+        "ok": true
+      },
+      {
+        "path": "api/newsroom-run.json",
+        "status": 200,
+        "expected": "1c29945d5c63875287ee1102329af61b69ab34e515cfa0d5e8f8168f99e3e953",
+        "actual": "1c29945d5c63875287ee1102329af61b69ab34e515cfa0d5e8f8168f99e3e953",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk.json",
+        "status": 200,
+        "expected": "39ee622134953f512ce271130294a98677ee9babbd448c466a42cb3ba7959787",
+        "actual": "39ee622134953f512ce271130294a98677ee9babbd448c466a42cb3ba7959787",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-search-2026-10.json",
+        "status": 200,
+        "expected": "bb0a6304711f7713d01d2cb8bd7f735b2a450fb12d74053f3bff9c28c1411efe",
+        "actual": "bb0a6304711f7713d01d2cb8bd7f735b2a450fb12d74053f3bff9c28c1411efe",
+        "ok": true
+      },
+      {
+        "path": "api/news-desk-stats.json",
+        "status": 200,
+        "expected": "83b8110125d2bc0696aac07c91ca6de71b0ea9ffb15e266d5d230f2c8b9e6af5",
+        "actual": "83b8110125d2bc0696aac07c91ca6de71b0ea9ffb15e266d5d230f2c8b9e6af5",
+        "ok": true
+      },
+      {
+        "path": "api/news-visual-receipts.json",
+        "status": 200,
+        "expected": "b0461952f54e017aceb66c7c8cba048e4fd86a007118cb0e6f4f4645df63ae33",
+        "actual": "b0461952f54e017aceb66c7c8cba048e4fd86a007118cb0e6f4f4645df63ae33",
+        "ok": true
+      },
+      {
+        "path": "api/obelisk-redirect-readiness.json",
+        "status": 200,
+        "expected": "629b556c0bf0c4105fbc88ef6c5631cea985c5d3877799e9511b041630181703",
+        "actual": "629b556c0bf0c4105fbc88ef6c5631cea985c5d3877799e9511b041630181703",
+        "ok": true
+      },
+      {
+        "path": "api/promotion-receipt.json",
+        "status": 200,
+        "expected": "4a2fadf58e4811dbf8788b5de8b1952de53d5f5811fdfbd9b0905aee75fd4a39",
+        "actual": "4a2fadf58e4811dbf8788b5de8b1952de53d5f5811fdfbd9b0905aee75fd4a39",
+        "ok": true
+      },
+      {
+        "path": "api/oracle-insights.json",
+        "status": 200,
+        "expected": "7234165c42c9c8c95ae540268fbf2587b18db566985bf99881cd863964a89e14",
+        "actual": "7234165c42c9c8c95ae540268fbf2587b18db566985bf99881cd863964a89e14",
+        "ok": true
+      },
+      {
+        "path": "api/oracle-feedback-themes.json",
+        "status": 200,
+        "expected": "3fe2915261fe6e800769767263929ae5f8d479dc64f21f9e8d52c7c6342026cc",
+        "actual": "3fe2915261fe6e800769767263929ae5f8d479dc64f21f9e8d52c7c6342026cc",
+        "ok": true
+      },
+      {
+        "path": "api/og-coverage.json",
+        "status": 200,
+        "expected": "893ec69ac2eb9d902a7820649db30fceb14c8f6060ecd7e7caff4cdc58ed59ac",
+        "actual": "893ec69ac2eb9d902a7820649db30fceb14c8f6060ecd7e7caff4cdc58ed59ac",
+        "ok": true
+      },
+      {
+        "path": "api/oracle-query-insights.json",
+        "status": 200,
+        "expected": "c86a2a9aa30952b09e8ad70ccefd8e0761611494e91c7ee7a935e86dbd3ccff8",
+        "actual": "c86a2a9aa30952b09e8ad70ccefd8e0761611494e91c7ee7a935e86dbd3ccff8",
+        "ok": true
+      },
+      {
+        "path": "api/proof-aware-projects.json",
+        "status": 200,
+        "expected": "38cf7c0948e6a4296247a661a159ef6a71a942bf9b0548ca4a2b4f1c0c01eb27",
+        "actual": "38cf7c0948e6a4296247a661a159ef6a71a942bf9b0548ca4a2b4f1c0c01eb27",
+        "ok": true
+      },
+      {
+        "path": "api/release-ceremony.json",
+        "status": 200,
+        "expected": "4162feabe0be3c50249ac83b42cbf413bd9dfa278d3b79a79b73d1bd7ec9e4f0",
+        "actual": "4162feabe0be3c50249ac83b42cbf413bd9dfa278d3b79a79b73d1bd7ec9e4f0",
+        "ok": true
+      },
+      {
+        "path": "api/proof-surface-diagnostics.json",
+        "status": 200,
+        "expected": "4791067c92f7092cd4588d4be8b1465e19217da3e0b75ebc5d374a04ce0432d6",
+        "actual": "4791067c92f7092cd4588d4be8b1465e19217da3e0b75ebc5d374a04ce0432d6",
+        "ok": true
+      },
+      {
+        "path": "api/public-intelligence.json",
+        "status": 200,
+        "expected": "39ca4ccd8050ae296c3d64a894c1dfd084ddc8121446bfbfd5921b6918e7dd74",
+        "actual": "39ca4ccd8050ae296c3d64a894c1dfd084ddc8121446bfbfd5921b6918e7dd74",
+        "ok": true
+      },
+      {
+        "path": "api/rank-climbers.json",
+        "status": 200,
+        "expected": "0dc3f1e9c8bedc7fcc9deaa2dc3a5f61cb5b0f9ff9fe76ffd3e157b158c59d88",
+        "actual": "0dc3f1e9c8bedc7fcc9deaa2dc3a5f61cb5b0f9ff9fe76ffd3e157b158c59d88",
+        "ok": true
+      },
+      {
+        "path": "api/push-config.json",
+        "status": 200,
+        "expected": "9f29d8d2d4555c4b549654a144588aa01bbf74514ab35ca37838ebc63e66146e",
+        "actual": "9f29d8d2d4555c4b549654a144588aa01bbf74514ab35ca37838ebc63e66146e",
+        "ok": true
+      },
+      {
+        "path": "api/public-status.json",
+        "status": 200,
+        "expected": "864b6d27746f60fa8ab8e36b2a4a3f1f3d35615a890c9f9c00dac6ca65ac8e49",
+        "actual": "864b6d27746f60fa8ab8e36b2a4a3f1f3d35615a890c9f9c00dac6ca65ac8e49",
+        "ok": true
+      },
+      {
+        "path": "api/release-dependencies.json",
+        "status": 200,
+        "expected": "11afd1605ac4017c0214ddff4f5095c6c8c3d1a92e39f3b5b8aed1bad196f26c",
+        "actual": "11afd1605ac4017c0214ddff4f5095c6c8c3d1a92e39f3b5b8aed1bad196f26c",
+        "ok": true
+      },
+      {
+        "path": "api/release-proof.json",
+        "status": 200,
+        "expected": "ce345df674a0150e7b0f72a96d928a4e7861da9938565fbc6014191f62ef9ae7",
+        "actual": "ce345df674a0150e7b0f72a96d928a4e7861da9938565fbc6014191f62ef9ae7",
+        "ok": true
+      },
+      {
+        "path": "api/staging-deploy-receipt.json",
+        "status": 200,
+        "expected": "21ceb887ce414520068af3471aca67808fb4d9f844c54909886c764dc55ebda3",
+        "actual": "21ceb887ce414520068af3471aca67808fb4d9f844c54909886c764dc55ebda3",
+        "ok": true
+      },
+      {
+        "path": "api/staging-attention-browser.json",
+        "status": 200,
+        "expected": "bbdd684e24721d6c87d41036ea89af27a9fedb6777e485649eff05118f7d546d",
+        "actual": "bbdd684e24721d6c87d41036ea89af27a9fedb6777e485649eff05118f7d546d",
+        "ok": true
+      },
+      {
+        "path": "api/staging-deploy-continuity.json",
+        "status": 200,
+        "expected": "e0a1281ada1cf8528611f91c1c462f2e4856c4d16c0a3082f0188f57d13eec2f",
+        "actual": "e0a1281ada1cf8528611f91c1c462f2e4856c4d16c0a3082f0188f57d13eec2f",
+        "ok": true
+      },
+      {
+        "path": "api/site-health.json",
+        "status": 200,
+        "expected": "5d633d38f77d9c6bef69382504fa74a184878e3fa5de65fe77cc2a89c4dfa8e5",
+        "actual": "5d633d38f77d9c6bef69382504fa74a184878e3fa5de65fe77cc2a89c4dfa8e5",
+        "ok": true
+      },
+      {
+        "path": "api/security-posture.json",
+        "status": 200,
+        "expected": "0dfa9a048b524a6049b048f93b85c9699d918d327ec3d9600195755876defeb9",
+        "actual": "0dfa9a048b524a6049b048f93b85c9699d918d327ec3d9600195755876defeb9",
+        "ok": true
+      },
+      {
+        "path": "api/staging-release-browser.json",
+        "status": 200,
+        "expected": "8ce46b2cd822dc53b915a19f11d95f3e2d0e9cdeb14a5a377ae5fedf889c4d03",
+        "actual": "8ce46b2cd822dc53b915a19f11d95f3e2d0e9cdeb14a5a377ae5fedf889c4d03",
+        "ok": true
+      },
+      {
+        "path": "api/staging-health.json",
+        "status": 200,
+        "expected": "2b7936bcd757f125672aa989f286637b7e825db9fed043a81e417e7416428172",
+        "actual": "2b7936bcd757f125672aa989f286637b7e825db9fed043a81e417e7416428172",
+        "ok": true
+      },
+      {
+        "path": "api/tt-readiness.json",
+        "status": 200,
+        "expected": "a45c70faa2e9cfd4c55e2ec0453614eb3bd23e4a085b9a91efe65bc9184c15b1",
+        "actual": "a45c70faa2e9cfd4c55e2ec0453614eb3bd23e4a085b9a91efe65bc9184c15b1",
+        "ok": true
+      },
+      {
+        "path": "api/tt-summary.json",
+        "status": 200,
+        "expected": "fbfcaa2876b412312a93b2af20a402d3cb35c3736233ea0a22dda870254885b8",
+        "actual": "fbfcaa2876b412312a93b2af20a402d3cb35c3736233ea0a22dda870254885b8",
+        "ok": true
+      },
+      {
+        "path": "api/studio-timeline.json",
+        "status": 200,
+        "expected": "d231eaa21c986e433a1446cf7b2cf0cff5ff54d2eedf1b969e4c9f50e53cd81b",
+        "actual": "d231eaa21c986e433a1446cf7b2cf0cff5ff54d2eedf1b969e4c9f50e53cd81b",
+        "ok": true
+      },
+      {
+        "path": "api/ux-decision-ledger.json",
+        "status": 200,
+        "expected": "c01dab169c60ff003abf21bf308dfe7c602127c6a04a0637bc83c2ac772bdc50",
+        "actual": "c01dab169c60ff003abf21bf308dfe7c602127c6a04a0637bc83c2ac772bdc50",
+        "ok": true
+      },
+      {
+        "path": "api/status-proof.json",
+        "status": 200,
+        "expected": "07b4e0fd9a930a21d1c655b782ffac827a5c7dde86888431f08b29dc14a09a60",
+        "actual": "07b4e0fd9a930a21d1c655b782ffac827a5c7dde86888431f08b29dc14a09a60",
+        "ok": true
+      },
+      {
+        "path": "api/uptime.json",
+        "status": 200,
+        "expected": "10bb7cd027dc006823614cc0cff3afe03440a0fe9562107078e13866cee676fd",
+        "actual": "10bb7cd027dc006823614cc0cff3afe03440a0fe9562107078e13866cee676fd",
+        "ok": true
+      },
+      {
+        "path": "api/vault-narrative.json",
+        "status": 200,
+        "expected": "4f0e563b5d7c3be5db2242a583e9bf55bd25cbda65750320522d77f36e78f139",
+        "actual": "4f0e563b5d7c3be5db2242a583e9bf55bd25cbda65750320522d77f36e78f139",
+        "ok": true
+      },
+      {
+        "path": "api/vault-momentum.json",
+        "status": 200,
+        "expected": "cec1af4c85c4df72ff2c55ac99306fc904aa26c3bfb1ceb3e84692215d021371",
+        "actual": "cec1af4c85c4df72ff2c55ac99306fc904aa26c3bfb1ceb3e84692215d021371",
+        "ok": true
+      },
+      {
+        "path": "assets/desk-welcome.css",
+        "status": 200,
+        "expected": "b4cc60f03bb5df8681c469a593dd02aa2b7c9e469c655417c09e73e28e3cf393",
+        "actual": "b4cc60f03bb5df8681c469a593dd02aa2b7c9e469c655417c09e73e28e3cf393",
+        "ok": true
+      },
+      {
+        "path": "api/vault-narrative-history.json",
+        "status": 200,
+        "expected": "19713b82f94ec3b29afa5d006effbc0a5b0b1a4c1ca138d5a2b072511424dc0f",
+        "actual": "19713b82f94ec3b29afa5d006effbc0a5b0b1a4c1ca138d5a2b072511424dc0f",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme--128.avif",
+        "status": 200,
+        "expected": "f9cfc11faf4d855b086a968f6c3cae27427f96c51f897b7420f3bf6f6f8ad634",
+        "actual": "f9cfc11faf4d855b086a968f6c3cae27427f96c51f897b7420f3bf6f6f8ad634",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme--640.webp",
+        "status": 200,
+        "expected": "7a3a48fa2e5974cd8cb352a0b859ab340cf07c2655176bd7645d6d7af20a7cb0",
+        "actual": "7a3a48fa2e5974cd8cb352a0b859ab340cf07c2655176bd7645d6d7af20a7cb0",
+        "ok": true
+      },
+      {
+        "path": "api/velocity-series.json",
+        "status": 200,
+        "expected": "a2a59115b14fce638c5261f99111474799c1a3dff35f10d34a5ec7363ca45a18",
+        "actual": "a2a59115b14fce638c5261f99111474799c1a3dff35f10d34a5ec7363ca45a18",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme.avif",
+        "status": 200,
+        "expected": "37f8e02b9c1b6b272556b8e74873ef74317f2263d08c6ec5da93c47903387394",
+        "actual": "37f8e02b9c1b6b272556b8e74873ef74317f2263d08c6ec5da93c47903387394",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme.webp",
+        "status": 200,
+        "expected": "90b97fe74aa160e8d058365a4c10ab6343c197c9879482b6253c78c058c1d593",
+        "actual": "90b97fe74aa160e8d058365a4c10ab6343c197c9879482b6253c78c058c1d593",
+        "ok": true
+      },
+      {
+        "path": "api/worker-route-provenance.json",
+        "status": 200,
+        "expected": "28408ce3857846e20955bfedc53d7dcd2cb42f1f9ebe7cce6b924eb94c88d962",
+        "actual": "28408ce3857846e20955bfedc53d7dcd2cb42f1f9ebe7cce6b924eb94c88d962",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--satire--640.webp",
+        "status": 200,
+        "expected": "8dfd332513c90c469bb10de50e3d2eb180d9353e93d98c424cca923f1ab60df9",
+        "actual": "8dfd332513c90c469bb10de50e3d2eb180d9353e93d98c424cca923f1ab60df9",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--satire.avif",
+        "status": 200,
+        "expected": "afe58868942777500ab738b4695db92e96d25749ede2022858588f7b8bef83f1",
+        "actual": "afe58868942777500ab738b4695db92e96d25749ede2022858588f7b8bef83f1",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme--128.avif",
+        "status": 200,
+        "expected": "b2945b6365596b995016300a42f0573350956615485361b620a15f213a4d2142",
+        "actual": "b2945b6365596b995016300a42f0573350956615485361b620a15f213a4d2142",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme.png",
+        "status": 200,
+        "expected": "eec815bdf596bd6bd590b536a4256658ecea95f93dc7519170bfe3d120f51b33",
+        "actual": "eec815bdf596bd6bd590b536a4256658ecea95f93dc7519170bfe3d120f51b33",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--satire.png",
+        "status": 200,
+        "expected": "ee7017dc02bc99a77a3bc59e031d84a2ff3bbee49c9ba2b8e15a7cd370297ed9",
+        "actual": "ee7017dc02bc99a77a3bc59e031d84a2ff3bbee49c9ba2b8e15a7cd370297ed9",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--meme--640.avif",
+        "status": 200,
+        "expected": "c244f72361d7ede360c559661f9dbbdef2629960c2775840326145d018845100",
+        "actual": "c244f72361d7ede360c559661f9dbbdef2629960c2775840326145d018845100",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--satire.webp",
+        "status": 200,
+        "expected": "fadb241855ecb95cdf8fca9f5727d2a61ae51d96150bb36b6059c3dd54235ac6",
+        "actual": "fadb241855ecb95cdf8fca9f5727d2a61ae51d96150bb36b6059c3dd54235ac6",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme--640.webp",
+        "status": 200,
+        "expected": "1d168128333266c53e6d125880acbe57f78bf7d4f6aaeecc676cc27fe3362b2b",
+        "actual": "1d168128333266c53e6d125880acbe57f78bf7d4f6aaeecc676cc27fe3362b2b",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme.avif",
+        "status": 200,
+        "expected": "0ed2d2956cf793edaffd5ebc530e0ce9046e05bc0a815cdb97815f21570416cb",
+        "actual": "0ed2d2956cf793edaffd5ebc530e0ce9046e05bc0a815cdb97815f21570416cb",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme.png",
+        "status": 200,
+        "expected": "24bd79ef2baf134c3bf93bec262364cbcdc64ad62c2e08521a8c9145c7a36ce6",
+        "actual": "24bd79ef2baf134c3bf93bec262364cbcdc64ad62c2e08521a8c9145c7a36ce6",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme.webp",
+        "status": 200,
+        "expected": "a4bb548f8800c1c39be286d5723b7135f8de03ae4d8e4891f3566ce64d3443aa",
+        "actual": "a4bb548f8800c1c39be286d5723b7135f8de03ae4d8e4891f3566ce64d3443aa",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire--640.webp",
+        "status": 200,
+        "expected": "edb27aa92ac7c754a7b6c56330e81bec58ced3b5c49d0970e39c7eb1e508c43f",
+        "actual": "edb27aa92ac7c754a7b6c56330e81bec58ced3b5c49d0970e39c7eb1e508c43f",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model--satire--640.avif",
+        "status": 200,
+        "expected": "38af6fe2667d35ce5b5b8bfd33a2858adf8f6494a8a13333731b020603f973e0",
+        "actual": "38af6fe2667d35ce5b5b8bfd33a2858adf8f6494a8a13333731b020603f973e0",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme--640.avif",
+        "status": 200,
+        "expected": "019d61886c75094f25bac0f21df60643d050f58c77e40c9945afbf7aa7b232f2",
+        "actual": "019d61886c75094f25bac0f21df60643d050f58c77e40c9945afbf7aa7b232f2",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire.avif",
+        "status": 200,
+        "expected": "2cb4f1ba1803cfe0f51c6b6a9b7ef3638b989667f417a5c22e87413a29da0379",
+        "actual": "2cb4f1ba1803cfe0f51c6b6a9b7ef3638b989667f417a5c22e87413a29da0379",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme--128.avif",
+        "status": 200,
+        "expected": "7d8ebf035743917ae5f11324ba5328aac3f11768e220617d420c3fa4bbf9148b",
+        "actual": "7d8ebf035743917ae5f11324ba5328aac3f11768e220617d420c3fa4bbf9148b",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-06--embeddinggemma-2-an-open-lightweight-multimodal-embedding-model.png",
+        "status": 200,
+        "expected": "2516003d16e74b3b733ca9bf9e4d319e6a4de774a380e31f2e319195acd310f1",
+        "actual": "2516003d16e74b3b733ca9bf9e4d319e6a4de774a380e31f2e319195acd310f1",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire.webp",
+        "status": 200,
+        "expected": "36df616c1dcdc1ab158461b821f3212e5f9b0d5cbeb74c25c60a6b7739a396b7",
+        "actual": "36df616c1dcdc1ab158461b821f3212e5f9b0d5cbeb74c25c60a6b7739a396b7",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire.png",
+        "status": 200,
+        "expected": "be889acaddf3c75e3919352c1855372aca560143b0c7a2dfc43cb4e1815c331b",
+        "actual": "be889acaddf3c75e3919352c1855372aca560143b0c7a2dfc43cb4e1815c331b",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme.avif",
+        "status": 200,
+        "expected": "c90cae3c7c5b9560758c37bc6c8935d1b327f99ba592ba87c549d92d8e36e0fc",
+        "actual": "c90cae3c7c5b9560758c37bc6c8935d1b327f99ba592ba87c549d92d8e36e0fc",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme--640.webp",
+        "status": 200,
+        "expected": "a51a837bc8b3a666eeabd872452bdc5af0e875b9260c3c0e775d0ec56f8cb7b8",
+        "actual": "a51a837bc8b3a666eeabd872452bdc5af0e875b9260c3c0e775d0ec56f8cb7b8",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme.webp",
+        "status": 200,
+        "expected": "265e628c53bfde5e0089bdb160ce07fa1abe3b4e743b7da717ab682f293463f6",
+        "actual": "265e628c53bfde5e0089bdb160ce07fa1abe3b4e743b7da717ab682f293463f6",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire--640.avif",
+        "status": 200,
+        "expected": "c421c2fb7c47506719df6637110a58e85e141cce06bf746d8ec1e555030bf1ed",
+        "actual": "c421c2fb7c47506719df6637110a58e85e141cce06bf746d8ec1e555030bf1ed",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--satire--640.webp",
+        "status": 200,
+        "expected": "177171c25e83bb3f57992e463b5d89663f116ce04a8b98e52e3f990a0d1ef280",
+        "actual": "177171c25e83bb3f57992e463b5d89663f116ce04a8b98e52e3f990a0d1ef280",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--satire.avif",
+        "status": 200,
+        "expected": "904d312de97b75c610d930a91bb2a37f401c6935d51549f370083315bd840fa8",
+        "actual": "904d312de97b75c610d930a91bb2a37f401c6935d51549f370083315bd840fa8",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme.png",
+        "status": 200,
+        "expected": "ff8a379438d60527c65eba6f5ac33e0b188c7db4951158360fb6edb4b0aab012",
+        "actual": "ff8a379438d60527c65eba6f5ac33e0b188c7db4951158360fb6edb4b0aab012",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--meme--640.avif",
+        "status": 200,
+        "expected": "c0360ee6630d7c440c55f0f21650e4e1ce89af9659f164074df26730e813b34e",
+        "actual": "c0360ee6630d7c440c55f0f21650e4e1ce89af9659f164074df26730e813b34e",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--satire.webp",
+        "status": 200,
+        "expected": "167cb7dd80ca74cb83959b1d3fc01619cf6d928f5c57cb35dd5cc2cbe9c13ecb",
+        "actual": "167cb7dd80ca74cb83959b1d3fc01619cf6d928f5c57cb35dd5cc2cbe9c13ecb",
+        "ok": true
+      },
+      {
+        "path": "index.html",
+        "status": 200,
+        "expected": "b130649e998f0696e69fe6b917752026bdc54c1d84cfde6938aaecbfafcf3822",
+        "actual": "b130649e998f0696e69fe6b917752026bdc54c1d84cfde6938aaecbfafcf3822",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--satire--640.avif",
+        "status": 200,
+        "expected": "358d1ca4fbe54d30f78b27dc1f0c4194c927842b9860ddfe9946a6627600b9d7",
+        "actual": "358d1ca4fbe54d30f78b27dc1f0c4194c927842b9860ddfe9946a6627600b9d7",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude.png",
+        "status": 200,
+        "expected": "8766016442e3c97e2f918216a3f1e255c438815ecd8e69e14c7b80eb1f7e6284",
+        "actual": "8766016442e3c97e2f918216a3f1e255c438815ecd8e69e14c7b80eb1f7e6284",
+        "ok": true
+      },
+      {
+        "path": "data/staging-deploy-history.ndjson",
+        "status": 200,
+        "expected": "d87b145e29b416ae50e3c5ec4783afbe30451fec82adbf7487bcf6fedd4f6f0a",
+        "actual": "d87b145e29b416ae50e3c5ec4783afbe30451fec82adbf7487bcf6fedd4f6f0a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-07/frontier-access-becomes-research-infrastructure/index.html",
+        "status": 200,
+        "expected": "2930d5c37ad6d02993c857cebd103c1a3d23dc70b19de5a6f6e47068e243faf7",
+        "actual": "2930d5c37ad6d02993c857cebd103c1a3d23dc70b19de5a6f6e47068e243faf7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-07/agent-control-becomes-operations-discipline/index.html",
+        "status": 200,
+        "expected": "cb1cfc6489c4f7c5e7712cb6abee40d9dfd77c3746da514725aafa6f57ed53bb",
+        "actual": "cb1cfc6489c4f7c5e7712cb6abee40d9dfd77c3746da514725aafa6f57ed53bb",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-07/agent-control-becomes-operations-discipline/critique.json",
+        "status": 200,
+        "expected": "54aeb084483181657f4416eb8ee10ad5c1760fd6b8016d871e79bdf1d3aaff0b",
+        "actual": "54aeb084483181657f4416eb8ee10ad5c1760fd6b8016d871e79bdf1d3aaff0b",
+        "ok": true
+      },
+      {
+        "path": "dispatch/index.html",
+        "status": 200,
+        "expected": "fc49339e6e9aaf32a2ae81be0d9e890dfd973fb4306f9914857a14131ef1cbea",
+        "actual": "fc49339e6e9aaf32a2ae81be0d9e890dfd973fb4306f9914857a14131ef1cbea",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-07/frontier-access-becomes-research-infrastructure/critique.json",
+        "status": 200,
+        "expected": "65909ac1459317cf8d829dab16892384ab397f4eda69dbb6f8b7555af5ba6263",
+        "actual": "65909ac1459317cf8d829dab16892384ab397f4eda69dbb6f8b7555af5ba6263",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-09/weathernext-buys-forecasters-an-extra-day/index.html",
+        "status": 200,
+        "expected": "75935e6234e47ff9aaba187dbdbacccbfb65ce18ef22e932b816f8c78daffe97",
+        "actual": "75935e6234e47ff9aaba187dbdbacccbfb65ce18ef22e932b816f8c78daffe97",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation--satire.png",
+        "status": 200,
+        "expected": "761c2f2d2eb5fcd02ba9f588f3dcf5744b1363eabaa9b579b1fed4476a995bd2",
+        "actual": "761c2f2d2eb5fcd02ba9f588f3dcf5744b1363eabaa9b579b1fed4476a995bd2",
+        "ok": true
+      },
+      {
+        "path": "assets/og/news/2026-10-07--openai-launches-visual-ads-that-appear-alongside-image-generation.png",
+        "status": 200,
+        "expected": "6946bd85f84a8059c3984ca13e5d2947eb069023a7b278287fdd183b978e8804",
+        "actual": "6946bd85f84a8059c3984ca13e5d2947eb069023a7b278287fdd183b978e8804",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-09/weathernext-buys-forecasters-an-extra-day/critique.json",
+        "status": 200,
+        "expected": "d22b091a7f91f7703c205f72c288cde962f2652d9b9d3a822c351d61cdb3d682",
+        "actual": "d22b091a7f91f7703c205f72c288cde962f2652d9b9d3a822c351d61cdb3d682",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/critique.json",
+        "status": 200,
+        "expected": "7fa19b082411d1b73e09dd1b009dd38f1a26401854bb755b434174615d4c81f8",
+        "actual": "7fa19b082411d1b73e09dd1b009dd38f1a26401854bb755b434174615d4c81f8",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/index.html",
+        "status": 200,
+        "expected": "5d5fea03230eb9dabc8b317f6c4f5a482edea271dfbdec55a9be60ce9cd675b3",
+        "actual": "5d5fea03230eb9dabc8b317f6c4f5a482edea271dfbdec55a9be60ce9cd675b3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/index.html",
+        "status": 200,
+        "expected": "e85cbe66610b78f4dbeb667363d259245633e18f91c40744ac2097b0a8c3adb3",
+        "actual": "e85cbe66610b78f4dbeb667363d259245633e18f91c40744ac2097b0a8c3adb3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/critique.json",
+        "status": 200,
+        "expected": "e47788d705599f34eec57c0a47e73e2b61c76429ceaa650b3db3b0d91a6202b3",
+        "actual": "e47788d705599f34eec57c0a47e73e2b61c76429ceaa650b3db3b0d91a6202b3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/critique.json",
+        "status": 200,
+        "expected": "70ba616777488e945760db1a11c573f1f0877ba6df19821c8fbed02a80e11354",
+        "actual": "70ba616777488e945760db1a11c573f1f0877ba6df19821c8fbed02a80e11354",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/index.html",
+        "status": 200,
+        "expected": "846071a63c2373c3b34a471f1bda1c0e50a887b5c621d3c30fa779d7caa02c82",
+        "actual": "846071a63c2373c3b34a471f1bda1c0e50a887b5c621d3c30fa779d7caa02c82",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/index.html",
+        "status": 200,
+        "expected": "dc0a9ebf08bc0297ff61685e95e09fca5316486da0ff95a53168d8414bb14258",
+        "actual": "dc0a9ebf08bc0297ff61685e95e09fca5316486da0ff95a53168d8414bb14258",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-21/how-much-memory-does-your-agent-actually-need/critique.json",
+        "status": 200,
+        "expected": "d1195db17edb17a32458ea5ccb2c7ed8b884b2858c8994ea9699ea8eb746868a",
+        "actual": "d1195db17edb17a32458ea5ccb2c7ed8b884b2858c8994ea9699ea8eb746868a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/critique.json",
+        "status": 200,
+        "expected": "4b94e206a89fa15c386cbafc7f826e5d66b1f3c85e7fb01190dc0c727a6b59d4",
+        "actual": "4b94e206a89fa15c386cbafc7f826e5d66b1f3c85e7fb01190dc0c727a6b59d4",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
+        "status": 200,
+        "expected": "9676301ba3081eed5f01b004c6a67cfacb129ef1b2f663c0ad7962cde566b4d7",
+        "actual": "9676301ba3081eed5f01b004c6a67cfacb129ef1b2f663c0ad7962cde566b4d7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/index.html",
+        "status": 200,
+        "expected": "fe2a0980f0062ec9c289ddfc110d3570ffe96c66f50f62814e22829fe6e3dd5a",
+        "actual": "fe2a0980f0062ec9c289ddfc110d3570ffe96c66f50f62814e22829fe6e3dd5a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/critique.json",
+        "status": 200,
+        "expected": "9e854dbdb1e3ff9c25cb3c044a19564c667cdb9faf914f62b0a6bbd65a185678",
+        "actual": "9e854dbdb1e3ff9c25cb3c044a19564c667cdb9faf914f62b0a6bbd65a185678",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/critique.json",
+        "status": 200,
+        "expected": "34930bd9cc9b53e7313248f8ca9adde5b14ba9cbd26ee31cfedd4db70bba3a90",
+        "actual": "34930bd9cc9b53e7313248f8ca9adde5b14ba9cbd26ee31cfedd4db70bba3a90",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/index.html",
+        "status": 200,
+        "expected": "816d17babb0c5531cc98d6442050af478c368199951874813b24f1099b99614a",
+        "actual": "816d17babb0c5531cc98d6442050af478c368199951874813b24f1099b99614a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-23/from-atari-to-eve-online-building-on-15-years/index.html",
+        "status": 200,
+        "expected": "203b74891f1cc6263514f99ec1cf198a07fcde97dac942232284ce25976aea8a",
+        "actual": "203b74891f1cc6263514f99ec1cf198a07fcde97dac942232284ce25976aea8a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-23/from-atari-to-eve-online-building-on-15-years/critique.json",
+        "status": 200,
+        "expected": "5766de89ffc8c87efdfaa21a3739e9cec3fa941752a68db28504d63c2ccf728f",
+        "actual": "5766de89ffc8c87efdfaa21a3739e9cec3fa941752a68db28504d63c2ccf728f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-24/metaroce-a-new-rdma-transport-built-for-ai-scale/critique.json",
+        "status": 200,
+        "expected": "db4d670b69f6e81a547aff7e124a6a5fcb2b57d33836219c1edb47b246223639",
+        "actual": "db4d670b69f6e81a547aff7e124a6a5fcb2b57d33836219c1edb47b246223639",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-24/metaroce-a-new-rdma-transport-built-for-ai-scale/index.html",
+        "status": 200,
+        "expected": "f9b7cc3862120093507677cee26cc37d47a88691d78151c5301ab376d9ba6e7b",
+        "actual": "f9b7cc3862120093507677cee26cc37d47a88691d78151c5301ab376d9ba6e7b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/index.html",
+        "status": 200,
+        "expected": "b88a542aa53b304092ac9f59781dc4cc51957aba2efe35eee3702cba361d562d",
+        "actual": "b88a542aa53b304092ac9f59781dc4cc51957aba2efe35eee3702cba361d562d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/critique.json",
+        "status": 200,
+        "expected": "926953fd4a458b0e8308f334c888a05052604a49c68baad37a801a63d58dfcc1",
+        "actual": "926953fd4a458b0e8308f334c888a05052604a49c68baad37a801a63d58dfcc1",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/openai-restores-5-hour-codex-and-work-limits-for/index.html",
+        "status": 200,
+        "expected": "6400c7abcef8e0359303ed2fe5dbf0d84c411a29699661d4c78c0071e5f7683f",
+        "actual": "6400c7abcef8e0359303ed2fe5dbf0d84c411a29699661d4c78c0071e5f7683f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/nvidia-and-apple-unveil-compact-ai-computers-for-robots/index.html",
+        "status": 200,
+        "expected": "f1bf394a6e734eb15a0b81564256e85629b00109a022e3b1793d57f031fa4f35",
+        "actual": "f1bf394a6e734eb15a0b81564256e85629b00109a022e3b1793d57f031fa4f35",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/openai-restores-5-hour-codex-and-work-limits-for/critique.json",
+        "status": 200,
+        "expected": "e4fb04682c1a36f6b8ca950d2f628300f6a85b0395e795dddca33aede71f2810",
+        "actual": "e4fb04682c1a36f6b8ca950d2f628300f6a85b0395e795dddca33aede71f2810",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-25/nvidia-and-apple-unveil-compact-ai-computers-for-robots/critique.json",
+        "status": 200,
+        "expected": "d25c3a39be161a7e550835488a9c7ebd909071b2caf1ac0babd599453f594d97",
+        "actual": "d25c3a39be161a7e550835488a9c7ebd909071b2caf1ac0babd599453f594d97",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/critique.json",
+        "status": 200,
+        "expected": "8ea668a5a70dbebe40a9abf49d25ac6a554b52215fd4c78876907dc5cd37376a",
+        "actual": "8ea668a5a70dbebe40a9abf49d25ac6a554b52215fd4c78876907dc5cd37376a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/index.html",
+        "status": 200,
+        "expected": "c507a78c3a7c2a95eb9ca042a90f94dfd1d0d83228332f4505382cb7ece65687",
+        "actual": "c507a78c3a7c2a95eb9ca042a90f94dfd1d0d83228332f4505382cb7ece65687",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-01/openai-starts-charging-some-customers-only-when-its-ai/index.html",
+        "status": 200,
+        "expected": "51cbfff1050da254f042cd2272a934f1f2d8730ea994da56c2c39ab1bdeddac5",
+        "actual": "51cbfff1050da254f042cd2272a934f1f2d8730ea994da56c2c39ab1bdeddac5",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/index.html",
+        "status": 200,
+        "expected": "b40ef13cbe808b65adf01f7927fbf639696fde63ff92b01654611e569dbc844c",
+        "actual": "b40ef13cbe808b65adf01f7927fbf639696fde63ff92b01654611e569dbc844c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-01/anthropic-releases-claude-fable-5-1-and-claude-mythos/critique.json",
+        "status": 200,
+        "expected": "2e3791b6ec080541ed767957b6bec4253763809443671b469ac1249eff82280c",
+        "actual": "2e3791b6ec080541ed767957b6bec4253763809443671b469ac1249eff82280c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/apple-reveals-shocking-evidence-from-ex-employees-macbook-in/index.html",
+        "status": 200,
+        "expected": "b72ed56ccc1211317b64f77b1a48eb2a892fdcb6c753257ce2e294714f437f63",
+        "actual": "b72ed56ccc1211317b64f77b1a48eb2a892fdcb6c753257ce2e294714f437f63",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-01/openai-starts-charging-some-customers-only-when-its-ai/critique.json",
+        "status": 200,
+        "expected": "115e32eb763bfa63e32ab7df29ee8544672ba585086af3cd428856ee70d8a966",
+        "actual": "115e32eb763bfa63e32ab7df29ee8544672ba585086af3cd428856ee70d8a966",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/apple-reveals-shocking-evidence-from-ex-employees-macbook-in/critique.json",
+        "status": 200,
+        "expected": "ddf9d67069e618cbad678ae4b7f126a314c4494f1b0ba53cf956a6ae9e957556",
+        "actual": "ddf9d67069e618cbad678ae4b7f126a314c4494f1b0ba53cf956a6ae9e957556",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/proactive-cyber-defense-for-governments-and-enterprises/index.html",
+        "status": 200,
+        "expected": "7bbbad09cbee075b7bcf9d072461f6cfb2f01042923cbeeab7259cbe77093d9b",
+        "actual": "7bbbad09cbee075b7bcf9d072461f6cfb2f01042923cbeeab7259cbe77093d9b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/proactive-cyber-defense-for-governments-and-enterprises/critique.json",
+        "status": 200,
+        "expected": "b27c026639ac47ab2b126ac85b44b879fc157e6d6928d0e5aec76e97f3c41a11",
+        "actual": "b27c026639ac47ab2b126ac85b44b879fc157e6d6928d0e5aec76e97f3c41a11",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/trump-administration-sides-with-openai-in-new-york-times/index.html",
+        "status": 200,
+        "expected": "57664fd6bc8691fe4f53468f8e78a67c0efa03c5dd2f6374e3f9aeb66bbea3cb",
+        "actual": "57664fd6bc8691fe4f53468f8e78a67c0efa03c5dd2f6374e3f9aeb66bbea3cb",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-03/nvidia-is-buying-hugging-face-for-almost-13-billion/index.html",
+        "status": 200,
+        "expected": "d16a92db3e422573ceeac9f73d302dbee5398e6cbb358716b866ea59c6ca73d3",
+        "actual": "d16a92db3e422573ceeac9f73d302dbee5398e6cbb358716b866ea59c6ca73d3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-03/nvidia-is-buying-hugging-face-for-almost-13-billion/critique.json",
+        "status": 200,
+        "expected": "612d0d806774bc48520fe8c638a9611604305d11765acb28dc39c23ff32a453d",
+        "actual": "612d0d806774bc48520fe8c638a9611604305d11765acb28dc39c23ff32a453d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-02/trump-administration-sides-with-openai-in-new-york-times/critique.json",
+        "status": 200,
+        "expected": "6658519ec14c8d9c120c4710f0d35ab0b5738987d9779966cd935e77a6ff5d30",
+        "actual": "6658519ec14c8d9c120c4710f0d35ab0b5738987d9779966cd935e77a6ff5d30",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-04/openai-releases-astra-its-most-capable-model-yet-amid/critique.json",
+        "status": 200,
+        "expected": "19f3d6b6636e1f035fdd0053480457bc538a2cdb5d8adfbf9a595a1d8494db01",
+        "actual": "19f3d6b6636e1f035fdd0053480457bc538a2cdb5d8adfbf9a595a1d8494db01",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-04/openai-releases-astra-its-most-capable-model-yet-amid/index.html",
+        "status": 200,
+        "expected": "c80e03b6228a9054f2d267cfa4ff495eeb35bb764527ebb1abe6fb55622edd50",
+        "actual": "c80e03b6228a9054f2d267cfa4ff495eeb35bb764527ebb1abe6fb55622edd50",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/openai-admits-to-german-wiki-incident/index.html",
+        "status": 200,
+        "expected": "909b636fadad37f63a198b28cb51cd91684fcb036f4beaab7d859206bd943f92",
+        "actual": "909b636fadad37f63a198b28cb51cd91684fcb036f4beaab7d859206bd943f92",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/authors-push-back-as-publishers-and-agents-make-claims/index.html",
+        "status": 200,
+        "expected": "b0ae5ad5a36ec4d48ed0e09512226a5fbe2a96978b206e0923e19237ccb3fd0b",
+        "actual": "b0ae5ad5a36ec4d48ed0e09512226a5fbe2a96978b206e0923e19237ccb3fd0b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/openai-admits-to-german-wiki-incident/critique.json",
+        "status": 200,
+        "expected": "ceb4750e82a3873470d7d895f54de1b7db112be503425bd37c92f984b231d735",
+        "actual": "ceb4750e82a3873470d7d895f54de1b7db112be503425bd37c92f984b231d735",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/index.html",
+        "status": 200,
+        "expected": "81fbf2cb17420a21be0afa8dc82bc6eb5f69d0f0c21cac41cbbbafc93893dd2b",
+        "actual": "81fbf2cb17420a21be0afa8dc82bc6eb5f69d0f0c21cac41cbbbafc93893dd2b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/authors-push-back-as-publishers-and-agents-make-claims/critique.json",
+        "status": 200,
+        "expected": "487377338698f1f6547752cf7b8bb9ec9f871b898c5e1d571f0abcc191bd3b5a",
+        "actual": "487377338698f1f6547752cf7b8bb9ec9f871b898c5e1d571f0abcc191bd3b5a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-08/openai-agents-hacked-another-website/index.html",
+        "status": 200,
+        "expected": "17e4d6d30d4deed8121fe4f4f61fc701cccd12e5325ae7f2adcd58d72b2eb15c",
+        "actual": "17e4d6d30d4deed8121fe4f4f61fc701cccd12e5325ae7f2adcd58d72b2eb15c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/hackers-are-stealing-claude-tokens-from-subscribers/critique.json",
+        "status": 200,
+        "expected": "98205d0d6bed9781eabf6d792edbee8f13b9f8e949207ead600e3b53462147ef",
+        "actual": "98205d0d6bed9781eabf6d792edbee8f13b9f8e949207ead600e3b53462147ef",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-08/openai-agents-hacked-another-website/critique.json",
+        "status": 200,
+        "expected": "450c915fc5f2b2c2aa5752983d4cb60d038c1947fab9d76b1e8d532f19bfe649",
+        "actual": "450c915fc5f2b2c2aa5752983d4cb60d038c1947fab9d76b1e8d532f19bfe649",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/critique.json",
+        "status": 200,
+        "expected": "8b72c763c7f3cc2a7b375f71e393d988a183f201c8eb55d6cceae906c06521f7",
+        "actual": "8b72c763c7f3cc2a7b375f71e393d988a183f201c8eb55d6cceae906c06521f7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/hackers-are-stealing-claude-tokens-from-subscribers/index.html",
+        "status": 200,
+        "expected": "0e2a788536bc2767c21c9d799d35e9ea9465fce32ec25bfe27cce9f041918266",
+        "actual": "0e2a788536bc2767c21c9d799d35e9ea9465fce32ec25bfe27cce9f041918266",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/muse-metas-new-personal-ai-agent-needs-you-to/critique.json",
+        "status": 200,
+        "expected": "a90ec28d05e6da919903b8c6b3466260ee2cd15e3e8bb0cb28da2959276598af",
+        "actual": "a90ec28d05e6da919903b8c6b3466260ee2cd15e3e8bb0cb28da2959276598af",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/muse-metas-new-personal-ai-agent-needs-you-to/index.html",
+        "status": 200,
+        "expected": "41272fb291435875148ac986e8875ee6218d3f6a8c0adeaa03a3a740277d050a",
+        "actual": "41272fb291435875148ac986e8875ee6218d3f6a8c0adeaa03a3a740277d050a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/worried-anthropic-researchers-warn-that-ai-8216-could-kill/index.html",
+        "status": 200,
+        "expected": "b1faa43c18864318e22c2d8845d7122b5592e9c66101022a7c83beb0ef540922",
+        "actual": "b1faa43c18864318e22c2d8845d7122b5592e9c66101022a7c83beb0ef540922",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-09/worried-anthropic-researchers-warn-that-ai-8216-could-kill/critique.json",
+        "status": 200,
+        "expected": "9ba016eeed8b38fe5c46ded95ecc546238f222b87fe5cedb0d296aeb9f8ffac9",
+        "actual": "9ba016eeed8b38fe5c46ded95ecc546238f222b87fe5cedb0d296aeb9f8ffac9",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-10/deepseeks-new-low-cost-model-deals-a-fresh-blow/index.html",
+        "status": 200,
+        "expected": "f3f7ccd1ee341131aac38630e22016fe9196acaa4f4eaef2a943acd468717f82",
+        "actual": "f3f7ccd1ee341131aac38630e22016fe9196acaa4f4eaef2a943acd468717f82",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/a-misalignment-of-ai-in-mathematics/critique.json",
+        "status": 200,
+        "expected": "7b307aab2a4b0281d12f072a1c4ce17ab9be9f355c3f4cacc1e181ceb79c4755",
+        "actual": "7b307aab2a4b0281d12f072a1c4ce17ab9be9f355c3f4cacc1e181ceb79c4755",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-10/local-newspapers-sue-openai-and-microsoft-over-use-of/index.html",
+        "status": 200,
+        "expected": "359585d41f80e6505d741b4abc93f40f53e1e21fe0c769996ea59bf28a6a806a",
+        "actual": "359585d41f80e6505d741b4abc93f40f53e1e21fe0c769996ea59bf28a6a806a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-10/local-newspapers-sue-openai-and-microsoft-over-use-of/critique.json",
+        "status": 200,
+        "expected": "0cc310e9e7b96057fbd68537e0d147c1cdb159f375dfdc456246d7419ca31953",
+        "actual": "0cc310e9e7b96057fbd68537e0d147c1cdb159f375dfdc456246d7419ca31953",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-10/deepseeks-new-low-cost-model-deals-a-fresh-blow/critique.json",
+        "status": 200,
+        "expected": "88b0ddc3b1716466030194ff282eefa44252784e25dcd5c9b281e2a4aa1a7fe2",
+        "actual": "88b0ddc3b1716466030194ff282eefa44252784e25dcd5c9b281e2a4aa1a7fe2",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/a-misalignment-of-ai-in-mathematics/index.html",
+        "status": 200,
+        "expected": "c86f31d6b67327b35aaa7e000f3980763a7aa14ed9dc17d810361ce95fc9e33d",
+        "actual": "c86f31d6b67327b35aaa7e000f3980763a7aa14ed9dc17d810361ce95fc9e33d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/breaking-usyd-signs-multi-year-partnership-with-openai/critique.json",
+        "status": 200,
+        "expected": "0f038b2848f396cfdfe838ae053f485581a1f94ad15d77579d28965eed9add02",
+        "actual": "0f038b2848f396cfdfe838ae053f485581a1f94ad15d77579d28965eed9add02",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/nscale-adds-former-openai-exec-fidji-simo-to-its/index.html",
+        "status": 200,
+        "expected": "392f51abeac867dace023ea4594cb4d19acb310cee70adabf50cbda60a691f1a",
+        "actual": "392f51abeac867dace023ea4594cb4d19acb310cee70adabf50cbda60a691f1a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/breaking-usyd-signs-multi-year-partnership-with-openai/index.html",
+        "status": 200,
+        "expected": "1cd86f5742fbf9fef0a5c3340ff63f35c11127ea34477f12218e110f0abeb3d4",
+        "actual": "1cd86f5742fbf9fef0a5c3340ff63f35c11127ea34477f12218e110f0abeb3d4",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/index.html",
+        "status": 200,
+        "expected": "6398152cb896e10d6f9a422ce3e4a46c0053e759a877b326d9dae3b72c98995d",
+        "actual": "6398152cb896e10d6f9a422ce3e4a46c0053e759a877b326d9dae3b72c98995d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-14/sam-altman-says-openai-going-public-in-2026-would/critique.json",
+        "status": 200,
+        "expected": "ef7648e5b10568f05a26538603cbaf92daa068737f26deed3d8a32ca9ee95a9c",
+        "actual": "ef7648e5b10568f05a26538603cbaf92daa068737f26deed3d8a32ca9ee95a9c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/critique.json",
+        "status": 200,
+        "expected": "bcd434f010a3e0b44f33534ec6f008bf7150016d19efcb22bd39e0f7e065bb9b",
+        "actual": "bcd434f010a3e0b44f33534ec6f008bf7150016d19efcb22bd39e0f7e065bb9b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-14/sam-altman-says-openai-going-public-in-2026-would/index.html",
+        "status": 200,
+        "expected": "7849a52ac479e20fb09409326bcb81cd8ed2970ca0066089b0ed910c10ab88a7",
+        "actual": "7849a52ac479e20fb09409326bcb81cd8ed2970ca0066089b0ed910c10ab88a7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-11/nscale-adds-former-openai-exec-fidji-simo-to-its/critique.json",
+        "status": 200,
+        "expected": "bb818a1909db852365f5636578bf3b993fa369fd06b351db4297176673bf4c52",
+        "actual": "bb818a1909db852365f5636578bf3b993fa369fd06b351db4297176673bf4c52",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-14/watch-astronaut-christina-koch-and-googles-james-manyika-discuss/index.html",
+        "status": 200,
+        "expected": "d570c5d428022d1bacb9d3f2556e3f6f870e433413c637c3511722c8c05f1e39",
+        "actual": "d570c5d428022d1bacb9d3f2556e3f6f870e433413c637c3511722c8c05f1e39",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-14/watch-astronaut-christina-koch-and-googles-james-manyika-discuss/critique.json",
+        "status": 200,
+        "expected": "d9f1319cb627b3ee08cc595e81b91e08fda477096f8e23a9b25e6975a336aa4c",
+        "actual": "d9f1319cb627b3ee08cc595e81b91e08fda477096f8e23a9b25e6975a336aa4c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300/index.html",
+        "status": 200,
+        "expected": "ff72d7f8bfe2bd9f5e12d7f55436ddbc8b2d586a44889935fe928ed680906b4e",
+        "actual": "ff72d7f8bfe2bd9f5e12d7f55436ddbc8b2d586a44889935fe928ed680906b4e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300m/index.html",
+        "status": 200,
+        "expected": "0d05d337e687e84be7b575ab77ddc53d904e283a3b9af7f15e1e9c091c1d2007",
+        "actual": "0d05d337e687e84be7b575ab77ddc53d904e283a3b9af7f15e1e9c091c1d2007",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/index.html",
+        "status": 200,
+        "expected": "df82d6a1c6856003bd11c48d0ae36c014799128dafe8850522c078e28ed0dd16",
+        "actual": "df82d6a1c6856003bd11c48d0ae36c014799128dafe8850522c078e28ed0dd16",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300m/critique.json",
+        "status": 200,
+        "expected": "1b1aa1895bd15829bc7de3e7fe39e281145437ac2da0f895841a8381a1360fc3",
+        "actual": "1b1aa1895bd15829bc7de3e7fe39e281145437ac2da0f895841a8381a1360fc3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-16/theres-a-100-chance-ai-agents-are-ruining-the/index.html",
+        "status": 200,
+        "expected": "49e8134bde166275f0992ad3f35c700a4c7e213ecca0dc6badbd47bab36f6b2f",
+        "actual": "49e8134bde166275f0992ad3f35c700a4c7e213ecca0dc6badbd47bab36f6b2f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-16/google-deepmind-launches-interdisciplinary-institute-to-tackle-the-big/critique.json",
+        "status": 200,
+        "expected": "fb6871cb40e25ec1dada1555e04b1ef0b29d5fbd37199362707386b3f07d860f",
+        "actual": "fb6871cb40e25ec1dada1555e04b1ef0b29d5fbd37199362707386b3f07d860f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300/critique.json",
+        "status": 200,
+        "expected": "9561e6f6269c0f90c42922ac588b735c7bdc2103d3490f5ba5d53a92ad1cefcd",
+        "actual": "9561e6f6269c0f90c42922ac588b735c7bdc2103d3490f5ba5d53a92ad1cefcd",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/index.html",
+        "status": 200,
+        "expected": "753803aad11616ec9bd105a0388abddfbc6e52a6276281fa8734e30caddbd72a",
+        "actual": "753803aad11616ec9bd105a0388abddfbc6e52a6276281fa8734e30caddbd72a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/critique.json",
+        "status": 200,
+        "expected": "2a6a28e483ebdc2faf7b599a1796951a825f17a24f064fd9812bc8284fb8f27e",
+        "actual": "2a6a28e483ebdc2faf7b599a1796951a825f17a24f064fd9812bc8284fb8f27e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/critique.json",
+        "status": 200,
+        "expected": "14a7efe83d65d4c0c54095e0b69a000fb3ffb288f7b12916114bc9374d85df76",
+        "actual": "14a7efe83d65d4c0c54095e0b69a000fb3ffb288f7b12916114bc9374d85df76",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/index.html",
+        "status": 200,
+        "expected": "d1fe91c88774097250786092a398c6726b1e168fc6c7ae1e30fc3de7df576470",
+        "actual": "d1fe91c88774097250786092a398c6726b1e168fc6c7ae1e30fc3de7df576470",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-16/theres-a-100-chance-ai-agents-are-ruining-the/critique.json",
+        "status": 200,
+        "expected": "45bfe44fe0090c6b1a272787cdceaad3d3b7435b8f4b4403790a3752b4b7e2ea",
+        "actual": "45bfe44fe0090c6b1a272787cdceaad3d3b7435b8f4b4403790a3752b4b7e2ea",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/index.html",
+        "status": 200,
+        "expected": "d06f75515035f993b184610ec1845722fadc6ae1e59222d583aa368fdf850dc4",
+        "actual": "d06f75515035f993b184610ec1845722fadc6ae1e59222d583aa368fdf850dc4",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/critique.json",
+        "status": 200,
+        "expected": "163041d6cf828097b4a9a7e9f0f3aab522569f44489abd6f30beb1f4058e1974",
+        "actual": "163041d6cf828097b4a9a7e9f0f3aab522569f44489abd6f30beb1f4058e1974",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/critique.json",
+        "status": 200,
+        "expected": "705a7556624858620543b1f81c7cde9cc991e94f229f9b5c058926995b17636d",
+        "actual": "705a7556624858620543b1f81c7cde9cc991e94f229f9b5c058926995b17636d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/index.html",
+        "status": 200,
+        "expected": "476e1376eab5d744264721383f36e984bb2d5999d936768ff828c43172976c8c",
+        "actual": "476e1376eab5d744264721383f36e984bb2d5999d936768ff828c43172976c8c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/microsoft-exec-called-ai-scraping-the-largest-theft-of/index.html",
+        "status": 200,
+        "expected": "f9ba2c1bdf079ee62e2094617ddd613158df036c99de4de3e40c52f6a9032542",
+        "actual": "f9ba2c1bdf079ee62e2094617ddd613158df036c99de4de3e40c52f6a9032542",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/security-researchers-used-anthropic-039-s-claude-to-hack/index.html",
+        "status": 200,
+        "expected": "ea8f6a4605ffb08d43b2260dc38317480e7449c7b97ee331f1aba3fd2efb8557",
+        "actual": "ea8f6a4605ffb08d43b2260dc38317480e7449c7b97ee331f1aba3fd2efb8557",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/microsoft-exec-called-ai-scraping-the-largest-theft-of/critique.json",
+        "status": 200,
+        "expected": "5ab9c53ab3e9a7e19a0682d347defa5ebfdb826af63bb520a50ddbe7e19ffcb3",
+        "actual": "5ab9c53ab3e9a7e19a0682d347defa5ebfdb826af63bb520a50ddbe7e19ffcb3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-18/security-researchers-used-anthropic-039-s-claude-to-hack/critique.json",
+        "status": 200,
+        "expected": "1a7e892a19afa2c6146f8c07236b561d38cac88c352b20d87c27335fcbb09ae8",
+        "actual": "1a7e892a19afa2c6146f8c07236b561d38cac88c352b20d87c27335fcbb09ae8",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-19/google-says-its-gemini-ai-model-hacked-three-other/index.html",
+        "status": 200,
+        "expected": "82ce4f535cbf45eba309c470929f5ef0f6bda16abaa2294423d69ae95dd0d604",
+        "actual": "82ce4f535cbf45eba309c470929f5ef0f6bda16abaa2294423d69ae95dd0d604",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/index.html",
+        "status": 200,
+        "expected": "c85b05ae8dd845d461e3dd480e1a3422f443d82345bf8429a9989a27ac178b30",
+        "actual": "c85b05ae8dd845d461e3dd480e1a3422f443d82345bf8429a9989a27ac178b30",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/critique.json",
+        "status": 200,
+        "expected": "76a38376c11a0893979132dc2f05595b28d09308cc104a285dca639a30852ed8",
+        "actual": "76a38376c11a0893979132dc2f05595b28d09308cc104a285dca639a30852ed8",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/anthropic-selects-accenture-as-first-embedded-evaluator-to-help/index.html",
+        "status": 200,
+        "expected": "a6181cba147763c9e90caab743533461982eba30a3172e018a63d36191321950",
+        "actual": "a6181cba147763c9e90caab743533461982eba30a3172e018a63d36191321950",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/anthropic-selects-accenture-as-first-embedded-evaluator-to-help/critique.json",
+        "status": 200,
+        "expected": "ca5b808e1b2634816dd1b0d11e6177fe3662fe94735c60b93a0b4f088096f62a",
+        "actual": "ca5b808e1b2634816dd1b0d11e6177fe3662fe94735c60b93a0b4f088096f62a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/google-says-its-gemini-ai-model-hacked-three-other-update-2026-09-20/critique.json",
+        "status": 200,
+        "expected": "e47e295c82c8d46e77e781afcb0bf4130131a3af1dacdb5255005d672a1b5de0",
+        "actual": "e47e295c82c8d46e77e781afcb0bf4130131a3af1dacdb5255005d672a1b5de0",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-19/google-says-its-gemini-ai-model-hacked-three-other/critique.json",
+        "status": 200,
+        "expected": "bfb1806af1abc3ee4e2850e0ed3d70eb617803ce14808c2ead27e5fd8cf8b929",
+        "actual": "bfb1806af1abc3ee4e2850e0ed3d70eb617803ce14808c2ead27e5fd8cf8b929",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/critique.json",
+        "status": 200,
+        "expected": "4d5a9b600b3041bc58f42030b18fa602aa62879900c72b891f7cce69ba2f9599",
+        "actual": "4d5a9b600b3041bc58f42030b18fa602aa62879900c72b891f7cce69ba2f9599",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/google-says-its-gemini-ai-model-hacked-three-other-update-2026-09-20/index.html",
+        "status": 200,
+        "expected": "95293eba51948bb5e8dc38b4221c394d83f5e8f2c0fff2d6621ece4625613c10",
+        "actual": "95293eba51948bb5e8dc38b4221c394d83f5e8f2c0fff2d6621ece4625613c10",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/openai-and-anthropic-oversold-ai-security-breaches/critique.json",
+        "status": 200,
+        "expected": "7f857827a831224c8f07733a1adc5e3bb0f43b4f23f3fc0102acba8caed09ebb",
+        "actual": "7f857827a831224c8f07733a1adc5e3bb0f43b4f23f3fc0102acba8caed09ebb",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/openai-and-anthropic-oversold-ai-security-breaches/index.html",
+        "status": 200,
+        "expected": "ced830680001dee57b666a32e3ce11dd038650b0ffdced39a8ce936c96c835fc",
+        "actual": "ced830680001dee57b666a32e3ce11dd038650b0ffdced39a8ce936c96c835fc",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/index.html",
+        "status": 200,
+        "expected": "537e8093006a3c986d8d08fa5220bb62b1bdf70be409a6f4214fe199fc107d9f",
+        "actual": "537e8093006a3c986d8d08fa5220bb62b1bdf70be409a6f4214fe199fc107d9f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/5-companies-using-nvidia-ai-for-clean-energy/index.html",
+        "status": 200,
+        "expected": "99bd671c995d7306ca3138561cbc09e302f9c19b181e73627257a550e643468e",
+        "actual": "99bd671c995d7306ca3138561cbc09e302f9c19b181e73627257a550e643468e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/5-companies-using-nvidia-ai-for-clean-energy/critique.json",
+        "status": 200,
+        "expected": "8c5e28542121e1a67a24ec10a625de0956b408db8d32c600af70a315c4b4041b",
+        "actual": "8c5e28542121e1a67a24ec10a625de0956b408db8d32c600af70a315c4b4041b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/amazon-blocks-metas-muse-ai-agent/index.html",
+        "status": 200,
+        "expected": "e2757b4cb9b292fb6af1fc5e91b15c28175d59ed380faadbfc1cd20b26d63ed3",
+        "actual": "e2757b4cb9b292fb6af1fc5e91b15c28175d59ed380faadbfc1cd20b26d63ed3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/amazon-blocks-metas-muse-ai-agent/critique.json",
+        "status": 200,
+        "expected": "9a6245fa9d7bc56ebbe82affd462ceebc0ffff1082e0d69847ddb58b89ee0553",
+        "actual": "9a6245fa9d7bc56ebbe82affd462ceebc0ffff1082e0d69847ddb58b89ee0553",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/indias-ai-agent-sprawl-enterprises-struggle-with-production-beyond/index.html",
+        "status": 200,
+        "expected": "c1b964f306f466fe9c95977404ff286867bf14f503ac3dea3d1eeb02ae8a48e7",
+        "actual": "c1b964f306f466fe9c95977404ff286867bf14f503ac3dea3d1eeb02ae8a48e7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-21/indias-ai-agent-sprawl-enterprises-struggle-with-production-beyond/critique.json",
+        "status": 200,
+        "expected": "e752f1d3f99c4fc04f93245f1d544c49c36d1371f2810891278f98378e8f9252",
+        "actual": "e752f1d3f99c4fc04f93245f1d544c49c36d1371f2810891278f98378e8f9252",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-22/anthropic-releases-claude-opus-5-5-fable-5-1/index.html",
+        "status": 200,
+        "expected": "c9554c31b7568304044f35767a10c015334e3761dfbf050b2061fa05d9fff6a7",
+        "actual": "c9554c31b7568304044f35767a10c015334e3761dfbf050b2061fa05d9fff6a7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-22/anthropic-releases-claude-opus-5-5-fable-5-1/critique.json",
+        "status": 200,
+        "expected": "b877e61babbe97147e0394c4558909fba4c8cc99d809158e011ebf6d2f65a266",
+        "actual": "b877e61babbe97147e0394c4558909fba4c8cc99d809158e011ebf6d2f65a266",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-22/nvidia-isaac-ros-5-0-advances-agentic-open-source/index.html",
+        "status": 200,
+        "expected": "e34388a89e449e066874aa9eaf2cfeed6e94e2399ccf9998d9eded4b55253ef6",
+        "actual": "e34388a89e449e066874aa9eaf2cfeed6e94e2399ccf9998d9eded4b55253ef6",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/anthropic-launches-claude-opus-5-5-with-stricter-safeguards/index.html",
+        "status": 200,
+        "expected": "dcf4b59de8ace049acc296646f68e73c46e88ec188c146ef09459c4c8a6e8858",
+        "actual": "dcf4b59de8ace049acc296646f68e73c46e88ec188c146ef09459c4c8a6e8858",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/anthropic-launches-claude-opus-5-5-with-stricter-safeguards/critique.json",
+        "status": 200,
+        "expected": "6bd9be32b5a29270bba2f860b44a92f3c562248e3eaf9d159efdf72892300b25",
+        "actual": "6bd9be32b5a29270bba2f860b44a92f3c562248e3eaf9d159efdf72892300b25",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-22/nvidia-isaac-ros-5-0-advances-agentic-open-source/critique.json",
+        "status": 200,
+        "expected": "5594864b43b2669e7630ce61f6cc3116c123755779fb4d0463407592d01e70f8",
+        "actual": "5594864b43b2669e7630ce61f6cc3116c123755779fb4d0463407592d01e70f8",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/ema-raises-77m-as-ai-starts-eating-into-enterprise/index.html",
+        "status": 200,
+        "expected": "17ab43f3b015794c08585b1cf56829b3824edd1fbdc5c2cc295fc1b6c1699ddd",
+        "actual": "17ab43f3b015794c08585b1cf56829b3824edd1fbdc5c2cc295fc1b6c1699ddd",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/ema-raises-77m-as-ai-starts-eating-into-enterprise/critique.json",
+        "status": 200,
+        "expected": "3526f79cd9b4fd66caf36408181355b83c44705a3681e9dbb699609dbe484cba",
+        "actual": "3526f79cd9b4fd66caf36408181355b83c44705a3681e9dbb699609dbe484cba",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/openai-breaches-medicare-albanese-reveals/index.html",
+        "status": 200,
+        "expected": "10dc6e310bd37e70bcad7f4428edcc94474f73dfb8bfa0ef4a9b353a0312d9f5",
+        "actual": "10dc6e310bd37e70bcad7f4428edcc94474f73dfb8bfa0ef4a9b353a0312d9f5",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/openai-releases-gpt-6-sol-and-luna-50-cheaper/index.html",
+        "status": 200,
+        "expected": "96dd8696694be686427a2d782c6a94d358afc000b67609bbf24dc0fd8424042f",
+        "actual": "96dd8696694be686427a2d782c6a94d358afc000b67609bbf24dc0fd8424042f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/openai-breaches-medicare-albanese-reveals/critique.json",
+        "status": 200,
+        "expected": "3c99279d47aa05efd75bbd417628400c1bde85c5d505100b3c75aa16c121a66a",
+        "actual": "3c99279d47aa05efd75bbd417628400c1bde85c5d505100b3c75aa16c121a66a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/index.html",
+        "status": 200,
+        "expected": "f5ae78b92660d7079505731423c002baa1dea64a9ab7303b3fe9dccaeaf055ed",
+        "actual": "f5ae78b92660d7079505731423c002baa1dea64a9ab7303b3fe9dccaeaf055ed",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-23/openai-releases-gpt-6-sol-and-luna-50-cheaper/critique.json",
+        "status": 200,
+        "expected": "de831c639e077041f474724e633ea551a61feb4705eaa4d5e05b27228aced20e",
+        "actual": "de831c639e077041f474724e633ea551a61feb4705eaa4d5e05b27228aced20e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/australia-says-openai-agent-hacked-into-government-website/index.html",
+        "status": 200,
+        "expected": "4dbec1a0340f7c905455a3a607decf3fb9d9abf8ca242b153001b0fbc1399333",
+        "actual": "4dbec1a0340f7c905455a3a607decf3fb9d9abf8ca242b153001b0fbc1399333",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/australia-says-openai-agent-hacked-into-government-website/critique.json",
+        "status": 200,
+        "expected": "af59bc19d37b5b264fbf486cdb0e998f70bf4f5e81085a921f2f2b873ae0f32d",
+        "actual": "af59bc19d37b5b264fbf486cdb0e998f70bf4f5e81085a921f2f2b873ae0f32d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/critique.json",
+        "status": 200,
+        "expected": "966f62b3d7b70fcd307480474fa3cc7dc3367634553b9c98cba2c96a7b2e9ddc",
+        "actual": "966f62b3d7b70fcd307480474fa3cc7dc3367634553b9c98cba2c96a7b2e9ddc",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/index.html",
+        "status": 200,
+        "expected": "e9849eb2190a92d6e4f4c5103a1346b81464227f2fdbbcaa6f6c491af58a0bd2",
+        "actual": "e9849eb2190a92d6e4f4c5103a1346b81464227f2fdbbcaa6f6c491af58a0bd2",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/critique.json",
+        "status": 200,
+        "expected": "ead96a2dd341e8186cbc1576121cac05bc48de893dc4c8033ba1525c6a1aaf0b",
+        "actual": "ead96a2dd341e8186cbc1576121cac05bc48de893dc4c8033ba1525c6a1aaf0b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/openai-agent-hacked-australian-government-website-pm-says/critique.json",
+        "status": 200,
+        "expected": "4a2a1e7d6b65af5444c9d046ef74adb04d0a06fb3d685d16e4d8b0423010404a",
+        "actual": "4a2a1e7d6b65af5444c9d046ef74adb04d0a06fb3d685d16e4d8b0423010404a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-24/openai-agent-hacked-australian-government-website-pm-says/index.html",
+        "status": 200,
+        "expected": "24a9960cafccb1e9ba6334dcfbb37b0b354ecf33c99b1be7862062efa43c53fa",
+        "actual": "24a9960cafccb1e9ba6334dcfbb37b0b354ecf33c99b1be7862062efa43c53fa",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/index.html",
+        "status": 200,
+        "expected": "a14ce73c6ee0fb7613401de4b3bebf8f4d79e0ce6b96aed0eaec6a6793906520",
+        "actual": "a14ce73c6ee0fb7613401de4b3bebf8f4d79e0ce6b96aed0eaec6a6793906520",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/critique.json",
+        "status": 200,
+        "expected": "9345ba64d63a1a826bcd3e58acf3d905d70190f6ad5bb82bc808f772914f85ca",
+        "actual": "9345ba64d63a1a826bcd3e58acf3d905d70190f6ad5bb82bc808f772914f85ca",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/index.html",
+        "status": 200,
+        "expected": "403cb463a0dec2a21ef3e39c562958aa9cd90ab3bcb6121c9d62a8e80173f819",
+        "actual": "403cb463a0dec2a21ef3e39c562958aa9cd90ab3bcb6121c9d62a8e80173f819",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/pentagon-was-right-to-slap-anthropic-with-a-security/index.html",
+        "status": 200,
+        "expected": "8259a1dae7d8e9ac14909a6d16e2c3d2e1f02d3eb7b85daa1eb5f6a2af5a7447",
+        "actual": "8259a1dae7d8e9ac14909a6d16e2c3d2e1f02d3eb7b85daa1eb5f6a2af5a7447",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/pentagon-was-right-to-slap-anthropic-with-a-security/critique.json",
+        "status": 200,
+        "expected": "707225a14ee00df1c60e9ae6a0c12b11e324b756dc98d8056efc732c0778e1f1",
+        "actual": "707225a14ee00df1c60e9ae6a0c12b11e324b756dc98d8056efc732c0778e1f1",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/critique.json",
+        "status": 200,
+        "expected": "419545af84d61b8fd66819b8fd971f4b795e8b1ced23843ee678b58a5416a7e9",
+        "actual": "419545af84d61b8fd66819b8fd971f4b795e8b1ced23843ee678b58a5416a7e9",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/index.html",
+        "status": 200,
+        "expected": "baf62aa77ae1abf0d370f78a22c59e2715e9c466e79bf3eddf78019b40251c0f",
+        "actual": "baf62aa77ae1abf0d370f78a22c59e2715e9c466e79bf3eddf78019b40251c0f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/index.html",
+        "status": 200,
+        "expected": "67e418650a906c58a266d0d4d67a764f5d7152b50069cda80ecb5ca9f83a8421",
+        "actual": "67e418650a906c58a266d0d4d67a764f5d7152b50069cda80ecb5ca9f83a8421",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/critique.json",
+        "status": 200,
+        "expected": "4388d2aaf511295220f9b193e7ef7c4cb215da07070ea749c2e7a697f25b53bf",
+        "actual": "4388d2aaf511295220f9b193e7ef7c4cb215da07070ea749c2e7a697f25b53bf",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/index.html",
+        "status": 200,
+        "expected": "93ddfce6e6de717fc0001b159ed6b50b6677ee15c302510f417794c437f8eb04",
+        "actual": "93ddfce6e6de717fc0001b159ed6b50b6677ee15c302510f417794c437f8eb04",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/critique.json",
+        "status": 200,
+        "expected": "d1d86310a8dafc62eb87fbd9f004ca5dac04bf6b9733dcf384410a61dcfee2b7",
+        "actual": "d1d86310a8dafc62eb87fbd9f004ca5dac04bf6b9733dcf384410a61dcfee2b7",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/critique.json",
+        "status": 200,
+        "expected": "ac573f222a386cff7adfa2c5a9d822fe8b86b6ee1eebe3464c54f0552fcc2530",
+        "actual": "ac573f222a386cff7adfa2c5a9d822fe8b86b6ee1eebe3464c54f0552fcc2530",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/index.html",
+        "status": 200,
+        "expected": "cd16823716b2a3e7ad3076ee695e994992866d2c36d93520b14e79cbf3db88a2",
+        "actual": "cd16823716b2a3e7ad3076ee695e994992866d2c36d93520b14e79cbf3db88a2",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/critique.json",
+        "status": 200,
+        "expected": "565d8149c47d9e07b5d5f8258053a256d553412bb916fbcdbc055227664dbd17",
+        "actual": "565d8149c47d9e07b5d5f8258053a256d553412bb916fbcdbc055227664dbd17",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/index.html",
+        "status": 200,
+        "expected": "22992d4aa59692effca8139c0526ee29f8a6ce8cd485934288866fb8b0647712",
+        "actual": "22992d4aa59692effca8139c0526ee29f8a6ce8cd485934288866fb8b0647712",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-agents-tried-to-bruteforce-a-un-website/index.html",
+        "status": 200,
+        "expected": "c5a62eab2ee0769f834c11f0a75b581894aba077d83379e587cd64e62192a38b",
+        "actual": "c5a62eab2ee0769f834c11f0a75b581894aba077d83379e587cd64e62192a38b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/critique.json",
+        "status": 200,
+        "expected": "d3f8c1a729132a1273fda1b79863bc6acd2a30dbfd25740a1da385e4001cbbfb",
+        "actual": "d3f8c1a729132a1273fda1b79863bc6acd2a30dbfd25740a1da385e4001cbbfb",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-halts-training-of-latest-models-as-reports-mount/critique.json",
+        "status": 200,
+        "expected": "a56c8d5ff0bf61a9326538db8ba8be28da6664aa5a68d328882b9de365a2a79f",
+        "actual": "a56c8d5ff0bf61a9326538db8ba8be28da6664aa5a68d328882b9de365a2a79f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-halts-training-of-latest-models-as-reports-mount/index.html",
+        "status": 200,
+        "expected": "202ed0d403a2b9e03f74362e8aa57bfda11b1af2ef6bdb7bfa86a94e4cc41d55",
+        "actual": "202ed0d403a2b9e03f74362e8aa57bfda11b1af2ef6bdb7bfa86a94e4cc41d55",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-pauses-training-of-its-most-capable-models/critique.json",
+        "status": 200,
+        "expected": "bb1a11aa88ebe2e9a8a2537e40f5f1f14eeaf072c9582e431672bbcc3e7e8345",
+        "actual": "bb1a11aa88ebe2e9a8a2537e40f5f1f14eeaf072c9582e431672bbcc3e7e8345",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-agents-tried-to-bruteforce-a-un-website/critique.json",
+        "status": 200,
+        "expected": "5c23354727a3fe31ec2bd310c099a8b439531cd3b9fad923b37abb7df9956eed",
+        "actual": "5c23354727a3fe31ec2bd310c099a8b439531cd3b9fad923b37abb7df9956eed",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-27/openai-pauses-training-of-its-most-capable-models/index.html",
+        "status": 200,
+        "expected": "80c9285c75a0a2682323978a5f502046adc4db0979a2ceb3620c72010a2dcf15",
+        "actual": "80c9285c75a0a2682323978a5f502046adc4db0979a2ceb3620c72010a2dcf15",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/anthropic-gamma-and-clay-share-what-happens-when-enterprises/critique.json",
+        "status": 200,
+        "expected": "5fd3c50c6e6b2ae00984b757f361707812d0684eeed779bab29fe1f91d54c552",
+        "actual": "5fd3c50c6e6b2ae00984b757f361707812d0684eeed779bab29fe1f91d54c552",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/anthropic-gamma-and-clay-share-what-happens-when-enterprises/index.html",
+        "status": 200,
+        "expected": "d5ab63ce9af274f4f40208399ec14978370ba2ef0ad4c3260e014a6911a47124",
+        "actual": "d5ab63ce9af274f4f40208399ec14978370ba2ef0ad4c3260e014a6911a47124",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/index.html",
+        "status": 200,
+        "expected": "fe761ebc903510da70efe33f5b3e77b70c6425a9cba0e6f326444f1b9ea276db",
+        "actual": "fe761ebc903510da70efe33f5b3e77b70c6425a9cba0e6f326444f1b9ea276db",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/critique.json",
+        "status": 200,
+        "expected": "854d496df49267957fc228361dc2af059f26d5fe5deba99de924d76a9cb3fe51",
+        "actual": "854d496df49267957fc228361dc2af059f26d5fe5deba99de924d76a9cb3fe51",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/nvidia-launches-new-platform-for-reining-in-rogue-ai/critique.json",
+        "status": 200,
+        "expected": "b86ad0d5d178a768f6517bdf7256fb34ff5b5f39693ead4f44dc1214dc619131",
+        "actual": "b86ad0d5d178a768f6517bdf7256fb34ff5b5f39693ead4f44dc1214dc619131",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/anthropic-warns-of-existential-ai-risks-to-humanity-in/critique.json",
+        "status": 200,
+        "expected": "adf4ec9192b3e62870e9ba3f59f3e6bd4674959e270c416a19029c042a4404df",
+        "actual": "adf4ec9192b3e62870e9ba3f59f3e6bd4674959e270c416a19029c042a4404df",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-28/nvidia-launches-new-platform-for-reining-in-rogue-ai/index.html",
+        "status": 200,
+        "expected": "a127e9e777f68c85279c11430a924ff64468435c42ca6f2a8dcf731a4dfa43a3",
+        "actual": "a127e9e777f68c85279c11430a924ff64468435c42ca6f2a8dcf731a4dfa43a3",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/anthropic-warns-of-existential-ai-risks-to-humanity-in/index.html",
+        "status": 200,
+        "expected": "1f43ee307236d45360dbe3691be167d2d02f949a85ba122f0cc2a0fb10d113dd",
+        "actual": "1f43ee307236d45360dbe3691be167d2d02f949a85ba122f0cc2a0fb10d113dd",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/new-kind-of-cyber-incident-openai-apologises-for-medicare/index.html",
+        "status": 200,
+        "expected": "3e370e4a3d26cd0c03c52b4f63d88b5d7504f434bc816ab4b25d0d0592b51b6e",
+        "actual": "3e370e4a3d26cd0c03c52b4f63d88b5d7504f434bc816ab4b25d0d0592b51b6e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/openai-launches-always-on-dots-agents-to-rival-meta/index.html",
+        "status": 200,
+        "expected": "4c5c5d43879030beca00522395badf801b59d8a444dff91f62878afb0ddc5427",
+        "actual": "4c5c5d43879030beca00522395badf801b59d8a444dff91f62878afb0ddc5427",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/new-kind-of-cyber-incident-openai-apologises-for-medicare/critique.json",
+        "status": 200,
+        "expected": "df297271cc3ef41b0729ec72d947611b920502374ef33a18ffe09bdc71773a59",
+        "actual": "df297271cc3ef41b0729ec72d947611b920502374ef33a18ffe09bdc71773a59",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-29/openai-launches-always-on-dots-agents-to-rival-meta/critique.json",
+        "status": 200,
+        "expected": "3b357055734b952ef0c4e5d0b5d3879eee6c388be977189eb5d9751443e94e88",
+        "actual": "3b357055734b952ef0c4e5d0b5d3879eee6c388be977189eb5d9751443e94e88",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/openai-launches-always-on-dots-agents-to-rival-meta-update-2026-09-30/critique.json",
+        "status": 200,
+        "expected": "a4392364f03cc0e6d3257ea3b6b3e6e2f9921a719355cf5da4c1d15548d65f73",
+        "actual": "a4392364f03cc0e6d3257ea3b6b3e6e2f9921a719355cf5da4c1d15548d65f73",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/openai-launches-always-on-dots-agents-to-rival-meta-update-2026-09-30/index.html",
+        "status": 200,
+        "expected": "c2d0b3bd6c99d518250a09eb10e7b65c6bed764ec0844a922c625be39bc1141e",
+        "actual": "c2d0b3bd6c99d518250a09eb10e7b65c6bed764ec0844a922c625be39bc1141e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/openai-scraps-release-of-new-model-over-safety-concerns/index.html",
+        "status": 200,
+        "expected": "2bc21024c1edf89988447512194be20dabaeb4bcaff1de6734317d268792a1f6",
+        "actual": "2bc21024c1edf89988447512194be20dabaeb4bcaff1de6734317d268792a1f6",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/openai-scraps-release-of-new-model-over-safety-concerns/critique.json",
+        "status": 200,
+        "expected": "2a65fe42f3fab265b7b3fea3d4f0fb4938022ffac6f87f01b072908c5fb0daeb",
+        "actual": "2a65fe42f3fab265b7b3fea3d4f0fb4938022ffac6f87f01b072908c5fb0daeb",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/trump-ai-deal-rebrands-artificial-intelligence-as-superintelligence/index.html",
+        "status": 200,
+        "expected": "202c129a2209d0467d62b360d91b6bd92abdba6d4304534c4d387f954e0428d5",
+        "actual": "202c129a2209d0467d62b360d91b6bd92abdba6d4304534c4d387f954e0428d5",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/index.html",
+        "status": 200,
+        "expected": "39bdd9f0df632f912a5a9edf50c11b8ab5a6c94a8e72e4d35712bc42f8c5d4cf",
+        "actual": "39bdd9f0df632f912a5a9edf50c11b8ab5a6c94a8e72e4d35712bc42f8c5d4cf",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/trump-ai-deal-rebrands-artificial-intelligence-as-superintelligence/critique.json",
+        "status": 200,
+        "expected": "0decf9f7f39805ee745fe147edff0d919e87875f87ff5d9cbf080ed0db35042f",
+        "actual": "0decf9f7f39805ee745fe147edff0d919e87875f87ff5d9cbf080ed0db35042f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/critique.json",
+        "status": 200,
+        "expected": "d5dc7d4a0df241a57a16740eab06b3510bd372aa9fd68ef9ebed9f200a4078ea",
+        "actual": "d5dc7d4a0df241a57a16740eab06b3510bd372aa9fd68ef9ebed9f200a4078ea",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/us-trade-regulator-opens-investigation-into-ai-giants-including/index.html",
+        "status": 200,
+        "expected": "3b01813202ae8e1b0a73e6b175fcc4c736eae39783da793daafce830dde7f9bd",
+        "actual": "3b01813202ae8e1b0a73e6b175fcc4c736eae39783da793daafce830dde7f9bd",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/ftc-launches-sweeping-probe-into-openai-anthropic-and-other/index.html",
+        "status": 200,
+        "expected": "1980c3e223751111883d435247bfc5d13e390d49989cdb24778174367f6a29df",
+        "actual": "1980c3e223751111883d435247bfc5d13e390d49989cdb24778174367f6a29df",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/gavin-newsom-signs-laws-to-protect-california-workers-from/index.html",
+        "status": 200,
+        "expected": "285b9b6a02bdfff58d801c76272793ef2ee6b7facc43ba432aec721339b8abe9",
+        "actual": "285b9b6a02bdfff58d801c76272793ef2ee6b7facc43ba432aec721339b8abe9",
+        "ok": true
+      },
+      {
+        "path": "news/2026-09-30/us-trade-regulator-opens-investigation-into-ai-giants-including/critique.json",
+        "status": 200,
+        "expected": "005615042202cfadd5eb7bcfe1008908c785c725619e206f7ad8d6fd0715425e",
+        "actual": "005615042202cfadd5eb7bcfe1008908c785c725619e206f7ad8d6fd0715425e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/openai-is-sued-over-rogue-ai-hugging-face-cyberattack/index.html",
+        "status": 200,
+        "expected": "35fcb4b98516b7f51b99c8fd730561b97ebe71f9bfbfba892e4a29007ce54961",
+        "actual": "35fcb4b98516b7f51b99c8fd730561b97ebe71f9bfbfba892e4a29007ce54961",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/gavin-newsom-signs-laws-to-protect-california-workers-from/critique.json",
+        "status": 200,
+        "expected": "219d8a831bce2de79fda80c3a1e30c915b732334161b740da01f62dd8d433f7a",
+        "actual": "219d8a831bce2de79fda80c3a1e30c915b732334161b740da01f62dd8d433f7a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/openai-is-sued-over-rogue-ai-hugging-face-cyberattack/critique.json",
+        "status": 200,
+        "expected": "2048d9197277ef78aeb15a79e7b3a0d91c693ea8b43280ddbb8b7391ba4df944",
+        "actual": "2048d9197277ef78aeb15a79e7b3a0d91c693ea8b43280ddbb8b7391ba4df944",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-01/ftc-launches-sweeping-probe-into-openai-anthropic-and-other/critique.json",
+        "status": 200,
+        "expected": "daaade69c0cfccaff792d54f7a37c52a955d989c491f8e3f501bd254d0d74f68",
+        "actual": "daaade69c0cfccaff792d54f7a37c52a955d989c491f8e3f501bd254d0d74f68",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-02/autosynthdata-generating-training-data-for-enterprise-agents/critique.json",
+        "status": 200,
+        "expected": "a191349a08997701356a04eba5c8ad11c07c5c5dd090f4f53685c80e6592a40b",
+        "actual": "a191349a08997701356a04eba5c8ad11c07c5c5dd090f4f53685c80e6592a40b",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-02/autosynthdata-generating-training-data-for-enterprise-agents/index.html",
+        "status": 200,
+        "expected": "737f72a2379491dafd9f96fa27b64dcf618d29d63d2204ece5adad4d062a3328",
+        "actual": "737f72a2379491dafd9f96fa27b64dcf618d29d63d2204ece5adad4d062a3328",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/index.html",
+        "status": 200,
+        "expected": "a8656a2d8ae13d0ee212bd34b8fb27b4a1c6c3c3494c6418f08f44ab7ae52fed",
+        "actual": "a8656a2d8ae13d0ee212bd34b8fb27b4a1c6c3c3494c6418f08f44ab7ae52fed",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/critique.json",
+        "status": 200,
+        "expected": "b29887a4da4ddbc8f8f874581d936776c3b19b3a7ba78abe0af0d44d4da52e43",
+        "actual": "b29887a4da4ddbc8f8f874581d936776c3b19b3a7ba78abe0af0d44d4da52e43",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/index.html",
+        "status": 200,
+        "expected": "e086a1eb63c9be1548346282ea5479361557896cdd8190e08b05df0ca7ff70dc",
+        "actual": "e086a1eb63c9be1548346282ea5479361557896cdd8190e08b05df0ca7ff70dc",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/critique.json",
+        "status": 200,
+        "expected": "064c80e2fa6ed67efe0d97582cc21c6da195108ff119acf697452fb87bc14a0e",
+        "actual": "064c80e2fa6ed67efe0d97582cc21c6da195108ff119acf697452fb87bc14a0e",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-03/openai-safety-leader-quits-warning-ai-companys-culture-is/index.html",
+        "status": 200,
+        "expected": "7af9f5450b3e406303bb0be3852dc91cad1934625d25bbd471cf4205c3ad1555",
+        "actual": "7af9f5450b3e406303bb0be3852dc91cad1934625d25bbd471cf4205c3ad1555",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/index.html",
+        "status": 200,
+        "expected": "b2caf13d632fe3862301c0f23d25489bc468c7ab8111d9bd2139af3178d783b0",
+        "actual": "b2caf13d632fe3862301c0f23d25489bc468c7ab8111d9bd2139af3178d783b0",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-03/openai-safety-leader-quits-warning-ai-companys-culture-is/critique.json",
+        "status": 200,
+        "expected": "fb4dbc31f062ce829157dc78810ff76ef947efc6a44af12539e3490987c00464",
+        "actual": "fb4dbc31f062ce829157dc78810ff76ef947efc6a44af12539e3490987c00464",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/critique.json",
+        "status": 200,
+        "expected": "59af33234cce30e82f24eaab5145e6b3e04f2a5ca46d532cea6c0863c77d226f",
+        "actual": "59af33234cce30e82f24eaab5145e6b3e04f2a5ca46d532cea6c0863c77d226f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/openai-safety-employee-resigns-claiming-the-companys-culture-is/index.html",
+        "status": 200,
+        "expected": "535570b856e1a063230b804b7de41876cfe03c8508b99b6f4eac021dcefa63c6",
+        "actual": "535570b856e1a063230b804b7de41876cfe03c8508b99b6f4eac021dcefa63c6",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/index.html",
+        "status": 200,
+        "expected": "31cae9466f4d7f28cd1c195e4be4026861b7a89a791d20920bbcbfaad24e8d7d",
+        "actual": "31cae9466f4d7f28cd1c195e4be4026861b7a89a791d20920bbcbfaad24e8d7d",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/critique.json",
+        "status": 200,
+        "expected": "436eccb6fb5bd37e8f03ebc7b0641288f96b517d115b6ca0c8185e3459542839",
+        "actual": "436eccb6fb5bd37e8f03ebc7b0641288f96b517d115b6ca0c8185e3459542839",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/openai-safety-employee-resigns-claiming-the-companys-culture-is/critique.json",
+        "status": 200,
+        "expected": "59b48fc11240f15a5a4681340d2dd1801b32cda4320f0a318d179c151912e4f6",
+        "actual": "59b48fc11240f15a5a4681340d2dd1801b32cda4320f0a318d179c151912e4f6",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/index.html",
+        "status": 200,
+        "expected": "2dae974ee98d2785fe868598b0e3000256184ee4d80e0ad15cdcb5981d9c406f",
+        "actual": "2dae974ee98d2785fe868598b0e3000256184ee4d80e0ad15cdcb5981d9c406f",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/tech-leaders-sign-super-intelligence-accord-but-their-labs-still-say-ai/index.html",
+        "status": 200,
+        "expected": "3ab06aa0c0abeba7ab8729d7d5623a8d537077c08e0e1c79020c7a88bc268bca",
+        "actual": "3ab06aa0c0abeba7ab8729d7d5623a8d537077c08e0e1c79020c7a88bc268bca",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/trump-launches-super-intelligence-force-that-has-nothing-to/critique.json",
+        "status": 200,
+        "expected": "7b0c7c9a201eb178f535bb57f19202422261b478e4b2f40bf4b05e0ce5fa19f1",
+        "actual": "7b0c7c9a201eb178f535bb57f19202422261b478e4b2f40bf4b05e0ce5fa19f1",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/tech-leaders-sign-super-intelligence-accord-but-their-labs-still-say-ai/critique.json",
+        "status": 200,
+        "expected": "83fae26c3b32d86ce757ecf6e2fbdd5a579a5a328156944934452e3ec870053c",
+        "actual": "83fae26c3b32d86ce757ecf6e2fbdd5a579a5a328156944934452e3ec870053c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/critique.json",
+        "status": 200,
+        "expected": "29cfe4a0a44d148b9334ecdb94005a9cecf92cf93a4c76583fd10bb63c04b554",
+        "actual": "29cfe4a0a44d148b9334ecdb94005a9cecf92cf93a4c76583fd10bb63c04b554",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/index.html",
+        "status": 200,
+        "expected": "78c762906ec2d5de07a68148ef6124f9a71ec76fb42a7944b0ee259982fa40e9",
+        "actual": "78c762906ec2d5de07a68148ef6124f9a71ec76fb42a7944b0ee259982fa40e9",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/critique.json",
+        "status": 200,
+        "expected": "fb36a9417afd1404d9b3eb488012e5ffb140e1efe085df939725e0ce241cc2c0",
+        "actual": "fb36a9417afd1404d9b3eb488012e5ffb140e1efe085df939725e0ce241cc2c0",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/index.html",
+        "status": 200,
+        "expected": "f5d0c5426da42a619242879c16c7d9b5165e8ea35bb336542e0c2363461aeb4a",
+        "actual": "f5d0c5426da42a619242879c16c7d9b5165e8ea35bb336542e0c2363461aeb4a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/openai-is-adding-text-watermarking-in-chatgpt-and-codex/index.html",
+        "status": 200,
+        "expected": "6aed1663dee8ef22481ad262b3fc4f4fb1092209a335daf58c01841744166ed0",
+        "actual": "6aed1663dee8ef22481ad262b3fc4f4fb1092209a335daf58c01841744166ed0",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/openai-rogue-agent-activities-found-on-wikimedia-projects/critique.json",
+        "status": 200,
+        "expected": "befc8cd9f52639281998700f00d7d1cefeb9a5d31a8fd910839d603df650f558",
+        "actual": "befc8cd9f52639281998700f00d7d1cefeb9a5d31a8fd910839d603df650f558",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/openai-rogue-agent-activities-found-on-wikimedia-projects/index.html",
+        "status": 200,
+        "expected": "2b557941ca4b96a02282acb86373499ef5c79c7f156ad9bdfdee2d7dd55da1ca",
+        "actual": "2b557941ca4b96a02282acb86373499ef5c79c7f156ad9bdfdee2d7dd55da1ca",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/trump-names-intelligence-chief-jay-clayton-as-new-white/critique.json",
+        "status": 200,
+        "expected": "621b2f7f215eeb5d2ae5bb6b379488687c2f48c38da4b268b080f94c632a62c5",
+        "actual": "621b2f7f215eeb5d2ae5bb6b379488687c2f48c38da4b268b080f94c632a62c5",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/openai-is-adding-text-watermarking-in-chatgpt-and-codex/critique.json",
+        "status": 200,
+        "expected": "09944789ca9accee9f64c49f8a827133b523573c8fe0e0a5d948508f3977f464",
+        "actual": "09944789ca9accee9f64c49f8a827133b523573c8fe0e0a5d948508f3977f464",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-05/trump-names-intelligence-chief-jay-clayton-as-new-white/index.html",
+        "status": 200,
+        "expected": "9a2c3521f205f503112a1be7fccb46143cbd101fe4d88b1f836e2a98578f1f7c",
+        "actual": "9a2c3521f205f503112a1be7fccb46143cbd101fe4d88b1f836e2a98578f1f7c",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/critique.json",
+        "status": 200,
+        "expected": "b34ef0df7ce38fbfa50b987a56bd063a0174f6b56ba29c57b683be9675fb9983",
+        "actual": "b34ef0df7ce38fbfa50b987a56bd063a0174f6b56ba29c57b683be9675fb9983",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/index.html",
+        "status": 200,
+        "expected": "c0d648d73383e288b3345a78241f204d24b8b481475591283274b158e91cc656",
+        "actual": "c0d648d73383e288b3345a78241f204d24b8b481475591283274b158e91cc656",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/index.html",
+        "status": 200,
+        "expected": "a05b4e1d5cacb4e5cd90d4eba3ced7fb380008081d7ad109b749a7f8dff8bded",
+        "actual": "a05b4e1d5cacb4e5cd90d4eba3ced7fb380008081d7ad109b749a7f8dff8bded",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/critique.json",
+        "status": 200,
+        "expected": "320b9637c3402612877b9e296cce47caf63b4d5f3d9e0010205e914a96e88c54",
+        "actual": "320b9637c3402612877b9e296cce47caf63b4d5f3d9e0010205e914a96e88c54",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-07/aditi-consulting-achieves-anthropic-select-tier-after-putting-claude/index.html",
+        "status": 200,
+        "expected": "6fe1e7ce892a7370205416cad5f5ddd5e8337d5ab874cfd478aa193aa35ed801",
+        "actual": "6fe1e7ce892a7370205416cad5f5ddd5e8337d5ab874cfd478aa193aa35ed801",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-07/aditi-consulting-achieves-anthropic-select-tier-after-putting-claude/critique.json",
+        "status": 200,
+        "expected": "df1892f59672c39427d6cb01ff0ccafa0dec7500c0410d10dbc538a01e4b585a",
+        "actual": "df1892f59672c39427d6cb01ff0ccafa0dec7500c0410d10dbc538a01e4b585a",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-07/openai-launches-visual-ads-that-appear-alongside-image-generation/index.html",
+        "status": 200,
+        "expected": "f0d00d25365e71462952d502598d3473925a1decf8703784c6cac09642898b87",
+        "actual": "f0d00d25365e71462952d502598d3473925a1decf8703784c6cac09642898b87",
+        "ok": true
+      },
+      {
+        "path": "news/2026-10-07/openai-launches-visual-ads-that-appear-alongside-image-generation/critique.json",
+        "status": 200,
+        "expected": "56e20430376261c649aecc801ab12e645bc9b88e584616b42fe027e03015337f",
+        "actual": "56e20430376261c649aecc801ab12e645bc9b88e584616b42fe027e03015337f",
+        "ok": true
+      },
+      {
+        "path": "news/index.html",
+        "status": 200,
+        "expected": "124da869c991b6160a28ed4774c5b5126fe4b926e839101db8505109be6fc172",
+        "actual": "124da869c991b6160a28ed4774c5b5126fe4b926e839101db8505109be6fc172",
+        "ok": true
+      },
+      {
+        "path": "news/personas/dot/index.html",
+        "status": 200,
+        "expected": "9ff0b8177bd814dae45789ff6c934f79a3c9679db0c0a45ae80e6b3b4001abaa",
+        "actual": "9ff0b8177bd814dae45789ff6c934f79a3c9679db0c0a45ae80e6b3b4001abaa",
+        "ok": true
+      },
+      {
+        "path": "news/archive/2026-10/index.html",
+        "status": 200,
+        "expected": "29cbd739dbd1096211f9985689d338fe2f1556bea99a2e1b39b6ca93dd3d0909",
+        "actual": "29cbd739dbd1096211f9985689d338fe2f1556bea99a2e1b39b6ca93dd3d0909",
+        "ok": true
+      },
+      {
+        "path": "news/archive/index.html",
+        "status": 200,
+        "expected": "b2c0edc4e470c32739e357db6ce87ed6af024ef11bf7d018644f1783463cfdbc",
+        "actual": "b2c0edc4e470c32739e357db6ce87ed6af024ef11bf7d018644f1783463cfdbc",
+        "ok": true
+      },
+      {
+        "path": "news/personas/echo/index.html",
+        "status": 200,
+        "expected": "800fe5eff751638b912c3c58cecd9f363592cea5708fbe2bfbd483e6ed408928",
+        "actual": "800fe5eff751638b912c3c58cecd9f363592cea5708fbe2bfbd483e6ed408928",
+        "ok": true
+      },
+      {
+        "path": "news/personas/dot/page/4/index.html",
+        "status": 200,
+        "expected": "9a255faf0b16153e941b6d80e8710c060e88319d026d55d1ef1062c1ea23c98c",
+        "actual": "9a255faf0b16153e941b6d80e8710c060e88319d026d55d1ef1062c1ea23c98c",
+        "ok": true
+      },
+      {
+        "path": "news/personas/dot/page/3/index.html",
+        "status": 200,
+        "expected": "3841b437d63ed7ec202c12e9b6051fb294eb2261e9f132add9b36bd62b11e47c",
+        "actual": "3841b437d63ed7ec202c12e9b6051fb294eb2261e9f132add9b36bd62b11e47c",
+        "ok": true
+      },
+      {
+        "path": "news/personas/dot/page/2/index.html",
+        "status": 200,
+        "expected": "f76547b67b60ab0f17507db6d9d55275781ecb48547cc9d4decf80a05c4c7769",
+        "actual": "f76547b67b60ab0f17507db6d9d55275781ecb48547cc9d4decf80a05c4c7769",
+        "ok": true
+      },
+      {
+        "path": "news/personas/juno/index.html",
+        "status": 200,
+        "expected": "c7f572f7a90a376f71227aebb4d592506073181f090c25f2e06ac03b641d01a4",
+        "actual": "c7f572f7a90a376f71227aebb4d592506073181f090c25f2e06ac03b641d01a4",
+        "ok": true
+      },
+      {
+        "path": "news/personas/mara/index.html",
+        "status": 200,
+        "expected": "5bf6077e77f42fffd456af68b0f140ea4a959b07e696e5e4ed274a62d3c6ce8e",
+        "actual": "5bf6077e77f42fffd456af68b0f140ea4a959b07e696e5e4ed274a62d3c6ce8e",
+        "ok": true
+      },
+      {
+        "path": "news/personas/echo/page/2/index.html",
+        "status": 200,
+        "expected": "d9f037ee1c502491c60f176e4d636cd80743af4b567befb92797f68e782f341e",
+        "actual": "d9f037ee1c502491c60f176e4d636cd80743af4b567befb92797f68e782f341e",
+        "ok": true
+      },
+      {
+        "path": "news/personas/mica/index.html",
+        "status": 200,
+        "expected": "a43c0213c41731f8cb279712106ae0dcc2be3ca7f3ea2a88d2f04d9501be4f6e",
+        "actual": "a43c0213c41731f8cb279712106ae0dcc2be3ca7f3ea2a88d2f04d9501be4f6e",
+        "ok": true
+      },
+      {
+        "path": "news/personas/mara/page/3/index.html",
+        "status": 200,
+        "expected": "d140debff9eab27a934cf56b70177ef8cfe98204de5d72d59a36f65c5ac54bb2",
+        "actual": "d140debff9eab27a934cf56b70177ef8cfe98204de5d72d59a36f65c5ac54bb2",
+        "ok": true
+      },
+      {
+        "path": "news/personas/nib/index.html",
+        "status": 200,
+        "expected": "b1c2ea84dda59c64c7aae215218ac82a180399f701f7ff001848668cf41904af",
+        "actual": "b1c2ea84dda59c64c7aae215218ac82a180399f701f7ff001848668cf41904af",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/index.html",
+        "status": 200,
+        "expected": "767c08e347447decec295a5815794d0f235e14e9994958eef5f47c97b0ddcc71",
+        "actual": "767c08e347447decec295a5815794d0f235e14e9994958eef5f47c97b0ddcc71",
+        "ok": true
+      },
+      {
+        "path": "news/personas/mara/page/2/index.html",
+        "status": 200,
+        "expected": "8db97284395d12fafc8dab34f2df5f3f3bd25c2870b8bbfec1e50ef81b99eb55",
+        "actual": "8db97284395d12fafc8dab34f2df5f3f3bd25c2870b8bbfec1e50ef81b99eb55",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/2/index.html",
+        "status": 200,
+        "expected": "9071cecb3a83b6faec5f732bbda750ec4781fd78e4a8ed442e0b36398e852d5d",
+        "actual": "9071cecb3a83b6faec5f732bbda750ec4781fd78e4a8ed442e0b36398e852d5d",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/4/index.html",
+        "status": 200,
+        "expected": "22fd5964081bea08ab14d413c020bb564bc9154ebff97ffe0b4151729281febc",
+        "actual": "22fd5964081bea08ab14d413c020bb564bc9154ebff97ffe0b4151729281febc",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/3/index.html",
+        "status": 200,
+        "expected": "888f28ba34cbc71521baa200a17b3ce23461e06b2c34722b0597f85e5276cb3c",
+        "actual": "888f28ba34cbc71521baa200a17b3ce23461e06b2c34722b0597f85e5276cb3c",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/6/index.html",
+        "status": 200,
+        "expected": "6011b413b7327a84c73a4d65aa183a0396fd430a36a6f5ba5a650831259ca821",
+        "actual": "6011b413b7327a84c73a4d65aa183a0396fd430a36a6f5ba5a650831259ca821",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/5/index.html",
+        "status": 200,
+        "expected": "0cb00a8be64eda9a1365b764d9a8c1a169133e559dafef32f4c9ad456a7d7bf4",
+        "actual": "0cb00a8be64eda9a1365b764d9a8c1a169133e559dafef32f4c9ad456a7d7bf4",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/7/index.html",
+        "status": 200,
+        "expected": "d05c0819def1d647382b25c48d1aa2c3d2e52196faa9ac627e1e1b5ebac1e250",
+        "actual": "d05c0819def1d647382b25c48d1aa2c3d2e52196faa9ac627e1e1b5ebac1e250",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/8/index.html",
+        "status": 200,
+        "expected": "cf1b0d8d5b9c051773ab5e7846744108721aa67d3cbfd240badf0d6c88cd72d7",
+        "actual": "cf1b0d8d5b9c051773ab5e7846744108721aa67d3cbfd240badf0d6c88cd72d7",
+        "ok": true
+      },
+      {
+        "path": "sitemap.xml",
+        "status": 200,
+        "expected": "e24410bf92fc94e93506857634b496f77f1c2a1085edfed424ccd340d3443257",
+        "actual": "e24410bf92fc94e93506857634b496f77f1c2a1085edfed424ccd340d3443257",
+        "ok": true
+      },
+      {
+        "path": "news/personas/rex/page/9/index.html",
+        "status": 200,
+        "expected": "6d3c123a5c320183ea8bead58102a7b7bd048b0ff7ef151994ba7d5d4a89cb28",
+        "actual": "6d3c123a5c320183ea8bead58102a7b7bd048b0ff7ef151994ba7d5d4a89cb28",
+        "ok": true
+      },
+      {
+        "path": "news/personas/vera/index.html",
+        "status": 200,
+        "expected": "e8810a9113d7737e71af87de043bc6270e4f44377dc844854581a95e0bb7ac01",
+        "actual": "e8810a9113d7737e71af87de043bc6270e4f44377dc844854581a95e0bb7ac01",
+        "ok": true
+      },
+      {
+        "path": "news/personas/vera/page/2/index.html",
+        "status": 200,
+        "expected": "cb02296a71a2d6871061276c4319668a476b20ec44650228cafd97ba8408366f",
+        "actual": "cb02296a71a2d6871061276c4319668a476b20ec44650228cafd97ba8408366f",
+        "ok": true
+      },
+      {
+        "path": "news/personas/vera/page/4/index.html",
+        "status": 200,
+        "expected": "896bee47352e2f6405df621dc6e5f906f490ad545dea95fb9ceac92ac7c6981e",
+        "actual": "896bee47352e2f6405df621dc6e5f906f490ad545dea95fb9ceac92ac7c6981e",
+        "ok": true
+      },
+      {
+        "path": "news/subscribed/index.html",
+        "status": 200,
+        "expected": "440479db3e39d11aa22fe1fda9a73865de2eb3ef9859501d3dd00387cf0264be",
+        "actual": "440479db3e39d11aa22fe1fda9a73865de2eb3ef9859501d3dd00387cf0264be",
+        "ok": true
+      },
+      {
+        "path": "news/personas/vera/page/3/index.html",
+        "status": 200,
+        "expected": "349f428ebe1f61d697ace6fc141b171ff2fb602315a90a48821e7d4ed2e5dcd5",
+        "actual": "349f428ebe1f61d697ace6fc141b171ff2fb602315a90a48821e7d4ed2e5dcd5",
+        "ok": true
+      },
+      {
+        "path": "stats.json",
+        "status": 200,
+        "expected": "8fddd9e9c23352996ba34869e8738f2ad0bbbe0ebe09f275c054b70db686641e",
+        "actual": "8fddd9e9c23352996ba34869e8738f2ad0bbbe0ebe09f275c054b70db686641e",
+        "ok": true
+      },
+      {
+        "path": "sitemap-page/index.html",
+        "status": 200,
+        "expected": "bbc222c7b1f9a0dec1e6cc89640d56c46de2c8c15ca97fb99cf8741a3a4ea6ee",
+        "actual": "bbc222c7b1f9a0dec1e6cc89640d56c46de2c8c15ca97fb99cf8741a3a4ea6ee",
+        "ok": true
+      }
+    ]
+  },
+  "images": [
+    {
+      "entry": "2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude@5d5f468fe52dcb59",
+      "url": "https://vaultsparkstudios.com/assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--meme--640.webp",
+      "sha256": "1d168128333266c53e6d125880acbe57f78bf7d4f6aaeecc676cc27fe3362b2b"
+    },
+    {
+      "entry": "2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude@36df31ca2fefe0de+none",
+      "url": "https://vaultsparkstudios.com/assets/og/news/2026-10-07--aditi-consulting-achieves-anthropic-select-tier-after-putting-claude--satire--640.webp",
+      "sha256": "edb27aa92ac7c754a7b6c56330e81bec58ced3b5c49d0970e39c7eb1e508c43f"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "status": 200,
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-07",
+        "sha": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+        "baselineSha": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+        "builtAt": "2026-10-07T16:29:36.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+        "contentLanePaths": "367 paths",
+        "contentLanePathSetSha256": "c413fd8494b3347739d3723d908a8193438e44c0c2278d401498ae8845497fe9",
+        "workflowRunId": "37652265810"
+      },
+      "newsStatus": 200,
+      "csp": "default-src 'self'; script-src 'self' 'sha256-mDCH8qP4y0wXIiunbM28/JsT+FLlBj788w+78NAWuZs=' 'sha256-/wHCWsu3/A7Rt8oL/T5Qg3eslm9p+kU2tEYgp4v/xIY=' 'sha256-+OaCNUpUU5GoCU4+oad9b9MacDUFH32YR3GImBA4UN4=' 'sha256-+RIrT64inX0ubBcjOoYWhy7Jb6SAZMUiKEk/eCZqtNg=' 'sha256-1f+iUGaS/tV/IT/SxHxFryi8N+j1nu0ax/cPjHvkExQ=' 'sha256-1UY3+YG3/aghZuROwdh01e6q3uBGn09YVftjxTlBqTE=' 'sha256-1ZsX1Q3JhID5b3Unk1zg9jtp8HuHxURfCnyFzo6uAeU=' 'sha256-2mXITJ1YD8lz4Tw3hXIAQ2hgaIcyBsso606s9iI5g2A=' 'sha256-2xXUg/196h/tX0WnVQlbChmt/j93eXuHaPJeAf1YhVQ=' 'sha256-3OXxYM9KCkAI2lTufdyuFj+VO9LWJnySU3fV5Rgp+Iw=' 'sha256-4y2yTgN07L7tuLdqd22tHqnjb1Yo5EQcJNPOH/fTj6k=' 'sha256-6LhxaKZePez9MP4tlBaCqBzlgynkabWjj7FWyMEaYng=' 'sha256-7BacaBw1R2dA5pWgHSvkrmJ4PsSbfZCGoEbQC+jzAMI=' 'sha256-7bRYfRNF3v0rtgRf+qfpnIxeQQIWRYrnclRLEPwxwhY=' 'sha256-7C2vUIVAJvKmknoPiB6IBynlB3mvTHXCIrMRUB/LZvY=' 'sha256-8gThGXPpu9Gp/+y/bwlqsrcwQ6JEXnLBslIzFA3vcBw=' 'sha256-8T9MUAz019BccEVCJ6buo7p+JM+fJYzUcvnWnduGEog=' 'sha256-8U0RIjARy7qzYC5RwK9GeXc0WtOgOcNhxUTTsE1enp0=' 'sha256-9i2pD2QhYd3osboHWtoNhCnJdrGpc2iGaYBai+wuX90=' 'sha256-AaR3SCdKNH1u0oZvTcN5k27P2LYSqbxtvArx3Bs92YA=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' 'sha256-B0Ih8HRLmhPzlG26g5c3tsl1F+qMGidoXr6Tw2pTFI0=' 'sha256-bL/8PICYU8gGT1wjuRN/P7+s+lryCt+83wHP4RfhYKg=' 'sha256-CdXn9YGiqMwd3FW7xyPE30YBeudv+VZ6kKHJ7Cdn5bU=' 'sha256-ciajO9x2ca79NU8K+BmjlysfzbF0ffjN/2i314BZNFc=' 'sha256-Cn8cgKQdmoC3d/Tv86QQd+nDdze0KUVRIfNKXGO52+A=' 'sha256-COUnE3ToJZYJKwuHSNCT8VrWs3abhnWVBQOTHgGTwCk=' 'sha256-cTWw+/37UKLZzzibF7Z4sFhqshwkFkfMvN5moVpGWVs=' 'sha256-DI8wO3BL8C0RW1hL/m3q5V89wajK3zC8Sb+e41ZK1iY=' 'sha256-dZNuqX91zJojUg7FRdKg5d3LknfbrNLsddyjo/JDQiQ=' 'sha256-eFO5NODxDfDVqyEPyqdG/Dz8Mtdjnvh9goAJJe+xoNo=' 'sha256-eRNx56eNVfqSfkdV0D89AOJYd32voJKxy+nRg2ECi4E=' 'sha256-eTF0uPI6DpYpKVmaJJeRRm5TSXzdtCyFkiuOgTRNN5E=' 'sha256-f+8wKcR7c1J4kLNcGbnkeOUhOQc0Ey4PFpiCyQ4EbtU=' 'sha256-GEw0AdBFktwtVecnKrmGqCnQhddgYdiccv8eggRcnA0=' 'sha256-gjrsK+3+1qjtugXehTH/NW0COoI/iuInT8VAUsoz7Xw=' 'sha256-h4sfDKt6K2tjjF3dmOKlVPaxGoKBPgazLnQjsxfHup4=' 'sha256-hMokIpxJV+xG8muehdpUbahVuudRpv7yJP+FKbCjRII=' 'sha256-JlgNW+c5oNngZ1rXtsZXGRsLLX0Yr0DkXQGCLvv1Hlk=' 'sha256-JtO+XML6gBWvTOulkLJgMR3keUN/GqVhk3HPRcztEow=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-kbZWY0z2jKEzGLEhfIYBmsc9SwjJa1BmsRwJx7IHfjM=' 'sha256-KecdaJxOiEnwU5qkfW1UHfDsvTfFNioRpAdMt2431PM=' 'sha256-ljgqE4jQKsGm9I/gZbnwtQjLit940k13FUOyoXw1vfg=' 'sha256-LwC/urUyBuOCbU/WBOtkkeiNYU5er25TOxMTF1nNaJE=' 'sha256-mcd67U10waTeaveNwnkY7gYqld6zyN/2PCZQAZF9XgA=' 'sha256-mj9nbBksLckGNaRqDEvnDqifesV34AUlZGqmGntABCQ=' 'sha256-MkWf/kTAOal6If76oa1+fA8xjWeUKKkt1BgpDj4D7LU=' 'sha256-MPCNW8EeYdQO2ENDhJ36wrnu8OnJ9mGgpWmIG21C3rg=' 'sha256-mTVeUmhtx5tdNVR3a747EpmWpUe6l35d9FVRZA+XL9Y=' 'sha256-N/OCmgWRMrDt1JSXitj/rQjPFxJqGhaXPgP7OMRyGB8=' 'sha256-N0fOl/CVxtz6VGyUDrx9bSrgpwyQqxRCoGuWCUBXjA8=' 'sha256-n7gCSh+hU/1xcTDzaobqnsaiWHAUFiqLnpUCOcQSh98=' 'sha256-NOZjWwcSx/j6+rpN4af2WO21BHp+jDrUk/cqQdz3+3c=' 'sha256-o2BXKuyloE3HMVrNhJie0MaDnpdDnG5Msdu62ocdKJI=' 'sha256-O8b0wiLMhUX3A8djPdIJh9k5o1aqly2z9vZZ5sYRZ1s=' 'sha256-OGjKTgfIj8EtC+b24/ADQRob4X3P68RTQi09Z4ssH5g=' 'sha256-oVeOPKPGaKBhpCTYRMKU5qxgqdBjeIb6+nFty1ZXD9A=' 'sha256-P6RV97xfCg4rXjSFg5I9z/dfimNO4ic3nGDhY266ZU8=' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-q0ByLDZkrFNE5/fVAMa1R4yuB0HHf0j2b+PZwHk7BT8=' 'sha256-q9a20wCH7weVneyuIrrRGa+BKRiClTsOmGNGtEGpc/4=' 'sha256-qxoC3mKtgmaAmqcL6kfLRd6m2Pmz+aI2b0K0gVjdil0=' 'sha256-rg03oIvrgJxvUNs0QaxQQhzO+NXBVDIiJGjE/nzHLzg=' 'sha256-RRh7pYvJv7ZfAIjulsFXRkeNgc2BM3YeFb46Ak7y3v8=' 'sha256-rv9m+Zwiq39ImAp3CNjC6iySpzCV+/saUqey0gFksjY=' 'sha256-SEG/Iqfp7Jz9ZaM9HXJBeOYplq3Ufv3Lm2TVMyNnqE0=' 'sha256-TBtL6/PNVhPQm61ugN8uNWsNQABMTd35wXKPsL7Fv8c=' 'sha256-TLVBJnWanYh2sw4nDSOC8TLLUfLwFbAG6cctPL95C74=' 'sha256-tzcyzRA1BVljjKPxQcsqyEn62T2GndOkIweuNdj2DbI=' 'sha256-uqyuMjRe3AHxCzBx0FvgB/xL8EKRN1D1jKbWtYfhaa4=' 'sha256-uYEDRGI6TjjpHLWrfzmxAaLptsIOhOI1g4taK18Oxc4=' 'sha256-v9v+Yk52U9LnkFCjckD+mkYvN+N/a1Jl0e5ypZ56JV8=' 'sha256-vmyfqyDZUXXqWf75d8otxKiGl/+tsLjksDDru9KO3M8=' 'sha256-vQEQ5JoaFVv7EkF7Lar4nFxADSCU/ambnhlH6nAntTY=' 'sha256-w2Fca9bqvC7M598cwJOt+MJuHa4b54qrjP1ocOg24p4=' 'sha256-wn0C6i6EwMM/GnXgjKUdPY1N4pC0jmszlxsRTTv/vyM=' 'sha256-XdHcZWQrqgwOuuIEs9J5a0nYI4/agz9wQE8ikMlG4Gs=' 'sha256-XMTWN+tTWBvU9w0HAaXxS6Bb29p1eYb6VNKiS5/vlH0=' 'sha256-YVLnuhVB/nuNGzEDOQgQEQRIufzMjqotqcvE58rdAOc=' 'sha256-z7Sl5Tg//aXuL4lvfOeTl+rbuzK91l/8vs8P6bsG108=' 'sha256-zmT6FzF6S2On2wGptP8icP1tOkFozNId+19sT3vReuU=' 'sha256-zUKHQIDMxojEgcPgYQ+IcB3n7qz/F4cg8BBwGiu4hMI=' 'sha256-zYL1PYLsJ2AVFrGRzf2g71M9If1UAmx1nHJSR0GfDx8=' 'sha256-YDBc0l4e7MoGJMuzaifAmfTbiM7yz8H4VUdl1WAOklU=' 'sha256-eJGI0Ik4oYe/PKLDOt4wcN76wYs8h+Ew05pMzdY6xG8=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com 'nonce-RjKBHIbfd_9BFtV_MTsugTJY' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;"
+    },
+    {
+      "origin": "https://vaultsparkstudios-website.pages.dev",
+      "status": 200,
+      "stamp": {
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-07",
+        "sha": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+        "baselineSha": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+        "builtAt": "2026-10-07T16:29:36.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "8068adfcea36eef062c3b6a7dbd56260f82571a6",
+        "contentLanePaths": "367 paths",
+        "contentLanePathSetSha256": "c413fd8494b3347739d3723d908a8193438e44c0c2278d401498ae8845497fe9",
+        "workflowRunId": "37652265810"
+      },
+      "newsStatus": 200,
+      "csp": null
+    }
+  ],
+  "edgeHealth": {
+    "status": 200,
+    "body": {
+      "ok": true,
+      "service": "vaultspark-edge",
+      "auth": "obelisk"
+    }
+  },
+  "identity": "Existing scoped-content holds preserved"
+}

@@ -2860,3 +2860,10 @@ S370 hardens automated Desk publication: pinned candidate checkout and title/SHA
 Independent review found two races and both were fixed; 39/39 focused checks passed. Two existing verification carries resolved with hosted evidence. The automated art commits after S369 are explicitly recorded. Full-suite, staging and production disposition will be appended when observed.
 
 Brainstorm: propagation pre-apply project-contract smoke; typed routine receipts for unattended art commits; future per-story version lineage. The first two are recorded as next-scope SIL items, not automatic new implementation.
+
+
+## 2026-10-07 UTC — Session 370 addendum (release acceptance)
+
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced.
+
+The score remains 916/1000 with the original ten category values. No field-vitals, conversion or new-mailbox-delivery improvement is claimed. Generated-page whitespace, QA placeholder coverage and three AVIF derivatives were repaired after verification found drift. Incoming observations were merged without changing source/art inputs. Manual project-local canonical closeout preserves the cross-repo write boundary; the unused autopilot is not reported as executed.

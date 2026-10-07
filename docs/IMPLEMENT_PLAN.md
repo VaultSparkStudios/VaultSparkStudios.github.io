@@ -1,11 +1,11 @@
 # S370 implementation plan
 
-Session intent: complete the authorized arc, commit and push main, and verify production deployment.
+Session intent: complete the authorized arc, commit/push main and verify production deployment.
 
-- Wave 1 complete: preserve prior cache residue, sync remote, reconcile canon, inspect current release evidence, verify audit premises 2/2.
-- Wave 2 in progress: bind art dispatch to the intended SHA and confirmed run; pin served derivative bytes. Default L2, existing pipeline and no new dependencies.
-- Wave 3 open: independent review, full required checks, canonical staging verification, direct main push, production deployment and closeout.
+- Wave 1 complete: recovery, canon reconciliation and 2/2 verified audit premises.
+- Wave 2 complete: both L2 outcomes, two review fixes, independent pass and 39/39 focused checks.
+- Wave 3 complete: canonical staging, hosted and live publication acceptance; final closeout records reconciled.
 
-Acceptance: malformed, missing, unrelated, ambiguous or failed run evidence cannot report release success; stale image bytes cannot pass live verification; both banner and satire are checked. Keep existing identity holds enforced by the production promotion resolver.
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced.
 
-The nine-axis audit is `docs/AUDIT_2026-10-07.json`. Deferred ideas do not expand this implementation.
+No new dependency, authentication flow, price, paid model use or newsletter send. Two SIL proposals remain queued for a future selected scope.

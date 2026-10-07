@@ -1422,3 +1422,8 @@ Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c
 ## 2026-10-07 — S370 candidate truth
 
 Observed scheduled art releases 37549313182/37590125126 and scheduled publisher release 37622619279 succeeded. Candidate evidence verifies 39/39 focused checks and independent review. Broad checks exposed stale startup/generated evidence; release remains pending until corrected and observed. No clean/full production claim is made from a partial runner receipt.
+
+
+## 2026-10-07 — S370 observed release
+
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced. Full and diagnostic partial runs are distinguished in the release report. A successful HTTP image response alone cannot establish current approved artwork. No identity hold or historical uncertain uptime row was reclassified.
