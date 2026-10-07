@@ -1,7 +1,7 @@
 {
   "date": "2026-10-07",
   "simulated": false,
-  "leadSlug": "aditi-consulting-achieves-anthropic-select-tier-after-putting-claude",
+  "leadSlug": "multimodal-open-d1-decision-models-for-the-edge",
   "stories": [
     {
       "slug": "openai-launches-visual-ads-that-appear-alongside-image-generation",
@@ -329,6 +329,131 @@
         "fellBack": false,
         "attempt": 3,
         "at": "2026-10-07T12:39:20.860Z"
+      }
+    },
+    {
+      "slug": "multimodal-open-d1-decision-models-for-the-edge",
+      "format": "quick",
+      "kind": "trending",
+      "edition": "close",
+      "headline": "LiquidAI's d1-3B beats bigger models on Decision Index",
+      "hook": "Small model, big score. LiquidAI claims the top spot.",
+      "tldr": "LiquidAI released open-weight decision models d1-3B and d1-omni-600M today. The d1-3B scores 48.57 on the Decision Index 0.2.1, beating larger competitors. This availability allows immediate local testing for edge applications.",
+      "facts": [
+        {
+          "text": "Best decision model under 10B on the Decision Index 0.2.1: d1-3B scores 48.57, ahead of every 4B and 9B model and of Decider 35B-A3B (47.11).",
+          "sourceUrl": "https://huggingface.co/blog/LiquidAI/open-d1"
+        },
+        {
+          "text": "Get Started with open d1 decision models Both decision models are open-weight and available on Hugging Face today: Download: d1-3B and d1-omni-600M on Hugging Face.",
+          "sourceUrl": "https://huggingface.co/blog/LiquidAI/open-d1"
+        },
+        {
+          "text": "See the d1-omni-600M model card for instructions on how to run it.",
+          "sourceUrl": "https://huggingface.co/blog/LiquidAI/open-d1"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "d1-3B hits 48.57 on Decision Index 0.2.1, beating Decider 35B-A3B at 47.11. You can download it now on Hugging Face. Edge inference just got a serious speed bump.",
+          "sources": [
+            "https://huggingface.co/blog/LiquidAI/open-d1"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "horizon": -1,
+          "verdict": "fair",
+          "confidence": 0.9,
+          "position": "Scores matter less than costs. d1-3B is open-weight but latency and power draw remain unmeasured. Downloading does not equal deploying profitably.",
+          "sources": [
+            "https://huggingface.co/blog/LiquidAI/open-d1"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "rex",
+          "text": "Look at this number. 48.57. That is the d1-3B score on the Decision Index 0.2.1. It is ahead of every 4B and 9B model. It even beats the Decider 35B-A3B which sits at 47.11. Why? Because it is small. You can run it on your toaster if you really wanted to."
+        },
+        {
+          "personaId": "dot",
+          "text": "It is available on Hugging Face today. That is a download button. It is not a battery life guarantee. You need to measure the energy cost per decision. Until then, it is just a file size."
+        }
+      ],
+      "memeLine": {
+        "text": "Big models are out. Small decisions are in.",
+        "personaId": "rex"
+      },
+      "body": [
+        {
+          "voice": "rex",
+          "text": "You are going to see this everywhere. LiquidAI has dropped the d1-3B and d1-omni-600M models directly onto Hugging Face. The d1-3B is not just another tiny model; it is currently the best decision model under 10B on the Decision Index 0.2.1. It scores 48.57, leaving the Decider 35B-A3B behind with a 47.11. This is not a theoretical win. It is a shipped artifact that proves smaller can be sharper for specific tasks."
+        },
+        {
+          "voice": "dot",
+          "text": "The price tag is zero dollars for the weights. The real cost is infrastructure. Running these models requires precise timing and low latency. We do not have data on how these perform on actual edge hardware. A high index score does not compensate for thermal throttling or power spikes. You must test the deployment environment before you trust the benchmark."
+        },
+        {
+          "voice": "rex",
+          "text": "The evidence points to a shift. If you can get better decisions with less compute, the efficiency gains compound quickly. The instructions are in the model card for d1-omni-600M. Start there. See what happens when you stop relying on massive parameter counts for simple logic."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-07--multimodal-open-d1-decision-models-for-the-edge.png",
+        "scene": "A single glowing microchip labeled 'd1-3B' sits prominently in the foreground of a sleek server rack, while massive, dusty mainframes in the background display error codes. The composition shows microchip labeled 'd1-3B' outperforms mainframes in the background.",
+        "alt": "Visual metaphor showing the d1-3B model outperforming larger legacy systems in an edge computing scenario. The composition shows microchip labeled 'd1-3B' outperforms mainframes in the background.",
+        "anchors": [
+          "Decision Index 0.2.1",
+          "Hugging Face today",
+          "scores 48.57"
+        ],
+        "relationships": [
+          {
+            "id": "model-outperforms",
+            "subject": [
+              "microchip labeled 'd1-3B'"
+            ],
+            "action": [
+              "outperforms"
+            ],
+            "object": [
+              "mainframes in the background"
+            ],
+            "evidenceAnchorRefs": [
+              "Decision Index 0.2.1"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "ede2c0f451aa4670c181877e9d05795294a4a8376e4e1c4b6f7763ab58ee3623",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.134
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "Tech Media Hype Cycles and Benchmark Culture",
+          "setup": "Journalists celebrate raw parameter counts as the only metric of intelligence.",
+          "payoff": "They ignore that a smaller model made the right decision faster, rendering their benchmarks obsolete.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-10-07T18:33:34.577Z"
       }
     }
   ]
