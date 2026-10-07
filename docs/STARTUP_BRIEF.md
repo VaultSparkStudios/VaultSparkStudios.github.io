@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         530/530 passing (2026-10-06)                   ║
+║  ✓  Tests         530/530 passing (2026-10-07)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   3d                                             ║
