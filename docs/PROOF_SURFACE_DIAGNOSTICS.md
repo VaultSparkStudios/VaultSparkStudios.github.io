@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-07T14:54:00.581Z
-Receipt: `2a05c987510cdcdc873be074` · coverage 90/109
+Generated: 2026-10-07T14:59:51.009Z
+Receipt: `d8fd7888c909c72848bb379e` · coverage 109/109
 
-Latest: **89/90** passed · blocking 89/90 · advisory findings 0/0 · total 53.2s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 33.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 22 | blocking | 3.1s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 49 | blocking | 3.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 65 | blocking | 2.0s | 0 | `node scripts/check-content-coherence.mjs` |
-| 18 | blocking | 1.9s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 38 | blocking | 1.8s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 35 | blocking | 1.8s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 24 | blocking | 1.7s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 57 | blocking | 1.6s | 0 | `node scripts/check-journal-dates.mjs` |
-| 37 | blocking | 1.6s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 56 | blocking | 1.5s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 49 | blocking | 1.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 106 | advisory | 1.1s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 65 | blocking | 0.9s | 0 | `node scripts/check-content-coherence.mjs` |
+| 22 | blocking | 0.8s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 82 | blocking | 0.8s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 24 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 18 | blocking | 0.8s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 37 | blocking | 0.7s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 35 | blocking | 0.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 78 | blocking | 0.7s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
 
 ## Failures
 
-- Step 90 [blocking]: `node scripts/check-visual-qa-retention.mjs --check` exited 1 — self/contract
+- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
