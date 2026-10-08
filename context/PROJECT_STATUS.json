@@ -103,14 +103,14 @@
   "silCategoriesUpdatedSession": 370,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-07",
-    "passing": 14,
-    "warning": 3,
-    "failing": 0,
+    "date": "2026-10-08",
+    "passing": 13,
+    "warning": 2,
+    "failing": 2,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 2,
     "total": 17,
-    "score": 82,
+    "score": 76,
     "checks": [
       {
         "id": "manifest",
@@ -122,7 +122,7 @@
       {
         "id": "validate",
         "pass": true,
-        "warn": true,
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
@@ -136,7 +136,7 @@
       {
         "id": "compliance-velocity",
         "pass": true,
-        "warn": true,
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
@@ -150,7 +150,7 @@
       {
         "id": "launch",
         "pass": true,
-        "warn": true,
+        "warn": false,
         "driftClass": "expected-external",
         "blocking": false
       },
@@ -170,7 +170,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -178,7 +178,7 @@
       {
         "id": "sibling-locks",
         "pass": false,
-        "warn": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
