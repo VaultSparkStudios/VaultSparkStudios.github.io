@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T20:02:23.394Z",
+  "generatedAt": "2026-10-08T20:07:22.412Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-08T16:48:10.808Z",
-    "newestAgeHours": 3.2,
+    "newestAgeHours": 3.3,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-08T19:58:50Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-08T20:05:57Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37835978692",
       "headSha": "1f72fd5d16ef859a0237adbc492b1672731000e3",
       "event": "push"
@@ -175,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.5,
+      "ageHours": 1.58,
       "staleAfterHours": 48
     },
     {
@@ -188,7 +188,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.13,
+      "ageHours": 1.21,
       "staleAfterHours": 48
     },
     {
@@ -201,7 +201,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.37,
+      "ageHours": 3.46,
       "staleAfterHours": 48
     },
     {
@@ -218,7 +218,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-08T19:40:01Z",
+      "lastUpdatedAt": "2026-10-08T20:06:08Z",
       "recentConclusions": [
         "success",
         "success",
@@ -227,7 +227,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.37,
+      "ageHours": 0.02,
       "staleAfterHours": 48
     },
     {
