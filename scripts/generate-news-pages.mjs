@@ -339,8 +339,8 @@ const PANEL_REACTIONS = [
  * The panel, credited to the voice that drew it.
  *
  * S356 reader-first layout: the illustration is the story's hero image, so it
- * follows the Story Overview and loads eagerly. On mobile, the overview is
- * the first-paint priority; desktop retains the illustration discovery hint.
+ * follows the Story Overview. Its desktop preload discovers the artwork early;
+ * mobile discovers it lazily so the overview can paint before image traffic.
  * Its reactions and image threads occupy the desktop side panel. The optional
  * satire cartoon stays in a native disclosure below the lead illustration.
  */
@@ -380,7 +380,7 @@ function memeFigure(story, day) {
     : `AI-generated editorial illustration, attributed to ${personaNameLink(persona)} (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
     <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
-    <img src="${base}.png" width="1200" height="630" loading="eager" fetchpriority="high" decoding="async" alt="${alt}"></picture>
+    <img src="${base}.png" width="1200" height="630" loading="lazy" fetchpriority="auto" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
 }

@@ -50,6 +50,7 @@ for (const day of days) {
       if (!hint.includes('fetchpriority="high"') || !hint.includes('as="image"')) errors.push(rel + ': lead hint priority/type missing');
     }
     if (hints.length > 1 || hints.some(h => !h.includes('media="(min-width: 601px)"'))) errors.push(rel + ': image preload competes with mobile overview');
+    if (leadPicture && !leadPicture.includes('loading="lazy" fetchpriority="auto"')) errors.push(rel + ': illustration discovery competes with overview first paint');
     const at = (needle) => article.indexOf(needle);
     const order = [
       ['<h1>', 'headline'],
