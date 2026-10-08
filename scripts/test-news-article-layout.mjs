@@ -49,7 +49,7 @@ for (const day of days) {
       if (!href || !leadPicture?.includes('srcset="' + href + '"') || !existsSync(join(ROOT, href))) errors.push(rel + ': preload does not match an available lead picture source');
       if (!hint.includes('fetchpriority="high"') || !hint.includes('as="image"')) errors.push(rel + ': lead hint priority/type missing');
     }
-    if (new Set(hints.map(h => h.match(/href="([^"]+)"/)?.[1])).size !== hints.length || hints.length > 2) errors.push(rel + ': duplicate or excess lead image preloads');
+    if (hints.length > 1 || hints.some(h => !h.includes('media="(min-width: 601px)"'))) errors.push(rel + ': image preload competes with mobile overview');
     const at = (needle) => article.indexOf(needle);
     const order = [
       ['<h1>', 'headline'],

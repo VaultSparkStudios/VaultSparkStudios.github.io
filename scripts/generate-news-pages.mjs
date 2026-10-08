@@ -339,7 +339,8 @@ const PANEL_REACTIONS = [
  * The panel, credited to the voice that drew it.
  *
  * S356 reader-first layout: the illustration is the story's hero image, so it
- * sits directly under the byline and loads eagerly (it is the article LCP).
+ * follows the Story Overview and loads eagerly. On mobile, the overview is
+ * the first-paint priority; desktop retains the illustration discovery hint.
  * Its reactions and image threads occupy the desktop side panel. The optional
  * satire cartoon stays in a native disclosure below the lead illustration.
  */
@@ -364,8 +365,7 @@ function editorialImagePreload(story, day) {
   if (!personaById(story.memeLine?.personaId) || !story.memeLine?.text) return '';
   const base = escapeHtml('/assets/og/news/' + day.date + '--' + story.slug + '--meme');
   const hint = (href, type, media = '') => '<link rel="preload" as="image" href="' + href + '" type="' + type + '" fetchpriority="high"' + (media ? ' media="' + media + '"' : '') + ' data-desk-editorial-preload>';
-  if (isFallbackArt(story)) return hint(base + '.avif', 'image/avif');
-  return hint(base + '--640.webp', 'image/webp', '(max-width: 600px)') + hint(base + '.avif', 'image/avif', '(min-width: 601px)');
+  return hint(base + '.avif', 'image/avif', '(min-width: 601px)');
 }
 
 function memeFigure(story, day) {
