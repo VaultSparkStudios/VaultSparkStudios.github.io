@@ -2886,3 +2886,7 @@ Two regression ideas are already implemented and on the task board: complete ove
 ### S370 final validation coherence repair
 
 Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+### S370 final closeout acceptance addendum — 2026-10-08
+
+Retain original 916/1000 and ten category scores. All five founder outcomes are deployed and independently checked. The generated-answer ordering invariant is implemented. Learning: recheck candidate bindings after the last rebuild/merge, preserving actual source, image hashes and review dates. Committed one future maintenance item to TASK_BOARD for the existing receipt-ordering gate. No rejected or unfixed review finding. Canonical final record verification runs after this write-back.

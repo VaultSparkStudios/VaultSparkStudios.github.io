@@ -420,3 +420,9 @@ The obsolete local preview terminal has been stopped and re-enumerated with no m
 ### S370 final validation coherence repair
 
 Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+### S370 final production acceptance — 2026-10-08
+
+Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
+
+All five requested outcomes are live. Final canonical record verification and main publication follow this write-back. Existing identity/Worker baseline stays held; this was the authorized static-content promotion.

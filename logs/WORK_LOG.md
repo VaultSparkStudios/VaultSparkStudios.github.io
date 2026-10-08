@@ -1458,3 +1458,9 @@ Reconciled all founder-requested Spark/Desk outcomes and their publication evide
 ### S370 final validation coherence repair
 
 Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+### 2026-10-08 — S370 final follow-through acceptance
+
+Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
+
+Corrected candidate-only proof metadata after the hosted mismatch; independent review confirmed all original source/capture/review fields were retained. Lighthouse's first corrected-candidate run missed the existing article tier (88 vs 90); unchanged-source rerun passed without changing thresholds. Private subscription records remain excluded. Original preview and two temporary capture servers are closed.

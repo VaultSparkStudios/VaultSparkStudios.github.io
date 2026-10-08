@@ -5,8 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Spark and Desk requests are live; final closeout reconciles memory, direction and          ║
-║    delivery evidence.                                                                         ║
+║    All five Spark and Desk requests are live; final closeout reconciles accepted              ║
+║    production, memory and terminal cleanup.                                                   ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████░░░░░   50/100                                                       ║
 ║  ECOSYSTEM IMPACT   ██░░░░░░░░   20/100                                                       ║
@@ -21,7 +21,7 @@
          ── ui-ux-feedback ──────────────────────────────────────────────────────────────────
          Spark is a moving corner companion with an optional popup. Expanded overviews
          precede illustrations and reaction names are fully readable.
-         → Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
+         → Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
 
   [#2]  desk-delivery-recovery                                    PROJ 6  ·  ECOS 2
          ── features-depth ──────────────────────────────────────────────────────────────────

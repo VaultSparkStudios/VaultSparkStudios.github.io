@@ -9,7 +9,7 @@
 - [ ] **[SIL/P2 · next scope]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
 - [ ] **[CI/P2 · future maintenance]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
 
-Last updated: 2026-10-06 UTC (S369 implementation)
+Last updated: 2026-10-08 UTC (S370 requested closeout)
 
 ## S369 — Spark candidate and release
 
@@ -638,6 +638,8 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 - [x] Reconcile context, task board, CDR, truth audit, repository memory and Codex memory with all five completed founder requests.
 - [x] Stop the remaining local preview terminal and confirm it has exited.
-- [ ] Finish canonical closeout checks, main publication and final deployment readback.
+- [x] Finish canonical closeout checks, main publication and final deployment readback. Acceptance: requested code published on main; corrected release ee8db4f7f verified in production by Pages run 37807641227 and live browser checks; closing records are published by this closeout.
 
 - [x] [SIL] Refresh generated Oracle answers before closeout sealing; guard the dependency with the build-order invariant.
+
+- [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.

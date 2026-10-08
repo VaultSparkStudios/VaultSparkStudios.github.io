@@ -1,3 +1,9 @@
+### Current bounded acceptance — 2026-10-08
+
+Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
+
+Main publication of the closing records is in progress. No new full-portfolio or authenticated-provider readiness claim. Mail inbox placement and unrelated identity holds remain outside this verified outcome.
+
 ## S370 requested follow-through truth reconciliation (2026-10-08)
 
 Title, corner Spark, expanded top overview and reaction labels are verified production behavior, not merely source changes. Source and deployment receipts remain distinct: released content 6f6fe8388339674d331422c5033c8a95c8f9e55a; Pages 37714546973; main integration f743346f9. Daily digest rejection was caused by the optional campaign tag; compatibility tests pass and provider sent/delivered status confirms recovery. No inbox-placement, email-client-rendering, field-vitals or conversion claim is inferred. Earlier checkpoints below remain historical.
