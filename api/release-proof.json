@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-08T01:56:41.410Z",
+  "generatedAt": "2026-10-08T02:19:30.096Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,17 +21,18 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch",
       "/membership/:localShellParity"
     ],
     "candidateBuildSha": "d0963841551557fe31bec85c855c46106f97bac2",
     "deployedBuildSha": "be9fe433d7a7fe9bb8e537617e912bb696b6d147",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "cdc759a9d700757beb1dd4c289c094d801368f65cbf8c85a4376bf6a3ec85e00",
+      "candidateRoot": "9d49e3c8045aa44b4f8e549f1a9f4f1d234e8eaaa87b2d3b8a4f478394004a35",
       "candidateLeafCount": 63,
       "stagingRoot": "cdc759a9d700757beb1dd4c289c094d801368f65cbf8c85a4376bf6a3ec85e00",
       "stagingLeafCount": 63,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -71,13 +72,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 6,
-    "ageHours": -0.2,
-    "observedAt": "2026-10-08T01:56:41.410Z",
+    "commitsBehind": 10,
+    "ageHours": 0.8,
+    "observedAt": "2026-10-08T02:19:22.341Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-08T01:56:41.410Z",
+      "observedAt": "2026-10-08T02:19:22.341Z",
       "expectedFrom": "b3f6521d99d25e87e0e84c39ccd3a6ba26c00d9790e5af69849eda56e51d5f38",
       "supersededBy": null,
       "ageHours": 0,
