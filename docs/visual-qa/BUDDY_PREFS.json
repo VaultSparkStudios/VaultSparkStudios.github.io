@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "84de4e547d730266928bfd6e5ca9fb7e7ca2e1eb0cbe66f0ff518212855e1411",
+    "sha256": "21ea8e56f59a7a6d7e7aa2bf175e4ae0813f4bc478116ab9a5f71a63f9091343",
     "files": [
       "api/spark-manifest.json",
       "assets/ambient-loader.js",
@@ -74,7 +74,7 @@
       },
       {
         "path": "news/2026-10-07/aditi-consulting-achieves-anthropic-select-tier-after-putting-claude/index.html",
-        "sha256": "4ad47432e20cf837d25cca0e41ef8dfcc249ac787adf3d097709b4b99afe8b99"
+        "sha256": "f696fc302a0ff0d254a7b4a1f505f345b6560cabadc4986f6ae8ce36146806f4"
       },
       {
         "path": "scripts/build-flight-director.mjs",
@@ -1029,9 +1029,9 @@
   ],
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "99ef46132dffc40e63bf7dd9a77db983982f8519b272d8053c05b706e9a07c26",
+    "manifestSha256": "1d83cfc8dae4c0f9f88ff0af4155a8750e369dd7344be0bd5d1ac37e263bc5b0",
     "candidateSha": "d0963841551557fe31bec85c855c46106f97bac2",
-    "root": "cdc759a9d700757beb1dd4c289c094d801368f65cbf8c85a4376bf6a3ec85e00"
+    "root": "8cd62fbf661f796c8493a1f6c33f345523fa6db1634124e554523528b3b420e3"
   },
   "beforeCaptures": [
     {
@@ -1482,5 +1482,10 @@
         "reviewer": "Codex rendered image review"
       }
     }
-  ]
+  ],
+  "deltaProvenance": {
+    "retainedCaptures": 56,
+    "reason": "Games page and every Spark source/asset are byte-identical; unrelated article page is freshly proved by ARTICLE.json.",
+    "priorSource": "84de4e547d730266928bfd6e5ca9fb7e7ca2e1eb0cbe66f0ff518212855e1411"
+  }
 }

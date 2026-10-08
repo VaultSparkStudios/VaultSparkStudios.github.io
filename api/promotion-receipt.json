@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "be9fe433d7a7fe9bb8e537617e912bb696b6d147",
+    "sha": "d0963841551557fe31bec85c855c46106f97bac2",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "f3b729a16798ddf419d0bc936ccb81c8a8e19331",
-    "contentLaneHead": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+    "sha": "61efa22a56fad17326fcf0fd733b11669e4735e9",
+    "contentLaneHead": "6f6fe8388339674d331422c5033c8a95c8f9e55a",
     "reachable": true,
     "reconciliation": "content-lane-match",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-06T19:10:22.064Z",
-      "ageHours": 2.9,
+      "observedAt": "2026-10-08T13:12:38.530Z",
+      "ageHours": 1.2,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,10 +89,10 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production build sha f3b729a1 is the content-lane baseline; served contentLaneHead 61efa22a is at/after promoted be9fe433 and shell parity was observed 'matched' at 2026-10-06T19:10:22.064Z (current)",
+    "production build sha 61efa22a is the content-lane baseline; served contentLaneHead 6f6fe838 is at/after promoted d0963841 and shell parity was observed 'matched' at 2026-10-08T13:12:38.530Z (current)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-06T22:02:17.021Z",
+  "generatedAt": "2026-10-08T14:24:44.707Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -100,7 +100,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-06T22:02:17.021Z",
+    "newestGradableAt": "2026-10-08T14:24:44.707Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

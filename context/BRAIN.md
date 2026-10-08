@@ -20,7 +20,7 @@ This is a generated static site with serverless capabilities (Supabase edge func
 
 ## Architecture constraints
 
-- **Generated public tree** — run `npm run build`, the 506-step build gate and rendered visual checks before a release; generated HTML, feeds and proof artifacts are committed.
+- **Generated public tree** — run `npm run build`, the full build gate (currently 530 steps) and rendered visual checks before a release; generated HTML, feeds and proof artifacts are committed. Closeout rebuilds Oracle answers before sealing candidate artifacts.
 - **Public repo** — secrets never committed. All keys via Supabase secrets or Cloudflare env.
 - **Cloudflare Pages** — static output uses directory routes; Worker and Supabase capabilities are deployed separately.
 - **Edge functions stay cloud** — Supabase must remain cloud-hosted (per studio-ops Supabase migration guide). Edge functions cannot move to self-hosted Hetzner.

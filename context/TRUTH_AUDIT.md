@@ -1,3 +1,7 @@
+## S370 requested follow-through truth reconciliation (2026-10-08)
+
+Title, corner Spark, expanded top overview and reaction labels are verified production behavior, not merely source changes. Source and deployment receipts remain distinct: released content 6f6fe8388339674d331422c5033c8a95c8f9e55a; Pages 37714546973; main integration f743346f9. Daily digest rejection was caused by the optional campaign tag; compatibility tests pass and provider sent/delivered status confirms recovery. No inbox-placement, email-client-rendering, field-vitals or conversion claim is inferred. Earlier checkpoints below remain historical.
+
 ## S368 Membership, Season and Project Truth Now Come From One Source Each (2026-10-02)
 
 | Dimension | Score | Evidence |

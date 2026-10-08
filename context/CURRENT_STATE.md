@@ -408,3 +408,15 @@ Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c
 Homepage title uses Super Intelligence. Animated Spark opens an optional, nonmodal corner popup with left/right, motion and tuck preferences; unsolicited guide/path popups are removed. All 112 articles retain an expanded Story Overview before artwork, with full illustration reaction names. Desktop retains early illustration discovery; mobile lets the overview paint first. The provider-rejected optional Dispatch tag is removed. The regular daily digest succeeded and provider delivery is verified; schedule remains 23:30 UTC, once per publication day when new live editions exist. No off-schedule email was sent.
 
 Production content release 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973, is published and its served contentLaneHead matches. Exact-commit E2E/compliance run 37713267729 passed the full 530-step suite and 215 mobile checks; Lighthouse run 37713273657 passed 9 route tiers (article performance 92/accessibility 100); accessibility run 37713280248 passed after restarting a stalled browser download. Focused browser checks passed 14/14 locally, on canonical staging and on production. Seven themes were inspected at desktop/mobile sizes with 140 primary and 84 supplemental current captures, plus 56 retained before captures. Sixteen production screenshots were inspected in dark/light at 1366/390px.
+
+
+### 2026-10-08 — S370 final closeout reconciliation
+
+All five requested follow-through outcomes are published: Super Intelligence title; animated corner Spark with optional popup and local preferences; expanded Story Overview before illustrations; complete reaction labels; diagnosed and repaired daily digest delivery. Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
+
+The obsolete local preview terminal has been stopped and re-enumerated with no matching preview process. Final closeout publication is being verified separately from the existing UI release. No new feature, identity, pricing or lifecycle changes are part of this reconciliation.
+
+
+### S370 final validation coherence repair
+
+Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.

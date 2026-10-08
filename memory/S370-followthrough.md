@@ -1,0 +1,5 @@
+# S370 Spark and Desk follow-through
+
+Spark is an optional animated corner buddy with a nonmodal popup, left/right placement, motion and tuck preferences. Preserve the top Story Overview above artwork and separate source-backed News Brief below it. Illustration reactions use complete names. The title expands SI as Super Intelligence. Dispatch uses one daily digest at 23:30 UTC when new editions exist; avoid optional campaign tags rejected by the provider. Delivery, inbox placement and client rendering are distinct evidence. Retain private recipient evidence outside public files. Repeated closeout reconciles earlier work without creating a new SIL score.
+
+Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.

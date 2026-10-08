@@ -2874,3 +2874,15 @@ The score remains 916/1000 with the original ten category values. No field-vital
 Historical S370 score 916/1000 is retained; this is validation of the requested follow-through, not a new portfolio audit. Completed: title correction, corner Spark, restored expanded overview, complete reaction names and daily digest repair. Production content release 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973, is published and its served contentLaneHead matches. Exact-commit E2E/compliance run 37713267729 passed the full 530-step suite and 215 mobile checks; Lighthouse run 37713273657 passed 9 route tiers (article performance 92/accessibility 100); accessibility run 37713280248 passed after restarting a stalled browser download. Focused browser checks passed 14/14 locally, on canonical staging and on production. Seven themes were inspected at desktop/mobile sizes with 140 primary and 84 supplemental current captures, plus 56 retained before captures. Sixteen production screenshots were inspected in dark/light at 1366/390px.
 
 Two regression commitments are completed in TASK_BOARD: campaign payload compatibility and reader-first overview/full-label contracts. Release preparation caught responsive AVIF/placeholder coverage and mobile illustration priority; both were corrected before publication. Other existing work remains outside this task.
+
+
+### 2026-10-08 — S370 repeated closeout addendum
+
+Retain 916/1000: Dev Health 87; Creative Alignment 95; Momentum 90; Engagement 91; Process Quality 87; Cross-Repo Coherence 92; Security Posture 94; Ecosystem Integration 91; Capital Efficiency 94; Automation Coverage 95. These are the original S370 category values, not new measurement. Requested title, buddy, overview, reactions and digest recovery are complete. Website pixel, accessibility and performance evidence is recorded; field conversion/vitals remain separately unmeasured.
+
+Two regression ideas are already implemented and on the task board: complete overview/reaction contracts, and provider-compatible campaign payload checks. Repeated closeout should reconcile CDR and memory without inventing another score or reopening completed feature work.
+
+
+### S370 final validation coherence repair
+
+Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.

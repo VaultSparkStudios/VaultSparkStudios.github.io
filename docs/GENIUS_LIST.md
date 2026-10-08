@@ -1,6 +1,6 @@
 # Genius Hit List — Session 370
 
-Generated: 2026-10-07
+Generated: 2026-10-08
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **916/1000**
 - CI health: **check gh run list**
-- Current focus: S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate.
+- Current focus: S370 requested Spark and Desk changes are live; explicit final closeout reconciles CDR, memory, publication and terminal cleanup.
 
 ## Strategic Read
 

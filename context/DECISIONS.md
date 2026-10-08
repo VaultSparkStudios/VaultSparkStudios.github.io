@@ -2130,3 +2130,13 @@ Startup canon sync removed local capability exports needed by existing verificat
 ### 2026-10-07 — requested Spark and article behavior
 
 Spark is an optional nonmodal corner companion, with persisted corner/motion preferences and session tuck. Requested paths and navigation remain inside its popup; unsolicited guides are retired. Story Overview retains the full summary above artwork; News Brief retains attributed claim detail below it. Desktop image discovery stays early, while mobile defers illustration traffic for overview first paint. Dispatch omits the provider-rejected optional tag and keeps its existing daily schedule. No pricing, tiers, public send promises or identity flows changed.
+
+
+### 2026-10-08 — S370 follow-through closeout boundary
+
+The founder explicitly authorizes complete closeout, main publication and deployment. Preserve earlier decisions and the scored session; this reconciliation adds no feature scope. Production promotion uses the existing bounded content lane, retaining the deployed identity/security baseline. Provider delivery is evidence of successful delivery, not of a particular inbox folder or email-client rendering.
+
+
+### S370 final validation coherence repair
+
+Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.

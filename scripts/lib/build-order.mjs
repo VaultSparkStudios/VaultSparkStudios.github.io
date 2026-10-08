@@ -42,14 +42,15 @@ export const DERIVED_BUILD_ORDER = [
   // S335: `full` was a strict subset of `refresh-live-data` and omitted this
   // step, so a closeout cascade left api/public-status.json stale and
   // build:check failed one step later. A profile named full must be full.
-  // (build-oracle-answers.mjs stays out: it reads api/citation.json, the
-  // LAST seal step, so it cannot sit inside this profile without a second
-  // citation pass — it runs in `npm run build` after the postbuild seal.)
   { script: 'build-public-status.mjs',         timeout: 30000, why: 'projects public intelligence into public status before the proof chain consumes it' },
   { script: 'build-intelligence-budget.mjs',   timeout: 30000, why: 'reads api/ surfaces refreshed above' },
   { script: 'build-newsroom-run.mjs',          timeout: 30000, why: 'derives scheduler evidence before public proof surfaces' },
   { script: 'build-agents-json.mjs',           timeout: 30000, why: 'reads refreshed public intelligence and discovery shards' },
   { script: 'build-ai-discovery-health.mjs',   timeout: 30000, why: 'validates the refreshed agent discovery surface' },
+  // Answers use public insights/tiers; citation supplies only a fallback day,
+  // not its seal. Refresh these bytes before sealing so closeout also satisfies
+  // the answer-feed drift contract after public intelligence changes.
+  { script: 'build-oracle-answers.mjs',        timeout: 30000, why: 'refreshes public answer bytes before the candidate seal' },
   { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals critical artifacts after every leaf mutation' },
   { script: 'build-release-proof.mjs',       timeout: 30000, why: 'consumes the refreshed candidate seal' },
   { script: 'build-status-proof.mjs',        timeout: 30000, why: 'consumes refreshed release and staging proof' },
@@ -141,6 +142,7 @@ function selfTest() {
     ['newsroom receipt before status proof', idx('build-newsroom-run.mjs') < idx('build-status-proof.mjs')],
     ['agents before AI discovery health', idx('build-agents-json.mjs') < idx('build-ai-discovery-health.mjs')],
     ['AI discovery health before candidate seal', idx('build-ai-discovery-health.mjs') < idx('build-candidate-artifact-manifest.mjs')],
+    ['Oracle answers before candidate seal', idx('build-oracle-answers.mjs') >= 0 && idx('build-oracle-answers.mjs') < idx('build-candidate-artifact-manifest.mjs')],
     ['candidate before release proof', idx('build-candidate-artifact-manifest.mjs') < idx('build-release-proof.mjs')],
     ['release before status proof', idx('build-release-proof.mjs') < idx('build-status-proof.mjs')],
     ['analytics before stats surface', idx('build-analytics-summary.mjs') < idx('build-stats-surface.mjs')],

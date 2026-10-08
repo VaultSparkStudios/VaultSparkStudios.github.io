@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    916/1000   █████████████████████░░░   92%                     ║
 ║    SIL v3.0  ·  Avg3: 919  ·  Velocity 2→                        ║
-║    Last active: -1d  ·  Last closeout: 1d  ·  (active =…         ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -81,13 +81,13 @@
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▆▆▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.203  (healthy)                               ║
+║  ✓  Entropy       0.210  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Doctor        14/17 (82%)  ·  3 warn: 3 self                 ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)

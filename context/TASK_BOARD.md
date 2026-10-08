@@ -632,3 +632,12 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 - [x] [SIL] Guard campaign payload compatibility with 44 digest regression checks.
 - [x] [SIL] Guard overview-before-art reading order and complete reaction labels with 112 article contracts and 14 focused browser checks.
+
+
+### S370 explicit final closeout
+
+- [x] Reconcile context, task board, CDR, truth audit, repository memory and Codex memory with all five completed founder requests.
+- [x] Stop the remaining local preview terminal and confirm it has exited.
+- [ ] Finish canonical closeout checks, main publication and final deployment readback.
+
+- [x] [SIL] Refresh generated Oracle answers before closeout sealing; guard the dependency with the build-order invariant.
