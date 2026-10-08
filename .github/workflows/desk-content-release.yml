@@ -26,7 +26,7 @@ jobs:
       contents: read
       actions: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.art_head_sha || 'main' }}
           fetch-depth: 0
@@ -39,7 +39,7 @@ jobs:
           [[ "$ART_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "Invalid art candidate SHA" >&2; exit 1; }
           test "$(git rev-parse HEAD)" = "$ART_HEAD_SHA"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
 

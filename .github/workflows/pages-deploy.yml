@@ -83,7 +83,7 @@ jobs:
     # Push/schedule runs are source-publication receipts only while held. Every
     # production-mutating step below consumes the same promotion-gate output.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # A Desk dispatch pins the already staged commit. Routine feed bots may
           # advance main while this workflow queues; the candidate must not move.
@@ -93,7 +93,7 @@ jobs:
           # fail. Full history is also what the deploy-currency comparison needs.
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "22"
 
@@ -129,7 +129,7 @@ jobs:
         # invisible: the run says "staging-browser-receipt: rejected" and the
         # receipt naming the actual failing assertion never leaves the runner.
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: staging-release-browser-receipt
           path: |
