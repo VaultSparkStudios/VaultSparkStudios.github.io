@@ -1974,3 +1974,22 @@ Requested title, corner Spark companion, expanded/renamed top overview, full rea
 Production content release 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973, is published and its served contentLaneHead matches. Exact-commit E2E/compliance run 37713267729 passed the full 530-step suite and 215 mobile checks; Lighthouse run 37713273657 passed 9 route tiers (article performance 92/accessibility 100); accessibility run 37713280248 passed after restarting a stalled browser download. Focused browser checks passed 14/14 locally, on canonical staging and on production. Seven themes were inspected at desktop/mobile sizes with 140 primary and 84 supplemental current captures, plus 56 retained before captures. Sixteen production screenshots were inspected in dark/light at 1366/390px.
 
 Release preserves the existing identity/security baseline. Prior workspace residue is retained; no new maintenance or auth scope was added.
+
+
+---
+<!-- archived: 2026-10-08 -->
+
+## Where We Left Off — S370 shipped (2026-10-07)
+
+Session Intent: /arc, direct main commit/push and full deployment, all authorized by the founder.
+
+S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate.
+
+Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced.
+
+Both selected L2 audit outcomes are complete. The two SIL proposals remain next-scope work. Existing cache residue and the startup stash are preserved; no new model spend or outbound support email. Detailed acceptance: docs/S370_RELEASE_2026-10-07.md. Prior pending checkpoints are retained as historical evidence.
+
+
+### S370 final validation coherence repair
+
+Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
