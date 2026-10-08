@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-08T21:39:07.142Z",
+  "generatedAt": "2026-10-08T22:07:19.718Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -99,6 +99,16 @@
       ]
     },
     {
+      "country": "MX",
+      "samples": 3,
+      "lcpP75": 528,
+      "ttfbP75": 176,
+      "confidence": "low",
+      "colos": [
+        "DFW"
+      ]
+    },
+    {
       "country": "NL",
       "samples": 3,
       "lcpP75": 2992,
@@ -120,7 +130,7 @@
     },
     {
       "country": "other",
-      "samples": 23,
+      "samples": 21,
       "lcpP75": 1284,
       "ttfbP75": 538,
       "confidence": "high",
@@ -129,7 +139,6 @@
         "BOM",
         "BRU",
         "BUD",
-        "DFW",
         "DME",
         "FCO",
         "FRA",
