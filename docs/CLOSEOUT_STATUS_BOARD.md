@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-07 (Session 370 closeout) -->
+<!-- generated-at: 2026-10-08 (Session 370 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S370 ═══════╗
-║  Date: 2026-10-07  ·  SIL: 916/1000  ·  Velocity: 2 stable       ║
+║  Date: 2026-10-08  ·  SIL: 916/1000  ·  Velocity: 2 stable       ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S370) — no receipt; run node scripts/clos  ║
+║  Autopilot: proven (S370)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(S370): close verified publication evidence arc          ║
-║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ chore: refresh live data feeds [skip ci]                      ║
-║  ✓ chore: update CI status beacon [skip ci]                      ║
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
+║  ✓ Shipped: Super Intelligence title; animated Spark corner fri  ║
+║  ✓ Verified: Production content ee8db4f7fcb72857f3ba7401efd2bb1  ║
+║  ✓ Desk: reported subscription is active and confirmed; provide  ║
+║  ✓ Source: requested site code is on main; the corrected proof   ║
+║  ✓ Memory: repository and Codex indexes/topics updated; private  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 916/1000 ═══════════════════════════════════════╗
 ║    Dev Health         87   █████████░                            ║
@@ -39,11 +39,11 @@
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
 ║  · context/PROJECT_STATUS.json                                   ║
-║  ✓ Codex agent memory                                            ║
+║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 221 files  ·  M:25 A:0 D:0 ?:196                       ║
-║  Ahead: 2  ·  Behind: 0                                          ║
+║  Changes: 228 files  ·  M:25 A:0 D:0 ?:203                       ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -55,10 +55,10 @@
 ║  Compliance:    —                                                ║
 ║  Tests:         530/530                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         2d ago                                           ║
+║  IGNIS:         3d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║  shells:        4 started · 4 closed · 0 running                 ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
