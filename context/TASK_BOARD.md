@@ -627,5 +627,8 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 - [x] Implement animated corner Spark buddy and popup with corner/motion controls.
 - [x] Restore Story Overview and full illustration reaction labels across generated articles.
 - [x] Inspect confirmed subscription and diagnose the scheduled Dispatch failures; remove rejected optional campaign tag.
-- [ ] Verify current rendered pixels, mobile regressions, staging, hosted release and production.
-- [ ] Observe the next regular digest's provider acceptance/delivery; no off-schedule send requested.
+- [x] Verify rendered pixels, mobile regressions, canonical staging, hosted checks and production; release 6f6fe8388/Pages37714546973.
+- [x] Observe regular digest acceptance, sent status and provider delivery; no off-schedule send.
+
+- [x] [SIL] Guard campaign payload compatibility with 44 digest regression checks.
+- [x] [SIL] Guard overview-before-art reading order and complete reaction labels with 112 article contracts and 14 focused browser checks.

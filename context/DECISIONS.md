@@ -2125,3 +2125,8 @@ Startup canon sync removed local capability exports needed by existing verificat
 - Restore every article's full stored summary as Story Overview before artwork. Keep the separate attributed News Brief and persona analysis.
 - Illustration reaction labels must wrap visibly at every width rather than truncate.
 - Remove the optional Brevo campaign tag: live scheduled runs returned HTTP 405 because the account cannot use it. Keep the existing once-daily UTC schedule and double opt-in. No additional campaign or test email is sent by this work.
+
+
+### 2026-10-07 — requested Spark and article behavior
+
+Spark is an optional nonmodal corner companion, with persisted corner/motion preferences and session tuck. Requested paths and navigation remain inside its popup; unsolicited guides are retired. Story Overview retains the full summary above artwork; News Brief retains attributed claim detail below it. Desktop image discovery stays early, while mobile defers illustration traffic for overview first paint. Dispatch omits the provider-rejected optional tag and keeps its existing daily schedule. No pricing, tiers, public send promises or identity flows changed.
