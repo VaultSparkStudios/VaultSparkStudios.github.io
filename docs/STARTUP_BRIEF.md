@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   95  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
 ║        Push helper as a repo script (scripts/push-main.mjs): au  ║
+║                                                                  ║
+║   81  [PRODUCT]      Approve Desk digest test → autoSend; apply  ║
+║        Approve Desk digest test is open, local, and unblocked —  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
