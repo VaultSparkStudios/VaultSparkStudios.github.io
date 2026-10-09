@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T18:26:58.352Z",
+  "generatedAt": "2026-10-09T18:29:54.625Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 2,
-    "healthy": 2,
-    "unknown": 13,
+    "observed": 3,
+    "healthy": 3,
+    "unknown": 12,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-08T16:48:10.808Z",
-    "newestAgeHours": 25.6,
+    "newestAgeHours": 25.7,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-09T18:21:02Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-09T18:28:33Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37972648343",
       "headSha": "6b12cdbf97623170e51bac6fef55ad3db39ba878",
       "event": "push"
@@ -168,12 +168,12 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
+      "lastUpdatedAt": "2026-10-09T18:28:13Z",
       "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.03,
       "staleAfterHours": 48
     },
     {
@@ -197,7 +197,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.83,
+      "ageHours": 1.88,
       "staleAfterHours": 48
     },
     {
@@ -223,7 +223,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.28,
+      "ageHours": 0.33,
       "staleAfterHours": 48
     },
     {
