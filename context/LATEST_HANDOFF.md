@@ -22,3 +22,7 @@ Deploy: requested UI is deployed; final closeout source publication and deployme
 SIL: retain S370 916/1000 and its original ten categories; repeated closeout is not another scored session. Scaffold: five feature outcomes done; final closeout verification in progress. Shells: original preview session 6960 stopped; fresh process enumeration contains no local-preview-server process. Prior primary-workspace changes remain preserved in an isolated worktree.
 
 Historical checkpoints below are retained; their pending wording is superseded by current verified outcomes above.
+
+## S371 release maintenance handoff — 2026-10-09
+
+Four selected L2 outcomes are implemented and independently reviewed. Focused regression4/4; news153/153; mobile215/215. Exact source deployment is pending staging and hosted checks. Preserve original checkout and startup propagation stash. Main-only OG and complete write-back history execute from published main; Windows scheduled art uses the primary checkout bootstrap, which must be updated safely after source publication. Final accepted disposition will be appended here.

@@ -1662,12 +1662,16 @@ if (searchEntries.length) {
   for (const shard of shards) targets.push({ path: shard.path, html: serializeSearchIndex(shard.body) });
 }
 
+const { newsPageMatches } = await import('./lib/news-page-comparison.mjs');
 let stale = 0;
 let updated = 0;
 for (const t of targets) {
   const outPath = join(ROOT, t.path);
   const existing = existsSync(outPath) ? readFileSync(outPath, 'utf8') : null;
-  if (existing !== null && existing.trim() === t.html.trim()) continue;
+  // Persona markup is normalized above; shared-shell propagation can restore
+  // its indentation without changing rendered content. Keep other artifacts
+  // byte-sensitive and ignore only the same indentation in persona checks.
+  if (existing !== null && newsPageMatches(existing, t.html, t.path)) continue;
   stale += 1;
   if (APPLY) {
     mkdirSync(dirname(outPath), { recursive: true });

@@ -1,0 +1,323 @@
+{
+  "schemaVersion": "2.1",
+  "session": 371,
+  "generatedAt": "2026-10-09T16:46:17.530Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "L2 release maintenance: four verified publication/evidence/generation defects, S370 trailing-record recovery, staging-first promotion and closeout.",
+  "axisCoverage": {
+    "feature-depth": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Desk archive discovery",
+          "evidence": "assets/news-desk-search.js already searches editions"
+        },
+        {
+          "title": "Correspondent history",
+          "evidence": "news/personas/rex/page/9/index.html retains pagination"
+        }
+      ]
+    },
+    "innovative-features": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Version lineage per illustration",
+          "evidence": "deferred; existing hash-bound approvals address current need"
+        },
+        {
+          "title": "Release collision forecast",
+          "evidence": "deferred; no proven user failure"
+        }
+      ]
+    },
+    "ux": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Second guidance popup",
+          "evidence": "skipped: accepted Spark replaces automatic guides"
+        },
+        {
+          "title": "Reaction labels",
+          "evidence": "skipped: full labels already shipped in S370"
+        }
+      ]
+    },
+    "feedback-loop": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Missing closeout anchor",
+          "evidence": "selected: sixty-commit default loses evidence"
+        },
+        {
+          "title": "Delivery inbox inference",
+          "evidence": "skipped: current handoff distinguishes provider delivery from inbox placement"
+        }
+      ]
+    },
+    "gamification-engagement": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Journey progress",
+          "evidence": "skipped: Spark retains progress"
+        },
+        {
+          "title": "Correspondent quests",
+          "evidence": "deferred: changes membership economy, no new direction"
+        }
+      ]
+    },
+    "ai-integration": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Art approval",
+          "evidence": "skipped: hash-bound automated reviewer exists"
+        },
+        {
+          "title": "Third discovery agent",
+          "evidence": "deferred: duplicates accepted Spark surface"
+        }
+      ]
+    },
+    "security": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "OG tag mutation",
+          "evidence": "selected: workflow attempts detached publication"
+        },
+        {
+          "title": "Signup counters",
+          "evidence": "skipped: isolated atomic counters already ship"
+        }
+      ]
+    },
+    "speed-organization": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Desk routine attribution",
+          "evidence": "selected: no source receipt emitted"
+        },
+        {
+          "title": "Propagation export loss",
+          "evidence": "deferred: incoming shared batch preserved pending owner-level verification"
+        }
+      ]
+    },
+    "token-api-reduction": {
+      "examinedCandidates": 2,
+      "candidates": [
+        {
+          "title": "Paid image reviewer",
+          "evidence": "skipped: subscription reviewer exists"
+        },
+        {
+          "title": "Fresh-cohort replay",
+          "evidence": "deferred: real RUM cohort required; no synthetic field claims"
+        }
+      ]
+    }
+  },
+  "candidateIdeas": [
+    {
+      "title": "Illustration lineage map",
+      "disposition": "Deferred beyond current repair"
+    },
+    {
+      "title": "Conflict-risk release calendar",
+      "disposition": "Deferred beyond current repair"
+    },
+    {
+      "title": "Consent-cohort discovery replay",
+      "disposition": "Deferred: needs real cohort"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "desk-routine-receipts",
+      "axis": "speed-organization",
+      "title": "Bind automated Desk maintenance to exact commit receipts",
+      "why": "Verified against current remote source; improves the existing publication path without new paid services or identity changes.",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 16,
+      "selectedDepth": "L2",
+      "status": "pending",
+      "executionLog": [],
+      "informationFindingOutcome": "Publication and write-back claims remain bound to observed source evidence",
+      "recipe": "Reuse routine-session-receipt.mjs; record each art and reseal commit with exact SHA/files before push, idempotently, and keep deployment proof separate.",
+      "acceptance": "tests/s371-release-maintenance.unit.spec.mjs plus existing autopilot/writeback self-tests; independent diff review; staging smoke, candidate checks and production readback.",
+      "premises": [
+        {
+          "claim": "The existing integration surface is present and can be reused for this outcome.",
+          "adapter": "file-content",
+          "target": "scripts/lib/routine-session-receipt.mjs",
+          "pattern": "JSON.stringify(commitPaths) === JSON.stringify(receipt.changedPaths)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document the demonstrated gap and acceptance."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Reuse routine-session-receipt.mjs; record each art and reseal commit with exact SHA/files before push, idempotently, and keep deployment proof separate."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Broader fleet/runtime integration; outside selected scope."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "complete-closeout-history",
+      "axis": "feedback-loop",
+      "title": "Measure write-back against the actual closeout anchor",
+      "why": "Verified against current remote source; improves the existing publication path without new paid services or identity changes.",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 2,
+      "priority": 24,
+      "selectedDepth": "L2",
+      "status": "pending",
+      "executionLog": [],
+      "informationFindingOutcome": "Publication and write-back claims remain bound to observed source evidence",
+      "recipe": "Find the latest SIL commit by path and read its complete history through HEAD. Missing anchor or unreadable history stays nonpassing; test automation bursts exceeding sixty commits.",
+      "acceptance": "tests/s371-release-maintenance.unit.spec.mjs plus existing autopilot/writeback self-tests; independent diff review; staging smoke, candidate checks and production readback.",
+      "premises": [
+        {
+          "claim": "The existing integration surface is present and can be reused for this outcome.",
+          "adapter": "file-content",
+          "target": "scripts/check-writeback-currency.mjs",
+          "pattern": "no ${WRITE_BACK_ANCHOR} commit in the inspected range",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document the demonstrated gap and acceptance."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Find the latest SIL commit by path and read its complete history through HEAD. Missing anchor or unreadable history stays nonpassing; test automation bursts exceeding sixty commits."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Broader fleet/runtime integration; outside selected scope."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "slug": "og-writable-main",
+      "axis": "security",
+      "title": "Restrict Open Graph publication to writable main",
+      "why": "Verified against current remote source; improves the existing publication path without new paid services or identity changes.",
+      "tier": "⚡",
+      "impact": 6,
+      "innovation": 3,
+      "effortHours": 1,
+      "priority": 11.36,
+      "selectedDepth": "L2",
+      "status": "pending",
+      "executionLog": [],
+      "informationFindingOutcome": "Publication and write-back claims remain bound to observed source evidence",
+      "recipe": "Gate both push and manual dispatch to main and check out main with full history. Preserve generated-image publisher and its existing retry helper.",
+      "acceptance": "tests/s371-release-maintenance.unit.spec.mjs plus existing autopilot/writeback self-tests; independent diff review; staging smoke, candidate checks and production readback.",
+      "premises": [
+        {
+          "claim": "The existing integration surface is present and can be reused for this outcome.",
+          "adapter": "file-content",
+          "target": ".github/workflows/og-images.yml",
+          "pattern": "bash scripts/ci/publish-push.sh \"OG images\"",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document the demonstrated gap and acceptance."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Gate both push and manual dispatch to main and check out main with full history. Preserve generated-image publisher and its existing retry helper."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Broader fleet/runtime integration; outside selected scope."
+        }
+      }
+    },
+    {
+      "id": 4,
+      "slug": "persona-generator-roundtrip",
+      "axis": "speed-efficiency",
+      "title": "Keep persona generation consistent after shell propagation",
+      "why": "A normal build passed generation then reported 26 persona outputs stale solely because the shell formatter changes line indentation.",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 14,
+      "selectedDepth": "L2",
+      "status": "pending",
+      "executionLog": [],
+      "informationFindingOutcome": "Publication and write-back claims remain bound to observed source evidence",
+      "recipe": "Compare line-edge indentation only on exact generated persona routes; retain strict comparisons for substantive text, attributes, links and all other routes.",
+      "acceptance": "Regression cases for formatting and substantive changes; normal generated-news check; full build checks; unchanged runtime source binding.",
+      "premises": [
+        {
+          "claim": "The persona generator intentionally removes line indentation.",
+          "adapter": "file-content",
+          "target": "scripts/generate-news-pages.mjs",
+          "pattern": "return html.replace(/[ \\t]+$/gm, '').replace(/\\n[ \\t]+/g, '\\n');",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Document the demonstrated gap and acceptance."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Compare line-edge indentation only on exact generated persona routes; retain strict comparisons for substantive text, attributes, links and all other routes."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Broader fleet/runtime integration; outside selected scope."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 4,
+    "priority": 65.36,
+    "top3": [
+      "desk-routine-receipts",
+      "complete-closeout-history",
+      "og-writable-main"
+    ]
+  }
+}

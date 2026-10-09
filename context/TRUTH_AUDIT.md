@@ -1437,3 +1437,8 @@ Observed scheduled art releases 37549313182/37590125126 and scheduled publisher 
 ## 2026-10-07 — S370 observed release
 
 Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced. Full and diagnostic partial runs are distinguished in the release report. A successful HTTP image response alone cannot establish current approved artwork. No identity hold or historical uncertain uptime row was reclassified.
+
+
+## S371 maintenance evidence checkpoint — 2026-10-09
+
+Four source outcomes reviewed; tests4/4, generated news153/153, current mobile215/215 and refreshed visual84/84 pass. Deployment is not inferred from a commit or these local receipts. Original S370 production acceptance remains historical; S371 staging and exact-source production acceptance are pending. New routine ledger binds source maintenance, not delivery.

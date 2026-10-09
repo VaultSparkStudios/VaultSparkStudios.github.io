@@ -318,7 +318,7 @@ function evaluateWriteBackAge({ commits = [], nowMs = null, staleHours = 12, sil
 
   if (anchorIdx === -1) {
     return {
-      ok: true,
+      ok: false,
       inFlight: false,
       debtCount: 0,
       anchor: null,
@@ -527,10 +527,20 @@ export function repairPlanForWriteBackCurrency(result = {}) {
 }
 
 /** Read commits from git. Newest-first, with the file list per commit. */
-export function readCommits(root = ROOT, limit = 60) {
-  const res = spawnSync('git', ['log', `-${limit}`, '--name-only', '--date=iso-strict',
+export function readCommits(root = ROOT, limit = null) {
+  let range = [];
+  if (limit === null) {
+    const anchor = spawnSync('git', ['log', '-1', '--format=%H', '--', WRITE_BACK_ANCHOR], { cwd: root, encoding: 'utf8', windowsHide: true });
+    if (anchor.status !== 0) throw new Error('cannot observe closeout anchor');
+    const sha = String(anchor.stdout || '').trim();
+    if (sha) {
+      const parent = spawnSync('git', ['rev-parse', '--verify', `${sha}^`], { cwd: root, encoding: 'utf8', windowsHide: true });
+      if (parent.status === 0) range = [`${String(parent.stdout).trim()}..HEAD`];
+    }
+  }
+  const res = spawnSync('git', ['log', ...(limit === null ? range : [`-${limit}`]), '--name-only', '--date=iso-strict',
     '--format=%x00%H%x1f%ad%x1f%s%x1f%ae'], { cwd: root, encoding: 'utf8', windowsHide: true });
-  if (res.status !== 0) return [];
+  if (res.status !== 0) throw new Error('cannot observe write-back history');
   const commits = [];
   for (const block of String(res.stdout || '').split('\0')) {
     if (!block.trim()) continue;
@@ -586,7 +596,10 @@ export function run(root = ROOT, opts = {}) {
   let silText = '';
   try { silText = fs.readFileSync(path.join(root, WRITE_BACK_ANCHOR), 'utf8'); } catch { silText = ''; }
   const routineReceipts = readRoutineReceipts(root).rows;
-  const result = evaluateWriteBackCurrency({ commits: readCommits(root, opts.limit || 60), silText, routineReceipts, sessionLock: readWriteBackLock(root), ...opts });
+  let commits;
+  try { commits = readCommits(root, opts.limit ?? null); }
+  catch (error) { return { ok: false, unmeasured: true, debtCount: 0, debt: [], reason: error.message }; }
+  const result = evaluateWriteBackCurrency({ commits, silText, routineReceipts, sessionLock: readWriteBackLock(root), ...opts });
   return labelSyncState(result, opts.syncState === undefined ? readSyncState(root, { fetch: Boolean(opts.fetch) }) : opts.syncState);
 }
 

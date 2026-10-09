@@ -82,3 +82,11 @@ Verified release: Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, P
 Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
 
 Original S370 score retained. Private CDR and recipient evidence excluded from public commits. Preserve primary residue; verify the closing main push and no remaining task-owned background job.
+
+
+## S371 routine and generator evidence
+
+- Receipt consumer recognizes chore(routine-*) subjects; producer must use this family and exact commit/file binding. A source receipt does not certify deployment.
+- Locate the actual SIL anchor before filtering routine churn; missing history is unmeasured and nonpassing.
+- Generated persona indentation is intentionally normalized; compare only that formatting on exact routes. Never normalize security attributes or substantive content.
+- Partial nav/spine regeneration must be followed by build-shell-assets to restore SRI. Preserve real screenshot review dates and rerun source checks after the final merge.

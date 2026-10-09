@@ -1,16 +1,16 @@
-# Genius Hit List — Session 370
+# Genius Hit List — Session 371
 
-Generated: 2026-10-08
+Generated: 2026-10-09
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **81/100**
 - Health: **yellow**
-- Current SIL: **916/1000**
+- Current SIL: **915/1000**
 - CI health: **check gh run list**
-- Current focus: S370 requested Spark and Desk changes are live; explicit final closeout reconciles CDR, memory, publication and terminal cleanup.
+- Current focus: S371 release maintenance: four reviewed fixes; exact candidate staging, checks and deployment in progress.
 
 ## Strategic Read
 
@@ -22,12 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [COHESION] Preserve project-local capability contracts during incoming propagati…
-Final score: **100**
-[SIL/P2 · next scope] Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
-Why it matters: Preserve project-local capability contracts during incoming propagatio is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
+#### 1. [PRODUCT] Wave3: full release checks, staging byte proof, main publication, pro…
+Final score: **96**
+Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
+Why it matters: Wave3: full release checks, staging byte proof, main publication, prod is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -36,65 +34,65 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Add a routine receipt for out-of-session Desk art commits so write-ba…
+#### 3. [PRODUCT] Exercise the art receipt path on the next real scheduled publish; con…
 Final score: **93**
-[SIL/P2 · next scope] Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
-Why it matters: Add a routine receipt for out-of-session Desk art commits so write-bac is open, local, and unblocked — can ship this session.
+[SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
+Why it matters: Exercise the art receipt path on the next real scheduled publish; conf is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-Final score: **87**
-[SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
-Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
+#### 4. [COHESION] Preserve project-local capability contracts during incoming propagati…
+Final score: **92**
+[SIL/P2 · next scope] Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
+Why it matters: Preserve project-local capability contracts during incoming propagatio is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+#### 1. [PRODUCT] Keep shell regeneration and SRI stamping in a single documented seque…
+Final score: **90**
+[SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
+Why it matters: Keep shell regeneration and SRI stamping in a single documented sequen is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
 Final score: **81**
+[SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
+Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+Final score: **75**
 [P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
 Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Restrict the optional Open Graph regeneration publisher to a writable…
-Final score: **80**
+#### 4. [VERIFY] Restrict the optional Open Graph regeneration publisher to a writable…
+Final score: **74**
 [CI/P2 · future maintenance] Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
-Why it matters: Restrict the optional Open Graph regeneration publisher to a writable  is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Restrict the optional Open Graph regeneration publisher to a writable  is a 371-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 3. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
-Final score: **78**
+#### 5. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
+Final score: **72**
 [DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
 Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-Final score: **74**
+### LATER
+
+#### 1. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+Final score: **68**
 [AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
-Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 371-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 5. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **72**
+#### 2. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
+Final score: **66**
 [QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
 Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **69**
+#### 3. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
+Final score: **63**
 [S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
 Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
-
-#### 2. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **65**
-[DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
-Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 370-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
-
-#### 3. [PRODUCT] Teach the closeout wipe guard to recognize a byte-preserving work-log…
-Final score: **60**
-[S365][OPS/P2] Teach the closeout wipe guard to recognize a byte-preserving work-log archive move, so routine cap rotation no longer needs --allow-wipe; keep unarchived deletion blocking.
-Why it matters: Teach the closeout wipe guard to recognize a byte-preserving work-log  is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -140,18 +138,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Preserve project-local capability contracts during incoming propagati…
+1. Wave3: full release checks, staging byte proof, main publication, pro…
 2. Post-push CI confirmation
-3. Add a routine receipt for out-of-session Desk art commits so write-ba…
-4. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-5. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-6. Restrict the optional Open Graph regeneration publisher to a writable…
-7. Add a generated-fixture check for month rollover so a future edition …
-8. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-9. Review measured Linux screenshots before refreshing visual-regression…
-10. Track growth of the Desk overlay from the production baseline; arrang…
-11. Verify prior-overlay path preservation automatically before scoped Pa…
-12. Teach the closeout wipe guard to recognize a byte-preserving work-log…
+3. Exercise the art receipt path on the next real scheduled publish; con…
+4. Preserve project-local capability contracts during incoming propagati…
+5. Keep shell regeneration and SRI stamping in a single documented seque…
+6. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+7. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
+8. Restrict the optional Open Graph regeneration publisher to a writable…
+9. Add a generated-fixture check for month rollover so a future edition …
+10. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
+11. Review measured Linux screenshots before refreshing visual-regression…
+12. Track growth of the Desk overlay from the production baseline; arrang…
 
 ## Best Immediate Move
 

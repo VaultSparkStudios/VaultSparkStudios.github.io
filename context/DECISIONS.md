@@ -2140,3 +2140,10 @@ The founder explicitly authorizes complete closeout, main publication and deploy
 ### S370 final validation coherence repair
 
 Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+
+## D-S371.1 — bounded release-maintenance arc (2026-10-09)
+
+Use an isolated current-remote worktree to preserve the original checkout residue and quarantine unverified startup propagation. Implement four demonstrated maintenance defects at L2; preserve all accepted public design, rights, prices and identity holds. The persona comparator matches only its existing line-edge normalization on exact profile routes; attributes, text, links and other routes remain strict. Routine receipts record source maintenance, never infer production delivery. Founder explicitly authorizes direct main commit/push and deployment.
+
+Canonical conformance measured zero ABSOLUTE gaps; remaining STRONG diagnostics and manual adoption reviews retain their existing project-specific posture. Delegating scripts that resolve relative to the temporary sibling stub are not treated as proof for this website; canonical probes use an explicit project path. The four S370 automated art/reseal commits and two trailing record commits discovered by full anchor history will be reconciled as an unscored addendum. S370 remains916/1000. Full release evidence is required before claiming deployment.

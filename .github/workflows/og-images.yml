@@ -2,6 +2,7 @@ name: Regenerate OG Images
 
 on:
   push:
+    branches: [main]
     paths:
       - 'scripts/generate-og.mjs'
       - 'scripts/package.json'
@@ -9,11 +10,16 @@ on:
 
 jobs:
   generate:
+    # Release tags may generate previews, but must never mutate a detached ref.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:

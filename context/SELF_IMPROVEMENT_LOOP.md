@@ -2890,3 +2890,25 @@ Closeout validation found an omitted generated answer-feed rebuild. The full der
 ### S370 final closeout acceptance addendum — 2026-10-08
 
 Retain original 916/1000 and ten category scores. All five founder outcomes are deployed and independently checked. The generated-answer ordering invariant is implemented. Learning: recheck candidate bindings after the last rebuild/merge, preserving actual source, image hashes and review dates. Committed one future maintenance item to TASK_BOARD for the existing receipt-ordering gate. No rejected or unfixed review finding. Canonical final record verification runs after this write-back.
+
+
+### S370 trailing history recovery — unscored addendum (2026-10-09)
+
+Complete anchor history identifies four automated art/reseal commits and trailing completed-publication memory/contract records after the prior SIL anchor. These are recovered historical maintenance, not four human sessions or inferred new deployment. Keep S370916/1000 and its ten category values unchanged. New producer receipts apply prospectively; no retrospective exact receipt is manufactured.
+
+## 2026-10-09 UTC — Session 371 (release maintenance) | Total: 915/1000 (v3.0) | Velocity: 4 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 89 | Focused4/4 and news153/153; complete release gate pending. |
+| Creative Alignment | 95 | Preserved accepted Spark, overview, reactions, branding and public promises. |
+| Momentum | 90 | Four demonstrated maintenance defects implemented; deployment still requires proof. |
+| Engagement | 91 | Existing public behavior retained; conversion improvement unmeasured. |
+| Process Quality | 82 | Independent review fixed one subject-classification gap; generated evidence and shell stamping required repeat verification. |
+| Cross-Repo Coherence | 92 | Canonical probes use explicit website path; incoming propagation quarantined. |
+| Security Posture | 94 | SRI preserved, unchanged identity holds, source/deployment receipts separated. |
+| Ecosystem Integration | 91 | Existing routine-receipt contract reused with exact SHA and path binding. |
+| Capital Efficiency | 96 | Existing dependencies and deterministic local tests; no paid API or new install. |
+| Automation Coverage | 95 | More-than60-commit fixture, consumer-level receipt validation, main gating and substantive generator mismatch tests. |
+
+Website rubric: current local mobile215/215 and visual84/84 in seven themes; field vitals, conversion and upgraded-mail inbox delivery remain unmeasured. This checkpoint score records implementation quality; final deployment disposition is appended when observed. Brainstorm commitments in TASK_BOARD: observe the next scheduled receipt and document the combined shell/SRI regeneration sequence.

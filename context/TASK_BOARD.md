@@ -1,3 +1,11 @@
+# S371 release maintenance
+
+- [x] Wave1: preserve original checkout and unverified propagation; profile current remote and source premises.
+- [x] Wave2: implement four verified maintenance outcomes; independent review PASS and focused tests4/4.
+- [ ] Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
+- [ ] [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
+- [ ] [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
+
 # Task Board — VaultSparkStudios.github.io
 
 ## S370 arc
@@ -6,7 +14,7 @@
 - [x] Wave 2: implement both L2 outcomes, fix independent review findings, pass 39/39 focused checks.
 - [x] Wave 3: canonical staging, hosted checks, pinned production publication and final closeout evidence verified in docs/S370_RELEASE_2026-10-07.md.
 - [ ] **[SIL/P2 · next scope]** Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
-- [ ] **[SIL/P2 · next scope]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
+- [x] **[SIL/P2 · completed S371]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
 - [ ] **[CI/P2 · future maintenance]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
 
 Last updated: 2026-10-08 UTC (S370 requested closeout)

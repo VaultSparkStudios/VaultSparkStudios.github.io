@@ -27,6 +27,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { appendRoutineReceiptAtomic, buildRoutineReceipt, ROUTINE_RECEIPT_LEDGER } from './lib/routine-session-receipt.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STAGE_HOME = path.join(ROOT, '.cache', 'desk-art-staging');
@@ -249,8 +250,23 @@ function guardChecks() {
   }
 }
 
-function pushWithRetry() {
+export function recordArtCommitReceipt({ root = WT, startedAt, runGit = git, completedAt = new Date().toISOString() }) {
+  const head = runGit('rev-parse', 'HEAD');
+  const files = runGit('diff-tree', '--root', '--no-commit-id', '--name-only', '-r', 'HEAD');
+  if (head.status !== 0 || files.status !== 0) throw new Error('cannot bind Desk art routine receipt to commit');
+  const receipt = buildRoutineReceipt({ routineId: 'desk-art', routineName: 'Automated Desk art publication',
+    startedAt, completedAt, commit: head.out.trim(), changedPaths: lines(files.out),
+    producedArtifacts: lines(files.out).filter((p) => /^(?:assets\/og\/news\/|news\/|api\/news)/.test(p)),
+    writeBackDisposition: 'maintenance-recorded' });
+  // This records source maintenance only. Release/run and served-byte proofs remain separate.
+  return appendRoutineReceiptAtomic(root, receipt);
+}
+
+function pushWithRetry(startedAt) {
   for (let i = 1; i <= 6; i += 1) {
+    git('add', '--', ROUTINE_RECEIPT_LEDGER);
+    if (lines(git('diff', '--cached', '--name-only').out).length
+        && git('commit', '-q', '-m', 'chore(proof): record Desk art routine maintenance [skip ci]').status !== 0) throw new Error('routine receipt commit failed');
     git('fetch', '-q', 'origin', 'main');
     if (Number(git('rev-list', '--count', 'HEAD..origin/main').out.trim()) > 0) {
       git('merge', '--no-edit', '-q', 'origin/main');
@@ -265,7 +281,13 @@ function pushWithRetry() {
       }
     }
     node('scripts/repair-evidence-graph.mjs');
-    if (lines(git('diff', '--cached', '--name-only').out).length) git('commit', '-q', '-m', 'chore(desk): reseal derived outputs after auto art');
+    if (lines(git('diff', '--cached', '--name-only').out).length) {
+      if (git('commit', '-q', '-m', 'chore(routine-desk-art): reseal derived outputs after auto art').status !== 0) throw new Error('reseal commit failed');
+      recordArtCommitReceipt({ startedAt });
+    }
+    git('add', '--', ROUTINE_RECEIPT_LEDGER);
+    if (lines(git('diff', '--cached', '--name-only').out).length
+        && git('commit', '-q', '-m', 'chore(proof): record Desk art routine maintenance [skip ci]').status !== 0) throw new Error('routine receipt commit failed');
     const p = git('push', 'origin', 'HEAD:refs/heads/main');
     if (p.status === 0) { log(`pushed ${git('rev-parse', '--short', 'HEAD').out.trim()} (try ${i})`); return true; }
     log(`push try ${i} failed: ${lines(p.out).find((l) => /rejected|⛔/.test(l)) || 'unknown'}`);
@@ -341,6 +363,7 @@ export async function dispatchRelease({ expectedSha, runCommand = sh, pause = sl
 }
 
 async function main() {
+  const startedAt = new Date().toISOString();
   if (!acquireLock()) { log('another autopilot run is active; exiting'); return 0; }
   try {
     prepareWorktree();
@@ -390,9 +413,10 @@ async function main() {
     if (bad.length) throw new Error(`refusing to publish: unexpected changes in ${bad.slice(0, 5).join(', ')}`);
     git('add', '-A');
     const msgFile = path.join(os.tmpdir(), `desk-art-autopilot-${process.pid}.txt`);
-    fs.writeFileSync(msgFile, `feat(desk): auto-reviewed art for ${total} image(s)\n\nPublished by desk-art-autopilot on the automated reviewer's approval (D-S368.10).\nBanners: ${approved.banner.join(', ') || 'none'}\nSatire: ${approved.satire.join(', ') || 'none'}\n`);
+    fs.writeFileSync(msgFile, `chore(routine-desk-art): auto-reviewed art for ${total} image(s)\n\nPrepared by desk-art-autopilot on the automated reviewer's approval (D-S368.10). Deployment is verified separately after release.\nBanners: ${approved.banner.join(', ') || 'none'}\nSatire: ${approved.satire.join(', ') || 'none'}\n`);
     if (git('commit', '-q', '-F', msgFile).status !== 0) throw new Error('commit failed');
-    if (!pushWithRetry()) throw new Error('push failed after retries');
+    recordArtCommitReceipt({ startedAt });
+    if (!pushWithRetry(startedAt)) throw new Error('push failed after retries');
     if (NO_DEPLOY) { log('--no-deploy: pushed, release not dispatched'); return 0; }
     const released = await dispatchRelease({ expectedSha: git('rev-parse', 'HEAD').out.trim() });
     if (released !== 0) return released;
