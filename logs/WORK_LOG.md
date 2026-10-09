@@ -1482,3 +1482,14 @@ Local checks passed 531/531, refreshed mobile probes 215/215, and reviewed artic
 Rollback: previous Pages run 37807641227 and content head ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; staging snapshot 20261009191141. Windows producer bootstrap passed 39/39 with original target bytes backed up locally.
 
 S371915/1000 remains the recorded ten-category score; S370916/1000 is unchanged. IGNIS refresh did not finish within the bounded invocation; the previous dated result is preserved and no fresh score is claimed.
+
+
+## S371 closing follow-through verified — 2026-10-09
+
+Closing candidate `9b105d275e2f32cabe6ca2597205b6aebbd963cb` (tag `release-S371-9b105d275`) is verified live through Pages run `37986968939`. Required exact-candidate checks passed: E2E/compliance 37985123589, accessibility 37985123779, and Lighthouse 37985123593 including staging. Staging snapshot 20261009201032 verified 562 overlays and three safe removals. Fourteen staging artifacts matched the candidate.
+
+Production metadata and fourteen served artifacts match the candidate after documented edge transforms. The normal cached article CSS and four normal public-feed URLs also match. Reviewed HTML and browser assets are preserved, with only the shell-manifest timestamp changed. All three bound sources and 168 screenshot hashes were independently verified unchanged before metadata-only rebinding; original capture and review dates remain. The earlier closing E2E failure 37983977935 is retained.
+
+Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
+
+The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
