@@ -1,6 +1,6 @@
 # S371 release maintenance — 2026-10-09
 
-Four source fixes are implemented and independently reviewed: exact automated-art routine receipts, complete closeout-anchor history, main-only Open Graph publication and formatting-safe persona generator comparison. Focused tests4/4, news generation153/153 and current mobile runtime215/215 pass. Full build, canonical staging and production acceptance remain in progress. Existing identity holds and accepted Spark/Desk behavior are preserved.
+Four source fixes are implemented and independently reviewed: exact automated-art routine receipts, complete closeout-anchor history, main-only Open Graph publication and formatting-safe persona generator comparison. Focused tests4/4, news generation154/154 and current mobile runtime215/215 pass. Full build, canonical staging and pinned production acceptance are verified. Acceptance: docs/S371_RELEASE_2026-10-09.md. Existing identity holds and accepted Spark/Desk behavior are preserved.
 
 ## S370 — publication evidence shipped (2026-10-07)
 

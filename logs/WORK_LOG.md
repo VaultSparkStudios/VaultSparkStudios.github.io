@@ -1469,3 +1469,16 @@ Corrected candidate-only proof metadata after the hosted mismatch; independent r
 ## 2026-10-09 — Session 371 release maintenance
 
 Bounded four-outcome maintenance arc; preserved original working tree and incoming propagation. Independent review found a subject classification gap and it was fixed. Focused tests4/4; news153/153; mobile215/215 and seven-theme84-image pixel review pass. Full release checks and staging/production proof remain pending at this checkpoint. No paid model call, install, pricing or identity change.
+
+
+## S371 final observed acceptance — 2026-10-09
+
+Candidate `f50960d2156091769e7922e0ac8904b22b65c516` (tag release-S371-f50960d21) is verified live through Pages run `37981014146`. All three exact-candidate required checks passed: e2e.yml 37978505492, lighthouse.yml 37978505511, accessibility.yml 37978505521. Earlier Lighthouse failures and the predeployment provenance-expiry failure remain recorded. Fresh production Worker provenance matched 9/9. Canonical staging 20261009191141 verified 562 overlays and 3 safe removals.
+
+Production metadata and ten served artifacts match the pinned candidate after removing documented edge nonce attributes and the exact recognized Cloudflare JSD append. The regular cached article CSS URL also matches. Production Spark passed 11/11. Eight live article cases passed source focus, keyboard navigation, back-scroll and print checks; desktop/mobile dark/light inspection passed. Browser Find matched related-title text, but initial result visibility is a preexisting limitation also reproduced without the optimization; it is not claimed passing.
+
+Local checks passed 531/531, refreshed mobile probes 215/215, and reviewed article captures 168/168; the initial 84 maintenance captures remain retained. Doctor: zero blocking findings and 3 advisories. The required render repair measured a 17% median local text-LCP improvement; field performance and conversion remain unmeasured. Identity holds remain unchanged. Production retains retired baseline hashed assets while current references resolve to the new exact bytes.
+
+Rollback: previous Pages run 37807641227 and content head ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; staging snapshot 20261009191141. Windows producer bootstrap passed 39/39 with original target bytes backed up locally.
+
+S371915/1000 remains the recorded ten-category score; S370916/1000 is unchanged. IGNIS refresh did not finish within the bounded invocation; the previous dated result is preserved and no fresh score is claimed.

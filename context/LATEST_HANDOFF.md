@@ -1,3 +1,9 @@
+## Where We Left Off — S371 final observed acceptance (2026-10-09)
+
+Session Intent: /arc, authorized direct main publication and deployment.
+
+Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: candidate f50960d2156091769e7922e0ac8904b22b65c516 live through Pages 37981014146. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Final closeout record checks and shell cleanup are being completed; see the appended completion receipt.
+
 ## Where We Left Off — S370 final requested closeout (2026-10-08)
 
 Session Intent: finish the five requested site outcomes and explicit closeout, main publication, deployment, records and terminal cleanup.

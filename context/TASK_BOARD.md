@@ -2,7 +2,7 @@
 
 - [x] Wave1: preserve original checkout and unverified propagation; profile current remote and source premises.
 - [x] Wave2: implement four verified maintenance outcomes; independent review PASS and focused tests4/4.
-- [ ] Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
+- [x] Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
 - [ ] [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
 - [ ] [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
 
@@ -15,7 +15,7 @@
 - [x] Wave 3: canonical staging, hosted checks, pinned production publication and final closeout evidence verified in docs/S370_RELEASE_2026-10-07.md.
 - [ ] **[SIL/P2 · next scope]** Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
 - [x] **[SIL/P2 · completed S371]** Add a routine receipt for out-of-session Desk art commits so write-back currency can identify actual automated work without subject-only exemptions.
-- [ ] **[CI/P2 · future maintenance]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
+- [x] **[CI/P2 · completed S371]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
 
 Last updated: 2026-10-08 UTC (S370 requested closeout)
 
@@ -651,3 +651,6 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 - [x] [SIL] Refresh generated Oracle answers before closeout sealing; guard the dependency with the build-order invariant.
 
 - [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.
+
+
+- [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
