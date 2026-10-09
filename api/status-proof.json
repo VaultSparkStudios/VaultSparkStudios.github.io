@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-10-09T18:20:48.243Z",
+  "generatedAt": "2026-10-09T18:26:58.709Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 89,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 3862534,
+      "ageSeconds": 3862904,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
@@ -35,7 +35,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-10-09T18:09:20.380Z",
-      "freshnessSeconds": 688,
+      "freshnessSeconds": 1058,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -196,7 +196,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-10-09T18:19:34.311Z",
-      "freshnessSeconds": 74,
+      "freshnessSeconds": 444,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -331,7 +331,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-10-09T18:09:21.433Z",
-      "freshnessSeconds": 687,
+      "freshnessSeconds": 1057,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -528,7 +528,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-10-09T17:14:37.723Z",
-      "freshnessSeconds": 3971,
+      "freshnessSeconds": 4341,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -595,7 +595,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-10-09T18:09:42.258Z",
-      "freshnessSeconds": 666,
+      "freshnessSeconds": 1036,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -628,30 +628,30 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-10-09T18:20:09.446Z",
-      "freshnessSeconds": 39,
+      "generatedAt": "2026-10-09T18:26:58.352Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-10-09T18:20:09.446Z",
+        "generatedAt": "2026-10-09T18:26:58.352Z",
         "generatedBy": "scripts/build-ci-status-beacon.mjs",
         "allGreen": false,
-        "browserGatesGreen": true,
-        "verifiedBrowserHeadSha": "07363f46d90447fbe7c6b2e3009bc952bbb436e0",
+        "browserGatesGreen": false,
+        "verifiedBrowserHeadSha": null,
         "hasDeadCron": false,
         "hasScheduledUnknown": true,
         "hasScheduledStale": false,
         "scheduledCoverage": {
           "total": 15,
-          "observed": 4,
-          "healthy": 4,
-          "unknown": 11,
+          "observed": 2,
+          "healthy": 2,
+          "unknown": 13,
           "stale": 0,
           "dead": 0
         },
-        "terminalState": "unknown",
+        "terminalState": "in_progress",
         "knownTerminalBlockers": [],
-        "summary": "CI gate status is unknown.",
+        "summary": "CI gates are still running.",
         "deploymentReconciliation": {
           "state": "clear",
           "threshold": 2,
@@ -663,7 +663,7 @@
           "lastStrandedAt": "2026-10-06T08:31:14.471Z",
           "currentBehindStreak": 0,
           "newestGradableAt": "2026-10-08T16:48:10.808Z",
-          "newestAgeHours": 25.5,
+          "newestAgeHours": 25.6,
           "maxAgeHours": 48,
           "stale": false,
           "strandedAlert": false
@@ -671,12 +671,12 @@
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "success",
-            "rawStatus": "completed",
-            "conclusion": "success",
-            "updatedAt": "2026-10-09T17:55:29Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37968657881",
-            "headSha": "07363f46d90447fbe7c6b2e3009bc952bbb436e0",
+            "status": "in_progress",
+            "rawStatus": "in_progress",
+            "conclusion": null,
+            "updatedAt": "2026-10-09T18:21:02Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37972648481",
+            "headSha": "6b12cdbf97623170e51bac6fef55ad3db39ba878",
             "event": "push"
           },
           {
@@ -684,19 +684,19 @@
             "status": "success",
             "rawStatus": "completed",
             "conclusion": "success",
-            "updatedAt": "2026-10-09T17:49:21Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37968657854",
-            "headSha": "07363f46d90447fbe7c6b2e3009bc952bbb436e0",
+            "updatedAt": "2026-10-09T18:25:24Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37972648298",
+            "headSha": "6b12cdbf97623170e51bac6fef55ad3db39ba878",
             "event": "push"
           },
           {
             "name": "Lighthouse CI",
-            "status": "success",
-            "rawStatus": "completed",
-            "conclusion": "success",
-            "updatedAt": "2026-10-09T18:16:08Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37968657547",
-            "headSha": "07363f46d90447fbe7c6b2e3009bc952bbb436e0",
+            "status": "in_progress",
+            "rawStatus": "in_progress",
+            "conclusion": null,
+            "updatedAt": "2026-10-09T18:21:02Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37972648343",
+            "headSha": "6b12cdbf97623170e51bac6fef55ad3db39ba878",
             "event": "push"
           },
           {
@@ -812,15 +812,13 @@
           },
           {
             "name": "Cloudflare Pages Deploy",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-09T12:59:28Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0,
-            "state": "healthy",
-            "ageHours": 5.34,
+            "state": "unknown",
+            "ageHours": null,
             "staleAfterHours": 48
           },
           {
@@ -833,7 +831,7 @@
             "dead": false,
             "streak": 0,
             "state": "healthy",
-            "ageHours": 1.71,
+            "ageHours": 1.83,
             "staleAfterHours": 48
           },
           {
@@ -859,20 +857,18 @@
             "dead": false,
             "streak": 0,
             "state": "healthy",
-            "ageHours": 0.17,
+            "ageHours": 0.28,
             "staleAfterHours": 48
           },
           {
             "name": "Generate Vault Narrative",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-10-09T13:12:47Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0,
-            "state": "healthy",
-            "ageHours": 5.12,
+            "state": "unknown",
+            "ageHours": null,
             "staleAfterHours": 48
           },
           {
@@ -892,14 +888,14 @@
     "newsroom-run": {
       "present": true,
       "source": "/api/newsroom-run.json",
-      "generatedAt": "2026-10-09T18:20:09.446Z",
-      "freshnessSeconds": 39,
+      "generatedAt": "2026-10-09T18:26:58.352Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-newsroom-run.mjs",
-        "generatedAt": "2026-10-09T18:20:09.446Z",
+        "generatedAt": "2026-10-09T18:26:58.352Z",
         "publicSafe": true,
         "state": "abstained",
         "workflow": {
@@ -934,7 +930,7 @@
           "note": "This receipt reports run-level workflow evidence and public corpus counts only."
         },
         "sourceHashes": {
-          "ciStatusSha256": "69ff33b5f8c974dd3aed1dc0930f15be7e3dbf0932874f5087230067b329356d",
+          "ciStatusSha256": "ba7c620ffd9205956c4775b796496acf3f3fed498449e1079ec093d4d92ab2a7",
           "newsFeedSha256": "3194923250d630e0ee4961d86e4abe35bc4280dd43885555417f16ffdb04a4d9",
           "workflowSha256": "f04d0d79ffe99c1038f9c7c37416b87010956d733f3b66ca6cc1031388fd5a29"
         }
@@ -944,7 +940,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-10-08T16:48:10.808Z",
-      "freshnessSeconds": 91957,
+      "freshnessSeconds": 92328,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1061,7 +1057,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-10-09T17:15:06.849Z",
-      "freshnessSeconds": 3941,
+      "freshnessSeconds": 4312,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1089,7 +1085,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-10-09T18:09:21.363Z",
-      "freshnessSeconds": 687,
+      "freshnessSeconds": 1057,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1285,7 +1281,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 3862534,
+      "freshnessSeconds": 3862904,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1458,7 +1454,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-09-20T18:35:05.575Z",
-      "freshnessSeconds": 1640743,
+      "freshnessSeconds": 1641113,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1533,7 +1529,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-10-09T18:09:42.357Z",
-      "freshnessSeconds": 666,
+      "freshnessSeconds": 1036,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1688,7 +1684,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 8619648,
+      "freshnessSeconds": 8620019,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2140,7 +2136,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 8619648,
+      "freshnessSeconds": 8620019,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2171,7 +2167,7 @@
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
       "generatedAt": "2026-10-09T18:09:42.007Z",
-      "freshnessSeconds": 666,
+      "freshnessSeconds": 1037,
       "staleAfterH": 36,
       "stale": false,
       "data": {
@@ -2558,7 +2554,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-10-09T00:00:00.000Z",
-      "freshnessSeconds": 66048,
+      "freshnessSeconds": 66419,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2621,7 +2617,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-10-09T00:00:00.000Z",
-      "freshnessSeconds": 66048,
+      "freshnessSeconds": 66419,
       "staleAfterH": 720,
       "stale": false,
       "data": {
