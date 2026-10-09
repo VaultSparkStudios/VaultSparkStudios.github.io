@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-09T22:11:58.562Z",
+  "capturedAt": "2026-10-09T22:41:32.329Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "779388aeaf76bf9a14585865b900635e864a85df843fd3ebd80416c3c10c48c5",
+    "sha256": "de6ee789a6d23f529deb98fd93a7f9a28add04db55b330b1036ab343771b1e45",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -1956,11 +1956,11 @@
       },
       {
         "path": "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/index.html",
-        "sha256": "4f7e023f2124f52995912f4fa45a346acf7d70338d2072b30fbad72f0a62e9b8"
+        "sha256": "859936d66462aaad89ce4cf452df89a480ef1015895c94fa3b30d4e8f5b0fcd7"
       },
       {
         "path": "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html",
-        "sha256": "3bd17d12356d809f7e2de12a26adadd012a9d99d8b88805d024e4a3401a64d88"
+        "sha256": "170fbfb2b049fb1263432a8d519b2c504900df3988e07bfc39a84c1b8035e338"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2022,9 +2022,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "121ca6b2b264592725350629aafd33d65ed18e73ff2a6c3d62aea6370c73d96b",
+    "manifestSha256": "84029247e9fb3a28801547b3f17c0416adcf4cff80eeaa361efedc5af85dcb81",
     "candidateSha": "fad1523b72977cef27305295c7c53020198f83ec",
-    "root": "802df3765612234598af1b33722b614a68f3e9e94f520e33bc17c66a15f92262"
+    "root": "54ca3a8329783f65691642dde2cbe89622d1172c32ddb1935a393457447d59c7"
   },
   "matrix": {
     "routes": [
@@ -2067,12 +2067,25 @@
       "complete": true
     },
     "reviewer": "Claude Opus 5.5 (S372)",
-    "findings": [],
+    "findings": [
+      {
+        "severity": "non-blocking",
+        "scope": "desktop, all themes",
+        "summary": "The illustration-pending placeholder headline is hard-clipped mid-glyph at its third line; mobile uses an ellipsis correctly. The placeholder is aria-hidden, the full title is shown directly below, and it is replaced when art publishes.",
+        "preexisting": true
+      },
+      {
+        "severity": "non-blocking",
+        "scope": "mobile, all themes",
+        "summary": "Thumbnail cover-crop clips the banner baked-in caption on every card.",
+        "preexisting": true
+      }
+    ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null,
-    "reviewedAt": "2026-10-09T22:12:09.008Z",
-    "method": "Directly inspected all 28 changed-surface captures (two articles x seven themes x desktop1366/mobile390) of the More-from-The-Desk section after the S372 art autopilot replaced an illustration-pending placeholder with published art. Card art, metadata and titles are legible and consistent with neighbouring cards in every theme. Pre-existing, not introduced by this change: at mobile width the thumbnail cover-crop clips the banner baked-in caption on every card; the flat band below the footer and the mid-frame sticky header are capture-clip artifacts."
+    "reviewedAt": "2026-10-09T22:41:32.500Z",
+    "method": "Directly inspected all 28 changed-surface captures (two articles x seven themes x desktop1366/mobile390) of More-from-The-Desk after the latenight edition (434cced41) added a card with an illustration-pending placeholder. Card art, metadata and titles are legible in every theme. Capture-clip artifacts: flat band below the footer, mid-frame sticky header on mobile."
   },
   "captures": [
     {
@@ -2084,7 +2097,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--desktop--changed-surface.png",
-      "sha256": "af2b48189fc252160ca1bff6d6bb4e912e9ee4164bd2a084a528a65ad602b96b",
+      "sha256": "a7f77e254fc68f28800f3c2120a2e49e914136c1dc1a959a2b3b7088af0610d0",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2101,7 +2114,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--dark--desktop--changed-surface.png",
-      "sha256": "496e92c892d5ac364e1ac82904c873b92dd3ad3f5a42cdedb14df6e89356d1fe",
+      "sha256": "96f4919aaf8e49e7ecc0daa880d8f40d2d2adbaa38c2573da7bb80a0427ff684",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2118,7 +2131,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--desktop--changed-surface.png",
-      "sha256": "2c3c47e6d01dfb323075a946717f78ddb56d4dbf4dc23a9ddaae535e566dca03",
+      "sha256": "5c1d6882cbd6adac804ab37ab52a2323ca6d00067d34cc162ac416044c096ebb",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2135,7 +2148,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--light--desktop--changed-surface.png",
-      "sha256": "7f6d7241b0402d6cc50b48d532bf3d9881012409cdb519cc595f7c5f9070f2a2",
+      "sha256": "b08fdd12eff6eb79142fcf90205ac4bc7051c6aaff970022fd791d0d1d0e4050",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2152,7 +2165,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--desktop--changed-surface.png",
-      "sha256": "82a2de0986ee452e3400e2a918f023c329d5e07280bb701534e7effbeedebcbd",
+      "sha256": "cf17f7cf5c96447e35537a0e08865e588ad0f78874a9d6b930186e09afa32e20",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2169,7 +2182,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--ambient--desktop--changed-surface.png",
-      "sha256": "f212cfda54d2f98f10eff0618a389d8233b7f5357638fed97bd4b2a417378a4b",
+      "sha256": "5ead88acc1b2af3f5be6a5f57bddb558e6b40b185694163d878dab76e18a33cc",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2186,7 +2199,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--desktop--changed-surface.png",
-      "sha256": "e2a5389b76bad30ed041a33e933c289a7b3733f2a26876d9d20607b9684636bd",
+      "sha256": "754ab92701c05a4242b7881aebac045f7487105d3b5080b5436a7a6a1847dc8a",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2203,7 +2216,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--warm--desktop--changed-surface.png",
-      "sha256": "4e7de4b41fe4c46025304f4b835731e5addd8ae67d114b99314ccfddb2e16b9a",
+      "sha256": "1d12304d32e98b09d77823681a5a52112612c83db82ef7b740893b9ad1e6eba2",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2220,7 +2233,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--desktop--changed-surface.png",
-      "sha256": "eca9b804475fd7fc1cc1f2db789e54abe259734faa33fb22a4b87094628e7d0a",
+      "sha256": "f991c92b14e24cf8a058193d38c29a5d38b08ff8a0584618a600093d84384916",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2237,7 +2250,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--cool--desktop--changed-surface.png",
-      "sha256": "953847d4d20cbd5617d74fe57123d5af5e4aa31a25982cb8d30f30039ffb6aa3",
+      "sha256": "18c175539fd404b82f4a5b203d14d93d8802b3cb55e27048c34912116b851b28",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2254,7 +2267,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--desktop--changed-surface.png",
-      "sha256": "320524ef5ce14fcc10d75b2da890682e3c50ab31a77091aa87a58d3e3f733f5b",
+      "sha256": "02b2b269b532d3a3eaf36947be78101be085a29eeb18bc681e04e0d7b73f6354",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2271,7 +2284,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--lava--desktop--changed-surface.png",
-      "sha256": "5c7240ec167d9e18133f0aacc43dfc6b1eb839f17e023fdaca40a1c5d7387904",
+      "sha256": "721f651f036ad42612b16f2b8734be0463f9b588038562e3e82e5843d00640b9",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2288,7 +2301,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--desktop--changed-surface.png",
-      "sha256": "ee5d80c3791664399e3d4806362a8346ca76438f9d3507b3a82715f4f490a14d",
+      "sha256": "778761fc9a07504309652a467fceaa5d1d6376dfd4ac22155748a23dba3146ee",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2305,7 +2318,7 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--high-contrast--desktop--changed-surface.png",
-      "sha256": "77eeff08ad6c70a48e0b1f050e123d89d95d93d0a43be7e4cd4b677504fc2ba2",
+      "sha256": "d38b37cc6fd8a9ccdd08c6006cd29c1907cd0bbeb73f9bcde3bfaadeeb6b72cd",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2322,7 +2335,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--mobile--changed-surface.png",
-      "sha256": "4656dd5b504ca605d9f4cbaefd0a97ebf76f153d8fc41c326cd1f72538178302",
+      "sha256": "773d5f0469c2657466bb4104a2129ce6375e42efb7c7ac71e0cefa49bbf2f318",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2339,7 +2352,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--dark--mobile--changed-surface.png",
-      "sha256": "7108956a5e10f5084c489927785ba6291346660800a2c01bf1dc0d652eb6d404",
+      "sha256": "9d3b2c4afa14605a52e148df00aa3c40672d6ad7da2129051853b93d4ff71c84",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2356,7 +2369,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--mobile--changed-surface.png",
-      "sha256": "2d34eb21ba7b3e24b9801bd882e60c8b62a2f7c71a1aef6a19b769c819a6f78e",
+      "sha256": "a94a9f55c86a0c00f2697c8c7e555d2af6df25e03b4289c0af68e33147c67611",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2373,7 +2386,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--light--mobile--changed-surface.png",
-      "sha256": "8027be2229c1e70d9411c6ea1a353b76ebe3853cded96c6689169280065bd4bd",
+      "sha256": "181c9ff0413cd1c48af0f7450561f8869bc01560ba619c166ec89d1538e95b3f",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2390,7 +2403,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--mobile--changed-surface.png",
-      "sha256": "b6abfbb26bfe1ca7e30ea97aa4153f749503cda6ecc693bf38af9a9f9c8716f8",
+      "sha256": "1759bdada84e1aa3f8708915f96e951b05c46f5bfe714a9ea3a71e72b80af84e",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2407,7 +2420,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--ambient--mobile--changed-surface.png",
-      "sha256": "2e7b930e1977f4f11962aee0163d68a84e87595a75c7cbc0ae892eb040fd3bfd",
+      "sha256": "e77b4b083b3f7e2a88277c9c9c72e2d7c7f821bc4f734859bbb458ac0e73e967",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2424,7 +2437,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--mobile--changed-surface.png",
-      "sha256": "c132e43fbcf4197a74ccb6b7846c35694aaf5f878930075be80fa807481121d6",
+      "sha256": "36b5656bb0e7828a2e68bc19e3edaa4768592ebae235a6fa6f8b6c59f3180382",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2441,7 +2454,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--warm--mobile--changed-surface.png",
-      "sha256": "d897f5c6d118cb4b6ee63eed9bcabe14942dfc99549a27f40103c9751a14d808",
+      "sha256": "4c6527ee70561b86f1dc35a7617461d9649bb17163719daaed317d5a7107479a",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2458,7 +2471,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--mobile--changed-surface.png",
-      "sha256": "8bd6575a4123312355c3bec5f1e324a9a8cd01b0e5bddc791fd78c7875553ff8",
+      "sha256": "1a6fd5c69a2dfeef469d172ad387de8487f843f9cf78af3d4f5c3fb9d32e4688",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2475,7 +2488,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--cool--mobile--changed-surface.png",
-      "sha256": "ccc9a7b2cdfd0d24848e5600f2c4882fbfe0020505a5645352c4c9648996ea55",
+      "sha256": "d8f8287271628a3752b08101ea515e673bf5d264f6f4be4dfdc662b2a753dd1d",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2492,7 +2505,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--mobile--changed-surface.png",
-      "sha256": "2b8d4f0a364ffcbe77b44be6336acb1ec3f80d583ce3844eb807c9254d236b4a",
+      "sha256": "0235c3327e1c344bb7f2d7a1dea1297462a07eb7c279bf3d274a62151b07c3c2",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2509,7 +2522,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--lava--mobile--changed-surface.png",
-      "sha256": "712188bd7731eb85da4f5d5d54276e2bb119efcaed3967c9c5b4aa0385d00bec",
+      "sha256": "42fca9565741aad294e8f05908ba8f1b2eaa5ae16d15207fe66bf66160219262",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2526,7 +2539,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--mobile--changed-surface.png",
-      "sha256": "96c61669ccf02ea0494a37be73a6c738114fafb230f4ab6b7883f42aed697677",
+      "sha256": "fdcb375cc66c8e6483f65e33e4ab2844413ebb788d0b36a6c4dc46b7455b3e56",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
@@ -2543,7 +2556,7 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--high-contrast--mobile--changed-surface.png",
-      "sha256": "9dd65822cbb48f92daed6a6db27e47428f1d2d8cd64e0fee23f80acffee39c2d",
+      "sha256": "e2ee7802edfc61d4366651f9b87ed0ce4b3f16562ea60e49dbe4402ea632fabf",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
@@ -2551,13 +2564,5 @@
         "reviewer": "Claude Opus 5.5 (S372)"
       }
     }
-  ],
-  "rebound": {
-    "at": "2026-10-09T22:27:38.366Z",
-    "note": "Source binding recomputed after normalizing CRLF working-tree copies to the committed LF bytes (git blob hashes unchanged). All 28 capture hashes verified unchanged; original capture and review times retained.",
-    "changedSourceEntries": [
-      "vault-member/portal-auth.js",
-      "vault-member/portal-dashboard.js"
-    ]
-  }
+  ]
 }
