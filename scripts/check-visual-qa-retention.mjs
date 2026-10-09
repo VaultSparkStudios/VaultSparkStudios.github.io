@@ -23,7 +23,10 @@ if (SELF_TEST) {
   if (got.retained.join(',') !== 'b.png,c.png' || got.archivalCandidates.join(',') !== 'a.png') process.exit(1);
   console.log('check-visual-qa-retention --self-test: all passed');
 } else {
-  const files = fs.readdirSync(DIR);
+  // S372: directory order is OS-defined (case-insensitive on Windows NTFS), so an
+  // unsorted listing made the committed report differ by platform and the CI
+  // --check failed on a report generated on Windows. Code-unit order is stable.
+  const files = fs.readdirSync(DIR).sort();
   const receipts = files.filter((file) => file.endsWith('.json') && file !== 'manifest.json')
     .map((file) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8')))
     .filter((value) => Array.isArray(value?.captures));
