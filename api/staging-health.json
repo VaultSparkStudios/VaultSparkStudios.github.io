@@ -1,18 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-09T22:07:23.279Z",
+  "generatedAt": "2026-10-09T22:39:03.828Z",
   "candidateReady": false,
   "candidateFindings": [
-    "staging-build-sha-mismatch"
+    "staging-build-sha-mismatch",
+    "staging-artifact-root-mismatch"
   ],
   "candidateBuildSha": "fad1523b72977cef27305295c7c53020198f83ec",
   "stagingBuildSha": "be9fe433d7a7fe9bb8e537617e912bb696b6d147",
   "artifactManifest": {
-    "candidateRoot": "802df3765612234598af1b33722b614a68f3e9e94f520e33bc17c66a15f92262",
+    "candidateRoot": "54ca3a8329783f65691642dde2cbe89622d1172c32ddb1935a393457447d59c7",
     "candidateLeafCount": 63,
     "stagingRoot": "802df3765612234598af1b33722b614a68f3e9e94f520e33bc17c66a15f92262",
     "stagingLeafCount": 63,
-    "matched": true
+    "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -22,7 +23,7 @@
   "surfaceParity": {
     "state": "uncomparable",
     "productionRoutes": null,
-    "stagingRoutes": 247,
+    "stagingRoutes": 248,
     "missingOnStaging": [],
     "missingOnStagingCount": null,
     "aheadOnStaging": [],
