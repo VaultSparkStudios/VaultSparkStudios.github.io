@@ -31,10 +31,14 @@ test.describe('Public pages load', () => {
     await expect(page.locator('.lb-table').first()).toBeVisible();
   });
 
-  test('Journal page renders posts', async ({ page }) => {
+  // S368 retired the /journal/ index into /changelog/#stories; the story pages stay served.
+  test('Retired journal index lands on changelog stories', async ({ page }) => {
     await page.goto(BASE + '/journal/');
-    await expect(page).toHaveTitle(/Journal|Signal Log/i);
-    await expect(page.locator('article, .post-card, .journal-entry').first()).toBeVisible();
+    await expect(page).toHaveURL(/\/changelog\/#stories$/);
+    await expect(page).toHaveTitle(/Changelog/i);
+    const story = page.locator('#stories .cl-story__title a').first();
+    await expect(story).toBeVisible();
+    await expect(story).toHaveAttribute('href', /^\/journal\/[a-z0-9-]+\/$/);
   });
 
   test('404 page shows custom error', async ({ page }) => {

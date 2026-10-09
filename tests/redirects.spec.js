@@ -14,8 +14,10 @@ const LEGACY_301 = [
   ['/gridiron-gm',               '/games/gridiron-gm/'],
   ['/vaultfront',                '/games/vaultfront/'],
   ['/open-source',               '/rights/'],
-  // S160 #20 (redundance-purge): /signal-log/ retired into /journal/
-  ['/signal-log',                '/journal/'],
+  // S160 #20 retired /signal-log/ into /journal/; S368 retired that index into
+  // /changelog/#stories. S372: the Worker now takes one hop straight there.
+  ['/signal-log',                '/changelog/#stories'],
+  ['/vaultspark-football-gm',    '/games/franchise-architect/'],
   // Investor portal canonicalization
   ['/investor',                  '/investor-portal/'],
   ['/investor/admin',            '/investor-portal/admin/'],

@@ -183,6 +183,18 @@ test('public redirects keep the configured canonical origin behind a staging pro
   );
 });
 
+test('legacy redirects take one hop and keep the query ahead of a fragment target', async () => {
+  const ctx = { waitUntil() {} };
+  const hop = async (path) => {
+    const res = await worker.fetch(new Request(`${APEX}${path}`, { headers: { accept: 'text/html' } }), {}, ctx);
+    return [res.status, res.headers.get('Location')];
+  };
+  assert.deepEqual(await hop('/signal-log?ref=feed'), [301, `${APEX}/changelog/?ref=feed#stories`]);
+  assert.deepEqual(await hop('/signal-log'), [301, `${APEX}/changelog/#stories`]);
+  assert.deepEqual(await hop('/vaultspark-football-gm'), [301, `${APEX}/games/franchise-architect/`]);
+  assert.deepEqual(await hop('/investor/admin?x=1'), [301, `${APEX}/investor-portal/admin/?x=1`]);
+});
+
 test('buffered HTML cache copies consume independently without stream tees', async () => {
   const bytes = new TextEncoder().encode('<!doctype html><title>independent</title>').buffer;
   const source = new Response(bytes, { status: 200, headers: { 'content-type': 'text/html' } });

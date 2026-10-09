@@ -1372,7 +1372,8 @@ const worker = {
       // S284 Franchise Architect rebrand — VaultSpark Football GM slug retired.
       // (Pages `_redirects` is the live path today; these are the canonical Worker
       // 301s that take over on the next Worker deploy.)
-      '/vaultspark-football-gm': '/franchise-architect/',
+      // S372: one hop — /franchise-architect/ is itself retired to /games/franchise-architect/.
+      '/vaultspark-football-gm': '/games/franchise-architect/',
       '/games/vaultspark-football-gm': '/games/franchise-architect/',
       // Investor portal canonicalization
       '/investor': '/investor-portal/',
@@ -1387,9 +1388,9 @@ const worker = {
       '/products': '/projects/',
       // VaultFront moved from /projects/ to /games/ — canonical now /games/vaultfront/
       '/projects/vaultfront': '/games/vaultfront/',
-      // S160 #20 (redundance-purge): /signal-log/ retired into /journal/ — every
-      // public communications signal is now an entry inside the journal feed.
-      '/signal-log': '/journal/',
+      // S160 #20 (redundance-purge): /signal-log/ retired into /journal/; S368 then
+      // retired the /journal/ index into /changelog/#stories. S372: one hop, not two.
+      '/signal-log': '/changelog/#stories',
     };
     // /products/<slug> tree → canonical per-project surfaces (S147)
     const PRODUCTS_PATH_REDIRECTS = {
@@ -1462,7 +1463,10 @@ const worker = {
       .sort(([left], [right]) => right.length - left.length)) {
       const re = new RegExp(`^${from}(/|$)`, 'i');
       if (re.test(url.pathname)) {
-        return Response.redirect(`${publicOrigin}${to}${url.search}`, 301);
+        // The query belongs before a fragment target, never inside it.
+        const hashAt = to.indexOf('#');
+        const target = hashAt < 0 ? `${to}${url.search}` : `${to.slice(0, hashAt)}${url.search}${to.slice(hashAt)}`;
+        return Response.redirect(`${publicOrigin}${target}`, 301);
       }
     }
     // External canonicals (full-domain handoffs)

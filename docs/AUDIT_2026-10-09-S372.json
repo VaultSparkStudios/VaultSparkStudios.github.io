@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "2.1",
+  "session": 372,
+  "generatedAt": "2026-10-09T21:47:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Three L2 outcomes from live signals at S372 start: restore the daily public-surface assurance that a retired route had held red for eight days, remove two-hop legacy redirects at the edge, and route a cross-repo checker misclassification to its owner through the Ark.",
+  "axes": {
+    "features-depth": 1,
+    "ui-ux-feedback": 1.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 2.5,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "restore-daily-surface-assurance",
+      "axis": "observability-honesty",
+      "title": "Restore the daily public-surface assurance held red by a retired route",
+      "why": "The S368 IA consolidation retired /journal/ into /changelog/#stories on 2026-10-02, but check-live-surface-matrix still required /journal/ in the sitemap. CI Health Monitor failed eight consecutive daily runs (36989006001 through 37910745305), and because the matrix aborted before its sweep, the 247-route sweep, edge smoke and Chromium public-journey smoke behind it went unexercised for eight days.",
+      "recipe": "Require the successor /changelog/. Report missing required routes as failures instead of throwing so one stale entry cannot abort the sweep. Add a self-test that rejects any required route _redirects retires, and run that self-test in build:check. Update the Chromium smoke journey to the successor and pin the retirement redirect.",
+      "tier": "🔥",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 4,
+      "priority": 24,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "executionLog": [
+        {
+          "at": "2026-10-09T21:40:00.000Z",
+          "status": "shipped",
+          "note": "Self-test 13/13 and a control with /journal/ restored fails as intended. Live matrix against the Pages origin: 247 sitemap routes, 8 public files, Desk 2026-10-09, 0 failures. smoke-live --edge-only 2/2. The masked Chromium smoke failed on the same stale /journal/ assumption; after the fix 15/15 passed on the Pages origin and the retirement journey passed on the apex.",
+          "evidence": "scripts/check-live-surface-matrix.mjs; tests/smoke.spec.js"
+        }
+      ],
+      "informationFindingOutcome": "A retired route can no longer silently hold the daily assurance red, and one missing route no longer hides every other result.",
+      "acceptance": "Matrix self-test passes with a failing control; live matrix, edge smoke and Chromium journey smoke pass; the next scheduled CI Health Monitor run is green.",
+      "premises": [
+        {
+          "claim": "CI Health Monitor failed daily since 2026-10-02 with 'sitemap lacks /journal/'",
+          "adapter": "observed",
+          "target": "gh run view 37910745305 --log-failed",
+          "pattern": "live surface matrix failed: sitemap lacks /journal/",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Replace /journal/ with /changelog/."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Successor route, non-aborting missing-route reporting, a retired-route self-test wired into build:check, and the masked Chromium journey repaired."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Derive the required-route list from the navigation contract; deferred as unnecessary for the selected outcome."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slug": "single-hop-legacy-redirects",
+      "axis": "speed-organization-efficiency",
+      "title": "Send legacy edge redirects to their final destination in one hop",
+      "why": "The Worker sent /signal-log to /journal/ and /vaultspark-football-gm to /franchise-architect/, both of which _redirects retires, so visitors and crawlers took two 301s. The same loop appended the query after the target, which would place it inside the fragment for any hash destination.",
+      "recipe": "Point both entries at the final destinations, insert the query before a fragment, update the redirect contract spec, and add a unit spec that fails on any Worker or _redirects rule landing on a retired route, wired into build:check.",
+      "tier": "⚡",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 3,
+      "priority": 18,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "executionLog": [
+        {
+          "at": "2026-10-09T21:45:00.000Z",
+          "status": "shipped",
+          "note": "Unit spec 3/3; against the previous Worker it reports both chains. Worker syntax check passes. Live single-hop behaviour is accepted after the Worker deploy.",
+          "evidence": "tests/s372-redirect-chains.unit.spec.mjs; cloudflare/security-headers-worker.js; tests/redirects.spec.js"
+        }
+      ],
+      "informationFindingOutcome": "Every legacy redirect lands on a served page in one hop, and new chains fail the build.",
+      "acceptance": "Chain spec passes with a failing control; after Worker deploy, /signal-log and /vaultspark-football-gm return a single 301 to their final destinations.",
+      "premises": [
+        {
+          "claim": "https://vaultsparkstudios.com/signal-log 301s to /journal/, itself a 301",
+          "adapter": "observed",
+          "target": "curl -s -o /dev/null -w '%{redirect_url}' https://vaultsparkstudios.com/signal-log",
+          "pattern": "https://vaultsparkstudios.com/journal/",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Repoint the two entries."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Repoint, fix query/fragment order, update the contract spec, add a wired chain guard."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Generate the Worker legacy map and _redirects from one route registry; deferred."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "slug": "visual-qa-cache-misclassification",
+      "axis": "observability-honesty",
+      "title": "Route the CANON-053 checker's cache-file misclassification to its owner",
+      "why": "check-visual-qa (owned by studio-ops) classifies any .html path as UI implementation, so a regenerated .cache/pathways-diff/propagated.html report raised an ABSOLUTE CANON-053 gap at /start with no UI change.",
+      "recipe": "Discard the local cache churn here, and ship repo-question cargo to studio-ops proposing that generated .cache/ paths be excluded from isUiImplementationFile. Never edit the sibling tree.",
+      "tier": "💡",
+      "effortHours": 0.25,
+      "impact": 4,
+      "innovation": 2,
+      "priority": 8,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "executionLog": [],
+      "informationFindingOutcome": "A false ABSOLUTE canon gap stops recurring at the source rather than being cleared by hand each session.",
+      "acceptance": "check-visual-qa --changed passes here; Ark cargo is shipped to studio-ops.",
+      "premises": [
+        {
+          "claim": "check-visual-qa reported a CANON-053 defect for .cache/pathways-diff/propagated.html",
+          "adapter": "observed",
+          "target": "node ../vaultspark-studio-ops/scripts/check-visual-qa.mjs --project .",
+          "pattern": "receipt predates 1 changed UI file(s)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.1,
+          "recipe": "Discard the local churn."
+        },
+        "L2": {
+          "effortHours": 0.25,
+          "recipe": "Discard locally and ship owner cargo."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Owner-side fix with a regression case; belongs to studio-ops."
+        }
+      }
+    }
+  ],
+  "totals": {
+    "count": 3,
+    "priority": 50,
+    "top3": [
+      "restore-daily-surface-assurance",
+      "single-hop-legacy-redirects",
+      "visual-qa-cache-misclassification"
+    ]
+  }
+}

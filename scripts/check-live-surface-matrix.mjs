@@ -2,8 +2,9 @@
 // @verification-scope scheduled-assurance
 // Daily, read-only check of the served Pages origin. The edge may challenge CI
 // clients, so route/content assertions use Pages while smoke-live checks the edge.
+import { readFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { deriveNewsReleaseContract } from './lib/news-release-contract.mjs';
 
 const args = process.argv.slice(2);
@@ -13,7 +14,12 @@ const concurrency = Number(option('--concurrency', '8'));
 const maxAgeDays = Number(option('--max-age-days', '1'));
 const minRoutes = Number(option('--min-routes', '180'));
 const jsonOut = option('--json-out', '');
-const REQUIRED_ROUTES = ['/', '/games/', '/projects/', '/news/', '/community/', '/membership/', '/contact/', '/privacy/', '/terms/', '/journal/', '/studio/', '/status/', '/universe/'];
+// S372: /journal/ was retired into /changelog/#stories by the S368 IA consolidation
+// while this list still required it, so the daily run failed for 8 days and every
+// step behind it went unexercised. The self-test now rejects any required route
+// that _redirects retires.
+const REQUIRED_ROUTES = ['/', '/games/', '/projects/', '/news/', '/community/', '/membership/', '/contact/', '/privacy/', '/terms/', '/changelog/', '/studio/', '/status/', '/universe/'];
+const REDIRECTS_FILE = resolve(dirname(import.meta.filename), '..', '_redirects');
 const FILE_SURFACES = [
   ['/agents.json', 'json'], ['/manifest.json', 'json'], ['/api/public-status.json', 'json'],
   ['/api/heartbeat.json', 'json'], ['/api/site-health.json', 'json'],
@@ -29,8 +35,23 @@ export function sitemapRoutes(xml, minimum = minRoutes) {
   });
   if (routes.length < minimum) throw new Error(`sitemap has ${routes.length} routes; expected at least ${minimum}`);
   if (new Set(routes).size !== routes.length) throw new Error('sitemap contains duplicate routes');
-  for (const route of REQUIRED_ROUTES) if (!routes.includes(route)) throw new Error(`sitemap lacks ${route}`);
   return routes;
+}
+
+// A missing required route is one failure among many, not a reason to skip the sweep.
+export function missingRequiredRoutes(routes, required = REQUIRED_ROUTES) {
+  return required.filter((route) => !routes.includes(route)).map((route) => `sitemap lacks ${route}`);
+}
+
+// Exact (non-splat) redirect sources with a 3xx status, normalised to a trailing slash.
+export function retiredRoutes(redirectsText) {
+  const retired = new Set();
+  for (const line of String(redirectsText).split(/\r?\n/)) {
+    const [source, , status] = line.trim().split(/\s+/);
+    if (!source || source.startsWith('#') || source.includes('*') || !/^30[1278]!?$/.test(status || '')) continue;
+    retired.add(source.endsWith('/') ? source : `${source}/`);
+  }
+  return retired;
 }
 
 export function inspectPage(route, result) {
@@ -120,6 +141,9 @@ function selfTest() {
     ['redirected route fails', /redirected/.test(inspectPage('/games/', { status: 200, path: '/', type: 'text/html', body: '<html><title>Home</title>' }))],
     ['invalid public JSON fails', /invalid JSON/.test(inspectFileSurface('/agents.json', 'json', { status: 200, body: '{broken-json-response' }))],
     ['short sitemap fails', (() => { try { sitemapRoutes('<loc>https://vaultsparkstudios.com/</loc>', 180); return false; } catch { return true; } })()],
+    ['missing required route is reported, not thrown', (() => { const xml = '<loc>https://vaultsparkstudios.com/</loc>'; return missingRequiredRoutes(sitemapRoutes(xml, 1), ['/', '/news/']).join() === 'sitemap lacks /news/'; })()],
+    ['retired redirect sources are detected', (() => { const r = retiredRoutes('# c\n/old/  /new/  301\n/old  /new/  301\n/tree/*  /x/  301\n/proxy  /p/  200\n'); return r.has('/old/') && !r.has('/tree/*') && !r.has('/proxy/'); })()],
+    ['no required route is retired by _redirects', (() => { const retired = retiredRoutes(readFileSync(REDIRECTS_FILE, 'utf8')); const bad = REQUIRED_ROUTES.filter((r) => retired.has(r)); if (bad.length) console.error(`    required but retired: ${bad.join(', ')}`); return bad.length === 0; })()],
   ];
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
   if (cases.some(([, ok]) => !ok)) throw new Error('surface matrix self-test failed');
@@ -133,7 +157,7 @@ async function main() {
   const sitemap = await get('/sitemap.xml');
   if (sitemap.status !== 200) throw new Error(`sitemap returned HTTP ${sitemap.status}`);
   const routes = sitemapRoutes(sitemap.body);
-  const failures = await sweep(routes, concurrency);
+  const failures = [...missingRequiredRoutes(routes), ...await sweep(routes, concurrency)];
   const fileResults = await Promise.all(FILE_SURFACES.map(async ([route, kind]) => {
     try { return inspectFileSurface(route, kind, await get(route)); }
     catch (error) { return `${route}: ${error.message}`; }
