@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · deployed · arch=— · top-axis=—              ║
+║  Profile · website · live-production · arch=— · top-axis=—       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -123,6 +123,9 @@
 ║   96  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   95  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
 ║        Push helper as a repo script (scripts/push-main.mjs): au  ║
-║                                                                  ║
-║   81  [PRODUCT]      Approve Desk digest test → autoSend; apply  ║
-║        Approve Desk digest test is open, local, and unblocked —  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
