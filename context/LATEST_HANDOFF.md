@@ -1,3 +1,8 @@
+## Where We Left Off — S371 final observed acceptance (2026-10-09)
+
+Session Intent: /arc, authorized direct main publication and deployment.
+
+Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: closing candidate 9b105d275e2f32cabe6ca2597205b6aebbd963cb live through Pages 37986968939; prior f509 acceptance remains preserved. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Canonical autopilot completed with two full 531-step passes. The temporary preview stopped; closing public feeds are verified live at 9b105d275. The acceptance receipt is recorded below.
 ## Where We Left Off — S370 final requested closeout (2026-10-08)
 
 Session Intent: finish the five requested site outcomes and explicit closeout, main publication, deployment, records and terminal cleanup.
@@ -11,18 +16,13 @@ Session Intent: finish the five requested site outcomes and explicit closeout, m
 - Shells: original preview and both temporary capture servers stopped. Final canonical verification completed; all four task-owned long-running jobs are closed.
 
 Historical checkpoints below remain intact; pending release wording is superseded by the verified production acceptance above.
-## Where We Left Off — S370 requested follow-through (2026-10-08)
 
-Session Intent: founder-requested /closeout, complete memory/context/CDR/task-board updates, direct commit/push to GitHub main, deployment and background-terminal cleanup.
+## S371 closing follow-through verified — 2026-10-09
 
-Shipped: all five Spark/Desk requests. Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
+Closing candidate `9b105d275e2f32cabe6ca2597205b6aebbd963cb` (tag `release-S371-9b105d275`) is verified live through Pages run `37986968939`. Required exact-candidate checks passed: E2E/compliance 37985123589, accessibility 37985123779, and Lighthouse 37985123593 including staging. Staging snapshot 20261009201032 verified 562 overlays and three safe removals. Fourteen staging artifacts matched the candidate.
 
-Deploy: requested UI is deployed; final closeout source publication and deployment readback are in progress. Existing identity baseline remains held.
+Production metadata and fourteen served artifacts match the candidate after documented edge transforms. The normal cached article CSS and four normal public-feed URLs also match. Reviewed HTML and browser assets are preserved, with only the shell-manifest timestamp changed. All three bound sources and 168 screenshot hashes were independently verified unchanged before metadata-only rebinding; original capture and review dates remain. The earlier closing E2E failure 37983977935 is retained.
 
-SIL: retain S370 916/1000 and its original ten categories; repeated closeout is not another scored session. Scaffold: five feature outcomes done; final closeout verification in progress. Shells: original preview session 6960 stopped; fresh process enumeration contains no local-preview-server process. Prior primary-workspace changes remain preserved in an isolated worktree.
+Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
-Historical checkpoints below are retained; their pending wording is superseded by current verified outcomes above.
-
-## S371 release maintenance handoff — 2026-10-09
-
-Four selected L2 outcomes are implemented and independently reviewed. Focused regression4/4; news153/153; mobile215/215. Exact source deployment is pending staging and hosted checks. Preserve original checkout and startup propagation stash. Main-only OG and complete write-back history execute from published main; Windows scheduled art uses the primary checkout bootstrap, which must be updated safely after source publication. Final accepted disposition will be appended here.
+The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.

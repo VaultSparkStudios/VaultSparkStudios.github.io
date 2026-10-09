@@ -1993,3 +1993,23 @@ Both selected L2 audit outcomes are complete. The two SIL proposals remain next-
 ### S370 final validation coherence repair
 
 Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
+
+
+---
+<!-- archived: 2026-10-09 -->
+
+## Where We Left Off — S370 requested follow-through (2026-10-08)
+
+Session Intent: founder-requested /closeout, complete memory/context/CDR/task-board updates, direct commit/push to GitHub main, deployment and background-terminal cleanup.
+
+Shipped: all five Spark/Desk requests. Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
+
+Deploy: requested UI is deployed; final closeout source publication and deployment readback are in progress. Existing identity baseline remains held.
+
+SIL: retain S370 916/1000 and its original ten categories; repeated closeout is not another scored session. Scaffold: five feature outcomes done; final closeout verification in progress. Shells: original preview session 6960 stopped; fresh process enumeration contains no local-preview-server process. Prior primary-workspace changes remain preserved in an isolated worktree.
+
+Historical checkpoints below are retained; their pending wording is superseded by current verified outcomes above.
+
+## S371 release maintenance handoff — 2026-10-09
+
+Four selected L2 outcomes are implemented and independently reviewed. Focused regression4/4; news153/153; mobile215/215. Exact source deployment is pending staging and hosted checks. Preserve original checkout and startup propagation stash. Main-only OG and complete write-back history execute from published main; Windows scheduled art uses the primary checkout bootstrap, which must be updated safely after source publication. Final accepted disposition will be appended here.

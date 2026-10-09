@@ -15,3 +15,6 @@ Selected depth: L2. Preserve the original checkout and unverified incoming propa
    Acceptance: focused regression cases, generated-news current, full build and unchanged runtime binding.
 
 Wave 1: current-remote profile, canon and source audit. Wave 2: four fixes and independent review. Wave 3: staging, exact-candidate checks, production readback, records and closeout.
+
+
+All four selected L2 outcomes verified. Wave3 complete; exact production acceptance: docs/S371_RELEASE_2026-10-09.md.

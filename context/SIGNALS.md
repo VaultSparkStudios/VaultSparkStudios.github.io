@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         530/530 passing (2026-10-08)                   ║
+║  ✓  Tests         531/531 passing (2026-10-09)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   5d                                             ║
@@ -7,7 +7,7 @@
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   0/0 (0%) → ▆▆▆▆▄▄▁▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.210  (healthy)                               ║
+║  ✓  Entropy       0.220  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
