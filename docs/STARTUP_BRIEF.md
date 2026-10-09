@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S371) - WHAT SHIPPED ══════════════════════════╗
-║  S371 release maintenance: four reviewed fixes; exact candidate  ║
+║  S371 release maintenance verified on main, scheduled producer   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · live-production · arch=— · top-axis=—       ║
+║  Profile · website · deployed · arch=— · top-axis=—              ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -63,17 +63,17 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 371 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    530/530 passing  ·  Deploy: N/A                       ║
+║  Tests:    531/531 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         530/530 passing (2026-10-08)                   ║
+║  ✓  Tests         531/531 passing (2026-10-09)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ✓  Context age   5d                                             ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⛔  Doctor        13/17 (76%)  ·  2 failing                      ║
 ║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wave3: full release checks, staging byte p  ║
-║        Wave3: full release checks, staging byte proof, main pub  ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      Exercise the art receipt path on the next   ║
+║   96  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
-║   92  [COHESION]     Preserve project-local capability contract  ║
+║   95  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
+║   93  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
 ║        Keep shell regeneration and SRI stamping in a single doc  ║
+║                                                                  ║
+║   87  [PRODUCT]      Push helper as a repo script (scripts/push  ║
+║        Push helper as a repo script (scripts/push-main.mjs): au  ║
+║                                                                  ║
+║   81  [PRODUCT]      Approve Desk digest test → autoSend; apply  ║
+║        Approve Desk digest test is open, local, and unblocked —  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
