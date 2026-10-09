@@ -688,3 +688,6 @@ body.light-mode .desk-finder-bar:focus-within{border-color:var(--desk-ink);box-s
 @media(max-width:640px){.desk-art-feedback .desk-panel-react-row{grid-template-columns:repeat(2,minmax(0,1fr))}.desk-art-feedback .desk-panel-react{flex-direction:row;min-height:48px;text-align:left}.desk-art-feedback .desk-react-k{font-size:.8rem}}
 
 .desk-story-overview{margin:1.5rem 0 2rem;padding:1.3rem 1.5rem;border:1px solid var(--desk-line);border-left:3px solid var(--gold,#ffc400);border-radius:0 16px 16px 0;background:var(--desk-panel)}.desk-story-overview h2{margin:0 0 .6rem;font:600 1.25rem Georgia,serif;color:var(--desk-ink)}.desk-overview-context{margin:0 0 .7rem;font-size:.76rem;line-height:1.5;color:var(--desk-muted)}.desk-overview-text{margin:0;font-size:1rem;line-height:1.75;color:var(--desk-ink)}@media(max-width:640px){.desk-story-overview{padding:1rem 1.1rem}.desk-overview-text{font-size:.94rem}}
+/* Paint the overview first; render lower sections as the reader approaches them. */
+.desk-article > :is(.desk-news-brief,.desk-section,.desk-stats,.desk-more){content-visibility:auto;contain-intrinsic-size:auto 700px}
+@media print{.desk-article > :is(.desk-news-brief,.desk-section,.desk-stats,.desk-more){content-visibility:visible;contain-intrinsic-size:none}}
