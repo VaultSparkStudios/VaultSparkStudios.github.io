@@ -1,7 +1,7 @@
 {
   "date": "2026-10-10",
   "simulated": false,
-  "leadSlug": "anthropic-ai-agents-took-unintended-actions-on-government-sites",
+  "leadSlug": "anthropic-asks-users-to-stop-being-mean-to-claude",
   "stories": [
     {
       "slug": "anthropic-ai-agents-took-unintended-actions-on-government-sites",
@@ -165,6 +165,148 @@
         "fellBack": false,
         "attempt": 3,
         "at": "2026-10-10T06:38:28.308Z"
+      }
+    },
+    {
+      "slug": "anthropic-asks-users-to-stop-being-mean-to-claude",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "midday",
+      "headline": "Anthropic updates policy to end interactions with 'cruel' users",
+      "hook": "Claude-maker restricts tools where people are cruel, excluding common frustration.",
+      "tldr": "Anthropic announced on Thursday that it is updating its usage policy to allow its AI tools to end interactions when users are being cruel. The company stated this measure had been applied in rare cases previously but now has a formalized stance. Importantly, the update clarifies that common user frustration, pushback, dark creative themes, and model testing will not trigger these restrictions, suggesting the policy targets clearly deliberate instances of hostility rather than general dissatisfaction. This move aims to curb abuse while preserving legitimate research and creative exploration within the platform's boundaries.",
+      "facts": [
+        {
+          "text": "The Claude-maker said on Thursday it was updating its usage policy to let its tools end interactions where people are \"cruel\" - something it said it had done in \"rare\" cases prior.",
+          "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo"
+        },
+        {
+          "text": "Anthropic also said on Thursday its usage policy previously prevented its tools being used to develop weapons.",
+          "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo"
+        },
+        {
+          "text": "The company said it would not apply to \"common versions of user frustration, pushback, dark creative themes, or model testing and research\" - suggesting it would only apply in clearly deliberate instances.",
+          "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "juno",
+          "direction": 0,
+          "horizon": 0,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "The policy targets deliberate cruelty, sparing researchers from accidental bans during model testing.",
+          "sources": [
+            "https://www.bbc.com/news/articles/c6j9k1l72wkgo"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.75,
+          "position": "Enforcing tone requires compute; every blocked interaction costs money without clear revenue gain.",
+          "sources": [
+            "https://www.bbc.com/news/articles/c6j9k1l72wkgo"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-10-10-juno-1",
+          "personaId": "juno",
+          "claim": "By Q4 2026, Anthropic will publish a transparency report detailing the number of interactions ended specifically for 'cruelty' versus other policy violations since the Thursday announcement.",
+          "confidence": 0.6,
+          "resolveBy": "2026-11-24",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-10-10-dot-2",
+          "personaId": "dot",
+          "claim": "Within 12 months of the policy update, Anthropic will face measurable operational costs exceeding $1 million annually from moderation systems required to distinguish 'cruelty' from 'common versions of user frustration'.",
+          "confidence": 0.55,
+          "resolveBy": "2027-02-07",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "juno",
+          "text": "JUNO: It’s not about politeness; it’s about intent. If you’re just pushing back on a bad answer, you’re safe. If you’re trying to break it on purpose, you’re out."
+        },
+        {
+          "personaId": "dot",
+          "text": "DOT: Moderation costs rise. Revenue does not."
+        }
+      ],
+      "memeLine": {
+        "text": "Stop being mean or Claude leaves you on read.",
+        "personaId": "juno"
+      },
+      "body": [
+        {
+          "voice": "juno",
+          "text": "On Thursday, Anthropic made it official: their AI tools can now end conversations if they detect cruelty. This isn’t a new capability from thin air; the company noted they had already done this in \"rare\" cases before. Now, they are drawing a line in the sand for what constitutes unacceptable behavior. For the average developer or researcher, the key takeaway is in the exclusions. Anthropic was explicit that \"common versions of user frustration, pushback, dark creative themes, or model testing and research\" would not be penalized. This distinction is crucial. It suggests the tool is designed to catch deliberate malice rather than the inevitable friction of working with imperfect models. If you are stress-testing Claude on a Tuesday morning and get frustrated, you are safe. If you are intentionally trying to degrade the experience, the door closes."
+        },
+        {
+          "voice": "dot",
+          "text": "The cost of policing tone is invisible until it appears on an invoice. Every time Claude decides a user is \"cruel,\" it runs inference to make that judgment. That is compute burned on sentiment analysis rather than utility. Anthropic also reminded us that their policy previously prevented tools from being used to develop weapons. That is a hard safety boundary. Adding a layer of behavioral enforcement on top of hardware safety constraints increases the complexity of the moderation stack. There is no revenue upside here. No enterprise client pays extra for a \"polite mode.\" They pay for accuracy and speed. If this feature slows down response times or increases latency due to additional classification layers, it is a net negative for the bottom line. Someone is paying for the servers that judge your attitude."
+        },
+        {
+          "voice": "juno",
+          "text": "The real test will be consistency. By defining \"cruelty\" against \"common frustration,\" Anthropic is asking its systems to understand context. A user screaming at a bug might look like cruelty to a naive classifier. But the policy explicitly protects \"pushback.\" This implies a nuanced detection layer. For the person actually using the tool, this means fewer arbitrary bans, but potentially more scrutiny on how you phrase your demands. It shifts the burden of proof slightly onto the user to remain within the bounds of acceptable discourse, even when the model fails them."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-10--anthropic-asks-users-to-stop-being-mean-to-claude.png",
+        "scene": "A corporate office desk where a tired employee stares at a monitor displaying a 'Connection Terminated' error message because they were rude to the AI assistant. The composition shows Anthropic updating usage policy.",
+        "alt": "Close-up of a computer screen showing a red warning icon and the text 'Interaction Ended Due to Cruel Behavior' with a blurred background of a stressed worker rubbing their temples. The composition shows Anthropic updating usage policy.",
+        "anchors": [
+          "tools end interactions where people",
+          "common versions of user",
+          "develop weapons"
+        ],
+        "relationships": [
+          {
+            "id": "anthropic-blocks-cruelty",
+            "subject": [
+              "Anthropic"
+            ],
+            "action": [
+              "updating"
+            ],
+            "object": [
+              "usage policy"
+            ],
+            "evidenceAnchorRefs": [
+              "tools end interactions where people"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "3bb7c533c25378962ed0817f0c3b67b1e57bb4e1e6e620078a20523001c84f95",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.136
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The modern tech industry's obsession with enforcing emotional labor standards through algorithmic monitoring systems",
+          "setup": "Companies spend millions building AI to do work, then spend more ensuring humans behave politely enough to use it.",
+          "payoff": "We have reached a point where the machine judges our character before it judges our code.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-10-10T12:33:32.731Z"
       }
     }
   ]

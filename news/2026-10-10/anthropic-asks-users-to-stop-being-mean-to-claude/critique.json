@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-10T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude",
+    "url": "https://vaultsparkstudios.com/news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-01-9e7d3f028489",
+      "hash": "9e7d3f028489b25c544084f2e00a9c2c4e272461fa0f1c908cad4a5248a2964e",
+      "text": "The Claude-maker said on Thursday it was updating its usage policy to let its tools end interactions where people are \"cruel\" - something it said it had done in \"rare\" cases prior.",
+      "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/#fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-01-9e7d3f028489"
+    },
+    {
+      "id": "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-02-d35e20e05e1d",
+      "hash": "d35e20e05e1df044f75be0a3a0c289142d4bcc6cc4c77676bd7a200e4ee57752",
+      "text": "Anthropic also said on Thursday its usage policy previously prevented its tools being used to develop weapons.",
+      "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/#fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-02-d35e20e05e1d"
+    },
+    {
+      "id": "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-03-ac22b098a4dc",
+      "hash": "ac22b098a4dc83d5720a36ee353fe4b6a252ffea47539aa37275195f0f7e3b84",
+      "text": "The company said it would not apply to \"common versions of user frustration, pushback, dark creative themes, or model testing and research\" - suggesting it would only apply in clearly deliberate instances.",
+      "sourceUrl": "https://www.bbc.com/news/articles/c6j9k1l72wkgo",
+      "sourceHost": "bbc.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/#fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-03-ac22b098a4dc"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "juno:fair",
+      "persona": "juno",
+      "text": "The policy targets deliberate cruelty, sparing researchers from accidental bans during model testing.",
+      "confidence": 0.85,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-01-9e7d3f028489",
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-02-d35e20e05e1d",
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-03-ac22b098a4dc"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "dot:underhyped",
+      "persona": "dot",
+      "text": "Enforcing tone requires compute; every blocked interaction costs money without clear revenue gain.",
+      "confidence": 0.75,
+      "verdict": "underhyped",
+      "direction": -1,
+      "factRefs": [
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-01-9e7d3f028489",
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-02-d35e20e05e1d",
+        "fact-2026-10-10-anthropic-asks-users-to-stop-being-mean-to-claude-03-ac22b098a4dc"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-10-10-juno-1",
+      "persona": "juno",
+      "text": "By Q4 2026, Anthropic will publish a transparency report detailing the number of interactions ended specifically for 'cruelty' versus other policy violations since the Thursday announcement.",
+      "confidence": 0.6,
+      "resolveBy": "2026-11-24",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-10-10-dot-2",
+      "persona": "dot",
+      "text": "Within 12 months of the policy update, Anthropic will face measurable operational costs exceeding $1 million annually from moderation systems required to distinguish 'cruelty' from 'common versions of user frustration'.",
+      "confidence": 0.55,
+      "resolveBy": "2027-02-07",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-10-10--anthropic-asks-users-to-stop-being-mean-to-claude.png",
+    "artSha256": "3bb7c533c25378962ed0817f0c3b67b1e57bb4e1e6e620078a20523001c84f95",
+    "pageSha256": "8ef06bcf1a5f710aafe44bbe4a93d92bf01e4ff264b6df9389abefdec75cc97c",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "a614e323da19f1ee1896d50b4cbe0ed5ea841ef6233b9e127782cf5c27ba9509",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
