@@ -104,13 +104,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-10",
-    "passing": 14,
+    "passing": 15,
     "warning": 1,
-    "failing": 2,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 2,
+    "advisoryFailing": 1,
     "total": 17,
-    "score": 82,
+    "score": 88,
     "checks": [
       {
         "id": "manifest",
@@ -212,8 +212,8 @@
       },
       {
         "id": "sched-staleness",
-        "pass": false,
-        "warn": false,
+        "pass": true,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
