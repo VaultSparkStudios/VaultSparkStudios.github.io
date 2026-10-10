@@ -120,9 +120,6 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   86  [VERIFY]       Lighthouse is sitting on its floors: homep  ║
 ║        Lighthouse is sitting on its floors: homepage 0.75–0.78   ║
+║                                                                  ║
+║   84  [PRODUCT]      Push helper as a repo script (scripts/push  ║
+║        Push helper as a repo script (scripts/push-main.mjs): au  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

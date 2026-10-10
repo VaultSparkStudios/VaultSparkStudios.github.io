@@ -12,7 +12,9 @@ Eight of the ten S372 follow-ups are closed, each with a test.
 
 - **Git-history feeds.** The commit-velocity feed and the commit map refuse to write in a shallow clone and keep the committed file (D-S373.7); a depth-1 publisher had zeroed 59 days of the velocity feed on `main`.
 
-Not done: production promotion. The founder approved it, and candidate 2b001af82 is on main and staging with E2E, accessibility, the release ceremony and a clean-checkout build all green, but Lighthouse failed twice at that SHA (article trend 0.82 against 0.92, then homepage 0.75 against its 0.76 floor), so it was not promoted. The Lighthouse fix is also not done: six article runs across both attempts score 0.81 to 0.82 when all eleven scripts finish before first paint and 0.86 to 0.94 when one finishes after, while real paint is 150 to 240 ms. The homepage loads 28 deferred scripts, so the fix is a script-loading change on both page types.
+Production: promoted 2026-10-10. Worker ed6ca127 and the full Pages lane are live; served bytes are tree-current at a2c339580 (0 differing files). Identity surfaces remain held.
+
+Not done: the Lighthouse fix. The gate failed twice at one commit and passed at the next with no JS or CSS change, so it is measuring variance. Six article runs score 0.81 to 0.82 when all eleven scripts finish before first paint and 0.86 to 0.94 when one finishes after, while real paint is 150 to 240 ms. The homepage loads 28 deferred scripts, so the fix is a script-loading change on both page types.
 
 # S372 assurance and redirect repair — 2026-10-09
 

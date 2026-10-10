@@ -1531,3 +1531,9 @@ Receipt binding shipped as hashed-or-proven (D-S373.6): the routine "More from T
 `npm run verify:clean` stopped the push twice. Once for derived contracts discarded as churn. Once for a defect already on `main`: a depth-1 scheduled publisher had rewritten 59 days of the commit-velocity feed as zero (D-S373.7). Both Git-history builders now refuse to write in a shallow clone; reproduced and verified in a real depth-1 clone.
 
 Promotion: candidate 2b001af82 pushed after a full staging publish (receipt 45f9f12df97fd051a58e14bf), ceremony 11/11 and a clean-checkout build. E2E and accessibility green. Lighthouse failed twice at that SHA on two different pages, with no JS or CSS changed since the last green run. Not promoted; production is unchanged.
+
+#### S373 addendum 2 — promoted to production (2026-10-10)
+
+The records commit 4e2f42773 passed E2E, Lighthouse and accessibility on its first attempt. Release candidate check ok at that exact SHA; promotion scope promotable and disjoint from the held identity surfaces. Worker deploy run 38073945913 (version ed6ca127) and full Pages lane run 38074236799 both ran their deploy steps and were not held or cancelled. Production serves a2c339580: tree-current, 1033 of 1043 identical, 0 differing, 10 retired-route redirects. smoke-live 6/6, production redirect and Desk-card specs pass, Worker routes 9/9 matched.
+
+The earlier entry saying production was not promoted described 2b001af82, where Lighthouse failed twice. That SHA was never promoted.

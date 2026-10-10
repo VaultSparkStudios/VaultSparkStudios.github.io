@@ -5,7 +5,7 @@
 - [x] Wave3: pre-push blocks a skip-CI token in a commit body; closeout refuses a non-interactive shell up front; clean-checkout verifier; audit sidecar per session; redirect targets must exist.
 - [x] Wave4: satire 640 AVIF in the lane plus backfill; sized card art; mobile thumbnail and desktop placeholder fixes with a browser test and a 28-capture review.
 - [x] Wave5: staging applies `_redirects` through the Worker (staging-only flag); Lighthouse flake diagnosed, thresholds unchanged.
-- [ ] Production: founder approved promotion (2026-10-10). Candidate 2b001af82 is on main and staging (ceremony 11/11, E2E and accessibility green) but Lighthouse failed twice at that SHA, so it was NOT promoted. No JS or CSS changed since the last green run. Needs the Lighthouse fix or the founder's call.
+- [x] Production: promoted 2026-10-10 (founder-approved). Worker ed6ca127, full Pages lane run 38074236799; production is tree-current at a2c339580. Lighthouse failed twice at 2b001af82 and passed first time at 4e2f42773 with no JS or CSS change; the Lighthouse fix below is still open.
 
 # S372 arc — assurance and redirect repair
 
