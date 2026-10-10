@@ -120,19 +120,19 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Production: the Worker source and Desk con  ║
-║        Production: the Worker source and Desk content changed;   ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Exercise the art receipt path on the next   ║
+║   93  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
-║   89  [COHESION]     Preserve project-local capability contract  ║
+║   92  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
+║   90  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
 ║        Keep shell regeneration and SRI stamping in a single doc  ║
 ║                                                                  ║
-║   83  [VERIFY]       Lighthouse is sitting on its floors: homep  ║
+║   86  [VERIFY]       Lighthouse is sitting on its floors: homep  ║
 ║        Lighthouse is sitting on its floors: homepage 0.75–0.78   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
