@@ -2965,3 +2965,5 @@ CI Health Monitor run 38012236106 passed both jobs at 0b910cfb5, its first succe
 Unscored addendum; S372 remains 904/1000. The earlier "fully deployed" claim was wrong by six served data files that the content lane withholds by type; the stop-condition review caught it. Full lane run 38017202206 now serves 556b4d14e with zero differing files across code, data and HTML (byte parity against the deployed commit). Identity hold unchanged and not attempted. Lesson committed to memory and TASK_BOARD: claim "fully deployed" only from a served-versus-committed byte comparison, never from a lane's success status.
 
 Identity hold re-probed (try-first, CANON-019): `verify-provider-journey --watch --since=168` observed no provider-journey leg in 7 days; `obelisk-staging-registration` is now completed and live-verified. The hold stays `state=hold` and is founder-reserved (own-browser passkey sign-in and sign-out). It withheld nothing from run 38017202206, which built the whole committed tree.
+
+Founder confirmed the S372 deploy scope as complete with the identity hold kept (D-S372.6). Both hold reasons were re-probed and stay open in their own scope.
