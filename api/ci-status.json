@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T18:23:57.110Z",
+  "generatedAt": "2026-10-10T18:28:24.428Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 4,
-    "healthy": 4,
-    "unknown": 11,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-10T05:05:47.970Z",
-    "newestAgeHours": 13.3,
+    "newestAgeHours": 13.4,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-10T18:20:02Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-10T18:27:16Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38075344823",
       "headSha": "ee0074f3e2e3d9590eb98d121fb8a3e47edcc50b",
       "event": "push"
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-10T18:20:02Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-10T18:27:03Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38075344887",
       "headSha": "ee0074f3e2e3d9590eb98d121fb8a3e47edcc50b",
       "event": "push"
@@ -168,12 +168,12 @@
     {
       "name": "The Desk — Scheduled Publish",
       "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
+      "lastUpdatedAt": "2026-10-10T18:27:12Z",
       "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.02,
       "staleAfterHours": 48
     },
     {
@@ -186,7 +186,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.48,
+      "ageHours": 5.56,
       "staleAfterHours": 48
     },
     {
@@ -199,7 +199,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.81,
+      "ageHours": 1.88,
       "staleAfterHours": 48
     },
     {
@@ -225,7 +225,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.26,
+      "ageHours": 0.34,
       "staleAfterHours": 48
     },
     {
@@ -238,7 +238,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.24,
+      "ageHours": 5.31,
       "staleAfterHours": 48
     },
     {
