@@ -2953,3 +2953,7 @@ The owner's original dirty checkout, local backups and private evidence are pres
 | Automation Coverage | 96 | Three new structural guards: retired-route self-test, redirect-chain unit spec, platform-independent retention report. |
 
 Brainstorm (committed to TASK_BOARD as [SIL]): (1) routine Desk lanes must not strand tracked receipts; (2) receipt bindings should hash committed blobs so a CRLF working copy cannot produce a non-portable receipt. Also queued: verify receipt-bearing changes in a clean worktree before pushing, since that run caught what four CI cycles otherwise found one at a time.
+
+## S372 closing follow-through — 2026-10-10
+
+Unscored addendum; S372 remains 904/1000. Main tip b0895dbe6 passed E2E 38010338300, accessibility 38010338297 and, on re-run, Lighthouse 38010338287 (first attempt: one article at performance 0.88 against a 0.90 floor). Production content was promoted through the confirmed content lane (run 38011991378) after a fresh Hetzner staging overlay (20261010005651) and green parity. Production serves contentLaneHead b1d27aee6 and Worker 9c7c29f1. A third art-driven receipt invalidation and a missing satire 640 AVIF were repaired on the way; both lane gaps are on the task board.
