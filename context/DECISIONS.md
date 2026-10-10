@@ -2147,3 +2147,20 @@ Closeout validation found an omitted generated answer-feed rebuild. The full der
 Use an isolated current-remote worktree to preserve the original checkout residue and quarantine unverified startup propagation. Implement four demonstrated maintenance defects at L2; preserve all accepted public design, rights, prices and identity holds. The persona comparator matches only its existing line-edge normalization on exact profile routes; attributes, text, links and other routes remain strict. Routine receipts record source maintenance, never infer production delivery. Founder explicitly authorizes direct main commit/push and deployment.
 
 Canonical conformance measured zero ABSOLUTE gaps; remaining STRONG diagnostics and manual adoption reviews retain their existing project-specific posture. Delegating scripts that resolve relative to the temporary sibling stub are not treated as proof for this website; canonical probes use an explicit project path. The four S370 automated art/reseal commits and two trailing record commits discovered by full anchor history will be reconciled as an unscored addendum. S370 remains916/1000. Full release evidence is required before claiming deployment.
+
+
+## D-S372.1 — restore assurance at the gate, not the symptom (2026-10-09)
+
+The CI Health Monitor had failed daily since the S368 IA consolidation retired `/journal/`. The live matrix now requires the successor `/changelog/`. A missing required route is reported as one failure, not thrown, so one stale entry can no longer hide the whole sweep. A build:check self-test rejects any required route that `_redirects` retires. The masked Chromium journey had the same stale assumption and now checks the retirement redirect. Founder direction for this session: `/arc`, then direct main commit/push and full deployment.
+
+## D-S372.2 — legacy redirects take one hop; chains fail the build (2026-10-09)
+
+The Worker's `/signal-log` and `/vaultspark-football-gm` entries pointed at routes that `_redirects` itself retires. Both now target their final destinations. A fragment target receives the query before the fragment. `tests/s372-redirect-chains.unit.spec.mjs` covers both the Worker legacy maps and `_redirects`. Staging cannot verify `_redirects` behavior because Hetzner does not apply it, so production readback is the acceptance for route merges.
+
+## D-S372.3 — receipts bind committed bytes and are re-reviewed, never rebound, when content changes (2026-10-09)
+
+Two routine Desk lanes (art autopilot and the scheduled edition publisher) changed bound article HTML without running E2E. Each time, the affected surface was recaptured and directly re-reviewed (28/28 twice); metadata rebinding is reserved for unchanged bytes. The source binding is proven against the committed git blobs (400/400) because a Windows CRLF working copy produced a receipt CI could never match. Two non-blocking, pre-existing visual findings are recorded in the receipt and on the board. The systemic fixes (routine lanes vs bound receipts; portable hashing) are queued as `[SIL]` items rather than widened into this session.
+
+## D-S372.4 — the cross-checkout closeout boundary is not fabricated (2026-10-09)
+
+S371 closed out in another worktree, so this checkout lacked `.cache/closeout-brief-371.json` (build:check step 224). Recreating that receipt would falsely claim the closeout ran here. Steps 1–223 and 225–532 were verified separately; S372's own closeout renders its own boundary receipt.

@@ -1,28 +1,16 @@
+## Where We Left Off (Session 372) — assurance and redirect repair (2026-10-09)
+
+Session Intent: /arc, then the founder authorized direct commit/push to main and full deployment. Intent: **Achieved**.
+
+- Shipped: 7 items across 3 groups. Observability: daily surface assurance restored, retired-route self-test, masked Chromium journey repaired. Edge: single-hop legacy redirects, query-before-fragment ordering, redirect-chain guard. Evidence: art-changed Desk articles re-reviewed (28/28 twice), receipt bound to committed LF bytes, platform-independent retention report.
+- Tests: unit 388 (0 failures, 1 todo); clean-checkout build:check 532/532; mobile 215/215; live matrix 247 routes / 0 failures; edge smoke 2/2; Chromium 15/15; redirect contract 4/4 on production; local release ceremony 11/11.
+- Deploy: deployed to production. Worker version `9c7c29f1-34c4-4670-aa01-3a34450db061` via run 38005943124, which completed its ceremony, deploy and liveness steps with no hold or rollback. Required checks passed at exact SHA `3d47921d4`: E2E 38004526528, Lighthouse 38004526555, accessibility 38004526591. Staging Worker `08480916` was verified first. Post-deploy route provenance shows 9/9 matched at 23:48:49Z, 32s after the deploy. Live: `/signal-log` reaches `/changelog/#stories` and `/vaultspark-football-gm` reaches `/games/franchise-architect/`, one hop each.
+- Content lane: no served content changed this session. The Worker was the only production surface touched.
+- CI history (honest): E2E failed four times before going green. Causes: the art autopilot, then the latenight edition, changed bound articles; CRLF working copies produced a non-portable receipt; the retention report was uncommitted, then platform-ordered. One push quoted a skip-ci token and skipped CI; the required workflows were then dispatched manually. Each cause is root-fixed or queued as [SIL].
+- Not verified / open: Hetzner staging does not apply `_redirects`. Field performance and conversion remain unmeasured. Identity holds are unchanged. Ark question 01K4H9AK… to studio-ops awaits an answer.
+- Next: the [SIL] items at the top of TASK_BOARD (routine lanes vs bound receipts; portable receipt hashing).
 ## Where We Left Off — S371 final observed acceptance (2026-10-09)
 
 Session Intent: /arc, authorized direct main publication and deployment.
 
 Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: closing candidate 9b105d275e2f32cabe6ca2597205b6aebbd963cb live through Pages 37986968939; prior f509 acceptance remains preserved. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Canonical autopilot completed with two full 531-step passes. The temporary preview stopped; closing public feeds are verified live at 9b105d275. The acceptance receipt is recorded below.
-## Where We Left Off — S370 final requested closeout (2026-10-08)
-
-Session Intent: finish the five requested site outcomes and explicit closeout, main publication, deployment, records and terminal cleanup.
-
-- Shipped: Super Intelligence title; animated Spark corner friend and optional nonmodal popup replacing automatic guides; expanded Story Overview before artwork; full illustration reaction labels; Desk delivery recovery.
-- Verified: Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
-- Desk: reported subscription is active and confirmed; provider delivery was verified October 7. One daily digest at 23:30 UTC (7:30 p.m. EDT / 6:30 p.m. EST) when new real editions exist. Provider delivery does not establish inbox placement. No extra manual email was sent.
-- Source: requested site code is on main; the corrected proof is published on the pinned release branch. This closing commit reconciles final acceptance records onto main.
-- Memory: repository and Codex indexes/topics updated; private CDR reconciled locally and kept out of the public repository.
-- SIL: original S370 916/1000 retained; no new scored session.
-- Shells: original preview and both temporary capture servers stopped. Final canonical verification completed; all four task-owned long-running jobs are closed.
-
-Historical checkpoints below remain intact; pending release wording is superseded by the verified production acceptance above.
-
-## S371 closing follow-through verified — 2026-10-09
-
-Closing candidate `9b105d275e2f32cabe6ca2597205b6aebbd963cb` (tag `release-S371-9b105d275`) is verified live through Pages run `37986968939`. Required exact-candidate checks passed: E2E/compliance 37985123589, accessibility 37985123779, and Lighthouse 37985123593 including staging. Staging snapshot 20261009201032 verified 562 overlays and three safe removals. Fourteen staging artifacts matched the candidate.
-
-Production metadata and fourteen served artifacts match the candidate after documented edge transforms. The normal cached article CSS and four normal public-feed URLs also match. Reviewed HTML and browser assets are preserved, with only the shell-manifest timestamp changed. All three bound sources and 168 screenshot hashes were independently verified unchanged before metadata-only rebinding; original capture and review dates remain. The earlier closing E2E failure 37983977935 is retained.
-
-Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
-
-The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.

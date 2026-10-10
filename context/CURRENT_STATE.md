@@ -1,3 +1,11 @@
+# S372 assurance and redirect repair — 2026-10-09
+
+The daily public-surface assurance (CI Health Monitor) runs again. `check-live-surface-matrix.mjs` requires `/changelog/` instead of the `/journal/` index that S368 retired. A missing required route is now one reported failure, not an abort, so the 247-route sweep always runs. A build:check self-test rejects any required route that `_redirects` retires. The Chromium smoke journey checks the retirement redirect and changelog stories. Live matrix: 247 routes, 0 failures. Edge smoke passes 2/2 and Chromium 15/15.
+
+The edge Worker's legacy redirects now reach their destination in one hop: `/signal-log` → `/changelog/#stories` and `/vaultspark-football-gm` → `/games/franchise-architect/`. A query string is placed before a fragment target. `tests/s372-redirect-chains.unit.spec.mjs` (in build:check and test:unit) fails any Worker or `_redirects` rule that lands on a retired route. Staging Worker 08480916 was verified first. Production Worker 9c7c29f1-34c4-4670-aa01-3a34450db061 is live (run 38005943124), with one-hop redirects and post-deploy route provenance 9/9.
+
+The visual-QA receipt covers the two Desk articles the art autopilot changed after S371: 28 captures in seven themes, all manually reviewed. The source binding uses committed LF bytes; all 400 entries match the git blobs.
+
 # S371 release maintenance — 2026-10-09
 
 Four source fixes are implemented and independently reviewed: exact automated-art routine receipts, complete closeout-anchor history, main-only Open Graph publication and formatting-safe persona generator comparison. Focused tests4/4, news generation154/154 and current mobile runtime215/215 pass. Full build, canonical staging and pinned production acceptance are verified. Acceptance: docs/S371_RELEASE_2026-10-09.md. Existing identity holds and accepted Spark/Desk behavior are preserved.

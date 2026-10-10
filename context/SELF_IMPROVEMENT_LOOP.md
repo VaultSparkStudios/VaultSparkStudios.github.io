@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▇▇
-Avgs — 3: 919.0 | 5: 934.0 | 10: 946.3 | 25: 965.3 | all: unmeasured (archived history not re-scored)
+Sparkline (last 5 totals): ▇▇▇▇▇
+Avgs — 3: 911.7 | 5: 915.2 | 10: 931.1 | 25: — [N=19] | all: unmeasured (archived history not re-scored)
 History scope: latest scored entry per session in the active append-only ledger.
 Velocity trend: → | Protocol velocity: → | Debt: →
-Last session: 2026-10-07 | Session 370 | Total: 916/1000 | Velocity: 2 | protocolVelocity: 0
+Last session: 2026-10-09 | Session 372 | Total: 904/1000 | Velocity: 4 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2936,3 +2936,20 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+## 2026-10-09 UTC — Session 372 (assurance and redirect repair) | Total: 904/1000 (v3.0) | Velocity: 4 | Debt: →
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 88 | Daily assurance restored (live matrix 247/0, edge 2/2, Chromium 15/15); unit 388/0; clean-checkout build:check 532/532; E2E needed four CI cycles to go green. |
+| Creative Alignment | 94 | No creative change; Desk art, Spark and accepted public behavior preserved. |
+| Momentum | 88 | Three audit outcomes plus the S363 memory-index item shipped; Worker promotion completed through the canonical lane. |
+| Engagement | 90 | Visitors and crawlers reach retired routes in one hop; field conversion unmeasured. |
+| Process Quality | 78 | Overwrote S371's same-date audit (restored from git), and a quoted skip-ci token silently skipped CI; both caught and recorded as memories. Four receipt defects surfaced one CI cycle at a time until a clean-worktree run was used. |
+| Cross-Repo Coherence | 92 | Visual-QA misclassification routed to studio-ops via Ark (01K4H9AK…); no sibling tree edits. |
+| Security Posture | 94 | Worker change disjoint from the identity hold (SCOPED promotion); staging first; secrets via gateway. |
+| Ecosystem Integration | 90 | Reused existing capture, rebind, repair and ceremony tooling; no new dependencies. |
+| Capital Efficiency | 94 | No paid API or install; extra CI minutes from repeated E2E cycles. |
+| Automation Coverage | 96 | Three new structural guards: retired-route self-test, redirect-chain unit spec, platform-independent retention report. |
+
+Brainstorm (committed to TASK_BOARD as [SIL]): (1) routine Desk lanes must not strand tracked receipts; (2) receipt bindings should hash committed blobs so a CRLF working copy cannot produce a non-portable receipt. Also queued: verify receipt-bearing changes in a clean worktree before pushing, since that run caught what four CI cycles otherwise found one at a time.

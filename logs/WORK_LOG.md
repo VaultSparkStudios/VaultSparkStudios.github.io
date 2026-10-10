@@ -1493,3 +1493,10 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+
+### 2026-10-09 — S372 arc: assurance and redirect repair
+
+Synced 138 commits; triage found write-back current through S371 (not cut off). Cleared a false CANON-053 gap caused by a regenerated `.cache` report and routed the checker misclassification to studio-ops via Ark. Audit `docs/AUDIT_2026-10-09-S372.md` (3 items) shipped in full. The daily CI Health Monitor had failed since 2026-10-02 because the live matrix still required the retired `/journal/`. That failure masked the sweep, edge smoke and Chromium smoke behind it, and the Chromium smoke had the same stale route. Both are fixed, with a retired-route self-test. Worker legacy redirects now take one hop and keep the query ahead of a fragment, with a redirect-chain unit spec in build:check and test:unit.
+
+Release: staging Worker 08480916 verified first. E2E failed four times (8db1f1bf0 art and 434cced41 latenight edition changed bound articles; CRLF working copies; uncommitted then platform-ordered retention report). Each was fixed at its cause and verified in a clean worktree (build:check 532/532). Required checks then passed at 3d47921d4. Production Worker 9c7c29f1 deployed via run 38005943124 (ceremony, deploy, liveness; no hold or rollback). Production readback: one-hop 301s, redirect spec 4/4, post-deploy route provenance 9/9. Memory index compacted 23.3KB → 12.1KB with zero links lost.
