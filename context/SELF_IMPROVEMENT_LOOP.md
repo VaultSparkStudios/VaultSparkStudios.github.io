@@ -2959,3 +2959,7 @@ Brainstorm (committed to TASK_BOARD as [SIL]): (1) routine Desk lanes must not s
 Unscored addendum; S372 remains 904/1000. Main tip b0895dbe6 passed E2E 38010338300, accessibility 38010338297 and, on re-run, Lighthouse 38010338287 (first attempt: one article at performance 0.88 against a 0.90 floor). Production content was promoted through the confirmed content lane (run 38011991378) after a fresh Hetzner staging overlay (20261010005651) and green parity. Production serves contentLaneHead b1d27aee6 and Worker 9c7c29f1. A third art-driven receipt invalidation and a missing satire 640 AVIF were repaired on the way; both lane gaps are on the task board.
 
 CI Health Monitor run 38012236106 passed both jobs at 0b910cfb5, its first success since 2026-10-01; recorded in 62611bed4. This closes the acceptance for the restored daily assurance.
+
+## S372 full production promotion — 2026-10-10
+
+Unscored addendum; S372 remains 904/1000. The earlier "fully deployed" claim was wrong by six served data files that the content lane withholds by type; the stop-condition review caught it. Full lane run 38017202206 now serves 556b4d14e with zero differing files across code, data and HTML (byte parity against the deployed commit). Identity hold unchanged and not attempted. Lesson committed to memory and TASK_BOARD: claim "fully deployed" only from a served-versus-committed byte comparison, never from a lane's success status.

@@ -1508,3 +1508,9 @@ Closeout commit 433f43e6a and follow-ups published to main (tip b0895dbe6). Duri
 Content: the push-triggered Pages run held as designed, so the content lane was promoted explicitly. Hetzner staging overlay 20261010005651 (580 overlays, 3 safe removals, identity untouched), parity green, promotion scope scoped-disjoint, then content-lane run 38011991378. Production readback: contentLaneHead b1d27aee6, homepage launch age 220, served route provenance from the post-deploy probe, new AVIF served byte-exact, smoke-live 6/6.
 
 CI Health Monitor run 38012236106 (manual dispatch at 0b910cfb5) passed both jobs: scheduled workflow health, and daily live routes and Desk assurance. This is its first success since 2026-10-01 and satisfies the acceptance for audit item 1.
+
+### 2026-10-10 — S372 full production promotion
+
+A stop-condition review correctly found that the content lane was a partial promotion. Measured against the Pages origin: 454 of 702 code/data files identical and exactly 6 differing (`data/ignis-search-index.json`, `lqip-map.json`, `perf-history.ndjson`, `promotion-history.ndjson`, `stats-surface.json`, `uptime-history.ndjson`), which the content and hotfix lanes refuse by type; all 286 served HTML pages, including `auth/**`, already matched. Published the exact committed tree to Hetzner staging (10577 files, receipt 0a9204a82cb2b19c7710665d), ceremony 11/11, clean-checkout build:check passed at fcdf8fd24. Required checks at that SHA passed (Lighthouse on attempt 3; see D-S372.5).
+
+Full production lane run 38017202206 completed its CI ceremony, clean-tree build, deploy, purge, liveness, feed contract and live News freshness. Production serves 556b4d14e (deployedBy pages-deploy). Readback against that commit: code and data 455 identical / 0 differ, HTML 286 identical / 0 differ, the six data files match on both the Pages origin and the apex, smoke-live 6/6, redirect and smoke specs 13/13 on production. Identity hold unchanged.
