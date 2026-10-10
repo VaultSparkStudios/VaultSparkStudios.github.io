@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 120,
+    "inspected": 96,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,83 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "7927f412",
+      "ts": "2026-10-10T16:50:51.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "record the final staging publish and ceremony for the S373 promotion",
+      "visitorFacing": false
+    },
+    {
+      "sha": "40a73a84",
+      "ts": "2026-10-10T16:50:48.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "reseal derived outputs after rebasing the S373 candidate onto main",
+      "visitorFacing": true
+    },
+    {
+      "sha": "6554afba",
+      "ts": "2026-10-10T16:50:45.000Z",
+      "type": "fix",
+      "scope": "feeds",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "a shallow clone can no longer rewrite Git-history feeds",
+      "visitorFacing": false
+    },
+    {
+      "sha": "2f4d4601",
+      "ts": "2026-10-10T16:50:44.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "commit the regenerated public contracts for the S373 candidate",
+      "visitorFacing": false
+    },
+    {
+      "sha": "782da274",
+      "ts": "2026-10-10T16:50:42.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "resync record-derived feeds for the S373 candidate",
+      "visitorFacing": false
+    },
+    {
+      "sha": "dbc798f8",
+      "ts": "2026-10-10T16:50:40.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "record the staging publish and ceremony for the S373 promotion",
+      "visitorFacing": false
+    },
+    {
+      "sha": "45663ccb",
+      "ts": "2026-10-10T16:50:37.000Z",
+      "type": "feat",
+      "scope": "receipts",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "prove routine Desk content instead of hashing or omitting it",
+      "visitorFacing": false
+    },
     {
       "sha": "a6c742b5",
       "ts": "2026-10-10T15:33:09.000Z",
@@ -204,83 +281,6 @@
       "tone": "muted",
       "summary": "auto-reviewed art for 2 image(s)",
       "visitorFacing": true
-    },
-    {
-      "sha": "3d47921d",
-      "ts": "2026-10-09T23:27:30.000Z",
-      "type": "fix",
-      "scope": "visual-qa",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "make the retention report independent of directory order",
-      "visitorFacing": false
-    },
-    {
-      "sha": "c18a7116",
-      "ts": "2026-10-09T23:15:05.000Z",
-      "type": "chore",
-      "scope": "visual-qa",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "commit the retention report for the S372 receipt",
-      "visitorFacing": false
-    },
-    {
-      "sha": "a96add76",
-      "ts": "2026-10-09T22:42:58.000Z",
-      "type": "fix",
-      "scope": "visual-qa",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "re-review Desk articles after the latenight edition",
-      "visitorFacing": false
-    },
-    {
-      "sha": "ddf48c93",
-      "ts": "2026-10-09T22:28:29.000Z",
-      "type": "fix",
-      "scope": "visual-qa",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "bind receipt to committed LF bytes, not CRLF working copies",
-      "visitorFacing": false
-    },
-    {
-      "sha": "a14ddf77",
-      "ts": "2026-10-09T22:13:01.000Z",
-      "type": "fix",
-      "scope": "visual-qa",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "re-review Desk articles changed by routine art publication",
-      "visitorFacing": false
-    },
-    {
-      "sha": "9eeaa173",
-      "ts": "2026-10-09T21:56:46.000Z",
-      "type": "fix",
-      "scope": "assurance",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "restore daily surface checks and single-hop legacy redirects",
-      "visitorFacing": true
-    },
-    {
-      "sha": "2d5bc8b8",
-      "ts": "2026-10-09T21:54:16.000Z",
-      "type": "chore",
-      "scope": "routine-desk-art",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "reseal derived outputs after auto art",
-      "visitorFacing": false
     }
   ]
 }
