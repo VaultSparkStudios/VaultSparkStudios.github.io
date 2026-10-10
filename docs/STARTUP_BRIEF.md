@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -79,16 +79,16 @@
 ║  ✓  Context age   6d                                             ║
 ║  ✓  IGNIS         46114 FORGE  ·  4d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/38 (84%) → ▆▆▆▄▄▁▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▆▆▄▄▁▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.220  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  7d old (2026-10-02)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  2 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,19 +120,19 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
+║   87  [PRODUCT]      The satire-cartoon lane emits --640.webp b  ║
+║        The satire-cartoon lane emits --640.webp but no --640.av  ║
 ║                                                                  ║
 ║   86  [VERIFY]       Before pushing receipt-bearing changes, ve  ║
 ║        Before pushing receipt-bearing changes, verify in a clea  ║
 ║                                                                  ║
-║   84  [PRODUCT]      On mobile, "More from The Desk" thumbnails  ║
-║        On mobile, "More from The Desk" thumbnails cover-crop th  ║
-║                                                                  ║
 ║   83  [VERIFY]       The art autopilot edits article HTML bound  ║
 ║        The art autopilot edits article HTML bound by the tracke  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Exercise the art receipt path on the next   ║
+║   81  [PRODUCT]      On mobile, "More from The Desk" thumbnails  ║
+║        On mobile, "More from The Desk" thumbnails cover-crop th  ║
+║                                                                  ║
+║   78  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
