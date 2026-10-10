@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-10T17:37:43.569Z",
+  "generatedAt": "2026-10-10T17:43:57.027Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "4e2f42773e606d96e01d99aaa473f11742baf626",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 6,
-    "healthy": 6,
-    "unknown": 9,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-10T05:05:47.970Z",
-    "newestAgeHours": 12.5,
+    "newestAgeHours": 12.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-10T17:32:14Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-10T17:42:31Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38071640909",
       "headSha": "4e2f42773e606d96e01d99aaa473f11742baf626",
       "event": "push"
@@ -79,15 +79,13 @@
   "scheduledWorkflows": [
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-10T09:19:00Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 8.31,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -177,7 +175,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.06,
+      "ageHours": 5.17,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +188,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.71,
+      "ageHours": 4.82,
       "staleAfterHours": 48
     },
     {
@@ -204,7 +202,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.04,
+      "ageHours": 1.14,
       "staleAfterHours": 48
     },
     {
@@ -230,7 +228,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.03,
+      "ageHours": 0.14,
       "staleAfterHours": 48
     },
     {
@@ -243,7 +241,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.47,
+      "ageHours": 4.57,
       "staleAfterHours": 48
     },
     {
