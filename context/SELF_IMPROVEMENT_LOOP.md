@@ -2985,3 +2985,5 @@ Founder confirmed the S372 deploy scope as complete with the identity hold kept 
 | Automation Coverage | 97 | Five new mechanical guards replace steps S372 did by hand. |
 
 Brainstorm (committed to TASK_BOARD): (1) decide the routine-content receipt binding (D-S373.3); (2) confirm the Lighthouse hypothesis by loading below-the-fold Desk scripts after paint.
+
+S373 addendum (unscored): at pushed tip 5a8beccc5, E2E 38027265657 and accessibility 38027265617 passed first time; Lighthouse 38027265643 failed on the pre-existing floor flake (homepage 0.75, one article 0.89). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it, steady simulated FCP and swinging simulated LCP. Recorded on the task board and in the handoff; thresholds unchanged.

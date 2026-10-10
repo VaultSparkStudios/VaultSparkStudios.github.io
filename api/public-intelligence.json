@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-10T05:12:21.888Z",
+  "generatedAt": "2026-10-10T05:35:21.980Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -25,7 +25,7 @@
       "Tests: unit 408 (0 failures, 1 todo), up from 388; new specs `s373-guards`, `s373-pages-redirects`, `desk-more-cards` (browser, 3/3, fails against the previous build); local build:check passes all 534 steps.",
       "Deploy: staging only. Staging Worker 41746efa verified (16 of 16 routes match production). Production is unchanged this session; promotion of the Worker source and Desk content awaits the founder's go-ahead.",
       "Not done 1: making the visual receipt tolerant of routine Desk publishing. The change (hash dated articles with the `desk-more` block replaced by a marker) was blocked by the session's permission classifier as an edit to audit code. Until it is decided, each art or edition publish that touches a bound article will fail the next E2E, as in S372.",
-      "Not done 2: the Lighthouse flake. Diagnosed as a timing race between ten deferred scripts and first paint under simulated throttling; this is a hypothesis with supporting evidence, not a proven cause. Thresholds unchanged.",
+      "Not done 2: the Lighthouse flake, which now gates releases (the homepage tier reads recurring sub-floor; run 38027265643 failed at 5a8beccc5 on the homepage at 0.75 and one article at 0.89, the same profile as S372 and not caused by S373). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it in every run, steady simulated FCP (1.3s) and swinging simulated LCP (2.3–3.9s). Direction: load below-the-fold Desk scripts after paint. Thresholds unchanged.",
       "Carried: identity hold unchanged; Ark questions to studio-ops (visual-QA `.cache` classification, Supabase gateway slot) await replies."
     ]
   },
@@ -840,8 +840,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Push gates green, but scheduled-workflow evidence is incomplete (4/15 observed).",
-    "checkedAt": "2026-10-10T02:31:24.768Z",
+    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-10-10T05:34:35.542Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -853,7 +853,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",
