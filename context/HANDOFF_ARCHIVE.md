@@ -2041,3 +2041,13 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+
+---
+<!-- archived: 2026-10-10 -->
+
+## Where We Left Off — S371 final observed acceptance (2026-10-09)
+
+Session Intent: /arc, authorized direct main publication and deployment.
+
+Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: closing candidate 9b105d275e2f32cabe6ca2597205b6aebbd963cb live through Pages 37986968939; prior f509 acceptance remains preserved. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Canonical autopilot completed with two full 531-step passes. The temporary preview stopped; closing public feeds are verified live at 9b105d275. The acceptance receipt is recorded below.

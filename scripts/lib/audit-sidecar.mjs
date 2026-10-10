@@ -73,29 +73,50 @@ export function readAuditSidecar(repoRoot, date) {
   try { return JSON.parse(fs.readFileSync(sidecarPath(repoRoot, date), 'utf8')); } catch { return null; }
 }
 
+// S373: two sessions can run on one calendar date. S372 wrote its audit to the plain
+// date name and silently replaced S371's committed sidecar (restored from git). The
+// second session of a day uses `AUDIT_<date>-S<n>.json`, the form studio-ops has read
+// since S312; this local copy only knew the plain name, so it could neither find the
+// newer file nor refuse the overwrite.
+const SIDECAR_RE = /^AUDIT_(\d{4}-\d{2}-\d{2})(?:-S(\d+))?\.json$/;
+
+/** Key to write under: the plain date, or `<date>-S<n>` when another session holds it. */
+export function sidecarKeyFor(repoRoot, date, session) {
+  const existing = readAuditSidecar(repoRoot, date);
+  if (!existing || existing.session == null || session == null || Number(existing.session) === Number(session)) return date;
+  return `${date}-S${Number(session)}`;
+}
+
 export function writeAuditSidecar(repoRoot, date, audit) {
   audit.schemaVersion = SCHEMA_VERSION;
   audit.generatedAt = audit.generatedAt || new Date().toISOString();
   const safe = redactFounderIdentity(audit);  // CANON-028 scrub at the source
   const p = sidecarPath(repoRoot, date);
+  const existing = readAuditSidecar(repoRoot, date);
+  if (existing && existing.session != null && audit.session != null && Number(existing.session) !== Number(audit.session)) {
+    throw new Error(`refusing to overwrite ${path.basename(p)} (session ${existing.session}) with session ${audit.session}; write to ${sidecarKeyFor(repoRoot, date, audit.session)} instead`);
+  }
   fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(p, JSON.stringify(safe, null, 2) + '\n');
   return p;
 }
 
 /**
- * Find the latest AUDIT_*.json in docs/. Returns { date, audit } or null.
+ * Find the latest AUDIT_*.json in docs/, including `-S<n>` session variants.
+ * Returns { date, audit, path } or null; `date` is the key readAuditSidecar accepts.
  */
 export function findLatestAuditSidecar(repoRoot) {
   const dir = path.join(repoRoot, 'docs');
   if (!fs.existsSync(dir)) return null;
   const files = fs.readdirSync(dir)
-    .filter(f => /^AUDIT_\d{4}-\d{2}-\d{2}\.json$/.test(f))
-    .sort();
+    .map(f => ({ f, m: f.match(SIDECAR_RE) }))
+    .filter(x => x.m)
+    // Newest date first; on one date a session-suffixed file is newer than the plain one.
+    .sort((a, b) => a.m[1].localeCompare(b.m[1]) || (Number(a.m[2] ?? -1) - Number(b.m[2] ?? -1)));
   if (!files.length) return null;
   const latest = files[files.length - 1];
-  const date = latest.match(/AUDIT_(\d{4}-\d{2}-\d{2})\.json/)[1];
-  return { date, audit: readAuditSidecar(repoRoot, date), path: path.join(dir, latest) };
+  const date = latest.f.slice('AUDIT_'.length, -'.json'.length);
+  return { date, audit: readAuditSidecar(repoRoot, date), path: path.join(dir, latest.f) };
 }
 
 /**

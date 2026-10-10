@@ -1,1 +1,6 @@
+# S373: git stores every text file here as LF (no CRLF blob in the index). Without this rule a
+# Windows checkout can hold CRLF working copies, and anything that hashes working-tree bytes
+# (visual and mobile receipts) then disagrees with the Linux CI checkout. Text detection is
+# automatic; binaries are untouched.
+* text=auto eol=lf
 assets/spark-compass.css text eol=lf

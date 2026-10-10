@@ -117,6 +117,35 @@ export function scanFile(rel, text) {
   return out;
 }
 
+// S373: GitHub honours a skip-CI token ANYWHERE in a commit message. In S372 a commit
+// body that merely quoted another commit's subject carried the token, and E2E,
+// Lighthouse and accessibility were all skipped for that push with no failure anywhere.
+// The token is deliberate only in a subject line (publishers and closeout put it there).
+const SKIP_CI_RE = /\[(?:skip ci|ci skip|no ci|skip actions|actions skip)\]/i;
+
+/** scanCommitMessage(sha, message) → array of violation strings (pure). */
+export function scanCommitMessage(sha, message) {
+  const [subject = '', ...body] = String(message).replace(/\r/g, '').split('\n');
+  if (!SKIP_CI_RE.test(body.join('\n'))) return [];
+  return [`⛔ skip-CI token in the BODY of ${String(sha).slice(0, 9)} ("${subject.slice(0, 60)}"): GitHub honours it anywhere and would skip every workflow for this push. Keep it in the subject line only, or reword the body.`];
+}
+
+function pushedCommitMessages(ROOT, ranges) {
+  const out = [];
+  for (const [localSha, remoteSha] of ranges) {
+    if (!localSha || localSha === ZERO) continue;
+    const range = remoteSha && remoteSha !== ZERO ? [`${remoteSha}..${localSha}`] : ['-1', localSha];
+    try {
+      const raw = execFileSync('git', ['log', '--format=%H%x00%B%x1e', ...range], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 });
+      for (const record of raw.split('\x1e')) {
+        const [sha, message] = record.replace(/^\s+/, '').split('\x00');
+        if (sha && message !== undefined) out.push([sha, message]);
+      }
+    } catch { /* an unreadable range is reported by git itself on push */ }
+  }
+  return out;
+}
+
 export function coherenceChecksForFiles(files, root = process.cwd()) {
   const checks = affectedEvidenceNodes(loadEvidenceGraph(root), files)
     .map((node) => ({ id: node.id, command: node.check }));
@@ -150,6 +179,12 @@ if (process.argv.includes('--self-test')) {
   ok(scanFile('data/x.json', pgProd).length === 1, 'flags prod pg url');
   ok(scanFile('data/x.json', pgLocal).length === 0, 'allows localhost pg url');
   ok(scanFile('a.txt', 'totally clean content').length === 0, 'clean file passes');
+  const skipTok = '[skip' + ' ci]';
+  ok(scanCommitMessage('abc', `chore: beacon ${skipTok}`).length === 0, 'skip token in the subject is deliberate and allowed');
+  ok(scanCommitMessage('abc', `fix: thing\n\nThe publisher (deadbeef, ${skipTok}) rewrote it.`).length === 1, 'skip token quoted in the body is blocked (the S372 defect)');
+  ok(scanCommitMessage('abc', `fix: thing\r\n\r\nbody ${skipTok.toUpperCase()}`).length === 1, 'body token is matched case-insensitively across CRLF');
+  ok(scanCommitMessage('abc', `chore: x ${skipTok}\n\nRecords only.`).length === 0, 'subject token with a clean body passes');
+  ok(scanCommitMessage('abc', 'fix: thing\n\nMentions skip-ci in prose without the bracket token.').length === 0, 'prose without the bracket token passes');
   const closeoutChecks = coherenceChecksForFiles(['context/PROJECT_STATUS.json', 'context/SELF_IMPROVEMENT_LOOP.md', 'api/public-intelligence.json']).map((check) => check.id);
   ok(closeoutChecks.includes('public-intelligence') && closeoutChecks.includes('startup-brief') && closeoutChecks.includes('candidate-artifact-manifest'), 'captured S290→S291 closeout drift selects the graph closure');
   ok(coherenceChecksForFiles(['scripts/unrelated-helper.mjs']).length === 0, 'code-only push stays fast');
@@ -192,6 +227,8 @@ if (RUN_DIRECT) {
     if (isBinary(buf)) continue;                       // skip binary (replaces `file` probe)
     violations.push(...scanFile(rel, buf.toString('utf8')));
   }
+
+  for (const [sha, message] of pushedCommitMessages(ROOT, ranges)) violations.push(...scanCommitMessage(sha, message));
 
   if (violations.length) {
     console.error('\n⛔ Pre-push checks: ' + violations.length + ' issue(s) found\n');

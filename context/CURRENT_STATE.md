@@ -1,3 +1,15 @@
+# S373 follow-ups, guards and test coverage — 2026-10-10
+
+Eight of the ten S372 follow-ups are closed, each with a test.
+
+- **Release truth.** `scripts/check-served-parity.mjs` compares the bytes an origin serves with a commit and names the lane that can carry each difference; production measured `tree-current` against its deployed commit. The content lane now carries `data/promotion-history.ndjson`, `data/uptime-history.ndjson` and `data/stats-surface.json` by exact path, with their public anchors re-proven on every self-test.
+- **Process guards.** Pre-push blocks a skip-CI token in a commit body (subject only). The closeout tool refuses a non-interactive shell before doing any work unless `--yes` or `--dry-run` is given. `scripts/verify-clean-checkout.mjs` runs build:check in a clean worktree as CI sees it, removing its node_modules link before the worktree. The audit sidecar finder reads `-S<n>` files and the writer refuses to overwrite another session's audit.
+- **Checkout.** `.gitattributes` pins text to LF; the index held no CRLF text, so nothing was renormalized.
+- **Desk.** The satire lane emits a `--640.avif` derivative (nine backfilled). "More from The Desk" cards request 128w/640w AVIF, show a whole 16:9 thumbnail on mobile, and the pending placeholder no longer clips. `tests/desk-more-cards.spec.js` asserts this in a browser.
+- **Staging.** The staging Worker applies the origin's `_redirects` (`PAGES_REDIRECTS_EMULATION`, staging only); staging matched production on 16 of 16 probed routes. Staging Worker version 41746efa.
+
+Not done: excluding routine Desk content from the visual receipt's binding (needs the founder's approval), and a fix for the Lighthouse flake (diagnosed only). Production promotion of this session's Worker and Desk changes awaits the founder's go-ahead.
+
 # S372 assurance and redirect repair — 2026-10-09
 
 The daily public-surface assurance (CI Health Monitor) runs again. `check-live-surface-matrix.mjs` requires `/changelog/` instead of the `/journal/` index that S368 retired. A missing required route is now one reported failure, not an abort, so the 247-route sweep always runs. A build:check self-test rejects any required route that `_redirects` retires. The Chromium smoke journey checks the retirement redirect and changelog stories. Live matrix: 247 routes, 0 failures. Edge smoke passes 2/2 and Chromium 15/15.

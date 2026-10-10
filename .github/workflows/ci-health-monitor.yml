@@ -70,3 +70,13 @@ jobs:
         env:
           BASE_URL: https://vaultsparkstudios-website.pages.dev
         run: npx playwright test tests/smoke.spec.js tests/news-theme-controls.spec.js --project=chromium --reporter=list --workers=2
+      # S373: measure what production serves against the commit it reports, and name
+      # the release lane that can carry each difference. Last in the job so it can never hide another check. Report-only on purpose: the
+      # automated Desk lane promotes only newsroom paths, so other feeds lag between
+      # content runs by design, and an enforcing step here would be red most days.
+      - name: Report served-versus-committed byte parity
+        run: |
+          node scripts/check-served-parity.mjs --self-test
+          SHA=$(curl -fsS https://vaultsparkstudios-website.pages.dev/api/build-sha.json | node -e "let s='';process.stdin.on('data',x=>s+=x).on('end',()=>{const j=JSON.parse(s);process.stdout.write(j.contentLaneHead||j.sha||'')})")
+          git fetch --no-tags --depth=1 origin "$SHA" || echo "deployed commit $SHA not fetchable; the report will say unverified"
+          node scripts/check-served-parity.mjs

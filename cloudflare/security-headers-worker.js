@@ -30,6 +30,7 @@ import guideShellManifest from '../assets/shell-manifest.json' with { type: 'jso
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
 import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
 import { handleAgentActions } from './agent-actions.js';
+import { pagesRedirectResponse } from './pages-redirects.js';
 import {
   drKeyFor,
   independentBufferedResponse,
@@ -1541,6 +1542,15 @@ const worker = {
     if (method !== 'GET' && method !== 'HEAD') {
       const passthrough = await originFetch(request);
       return withSecurityHeaders(passthrough, { ttl: 0, csp: WORKER_CSP });
+    }
+
+    // S373: Cloudflare Pages applies `_redirects` before static assets, so in production
+    // a retired route never reaches a file. The Hetzner staging origin has no such layer
+    // and answered 200/404 there. With this flag (staging only) the Worker applies the
+    // origin's own `_redirects` here, at the point Pages would. Production never sets it.
+    if (env.PAGES_REDIRECTS_EMULATION === '1') {
+      const pagesRedirect = await pagesRedirectResponse(url, { originFetch, publicOrigin });
+      if (pagesRedirect) return pagesRedirect;
     }
 
     const ttl = getCacheTTL(request.url);

@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 911.7 | 5: 915.2 | 10: 931.1 | 25: — [N=19] | all: unmeasured (archived history not re-scored)
+Avgs — 3: 914.0 | 5: 914.0 | 10: 924.6 | 25: — [N=20] | all: unmeasured (archived history not re-scored)
 History scope: latest scored entry per session in the active append-only ledger.
-Velocity trend: → | Protocol velocity: → | Debt: →
-Last session: 2026-10-09 | Session 372 | Total: 904/1000 | Velocity: 4 | protocolVelocity: 0
+Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
+Last session: 2026-10-10 | Session 373 | Total: 923/1000 | Velocity: 8 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2967,3 +2967,21 @@ Unscored addendum; S372 remains 904/1000. The earlier "fully deployed" claim was
 Identity hold re-probed (try-first, CANON-019): `verify-provider-journey --watch --since=168` observed no provider-journey leg in 7 days; `obelisk-staging-registration` is now completed and live-verified. The hold stays `state=hold` and is founder-reserved (own-browser passkey sign-in and sign-out). It withheld nothing from run 38017202206, which built the whole committed tree.
 
 Founder confirmed the S372 deploy scope as complete with the identity hold kept (D-S372.6). Both hold reasons were re-probed and stay open in their own scope.
+
+
+## 2026-10-10 UTC — Session 373 (S372 follow-ups, guards and test coverage) | Total: 923/1000 (v3.0) | Velocity: 8 | Debt: ↓
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 91 | Unit 408/0 (up 20); local build:check passes all 534 steps; three new specs each with a failing control. |
+| Creative Alignment | 94 | Desk card changes follow the existing design; no creative direction changed. |
+| Momentum | 92 | Eight of ten S372 follow-ups closed in one session, plus guards for each S372 mistake. |
+| Engagement | 91 | Mobile readers see whole thumbnails and load 128w/640w art; conversion unmeasured. |
+| Process Quality | 86 | Every fix verified against real behaviour (production redirects measured before emulating them). One slip: after a blocked edit, a second edit left a module briefly inconsistent; reverted at once. |
+| Cross-Repo Coherence | 92 | No sibling edits; the stale local audit-sidecar copy was fixed narrowly rather than overwritten. |
+| Security Posture | 94 | Release allowlist widened only by its own stated rule with a machine check; staging flag asserted absent from production. |
+| Ecosystem Integration | 91 | Reused the content-lane classifier in the parity reporter; one definition of "promotable". |
+| Capital Efficiency | 95 | No paid services, no installs. |
+| Automation Coverage | 97 | Five new mechanical guards replace steps S372 did by hand. |
+
+Brainstorm (committed to TASK_BOARD): (1) decide the routine-content receipt binding (D-S373.3); (2) confirm the Lighthouse hypothesis by loading below-the-fold Desk scripts after paint.

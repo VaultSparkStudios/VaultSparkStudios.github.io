@@ -120,6 +120,9 @@ routes = [
 PRIMARY_ORIGIN = "https://website-origin.staging.vaultsparkstudios.com"
 FALLBACK_ORIGIN = "https://vaultsparkstudios-website.pages.dev"
 PUBLIC_ORIGIN = "https://website.staging.vaultsparkstudios.com"
+# S373: staging has no Pages layer, so the Worker applies the origin's `_redirects`
+# itself. Staging only; production gets these redirects from Cloudflare Pages.
+PAGES_REDIRECTS_EMULATION = "1"
 PORTAL_GATE_ENABLED = "1"
 PORTAL_GATE_COOKIE = "vs_portal_session_staging"
 OBELISK_CLIENT_ID = "vaultsparkstudios-website"

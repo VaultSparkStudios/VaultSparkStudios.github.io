@@ -363,8 +363,14 @@ export const SATIRE_CARTOON_DERIVATIVES = Object.freeze({
   '.webp': Object.freeze({ width: 1024, format: 'webp' }),
   '.avif': Object.freeze({ width: 1024, format: 'avif' }),
   '--640.webp': Object.freeze({ width: 640, format: 'webp' }),
+  // S373: the lane emitted the 640 WebP without an AVIF sibling, so any cartoon whose
+  // 640 WebP reached 30KB failed `check-image-formats --strict` on main until someone
+  // hand-encoded one (59b578bd3, then again in S372). The lane now owns the sibling.
+  '--640.avif': Object.freeze({ width: 640, format: 'avif' }),
 });
-export const SATIRE_CARTOON_BUDGETS = Object.freeze({ '.png': 650_000, '.webp': 250_000, '.avif': 210_000, '--640.webp': 120_000 });
+// `--640.avif` budget: the 108 siblings already published (hand-encoded before S373)
+// peak at 159,767 bytes, and the build verifies every derivative against its budget.
+export const SATIRE_CARTOON_BUDGETS = Object.freeze({ '.png': 650_000, '.webp': 250_000, '.avif': 210_000, '--640.webp': 120_000, '--640.avif': 165_000 });
 
 /**
  * First edition date the two-image rule applies to (D-S368.7, 2026-10-03).

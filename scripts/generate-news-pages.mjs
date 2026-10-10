@@ -379,7 +379,7 @@ function memeFigure(story, day) {
     ? `<strong>Illustration pending.</strong> ${escapeHtml(persona.name)}’s panel for this story has not been drawn yet; this placeholder is generated from the story, not an illustration of it.`
     : `AI-generated editorial illustration, attributed to ${personaNameLink(persona)} (AI persona) · bound to the sourced facts below`;
   return `<figure class="desk-meme desk-hero-figure${isFallbackArt(story) ? ' is-pending' : ''}" id="editorial-illustration-1">
-    <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
+    <picture>${isFallbackArt(story) ? '' : `<source media="(max-width: 600px)" srcset="${base}--640.avif" type="image/avif"><source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp">`}<source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="lazy" fetchpriority="auto" decoding="async" alt="${alt}"></picture>
     <figcaption>${caption}</figcaption>
   </figure>`;
@@ -406,7 +406,7 @@ function satireFigure(story, day) {
     : '';
   return `<figure class="desk-satire" id="satire-cartoon" data-persona="${escapeHtml(persona.id)}" data-satire-cartoon="${cartoon.caricature === true ? 'caricature' : 'cartoon'}" aria-labelledby="desk-satire-label">
     <p class="desk-satire-label" id="desk-satire-label">${escapeHtml(SATIRE_CARTOON_LABEL)}${cartoon.caricature === true ? ' · caricature' : ''}</p>
-    <picture class="desk-satire-frame"><source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp"><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
+    <picture class="desk-satire-frame"><source media="(max-width: 600px)" srcset="${base}--640.avif" type="image/avif"><source media="(max-width: 600px)" srcset="${base}--640.webp" type="image/webp"><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="${width}" height="${height}" loading="lazy" decoding="async" alt="${escapeHtml(cartoon.alt)}"></picture>
     <figcaption><p class="desk-satire-caption">“${escapeHtml(story.memeLine.text)}”</p><p class="desk-satire-byline">Drawn in the style of ${personaNameLink(persona)} <span class="desk-ai-tag">AI persona</span> · AI-generated satire, not a photograph or a real event</p>${note}</figcaption>
   </figure>`;
@@ -608,7 +608,7 @@ function moreFromDesk(currentDay, current) {
     const art = `/assets/og/news/${d.date}--${s.slug}--meme`;
     const edition = EDITIONS.find((e) => e.id === s.edition)?.name;
     return `<li><a class="desk-more-card" href="/news/${d.date}/${s.slug}/">
-      ${isFallbackArt(s) ? pendingArt(s, 'desk-more-art') : `<picture class="desk-more-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt=""></picture>`}
+      ${isFallbackArt(s) ? pendingArt(s, 'desk-more-art') : `<picture class="desk-more-art"><source type="image/avif" srcset="${art}--128.avif 128w, ${art}--640.avif 640w" sizes="(max-width: 760px) 120px, 33vw"><source type="image/webp" srcset="${art}--640.webp"><img src="${art}--640.webp" width="640" height="336" loading="lazy" decoding="async" alt=""></picture>`}
       <span class="desk-more-copy"><span class="desk-more-meta">${edition ? `${escapeHtml(edition)} · ` : ''}${storyTimeHtml(d, s)}</span><span class="desk-more-title">${escapeHtml(s.headline)}</span></span>
     </a></li>`;
   }).join('\n');

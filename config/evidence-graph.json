@@ -604,6 +604,21 @@
       "note": "CANON-048 dual-audience surface: the machine-readable outcome-to-route-to-evidence map agents read. Sources are the DEFINITIONS[].evidence feeds it resolves freshness against."
     },
     {
+      "id": "visual-qa-retention",
+      "output": "docs/performance/visual-qa-retention.json",
+      "sources": [
+        "docs/visual-qa/LATEST.json",
+        "scripts/check-visual-qa-retention.mjs"
+      ],
+      "builder": "scripts/check-visual-qa-retention.mjs",
+      "check": [
+        "node",
+        "scripts/check-visual-qa-retention.mjs",
+        "--check"
+      ],
+      "note": "S373: the retention report is derived from the review receipts but was not a graph output, so repair-evidence-graph never staged it. In S372 a new receipt left it stale and uncommitted, and the clean CI checkout failed its --check (E2E 38001024179)."
+    },
+    {
       "id": "launch-age",
       "output": "index.html",
       "sources": [

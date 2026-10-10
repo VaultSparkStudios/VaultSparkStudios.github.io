@@ -2174,3 +2174,24 @@ Staging first: the exact committed tree was published to Hetzner staging with un
 ## D-S372.6 — founder confirms deploy scope: complete, identity hold stays (2026-10-10)
 
 Asked directly whether "fully deploy" included clearing the identity hold, the founder chose "Done; keep the hold". The S372 deploy is complete as the whole committed tree served at 556b4d14e plus Worker 9c7c29f1. Both hold reasons were re-probed and remain open in their own scope: `real-provider-e2e-pending` needs the founder's own-browser passkey sign-in and sign-out (no journey leg observed in 168h); `supabase-control-plane-partial` is a shared secrets-gateway slot holding a sibling project's key (live probe auth-error), owned by studio-ops and followed up via Ark 01K4HRI2I39CAD81018E7AB247.
+
+
+## D-S373.1 — a deploy claim is a measurement, and the content lane carries only anchored data (2026-10-10)
+
+"Deployed" is now reported from `check-served-parity.mjs`, which compares served bytes with a commit, rather than from a lane's exit status. The daily run is report-only and last in its job: the automated Desk lane promotes only newsroom paths, so other feeds lag between content runs by design, and an enforcing check there would be red most days. Three data files joined the content lane's exact-path allowlist because each meets its stated rule (the two ledgers are named as `source` by the public feed `api/worker-route-history.json`; `data/stats-surface.json` is a byte-identical twin of the already-allowed `stats.json`), and a self-test re-proves those anchors. `data/ignis-search-index.json` stays on the full gate because browser JavaScript reads it, so it is coupled to the shipped bundle.
+
+## D-S373.2 — line endings are fixed at checkout, not in the receipt hash (2026-10-10)
+
+`.gitattributes` pins `* text=auto eol=lf`. The index contained no CRLF text (3115 LF, the rest binary or empty), so the rule changes no committed byte. This removes the cause of the S372 non-portable receipt without touching the binding code.
+
+## D-S373.3 — not decided: tolerating routine Desk content in the visual receipt (2026-10-10)
+
+The proposed change replaces the routine `desk-more` block with a marker when hashing dated Desk articles, in the single binding function the writers and checker share, leaving the generator, stylesheet and every other byte bound. It was blocked by the session permission classifier as a change to audit code. It alters what a receipt attests, so it is recorded here as awaiting the founder's explicit approval rather than routed around. A partial edit that slipped through (an export line) was reverted at once and both receipts re-verified.
+
+## D-S373.4 — staging mirrors Pages redirects at the Worker, behind a staging-only flag (2026-10-10)
+
+`cloudflare/pages-redirects.js` implements only what this repository's `_redirects` uses, each behaviour measured against production (exact sources, trailing splat with `:splat`, query ahead of fragment). It runs where Pages would apply the file, after the Worker's own routes, and any failure to read the file declines to redirect instead of failing the request. Production never sets `PAGES_REDIRECTS_EMULATION`; a unit test asserts that from `wrangler.toml`.
+
+## D-S373.5 — closeout confirmation is decided before work starts (2026-10-10)
+
+In a non-interactive shell the closeout tool exits 2 immediately unless `--yes` or `--dry-run` is given. Auto-confirming was rejected: committing and pushing stays an explicit choice.

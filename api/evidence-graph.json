@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "c3cdf7de2b3eba1864ebb420b3d67b98f5f430c453410cddc65f97b6bf868a48",
+  "contractSha256": "dcd1521f08c375412181685b69753e918b95c45eedc58eea9fe2d3acb8046387",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 88,
+  "nodeCount": 89,
   "cascadeNodeCount": 42,
   "buildOrder": [
     "ai-canonical-pages",
@@ -57,6 +57,7 @@
     "surface-spine",
     "tt-readiness",
     "tt-summary",
+    "visual-qa-retention",
     "worker-route-provenance",
     "changelog-live",
     "feedback-provenance",
@@ -1609,6 +1610,19 @@
       "externalSources": [
         "api/funnel-summary.json",
         "data/rum-summary.json"
+      ]
+    },
+    {
+      "id": "visual-qa-retention",
+      "output": "docs/performance/visual-qa-retention.json",
+      "builder": "scripts/check-visual-qa-retention.mjs",
+      "verify": "node scripts/check-visual-qa-retention.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "docs/visual-qa/LATEST.json",
+        "scripts/check-visual-qa-retention.mjs"
       ]
     },
     {

@@ -41,8 +41,8 @@
       "sourceFingerprint": "0324e723f1f06945a6577e39",
       "archiveSha256": "bf83010f08330fa1c53ae7cc5a573b84e114ed00bf3f30ed28c371195c9c950e",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 103,
@@ -53,18 +53,18 @@
     }
   },
   "production": {
-    "reconciliation": "content-lane-match",
+    "reconciliation": "ahead",
     "cspMode": "enforce",
     "receiptState": "degraded",
     "reconciled": false,
-    "observedAt": "2026-10-10T00:21:07.125Z"
+    "observedAt": "2026-10-10T05:05:47.970Z"
   },
   "productionWorkerRoutes": {
     "state": "matched",
     "matched": 9,
     "total": 9,
     "observedAt": "2026-10-09T23:48:49.677Z",
-    "sourceContractSha256": "ce7426605f7c38de2d038cd25b7f8f863d46c5ecc5560406b66274d900c65f03"
+    "sourceContractSha256": "539c0e7dc974d3b15550566c2d2a9f0519aa318a23b3bcfa54098e227b92d82f"
   },
   "productionDeploy": {
     "state": "content-current",
@@ -178,8 +178,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -192,6 +192,8 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-10T00:26:19.411Z",
+  "capturedAt": "2026-10-10T04:39:54.726Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "2c88f0fc3ad74e84b0cd6184f15c0be19c84163e05f10fef403622204a25bd99",
+    "sha256": "897252630ce30a32f36585707b14acfbbd2aae180c90aed3b54c9a8909bf515e",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -479,7 +479,7 @@
       },
       {
         "path": "assets/news-desk.css",
-        "sha256": "889fd2ecd7227c6662d991b1e672cbe16b2213c6550eea983fb6238b2b8760e5"
+        "sha256": "66dd8bc7cbf0b74718263735baeb97c7c0d99b3e4855c0459fdd977929978119"
       },
       {
         "path": "assets/og/news/2026-08-07--agent-control-becomes-operations-discipline--meme--128.avif",
@@ -1971,11 +1971,11 @@
       },
       {
         "path": "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/index.html",
-        "sha256": "bc7ae39bc8302aae23913c624164ae4544b62a70818fdb9363b178985a6f726a"
+        "sha256": "6d2aaa35edea7d3bf871bc02f593d7f0aa8bfd954858a1b0207d089b601da299"
       },
       {
         "path": "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html",
-        "sha256": "7f65d3174ed397d0a87d8bee0728de7ad2d3ff1004867f2678bae97398cdf6ac"
+        "sha256": "b65e1339eb5c53660cabda4c8192432349b2f4b15358ae76d0dade791bb75610"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2003,7 +2003,7 @@
       },
       {
         "path": "scripts/generate-news-pages.mjs",
-        "sha256": "ff354249157492fd44d33243ccd029db8f42c020963e1423d87c8c1c0ba2b135"
+        "sha256": "6ed5f6c2fe04e3e17e1bcb1814917cc30ea29e050c908bd0a4d9093bbfcaba37"
       },
       {
         "path": "scripts/lib/news-desk.mjs",
@@ -2011,7 +2011,7 @@
       },
       {
         "path": "scripts/lib/news-memes.mjs",
-        "sha256": "8ceb08266188bfa3116be16812318fed5d92201e8494197c55c009a63745e6e3"
+        "sha256": "a8de3d0e7fbfca6850044cc54c9dfe945a191d8c67682685534f5d46d00941ea"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -2037,9 +2037,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "55f3b56f0d9c5926eade2a45f07ae71ff8a15a8df80c6b45a4b6ce2d8f9956a9",
+    "manifestSha256": "e27bb59b052b72df2e286930c9f45f548ebe04a3d7169d0c004d34362054935d",
     "candidateSha": "3d47921d41f84a3d617735aab3f92634b4022347",
-    "root": "2167f8c2fa6a21a2b3cbe6180e4363f7ad108d84a428d003b7b3ff000e408836"
+    "root": "fcde4275caf4cfb18fd28ea5b6da63aef6a7d5ab0f73a75d9379c293feb311f2"
   },
   "matrix": {
     "routes": [
@@ -2081,26 +2081,17 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Claude Opus 5.5 (S372)",
-    "findings": [
-      {
-        "severity": "non-blocking",
-        "scope": "mobile, all themes",
-        "summary": "Thumbnail cover-crop clips the banner baked-in caption on every card.",
-        "preexisting": true
-      },
-      {
-        "severity": "non-blocking",
-        "scope": "desktop, all themes (seen in the prior S372 capture set while a placeholder was present)",
-        "summary": "The illustration-pending placeholder headline is hard-clipped mid-glyph; mobile ellipsizes correctly. Not visible in this set because art has published.",
-        "preexisting": true
-      }
+    "reviewer": "Claude Opus 5.5 (S373)",
+    "findings": [],
+    "fixesApplied": [
+      "Desktop pending placeholder no longer clips its headline mid-glyph (two-line clamp, tighter padding).",
+      "Mobile card art is a whole 16:9 inset thumbnail instead of a cover-cropped square that cut the banner caption.",
+      "Cards request 128w/640w AVIF instead of the 1200px original."
     ],
-    "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null,
-    "reviewedAt": "2026-10-10T00:26:19.565Z",
-    "method": "Directly inspected all 28 changed-surface captures (two articles x seven themes x desktop1366/mobile390) of More-from-The-Desk after the art autopilot (95d59ab89) replaced the latenight placeholder with published art. Card art, metadata and titles are legible and consistent in every theme. Capture-clip artifacts: flat band below the footer, mid-frame sticky header on mobile."
+    "reviewedAt": "2026-10-10T04:39:55.556Z",
+    "method": "S373 UI change to More-from-The-Desk cards (sized 128/640 AVIF sources, whole 16:9 mobile thumbnail, placeholder headline clamp). Inspected all 28 changed-surface captures (two articles x seven themes x desktop1366/mobile390) on four native-resolution contact sheets, displayed at 64% (desktop) and 80% (mobile). The two changed states were also inspected at full resolution in separate harness captures: mobile art in all seven themes, and the pending placeholder (injected with the generator markup) at desktop in all seven themes and at mobile in dark and light. tests/desk-more-cards.spec.js asserts the layout in a browser and fails against the previous production build."
   },
   "captures": [
     {
@@ -2112,12 +2103,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--desktop--changed-surface.png",
-      "sha256": "7bb03e2546f374f27c929d57d79ba7ac7b680c9ab17a287dab06f0d56cb0d6c0",
+      "sha256": "b0eb2336d6b33e4f31659e9187ef6597915cceadac483f070b8f7d45e9f23cb8",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2129,12 +2120,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--dark--desktop--changed-surface.png",
-      "sha256": "1e3722277e972e0e19c7503bfb67c7bd0848f6903acd16cbcff2f13891c1f196",
+      "sha256": "a07be947616e3ec5fceecefd15e38fce58c9625592d35f99fa394cd563e66963",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2146,12 +2137,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--desktop--changed-surface.png",
-      "sha256": "0aeeddfda2433af5dac1c06a3e17eb88dc74eddae588833dca5508ea7a66a042",
+      "sha256": "d68407e0fba4816c70f6eb361e2a2a5b7bcadcdc88ad32bd280c1f79cceb4d43",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2163,12 +2154,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--light--desktop--changed-surface.png",
-      "sha256": "16e1dfc6b068ab7dd502c7d8f756c6278d462824404108450ff785abf9fca44a",
+      "sha256": "b9ea5ce737906ef52526274d5c0e2b113157c79957480dccbf661b80ddc627fd",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2180,12 +2171,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--desktop--changed-surface.png",
-      "sha256": "763a112a5286b327a6ecd902b2358abfc4960ce22d8dea12983a75f7b35982e2",
+      "sha256": "19479d988d510ef8ebaff4197cbf17467a2dd1f8d9695b312f01b0f9241b853e",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2197,12 +2188,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--ambient--desktop--changed-surface.png",
-      "sha256": "9410a3f24b09d78aacb0b906399e83e3d26aa1085734103b4fe44d60b2927861",
+      "sha256": "3c0776d909f8b20be67edafcdac0adfaa10b36f4a8d7c3c8a57a1402019f7b24",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2214,12 +2205,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--desktop--changed-surface.png",
-      "sha256": "f9f101ca336052a73eca1bed1ad244055bc6f1aa976e39a23e81b62fe8e4be09",
+      "sha256": "b98a80b4f5f60ae42f1ef69351eea9a3f2c1c3596360044426f3b16d33c1a61b",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2231,12 +2222,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--warm--desktop--changed-surface.png",
-      "sha256": "d0707df2b7f790c3fb16c2ce276f239b7ad1e233b0ad5c00b75f4d9543da7ab1",
+      "sha256": "6d668fe7180a2e13be8c60303abbe0474b5d91ef9265e3cc9f8e46b26f26b903",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2248,12 +2239,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--desktop--changed-surface.png",
-      "sha256": "ee79463b96c2e297cb8e0c19b4eac830cc1a1307f6c323f88871dcc69020ab56",
+      "sha256": "b4cd2d253b98b936c8ba1fd4495b1a12ebf0a361b5076ca9589e135c78f09bc6",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2265,12 +2256,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--cool--desktop--changed-surface.png",
-      "sha256": "b798222f8f50a00daaedad40f1c0cd509056429bbb3ef5bc2245309ba7708d84",
+      "sha256": "463a67a705b9f53c60b97d0eb7a445089b3a5cf549cab07ac6e9ad8104b2e67c",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2282,12 +2273,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--desktop--changed-surface.png",
-      "sha256": "eb0b2fdf414c896dde6873312caf2ebd43b625f05193666513f6e426e202dfb7",
+      "sha256": "9e8724a06cf5f2aef30a40a62f9c6023947eecce740c8932c413c19a296ea893",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2299,12 +2290,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--lava--desktop--changed-surface.png",
-      "sha256": "41458a2c5f131beb95c573ef070b871a584334351136443aa09895df16755556",
+      "sha256": "1cd0e184ebf637514f1393f13729bfbcd9aeb96136e66477821fc269a30ecb25",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2316,12 +2307,12 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--desktop--changed-surface.png",
-      "sha256": "34b4f335e9d7a60727b62a0275ce2b1d6736842ef883fb539641d6428bf8842f",
+      "sha256": "1c010f06fa78473e77290255840363ef06b46e60608fbac9fae9aa1d97f62f60",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2333,12 +2324,12 @@
         "height": 900
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--high-contrast--desktop--changed-surface.png",
-      "sha256": "caa9c0e2a551606009947590cdbb9226efab55089246f117630a16bc996b4ec4",
+      "sha256": "17d14b5ab52f2dbf4d16480ab0d1fd82977a86725605dce25c3176f526357aa1",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2350,12 +2341,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--mobile--changed-surface.png",
-      "sha256": "db69c6f62e01c4fb411bee4f6aa8a52106745a60abb19e1a6029a96a77548c92",
+      "sha256": "f84fe03d870512f5f202770a5b57adb6d92f8a07c7f5acc8b7f80170b58798a3",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2367,12 +2358,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--dark--mobile--changed-surface.png",
-      "sha256": "3a16c9b811c1f03353dfb161f13117ca028eb7df99d0c92226fa065ad36f25bf",
+      "sha256": "d29439f6a81113c1168a111debe515f5858c60b56f252ffc86d6322e0df1dfe5",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2384,12 +2375,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--mobile--changed-surface.png",
-      "sha256": "2545d650bf810e1c192f104fc409bb4933a2cf2a6a5fb294c2cc2c5623d02d25",
+      "sha256": "ba5c979650d0a737607172e376fd2e42ceefe6b0294e814e280eaf0e8477264f",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2401,12 +2392,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--light--mobile--changed-surface.png",
-      "sha256": "dc2a097bdc263652cadeb2e89a0c825ad3d5b5d37967f5940801c47550b0d8db",
+      "sha256": "695db309402bf6ff21a7ea30a9de9e6ee780cd7fd15bf345c168f41518109495",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2418,12 +2409,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--mobile--changed-surface.png",
-      "sha256": "e2a0d0f94945dbab94e67660e11f93934d25381cbe7ed51d2000b9f282e982a3",
+      "sha256": "9db03dde60929b66bb9ae866705888999f61d9ddc8a44f68950ddceb0f963125",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2435,12 +2426,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--ambient--mobile--changed-surface.png",
-      "sha256": "a6c4292069cb1e7e0826cedf7478535f898a4ca6be902a130d67a1567c88f32a",
+      "sha256": "0b4058321ffecc186e3bc30ae8031bfb55c7f5d7288a2785ba4402043901a3b1",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2452,12 +2443,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--mobile--changed-surface.png",
-      "sha256": "f21e0fc49d81895ac3d3f4fd239a5819ee5b175987e352c2852589db7d5013a7",
+      "sha256": "dfb52b85b644777ed02ee42b3f7c5a866bc1d64e476102725c4d9459abcaecd2",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2469,12 +2460,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--warm--mobile--changed-surface.png",
-      "sha256": "e99dff3b824b2ea2fb342cce74b5360b2ceb5dbdee380dedd79bef2d8ab500bb",
+      "sha256": "b6207f9c0aec7c437461c414884173ae918c257e956e95d7adc758ca9041e2a0",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2486,12 +2477,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--mobile--changed-surface.png",
-      "sha256": "3126d9edac8bcf185b6e71c034af5010af309e0f83c11ef86aabe2368635871f",
+      "sha256": "69be255fc797d05849e6b1f376a8649ada5129bef7cf1551ecb388923f068b98",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2503,12 +2494,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--cool--mobile--changed-surface.png",
-      "sha256": "2dd3493af1d774dfa75b78ca804fb50c8854007c57538ffce0d3575bf59b4a0a",
+      "sha256": "2231bdccb9d77d7fc0fea4183202d36c2afdf76c3ceaac71c93cfb14e9e1950f",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2520,12 +2511,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--mobile--changed-surface.png",
-      "sha256": "ef45582813728712568690fe157d58725413ea3f7729f675293ec20b210f56db",
+      "sha256": "e3b39403c940b495d41c5eabdb1c8d1623698e2aa3b6241c3e46f5f7f77b7532",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2537,12 +2528,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--lava--mobile--changed-surface.png",
-      "sha256": "0378cbe7dc7ae149a6460bfb4b655ca426794cf5fe792e5fe8dd5516c53ba2a5",
+      "sha256": "6bf4231683a4f3c38db3a123e2a3475e93e6f21d3cf867f8791c5329708386aa",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2554,12 +2545,12 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--mobile--changed-surface.png",
-      "sha256": "2f426ec36cbafb13b9310f404990cf6ec4c0195cf43c77482b1c986ee147e092",
+      "sha256": "ad39bfba7b0f162efd61056941195f6003211aa273d5ff1504ab81dd79d242a3",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     },
     {
@@ -2571,12 +2562,12 @@
         "height": 844
       },
       "file": "news-2026-10-09-openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid--high-contrast--mobile--changed-surface.png",
-      "sha256": "88391386bbaa920a2d6ec1aeb2209692ce7ea73abc6c7309f91a3447c15cc728",
+      "sha256": "69c4037b84c275ad4e07de74c616356cc3bf975217f77846ab3c5e4ec5bfb0cd",
       "page": "/news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Claude Opus 5.5 (S372)"
+        "reviewer": "Claude Opus 5.5 (S373)"
       }
     }
   ]

@@ -81,11 +81,30 @@ function header(title) {
   console.log(`╚${bar}╝\n`);
 }
 
+// S373: in an agent or CI shell stdin is not a terminal, so the confirmation below could
+// never be answered. The S372 run spent ten minutes on gates, reached the prompt and died
+// with exit 13 having committed nothing. Committing and pushing stays an explicit choice
+// (`--yes`), but that is now decided before any work starts rather than after all of it.
+function confirmationMode({ autoYes, dry, isTTY }) {
+  if (dry) return 'dry-run';
+  if (autoYes) return 'confirmed';
+  return isTTY ? 'interactive' : 'refuse';
+}
+if (confirmationMode({ autoYes: AUTO_YES, dry: DRY, isTTY: Boolean(process.stdin.isTTY) }) === 'refuse') {
+  console.error('⛔ closeout-autopilot: stdin is not a terminal, so the commit + push confirmation cannot be answered.');
+  console.error('   Re-run with --yes to commit and push, or --dry-run to preview. Nothing was changed.');
+  process.exit(2);
+}
+
 async function prompt(question, defaultYes = true) {
   if (DRY) { console.log(`(dry-run) would prompt: ${question}`); return defaultYes; }
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   return new Promise(resolve => {
+    let answered = false;
+    // If stdin closes without an answer, decline instead of never resolving.
+    rl.on('close', () => { if (!answered) { console.log('\n  No answer received — treating as "no".'); resolve(false); } });
     rl.question(`${question} ${defaultYes ? '[Y/n/dry]' : '[y/N/dry]'}: `, answer => {
+      answered = true;
       rl.close();
       const a = (answer || '').trim().toLowerCase();
       if (a === 'dry') resolve('dry');

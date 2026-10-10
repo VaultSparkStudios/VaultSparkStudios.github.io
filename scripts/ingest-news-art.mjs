@@ -829,8 +829,8 @@ async function selfTest() {
     t('an injected encoder cannot bypass the satire format budgets', missingSatireFormats.rejected.some((r) => r.id === `${date}--good` && /budget preflight/.test(r.reason)));
     t('satire dry-run validates staged cartoons and writes nothing',
       satDry.accepted.some((e) => e.id === `${date}--good`) && !fs.existsSync(path.join(artDir, `${date}--good--satire.png`)));
-    t('satire derivatives pass the budget preflight (png/webp/avif/640 webp)',
-      ['.png', '.webp', '.avif', '--640.webp'].every((k) => satDry.accepted.find((e) => e.id === `${date}--good`)?.budget[k] > 0));
+    t('satire derivatives pass the budget preflight (png/webp/avif/640 webp/640 avif)',
+      ['.png', '.webp', '.avif', '--640.webp', '--640.avif'].every((k) => satDry.accepted.find((e) => e.id === `${date}--good`)?.budget[k] > 0));
     const satReason = (plan, slug) => plan.rejected.find((r) => r.id === `${date}--${slug}`)?.reason || '';
     t('a non-square cartoon is rejected', /not square/.test(satReason(satDry, 'flat')));
     t('a cartoon generated from an older joke is rejected (derived alt mismatch)', /changed after this cartoon was generated/.test(satReason(satDry, 'small')));

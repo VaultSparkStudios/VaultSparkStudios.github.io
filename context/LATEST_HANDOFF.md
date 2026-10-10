@@ -1,3 +1,13 @@
+## Where We Left Off (Session 373) — S372 follow-ups, guards and test coverage (2026-10-10)
+
+Session Intent: do the still-open S372 items, improve on that session's work, fix its errors, and add the missing test coverage and guards. Intent: **Partial** — eight of ten items closed; two remain with reasons below.
+
+- Shipped: 13 changes across 5 groups. Release truth: served-parity reporter; three data files on the content lane. Process: skip-CI body guard; non-interactive closeout refusal; clean-checkout verifier; per-session audit sidecar; redirect-target test. Checkout: LF pinned. Desk: satire 640 AVIF lane derivative and backfill; sized card art; mobile thumbnail and desktop placeholder fixes. Staging: `_redirects` emulation in the Worker.
+- Tests: unit 408 (0 failures, 1 todo), up from 388; new specs `s373-guards`, `s373-pages-redirects`, `desk-more-cards` (browser, 3/3, fails against the previous build); local build:check passes all 534 steps.
+- Deploy: staging only. Staging Worker 41746efa verified (16 of 16 routes match production). Production is unchanged this session; promotion of the Worker source and Desk content awaits the founder's go-ahead.
+- Not done 1: making the visual receipt tolerant of routine Desk publishing. The change (hash dated articles with the `desk-more` block replaced by a marker) was blocked by the session's permission classifier as an edit to audit code. Until it is decided, each art or edition publish that touches a bound article will fail the next E2E, as in S372.
+- Not done 2: the Lighthouse flake. Diagnosed as a timing race between ten deferred scripts and first paint under simulated throttling; this is a hypothesis with supporting evidence, not a proven cause. Thresholds unchanged.
+- Carried: identity hold unchanged; Ark questions to studio-ops (visual-QA `.cache` classification, Supabase gateway slot) await replies.
 ## Where We Left Off (Session 372) — assurance and redirect repair (2026-10-09)
 
 Session Intent: /arc, then the founder authorized direct commit/push to main and full deployment. Intent: **Achieved**.
@@ -12,8 +22,3 @@ Session Intent: /arc, then the founder authorized direct commit/push to main and
 - CI history (honest): E2E failed four times before going green. Causes: the art autopilot, then the latenight edition, changed bound articles; CRLF working copies produced a non-portable receipt; the retention report was uncommitted, then platform-ordered. One push quoted a skip-ci token and skipped CI; the required workflows were then dispatched manually. Each cause is root-fixed or queued as [SIL].
 - Not verified / open: Hetzner staging does not apply `_redirects`. Field performance and conversion remain unmeasured. Identity holds are unchanged. Ark question 01K4H9AK… to studio-ops awaits an answer.
 - Next: the [SIL] items at the top of TASK_BOARD (routine lanes vs bound receipts; portable receipt hashing).
-## Where We Left Off — S371 final observed acceptance (2026-10-09)
-
-Session Intent: /arc, authorized direct main publication and deployment.
-
-Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: closing candidate 9b105d275e2f32cabe6ca2597205b6aebbd963cb live through Pages 37986968939; prior f509 acceptance remains preserved. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Canonical autopilot completed with two full 531-step passes. The temporary preview stopped; closing public feeds are verified live at 9b105d275. The acceptance receipt is recorded below.

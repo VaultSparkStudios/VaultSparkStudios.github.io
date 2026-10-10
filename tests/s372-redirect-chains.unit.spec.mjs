@@ -48,6 +48,29 @@ test('no Worker legacy redirect lands on a route _redirects retires', () => {
   assert.deepEqual(chains(pairs, retired), []);
 });
 
+// S373: a chain guard alone still lets a redirect point at nothing. Targets served by the
+// Worker itself (portal and API routes) have no file to find and are excluded by prefix.
+const WORKER_SERVED_TARGET = /^\/(?:api|investor-portal)(?:\/|$)/;
+
+export function missingTargets(pairs, root = ROOT) {
+  return pairs
+    .filter(([, target]) => !/^https?:/.test(target) && !WORKER_SERVED_TARGET.test(pathOf(target)))
+    .filter(([, target]) => {
+      const p = pathOf(target).replace(/^\//, '');
+      return !fs.existsSync(path.join(root, slashed(p), 'index.html')) && !(p && fs.existsSync(path.join(root, p)) && fs.statSync(path.join(root, p)).isFile());
+    })
+    .map(([source, target]) => `${source} -> ${target}`);
+}
+
+test('missing-target detection finds a redirect to a page that does not exist', () => {
+  assert.deepEqual(missingTargets([['/a', '/games/'], ['/b', '/no-such-page-s373/'], ['/c', '/investor-portal/x/'], ['/d', 'https://example.com/']]),
+    ['/b -> /no-such-page-s373/']);
+});
+
+test('every Worker legacy redirect lands on a page that exists in the tree', () => {
+  assert.deepEqual(missingTargets(workerLegacyPairs(read('cloudflare/security-headers-worker.js'))), []);
+});
+
 test('no _redirects rule lands on a route _redirects retires', () => {
   const rules = redirectRules(read('_redirects'));
   assert.ok(rules.length >= 40, `expected the _redirects table, parsed ${rules.length} rules`);

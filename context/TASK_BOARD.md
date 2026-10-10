@@ -1,19 +1,28 @@
+# S373 — S372 follow-ups, guards and test coverage
+
+- [x] Wave1: line endings pinned at checkout (`.gitattributes`); retention report added to the evidence graph.
+- [x] Wave2: content lane carries three anchored data files; served-versus-committed byte parity reporter, wired into build:check and the daily monitor (report-only, last step).
+- [x] Wave3: pre-push blocks a skip-CI token in a commit body; closeout refuses a non-interactive shell up front; clean-checkout verifier; audit sidecar per session; redirect targets must exist.
+- [x] Wave4: satire 640 AVIF in the lane plus backfill; sized card art; mobile thumbnail and desktop placeholder fixes with a browser test and a 28-capture review.
+- [x] Wave5: staging applies `_redirects` through the Worker (staging-only flag); Lighthouse flake diagnosed, thresholds unchanged.
+- [ ] Production: the Worker source and Desk content changed; staging is verified. Promotion awaits the founder's go-ahead for this session.
+
 # S372 arc — assurance and redirect repair
 
 - [x] Wave1: sync 138 commits, triage (not cut off; write-back current through S371), /start, canon conformance (cleared a false CANON-053 gap from a `.cache` report).
 - [x] Wave2: audit `docs/AUDIT_2026-10-09-S372.md` — restore daily surface assurance, single-hop legacy redirects, Ark cargo for the checker misclassification; all three shipped with failing controls.
 - [x] Wave3: CI repair — re-reviewed two art-changed Desk articles (28/28 captures) and bound the receipt to committed LF bytes (400/400 entries).
 - [x] Wave4: production Worker 9c7c29f1 promoted (run 38005943124) after exact-SHA checks at 3d47921d4; live one-hop readback, redirect spec 4/4, post-deploy provenance 9/9.
-- [ ] **[SIL/P2 · S372]** Before pushing receipt-bearing changes, verify in a clean worktree of the exact commit (`git worktree add --detach` + junctioned node_modules + `CI=true run-build-check`). That run found what four CI cycles otherwise surfaced one at a time; consider a script.
-- [ ] **[SIL/P2 · S372]** The art autopilot edits article HTML bound by the tracked visual receipt without running E2E, so the next CI-bearing push fails step 158 (8db1f1bf0 → E2E 37996463632). Either the art lane re-reviews affected bound articles, or the receipt stops binding routine-art regions.
-- [ ] **[SIL/P2 · S372]** Receipt source bindings hash working-tree bytes; a Windows CRLF copy of an LF file produces a receipt CI can never match (E2E 37998007384). Hash the committed blob, or normalize line endings, in the shared binding.
-- [ ] **[SIL/P1 · S372]** The content and hotfix lanes refuse served `data/*.json|ndjson` by type, so every content-lane closeout leaves them stale until a full promotion (6 files lagged through S371 and most of S372). Either classify these exact-path public data artifacts as promotable, or add a served-versus-committed byte-parity check to closeout so the gap is reported instead of assumed away.
-- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors.
-- [ ] **[DESK/P3 · S372]** More-from-The-Desk card images reference the full 1200px art instead of the 640px variants.
-- [ ] **[DESK/P2 · S372]** The satire-cartoon lane emits `--640.webp` but no `--640.avif`, so every satire 640 of 30KB or more fails `check-image-formats --strict` until hand-completed (59b578bd3; S372 derived `2026-10-09--anthropic-bans-users-from-being-cruel-to-its-ai--satire--640.avif` with the meme lane encoder). Add the derivative to `SATIRE_CARTOON_DERIVATIVES` / the responsive-art loop.
-- [ ] **[STAGING/P3 · S372]** Hetzner staging does not apply `_redirects`: retired routes return 200/404 there and 301 in production, so staging cannot verify a route consolidation.
-- [ ] **[DESK/P3 · S372]** On mobile, "More from The Desk" thumbnails cover-crop the banner's burned-in caption on every card (pre-existing; seen in the S372 visual review).
-- [ ] **[TOOL/P3 · S372]** Local `scripts/lib/audit-sidecar.mjs` misses `AUDIT_<date>-S<n>.json` sidecars; studio-ops' copy handles them since S312.
+- [x] **[SIL/P2 · S372]** Before pushing receipt-bearing changes, verify in a clean worktree of the exact commit (`git worktree add --detach` + junctioned node_modules + `CI=true run-build-check`). That run found what four CI cycles otherwise surfaced one at a time; consider a script. — **DONE S373:** `npm run verify:clean`.
+- [ ] **[SIL/P2 · S372]** The art autopilot edits article HTML bound by the tracked visual receipt without running E2E, so the next CI-bearing push fails step 158 (8db1f1bf0 → E2E 37996463632). Either the art lane re-reviews affected bound articles, or the receipt stops binding routine-art regions. **S373:** not done; the binding change needs the founder's approval (D-S373.3).
+- [x] **[SIL/P2 · S372]** Receipt source bindings hash working-tree bytes; a Windows CRLF copy of an LF file produces a receipt CI can never match (E2E 37998007384). Hash the committed blob, or normalize line endings, in the shared binding. — **DONE S373** at checkout level: `.gitattributes` pins LF (D-S373.2).
+- [x] **[SIL/P1 · S372]** The content and hotfix lanes refuse served `data/*.json|ndjson` by type, so every content-lane closeout leaves them stale until a full promotion (6 files lagged through S371 and most of S372). Either classify these exact-path public data artifacts as promotable, or add a served-versus-committed byte-parity check to closeout so the gap is reported instead of assumed away. — **DONE S373:** three anchored files allowlisted; `npm run verify:served` measures the rest (D-S373.1).
+- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373:** hypothesis only — ten deferred scripts race first paint under simulated throttling (static text LCP, TBT 0). Confirm by loading below-the-fold Desk scripts after paint.
+- [x] **[DESK/P3 · S372]** More-from-The-Desk card images reference the full 1200px art instead of the 640px variants. — **DONE S373.**
+- [x] **[DESK/P2 · S372]** The satire-cartoon lane emits `--640.webp` but no `--640.avif`, so every satire 640 of 30KB or more fails `check-image-formats --strict` until hand-completed (59b578bd3; S372 derived `2026-10-09--anthropic-bans-users-from-being-cruel-to-its-ai--satire--640.avif` with the meme lane encoder). Add the derivative to `SATIRE_CARTOON_DERIVATIVES` / the responsive-art loop. — **DONE S373:** lane derivative, nine backfilled, unit test.
+- [x] **[STAGING/P3 · S372]** Hetzner staging does not apply `_redirects`: retired routes return 200/404 there and 301 in production, so staging cannot verify a route consolidation. — **DONE S373:** staging-only Worker flag (D-S373.4).
+- [x] **[DESK/P3 · S372]** On mobile, "More from The Desk" thumbnails cover-crop the banner's burned-in caption on every card (pre-existing; seen in the S372 visual review). — **DONE S373:** `tests/desk-more-cards.spec.js`.
+- [x] **[TOOL/P3 · S372]** Local `scripts/lib/audit-sidecar.mjs` misses `AUDIT_<date>-S<n>.json` sidecars; studio-ops' copy handles them since S312. — **DONE S373.**
 
 # S371 release maintenance
 

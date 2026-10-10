@@ -69,7 +69,34 @@ export const PUBLIC_DATA_ARTIFACTS = Object.freeze([
   'api/news-desk-claims.ndjson', // canonical public claim ledger named by /news/, agents.json, and llms-full.txt
   'data/staging-deploy-history.ndjson', // named by api/staging-deploy-continuity.json servedPath + the agents.json evidence.ledger.verify action
   'stats.json', // named by /stats/ and agents.json; generated, public-safe Analytica Feed v1
+  // S373: three served ledgers that only a full promotion could carry, so every
+  // content-lane release left them stale (measured in S372: byte-different from main
+  // on the Pages origin). Each meets the rule above, and publicDataAnchorFindings()
+  // re-proves the anchor on every self-test so an entry cannot outlive it.
+  'data/promotion-history.ndjson', // named as `source` by the public feed api/worker-route-history.json
+  'data/uptime-history.ndjson', // named as `source` by the public feed api/worker-route-history.json
+  'data/stats-surface.json', // byte-identical twin of stats.json above; one generator writes both
 ]);
+
+/**
+ * Re-prove the public anchor behind the S373 allowlist entries against the tree.
+ * `data/ignis-search-index.json` (read by browser JS, so coupled to the shipped
+ * bundle) and the build-time maps deliberately stay on the full promotion gate.
+ */
+export function publicDataAnchorFindings(root = ROOT) {
+  const findings = [];
+  const read = (rel) => { try { return fs.readFileSync(path.join(root, rel)); } catch { return null; } };
+  const routeHistory = read('api/worker-route-history.json');
+  for (const ledger of ['data/promotion-history.ndjson', 'data/uptime-history.ndjson']) {
+    if (!routeHistory || !routeHistory.toString('utf8').includes(`"source": "${ledger}"`)) {
+      findings.push(`${ledger} is no longer named as a source by api/worker-route-history.json`);
+    }
+  }
+  const stats = read('stats.json');
+  const twin = read('data/stats-surface.json');
+  if (!stats || !twin || !stats.equals(twin)) findings.push('data/stats-surface.json is no longer byte-identical to stats.json');
+  return findings;
+}
 
 /**
  * Content-addressed shell bundles: `assets/<name>.shell-<hash>.js|css`.
@@ -258,6 +285,19 @@ function selfTest() {
     ['a non-api json is blocked', classifyPath('data/game-registry.json') === 'blocked'],
     ['an arbitrary root json remains blocked', classifyPath('private-stats.json') === 'blocked'],
     ['the anchored public ledger is allowed BY EXACT PATH', classifyPath('data/staging-deploy-history.ndjson') === 'content'],
+    ['S373: the two route-history ledgers and the stats twin are allowed BY EXACT PATH', ['data/promotion-history.ndjson', 'data/uptime-history.ndjson', 'data/stats-surface.json'].every((p) => classifyPath(p) === 'content')],
+    ['S373: their public anchors hold in this tree', (() => { const f = publicDataAnchorFindings(); for (const x of f) console.error(`    ${x}`); return f.length === 0; })()],
+    ['S373: a missing anchor or a diverged twin is reported', (() => {
+      const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'vss-data-anchor-'));
+      try {
+        fs.mkdirSync(path.join(tmp, 'api')); fs.mkdirSync(path.join(tmp, 'data'));
+        fs.writeFileSync(path.join(tmp, 'api', 'worker-route-history.json'), '{"a":{"source": "data/uptime-history.ndjson"}}');
+        fs.writeFileSync(path.join(tmp, 'stats.json'), '{"v":1}'); fs.writeFileSync(path.join(tmp, 'data', 'stats-surface.json'), '{"v":2}');
+        const f = publicDataAnchorFindings(tmp);
+        return f.length === 2 && f.some((x) => x.startsWith('data/promotion-history.ndjson')) && f.some((x) => x.includes('byte-identical'));
+      } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+    })()],
+    ['S373: browser-read and build-time data stay on the full gate', ['data/ignis-search-index.json', 'data/lqip-map.json', 'data/perf-history.ndjson'].every((p) => classifyPath(p) === 'blocked')],
     ['the four discovery roots are allowed BY EXACT PATH', ['sitemap.xml','robots.txt','agents.json','.well-known/llms.txt'].every((p) => classifyPath(p) === 'content')],
     ['other discovery-shaped paths remain blocked', classifyPath('other.xml') === 'blocked' && classifyPath('.well-known/other.txt') === 'blocked'],
     ['other ndjson stays blocked', classifyPath('api/private.ndjson') === 'blocked' && classifyPath('data/rum-history.ndjson') === 'blocked' && classifyPath('data/staging-deploy-history2.ndjson') === 'blocked'],

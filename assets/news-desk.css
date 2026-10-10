@@ -423,7 +423,9 @@ body.light-mode .desk-satire-byline .desk-ai-tag{border-color:var(--persona-ink,
 .desk-art-pending{display:flex;flex-direction:column;justify-content:flex-end;gap:.4rem;padding:clamp(.8rem,2.4vw,1.4rem);background:linear-gradient(135deg,color-mix(in srgb,var(--gold,#ffc400) 26%,var(--bg,#07080f)),var(--bg,#07080f) 72%);color:var(--desk-ink)}
 .desk-art-pending-k{color:var(--desk-muted);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .desk-art-pending-h{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font:600 clamp(1rem,2.2vw,1.45rem)/1.2 Georgia,'Times New Roman',serif}
-.desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.95rem}
+/* S373: in a card the box is a fixed 1200/630 frame; a two-line label plus three headline lines overflowed it and the last line was cut mid-glyph. */
+.desk-more-art.desk-art-pending{padding:.8rem}
+.desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.95rem;-webkit-line-clamp:2}
 
 /* ── S356 /news/ index: image-led lead, responsive image grid ─────────────── */
 .desk-edition{margin-top:.4rem}
@@ -478,9 +480,11 @@ body.light-mode .desk-split-label[data-heat=cool],body.light-mode .desk-story-sp
   .desk-facts{padding:.9rem 1rem .9rem 2.1rem}
   .desk-more-grid{grid-template-columns:1fr}
   .desk-more-card{display:grid;grid-template-columns:120px minmax(0,1fr);align-items:stretch}
-  .desk-more-art{aspect-ratio:auto;height:100%;min-height:76px}
+  /* S373: show the whole banner as a 16:9 thumbnail. Stretching it to the card height cover-cropped it to a square and cut the caption baked into the art. The text-only placeholder keeps the full-height box. */
+  .desk-more-art{aspect-ratio:1200/630;height:auto;align-self:center;margin-left:.6rem;border-radius:8px}
+  .desk-more-art.desk-art-pending{aspect-ratio:auto;height:100%;min-height:76px;align-self:stretch;margin-left:0;border-radius:0}
   .desk-more-art.desk-art-pending .desk-art-pending-k{display:none}
-  .desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.78rem}
+  .desk-more-art.desk-art-pending .desk-art-pending-h{font-size:.78rem;-webkit-line-clamp:3}
   .desk-story-card.desk-lead{grid-template-columns:1fr}
   .desk-story-card.desk-lead .desk-story-art{height:auto;min-height:0;aspect-ratio:1200/630}
   .desk-panel-thumb{flex-basis:72px}
