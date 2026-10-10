@@ -2987,3 +2987,5 @@ Founder confirmed the S372 deploy scope as complete with the identity hold kept 
 Brainstorm (committed to TASK_BOARD): (1) decide the routine-content receipt binding (D-S373.3); (2) confirm the Lighthouse hypothesis by loading below-the-fold Desk scripts after paint.
 
 S373 addendum (unscored): at pushed tip 5a8beccc5, E2E 38027265657 and accessibility 38027265617 passed first time; Lighthouse 38027265643 failed on the pre-existing floor flake (homepage 0.75, one article 0.89). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it, steady simulated FCP and swinging simulated LCP. Recorded on the task board and in the handoff; thresholds unchanged.
+
+S373 addendum (unscored): the founder approved the receipt change and asked for no downside. Shipped as hashed-or-proven (D-S373.6): the routine block is set aside only when the generator proves the page, its digest is recorded and drift is reported. A real art publication (366d2c88e) changed both reviewed articles during the work and the receipt stayed valid with two notes. Nine of ten S372 follow-ups are now closed.

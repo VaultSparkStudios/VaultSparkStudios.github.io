@@ -79,6 +79,37 @@ test('content lane: allowlisted data files keep a real public anchor; browser-re
   for (const file of ['data/ignis-search-index.json', 'data/lqip-map.json', 'data/game-registry.json']) assert.equal(classifyPath(file), 'blocked');
 });
 
+test('receipt binding: only a dated Desk article with exactly one routine block is marked; everything else is hashed as-is', async () => {
+  const { createRequire } = await import('node:module');
+  const lib = createRequire(import.meta.url)('../scripts/lib/mobile-runtime-contract.cjs');
+  const article = 'news/2026-10-09/a-story/index.html';
+  const block = (inner) => `<section class="desk-more" aria-labelledby="t"><ul>${inner}</ul></section>`;
+  const page = (inner, body = 'body') => Buffer.from(`<main>${body}</main>${block(inner)}<footer>f</footer>`);
+  // Routine content differs, reviewed content identical → same bound bytes, different routine digest.
+  assert.ok(lib.bindingBytes(article, page('<li>a</li>')).equals(lib.bindingBytes(article, page('<li>b</li><li>c</li>'))));
+  assert.notEqual(lib.routineRegionDigest(article, page('<li>a</li>')), lib.routineRegionDigest(article, page('<li>b</li>')));
+  assert.ok(lib.bindingBytes(article, page('<li>a</li>')).includes(lib.DESK_ROUTINE_REGION_MARKER));
+  // Reviewed content differs → different bound bytes.
+  assert.equal(lib.bindingBytes(article, page('<li>a</li>')).equals(lib.bindingBytes(article, page('<li>a</li>', 'edited'))), false);
+  // Not an article, no block, two blocks, or binary → untouched, no routine digest.
+  const untouched = [
+    ['news/index.html', page('<li>a</li>')],
+    ['games/index.html', page('<li>a</li>')],
+    ['news/2026-10-09/a-story/critique.json', page('<li>a</li>')],
+    [article, Buffer.from('<main>no block here</main>')],
+    [article, Buffer.concat([page('<li>a</li>'), Buffer.from(block('<li>second</li>'))])],
+    [article, Buffer.concat([page('<li>a</li>'), Buffer.from([0, 1, 2])])],
+  ];
+  for (const [file, bytes] of untouched) {
+    assert.ok(lib.bindingBytes(file, bytes).equals(bytes), `${file} must be hashed as-is`);
+    assert.equal(lib.routineRegionDigest(file, bytes), null);
+  }
+  // Non-ASCII bytes outside the block survive the round trip exactly.
+  const unicode = Buffer.from(`<main>café — ’quoted’ 日本</main>${block('<li>x</li>')}`);
+  const bound = lib.bindingBytes(article, unicode);
+  assert.ok(bound.toString('utf8').startsWith('<main>café — ’quoted’ 日本</main>'));
+});
+
 test('satire lane: the 640 AVIF is a lane derivative with a budget, and every published cartoon has one', async () => {
   const { SATIRE_CARTOON_DERIVATIVES, SATIRE_CARTOON_BUDGETS } = await import('../scripts/lib/news-memes.mjs');
   assert.deepEqual(SATIRE_CARTOON_DERIVATIVES['--640.avif'], { width: 640, format: 'avif' });

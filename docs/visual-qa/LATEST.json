@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "897252630ce30a32f36585707b14acfbbd2aae180c90aed3b54c9a8909bf515e",
+    "sha256": "ff4f383f25725ed33943b47b81b5366b977fba5bf4732675d4f2d7b90cfc7b1b",
     "files": [
       "assets/ambient-loader.js",
       "assets/changelog-reactions.js",
@@ -1971,11 +1971,13 @@
       },
       {
         "path": "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/index.html",
-        "sha256": "6d2aaa35edea7d3bf871bc02f593d7f0aa8bfd954858a1b0207d089b601da299"
+        "sha256": "e784ade5ca6a63da5d04369f732d21c17a00ab9c22f05135b7b37d562327461f",
+        "routineRegionSha256": "cd561e58603e527a89b1d06b59dc86f755361f1235dfee9ae70ff431c5dd759a"
       },
       {
         "path": "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html",
-        "sha256": "b65e1339eb5c53660cabda4c8192432349b2f4b15358ae76d0dade791bb75610"
+        "sha256": "f67ba5c63389ea69838d5411c3f504908597bfa2614967bfd29a4784c0b34ddc",
+        "routineRegionSha256": "5ab72360349edd3a516d6585a7f3c478f1c88fb0d42d6d3d5583b34500a4dfe4"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -2037,9 +2039,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "350d810036591fd0972064b5a043f0fe9cf733e4c7cd1bf495a50c0efc4d2333",
+    "manifestSha256": "07a2ded5e14821c81619c2f0a1c63fd61ee494f8e2c69494917d5cb0881c125d",
     "candidateSha": "11a42b54b494fac905c8ab5b71ec436505546070",
-    "root": "588a8fc5673186029836adc217d634d83671c522fe6b1d987cfc6155bdb0855a"
+    "root": "f98987192ef114cc3de35ef3dc0f6c5dc43a73dc3adf1431c52f6b05d5ce8152"
   },
   "matrix": {
     "routes": [
@@ -2572,13 +2574,19 @@
     }
   ],
   "rebound": {
-    "at": "2026-10-10T05:15:18.955Z",
-    "note": "Candidate manifest was rebuilt when S373 was rebased onto current main. All 28 capture hashes and the aggregate source digest verified unchanged; original capture and review times retained.",
+    "at": "2026-10-10T15:27:34.730Z",
+    "note": "Re-stamped under the routine-region binding rule (D-S373.6, founder-approved). No bound file changed: all 403 review-time digests were re-verified against current raw bytes, and all 28 capture hashes are unchanged. Original capture and review times retained.",
+    "bindingRule": "routine-region-v1",
+    "routineBoundArticles": [
+      "news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/index.html",
+      "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html"
+    ],
+    "previousSourceSha256": "897252630ce30a32f36585707b14acfbbd2aae180c90aed3b54c9a8909bf515e",
     "previousCandidate": {
       "manifest": "api/candidate-artifact-manifest.json",
-      "manifestSha256": "e27bb59b052b72df2e286930c9f45f548ebe04a3d7169d0c004d34362054935d",
-      "candidateSha": "3d47921d41f84a3d617735aab3f92634b4022347",
-      "root": "fcde4275caf4cfb18fd28ea5b6da63aef6a7d5ab0f73a75d9379c293feb311f2"
+      "manifestSha256": "350d810036591fd0972064b5a043f0fe9cf733e4c7cd1bf495a50c0efc4d2333",
+      "candidateSha": "11a42b54b494fac905c8ab5b71ec436505546070",
+      "root": "588a8fc5673186029836adc217d634d83671c522fe6b1d987cfc6155bdb0855a"
     }
   }
 }

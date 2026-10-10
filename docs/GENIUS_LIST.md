@@ -48,7 +48,7 @@ Why it matters: Keep shell regeneration and SRI stamping in a single documented 
 
 #### 1. [VERIFY] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /…
 Final score: **83**
-[PERF/P2 · S372] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /news/2026-08-11/cloudflare-gave…/ bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. S373: hypothesis only — ten deferred scripts race first paint under simulated throttling (static text LCP, TBT 0). Confirm by loading below-the-fold Desk scripts after paint.
+[PERF/P2 · S372] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /news/2026-08-11/cloudflare-gave…/ bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. S373 evidence: observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor.
 Why it matters: Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /n is a 373-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
@@ -97,44 +97,44 @@ First command: `npm run build:check`
 ### DEFERRED / GATED
 
 #### 1. [AI] The doctor names rescore-ignis --stale as the IGNIS remedy, but the p…
-Final score: **94**
+Final score: **97**
 [SIL][S362][OBS/P3] The doctor names rescore-ignis --stale as the IGNIS remedy, but the propagated copy reads portfolio/PROJECT_REGISTRY.json from this repo root and finds nothing, so the remedy is a structural no-op here (D-S362.6). Awaiting the studio-ops answer to Ark repo-question 01K2TR2MCB649E1AD036E22BAD; until then the stale score stands honestly reported.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
 #### 2. [PRODUCT] Surface the Supabase health API per-service verdict (db/rest/auth) on…
-Final score: **93**
+Final score: **96**
 [SIL][S360][OBS/P2] Surface the Supabase health API per-service verdict (db/rest/auth) on /status/ through a scheduled, credential-side probe that writes a public JSON. The browser probes can say "not responding" but not "the database is up and the gateway is not".
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 3. [PRODUCT] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27…
-Final score: **87**
+Final score: **90**
 [S362][OBS/P3] desk-model-servability dropped to 1/2 during this session: Qwen3.8-27B is unmeasured at the provider. Advisory and external; re-probe next session before treating it as a defect.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 4. [VERIFY] The art autopilot edits article HTML bound by the tracked visual rece…
-Final score: **86**
-[SIL/P2 · S372] The art autopilot edits article HTML bound by the tracked visual receipt without running E2E, so the next CI-bearing push fails step 158 (8db1f1bf0 → E2E 37996463632). Either the art lane re-reviews affected bound articles, or the receipt stops binding routine-art regions. S373: not done; the binding change needs the founder's approval (D-S373.3).
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 5. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
-Final score: **84**
+#### 4. [PRODUCT] Reconcile the four propagated checkers that encode studio-ops' own la…
+Final score: **87**
 [SIL][S363][PROTOCOL/P2] Reconcile the four propagated checkers that encode studio-ops' own layout (D-S363.5, D-S363.7, D-S363.8, D-S363.9): check-windows-hide scan roots, the wipe guard's status-row format and archive naming, and arc-profile.mjs resolving PROJECT_REGISTRY to a path that exists only inside studio-ops. Each produced a false failure or a false inference that no local change could fix. Ark cargo 01K30UDB1264A040FE519B8D8B carries the upstream ask; this item tracks whether the next drain actually lands it.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 6. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
-Final score: **81**
+#### 5. [PRODUCT] "Coming soon" / "TBD" copy on six live game pages. Founder copy decis…
+Final score: **84**
 [S356][PRODUCT/P2] "Coming soon" / "TBD" copy on six live game pages. Founder copy decision: call-of-doodie, franchise-architect, gridiron-gm (trailer + screenshots), vaultfront (backend), mindframe, project-unknown (platform, title).
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 7. [PRODUCT] Founder-owned items deferred. Passkey sign-in, signup walkthrough, pu…
-Final score: **78**
+#### 6. [PRODUCT] Founder-owned items deferred. Passkey sign-in, signup walkthrough, pu…
+Final score: **81**
 [S354][FOUNDER DIRECTIVE] Founder-owned items deferred. Passkey sign-in, signup walkthrough, public member data, newsletter arming, Desk cadence, warm-origin, Workers Paid and the small confirmations wait until the founder picks them up; agent-owned items continue.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 8. [PRODUCT] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A…
-Final score: **72**
+#### 7. [PRODUCT] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A…
+Final score: **75**
 [S352][SIL][OBS/P1] Ship the sampler RPC entrypoint on Ark acceptance. Ark 01K2EQ77M9F29A0EC9619EA4BC asks studio-ops to reuse studio-ops-cron */30 via a service binding. The website half needs a node-side cloudflare:workers shim for the unit tests.
 Why it matters: Owned by another repo or already moved through Ark cargo.
+
+#### 8. [PRODUCT] Free a cron slot, or move the account to Workers Paid. S352: an agent…
+Final score: **72**
+[S351][OBS/P0 · FOUNDER DECISION] Free a cron slot, or move the account to Workers Paid. S352: an agent-side third option went to studio-ops via Ark (row above); this row closes if studio-ops accepts. This is the single thing standing between the studio and ever observing its own edge, and it is now a one-sentence decision rather than an investigation. Five of five free-plan cron triggers are in use by other projects. Retiring one is a live change to that project (founder call); Workers Paid raises the cap to 1,000 and is a billing action reserved to a human under CANON-019. Everything downstream is already built, deployed and verified — namespace, binding, handler, drain, 12/12 drain self-tests.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order
 

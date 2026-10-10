@@ -2195,3 +2195,15 @@ The proposed change replaces the routine `desk-more` block with a marker when ha
 ## D-S373.5 — closeout confirmation is decided before work starts (2026-10-10)
 
 In a non-interactive shell the closeout tool exits 2 immediately unless `--yes` or `--dry-run` is given. Auto-confirming was rejected: committing and pushing stays an explicit choice.
+
+
+## D-S373.6 — routine Desk content in a reviewed article is proven, not omitted (2026-10-10, founder-approved)
+
+Supersedes the open question in D-S373.3. The founder approved the change and asked that it carry no downside. The first proposal simply left the "More from The Desk" block out of the hash, which would have meant trusting the art lane for those bytes. What shipped instead:
+
+- **Hashed or proven.** For a dated Desk article with exactly one such block, the receipt hashes the page with the block replaced by a fixed marker (`routine-region-v1`) and records the block's own digest. `check-receipt-ordering` then requires `generate-news-pages --check` to pass, which proves every news page is byte-for-byte what the generator renders from the committed Desk data. The generator and the stylesheet remain bound sources. No byte is unattested.
+- **Fail closed.** No block, two blocks, a non-article path, a missing generator, or a failing generator check all fall back to refusing the receipt, which forces the same re-review a whole-page hash would. A receipt written before the rule cannot use it.
+- **Visible.** When routine content has changed since review the checker prints a note per article and says so on its summary line; a green line never implies a re-review.
+- **Layout still checked.** `tests/desk-more-cards.spec.js` asserts the current cards' layout in a browser on every CI run.
+
+Verified on the real repository: a hand edit inside the block is refused (generator proof fails); a hand edit outside it is refused (hash); a genuine headline change regenerated through the generator (133 pages) leaves the receipt valid with a note for each reviewed article. The existing receipt was re-stamped only after all 403 review-time digests were re-verified against current raw bytes and all 28 capture hashes were confirmed unchanged.

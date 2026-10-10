@@ -8,7 +8,9 @@ Eight of the ten S372 follow-ups are closed, each with a test.
 - **Desk.** The satire lane emits a `--640.avif` derivative (nine backfilled). "More from The Desk" cards request 128w/640w AVIF, show a whole 16:9 thumbnail on mobile, and the pending placeholder no longer clips. `tests/desk-more-cards.spec.js` asserts this in a browser.
 - **Staging.** The staging Worker applies the origin's `_redirects` (`PAGES_REDIRECTS_EMULATION`, staging only); staging matched production on 16 of 16 probed routes. Staging Worker version 41746efa.
 
-Not done: excluding routine Desk content from the visual receipt's binding (needs the founder's approval), and a fix for the Lighthouse flake (diagnosed only). Production promotion of this session's Worker and Desk changes awaits the founder's go-ahead.
+- **Receipts.** Routine Desk content inside a reviewed article no longer invalidates the visual receipt: the block is set aside only when `generate-news-pages --check` proves the page, its digest is recorded, and drift is reported (D-S373.6, founder-approved).
+
+Not done: a fix for the Lighthouse flake (evidence gathered, cause not proven). Production promotion of this session's Worker and Desk changes awaits the founder's go-ahead.
 
 # S372 assurance and redirect repair — 2026-10-09
 
