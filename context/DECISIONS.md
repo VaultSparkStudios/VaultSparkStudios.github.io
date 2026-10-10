@@ -2207,3 +2207,12 @@ Supersedes the open question in D-S373.3. The founder approved the change and as
 - **Layout still checked.** `tests/desk-more-cards.spec.js` asserts the current cards' layout in a browser on every CI run.
 
 Verified on the real repository: a hand edit inside the block is refused (generator proof fails); a hand edit outside it is refused (hash); a genuine headline change regenerated through the generator (133 pages) leaves the receipt valid with a note for each reviewed article. The existing receipt was re-stamped only after all 403 review-time digests were re-verified against current raw bytes and all 28 capture hashes were confirmed unchanged.
+
+
+## D-S373.7 — a builder that reads Git history refuses to write in a shallow clone (2026-10-10)
+
+Found by `npm run verify:clean` while preparing the S373 promotion: `main` carried a public commit-velocity feed with 59 closed days rewritten as zero (5,355 commits reported as 3). Cause: the scheduled narrative publisher (`eb08776f4`) checks out at depth 1; its push had to rebase, `publish-push.sh --resync` force-rebuilt the feed from the commits it could see, and the node's own `--check` passed because it compared against the same shallow view. Five scheduled publishers run `--resync` on shallow checkouts, and the workflow depth gate cannot see that indirection.
+
+Decision: fix the builder, not the callers. The repository is 4.4 GiB, so deepening five frequent workflows is the expensive answer and still leaves the next caller exposed. `build-oracle-velocity-public` and `build-commit-map` now ask git whether history is complete; in a shallow clone they write nothing and keep the committed file, and the velocity `--check` verifies the embedded proof and states that the history comparison was not performed. A failed `git log` now throws instead of counting as zero commits. A unit test requires every evidence-graph node sourced from `.git/HEAD` to carry the guard.
+
+Verified in a real depth-1 clone: the previous builder wrote "1 commit" and its check then printed "59 closed day(s) stable"; the new one leaves the bytes untouched. The feed was restored from full history (5,369 commits). Not changed: the five workflows' checkout depth, and the depth gate's blindness to `--resync`, which no longer matters for these two feeds.

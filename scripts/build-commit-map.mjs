@@ -188,7 +188,17 @@ export function build({ max = SCAN_CEILING, execute = execFileSync, now = new Da
   };
 }
 
-export function writeCommitMap({ output = OUT, ...options } = {}) {
+// S373: a shallow clone sees a handful of commits, so a map built there replaces the
+// real one with whatever the tip happens to be. The sibling velocity feed was zeroed
+// this way by a depth-1 publisher (eb08776f4). Ask git; a full-history lane writes.
+export function historyIsShallow(execute = execFileSync) {
+  try {
+    return String(execute('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8', windowsHide: true })).trim() === 'true';
+  } catch { return false; }
+}
+
+export function writeCommitMap({ output = OUT, shallow = historyIsShallow(), ...options } = {}) {
+  if (shallow) return { written: false, shallow: true, payload: null };
   // No filesystem mutation occurs before both observation and coverage gates.
   const payload = build(options);
   if (payload.scan.state === 'scan-ceiling-reached') {
@@ -237,11 +247,14 @@ function selfTest() {
   try {
     fs.writeFileSync(previous, '{"previous":true}');
     let gitError = false, boundedError = false;
-    try { writeCommitMap({ output: previous, execute: () => { throw new Error('Git unavailable'); } }); } catch (error) { gitError = /Git history unavailable/.test(error.message); }
+    try { writeCommitMap({ output: previous, shallow: false, execute: () => { throw new Error('Git unavailable'); } }); } catch (error) { gitError = /Git history unavailable/.test(error.message); }
     more.push(['Git failure rejects and preserves previous bytes', gitError && fs.readFileSync(previous, 'utf8') === '{"previous":true}']);
-    try { writeCommitMap({ output: previous, execute: run(bots) }); } catch (error) { boundedError = /scan ceiling reached/.test(error.message); }
+    try { writeCommitMap({ output: previous, shallow: false, execute: run(bots) }); } catch (error) { boundedError = /scan ceiling reached/.test(error.message); }
     more.push(['insufficient bounded scan rejects before overwrite', boundedError && fs.readFileSync(previous, 'utf8') === '{"previous":true}']);
-    const written = writeCommitMap({ output: previous, execute: run(['feat: one']) });
+    const kept = writeCommitMap({ output: previous, shallow: true, execute: run(['feat: tip only']) });
+    more.push(['a shallow clone writes nothing and preserves previous bytes', kept.written === false && kept.shallow === true && fs.readFileSync(previous, 'utf8') === '{"previous":true}']);
+    more.push(['shallow state is read from git', historyIsShallow(() => 'true') === true && historyIsShallow(() => 'false') === false]);
+    const written = writeCommitMap({ output: previous, shallow: false, execute: run(['feat: one']) });
     more.push(['successful short history writes typed coverage', written.written && JSON.parse(fs.readFileSync(previous, 'utf8')).scan.state === 'available-history-exhausted']);
   } finally { fs.unlinkSync(previous); fs.rmdirSync(temp); }
   for (const [name, ok] of more) console.log((ok ? '✓ ' : '✘ ') + name);
@@ -264,7 +277,11 @@ function main() {
     return;
   }
 
-  const { written, payload } = writeCommitMap();
+  const { written, payload, shallow } = writeCommitMap();
+  if (shallow) {
+    console.log('build-commit-map: shallow clone cannot read history — kept the existing file, nothing written');
+    return;
+  }
   if (!written) {
     console.log('build-commit-map: available local history has no non-noise commits — keeping existing file');
     return;

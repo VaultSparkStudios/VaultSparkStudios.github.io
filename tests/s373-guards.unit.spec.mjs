@@ -110,6 +110,34 @@ test('receipt binding: only a dated Desk article with exactly one routine block 
   assert.ok(bound.toString('utf8').startsWith('<main>café — ’quoted’ 日本</main>'));
 });
 
+test('git-history feeds: every graph node built from Git history refuses to write in a shallow clone', async () => {
+  // eb08776f4: a depth-1 publisher rebased, its resync rebuilt the velocity feed from 3
+  // commits (5,355 → 3), and the node's own --check passed against the same shallow view.
+  const graph = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'evidence-graph.json'), 'utf8'));
+  const historyNodes = graph.nodes.filter((node) => (node.sources || []).includes('.git/HEAD'));
+  assert.ok(historyNodes.length >= 2, 'the velocity feed and the commit map are Git-history nodes');
+  for (const node of historyNodes) {
+    const source = fs.readFileSync(path.join(ROOT, node.builder), 'utf8');
+    assert.match(source, /--is-shallow-repository/, `${node.id}: ${node.builder} must ask git whether history is complete before writing`);
+  }
+  const velocity = await import('../scripts/build-oracle-velocity-public.mjs');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vss-s373-velocity-'));
+  try {
+    const out = path.join(dir, 'feed.json');
+    const dates = ['2026-06-12', '2026-06-13', '2026-06-14', '2026-06-15'];
+    const feed = (commits) => velocity.attachClosedDayProof({ schemaVersion: '1.1', generatedAt: '2026-06-15', series: { dates, commits } });
+    const committed = JSON.stringify(feed([51, 62, 51, 4]), null, 2) + '\n';
+    fs.writeFileSync(out, committed);
+    const said = [];
+    const zeroed = () => feed([0, 0, 0, 3]);
+    assert.equal(velocity.run({ shallow: true, out, log: (line) => said.push(line), buildFeed: zeroed }).written, false);
+    assert.equal(fs.readFileSync(out, 'utf8'), committed, 'the committed history survives a shallow rebuild');
+    assert.equal(velocity.run({ check: true, shallow: true, out, log: (line) => said.push(line), buildFeed: zeroed }).compared, false);
+    assert.match(said.join('\n'), /NOT performed/, 'an unverifiable check says so instead of printing "stable"');
+    assert.throws(() => velocity.run({ check: true, shallow: false, out, log: () => {}, buildFeed: zeroed }), /drifted/, 'with full history the same zeros are still rejected');
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('satire lane: the 640 AVIF is a lane derivative with a budget, and every published cartoon has one', async () => {
   const { SATIRE_CARTOON_DERIVATIVES, SATIRE_CARTOON_BUDGETS } = await import('../scripts/lib/news-memes.mjs');
   assert.deepEqual(SATIRE_CARTOON_DERIVATIVES['--640.avif'], { width: 640, format: 'avif' });

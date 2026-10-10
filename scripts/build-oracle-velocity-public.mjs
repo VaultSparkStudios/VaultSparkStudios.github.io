@@ -23,7 +23,8 @@
    today's new commits without making historical drift invisible.
      node scripts/build-oracle-velocity-public.mjs --self-test
 */
-import { writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
@@ -139,8 +140,22 @@ function gitDailyTally() {
   let lines = '';
   try {
     lines = execSync('git log --pretty=format:%cI', { cwd: ROOT, encoding: 'utf8' });
-  } catch { lines = ''; }
+  } catch {
+    // An unreadable history is not a history of zero commits.
+    throw new Error('Git history unavailable; existing feed preserved');
+  }
   return tallyCommitDays(lines);
+}
+
+// S373: a shallow clone sees a handful of commits, so counting there rewrites sixty
+// days of public history as zeros. It happened (eb08776f4): a scheduled publisher on a
+// depth-1 checkout rebased, its resync force-rebuilt this feed (5,355 commits became 3),
+// and --check then "verified" the result against the same shallow view. Ask git
+// directly; a full-history lane stays the only writer.
+export function historyIsShallow(execute = execSync) {
+  try {
+    return String(execute('git rev-parse --is-shallow-repository', { cwd: ROOT, encoding: 'utf8' })).trim() === 'true';
+  } catch { return false; }
 }
 
 export function build(generatedAt) {
@@ -167,21 +182,32 @@ function todayUTC() {
   } catch { return '2026-01-01'; }
 }
 
-function run({ check } = {}) {
-  const feed = build(todayUTC());
-  if (check) {
-    let committed;
+export function run({ check, shallow = historyIsShallow(), out = OUT, log = console.log, buildFeed = () => build(todayUTC()) } = {}) {
+  const readCommitted = () => {
     try {
-      committed = JSON.parse(readFileSync(OUT, 'utf8'));
+      return JSON.parse(readFileSync(out, 'utf8'));
     } catch (error) {
       throw new Error(`cannot read committed velocity feed: ${error.message}`);
     }
-    const comparison = compareClosedDays(committed, feed);
-    console.log(`build-oracle-velocity-public --check: ${comparison.overlapDays} closed day(s) stable through ${comparison.closedThrough} · open day ${comparison.currentOpenDay} allowed to move`);
-    return;
+  };
+  if (shallow) {
+    // The committed feed stays authoritative. Its embedded proof is still checked, so a
+    // missing or malformed feed fails here rather than passing as "kept".
+    const pairs = verifyEmbeddedProof(readCommitted());
+    log(check
+      ? `build-oracle-velocity-public --check: committed closed-day proof intact (${pairs.length} day(s)) · history comparison NOT performed — shallow clone`
+      : 'build-oracle-velocity-public: shallow clone cannot count history — kept the committed feed, nothing written');
+    return { written: false, compared: false };
   }
-  writeFileSync(OUT, JSON.stringify(feed, null, 2) + '\n');
-  console.log(`✓ build-oracle-velocity-public: api/ecosystem-velocity.json (${feed.series.dates.length} days · ${feed.totalCommits} commits)`);
+  const feed = buildFeed();
+  if (check) {
+    const comparison = compareClosedDays(readCommitted(), feed);
+    log(`build-oracle-velocity-public --check: ${comparison.overlapDays} closed day(s) stable through ${comparison.closedThrough} · open day ${comparison.currentOpenDay} allowed to move`);
+    return { written: false, compared: true };
+  }
+  writeFileSync(out, JSON.stringify(feed, null, 2) + '\n');
+  log(`✓ build-oracle-velocity-public: api/ecosystem-velocity.json (${feed.series.dates.length} days · ${feed.totalCommits} commits)`);
+  return { written: true, compared: false };
 }
 
 function selfTest() {
@@ -216,7 +242,33 @@ function selfTest() {
   let malformedCaught = false;
   try { compareClosedDays({ ...committed, closedDayProof: { ...committed.closedDayProof, sha256: 'bad' } }, openEdge); } catch (error) { malformedCaught = error.message.includes('hash mismatch'); }
   assert(malformedCaught, 'malformed committed proof is refused');
-  if (fail === 0) { console.log('✓ build-oracle-velocity-public --self-test: 14/14 passed'); process.exit(0); }
+  // S373: a shallow clone must never rewrite the committed history.
+  const dir = mkdtempSync(join(tmpdir(), 'vss-velocity-'));
+  try {
+    const out = join(dir, 'feed.json');
+    const good = JSON.stringify(committed, null, 2) + '\n';
+    writeFileSync(out, good);
+    const said = [];
+    const zeros = () => fixture('2026-06-15', committed.series.dates, [0, 0, 0, 3]);
+    const kept = run({ shallow: true, out, log: (line) => said.push(line), buildFeed: zeros });
+    assert(kept.written === false && readFileSync(out, 'utf8') === good, 'shallow write keeps the committed bytes');
+    assert(said.join(' ').includes('nothing written'), 'shallow write says it wrote nothing');
+    const checked = run({ check: true, shallow: true, out, log: (line) => said.push(line), buildFeed: zeros });
+    assert(checked.compared === false && said.join(' ').includes('NOT performed'), 'shallow check states the comparison did not run');
+    let proofCaught = false;
+    writeFileSync(out, JSON.stringify({ ...committed, closedDayProof: { ...committed.closedDayProof, sha256: 'bad' } }));
+    try { run({ check: true, shallow: true, out, log: () => {}, buildFeed: zeros }); } catch { proofCaught = true; }
+    assert(proofCaught, 'shallow check still refuses a malformed committed feed');
+    let missingCaught = false;
+    try { run({ shallow: true, out: join(dir, 'absent.json'), log: () => {}, buildFeed: zeros }); } catch { missingCaught = true; }
+    assert(missingCaught, 'shallow write with no committed feed fails instead of reporting kept');
+    writeFileSync(out, good);
+    let fullCaught = false;
+    try { run({ check: true, shallow: false, out, log: () => {}, buildFeed: zeros }); } catch (error) { fullCaught = error.message.includes('drifted'); }
+    assert(fullCaught, 'full-history check still rejects zeroed closed days');
+    assert(historyIsShallow(() => 'true\n') === true && historyIsShallow(() => 'false\n') === false, 'shallow state is read from git');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+  if (fail === 0) { console.log('✓ build-oracle-velocity-public --self-test: 21/21 passed'); process.exit(0); }
   console.error(`✗ build-oracle-velocity-public --self-test: ${fail} failed`); process.exit(1);
 }
 
