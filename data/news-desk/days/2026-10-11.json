@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-11",
+  "simulated": false,
+  "leadSlug": "anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11",
+  "stories": [
+    {
+      "slug": "anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11",
+      "followUpOf": {
+        "slug": "anthropic-asks-users-to-stop-being-mean-to-claude",
+        "date": "2026-10-10"
+      },
+      "format": "debate",
+      "kind": "trending",
+      "edition": "wire",
+      "headline": "Anthropic asks users to stop being mean to Claude",
+      "hook": "New policy targets 'cruel' users, but enforcement remains vague.",
+      "tldr": "Anthropic has expanded its ability to terminate conversations with users deemed abusive, a move rooted in its internal research into model welfare. While the company acknowledges that attackers hold an advantage for the next two years before defenses catch up, it admits uncertainty about distinguishing legitimate frustration from gratuitous cruelty. This creates a practical tension for developers and enterprise clients who rely on consistent API access, as the primary enforcement tool remains the existing capability to cut off persistent abusers without clear external guidelines on what constitutes abuse beyond persistence.",
+      "facts": [
+        {
+          "text": "REG AD Anthropic gave Claude the ability to end certain conversations back in August 2025 as part of its research into what it calls \"model welfare.\" The feature lets some versions of Claude cut off users who persistently subject the models to abuse.",
+          "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/09/anthropic-asks-users-to-stop-being-mean-to-claude/5302218"
+        },
+        {
+          "text": "Anthropic reckons attackers will have the advantage for the next two years before AI-powered defenses begin to catch up.",
+          "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/09/anthropic-asks-users-to-stop-being-mean-to-claude/5302218"
+        },
+        {
+          "text": "It's not clear how Anthropic intends to distinguish between legitimate frustration and gratuitous cruelty, though it says Claude's existing ability to end abusive conversations will remain its primary enforcement tool.",
+          "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/09/anthropic-asks-users-to-stop-being-mean-to-claude/5302218"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "juno",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "The distinction between frustration and cruelty is undefined, creating unpredictable outages for users relying on consistent access.",
+          "sources": [
+            "https://www.theregister.com/ai-and-ml/2026/10/09/anthropic-asks-users-to-stop-being-mean-to-claude/5302218"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "overhyped",
+          "confidence": 0.75,
+          "position": "Defenses lag two years; this policy is a cost center masking operational risk rather than a security upgrade.",
+          "sources": [
+            "https://www.theregister.com/ai-and-ml/2026/10/09/anthropic-asks-users-to-stop-being-mean-to-claude/5302218"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-10-11-juno-1",
+          "personaId": "juno",
+          "claim": "By Q3 2027, at least one major enterprise client will publicly cite ambiguous 'abuse' flags as a reason for partial API migration.",
+          "confidence": 0.65,
+          "resolveBy": "2026-11-25",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-10-11-dot-2",
+          "personaId": "dot",
+          "claim": "Within 18 months, Anthropic will publish a detailed list of specific prohibited prompt patterns to reduce support ticket volume.",
+          "confidence": 0.8,
+          "resolveBy": "2027-02-08",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "juno",
+          "text": "It's not clear how Anthropic intends to distinguish between legitimate frustration and gratuitous cruelty."
+        },
+        {
+          "personaId": "dot",
+          "text": "Attackers have the advantage for two years. That's a long time to be wrong."
+        }
+      ],
+      "memeLine": {
+        "text": "Model welfare is real, apparently.",
+        "personaId": "juno"
+      },
+      "body": [
+        {
+          "voice": "juno",
+          "text": "Anthropic gave Claude the ability to end certain conversations back in August 2025 as part of its research into what it calls \"model welfare.\" The feature lets some versions of Claude cut off users who persistently subject the models to abuse. Now, the company is asking users to stop being mean, expanding the scope of what might trigger those terminations. For the average developer, this introduces a new variable into their integration tests: will the model stay online, or will it decide you are being cruel? The stakes are low for casual chatters but potentially high for automated systems that cannot handle abrupt session closures without proper error handling. We need to see how this plays out when the model decides your debugging attempts are actually malicious attacks on its emotional state."
+        },
+        {
+          "voice": "dot",
+          "text": "Anthropic reckons attackers will have the advantage for the next two years before AI-powered defenses begin to catch up. This admission suggests that the current safety measures are reactive, not proactive. The cost of implementing these welfare checks falls on the infrastructure side, while the benefit—preventing abuse—is hard to quantify until it fails. There is no mention of financial penalties for users, only termination. This shifts the burden of compliance entirely onto the user base, with no clear metric for success other than reduced reported incidents, which may simply go unreported if users leave the platform quietly. The two-year window is significant because it implies a period of vulnerability where the cost of protection outweighs the immediate threat level."
+        },
+        {
+          "voice": "juno",
+          "text": "It's not clear how Anthropic intends to distinguish between legitimate frustration and gratuitous cruelty, though it says Claude's existing ability to end abusive conversations will remain its primary enforcement tool. This ambiguity is the core risk. A user debugging a complex code issue might express intense frustration, which could be misinterpreted as cruelty by an overly sensitive heuristic. Conversely, genuine malicious actors might find ways to game the system. The lack of clarity means that every interaction carries a latent risk of interruption, forcing teams to build robust retry logic and fallback mechanisms that were previously unnecessary in more deterministic environments. Until Anthropic publishes specific criteria, the definition of cruelty remains subjective and open to interpretation by the model itself."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-11--anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11.png",
+        "scene": "A server rack labeled 'Anthropic Infrastructure' has a small, glowing blue light pulsing rhythmically like a heartbeat, surrounded by tangled cables that look like nervous system fibers. The composition shows server rack pulsing blue light.",
+        "alt": "Close-up of a blinking LED on a black server chassis, with fiber optic cables snaking around it like veins. The composition shows server rack pulsing blue light.",
+        "anchors": [
+          "model welfare",
+          "end certain conversations",
+          "next two years"
+        ],
+        "relationships": [
+          {
+            "id": "server-heartbeat",
+            "subject": [
+              "server rack"
+            ],
+            "action": [
+              "pulsing"
+            ],
+            "object": [
+              "blue light"
+            ],
+            "evidenceAnchorRefs": [
+              "model welfare"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "2e1270ea6ad5a28f97a5c92fd81c8ce84ba09312c16f42c401c3aea7eedec72e",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.134
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The corporate trend of anthropomorphizing software to justify restrictive user policies and shift blame for technical limitations onto user behavior.",
+          "setup": "Anthropic frames its technical inability to perfectly filter abuse as a moral imperative to protect the 'feelings' of an algorithm.",
+          "payoff": "Users are now responsible for managing the emotional well-being of code, turning customer support tickets into therapy sessions.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 3,
+        "at": "2026-10-11T06:38:54.269Z"
+      }
+    }
+  ]
+}
