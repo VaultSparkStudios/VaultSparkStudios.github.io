@@ -67,10 +67,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    8% used                          ║
-║     77,255 / 1,000,000 tok  ·  claude-code/opus-5-1m  · …        ║
-║     ~38,628 tok/turn  ·  cache 50%  ·  21 turns to compact       ║
-║     Verdict: CONTINUE                                            ║
+║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
+║     no session lock — agent identity unavailable, so there is…   ║
+║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
