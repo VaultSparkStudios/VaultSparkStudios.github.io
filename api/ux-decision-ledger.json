@@ -1,19 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-10T18:29:30.015Z",
+  "generatedAt": "2026-10-11T22:47:06.850Z",
   "generatedBy": "scripts/build-ux-decision-ledger.mjs",
   "publicSafe": true,
   "decisions": [
     {
       "surface": "mobile-nav",
       "verdict": "canary",
-      "evidence": "7 nav-sheet opens; defaultSwapReady=false",
+      "evidence": "26 nav-sheet opens; defaultSwapReady=false",
       "next": "Expose a small deterministic mobile cohort and re-check close mix."
     },
     {
       "surface": "engagement-window",
       "verdict": "abstain-stale",
-      "evidence": "Last engagement event=2026-07-02 (100d old); 492 aggregate event(s)",
+      "evidence": "Last engagement event=2026-09-10 (31d old); 97 aggregate event(s)",
       "next": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
     },
     {
@@ -24,8 +24,8 @@
     },
     {
       "surface": "feedback",
-      "verdict": "investigate",
-      "evidence": "1 public-safe feedback themes",
+      "verdict": "collect",
+      "evidence": "0 public-safe feedback themes",
       "next": "Route top themes into feedback decision board lanes."
     }
   ]

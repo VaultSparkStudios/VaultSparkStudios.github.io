@@ -1,3 +1,14 @@
+# S374 arc — scripts after first paint, SI first use
+
+- [x] Wave1: sync 80 commits, triage (not cut off), /start, canon sync (3 STRONG gaps, 0 ABSOLUTE).
+- [x] Wave2: audit `docs/AUDIT_2026-10-11-S374.md`, four items, premises 5/5; a fifth (rebuild `/stats/`) dropped as a false premise.
+- [x] Wave3: `assets/after-paint.js`; Desk pages park four scripts, the homepage seven; unit 10/10 and browser 3/3; layout shift unchanged; independent review, six fixes applied.
+- [x] Wave4: menu label "Synthetic Intelligence (SI)" sitewide (258 findings to 2), checked in seven themes on desktop and mobile; FAQ question reworded.
+- [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
+- [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
+- [ ] **[HOME/P2 · S374]** `home-intelligence.js` and `recent-ships.js` initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374).
+- [ ] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Confirm the S374 push clears it and find which derived contract the records commit left behind.
+
 # S373 — S372 follow-ups, guards and test coverage
 
 - [x] Wave1: line endings pinned at checkout (`.gitattributes`); retention report added to the evidence graph.
@@ -9,26 +20,10 @@
 
 # S372 arc — assurance and redirect repair
 
-- [x] Wave1: sync 138 commits, triage (not cut off; write-back current through S371), /start, canon conformance (cleared a false CANON-053 gap from a `.cache` report).
-- [x] Wave2: audit `docs/AUDIT_2026-10-09-S372.md` — restore daily surface assurance, single-hop legacy redirects, Ark cargo for the checker misclassification; all three shipped with failing controls.
-- [x] Wave3: CI repair — re-reviewed two art-changed Desk articles (28/28 captures) and bound the receipt to committed LF bytes (400/400 entries).
-- [x] Wave4: production Worker 9c7c29f1 promoted (run 38005943124) after exact-SHA checks at 3d47921d4; live one-hop readback, redirect spec 4/4, post-deploy provenance 9/9.
-- [x] **[SIL/P2 · S372]** Before pushing receipt-bearing changes, verify in a clean worktree of the exact commit (`git worktree add --detach` + junctioned node_modules + `CI=true run-build-check`). That run found what four CI cycles otherwise surfaced one at a time; consider a script. — **DONE S373:** `npm run verify:clean`.
-- [x] **[SIL/P2 · S372]** The art autopilot edits article HTML bound by the tracked visual receipt without running E2E, so the next CI-bearing push fails step 158 (8db1f1bf0 → E2E 37996463632). Either the art lane re-reviews affected bound articles, or the receipt stops binding routine-art regions. — **DONE S373 (founder-approved, D-S373.6):** the block is hashed-or-proven, never omitted.
-- [x] **[SIL/P2 · S372]** Receipt source bindings hash working-tree bytes; a Windows CRLF copy of an LF file produces a receipt CI can never match (E2E 37998007384). Hash the committed blob, or normalize line endings, in the shared binding. — **DONE S373** at checkout level: `.gitattributes` pins LF (D-S373.2).
-- [x] **[SIL/P1 · S372]** The content and hotfix lanes refuse served `data/*.json|ndjson` by type, so every content-lane closeout leaves them stale until a full promotion (6 files lagged through S371 and most of S372). Either classify these exact-path public data artifacts as promotable, or add a served-versus-committed byte-parity check to closeout so the gap is reported instead of assumed away. — **DONE S373:** three anchored files allowlisted; `npm run verify:served` measures the rest (D-S373.1).
-- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor.
-- [x] **[DESK/P3 · S372]** More-from-The-Desk card images reference the full 1200px art instead of the 640px variants. — **DONE S373.**
-- [x] **[DESK/P2 · S372]** The satire-cartoon lane emits `--640.webp` but no `--640.avif`, so every satire 640 of 30KB or more fails `check-image-formats --strict` until hand-completed (59b578bd3; S372 derived `2026-10-09--anthropic-bans-users-from-being-cruel-to-its-ai--satire--640.avif` with the meme lane encoder). Add the derivative to `SATIRE_CARTOON_DERIVATIVES` / the responsive-art loop. — **DONE S373:** lane derivative, nine backfilled, unit test.
-- [x] **[STAGING/P3 · S372]** Hetzner staging does not apply `_redirects`: retired routes return 200/404 there and 301 in production, so staging cannot verify a route consolidation. — **DONE S373:** staging-only Worker flag (D-S373.4).
-- [x] **[DESK/P3 · S372]** On mobile, "More from The Desk" thumbnails cover-crop the banner's burned-in caption on every card (pre-existing; seen in the S372 visual review). — **DONE S373:** `tests/desk-more-cards.spec.js`.
-- [x] **[TOOL/P3 · S372]** Local `scripts/lib/audit-sidecar.mjs` misses `AUDIT_<date>-S<n>.json` sidecars; studio-ops' copy handles them since S312. — **DONE S373.**
+- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — **S374:** script loading changed on both page types (D-S374.1); closes when the pushed commit passes its unchanged floors without a re-run.
 
 # S371 release maintenance
 
-- [x] Wave1: preserve original checkout and unverified propagation; profile current remote and source premises.
-- [x] Wave2: implement four verified maintenance outcomes; independent review PASS and focused tests4/4.
-- [x] Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
 - [ ] [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
 - [ ] [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
 

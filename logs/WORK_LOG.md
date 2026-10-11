@@ -1537,3 +1537,13 @@ Promotion: candidate 2b001af82 pushed after a full staging publish (receipt 45f9
 The records commit 4e2f42773 passed E2E, Lighthouse and accessibility on its first attempt. Release candidate check ok at that exact SHA; promotion scope promotable and disjoint from the held identity surfaces. Worker deploy run 38073945913 (version ed6ca127) and full Pages lane run 38074236799 both ran their deploy steps and were not held or cancelled. Production serves a2c339580: tree-current, 1033 of 1043 identical, 0 differing, 10 retired-route redirects. smoke-live 6/6, production redirect and Desk-card specs pass, Worker routes 9/9 matched.
 
 The earlier entry saying production was not promoted described 2b001af82, where Lighthouse failed twice. That SHA was never promoted.
+
+## 2026-10-11 — Session 374 scripts after first paint, SI first use
+
+Arc under the founder's instruction to push to main and fully deploy. Synced 80 automation commits; triage found the prior session closed out.
+
+Audit `docs/AUDIT_2026-10-11-S374.md`: four items, premises 5/5. A fifth candidate, rebuilding `/stats/`, was dropped when history showed S368 retired it into `/evidence/#numbers` on purpose.
+
+Shipped: `assets/after-paint.js` and the `<template data-after-paint>` convention. Desk pages park four scripts, the homepage seven of 28. The consent banner was parked at first and returned to eager after reading its attention contract; Desk presence likewise, after an independent review pointed out it times the visit from when it runs. The same review led to a settle timeout, per-script error isolation, a double-include guard and a wait for later eager scripts. Unit spec 10/10, browser spec 3/3 on three engines; layout shift unchanged. Menu label "Synthetic Intelligence (SI)" sitewide, checked in seven themes on desktop and mobile; `check-si-terminology` 258 findings to 2. Stats small-count clearance. Ark `01K4MH9K7Q3360206BDD384910` to studio-ops.
+
+Found and boarded, not fixed: four browser specs that fail locally against production and the local build alike; `main` red at build:check step 37 in CI at ee0074f3e2.

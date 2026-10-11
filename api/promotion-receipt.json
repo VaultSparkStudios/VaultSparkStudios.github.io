@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "3d47921d41f84a3d617735aab3f92634b4022347",
+    "sha": "823a48a0dd0637249c6f917f471f13316fdcb9f3",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "556b4d14e8fe393c78758f5127b146d37b59141b",
-    "contentLaneHead": null,
+    "sha": "a2c3395803e351edede1dbb02079ff073230527b",
+    "contentLaneHead": "241136bbac60002ddc96ca94c06f56d870774d65",
     "reachable": true,
-    "reconciliation": "ahead",
+    "reconciliation": "unknown",
     "shellParity": {
-      "state": "matched",
-      "observedAt": "2026-10-10T03:11:40.448Z",
-      "ageHours": 1.9,
+      "state": "unobserved",
+      "observedAt": "2026-10-11T21:06:25.352Z",
+      "ageHours": 2.6,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,10 +89,10 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production serves 556b4d14, newer than the recorded promoted 3d47921d (benign — a later rebuild moved on)",
+    "served contentLaneHead 241136bb is at/after promoted 823a48a0, but shell parity was not observed as matched (state 'unobserved', observed 2.6h ago, max 12h) — not graded as current (honest-dark)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-10T05:05:47.970Z",
+  "generatedAt": "2026-10-11T23:42:42.529Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -100,7 +100,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-06T08:31:14.471Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-10T05:05:47.970Z",
+    "newestGradableAt": "2026-10-11T23:42:42.529Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

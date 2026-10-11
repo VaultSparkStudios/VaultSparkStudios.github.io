@@ -489,8 +489,13 @@ function buildAmbientBlock(relPath) {
   if (universe)    base.push('<script src="/assets/lore-gates.js" defer></script>');
   if (leaderRanks) base.push('<script src="/assets/studio-pulse-live.js" defer></script>');
   if (desk) {
+    // S374: parked until the first frame is on screen (assets/after-paint.js).
+    // The Desk generator emits the same bytes; change both together.
+    base.push('<template data-after-paint>');
     base.push('<script src="/assets/csrf-token.js" defer></script>');
     base.push('<script src="/assets/turnstile.js" defer></script>');
+    base.push('</template>');
+    base.push('<script src="/assets/after-paint.js" defer></script>');
   }
   return `<!-- vs-ambient:start -->\n${base.join('\n')}\n<!-- vs-ambient:end -->`;
 }

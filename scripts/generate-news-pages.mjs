@@ -107,7 +107,9 @@ const footerBlock = slice('<footer class="site-footer"', '</footer>', 9);
 const ambientBlock = slice('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->', '<!-- vs-ambient:end -->'.length);
 let deskAmbientBlock = ambientBlock.replace(
   '<!-- vs-ambient:end -->',
-  '<script src="/assets/csrf-token.js" defer></script>\n<script src="/assets/turnstile.js" defer></script>\n<!-- vs-ambient:end -->',
+  // S374: parked until the first frame is on screen (assets/after-paint.js).
+  // propagate-nav emits the same bytes for /news/ pages; change both together.
+  '<template data-after-paint>\n<script src="/assets/csrf-token.js" defer></script>\n<script src="/assets/turnstile.js" defer></script>\n</template>\n<script src="/assets/after-paint.js" defer></script>\n<!-- vs-ambient:end -->',
 );
 const speculationBlock = slice('<!-- vs-speculation:start -->', '<!-- vs-speculation:end -->', '<!-- vs-speculation:end -->'.length);
 const styleHref = (sample.match(/href="([^"]*style\.shell-[a-f0-9]+\.css)"/) || [])[1] || '../../assets/style.css';
@@ -126,6 +128,7 @@ const shellManifest = existsSync(join(ROOT, 'assets/shell-manifest.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'assets/shell-manifest.json'), 'utf8'))
   : { assets: {} };
 if (shellManifest.assets?.turnstile?.path) deskAmbientBlock = deskAmbientBlock.replace('/assets/turnstile.js', `/${shellManifest.assets.turnstile.path}`);
+if (shellManifest.assets?.afterPaint?.path) deskAmbientBlock = deskAmbientBlock.replace('/assets/after-paint.js', `/${shellManifest.assets.afterPaint.path}`);
 // The inline theme boot restores colors; this controller supplies visitor controls.
 const navToggleSrc = shellManifest.assets?.navToggle?.path
   ? `/${shellManifest.assets.navToggle.path}`
@@ -1004,7 +1007,7 @@ ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><
   ${communitySection(story, day)}
   ${moreFromDesk(day, story)}
   ${DISCLOSURE}
-</article></main><link rel="stylesheet" href="/assets/desk-comments.css"><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script><script src="${deskCommentsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
+</article></main><link rel="stylesheet" href="/assets/desk-comments.css"><template data-after-paint><script src="${deskReactionsSrc}" defer></script><script src="${deskCommentsSrc}" defer></script></template><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */

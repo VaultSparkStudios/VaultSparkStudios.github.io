@@ -1,3 +1,7 @@
+### S374 truth reconciliation — 2026-10-11
+
+Two generated statements disagreed with their sources. `context/CANON_ADOPTION.md` says the CANON-054 and CANON-055 checkers passed; both exit 1 (reported upstream, D-S374.4). The CANON-054 checker says the site has no stats page; the page was moved to `/evidence/#numbers` on purpose (D-S374.2). Session identity agreed on every surface: S373 closed, this is S374. Whether the Lighthouse check is now stable is unmeasured until the pushed commit runs.
+
 ### S373 truth reconciliation — 2026-10-10
 
 Whether production serves a commit is now a measurement (`scripts/check-served-parity.mjs`): `tree-current` against the deployed commit when taken, with ten retired-route redirects and no differing file. The S372 statement "fully deployed" had been made from lane exit status and was wrong by six files; that class of claim is no longer inferred. Staging now answers retired routes as production does (16 of 16 probed), so a route consolidation can be verified before release. Production itself was not changed in S373. Two limits stand: the visual receipt is still invalidated by routine Desk publishing, and the Lighthouse flake has a hypothesis, not a proven cause.

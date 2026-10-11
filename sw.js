@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-76d5240089375aac';
+const CACHE_NAME = 'vaultspark-shell-363cd224cfcd3866';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -31,7 +31,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/supabase-client.shell-bd7ccf3b3d.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
-  '/assets/home-idle-loader.shell-d1839327b4.js',
+  '/assets/home-idle-loader.shell-d6269f7d0f.js',
   '/assets/ambient-core.shell-5b2e3a4faa.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
@@ -39,6 +39,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/desk-presence.shell-b33c76422e.js',
   '/assets/desk-comments.shell-e292fb59d7.js',
   '/assets/turnstile.shell-3fab54aa82.js',
+  '/assets/after-paint.shell-c819ba6e3a.js',
   '/assets/hero-ticker.shell-550971e267.js',
   '/assets/public-intelligence.shell-c86a6ecc39.js',
   '/assets/studio-now.shell-fef717e631.js',
@@ -89,6 +90,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/desk-presence.js',
   '/assets/desk-comments.js',
   '/assets/turnstile.js',
+  '/assets/after-paint.js',
   '/assets/hero-ticker.js',
   '/assets/public-intelligence.js',
   '/assets/studio-now.js',

@@ -46,6 +46,10 @@ const SHELL_ASSETS = [
   { key: 'deskPresence', source: 'assets/desk-presence.js', stem: 'desk-presence.shell', attribute: 'src' },
   { key: 'deskComments', source: 'assets/desk-comments.js', stem: 'desk-comments.shell', attribute: 'src' },
   { key: 'turnstile', source: 'assets/turnstile.js', stem: 'turnstile.shell', attribute: 'src' },
+  // S374: activates the scripts a page parks in <template data-after-paint>.
+  // Desk articles and the homepage reference it, so it rides the content lane
+  // with them under a fingerprinted name.
+  { key: 'afterPaint', source: 'assets/after-paint.js', stem: 'after-paint.shell', attribute: 'src' },
   { key: 'heroTicker', source: 'assets/hero-ticker.js', stem: 'hero-ticker.shell', attribute: 'src' },
   // S357 — caught by the release ceremony's staging browser gate, not by review.
   // S356 retired a public presence feed for privacy (CANON-028) and removed the

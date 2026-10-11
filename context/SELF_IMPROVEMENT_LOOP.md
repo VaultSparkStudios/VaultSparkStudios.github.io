@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 914.0 | 5: 914.0 | 10: 924.6 | 25: — [N=20] | all: unmeasured (archived history not re-scored)
+Avgs — 3: 916.7 | 5: 916.2 | 10: 928.1 | 25: — [N=21] | all: unmeasured (archived history not re-scored)
 History scope: latest scored entry per session in the active append-only ledger.
-Velocity trend: ↑ | Protocol velocity: → | Debt: ↓
-Last session: 2026-10-10 | Session 373 | Total: 923/1000 | Velocity: 8 | protocolVelocity: 0
+Velocity trend: ↓ | Protocol velocity: → | Debt: →
+Last session: 2026-10-11 | Session 374 | Total: 923/1000 | Velocity: 4 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2995,3 +2995,22 @@ S373 addendum 2 (unscored): the clean-checkout verifier stopped the promotion tw
 S373 addendum 3 (unscored): the approved promotion did not reach production. Everything except Lighthouse was green at 2b001af82; Lighthouse failed twice on two different pages whose scripts and styles had not changed. One re-run was used and no threshold was touched. The remaining S372 follow-up (the Lighthouse fix) is now the release blocker, with a sharper measurement: the score follows whether the last script finishes before first paint.
 
 S373 addendum 4 (unscored): promoted. The commit after the twice-failed candidate passed all three required checks first time with no JS or CSS change, and production now serves it (tree-current at a2c339580, Worker ed6ca127). A gate that fails twice and then passes on unchanged pages is not telling releases apart; fixing the script loading is the next piece of work.
+
+## 2026-10-11 UTC — Session 374 (scripts after first paint, SI first use) | Total: 923/1000 (v3.0) | Velocity: 4 | Debt: →
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 92 | New unit spec 10/10 and browser spec 3/3 on real pages in three engines; layout shift measured equal before and after; the article layout test now refuses a parked script with no activator. |
+| Creative Alignment | 94 | One menu label and one FAQ question changed, both for canon terminology; checked in seven themes on desktop and mobile. |
+| Momentum | 90 | Four audit items shipped; the release blocker carried since S370 has a root fix on both page types. |
+| Engagement | 91 | Fewer requests compete with first content; reactions, comments and the newsletter client still mount. Conversion remains unmeasured. |
+| Process Quality | 88 | Premises verified before work; a planned `/stats/` rebuild dropped when history showed the route was retired on purpose; consent banner returned to eager after reading its attention contract. Independent review of the loader: no must-fix, six should-fix points applied, Desk presence returned to eager. |
+| Cross-Repo Coherence | 92 | No sibling edits; three studio-ops tooling defects reported through the Ark with evidence. |
+| Security Posture | 94 | No Worker or CSP change; the new Trusted Types policy passes same-origin `/assets/` paths only and ignores anything else. |
+| Ecosystem Integration | 91 | Canon posture recorded from checker output, with justifications for the two accepted gaps. |
+| Capital Efficiency | 95 | No paid services, no installs. |
+| Automation Coverage | 96 | Request-timing assertion in a real browser replaces reading Lighthouse artifacts by hand. |
+
+Brainstorm (committed to TASK_BOARD): (1) establish whether the CI `e2e` job runs the four specs that fail locally against production; (2) find which derived contract the last records commit left behind at build:check step 37.
+
+---

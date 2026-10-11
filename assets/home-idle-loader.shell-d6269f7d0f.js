@@ -67,7 +67,13 @@
   function schedule() {
     if (scheduled) return;
     scheduled = true;
-    setTimeout(function () { loadQueue(scripts.slice()); }, 1200);
+    setTimeout(function () {
+      // S374: two entries here read window.VSPublic, which the homepage now
+      // loads through after-paint.js. Wait for that pass to settle first.
+      const gate = window.VSAfterPaint;
+      if (!gate || gate.done) { loadQueue(scripts.slice()); return; }
+      document.addEventListener('vs:after-paint', function () { loadQueue(scripts.slice()); }, { once: true });
+    }, 1200);
   }
   ['pointerdown', 'keydown', 'scroll'].forEach(function (type) {
     window.addEventListener(type, schedule, { once: true, passive: type !== 'keydown' });

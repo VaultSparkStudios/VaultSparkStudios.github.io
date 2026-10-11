@@ -1,3 +1,11 @@
+# S374 scripts after first paint, SI first use — 2026-10-11
+
+- **Script loading.** Scripts that change nothing above the fold are parked in `<template data-after-paint>` and run by `assets/after-paint.js` once the page has loaded and a frame is on screen, or at the first interaction. Desk pages park the reactions, comments, CSRF and Turnstile scripts (four of eleven on an article); presence stays eager because it times the visit from when it runs. The homepage parks seven of its 28: the public data client, the newsletter client and its fallback, live proof, the hydration timeout, the stats tile and the join bar. The consent banner, hero scripts, click tracking and error reporting stay eager. The homepage idle loader waits for the parked pass before starting.
+- **Why.** The required Lighthouse check failed on unchanged bytes from S370 to S373; its result files tied the score to how many deferred scripts finished before a text paint. Floors are unchanged.
+- **Checks.** `tests/after-paint.unit.spec.js` (10) and `tests/after-paint.spec.js` (3, real pages) assert that parked scripts are requested after first paint, run in order, and still mount. The article layout test refuses a parked script with no activator or one that also loads eagerly. Layout shift measured the same before and after (homepage at or below 0.008, article at or below 0.004, desktop and mobile).
+- **Terminology.** The Resources menu reads "Synthetic Intelligence (SI)" on every page, so the expansion precedes the abbreviation; `check-si-terminology` went from 258 findings to 2 (one page title and one published Desk headline, both recorded in D-S374.3). One FAQ question on `/synthetic-intelligence/` was reworded without changing its answer.
+- **Stats.** The Sparked-projects count carries an explicit small-count clearance (it counts projects, not people). `/stats/` stays retired into `/evidence/#numbers` (D-S374.2).
+
 # S373 follow-ups, guards and test coverage — 2026-10-10
 
 Eight of the ten S372 follow-ups are closed, each with a test.

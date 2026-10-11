@@ -93,6 +93,21 @@ for (const day of days) {
 
     const commentsScript = html.match(/<script src="\/(assets\/desk-comments\.shell-[a-f0-9]{10}\.js)" defer><\/script>/);
     if (!commentsScript || !existsSync(join(ROOT, commentsScript[1]))) errors.push(`${rel}: fingerprinted comments client missing`);
+    // S374: reader-interaction scripts are parked until the first frame is on
+    // screen. A parked script with no activator would never run, and one left
+    // outside the template would load ahead of the article text again.
+    const unparked = html.replace(/<template data-after-paint>[\s\S]*?<\/template>/g, '');
+    const parked = [...html.matchAll(/<template data-after-paint>([\s\S]*?)<\/template>/g)].map((m) => m[1]).join('');
+    // desk-presence measures engaged time from when it runs, so it stays eager.
+    if (!/<script src="\/assets\/desk-presence\.shell-[a-f0-9]{10}\.js" defer><\/script>/.test(unparked)) errors.push(`${rel}: desk-presence must load eagerly (it times the visit)`);
+    if ((unparked.match(/assets\/after-paint\.shell-[a-f0-9]{10}\.js/g) || []).length !== 1) errors.push(`${rel}: expected exactly one after-paint activator`);
+    for (const name of ['desk-reactions', 'desk-comments', 'csrf-token', 'turnstile']) {
+      const tag = new RegExp(`<script src="/assets/${name}(?:\\.shell-[a-f0-9]{10})?\\.js" defer></script>`);
+      if (!tag.test(parked)) errors.push(`${rel}: ${name} is not parked for after-paint loading`);
+      if (tag.test(unparked)) errors.push(`${rel}: ${name} also loads ahead of first paint`);
+    }
+    const activator = unparked.match(/<script src="\/(assets\/after-paint\.shell-[a-f0-9]{10}\.js)" defer><\/script>/);
+    if (!activator || !existsSync(join(ROOT, activator[1]))) errors.push(`${rel}: fingerprinted after-paint activator missing`);
     if (!html.includes('<link rel="stylesheet" href="/assets/desk-comments.css">')) errors.push(`${rel}: comments stylesheet missing`);
     const facts = [...article.matchAll(/<li id="(fact-[^"]+)" data-fact-id="[^"]+" data-fact-hash="([a-f0-9]{64})">([\s\S]*?)<\/li>/g)];
     if (facts.length !== (story.facts || []).length) errors.push(`${rel}: ${facts.length} fact rows rendered, ${(story.facts || []).length} in corpus`);

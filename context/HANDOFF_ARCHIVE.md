@@ -2051,3 +2051,21 @@ The owner's original dirty checkout, local backups and private evidence are pres
 Session Intent: /arc, authorized direct main publication and deployment.
 
 Shipped: four maintenance outcomes plus required article rendering and release-provenance repairs. Deploy: closing candidate 9b105d275e2f32cabe6ca2597205b6aebbd963cb live through Pages 37986968939; prior f509 acceptance remains preserved. Verified: local531/531, focused4/4, mobile215/215, manual article pixels168/168, hosted exactcandidate gates, staging/live parity, Spark 11/11 and eight article focus/keyboard/back-scroll/print cases. Initial browser Find positioning remains a documented preexisting limitation; it is not claimed passing. Existing identity hold remains. Source: main; original owner's dirty checkout preserved. Memory: repository and Codex indexes/topics updated. SIL:915/1000; prior916 retained. Next scope: observe scheduled art receipt and document partial shell/SRI ordering. Canonical autopilot completed with two full 531-step passes. The temporary preview stopped; closing public feeds are verified live at 9b105d275. The acceptance receipt is recorded below.
+
+---
+<!-- archived: 2026-10-11 -->
+
+## Where We Left Off (Session 372) — assurance and redirect repair (2026-10-09)
+
+Session Intent: /arc, then the founder authorized direct commit/push to main and full deployment. Intent: **Achieved**.
+
+- Shipped: 7 items across 3 groups. Observability: daily surface assurance restored, retired-route self-test, masked Chromium journey repaired. Edge: single-hop legacy redirects, query-before-fragment ordering, redirect-chain guard. Evidence: art-changed Desk articles re-reviewed (28/28 twice), receipt bound to committed LF bytes, platform-independent retention report.
+- Tests: unit 388 (0 failures, 1 todo); clean-checkout build:check 532/532; mobile 215/215; live matrix 247 routes / 0 failures; edge smoke 2/2; Chromium 15/15; redirect contract 4/4 on production; local release ceremony 11/11.
+- Deploy: deployed to production. Worker version `9c7c29f1-34c4-4670-aa01-3a34450db061` via run 38005943124, which completed its ceremony, deploy and liveness steps with no hold or rollback. Required checks passed at exact SHA `3d47921d4`: E2E 38004526528, Lighthouse 38004526555, accessibility 38004526591. Staging Worker `08480916` was verified first. Post-deploy route provenance shows 9/9 matched at 23:48:49Z, 32s after the deploy. Live: `/signal-log` reaches `/changelog/#stories` and `/vaultspark-football-gm` reaches `/games/franchise-architect/`, one hop each.
+- Content lane: promoted after closeout via run 38011991378 (staging overlay 20261010005651, parity green). Production serves contentLaneHead b1d27aee6: evidence feeds, homepage launch age and the completed satire 640 AVIF. smoke-live 6/6.
+- Full promotion: run 38017202206 (confirmed-production lane, SCOPED) serves 556b4d14e. Byte parity against that commit: 0 differing files across code, data and HTML. This promoted six served data files the content lane withholds by type. Staging received the exact tree first (10577 files). Identity hold unchanged (state=hold); not attempted.
+- CI Health Monitor: run 38012236106 passed both jobs at 0b910cfb5, its first success since 2026-10-01.
+- Final tip b0895dbe6: E2E 38010338300 and accessibility 38010338297 passed; Lighthouse 38010338287 passed on re-run after one single-run dip (0.88 vs 0.90 on one article).
+- CI history (honest): E2E failed four times before going green. Causes: the art autopilot, then the latenight edition, changed bound articles; CRLF working copies produced a non-portable receipt; the retention report was uncommitted, then platform-ordered. One push quoted a skip-ci token and skipped CI; the required workflows were then dispatched manually. Each cause is root-fixed or queued as [SIL].
+- Not verified / open: Hetzner staging does not apply `_redirects`. Field performance and conversion remain unmeasured. Identity holds are unchanged. Ark question 01K4H9AK… to studio-ops awaits an answer.
+- Next: the [SIL] items at the top of TASK_BOARD (routine lanes vs bound receipts; portable receipt hashing).

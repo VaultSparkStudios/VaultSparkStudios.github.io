@@ -55,6 +55,9 @@ export function deriveStatsSurface({ ecosystem, publicStatus, analytics, cloudfl
     }),
     metric('sparked-projects', 'Sparked projects', publicStatus.studio.sparked, 'projects marked SPARKED', 'current snapshot', timestamps.portfolio, sources.portfolio, {
       category: 'portfolio', format: 'integer',
+      // A count of publicly listed projects, not of people: the small-count
+      // privacy floor (CANON-054) guards visitor and member cells only.
+      smallCountOk: true,
       interpretation: `${publicStatus.studio.sparked} of ${publicStatus.studio.reposOnline} tracked initiatives are live and active; FORGE work is reported separately.`,
     }),
     metric('human-page-loads-30d', 'Human page loads', audienceAvailable ? websiteAudience.pageLoads.estimate : null, 'bot-excluded browser page loads', '30 complete UTC days', timestamps.cloudflare, sources.cloudflare, {
