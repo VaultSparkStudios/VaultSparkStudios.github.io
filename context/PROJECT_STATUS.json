@@ -14,7 +14,7 @@
   "liveUrl": "https://vaultsparkstudios.com/",
   "currentFocus": "S374 moved non-visual scripts behind first paint on the homepage and Desk pages; pushed as be218812c8 and promoted on 2026-10-12 (production tree-current at 8b29b2f6c1).",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Confirm the Lighthouse check passes its unchanged floors without a re-run across the next releases.",
+  "nextMilestone": "Delay the first network calls of the eager Desk presence and ambient scripts until after first paint, and show the Lighthouse check passing its unchanged floors across several consecutive runs.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -261,7 +261,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "0e3083f65dcc460300b789f9",
   "testsSourceFingerprint": "02fe1fc930de601deb1dc8cf",
-  "lastSessionSummary": "S374 loads non-visual scripts after first paint; Lighthouse passed first time (homepage 0.81 to 0.98, article 0.98 to 0.99); promoted to production.",
+  "lastSessionSummary": "S374 loads non-visual scripts after first paint and was promoted to production; Lighthouse scores rose but the article still fell below its floor once in three runs.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 371,

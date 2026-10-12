@@ -100,6 +100,12 @@
           "status": "shipped",
           "note": "Acceptance met on the pushed commit: the measured article scored 0.98, 0.99, 0.99 against the unchanged 0.90 floor on the first attempt. Verified on staging and production with the browser spec (9/9 each).",
           "evidence": "Lighthouse run 38189819765 at be218812c8, attempt 1; production run 38191069141"
+        },
+        {
+          "at": "2026-10-12T02:20:12.085Z",
+          "status": "shipped",
+          "note": "Correction: the acceptance was met on the pushed commit only. The next commit failed Lighthouse once on the article (0.88, 0.88, 0.96 against 0.90) and passed on one re-run. Scores are higher than before on both pages; the check is not yet stable and the task-board item is reopened.",
+          "evidence": "Lighthouse run 38193011995 attempts 1 and 2 at 1f29cc7bf9"
         }
       ]
     },
@@ -157,6 +163,12 @@
           "status": "shipped",
           "note": "Acceptance met on the pushed commit: the homepage scored 0.81, 0.95, 0.98 against the unchanged 0.76 floor on the first attempt. Blocking time now appears after first paint (106 to 665 ms across runs); stability across releases remains to be observed.",
           "evidence": "Lighthouse run 38189819765 at be218812c8, attempt 1; production run 38191069141"
+        },
+        {
+          "at": "2026-10-12T02:20:12.085Z",
+          "status": "shipped",
+          "note": "Correction: the acceptance was met on the pushed commit only. The next commit failed Lighthouse once on the article (0.88, 0.88, 0.96 against 0.90) and passed on one re-run. Scores are higher than before on both pages; the check is not yet stable and the task-board item is reopened.",
+          "evidence": "Lighthouse run 38193011995 attempts 1 and 2 at 1f29cc7bf9"
         }
       ]
     },
