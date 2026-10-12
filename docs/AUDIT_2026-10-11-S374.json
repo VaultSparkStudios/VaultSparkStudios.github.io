@@ -58,7 +58,7 @@
       "impact": 9,
       "innovation": 5,
       "priority": 40,
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "readinessArea": "release gate",
       "stageRationale": "A required check that fails on unchanged bytes blocks every production promotion.",
@@ -94,6 +94,12 @@
           "status": "pending",
           "note": "Implemented and verified locally: four scripts parked on Desk pages (presence kept eager because it times the visit). Unit 10/10; browser spec 3/3 on Chromium, Firefox and WebKit; reactions and comments mount. Acceptance still open: the article Lighthouse runs on the pushed commit.",
           "evidence": "assets/after-paint.js; scripts/generate-news-pages.mjs; scripts/propagate-nav.mjs; tests/after-paint.unit.spec.js; tests/after-paint.spec.js"
+        },
+        {
+          "at": "2026-10-12T01:23:00.333Z",
+          "status": "shipped",
+          "note": "Acceptance met on the pushed commit: the measured article scored 0.98, 0.99, 0.99 against the unchanged 0.90 floor on the first attempt. Verified on staging and production with the browser spec (9/9 each).",
+          "evidence": "Lighthouse run 38189819765 at be218812c8, attempt 1; production run 38191069141"
         }
       ]
     },
@@ -109,7 +115,7 @@
       "impact": 8,
       "innovation": 4,
       "priority": 28,
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "readinessArea": "release gate",
       "stageRationale": "The homepage is the page that most often fails the required check.",
@@ -145,6 +151,12 @@
           "status": "pending",
           "note": "Implemented and verified locally: seven of 28 homepage scripts parked; consent banner, hero scripts, click tracking and error reporting kept eager. Layout shift unchanged (at or below 0.008 before and after, desktop and mobile). Acceptance still open: the homepage Lighthouse runs on the pushed commit.",
           "evidence": "index.html; assets/home-idle-loader.js; tests/after-paint.spec.js"
+        },
+        {
+          "at": "2026-10-12T01:23:00.333Z",
+          "status": "shipped",
+          "note": "Acceptance met on the pushed commit: the homepage scored 0.81, 0.95, 0.98 against the unchanged 0.76 floor on the first attempt. Blocking time now appears after first paint (106 to 665 ms across runs); stability across releases remains to be observed.",
+          "evidence": "Lighthouse run 38189819765 at be218812c8, attempt 1; production run 38191069141"
         }
       ]
     },

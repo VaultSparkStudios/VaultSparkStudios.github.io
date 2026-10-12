@@ -3014,3 +3014,7 @@ S373 addendum 4 (unscored): promoted. The commit after the twice-failed candidat
 Brainstorm (committed to TASK_BOARD): (1) establish whether the CI `e2e` job runs the four specs that fail locally against production; (2) find which derived contract the last records commit left behind at build:check step 37.
 
 ---
+
+S374 addendum (unscored): pushed as be218812c8 and promoted (run 38191069141; production tree-current at 8b29b2f6c1, 0 differing files). All three required checks passed first time. Lighthouse: homepage 0.81, 0.95, 0.98 (floor 0.76; previously 0.75 to 0.78) and the article 0.98, 0.99, 0.99 (floor 0.90; previously 0.82 to 0.92). One commit is not proof of stability, and the homepage now shows blocking time after first paint (106 to 665 ms across runs) that it did not show before. Convergence cost three rounds: two date-derived homepage values rolled at 00:00Z and one push lost the publisher race.
+
+---

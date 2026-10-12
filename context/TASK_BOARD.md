@@ -7,7 +7,7 @@
 - [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
 - [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
 - [ ] **[HOME/P2 · S374]** `home-intelligence.js` and `recent-ships.js` initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374).
-- [ ] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Confirm the S374 push clears it and find which derived contract the records commit left behind.
+- [x] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Cleared at be218812c8 (E2E 38189819783 green). Cause: a records-only commit that changed context files without regenerating derived artifacts; a records commit needs `resync-derived` and a receipt rebind before push.
 
 # S373 — S372 follow-ups, guards and test coverage
 
@@ -20,7 +20,7 @@
 
 # S372 arc — assurance and redirect repair
 
-- [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — **S374:** script loading changed on both page types (D-S374.1); closes when the pushed commit passes its unchanged floors without a re-run.
+- [x] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — **S374:** script loading changed on both page types (D-S374.1); **DONE S374:** be218812c8 passed first time, homepage 0.81/0.95/0.98, article 0.98/0.99/0.99. Watch the next releases; homepage blocking time now shows after first paint (106 to 665 ms).
 
 # S371 release maintenance
 

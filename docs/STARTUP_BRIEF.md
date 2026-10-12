@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S374) - WHAT SHIPPED ══════════════════════════╗
-║  S374 loads non-visual scripts after first paint on the homepag  ║
+║  S374 loads non-visual scripts after first paint; Lighthouse pa  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    923/1000   ██████████████████████░░   92%                     ║
 ║    SIL v3.0  ·  Avg3: 916.7  ·  Velocity 4↓                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▆▇▇▆▄  ↓  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
 ║        home-intelligence.js and recent-ships.js initialise only  ║
 ║                                                                  ║
-║   86  [VERIFY]       Four browser specs fail on this machine ag  ║
-║        Four browser specs fail on this machine against both pro  ║
-║                                                                  ║
-║   84  [PRODUCT]      Exercise the art receipt path on the next   ║
+║   90  [PRODUCT]      Exercise the art receipt path on the next   ║
 ║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
-║   83  [COHESION]     Preserve project-local capability contract  ║
+║   89  [COHESION]     Preserve project-local capability contract  ║
 ║        Preserve project-local capability contracts during incom  ║
+║                                                                  ║
+║   87  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
+║        Keep shell regeneration and SRI stamping in a single doc  ║
+║                                                                  ║
+║   86  [VERIFY]       Four browser specs fail on this machine ag  ║
+║        Four browser specs fail on this machine against both pro  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
