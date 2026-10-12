@@ -2468,3 +2468,7 @@ S374 addendum 2 (unscored, correction): the previous addendum and the task board
 | Automation Coverage | 96 | The layout test and contract check now assert cartoon placement, scope uniqueness and thread attachment on every article. |
 
 Brainstorm (committed to TASK_BOARD): (1) report cartoon reaction totals in the public reactions snapshot; (2) check the empty image thread controls against the live comment service.
+
+---
+
+S375 addendum (unscored): pushed as c8635d986e and promoted (run 38212109944; production tree-current at be976158c8, 0 differing files). All three required checks passed first time; the measured article scored 0.94 against its 0.90 floor in that one run, which is one more data point for the open stability task and not a conclusion. Process note: a spec that assumed a single image reaction panel was not updated with the generator and was caught on staging rather than before the first gate run; search the tests for a selector before changing how many elements match it.

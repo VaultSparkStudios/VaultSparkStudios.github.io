@@ -1565,3 +1565,11 @@ The generator now emits a cartoon stage right after the illustration stage. Its 
 Capturing the change exposed an older defect: the article shell could be scrolled 352px sideways when an image comment panel opened at 1366px. It reproduced twice and stopped after `overflow:clip`. Seven themes were captured at desktop and mobile, before and after.
 
 Three hit-list items were assessed and not selected; reasons are in the audit and D-S375.3.
+
+#### S375 addendum — pushed and promoted (2026-10-12 UTC)
+
+Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de202f4; staging release spec 6/6; cartoon probe 12/12 across Chromium, Firefox and WebKit at 1366px and 390px, after one unexplained failure in the first probe run straight after the publish). Clean-checkout gate passed at 35c661742 before the push. Required checks at c8635d986e passed on the first attempt: E2E 38210836603, Lighthouse 38210836606 (measured article 0.94 against the unchanged 0.90 floor), accessibility 38210836596. Promoted through the confirmed-production lane, run 38212109944 (SCOPED; identity hold unchanged). Readback from served bytes: tree-current at be976158c8, which contains the candidate; 1043 of 1053 files identical, 0 differing, 10 retired-route redirects. The same cartoon probe passes 12/12 against production, and the live reaction endpoint answers for the cartoon key with an empty tally.
+
+Convergence took four gate runs. The first stopped on the score ledger's size cap (rotated with the tool the check names; 21 blocks moved to the quarter archives). The next two stopped on derived files left stale by a late test fix, which a full sweep of the gated generators cleared. The closeout tool was run with the wipe override because the ledger rotation shrinks the hot file; the moved blocks are in `context/archive/SIL_2026Q3.md` and `SIL_2026Q4.md`. One rebase onto five automated commits was resolved by regenerating, not hand-merging.
+
+The reaction spec assumed one image reaction panel and needed scoping to the illustration row; that was missed until the staging run. Running it there also showed seven older failures that reproduce on production with the unmodified spec: a click sent right after DOMContentLoaded arrives before the parked reactions script. It is on the task board.

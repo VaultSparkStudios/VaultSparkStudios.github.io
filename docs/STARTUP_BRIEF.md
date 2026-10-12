@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wave5: release (gate, staging, push, produ  ║
-║        Wave5: release (gate, staging, push, production); outcom  ║
-║                                                                  ║
-║   93  [PRODUCT]      Cartoon reaction totals are collected but   ║
+║   96  [PRODUCT]      Cartoon reaction totals are collected but   ║
 ║        Cartoon reaction totals are collected but build-news-des  ║
 ║                                                                  ║
-║   90  [PRODUCT]      tests/desk-reactions.spec.js fails 7 tests  ║
+║   93  [PRODUCT]      tests/desk-reactions.spec.js fails 7 tests  ║
 ║        tests/desk-reactions.spec.js fails 7 tests in WebKit aga  ║
 ║                                                                  ║
-║   87  [PRODUCT]      An empty image comment thread showed "Try   ║
+║   90  [PRODUCT]      An empty image comment thread showed "Try   ║
 ║        An empty image comment thread showed "Try again" and "Ca  ║
 ║                                                                  ║
-║   81  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
+║   84  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
 ║        home-intelligence.js and recent-ships.js initialise only  ║
+║                                                                  ║
+║   78  [PRODUCT]      Exercise the art receipt path on the next   ║
+║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

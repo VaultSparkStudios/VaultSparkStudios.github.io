@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 139,
+    "inspected": 145,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,28 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "c8635d98",
+      "ts": "2026-10-12T06:04:42.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "staging receipt and lineage for the S375 candidate",
+      "visitorFacing": false
+    },
+    {
+      "sha": "35c66174",
+      "ts": "2026-10-12T05:52:20.000Z",
+      "type": "chore",
+      "scope": "release",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "regenerate derived artifacts after publisher rebase (S375)",
+      "visitorFacing": true
+    },
     {
       "sha": "0d5a85c6",
       "ts": "2026-10-12T05:49:43.000Z",
@@ -259,28 +281,6 @@
       "tone": "muted",
       "summary": "reseal derived outputs after rebasing the S373 candidate onto main",
       "visitorFacing": true
-    },
-    {
-      "sha": "6554afba",
-      "ts": "2026-10-10T16:50:45.000Z",
-      "type": "fix",
-      "scope": "feeds",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "a shallow clone can no longer rewrite Git-history feeds",
-      "visitorFacing": false
-    },
-    {
-      "sha": "2f4d4601",
-      "ts": "2026-10-10T16:50:44.000Z",
-      "type": "chore",
-      "scope": "release",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "commit the regenerated public contracts for the S373 candidate",
-      "visitorFacing": false
     }
   ]
 }

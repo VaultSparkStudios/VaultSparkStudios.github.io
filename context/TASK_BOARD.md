@@ -4,9 +4,9 @@
 - [x] Wave2: audit `docs/AUDIT_2026-10-12-S375.md`, two items; three hit-list items assessed and left unselected with reasons.
 - [x] Wave3 (founder direction): cartoon stage directly below the illustration on 122 articles, own reaction scope and comment thread; layout test, contract check and browser spec updated.
 - [x] Wave4: article shell no longer scrolls sideways (`overflow:clip`); seven themes captured at desktop and mobile.
-- [ ] Wave5: release (gate, staging, push, production); outcome goes in the handoff.
+- [x] Wave5: gate 534/534, staging, push c8635d986e, required checks first time, production tree-current at be976158c8 (run 38212109944).
 - [ ] **[SIL/P2 · S375]** Cartoon reaction totals are collected but `build-news-desk-reactions` does not probe the `/panel/satire-cartoon` scope; add it (and the illustration scope if absent) to the public snapshot.
-- [ ] **[SIL/P2 · S375]** `tests/desk-reactions.spec.js` fails 7 tests in WebKit against production and the local build alike (unmodified spec): a click sent right after DOMContentLoaded lands before the parked reactions script runs. Establish whether a real Safari reader can lose a first tap; fix the loader or the spec.
+- [ ] **[SIL/P2 · S375]** `tests/desk-reactions.spec.js` fails 7 tests in WebKit against production and the local build alike (unmodified spec), and in Chromium against staging: a click sent right after DOMContentLoaded lands before the parked reactions script runs. Establish whether a real Safari reader can lose a first tap; fix the loader or the spec.
 - [ ] **[SIL/P3 · S375]** An empty image comment thread showed "Try again" and "Cancel reply" under a mocked empty service; check against the live service.
 
 # S374 arc — scripts after first paint, SI first use
