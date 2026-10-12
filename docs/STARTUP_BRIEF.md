@@ -79,16 +79,16 @@
 ║  ⚠  Context age   8d                                             ║
 ║  ✓  IGNIS         46114 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/38 (84%) → ▆▄▄▁▄▄▄▄                          ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▆▄▄▁▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.220  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  9d old (2026-10-02)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  2 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,6 +120,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
 ║        home-intelligence.js and recent-ships.js initialise only  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
 ║        Keep shell regeneration and SRI stamping in a single doc  ║
-║                                                                  ║
-║   86  [VERIFY]       Four browser specs fail on this machine ag  ║
-║        Four browser specs fail on this machine against both pro  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
