@@ -1,17 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-11T23:38:15.770Z",
+  "generatedAt": "2026-10-12T00:19:44.738Z",
   "candidateReady": false,
   "candidateFindings": [
-    "staging-artifact-root-mismatch"
+    "staging-build-sha-mismatch",
+    "staging-artifact-root-mismatch",
+    "staging-artifact-leaf-count-mismatch",
+    "/:localShellParity"
   ],
   "candidateBuildSha": "11a42b54b494fac905c8ab5b71ec436505546070",
-  "stagingBuildSha": "11a42b54b494fac905c8ab5b71ec436505546070",
+  "stagingBuildSha": "377d0a886fd0e6fbb8669e4a2a5a38d7c71a5e8e",
   "artifactManifest": {
     "candidateRoot": "30fb9cee7503feed06c67c1046b7aa6fb8469737274b7e7707f220aabce7de46",
     "candidateLeafCount": 63,
-    "stagingRoot": "79c87b14635b7bb954099666575e0cb756d47386bda74a22fd59f22438cbe81c",
-    "stagingLeafCount": 63,
+    "stagingRoot": "27a07675288bcd480328a62f560961f144c92dd0e9fbf1d37f332d4876aa7ab7",
+    "stagingLeafCount": 64,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -41,11 +44,12 @@
       "shellParity": false,
       "prodShell": [],
       "stagingShell": [
+        "assets/after-paint.shell-c819ba6e3a.js",
         "assets/ambient-core.shell-5b2e3a4faa.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-d1839327b4.js",
+        "assets/home-idle-loader.shell-d6269f7d0f.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
