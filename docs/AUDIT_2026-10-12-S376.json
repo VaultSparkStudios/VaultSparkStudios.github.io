@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "2.1",
+  "session": 376,
+  "generatedAt": "2026-10-12T21:10:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "The three top items on the S375 hit list, each re-verified against live code and production before selection. All three concern reader feedback on Desk articles: a control that shows when it should be hidden, a first tap that can be lost, and reaction totals that are collected but never published.",
+  "stage": {
+    "lifecycleFocus": "not emitted by skill-profile.mjs in this repository",
+    "status": "SPARKED, live production (context/PROJECT_STATUS.json)",
+    "readiness": [
+      {
+        "area": "accessibility and presentation",
+        "evidence": "Production probe at 1366px: the reply banner on an empty community thread has the hidden attribute and computes display:flex at 722x44px",
+        "state": "defect open on every article"
+      },
+      {
+        "area": "reader feedback delivery",
+        "evidence": "tests/desk-reactions.spec.js fails 7 tests in WebKit against production (S375 record); the reactions script is parked in template[data-after-paint]",
+        "state": "defect open"
+      },
+      {
+        "area": "observability honesty",
+        "evidence": "build-news-desk-reactions probes only <date>/<slug>; the feed definition says illustration reactions are included",
+        "state": "published definition overstates coverage"
+      },
+      {
+        "area": "staging",
+        "evidence": "Hetzner staging present",
+        "state": "must be refreshed for this candidate"
+      }
+    ]
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 2,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "hidden-comment-controls-stay-hidden",
+      "axis": "ui-ux-feedback",
+      "title": "Keep the reply banner hidden on a comment thread until a reader is replying",
+      "why": "The reply banner carries the hidden attribute until a reader presses Reply, but .desk-comments-replying declares display:flex, which wins over the browser's default for hidden. On production the banner and its Cancel reply button show on every article's community thread, including empty ones where there is nothing to reply to. The board note also named Try again; that button is correctly hidden in production. Correction after the rendered captures: at 390px the Try again button does show as well; the same rule hides both.",
+      "recipe": "Add one rule to assets/desk-comments.css so any element inside .desk-comments carrying the hidden attribute is not displayed. Capture the community thread before and after in every theme at desktop and mobile.",
+      "tier": "🔥",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 2,
+      "priority": 14,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "readinessArea": "accessibility and presentation",
+      "stageRationale": "A visible defect on every Desk article in production.",
+      "informationFindingOutcome": "A reader who wants to comment sees the composer without a stray Cancel reply control above it.",
+      "acceptance": "A browser probe reports display:none for the reply banner on an empty thread and display:flex after Reply is pressed on a comment; seven themes inspected at desktop and mobile.",
+      "premises": [
+        {
+          "claim": "The reply banner's class sets a display value and the stylesheet has no rule for the hidden attribute",
+          "adapter": "grep-count",
+          "target": "assets/desk-comments.css",
+          "pattern": "\\[hidden\\]",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "The CSS rule only."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "The rule, a browser assertion in the comments spec, and theme captures."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Also sweep every stylesheet for a class display rule on an element that is toggled with the hidden attribute."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "first-tap-before-parked-script-is-not-lost",
+      "axis": "ui-ux-feedback",
+      "title": "Stop a reaction tap from being lost in browsers without scroll anchoring, and deliver a tap that lands before the reactions script has run",
+      "why": "Since S374 the reactions script is parked until after the first paint and starts loading at the first interaction. When that first interaction is a tap on a reaction button, the tap starts the load and is then dropped, because the handler does not exist yet. Nothing tells the reader. The unmodified browser spec shows it: 7 failures in WebKit against production. Finding during implementation: that mechanism is real (a unit case reproduces it) but it was not what failed the browser spec. Tracing the WebKit run showed the press landing on the button and the release landing on the article: the section above the reaction bar is rendered late (content-visibility:auto with a 700px estimate) and grew by 181px between the two. Chromium and Firefox hide that change with scroll anchoring; WebKit has none, so after any jump (a fragment link, find-in-page, a restored scroll position) the page moves under the reader. A reader scrolling down from the top is not affected.",
+      "recipe": "In assets/after-paint.js, remember the last click on a reaction button made before the parked scripts have finished, and deliver it once they have. One click per reaction bar, the most recent. Add a unit case and keep the browser spec unmodified as the acceptance check. Rehash the shell assets and regenerate the pages that reference the loader. Added: in assets/news-desk.css, defer section rendering only inside @supports (overflow-anchor:auto). In the presence test, accept that WebKit does not expose a sendBeacon Blob body to a route handler.",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 6,
+      "innovation": 4,
+      "priority": 13,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "readinessArea": "reader feedback delivery",
+      "stageRationale": "A reader action silently discarded on a live page; introduced by the S374 performance change.",
+      "informationFindingOutcome": "A reader's first tap on a reaction is recorded even on a slow connection.",
+      "acceptance": "tests/desk-reactions.spec.js passes in Chromium, Firefox and WebKit against the local build with no retries (the only spec edit is the WebKit beacon-body allowance); eight of eight early WebKit taps reach the service, against one of eight before; the after-paint unit and browser specs pass; Lighthouse floors unchanged.",
+      "premises": [
+        {
+          "claim": "The loader starts on pointerdown and has no click replay",
+          "adapter": "grep-count",
+          "target": "assets/after-paint.js",
+          "pattern": "replay",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Make the spec wait for the script; leaves the reader-facing loss in place."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Replay the last early reaction click from the loader."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "A declarative replay attribute on any parked script's controls, emitted by both Desk writers."
+        }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "slug": "illustration-and-cartoon-reaction-totals-published",
+      "axis": "observability-honesty",
+      "title": "Publish illustration and cartoon reaction totals in the reader-signal feed",
+      "why": "Readers can react to the illustration and, since S375, the cartoon. Those counts live under their own keys at the edge and the snapshot builder never reads them, while the published definition says illustration reactions are counted.",
+      "recipe": "Probe <date>/<slug>/panel/editorial-illustration-1 for every probed story and /panel/satire-cartoon where the story has a cartoon. Record them as a separate panels list in the snapshot with the same floor and reset rule, expose them per story in the feed without adding them to the story total, correct the definition, extend the self-test, run one probe.",
+      "tier": "⚡",
+      "effortHours": 1.5,
+      "impact": 5,
+      "innovation": 3,
+      "priority": 9,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "readinessArea": "observability honesty",
+      "stageRationale": "A published measurement definition that does not match what is measured.",
+      "informationFindingOutcome": "Anyone reading the public feed can see how readers responded to each image, with the same small-count suppression as story totals.",
+      "acceptance": "Self-test passes with new panel cases; --check passes; the feed carries a panels object for every story after one live probe; story totals are unchanged by the addition.",
+      "premises": [
+        {
+          "claim": "The snapshot builder does not reference panel scopes",
+          "adapter": "grep-count",
+          "target": "scripts/build-news-desk-reactions.mjs",
+          "pattern": "/panel/",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Correct the definition only."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Probe and publish panel totals in the feed."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Also show image totals on the Desk hub signal section."
+        }
+      },
+      "executionLog": []
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "home-intelligence-and-recent-ships-never-initialise",
+      "reason": "Unchanged from S375: enabling them switches on a homepage activity feed that has never rendered in production. That is a visible homepage change needing its own review. Stays on TASK_BOARD."
+    },
+    {
+      "slug": "four-failing-browser-specs",
+      "reason": "Not selected; no new evidence gathered this session. Stays on TASK_BOARD."
+    },
+    {
+      "slug": "art-receipt-path-on-next-scheduled-publish",
+      "reason": "Depends on a scheduled publish outside this session. Stays on TASK_BOARD."
+    }
+  ],
+  "totals": {
+    "count": 3,
+    "priority": 36,
+    "top3": [
+      "hidden-comment-controls-stay-hidden",
+      "first-tap-before-parked-script-is-not-lost",
+      "illustration-and-cartoon-reaction-totals-published"
+    ]
+  }
+}

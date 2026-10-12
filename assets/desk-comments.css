@@ -21,6 +21,13 @@
   color: var(--text);
 }
 
+/* Several blocks here are shown and hidden with the hidden attribute, and a
+   class that sets display (the reply banner is display:flex) outranks the
+   browser's own rule for it. Without this the banner showed on every thread. */
+.desk-comments [hidden] {
+  display: none !important;
+}
+
 @supports (color: color-mix(in srgb, red 50%, transparent)) {
   .desk-comments {
     --dc-line: color-mix(in srgb, var(--muted) 24%, transparent);

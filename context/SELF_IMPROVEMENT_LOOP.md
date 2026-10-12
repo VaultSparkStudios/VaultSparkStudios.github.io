@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 923.7 | 5: 918.0 | 10: 926.0 | 25: — [N=22] | all: unmeasured (archived history not re-scored)
+Avgs — 3: 925.0 | 5: 920.4 | 10: 926.0 (carried from S375, not recomputed) | 25: — [N=23] | all: unmeasured (archived history not re-scored)
 History scope: latest scored entry per session in the active append-only ledger.
-Velocity trend: ↓ | Protocol velocity: → | Debt: →
-Last session: 2026-10-12 | Session 375 | Total: 925/1000 | Velocity: 2 | protocolVelocity: 0
+Velocity trend: ↑ | Protocol velocity: → | Debt: →
+Last session: 2026-10-12 | Session 376 | Total: 927/1000 | Velocity: 3 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2472,3 +2472,20 @@ Brainstorm (committed to TASK_BOARD): (1) report cartoon reaction totals in the 
 ---
 
 S375 addendum (unscored): pushed as c8635d986e and promoted (run 38212109944; production tree-current at be976158c8, 0 differing files). All three required checks passed first time; the measured article scored 0.94 against its 0.90 floor in that one run, which is one more data point for the open stability task and not a conclusion. Process note: a spec that assumed a single image reaction panel was not updated with the generator and was caught on staging rather than before the first gate run; search the tests for a selector before changing how many elements match it.
+
+## 2026-10-12 UTC — Session 376 (reader feedback on Desk articles) | Total: 927/1000 (v3.0) | Velocity: 3 | Debt: →
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 93 | Two reader-facing defects on every Desk article fixed at their cause; WebKit reactions spec 5 of 12 to 12 of 12; a Firefox tap still fails about 2 in 14 and is boarded. |
+| Creative Alignment | 94 | No change to voice, labelling or layout order; the comment composer reads as designed. |
+| Momentum | 90 | Three items shipped, all three top hit-list entries closed. |
+| Engagement | 93 | A reaction tap now reaches the service in WebKit; image reactions are reported, none yet above the floor. |
+| Process Quality | 89 | The first fix was built on a recorded cause that measurement then disproved; the event trace found the real one. An independent review caught a double-delivery defect before release. |
+| Cross-Repo Coherence | 92 | No sibling edits. |
+| Security Posture | 94 | No Worker, CSP or allowlist change; the probe reads public GET endpoints only. |
+| Ecosystem Integration | 91 | Feed consumers get image totals as an additive field; existing fields keep their meaning. |
+| Capital Efficiency | 95 | No paid services, no installs. |
+| Automation Coverage | 96 | Unit cases for early-tap delivery and for not delivering twice; a browser assertion that the reply banner is hidden; builder cases for panels, reset and key length. |
+
+Brainstorm (committed to TASK_BOARD): (1) settle the Firefox tap after a jump, choosing between exact section size hints and no deferral with Lighthouse evidence; (2) move the Spark companion clear of the Post comment button at 390px.

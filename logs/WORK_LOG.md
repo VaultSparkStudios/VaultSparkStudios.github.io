@@ -1573,3 +1573,17 @@ Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de20
 Convergence took four gate runs. The first stopped on the score ledger's size cap (rotated with the tool the check names; 21 blocks moved to the quarter archives). The next two stopped on derived files left stale by a late test fix, which a full sweep of the gated generators cleared. The closeout tool was run with the wipe override because the ledger rotation shrinks the hot file; the moved blocks are in `context/archive/SIL_2026Q3.md` and `SIL_2026Q4.md`. One rebase onto five automated commits was resolved by regenerating, not hand-merging.
 
 The reaction spec assumed one image reaction panel and needed scoping to the illustration row; that was missed until the staging run. Running it there also showed seven older failures that reproduce on production with the unmodified spec: a click sent right after DOMContentLoaded arrives before the parked reactions script. It is on the task board.
+
+## 2026-10-12 — Session 376 reader feedback on Desk articles
+
+/arc with direct push and full deployment authorized. No cut-off found; 36 automation commits pulled. The audit took the three top hit-list items, all about reader feedback on Desk articles, and checked each against production first.
+
+A browser probe of production showed the reply banner on every article's community thread: it carries the `hidden` attribute and computes `display:flex`. The captures then showed a Try again button at phone width as well. One CSS rule hides both.
+
+The reaction item was first built on the recorded premise, a tap arriving before the parked script. The unit case reproduced that, the loader gained a replay, and the browser spec still failed 7 tests in WebKit. A trace of each event showed the press on the button and the release on the article: the section above is rendered late with a 700px estimate and grew by 181px in between. Chromium and Firefox absorb that with scroll anchoring; WebKit has none. Late rendering now applies only where anchoring exists. The replay stays for the narrower case it does cover.
+
+The reader-signal builder now probes illustration and cartoon keys and publishes them per story, apart from the story total. One live probe read 248 panels; none reaches the five-signal floor.
+
+An independent review found the replay could deliver a handled tap twice. The listener now ignores taps the live script cancelled. It also asked for a guard on keys longer than the store keeps, plainer wording in the feed definition, and a WebKit test that keeps its assertions; all applied.
+
+Found and boarded, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px.

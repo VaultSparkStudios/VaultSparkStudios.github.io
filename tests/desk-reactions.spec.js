@@ -327,8 +327,14 @@ test('floating page widgets never sit on top of a visible reaction button', asyn
   await expect.poll(() => page.evaluate(() => getComputedStyle(document.querySelector('.vs-rate-page')).visibility)).toBe('visible');
 });
 
-test('Desk reader activity separates live presence from sample-gated engaged time', async ({ page }) => {
+test('Desk reader activity separates live presence from sample-gated engaged time', async ({ page, browserName }) => {
   let summary = null;
+  // The summary leaves as a Blob through sendBeacon, and WebKit does not hand a
+  // beacon's body to a route handler. Take sendBeacon away there so the script
+  // uses its own keepalive fetch fallback, whose body can be read.
+  if (browserName === 'webkit') {
+    await page.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'sendBeacon', { value: undefined, configurable: true }); });
+  }
   await page.route('**/v/desk-presence*', async (route) => {
     const request = route.request();
     if (request.method() === 'GET') {
@@ -336,7 +342,7 @@ test('Desk reader activity separates live presence from sample-gated engaged tim
       return;
     }
     const body = request.postDataJSON();
-    if (body.kind === 'summary') summary = body;
+    if (body && body.kind === 'summary') summary = body;
     await route.fulfill({ status: 202, contentType: 'application/json', body: JSON.stringify({ ok: true, state: 'accepted' }) });
   });
   await page.route('**/api/news-desk-engagement.json', async (route) => {

@@ -1,3 +1,16 @@
+## Where We Left Off (Session 376) — reader feedback on Desk articles (2026-10-12)
+
+Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). Intent: see the Deploy line.
+
+- Shipped: 3 items. Comment threads no longer show a Cancel reply banner (or, at phone width, a Try again button) when there is nothing to cancel or retry. Reaction taps are no longer lost in WebKit: sections are rendered late only where scroll anchoring exists, and the loader delivers a tap made before the reactions script has run. The reader-signal feed lists illustration and cartoon reactions per story, separate from story totals.
+- Tests: after-paint unit 12 of 12; reactions builder self-test 25 of 25; Desk browser specs (reactions, comments, after-paint, artwork) 80 of 81 with no retries on three engines, the one failure a Firefox tap that passes on retry; WebKit reactions 12 of 12 (was 5 of 12); early WebKit taps 8 of 8 delivered (was 1 of 8). Seven themes captured at 1366px and 390px, before and after.
+- Review: an independent review found that a tap handled by the live script could be delivered a second time while a later parked script was still loading, which would have taken the vote back. Fixed with a unit case; three smaller findings also fixed.
+- Deploy: DEPLOY_PENDING
+- Corrected: S375 recorded the WebKit failures as a click arriving before the parked script. That mechanism exists but was not the cause; the press and release landed on different elements because the section above the reaction bar grew by 181px between them.
+- Found, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px. Both on the task board.
+- Not selected: the dormant homepage scripts, the four failing browser specs, the art receipt path (needs a scheduled publish).
+- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
+
 ## Where We Left Off (Session 375) — satire cartoon below the illustration (2026-10-12)
 
 Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). During the arc the founder asked for the satire cartoon to sit below the AI-generated art on every article with its own reaction and comment area. Intent: **Achieved** — shipped, pushed and promoted.

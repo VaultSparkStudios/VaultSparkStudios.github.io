@@ -1,3 +1,7 @@
+### S376 truth reconciliation — 2026-10-12
+
+One published definition was wrong and is corrected. The reader-signal feed said it counted reactions on a story "or on its generated illustration"; reactions sent from an image panel were never read. They are now read and listed under `panels`, apart from the story total, and the definition says which reactions are stored where. All 248 panels are below the five-signal floor, so the feed publishes no image total yet. One recorded cause was wrong: S375 attributed seven WebKit test failures to a tap arriving before a parked script. Measured this session, the cause was a late-rendered section changing height in a browser without scroll anchoring.
+
 ### S375 truth reconciliation — 2026-10-12
 
 No source of truth changed. One public contract gained a field: Desk feed stories with a cartoon now carry `_vaultspark.satire_reaction_key`. Cartoon reactions are collected from this release on, and no public summary reports them yet, so no surface claims a cartoon reaction total.

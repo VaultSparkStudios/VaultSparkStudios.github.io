@@ -1,3 +1,11 @@
+# S376 reader feedback on Desk articles — 2026-10-12
+
+- **Comment threads.** The reply banner and its Cancel reply button no longer show on a thread until a reader presses Reply; at phone width a Try again button also showed after a successful load. Both carried the `hidden` attribute and were displayed anyway because a class set `display`. `assets/desk-comments.css` now keeps hidden elements inside a thread hidden.
+- **Reaction taps.** Article sections are rendered late only in browsers that have scroll anchoring (`@supports (overflow-anchor:auto)`). Without anchoring, a late section taking its real height moved the page under the reader after a jump: 181px in WebKit, enough for a press on a reaction to be released on the article. Early WebKit taps went from 1 of 8 delivered to 8 of 8.
+- **Early taps.** `assets/after-paint.js` keeps the last reaction tap made before the parked reactions script exists and delivers it once the script has run; a tap the live script already handled is never delivered twice.
+- **Reader-signal feed.** `api/news-desk-reactions.json` now lists illustration and cartoon reactions per story under `panels`, separate from the story total, with the same five-signal floor and reset rule. First probe: 248 panels read, all below the floor, so no image total is published yet. The feed's definition was corrected to say what is counted where.
+- **Checks.** After-paint unit suite 12 (was 10 plus two new cases); reactions builder self-test 25; the reactions browser spec passes in WebKit 12 of 12 (was 5 of 12). Firefox still loses a tap issued straight after a jump about 2 times in 14; it passes on retry and is on the task board. Seven themes captured at 1366px and 390px (`docs/visual-qa/S376_COMMENTS.json`).
+
 # S375 satire cartoon below the illustration — 2026-10-12
 
 - **Article order.** On every Desk article with a satire cartoon (122 of 123), the cartoon is the stage directly below the AI-generated illustration and above the News Brief. It used to render after the predictions and the transcript.

@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-12T06:34:38.056Z
-Receipt: `594c479890157513e0851e32` · coverage 109/109
+Generated: 2026-10-12T22:40:24.689Z
+Receipt: `8a6a09dfc53536a8f2fc9bf8` · coverage 109/109
 
-Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 26.6s
+Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 36.9s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 49 | blocking | 6.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 88 | blocking | 3.2s | 0 | `node scripts/check-receipt-ordering.mjs` |
-| 37 | blocking | 0.6s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 78 | blocking | 0.6s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 106 | advisory | 0.5s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 38 | blocking | 0.4s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 65 | blocking | 0.4s | 0 | `node scripts/check-content-coherence.mjs` |
-| 90 | blocking | 0.4s | 0 | `node scripts/check-visual-qa-retention.mjs --check` |
-| 22 | blocking | 0.4s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 35 | blocking | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 88 | blocking | 1.7s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 49 | blocking | 1.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 82 | blocking | 1.4s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 22 | blocking | 1.2s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 78 | blocking | 1.1s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 65 | blocking | 1.1s | 0 | `node scripts/check-content-coherence.mjs` |
+| 106 | advisory | 1.0s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 37 | blocking | 1.0s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 24 | blocking | 0.9s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 38 | blocking | 0.9s | 0 | `node scripts/generate-news-pages.mjs --check` |
 
 ## Failures
 
-- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
+- None.

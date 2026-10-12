@@ -1,4 +1,4 @@
-# Genius Hit List — Session 375
+# Genius Hit List — Session 376
 
 Generated: 2026-10-12
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **78/100**
+- Overall opportunity pressure: **77/100**
 - Health: **yellow**
-- Current SIL: **925/1000**
+- Current SIL: **927/1000**
 - CI health: **check gh run list**
-- Current focus: S375 placed the satire cartoon directly below the illustration on every Desk article, with its own reactions and comment thread; pushed as c8635d986e and promoted on 2026-10-12 (production tree-current at be976158c8).
+- Current focus: S376 fixed reader feedback on Desk articles: comment threads no longer show stray Cancel reply and Try again controls, reaction taps are no longer lost in WebKit, and the reader-signal feed lists illustration and cartoon reactions.
 
 ## Strategic Read
 
@@ -22,20 +22,24 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Cartoon reaction totals are collected but build-news-desk-reactions d…
-Final score: **96**
-[SIL/P2 · S375] Cartoon reaction totals are collected but build-news-desk-reactions does not probe the /panel/satire-cartoon scope; add it (and the illustration scope if absent) to the public snapshot.
-Why it matters: Cartoon reaction totals are collected but build-news-desk-reactions do is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] tests/desk-reactions.spec.js fails 7 tests in WebKit against producti…
+#### 1. [PRODUCT] At 390px the Spark companion overlaps the Post comment button and the…
 Final score: **93**
-[SIL/P2 · S375] tests/desk-reactions.spec.js fails 7 tests in WebKit against production and the local build alike (unmodified spec), and in Chromium against staging: a click sent right after DOMContentLoaded lands before the parked reactions script runs. Establish whether a real Safari reader can lose a first tap; fix the loader or the spec.
-Why it matters: tests/desk-reactions.spec.js fails 7 tests in WebKit against productio is open, local, and unblocked — can ship this session.
+[SIL/P3 · S376] At 390px the Spark companion overlaps the Post comment button and the display-name field on Desk articles.
+Why it matters: At 390px the Spark companion overlaps the Post comment button and the  is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] An empty image comment thread showed "Try again" and "Cancel reply" u…
-Final score: **90**
-[SIL/P3 · S375] An empty image comment thread showed "Try again" and "Cancel reply" under a mocked empty service; check against the live service.
-Why it matters: An empty image comment thread showed "Try again" and "Cancel reply" un is open, local, and unblocked — can ship this session.
+#### 2. [INTELLIGENCE] task-slice, check-audit-premises and the start maintenance lane have …
+Final score: **93**
+[OPS/P3 · S376] task-slice, check-audit-premises and the start maintenance lane have no local copy here.
+Why it matters: task-slice, check-audit-premises and the start maintenance lane have n keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
+
+#### 3. [VERIFY] Firefox loses a reaction tap issued straight after a jump about 2 in …
+Final score: **86**
+[SIL/P2 · S376] Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
+Why it matters: Firefox loses a reaction tap issued straight after a jump about 2 in 1 is a 376-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 4. [PRODUCT] home-intelligence.js and recent-ships.js initialise only on DOMConten…
 Final score: **84**
@@ -52,7 +56,7 @@ Why it matters: Exercise the art receipt path on the next real scheduled publish
 #### 2. [VERIFY] Four browser specs fail on this machine against both production and t…
 Final score: **77**
 [SIL/P2 · S374] Four browser specs fail on this machine against both production and the local build, before and after this session's change: ambient-engagement (milestones, first-scroll order, IGNIS tier) and stats-theme-accessibility (expects 19 projects, feed has 22). The CI e2e job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
-Why it matters: Four browser specs fail on this machine against both production and th is a 375-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Four browser specs fail on this machine against both production and th is a 376-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -71,7 +75,7 @@ Why it matters: Keep shell regeneration and SRI stamping in a single documented 
 #### 5. [VERIFY] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /…
 Final score: **71**
 [PERF/P2 · S372] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /news/2026-08-11/cloudflare-gave…/ bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. S373 evidence: observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — S374: script loading changed on both page types (D-S374.1); S374: improved, not stable. be218812c8 passed first time (article 0.98/0.99/0.99); 1f29cc7bf9 failed once on the article (0.88/0.88/0.96) and passed on re-run. Failing runs had the load event before first paint with 24 to 25 requests done, including fetches from eager desk-presence and ambient scripts. Next: delay those first fetches until after paint.
-Why it matters: Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /n is a 375-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /n is a 376-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -136,9 +140,9 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Cartoon reaction totals are collected but build-news-desk-reactions d…
-2. tests/desk-reactions.spec.js fails 7 tests in WebKit against producti…
-3. An empty image comment thread showed "Try again" and "Cancel reply" u…
+1. At 390px the Spark companion overlaps the Post comment button and the…
+2. task-slice, check-audit-premises and the start maintenance lane have …
+3. Firefox loses a reaction tap issued straight after a jump about 2 in …
 4. home-intelligence.js and recent-ships.js initialise only on DOMConten…
 5. Exercise the art receipt path on the next real scheduled publish; con…
 6. Four browser specs fail on this machine against both production and t…

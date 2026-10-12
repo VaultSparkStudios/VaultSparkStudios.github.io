@@ -2249,3 +2249,15 @@ Founder direction during S375. This replaces the S356 and D-S368.7 placement, wh
 ## D-S375.3 — the two dormant homepage scripts stay dormant this session (2026-10-12)
 
 `home-intelligence.js` and `recent-ships.js` never initialise on the homepage. Fixing the listener would switch on an activity feed that has never rendered in production and writes inline styles. That is a visible homepage change that needs its own review and captures, so it was assessed and left on the task board.
+
+## D-S376.1 — late section rendering only where the browser has scroll anchoring (2026-10-12)
+
+Desk article sections use `content-visibility:auto` with a 700px size estimate. When a section is first rendered it takes its real height, and a browser with scroll anchoring keeps the reader's place. WebKit has no scroll anchoring, so after a jump the page moved under the reader (181px measured), and a press on a reaction was released on the article. The rule now sits inside `@supports (overflow-anchor:auto)`. WebKit renders every section up front, as it did before the rule was added; Chromium, where Lighthouse runs, is unchanged. If WebKit gains anchoring the rule applies there without another edit.
+
+## D-S376.2 — image reactions are published apart from story totals (2026-10-12)
+
+The reader-signal feed lists illustration and cartoon reactions under each story's `panels`, read from the image's own key, with the same five-signal floor and reset rule as stories. They are not added to the story total, so existing totals keep their meaning. A panel key longer than the 120 characters the store keeps is never probed and is published as unavailable with a reason, because it would be read under a different name and two panels could share one counter.
+
+## D-S376.3 — the loader delivers an early reaction tap, and only that (2026-10-12)
+
+`after-paint.js` remembers the most recent tap on a reaction button made before the parked reactions script has run, one per bar, and delivers it when the parked scripts finish. It listens at the end of the bubble path and ignores any tap whose default was cancelled, which is how the reactions script marks a tap it handled; delivering such a tap again would take the vote back. The selector is fixed in the loader. Other parked scripts get no replay.
