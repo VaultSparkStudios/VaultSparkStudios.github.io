@@ -138,7 +138,7 @@ test('switching reactions keeps exactly one lit per bar, and bars are independen
   await page.goto(STORY_URL, { waitUntil: 'domcontentloaded' });
   const story = page.locator(`[data-desk-reactions="${STORY_SLUG}"]`);
   const storyRow = story.locator('.desk-react-row').first();
-  const panel = page.locator('.desk-panel-reactions');
+  const panel = page.locator('[data-desk-reactions$="/panel/editorial-illustration-1"]');
 
   await story.locator('[data-reaction="knew-this"]').click();
   await expect(story.locator('[data-reaction="knew-this"]')).toHaveAttribute('aria-pressed', 'true');
@@ -252,13 +252,27 @@ test('legacy multi-select memory collapses to one lit reaction per bar', async (
 test('every generated panel offers eight emoji reactions with a pressed state', async ({ page }) => {
   await mockReactions(page);
   await page.goto(STORY_URL, { waitUntil: 'domcontentloaded' });
-  const panel = page.locator('.desk-panel-reactions');
+  const panel = page.locator('[data-desk-reactions$="/panel/editorial-illustration-1"]');
   await expect(panel).toHaveCount(1);
   await expect(panel.locator('[data-reaction]')).toHaveCount(8);
   await expect(panel.locator('[data-reaction][aria-pressed]')).toHaveCount(8);
   for (const id of ['panel-like', 'panel-fire', 'panel-laugh', 'panel-wow', 'panel-think', 'panel-yikes', 'panel-eyes', 'panel-100']) {
     await expect(panel.locator(`[data-reaction="${id}"]`)).toHaveCount(1);
   }
+});
+
+// S375: the satire cartoon has its own reaction row, counted under its own key.
+test('a cartoon vote is recorded under the cartoon key and leaves the illustration row alone', async ({ page }) => {
+  const api = await mockReactions(page);
+  await page.goto(STORY_URL, { waitUntil: 'domcontentloaded' });
+  const illustration = page.locator('[data-desk-reactions$="/panel/editorial-illustration-1"]');
+  const cartoon = page.locator('[data-desk-reactions$="/panel/satire-cartoon"]');
+  await expect(cartoon).toHaveCount(1);
+  await expect(cartoon.locator('[data-reaction]')).toHaveCount(8);
+  await cartoon.locator('[data-reaction="panel-laugh"]').click();
+  await expect(cartoon.locator('[data-reaction="panel-laugh"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(illustration.locator('[data-reaction][aria-pressed="true"]')).toHaveCount(0);
+  expect(api.posts.at(-1)).toMatchObject({ slug: STORY_SLUG + '/panel/satire-cartoon', reaction: 'panel-laugh', on: true });
 });
 
 test('reaction buttons wrap inside a 390px viewport with 44px tap targets', async ({ page }) => {

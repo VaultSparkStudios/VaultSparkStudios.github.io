@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-12T04:50:03.251Z",
+  "generatedAt": "2026-10-12T05:45:15.497Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 374,
+    "currentSession": 375,
     "lastUpdated": "2026-10-12",
-    "currentFocus": "S374 moved non-visual scripts behind first paint on the homepage and Desk pages; pushed as be218812c8 and promoted on 2026-10-12 (production tree-current at 8b29b2f6c1).",
+    "currentFocus": "S375 placed the satire cartoon directly below the illustration on every Desk article, with its own reactions and comment thread.",
     "nextMilestone": "Delay the first network calls of the eager Desk presence and ambient scripts until after first paint, and show the Lighthouse check passing its unchanged floors across several consecutive runs.",
     "ignis": {
       "score": 46114,
@@ -20,7 +20,14 @@
   "pulse": {
     "now": [],
     "next": [],
-    "shipped": []
+    "shipped": [
+      "Shipped: 2 items. The cartoon stage renders directly below the illustration on 122 articles, with eight reactions counted under its own key and its own comment thread; the Desk feed publishes that key. The article shell can no longer be scrolled sideways.",
+      "Tests: `test-news-article-layout` passes on 123 articles with the new order; the reaction spec gained a cartoon vote isolation test (passes in Chromium and Firefox); a browser vote on the cartoon was stored only under the cartoon key; seven themes captured at 1366px and 390px, before and after.",
+      "Deploy: pending at the time of writing; see the addendum in `logs/WORK_LOG.md`.",
+      "Found, not fixed: seven reaction tests fail in WebKit on production and locally with the unmodified spec (a click right after DOMContentLoaded precedes the parked script; Chromium and Firefox pass); cartoon reaction totals are not in any public summary yet; an empty image thread showed two stray controls under a mocked service. Both on the task board.",
+      "Not selected: the homepage scripts that never initialise (enabling them turns on a feed that has never rendered in production), the four failing browser specs, Lighthouse stability. This session adds a second lazy image stage above the News Brief, so the next Lighthouse runs are new evidence for that task.",
+      "Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies."
+    ]
   },
   "consumerChangelog": [
     {
@@ -134,7 +141,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 374,
+    "sessionsCompleted": 375,
     "liveProjects": 3,
     "projectsInForge": 17,
     "activeEdgeFunctions": 16,
@@ -150,17 +157,17 @@
     "vaulted": 1,
     "silCategories": {
       "devHealth": 92,
-      "alignment": 94,
-      "momentum": 90,
-      "engagement": 91,
-      "process": 88,
+      "alignment": 95,
+      "momentum": 89,
+      "engagement": 92,
+      "process": 89,
       "coherence": 92,
       "security": 94,
       "ecosystem": 91,
       "capital": 95,
       "automation": 96,
-      "total": 923,
-      "updatedSession": 374
+      "total": 925,
+      "updatedSession": 375
     },
     "sealedNextRevealAt": null
   },

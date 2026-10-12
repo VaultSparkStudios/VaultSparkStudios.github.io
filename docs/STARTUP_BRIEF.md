@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-12 (Session 374 closeout) -->
-<!-- semantic-freshness: hash=4d37af3c10e8aa2f next=375 silSession=374 silScore=923 handoff=374 tests=- -->
+<!-- generated-at: 2026-10-12 (Session 375 closeout) -->
+<!-- semantic-freshness: hash=7fed8b08ae95ced8 next=376 silSession=375 silScore=925 handoff=375 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 374 closeout · 2026-10-12.
+> **Fast-boot brief** — generated at Session 375 closeout · 2026-10-12.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 375 · 2026-10-12 · FOUNDER MODE                         ║
+║  Session 376 · 2026-10-12 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S374) - WHAT SHIPPED ══════════════════════════╗
-║  S374 loads non-visual scripts after first paint and was promot  ║
+╔══ LAST SESSION (S375) - WHAT SHIPPED ══════════════════════════╗
+║  S375 moved the satire cartoon directly below the illustration   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,18 +41,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    923/1000   ██████████████████████░░   92%                     ║
-║    SIL v3.0  ·  Avg3: 916.7  ·  Velocity 4↓                      ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
-║    Trend  ▆▇▇▆▄  ↓  (last 5 sessions)                            ║
+║    925/1000   ██████████████████████░░   93%                     ║
+║    SIL v3.0  ·  Avg3: 923.7  ·  Velocity 2↓                      ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Trend  ▂▄▆▄  ↓  (last 4 sessions)                             ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Alignment         94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Engagement        91    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      88    █████████░  ▆▇▇▆▆▆▇▇ →                ║
+║    Dev Health        92    █████████░  ██▇█▇▇▇▇ →                ║
+║    Alignment         95    ██████████  ▇▇█▇▇▇▇▇ →                ║
+║    Momentum          89    █████████░  ██▇█▇▇▇▇ →                ║
+║    Engagement        92    █████████░  ▇▇█▇▇▇▇▇ →                ║
+║    Process Qual      89    █████████░  ████▆▇▇▇ →                ║
 ║    Coherence         92    █████████░  ········ →                ║
 ║    Security          94    █████████░  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
@@ -61,34 +61,34 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 374 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 375 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    534/534 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         534/534 passing (2026-10-11)                   ║
-║  ✓  Velocity      4 ↓  ·  Debt: →                                ║
+║  ✓  Velocity      2 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   8d                                             ║
 ║  ✓  IGNIS         46114 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▆▄▄▁▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▆▄▄▁▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.220  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  10d old (2026-10-02)                           ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⛔  Doctor        14/17 (82%)  ·  2 failing                      ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▇▇▆▄  4↓  (last 5 sessions)                        ║
+║  Velocity:   ▂▄▆▄  2↓  (last 5 sessions)                         ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  922/1000  (↓1 vs current 923)                       ║
-║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 39.5 over last 10 forecasts                    ║
+║  Projected:  923/1000  (↓2 vs current 925)                       ║
+║  At-risk:    Momentum Δ-4                                        ║
+║  Calibration: MAE 29.9 over last 10 forecasts                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   93  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
+║   96  [PRODUCT]      Wave5: release (gate, staging, push, produ  ║
+║        Wave5: release (gate, staging, push, production); outcom  ║
+║                                                                  ║
+║   93  [PRODUCT]      Cartoon reaction totals are collected but   ║
+║        Cartoon reaction totals are collected but build-news-des  ║
+║                                                                  ║
+║   90  [PRODUCT]      tests/desk-reactions.spec.js fails 7 tests  ║
+║        tests/desk-reactions.spec.js fails 7 tests in WebKit aga  ║
+║                                                                  ║
+║   87  [PRODUCT]      An empty image comment thread showed "Try   ║
+║        An empty image comment thread showed "Try again" and "Ca  ║
+║                                                                  ║
+║   81  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
 ║        home-intelligence.js and recent-ships.js initialise only  ║
-║                                                                  ║
-║   87  [PRODUCT]      Exercise the art receipt path on the next   ║
-║        Exercise the art receipt path on the next real scheduled  ║
-║                                                                  ║
-║   86  [VERIFY]       Four browser specs fail on this machine ag  ║
-║        Four browser specs fail on this machine against both pro  ║
-║                                                                  ║
-║   86  [COHESION]     Preserve project-local capability contract  ║
-║        Preserve project-local capability contracts during incom  ║
-║                                                                  ║
-║   84  [PRODUCT]      Keep shell regeneration and SRI stamping i  ║
-║        Keep shell regeneration and SRI stamping in a single doc  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 374 closeout · 2026-10-12*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 375 closeout · 2026-10-12*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

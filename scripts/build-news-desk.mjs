@@ -426,6 +426,7 @@ export function buildNewsFeed(days = loadPublicDays()) {
       _vaultspark: {
         engagement_key: `${day.date}/${story.slug}`,
         panel_reaction_key: `${day.date}/${story.slug}/panel/editorial-illustration-1`,
+        ...(story.visual?.satireCartoon ? { satire_reaction_key: `${day.date}/${story.slug}/panel/satire-cartoon` } : {}),
         source_urls: [...new Set(story.facts.map((fact) => fact.sourceUrl))],
         heat: computeHeat(story.stances),
         prediction_count: story.predictions.length,

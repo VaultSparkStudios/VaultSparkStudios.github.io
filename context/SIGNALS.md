@@ -1,6 +1,6 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         534/534 passing (2026-10-11)                   ║
-║  ✓  Velocity      4 ↓  ·  Debt: →                                ║
+║  ✓  Velocity      2 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   8d                                             ║
 ║  ✓  IGNIS         46114 FORGE  ·  6d old                         ║
@@ -11,7 +11,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  9d old (2026-10-02)                            ║
+║  ⚠  Revenue sig.  10d old (2026-10-02)                           ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⛔  Doctor        14/17 (82%)  ·  2 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║

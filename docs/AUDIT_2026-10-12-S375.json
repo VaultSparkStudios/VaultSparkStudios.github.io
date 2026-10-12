@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "2.1",
+  "session": 375,
+  "generatedAt": "2026-10-12T04:40:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "One founder-directed outcome given during the S375 arc, plus the defect its rendered-pixel check exposed: place the satire cartoon directly below the AI-generated illustration on every Desk article and give the cartoon its own reaction and comment area. The remaining hit-list items were assessed and left unselected; reasons are recorded under skipped.",
+  "stage": {
+    "lifecycleFocus": "not emitted by skill-profile.mjs in this repository",
+    "status": "SPARKED, live production (context/PROJECT_STATUS.json)",
+    "readiness": [
+      {
+        "area": "accessibility and presentation",
+        "evidence": "Seven themes at 1366px and 390px captured before and after in docs/visual-qa/S375_CARTOON.json",
+        "state": "ready for this change"
+      },
+      {
+        "area": "canon conformance",
+        "evidence": "check-canon-conformance at S375 start: 2 gaps, 0 ABSOLUTE",
+        "state": "gaps open, unchanged by this session"
+      },
+      {
+        "area": "staging",
+        "evidence": "Hetzner staging present",
+        "state": "must be refreshed for this candidate"
+      }
+    ]
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2.5,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1,
+    "observability-honesty": 2,
+    "sil-debt": 1
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "satire-cartoon-below-illustration-with-own-feedback",
+      "axis": "ui-ux-feedback",
+      "title": "Put the satire cartoon directly below the illustration and give it its own reactions and comments",
+      "why": "Founder direction during S375. The cartoon rendered after the predictions and transcript, far from the illustration, and offered a comment thread but no reactions, so a reader could react to the illustration and not to the cartoon.",
+      "recipe": "In generate-news-pages, render a cartoon stage immediately after the illustration stage. Give its side panel a reaction row scoped to <date>/<slug>/panel/satire-cartoon (the same eight reaction ids the Worker already accepts, so no Worker change) and the existing cartoon comment thread. Publish the new scope in the Desk feed. Update the layout test, the public contract check and the browser spec to the new order. Regenerate every article.",
+      "tier": "🔥",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 4,
+      "priority": 18,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "readinessArea": "accessibility and presentation",
+      "stageRationale": "Direct founder instruction on a live public surface.",
+      "informationFindingOutcome": "A reader sees both images together near the top of the story and can react to or comment on the cartoon where it sits.",
+      "acceptance": "All 122 articles with a cartoon render it between the illustration and the News Brief with a distinct reaction scope and comment thread; layout test and contract check pass; a browser vote on the cartoon is stored only under the cartoon key; seven themes inspected at desktop and mobile.",
+      "premises": [
+        {
+          "claim": "Before this session the cartoon stage was emitted after the transcript, with comments only",
+          "adapter": "git-show",
+          "target": "48532cd65d:scripts/generate-news-pages.mjs",
+          "pattern": "aria-label=\"Cartoon comments\"",
+          "operator": "gte",
+          "expected": 1
+        }
+      ],
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Move the existing cartoon stage only." },
+        "L2": { "effortHours": 2, "recipe": "Move it, add a separately counted reaction row, publish the scope in the feed, update tests and receipts." },
+        "L3": { "effortHours": 6, "recipe": "Also surface cartoon reaction totals in the Desk engagement feed and hub cards." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "desk-shell-not-scrollable-sideways",
+      "axis": "ui-ux-feedback",
+      "title": "Stop the Desk article shell from being scrolled sideways",
+      "why": "Found while capturing item 1. The article shell used overflow:hidden around a decorative glow that extends 352px past the right edge. Hidden overflow can still be scrolled by focus or scrollIntoView, and opening the cartoon comment panel at 1366px moved the whole article 352px to the left.",
+      "recipe": "Declare overflow:clip after the existing overflow:hidden on .desk-shell so the box cannot be scrolled; older browsers keep the previous behaviour.",
+      "tier": "⚡",
+      "effortHours": 0.25,
+      "impact": 6,
+      "innovation": 3,
+      "priority": 15,
+      "status": "pending",
+      "selectedDepth": "L1",
+      "readinessArea": "accessibility and presentation",
+      "stageRationale": "A layout defect on every Desk page, reachable from the feature being shipped.",
+      "informationFindingOutcome": "The article stays in place when a reader opens an image comment panel.",
+      "acceptance": "The capture that reproduced a -259px article offset twice reports 93px in all seven themes after the change.",
+      "premises": [
+        {
+          "claim": "The shell declares overflow:hidden around an overflowing pseudo-element",
+          "adapter": "git-show",
+          "target": "48532cd65d:assets/news-desk.css",
+          "pattern": "isolation:isolate;overflow:hidden}",
+          "operator": "gte",
+          "expected": 1
+        }
+      ],
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "overflow:clip on the shell." },
+        "L2": { "effortHours": 1, "recipe": "Also add a browser assertion on the main element's scrollLeft." },
+        "L3": { "effortHours": 2, "recipe": "Audit every overflow:hidden wrapper sitewide for the same pattern." }
+      },
+      "executionLog": []
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "home-intelligence-and-recent-ships-never-initialise",
+      "reason": "Premise confirmed (both listen only for DOMContentLoaded and are injected after it). Not selected: enabling them would switch on a homepage activity feed that has never rendered in production and writes inline styles. That is a visible homepage change needing its own review and theme captures, outside this session's requested outcome. Stays on TASK_BOARD."
+    },
+    {
+      "slug": "four-failing-browser-specs",
+      "reason": "Not selected this session; no new evidence gathered. Stays on TASK_BOARD."
+    },
+    {
+      "slug": "lighthouse-floor-stability",
+      "reason": "Not selected; S374 recorded it as improved, not stable. This session adds a second lazy image stage above the News Brief, so the next CI runs are fresh evidence for that task."
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 33,
+    "top3": [
+      "satire-cartoon-below-illustration-with-own-feedback",
+      "desk-shell-not-scrollable-sideways"
+    ]
+  }
+}

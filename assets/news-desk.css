@@ -1,4 +1,4 @@
-.desk-shell{--desk-ink:var(--text,#f7f4ed);--desk-muted:var(--muted,#aaa7a0);--desk-line:var(--line,rgba(255,255,255,.13));--desk-panel:var(--panel,rgba(255,255,255,.035));position:relative;isolation:isolate;overflow:hidden}
+.desk-shell{--desk-ink:var(--text,#f7f4ed);--desk-muted:var(--muted,#aaa7a0);--desk-line:var(--line,rgba(255,255,255,.13));--desk-panel:var(--panel,rgba(255,255,255,.035));position:relative;isolation:isolate;overflow:hidden;overflow:clip}
 .desk-shell:before{content:"";position:absolute;z-index:-1;inset:-18rem -22rem auto auto;width:44rem;height:44rem;border-radius:50%;background:radial-gradient(circle,rgba(255,196,0,.12),transparent 68%);pointer-events:none}
 .desk-wrap{width:min(1120px,calc(100% - 2rem));margin-inline:auto;padding:4.25rem 0 5rem}
 .desk-kicker{display:flex;align-items:center;gap:.65rem;color:var(--gold,#ffc400);font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.desk-kicker:before{content:"";width:2rem;height:1px;background:currentColor}
@@ -681,6 +681,8 @@ body.light-mode .desk-finder-bar:focus-within{border-color:var(--desk-ink);box-s
 .desk-news-brief{border-inline-start:3px solid var(--gold);padding:1.5rem 1.7rem}.desk-news-brief ol{padding-left:1.25rem}.desk-news-brief li{padding:.6rem 0;line-height:1.75}.desk-news-brief li>a{font-size:.78rem;color:var(--desk-ink);text-underline-offset:3px}.desk-news-brief p{color:var(--desk-muted);line-height:1.65;font-size:.85rem}
 .desk-axis-ends{gap:.65rem}.desk-axis-ends span{max-width:34%;white-space:normal}.desk-axis-note{font-size:.75rem;line-height:1.6;color:var(--desk-muted);margin:.8rem 0 0}
 .desk-satire-stage .desk-meme{margin:0}.desk-satire-stage img{max-width:100%;height:auto}
+/* S375: the cartoon stage sits directly under the illustration stage. */
+.desk-satire-stage{margin-top:0}.desk-satire-stage .desk-satire{margin:0 auto}.desk-satire-stage .desk-art-gallery{padding:1.1rem;border:1px solid var(--desk-line);border-radius:18px;background:var(--desk-panel)}@media(max-width:640px){.desk-satire-stage .desk-art-gallery{padding:.8rem}}
 @media(max-width:700px){.desk-masthead{grid-template-columns:1fr;gap:1.2rem}.desk-masthead-card{padding:1.25rem}.desk-mini-nav{margin-bottom:1.5rem}.desk-mini-nav a{padding:.35rem .6rem}.desk-masthead .desk-display{font-size:3.4rem}.desk-news-brief{padding:1.1rem}.desk-metric-heading{font-size:.76rem}}
 
 /* Full illustration labels in the narrow article side panel. */

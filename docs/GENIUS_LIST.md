@@ -1,4 +1,4 @@
-# Genius Hit List — Session 374
+# Genius Hit List — Session 375
 
 Generated: 2026-10-12
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **77/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
-- Current SIL: **923/1000**
+- Current SIL: **925/1000**
 - CI health: **check gh run list**
-- Current focus: S374 moved non-visual scripts behind first paint on the homepage and Desk pages; pushed as be218812c8 and promoted on 2026-10-12 (production tree-current at 8b29b2f6c1).
+- Current focus: S375 placed the satire cartoon directly below the illustration on every Desk article, with its own reactions and comment thread.
 
 ## Strategic Read
 
@@ -22,77 +22,75 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] home-intelligence.js and recent-ships.js initialise only on DOMConten…
+#### 1. [PRODUCT] Wave5: release (gate, staging, push, production); outcome goes in the…
+Final score: **96**
+Wave5: release (gate, staging, push, production); outcome goes in the handoff.
+Why it matters: Wave5: release (gate, staging, push, production); outcome goes in the  is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Cartoon reaction totals are collected but build-news-desk-reactions d…
 Final score: **93**
+[SIL/P2 · S375] Cartoon reaction totals are collected but build-news-desk-reactions does not probe the /panel/satire-cartoon scope; add it (and the illustration scope if absent) to the public snapshot.
+Why it matters: Cartoon reaction totals are collected but build-news-desk-reactions do is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] tests/desk-reactions.spec.js fails 7 tests in WebKit against producti…
+Final score: **90**
+[SIL/P2 · S375] tests/desk-reactions.spec.js fails 7 tests in WebKit against production and the local build alike (unmodified spec): a click sent right after DOMContentLoaded lands before the parked reactions script runs. Establish whether a real Safari reader can lose a first tap; fix the loader or the spec.
+Why it matters: tests/desk-reactions.spec.js fails 7 tests in WebKit against productio is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] An empty image comment thread showed "Try again" and "Cancel reply" u…
+Final score: **87**
+[SIL/P3 · S375] An empty image comment thread showed "Try again" and "Cancel reply" under a mocked empty service; check against the live service.
+Why it matters: An empty image comment thread showed "Try again" and "Cancel reply" un is open, local, and unblocked — can ship this session.
+
+### NEXT
+
+#### 1. [PRODUCT] home-intelligence.js and recent-ships.js initialise only on DOMConten…
+Final score: **81**
 [HOME/P2 · S374] home-intelligence.js and recent-ships.js initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374).
 Why it matters: home-intelligence.js and recent-ships.js initialise only on DOMContent is open, local, and unblocked — can ship this session.
 
 #### 2. [PRODUCT] Exercise the art receipt path on the next real scheduled publish; con…
-Final score: **90**
+Final score: **75**
 [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
 Why it matters: Exercise the art receipt path on the next real scheduled publish; conf is open, local, and unblocked — can ship this session.
 
-#### 3. [COHESION] Preserve project-local capability contracts during incoming propagati…
-Final score: **89**
+#### 3. [VERIFY] Four browser specs fail on this machine against both production and t…
+Final score: **74**
+[SIL/P2 · S374] Four browser specs fail on this machine against both production and the local build, before and after this session's change: ambient-engagement (milestones, first-scroll order, IGNIS tier) and stats-theme-accessibility (expects 19 projects, feed has 22). The CI e2e job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
+Why it matters: Four browser specs fail on this machine against both production and th is a 375-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 4. [COHESION] Preserve project-local capability contracts during incoming propagati…
+Final score: **74**
 [SIL/P2 · next scope] Preserve project-local capability contracts during incoming propagation; source copies that remove known exports must fail before being applied.
 Why it matters: Preserve project-local capability contracts during incoming propagatio is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 4. [PRODUCT] Keep shell regeneration and SRI stamping in a single documented seque…
-Final score: **87**
+#### 5. [PRODUCT] Keep shell regeneration and SRI stamping in a single documented seque…
+Final score: **72**
 [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
 Why it matters: Keep shell regeneration and SRI stamping in a single documented sequen is open, local, and unblocked — can ship this session.
 
-### NEXT
+### LATER
 
-#### 1. [VERIFY] Four browser specs fail on this machine against both production and t…
-Final score: **86**
-[SIL/P2 · S374] Four browser specs fail on this machine against both production and the local build, before and after this session's change: ambient-engagement (milestones, first-scroll order, IGNIS tier) and stats-theme-accessibility (expects 19 projects, feed has 22). The CI e2e job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
-Why it matters: Four browser specs fail on this machine against both production and th is a 374-session-old carry-forward; verify or close it so it stops polluting the hit list.
+#### 1. [VERIFY] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /…
+Final score: **68**
+[PERF/P2 · S372] Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /news/2026-08-11/cloudflare-gave…/ bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. S373 evidence: observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — S374: script loading changed on both page types (D-S374.1); S374: improved, not stable. be218812c8 passed first time (article 0.98/0.99/0.99); 1f29cc7bf9 failed once on the article (0.88/0.88/0.96) and passed on re-run. Failing runs had the load event before first paint with 24 to 25 requests done, including fetches from eager desk-presence and ambient scripts. Next: delay those first fetches until after paint.
+Why it matters: Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /n is a 375-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 2. [PRODUCT] Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-Final score: **81**
+Final score: **66**
 [SIL/P2] Push helper as a repo script (scripts/push-main.mjs): autostash merge, regenerate conflicted generated outputs, repair-evidence-graph, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
 Why it matters: Push helper as a repo script (scripts/push-main.mjs): autostash merge, is open, local, and unblocked — can ship this session.
 
 #### 3. [PRODUCT] Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-Final score: **75**
+Final score: **60**
 [P1] Approve Desk digest test → autoSend; apply caller-trust-column-revokes; Ark 01K3SJ87… reply.
 Why it matters: Approve Desk digest test is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Add a generated-fixture check for month rollover so a future edition …
-Final score: **72**
-[DESK/QA/P2] Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
-Why it matters: Add a generated-fixture check for month rollover so a future edition a is open, local, and unblocked — can ship this session.
-
-#### 5. [VERIFY] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-Final score: **68**
-[AUTH/P0] Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity → login E2E; Sparked-as-free.
-Why it matters: Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity is a 374-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-### LATER
-
-#### 1. [PRODUCT] Review measured Linux screenshots before refreshing visual-regression…
-Final score: **66**
-[QA/P2] Review measured Linux screenshots before refreshing visual-regression references.
-Why it matters: Review measured Linux screenshots before refreshing visual-regression  is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Track growth of the Desk overlay from the production baseline; arrang…
-Final score: **63**
-[S366][RELEASE/P2] Track growth of the Desk overlay from the production baseline; arrange a reviewed baseline reset before accumulated story paths or artwork hit the staging archive or Pages limits.
-Why it matters: Track growth of the Desk overlay from the production baseline; arrange is open, local, and unblocked — can ship this session.
-
-#### 3. [VERIFY] Verify prior-overlay path preservation automatically before scoped Pa…
-Final score: **59**
-[DESK/RELEASE/P2] Verify prior-overlay path preservation automatically before scoped Pages deploys.
-Why it matters: Verify prior-overlay path preservation automatically before scoped Pag is a 374-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
 
 ### DEFERRED / GATED
 
@@ -138,18 +136,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. home-intelligence.js and recent-ships.js initialise only on DOMConten…
-2. Exercise the art receipt path on the next real scheduled publish; con…
-3. Preserve project-local capability contracts during incoming propagati…
-4. Keep shell regeneration and SRI stamping in a single documented seque…
-5. Four browser specs fail on this machine against both production and t…
-6. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
-7. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
-8. Add a generated-fixture check for month rollover so a future edition …
-9. Obelisk Ark 01K3SH847CF5020D9D7209EB07: reopen signup + test identity…
-10. Review measured Linux screenshots before refreshing visual-regression…
-11. Track growth of the Desk overlay from the production baseline; arrang…
-12. Verify prior-overlay path preservation automatically before scoped Pa…
+1. Wave5: release (gate, staging, push, production); outcome goes in the…
+2. Cartoon reaction totals are collected but build-news-desk-reactions d…
+3. tests/desk-reactions.spec.js fails 7 tests in WebKit against producti…
+4. An empty image comment thread showed "Try again" and "Cancel reply" u…
+5. home-intelligence.js and recent-ships.js initialise only on DOMConten…
+6. Exercise the art receipt path on the next real scheduled publish; con…
+7. Four browser specs fail on this machine against both production and t…
+8. Preserve project-local capability contracts during incoming propagati…
+9. Keep shell regeneration and SRI stamping in a single documented seque…
+10. Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and /…
+11. Push helper as a repo script (scripts/push-main.mjs): autostash merge…
+12. Approve Desk digest test → autoSend; apply caller-trust-column-revoke…
 
 ## Best Immediate Move
 

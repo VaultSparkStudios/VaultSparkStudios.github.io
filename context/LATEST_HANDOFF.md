@@ -1,3 +1,14 @@
+## Where We Left Off (Session 375) — satire cartoon below the illustration (2026-10-12)
+
+Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). During the arc the founder asked for the satire cartoon to sit below the AI-generated art on every article with its own reaction and comment area. Intent: feature **Achieved** locally; release outcome is recorded in the Deploy line.
+
+- Shipped: 2 items. The cartoon stage renders directly below the illustration on 122 articles, with eight reactions counted under its own key and its own comment thread; the Desk feed publishes that key. The article shell can no longer be scrolled sideways.
+- Tests: `test-news-article-layout` passes on 123 articles with the new order; the reaction spec gained a cartoon vote isolation test (passes in Chromium and Firefox); a browser vote on the cartoon was stored only under the cartoon key; seven themes captured at 1366px and 390px, before and after.
+- Deploy: pending at the time of writing; see the addendum in `logs/WORK_LOG.md`.
+- Found, not fixed: seven reaction tests fail in WebKit on production and locally with the unmodified spec (a click right after DOMContentLoaded precedes the parked script; Chromium and Firefox pass); cartoon reaction totals are not in any public summary yet; an empty image thread showed two stray controls under a mocked service. Both on the task board.
+- Not selected: the homepage scripts that never initialise (enabling them turns on a feed that has never rendered in production), the four failing browser specs, Lighthouse stability. This session adds a second lazy image stage above the News Brief, so the next Lighthouse runs are new evidence for that task.
+- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
+
 ## Where We Left Off (Session 374) — scripts after first paint, SI first use (2026-10-11)
 
 Session Intent: /arc, then the founder authorized direct commit/push to main and full deployment. Intent: **Achieved** for the push and full deployment; the Lighthouse check is improved, not yet stable.

@@ -6,8 +6,8 @@
  * reading order and the contracts other agents build against:
  *   - first screen order: h1 → deck → byline (+ AI-written line) → illustration
  *     → News Brief, with reader-activity numbers after the story body
- *   - the satire cartoon follows persona analysis and The Desk's Take, before
- *     the full authorship disclosure and subscription area
+ *   - S375: the satire cartoon sits directly below the illustration, before
+ *     the News Brief, and carries its own reaction scope and comment thread
  *   - every fact <li> keeps id + data-fact-hash and folds its receipt into a
  *     <details class="desk-receipt">
  *   - the community slot matches the desk-comments.js contract exactly
@@ -80,12 +80,16 @@ for (const day of days) {
     if (!article.includes('The Desk’s Take')) errors.push(`${rel}: updated persona-analysis heading missing`);
     if (at('id="satire-cartoon"') >= 0) {
       const cartoon = at('id="satire-cartoon"');
-      for (const needle of ['id="positions"', 'id="predictions"', 'id="argument"']) {
-        if (at(needle) >= 0 && cartoon < at(needle)) errors.push(`${rel}: satire precedes persona analysis`);
-      }
-      for (const needle of ['id="how-this-was-written"', 'data-desk-dispatch="story"']) {
-        if (at(needle) < 0 || cartoon > at(needle)) errors.push(`${rel}: satire follows or lacks authorship/subscription area`);
-      }
+      if (cartoon < at('id="editorial-illustration-1"')) errors.push(`${rel}: satire precedes the illustration`);
+      if (cartoon > at('id="desk-short-title"')) errors.push(`${rel}: satire is not directly below the illustration`);
+      const between = article.slice(at('id="editorial-illustration-1"'), cartoon);
+      if ((between.match(/<section class="desk-art-stage/g) || []).length !== 1) errors.push(`${rel}: another section sits between the illustration and the cartoon`);
+      const scope = `data-desk-reactions="${day.date}/${story.slug}/panel/satire-cartoon"`;
+      if (article.split(scope).length !== 2) errors.push(`${rel}: cartoon reaction scope missing or duplicated`);
+      const thread = at('data-comment-target="satire-cartoon"');
+      if (thread < cartoon || thread > at('id="desk-short-title"')) errors.push(`${rel}: cartoon comment thread is not attached to the cartoon`);
+    } else if (article.includes('/panel/satire-cartoon')) {
+      errors.push(`${rel}: cartoon reaction scope rendered without a cartoon`);
     }
 
     const community = `<section class="desk-comments" id="community" data-desk-comments data-slug="${day.date}/${story.slug}" aria-labelledby="desk-comments-title"><h2 id="desk-comments-title">Community</h2><p class="desk-comments-fallback">Comments are loading…</p></section>`;
@@ -122,7 +126,8 @@ for (const day of days) {
 
     const more = article.slice(at('class="desk-more"'));
     if (at('class="desk-more"') >= 0 && more.includes(`href="/news/${day.date}/${story.slug}/"`)) errors.push(`${rel}: More from The Desk links to itself`);
-    if ((article.match(/data-reaction="panel-/g) || []).length !== 8) errors.push(`${rel}: expected eight panel reactions`);
+    const panelButtons = at('id="satire-cartoon"') >= 0 ? 16 : 8;
+    if ((article.match(/data-reaction="panel-/g) || []).length !== panelButtons) errors.push(`${rel}: expected ${panelButtons} image reaction buttons`);
   }
 }
 

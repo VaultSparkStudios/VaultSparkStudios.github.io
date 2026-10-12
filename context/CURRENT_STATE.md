@@ -1,3 +1,11 @@
+# S375 satire cartoon below the illustration — 2026-10-12
+
+- **Article order.** On every Desk article with a satire cartoon (122 of 123), the cartoon is the stage directly below the AI-generated illustration and above the News Brief. It used to render after the predictions and the transcript.
+- **Cartoon feedback.** The cartoon has its own side panel: eight reactions counted under `<date>/<slug>/panel/satire-cartoon`, separate from the illustration and the story, and its own comment thread. The reaction ids are the ones the Worker already accepts, so the Worker did not change. The Desk feed publishes the scope as `_vaultspark.satire_reaction_key`.
+- **Layout fix.** The article shell can no longer be scrolled sideways. It used `overflow:hidden` around a glow that extends 352px past the right edge, and opening an image comment panel at 1366px could move the article that far left. It now also declares `overflow:clip`.
+- **Checks.** `test-news-article-layout` requires the cartoon between the illustration and the News Brief with exactly one cartoon reaction scope and an attached thread; `check-public-contract-health` and `tests/desk-artwork.spec.js` follow the new order. Seven themes captured at 1366px and 390px (`docs/visual-qa/S375_CARTOON.json`).
+- **Not shown yet.** Cartoon reaction totals are collected but no public summary reads them.
+
 # S374 scripts after first paint, SI first use — 2026-10-11
 
 - **Script loading.** Scripts that change nothing above the fold are parked in `<template data-after-paint>` and run by `assets/after-paint.js` once the page has loaded and a frame is on screen, or at the first interaction. Desk pages park the reactions, comments, CSRF and Turnstile scripts (four of eleven on an article); presence stays eager because it times the visit from when it runs. The homepage parks seven of its 28: the public data client, the newsletter client and its fallback, live proof, the hydration timeout, the stats tile and the join bar. The consent banner, hero scripts, click tracking and error reporting stay eager. The homepage idle loader waits for the parked pass before starting.

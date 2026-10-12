@@ -1555,3 +1555,13 @@ Pushed as be218812c8 after a full staging publish (receipt 650f4592a4e8d8c158a06
 The push took three attempts at convergence. A stale retention report and image-placeholder map followed the 42 new review captures; the UTC day change moved two date-derived homepage values, each needing a real mobile-audit re-run (215 of 215 each time); one push lost a race with the half-hourly uptime publisher. Nothing was bypassed. Correction, same day: the records commit 1f29cc7bf9 failed Lighthouse on its first attempt and passed on one re-run. Three Lighthouse runs on the same page bytes after the change: be218812c8 passed first time (homepage 0.81, 0.95, 0.98; article 0.98, 0.99, 0.99); the records commit 1f29cc7bf9 failed its first attempt on the article (0.88, 0.88, 0.96 against 0.90; homepage 0.66, 0.82, 0.83) and passed on one re-run (article 0.95, 0.96, 0.95; homepage 0.81, 0.82, 0.85), run 38193011995. Both pages score higher than before (homepage medians 0.82 to 0.95, was 0.75 to 0.78; article medians 0.88 to 0.99, was 0.82 to 0.92), and the article still fell below its floor once in three. In the failing runs the load event came before the first paint and 24 to 25 requests had finished by then, including data fetches made by scripts that stayed eager (Desk presence, the ambient bundle); in the first passing run 13 to 14 had. That is a correlation from three runs, not a proven cause. The Lighthouse task was reopened.
 
 The closeout wipe guard flagged the compact handoff, which a start-of-session script had rewritten with a different generator; the committed version was restored instead of overriding the guard.
+
+## 2026-10-12 — Session 375 satire cartoon below the illustration
+
+/arc with direct push and full deployment authorized. No cut-off found; six automation commits pulled. During the audit the founder asked for the satire cartoon to move below the AI-generated art on every article with its own reaction and comment area; that became the session's lead item.
+
+The generator now emits a cartoon stage right after the illustration stage. Its side panel carries eight reactions under `/panel/satire-cartoon` and the existing cartoon comment thread. All 123 articles were regenerated; 122 carry a cartoon. The layout test, the public contract check and the artwork browser spec were updated to the new order, and the feed gained `satire_reaction_key`.
+
+Capturing the change exposed an older defect: the article shell could be scrolled 352px sideways when an image comment panel opened at 1366px. It reproduced twice and stopped after `overflow:clip`. Seven themes were captured at desktop and mobile, before and after.
+
+Three hit-list items were assessed and not selected; reasons are in the audit and D-S375.3.
