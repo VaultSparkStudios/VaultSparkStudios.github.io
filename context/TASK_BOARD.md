@@ -6,7 +6,7 @@
 - [x] Wave4: menu label "Synthetic Intelligence (SI)" sitewide (258 findings to 2), checked in seven themes on desktop and mobile; FAQ question reworded.
 - [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
 - [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
-- [ ] **[HOME/P2 · S374]** `home-intelligence.js` and `recent-ships.js` initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374).
+- [ ] **[HOME/P2 · S374]** `home-intelligence.js` and `recent-ships.js` initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374). *(routine/home-late-init: readyState fix proposed, awaiting review)*
 - [x] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Cleared at be218812c8 (E2E 38189819783 green). Cause: a records-only commit that changed context files without regenerating derived artifacts; a records commit needs `resync-derived` and a receipt rebind before push.
 
 # S373 — S372 follow-ups, guards and test coverage

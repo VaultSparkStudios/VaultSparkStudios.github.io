@@ -105,7 +105,7 @@
       '</article>');
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  function init() {
     var containers = document.querySelectorAll('[data-recent-ships]');
     if (!containers.length) return;
 
@@ -123,5 +123,9 @@
     }).catch(function () {
       containers.forEach(renderFallback);
     });
-  });
+  }
+
+  // The idle loader injects this script after DOMContentLoaded has fired.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();

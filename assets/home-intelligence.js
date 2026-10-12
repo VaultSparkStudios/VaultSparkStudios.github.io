@@ -99,9 +99,13 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  function init() {
     initKitForms();
     initActiveNav();
     renderActivityFeed();
-  });
+  }
+
+  // The idle loader injects this script after DOMContentLoaded has fired.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
