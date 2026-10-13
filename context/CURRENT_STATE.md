@@ -1,6 +1,6 @@
 # S378 companion control clearance — 2026-10-13
 
-S378: Spark yields when its chosen corner covers an interactive control and while the visitor edits; it returns when clear. Frame-coalesced checks cache candidate controls and invalidate on DOM/membership changes. Explicit click focus preserves WebKit return behavior. Shell integrity hashes new candidate bytes before files are written. Final local Spark suite 42/42 across three engines, no retries; shell unit 12/12; 56 manually reviewed seven-theme captures. Full build gates, staging, push, hosted checks and production acceptance remain pending.
+S378: Spark yields to reader controls and editing, then returns without losing corner preferences or header recall. Necessary build fixes hash SRI from candidate bytes and exclude QA/raw images from public placeholders. Local Spark42/42, shell13/13, mobile215/215,56 inspected seven-theme captures and full534/534 passed. Exact candidate57ca422724 pushed and deployed; required hosted checks green, staging/live feature9/9, canonical ceremony11/11. Immutable text parity1059/1069 identical,10 redirects,0 differences/unread. Primary HTML283 provider-adjusted bodies,14 declared redirects,9 held identity routes; non-HTML has no unaccounted difference. Canonical closeout and closing publication remain in progress; docs/RELEASE_S378.json records evidence.
 
 # S377 homepage Recent Ships restored — 2026-10-13
 

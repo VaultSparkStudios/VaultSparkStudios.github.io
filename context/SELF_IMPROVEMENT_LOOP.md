@@ -2537,3 +2537,5 @@ Website product rubric. Verified local reader controls, editing and focus return
 
 
 S378 verification addendum: shell suite now13/13 after the necessary served-raster filtering regression. Complete local build534/534 passed at 2026-10-13T22:13:17.645Z. Production acceptance remains pending.
+
+S378 release acceptance addendum — 2026-10-13T22:52:51.834Z: Selected outcome now accepted at57ca422724 with exact hosted checks, staging/live9 cases, ceremony11, attention15 and immutable1059/1069 text parity (10 redirects;0 differing/unread). This supersedes earlier pending-release and12-unit notes. Final unit count13. Score remains933/1000 across the recorded10 categories. Closing publication pending. Conversion and field-vitals effects remain unmeasured.

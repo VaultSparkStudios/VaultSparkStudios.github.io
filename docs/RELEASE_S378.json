@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0",
+  "session": 378,
+  "accepted": true,
+  "acceptedAt": "2026-10-13T22:52:51.834Z",
+  "scope": "One selected L2 outcome: Spark clears reader controls. Necessary shell-SRI and served-raster build fixes included. Identity and lifecycle changes outside this promotion.",
+  "candidate": "57ca422724e62b41039d63f27302054885f4d27b",
+  "productionTag": "s378-release-20261013",
+  "productionRun": 38479092550,
+  "deployedSha": "57ca422724e62b41039d63f27302054885f4d27b",
+  "deploymentUrl": "https://941d69e0.vaultsparkstudios-website.pages.dev",
+  "primaryOrigin": "https://vaultsparkstudios.com",
+  "requiredHostedChecks": [
+    {
+      "workflow": ".github/workflows/e2e.yml",
+      "state": "passed",
+      "runId": 38477062757
+    },
+    {
+      "workflow": ".github/workflows/lighthouse.yml",
+      "state": "passed",
+      "runId": 38477062736
+    },
+    {
+      "workflow": ".github/workflows/accessibility.yml",
+      "state": "passed",
+      "runId": 38477062672
+    }
+  ],
+  "releaseCeremony": {
+    "passed": 11,
+    "total": 11,
+    "source": "Actual confirmed production workflow log"
+  },
+  "staging": {
+    "receiptId": "74d57cbfc6d6aa266f6fe097",
+    "sourceCommit": "57ca422724e62b41039d63f27302054885f4d27b",
+    "receiptIntentSha": "6633fe0d222cad67798f5047dd0b5d1c08cf3eed",
+    "identityEvidence": "Clean detached candidate archive plus independently compared served loader, compiled bundle and LQIP Git blobs; receipt commitSha is inherited build intent, not exact Git attestation.",
+    "artifactRoot": "16843e4bf2134736bc7706376eac88ea6ffa8956ccb7dfb84c7c926180e541a8",
+    "rollback": "/opt/studio/staging/website/.rollback/20261013222031",
+    "featureCases": 9,
+    "contentBrowserCases": 3,
+    "heldIdentityCases": 3,
+    "attentionCases": 15
+  },
+  "validation": {
+    "completeLocalBuildSteps": 534,
+    "shellUnits": 13,
+    "sparkBrowserCases": 42,
+    "mobileCases": 215,
+    "inspectedCaptures": 56,
+    "themes": 7,
+    "cleanHostedCheckouts": "E2E, accessibility and local/staging Lighthouse passed at exact candidate"
+  },
+  "productionFeatureCases": 9,
+  "immutableParity": {
+    "scope": "Every git-tracked served text artifact; binary assets outside this comparison",
+    "checked": 1069,
+    "identical": 1059,
+    "redirects": 10,
+    "differing": 0,
+    "unread": 0
+  },
+  "primaryRaw": {
+    "checked": 1069,
+    "identical": 672,
+    "differing": 283,
+    "redirects": 114,
+    "unread": 0,
+    "interpretation": "All differences are HTML, accounted for by bounded provider transformation comparison; raw primary tree-current is not claimed."
+  },
+  "primaryHtml": {
+    "checked": 306,
+    "providerInjectedBodies": 283,
+    "declaredRedirects": 14,
+    "heldIdentityRedirects": 9,
+    "unverified": 0,
+    "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f",
+    "limits": "Held identity redirects do not prove authenticated journeys."
+  },
+  "parityReader": {
+    "method": "Existing comparators with scratch batch Git blob retrieval, each object hash checked; three direct Git comparisons and17 comparator self-tests passed.",
+    "supersededSweeps": "Two slow per-file readers stopped with exit-1; never counted as passing. Original independent HTML comparator also passed."
+  },
+  "rollback": {
+    "priorObservedBuild": {
+      "schemaVersion": "1.1",
+      "generatedAt": "2026-10-13",
+      "sha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+      "baselineSha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+      "builtAt": "2026-10-13T18:37:44.000Z",
+      "deployedBy": "pages-deploy-content-lane",
+      "contentLaneHead": "de1f2c73375564fd2f6d6ce3551bc64055e988d9",
+      "contentLanePaths": "174 paths",
+      "contentLanePathSetSha256": "c5e749f1f0c6484687cef36a3e82348c6cf08ba2456c8364f9f7059810ad6523",
+      "workflowRunId": "38448078216"
+    },
+    "method": "Promote prior verified source; timestamped staging snapshot and GitHub Pages warm rollback retained."
+  },
+  "review": {
+    "source": "review_s378 passed after cache membership and focus fixes; LQIP separately passed",
+    "closeoutClaims": "Final review pending"
+  },
+  "closeout": {
+    "state": "Canonical autopilot and closing publication pending"
+  },
+  "evidenceHashes": {
+    "s378-fast-origin-parity.json": "fc36cb30a6bc24ab377d183dfbd414d817820913efbe065b229a3be2352e75f5",
+    "s378-fast-edge-parity.json": "b7d0989bc68c206c799a37adcb18b1252f9111c9547e0ef57caeefb548ef61d4",
+    "s378-fast-primary-parity.json": "0f10849c46866a902768c497b0f16d6ba7034b204c2856242a1ceffde12b1796",
+    "s378-staging-byte-proof.json": "02a0a9c50ebdc6e2a1296cce70e0c0b69ff172e03ee87b3692efcb1f0627ffd7",
+    "s378-served-sha.json": "28754ec29c5b037efaac812fb267f6fe99dd3ba860d6f4e72ba88b9ce3cfc1fb",
+    "s378-full-acceptance-receipt.json": "2884dcb2a864c94efba0191f1eb94170cd9f997dccc8dc432c3133898af12cdf"
+  },
+  "closingMobileAudit": {
+    "passed": 215,
+    "total": 215,
+    "source": "Fresh run after main automation changed index.html",
+    "log": ".cache/s378-closing-mobile.log",
+    "checkedAt": "2026-10-13T23:09:12.840Z"
+  }
+}

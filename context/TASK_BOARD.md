@@ -7,7 +7,8 @@
 
 - [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
 - [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
-- [ ] Wave 3: canonical closeout, staging, required exact-candidate checks, direct main push and production acceptance.
+- [x] Wave 3 release: exact staging, hosted checks, direct main push and production acceptance verified in docs/RELEASE_S378.json.
+- [ ] Wave 3 closeout: canonical autopilot, closing artifact publication, Ark and native goal completion.
 ## S377 arc — homepage Recent Ships
 
 - [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
@@ -24,7 +25,7 @@
 - [x] Wave4: reaction taps no longer lost in WebKit; early-tap delivery in the loader.
 - [x] Wave5: image reaction totals in the feed; independent review, four findings fixed.
 - [ ] **[SIL/P2 · S376]** Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
-- [x] **[SIL/P3 · S376 → S378]** Spark now yields to controls/editing; actual article submit and name fields verified at both corners across three browsers. Deployment acceptance pending in S378 Wave 3.
+- [x] **[SIL/P3 · S376 → S378]** Spark now yields to controls/editing; actual article submit and name fields verified at both corners across three browsers. Deployment acceptance verified in docs/RELEASE_S378.json.
 - [ ] **[OPS/P3 · S376]** Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
 ## S374 arc — scripts after first paint, SI first use
 

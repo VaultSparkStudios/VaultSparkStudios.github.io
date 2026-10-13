@@ -1,3 +1,7 @@
+### S378 production acceptance — 2026-10-13T22:52:51.834Z
+
+Own-invocation release accepted; docs/RELEASE_S378.json binds exact source, actual deploy steps and served proofs. Staging receipt intent6633 differs from actual candidate57ca: independent Git/served hashes establish the relationship. Primary raw HTML differs due to narrowly verified provider transport; no raw-primary tree-current or positive held-identity acceptance is claimed. Canonical closeout/closing publication still pending.
+
 ### S378 — 2026-10-13
 
 Fresh goal bound to S378; native completion unproven until new release evidence. Initial startup brief used a stale previous-session context estimate; live meter is UNMEASURED, not 98% used. CANON checks: no absolute gaps; existing identity hold and two terminology findings remain explicit. Local feature proofs pass; production rollout remains pending. Existing external maintenance warnings are not website failures.

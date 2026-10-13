@@ -147,12 +147,12 @@
       "priority": 22.5,
       "why": "Restore unobstructed article feedback and navigation at phone widths using the existing companion.",
       "recipe": "Extend the existing Spark loader with frame-coalesced, geometry-based yielding to ordinary interactive controls; keep modal priority, chosen corner, tucked/quiet preferences, and header access. Yield while editing, restore on exit, and avoid per-scroll DOM discovery. Verify real article submit/display-name controls and both corners in Chromium, Firefox and WebKit, seven themes at desktop/mobile, clean-build, staging and production.",
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "acceptance": "The companion yields whenever its selected corner intersects a visible interactive control; typing yields it; it returns when clear. Both corners, mobile and desktop, three engines; unchanged consent/tuck/quiet/header behavior. Hash-bound inspected seven-theme before/after captures; current staging and exact-candidate production readback.",
       "premises": [
         {
-          "claim": "Implemented companion clearance exists; final release acceptance is still pending",
+          "claim": "Implemented companion clearance exists and release acceptance is verified",
           "adapter": "grep-count",
           "target": "assets/command-palette-loader.js",
           "pattern": "overlapsControl",
@@ -194,6 +194,11 @@
           "at": "2026-10-13T21:21:35.802Z",
           "status": "pending",
           "note": "Machine status remains pending until all stated acceptance (staging and production included) is verified. Implementation proofs pass. Full gate stopped at 37 on generated public-intelligence/heartbeat drift, now repaired; gate rerun required."
+        },
+        {
+          "at": "2026-10-13T22:52:51.834Z",
+          "status": "shipped",
+          "note": "Full stated acceptance verified at57ca422724: exact staged and live browser cases, all hosted requirements,56 inspected images, immutable and primary served-byte accounting. Closing protocol remains active."
         }
       ],
       "implementationNotes": [
@@ -209,7 +214,7 @@
         "verification": "Fresh S378 strict verifier 1/1 before implementation; rendered mobile overlap measured and inspected."
       },
       "implementationVerified": true,
-      "releaseVerified": false,
+      "releaseVerified": true,
       "originalPremises": [
         {
           "claim": "The loader contains no geometry-based companion/control clearance before this implementation",

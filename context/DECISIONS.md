@@ -2162,3 +2162,7 @@ The release-card visual receipt binds its twelve actual source dependencies, 28 
 ## S378 — 2026-10-13
 
 Use reversible companion yielding instead of relocating a visitor-selected corner. Reuse the existing loader, header recall, preferences, rendered receipt and browser matrix; no dependencies or paid inference. Hash shell integrity from the generated candidate bytes because the new content-addressed file does not exist during HTML rewrite. Independent review caught selector membership invalidation and a test race; both corrected. CANON-045 identity hold remains outside this scoped unchanged-identity release; two legacy CANON-056 terminology findings remain existing carry evidence. No lifecycle/security/trust-policy changes.
+
+## S378 served-raster release dependency — 2026-10-13
+
+Build public low-quality image placeholders only for served raster paths, using the shared release-lane exclusions. Preserve1594 actual public placeholders; operator screenshots and raw proof art are excluded. Existing comparators used hash-verified batch Git reads for this release proof; HTTP selection, byte/hash checks and failure policy were preserved.

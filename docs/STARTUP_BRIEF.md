@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S378) - WHAT SHIPPED ══════════════════════════╗
-║  S378: Spark yields when its chosen corner covers an interactiv  ║
+║  S378: Spark yields to reader controls and editing, then return  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · live-production · arch=— · top-axis=—       ║
+║  Profile · website · S1 · arch=— · top-axis=—                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -79,16 +79,16 @@
 ║  ⚠  Context age   9d                                             ║
 ║  ✓  IGNIS         46204 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▁▄▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▁▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.172  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  0d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -126,8 +126,8 @@
 ║   93  [PRODUCT]      Inspect hidden-opener focus return after f  ║
 ║        Inspect hidden-opener focus return after future placemen  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Wave 3: canonical closeout, staging, requi  ║
-║        Wave 3: canonical closeout, staging, required exact-cand  ║
+║   90  [PRODUCT]      Wave 3 closeout: canonical autopilot, clos  ║
+║        Wave 3 closeout: canonical autopilot, closing artifact p  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Census deferred homepage modules before en  ║
 ║        Census deferred homepage modules before enabling home-in  ║

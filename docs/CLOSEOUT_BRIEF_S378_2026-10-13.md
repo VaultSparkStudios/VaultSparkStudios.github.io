@@ -5,7 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Spark clears reader controls; release validation in progress                               ║
+║    Spark clears reader controls; exact production acceptance verified                         ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████████░   90/100                                                       ║
 ║  ECOSYSTEM IMPACT   █████░░░░░   50/100                                                       ║
@@ -20,17 +20,17 @@
          ── ux ──────────────────────────────────────────────────────────────────────────────
          Spark yields while readers use article controls and type. It returns when clear,
          with the header available throughout.
-         → docs/visual-qa/S378_SPARK_CLEARANCE.json
+         → docs/RELEASE_S378.json
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Complete staging and production acceptance.
+    • Finish canonical closing publication.
 
   BLOCKERS
     (none)
 
   ACTION GATE
-    Implementation verified; exact release acceptance pending.
+    Release accepted; canonical closing publication in progress.
 
 ```
