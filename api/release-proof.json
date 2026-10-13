@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-13T00:37:44.146Z",
+  "generatedAt": "2026-10-13T01:19:28.439Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -64,21 +67,21 @@
     "sourceContractSha256": "539c0e7dc974d3b15550566c2d2a9f0519aa318a23b3bcfa54098e227b92d82f"
   },
   "productionDeploy": {
-    "state": "behind",
-    "commitsBehind": 7,
-    "ageHours": 1.7,
-    "observedAt": "2026-10-13T00:18:30.619Z",
+    "state": "content-current",
+    "commitsBehind": 2,
+    "ageHours": 0.4,
+    "observedAt": "2026-10-13T01:19:28.439Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-13T00:18:30.619Z",
-      "expectedFrom": "9168d8c9f80a0d972c1c7072fe9f21d680f44ba9619980f66f7562fba1afed84",
-      "supersededBy": "9e9af113b36e3c2a0fa88a7e4b3afbe507ec4ff9f28abbd4a7eb6d42b6e360e2",
+      "observedAt": "2026-10-13T01:19:28.439Z",
+      "expectedFrom": "9e9af113b36e3c2a0fa88a7e4b3afbe507ec4ff9f28abbd4a7eb6d42b6e360e2",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
-        "assets/after-paint.shell-c819ba6e3a.js",
+        "assets/after-paint.shell-0392b76d45.js",
         "assets/ambient-core.shell-5b2e3a4faa.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
@@ -98,7 +101,7 @@
         "assets/vault-door.shell-20bb2584bc.js"
       ],
       "actual": [
-        "assets/after-paint.shell-c819ba6e3a.js",
+        "assets/after-paint.shell-0392b76d45.js",
         "assets/ambient-core.shell-5b2e3a4faa.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
@@ -182,7 +185,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -191,7 +194,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
