@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-10-13T05:09:24.803Z",
+  "generatedAt": "2026-10-13T05:42:47.724Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -14,17 +14,17 @@
     ]
   },
   "state": "behind",
-  "observedAt": "2026-10-13T05:09:24.803Z",
+  "observedAt": "2026-10-13T05:42:47.724Z",
   "observedOrigin": "multi-vantage-quorum",
   "deployedSha": "d3c87d8ba7b04727425adf5d1a8b4d9956c0ebf3",
   "deployedShaShort": "d3c87d8ba7b0",
-  "repoTipShaShort": "64206a5db238",
-  "commitsBehind": 36,
+  "repoTipShaShort": "a5a1abdd5025",
+  "commitsBehind": 47,
   "deployedCommitAt": "2026-10-13T00:55:09.000Z",
-  "ageHours": 3.8,
-  "undeployedContentCommits": 12,
+  "ageHours": 4.7,
+  "undeployedContentCommits": 16,
   "oldestUndeployedContentAt": "2026-10-13T01:16:57Z",
-  "contentLagHours": 3.9,
+  "contentLagHours": 4.4,
   "ageDays": 0.2,
   "thresholds": {
     "warnHours": 12,
@@ -45,7 +45,7 @@
     "state": "agreed",
     "required": 2,
     "agreementCount": 3,
-    "observedAt": "2026-10-13T05:09:24.803Z",
+    "observedAt": "2026-10-13T05:42:47.724Z",
     "agreedShaShort": "d3c87d8ba7b0",
     "agreedSha256": "dcac15fa7ae48333c732cbf6a95d4ba2cebf8f3b4f6769c8f61b2ecc362ce2cb",
     "evidence": [
@@ -53,7 +53,7 @@
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-10-13T05:09:24.803Z",
+        "observedAt": "2026-10-13T05:42:47.725Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +67,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-10-13T05:09:24.827Z",
+        "observedAt": "2026-10-13T05:42:47.760Z",
         "shaShort": "d3c87d8ba7b0",
         "sha256": "dcac15fa7ae48333c732cbf6a95d4ba2cebf8f3b4f6769c8f61b2ecc362ce2cb",
         "httpStatus": 200,
@@ -81,7 +81,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-10-13T05:09:24.828Z",
+        "observedAt": "2026-10-13T05:42:47.761Z",
         "shaShort": "d3c87d8ba7b0",
         "sha256": "dcac15fa7ae48333c732cbf6a95d4ba2cebf8f3b4f6769c8f61b2ecc362ce2cb",
         "httpStatus": 200,
@@ -95,7 +95,7 @@
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
         "state": "observed",
-        "observedAt": "2026-10-13T05:09:24.830Z",
+        "observedAt": "2026-10-13T05:42:47.763Z",
         "shaShort": "d3c87d8ba7b0",
         "sha256": "dcac15fa7ae48333c732cbf6a95d4ba2cebf8f3b4f6769c8f61b2ecc362ce2cb",
         "httpStatus": 200,
@@ -115,11 +115,11 @@
     ]
   },
   "shellParity": {
-    "state": "superseded",
+    "state": "drift",
     "route": "/",
-    "observedAt": "2026-10-13T05:09:24.803Z",
-    "expectedFrom": "9e9af113b36e3c2a0fa88a7e4b3afbe507ec4ff9f28abbd4a7eb6d42b6e360e2",
-    "supersededBy": "7ef98989b640edd6961d91b480efd85c49e3023e8eaca50470f739531f76b968",
+    "observedAt": "2026-10-13T05:42:47.724Z",
+    "expectedFrom": "7ef98989b640edd6961d91b480efd85c49e3023e8eaca50470f739531f76b968",
+    "supersededBy": null,
     "ageHours": 0,
     "stale": false,
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -129,7 +129,7 @@
       "assets/ambient-feature.shell-9b5baeb1ab.js",
       "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
       "assets/hero-ticker.shell-550971e267.js",
-      "assets/home-idle-loader.shell-d6269f7d0f.js",
+      "assets/home-idle-loader.shell-7b976ad580.js",
       "assets/nav-sheet.shell-c0fddc0c73.js",
       "assets/nav-toggle.shell-8c1f2155b5.js",
       "assets/public-intelligence.shell-c86a6ecc39.js",
@@ -163,8 +163,12 @@
       "assets/theme-toggle.shell-8221605898.js",
       "assets/vault-door.shell-20bb2584bc.js"
     ],
-    "missing": [],
-    "unexpected": [],
+    "missing": [
+      "assets/home-idle-loader.shell-7b976ad580.js"
+    ],
+    "unexpected": [
+      "assets/home-idle-loader.shell-d6269f7d0f.js"
+    ],
     "challengedAt": null,
     "challengeError": null
   },

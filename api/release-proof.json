@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-13T05:31:03.141Z",
+  "generatedAt": "2026-10-13T05:42:55.548Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -21,9 +24,9 @@
     "deployedBuildSha": "1461d12b735c36c3b117b3b34cff98a2d3c8743e",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "5d2e4f8c8573e8d3eb00cb4db841f1bc71bf39b0850eb946ae6e645ce1cd8498",
+      "candidateRoot": "7fd5cb2f81c321da4089496cdb70b4d9d718766ed02d10e9264da5a6ee4a346c",
       "candidateLeafCount": 65,
-      "stagingRoot": "5d2e4f8c8573e8d3eb00cb4db841f1bc71bf39b0850eb946ae6e645ce1cd8498",
+      "stagingRoot": "7fd5cb2f81c321da4089496cdb70b4d9d718766ed02d10e9264da5a6ee4a346c",
       "stagingLeafCount": 65,
       "matched": true
     },
@@ -65,15 +68,15 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 36,
-    "ageHours": 3.8,
-    "observedAt": "2026-10-13T05:09:24.803Z",
+    "commitsBehind": 47,
+    "ageHours": 4.7,
+    "observedAt": "2026-10-13T05:42:47.724Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-13T05:09:24.803Z",
-      "expectedFrom": "9e9af113b36e3c2a0fa88a7e4b3afbe507ec4ff9f28abbd4a7eb6d42b6e360e2",
-      "supersededBy": "7ef98989b640edd6961d91b480efd85c49e3023e8eaca50470f739531f76b968",
+      "observedAt": "2026-10-13T05:42:47.724Z",
+      "expectedFrom": "7ef98989b640edd6961d91b480efd85c49e3023e8eaca50470f739531f76b968",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -83,7 +86,7 @@
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-d6269f7d0f.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
@@ -117,8 +120,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/home-idle-loader.shell-7b976ad580.js"
+      ],
+      "unexpected": [
+        "assets/home-idle-loader.shell-d6269f7d0f.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -177,7 +184,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -191,7 +198,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
