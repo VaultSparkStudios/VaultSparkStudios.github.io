@@ -16,6 +16,16 @@ const swBefore = fs.readFileSync(SW, 'utf8');
 const { predicatesMissingShellAsset, findHtmlFiles, updateHtmlReferences } = await import('../scripts/build-shell-assets.mjs');
 const bundle = (entries) => `const CONTENT_ADDRESSED_PREDICATE_SRCS = [\n${entries}\n];`;
 
+test('proof screenshots and raw art never enter the client placeholder map', async () => {
+  const mapPath = path.join(ROOT, 'data/lqip-map.json');
+  const priorMap = fs.readFileSync(mapPath, 'utf8');
+  const {isServedRaster} = await import('../scripts/build-lqip-map.mjs');
+  assert.equal(fs.readFileSync(mapPath, 'utf8'), priorMap, 'import must not rebuild the map');
+  for (const image of ['docs/visual-qa/phone.png', 'docs\\mobile-audit\\phone.png', '.cache/theme.png', 'tests/fixture.webp', 'data/news-desk/art/raw.png']) assert.equal(isServedRaster(image), false, image);
+  for (const image of ['assets/covers/game.avif', 'assets/news/illustration.png', 'games/example/hero.webp']) assert.equal(isServedRaster(image), true, image);
+  assert.equal(isServedRaster('assets/site.json'), false);
+});
+
 test('new shell hashes bind integrity to candidate bytes before files exist', () => {
   const original = JSON.parse(before);
   const corePath = 'assets/ambient-core.shell-0000000000.js';

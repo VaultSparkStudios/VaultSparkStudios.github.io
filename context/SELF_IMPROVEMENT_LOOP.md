@@ -2535,3 +2535,5 @@ Autopilot completed exit0 after two534-check passes. Closing452fdf163c was pushe
 
 Website product rubric. Verified local reader controls, editing and focus return; 42/42 browser cases, 12/12 shell unit cases, 56 inspected images. First browser attempts exposed test scrolling assumptions and WebKit click focus; corrected, not hidden. Conversion and field-vitals effects remain unmeasured. Full release acceptance is pending, so this score is implementation/process evidence only. Brainstorm commitments recorded on TASK_BOARD: selector-membership regression upkeep and hidden-opener focus return after placement changes. No additional selected scope.
 
+
+S378 verification addendum: shell suite now13/13 after the necessary served-raster filtering regression. Complete local build534/534 passed at 2026-10-13T22:13:17.645Z. Production acceptance remains pending.

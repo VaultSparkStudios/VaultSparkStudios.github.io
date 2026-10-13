@@ -199,7 +199,8 @@
       "implementationNotes": [
         "Build dependency uncovered: shell integrity previously read the candidate hashed file before main wrote it. Now derives SHA384 from the exact generated candidate bytes; a missing candidate fails clearly. Shell unit suite 12/12.",
         "Independent review caught attribute-only control membership changes; href/role/contenteditable invalidation fixed and covered.",
-        "Initial cross-browser clearance suite 9/9, no retries; final regression and existing Spark suite pending."
+        "Initial cross-browser clearance suite 9/9, no retries; final regression and existing Spark suite pending.",
+        "Final local acceptance: Spark42/42, shell units13/13 including served-raster filtering, mobile215/215, visual56/56 inspected, complete build534/534. Exact production release still pending."
       ],
       "historicalPremiseEvidence": {
         "sourceCommit": "47da157a46674a3855e774afb034ffcd2779df6d",
