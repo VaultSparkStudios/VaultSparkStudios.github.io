@@ -13,7 +13,8 @@
  *
  * The two hard rules this module enforces:
  *   1. A pin must be a FLOATING alias (`opus`, `opus[1m]`, `sonnet`, …), never a
- *      dated snapshot (`claude-opus-4-8[1m]`). A dated ID reads correct the day
+ *      dated snapshot (a full `claude-<family>-<version>` ID, with or without the
+ *      `[1m]` suffix). A dated ID reads correct the day
  *      it is written and then silently decays as newer models ship.
  *   2. An unrecognized predicate in a derivation step THROWS. The rule this
  *      replaced failed silently — it tested `developmentPhase === 'active'`
@@ -29,9 +30,13 @@ import path from 'node:path';
  * Model values that track the newest release of their family. These are the
  * ONLY values allowed in a `.claude/settings.json` "model" field.
  *
- * Deliberately an allowlist, not a `claude-*` blocklist: a future
- * `claude-opus-6[1m]` is just as stale-prone as today's `claude-opus-4-8[1m]`,
- * and only an allowlist catches the one that hasn't been released yet.
+ * Deliberately an allowlist, not a `claude-*` blocklist: next year's versioned
+ * ID is just as stale-prone as the one current today, and only an allowlist
+ * catches the one that hasn't been released yet.
+ *
+ * (S372: no dated ID is spelled out in this file, even as an example. It
+ * propagates, and a recipient's content scan rightly refuses a versioned model
+ * ID anywhere outside its model router — Seamline.)
  */
 export const FLOATING_MODEL_RE = /^(default|opus|sonnet|haiku)(\[1m\])?$/;
 

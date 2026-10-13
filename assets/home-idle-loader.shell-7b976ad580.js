@@ -18,7 +18,7 @@
     '/assets/ignis-live.js',
     '/assets/micro-feedback.js',
     '/assets/showcase-spine.js',
-    '/assets/recent-ships.js',
+    '/assets/recent-ships.shell-001af71d31.js',
     '/assets/ignis-tour.js',
     '/assets/vault-resonance.js',
     // build-shell-assets rewrites this child to its immutable fingerprint before

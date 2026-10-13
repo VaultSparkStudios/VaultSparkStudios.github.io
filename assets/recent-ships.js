@@ -105,7 +105,10 @@
       '</article>');
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  var initialized = false;
+  function init() {
+    if (initialized) return;
+    initialized = true;
     var containers = document.querySelectorAll('[data-recent-ships]');
     if (!containers.length) return;
 
@@ -123,5 +126,12 @@
     }).catch(function () {
       containers.forEach(renderFallback);
     });
-  });
+  }
+
+  // The homepage loads this module after first paint, often after DOM ready.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 })();

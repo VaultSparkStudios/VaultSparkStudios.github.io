@@ -138,6 +138,15 @@ function isKnownPublicToken(line, matched, pat, relPath) {
       && line.includes(matched)
       && /^(?:-)?20\d{2}-\d{2}-\d{2}-[a-z0-9-]{12,}$/i.test(matched)) return true;
 
+  // The same generated report also carries session-scoped before/after shots.
+  // Recognize only a standalone filename in that exact report, never a field
+  // containing credentials or any high-confidence key pattern.
+  if (pat.type === 'cf-maybe'
+      && relPath.replace(/\\/g, '/') === 'docs/performance/visual-qa-retention.json'
+      && /^\s*"S\d{3,}R-\d+-[a-z0-9-]+-(?:dark|light|ambient|warm|cool|lava|high-contrast)-(?:desktop|mobile)-(?:before|after)\.png",?\s*$/i.test(line)
+      && line.includes(matched)
+      && /^S\d{3,}R-\d+-[a-z0-9-]+$/i.test(matched)) return true;
+
   if ((pat.type === 'aws-maybe' || pat.type === 'cf-maybe') &&
       (line.includes('sha256-') || line.includes('sha384-') || line.includes('sha512-') || line.includes('"integrity"'))) {
     return true;
@@ -364,11 +373,17 @@ if (args.includes('--self-test')) {
   const slug = '"news-2026-09-28-nvidia-launches-new-platform-for-reining-in-rogue-ai-#editorial-illustration-1--dark--desktop.png",';
   const heuristic = PATTERNS.find((pattern) => pattern.type === 'cf-maybe');
   const candidate = slug.match(heuristic.regex)?.[0];
+  const sessionShot = '"S371R-0-community-ambient-desktop-before.png",';
+  const sessionCandidate = sessionShot.match(heuristic.regex)?.[0];
   const tests = [
     ['dated capture filename is recognized', Boolean(candidate) && isKnownPublicToken(slug, candidate, heuristic, rel)],
     ['other paths are still scanned', !isKnownPublicToken(slug, candidate, heuristic, 'api/other.json')],
     ['mixed lines are still scanned', !isKnownPublicToken(`${slug} "token":"${'x'.repeat(48)}"`, candidate, heuristic, rel)],
     ['high-confidence tokens are still scanned', !isKnownPublicToken(slug, candidate, { type: 'github' }, rel)],
+    ['session capture filename is recognized', Boolean(sessionCandidate) && isKnownPublicToken(sessionShot, sessionCandidate, heuristic, rel)],
+    ['session filename in other paths is still scanned', !isKnownPublicToken(sessionShot, sessionCandidate, heuristic, 'api/other.json')],
+    ['mixed session lines are still scanned', !isKnownPublicToken(`${sessionShot} "token":"${'x'.repeat(48)}"`, sessionCandidate, heuristic, rel)],
+    ['high-confidence session matches are still scanned', !isKnownPublicToken(sessionShot, sessionCandidate, { type: 'github' }, rel)],
   ];
   for (const [name, ok] of tests) process.stdout.write(`${ok ? '✓' : '✗'} ${name}\n`);
   process.exit(tests.every(([, ok]) => ok) ? 0 : 1);

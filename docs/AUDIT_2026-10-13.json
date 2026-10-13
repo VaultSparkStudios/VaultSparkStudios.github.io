@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "2.1",
+  "session": 377,
+  "generatedAt": "2026-10-13T03:50:17.433Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S377 arc: restore the empty recent-release surface and supply the missing bounded audit tooling; receive and validate canonical startup propagation. No lifecycle or identity changes.",
+  "stage": {
+    "status": "SPARKED",
+    "lifecycleFocus": "supported-release",
+    "provenance": "propagated skill-profile implement: S1 SPARKED RELEASED, supported-release",
+    "readiness": [
+      {
+        "area": "runtime",
+        "state": "gap",
+        "evidence": "Recent ships listener attached only after DOMContentLoaded"
+      },
+      {
+        "area": "protocol",
+        "state": "gap",
+        "evidence": "task-slice and check-audit-premises absent locally"
+      },
+      {
+        "area": "release",
+        "state": "unverified",
+        "evidence": "New candidate still needs staging and exact-candidate required checks"
+      }
+    ],
+    "recordedStage": "S1"
+  },
+  "axes": {
+    "features-depth": 1.5,
+    "ui-ux-feedback": 2,
+    "gamification-immersion": 1,
+    "ai-intelligence": 1,
+    "security": 1.5,
+    "speed-organization-efficiency": 2,
+    "token-cost": 1.5,
+    "observability-honesty": 2,
+    "sil-debt": 1
+  },
+  "candidateReview": [
+    [
+      "feature-depth",
+      "Update cards initialise after deferred loading",
+      "selected: listener-only module"
+    ],
+    [
+      "feature-depth",
+      "Add another membership preview",
+      "not selected: rank/tier scope needs direction"
+    ],
+    [
+      "new-features",
+      "Personal activity digest",
+      "not selected: no evidenced demand"
+    ],
+    [
+      "new-features",
+      "Source-linked release timeline",
+      "existing changelog provides this"
+    ],
+    [
+      "ux",
+      "Restore the empty recent-release grid",
+      "selected"
+    ],
+    [
+      "ux",
+      "Activate dormant member activity feed",
+      "not selected: separate member-data review and larger homepage composition"
+    ],
+    [
+      "feedback",
+      "Reply banner visibility",
+      "already shipped S376"
+    ],
+    [
+      "feedback",
+      "Early reaction taps",
+      "already shipped S376"
+    ],
+    [
+      "engagement",
+      "Spark overlaps comment submit",
+      "remains separate accepted mobile follow-up"
+    ],
+    [
+      "engagement",
+      "New achievement tiers",
+      "not selected: economy changes require direction"
+    ],
+    [
+      "ai",
+      "Expose latest verified ships to readers",
+      "selected recent ships"
+    ],
+    [
+      "ai",
+      "Add paid inference on homepage",
+      "rejected: no need for paid calls"
+    ],
+    [
+      "security",
+      "Recheck public-safe rollout artifacts",
+      "required release acceptance"
+    ],
+    [
+      "security",
+      "Rewrite Obelisk auth",
+      "rejected: outside authorization"
+    ],
+    [
+      "speed",
+      "Reuse missing audit/task projection tooling",
+      "selected internal adoption"
+    ],
+    [
+      "speed",
+      "Bundle every homepage script",
+      "not selected: defeats current after-paint performance design"
+    ],
+    [
+      "token-cost",
+      "Bound task context instead of full board",
+      "selected missing projection tool"
+    ],
+    [
+      "token-cost",
+      "Cache audit evidence across sessions",
+      "not selected: risks borrowing stale evidence"
+    ]
+  ],
+  "items": [
+    {
+      "slug": "deferred-recent-ships",
+      "axis": "ui-ux-feedback",
+      "title": "Populate recent release cards after deferred homepage loading",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1.5,
+      "recipe": "Use a readyState-aware, once-only initializer in recent-ships.js; preserve the existing public intelligence/changelog fallback and after-paint loading. Verify populated cards and all themes on desktop/mobile.",
+      "target": "assets/recent-ships.js",
+      "pattern": "document.addEventListener\\('DOMContentLoaded'",
+      "acceptance": "Late-load and early-load unit cases; actual homepage cards visible; 7-theme desktop/mobile before/after images inspected; staging and production readback.",
+      "id": 1,
+      "tier": "🔥",
+      "status": "pending",
+      "selectedDepth": "L2",
+      "priority": 17.71,
+      "why": "Use a readyState-aware, once-only initializer in recent-ships.js; preserve the existing public intelligence/changelog fallback and after-paint loading. Verify populated cards and all themes on desktop/mobile.",
+      "premises": [
+        {
+          "claim": "Recent Ships has no document.readyState branch before this implementation",
+          "adapter": "grep-count",
+          "target": "assets/recent-ships.js",
+          "pattern": "document\\.readyState",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Use a readyState-aware, once-only initializer in recent-ships.js; preserve the existing public intelligence/changelog fallback and after-paint loading. Verify populated cards and all themes on desktop/mobile."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Use a readyState-aware, once-only initializer in recent-ships.js; preserve the existing public intelligence/changelog fallback and after-paint loading. Verify populated cards and all themes on desktop/mobile."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Expand acceptance to all consumers only when separately requested."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-13T04:30:43.569Z",
+          "status": "pending",
+          "note": "Implementation verified locally: early/late load and fallback regressions 3/3, browser probe 6/6 across three engines and two widths, mobile 215/215, rendered pixels 28/28. Staging, candidate CI and production acceptance remain required."
+        }
+      ],
+      "historicalPremiseEvidence": {
+        "sourceCommit": "c8d682cf6aae629393838c3585990a798b9bc66f",
+        "verifiedBeforeImplementation": true,
+        "actual": 0,
+        "verification": "Initial strict audit returned 2/2 verified; original source at bound starting commit has no readyState branch. Runtime regression tests are the post-change acceptance."
+      }
+    },
+    {
+      "slug": "local-audit-tooling",
+      "axis": "speed-organization-efficiency",
+      "title": "Adopt existing bounded task and strict audit-premise tools locally",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "recipe": "Reuse the studio-owned task projection and premise checker with explicit project paths, preserving a local invocation contract without copying the control-plane runtime. Verify the new audit against this repo and a bounded task projection.",
+      "target": "scripts/task-slice.mjs",
+      "absent": true,
+      "acceptance": "Local task-slice returns bounded project-local tasks; local strict premise checker accepts valid local claims and rejects contradictions; --help writes nothing.",
+      "id": 2,
+      "tier": "🔥",
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "priority": 20.19,
+      "why": "Reuse the studio-owned task projection and premise checker with explicit project paths, preserving a local invocation contract without copying the control-plane runtime. Verify the new audit against this repo and a bounded task projection.",
+      "premises": [
+        {
+          "claim": "Local bounded task helper is missing",
+          "adapter": "file-exists",
+          "target": "scripts/task-slice.mjs",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Reuse the studio-owned task projection and premise checker with explicit project paths, preserving a local invocation contract without copying the control-plane runtime. Verify the new audit against this repo and a bounded task projection."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Reuse the studio-owned task projection and premise checker with explicit project paths, preserving a local invocation contract without copying the control-plane runtime. Verify the new audit against this repo and a bounded task projection."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Expand acceptance to all consumers only when separately requested."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-13T03:56:05.388Z",
+          "status": "shipped",
+          "tests": "2/2 adapter regressions pass; bounded local task projection 1081/1200 chars from 155546-byte board; independent review duplicate selector finding fixed",
+          "review": "fix finding resolved"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 2,
+    "priority": 37.900000000000006,
+    "top3": [
+      "deferred-recent-ships",
+      "local-audit-tooling"
+    ]
+  },
+  "skipped": [],
+  "executionLog": []
+}

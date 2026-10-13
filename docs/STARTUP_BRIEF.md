@@ -120,9 +120,6 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      At 390px the Spark companion overlaps the   ║
 ║        At 390px the Spark companion overlaps the Post comment b  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   84  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
 ║        home-intelligence.js and recent-ships.js initialise only  ║
+║                                                                  ║
+║   78  [PRODUCT]      Exercise the art receipt path on the next   ║
+║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

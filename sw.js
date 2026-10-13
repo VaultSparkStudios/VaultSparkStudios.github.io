@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-656ed0b07b156311';
+const CACHE_NAME = 'vaultspark-shell-897e6093f1e5db13';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -31,7 +31,8 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/supabase-client.shell-bd7ccf3b3d.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
-  '/assets/home-idle-loader.shell-d6269f7d0f.js',
+  '/assets/recent-ships.shell-001af71d31.js',
+  '/assets/home-idle-loader.shell-7b976ad580.js',
   '/assets/ambient-core.shell-5b2e3a4faa.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
@@ -82,6 +83,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/supabase-client.js',
   '/assets/sentry-init.js',
   '/assets/vault-pulse.js',
+  '/assets/recent-ships.js',
   '/assets/home-idle-loader.js',
   '/assets/ambient-core.bundle.js',
   '/assets/ambient-feature.bundle.js',

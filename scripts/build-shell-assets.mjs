@@ -26,6 +26,7 @@ const SHELL_ASSETS = [
   // content lane withholds plain executable assets. Fingerprint the child
   // before the loader so both can travel through the safe content lane.
   { key: 'vaultPulse', source: 'assets/vault-pulse.js', stem: 'vault-pulse.shell', attribute: 'src' },
+  { key: 'recentShips', source: 'assets/recent-ships.js', stem: 'recent-ships.shell', attribute: 'src' },
   { key: 'homeIdleLoader', source: 'assets/home-idle-loader.js', stem: 'home-idle-loader.shell', attribute: 'src' },
   // S136 speed sprint: ambient scripts concatenated into hashed bundles.
   // S175 stable-core split: core (rarely changes - hash survives feature
@@ -126,7 +127,7 @@ const SHELL_ASSETS = [
 // The child is rewritten to its fingerprint before the parent is hashed, so a
 // child change rotates the parent too and both ride the content lane together.
 const NESTED_SHELL_REFERENCES = {
-  homeIdleLoader: ['vaultPulse', 'trustDepth'],
+  homeIdleLoader: ['vaultPulse', 'trustDepth', 'recentShips'],
 };
 
 const HTML_SKIP_DIRS = new Set([
