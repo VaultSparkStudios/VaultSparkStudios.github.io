@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-12 (Session 376 closeout) -->
+<!-- generated-at: 2026-10-13 (Session 376 closeout) -->
 <!-- semantic-freshness: hash=1d86487f3341b17b next=377 silSession=376 silScore=927 handoff=376 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 376 closeout · 2026-10-12.
+> **Fast-boot brief** — generated at Session 376 closeout · 2026-10-13.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 377 · 2026-10-12 · FOUNDER MODE                         ║
+║  Session 377 · 2026-10-13 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    927/1000   ██████████████████████░░   93%                     ║
 ║    SIL v3.0  ·  Avg3: 925  ·  Velocity 3↑                        ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,10 +76,10 @@
 ║  ✓  Tests         534/534 passing (2026-10-12)                   ║
 ║  ✓  Velocity      3 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   8d                                             ║
-║  ✓  IGNIS         46114 FORGE  ·  6d old                         ║
+║  ⚠  Context age   9d                                             ║
+║  ⚠  IGNIS         46114 FORGE  ·  7d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/38 (84%) → ▆▄▄▁▄▄▄▄                          ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▁▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.220  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  10d old (2026-10-02)                           ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  2 failing                      ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    50d · Authorize or decline immutable warm-origin migrati      ║
-║    50d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    51d · Authorize or decline immutable warm-origin migrati      ║
+║    51d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -123,17 +123,17 @@
 ║   93  [PRODUCT]      At 390px the Spark companion overlaps the   ║
 ║        At 390px the Spark companion overlaps the Post comment b  ║
 ║                                                                  ║
-║   87  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
-║        home-intelligence.js and recent-ships.js initialise only  ║
+║   93  [INTELLIGENCE]  task-slice, check-audit-premises and the   ║
+║        task-slice, check-audit-premises and the start maintenan  ║
 ║                                                                  ║
 ║   86  [VERIFY]       Firefox loses a reaction tap issued straig  ║
 ║        Firefox loses a reaction tap issued straight after a jum  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Exercise the art receipt path on the next   ║
-║        Exercise the art receipt path on the next real scheduled  ║
+║   84  [PRODUCT]      home-intelligence.js and recent-ships.js i  ║
+║        home-intelligence.js and recent-ships.js initialise only  ║
 ║                                                                  ║
-║   80  [VERIFY]       Four browser specs fail on this machine ag  ║
-║        Four browser specs fail on this machine against both pro  ║
+║   78  [PRODUCT]      Exercise the art receipt path on the next   ║
+║        Exercise the art receipt path on the next real scheduled  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 376 closeout · 2026-10-12*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 376 closeout · 2026-10-13*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

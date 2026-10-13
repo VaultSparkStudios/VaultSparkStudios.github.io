@@ -103,12 +103,12 @@
   "silCategoriesUpdatedSession": 376,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-12",
+    "date": "2026-10-13",
     "passing": 14,
-    "warning": 1,
-    "failing": 2,
+    "warning": 2,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 2,
+    "advisoryFailing": 1,
     "total": 17,
     "score": 82,
     "checks": [
@@ -184,8 +184,8 @@
       },
       {
         "id": "ignis",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -212,8 +212,8 @@
       },
       {
         "id": "sched-staleness",
-        "pass": false,
-        "warn": false,
+        "pass": true,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
