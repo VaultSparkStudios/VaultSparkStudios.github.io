@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-13T00:22:10.854Z",
+  "generatedAt": "2026-10-13T01:52:24.126Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,7 +24,7 @@
   "pulse": {
     "currentSession": 376,
     "lastUpdated": "2026-10-13",
-    "currentFocus": "S376 fixed reader feedback on Desk articles: comment threads no longer show stray Cancel reply and Try again controls, reaction taps are no longer lost in WebKit, and the reader-signal feed lists illustration and cartoon reactions.",
+    "currentFocus": "S376 fixed reader feedback on Desk articles (stray comment controls, reaction taps lost in WebKit, image reactions in the reader-signal feed); pushed as b59fc7d3a2 and promoted on 2026-10-13 (production reports d3c87d8ba7).",
     "nextMilestone": "Delay the first network calls of the eager Desk presence and ambient scripts until after first paint, and show the Lighthouse check passing its unchanged floors across several consecutive runs.",
     "blockers": [
       "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
@@ -54,7 +54,7 @@
         "Shipped: 3 items. Comment threads no longer show a Cancel reply banner (or, at phone width, a Try again button) when there is nothing to cancel or retry. Reaction taps are no longer lost in WebKit: sections are rendered late only where scroll anchoring exists, and the loader delivers a tap made before the reactions script has run. The reader-signal feed lists illustration and cartoon reactions per story, separate from story totals.",
         "Tests: after-paint unit 12 of 12; reactions builder self-test 25 of 25; Desk browser specs (reactions, comments, after-paint, artwork) 80 of 81 with no retries on three engines, the one failure a Firefox tap that passes on retry; WebKit reactions 12 of 12 (was 5 of 12); early WebKit taps 8 of 8 delivered (was 1 of 8). Seven themes captured at 1366px and 390px, before and after.",
         "Review: an independent review found that a tap handled by the live script could be delivered a second time while a later parked script was still loading, which would have taken the vote back. Fixed with a unit case; three smaller findings also fixed.",
-        "Deploy: DEPLOY_PENDING",
+        "Deploy: Pushed as b59fc7d3a2 on 2026-10-13 UTC after a full staging publish of the rebased candidate b8d0fb6027 (receipt b9cf02706b2e9d95f5b1aadf; served bytes matched the commit; an earlier publish of 61beca59ba, receipt 6a642380c6b1dcb736fdaaca, passed the staging release spec 6/6 and delivered 6 of 6 early WebKit taps). Local gate 534/534 and mobile audit 215/215 on the pushed tree. Required checks at b59fc7d3a2: E2E 38328313060 and accessibility 38328313040 passed first time; Lighthouse 38328313078 failed its first attempt on the measured article (0.88 against the unchanged 0.90 floor) and passed on one re-run (article 0.92, homepage 0.81). Promoted through the confirmed-production lane, run 38330430872 (SCOPED; identity hold unchanged): production reports d3c87d8ba7, which contains the candidate. Readback from served bytes: tree-current at d3c87d8ba7, 1051 of 1061 files identical, 0 differing, 10 retired-route redirects (a first run left one file unread and was repeated). On production the reply banner computes display:none and 6 of 6 early WebKit taps reach the (mocked) service.",
         "Corrected: S375 recorded the WebKit failures as a click arriving before the parked script. That mechanism exists but was not the cause; the press and release landed on different elements because the section above the reaction bar grew by 181px between them.",
         "Found, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px. Both on the task board."
       ]

@@ -2489,3 +2489,7 @@ S375 addendum (unscored): pushed as c8635d986e and promoted (run 38212109944; pr
 | Automation Coverage | 96 | Unit cases for early-tap delivery and for not delivering twice; a browser assertion that the reply banner is hidden; builder cases for panels, reset and key length. |
 
 Brainstorm (committed to TASK_BOARD): (1) settle the Firefox tap after a jump, choosing between exact section size hints and no deferral with Lighthouse evidence; (2) move the Spark companion clear of the Post comment button at 390px.
+
+---
+
+S376 addendum (unscored): pushed as b59fc7d3a2 and promoted (run 38330430872; production reports d3c87d8ba7). E2E and accessibility passed first time; Lighthouse failed once on the measured article at 0.88 and passed on one re-run at 0.92, the same pair of values as S372 to S375, so the stability task stays open. Process note: the reaction fix was first built on the cause recorded by the previous session, and only an event trace showed the real one; when a recorded cause is the premise, measure it before building on it.

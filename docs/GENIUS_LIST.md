@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **927/1000**
 - CI health: **check gh run list**
-- Current focus: S376 fixed reader feedback on Desk articles: comment threads no longer show stray Cancel reply and Try again controls, reaction taps are no longer lost in WebKit, and the reader-signal feed lists illustration and cartoon reactions.
+- Current focus: S376 fixed reader feedback on Desk articles (stray comment controls, reaction taps lost in WebKit, image reactions in the reader-signal feed); pushed as b59fc7d3a2 and promoted on 2026-10-13 (production reports d3c87d8ba7).
 
 ## Strategic Read
 
