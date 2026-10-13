@@ -2493,3 +2493,5 @@ Brainstorm (committed to TASK_BOARD): (1) settle the Firefox tap after a jump, c
 ---
 
 S376 addendum (unscored): pushed as b59fc7d3a2 and promoted (run 38330430872; production reports d3c87d8ba7). E2E and accessibility passed first time; Lighthouse failed once on the measured article at 0.88 and passed on one re-run at 0.92, the same pair of values as S372 to S375, so the stability task stays open. Process note: the reaction fix was first built on the cause recorded by the previous session, and only an event trace showed the real one; when a recorded cause is the premise, measure it before building on it.
+
+S376 closeout note (unscored): the first pass of this closeout ran the commit steps by hand and left out the session-floor gate, the intelligence refresh, the status board and the autopilot. They were run afterwards (IGNIS rescore, state vector, entropy, genome 23/25, board conformant, autopilot exit 0) and pushed as da28cc4510. Sessions 371 to 375 have no autopilot receipt row either; that ledger is written by the closing agent, not by the autopilot.
