@@ -147,16 +147,16 @@
       "priority": 22.5,
       "why": "Restore unobstructed article feedback and navigation at phone widths using the existing companion.",
       "recipe": "Extend the existing Spark loader with frame-coalesced, geometry-based yielding to ordinary interactive controls; keep modal priority, chosen corner, tucked/quiet preferences, and header access. Yield while editing, restore on exit, and avoid per-scroll DOM discovery. Verify real article submit/display-name controls and both corners in Chromium, Firefox and WebKit, seven themes at desktop/mobile, clean-build, staging and production.",
-      "status": "shipped",
+      "status": "pending",
       "selectedDepth": "L2",
       "acceptance": "The companion yields whenever its selected corner intersects a visible interactive control; typing yields it; it returns when clear. Both corners, mobile and desktop, three engines; unchanged consent/tuck/quiet/header behavior. Hash-bound inspected seven-theme before/after captures; current staging and exact-candidate production readback.",
       "premises": [
         {
-          "claim": "The loader contains no geometry-based companion/control clearance before this implementation",
+          "claim": "Implemented companion clearance exists; final release acceptance is still pending",
           "adapter": "grep-count",
           "target": "assets/command-palette-loader.js",
           "pattern": "overlapsControl",
-          "operator": "eq",
+          "operator": "gt",
           "expected": 0
         }
       ],
@@ -189,6 +189,11 @@
           "at": "2026-10-13T21:18:03.821Z",
           "status": "shipped",
           "note": "Final existing and new Spark suite 42/42 across Chromium, Firefox and WebKit without retries. WebKit click-focus regressions fixed, and hidden buddy returns focus to the header. Full source delivery and production rollout still pending."
+        },
+        {
+          "at": "2026-10-13T21:21:35.802Z",
+          "status": "pending",
+          "note": "Machine status remains pending until all stated acceptance (staging and production included) is verified. Implementation proofs pass. Full gate stopped at 37 on generated public-intelligence/heartbeat drift, now repaired; gate rerun required."
         }
       ],
       "implementationNotes": [
@@ -201,7 +206,19 @@
         "verifiedBeforeImplementation": true,
         "actual": 0,
         "verification": "Fresh S378 strict verifier 1/1 before implementation; rendered mobile overlap measured and inspected."
-      }
+      },
+      "implementationVerified": true,
+      "releaseVerified": false,
+      "originalPremises": [
+        {
+          "claim": "The loader contains no geometry-based companion/control clearance before this implementation",
+          "adapter": "grep-count",
+          "target": "assets/command-palette-loader.js",
+          "pattern": "overlapsControl",
+          "operator": "eq",
+          "expected": 0
+        }
+      ]
     }
   ],
   "totals": {
