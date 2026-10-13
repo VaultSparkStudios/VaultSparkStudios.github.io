@@ -118,7 +118,7 @@
     ]
   },
   "parity": {
-    "scope": "Raw immutable production source, not raw primary-origin response",
+    "scope": "Raw immutable production served text artifacts, not raw primary-origin responses; binary assets outside HTTP comparison",
     "origin": "https://21b29bf9.vaultsparkstudios-website.pages.dev",
     "identical": 1052,
     "total": 1062,
@@ -185,5 +185,110 @@
     "s377-origin-parity.json": "e47d64a0a2294bf6534023b8dbd0474c4d620f69b672c1147c9f740a2fec62e8",
     "s377-edge-parity.json": "521e82e2c2a98444c3b87c91dfa319b0d773db1180600562427cb3748b7254c7",
     "s377-production-probe.json": "e04d90170a57ad4ce46317b19beb9cfe66602978389caa19d182daea51f889e0"
+  },
+  "versionedEvidenceArchives": {
+    "initialProductionProbe": "s377-initial-production-probe.json",
+    "verifiedOriginalHash": "e04d90170a57ad4ce46317b19beb9cfe66602978389caa19d182daea51f889e0"
+  },
+  "closingPublication": {
+    "accepted": true,
+    "acceptedAt": "2026-10-13T08:12:10.466Z",
+    "candidate": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+    "servedCommit": {
+      "origin": "https://vaultsparkstudios.com",
+      "checkedAt": "2026-10-13T08:04:58.066Z",
+      "sha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+      "contentLaneHead": null
+    },
+    "tag": "s377-closeout-452f",
+    "productionRun": 38365858868,
+    "productionStepsExecuted": [
+      "Deploy to Cloudflare Pages",
+      "Purge edge HTML cache",
+      "Post-purge edge liveness check"
+    ],
+    "deploymentUrl": "https://f04924df.vaultsparkstudios-website.pages.dev",
+    "workflows": [
+      {
+        "conclusion": "success",
+        "databaseId": 38362922275,
+        "headSha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+        "status": "completed",
+        "workflowName": "Accessibility Audit"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 38362922215,
+        "headSha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+        "status": "completed",
+        "workflowName": "E2E Test Suite"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 38362922239,
+        "headSha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
+        "status": "completed",
+        "workflowName": "Lighthouse CI"
+      }
+    ],
+    "lighthouse": {
+      "attempt": 2,
+      "firstAttempt": {
+        "run": 38362922239,
+        "performance": 0.89,
+        "floor": 0.9,
+        "route": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
+        "state": "failed"
+      },
+      "policy": "One failed-job rerun; performance floors unchanged; repeatability task remains open"
+    },
+    "staging": {
+      "receiptId": "47e4b5918a3664934f874e8a",
+      "sourceCommit": "73656e3afcc313272e0db13df4b57ce512bbe521",
+      "artifactRoot": "5b0a14be9529e70adf7c4c0bc9b0bf608546e326eada24583f63a0cc7404afad",
+      "relationship": "Exact critical artifact root matches closing candidate. Receipt intent SHA is ancestor6633, not an exact452f SHA attestation.",
+      "continuityDepth": 127,
+      "ceremony": "11/11 passed",
+      "mobileCases": 215,
+      "featureCases": 6
+    },
+    "parity": {
+      "scope": "Raw immutable production served text artifacts; binary assets are outside this HTTP comparison",
+      "identical": 1055,
+      "total": 1065,
+      "differing": 0,
+      "redirects": 10,
+      "unread": 0
+    },
+    "primaryRaw": {
+      "verdict": "content-lag",
+      "identical": 670,
+      "differing": 281,
+      "redirected": 114,
+      "unread": 0,
+      "limits": "All differences must be HTML accounted for by separate provider transport proof; non-HTML redirects do not prove journeys"
+    },
+    "primaryHtml": {
+      "checked": 304,
+      "siteBodiesMatching": 281,
+      "declaredRedirects": 14,
+      "heldIdentityRedirects": 9,
+      "unverified": 0,
+      "policy": "Original HTML bytes remain strictly compared. Only response nonce attributes and one exact appended observed Cloudflare script template are accounted for. Only provider request/time fields vary in that exact template. Declared redirects and same-path canonical slash redirects are checked. Provider DOM nonce must match the enforced response CSP. Unchanged protected identity routes are held, not passed. Worker-declared legacy aliases are verified against committed Worker source.",
+      "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+    },
+    "featureCases": 6,
+    "review": "review_s377 PASS; twelve source bindings and28 image hashes verified; fourteen after images truly recaptured after automated news changed homepage source",
+    "closeout": {
+      "autopilot": "exit0, two complete534-check gates; closing commits pushed normally",
+      "arkCargo": "01K4Q2VMP8402DF8514A691EB7",
+      "arkState": "delivered; shared scorecard persistence requested from owner; acceptance/application unproven",
+      "scope": "Selected outcomes complete. Identity holds unchanged; field-vitals/conversion unmeasured."
+    },
+    "evidenceHashes": {
+      "s377-closing-origin-parity.json": "42d496cb1d9eff489e754b4051aa333bd64c33cb25080ea43ea55e93c8f344a7",
+      "s377-closing-edge-parity.json": "bd622ea828beadd3f8934c2ecb474850a38cc2c9d6a957140da862e23ff6fdf0",
+      "s377-production-probe.json": "82f906d99e54af3a122d6c5f585935f37af488deeb4f207aba7484a18346c4ff"
+    }
   }
 }

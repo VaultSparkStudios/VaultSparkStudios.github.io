@@ -3,7 +3,7 @@
 - [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
 - [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
 - [x] Wave 3: independent review, local 534/534, clean checkout 534/534, mobile 215/215, seven-theme pixels, staging and required hosted checks.
-- [ ] Wave 4: selected features deployed and accepted; finish closeout publication and closing runtime readback.
+- [x] Wave 4: closeout autopilot passed; closing452f candidate pushed, deployed and accepted by served readback.
 - [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 - [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
 
