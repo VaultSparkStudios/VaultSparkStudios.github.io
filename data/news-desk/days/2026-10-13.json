@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-13",
+  "simulated": false,
+  "leadSlug": "ai-coding-agents-generate-more-code-but-not-more",
+  "stories": [
+    {
+      "slug": "ai-coding-agents-generate-more-code-but-not-more",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "wire",
+      "headline": "AI Agents Boost Code Volume, Not Software Output",
+      "hook": "More lines don't mean better ships. Here's the data.",
+      "tldr": "New research covering 300 million work events across over 700,000 employees shows AI coding agents increase total lines of code by 30 percent and commits by 20 percent. Yet this volume does not translate to more functional software or higher productivity. The surge in pull requests suggests a bottleneck in review and integration rather than delivery. Teams must now manage increased complexity without expecting proportional gains in shipped features.",
+      "facts": [
+        {
+          "text": "The introduction of AI coding agents at a firm leads to a 30 percent increase in total lines of code generated, a 20 percent rise in the number of total commits, and a 23 percent increase in pull requests on average, the researchers write.",
+          "sourceUrl": "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/"
+        },
+        {
+          "text": "That data encompasses 300 million individual “work events” (e.g., commits and pull requests) and issue management software data across more than 700,000 employees at over 700 relevant software development firms from 2021 through March of 2026.",
+          "sourceUrl": "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "Volume is noise. We need signal. More PRs just mean more backlog to clear before Tuesday hits.",
+          "sources": [
+            "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.75,
+          "position": "The curve is steep. If we fix the review bottleneck, this volume becomes velocity. Watch what happens next.",
+          "sources": [
+            "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-10-13-vera-1",
+          "personaId": "vera",
+          "claim": "By Q2 2027, firms using these agents will report a 15% increase in bug reports due to the 30% rise in code volume.",
+          "confidence": 0.8,
+          "resolveBy": "2026-11-27",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-10-13-rex-2",
+          "personaId": "rex",
+          "claim": "By March 2027, the 23% increase in pull requests will correlate with a measurable drop in average merge time as tooling adapts.",
+          "confidence": 0.65,
+          "resolveBy": "2027-02-10",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I look at that 30 percent increase in total lines of code generated and I see three times the places for things to break. You get 20 percent rise in the number of total commits and suddenly your CI pipeline is weeping. It’s not real until it has survived a Tuesday in production, and right now, we’re just generating more tickets."
+        },
+        {
+          "personaId": "rex",
+          "text": "Stop looking at the bugs and look at the scale. That data encompasses 300 million individual work events. This isn't noise; it's raw potential. You are going to see the review process shift from gatekeeping to triage. The 23 percent increase in pull requests on average means we are finally moving enough material to justify automating the flow."
+        }
+      ],
+      "memeLine": {
+        "text": "We are building more walls, not opening doors.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "The introduction of AI coding agents at a firm leads to a 30 percent increase in total lines of code generated, a 20 percent rise in the number of total commits, and a 23 percent increase in pull requests on average, according to researchers. For engineering leaders, this looks like productivity until you realize the output is code, not software. We are drowning in artifacts. Every commit needs review, every PR needs merging, and every line of new code introduces a potential failure point. The evidence cannot yet establish whether this volume improves maintenance or just accelerates technical debt. What matters today is the immediate pain of managing this influx without breaking the build. The gap between generation and integration is widening, and nobody has documented how to bridge it safely."
+        },
+        {
+          "voice": "rex",
+          "text": "Everyone is arguing about the demo, but I am reading the changelog hidden in the data. That data encompasses 300 million individual work events across more than 700,000 employees at over 700 relevant software development firms from 2021 through March of 2026. This is a massive signal. The 23 percent increase in pull requests on average indicates that developers are unblocking themselves faster than they can integrate. This unlocks a two-step future where automated testing handles the volume spike. You are going to see teams that adapt their review workflows to handle this throughput outpace those who try to slow it down. The direction is clear: speed is no longer the constraint, processing capacity is."
+        },
+        {
+          "voice": "vera",
+          "text": "But let’s be clear: one thing that breaks in production is the assumption that more code equals more value. The researchers write that while lines go up, software output does not necessarily follow. This creates a specific risk scenario where teams deploy more frequently but with lower confidence. The workaround nobody documents is the extra manual verification required to trust the AI-generated patches. Without this verification, the 30 percent increase in total lines of code generated becomes a liability, not an asset. We are not shipping software; we are shipping uncertainty."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-13--ai-coding-agents-generate-more-code-but-not-more.png",
+        "scene": "A dark server room filled with blinking lights representing 300 million work events, while a single engineer sits at a desk buried under physical stacks of paper labeled 'Pull Requests', looking exhausted. The composition shows engineer buried under paper stacks.",
+        "alt": "An exhausted software engineer sits at a cluttered desk in a dimly lit office, surrounded by towering stacks of paper documents labeled 'Pull Requests' and 'Commits', while background server racks glow with red warning lights indicating system overload from excessive code volume. The composition shows engineer buried under paper stacks.",
+        "anchors": [
+          "30 percent increase",
+          "300 million individual",
+          "700,000 employees"
+        ],
+        "relationships": [
+          {
+            "id": "engineer-overwhelmed-by-data",
+            "subject": [
+              "engineer"
+            ],
+            "action": [
+              "buried under"
+            ],
+            "object": [
+              "paper stacks"
+            ],
+            "evidenceAnchorRefs": [
+              "30 percent increase"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "741ee16a51667736dba2a87f52ea66a378d8a8280a44102e68e37439854f21a6",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.136
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The corporate obsession with measuring developer productivity solely by quantitative metrics like lines of code and commit counts rather than actual software quality or user value.",
+          "setup": "Management celebrates the 30 percent increase in total lines of code generated as a major victory for efficiency and output growth.",
+          "payoff": "Developers spend all their time reviewing and fixing the resulting mess, proving that more code does not equal more shipped software.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 3,
+        "at": "2026-10-13T06:44:33.232Z"
+      }
+    }
+  ]
+}
