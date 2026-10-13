@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-10-13T20:40:14.776Z",
+  "generatedAt": "2026-10-13T22:35:32.726Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -14,18 +14,18 @@
     ]
   },
   "state": "behind",
-  "observedAt": "2026-10-13T20:40:14.776Z",
+  "observedAt": "2026-10-13T22:35:32.726Z",
   "observedOrigin": "multi-vantage-quorum",
   "deployedSha": "de1f2c73375564fd2f6d6ce3551bc64055e988d9",
   "deployedShaShort": "de1f2c733755",
-  "repoTipShaShort": "13c62c9e20cd",
-  "commitsBehind": 4,
+  "repoTipShaShort": "ee8f12054845",
+  "commitsBehind": 16,
   "deployedCommitAt": "2026-10-13T18:34:31.000Z",
-  "ageHours": 2,
-  "undeployedContentCommits": 0,
-  "oldestUndeployedContentAt": null,
-  "contentLagHours": null,
-  "ageDays": 0.1,
+  "ageHours": 4,
+  "undeployedContentCommits": 5,
+  "oldestUndeployedContentAt": "2026-10-13T18:17:34-04:00",
+  "contentLagHours": 0.3,
+  "ageDays": 0.2,
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48,
@@ -45,7 +45,7 @@
     "state": "agreed",
     "required": 2,
     "agreementCount": 2,
-    "observedAt": "2026-10-13T20:40:14.777Z",
+    "observedAt": "2026-10-13T22:35:32.726Z",
     "agreedShaShort": "de1f2c733755",
     "agreedSha256": "65c9db8ddf7cd7b89d994d08731a45826f98995de6fa12b0b2c0e9a341a74495",
     "evidence": [
@@ -53,7 +53,7 @@
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-10-13T20:40:14.777Z",
+        "observedAt": "2026-10-13T22:35:32.726Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -67,7 +67,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-10-13T20:40:14.808Z",
+        "observedAt": "2026-10-13T22:35:32.749Z",
         "shaShort": "452fdf163c57",
         "sha256": "1f3a509acb4b2f2e2024b78d9dae891087e609fb95b2e26586b9640683bf2ab6",
         "httpStatus": 200,
@@ -81,7 +81,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "observed",
-        "observedAt": "2026-10-13T20:40:14.809Z",
+        "observedAt": "2026-10-13T22:35:32.751Z",
         "shaShort": "de1f2c733755",
         "sha256": "65c9db8ddf7cd7b89d994d08731a45826f98995de6fa12b0b2c0e9a341a74495",
         "httpStatus": 200,
@@ -95,7 +95,7 @@
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
         "state": "observed",
-        "observedAt": "2026-10-13T20:40:14.811Z",
+        "observedAt": "2026-10-13T22:35:32.752Z",
         "shaShort": "de1f2c733755",
         "sha256": "65c9db8ddf7cd7b89d994d08731a45826f98995de6fa12b0b2c0e9a341a74495",
         "httpStatus": 200,
@@ -120,17 +120,17 @@
     ]
   },
   "shellParity": {
-    "state": "superseded",
+    "state": "drift",
     "route": "/",
-    "observedAt": "2026-10-13T20:40:14.776Z",
-    "expectedFrom": "7ef98989b640edd6961d91b480efd85c49e3023e8eaca50470f739531f76b968",
-    "supersededBy": "3745df0842d65109a4bcfc71fcce13c287cc9d2a76c9a4514450836404fbf880",
+    "observedAt": "2026-10-13T22:35:32.726Z",
+    "expectedFrom": "3745df0842d65109a4bcfc71fcce13c287cc9d2a76c9a4514450836404fbf880",
+    "supersededBy": null,
     "ageHours": 0,
     "stale": false,
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
       "assets/after-paint.shell-0392b76d45.js",
-      "assets/ambient-core.shell-5b2e3a4faa.js",
+      "assets/ambient-core.shell-816a2a481c.js",
       "assets/ambient-feature.shell-9b5baeb1ab.js",
       "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
       "assets/hero-ticker.shell-550971e267.js",
@@ -168,8 +168,12 @@
       "assets/theme-toggle.shell-8221605898.js",
       "assets/vault-door.shell-20bb2584bc.js"
     ],
-    "missing": [],
-    "unexpected": [],
+    "missing": [
+      "assets/ambient-core.shell-816a2a481c.js"
+    ],
+    "unexpected": [
+      "assets/ambient-core.shell-5b2e3a4faa.js"
+    ],
     "challengedAt": null,
     "challengeError": null
   },
