@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-13T02:36:07.456Z
-Receipt: `071a2821d07ae58f73b8e307` · coverage 109/109
+Generated: 2026-10-13T02:44:50.378Z
+Receipt: `0fb864c38ffcedb931d9ba4d` · coverage 109/109
 
-Latest: **109/109** passed · blocking 92/92 · advisory findings 0/17 · total 27.0s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 22.9s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 38 | blocking | 1.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 37 | blocking | 1.0s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 22 | blocking | 0.9s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 37 | blocking | 0.8s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 38 | blocking | 0.8s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 49 | blocking | 0.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
 | 88 | blocking | 0.8s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 22 | blocking | 0.7s | 0 | `node scripts/check-schema-coverage.mjs` |
 | 78 | blocking | 0.6s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 49 | blocking | 0.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 18 | blocking | 0.6s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 24 | blocking | 0.6s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 106 | advisory | 0.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 11 | blocking | 0.5s | 0 | `node scripts/check-og-images.mjs` |
+| 65 | blocking | 0.6s | 0 | `node scripts/check-content-coherence.mjs` |
+| 82 | blocking | 0.4s | 0 | `node scripts/build-route-consolidation.mjs --check` |
+| 42 | blocking | 0.4s | 0 | `node scripts/check-intelligence-hydration.mjs` |
+| 24 | blocking | 0.4s | 0 | `node scripts/check-game-playability-coherence.mjs` |
 
 ## Failures
 
-- None.
+- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
