@@ -1,4 +1,14 @@
-# S377 arc — homepage Recent Ships
+
+
+## S378 arc — Spark clears reader controls
+
+- [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
+- [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
+
+- [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
+- [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
+- [ ] Wave 3: canonical closeout, staging, required exact-candidate checks, direct main push and production acceptance.
+## S377 arc — homepage Recent Ships
 
 - [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
 - [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
@@ -6,8 +16,7 @@
 - [x] Wave 4: closeout autopilot passed; closing452f candidate pushed, deployed and accepted by served readback.
 - [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 - [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
-
-# S376 arc — reader feedback on Desk articles
+## S376 arc — reader feedback on Desk articles
 
 - [x] Wave1: sync, triage (not cut off), /start, canon sync.
 - [x] Wave2: audit `docs/AUDIT_2026-10-12-S376.md`, three items, premises checked against production.
@@ -15,47 +24,23 @@
 - [x] Wave4: reaction taps no longer lost in WebKit; early-tap delivery in the loader.
 - [x] Wave5: image reaction totals in the feed; independent review, four findings fixed.
 - [ ] **[SIL/P2 · S376]** Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
-- [ ] **[SIL/P3 · S376]** At 390px the Spark companion overlaps the Post comment button and the display-name field on Desk articles.
+- [x] **[SIL/P3 · S376 → S378]** Spark now yields to controls/editing; actual article submit and name fields verified at both corners across three browsers. Deployment acceptance pending in S378 Wave 3.
 - [ ] **[OPS/P3 · S376]** Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
-
-# S375 arc — cartoon below the illustration, with its own reactions
-
-- [x] Wave1: sync, triage (not cut off), /start, canon sync (2 gaps, 0 ABSOLUTE).
-- [x] Wave2: audit `docs/AUDIT_2026-10-12-S375.md`, two items; three hit-list items assessed and left unselected with reasons.
-- [x] Wave3 (founder direction): cartoon stage directly below the illustration on 122 articles, own reaction scope and comment thread; layout test, contract check and browser spec updated.
-- [x] Wave4: article shell no longer scrolls sideways (`overflow:clip`); seven themes captured at desktop and mobile.
-- [x] Wave5: gate 534/534, staging, push c8635d986e, required checks first time, production tree-current at be976158c8 (run 38212109944).
-- [x] **[SIL/P2 · S375]** Cartoon and illustration reaction totals published under `panels` in the reader-signal feed (S376).
-- [x] **[SIL/P2 · S375]** WebKit reaction spec failures: cause was late section rendering without scroll anchoring; 12 of 12 (S376).
-- [x] **[SIL/P3 · S375]** Stray Cancel reply and Try again on comment threads: real in production, fixed in CSS (S376).
-
-# S374 arc — scripts after first paint, SI first use
+## S374 arc — scripts after first paint, SI first use
 
 Completed waves: [verbatim archive](archive/TASK_BOARD_ARCHIVE.md).
 
 - [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
 - [ ] **[HOME/P2 · S374]** `home-intelligence.js` remains dormant after deferred injection; review its member-data and layout scope before enabling. `recent-ships.js` shipped with early/late initialization and hashed delivery in S377.
-
-# S373 — S372 follow-ups, guards and test coverage
-
-- [x] Wave1: line endings pinned at checkout (`.gitattributes`); retention report added to the evidence graph.
-- [x] Wave2: content lane carries three anchored data files; served-versus-committed byte parity reporter, wired into build:check and the daily monitor (report-only, last step).
-- [x] Wave3: pre-push blocks a skip-CI token in a commit body; closeout refuses a non-interactive shell up front; clean-checkout verifier; audit sidecar per session; redirect targets must exist.
-- [x] Wave4: satire 640 AVIF in the lane plus backfill; sized card art; mobile thumbnail and desktop placeholder fixes with a browser test and a 28-capture review.
-- [x] Wave5: staging applies `_redirects` through the Worker (staging-only flag); Lighthouse flake diagnosed, thresholds unchanged.
-- [x] Production: promoted 2026-10-10 (founder-approved). Worker ed6ca127, full Pages lane run 38074236799; production is tree-current at a2c339580. Lighthouse failed twice at 2b001af82 and passed first time at 4e2f42773 with no JS or CSS change; the Lighthouse fix below is still open.
-
-# S372 arc — assurance and redirect repair
+## S372 arc — assurance and redirect repair
 
 - [ ] **[PERF/P2 · S372]** Lighthouse is sitting on its floors: homepage 0.75–0.78 vs 0.76 and `/news/2026-08-11/cloudflare-gave…/` bimodal 0.88 or 0.92 vs 0.90 (text LCP, render delay 2.2s vs 3.4s, TBT 0). Three of the last five runs needed a re-run. Find the render-delay cause or mark the tier lab-volatile with corroboration; do not lower floors. **S373 evidence:** observed FCP equals observed LCP (160–230ms) and ten scripts finish before it in every run; simulated FCP is steady at 1.3s while simulated LCP swings 2.3–3.9s. The gap is the script graph. Next: load below-the-fold Desk scripts after paint (CSP-safe) and compare in CI. The homepage tier now reads recurring sub-floor. — **S374:** script loading changed on both page types (D-S374.1); **S374: improved, not stable.** be218812c8 passed first time (article 0.98/0.99/0.99); 1f29cc7bf9 failed once on the article (0.88/0.88/0.96) and passed on re-run. Failing runs had the load event before first paint with 24 to 25 requests done, including fetches from eager `desk-presence` and ambient scripts. Next: delay those first fetches until after paint.
-
-# S371 release maintenance
+## S371 release maintenance
 
 - [ ] [SIL/P2 · next scope] Exercise the art receipt path on the next real scheduled publish; confirm consumer accepts the exact SHA/path ledger.
 - [ ] [SIL/P2 · next scope] Keep shell regeneration and SRI stamping in a single documented sequence when running partial generators.
 
 # Task Board — VaultSparkStudios.github.io
-
 ## S370 arc
 
 - [x] Wave 1: preserve residue, sync, reconcile canon and verify the two publication premises.
@@ -66,15 +51,6 @@ Completed waves: [verbatim archive](archive/TASK_BOARD_ARCHIVE.md).
 - [x] **[CI/P2 · completed S371]** Restrict the optional Open Graph regeneration publisher to a writable branch; S370 release-tag generation succeeded but publishing failed from detached HEAD (run 37650649182).
 
 Last updated: 2026-10-08 UTC (S370 requested closeout)
-
-## S369 — Spark candidate and release
-
-- [x] Audit competing route/resume popups and produce `docs/AUDIT_2026-10-06.json`, derived Markdown and `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; 12/12 typed source premises verified.
-- [x] Expand the accepted companion direction into Spark plan v2: visual identity, motion states, personality, mobile composition, public agent itineraries and explicit removal criteria for both pictured guides.
-- [x] **[P1 · verified live]** Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; neither guide reappears in the served release.
-- [x] **[P1 · Spark verified live]** Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation and canonical staging/live acceptance complete.
-- [x] **[P2 · founder-directed hero wording]** Homepage hero eyebrow now says “AI & Super Intelligence (SI) Studio” per explicit founder direction on 2026-10-06. This bounded hero edit does not rewrite the separate Synthetic Intelligence explainers or assert a demonstrated superintelligent capability.
-
 ## S368 final — open follow-ups (2026-10-05)
 
 - [x] **[P1 · S370 verified runs 37549313182/37590125126]** Confirm the art autopilot's first scheduled publish (`.cache/desk-art-staging/autopilot.log`); fix anything it aborted on.
@@ -83,23 +59,10 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] 46 old stashes archived under `refs/stash-archive/` and the stash list cleared.
 - [ ] **[SIL/P2]** Push helper as a repo script (`scripts/push-main.mjs`): autostash merge, regenerate conflicted generated outputs, `repair-evidence-graph`, push — replacing the session-local PowerShell helper that four separate failure modes tripped this session.
 - [x] /news/ search + filters, card timestamps, Desk signup bar, per-form Turnstile, legal wording, digest armed, art autopilot (D-S368.10), staging baseline reset.
-
-## S368 continued — Desk art, satire cartoons, AI & SI positioning
-
-- [x] Desk banner art restored (58 stories) + nightly worker + 48h currency alarm.
-- [x] Satire cartoon pipeline (D-S368.7); 95 stories reviewed and live.
-- [x] Hybrid AI & SI positioning + `/synthetic-intelligence/` + `/ai-vs-si/` (D-S368.8); four-story AI→SI Desk report.
-- [x] Fact extractor entity/chrome repair (55 facts); staging `--paths-file` fix; Desk prose links studio pages.
-- [x] Six fallback stories regenerated with per-story `visual.satireDirection` plus a general no-extra-real-people / no-mascot / correct-country prompt rule; all reviewed and live (102 stories with cartoons).
-- [x] **[SIL]** `scripts/review-satire-batch.mjs` (`npm run desk:satire:review`): contact sheets + explicit-id approval bound to live hashes.
-- [x] **[SIL]** `scripts/repair-evidence-graph.mjs` (`npm run repair:evidence`): rebuilds and stages every stale node the pre-push coherence gate would reject.
-- [x] Obelisk follow-up shipped via Ark `01K44K376G48C0C29395D31FE9` (supersedes `01K3SH847CF5020D9D7209EB07`).
-
 ## S368 — Audit 2026-10-02
 
 - [ ] **[AUTH/P0]** Obelisk Ark `01K3SH847CF5020D9D7209EB07`: reopen signup + test identity → login E2E; Sparked-as-free.
 - [ ] **[P1]** Approve Desk digest test → `autoSend`; apply caller-trust-column-revokes; Ark `01K3SJ87…` reply.
-
 ## Desk archive follow-up — 2026-10-01
 
 - [x] Archive 90 stories by month; seven recent editions keep the hub below 200 KiB.
@@ -107,7 +70,6 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] Repair the daily Desk lane's staging ancestry, 24 withheld persona/archive paths and restricted receiver rules; recovery `36835514861` and Pages `36835622726` passed with 159/159 production bytes.
 - [x] **[DESK/RELEASE/P2 · S370 verified run 37622619279]** Observe the next scheduled publisher-to-release trigger after the October 1 repair; the manual recovery path is proven.
 - [ ] **[DESK/QA/P2]** Add a generated-fixture check for month rollover so a future edition automatically creates its month archive and retains all older story links.
-
 ## Desk persona follow-up — 2026-09-30
 
 - [x] Release eight fictional correspondents with portraits, marks, voices, sourced feeds and prediction records; add creative-tools MICA with an honestly empty feed.
@@ -115,7 +77,6 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] PR #132 and Pages run `36791903046`: 506 build checks, 215 mobile cases, 70 reviewed captures, hosted gates and 147-path parity passed. Full-site identity remains held.
 - [ ] **[DESK/RELEASE/P2]** Verify prior-overlay path preservation automatically before scoped Pages deploys.
 - [ ] **[QA/P2]** Review measured Linux screenshots before refreshing visual-regression references.
-
 ## S366 — Robinhood Summit and daily homepage publication
 
 - [x] Publish the sourced September 29 Robinhood HOOD Summit analysis and lead the homepage with it.
@@ -129,7 +90,6 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] **[S366][PERF/P2]** A subsequent hosted Lighthouse run `36741037407` passed all nine route tiers at the unchanged floors; retain trend monitoring before any full-site promotion.
 - [x] **[S366][TRUTH/CI]** Keep IGNIS ROI source age separate from publisher health after a quiet ledger blocked closeout: `generatedAt` remains September 9 evidence, `rebuiltAt` tracks regeneration, and focused freshness checks pass.
 - [x] **[S366][CI]** Declare workflow scope for the new scheduled surface and Desk staging checks, and run their pure self-tests from the build gate; the reachability census now passes 254/254 checks and 325/325 self-tests.
-
 ## S365 — completed arc and follow-up
 
 - [x] Extract publisher article prose before fact selection; correct page-chrome facts in the 2026-09-28 edition and gate future Desk facts against navigation, promotion, and captions.
@@ -309,14 +269,6 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] **[S340][OBS/P3] `check-postbuild-ordering --check` reports `unmeasured` in CI and always will.** S347: actual postbuild lifecycle now produces a schema-bound trace. Exact complete-HTML hash observations gate later writes; ordinary/no-op reads are retained without invented dataflow. 38/38 focused tests; final build pending.
 
 - [x] **[S339][UX/P3] The cover artwork still duplicates the tile's KICKER and TITLE, the same way it used to duplicate the status.** Superseded by the decided S340 art-only direction and its S347 implementation; no separate design decision remains. Final pixel/release evidence is tracked on the S347 item.
-
-
-
-
-
-
-
-
 
 - [ ] **[S337][SEC/P1] The Trusted Types enforce blocker is LOAD ORDER, and it is measured.** `ambient-core.bundle.js` installs the TT `default` policy that the site's ~167 legacy `innerHTML` sinks depend on, and its own comment says it "MUST load before any sink usage" — but ambient-core is not the first script on the page. Measured across 137 built pages in S337: **31 sink-bearing client assets load before it**, led by `pwa-nav.js` (81 pages) and `pwa-install.js` (72). Report-Only hides this; enforcement throws. This is the concrete blocker the board has been recording as "stale soak evidence" — both are true, only this one names a defect. The repair hoists the policy installer ahead of every sink-bearing asset, which rewrites the head of every page and invalidates every hash-bound receipt at once, so it needs its own session and its own reseal budget, not a rider on a deploy. Re-measure with the scan in D-S337.3 before and after. (D-S337.3)
 
@@ -641,12 +593,9 @@ Verification, S281 (do not re-derive):
 ## Completed historical work
 
 Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TASK_BOARD_ARCHIVE.md).
-
 ## S364 follow-up
 
 - [ ] **[SIL][S364][OBS/P2]** Add a scheduled no-send public-form configuration probe that distinguishes missing challenge configuration from ordinary invalid input. No scheduled email sends.
-
-
 ## S369 focused follow-ups
 
 - [ ] **[SIL][S369][P2]** Re-probe Scriptorium (HTTP 401) and VaultFront (HTTP 503); treat these as authentication/availability observations, not proven abandoned URLs.
@@ -659,22 +608,18 @@ Completed S30–S69 entries are preserved in [TASK_BOARD_ARCHIVE.md](archive/TAS
 - [x] Honest thresholded Desk readership metrics from existing browser evidence; verify privacy-floor and counting tests.
 - [x] Stage, review and release combined Spark/Desk candidate; confirm actual production behavior.
 
-
 ### S369 closeout record reconciliation
 
 - [x] Reconcile deployed acceptance, creative direction, repository and Codex memory, status metadata and the final closeout brief. Preserve the recorded score and history.
 
-
 - [x] Fix Desk signup shared-KV quota 503; isolate rate counters, preserve security checks, deploy staging and production and verify no-send route.
 - [x] Observe founder regular signup confirmation and delivery: founder reports the normal signup worked correctly (2026-10-06); no direct address enrollment or new agent-sent email.
-
 
 ### S369 requested newsletter experience
 
 - [x] Publish and verify agent-friendly Desk signup, premium confirmation/digest emails, signed cancellation and immersive welcome. Pages37548337150/source d607927ec and Worker d12535f4 live;530/530 checks and desktop/mobile production pixels pass. New-template mailbox delivery stays separately unverified.
 - [ ] [SIL] Check upgraded invite/unsubscribe in a real mailbox during the next authorized signup; new-template delivery remains unverified.
 - [ ] [SIL] Evaluate explicit confirmation POST to avoid mail-scanner opt-in while preserving a simple agent workflow; existing confirmation GET retained in this release.
-
 
 Eight older completed technical tasks are preserved in context/archive/TASK_BOARD_ARCHIVE.md.
 
@@ -689,7 +634,6 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 - [x] [SIL] Guard campaign payload compatibility with 44 digest regression checks.
 - [x] [SIL] Guard overview-before-art reading order and complete reaction labels with 112 article contracts and 14 focused browser checks.
 
-
 ### S370 explicit final closeout
 
 - [x] Reconcile context, task board, CDR, truth audit, repository memory and Codex memory with all five completed founder requests.
@@ -700,6 +644,4 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 - [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.
 
-
 - [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
-

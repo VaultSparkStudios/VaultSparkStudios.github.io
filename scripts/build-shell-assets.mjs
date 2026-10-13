@@ -330,7 +330,7 @@ function normalizeThemeBootstrap(html) {
   return next;
 }
 
-function updateHtmlReferences(html, manifest, relPath) {
+export function updateHtmlReferences(html, manifest, relPath) {
   let next = html;
 
   for (const asset of SHELL_ASSETS) {
@@ -353,8 +353,12 @@ function updateHtmlReferences(html, manifest, relPath) {
   // content-addressed entry point to its bytes so it preserves the candidate
   // reference instead of substituting the retired guide bundle.
   const core = manifest.assets.ambientCore;
+  // A new hash has not been written yet: derive integrity from the same
+  // candidate bytes that main() will publish, never yesterday's disk asset.
+  const candidateCore = manifest.generatedFiles.find(file => file.outputRelPath === core.path);
+  if (!candidateCore) throw new Error('Ambient core candidate bytes are missing from the shell manifest');
   const integrity = 'sha384-' + crypto.createHash('sha384')
-    .update(fs.readFileSync(path.join(root, core.path))).digest('base64');
+    .update(candidateCore.content).digest('base64');
   next = next.replace(/<script\b[^>]*\bsrc=["'][^"']*assets\/ambient-core\.shell-[a-f0-9]{10}\.js["'][^>]*>/g,
     tag => tag.replace(/\s+(?:integrity|crossorigin)=["'][^"']*["']/g, '')
       .replace(/>$/, ` integrity="${integrity}" crossorigin="anonymous">`));

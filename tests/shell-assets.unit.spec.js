@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -12,8 +13,23 @@ const MANIFEST = path.join(ROOT, 'assets', 'shell-manifest.json');
 const SW = path.join(ROOT, 'sw.js');
 const before = fs.readFileSync(MANIFEST, 'utf8');
 const swBefore = fs.readFileSync(SW, 'utf8');
-const { predicatesMissingShellAsset, findHtmlFiles } = await import('../scripts/build-shell-assets.mjs');
+const { predicatesMissingShellAsset, findHtmlFiles, updateHtmlReferences } = await import('../scripts/build-shell-assets.mjs');
 const bundle = (entries) => `const CONTENT_ADDRESSED_PREDICATE_SRCS = [\n${entries}\n];`;
+
+test('new shell hashes bind integrity to candidate bytes before files exist', () => {
+  const original = JSON.parse(before);
+  const corePath = 'assets/ambient-core.shell-0000000000.js';
+  assert.equal(fs.existsSync(path.join(ROOT, corePath)), false);
+  const content = Buffer.from('window.__newCandidate = true;');
+  const manifest = {...original, assets: {...original.assets, ambientCore: {...original.assets.ambientCore, path: corePath}}, generatedFiles: [{outputRelPath: corePath, content}]};
+  const html = `<html><head></head><body><script src="/${original.assets.ambientCore.path}" integrity="old" crossorigin="use-credentials"></script></body></html>`;
+  const out = updateHtmlReferences(html, manifest, 'index.html');
+  const integrity = 'sha384-' + crypto.createHash('sha384').update(content).digest('base64');
+  assert.ok(out.includes(`src="/${corePath}"`));
+  assert.ok(out.includes(`integrity="${integrity}" crossorigin="anonymous"`));
+  assert.equal(out.includes('integrity="old"'), false);
+  assert.throws(() => updateHtmlReferences(html, {...manifest, generatedFiles: []}, 'index.html'), /candidate bytes are missing/);
+});
 
 test('shell scan preserves cache snapshots and finds public nested pages', () => {
   const temporaryRoot = path.resolve(os.tmpdir());

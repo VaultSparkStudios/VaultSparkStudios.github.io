@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 927.7 | 5: 925.8 | 10: 937.2 | 25: — [N=19] | all: unmeasured (archived history excluded)
+Avgs — 3: 930.3 | 5: 927.8 | 10: — | 25: — | all: unmeasured (archived history excluded)
 History scope: latest scored entry per session in active append-only ledger.
 Velocity trend: ↓ | Protocol velocity: → | Debt: ↓
-Last session: 2026-10-13 | Session 377 | Total: 931/1000 | Velocity: 2 | protocolVelocity: 0
+Last session: 2026-10-13 | Session 378 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2517,3 +2517,21 @@ Brainstorm commitments: inspect dormant deferred modules before activation; repa
 ### S377 final publication receipt — 2026-10-13
 
 Autopilot completed exit0 after two534-check passes. Closing452fdf163c was pushed, three exact-candidate hosted workflows passed and confirmed production38365858868 executed deployment/purges/liveness. Immutable served text1055/1065 exact with10 redirects; primary HTML281/304 exact after declared transport,14 declared redirects/nine held identity routes. Live6/6. Lighthouse0.89 first attempt failed against unchanged0.90; one rerun passed local and staging. Existing repeatability and identity work remains. Ark cargo01K4Q2VMP8402DF8514A691EB7 delivered; owner application unproven. Final evidence prepared for publication in docs/RELEASE_S377.json. SIL remains931/1000; no new selected work.
+
+## 2026-10-13 UTC — Session 378 (Spark control clearance) | Total: 933/1000 (v3.0) | Velocity: 1 | Debt: ↓
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Website product rubric. Verified local reader controls, editing and focus return; 42/42 browser cases, 12/12 shell unit cases, 56 inspected images. First browser attempts exposed test scrolling assumptions and WebKit click focus; corrected, not hidden. Conversion and field-vitals effects remain unmeasured. Full release acceptance is pending, so this score is implementation/process evidence only. Brainstorm commitments recorded on TASK_BOARD: selector-membership regression upkeep and hidden-opener focus return after placement changes. No additional selected scope.
+

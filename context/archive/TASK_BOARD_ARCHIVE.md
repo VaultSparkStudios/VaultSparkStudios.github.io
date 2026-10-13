@@ -2099,3 +2099,45 @@ Moved verbatim from the active board to preserve startup budget; open work stays
 - [x] Wave4: menu label "Synthetic Intelligence (SI)" sitewide (258 findings to 2), checked in seven themes on desktop and mobile; FAQ question reworded.
 - [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
 - [x] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Cleared at be218812c8 (E2E 38189819783 green). Cause: a records-only commit that changed context files without regenerating derived artifacts; a records commit needs `resync-derived` and a receipt rebind before push.
+
+
+<!-- rotated 2026-10-13 · sessions < 376 · 4 block(s) -->
+
+## S375 arc — cartoon below the illustration, with its own reactions
+
+- [x] Wave1: sync, triage (not cut off), /start, canon sync (2 gaps, 0 ABSOLUTE).
+- [x] Wave2: audit `docs/AUDIT_2026-10-12-S375.md`, two items; three hit-list items assessed and left unselected with reasons.
+- [x] Wave3 (founder direction): cartoon stage directly below the illustration on 122 articles, own reaction scope and comment thread; layout test, contract check and browser spec updated.
+- [x] Wave4: article shell no longer scrolls sideways (`overflow:clip`); seven themes captured at desktop and mobile.
+- [x] Wave5: gate 534/534, staging, push c8635d986e, required checks first time, production tree-current at be976158c8 (run 38212109944).
+- [x] **[SIL/P2 · S375]** Cartoon and illustration reaction totals published under `panels` in the reader-signal feed (S376).
+- [x] **[SIL/P2 · S375]** WebKit reaction spec failures: cause was late section rendering without scroll anchoring; 12 of 12 (S376).
+- [x] **[SIL/P3 · S375]** Stray Cancel reply and Try again on comment threads: real in production, fixed in CSS (S376).
+
+## S373 — S372 follow-ups, guards and test coverage
+
+- [x] Wave1: line endings pinned at checkout (`.gitattributes`); retention report added to the evidence graph.
+- [x] Wave2: content lane carries three anchored data files; served-versus-committed byte parity reporter, wired into build:check and the daily monitor (report-only, last step).
+- [x] Wave3: pre-push blocks a skip-CI token in a commit body; closeout refuses a non-interactive shell up front; clean-checkout verifier; audit sidecar per session; redirect targets must exist.
+- [x] Wave4: satire 640 AVIF in the lane plus backfill; sized card art; mobile thumbnail and desktop placeholder fixes with a browser test and a 28-capture review.
+- [x] Wave5: staging applies `_redirects` through the Worker (staging-only flag); Lighthouse flake diagnosed, thresholds unchanged.
+- [x] Production: promoted 2026-10-10 (founder-approved). Worker ed6ca127, full Pages lane run 38074236799; production is tree-current at a2c339580. Lighthouse failed twice at 2b001af82 and passed first time at 4e2f42773 with no JS or CSS change; the Lighthouse fix below is still open.
+
+## S369 — Spark candidate and release
+
+- [x] Audit competing route/resume popups and produce `docs/AUDIT_2026-10-06.json`, derived Markdown and `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; 12/12 typed source premises verified.
+- [x] Expand the accepted companion direction into Spark plan v2: visual identity, motion states, personality, mobile composition, public agent itineraries and explicit removal criteria for both pictured guides.
+- [x] **[P1 · verified live]** Retire the bottom-left Resume World Builder compass and bottom-right Your route guide, including automatic triggers, corner unlock toasts and stale generated bundles; preserve progress within Spark. Owner: website implementer. Acceptance: interaction scenarios in `docs/VAULT_COMPASS_PLAN_2026-10-06.md`; neither guide reappears in the served release.
+- [x] **[P1 · Spark verified live]** Build the named Spark entry, living sphere, shared palette/map/list and human/agent itineraries at the accepted first-release boundary. Dependency: guide retirement, rendered browser evidence and staging gates. Implementation and canonical staging/live acceptance complete.
+- [x] **[P2 · founder-directed hero wording]** Homepage hero eyebrow now says “AI & Super Intelligence (SI) Studio” per explicit founder direction on 2026-10-06. This bounded hero edit does not rewrite the separate Synthetic Intelligence explainers or assert a demonstrated superintelligent capability.
+
+## S368 continued — Desk art, satire cartoons, AI & SI positioning
+
+- [x] Desk banner art restored (58 stories) + nightly worker + 48h currency alarm.
+- [x] Satire cartoon pipeline (D-S368.7); 95 stories reviewed and live.
+- [x] Hybrid AI & SI positioning + `/synthetic-intelligence/` + `/ai-vs-si/` (D-S368.8); four-story AI→SI Desk report.
+- [x] Fact extractor entity/chrome repair (55 facts); staging `--paths-file` fix; Desk prose links studio pages.
+- [x] Six fallback stories regenerated with per-story `visual.satireDirection` plus a general no-extra-real-people / no-mascot / correct-country prompt rule; all reviewed and live (102 stories with cartoons).
+- [x] **[SIL]** `scripts/review-satire-batch.mjs` (`npm run desk:satire:review`): contact sheets + explicit-id approval bound to live hashes.
+- [x] **[SIL]** `scripts/repair-evidence-graph.mjs` (`npm run repair:evidence`): rebuilds and stages every stale node the pre-push coherence gate would reject.
+- [x] Obelisk follow-up shipped via Ark `01K44K376G48C0C29395D31FE9` (supersedes `01K3SH847CF5020D9D7209EB07`).

@@ -1,46 +1,49 @@
-<!-- generated-by: scripts/compact-handoff.mjs deterministic-v1 -->
-<!-- source-hash: a924997a65bd81658b87dd6338e4bf07fe4021165c5edfeb5345d9588d6111da -->
+<!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
+<!-- source-hash: 10312c953692 -->
+<!-- generated-at: 2026-10-13T21:01:45.557Z -->
 
-# LATEST_HANDOFF (source extract)
+# LATEST_HANDOFF (compact)
 
-# Latest Handoff
-## Where We Left Off — S369 Spark shipped
+SESSION 377 SUMMARY
 
-Production content lane: Pages run 37515965605, source 61efa22a56fad17326fcf0fd733b11669e4735e9; edge Worker 97e7e2b3-b93e-41eb-814f-71495d22a778. Live Spark 10/10 and seeded-history Membership 14/14 (seven themes × desktop/mobile) verified. Both old corner guides remain absent. MindFrame launches at https://usemindframe.com/. Full local build 530/530, mobile contract 215/215, staging ceremony 11/11; actual receipts and images are linked in docs/SPARK_RELEASE_2026-10-06.md. Existing identity/Supabase holds remain unchanged. The Desk ships a premium AI news masthead, clickable anchor profiles, mini navigation and a sitewide AI News/subscribe strip. Articles lead with artwork and version-bound public image threads beside it, then source-attributed News Briefs, The Desk’s Take and the signal-versus-hype axis. Satire follows all persona discussion before the full AI disclosure and subscription area. Readership cards expose thresholded recorded homepage/article loads and engaged reading evidence; missing values stay Collecting. Verification: 22/22 browser cases, 7/7 verification-helper cases, 33/33 metric cases, exact claim parity, 210 Desk captures reviewed in seven themes, including profile pagination preserving every contribution and 215/215 full mobile checks.
+Session: 377 (2026-10-13)
+Intent: /arc, commit/push to main, full deployment (authorized). ACHIEVED.
 
-Closeout updates preserve earlier candidate-stage observations. SIL remains 912/1000; no field conversion or Core Web Vitals improvement is claimed. Two external URLs remain uncertain (Scriptorium 401, VaultFront 503), with a bounded follow-up on the board. The homepage hero now says Super Intelligence per D-S369.5.
+SHIPPED
+- Once-only deferred release cards with hashed delivery
+- Bounded task and strict premise adapters (Studio Ops runtime)
 
-> Historical candidate checkpoint below: its pending statements are superseded by the shipped acceptance above and the Desk signup recovery at the end.
+TESTS & VALIDATION
+- Local/clean-checkout: 534/534 gates passed; mobile 215/215
+- Five new unit regressions; 28 theme captures (desktop/mobile before/after) inspected
+- E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172 passed
+- Production readback: 1052/1062 identical, 10 declared redirects, 6/6 feature probes live
 
-## Where We Left Off — S369 Spark candidate
+DEPLOY
+- Candidate 6633fe0d22 to production (run 38355129571)
+- Primary domain: 280 exact site bodies, 14 declared redirects, 9 held identity routes
+- Release evidence: docs/RELEASE_S377.json
 
-User authorized full-plan implementation, closeout, commit/push main and staging-first deployment; MindFrame link audit joined that scope. Spark is implemented locally, including both guide retirements, accessible list parity, validated public manifest, route progress and export. Two independent review rounds found 8 then 3 defects; all were fixed and focused tests pass. Candidate release checks are in progress. Canonical staging: Spark 10/10, mobile 215/215, release ceremony 11/11 (three browser cases executed; three identity cases explicitly held). All 140 final Compass captures reviewed in seven themes; 28 entry/bridge images also reviewed. Cold list opening measured 141–249ms and warm opening 54ms in three unthrottled headless Chromium samples; this is lab evidence, not field performance. Full single-run repository verification and production promotion remain pending.
+ISSUES CAUGHT & FIXED
+- Independent review found duplicate selector handling and overly broad historical premise; both resolved
+- Secret scanning retained high confidence
 
-Remote main fast-forwarded by five automated receipt commits to 8c672f5bb. A scoped stash preserves the prior generated receipt versions; latest remote uptime observations were retained. Existing unrelated cache/performance residue is preserved. No force push or identity-hold change is authorized.
+TOP 3 NOW-BUCKET ITEMS
+1. Existing identity hold (unchanged)
+2. Field-vitals freshness
+3. Firefox taps after jumps; companion overlap (WebKit)
 
-## S369 — popup audit · 2026-10-06
+TOP 3 BLOCKERS
+- Lighthouse repeatability
+- Dormant home-intelligence
+- Cross-repo adoption tracking (delivery != adoption)
 
-- Follow-up: founder accepted **Spark**, the colorful living-sphere companion, and requested both pictured corner guides be removed. Expanded plan to v2 with exact render-path retirement criteria, motion/voice/state specification, first-release boundary and agent itinerary parity. Sidecar updated to 95h estimated L2 scope. This follow-up updates the plan; the guides have not yet been removed from production.
+HUMAN-BLOCKED
+- None noted with age
 
-Session Intent: run /start, audit annoying public discovery popups, and propose a unified immersive human/agent experience; also answer homepage hero terminology question.
+CARRY-FORWARD
+- Pre-existing local operator caches, untracked work preserved
+- CDR review: no new creative direction
+- Ark writes for cross-repo; studio-ops replies still pending
 
-- Completed: refreshed/validated startup brief; Canon/Ark sync and frontier check; focused screenshot/source audit; attention and journey contracts pass 15/15 each but omit runtime constellation collisions; 12/12 canonical typed premises verified using this repo's file contents.
-- Deliverables: `docs/AUDIT_2026-10-06.json` (ranked sole truth), derived `.md`, `docs/VAULT_COMPASS_PLAN_2026-10-06.md`, and premise evidence JSON. Recommendation: one optional Vault Compass, no automatic expansion, shared map/list/agent destinations, Proof Orbit and Signal Mixing at selected depth.
-- No UI/hero implementation, commit, push or deployment. Browser inventory empty: new live/mobile/theme visual evidence is pending, not claimed. Supplied screenshot reviewed. Context initially unmeasured; brief's displayed percentage is inconsistent. Sibling start-sync fallback inspected Studio Ops and refused its residue, so it did not sync this repo. Existing WIP preserved.
-- Hero: `index.html` and `scripts/lib/org-entity.mjs` use Synthetic Intelligence under D-S368.8. Official White House order confirms Super Intelligence for executive-branch usage; studio wording was not changed. See plan's terminology note.
-- Startup warnings: skill manifest missing; five canon rows pending review; existing conformance errors/gaps retained. Current work was audit only. Next: select Compass implementation scope, then capture before/after in a working browser and verify staging before any promotion.
-
-### Desk signup recovery
-
-
-## Source lookup
-
-Extract is incomplete. Read context/LATEST_HANDOFF.md at the indicated lines before acting on omitted work or approvals. Full file: 46 lines; 0 typed handoff blocks.
-- L1: Latest Handoff
-- L2: Where We Left Off — S369 Spark shipped
-- L10: Where We Left Off — S369 Spark candidate
-- L16: S369 — popup audit · 2026-10-06
-- L28: Desk signup recovery
-- L33: S369 latest newsletter checkpoint
-- L38: S369 newsletter production edge acceptance
-- L43: S369 final newsletter publication
+Next session: confirm identity hold resolution path and prioritize Firefox/companion overlap fix.

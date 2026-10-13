@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S377) - WHAT SHIPPED ══════════════════════════╗
-║  S377 shipped two selected audit outcomes, validated real pixel  ║
+║  S377 fresh startup, audit, implementation and closeout autopil  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · live-production · arch=— · top-axis=—       ║
+║  Profile · website · S1 · arch=— · top-axis=—                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -67,9 +67,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
-║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
+║  ⚠  ███████████████████████░   98% used                          ║
+║     265,291 / 272,000 tok  ·  codex  ·  heuristic-stale          ║
+║     Verdict: CONSIDER_CLOSEOUT  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wave 4: selected features deployed and acc  ║
-║        Wave 4: selected features deployed and accepted; finish   ║
-║                                                                  ║
-║   93  [PRODUCT]      Census deferred homepage modules before en  ║
+║   96  [PRODUCT]      Census deferred homepage modules before en  ║
 ║        Census deferred homepage modules before enabling home-in  ║
 ║                                                                  ║
-║   84  [PRODUCT]      At 390px the Spark companion overlaps the   ║
+║   87  [PRODUCT]      At 390px the Spark companion overlaps the   ║
 ║        At 390px the Spark companion overlaps the Post comment b  ║
 ║                                                                  ║
-║   84  [INTELLIGENCE]  Start maintenance lane has no local copy   ║
+║   87  [INTELLIGENCE]  Start maintenance lane has no local copy   ║
 ║        Start maintenance lane has no local copy here; task-slic  ║
 ║                                                                  ║
-║   80  [VERIFY]       Keep generated receipt repairs in dependen  ║
+║   83  [VERIFY]       Keep generated receipt repairs in dependen  ║
 ║        Keep generated receipt repairs in dependency order: stat  ║
+║                                                                  ║
+║   80  [VERIFY]       Firefox loses a reaction tap issued straig  ║
+║        Firefox loses a reaction tap issued straight after a jum  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

@@ -1,3 +1,7 @@
+### S378 — 2026-10-13
+
+Fresh goal bound to S378; native completion unproven until new release evidence. Initial startup brief used a stale previous-session context estimate; live meter is UNMEASURED, not 98% used. CANON checks: no absolute gaps; existing identity hold and two terminology findings remain explicit. Local feature proofs pass; production rollout remains pending. Existing external maintenance warnings are not website failures.
+
 ### S377 truth reconciliation — 2026-10-13
 
 Homepage Recent Ships previously remained empty because its listener was registered after DOMContentLoaded; the repaired initializer now renders three cards in six production browser/width cases. Local and remote receipts distinguish prior candidate evidence, explicit identity holds and current production byte parity. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json. Conversion/field performance improvements remain unmeasured; no identity acceptance claim.

@@ -62,7 +62,7 @@ test('corner buddy animates, opens a nonmodal popup and remembers placement',asy
   await buddy.click();await expect(page.locator('.spark-card').first()).toBeVisible();expect(await page.locator('#spark-compass').evaluate(n=>n.matches(':modal'))).toBe(false);
   await page.getByLabel('Spark corner').selectOption('left');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
   await page.getByLabel('Spark motion',{exact:true}).selectOption('still');await expect(page.locator('.spark-buddy')).toHaveAttribute('data-motion','still');
-  await page.keyboard.press('Escape');await expect(buddy).toBeFocused();await page.reload();await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
+  await page.keyboard.press('Escape');await expect(page.locator('#spark-compass[open]')).toHaveCount(0);if(await buddy.isVisible())await expect(buddy).toBeFocused();else await expect(page.getByRole('button',{name:'Open Spark navigation'})).toBeFocused();await page.reload();await expect(page.locator('.spark-buddy')).toHaveAttribute('data-side','left');
   await page.getByRole('button',{name:'Tuck Spark away for this visit'}).click();await expect(page.locator('.spark-buddy')).toBeHidden();
   await page.getByRole('button',{name:'Open Spark navigation'}).click();await expect(page.locator('#spark-compass')).toBeVisible();
 });

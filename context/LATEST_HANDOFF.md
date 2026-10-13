@@ -1,3 +1,11 @@
+## Where We Left Off (Session 378) — Spark control clearance
+
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Native goal 01a13711-2367-7bd0-8d51-29d9b12798f8 bound to S378 at starting commit 47da157a4667. This invocation ran full startup and a fresh nine-axis audit.
+
+S378: Spark yields when its chosen corner covers an interactive control and while the visitor edits; it returns when clear. Frame-coalesced checks cache candidate controls and invalidate on DOM/membership changes. Explicit click focus preserves WebKit return behavior. Shell integrity hashes new candidate bytes before files are written. Final local Spark suite 42/42 across three engines, no retries; shell unit 12/12; 56 manually reviewed seven-theme captures. Full build gates, staging, push, hosted checks and production acceptance remain pending.
+
+Audit: docs/AUDIT_2026-10-13-S378.json. Independent review: cache membership finding fixed; second source review passes. First broad Spark run exposed WebKit mouse-focus behavior, fixed and final suite 42/42. Preserve all prior operator cache residue. Existing identity hold is unchanged; no new identity acceptance claimed. CDR reviewed: no new founder creative direction.
+
 ## Where We Left Off (Session 377) — homepage Recent Ships (2026-10-13)
 
 Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Selected outcomes achieved. Full fresh arc phases executed; closing publication452f pushed and production readback accepted. Final evidence receipt prepared for publication.

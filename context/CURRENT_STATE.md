@@ -1,3 +1,7 @@
+# S378 companion control clearance — 2026-10-13
+
+S378: Spark yields when its chosen corner covers an interactive control and while the visitor edits; it returns when clear. Frame-coalesced checks cache candidate controls and invalidate on DOM/membership changes. Explicit click focus preserves WebKit return behavior. Shell integrity hashes new candidate bytes before files are written. Final local Spark suite 42/42 across three engines, no retries; shell unit 12/12; 56 manually reviewed seven-theme captures. Full build gates, staging, push, hosted checks and production acceptance remain pending.
+
 # S377 homepage Recent Ships restored — 2026-10-13
 
 The deferred Recent Ships module now initializes once whether it loads before or after DOMContentLoaded. The homepage renders three release cards from public intelligence, with the existing changelog and unavailable-data fallbacks. A hashed child bundle makes the loader deliver the repaired executable. Local task projection and strict audit-premise adapters reuse Studio Ops and reject foreign paths and duplicate selectors.

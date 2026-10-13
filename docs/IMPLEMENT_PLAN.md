@@ -1,11 +1,5 @@
-# S377 implementation plan
+# S378 implementation plan
 
-Native goal association: ignored .cache/arc-goals binding. Bound session S377; new full arc. The start/canon sync supplied the newer lock writer and goal helper before implementation. No prior-session acceptance is borrowed.
+Session Intent: /arc, direct commit/push to main and full deployment, explicitly authorized.
 
-- Wave 1: startup and fresh nine-axis audit — complete; 2/2 premises verified.
-- Wave 2: restore deferred Recent Ships initialization and adopt bounded local audit adapters — complete.
-- Wave 3: unit and build checks, seven-theme rendered review, staging deployment, exact-candidate checks and authorized production promotion — complete.
-- Wave 4: completed — closeout autopilot passed, closing candidate pushed and confirmed production/readback accepted; final receipt prepared for publication.
-
-Selected audit: AUDIT_2026-10-13.json. L2 depth for both items. Implement local adapters first, then the Recent Ships initializer. Preserve after-paint loading and existing data/fallback rendering. Review the new real card layout in all themes at 1366px and 390px before shipping. Unchanged identity and membership contracts retain their current release scope. Received canonical propagation is validated as part of the candidate.
-
+Selected audit: AUDIT_2026-10-13-S378.json. One L2 outcome: Spark control clearance. First add geometry and editing yielding in the existing loader, then build hashed transport; verify behavior on three browser engines and all seven themes, independently review, and finish the authorized release and canonical closeout. No additional scope is inferred from remaining budget.

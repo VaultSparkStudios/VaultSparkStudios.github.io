@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import path from 'node:path';
 
 export function goalKey(goal) {
   if (typeof goal?.threadId !== 'string' || !goal.threadId.trim() || !Number.isSafeInteger(goal.createdAt) || goal.createdAt <= 0) {
@@ -25,6 +26,9 @@ export function bindArcGoal(goal, lockText, project) {
   const receipt = { schemaVersion: 1, key: goalKey(goal), threadId: goal.threadId, createdAt: goal.createdAt,
     project, session: Number(fields.session_id), startHead: fields.start_head, sessionStart: fields.session_start };
   if (fields.agent !== 'codex') throw new Error('Binding requires this goal’s Codex session lock');
+  if (String(fields.project || '').toLowerCase() !== path.basename(project).toLowerCase()) {
+    throw new Error('Session lock project does not match the goal checkout; investigate foreign lock');
+  }
   assessArcBinding(goal, receipt, project);
   return receipt;
 }

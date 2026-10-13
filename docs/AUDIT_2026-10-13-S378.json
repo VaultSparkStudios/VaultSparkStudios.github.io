@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "2.1",
+  "session": 378,
+  "generatedAt": "2026-10-13T21:05:47.122Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S378 full arc, supported-release stabilization: remove companion obstruction of existing feedback controls. No identity, lifecycle, tier, pricing or public-promise changes.",
+  "stage": {
+    "status": "SPARKED",
+    "recordedStage": "S1",
+    "lifecycleFocus": "supported-release",
+    "provenance": "live skill-profile audit, registry S1",
+    "readiness": [
+      {
+        "area": "reader interaction",
+        "state": "failing",
+        "evidence": "docs/visual-qa/s378-spark-dark-390-before.png and measured rectangle overlap"
+      },
+      {
+        "area": "identity",
+        "state": "held",
+        "evidence": "Existing Obelisk hold remains outside this unchanged-identity promotion"
+      },
+      {
+        "area": "release",
+        "state": "pending",
+        "evidence": "This invocation requires new staging/candidate/production proof"
+      }
+    ]
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "newFeatures": 1,
+    "ux": 2.5,
+    "feedback": 2,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1.5,
+    "speed": 2,
+    "tokenCost": 1.5
+  },
+  "candidateReview": [
+    [
+      "feature-depth",
+      "Spark usable beside comment controls",
+      "selected: existing navigation is useful but obstructs feedback"
+    ],
+    [
+      "feature-depth",
+      "Activate homepage member activity",
+      "not selected: dormant queries need their own data review"
+    ],
+    [
+      "new-features",
+      "Control-clearance overlay for companion debugging",
+      "novel but internal development aid, no new public surface needed"
+    ],
+    [
+      "new-features",
+      "Context-aware companion docking lanes",
+      "novel; prefer reversible yield over shifting a visitor-selected corner"
+    ],
+    [
+      "ux",
+      "Companion covers Post comment on 390px",
+      "selected: rendered overlap confirmed"
+    ],
+    [
+      "ux",
+      "Firefox taps after anchor jumps",
+      "not selected: known intermittent layout settling needs dedicated performance experiment"
+    ],
+    [
+      "feedback",
+      "Keep full comment form reachable",
+      "selected under control-clearance item"
+    ],
+    [
+      "feedback",
+      "Add a second reader survey",
+      "not selected: existing comment/reaction channel covers this"
+    ],
+    [
+      "gamification",
+      "Spark returns after leaving controls",
+      "included in selected acceptance"
+    ],
+    [
+      "gamification",
+      "Award badges for companion use",
+      "not selected: would change the earned rank economy"
+    ],
+    [
+      "ai",
+      "Local source-linked routes",
+      "already implemented by Spark manifest"
+    ],
+    [
+      "ai",
+      "Control-clearance evidence in agent release receipts",
+      "novel; use existing visual/runtime receipt contract"
+    ],
+    [
+      "security",
+      "Alter Obelisk identity hold",
+      "not selected: auth changes require separate founder direction"
+    ],
+    [
+      "security",
+      "Validate public assets and secrets before push",
+      "required release check, existing scanner reused"
+    ],
+    [
+      "speed",
+      "Coalesce collision checks per rendered frame",
+      "selected implementation detail; no dependency"
+    ],
+    [
+      "speed",
+      "Cache interactive candidates rather than query every scroll",
+      "selected implementation detail; invalidate on child-list changes"
+    ],
+    [
+      "token-cost",
+      "Bounded task projection",
+      "exists, sample 7934/8000 chars; first-line task omission remains upstream tooling defect"
+    ],
+    [
+      "token-cost",
+      "Paid semantic route model",
+      "not selected: existing deterministic public manifest provides this without API spending"
+    ]
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "spark-control-clearance",
+      "tier": "🔥",
+      "axis": "ux",
+      "title": "Keep Spark clear of reader controls",
+      "impact": 9,
+      "innovation": 5,
+      "effortHours": 2,
+      "priority": 22.5,
+      "why": "Restore unobstructed article feedback and navigation at phone widths using the existing companion.",
+      "recipe": "Extend the existing Spark loader with frame-coalesced, geometry-based yielding to ordinary interactive controls; keep modal priority, chosen corner, tucked/quiet preferences, and header access. Yield while editing, restore on exit, and avoid per-scroll DOM discovery. Verify real article submit/display-name controls and both corners in Chromium, Firefox and WebKit, seven themes at desktop/mobile, clean-build, staging and production.",
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "acceptance": "The companion yields whenever its selected corner intersects a visible interactive control; typing yields it; it returns when clear. Both corners, mobile and desktop, three engines; unchanged consent/tuck/quiet/header behavior. Hash-bound inspected seven-theme before/after captures; current staging and exact-candidate production readback.",
+      "premises": [
+        {
+          "claim": "The loader contains no geometry-based companion/control clearance before this implementation",
+          "adapter": "grep-count",
+          "target": "assets/command-palette-loader.js",
+          "pattern": "overlapsControl",
+          "operator": "eq",
+          "expected": 0
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Yield only to Desk comment forms; incomplete for site-wide controls."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Extend the existing Spark loader with frame-coalesced, geometry-based yielding to ordinary interactive controls; keep modal priority, chosen corner, tucked/quiet preferences, and header access. Yield while editing, restore on exit, and avoid per-scroll DOM discovery. Verify real article submit/display-name controls and both corners in Chromium, Firefox and WebKit, seven themes at desktop/mobile, clean-build, staging and production."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Add automatic adaptive relocation only with explicit new composition direction."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-13T21:11:52.391Z",
+          "status": "pending",
+          "note": "Implemented and reviewed. Exact staging, hosted candidate checks and production acceptance remain required."
+        },
+        {
+          "at": "2026-10-13T21:16:21.940Z",
+          "status": "shipped",
+          "note": "Selected implementation verified locally: final 42/42 browser cases, shell unit 12/12, 56 inspected captures. Full rollout remains required by arc and is not claimed complete."
+        },
+        {
+          "at": "2026-10-13T21:18:03.821Z",
+          "status": "shipped",
+          "note": "Final existing and new Spark suite 42/42 across Chromium, Firefox and WebKit without retries. WebKit click-focus regressions fixed, and hidden buddy returns focus to the header. Full source delivery and production rollout still pending."
+        }
+      ],
+      "implementationNotes": [
+        "Build dependency uncovered: shell integrity previously read the candidate hashed file before main wrote it. Now derives SHA384 from the exact generated candidate bytes; a missing candidate fails clearly. Shell unit suite 12/12.",
+        "Independent review caught attribute-only control membership changes; href/role/contenteditable invalidation fixed and covered.",
+        "Initial cross-browser clearance suite 9/9, no retries; final regression and existing Spark suite pending."
+      ],
+      "historicalPremiseEvidence": {
+        "sourceCommit": "47da157a46674a3855e774afb034ffcd2779df6d",
+        "verifiedBeforeImplementation": true,
+        "actual": 0,
+        "verification": "Fresh S378 strict verifier 1/1 before implementation; rendered mobile overlap measured and inspected."
+      }
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "priority": 22.5,
+    "top3": [
+      "spark-control-clearance"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "market-research",
+      "reason": "No MARKET.json; current work is evidenced release stabilization, not competitive positioning. No competitor facts assumed."
+    }
+  ],
+  "executionLog": []
+}

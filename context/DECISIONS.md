@@ -2278,3 +2278,7 @@ Rebase generated observations in dependency order; verify unchanged UI/capture h
 ### D-S377.4 — Focused visual evidence and explicit edge parity
 
 The release-card visual receipt binds its twelve actual source dependencies, 28 original screenshot hashes and captured consumer data. Generated payload correctness is checked by the build gate. Capture dates remain unchanged during metadata rebinding. Immutable production bytes match directly; primary HTML is separately compared using only the exact observed Cloudflare footer bootstrap and matching CSP nonce transport. Raw primary-domain parity remains nonpassing; protected identity redirects remain held. No security settings changed.
+
+## S378 — 2026-10-13
+
+Use reversible companion yielding instead of relocating a visitor-selected corner. Reuse the existing loader, header recall, preferences, rendered receipt and browser matrix; no dependencies or paid inference. Hash shell integrity from the generated candidate bytes because the new content-addressed file does not exist during HTML rewrite. Independent review caught selector membership invalidation and a test race; both corrected. CANON-045 identity hold remains outside this scoped unchanged-identity release; two legacy CANON-056 terminology findings remain existing carry evidence. No lifecycle/security/trust-policy changes.
