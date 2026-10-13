@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         534/534 passing (2026-10-12)                   ║
+║  ✓  Tests         534/534 passing (2026-10-13)                   ║
 ║  ✓  Velocity      3 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   9d                                             ║
