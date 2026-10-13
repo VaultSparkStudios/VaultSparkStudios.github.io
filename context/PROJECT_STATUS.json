@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.3",
+  "schemaVersion": "1.7",
   "slug": "vaultsparkstudios-website",
   "name": "VaultSparkStudios.github.io",
   "type": "website",
@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S376 fixed reader feedback on Desk articles (stray comment controls, reaction taps lost in WebKit, image reactions in the reader-signal feed); pushed as b59fc7d3a2 and promoted on 2026-10-13 (production reports d3c87d8ba7).",
+  "currentFocus": "S377 restored deferred homepage release cards and bounded local audit tooling; production accepted. Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Delay the first network calls of the eager Desk presence and ambient scripts until after first paint, and show the Lighthouse check passing its unchanged floors across several consecutive runs.",
+  "nextMilestone": "Review dormant homepage modules and continue existing performance repeatability tasks under a separately selected scope.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,14 +26,14 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
   ],
   "lastUpdated": "2026-10-13",
-  "currentSession": 376,
+  "currentSession": 377,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-02",
-  "silScore": 927,
-  "silAvg3": 925,
-  "silVelocity": 3,
-  "silDebt": "stable",
-  "silLastSession": 376,
+  "truthAuditLastRun": "2026-10-13",
+  "silScore": 931,
+  "silAvg3": 927.7,
+  "silVelocity": 2,
+  "silDebt": "down",
+  "silLastSession": 377,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -41,13 +41,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "green",
-      "note": "S370 scoped publication acceptance: Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced."
+      "note": "S377 Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "green",
-      "note": "S370 scoped publication acceptance: Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced."
+      "note": "S377 Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -62,19 +62,20 @@
     {
       "command": "npm run verify:local",
       "type": "local",
-      "status": "green"
+      "status": "green",
+      "note": "S377 Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "green",
-      "note": "S370 scoped publication acceptance: Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced."
+      "note": "S377 Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "S369 authoritative full build passed 530/530; measured receipt api/build-check-diagnostics.json, with hosted browser/compliance, accessibility, secret lint, page-size and preview/staging performance gates passed for deployed source."
+      "note": "S377 Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -82,35 +83,35 @@
   "ignisScoreDelta": -314,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-10-13",
-  "entropyScore": 0.22,
-  "entropyLastComputed": "2026-10-09",
+  "entropyScore": 0.172,
+  "entropyLastComputed": "2026-10-13",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-07-06T05:25:23.357Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 93,
+    "devHealth": 94,
     "creativeAlignment": 94,
     "momentum": 90,
-    "engagement": 93,
-    "processQuality": 89,
+    "engagement": 94,
+    "processQuality": 90,
     "crossRepoCoherence": 92,
     "securityPosture": 94,
     "ecosystemIntegration": 91,
     "capitalEfficiency": 95,
-    "automationCoverage": 96
+    "automationCoverage": 97
   },
-  "silCategoriesUpdatedSession": 376,
+  "silCategoriesUpdatedSession": 377,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-13",
-    "passing": 15,
-    "warning": 2,
+    "passing": 16,
+    "warning": 1,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 17,
-    "score": 88,
+    "score": 94,
     "checks": [
       {
         "id": "manifest",
@@ -212,7 +213,7 @@
       },
       {
         "id": "sched-staleness",
-        "pass": false,
+        "pass": true,
         "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
@@ -227,7 +228,7 @@
       {
         "id": "deploy-currency-live",
         "pass": true,
-        "warn": true,
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       }
@@ -261,15 +262,15 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "0e3083f65dcc460300b789f9",
   "testsSourceFingerprint": "0b8a39398775d5accc1f7792",
-  "lastSessionSummary": "S376 hid stray comment controls on Desk threads, stopped reaction taps being lost in WebKit, added illustration and cartoon reactions to the reader-signal feed, and was promoted to production.",
+  "lastSessionSummary": "S377 shipped two selected audit outcomes, validated real pixels and production byte parity, and prepared its full closeout writeback.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 376,
-    "enumeratedAt": "2026-10-13T02:26:01.903Z",
-    "started": 17,
-    "closed": 17,
+    "session": 377,
+    "enumeratedAt": "2026-10-13T07:02:36.148Z",
+    "started": 8,
+    "closed": 8,
     "running": 0,
-    "scope": "Seventeen background jobs this session (gate runs, mobile audits, CI and promotion watchers, served-bytes comparisons, a midnight wait); sixteen exited on their own and one mis-invoked comparison was stopped. One in-process review agent completed. Local preview servers were stopped after each use.",
+    "scope": "Count covers eight explicitly retained late-session tool handles only (58627,14031,56219,69334,84365,78738,41407,23812); seven completed and the mistaken staging invocation was stopped before upload. Earlier completed handles are not included in this count. No S377 servers listen on 4397/4316; process enumeration found no owned persistent helper. Full historical started count is unmeasured.",
     "runningJobs": []
   },
   "closeoutFollowthrough": {
@@ -285,5 +286,13 @@
     "validation": "Three exact-candidate hosted gates, local531/531, mobile215/215, reviewed168article captures and production Spark11/11. Live article Find visibility remains a separately documented preexisting limitation.",
     "previousReleasedContentSha": "f50960d2156091769e7922e0ac8904b22b65c516",
     "closeoutVerification": "Canonical autopilot exit0 with two531-step passes; exact closing gates, staging14artifact parity and production14artifact readback passed. Public acceptance receipt recorded in this closing commit."
+  },
+  "lastSession": 377,
+  "sessionState": {
+    "version": 1,
+    "durableSession": 377,
+    "currentFocus": "S377 restored deferred homepage release cards and bounded local audit tooling; production accepted. Candidate 6633fe0d22; required end-to-end 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.",
+    "nextMilestone": "Review dormant homepage modules and continue existing performance repeatability tasks under a separately selected scope.",
+    "lastSessionSummary": "S377 shipped two selected audit outcomes, validated real pixels and production byte parity, and prepared its full closeout writeback."
   }
 }

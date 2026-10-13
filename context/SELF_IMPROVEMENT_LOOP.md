@@ -9,10 +9,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 925.0 | 5: 920.4 | 10: 926.0 (carried from S375, not recomputed) | 25: — [N=23] | all: unmeasured (archived history not re-scored)
-History scope: latest scored entry per session in the active append-only ledger.
-Velocity trend: ↑ | Protocol velocity: → | Debt: →
-Last session: 2026-10-12 | Session 376 | Total: 927/1000 | Velocity: 3 | protocolVelocity: 0
+Avgs — 3: 927.7 | 5: 925.8 | 10: 937.2 | 25: — [N=19] | all: unmeasured (archived history excluded)
+History scope: latest scored entry per session in active append-only ledger.
+Velocity trend: ↓ | Protocol velocity: → | Debt: ↓
+Last session: 2026-10-13 | Session 377 | Total: 931/1000 | Velocity: 2 | protocolVelocity: 0
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2495,3 +2495,21 @@ Brainstorm (committed to TASK_BOARD): (1) settle the Firefox tap after a jump, c
 S376 addendum (unscored): pushed as b59fc7d3a2 and promoted (run 38330430872; production reports d3c87d8ba7). E2E and accessibility passed first time; Lighthouse failed once on the measured article at 0.88 and passed on one re-run at 0.92, the same pair of values as S372 to S375, so the stability task stays open. Process note: the reaction fix was first built on the cause recorded by the previous session, and only an event trace showed the real one; when a recorded cause is the premise, measure it before building on it.
 
 S376 closeout note (unscored): the first pass of this closeout ran the commit steps by hand and left out the session-floor gate, the intelligence refresh, the status board and the autopilot. They were run afterwards (IGNIS rescore, state vector, entropy, genome 23/25, board conformant, autopilot exit 0) and pushed as da28cc4510. Sessions 371 to 375 have no autopilot receipt row either; that ledger is written by the closing agent, not by the autopilot.
+
+## 2026-10-13 UTC — Session 377 (homepage Recent Ships) | Total: 931/1000 (v3.0) | Velocity: 2 | Debt: ↓
+
+| Dev Health | 94 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 94 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Two selected outcomes fully accepted. Website rubric: real desktop/phone pixels and fallback behavior verified; conversion and field Core Web Vitals remain unmeasured. Repeated receipt repair and rebase costs reduce process/momentum scores; existing identity hold remains. No paid API use or new dependencies.
+
+Brainstorm commitments: inspect dormant deferred modules before activation; repair generated receipts in dependency order. Both recorded on TASK_BOARD for a later scope, not added to this arc. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+

@@ -2261,3 +2261,20 @@ The reader-signal feed lists illustration and cartoon reactions under each story
 ## D-S376.3 — the loader delivers an early reaction tap, and only that (2026-10-12)
 
 `after-paint.js` remembers the most recent tap on a reaction button made before the parked reactions script has run, one per bar, and delivers it when the parked scripts finish. It listens at the end of the bubble path and ignores any tap whose default was cancelled, which is how the reactions script marks a tap it handled; delivering such a tap again would take the vote back. The selector is fixed in the loader. Other parked scripts get no replay.
+
+## D-S377.1 — Initialize deferred release cards once
+
+Use readyState-aware initialization, with a once-only DOMContentLoaded listener when needed and an immediate path after it. Hash the child module and update the existing idle-loader dependency graph so public release cards receive the repaired executable. Preserve the dormant member feed and existing data fallbacks. Acceptance: docs/RELEASE_S377.json and docs/visual-qa/LATEST.json.
+
+## D-S377.2 — Reuse bounded session tooling
+
+Thin adapters reuse canonical task projection and premise checks with an explicit local project and existing local audit. Reject duplicate selectors and cross-project arguments. This is session tooling, not a runtime dependency or copied control plane.
+
+## D-S377.3 — Preserve current evidence through release repairs
+
+Rebase generated observations in dependency order; verify unchanged UI/capture hashes before metadata-only receipt rebinding. Low-confidence retained screenshot filenames receive only the exact existing path/pattern exception, with high-confidence and mixed-line credential scanning intact. No hook bypass.
+
+
+### D-S377.4 — Focused visual evidence and explicit edge parity
+
+The release-card visual receipt binds its twelve actual source dependencies, 28 original screenshot hashes and captured consumer data. Generated payload correctness is checked by the build gate. Capture dates remain unchanged during metadata rebinding. Immutable production bytes match directly; primary HTML is separately compared using only the exact observed Cloudflare footer bootstrap and matching CSP nonce transport. Raw primary-domain parity remains nonpassing; protected identity redirects remain held. No security settings changed.

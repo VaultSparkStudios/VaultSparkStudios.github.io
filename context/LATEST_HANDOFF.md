@@ -1,3 +1,13 @@
+## Where We Left Off (Session 377) — homepage Recent Ships (2026-10-13)
+
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Selected outcomes achieved; full arc closeout publication and closing runtime readback pending.
+
+- Shipped: once-only deferred release cards with hashed delivery; bounded task and strict premise adapters using the existing Studio Ops runtime.
+- Tests: local and clean-checkout full gates 534/534 before rebase; mobile 215/215; five new unit regressions; seven themes × desktop/mobile × before/after = 28 captures, all inspected. Rebase preserved reviewed UI source bytes; canonical staging browser three passed/three held, feature browser six passed.
+- Deploy: Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+- Review: independent review caught duplicate selector handling and an overly broad historical premise; both fixed. Narrow screenshot-filename scan exceptions retain high-confidence secret scanning.
+- Scope: S377 is this invocation's bound session; prior closeout evidence did not substitute for startup, audit or implementation. CDR reviewed — no new creative direction. Cross-repo intelligence writes use Ark; delivery alone is not adoption.
+- Remaining: existing identity hold, field-vitals freshness, Firefox taps after jumps and companion overlap, Lighthouse repeatability, dormant home-intelligence. Preserved pre-existing local operator caches and untracked work.
 ## Where We Left Off (Session 376) — reader feedback on Desk articles (2026-10-12)
 
 Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). Intent: **Achieved** — shipped, pushed and promoted.
@@ -9,14 +19,4 @@ Session Intent: /arc, then direct commit/push to main and full deployment (found
 - Corrected: S375 recorded the WebKit failures as a click arriving before the parked script. That mechanism exists but was not the cause; the press and release landed on different elements because the section above the reaction bar grew by 181px between them.
 - Found, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px. Both on the task board.
 - Not selected: the dormant homepage scripts, the four failing browser specs, the art receipt path (needs a scheduled publish).
-- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
-## Where We Left Off (Session 375) — satire cartoon below the illustration (2026-10-12)
-
-Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). During the arc the founder asked for the satire cartoon to sit below the AI-generated art on every article with its own reaction and comment area. Intent: **Achieved** — shipped, pushed and promoted.
-
-- Shipped: 2 items. The cartoon stage renders directly below the illustration on 122 articles, with eight reactions counted under its own key and its own comment thread; the Desk feed publishes that key. The article shell can no longer be scrolled sideways.
-- Tests: `test-news-article-layout` passes on 123 articles with the new order; the reaction spec gained a cartoon vote isolation test (passes in Chromium and Firefox); a browser vote on the cartoon was stored only under the cartoon key; seven themes captured at 1366px and 390px, before and after.
-- Deploy: Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de202f4; staging release spec 6/6; cartoon probe 12/12 across Chromium, Firefox and WebKit at 1366px and 390px, after one unexplained failure in the first probe run straight after the publish). Clean-checkout gate passed at 35c661742 before the push. Required checks at c8635d986e passed on the first attempt: E2E 38210836603, Lighthouse 38210836606 (measured article 0.94 against the unchanged 0.90 floor), accessibility 38210836596. Promoted through the confirmed-production lane, run 38212109944 (SCOPED; identity hold unchanged). Readback from served bytes: tree-current at be976158c8, which contains the candidate; 1043 of 1053 files identical, 0 differing, 10 retired-route redirects. The same cartoon probe passes 12/12 against production, and the live reaction endpoint answers for the cartoon key with an empty tally.
-- Found, not fixed: seven reaction tests fail in WebKit on production and locally with the unmodified spec, and in Chromium against staging (a click right after DOMContentLoaded precedes the parked script; Chromium and Firefox pass locally and in CI); cartoon reaction totals are not in any public summary yet; an empty image thread showed two stray controls under a mocked service. Both on the task board.
-- Not selected: the homepage scripts that never initialise (enabling them turns on a feed that has never rendered in production), the four failing browser specs, Lighthouse stability. This session adds a second lazy image stage above the News Brief, so the next Lighthouse runs are new evidence for that task.
 - Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.

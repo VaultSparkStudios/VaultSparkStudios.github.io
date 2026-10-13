@@ -14,22 +14,22 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "d285d3dfcccc6ddd82052c2e364325b09771d82a2ee79ce36e8ffa235d749e59",
+    "sha256": "ea1ddad1dc68ff511a38cb090e20eee2866b9c9593d8ab0b453f6827797c1ba7",
     "files": [
-      "api/public-intelligence.json",
       "assets/home-idle-loader.js",
       "assets/home-idle-loader.shell-7b976ad580.js",
+      "assets/public-intelligence.js",
+      "assets/public-intelligence.shell-c86a6ecc39.js",
       "assets/recent-ships.js",
       "assets/recent-ships.shell-001af71d31.js",
       "assets/style.css",
+      "changelog/index.html",
+      "data/consumer-changelog.json",
       "index.html",
-      "scripts/build-shell-assets.mjs"
+      "scripts/build-shell-assets.mjs",
+      "scripts/generate-public-intelligence.mjs"
     ],
     "entries": [
-      {
-        "path": "api/public-intelligence.json",
-        "sha256": "6d2d1a13ace9cd2898bfd212e1fdcc47a9e237b28d3ff2246cb1ab82c7e90490"
-      },
       {
         "path": "assets/home-idle-loader.js",
         "sha256": "fd4d3a4495af439aade8e56bea94a874ae5d257034634ba4a70b34a82d22c527"
@@ -37,6 +37,14 @@
       {
         "path": "assets/home-idle-loader.shell-7b976ad580.js",
         "sha256": "7b976ad580128910771f0951b01e8536195f0aa0114ad98e60fb1550b685134d"
+      },
+      {
+        "path": "assets/public-intelligence.js",
+        "sha256": "c86a6ecc3976025a86513f7d3b1af26bbe6b2767087005525ee554d03b416425"
+      },
+      {
+        "path": "assets/public-intelligence.shell-c86a6ecc39.js",
+        "sha256": "c86a6ecc3976025a86513f7d3b1af26bbe6b2767087005525ee554d03b416425"
       },
       {
         "path": "assets/recent-ships.js",
@@ -51,12 +59,24 @@
         "sha256": "4995c3c86e52a372a0921b2166b7d8259e4d46d286cfdf32e4cbf714e8585309"
       },
       {
+        "path": "changelog/index.html",
+        "sha256": "fe14cae60edc6a07bc7667351e8e49acfbae41ffcf487de54c57b8047342b0b0"
+      },
+      {
+        "path": "data/consumer-changelog.json",
+        "sha256": "5e9dfffd6c292c6d49d3376c466d6853a62dcab825476afe216c56505fd120af"
+      },
+      {
         "path": "index.html",
         "sha256": "0e157864da2e98a58343db81bdbfb0bc0ed5f6494e095ac04fad7956cbb3a091"
       },
       {
         "path": "scripts/build-shell-assets.mjs",
         "sha256": "6c389b56b728a0ee5beda9c61893611b341f984e0249628864b015f2e2e51dd6"
+      },
+      {
+        "path": "scripts/generate-public-intelligence.mjs",
+        "sha256": "228ffc1d07ef6816198f8c19ed7f2bc2e42c094cedeaa08d330b95af70127c1c"
       }
     ]
   },
@@ -560,9 +580,26 @@
       }
     }
   ],
+  "dataEvidence": {
+    "scope": "Recent Ships component only; other homepage signals are not covered by these focused captures",
+    "path": "api/public-intelligence.json",
+    "capturedRawSha256": "6d2d1a13ace9cd2898bfd212e1fdcc47a9e237b28d3ff2246cb1ab82c7e90490",
+    "consumerChangelogSha256": "adb43da3dcac7ed00136a359de3681b8a0a5667313f9bf8a0721dc67efaf4c9f",
+    "verifiedBy": "node scripts/generate-public-intelligence.mjs --check; mandatory build gate verifies data derived from bound generator and consumer-changelog source",
+    "bindingReason": "The component reads consumerChangelog. Bound source data and embedded generator seed cover it; raw generatedAt and unrelated project metadata do not render in this component.",
+    "independentReview": "review_s377 accepted this focused binding; runtime data loader and fallback HTML also bound"
+  },
   "captureHistory": {
     "before": "Original S377 baseline captures preserved unchanged",
     "originalBatchReceiptAt": "2026-10-13T04:18:47.318Z",
     "after": "Recaptured against current source following refreshed public feed metadata"
+  },
+  "metadataRebind": {
+    "at": "2026-10-13T05:57:45.802Z",
+    "reason": "Implementation commit pointer updated; all bound UI source and capture bytes verified unchanged."
+  },
+  "sourceBindingRevision": {
+    "at": "2026-10-13T05:59:13.962Z",
+    "reason": "Focused component binding corrected to authoritative changelog data, generator, runtime loader and fallback. Captures remain the previously inspected batch; no new capture time is claimed."
   }
 }

@@ -1,3 +1,11 @@
+# S377 homepage Recent Ships restored — 2026-10-13
+
+The deferred Recent Ships module now initializes once whether it loads before or after DOMContentLoaded. The homepage renders three release cards from public intelligence, with the existing changelog and unavailable-data fallbacks. A hashed child bundle makes the loader deliver the repaired executable. Local task projection and strict audit-premise adapters reuse Studio Ops and reject foreign paths and duplicate selectors.
+
+Verification: three initializer regressions and two adapter regressions; complete local and clean-checkout build gates 534/534; mobile 215/215; 28 manually inspected captures across seven themes, desktop and phone. Canonical staging browser: three passed and three explicitly held identity contracts; six feature cases passed. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+
+Existing identity hold, member-feed dormancy, field-vitals gaps and performance-stability tasks remain. Conversion impact is unmeasured.
+
 # S376 reader feedback on Desk articles — 2026-10-12
 
 - **Comment threads.** The reply banner and its Cancel reply button no longer show on a thread until a reader presses Reply; at phone width a Try again button also showed after a successful load. Both carried the `hidden` attribute and were displayed anyway because a class set `display`. `assets/desk-comments.css` now keeps hidden elements inside a thread hidden.

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0",
+  "session": 377,
+  "accepted": true,
+  "acceptedAt": "2026-10-13T06:55:59.667Z",
+  "scope": "Two selected S377 outcomes: deferred Recent Ships rendering and bounded local audit adapters. Existing identity holds remain; authenticated journeys are not newly accepted.",
+  "candidate": "6633fe0d222cad67798f5047dd0b5d1c08cf3eed",
+  "deployedSha": "6633fe0d222cad67798f5047dd0b5d1c08cf3eed",
+  "productionRun": 38355129571,
+  "productionTag": "s377-release-6633",
+  "deploymentUrl": "https://21b29bf9.vaultsparkstudios-website.pages.dev",
+  "primaryOrigin": "https://vaultsparkstudios.com",
+  "workflows": {
+    "e2e": 38352394138,
+    "lighthouse": 38352394170,
+    "accessibility": 38352394172
+  },
+  "lighthouse": {
+    "attempt": 2,
+    "firstAttempt": {
+      "state": "failed",
+      "route": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
+      "performance": 0.88,
+      "floor": 0.9
+    },
+    "latestAttempt": "passed local and staging; floors unchanged",
+    "repeatability": "Existing task remains open"
+  },
+  "earlierCandidateFailure": {
+    "candidate": "6544fde6249a574973725ec9e06a4991668c06c5",
+    "run": 38350864073,
+    "step": 424,
+    "reason": "Repaired stats outputs were not committed; corrected and verified on new candidate"
+  },
+  "featureCases": 6,
+  "featureEvidence": {
+    "checkedAt": "2026-10-13T06:15:53.840Z",
+    "base": "https://vaultsparkstudios.com",
+    "results": [
+      {
+        "engine": "chromium",
+        "width": 1366,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "engine": "chromium",
+        "width": 390,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "engine": "firefox",
+        "width": 1366,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "engine": "firefox",
+        "width": 390,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "engine": "webkit",
+        "width": 1366,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "engine": "webkit",
+        "width": 390,
+        "cards": 3,
+        "titles": [
+          "The Desk: real art, reader-first articles, and a community on every story",
+          "Franchise Architect, a searchable changelog, and a clearer homepage",
+          "Forge Window live data and feedback polish"
+        ],
+        "script": "/assets/recent-ships.shell-001af71d31.js",
+        "overflow": false,
+        "errors": []
+      }
+    ]
+  },
+  "parity": {
+    "scope": "Raw immutable production source, not raw primary-origin response",
+    "origin": "https://21b29bf9.vaultsparkstudios-website.pages.dev",
+    "identical": 1052,
+    "total": 1062,
+    "differing": 0,
+    "redirects": 10,
+    "unread": 0
+  },
+  "primaryRawComparison": {
+    "verdict": "content-lag",
+    "identical": 668,
+    "differ": 280,
+    "redirected": 114,
+    "unread": 0,
+    "interpretation": "Raw primary tree-current did not pass. All 280 differing HTML bodies are accounted for by the separately verified provider transport."
+  },
+  "primaryHtml": {
+    "checked": 303,
+    "siteBodiesMatching": 280,
+    "declaredRedirects": 14,
+    "heldIdentityRedirects": 9,
+    "unverified": 0,
+    "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f",
+    "policy": "Original HTML bytes remain strictly compared. Only response nonce attributes and one exact appended observed Cloudflare script template are accounted for. Only provider request/time fields vary in that exact template. Declared redirects and same-path canonical slash redirects are checked. Provider DOM nonce must match the enforced response CSP. Unchanged protected identity routes are held, not passed. Worker-declared legacy aliases are verified against committed Worker source.",
+    "documentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/",
+    "limits": "Non-HTML primary redirects do not prove journeys. Held identity redirects do not prove authenticated flows."
+  },
+  "staging": {
+    "receiptId": "8391dc2116fbe2732a2863b3",
+    "root": "7fd5cb2f81c321da4089496cdb70b4d9d718766ed02d10e9264da5a6ee4a346c",
+    "sourceCommit": "b783ee08b3749faf05cbb79063de8b533f32e3f5",
+    "candidateRelationship": "Critical artifact root matches the rebased candidate; observed CI metadata differs.",
+    "rollback": "/opt/studio/staging/website/.rollback/20261013053505",
+    "canonicalBrowser": {
+      "passed": 3,
+      "held": 3,
+      "skipped": 0
+    },
+    "featureCases": 6
+  },
+  "validation": {
+    "unitRegressions": 5,
+    "localCompleteBuildSteps": 534,
+    "cleanCheckoutSteps": 534,
+    "cleanCheckoutCommit": "b783ee08b3749faf05cbb79063de8b533f32e3f5",
+    "mobileCases": 215,
+    "themes": 7,
+    "manuallyInspectedCaptures": 28
+  },
+  "review": {
+    "reviewer": "review_s377",
+    "verdict": "PASS",
+    "limitsPreserved": true
+  },
+  "rollback": {
+    "priorProductionSha": "d3c87d8ba7b04727425adf5d1a8b4d9956c0ebf3",
+    "method": "Confirmed production promotion of prior verified source; GitHub Pages remains the warm rollback origin"
+  },
+  "privacy": {
+    "credentialsRecorded": false,
+    "responseBodiesRecorded": false,
+    "requestIdentifiersRecorded": false
+  },
+  "evidenceHashes": {
+    "s377-origin-parity.json": "e47d64a0a2294bf6534023b8dbd0474c4d620f69b672c1147c9f740a2fec62e8",
+    "s377-edge-parity.json": "521e82e2c2a98444c3b87c91dfa319b0d773db1180600562427cb3748b7254c7",
+    "s377-production-probe.json": "e04d90170a57ad4ce46317b19beb9cfe66602978389caa19d182daea51f889e0"
+  }
+}

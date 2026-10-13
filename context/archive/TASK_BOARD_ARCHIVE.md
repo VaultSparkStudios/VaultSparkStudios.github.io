@@ -2087,3 +2087,15 @@ Moved verbatim from the active board to preserve startup budget; open work stays
 - [x] Wave1: preserve original checkout and unverified propagation; profile current remote and source premises.
 - [x] Wave2: implement four verified maintenance outcomes; independent review PASS and focused tests4/4.
 - [x] Wave3: full release checks, staging byte proof, main publication, production readback and final closeout.
+
+
+<!-- S377 closeout: completed S374 bullets preserved verbatim; open tasks retained live -->
+
+# S374 completed waves
+
+- [x] Wave1: sync 80 commits, triage (not cut off), /start, canon sync (3 STRONG gaps, 0 ABSOLUTE).
+- [x] Wave2: audit `docs/AUDIT_2026-10-11-S374.md`, four items, premises 5/5; a fifth (rebuild `/stats/`) dropped as a false premise.
+- [x] Wave3: `assets/after-paint.js`; Desk pages park four scripts, the homepage seven; unit 10/10 and browser 3/3; layout shift unchanged; independent review, six fixes applied.
+- [x] Wave4: menu label "Synthetic Intelligence (SI)" sitewide (258 findings to 2), checked in seven themes on desktop and mobile; FAQ question reworded.
+- [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
+- [x] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Cleared at be218812c8 (E2E 38189819783 green). Cause: a records-only commit that changed context files without regenerating derived artifacts; a records commit needs `resync-derived` and a receipt rebind before push.

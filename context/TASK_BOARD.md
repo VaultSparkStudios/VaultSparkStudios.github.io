@@ -1,3 +1,12 @@
+# S377 arc — homepage Recent Ships
+
+- [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
+- [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
+- [x] Wave 3: independent review, local 534/534, clean checkout 534/534, mobile 215/215, seven-theme pixels, staging and required hosted checks.
+- [ ] Wave 4: selected features deployed and accepted; finish closeout publication and closing runtime readback.
+- [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
+- [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
+
 # S376 arc — reader feedback on Desk articles
 
 - [x] Wave1: sync, triage (not cut off), /start, canon sync.
@@ -7,7 +16,7 @@
 - [x] Wave5: image reaction totals in the feed; independent review, four findings fixed.
 - [ ] **[SIL/P2 · S376]** Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
 - [ ] **[SIL/P3 · S376]** At 390px the Spark companion overlaps the Post comment button and the display-name field on Desk articles.
-- [ ] **[OPS/P3 · S376]** `task-slice`, `check-audit-premises` and the start maintenance lane have no local copy here.
+- [ ] **[OPS/P3 · S376]** Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
 
 # S375 arc — cartoon below the illustration, with its own reactions
 
@@ -22,14 +31,10 @@
 
 # S374 arc — scripts after first paint, SI first use
 
-- [x] Wave1: sync 80 commits, triage (not cut off), /start, canon sync (3 STRONG gaps, 0 ABSOLUTE).
-- [x] Wave2: audit `docs/AUDIT_2026-10-11-S374.md`, four items, premises 5/5; a fifth (rebuild `/stats/`) dropped as a false premise.
-- [x] Wave3: `assets/after-paint.js`; Desk pages park four scripts, the homepage seven; unit 10/10 and browser 3/3; layout shift unchanged; independent review, six fixes applied.
-- [x] Wave4: menu label "Synthetic Intelligence (SI)" sitewide (258 findings to 2), checked in seven themes on desktop and mobile; FAQ question reworded.
-- [x] Wave5: stats small-count clearance; Ark `01K4MH9K7Q3360206BDD384910` to studio-ops on the stats checker, the conformance detail and the adoption writer.
+Completed waves: [verbatim archive](archive/TASK_BOARD_ARCHIVE.md).
+
 - [ ] **[SIL/P2 · S374]** Four browser specs fail on this machine against both production and the local build, before and after this session's change: `ambient-engagement` (milestones, first-scroll order, IGNIS tier) and `stats-theme-accessibility` (expects 19 projects, feed has 22). The CI `e2e` job reported success at 4e2f42773 but its log shows no Playwright totals. Establish whether CI runs them, then fix or retire each.
-- [ ] **[HOME/P2 · S374]** `home-intelligence.js` and `recent-ships.js` initialise only on DOMContentLoaded, but the idle loader injects them after it, so neither runs on the homepage (found in review; predates S374).
-- [x] **[SIL/P2 · S374]** `main` failed build:check step 37 in CI at ee0074f3e2 (E2E run 38075344823, records-only commit). Cleared at be218812c8 (E2E 38189819783 green). Cause: a records-only commit that changed context files without regenerating derived artifacts; a records commit needs `resync-derived` and a receipt rebind before push.
+- [ ] **[HOME/P2 · S374]** `home-intelligence.js` remains dormant after deferred injection; review its member-data and layout scope before enabling. `recent-ships.js` shipped with early/late initialization and hashed delivery in S377.
 
 # S373 — S372 follow-ups, guards and test coverage
 
@@ -697,3 +702,4 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 
 
 - [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
+

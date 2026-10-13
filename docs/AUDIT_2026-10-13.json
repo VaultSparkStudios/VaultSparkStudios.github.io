@@ -15,18 +15,18 @@
     "readiness": [
       {
         "area": "runtime",
-        "state": "gap",
-        "evidence": "Recent ships listener attached only after DOMContentLoaded"
+        "state": "verified",
+        "evidence": "Six live feature cases and 28 inspected captures"
       },
       {
         "area": "protocol",
-        "state": "gap",
-        "evidence": "task-slice and check-audit-premises absent locally"
+        "state": "verified",
+        "evidence": "Two bounded adapter regressions"
       },
       {
         "area": "release",
-        "state": "unverified",
-        "evidence": "New candidate still needs staging and exact-candidate required checks"
+        "state": "verified",
+        "evidence": "docs/RELEASE_S377.json"
       }
     ],
     "recordedStage": "S1"
@@ -148,7 +148,7 @@
       "acceptance": "Late-load and early-load unit cases; actual homepage cards visible; 7-theme desktop/mobile before/after images inspected; staging and production readback.",
       "id": 1,
       "tier": "🔥",
-      "status": "pending",
+      "status": "shipped",
       "selectedDepth": "L2",
       "priority": 17.71,
       "why": "Use a readyState-aware, once-only initializer in recent-ships.js; preserve the existing public intelligence/changelog fallback and after-paint loading. Verify populated cards and all themes on desktop/mobile.",
@@ -181,6 +181,12 @@
           "at": "2026-10-13T04:30:43.569Z",
           "status": "pending",
           "note": "Implementation verified locally: early/late load and fallback regressions 3/3, browser probe 6/6 across three engines and two widths, mobile 215/215, rendered pixels 28/28. Staging, candidate CI and production acceptance remain required."
+        },
+        {
+          "at": "2026-10-13T06:55:59.835Z",
+          "status": "shipped",
+          "evidence": "docs/RELEASE_S377.json",
+          "note": "Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json."
         }
       ],
       "historicalPremiseEvidence": {
@@ -236,6 +242,11 @@
           "status": "shipped",
           "tests": "2/2 adapter regressions pass; bounded local task projection 1081/1200 chars from 155546-byte board; independent review duplicate selector finding fixed",
           "review": "fix finding resolved"
+        },
+        {
+          "at": "2026-10-13T07:01:13.002Z",
+          "status": "shipped",
+          "note": "Two bounded adapter regressions passed; duplicate selectors are rejected; strict current audit premises are trustworthy with zero open contradictions. Independent implementation review passed."
         }
       ]
     }

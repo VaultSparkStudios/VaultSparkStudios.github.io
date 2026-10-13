@@ -2095,3 +2095,18 @@ Session Intent: do the still-open S372 items, improve on that session's work, fi
 - Receipt binding (founder-approved, D-S373.6): routine Desk content in a reviewed article is set aside only when the generator proves the page, the block digest is recorded, and drift is reported. Verified by a three-way drill on the real repository. Art and edition publishes no longer invalidate the visual receipt.
 - Not done 2: the Lighthouse flake, which now gates releases (the homepage tier reads recurring sub-floor; run 38027265643 failed at 5a8beccc5 on the homepage at 0.75 and one article at 0.89, the same profile as S372 and not caused by S373). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it in every run, steady simulated FCP (1.3s) and swinging simulated LCP (2.3–3.9s). Direction: load below-the-fold Desk scripts after paint. Thresholds unchanged.
 - Carried: identity hold unchanged; Ark questions to studio-ops (visual-QA `.cache` classification, Supabase gateway slot) await replies.
+
+---
+<!-- archived: 2026-10-13 -->
+
+## Where We Left Off (Session 375) — satire cartoon below the illustration (2026-10-12)
+
+Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). During the arc the founder asked for the satire cartoon to sit below the AI-generated art on every article with its own reaction and comment area. Intent: **Achieved** — shipped, pushed and promoted.
+
+- Shipped: 2 items. The cartoon stage renders directly below the illustration on 122 articles, with eight reactions counted under its own key and its own comment thread; the Desk feed publishes that key. The article shell can no longer be scrolled sideways.
+- Tests: `test-news-article-layout` passes on 123 articles with the new order; the reaction spec gained a cartoon vote isolation test (passes in Chromium and Firefox); a browser vote on the cartoon was stored only under the cartoon key; seven themes captured at 1366px and 390px, before and after.
+- Deploy: Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de202f4; staging release spec 6/6; cartoon probe 12/12 across Chromium, Firefox and WebKit at 1366px and 390px, after one unexplained failure in the first probe run straight after the publish). Clean-checkout gate passed at 35c661742 before the push. Required checks at c8635d986e passed on the first attempt: E2E 38210836603, Lighthouse 38210836606 (measured article 0.94 against the unchanged 0.90 floor), accessibility 38210836596. Promoted through the confirmed-production lane, run 38212109944 (SCOPED; identity hold unchanged). Readback from served bytes: tree-current at be976158c8, which contains the candidate; 1043 of 1053 files identical, 0 differing, 10 retired-route redirects. The same cartoon probe passes 12/12 against production, and the live reaction endpoint answers for the cartoon key with an empty tally.
+- Found, not fixed: seven reaction tests fail in WebKit on production and locally with the unmodified spec, and in Chromium against staging (a click right after DOMContentLoaded precedes the parked script; Chromium and Firefox pass locally and in CI); cartoon reaction totals are not in any public summary yet; an empty image thread showed two stray controls under a mocked service. Both on the task board.
+- Not selected: the homepage scripts that never initialise (enabling them turns on a feed that has never rendered in production), the four failing browser specs, Lighthouse stability. This session adds a second lazy image stage above the News Brief, so the next Lighthouse runs are new evidence for that task.
+- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
+
