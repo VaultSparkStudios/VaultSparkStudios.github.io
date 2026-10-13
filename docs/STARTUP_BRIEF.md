@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · S1 · arch=— · top-axis=—                    ║
+║  Profile · website · live-production · arch=— · top-axis=—       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -123,9 +123,6 @@
 ║   96  [PRODUCT]      Wave 4: selected features deployed and acc  ║
 ║        Wave 4: selected features deployed and accepted; finish   ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Census deferred homepage modules before en  ║
 ║        Census deferred homepage modules before enabling home-in  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   84  [INTELLIGENCE]  Start maintenance lane has no local copy   ║
 ║        Start maintenance lane has no local copy here; task-slic  ║
+║                                                                  ║
+║   80  [VERIFY]       Keep generated receipt repairs in dependen  ║
+║        Keep generated receipt repairs in dependency order: stat  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
