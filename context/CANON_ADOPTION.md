@@ -61,7 +61,7 @@ Audience: public-live · Live ACTIVE canons: 55 · Pending review: 5
 | CANON-051 | Web Hardening: every public surface meets the edge-security  | adopted | Strict CSP (`csp-audit`), SRI (`check-sri`), Cloudflare Worker security headers, `security.txt`, supply-chain verify. |
 | CANON-052 | Project Lifecycle Ladder: FORGE/SPARKED/VAULTED with sub-sta | review | Project uses FORGE/SPARKED/VAULTED vocab (`vaultStatus: SPARKED`) with `PROJECT_STATUS.json` as the single write path via closeout; sub-stage/gated-transition machinery not yet audited against the new canon — walk pending. |
 | CANON-053 | Rendered-Pixel UI Discipline: look at the real interface whi | adopted | S304 (evidence corrected S329): docs/visual-qa/LATEST.json emitted by capture-theme-matrix.mjs --receipt (hash-bound captures, 7 themes, desktop+mobile) — verified by check-visual-review-receipt.mjs (wired in build:check; the previously cited check-visual-qa.mjs never existed in this repo). The S303 matrix review caught and fixed the sitewide theme-boot defect; regression-gated by check-theme-boot-contract.mjs. Re-run the harness with --receipt after any UI change. |
-| CANON-054 | Public Stats Surface: every website reports and analyzes its | adopted (suggested) | Conformance checker passed: } |
-| CANON-055 | Surface Follow-Through: every project change reaches the thi | adopted (suggested) | Conformance checker passed: } |
+| CANON-054 | Public Stats Surface: every website reports and analyzes its | adopted (suggested) | Conformance checker passed: conform |
+| CANON-055 | Surface Follow-Through: every project change reaches the thi | adopted (suggested) | Conformance checker passed: no files changed in range — nothing to follow through on |
 | CANON-056 | AI + SI Hybrid Terminology: keep AI, add Synthetic Intellige | review |  |
 

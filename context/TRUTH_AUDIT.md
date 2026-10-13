@@ -1,3 +1,11 @@
+### S376 truth reconciliation — 2026-10-12
+
+One published definition was wrong and is corrected. The reader-signal feed said it counted reactions on a story "or on its generated illustration"; reactions sent from an image panel were never read. They are now read and listed under `panels`, apart from the story total, and the definition says which reactions are stored where. All 248 panels are below the five-signal floor, so the feed publishes no image total yet. One recorded cause was wrong: S375 attributed seven WebKit test failures to a tap arriving before a parked script. Measured this session, the cause was a late-rendered section changing height in a browser without scroll anchoring.
+
+### S375 truth reconciliation — 2026-10-12
+
+No source of truth changed. One public contract gained a field: Desk feed stories with a cartoon now carry `_vaultspark.satire_reaction_key`. Cartoon reactions are collected from this release on, and no public summary reports them yet, so no surface claims a cartoon reaction total.
+
 ### S374 truth reconciliation — 2026-10-11
 
 Two generated statements disagreed with their sources. `context/CANON_ADOPTION.md` says the CANON-054 and CANON-055 checkers passed; both exit 1 (reported upstream, D-S374.4). The CANON-054 checker says the site has no stats page; the page was moved to `/evidence/#numbers` on purpose (D-S374.2). Session identity agreed on every surface: S373 closed, this is S374. The pushed commit be218812c8 passed Lighthouse first time (homepage 0.81 to 0.98, article 0.98 to 0.99); the next commit failed once on the article (0.88 against 0.90) and passed on re-run, so the check is improved and not stable; the task is reopened. "Deployed" is stated from served bytes: tree-current at 8b29b2f6c1, 0 differing files.

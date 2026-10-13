@@ -103,7 +103,9 @@ function evaluateDeskEngagementContracts(root = ROOT) {
       const html = fs.readFileSync(path.join(root, story.url.replace(/^\//, ''), 'index.html'), 'utf8');
       if (!html.includes('data-desk-engagement=')) findings.push(story.slug + ': reader activity panel missing');
       if (!html.includes('/panel/editorial-illustration-1')) findings.push(story.slug + ': per-panel reaction scope missing');
-      if ((html.match(/data-reaction="panel-/g) || []).length !== 8) findings.push(story.slug + ': expected eight panel reactions');
+      const hasCartoon = html.includes('id="satire-cartoon"');
+      if (hasCartoon && !html.includes('/panel/satire-cartoon')) findings.push(story.slug + ': cartoon reaction scope missing');
+      if ((html.match(/data-reaction="panel-/g) || []).length !== (hasCartoon ? 16 : 8)) findings.push(story.slug + ': unexpected image reaction button count');
       if (!html.includes('desk-presence.shell-')) findings.push(story.slug + ': hashed presence client missing');
     }
   } catch (error) {

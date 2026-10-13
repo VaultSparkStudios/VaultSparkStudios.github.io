@@ -19,6 +19,11 @@
  * DROPS means KV loss, not reader behaviour. Smoothing that over would fabricate
  * continuity, so a decrease publishes `state: 'reset'` carrying both numbers.
  *
+ * IMAGE PANELS (S376). A reader can also react to a story's illustration and
+ * to its satire cartoon. Those counts live under their own keys
+ * (`<date>/<slug>/panel/<id>`), so they are probed and published separately
+ * and are never added to the story total. Same floor, same reset rule.
+ *
  * Network boundary — same idiom as build-deploy-currency:
  *   --probe        fetch live counts, append history, write the feed
  *   (default)      re-derive the feed from committed history, no network
@@ -126,9 +131,37 @@ export function deriveStoryRow(slug, counts, previousTotal = null) {
   return { slug, state: 'sufficient', total, reactions, voices };
 }
 
+/**
+ * The Worker cuts every key to this many characters. A longer panel key would
+ * be read under a different name than the one published here, and two panels of
+ * one story could land on the same counter, so such a key is never probed.
+ */
+export const MAX_KEY_LENGTH = 120;
+
+/** The image panels a story carries, keyed the way the page sends them. */
+export function panelScopes(story) {
+  return [
+    { id: 'illustration', key: `${story.slug}/panel/editorial-illustration-1` },
+    ...(story.hasCartoon ? [{ id: 'cartoon', key: `${story.slug}/panel/satire-cartoon` }] : []),
+  ].map((panel) => ({ ...panel, readable: panel.key.length <= MAX_KEY_LENGTH }));
+}
+
+/** One image panel row. Panels have no voice votes, so none are reported. */
+export function derivePanelRow(key, counts, previousTotal = null) {
+  const row = deriveStoryRow(key, counts, previousTotal);
+  delete row.voices;
+  return row;
+}
+
 export function deriveSnapshot(rawBySlug, previousBySlug = new Map(), observedAt = null, meta = {}) {
   const stories = [...rawBySlug.keys()].sort().map((slug) =>
     deriveStoryRow(slug, rawBySlug.get(slug), previousBySlug.get(slug) ?? null));
+  // Present only when panels were probed, so a snapshot taken before panels
+  // existed is not mistaken for one that observed them and found nothing.
+  const panels = meta.panelRaw
+    ? [...meta.panelRaw.keys()].sort().map((key) =>
+      derivePanelRow(key, meta.panelRaw.get(key), previousBySlug.get(key) ?? null))
+    : null;
   const payload = {
     schemaVersion: '1.0',
     observedAt,
@@ -138,6 +171,7 @@ export function deriveSnapshot(rawBySlug, previousBySlug = new Map(), observedAt
     considered: meta.considered ?? stories.length,
     truncated: Boolean(meta.truncated),
     stories,
+    ...(panels ? { panels } : {}),
   };
   return { ...payload, receiptId: crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 20) };
 }
@@ -145,6 +179,18 @@ export function deriveSnapshot(rawBySlug, previousBySlug = new Map(), observedAt
 export function deriveFeed(corpusStories, historyRows) {
   const latest = historyRows.at(-1) || null;
   const bySlug = new Map((latest?.stories || []).map((row) => [row.slug, row]));
+  const panelByKey = new Map((latest?.panels || []).map((row) => [row.slug, row]));
+  const panelFor = ({ key, readable }) => {
+    const row = readable ? panelByKey.get(key) || null : null;
+    return {
+      key,
+      state: row ? row.state : 'unavailable',
+      ...(readable ? {} : { reason: 'key-longer-than-the-store-allows' }),
+      total: row?.total ?? null,
+      reactions: row?.reactions ?? null,
+      ...(row?.state === 'reset' ? { previousTotal: row.previousTotal, observedTotal: row.observedTotal } : {}),
+    };
+  };
   return {
     schemaVersion: '1.0',
     generatedBy: 'scripts/build-news-desk-reactions.mjs',
@@ -157,7 +203,7 @@ export function deriveFeed(corpusStories, historyRows) {
       metric: 'reader-signals',
       metricClass: 'voluntary-signal',
       minSignals: MIN_SIGNALS,
-      definition: 'Emoji reactions a reader chose to send on a story or on its generated illustration.',
+      definition: 'Emoji reactions a reader chose to send on a story, and separately on its generated illustration or satire cartoon. A reaction sent from the panel beside an image is stored under the key of that image, listed under "panels", and never added to the story total. Illustration reactions sent from the older in-story row are stored with the story and stay in its total.',
       isNot: ['a rating', 'a poll', 'representative of readers', 'unique people'],
       privacy: 'Counted per day against a truncated SHA-256 of IP + slug + day, capped at 12 per reader per day. No cookie, account id, raw IP, or durable session id is stored.',
       caveat: 'Only readers who chose to react are counted, so these are self-selected. A story below the floor publishes no total at all.',
@@ -175,6 +221,7 @@ export function deriveFeed(corpusStories, historyRows) {
         reactions: row?.reactions ?? null,
         voices: row?.voices ?? null,
         ...(row?.state === 'reset' ? { previousTotal: row.previousTotal, observedTotal: row.observedTotal } : {}),
+        panels: Object.fromEntries(panelScopes(story).map((panel) => [panel.id, panelFor(panel)])),
       };
     }),
   };
@@ -191,6 +238,7 @@ function corpus() {
       slug: `${day.date}/${story.slug}`,
       date: day.date,
       url: `/news/${day.date}/${story.slug}/`,
+      hasCartoon: Boolean(story.visual?.satireCartoon),
     }));
   });
 }
@@ -263,7 +311,41 @@ function selfTest() {
   const many = Array.from({ length: 400 }, (_, i) => ({ slug: `2026-08-01/s${i}`, date: '2026-08-01' }));
   const bounded = probeSlugs(many, new Date('2026-08-16T00:00:00Z'));
 
+  const withCartoon = { slug: '2026-10-12/c', date: '2026-10-12', url: '/news/2026-10-12/c/', hasCartoon: true };
+  const panelSnap = deriveSnapshot(
+    new Map([['2026-10-12/c', { 'made-me-laugh': 6 }]]),
+    new Map([['2026-10-12/c/panel/editorial-illustration-1', 20]]),
+    '2026-10-12T00:00:00Z',
+    { panelRaw: new Map([
+      ['2026-10-12/c/panel/satire-cartoon', { 'panel-laugh': 5, 'panel-think': 2 }],
+      ['2026-10-12/c/panel/editorial-illustration-1', { 'panel-100': 2 }],
+    ]) },
+  );
+  const panelFeedRow = deriveFeed([withCartoon, ...stories], [panelSnap]).stories[0];
+
   const cases = [
+    ['a story without a cartoon publishes an illustration panel only',
+      Object.keys(rowA.panels).join() === 'illustration'],
+    ['a snapshot taken before panels were probed reports them unavailable, not empty',
+      !('panels' in snap) && rowA.panels.illustration.state === 'unavailable' && rowA.panels.illustration.total === null],
+    ['a cartoon panel above the floor publishes its own total and reactions',
+      panelFeedRow.panels.cartoon.state === 'sufficient' && panelFeedRow.panels.cartoon.total === 7
+        && panelFeedRow.panels.cartoon.reactions['panel-laugh'] === 5 && !('voices' in panelFeedRow.panels.cartoon)],
+    ['image reactions are never added to the story total', panelFeedRow.total === 6],
+    ['the reset rule applies to a panel as it does to a story',
+      panelFeedRow.panels.illustration.state === 'reset' && panelFeedRow.panels.illustration.previousTotal === 20
+        && panelFeedRow.panels.illustration.observedTotal === 2],
+    ['a panel key longer than the store allows is never probed or matched',
+      (() => {
+        const long = { slug: `2026-10-12/${'x'.repeat(100)}`, date: '2026-10-12', url: '/x/', hasCartoon: true };
+        const scopes = panelScopes(long);
+        const snapshot = deriveSnapshot(new Map(), new Map(), null, { panelRaw: new Map([[scopes[0].key, { 'panel-100': 9 }]]) });
+        const row = deriveFeed([long], [snapshot]).stories[0].panels.illustration;
+        return scopes[0].readable === false && scopes[1].readable === false
+          && row.state === 'unavailable' && row.total === null && row.reason === 'key-longer-than-the-store-allows';
+      })()],
+    ['each panel names the key it was read from',
+      panelFeedRow.panels.cartoon.key === '2026-10-12/c/panel/satire-cartoon'],
     ['story absent from an observed snapshot remains unavailable', deriveFeed([...stories, {slug:'2026-08-16/unprobed',date:'2026-08-16',url:'/news/2026-08-16/unprobed/'}], [snap]).stories.at(-1).state === 'unavailable'],
     ['observed below-floor story remains insufficient', rowB.state === 'insufficient' && rowB.total === null],
     ['story reactions and voice votes are separated',
@@ -311,10 +393,11 @@ const history = readNdjson(HISTORY);
 
 if (PROBE) {
   const { slugs, truncated, considered } = probeSlugs(stories);
-  const previousBySlug = new Map((history.at(-1)?.stories || [])
+  const previousBySlug = new Map([...(history.at(-1)?.stories || []), ...(history.at(-1)?.panels || [])]
     .filter((row) => row.total != null).map((row) => [row.slug, row.total]));
   const raw = await probeAll(slugs);
-  const snapshot = deriveSnapshot(raw, previousBySlug, new Date().toISOString(), { truncated, considered });
+  const panelRaw = await probeAll(slugs.flatMap((story) => panelScopes(story).filter((panel) => panel.readable).map((panel) => ({ slug: panel.key }))));
+  const snapshot = deriveSnapshot(raw, previousBySlug, new Date().toISOString(), { truncated, considered, panelRaw });
   const last = history.at(-1);
   // Append only when the observation actually changed, so a quiet day adds no
   // row — the same low-churn contract the engagement history uses.

@@ -1,33 +1,33 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-08 (Session 370 closeout) -->
+<!-- generated-at: 2026-10-13 (Session 376 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S370 ═══════╗
-║  Date: 2026-10-08  ·  SIL: 916/1000  ·  Velocity: 2 stable       ║
-║  Mode: FOUNDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S370)                                        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S376 ═══════╗
+║  Date: 2026-10-13  ·  SIL: 927/1000  ·  Velocity: 3 stable       ║
+║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+║  Autopilot: proven (S376)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: Super Intelligence title; animated Spark corner fri  ║
-║  ✓ Verified: Production content ee8db4f7fcb72857f3ba7401efd2bb1  ║
-║  ✓ Desk: reported subscription is active and confirmed; provide  ║
-║  ✓ Source: requested site code is on main; the corrected proof   ║
-║  ✓ Memory: repository and Codex indexes/topics updated; private  ║
+║  ✓ Shipped: 3 items. Comment threads no longer show a Cancel re  ║
+║  ✓ Tests: after-paint unit 12 of 12; reactions builder self-tes  ║
+║  ✓ Review: an independent review found that a tap handled by th  ║
+║  ✓ Deploy: Pushed as b59fc7d3a2 on 2026-10-13 UTC after a full   ║
+║  ✓ Corrected: S375 recorded the WebKit failures as a click arri  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 916/1000 ═══════════════════════════════════════╗
-║    Dev Health         87   █████████░                            ║
-║    Alignment          95   ██████████                            ║
+╔══ SCORES · SIL 927/1000 ═══════════════════════════════════════╗
+║    Dev Health         93   █████████░                            ║
+║    Alignment          94   █████████░                            ║
 ║    Momentum           90   █████████░                            ║
-║    Engagement         91   █████████░                            ║
-║    Process Qual       87   █████████░                            ║
+║    Engagement         93   █████████░                            ║
+║    Process Qual       89   █████████░                            ║
 ║    Coherence          92   █████████░                            ║
 ║    Security           94   █████████░                            ║
 ║    Ecosystem          91   █████████░                            ║
-║    Capital            94   █████████░                            ║
-║    Automation         95   ██████████                            ║
+║    Capital            95   ██████████                            ║
+║    Automation         96   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -35,14 +35,14 @@
 ║  · context/LATEST_HANDOFF.md                                     ║
 ║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
-║  · Codex agent memory                                            ║
+║  · context/PROJECT_STATUS.json                                   ║
+║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 230 files  ·  M:27 A:0 D:0 ?:203                       ║
+║  Changes: 2 files  ·  M:2 A:0 D:0 ?:0                            ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,14 +51,14 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/17                                            ║
+║  Doctor:        15/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         530/530                                          ║
+║  Tests:         534/534                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         3d ago                                           ║
+║  IGNIS:         7d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        4 started · 4 closed · 0 running                 ║
+║  shells:        17 started · 17 closed · 0 running               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
@@ -66,5 +66,3 @@
 ```
 
 *Generated by `scripts/render-closeout-board.mjs v1.1`*
-
-Verified S370 acceptance: [production](https://vaultsparkstudios.com/) serves content `ee8db4f7fcb72857f3ba7401efd2bb19cca7658c`, confirmed by completed [Pages deployment 37807641227](https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/37807641227). Final requested source and records are published on main; closing bookkeeping commits do not replace this pinned runtime evidence. Private CDR and Codex memory were updated locally. All 25 pre-existing modified tracked files were preserved byte-for-byte during primary checkout synchronization; untracked files were untouched. Write-back dots above mean files were already committed, not omitted. The next session remains within the existing task board scope.

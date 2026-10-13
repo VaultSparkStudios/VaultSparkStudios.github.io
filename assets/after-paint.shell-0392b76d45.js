@@ -22,13 +22,43 @@
   var state = { started: false, done: false };
   window.VSAfterPaint = state;
 
+  // A reaction tapped before its parked script exists would start the load and
+  // then go nowhere, with nothing to tell the reader. Keep the most recent such
+  // tap for each bar and deliver it once the parked scripts have run.
+  // The listener sits at the end of the bubble path on purpose: the reactions
+  // script cancels the default of every tap it handles, so a cancelled tap was
+  // already delivered and must not be sent again (a second delivery of the
+  // same button takes the vote back).
+  var REPLAY = '[data-desk-reactions] [data-reaction]';
+  var early = [];
+  function remember(event) {
+    var button = event.target && event.target.closest ? event.target.closest(REPLAY) : null;
+    if (!button) return;
+    var bar = button.closest('[data-desk-reactions]');
+    var at = -1;
+    for (var i = 0; i < early.length; i++) if (early[i].bar === bar) at = i;
+    if (event.defaultPrevented) {
+      // Handled by the live script; it also supersedes any earlier tap on this bar.
+      if (at !== -1) early.splice(at, 1);
+      return;
+    }
+    if (at !== -1) early[at].button = button;
+    else early.push({ bar: bar, button: button });
+  }
+
   function finish() {
     if (state.done) return;
     state.done = true;
+    document.removeEventListener('click', remember);
     document.dispatchEvent(new Event('vs:after-paint'));
+    for (var i = 0; i < early.length; i++) {
+      try { if (early[i].button.isConnected) early[i].button.click(); } catch (_e) { /* skipped */ }
+    }
+    early = [];
   }
 
   if (!templates.length) { finish(); return; }
+  document.addEventListener('click', remember);
 
   // script.src is a TrustedScriptURL sink. Same narrow pattern as the homepage
   // idle loader: same-origin /assets/ paths only. No-op when TT is absent.

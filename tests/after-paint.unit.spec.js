@@ -202,3 +202,90 @@ test('a page with nothing parked reports done immediately', async () => {
     assert.deepEqual(await f.page.evaluate(() => ({ started: window.VSAfterPaint.started, done: window.VSAfterPaint.done })), { started: false, done: true });
   } finally { await f.close(); }
 });
+
+test('a reaction tapped before its parked script has run is delivered once, the latest per bar', async () => {
+  let releaseImage;
+  const imageHeld = new Promise((resolve) => { releaseImage = resolve; });
+  const body = `<div data-desk-reactions="one"><button data-reaction="a">A</button><button data-reaction="b">B</button></div>
+<div data-desk-reactions="two"><button data-reaction="c">C</button></div>
+<button id="other">Other</button>
+<img src="/slow.png" alt="" width="1" height="1">
+<template data-after-paint><script src="/assets/__reactions.js" defer></script></template>
+<script src="/assets/after-paint.js" defer></script>`;
+  const f = await openFixture(browser, {
+    pages: { '/story/': html({ body }) },
+    handlers: [
+      {
+        match: (u) => u.origin === ORIGIN && u.pathname === '/slow.png',
+        handle: async (route) => { await imageHeld; await route.fulfill({ status: 200, contentType: 'image/png', body: Buffer.alloc(0) }); },
+      },
+      {
+        match: (u) => u.origin === ORIGIN && u.pathname === '/assets/__reactions.js',
+        handle: async (route) => {
+          // Slow enough that every tap below lands before the handler exists.
+          await new Promise((done) => setTimeout(done, 400));
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/javascript',
+            body: `window.__got = []; document.addEventListener('click', function (e) { var b = e.target.closest('[data-reaction]'); if (b) { e.preventDefault(); window.__got.push(b.getAttribute('data-reaction')); } });`,
+          });
+        },
+      },
+    ],
+  });
+  try {
+    await f.page.goto(`${ORIGIN}/story/`, { waitUntil: 'domcontentloaded' });
+    await f.page.click('[data-reaction="a"]');
+    await f.page.click('[data-reaction="b"]');
+    await f.page.click('#other');
+    await f.page.click('[data-reaction="c"]');
+    assert.equal(await f.page.evaluate(() => typeof window.__got), 'undefined', 'the taps landed before the parked script ran');
+    await waitFor(async () => (await f.page.evaluate(() => (window.__got || []).length)) === 2, { message: 'early taps to be delivered' });
+    await settle(200);
+    assert.deepEqual(await f.page.evaluate(() => window.__got), ['b', 'c'], 'one tap per bar, the most recent, and nothing for other controls');
+    await f.page.click('[data-reaction="a"]');
+    assert.deepEqual(await f.page.evaluate(() => window.__got), ['b', 'c', 'a'], 'a later tap is handled once, not replayed');
+  } finally { releaseImage(); await f.close(); }
+});
+
+test('a tap the reactions script already handled is not delivered again while a later parked script loads', async () => {
+  let releaseLate;
+  const lateHeld = new Promise((resolve) => { releaseLate = resolve; });
+  const body = `<div data-desk-reactions="one"><button data-reaction="a">A</button><button data-reaction="b">B</button></div>
+<template data-after-paint><script src="/assets/__reactions.js" defer></script><script src="/assets/__late.js" defer></script></template>
+<script src="/assets/after-paint.js" defer></script>`;
+  const f = await openFixture(browser, {
+    pages: { '/story/': html({ body }) },
+    handlers: [
+      {
+        match: (u) => u.origin === ORIGIN && u.pathname === '/assets/__reactions.js',
+        handle: async (route) => {
+          await new Promise((done) => setTimeout(done, 300));
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/javascript',
+            body: `window.__got = []; document.querySelector('[data-desk-reactions]').addEventListener('click', function (e) { var b = e.target.closest('[data-reaction]'); if (b) { e.preventDefault(); window.__got.push(b.getAttribute('data-reaction')); } });`,
+          });
+        },
+      },
+      {
+        match: (u) => u.origin === ORIGIN && u.pathname === '/assets/__late.js',
+        handle: async (route) => { await lateHeld; await route.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.__late = true;' }); },
+      },
+    ],
+  });
+  try {
+    await f.page.goto(`${ORIGIN}/story/`, { waitUntil: 'domcontentloaded' });
+    // An early tap on A, before any handler exists.
+    await f.page.click('[data-reaction="a"]');
+    await waitFor(async () => (await f.page.evaluate(() => Array.isArray(window.__got))), { message: 'the reactions script to run' });
+    // The reactions script is live, the second parked script is still loading:
+    // this tap on B is handled at once and replaces the earlier tap on A.
+    await f.page.click('[data-reaction="b"]');
+    assert.deepEqual(await f.page.evaluate(() => ({ got: window.__got, done: window.VSAfterPaint.done })), { got: ['b'], done: false });
+    releaseLate();
+    await waitFor(async () => (await f.page.evaluate(() => window.VSAfterPaint.done)), { message: 'parked scripts to finish' });
+    await settle(200);
+    assert.deepEqual(await f.page.evaluate(() => window.__got), ['b'], 'nothing is delivered a second time');
+  } finally { releaseLate(); await f.close(); }
+});

@@ -1,3 +1,25 @@
+# S376 arc — reader feedback on Desk articles
+
+- [x] Wave1: sync, triage (not cut off), /start, canon sync.
+- [x] Wave2: audit `docs/AUDIT_2026-10-12-S376.md`, three items, premises checked against production.
+- [x] Wave3: stray comment controls hidden; seven themes captured.
+- [x] Wave4: reaction taps no longer lost in WebKit; early-tap delivery in the loader.
+- [x] Wave5: image reaction totals in the feed; independent review, four findings fixed.
+- [ ] **[SIL/P2 · S376]** Firefox loses a reaction tap issued straight after a jump about 2 in 14 (late sections resize while anchoring settles; passes on retry). Decide between exact section size hints and no deferral, with Lighthouse evidence.
+- [ ] **[SIL/P3 · S376]** At 390px the Spark companion overlaps the Post comment button and the display-name field on Desk articles.
+- [ ] **[OPS/P3 · S376]** `task-slice`, `check-audit-premises` and the start maintenance lane have no local copy here.
+
+# S375 arc — cartoon below the illustration, with its own reactions
+
+- [x] Wave1: sync, triage (not cut off), /start, canon sync (2 gaps, 0 ABSOLUTE).
+- [x] Wave2: audit `docs/AUDIT_2026-10-12-S375.md`, two items; three hit-list items assessed and left unselected with reasons.
+- [x] Wave3 (founder direction): cartoon stage directly below the illustration on 122 articles, own reaction scope and comment thread; layout test, contract check and browser spec updated.
+- [x] Wave4: article shell no longer scrolls sideways (`overflow:clip`); seven themes captured at desktop and mobile.
+- [x] Wave5: gate 534/534, staging, push c8635d986e, required checks first time, production tree-current at be976158c8 (run 38212109944).
+- [x] **[SIL/P2 · S375]** Cartoon and illustration reaction totals published under `panels` in the reader-signal feed (S376).
+- [x] **[SIL/P2 · S375]** WebKit reaction spec failures: cause was late section rendering without scroll anchoring; 12 of 12 (S376).
+- [x] **[SIL/P3 · S375]** Stray Cancel reply and Try again on comment threads: real in production, fixed in CSS (S376).
+
 # S374 arc — scripts after first paint, SI first use
 
 - [x] Wave1: sync 80 commits, triage (not cut off), /start, canon sync (3 STRONG gaps, 0 ABSOLUTE).

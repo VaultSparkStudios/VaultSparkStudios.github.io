@@ -344,8 +344,9 @@ const PANEL_REACTIONS = [
  * S356 reader-first layout: the illustration is the story's hero image, so it
  * follows the Story Overview. Its desktop preload discovers the artwork early;
  * mobile discovers it lazily so the overview can paint before image traffic.
- * Its reactions and image threads occupy the desktop side panel. The optional
- * satire cartoon stays in a native disclosure below the lead illustration.
+ * Its reactions and image threads occupy the desktop side panel. S375 (founder
+ * direction): the optional satire cartoon is the next stage, directly below
+ * the illustration, with its own reaction row and its own comment thread.
  */
 /**
  * True when the story's art is the procedural fallback rather than a drawn
@@ -413,6 +414,26 @@ function satireFigure(story, day) {
     <img src="${base}.png" width="${width}" height="${height}" loading="lazy" decoding="async" alt="${escapeHtml(cartoon.alt)}"></picture>
     <figcaption><p class="desk-satire-caption">“${escapeHtml(story.memeLine.text)}”</p><p class="desk-satire-byline">Drawn in the style of ${personaNameLink(persona)} <span class="desk-ai-tag">AI persona</span> · AI-generated satire, not a photograph or a real event</p>${note}</figcaption>
   </figure>`;
+}
+
+/**
+ * S375 — the cartoon's own reaction row. Same eight ids as the illustration
+ * (the Worker allowlist is unchanged), counted under a separate key so a vote
+ * on the cartoon never lands on the illustration's tally or the story's.
+ */
+function satireReactions(story, day) {
+  const persona = personaById(story.visual?.satireCartoon?.persona);
+  if (!persona) return '';
+  const reactionSlug = `${day.date}/${story.slug}/panel/satire-cartoon`;
+  return `<section class="desk-reactions desk-panel-reactions desk-satire-reactions" data-desk-reactions="${escapeHtml(reactionSlug)}" aria-label="React to this AI-generated satire cartoon">
+    <div class="desk-panel-react-head">
+      <p class="desk-react-title">React to ${escapeHtml(persona.name)}’s cartoon<span>Identity-free · one pick, tap it again to take it back · counted separately from the illustration.</span></p>
+    </div>
+    <div class="desk-react-row desk-panel-react-row">
+      ${PANEL_REACTIONS.map((r) => `<button type="button" class="desk-react desk-panel-react" data-reaction="${r.id}" aria-pressed="false" aria-label="${escapeHtml(r.aria.replace(/panel/g, 'cartoon'))}"><span class="desk-react-e" aria-hidden="true">${r.emoji}</span><span class="desk-react-k">${escapeHtml(r.label)}</span><span class="desk-react-n" hidden></span></button>`).join('\n      ')}
+    </div>
+    <p class="desk-react-status" data-reaction-status data-state="idle" role="status" aria-live="polite"></p>
+  </section>`;
 }
 
 function panelReactions(story, day) {
@@ -582,6 +603,13 @@ function artworkStage(story, day) {
   const illustration = memeFigure(story, day);
   if (!illustration) return '';
   return `<section class="desk-art-stage" aria-label="Story artwork and image discussion"><div class="desk-art-gallery">${illustration}</div><aside class="desk-art-feedback" aria-label="Artwork reactions and public comments">${panelReactions(story, day)}${imageDiscussion(story, day, 'editorial-illustration-1', 'the illustration')}</aside></section>`;
+}
+
+/** S375: the cartoon stage sits directly under the illustration stage. */
+function satireStage(story, day) {
+  const cartoon = satireFigure(story, day);
+  if (!cartoon) return '';
+  return `<section class="desk-art-stage desk-satire-stage" aria-label="Satire cartoon, reactions and public image comments"><div class="desk-art-gallery">${cartoon}</div><aside class="desk-art-feedback" aria-label="Cartoon reactions and public comments">${satireReactions(story, day)}${imageDiscussion(story, day, 'satire-cartoon', 'the cartoon')}</aside></section>`;
 }
 
 function storyOverview(story) {
@@ -969,6 +997,7 @@ ${day.simulated ? PREVIEW_BANNER : ''}
 ${supersededUrl ? `  <div class="desk-superseded"><strong>Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}">Read the canonical edition →</a></div>` : ''}
   ${storyOverview(story)}
   ${artworkStage(story, day)}
+  ${satireStage(story, day)}
   ${newsBrief(story, day)}
   ${storyToc(tocSections)}
   <section class="desk-body" id="story" aria-label="The story">${bodyHtml(story)}</section>
@@ -996,7 +1025,6 @@ ${/* Only the formats that make a claim about the future carry this section. A
   <ul class="desk-predictions">${story.predictions.map(predictionRow).join('\n')}</ul>
   </section>` : ''}
 ${hasTranscript ? `  <details class="desk-panel desk-transcript" id="argument"><summary>${argumentLabel}</summary>${transcript}</details>` : ''}
-  ${satireFigure(story, day) ? `<section class="desk-art-stage desk-satire-stage" aria-label="Satire cartoon and public image comments"><div class="desk-art-gallery">${satireFigure(story,day)}</div><aside class="desk-art-feedback" aria-label="Cartoon comments">${imageDiscussion(story,day,'satire-cartoon','the cartoon')}</aside></section>` : ''}
   <div class="desk-how" id="how-this-was-written">${AI_BANNER}</div>
   ${dispatchCta('story', { compact: true, heading: 'The next AI story, in your inbox.' })}
   <section class="desk-section desk-activity" aria-labelledby="desk-activity-title">

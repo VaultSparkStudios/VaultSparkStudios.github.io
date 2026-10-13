@@ -16,7 +16,7 @@ for (const theme of themes) {
       await page.addInitScript((selectedTheme) => localStorage.setItem('vs_theme', selectedTheme), theme);
       await page.goto(surface.path, { waitUntil: 'domcontentloaded' });
       if (surface.state) await expect(page.locator(surface.state)).toHaveAttribute('data-state', 'ready');
-      else await expect(page.locator('.desk-panel-reactions')).toBeVisible();
+      else await expect(page.locator('.desk-panel-reactions').first()).toBeVisible();
       const results = await new AxeBuilder({ page }).include(surface.selector).withTags(['wcag2aa', 'wcag21aa']).analyze();
       expect(results.violations.filter((violation) => violation.id === 'color-contrast')).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);

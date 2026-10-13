@@ -1,3 +1,19 @@
+# S376 reader feedback on Desk articles — 2026-10-12
+
+- **Comment threads.** The reply banner and its Cancel reply button no longer show on a thread until a reader presses Reply; at phone width a Try again button also showed after a successful load. Both carried the `hidden` attribute and were displayed anyway because a class set `display`. `assets/desk-comments.css` now keeps hidden elements inside a thread hidden.
+- **Reaction taps.** Article sections are rendered late only in browsers that have scroll anchoring (`@supports (overflow-anchor:auto)`). Without anchoring, a late section taking its real height moved the page under the reader after a jump: 181px in WebKit, enough for a press on a reaction to be released on the article. Early WebKit taps went from 1 of 8 delivered to 8 of 8.
+- **Early taps.** `assets/after-paint.js` keeps the last reaction tap made before the parked reactions script exists and delivers it once the script has run; a tap the live script already handled is never delivered twice.
+- **Reader-signal feed.** `api/news-desk-reactions.json` now lists illustration and cartoon reactions per story under `panels`, separate from the story total, with the same five-signal floor and reset rule. First probe: 248 panels read, all below the floor, so no image total is published yet. The feed's definition was corrected to say what is counted where.
+- **Checks.** After-paint unit suite 12 (was 10 plus two new cases); reactions builder self-test 25; the reactions browser spec passes in WebKit 12 of 12 (was 5 of 12). Firefox still loses a tap issued straight after a jump about 2 times in 14; it passes on retry and is on the task board. Seven themes captured at 1366px and 390px (`docs/visual-qa/S376_COMMENTS.json`).
+
+# S375 satire cartoon below the illustration — 2026-10-12
+
+- **Article order.** On every Desk article with a satire cartoon (122 of 123), the cartoon is the stage directly below the AI-generated illustration and above the News Brief. It used to render after the predictions and the transcript.
+- **Cartoon feedback.** The cartoon has its own side panel: eight reactions counted under `<date>/<slug>/panel/satire-cartoon`, separate from the illustration and the story, and its own comment thread. The reaction ids are the ones the Worker already accepts, so the Worker did not change. The Desk feed publishes the scope as `_vaultspark.satire_reaction_key`.
+- **Layout fix.** The article shell can no longer be scrolled sideways. It used `overflow:hidden` around a glow that extends 352px past the right edge, and opening an image comment panel at 1366px could move the article that far left. It now also declares `overflow:clip`.
+- **Checks.** `test-news-article-layout` requires the cartoon between the illustration and the News Brief with exactly one cartoon reaction scope and an attached thread; `check-public-contract-health` and `tests/desk-artwork.spec.js` follow the new order. Seven themes captured at 1366px and 390px (`docs/visual-qa/S375_CARTOON.json`).
+- **Not shown yet.** Cartoon reaction totals are collected but no public summary reads them.
+
 # S374 scripts after first paint, SI first use — 2026-10-11
 
 - **Script loading.** Scripts that change nothing above the fold are parked in `<template data-after-paint>` and run by `assets/after-paint.js` once the page has loaded and a frame is on screen, or at the first interaction. Desk pages park the reactions, comments, CSRF and Turnstile scripts (four of eleven on an article); presence stays eager because it times the visit from when it runs. The homepage parks seven of its 28: the public data client, the newsletter client and its fallback, live proof, the hydration timeout, the stats tile and the join bar. The consent banner, hero scripts, click tracking and error reporting stay eager. The homepage idle loader waits for the parked pass before starting.

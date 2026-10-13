@@ -34,13 +34,18 @@ test('artwork precedes prose; separate image threads load on request and do not 
  expect(await page.evaluate(()=>window.challengeThread)).toBe(await community.getAttribute('data-slug'));
  await expect(cartoon.locator('textarea')).toBeHidden();
 });
-test('mobile artwork fits; sourced brief and commentary precede satire and disclosure',async({page})=>{
+test('mobile artwork fits; the cartoon sits directly below the illustration with its own reactions',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto(ROUTE);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  const cartoon=page.locator('#satire-cartoon');await expect(cartoon).toBeVisible();
  const position=selector=>page.locator(selector).evaluate(e=>e.getBoundingClientRect().top+scrollY);
- expect(await position('#positions')).toBeLessThan(await position('#satire-cartoon'));
- expect(await position('#satire-cartoon')).toBeLessThan(await position('#how-this-was-written'));
+ expect(await position('#editorial-illustration-1')).toBeLessThan(await position('#satire-cartoon'));
+ expect(await position('#satire-cartoon')).toBeLessThan(await position('#desk-short-title'));
+ const stages=page.locator('.desk-art-stage');expect(await stages.count()).toBe(2);
+ await expect(stages.nth(1)).toHaveClass(/desk-satire-stage/);
+ const scopes=await page.locator('.desk-panel-reactions').evaluateAll(ns=>ns.map(n=>n.getAttribute('data-desk-reactions')));
+ expect(scopes).toHaveLength(2);expect(scopes[0].endsWith('/panel/editorial-illustration-1')).toBe(true);expect(scopes[1].endsWith('/panel/satire-cartoon')).toBe(true);
+ await expect(stages.nth(1).locator('.desk-panel-react')).toHaveCount(8);
  await expect(page.getByRole('heading',{name:'News Brief',exact:true})).toBeVisible();
  expect(await page.locator('.desk-news-brief li').count()).toBe(await page.locator('.desk-facts>li').count());
  await expect(page.getByRole('heading',{name:'The Desk’s Take',exact:true})).toBeVisible();
@@ -54,7 +59,7 @@ test('expanded story overview leads artwork and illustration labels stay fully v
   expect((await overview.locator('.desk-overview-text').textContent()).length).toBeGreaterThan(100);
   const y=selector=>page.locator(selector).first().evaluate(n=>n.getBoundingClientRect().top+scrollY);
   expect(await y('.desk-story-overview')).toBeLessThan(await y('#editorial-illustration-1'));
-  const labels=page.locator('.desk-panel-react .desk-react-k');expect(await labels.allTextContents()).toEqual(['Like','Fire','Laugh','Mind-blown','Hmm','Yikes','Watching','Nailed it']);
+  const labels=page.locator('.desk-art-stage').first().locator('.desk-panel-react .desk-react-k');expect(await labels.allTextContents()).toEqual(['Like','Fire','Laugh','Mind-blown','Hmm','Yikes','Watching','Nailed it']);
   expect(await labels.evaluateAll(ns=>ns.every(n=>n.scrollWidth<=n.clientWidth+1&&getComputedStyle(n).textOverflow!=='ellipsis'))).toBe(true);
  }
 });

@@ -211,7 +211,13 @@ test('a published comment appears immediately and a reply carries parentId', asy
   await expect(community.locator(`[data-comment-id="${published.id}"]`)).toBeVisible();
   await expect(community.locator('.desk-comments-summary')).toHaveText('4 comments');
 
+  // The reply banner is display:flex by class; until a reader presses Reply it
+  // carries the hidden attribute and must not be on screen.
+  await expect(community.locator('.desk-comments-replying')).toBeHidden();
+  await expect(community.locator('button', { hasText: 'Cancel reply' })).toBeHidden();
+
   await community.locator(`[data-comment-id="${GUEST_ID}"] button[aria-label^="Reply to"]`).click();
+  await expect(community.locator('.desk-comments-replying')).toBeVisible();
   await expect(community.locator('.desk-comments-replying-text')).toHaveText('Replying to Jordan');
   await community.locator('textarea').fill('A reply to that point.');
   await community.locator('button', { hasText: 'Post reply' }).click();
