@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-13T07:19:05.322Z",
+  "generatedAt": "2026-10-13T07:27:16.693Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -9,47 +9,40 @@
     "shellVersion": "1220404832-59bed42877-30b48f0ae6-7f501cc04e-8221605898-8c1f2155b5-0995bd7945-c0fddc0c73-bd7ccf3b3d-8b1d92d92b-141c057d30-001af71d31-7b976ad580-5b2e3a4faa-9b5baeb1ab-4b68e2855f-523b04a01e-b33c76422e-e292fb59d7-3fab54aa82-0392b76d45-550971e267-c86a6ecc39-fef717e631-b33242e1cc-e6b0b21c77-8dd57eb3a3-9fb978eca9-bc8a879068-aadb90966d-1ddedc6d81-f058757524-91a127bb4a-6abbb39184-37d24392f4-6b434171f8-d369cfd082-0fbab844d7-a71c845b99-355aaa84cf-1af2012142-5f63b6b75a-7ca5d9e98f-33115efcde-cb874aa5e8-5fc734ef84-bad58045cc-d927bf3c2d-20bb2584bc-d55870922b"
   },
   "staging": {
-    "status": "yellow",
+    "status": "green",
     "routeCount": 3,
     "reachable": true,
-    "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
-    ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-artifact-root-mismatch"
-    ],
-    "candidateBuildSha": "1461d12b735c36c3b117b3b34cff98a2d3c8743e",
-    "deployedBuildSha": "1461d12b735c36c3b117b3b34cff98a2d3c8743e",
+    "reasonCodes": [],
+    "candidateReady": true,
+    "candidateFindings": [],
+    "candidateBuildSha": "6633fe0d222cad67798f5047dd0b5d1c08cf3eed",
+    "deployedBuildSha": "6633fe0d222cad67798f5047dd0b5d1c08cf3eed",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "1318fa011292439f768d2e0b8daf808dbe0ca01b66f011b10f5e0134bfd898b1",
+      "candidateRoot": "5b0a14be9529e70adf7c4c0bc9b0bf608546e326eada24583f63a0cc7404afad",
       "candidateLeafCount": 65,
-      "stagingRoot": "7fd5cb2f81c321da4089496cdb70b4d9d718766ed02d10e9264da5a6ee4a346c",
+      "stagingRoot": "5b0a14be9529e70adf7c4c0bc9b0bf608546e326eada24583f63a0cc7404afad",
       "stagingLeafCount": 65,
-      "matched": false
+      "matched": true
     },
-    "productionParity": false,
+    "productionParity": true,
     "deployReceipt": {
-      "receiptId": "8391dc2116fbe2732a2863b3",
+      "receiptId": "47e4b5918a3664934f874e8a",
       "state": "verified",
-      "deployId": "20261013053505",
-      "manifestFileCount": 10943,
-      "remoteFileCount": 10943,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20261013053505",
-      "sourceFingerprint": "344ff02e9197270ba881f489",
-      "archiveSha256": "c3aba4d969f1d1c83d951edd8719a3c5729b3a85fde64151f9e0ea2724d3eb06",
+      "deployId": "20261013072341",
+      "manifestFileCount": 10954,
+      "remoteFileCount": 10954,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20261013072341",
+      "sourceFingerprint": "b756c4dc5c7bf4e39ced1ac5",
+      "archiveSha256": "9215e2cbcd3628cc749339d948968d2d6cf7150b639c0775035208f84af6b764",
       "remoteVerified": true,
-      "attested": false,
-      "reason": "receipt facts do not match current staging evidence"
+      "attested": true,
+      "reason": null
     },
     "deployHistory": {
-      "depth": 126,
-      "headReceiptId": "8391dc2116fbe2732a2863b3",
-      "previousReceiptId": "1baa9d7d846256905d505fed",
+      "depth": 127,
+      "headReceiptId": "47e4b5918a3664934f874e8a",
+      "previousReceiptId": "8391dc2116fbe2732a2863b3",
       "bound": true,
       "reason": null
     }
@@ -180,10 +173,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
+    "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
-    "stagingDeployAttested": false,
+    "stagingArtifactManifestBound": true,
+    "stagingDeployAttested": true,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -196,9 +189,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingArtifactManifestBound",
-    "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
