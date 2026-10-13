@@ -1,6 +1,6 @@
 ## Where We Left Off (Session 377) — homepage Recent Ships (2026-10-13)
 
-Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Selected outcomes achieved; full arc closeout publication and closing runtime readback pending.
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Selected outcomes achieved. Full fresh arc phases executed; closing publication452f pushed and production readback accepted. Final evidence receipt prepared for publication.
 
 - Shipped: once-only deferred release cards with hashed delivery; bounded task and strict premise adapters using the existing Studio Ops runtime.
 - Tests: local and clean-checkout full gates 534/534 before rebase; mobile 215/215; five new unit regressions; seven themes × desktop/mobile × before/after = 28 captures, all inspected. Rebase preserved reviewed UI source bytes; canonical staging browser three passed/three held, feature browser six passed.
@@ -8,6 +8,8 @@ Session Intent: /arc then direct commit/push to main and full deployment, explic
 - Review: independent review caught duplicate selector handling and an overly broad historical premise; both fixed. Narrow screenshot-filename scan exceptions retain high-confidence secret scanning.
 - Scope: S377 is this invocation's bound session; prior closeout evidence did not substitute for startup, audit or implementation. CDR reviewed — no new creative direction. Cross-repo intelligence writes use Ark; delivery alone is not adoption.
 - Remaining: existing identity hold, field-vitals freshness, Firefox taps after jumps and companion overlap, Lighthouse repeatability, dormant home-intelligence. Preserved pre-existing local operator caches and untracked work.
+Closing acceptance: candidate452fdf163c, confirmed production38365858868, immutable served text1055/1065 exact with10 redirects; primary281 exact HTML bodies after narrow provider transport,14 declared redirects and nine held identity routes; live6/6. Exact closing workflows38362922215/38362922239/38362922275 passed (Lighthouse attempt2; unchanged floor). Fresh mobile215/215 and recaptured14 after images. See docs/RELEASE_S377.json.
+
 ## Where We Left Off (Session 376) — reader feedback on Desk articles (2026-10-12)
 
 Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). Intent: **Achieved** — shipped, pushed and promoted.
