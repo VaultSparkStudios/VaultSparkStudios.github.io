@@ -1,18 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-13T04:14:15.324Z",
+  "generatedAt": "2026-10-13T05:09:24.740Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch"
+    "staging-artifact-root-mismatch",
+    "staging-artifact-leaf-count-mismatch",
+    "/:localShellParity",
+    "/membership/:localShellParity"
   ],
   "candidateBuildSha": "da28cc4510cc4869104bf9078f54cf429afdc269",
-  "stagingBuildSha": "29f8a61689fa352496a6c14a59e11c204fcc4142",
+  "stagingBuildSha": "9a5e026e9a5c5bcde50db0531bc9dd6c8b2f78af",
   "artifactManifest": {
     "candidateRoot": "d2bbe2e5bed51e0e5dff94efa4ef39a9049eef955c33718467e758a05a04c672",
     "candidateLeafCount": 64,
-    "stagingRoot": "d2b018b3573b2164ac42323ecd0823d97f55b279a013a75873497c0bef4ce6e1",
-    "stagingLeafCount": 64,
+    "stagingRoot": "823a430fcab6b34990aafae75e325a9e63833513f90d36a14554b4125c272d05",
+    "stagingLeafCount": 65,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -47,7 +50,7 @@
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
-        "assets/home-idle-loader.shell-d6269f7d0f.js",
+        "assets/home-idle-loader.shell-7b976ad580.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
@@ -139,13 +142,12 @@
     },
     {
       "route": "/membership/",
-      "prodStatus": 0,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
+      "statusParity": true,
       "shellParity": false,
-      "prodShell": [],
-      "stagingShell": [
+      "prodShell": [
         "assets/ambient-core.shell-5b2e3a4faa.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
@@ -156,8 +158,25 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/trust-depth.shell-bad58045cc.js"
       ],
-      "headerParity": false,
-      "prodHeaders": {},
+      "stagingShell": [
+        "assets/ambient-core.shell-5b2e3a4faa.js",
+        "assets/ambient-feature.shell-9b5baeb1ab.js",
+        "assets/nav-sheet.shell-c0fddc0c73.js",
+        "assets/public-intelligence.shell-c86a6ecc39.js",
+        "assets/pwa-nav.shell-5f63b6b75a.js",
+        "assets/recent-ships.shell-001af71d31.js",
+        "assets/schema-injector.shell-33115efcde.js",
+        "assets/style.shell-7f501cc04e.css",
+        "assets/theme-toggle.shell-8221605898.js",
+        "assets/trust-depth.shell-bad58045cc.js"
+      ],
+      "headerParity": true,
+      "prodHeaders": {
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "xcto": "nosniff",
+        "referrer": "strict-origin-when-cross-origin"
+      },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
         "hsts": "max-age=31536000; includeSubDomains; preload",
@@ -169,9 +188,7 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "status-mismatch",
-        "shell-mismatch",
-        "header-mismatch"
+        "shell-mismatch"
       ]
     }
   ]
