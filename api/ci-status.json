@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-14T02:02:15.229Z",
+  "generatedAt": "2026-10-14T02:30:28.923Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 12,
+    "observed": 2,
+    "healthy": 2,
+    "unknown": 13,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "CI gate status is unknown.",
+  "summary": "CI gates are still running.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-13T02:38:24.027Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-13T23:21:02.315Z",
-    "newestAgeHours": 2.7,
+    "newestAgeHours": 3.2,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -37,12 +37,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-14T01:54:42Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38497281219",
-      "headSha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-14T02:26:19Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38501011063",
+      "headSha": "3c2c2c66fa333fdc33f0f6a3740f97895015348c",
       "event": "push"
     },
     {
@@ -50,19 +50,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-14T01:45:57Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38497281223",
-      "headSha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+      "updatedAt": "2026-10-14T02:29:08Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38501011109",
+      "headSha": "3c2c2c66fa333fdc33f0f6a3740f97895015348c",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-14T02:00:31Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38497281172",
-      "headSha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-10-14T02:26:19Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38501010997",
+      "headSha": "3c2c2c66fa333fdc33f0f6a3740f97895015348c",
       "event": "push"
     },
     {
@@ -101,15 +101,13 @@
     },
     {
       "name": "The Desk Dispatch — Daily Digest",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-13T23:34:40Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 2.46,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -188,7 +186,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.86,
+      "ageHours": 1.33,
       "staleAfterHours": 48
     },
     {
@@ -216,16 +214,14 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-13T23:34:26Z",
+      "lastUpdatedAt": "2026-10-14T02:24:27Z",
       "recentConclusions": [
-        "success",
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.46,
+      "ageHours": 0.1,
       "staleAfterHours": 48
     },
     {
