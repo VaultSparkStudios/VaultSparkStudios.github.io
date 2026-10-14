@@ -5,7 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Spark clears reader controls; exact production acceptance verified                         ║
+║    Spark clears reader controls; closing production acceptance verified                       ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     █████████░   90/100                                                       ║
 ║  ECOSYSTEM IMPACT   █████░░░░░   50/100                                                       ║
@@ -25,12 +25,12 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Finish canonical closing publication.
+    • Selector membership and focus-return upkeep on future companion changes.
 
   BLOCKERS
     (none)
 
   ACTION GATE
-    Release accepted; canonical closing publication in progress.
+    Authorized release and canonical closeout complete.
 
 ```

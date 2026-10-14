@@ -8,7 +8,7 @@
 - [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
 - [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
 - [x] Wave 3 release: exact staging, hosted checks, direct main push and production acceptance verified in docs/RELEASE_S378.json.
-- [ ] Wave 3 closeout: canonical autopilot, closing artifact publication, Ark and native goal completion.
+- [x] Wave 3 closeout: canonical autopilot completed; closing source and confirmed production accepted; schedules restored. Final evidence publication and native goal completion follow final review.
 ## S377 arc — homepage Recent Ships
 
 - [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.

@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S378) - WHAT SHIPPED ══════════════════════════╗
-║  S378: Spark yields to reader controls and editing, then return  ║
+║  S378 complete: Spark clears reader controls and editing, then   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    933/1000   ██████████████████████░░   93%                     ║
 ║    SIL v3.0  ·  Avg3: 930.3  ·  Velocity 1↓                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  ↓  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         534/534 passing (2026-10-13)                   ║
+║  ✓  Tests         534/534 passing (2026-10-14)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   10d                                            ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  0d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -129,11 +129,11 @@
 ║   93  [PRODUCT]      Inspect hidden-opener focus return after f  ║
 ║        Inspect hidden-opener focus return after future placemen  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Wave 3 closeout: canonical autopilot, clos  ║
-║        Wave 3 closeout: canonical autopilot, closing artifact p  ║
-║                                                                  ║
-║   87  [PRODUCT]      Census deferred homepage modules before en  ║
+║   90  [PRODUCT]      Census deferred homepage modules before en  ║
 ║        Census deferred homepage modules before enabling home-in  ║
+║                                                                  ║
+║   84  [INTELLIGENCE]  Start maintenance lane has no local copy   ║
+║        Start maintenance lane has no local copy here; task-slic  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

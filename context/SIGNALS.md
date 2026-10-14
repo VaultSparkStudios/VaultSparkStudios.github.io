@@ -1,5 +1,5 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         534/534 passing (2026-10-13)                   ║
+║  ✓  Tests         534/534 passing (2026-10-14)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   10d                                            ║
@@ -13,7 +13,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  0d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║

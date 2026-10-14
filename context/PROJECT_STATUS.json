@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S378 selected outcome live and accepted; finishing canonical closeout and closing artifact publication.",
+  "currentFocus": "Spark control clearance shipped and verified in production.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Verify canonical autopilot push, closing artifact delivery, Ark and native goal completion.",
+  "nextMilestone": "Maintain reader-control accessibility when companion placement changes; existing identity acceptance remains separately held.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -25,7 +25,7 @@
     "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
   ],
-  "lastUpdated": "2026-10-13",
+  "lastUpdated": "2026-10-14",
   "currentSession": 378,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-13",
@@ -105,13 +105,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-14",
-    "passing": 16,
+    "passing": 15,
     "warning": 1,
-    "failing": 0,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 17,
-    "score": 94,
+    "score": 88,
     "checks": [
       {
         "id": "manifest",
@@ -213,8 +213,8 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -262,7 +262,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "9bd2ed6384742d254f8d5c88",
   "testsSourceFingerprint": "e002cf5610259134db16d3cc",
-  "lastSessionSummary": "S378: Spark yields to reader controls and editing, then returns without losing corner preferences or header recall. Necessary build fixes hash SRI from candidate bytes and exclude QA/raw images from public placeholders. Local Spark42/42, shell13/13, mobile215/215,56 inspected seven-theme captures and full534/534 passed. Exact candidate57ca422724 pushed and deployed; required hosted checks green, staging/live feature9/9, canonical ceremony11/11. Immutable text parity1059/1069 identical,10 redirects,0 differences/unread. Primary HTML283 provider-adjusted bodies,14 declared redirects,9 held identity routes; non-HTML has no unaccounted difference. Canonical closeout and closing publication remain in progress; docs/RELEASE_S378.json records evidence.",
+  "lastSessionSummary": "S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 377,
@@ -274,26 +274,24 @@
     "runningJobs": []
   },
   "closeoutFollowthrough": {
-    "date": "2026-10-13",
+    "session": 378,
+    "date": "2026-10-14",
     "agent": "codex",
-    "releasedContentSha": "452fdf163c57e1230aafacd4bbfb68345cfa67f9",
-    "pagesRunId": 38365858868,
-    "requestedOutcomes": 2,
-    "completedOutcomes": 2,
-    "previewTerminal": "stopped; no listeners on4397/4316",
-    "sourcePublication": "Closing candidate452fdf163c pushed normally to main and pinned as s377-closeout-452f",
-    "deployment": "Confirmed full static production promotion completed; primary served SHA matches",
-    "validation": "Required exact-candidate hosted checks passed; local534/534 twice at autopilot; fresh mobile215/215; seven themes and28 reviewed captures; live feature6/6",
-    "closeoutVerification": "Immutable served text1055/1065 exact with10 redirects; primary281 HTML bodies exact after narrow provider transform,14 declared redirects/nine held identity routes. Binary assets outside raw HTTP parity. Final receipt:docs/RELEASE_S377.json.",
-    "session": 377,
-    "evidenceScope": "Historical S377 follow-through; S378 closing publication not yet accepted."
+    "releasedContentSha": "0a3fa422354d9a98de582e2ffe106b8102ffeec6",
+    "pagesRunId": 38495788787,
+    "requestedOutcomes": 1,
+    "completedOutcomes": 1,
+    "sourcePublication": "Normal main push and immutable closing release tag verified",
+    "deployment": "Confirmed full production promotion; exact primary and immutable served SHA",
+    "validation": "Full534/534; mobile215/215; Spark42/42; shell13/13; seven themes56 captures; staging/live Spark9/9; canonical ceremony11/11",
+    "closeoutVerification": "Independent served immutable and bounded primary parity; four publisher workflows restored"
   },
   "lastSession": 378,
   "sessionState": {
     "version": 1,
     "durableSession": 378,
-    "currentFocus": "S378 selected outcome live and accepted; finishing canonical closeout and closing artifact publication.",
-    "nextMilestone": "Verify canonical autopilot push, closing artifact delivery, Ark and native goal completion.",
-    "lastSessionSummary": "S378: Spark yields to reader controls and editing, then returns without losing corner preferences or header recall. Necessary build fixes hash SRI from candidate bytes and exclude QA/raw images from public placeholders. Local Spark42/42, shell13/13, mobile215/215,56 inspected seven-theme captures and full534/534 passed. Exact candidate57ca422724 pushed and deployed; required hosted checks green, staging/live feature9/9, canonical ceremony11/11. Immutable text parity1059/1069 identical,10 redirects,0 differences/unread. Primary HTML283 provider-adjusted bodies,14 declared redirects,9 held identity routes; non-HTML has no unaccounted difference. Canonical closeout and closing publication remain in progress; docs/RELEASE_S378.json records evidence."
+    "currentFocus": "Spark control clearance shipped and verified in production.",
+    "nextMilestone": "Maintain reader-control accessibility when companion placement changes; existing identity acceptance remains separately held.",
+    "lastSessionSummary": "S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored."
   }
 }
