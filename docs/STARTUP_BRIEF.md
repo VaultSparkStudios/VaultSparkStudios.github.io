@@ -123,6 +123,9 @@
 ║   96  [PRODUCT]      Keep attribute-only interaction regression  ║
 ║        Keep attribute-only interaction regressions synchronized  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Inspect hidden-opener focus return after f  ║
 ║        Inspect hidden-opener focus return after future placemen  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Census deferred homepage modules before en  ║
 ║        Census deferred homepage modules before enabling home-in  ║
-║                                                                  ║
-║   81  [INTELLIGENCE]  Start maintenance lane has no local copy   ║
-║        Start maintenance lane has no local copy here; task-slic  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
