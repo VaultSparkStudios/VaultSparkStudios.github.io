@@ -1,3 +1,9 @@
+## Active Session 379 — target-bound release profile
+
+Session Intent: fresh /arc then authorized direct main commit/push and full deployment. Native goal 01a13cbb-e5fa-76e3-8574-db73dc06305d is bound to S379. Startup and fresh nine-axis audit completed; recovery commit 04f0a7032e records the prior session publication tail.
+
+Implementation commit 9234706ca6 repairs target registry discovery and unique exact project attribution. Local fixtures 13/13; independent review passed round 2. Full verification, staging, canonical closeout, push and production acceptance remain open; the goal is not complete. Selected contract: docs/AUDIT_2026-10-14.json; live process checkpoint: ignored .cache/s379-live-state.json. Preserve prior operator caches.
+
 ## Where We Left Off (Session 378) — Spark control clearance
 
 Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Native goal01a13711-2367-7bd0-8d51-29d9b12798f8 binds this fresh S378 to47da157a4667; continuation resumes this arc. Full startup and fresh nine-axis audit executed.
