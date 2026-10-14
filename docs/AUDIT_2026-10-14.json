@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "2.1",
+  "session": 379,
+  "generatedAt": "2026-10-14T23:30:07.743Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S379 arc. Stabilize authoritative release-stage discovery; preserve supported website behavior and existing release requirements. Complete staging, candidate checks, closeout and production deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "health": "yellow",
+    "mode": "supported-release",
+    "stageSource": "canonical registry through skill-profile",
+    "statusSource": "context/PROJECT_STATUS.json"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "baseline": "S379 startup doctor: 16/17 passing, sibling-lock advisory, zero blocking failures. Canon: zero ABSOLUTE gaps; existing identity and terminology exceptions retained. Arc profile reports UNKNOWN while skill-profile reports S1.",
+    "reuse": "Existing arc-profile, lifecycle-skill-profile and project-profile resolvers; no new dependency or provider.",
+    "source": "04f0a7032e"
+  },
+  "candidates": [
+    [
+      "feature-depth",
+      "Extend release-readiness reporting",
+      "Select the source-resolution prerequisite first; current stage disagreement proves the missing foundation."
+    ],
+    [
+      "feature-depth",
+      "Add account progression depth",
+      "No new measured failure; existing identity acceptance remains held and changes require separate scope."
+    ],
+    [
+      "new-features",
+      "Novel reader intent trail",
+      "Not selected: no demonstrated failure warrants new tracking or storage."
+    ],
+    [
+      "new-features",
+      "Novel evidence-based project comparison",
+      "Not selected: supported-release stabilization takes precedence; no user demand evidence."
+    ],
+    [
+      "ux",
+      "Rework companion focus return",
+      "Not selected: S378 explicitly verifies the behavior; no new regression evidence."
+    ],
+    [
+      "ux",
+      "Redesign mobile navigation",
+      "Not selected: existing navigation and prior theme proof; no current defect established."
+    ],
+    [
+      "feedback",
+      "Add support triage backend",
+      "Not selected: contact and feedback already exist; no demonstrated failed journey."
+    ],
+    [
+      "feedback",
+      "Novel release confidence annotation",
+      "Not selected: accurate stage provenance is the prerequisite; avoid adding another duplicate confidence surface."
+    ],
+    [
+      "gamification",
+      "Expand season rewards",
+      "Not selected: changes membership economy and needs founder direction."
+    ],
+    [
+      "gamification",
+      "Add achievement prompts",
+      "Not selected: no measured engagement failure, would expand fixed attention surfaces."
+    ],
+    [
+      "ai",
+      "Expand homepage assistant inference",
+      "Not selected: no justified paid API use or broken current outcome."
+    ],
+    [
+      "ai",
+      "Unify agent release-stage discovery",
+      "Selected existing resolver repair; no new AI service."
+    ],
+    [
+      "security",
+      "Change Obelisk signup policy",
+      "Not selected: unchanged identity holds are explicitly separate; preserve fail-closed access."
+    ],
+    [
+      "security",
+      "Recheck public artifact safety",
+      "Required release acceptance, not a new feature; secret scans and public-safe review remain gates."
+    ],
+    [
+      "speed",
+      "Resolve profile against canonical target registry",
+      "Selected: local resolver only reads absent local portfolio registry, yielding UNKNOWN despite canonical S1."
+    ],
+    [
+      "speed",
+      "Bundle shared website assets",
+      "Not selected: no fresh performance evidence justifies reversing deferred loading."
+    ],
+    [
+      "token-cost",
+      "Bound task context",
+      "Already implemented: scripts/task-slice.mjs produces bounded local projection."
+    ],
+    [
+      "token-cost",
+      "Cache stage evidence indefinitely",
+      "Rejected: would hide registry/status changes and corrupt current-scope selection."
+    ]
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "target-bound-arc-profile",
+      "tier": "🔥",
+      "axis": "speed-organization-efficiency",
+      "title": "Resolve arc lifecycle from the targeted canonical registry",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 20.19,
+      "why": "Operators and agents must discover the current release stage accurately before selecting work. The site is released; reporting UNKNOWN makes information finding unreliable and can select the wrong readiness work.",
+      "recipe": "Resolve the registry from the explicitly targeted project and its Studio Ops sibling, preserve local status fallback and lifecycle conflict evidence, and test sibling, isolated, foreign-target and malformed-registry cases without changing lifecycle records.",
+      "selectedDepth": "L2",
+      "status": "pending",
+      "acceptance": "Target-bound registry regression fixtures; local arc and skill profilers agree on S1 supported-release; local health and deployment gates; staging then production readback.",
+      "premises": [
+        {
+          "claim": "Arc registry loader reads only its script-local registry path before repair",
+          "adapter": "grep-count",
+          "target": "scripts/arc-profile.mjs",
+          "pattern": "const REGISTRY = path",
+          "operator": "eq",
+          "expected": 1
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Read the canonical sibling registry when local registry is absent."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Resolve the registry from the explicitly targeted project and its Studio Ops sibling, preserve local status fallback and lifecycle conflict evidence, and test sibling, isolated, foreign-target and malformed-registry cases without changing lifecycle records."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Broader shared-resolver migration requires a separate owner-reviewed adoption scope."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-14T23:35:55.079Z",
+          "status": "pending",
+          "note": "Implementation complete: 13/13 isolated regression fixtures; actual arc and shared skill profiler agree S1/supported-release; independent review FIX round 1 resolved exact identity attribution, PASS round 2 independently reran 13 tests. Full acceptance and release pending."
+        }
+      ],
+      "historicalPremiseEvidence": {
+        "sourceCommit": "04f0a7032e",
+        "verifiedBeforeImplementation": true,
+        "actual": 1,
+        "verification": "Strict local premise checker: 1 verified, 0 contradicted, 0 unverified before the source edit."
+      }
+    }
+  ],
+  "skipped": [],
+  "totals": {
+    "count": 1,
+    "priority": 20.19,
+    "top3": [
+      "target-bound-arc-profile"
+    ]
+  },
+  "innovationReserve": [],
+  "review": {
+    "reviewer": "independent studio-reviewer",
+    "rounds": 2,
+    "findings": 1,
+    "fixed": 1,
+    "verdict": "pass",
+    "receipt": "portfolio/ops/review-loop-receipts.ndjson"
+  }
+}
