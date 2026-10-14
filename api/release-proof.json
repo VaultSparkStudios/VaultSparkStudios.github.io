@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-14T06:37:23.774Z",
+  "generatedAt": "2026-10-14T06:57:40.058Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,17 +18,19 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "ab582158cb1dc8dbeab84bd6421c9488cbb1d38b",
     "deployedBuildSha": "ab582158cb1dc8dbeab84bd6421c9488cbb1d38b",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "c462a51ecbb0b07d6939c3462f3ca09a122bd9fab5a0edbd612321a9ee3b1159",
+      "candidateRoot": "0f7918621ed91563b8e00d334c97af4ecee5963aa995297a921898f95718b79a",
       "candidateLeafCount": 65,
       "stagingRoot": "c462a51ecbb0b07d6939c3462f3ca09a122bd9fab5a0edbd612321a9ee3b1159",
       "stagingLeafCount": 65,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -68,13 +70,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 21,
-    "ageHours": 4,
-    "observedAt": "2026-10-14T06:26:26.897Z",
+    "commitsBehind": 1,
+    "ageHours": 0,
+    "observedAt": "2026-10-14T06:57:40.058Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-14T06:26:26.897Z",
+      "observedAt": "2026-10-14T06:57:40.058Z",
       "expectedFrom": "3745df0842d65109a4bcfc71fcce13c287cc9d2a76c9a4514450836404fbf880",
       "supersededBy": null,
       "ageHours": 0,
@@ -178,7 +180,7 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
@@ -194,6 +196,7 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingCandidateReady",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
