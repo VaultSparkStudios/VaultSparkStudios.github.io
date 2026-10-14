@@ -2166,3 +2166,8 @@ Use reversible companion yielding instead of relocating a visitor-selected corne
 ## S378 served-raster release dependency — 2026-10-13
 
 Build public low-quality image placeholders only for served raster paths, using the shared release-lane exclusions. Preserve1594 actual public placeholders; operator screenshots and raw proof art are excluded. Existing comparators used hash-verified batch Git reads for this release proof; HTTP selection, byte/hash checks and failure policy were preserved.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.

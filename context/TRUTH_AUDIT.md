@@ -1501,3 +1501,8 @@ The owner's original dirty checkout, local backups and private evidence are pres
 ### S378 closing acceptance — 2026-10-14T01:34:10.290Z
 
 S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. Earlier pending/failed entries are retained as history; this addendum records actual final acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.

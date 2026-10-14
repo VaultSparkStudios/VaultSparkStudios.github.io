@@ -646,3 +646,8 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 - [ ] **[SIL/P2 · future maintenance]** Make candidate-manifest changes select the existing receipt-ordering check before push, including metadata-only rebuilds; retain source/image guards and original review dates.
 
 - [ ] **[UX/P2 · separate scope]** Stabilize initial browser Find positioning during article expansion. S371 production diagnostics reproduced the offscreen selected title with both current CSS and the appended optimization removed; script blocking preserved visibility. Evidence: `docs/S371_PRODUCTION_ACCEPTANCE.json`.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
