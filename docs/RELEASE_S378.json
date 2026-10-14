@@ -100,7 +100,9 @@
   },
   "review": {
     "source": "review_s378 passed after cache membership and focus fixes; LQIP separately passed",
-    "closeoutClaims": "review_s378 PASS: all15 evidence hashes verified; exact source, parity limits, held routes, retries and four restored workflows accurately recorded"
+    "closeoutClaims": "review_s378 PASS: all15 evidence hashes verified; exact source, parity limits, held routes, retries and four restored workflows accurately recorded",
+    "metadataSource": "review_s378 PASS: four classified JSON paths and seven staging hashes; reviewed UI bytes unchanged",
+    "metadataAcceptance": "review_s378 PASS: all22 evidence hashes; latest source3499 and production38499177485; metadata scope, preserved UI bytes, parity limits and held identity routes accurate"
   },
   "closeout": {
     "state": "Canonical closeout complete; closing production accepted; final reviewed writeback accompanies this commit",
@@ -316,5 +318,92 @@
       "s378-date-final-stage-browser-receipt.json": "786b8e3021e62626585347a5d32f65d2b0a811cd20e574e12ee4f59f11f97e29",
       "s378-date-final-attention-receipt.json": "0d6a34efe8587bf66cb55f92d27bd2242fa19a60f14add197507b072ddaa2575"
     }
-  }
+  },
+  "metadataPublication": {
+    "accepted": true,
+    "acceptedAt": "2026-10-14T02:23:01.656Z",
+    "sha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+    "tag": "s378-metadata-final-3499",
+    "productionRun": 38499177485,
+    "deploymentUrl": "https://11763634.vaultsparkstudios-website.pages.dev",
+    "previousAcceptedSource": "0a3fa422354d9a98de582e2ffe106b8102ffeec6",
+    "changedServedPaths": [
+      "api/candidate-artifact-manifest.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/public-intelligence.json"
+    ],
+    "scope": "Four inert JSON metadata artifacts. All reviewed HTML, JavaScript, CSS, shell/search assets, Forge feed and configuration retain accepted0a3 bytes.",
+    "requiredHostedChecks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 38497281219
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 38497281172
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 38497281223
+      }
+    ],
+    "releaseCeremony": {
+      "passed": 11,
+      "total": 11
+    },
+    "productionFeatureCases": 9,
+    "staging": {
+      "method": "Accepted full0a3 archive plus canonical four-file overlay; seven independent Git/served hash matches",
+      "verifiedRows": 7,
+      "stampLimitation": "Accepted full staging0a3 archive plus canonical four-file staging overlay. All other served source blobs and edge/auth configuration remain identical; stage stamp inherits ab58 build intent, not actual checkout identity."
+    },
+    "immutableParity": {
+      "checkedAt": "2026-10-14T02:22:51.089Z",
+      "origin": "https://11763634.vaultsparkstudios-website.pages.dev",
+      "against": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+      "deployedBy": null,
+      "verdict": "tree-current",
+      "checked": 1071,
+      "identical": 1061,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0
+    },
+    "primaryRaw": {
+      "checked": 1071,
+      "identical": 673,
+      "differ": 284,
+      "redirected": 114,
+      "unread": 0
+    },
+    "primaryHtml": {
+      "checked": 307,
+      "sourceIdenticalWithProviderInjection": 284,
+      "declaredRedirects": 14,
+      "heldIdentityRedirects": 9,
+      "unverified": 0
+    },
+    "evidenceHashes": {
+      "s378-metadata-production-run.json": "c088137f83d19f64ca1f5bb8cd4cb48e0869086b147135581b639771db9dc5db",
+      "s378-metadata-hosted.json": "558c4bbd13582620fe6825bdecba02b942fb0c286744b7e1c08c9855c2444286",
+      "s378-metadata-stage-proof.json": "95314cfa68cc0fcff4822d824f2bb923ba1af4eda2686e4eab26aafc018301f1",
+      "s378-metadata-served-sha.json": "30b3bb2bc6ce855067765ad57cce58ea429ac17dd6449e7abd3e1b480dbf8f85",
+      "s378-metadata-origin-parity.json": "11e25b7a64c200d37ab9240cb0ae2bd10adcf04753e42395cf1c85f036bee34a",
+      "s378-metadata-primary-parity.json": "0502709d95a7a70a717375b0fb6672df2097912b4fb2413376fcf0a4819e07e4",
+      "s378-metadata-edge-parity.json": "32a177883424b0c8d50c6f40fb29a77936cf173448f219c681f130c14fedaf0b"
+    }
+  },
+  "latestAcceptedRelease": {
+    "sha": "3499f4948e5d4c1e3220849d88b3f91f6b122d20",
+    "productionRun": 38499177485,
+    "acceptedAt": "2026-10-14T02:23:01.656Z"
+  },
+  "recordInterpretation": "Legacy top-level fields retain the first acceptance; closingPublication records0a3; metadataPublication records the latest full deployment3499."
 }
