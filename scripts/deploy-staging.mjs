@@ -162,7 +162,10 @@ try {
   // NUL framing is required on Windows: BSD tar can otherwise interpret CRLF
   // and edge-case path bytes as empty entries.
   fs.writeFileSync(listPath, Buffer.from(manifest.join('\0'), 'utf8'));
-  checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 300_000 }), 'release archive');
+  // The tracked release archive includes roughly 2 GiB of existing assets and QA
+  // evidence. Windows tar can exceed five minutes on that input; keep a bounded
+  // archive allowance separate from the shorter upload and remote-command limits.
+  checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 900_000 }), 'release archive');
   const archiveBytes = fs.statSync(archivePath).size;
   const archiveSha256 = crypto.createHash('sha256').update(fs.readFileSync(archivePath)).digest('hex');
   // scp shares tar's colon-parsing: a `C:\` source reads as host `C`. Relative.

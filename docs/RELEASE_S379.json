@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "session": 379,
+  "accepted": false,
+  "scope": "Target-bound release profile resolution and bounded archive-timeout prerequisite. No identity or lifecycle transition.",
+  "implementationCommits": [
+    "9234706ca6",
+    "dac8fb66c7"
+  ],
+  "validation": {
+    "fullLocalSteps": 535,
+    "profileFixtures": 13,
+    "stagingDeployerSelfTests": 15,
+    "mobileCases": 215,
+    "independentReview": "pass, exact identity finding resolved",
+    "doctorBlockingFailing": 0
+  },
+  "preliminaryStaging": {
+    "source": "dac8fb66c7",
+    "receipt": "ab8a2cad0587cd92b2212ab6",
+    "scopedBrowserPassed": 3,
+    "heldIdentity": 3,
+    "exactFinalCandidateAccepted": false,
+    "note": "Stage was a clean candidate archive plus the deployer-generated readiness timestamp. Generated session/test metadata changed afterward and must be staged before final promotion."
+  },
+  "remaining": [
+    "final exact-candidate staging and parity",
+    "required exact-SHA hosted checks",
+    "confirmed production deployment and readback",
+    "canonical closeout and publisher restoration"
+  ],
+  "rollback": "/opt/studio/staging/website/.rollback/20261014234344"
+}

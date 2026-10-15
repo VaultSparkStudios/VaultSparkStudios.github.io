@@ -505,3 +505,8 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.

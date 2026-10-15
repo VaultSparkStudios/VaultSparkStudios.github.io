@@ -1,5 +1,12 @@
-# S378 implementation plan
+# S379 implementation plan
 
-Session Intent: /arc, direct commit/push to main and full deployment, explicitly authorized.
+Session intent: fresh /arc, direct main publication and full deployment, authorized by the founder.
 
-Selected audit: AUDIT_2026-10-13-S378.json. One L2 outcome: Spark control clearance. First add geometry and editing yielding in the existing loader, then build hashed transport; verify behavior on three browser engines and all seven themes, independently review, and finish the authorized release and canonical closeout. No additional scope is inferred from remaining budget.
+- Wave 1 complete: startup, goal binding, canonical sync and S378 publication-record recovery.
+- Wave 2 complete: fresh nine-axis audit in AUDIT_2026-10-14.json; strict premise verified before edits. Supported-release provenance: canonical registry S1, local health yellow.
+- Wave 3 complete: targeted registry discovery repaired at L2; 13/13 isolated fixtures pass, actual arc and skill profilers agree on S1, and independent review passed after resolving the exact-identity finding.
+- Wave 4 open: full relevant checks, canonical closeout, exact-candidate CI, current staging acceptance, authorized main push and production readback. Existing identity and field-vitals gaps retain their scope.
+
+Information-finding outcome: agents and operators receive the site's authoritative release stage instead of UNKNOWN. Reuse the current profile and lifecycle implementation; no new dependency, account flow or lifecycle transition.
+
+Acceptance covers target isolation, local registry precedence, sibling discovery, malformed files, missing records, lifecycle disagreement and actual CLI behavior. Preserve unknown when evidence is absent. Send canonical owner feedback via Ark; this checkout owns its code only.
