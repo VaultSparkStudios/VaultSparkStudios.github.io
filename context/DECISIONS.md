@@ -2189,3 +2189,22 @@ CANON-045 provider acceptance remains held and is disjoint from this non-identit
 ## D-S379.4 - Deterministic early-reaction fixture (2026-10-15)
 
 The required closeout reconciliation run exposed the reaction fixture response-delay race: four real clicks exceeded400ms under host load. The fixture now holds the script response until the unchanged early-tap assertion runs, then releases it explicitly and during cleanup. Runtime code, replay assertions and test thresholds are unchanged. Targeted12/12 passed and independent review passed; complete canonical rerun follows.
+
+
+## D-S380.1 — Browser runner isolation (2026-10-15)
+
+Keep Node unit suites in node:test. Use matching js/mjs exclusions in every browser project and actual Playwright collection as a mandatory prerequisite without auth inputs. Preserve the existing Chromium-only visual baseline exception. A temporary fixture proves Node suites do not execute and fails after restoring the old exclusions. No new dependency, service or security policy.
+
+## D-S380.2 — Evidence and release scope (2026-10-15)
+
+The Node suite has430passed, zero failed and one historical schema-lite TODO; it is not431passed. Full authenticated runtime coverage remains distinct from successful discovery. Existing CANON-045 identity and D-S374.3 terminology exceptions remain explicit STRONG gaps; current conformance has zero ABSOLUTE gaps. The public website remains SPARKED/S1. No UI changes means CANON-053 requires no new pixel receipt; its changed-files checker passed.
+
+
+## D-S380.3 — Scope report credentials to their target
+
+The rank report must compare the configured Supabase origin with its declared website target before requesting a privileged credential. Preserve the existing public-key fallback and opt-in predicate; no RLS or user authentication changes. HTTP, malformed-body and transport failures must reject before writing, preserving previous evidence. A real public endpoint response200 with an empty array is valid evidence; an authentication error is not an empty result. Focused self-test and independent review passed.
+
+
+## D-S380.4 — Discovery cannot own execution artifacts
+
+Move mobile-audit findings cleanup from module load into its existing execution lifecycle hook. Keep worker ownership and zero-retry policy. Discovery must preserve previous measured findings and receipt bytes. The regression fixture copies the actual mobile spec into an isolated temporary project and checks exact sentinel preservation for all three browser inventories. Fresh full mobile execution is required because the old findings were deleted; previous evidence is not reused. Independent review passed.

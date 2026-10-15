@@ -1,3 +1,13 @@
+### S380 release prerequisite — target-bound rank report
+
+The stale rank report exposed a foreign-project admin credential in the inherited generator. It now checks gateway project identity before retrieving a service key, retains the existing public opt-in read path, and writes only after a successful array response. Actual public read HTTP200 returned zero visible rows; failed requests preserve the previous report. Focused self-test and independent review passed. Full537-step acceptance remains pending.
+
+## Session 380 — browser test discovery (2026-10-15)
+
+S380 restores browser-only Playwright discovery. All three projects exclude JavaScript and ESM Node unit specs. A mandatory collection gate runs independently of authentication credentials and is included in build:check. Actual inventory: Chromium 689, Firefox 619, WebKit 619; two isolation regressions pass, including deliberate old-pattern failure. Independent review passed. Node suite 430 passed / 0 failed / 1 existing TODO. Final full build, staging, exact-candidate hosted checks and production acceptance remain open in docs/RELEASE_S380.json.
+
+No public runtime, UI, identity, membership, lifecycle or pricing changes.
+
 ## Session 379 — release-profile discovery (2026-10-15)
 
 S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate. See docs/RELEASE_S379.json.

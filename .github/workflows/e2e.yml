@@ -63,6 +63,13 @@ jobs:
       - name: Public intelligence sync check
         run: npm run build:check
 
+      # Collection must pass without credentials. The optional authenticated
+      # run below cannot hide runner/configuration failures in Node unit suites.
+      - name: Browser test collection
+        run: npm run test:collection
+        env:
+          BASE_URL: http://127.0.0.1:4173
+
       - name: Run compliance tests
         run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium
         env:

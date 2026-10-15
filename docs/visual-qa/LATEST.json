@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-10-15T01:46:14.556Z",
-  "generatedBy": ".cache/s379-launch-qa.mjs after direct inspection of28 real browser captures",
+  "capturedAt": "2026-10-15T13:51:05.600Z",
+  "generatedBy": "S380 project capture-theme-matrix CLI; all14 originals directly inspected with image tool",
   "themes": [
     "dark",
     "light",
@@ -14,19 +14,19 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "5706da47040772ec0bf145e178e182f5f7412ef15ec163efa25bb20bf65bdb50",
+    "sha256": "cf8b9de6be2bb1fd5c5b6d1f5973f98dee21c6fc8df15841775c4a7f6acdcf45",
     "files": [
-      "api/public-status.json",
+      "api/news-desk-freshness.json",
       "assets/style.css",
       "assets/style.shell-7f501cc04e.css",
       "index.html",
-      "scripts/build-launch-age.mjs",
+      "scripts/build-home-desk-module.mjs",
       "scripts/capture-theme-matrix.mjs"
     ],
     "entries": [
       {
-        "path": "api/public-status.json",
-        "sha256": "4fae68edc241366de0db15a84f01f9f28cab5f1564df096471f13ad36b3b043a"
+        "path": "api/news-desk-freshness.json",
+        "sha256": "4685a94d48a2aa0e1624bc2f94bd93720f8cd52e5161e3887eb2b5ee924fa69d"
       },
       {
         "path": "assets/style.css",
@@ -38,11 +38,11 @@
       },
       {
         "path": "index.html",
-        "sha256": "1888f9f390668cd6ae1851b6372f8c5e025d7f53bafd4ada1899f73153f2e866"
+        "sha256": "ee592c957033bb7a89cb825a71dd5d1cc257a79c15a041785af1d8aabd1067e6"
       },
       {
-        "path": "scripts/build-launch-age.mjs",
-        "sha256": "1c800f9cdf521a23e21634b961e72bfddf2b432c4597075122e1ae5e3b0aad3c"
+        "path": "scripts/build-home-desk-module.mjs",
+        "sha256": "32cc38e689d4adddbf2ddaed9c71f72facec675c58b074fe688f4c41f78e847a"
       },
       {
         "path": "scripts/capture-theme-matrix.mjs",
@@ -50,16 +50,16 @@
       }
     ]
   },
-  "sourceBefore": {
-    "commit": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
-    "indexSha256": "f3f6af81fb5765328e95f91becee4764e59bcf2a4182626302eb7da7f18446ca",
-    "runtime": "Clean detached first accepted candidate, actual browser captures"
-  },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "f59d1e145a586f60da3765a67b74a7498720f1d60ce8a37313eb5139cf3b9c26",
+    "manifestSha256": "f9476ee38e55756739e77690b8f42f9f65c1aa3a5bd7081d75cb19c0699474c9",
     "candidateSha": "8c2b287adcd662cf9be3b88213d2c8424f691640",
-    "root": "6feddb320a0ab56a0d1702881d6368b0e6fe06613f82d0b3fddc1ceadf978d3b"
+    "root": "bc14e501dd6ff86c2c2a158a3874af70295b7a7c51fbc8ee58ee2bd588acb359"
+  },
+  "baseline": {
+    "commit": "bdc1403f7d47bfb1358ca4dc7bfc150cd6fdf68d",
+    "indexSha256": "ee592c957033bb7a89cb825a71dd5d1cc257a79c15a041785af1d8aabd1067e6",
+    "sourceUnchanged": true
   },
   "matrix": {
     "routes": [
@@ -75,481 +75,277 @@
       "high-contrast"
     ],
     "viewports": [
-      "desktop",
-      "mobile"
+      {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
     ],
     "states": [
-      "before",
-      "after"
+      "current-desk"
     ],
-    "expectedCaptures": 28,
-    "completedCaptures": 28
+    "expectedCaptures": 14,
+    "completedCaptures": 14
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
+      "totalCaptures": 14,
+      "manuallyReviewed": 14,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex S379 rendered image inspection",
+    "reviewer": "Codex S380 direct rendered-image inspection",
     "findings": [
-      "Inspected the actual224→225 launch-counter change at desktop1366 and mobile390 in all seven themes. Numbers and labels remain legible and fit their existing layout."
+      "Current inherited Desk update is readable in all seven themes at desktop1366 and mobile390. Lead art, title, story cards and signup controls fit their existing columns and stacked layout.",
+      "Element screenshots span beyond one viewport: the fixed navigation appears within the long capture; this is the existing viewport header, not a new element in the Desk layout. Mobile matrix215/215 separately verifies the actual viewport."
     ],
-    "fixesApplied": [
-      "Ran existing build-launch-age against the current committed observation clock."
-    ],
+    "fixesApplied": [],
     "blockingDefectsOpen": 0,
-    "limitation": "Focused generated launch-counter update; cadence copy review remains separately preserved in S379_CLOCK_COPY.json."
+    "limitation": "Fresh current-state review of inherited publisher content, not a before/after redesign or authenticated journey. No S380 UI source changes."
   },
   "captures": [
     {
-      "file": "s379-launch-dark-desktop-before.png",
-      "sha256": "2b869b9c6fd137fc1f4e1636f6e0d3b630de46bb9af68bcbda450cf68e9f2c1e",
+      "file": "s380-desk-dark-desktop.png",
+      "sha256": "5cad8d9262e220c797943704b662a2a87ab77907e48296c24ff2b37c5488bbef",
       "theme": "dark",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-light-desktop-before.png",
-      "sha256": "a951d8fa3fe015e43d7f78d160329e2a58940251b36f90943d10230ff66ab452",
+      "file": "s380-desk-light-desktop.png",
+      "sha256": "ea0dc3712045e8ff56a17e02450703fc4659bc6fb0730d5a73266b0239b7f953",
       "theme": "light",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-ambient-desktop-before.png",
-      "sha256": "4b8d8b5131d99252a9a0a8b7ce545d2cbc8852c0a1259706b2c5a24386cb94b9",
+      "file": "s380-desk-ambient-desktop.png",
+      "sha256": "90dacdc1fd622b1e51cf5f3c7ad8593f7e084c2798972c06a212d2c3d2603fe8",
       "theme": "ambient",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-warm-desktop-before.png",
-      "sha256": "f2b52e8a38a17fd0087cf8e11aa36fd9a43c22bcae88eb434836f4f0bb6b43e3",
+      "file": "s380-desk-warm-desktop.png",
+      "sha256": "977c7f2cc96b0efebb564a8750aa72eaea2bf0dbb340faac8a4567084c1d6e0a",
       "theme": "warm",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-cool-desktop-before.png",
-      "sha256": "3950765f813d3015f4a19257fc68d87e3700a804623fbd5a46e16f1d7ae529c4",
+      "file": "s380-desk-cool-desktop.png",
+      "sha256": "51730b132d08bf7b7e40f6804ecb610bf5a146932cbfa77b5d0e766cace070ae",
       "theme": "cool",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-lava-desktop-before.png",
-      "sha256": "56da98728d5b5ff3543bf8e0894b1c60aa5b3a4801d0ebdfb77b2fa0e33a754b",
+      "file": "s380-desk-lava-desktop.png",
+      "sha256": "efd2b078934400fbdaedf03b4e8ecac33515bd925a0105a9aaf82c29ec4e274f",
       "theme": "lava",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-high-contrast-desktop-before.png",
-      "sha256": "fed6fae7c2c90043909ab443393db5ad59c8f6f4be7d739a0f5d25c5e7bfc243",
+      "file": "s380-desk-high-contrast-desktop.png",
+      "sha256": "4aeddfb303e57ee4df541e1d5932078aedee28b084dc218807be8a355d631ab5",
       "theme": "high-contrast",
       "viewportName": "desktop",
       "viewport": {
+        "name": "desktop",
         "width": 1366,
         "height": 900
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-dark-mobile-before.png",
-      "sha256": "1a8748ec292a234ee8bb71018e2eb5498356771ffd1cf7216e3606bfc1be6a2a",
+      "file": "s380-desk-dark-mobile.png",
+      "sha256": "a4e78adffcb4ea986cf9421316f4b52da2a6bed646827693473c32eb70a94ada",
       "theme": "dark",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-light-mobile-before.png",
-      "sha256": "ed438d69ddf9c3b76bb5d349c15a88c0af0c372a6ebcb17bfc5ee8e86957630d",
+      "file": "s380-desk-light-mobile.png",
+      "sha256": "9340d12371a24ca7aeaff94b17374ace422e28b0afff5681d5664e2db11bca13",
       "theme": "light",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-ambient-mobile-before.png",
-      "sha256": "1004d5acacc49dcc1983935528b09bd89fc7cf01c9b87c24c2a0201216290957",
+      "file": "s380-desk-ambient-mobile.png",
+      "sha256": "47bcff2cce43067dc95483a3bdca9d1e372382724f4e77f84bd86a4a34efc9ad",
       "theme": "ambient",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-warm-mobile-before.png",
-      "sha256": "3358c448c071869fc39462e37b326d3c54a526735faf750c88119d6cef5a17db",
+      "file": "s380-desk-warm-mobile.png",
+      "sha256": "426bad13784dba24e4607fe74a894104a480ce28f695c87bed4d3a3bfe36b868",
       "theme": "warm",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-cool-mobile-before.png",
-      "sha256": "5e09fc911bae7db1cf037ad17c98d7b886bb9fd52ad27f6426cb3d7a8d5af974",
+      "file": "s380-desk-cool-mobile.png",
+      "sha256": "e87453155d7a28453a3bfda24190db6beff613e6268cd6a11da6de56887bd63f",
       "theme": "cool",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-lava-mobile-before.png",
-      "sha256": "da53b2e148d4c3013e2d2c921e32b9715fe92cbeadc3cff44ac612213e6ffe8f",
+      "file": "s380-desk-lava-mobile.png",
+      "sha256": "66c425f557261350cb334000e7d83b2f74013fa750646a9d2a5e15ef69315438",
       "theme": "lava",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     },
     {
-      "file": "s379-launch-high-contrast-mobile-before.png",
-      "sha256": "8ef1831a4d5f1c4c0eebabc634e6bdd2f58ce34634d3bdf0393dc995df5c668d",
+      "file": "s380-desk-high-contrast-mobile.png",
+      "sha256": "b3da290d80e0cb26882fc0619043e9de7dbacb7a7b59722e053f94a4def6f25e",
       "theme": "high-contrast",
       "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
       "page": "/",
-      "state": "before",
+      "state": "current-desk",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-dark-desktop-after.png",
-      "sha256": "00675516133f47b95846fda437ae553a74673391e770873ea0a5954a3a9cb73e",
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-light-desktop-after.png",
-      "sha256": "aa9a015d7ea8953e731adb6ef440e693bb164188c52cf00dc341909157997450",
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-ambient-desktop-after.png",
-      "sha256": "43fa8908e1ebeaa8d5d1a13d9a36a4b3c12f721eff57a5a27801ff2f70137368",
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-warm-desktop-after.png",
-      "sha256": "2e1820414fcc83e814bc23194b16ea48f941d16cecdf89663b4bb77d5726f05a",
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-cool-desktop-after.png",
-      "sha256": "5d19ed56e5993e4231ae080b7ad465d04f3496ac241c1548dc3522b5fe5a762d",
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-lava-desktop-after.png",
-      "sha256": "9c6e60a21f08bc868227ba77e7b6e1a0c444a17a245834186fc9eca468c67673",
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-high-contrast-desktop-after.png",
-      "sha256": "dc67c420d27ffe6cb67fbbe63698b98167c2ef20ec1fcb97bf6ec2315055dab1",
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-dark-mobile-after.png",
-      "sha256": "3840370b09c7e53e7117f95fe063e0846b6739c0eb09777c2dea65ba325a734a",
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-light-mobile-after.png",
-      "sha256": "ef9961844daad0acd5aa0fbcc90eeeaac00e01e2721cd198513d5afd8d3d1ca5",
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-ambient-mobile-after.png",
-      "sha256": "35643fce46549addcf01a48249f1a4a7a52bcf8125abb4e8eaa9b15a66ac92ec",
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-warm-mobile-after.png",
-      "sha256": "ae488ae1f4352dbed6bcd35b13c896bf2654f7035305f00ca52db49271749dfd",
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-cool-mobile-after.png",
-      "sha256": "f4f4ba5cff9e6c6c47e7a3e6629743176ef8286a799e4559d602451a082b08b4",
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-lava-mobile-after.png",
-      "sha256": "50dc977f075c97cf8a86f5ab996c2cc720755aa90aaaaa8a84501d0aa2cde389",
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
-      }
-    },
-    {
-      "file": "s379-launch-high-contrast-mobile-after.png",
-      "sha256": "c29ec166e562e110d47d5d32330ab6120be7a627bb1b8136710bade6a0e4af42",
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "page": "/",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex S379 rendered image inspection"
+        "reviewer": "Codex S380 direct rendered-image inspection"
       }
     }
   ]

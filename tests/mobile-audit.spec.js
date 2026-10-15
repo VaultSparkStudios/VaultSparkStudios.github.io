@@ -20,10 +20,14 @@ const BASE = process.env.BASE_URL;
 const OUT_DIR = path.join(__dirname, '..', 'docs', 'mobile-audit');
 const FINDINGS_PATH = path.join(OUT_DIR, 'findings.jsonl');
 
-if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
-if ((process.env.TEST_WORKER_INDEX === undefined || process.env.TEST_WORKER_INDEX === '0') && fs.existsSync(FINDINGS_PATH)) fs.rmSync(FINDINGS_PATH);
+// Discovery imports this file too. Only an executing audit owns its findings;
+// `playwright test --list` must preserve the last measured matrix and receipt.
+test.beforeAll(() => {
+  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+  if ((process.env.TEST_WORKER_INDEX === undefined || process.env.TEST_WORKER_INDEX === '0') && fs.existsSync(FINDINGS_PATH)) fs.rmSync(FINDINGS_PATH);
+});
 // Keep a single durable worker for deterministic append order. A Playwright
-// worker retry re-evaluates this module and clears findings.jsonl above, so a
+// worker retry executes setup again and clears findings.jsonl above, so a
 // transient setup timeout could pass on retry while leaving an incomplete
 // matrix receipt. Retry navigation inside the test instead; never restart the
 // owner of the exact-completion ledger.

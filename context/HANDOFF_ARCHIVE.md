@@ -2147,3 +2147,15 @@ Closing acceptance: candidate452fdf163c, confirmed production38365858868, immuta
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+---
+<!-- archived: 2026-10-15 -->
+
+## Where We Left Off (Session 378) — Spark control clearance
+
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Native goal01a13711-2367-7bd0-8d51-29d9b12798f8 binds this fresh S378 to47da157a4667; continuation resumes this arc. Full startup and fresh nine-axis audit executed.
+
+S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. See docs/RELEASE_S378.json.
+
+Independent source review corrected selector-membership caching; final source and LQIP review pass. CDR reviewed: no new human creative direction. Preserve prior operator cache residue. Four unused newly propagated canonical helpers are held reversibly under.cache/s378-held-propagation; report dependency mismatch through Ark. Identity holds remain scoped outside acceptance.

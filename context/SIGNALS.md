@@ -3,7 +3,7 @@
 ║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   11d                                            ║
-║  ✓  IGNIS         46467 FORGE  ·  -1d old                        ║
+║  ✓  IGNIS         46897 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▁▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -11,7 +11,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  1d old (2026-10-13)                            ║
+║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║

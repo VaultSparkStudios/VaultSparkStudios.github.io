@@ -1,3 +1,14 @@
+## S380 — browser discovery release
+
+- [x] Restore three-project browser collection and add a mandatory authentication-independent CI gate; independent review pass.
+- [x] Preserve mobile findings and receipts during discovery; actual-spec regression and independent review pass.
+- [x] Repair rank-report target binding and preserve prior evidence on failed requests; actual public read and independent review pass.
+
+S380 release follow-through: authoritative pending/completed acceptance and remaining phases are recorded in docs/RELEASE_S380.json and docs/IMPLEMENT_PLAN.md.
+
+- [ ] [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
+- [ ] [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
+
 ## S379 — accepted implementation and release
 
 - [x] Exact target registry discovery and unique declared project identity; profile13/13 and independent review passed after fixing prefix/suffix attribution.

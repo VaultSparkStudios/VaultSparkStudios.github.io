@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "2.1",
+  "session": 380,
+  "generatedAt": "2026-10-15T13:24:36.551Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S380 supported-release arc: repair verified browser test discovery failure and enforce collection independently of auth availability, then closeout and fully deploy. Necessary release prerequisite: target-bound rank-report credentials and failure-safe refresh.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "health": "yellow",
+    "mode": "supported-release",
+    "stageSource": "canonical registry",
+    "statusSource": "context/PROJECT_STATUS.json"
+  },
+  "axes": {
+    "ux": 2,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "baseline": "Startup doctor 14/17 pass, 3 advisories, no blocking failures; canon 0 ABSOLUTE gaps, 2 existing STRONG gaps. Actual Playwright --list fails with ESM unit imports; baseline also records production-origin guard because BASE_URL was not supplied. Repeat using isolated local origin.",
+    "reuse": "Existing Playwright CLI --list --reporter=json, node:test and required E2E workflow; no install or new service.",
+    "source": "bdc1403f7d"
+  },
+  "candidates": [
+    [
+      "feature-depth",
+      "Extend release confidence detail",
+      "Current receipt already distinguishes held identity; repair actual missing discovery first."
+    ],
+    [
+      "feature-depth",
+      "Add member progression detail",
+      "No fresh behavioral regression; membership changes need explicit direction."
+    ],
+    [
+      "new-features",
+      "Novel reader evidence trail",
+      "No demand evidence; would add tracking outside stabilization."
+    ],
+    [
+      "new-features",
+      "Novel release coverage heatmap",
+      "Existing release receipts can carry accurate counts without a new surface."
+    ],
+    [
+      "ux",
+      "Rework mobile navigation",
+      "Existing parity tests and no demonstrated visual regression."
+    ],
+    [
+      "ux",
+      "Simplify theme picker",
+      "No fresh defect; changes need rendered before/after proof."
+    ],
+    [
+      "feedback",
+      "Show support triage state",
+      "No demonstrated failed contact journey."
+    ],
+    [
+      "feedback",
+      "Novel executable discovery receipt",
+      "Selected as part of runner isolation: use actual runner inventory rather than claims."
+    ],
+    [
+      "gamification",
+      "Add seasonal reward",
+      "No evidence justifies economy changes."
+    ],
+    [
+      "gamification",
+      "Add attention prompts",
+      "No measured engagement failure warrants additional overlays."
+    ],
+    [
+      "ai",
+      "Add homepage paid inference",
+      "No need or spending authorization."
+    ],
+    [
+      "ai",
+      "Expose test evidence to agents",
+      "Existing audit/release JSON suffices after evidence repair."
+    ],
+    [
+      "security",
+      "Revise identity policy",
+      "Preserve unchanged fail-closed identity; existing holds remain."
+    ],
+    [
+      "security",
+      "Scan public candidate",
+      "Required release acceptance, already existing tool."
+    ],
+    [
+      "speed",
+      "Separate Node suites from browser collection",
+      "Confirmed seven discovery errors; selected."
+    ],
+    [
+      "speed",
+      "Enforce unauthenticated discovery",
+      "Selected same root cause: missing credentials must not tolerate collection failure."
+    ],
+    [
+      "token-cost",
+      "Bound task projection",
+      "Already exists; measured projection under 6000 characters."
+    ],
+    [
+      "token-cost",
+      "Cache test inventory indefinitely",
+      "Rejected: stale inventory would miss the next new unit suite."
+    ]
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "browser-runner-isolation",
+      "tier": "🔥",
+      "axis": "speed-organization-efficiency",
+      "title": "Restore and enforce browser-only Playwright discovery",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 20.19,
+      "why": "Browser coverage cannot start while the browser runner imports Node-only ESM suites. Missing auth currently tolerates the failing full-suite step.",
+      "recipe": "Exclude Node unit specs for both JavaScript module extensions in every Playwright project, prove actual collection contains browser tests and no unit suites, and make discovery a mandatory CI prerequisite independent of authentication secrets.",
+      "selectedDepth": "L2",
+      "status": "pending",
+      "acceptance": "Actual Chromium/Firefox/WebKit inventories contain browser tests and zero Node unit specs; negative fixture proves newly added .mjs unit tests cannot execute in browser discovery; mandatory workflow collection runs without credentials; node unit and full build checks pass; exact candidate staging/hosted checks and production readback.",
+      "premises": [
+        {
+          "claim": "Browser configuration excludes only .js Node unit specs before this repair",
+          "adapter": "file-content",
+          "target": "playwright.config.js",
+          "pattern": "**/*.unit.spec.js",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Full suite is tolerated when email credential is absent",
+          "adapter": "file-content",
+          "target": ".github/workflows/e2e.yml",
+          "pattern": "continue-on-error: ",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Extend all project exclusion patterns to cover .mjs."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Exclude Node unit specs for both JavaScript module extensions in every Playwright project, prove actual collection contains browser tests and no unit suites, and make discovery a mandatory CI prerequisite independent of authentication secrets."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Full authenticated-suite policy migration requires separate proven credential and runtime coverage scope."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-15T13:42:11.896Z",
+          "status": "pending",
+          "note": "First full build failed at step118: unit-suite parity correctly detected new fixture absent from explicit build unit command. Added it to that command; rerun required. No commit/push occurred."
+        },
+        {
+          "at": "2026-10-15T13:52:34.413Z",
+          "status": "pending",
+          "note": "Second full build stopped at160 on stale inherited OG coverage. Existing producer regenerated295/295 public pages. Focused proof check found stale S379 receipt after inherited current-HEAD homepage Desk update; fresh14 captures across7themes desktop/mobile directly inspected and hash-bound to unchanged HEAD source. Ordering gate now passes; full rerun still required."
+        },
+        {
+          "at": "2026-10-15T14:05:36.704Z",
+          "status": "pending",
+          "note": "Diagnostic tail227-425 passed, then rank report freshness failed58h. Original producer used a foreign-project gateway admin key, returned401 and silently wrote0. Actual target comparison showed mismatched gateway origin; existing website public-key query returnedHTTP200 array0. Necessary prerequisite now rejects foreign service credentials, preserves public opt-in query, bounds fetch, and preserves prior report on fetch/malformed errors. Focused self-test and real producer passed. Remaining diagnostic tail427-536 passed, but partial runs are not full-suite proof. New full plan537 required."
+        },
+        {
+          "at": "2026-10-15T14:15:21.850Z",
+          "status": "pending",
+          "note": "Full537 run stopped at403 after402 passes: new --list discovery exposed inherited module-load deletion of mobile findings. This was a real interaction regression. Moved setup into beforeAll execution hook; extended negative isolation fixture with actual mobile spec and sentinel evidence-preservation assertions. Focused2/2 pass; actual inventories unchanged689/619/619. Prior215 proof invalidated because findings were deleted and test source changed; a fresh complete215 rerun is active. Full537 must rerun after it."
+        },
+        {
+          "at": "2026-10-15T14:22:15.939Z",
+          "status": "pending",
+          "note": "Fresh mobile rerun215/215, zeroP0/P1. Actual whole-project collection689/619/619 then preserved byte-identical real mobile findings and receipt; findings count215. Focused isolation/evidence-preservation2/2 pass. Independent review passed. Full537 plus staging/production still required."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "studio-market",
+      "reason": "No MARKET.json or installed studio-market skill; market research has no dependency on this verified supported-release regression and remains unselected."
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "priority": 20.19,
+    "top3": [
+      "browser-runner-isolation"
+    ]
+  },
+  "innovationReserve": []
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0",
+  "session": 380,
+  "accepted": false,
+  "scope": "Browser-only Playwright discovery and mandatory collection, plus target-bound rank-report credential resolution and failure-safe refresh. No user-facing authentication, membership or identity policy change.",
+  "validation": {
+    "collection": {
+      "chromium": 689,
+      "firefox": 619,
+      "webkit": 619
+    },
+    "isolationTests": 2,
+    "independentReview": "pass",
+    "unit": {
+      "passed": 430,
+      "failed": 0,
+      "todo": 1
+    },
+    "visualQA": {
+      "captures": 14,
+      "themes": 7,
+      "widths": [
+        1366,
+        390
+      ],
+      "receipt": "docs/visual-qa/S380_CURRENT_DESK.json",
+      "scope": "Current inherited Desk content; unchanged S380 UI source",
+      "inspected": true
+    },
+    "canonAbsoluteGaps": 0,
+    "mobile": {
+      "passed": 215,
+      "failed": 0,
+      "p0p1": 0,
+      "freshAfterDiscoveryFix": true
+    },
+    "ogCoverage": {
+      "covered": 295,
+      "publicPages": 295
+    },
+    "rankReport": {
+      "gatewayTargetsWebsite": false,
+      "publicReadHttp": 200,
+      "publicRows": 0,
+      "focusedSelfTest": "passed",
+      "providerFailurePreservesReport": true
+    },
+    "discoveryPreservesMobile": {
+      "at": "2026-10-15T14:21:39.569Z",
+      "projects": {
+        "chromium": 689,
+        "firefox": 619,
+        "webkit": 619
+      },
+      "findings": 215,
+      "preserved": true,
+      "files": [
+        {
+          "path": "docs/mobile-audit/findings.jsonl",
+          "sha256": "e90c6bf29c7e57381989273ddd93aa76f35397b1db4907d8814cbdcff44aa449"
+        },
+        {
+          "path": "docs/mobile-audit/receipt.json",
+          "sha256": "d775d4e28111d395117772053a190d161d386f8139c2ca5f724e462a44a1c027"
+        }
+      ]
+    }
+  },
+  "remaining": [
+    "full537 build",
+    "staging",
+    "required exact-SHA checks",
+    "confirmed full production and readback",
+    "restore publishers"
+  ],
+  "rollback": "Previous full production candidate from api/deploy-currency.json; normal re-promotion of prior source. Staging archive retains a timestamped rollback."
+}

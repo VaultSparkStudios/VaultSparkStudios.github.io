@@ -1,3 +1,6 @@
+<!-- Current S380: browser discovery; release evidence docs/RELEASE_S380.json. -->
+- [S380 browser discovery](S380.md): mandatory collection and runner isolation.
+
 <!-- Current S379: closing production accepted; final evidence in docs/RELEASE_S379.json. -->
 - [S379 release-profile discovery](S379.md): exact identity, canonical registry and release verification.
 

@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "inspectionSchemaVersion": 2,
+  "capturedAt": "2026-10-15T13:51:05.600Z",
+  "generatedBy": "S380 project capture-theme-matrix CLI; all14 originals directly inspected with image tool",
+  "themes": [
+    "dark",
+    "light",
+    "ambient",
+    "warm",
+    "cool",
+    "lava",
+    "high-contrast"
+  ],
+  "source": {
+    "algorithm": "sha256",
+    "sha256": "cf8b9de6be2bb1fd5c5b6d1f5973f98dee21c6fc8df15841775c4a7f6acdcf45",
+    "files": [
+      "api/news-desk-freshness.json",
+      "assets/style.css",
+      "assets/style.shell-7f501cc04e.css",
+      "index.html",
+      "scripts/build-home-desk-module.mjs",
+      "scripts/capture-theme-matrix.mjs"
+    ],
+    "entries": [
+      {
+        "path": "api/news-desk-freshness.json",
+        "sha256": "4685a94d48a2aa0e1624bc2f94bd93720f8cd52e5161e3887eb2b5ee924fa69d"
+      },
+      {
+        "path": "assets/style.css",
+        "sha256": "4995c3c86e52a372a0921b2166b7d8259e4d46d286cfdf32e4cbf714e8585309"
+      },
+      {
+        "path": "assets/style.shell-7f501cc04e.css",
+        "sha256": "7f501cc04eff8391511c34164d0cbf9340b0a9f2c45423a613525b6165354c7e"
+      },
+      {
+        "path": "index.html",
+        "sha256": "ee592c957033bb7a89cb825a71dd5d1cc257a79c15a041785af1d8aabd1067e6"
+      },
+      {
+        "path": "scripts/build-home-desk-module.mjs",
+        "sha256": "32cc38e689d4adddbf2ddaed9c71f72facec675c58b074fe688f4c41f78e847a"
+      },
+      {
+        "path": "scripts/capture-theme-matrix.mjs",
+        "sha256": "0fe2beb72f1f7d6a3c09320310f468a643b5a2011c6bd85b83b516a912bad9e6"
+      }
+    ]
+  },
+  "candidate": {
+    "manifest": "api/candidate-artifact-manifest.json",
+    "manifestSha256": "f9476ee38e55756739e77690b8f42f9f65c1aa3a5bd7081d75cb19c0699474c9",
+    "candidateSha": "8c2b287adcd662cf9be3b88213d2c8424f691640",
+    "root": "bc14e501dd6ff86c2c2a158a3874af70295b7a7c51fbc8ee58ee2bd588acb359"
+  },
+  "baseline": {
+    "commit": "bdc1403f7d47bfb1358ca4dc7bfc150cd6fdf68d",
+    "indexSha256": "ee592c957033bb7a89cb825a71dd5d1cc257a79c15a041785af1d8aabd1067e6",
+    "sourceUnchanged": true
+  },
+  "matrix": {
+    "routes": [
+      "/"
+    ],
+    "themes": [
+      "dark",
+      "light",
+      "ambient",
+      "warm",
+      "cool",
+      "lava",
+      "high-contrast"
+    ],
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "states": [
+      "current-desk"
+    ],
+    "expectedCaptures": 14,
+    "completedCaptures": 14
+  },
+  "inspection": {
+    "renderedPixelsReviewed": true,
+    "coverage": {
+      "totalCaptures": 14,
+      "manuallyReviewed": 14,
+      "automatedOnly": 0,
+      "complete": true
+    },
+    "reviewer": "Codex S380 direct rendered-image inspection",
+    "findings": [
+      "Current inherited Desk update is readable in all seven themes at desktop1366 and mobile390. Lead art, title, story cards and signup controls fit their existing columns and stacked layout.",
+      "Element screenshots span beyond one viewport: the fixed navigation appears within the long capture; this is the existing viewport header, not a new element in the Desk layout. Mobile matrix215/215 separately verifies the actual viewport."
+    ],
+    "fixesApplied": [],
+    "blockingDefectsOpen": 0,
+    "limitation": "Fresh current-state review of inherited publisher content, not a before/after redesign or authenticated journey. No S380 UI source changes."
+  },
+  "captures": [
+    {
+      "file": "s380-desk-dark-desktop.png",
+      "sha256": "5cad8d9262e220c797943704b662a2a87ab77907e48296c24ff2b37c5488bbef",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-light-desktop.png",
+      "sha256": "ea0dc3712045e8ff56a17e02450703fc4659bc6fb0730d5a73266b0239b7f953",
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-ambient-desktop.png",
+      "sha256": "90dacdc1fd622b1e51cf5f3c7ad8593f7e084c2798972c06a212d2c3d2603fe8",
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-warm-desktop.png",
+      "sha256": "977c7f2cc96b0efebb564a8750aa72eaea2bf0dbb340faac8a4567084c1d6e0a",
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-cool-desktop.png",
+      "sha256": "51730b132d08bf7b7e40f6804ecb610bf5a146932cbfa77b5d0e766cace070ae",
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-lava-desktop.png",
+      "sha256": "efd2b078934400fbdaedf03b4e8ecac33515bd925a0105a9aaf82c29ec4e274f",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-high-contrast-desktop.png",
+      "sha256": "4aeddfb303e57ee4df541e1d5932078aedee28b084dc218807be8a355d631ab5",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-dark-mobile.png",
+      "sha256": "a4e78adffcb4ea986cf9421316f4b52da2a6bed646827693473c32eb70a94ada",
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-light-mobile.png",
+      "sha256": "9340d12371a24ca7aeaff94b17374ace422e28b0afff5681d5664e2db11bca13",
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-ambient-mobile.png",
+      "sha256": "47bcff2cce43067dc95483a3bdca9d1e372382724f4e77f84bd86a4a34efc9ad",
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-warm-mobile.png",
+      "sha256": "426bad13784dba24e4607fe74a894104a480ce28f695c87bed4d3a3bfe36b868",
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-cool-mobile.png",
+      "sha256": "e87453155d7a28453a3bfda24190db6beff613e6268cd6a11da6de56887bd63f",
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-lava-mobile.png",
+      "sha256": "66c425f557261350cb334000e7d83b2f74013fa750646a9d2a5e15ef69315438",
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    },
+    {
+      "file": "s380-desk-high-contrast-mobile.png",
+      "sha256": "b3da290d80e0cb26882fc0619043e9de7dbacb7a7b59722e053f94a4def6f25e",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "page": "/",
+      "state": "current-desk",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex S380 direct rendered-image inspection"
+      }
+    }
+  ]
+}

@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 932.3 | 5: 929.8 | 10: 939.1 | 25: unmeasured | all: unmeasured (archived history excluded)
+Sparkline (last5 totals):█████
+Avgs —3:932.3 |5:929.8 |10:939.1 |25:unmeasured |all:unmeasured (archived history excluded)
 History scope: latest scored entry per session in active append-only ledger.
-Velocity trend: → | Protocol velocity: → | Debt: ↓
-Last session: 2026-10-15 | Session 379 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
+Velocity trend:→ | Protocol velocity:→ | Debt:↓
+Last session:2026-10-15 | Session 380 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2574,3 +2574,33 @@ Process lessons: the independent reviewer found inherited substring attribution;
 S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate.
 
 The closeout launch-counter drift was corrected with the existing producer, followed by28 fresh inspected captures and a new215-case mobile audit. Visual retention inventory and closeout brief artifact names were reconciled through their existing tools; failed/partial runs were never substituted for complete acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+## Session 380 — 2026-10-15 — Browser test discovery
+
+Product rubric: ten categories,100points each. Scores held at the933 baseline; this verification repair does not prove a conversion or engagement improvement.
+
+| Category | Score |
+|---|---:|
+| Dev Health |95|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |95|
+| Process Quality |90|
+| Cross-Repo Coherence |92|
+| Security Posture |94|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |97|
+
+Total: 933/1000
+Velocity: 1
+Protocol velocity:1
+Debt:↓
+
+Actual discovery passes in three browsers and the old-pattern negative fails as expected. Independent review passed; full release acceptance remains open. Brainstorm: evaluate the existing schema-lite TODO and make public-vs-authenticated runtime coverage explicit. Both are future SIL tasks, not additional S380 work. CDR reviewed: no new human creative direction. Missing local maintenance/checklist helpers remain absent; canonical available tools were used. Context usage remains unmeasured.
+
+
+### S380 rank-report prerequisite
+
+Diagnostic freshness enforcement exposed a foreign-project service credential and an error-to-empty fallback. Target-origin validation now runs before privileged key resolution; valid public read200[] was observed. Provider failures preserve the previous file. Focused self-test and independent review passed. Full537 acceptance is still required; no authentication-policy, RLS or membership change.

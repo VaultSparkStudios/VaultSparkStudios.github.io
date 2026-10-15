@@ -1,12 +1,9 @@
-# S379 implementation plan
+# S380 implementation plan
 
-Session intent: fresh /arc, direct main publication and full deployment, authorized by the founder.
+Session Intent: full fresh arc, normal direct main push and full deployment authorized. Goal 01a13fb9-0568-7961-ad6a-79bc74aabb86.
 
-- Wave 1 complete: startup, goal binding, canonical sync and S378 publication-record recovery.
-- Wave 2 complete: fresh nine-axis audit in AUDIT_2026-10-14.json; strict premise verified before edits. Supported-release provenance: canonical registry S1, local health yellow.
-- Wave 3 complete: targeted registry discovery repaired at L2; 13/13 isolated fixtures pass, actual arc and skill profilers agree on S1, and independent review passed after resolving the exact-identity finding.
-- Wave 4 complete: canonical autopilot passed with full measured535-step acceptance; current closing staging, exact hosted checks, authorized main publication and confirmed full production/readback verified. Evidence: docs/RELEASE_S379.json.
+- [x] Wave 1 — startup, current canon checks and fresh nine-axis audit.
+- [ ] Wave 2 — L2 browser-runner-isolation; actual three-project discovery, negative isolation fixture, Node suite,537-step full build and independent review. Necessary release prerequisite: target-bound rank-report credentials with failure-safe refresh.
+- [ ] Wave 3 — staging, canonical closeout, normal push, required exact-candidate hosted checks, production readback.
 
-Information-finding outcome: agents and operators receive the site's authoritative release stage instead of UNKNOWN. Reuse the current profile and lifecycle implementation; no new dependency, account flow or lifecycle transition.
-
-Acceptance covers target isolation, local registry precedence, sibling discovery, malformed files, missing records, lifecycle disagreement and actual CLI behavior. Preserve unknown when evidence is absent. Send canonical owner feedback via Ark; this checkout owns its code only.
+Supported S1 release stabilization. No UI, identity, lifecycle or membership-policy change. Done means discovery really succeeds and unit fixtures cannot enter any browser project; collection is blocking even without auth secrets. Preserve existing separately held identity evidence.
