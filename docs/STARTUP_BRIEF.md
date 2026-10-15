@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         535/535 passing (2026-10-14)                   ║
+║  ✓  Tests         535/535 passing (2026-10-15)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   11d                                            ║

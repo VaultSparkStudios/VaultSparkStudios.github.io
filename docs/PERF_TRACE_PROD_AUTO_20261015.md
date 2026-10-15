@@ -1,11 +1,11 @@
 # Performance Trace — S142
 
-Generated: 2026-10-15T01:25:18.109Z
+Generated: 2026-10-15T01:33:03.170Z
 Base URL: https://vaultsparkstudios.com
 
 | Route | Status | LCP | LCP Budget | INP | INP Budget | FCP | CLS | DCL | Load | TTFB |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| /membership/ | 200 | 616ms | 2400ms | 96ms | 300ms | 616ms | 0.004 | 593ms | 605ms | 198ms |
+| /studio-pulse/ | 200 | 424ms | 2400ms | 64ms | 300ms | 424ms | 0.0047 | 410ms | 421ms | 99ms |
 
 ## Stylesheet Shell
-- /membership/: OK
+- /studio-pulse/: OK

@@ -16,7 +16,7 @@
     "shellParity": {
       "state": "matched",
       "observedAt": "2026-10-14T23:38:36.661Z",
-      "ageHours": 1.8,
+      "ageHours": 1.9,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 6,
     "workerRouteErrors": 6,
     "signalCardinality": 6,
     "signalEndpoints": [
@@ -72,7 +72,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 1,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -86,9 +86,9 @@
   "receiptState": "degraded",
   "findings": [
     "production serves 35f8ec97, newer than the recorded promoted ab582158 (benign — a later rebuild moved on)",
-    "7 console error(s) on the promoted artifact — 6 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
+    "6 console error(s) on the promoted artifact — 6 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-15T01:25:45.196Z",
+  "generatedAt": "2026-10-15T01:33:30.855Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -96,7 +96,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-13T02:38:24.027Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-15T01:25:45.196Z",
+    "newestGradableAt": "2026-10-15T01:33:30.855Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
