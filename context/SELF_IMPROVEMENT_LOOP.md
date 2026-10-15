@@ -2638,3 +2638,8 @@ Actual-spec negative fixtures detect candidate-origin leakage. Independent revie
 
 
 S381 checkpoint: canonical closeout preparation completed with both full537/537 runs; source fingerprint0a7314d9b9e2ca7555e99ad0 matches current code. Staging archive9ae27125cc verified65/65 and ceremony11/11. Required hosted checks and full production readback remain pending in docs/RELEASE_S381.json.
+
+
+S381 receipt correction checkpoint: hosted5563ad compliance rejected inherited visual build-stamp association. All287 retained image hashes and source entries verified unchanged before metadata-only rebinding; original S380 capture/review dates preserved. Local ordering2/2 passes. Full corrected validation and exact hosted candidate checks remain pending.
+
+S381 corrected validation complete: 537/537, receipt5f517a4caadab7a40f647a77; tested source fingerprint0a7314d9b9e2ca7555e99ad0 unchanged. Only receipt/documentation/review metadata plus inherited Lighthouse cache differs; production remains pending exact hosted acceptance.
