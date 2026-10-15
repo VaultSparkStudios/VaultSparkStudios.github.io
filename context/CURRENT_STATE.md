@@ -1,12 +1,8 @@
-### S380 release prerequisite — target-bound rank report
+## Session 380 — browser collection and verified release (2026-10-15)
 
-The stale rank report exposed a foreign-project admin credential in the inherited generator. It now checks gateway project identity before retrieving a service key, retains the existing public opt-in read path, and writes only after a successful array response. Actual public read HTTP200 returned zero visible rows; failed requests preserve the previous report. Focused self-test and independent review passed. Full537-step acceptance remains pending.
+S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
 
-## Session 380 — browser test discovery (2026-10-15)
-
-S380 restores browser-only Playwright discovery. All three projects exclude JavaScript and ESM Node unit specs. A mandatory collection gate runs independently of authentication credentials and is included in build:check. Actual inventory: Chromium 689, Firefox 619, WebKit 619; two isolation regressions pass, including deliberate old-pattern failure. Independent review passed. Node suite 430 passed / 0 failed / 1 existing TODO. Final full build, staging, exact-candidate hosted checks and production acceptance remain open in docs/RELEASE_S380.json.
-
-No public runtime, UI, identity, membership, lifecycle or pricing changes.
+See docs/RELEASE_S380.json for exact release receipts. No auth, membership, pricing or lifecycle policy change.
 
 ## Session 379 — release-profile discovery (2026-10-15)
 

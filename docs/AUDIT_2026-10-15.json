@@ -132,7 +132,7 @@
       "why": "Browser coverage cannot start while the browser runner imports Node-only ESM suites. Missing auth currently tolerates the failing full-suite step.",
       "recipe": "Exclude Node unit specs for both JavaScript module extensions in every Playwright project, prove actual collection contains browser tests and no unit suites, and make discovery a mandatory CI prerequisite independent of authentication secrets.",
       "selectedDepth": "L2",
-      "status": "pending",
+      "status": "shipped",
       "acceptance": "Actual Chromium/Firefox/WebKit inventories contain browser tests and zero Node unit specs; negative fixture proves newly added .mjs unit tests cannot execute in browser discovery; mandatory workflow collection runs without credentials; node unit and full build checks pass; exact candidate staging/hosted checks and production readback.",
       "premises": [
         {
@@ -216,6 +216,11 @@
           "at": "2026-10-15T15:35:57.657Z",
           "status": "pending",
           "note": "Required hosted compliance on ae4af521 rejected visual binding to .cache/pathways-diff/propagated.html, accidentally included from unfiltered git diff. Corrected exactly this unrelated operator-cache scope; all retained source entries,112 screenshots, hashes and capturedAt unchanged and independently verified. Full537 and focused92/92 blocking proof checks pass; source fingerprint remains6449d0ec45ef9c0444a62cec. No runtime/source mutation or staging replacement. Lighthouse first attempt missed one route floor0.88<0.90; repeat same-source measurement in progress, no threshold changed. New exact metadata candidate requires hosted checks before promotion."
+        },
+        {
+          "at": "2026-10-15T16:01:26.471Z",
+          "status": "shipped",
+          "note": "S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent."
         }
       ]
     }

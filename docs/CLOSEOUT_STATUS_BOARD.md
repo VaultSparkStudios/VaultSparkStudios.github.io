@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-15 (Session 379 closeout) -->
+<!-- generated-at: 2026-10-15 (Session 380 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S379 ═══════╗
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S380 ═══════╗
 ║  Date: 2026-10-15  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S379)                                        ║
+║  Autopilot: BYPASSED (S380) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
 ║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ chore(closeout): seal S379 closing release evidence           ║
-║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ chore(closeout): complete S379 release-profile arc            ║
-║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ fix(proof): exclude operator cache from rendered source bind  ║
+║  ✓ chore(release): bind final S380 accessibility and staging ac  ║
+║  ✓ fix(a11y): include visible text in shared accessible names    ║
+║  ✓ chore(release): bind merged S380 staging and full verificati  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -42,7 +42,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 485 files  ·  M:45 A:0 D:0 ?:440                       ║
+║  Changes: 585 files  ·  M:46 A:0 D:0 ?:539                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -53,12 +53,12 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        16/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         535/535                                          ║
+║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
 ║  IGNIS:         0d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║  shells:        65 started · 65 closed · 0 running               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
