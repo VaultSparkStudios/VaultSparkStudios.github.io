@@ -46,7 +46,7 @@
       "providerFailurePreservesReport": true
     },
     "discoveryPreservesMobile": {
-      "at": "2026-10-15T14:21:39.569Z",
+      "at": "2026-10-15T15:15:30.734Z",
       "projects": {
         "chromium": 689,
         "firefox": 619,
@@ -57,11 +57,11 @@
       "files": [
         {
           "path": "docs/mobile-audit/findings.jsonl",
-          "sha256": "e90c6bf29c7e57381989273ddd93aa76f35397b1db4907d8814cbdcff44aa449"
+          "sha256": "b40b715fd2912dcfaaad118f3ec65d0a946a38f2b8a3ba3827f5069763118446"
         },
         {
           "path": "docs/mobile-audit/receipt.json",
-          "sha256": "d775d4e28111d395117772053a190d161d386f8139c2ca5f724e462a44a1c027"
+          "sha256": "56d8c37cd1af7016da1a3c17890005f697e6d2cf67afda525d912d6e3c7656dd"
         }
       ]
     },
@@ -69,10 +69,10 @@
       "passed": 537,
       "failed": 0,
       "coverageComplete": true,
-      "sourceFingerprint": "97a5196a7232e38477a4b933",
+      "sourceFingerprint": "6449d0ec45ef9c0444a62cec",
       "planFingerprint": "f2e7a17da3aa1b5e926e07ee",
-      "receiptId": "7144fcb84a5c98e4fc0fe291",
-      "finishedAt": "2026-10-15T14:53:05.872Z"
+      "receiptId": "be466745df5e35a2d7c8b06a",
+      "finishedAt": "2026-10-15T15:20:08.908Z"
     },
     "archiveHash": {
       "streaming": true,
@@ -82,7 +82,7 @@
     },
     "accessibleNames": {
       "publicTestsPassed": 20,
-      "independentReview": "pass after2 generated-scope findings fixed",
+      "independentReview": "pass; generated findings resolved",
       "visualCaptures": 112,
       "themes": 7,
       "widths": [
@@ -91,24 +91,24 @@
       ],
       "receipt": "docs/visual-qa/S380_ACCESSIBLE_NAMES.json",
       "rejectedCandidate": "89d508f1dde82cf502f88b35ebf8e9f02722f25d",
-      "rejectedHostedRun": 38755968631
+      "rejectedHostedRun": 38755968631,
+      "currentFullPassed": true
     }
   },
   "remaining": [
-    "fresh mobile after name correction",
-    "full537 after name correction",
-    "revised staging and exact-SHA hosted checks",
+    "normal main publication",
+    "required exact-SHA hosted checks",
     "confirmed full production and readback",
     "restore publishers"
   ],
   "rollback": "Previous full production candidate from api/deploy-currency.json; normal re-promotion of prior source. Staging archive retains a timestamped rollback.",
   "staging": {
-    "candidate": "797832cf0e42cdffb4b71804033ac4464efc7d08",
-    "receiptId": "e7857f57b81729115515480f",
+    "candidate": "44c3514b7ecdaa713d41072fc54e477b8b013bd6",
+    "receiptId": "e8f966db9b6b4868b645d072",
     "criticalLeaves": 65,
     "criticalPassed": 65,
     "ceremony": "passed",
     "steps": 11,
-    "rollback": "/opt/studio/staging/website/.rollback/20261015144948"
+    "rollback": "/opt/studio/staging/website/.rollback/20261015151036"
   }
 }
