@@ -7,15 +7,15 @@
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S381 ═══════╗
 ║  Date: 2026-10-15  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S381) — no receipt; run node scripts/clos  ║
+║  Autopilot: proven (S381)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore(closeout): record verified S381 production [skip ci]    ║
 ║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
 ║  ✓ fix(release): bind retained visual receipt to candidate       ║
 ║  ✓ chore(release): reconcile S381 candidate evidence             ║
 ║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ chore(closeout): prepare verified S381 release candidate      ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -30,19 +30,19 @@
 ║    Automation         97   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  · context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 650 files  ·  M:48 A:0 D:0 ?:602                       ║
+║  Changes: 636 files  ·  M:33 A:0 D:0 ?:603                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝

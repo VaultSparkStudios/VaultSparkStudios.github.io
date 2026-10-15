@@ -1671,3 +1671,5 @@ S381 corrected validation complete: 537/537, receipt5f517a4caadab7a40f647a77; te
 
 
 S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+
+S381 final ledger reconciliation: older local autopilot does not emit the newer receipt ledger. Added an observed-execution receipt bound to its actual completed log SHA-256, exec83950 exit0 and final verified production run38787970210. No new run, score or application change.
