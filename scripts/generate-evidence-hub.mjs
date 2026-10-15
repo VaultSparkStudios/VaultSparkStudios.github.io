@@ -285,7 +285,7 @@ export function buildPage(lanes, chrome) {
 </head><body class="dark-mode" data-theme="dark">
 ${chrome.themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+      <a class="brand" href="/">
         <img fetchpriority="high" src="${depth}assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
       </a>

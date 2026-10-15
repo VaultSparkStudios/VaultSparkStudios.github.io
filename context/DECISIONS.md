@@ -2212,3 +2212,7 @@ Move mobile-audit findings cleanup from module load into its existing execution 
 ## D-S380.5 — Stream staging archive integrity checks
 
 The clean staging archive reached 2,151,356,408 bytes and exceeded Node's single-buffer file-read limit before upload. Calculate the same SHA-256 incrementally from a file stream, preserving exact bytes, remote hash verification, archive scope and rollback behavior. Multi-chunk equality and unreadable-input regressions belong in the existing deployer self-test. This is a necessary release prerequisite; no production policy changes.
+
+## D-S380.6 — Keep accessible names aligned with visible labels
+
+The required hosted accessibility gate rejected real label-content-name mismatches. Use the brand link's natural text instead of an override that omits its visible tagline. Include “Join The Discord”, “Mind-blown” and “Hmm” in the corresponding accessible names. Apply the news generator in write mode, then reconcile shell references and integrity attributes with the existing shell producer before regenerating news proof hashes. Preserve the visible layout, auth holds and all accessibility assertions. Capture and inspect before/after in every theme at desktop and mobile widths; do not treat held authenticated portal checks as public accessibility failures or passes.
