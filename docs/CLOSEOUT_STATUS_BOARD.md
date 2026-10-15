@@ -1,27 +1,27 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-13 (Session 377 closeout) -->
+<!-- generated-at: 2026-10-15 (Session 379 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S377 ═══════╗
-║  Date: 2026-10-13  ·  SIL: 931/1000  ·  Velocity: 2 down         ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
-║  Autopilot: BYPASSED (S377) — no receipt; run node scripts/clos  ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S379 ═══════╗
+║  Date: 2026-10-15  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
+║  Mode: BUILDER  ·  Agent: codex                                  ║
+║  Autopilot: proven (S379)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: once-only deferred release cards with hashed delive  ║
-║  ✓ Tests: local and clean-checkout full gates 534/534 before re  ║
-║  ✓ Deploy: Candidate 6633fe0d22; required E2E 38352394138, Ligh  ║
-║  ✓ Review: independent review caught duplicate selector handlin  ║
-║  ✓ Scope: S377 is this invocation's bound session; prior closeo  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ chore(closeout): seal S379 closing release evidence           ║
+║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ chore(closeout): complete S379 release-profile arc            ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 931/1000 ═══════════════════════════════════════╗
-║    Dev Health         94   █████████░                            ║
+╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
+║    Dev Health         95   ██████████                            ║
 ║    Alignment          94   █████████░                            ║
 ║    Momentum           90   █████████░                            ║
-║    Engagement         94   █████████░                            ║
+║    Engagement         95   ██████████                            ║
 ║    Process Qual       90   █████████░                            ║
 ║    Coherence          92   █████████░                            ║
 ║    Security           94   █████████░                            ║
@@ -30,20 +30,20 @@
 ║    Automation         97   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
-║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
+║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 264 files  ·  M:15 A:0 D:0 ?:249                       ║
-║  Ahead: 0  ·  Behind: 4                                          ║
+║  Changes: 485 files  ·  M:45 A:0 D:0 ?:440                       ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -53,12 +53,12 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        16/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         534/534                                          ║
+║  Tests:         535/535                                          ║
 ║  Validation:    full-fresh                                       ║
 ║  IGNIS:         0d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        24 started · 24 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
@@ -66,5 +66,3 @@
 ```
 
 *Generated by `scripts/render-closeout-board.mjs v1.1`*
-
-Shell count covers 24 explicitly retained background handles; the complete historical started count is unmeasured. Final publication commands are excluded. No owned preview server remains. Production acceptance: docs/RELEASE_S377.json (closing452f source; held identity routes unchanged).

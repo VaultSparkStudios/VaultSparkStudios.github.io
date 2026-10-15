@@ -5,15 +5,14 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    The released website now resolves its canonical stage through one exact project            ║
-║    identity.                                                                                  ║
+║    Canonical release discovery repaired; full closing production and closeout verified        ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   80/100                                                       ║
 ║  ECOSYSTEM IMPACT   ████░░░░░░   40/100                                                       ║
 ║  SIL DELTA          933 → 933  (+0)                                                           ║
 ║  CDR DISPOSITION    Reviewed; no new human creative direction                                 ║
 ║  SIL EVIDENCE       Baseline held; conversion and field-vitals effects unmeasured             ║
-║  PUBLICATION        First production verified; closing publication continues in the same arc  ║
+║  PUBLICATION        Closing production and source readback verified; five publisher states restored  ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 

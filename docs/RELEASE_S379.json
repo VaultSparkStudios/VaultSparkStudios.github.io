@@ -17,7 +17,14 @@
     "inspectedCadenceCaptures": 28,
     "inspectedNavigationThemes": 7,
     "inspectedLaunchCaptures": 28,
-    "afterPaintFixtureTests": 12
+    "afterPaintFixtureTests": 12,
+    "hostedCoverageLimitation": {
+      "run": 38667539547,
+      "blockingCompliance": "passed, including complete535 checks and mobile runtime",
+      "optionalFullSuite": "Failed during Playwright loading of Node .unit.spec.mjs fixtures; existing workflow tolerates this step when auth credential is absent. Workflow success does not establish full authenticated E2E coverage.",
+      "source": "Ignored local .cache/s379-closing-e2e.log; actual step annotation retained",
+      "scope": "Existing test-runner separation debt; no browser runtime or authentication change in this release"
+    }
   },
   "preliminaryStaging": {
     "source": "dac8fb66c7",
@@ -27,10 +34,7 @@
     "exactFinalCandidateAccepted": false,
     "note": "Stage was a clean candidate archive plus the deployer-generated readiness timestamp. Generated session/test metadata changed afterward and must be staged before final promotion."
   },
-  "remaining": [
-    "canonical closeout and any changed closing source publication",
-    "restore original publisher states and operator light capture"
-  ],
+  "remaining": [],
   "rollback": "/opt/studio/staging/website/.rollback/20261014234344",
   "failedCandidates": [
     {
@@ -236,6 +240,164 @@
     "terminalExit": 0,
     "fullPasses": 2,
     "stepsPerPass": 535,
-    "state": "Canonical closeout complete; closing candidate publication pending"
+    "logSha256": "6a35efccb3821bd3cb63d1da6c4013d9118acf4eee148bca00235f3960108d4c",
+    "independentReview": "Full closeout fix2 resolved and independently passed; bounded launch-counter correction independently passed",
+    "silScore": 933,
+    "intelligence": {
+      "scoreProof": {
+        "ok": true,
+        "score": 46467,
+        "tier": "FORGE",
+        "project": "vaultsparkstudios-website",
+        "sourceFingerprint": "48eb51d94acb7d75bfe9ed22bdbbc22e3951097649b31a8b58b9c5b36411fe53",
+        "historyHash": "9602f8e84797caa32e2e33dc474f16880a23d25139392b0fccdd8ea12ce7100b",
+        "mindHash": "ddd4cde12035394286e64d65456286aaac7ac187ad8d8bc4d8326efc032d9ab9"
+      },
+      "ecosystemMeasurement": "Fresh read-only owner measurement; persistence requested through Ark, not claimed applied"
+    },
+    "shells": {
+      "started": 2,
+      "closed": 2,
+      "running": 0
+    }
+  },
+  "closingPublication": {
+    "accepted": true,
+    "sha": "d049e56b763b4013730d51595810d49c66c94f18",
+    "productionRun": 38669110903,
+    "deploymentUrl": "https://cff5d114.vaultsparkstudios-website.pages.dev",
+    "acceptedAt": "2026-10-15T02:10:55.828Z",
+    "stamps": [
+      {
+        "origin": "https://cff5d114.vaultsparkstudios-website.pages.dev",
+        "sha": "d049e56b763b4013730d51595810d49c66c94f18",
+        "deployedBy": "pages-deploy"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "sha": "d049e56b763b4013730d51595810d49c66c94f18",
+        "deployedBy": "pages-deploy"
+      }
+    ],
+    "requiredHostedChecks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 38667539547
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 38667539608
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 38667539570
+      }
+    ],
+    "releaseCeremony": {
+      "passed": 11,
+      "total": 11
+    },
+    "staging": {
+      "receiptId": "febcc2391a991c6ba47c3bca",
+      "actualArchiveCommit": "d049e56b763b4013730d51595810d49c66c94f18",
+      "artifactRoot": "6feddb320a0ab56a0d1702881d6368b0e6fe06613f82d0b3fddc1ceadf978d3b",
+      "criticalLeaves": 65,
+      "criticalPassed": 65,
+      "rollback": "/opt/studio/staging/website/.rollback/20261015014737",
+      "contentBrowserPassed": 3,
+      "identityHeld": 3,
+      "attentionPassed": 15,
+      "skipped": 0
+    },
+    "immutableParity": {
+      "checkedAt": "2026-10-15T02:10:54.042Z",
+      "origin": "https://cff5d114.vaultsparkstudios-website.pages.dev",
+      "against": "d049e56b763b4013730d51595810d49c66c94f18",
+      "deployedBy": null,
+      "verdict": "tree-current",
+      "checked": 1078,
+      "identical": 1068,
+      "differ": 0,
+      "contentLag": [],
+      "fullPromotionOnly": [],
+      "redirected": 10,
+      "notServed": [],
+      "unread": 0
+    },
+    "primarySource": {
+      "checked": 1078,
+      "nonHtmlDifferences": [],
+      "unread": 0,
+      "htmlChecked": 310,
+      "htmlUnverified": 0,
+      "providerInjected": 287,
+      "declaredRedirects": 14,
+      "identityHeld": 9
+    },
+    "localFull": {
+      "passed": 535,
+      "failed": 0,
+      "coverageComplete": true,
+      "planFingerprint": "ff96924176e6facce8d97bad",
+      "sourceFingerprint": "e0222ab9e15cd721300f875a",
+      "finishedAt": "2026-10-15T01:39:25.115Z"
+    },
+    "mobile": {
+      "passed": 215,
+      "total": 215,
+      "source": "Fresh launch-counter run; receipt source/pixel hashes validated"
+    },
+    "visual": {
+      "themes": 7,
+      "launchCaptures": 28,
+      "cadenceCaptures": 28,
+      "manualInspection": true
+    },
+    "tag": "s379-closeout-d049e56b76",
+    "publisherStates": [
+      {
+        "name": "news-publish.yml",
+        "id": 336635533,
+        "state": "active",
+        "restoredAt": "2026-10-15T02:11:02.730Z"
+      },
+      {
+        "name": "uptime-probe.yml",
+        "id": 290922328,
+        "state": "active",
+        "restoredAt": "2026-10-15T02:11:03.407Z"
+      },
+      {
+        "name": "refresh-live-data.yml",
+        "id": 301109611,
+        "state": "active",
+        "restoredAt": "2026-10-15T02:11:04.093Z"
+      },
+      {
+        "name": "desk-content-release.yml",
+        "id": 370760439,
+        "state": "active",
+        "restoredAt": "2026-10-15T02:11:04.824Z"
+      },
+      {
+        "name": "ci-status-beacon.yml",
+        "id": 262469628,
+        "state": "active",
+        "restoredAt": "2026-10-15T02:11:05.597Z"
+      }
+    ],
+    "rollback": {
+      "productionPriorVerifiedOrigin": "https://80e9c54c.vaultsparkstudios-website.pages.dev",
+      "productionPriorVerifiedSha": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+      "staging": "/opt/studio/staging/website/.rollback/20261015014737"
+    }
+  },
+  "coordination": {
+    "impactCargo": "01K4UL8C1VD89CDD04B415CA8E",
+    "ownerQuestion": "01K4UL8C858FA1C211D4B83515",
+    "state": "delivered; owner adoption/persistence not claimed"
   }
 }

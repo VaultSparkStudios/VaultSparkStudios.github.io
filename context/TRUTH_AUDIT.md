@@ -1511,3 +1511,9 @@ Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metad
 ### S379 — release-profile source disagreement resolved (2026-10-15)
 
 Arc and shared skill discovery now agree on canonical S1 supported-release; local health remains yellow. Missing evidence stays unknown, and similarly named or ambiguous folders cannot borrow another project's record. First production acceptance is verified in RELEASE_S379.json. Existing identity holds, field-vitals freshness and D-S374.3 terminology exceptions remain explicit. Context usage was unmeasured. Canonical owner cargo delivery is not adoption. Final closeout publication remains tracked separately until actual readback.
+
+### S379 closing acceptance — 2026-10-15T02:11:05.668Z
+
+S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate.
+
+The closeout launch-counter drift was corrected with the existing producer, followed by28 fresh inspected captures and a new215-case mobile audit. Visual retention inventory and closeout brief artifact names were reconciled through their existing tools; failed/partial runs were never substituted for complete acceptance. Conversion and field-vitals effects remain unmeasured.

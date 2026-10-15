@@ -1,4 +1,4 @@
-<!-- Current S379: first production accepted; final publication evidence in docs/RELEASE_S379.json. -->
+<!-- Current S379: closing production accepted; final evidence in docs/RELEASE_S379.json. -->
 - [S379 release-profile discovery](S379.md): exact identity, canonical registry and release verification.
 
 # Project memory
