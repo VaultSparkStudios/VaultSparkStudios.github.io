@@ -13,7 +13,9 @@
     "stagingDeployerSelfTests": 15,
     "mobileCases": 215,
     "independentReview": "pass, exact identity finding resolved",
-    "doctorBlockingFailing": 0
+    "doctorBlockingFailing": 0,
+    "inspectedCadenceCaptures": 28,
+    "inspectedNavigationThemes": 7
   },
   "preliminaryStaging": {
     "source": "dac8fb66c7",
@@ -29,5 +31,14 @@
     "confirmed production deployment and readback",
     "canonical closeout and publisher restoration"
   ],
-  "rollback": "/opt/studio/staging/website/.rollback/20261014234344"
+  "rollback": "/opt/studio/staging/website/.rollback/20261014234344",
+  "failedCandidates": [
+    {
+      "candidate": "c188a285b9a480192cdff09e45e1bdcebb770556",
+      "workflow": "e2e.yml",
+      "run": 38657633305,
+      "reason": "UTC-midnight freshness drift at build gate346",
+      "promoted": false
+    }
+  ]
 }
