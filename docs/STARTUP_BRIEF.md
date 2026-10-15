@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   97  [VERIFY]       Classify the remaining broad E2E failures   ║
+║  100  [VERIFY]       Classify the remaining broad E2E failures   ║
 ║        Classify the remaining broad E2E failures against the ca  ║
 ║                                                                  ║
-║   96  [PRODUCT]      S381 release: full local check, exact stag  ║
-║        S381 release: full local check, exact staging, canonical  ║
-║                                                                  ║
-║   93  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
+║   96  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
 ║        Assess candidate-origin contracts for other browser API   ║
 ║                                                                  ║
-║   87  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
+║   90  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
 ║        Evaluate the existing Node schema-lite TODO with focused  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Separate optional authenticated runtime co  ║
+║   87  [PRODUCT]      Separate optional authenticated runtime co  ║
 ║        Separate optional authenticated runtime coverage from pu  ║
+║                                                                  ║
+║   84  [PRODUCT]      Reduce staging archive overhead through th  ║
+║        Reduce staging archive overhead through the existing pro  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

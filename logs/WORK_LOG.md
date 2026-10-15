@@ -1660,3 +1660,6 @@ Failed and partial checks remain recorded; they never substitute for complete ac
 S381 binds browser release checks to their selected candidate. Navigation probes use the loaded page origin and skip protocol-relative external links. Visual snapshots use the configured Playwright baseURL unless an explicit VR_BASE_URL overrides it. Pull-request visual checks start and audit the checked-out local preview; manual deployed-origin capture remains available. Actual-spec loopback regressions distinguish a broken candidate from a healthy decoy and detect the original target mutations. Local real-site navigation passes; independent review passed. Full build, exact staging, hosted checks and production acceptance remain open in docs/RELEASE_S381.json.
 
 All nine audit axes considered; one verified stabilization outcome selected. Existing identity/field-vitals limitations and historical optional E2E failures remain separate.
+
+
+S381 checkpoint: canonical closeout preparation completed with both full537/537 runs; source fingerprint0a7314d9b9e2ca7555e99ad0 matches current code. Staging archive9ae27125cc verified65/65 and ceremony11/11. Required hosted checks and full production readback remain pending in docs/RELEASE_S381.json.

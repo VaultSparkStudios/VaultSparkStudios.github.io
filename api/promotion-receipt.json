@@ -9,14 +9,14 @@
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "d049e56b763b4013730d51595810d49c66c94f18",
-    "contentLaneHead": "caa9278c6fd39411d18d1d95a1409b7b507aef2e",
+    "sha": "4ce367580b22c2a2541ff56af269d0fbca800074",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "content-lane-match",
+    "reconciliation": "ahead",
     "shellParity": {
       "state": "matched",
-      "observedAt": "2026-10-15T13:09:28.278Z",
-      "ageHours": 1.2,
+      "observedAt": "2026-10-15T17:02:57.697Z",
+      "ageHours": 0.7,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 8,
+    "consoleErrors": 7,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 1,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,10 +89,10 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production build sha d049e56b is the content-lane baseline; served contentLaneHead caa9278c is at/after promoted 8c2b287a and shell parity was observed 'matched' at 2026-10-15T13:09:28.278Z (current)",
-    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
+    "production serves 4ce36758, newer than the recorded promoted 8c2b287a (benign — a later rebuild moved on)",
+    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-15T14:23:45.074Z",
+  "generatedAt": "2026-10-15T17:47:07.181Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -100,7 +100,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-13T02:38:24.027Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-15T14:23:45.074Z",
+    "newestGradableAt": "2026-10-15T17:47:07.181Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

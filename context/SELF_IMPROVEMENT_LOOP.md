@@ -2635,3 +2635,6 @@ Protocol velocity: 1
 Debt: ↓
 
 Actual-spec negative fixtures detect candidate-origin leakage. Independent review passed; full release acceptance is still open. Brainstorm: classify remaining broad E2E failures on the actual candidate and assess other browser API probe target contracts. Both are future SIL tasks on TASK_BOARD, not additional S381 outcomes. CDR reviewed: no new human creative direction. Context usage unmeasured.
+
+
+S381 checkpoint: canonical closeout preparation completed with both full537/537 runs; source fingerprint0a7314d9b9e2ca7555e99ad0 matches current code. Staging archive9ae27125cc verified65/65 and ceremony11/11. Required hosted checks and full production readback remain pending in docs/RELEASE_S381.json.
