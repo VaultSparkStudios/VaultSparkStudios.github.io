@@ -1538,3 +1538,7 @@ Failed and partial checks remain recorded; they never substitute for complete ac
 ### S381 — candidate association (2026-10-15)
 
 The prior hosted nav failure shows production requests while BASE_URL selects loopback; visual fallback and PR workflow also bypassed the candidate. Source and actual-spec mutations prove the defect and repair. Origin correctness does not establish that historical visual baselines or optional browser failures pass. Production acceptance remains pending in RELEASE_S381.json.
+
+
+S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+The staging receipt build-stamp label is 9ae27125cc; actual checkout5563ad and all3601 shared source files independently establish this candidate. No authenticated identity journey is claimed.

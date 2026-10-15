@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S381) - WHAT SHIPPED ══════════════════════════╗
-║  S381 binds browser release checks to their selected candidate.  ║
+║  S381 complete: browser release checks follow their selected ca  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 

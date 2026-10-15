@@ -1,8 +1,6 @@
-## Session 381 — candidate-bound browser checks (2026-10-15)
+## Session 381 — verified release (2026-10-15)
 
-S381 binds browser release checks to their selected candidate. Navigation probes use the loaded page origin and skip protocol-relative external links. Visual snapshots use the configured Playwright baseURL unless an explicit VR_BASE_URL overrides it. Pull-request visual checks start and audit the checked-out local preview; manual deployed-origin capture remains available. Actual-spec loopback regressions distinguish a broken candidate from a healthy decoy and detect the original target mutations. Local real-site navigation passes; independent review passed. Full build, exact staging, hosted checks and production acceptance remain open in docs/RELEASE_S381.json.
-
-No public UI, identity, membership, pricing or lifecycle change.
+S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
 
 ## Session 380 — browser collection and verified release (2026-10-15)
 

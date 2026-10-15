@@ -5,13 +5,14 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Browser checks follow their selected candidate; release acceptance in progress.            ║
+║    Browser checks follow the selected candidate; full production verified.                    ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ██████░░░░   60/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
 ║  SIL DELTA          933 → 933  (+0)                                                           ║
-║  RELEASE            Full build, staging and production pending                                ║
+║  RELEASE            537/537 local; staging65/65; ceremony11/11; production verified           ║
 ║  CDR                Reviewed; no new human creative direction                                 ║
+║  OPTIONAL E2E       582 passed; 45 failed; 60 skipped; 2 flaky                                ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -29,12 +30,12 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Historical optional E2E failures remain unverified until separately classified.
+    • Classify the remaining optional broad E2E failures in a separate supported-release scope. Existing identity and field-vitals holds remain explicit.
 
   BLOCKERS
     (none)
 
   ACTION GATE
-    Implementation verified; full release acceptance pending.
+    Authorized full production and canonical closeout verified.
 
 ```
