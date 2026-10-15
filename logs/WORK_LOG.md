@@ -1622,3 +1622,10 @@ S378 complete: Spark clears reader controls and editing, then returns with prefe
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+## 2026-10-15 — Session 379
+
+S379 release-profile discovery shipped and verified in production. The resolver uses the targeted canonical registry and one exact declared project identity, preserves local health and unknown fallback, and reports this website as S1. First accepted candidate 35f8ec97dd6f deployed by confirmed Pages run 38662242217; full local535/535, profile13/13, staging-deployer15/15, mobile215/215, critical staging65/65, scoped staging3passed/3identityheld and attention15/15. Required exact-SHA hosted checks and immutable source parity passed. Closing publication evidence is maintained in docs/RELEASE_S379.json. Existing identity and field-vitals limitations remain separate.
+
+Fresh goal-specific arc; prior S378 publication-tail recovery was recorded separately before this audit. Session wave reconciliation and final publication follow-through: docs/IMPLEMENT_PLAN.md and docs/RELEASE_S379.json.

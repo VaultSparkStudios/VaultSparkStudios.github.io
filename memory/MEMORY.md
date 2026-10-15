@@ -1,3 +1,6 @@
+<!-- Current S379: first production accepted; final publication evidence in docs/RELEASE_S379.json. -->
+- [S379 release-profile discovery](S379.md): exact identity, canonical registry and release verification.
+
 # Project memory
 
 Current S370 acceptance: production `ee8db4f7f`, Pages `37807641227`; see [S370 follow-through](S370-followthrough.md). Earlier release pointers below are historical.

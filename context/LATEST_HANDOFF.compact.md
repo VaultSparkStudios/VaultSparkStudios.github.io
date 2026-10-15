@@ -1,7 +1,31 @@
-<!-- generated-by: Codex deterministic closeout summary; no paid API -->
+<!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
 <!-- source-hash: ee340210c765 -->
-<!-- generated-at: 2026-10-14T01:34:10.290Z -->
+<!-- generated-at: 2026-10-14T23:27:43.357Z -->
 
 # LATEST_HANDOFF (compact)
 
-S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored.
+SESSION 378 HANDOFF
+
+SHIPPED
+Spark reader controls cleared; editing restored with preferences and header recall preserved. Candidate 0a3fa422354d deployed to main via Pages run 38495788787. All required checks passed: local 534/534, mobile 215/215, Spark 42/42, shell 13/13. Seven themes inspected. Production ceremony 11/11 passed.
+
+CURRENT INTENT
+Resume /arc phase. Maintain Spark control clearance stability. Verify identity holds and field-vitals remain scoped outside this release.
+
+NOW (TOP 3)
+- Monitor immutable served text parity across hosted checks
+- Resolve four unused canonical helpers held under .cache/s378-held-propagation (report dependency mismatch through Ark)
+- Verify selector-membership caching remains corrected post-deployment
+
+BLOCKERS (TOP 3)
+- Identity holds remain scoped outside acceptance boundary (unresolved)
+- Field-vitals freshness status unclear (carries from S377)
+- Firefox taps after jumps and companion overlap still dormant (S377 carryover)
+
+HUMAN-BLOCKED
+None documented with age.
+
+REFERENCE
+Full details: docs/RELEASE_S378.json. Prior operator cache residue preserved. CDR reviewed — no new creative direction.
+
+Next session: validate held propagation dependency mismatch and resume identity-hold scope expansion if authorized.

@@ -2171,3 +2171,21 @@ Build public low-quality image placeholders only for served raster paths, using 
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+## D-S379.1 — Target-bound registry discovery and exact identity (2026-10-15)
+
+Resolve the target's local registry, then its Studio Ops sibling. Preserve local status fallback and unknown evidence. Registry matches require exactly one declared slug, folder name or path basename; prefixes, backup suffixes and ambiguous declarations cannot borrow another project's stage, URLs or staging policy. When the registry omits type, preserve the local website type. This repairs discovery; it does not change lifecycle records or approve a launch.
+
+## D-S379.2 — Bounded full-archive allowance (2026-10-15)
+
+A clean approximately2GiB staging archive timed out after300 seconds without deploying. Local archive creation now has a900-second ceiling. Manifest scope, upload limits, digest checks, remote acknowledgement, rollback and readback remain unchanged. Actual deployment and15 self-tests passed. Reducing unnecessary archive weight is a future task requiring route/rollback proof.
+
+## D-S379.3 — Routine promotion retains explicit existing holds (2026-10-15)
+
+CANON-045 provider acceptance remains held and is disjoint from this non-identity release under RELEASE_PROMOTION_PROTOCOL. The two accepted terminology findings retain D-S374.3's explanation; no new language policy change was made. Current conformance had zero ABSOLUTE gaps. These STRONG exceptions are explicit and do not become verified identity acceptance. No pricing, membership logic, rights, launch-date or trust-policy changes were authorized or made.
+
+
+## D-S379.4 - Deterministic early-reaction fixture (2026-10-15)
+
+The required closeout reconciliation run exposed the reaction fixture response-delay race: four real clicks exceeded400ms under host load. The fixture now holds the script response until the unchanged early-tap assertion runs, then releases it explicitly and during cleanup. Runtime code, replay assertions and test thresholds are unchanged. Targeted12/12 passed and independent review passed; complete canonical rerun follows.

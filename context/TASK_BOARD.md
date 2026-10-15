@@ -1,3 +1,11 @@
+## S379 — accepted implementation and release
+
+- [x] Exact target registry discovery and unique declared project identity; profile13/13 and independent review passed after fixing prefix/suffix attribution.
+- [x] Bounded staging archive timeout; actual clean archive/deployment accepted, self-tests15/15.
+- [x] First full production acceptance: see docs/RELEASE_S379.json. Closing ceremony wave status remains in docs/IMPLEMENT_PLAN.md until final publication is verified.
+- [ ] [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
+- [ ] [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
+
 
 
 ## S378 arc — Spark clears reader controls

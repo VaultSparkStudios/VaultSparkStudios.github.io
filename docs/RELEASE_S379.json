@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
   "session": 379,
-  "accepted": false,
+  "accepted": true,
   "scope": "Target-bound release profile resolution and bounded archive-timeout prerequisite. No identity or lifecycle transition.",
   "implementationCommits": [
-    "9234706ca6",
-    "dac8fb66c7"
+    "d64f01746b",
+    "2234852f0f"
   ],
   "validation": {
     "fullLocalSteps": 535,
@@ -15,7 +15,9 @@
     "independentReview": "pass, exact identity finding resolved",
     "doctorBlockingFailing": 0,
     "inspectedCadenceCaptures": 28,
-    "inspectedNavigationThemes": 7
+    "inspectedNavigationThemes": 7,
+    "inspectedLaunchCaptures": 28,
+    "afterPaintFixtureTests": 12
   },
   "preliminaryStaging": {
     "source": "dac8fb66c7",
@@ -26,10 +28,8 @@
     "note": "Stage was a clean candidate archive plus the deployer-generated readiness timestamp. Generated session/test metadata changed afterward and must be staged before final promotion."
   },
   "remaining": [
-    "final exact-candidate staging and parity",
-    "required exact-SHA hosted checks",
-    "confirmed production deployment and readback",
-    "canonical closeout and publisher restoration"
+    "canonical closeout and any changed closing source publication",
+    "restore original publisher states and operator light capture"
   ],
   "rollback": "/opt/studio/staging/website/.rollback/20261014234344",
   "failedCandidates": [
@@ -39,6 +39,196 @@
       "run": 38657633305,
       "reason": "UTC-midnight freshness drift at build gate346",
       "promoted": false
+    }
+  ],
+  "acceptedAt": "2026-10-15T00:56:02.191Z",
+  "candidate": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+  "productionRun": 38662242217,
+  "deploymentUrl": "https://80e9c54c.vaultsparkstudios-website.pages.dev",
+  "requiredHostedChecks": [
+    {
+      "workflow": ".github/workflows/e2e.yml",
+      "state": "passed",
+      "runId": 38660682752
+    },
+    {
+      "workflow": ".github/workflows/lighthouse.yml",
+      "state": "passed",
+      "runId": 38660682478
+    },
+    {
+      "workflow": ".github/workflows/accessibility.yml",
+      "state": "passed",
+      "runId": 38660682528
+    }
+  ],
+  "immutableParity": {
+    "checkedAt": "2026-10-15T00:55:54.563Z",
+    "origin": "https://80e9c54c.vaultsparkstudios-website.pages.dev",
+    "against": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+    "deployedBy": null,
+    "verdict": "tree-current",
+    "checked": 1078,
+    "identical": 1068,
+    "differ": 0,
+    "contentLag": [],
+    "fullPromotionOnly": [],
+    "redirected": 10,
+    "notServed": [],
+    "unread": 0
+  },
+  "primaryHtmlParity": {
+    "checked": 310,
+    "unverified": 0,
+    "providerInjected": 287,
+    "declaredRedirects": 14,
+    "heldIdentity": 9
+  },
+  "stamps": [
+    {
+      "origin": "https://80e9c54c.vaultsparkstudios-website.pages.dev",
+      "sha": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+      "deployedBy": "pages-deploy"
+    },
+    {
+      "origin": "https://vaultsparkstudios.com",
+      "sha": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+      "deployedBy": "pages-deploy"
+    }
+  ],
+  "staging": {
+    "receipt": {
+      "schemaVersion": "1.0",
+      "generatedAt": "2026-10-15T00:39:13.134Z",
+      "generatedBy": "scripts/deploy-staging.mjs",
+      "publicSafe": true,
+      "state": "verified",
+      "source": {
+        "commitSha": "ab582158cb1dc8dbeab84bd6421c9488cbb1d38b",
+        "fingerprint": "22b96245cf23b81be5b87f7a"
+      },
+      "candidate": {
+        "artifactRoot": "a0be0dd1dc189e2d8fdc5c156467990b46c12cc9e23a943aa058a477364499bf",
+        "leafCount": 65
+      },
+      "archive": {
+        "sha256": "8b4e1e3136ed0c55522c02630ccd72b2ae13bcbf01e1b58e4ac2d5454e08acd7",
+        "bytes": 2144638587
+      },
+      "deploy": {
+        "id": "20261015003322",
+        "manifestFileCount": 11162,
+        "remoteFileCount": 11162,
+        "remoteRoot": "/opt/studio/staging/website",
+        "rollbackPath": "/opt/studio/staging/website/.rollback/20261015003322"
+      },
+      "parity": {
+        "generatedAt": "2026-10-15T00:39:13.108Z",
+        "candidateReady": true,
+        "findings": [],
+        "candidateBuildSha": "ab582158cb1dc8dbeab84bd6421c9488cbb1d38b",
+        "stagingBuildSha": "ab582158cb1dc8dbeab84bd6421c9488cbb1d38b",
+        "candidateRoot": "a0be0dd1dc189e2d8fdc5c156467990b46c12cc9e23a943aa058a477364499bf",
+        "stagingRoot": "a0be0dd1dc189e2d8fdc5c156467990b46c12cc9e23a943aa058a477364499bf",
+        "matched": true
+      },
+      "remoteVerification": {
+        "method": "atomic-install-and-byte-equality",
+        "verified": true
+      },
+      "receiptId": "014438c277884260aa3a4289"
+    },
+    "actualArchiveCommit": "35f8ec97dd6f09f296a7f12dabc4df73e44eafb8",
+    "criticalLeaves": 65,
+    "criticalPassed": 65,
+    "browser": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-15T00:40:42.335Z",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/staging-release.spec.js",
+      "state": "passed",
+      "expectedTests": 6,
+      "observedTests": 6,
+      "executedTests": 3,
+      "passed": 3,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "held": 3,
+      "heldContracts": [
+        "anonymous Obelisk boundary is fail-closed and reaches the provider"
+      ],
+      "heldSurfaces": [
+        "identity",
+        "worker:identity"
+      ],
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "attention": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-15T00:41:23.271Z",
+      "generatedBy": "scripts/run-attention-release-gate.mjs",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/attention-surfaces.spec.js",
+      "state": "passed",
+      "expectedTests": 15,
+      "observedTests": 15,
+      "passed": 15,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    }
+  },
+  "localFull": {
+    "passed": 535,
+    "failed": 0,
+    "sourceFingerprint": "d0b00909b4054ae5fc79359c",
+    "finishedAt": "2026-10-15T00:39:21.356Z"
+  },
+  "preRebaseImplementationCommits": [
+    "9234706ca6",
+    "dac8fb66c7"
+  ],
+  "closeoutAttempts": [
+    {
+      "state": "failed",
+      "at": "2026-10-15T01:07:02.170Z",
+      "step": 160,
+      "reason": "Fresh public status advanced the homepage launch age from224 to225; existing producer missing from derived cascade",
+      "correction": "Ran existing build-launch-age;28 new launch-counter captures directly inspected; fresh215 mobile run in progress",
+      "promotedClosingCandidate": false
+    },
+    {
+      "state": "failed",
+      "reason": "Visual retention inventory needed to index28 new captures",
+      "correction": "Existing retention producer ran; focused92 blocking proof-surface checks passed"
+    },
+    {
+      "state": "failed",
+      "reason": "Closeout renderer artifact names differed from boundary convention",
+      "correction": "CanonicalS379 document/cache aliases created; remaining310-step partial preflight passed"
+    },
+    {
+      "state": "failed",
+      "reason": "Full535 passed; required post-signal run failed at119 on reaction fixture400ms race",
+      "correction": "Explicit response gate preserves all assertions; independent12/12 and review passed; complete rerun pending"
     }
   ]
 }

@@ -1506,3 +1506,8 @@ S378 complete: Spark clears reader controls and editing, then returns with prefe
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+### S379 — release-profile source disagreement resolved (2026-10-15)
+
+Arc and shared skill discovery now agree on canonical S1 supported-release; local health remains yellow. Missing evidence stays unknown, and similarly named or ambiguous folders cannot borrow another project's record. First production acceptance is verified in RELEASE_S379.json. Existing identity holds, field-vitals freshness and D-S374.3 terminology exceptions remain explicit. Context usage was unmeasured. Canonical owner cargo delivery is not adoption. Final closeout publication remains tracked separately until actual readback.

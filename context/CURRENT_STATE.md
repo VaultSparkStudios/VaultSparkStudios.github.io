@@ -1,3 +1,9 @@
+## Session 379 — release-profile discovery (2026-10-15)
+
+S379 release-profile discovery shipped and verified in production. The resolver uses the targeted canonical registry and one exact declared project identity, preserves local health and unknown fallback, and reports this website as S1. First accepted candidate 35f8ec97dd6f deployed by confirmed Pages run 38662242217; full local535/535, profile13/13, staging-deployer15/15, mobile215/215, critical staging65/65, scoped staging3passed/3identityheld and attention15/15. Required exact-SHA hosted checks and immutable source parity passed. Closing publication evidence is maintained in docs/RELEASE_S379.json. Existing identity and field-vitals limitations remain separate.
+
+Generated homepage cadence copy now reflects the UTC day boundary. Membership economy, authentication policy and lifecycle records retain their existing behavior. The bounded archive timeout prerequisite preserves the existing deployment manifest and verification.
+
 # S378 companion control clearance — 2026-10-13
 
 S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. See docs/RELEASE_S378.json.

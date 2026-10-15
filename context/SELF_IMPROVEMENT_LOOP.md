@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇▇▇
-Avgs — 3: 930.3 | 5: 927.8 | 10: — | 25: — | all: unmeasured (archived history excluded)
+Sparkline (last 5 totals): █████
+Avgs — 3: 932.3 | 5: 929.8 | 10: 939.1 | 25: unmeasured | all: unmeasured (archived history excluded)
 History scope: latest scored entry per session in active append-only ledger.
-Velocity trend: ↓ | Protocol velocity: → | Debt: ↓
-Last session: 2026-10-13 | Session 378 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
+Velocity trend: → | Protocol velocity: → | Debt: ↓
+Last session: 2026-10-15 | Session 379 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2548,3 +2548,23 @@ S378 complete: Spark clears reader controls and editing, then returns with prefe
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+## 2026-10-15 UTC — Session 379 (Target-bound release profile) | Total: 933/1000 (v3.0) | Velocity: 1 | Debt: ↓
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Website product rubric. Score held at933: no new conversion or field-vitals improvement is claimed. Release information finding is verified through13 isolated profile fixtures, actual S1 CLI agreement and independent review; complete local535-step and215-cell mobile acceptance passed. Exact-SHA hosted accessibility/Lighthouse/E2E and first production acceptance are recorded in RELEASE_S379.json. Generated cadence copy was refreshed after UTC midnight;28 before/after images across seven themes plus seven navigation-theme captures were inspected. Existing identity and field-vitals gaps remain.
+
+Process lessons: the independent reviewer found inherited substring attribution; that finding was fixed and independently rechecked. The initial archive timeout and stale mobile/generated-data gates remained red until corrected. Exact-SHA E2E caught the real UTC-midnight freshness transition; dated source outputs were regenerated, then re-verified. The broad browser wrapper's unrelated outputs were restored. Two future SIL commitments are on TASK_BOARD: archive footprint reduction through the existing policy, and isolated staging screenshot paths. CDR reviewed with no new human creative direction. Closing publication remains a ceremony requirement in IMPLEMENT_PLAN; this entry does not mark the native goal complete.
