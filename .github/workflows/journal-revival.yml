@@ -9,8 +9,8 @@ jobs:
   draft:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - name: Prove draft-only contract
@@ -20,7 +20,7 @@ jobs:
           HETZNER_INFERENCE_API_KEY: ${{ secrets.HETZNER_INFERENCE_API_KEY }}
           HETZNER_INFERENCE_BASE_URL: ${{ secrets.HETZNER_INFERENCE_BASE_URL }}
         run: node scripts/draft-journal-revival.mjs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: signal-log-draft
           path: journal/_drafts/revival-*.md
