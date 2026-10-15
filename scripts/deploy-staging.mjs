@@ -36,6 +36,12 @@ const HISTORY_OUT = path.join(ROOT, HISTORY_REL);
 const STAGING_ORIGIN = 'website-origin.staging.vaultsparkstudios.com';
 const SENSITIVE = /(^|\/)(?:\.env(?:\..*)?|secrets?)(?:\/|$)|\.(?:pem|key|p12|pfx)$/i;
 
+export async function fileSha256(file) {
+  const hash = crypto.createHash('sha256');
+  for await (const chunk of fs.createReadStream(file)) hash.update(chunk);
+  return hash.digest('hex');
+}
+
 export function safeManifest(files) {
   return [...new Set(files.map((file) => file.replaceAll('\\', '/')))]
     .filter((file) => file && !file.includes('\n') && file !== ZOMBIE && file !== RECEIPT_REL)
@@ -78,12 +84,27 @@ function checked(result, label) {
 }
 
 if (SELF_TEST) {
+  const fixtureDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vaultspark-staging-hash-'));
+  let streamedHashMatches = false;
+  let missingFileRejected = false;
+  try {
+    const bytes = Buffer.alloc(200_003, 0xa7);
+    const fixture = path.join(fixtureDir, 'archive.tgz');
+    fs.writeFileSync(fixture, bytes);
+    streamedHashMatches = await fileSha256(fixture) === crypto.createHash('sha256').update(bytes).digest('hex');
+    try { await fileSha256(path.join(fixtureDir, 'missing.tgz')); } catch (error) { missingFileRejected = error.code === 'ENOENT'; }
+  } finally {
+    fs.rmSync(path.join(fixtureDir, 'archive.tgz'), { force: true });
+    fs.rmdirSync(fixtureDir);
+  }
   const manifest = safeManifest([
     'index.html', '.well-known/llms.txt', 'assets/icon.png', '.env',
     'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js', '.cache/staging-tmp/previous.tgz',
     '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs', RECEIPT_REL,
   ]);
   const cases = [
+    ['streamed archive hash matches exact multi-chunk bytes', streamedHashMatches],
+    ['streamed archive hash rejects unreadable input', missingFileRejected],
     ['keeps public files', manifest.includes('index.html') && manifest.includes('.well-known/llms.txt')],
     ['rejects secrets, local evidence, temporary helpers, and ignored trees', manifest.length === 3],
     ['rejects zombie helper', !manifest.includes(ZOMBIE)],
@@ -167,7 +188,7 @@ try {
   // archive allowance separate from the shorter upload and remote-command limits.
   checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 900_000 }), 'release archive');
   const archiveBytes = fs.statSync(archivePath).size;
-  const archiveSha256 = crypto.createHash('sha256').update(fs.readFileSync(archivePath)).digest('hex');
+  const archiveSha256 = await fileSha256(archivePath);
   // scp shares tar's colon-parsing: a `C:\` source reads as host `C`. Relative.
   checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archiveRel, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'staging upload');
 

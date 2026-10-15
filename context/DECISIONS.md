@@ -2208,3 +2208,7 @@ The rank report must compare the configured Supabase origin with its declared we
 ## D-S380.4 — Discovery cannot own execution artifacts
 
 Move mobile-audit findings cleanup from module load into its existing execution lifecycle hook. Keep worker ownership and zero-retry policy. Discovery must preserve previous measured findings and receipt bytes. The regression fixture copies the actual mobile spec into an isolated temporary project and checks exact sentinel preservation for all three browser inventories. Fresh full mobile execution is required because the old findings were deleted; previous evidence is not reused. Independent review passed.
+
+## D-S380.5 — Stream staging archive integrity checks
+
+The clean staging archive reached 2,151,356,408 bytes and exceeded Node's single-buffer file-read limit before upload. Calculate the same SHA-256 incrementally from a file stream, preserving exact bytes, remote hash verification, archive scope and rollback behavior. Multi-chunk equality and unreadable-input regressions belong in the existing deployer self-test. This is a necessary release prerequisite; no production policy changes.
