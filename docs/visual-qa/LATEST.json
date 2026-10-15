@@ -14,9 +14,8 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "5ce06898d6e866e2dd3f8516cf76056d8b4373015a3b88f11437a6caf58cabaf",
+    "sha256": "e0cf4cde61f468805cd1024542f1387c8fc4442b9a689bd38380417fd345da44",
     "files": [
-      ".cache/pathways-diff/propagated.html",
       "accessibility/index.html",
       "ai-vs-si/index.html",
       "api/index.html",
@@ -298,10 +297,6 @@
       "vault/tombstones/index.html"
     ],
     "entries": [
-      {
-        "path": ".cache/pathways-diff/propagated.html",
-        "sha256": "d3288e2d4ac48938749a314339bd1e96fc3e7944d50d49591ad315e495c5257f"
-      },
       {
         "path": "accessibility/index.html",
         "sha256": "2e97e9ffa3082ac08ab81a8ade40de704e44f032f80770f3bf873bcef01a1d41"
@@ -3637,5 +3632,12 @@
         "reviewer": "Codex S380 rendered image inspection of every capture in original-resolution theme sheets"
       }
     }
-  ]
+  ],
+  "scopeCorrection": {
+    "at": "2026-10-15T15:34:34.752Z",
+    "removed": [
+      ".cache/pathways-diff/propagated.html"
+    ],
+    "reason": "Unrelated operator cache was accidentally included by an unfiltered git diff. Every remaining rendered source hash was verified unchanged; captures and their original timestamps are preserved."
+  }
 }
