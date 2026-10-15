@@ -64,14 +64,37 @@
           "sha256": "d775d4e28111d395117772053a190d161d386f8139c2ca5f724e462a44a1c027"
         }
       ]
+    },
+    "fullBuild": {
+      "passed": 537,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "dc86be9fadd114f5457ca280",
+      "planFingerprint": "f2e7a17da3aa1b5e926e07ee",
+      "receiptId": "c884e01137a1c4bcd0870ca5",
+      "finishedAt": "2026-10-15T14:41:34.181Z"
+    },
+    "archiveHash": {
+      "streaming": true,
+      "selfTests": 17,
+      "independentReview": "pass",
+      "failedAttempt": "2151356408-byte archive exceeded the Node single-buffer limit before upload; exact streamed hashing repaired the prerequisite"
     }
   },
   "remaining": [
-    "full537 build",
-    "staging",
-    "required exact-SHA checks",
+    "normal main publication",
+    "required exact-SHA hosted checks",
     "confirmed full production and readback",
     "restore publishers"
   ],
-  "rollback": "Previous full production candidate from api/deploy-currency.json; normal re-promotion of prior source. Staging archive retains a timestamped rollback."
+  "rollback": "Previous full production candidate from api/deploy-currency.json; normal re-promotion of prior source. Staging archive retains a timestamped rollback.",
+  "staging": {
+    "candidate": "42797e675248369a1107ddadf4c07b9bee5d464f",
+    "receiptId": "f24b5a11e4e187181adf8005",
+    "criticalLeaves": 65,
+    "criticalPassed": 65,
+    "ceremony": "passed",
+    "steps": 11,
+    "rollback": "/opt/studio/staging/website/.rollback/20261015144207"
+  }
 }
