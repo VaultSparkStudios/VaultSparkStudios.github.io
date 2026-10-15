@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-15 (Session 380 closeout) -->
-<!-- semantic-freshness: hash=47d1a4cb71ac6cea next=381 silSession=380 silScore=933 handoff=380 tests=- -->
+<!-- generated-at: 2026-10-15 (Session 381 closeout) -->
+<!-- semantic-freshness: hash=96783529afac137e next=382 silSession=381 silScore=933 handoff=381 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 380 closeout · 2026-10-15.
+> **Fast-boot brief** — generated at Session 381 closeout · 2026-10-15.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 381 · 2026-10-15 · BUILDER MODE                         ║
+║  Session 382 · 2026-10-15 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S380) - WHAT SHIPPED ══════════════════════════╗
-║  S380 complete: Playwright collects browser tests without loadi  ║
+╔══ LAST SESSION (S381) - WHAT SHIPPED ══════════════════════════╗
+║  S381 binds browser release checks to their selected candidate.  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,13 +36,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · live-production · arch=— · top-axis=—       ║
+║  Profile · website · S1 · arch=— · top-axis=—                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    933/1000   ██████████████████████░░   93%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
+║    SIL v3.0  ·  Avg3: 933  ·  Velocity 1→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -61,14 +61,14 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 380 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 381 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    537/537 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -79,16 +79,16 @@
 ║  ⚠  Context age   11d                                            ║
 ║  ✓  IGNIS         46897 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▁▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▁▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.179  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓4 vs current 933)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 9.8 over last 10 forecasts                     ║
+║  Calibration: MAE 7.2 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
+║   97  [VERIFY]       Classify the remaining broad E2E failures   ║
+║        Classify the remaining broad E2E failures against the ca  ║
+║                                                                  ║
+║   96  [PRODUCT]      S381 release: full local check, exact stag  ║
+║        S381 release: full local check, exact staging, canonical  ║
+║                                                                  ║
+║   93  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
+║        Assess candidate-origin contracts for other browser API   ║
+║                                                                  ║
+║   87  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
 ║        Evaluate the existing Node schema-lite TODO with focused  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Separate optional authenticated runtime co  ║
+║   84  [PRODUCT]      Separate optional authenticated runtime co  ║
 ║        Separate optional authenticated runtime coverage from pu  ║
-║                                                                  ║
-║   90  [PRODUCT]      Reduce staging archive overhead through th  ║
-║        Reduce staging archive overhead through the existing pro  ║
-║                                                                  ║
-║   87  [PRODUCT]      Give staging theme captures a session-spec  ║
-║        Give staging theme captures a session-specific output di  ║
-║                                                                  ║
-║   84  [PRODUCT]      Keep attribute-only interaction regression  ║
-║        Keep attribute-only interaction regressions synchronized  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 380 closeout · 2026-10-15*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 381 closeout · 2026-10-15*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

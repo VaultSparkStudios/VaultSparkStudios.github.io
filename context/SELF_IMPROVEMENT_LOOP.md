@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals):█████
-Avgs —3:932.3 |5:929.8 |10:939.1 |25:unmeasured |all:unmeasured (archived history excluded)
+Sparkline (last 5 totals): █████
+Avgs — 3:933.0 | 5:932.6 | 10:926.5 | 25:unmeasured | all:unmeasured (archived history excluded)
 History scope: latest scored entry per session in active append-only ledger.
 Velocity trend:→ | Protocol velocity:→ | Debt:↓
-Last session:2026-10-15 | Session 380 | Total: 933/1000 | Velocity: 1 | protocolVelocity: 1
+Last session:2026-10-15 | Session381 | Total:933/1000 | Velocity:1 | protocolVelocity:1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2610,3 +2610,28 @@ Diagnostic freshness enforcement exposed a foreign-project service credential an
 S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
 
 Failed and partial checks remain recorded; they never substitute for complete acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+## Session 381 — 2026-10-15 — Candidate-bound browser verification
+
+Product rubric: ten categories, 100 points each. Score held at 933; a verification repair does not establish improved reader engagement.
+
+| Category | Score |
+|---|---:|
+| Dev Health |95|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |95|
+| Process Quality |90|
+| Cross-Repo Coherence |92|
+| Security Posture |94|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |97|
+
+Total: 933/1000
+Velocity: 1
+Protocol velocity: 1
+Debt: ↓
+
+Actual-spec negative fixtures detect candidate-origin leakage. Independent review passed; full release acceptance is still open. Brainstorm: classify remaining broad E2E failures on the actual candidate and assess other browser API probe target contracts. Both are future SIL tasks on TASK_BOARD, not additional S381 outcomes. CDR reviewed: no new human creative direction. Context usage unmeasured.

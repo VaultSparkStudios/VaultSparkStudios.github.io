@@ -1,0 +1,200 @@
+{
+  "session": 381,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S381 full supported-release arc and authorized direct-main production deployment. Repair verified candidate-origin leakage without UI, auth or baseline policy changes.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "audience": "public-live",
+    "health": "yellow",
+    "mode": "supported-release",
+    "stageSource": "canonical registry",
+    "statusSource": "context/PROJECT_STATUS.json"
+  },
+  "axes": {
+    "ux": 2,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "baseline": "S381 doctor15/17 with2advisories and0blocking; canon0ABSOLUTE gaps, existing identity and terminology exceptions. Prior S380 optional E2E55failures are diagnostic, not S381 acceptance.",
+    "source": "351119f3e3",
+    "reuse": "Existing actual-spec temporary fixture pattern, Playwright and loopback HTTP server. Existing workflow-target checker only covers declared routes, not browser target selection; no package or service needed."
+  },
+  "candidates": [
+    [
+      "feature-depth",
+      "Candidate proof coverage",
+      "Select origin binding: existing checks can inspect the wrong release."
+    ],
+    [
+      "feature-depth",
+      "More progression detail",
+      "No verified member regression; economy changes remain separately scoped."
+    ],
+    [
+      "new-features",
+      "Novel release lens",
+      "Existing receipts can express candidate association without a new public interface."
+    ],
+    [
+      "new-features",
+      "Novel snapshot origin badge",
+      "Useful concept but no need for new UI to fix runner routing."
+    ],
+    [
+      "ux",
+      "Novel navigation health overlay",
+      "No reader-facing defect established; prove candidate navigation first."
+    ],
+    [
+      "ux",
+      "Redesign theme picker",
+      "Existing parity contract; no fresh defect."
+    ],
+    [
+      "feedback",
+      "Improve support receipt detail",
+      "No fresh failed support journey established."
+    ],
+    [
+      "feedback",
+      "Candidate-specific regression evidence",
+      "Select negative fixture that distinguishes candidate404 from healthy production."
+    ],
+    [
+      "gamification",
+      "Add milestones",
+      "No authorization to change progression policy."
+    ],
+    [
+      "gamification",
+      "Add streaks",
+      "No proven failure or retention evidence."
+    ],
+    [
+      "ai",
+      "Add inferred release recommendations",
+      "Deterministic origin checks are adequate; no paid inference."
+    ],
+    [
+      "ai",
+      "Automate visual approval",
+      "Existing inspected receipts; approval cannot be inferred from screenshot existence."
+    ],
+    [
+      "security",
+      "Revise identity flow",
+      "Existing held provider acceptance remains distinct; no trust-policy change authorized."
+    ],
+    [
+      "security",
+      "History purge",
+      "Destructive history rewrite outside routine arc authorization."
+    ],
+    [
+      "speed",
+      "Bind browser requests to candidate",
+      "Select proven navigation and visual origin leakage."
+    ],
+    [
+      "speed",
+      "Reduce staging archive",
+      "Existing stream hashing works; independent optimization not needed."
+    ],
+    [
+      "token-cost",
+      "Cache audits",
+      "No new token measurement available; avoid speculative cache change."
+    ],
+    [
+      "token-cost",
+      "Shard origin verification",
+      "Small focused regression is sufficient; no new orchestrator."
+    ]
+  ],
+  "items": [
+    {
+      "id": 1,
+      "slug": "candidate-browser-origin",
+      "title": "Bind browser release checks to their selected candidate",
+      "tier": "🔥",
+      "axis": "speed",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1.5,
+      "priority": 17.71,
+      "why": "The prior hosted run records navigation requests to production although BASE_URL selects the local candidate. Visual spec and PR workflow also bypass the candidate.",
+      "recipe": "Resolve navigation checks against the selected page origin, use configured Playwright baseURL for visual tests unless VR_BASE_URL explicitly overrides it, and make PR visual workflow audit its local candidate. Exercise actual specs against two isolated loopback origins, including a broken candidate with a healthy decoy, without changing committed baselines or UI.",
+      "selectedDepth": "L2",
+      "status": "pending",
+      "acceptance": "Actual nav callback passes on healthy candidate and fails on candidate404 even with a healthy decoy. Actual visual spec visits configured baseURL and preserves explicit VR override. Mutation restoring old expressions is detected; workflow PR defaults local preview. Focused tests, full build and required exact-candidate checks, current staging and production readback pass.",
+      "premises": [
+        {
+          "claim": "Nav coverage explicitly resolves candidate links against production",
+          "adapter": "file-content",
+          "target": "tests/nav-dropdown-coverage.spec.js",
+          "pattern": "new URL(href, 'https://vaultsparkstudios.com')",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Visual fallback ignores configured BASE_URL",
+          "adapter": "file-content",
+          "target": "tests/visual-regression.spec.js",
+          "pattern": "process.env.VR_BASE_URL || 'https://vaultsparkstudios.com'",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "PR snapshot workflow defaults to production",
+          "adapter": "file-content",
+          "target": ".github/workflows/visual-regression.yml",
+          "pattern": "github.event.inputs.base_url || 'https://vaultsparkstudios.com'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Repair nav and visual spec origin fallback."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Resolve navigation checks against the selected page origin, use configured Playwright baseURL for visual tests unless VR_BASE_URL explicitly overrides it, and make PR visual workflow audit its local candidate. Exercise actual specs against two isolated loopback origins, including a broken candidate with a healthy decoy, without changing committed baselines or UI."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Broader historical E2E triage is a separate supported-release outcome after these target-association checks."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-15T17:21:31.564Z",
+          "status": "pending",
+          "note": "Focused4/4 origin contracts and real local nav1 passed; independent reviews pass. Full attempts exposed status-derived stale projections and missing S381 brief alias; canonical producers/alias repaired. Diagnostic264-537 passed after necessary preconnect-scope fix: original operator report preserved, public-page failure regression1/1 pass. Full final acceptance still required."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "studio-market",
+      "reason": "No market artifact or installed studio-market skill; market positioning is not a dependency of this verified reliability repair."
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "priority": 17.71,
+    "top3": [
+      "candidate-browser-origin"
+    ]
+  },
+  "innovationReserve": [],
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-15T17:08:28.660Z"
+}

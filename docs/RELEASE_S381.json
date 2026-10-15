@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "session": 381,
+  "accepted": false,
+  "scope": "Candidate-bound navigation and visual verification; PR snapshot workflow uses checked-out local preview. No public runtime or identity change.",
+  "validation": {
+    "independentReview": "pass",
+    "realLocalNav": 1,
+    "visualQA": "changed-files check passed; no UI/UX files changed",
+    "canonAbsoluteGaps": 0,
+    "fullBuild": {
+      "passed": 537,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "127f2590217445ba5ab66fdb",
+      "receiptId": "349099ce3a025c5b4bd08668",
+      "finishedAt": "2026-10-15T17:25:52.314Z",
+      "note": "Complete run before dependency-free readiness polling edit; closing exact source full check remains required."
+    },
+    "originFixtureTests": 4,
+    "preconnectFixtureTests": 1
+  },
+  "remaining": [
+    "full build",
+    "staging",
+    "required exact-SHA hosted checks",
+    "full production and readback",
+    "publisher restoration"
+  ],
+  "rollback": "Previous production source from api/deploy-currency.json can be normally re-promoted. Staging deployment retains timestamped rollback."
+}

@@ -1,3 +1,17 @@
+## Where We Left Off (Session 381) — release acceptance in progress
+
+Session Intent: full fresh /arc, direct main commit/push and full deployment authorized. Native goal 01a14085-61d3-7452-b03f-28f285198b91 binds this S381 invocation. Startup and fresh nine-axis audit selected candidate-browser-origin. Implementation has passed focused verification and independent review; full release acceptance remains pending.
+
+S381 binds browser release checks to their selected candidate. Navigation probes use the loaded page origin and skip protocol-relative external links. Visual snapshots use the configured Playwright baseURL unless an explicit VR_BASE_URL overrides it. Pull-request visual checks start and audit the checked-out local preview; manual deployed-origin capture remains available. Actual-spec loopback regressions distinguish a broken candidate from a healthy decoy and detect the original target mutations. Local real-site navigation passes; independent review passed. Full build, exact staging, hosted checks and production acceptance remain open in docs/RELEASE_S381.json.
+
+Wave 1 complete. Wave 2 focused implementation verified, full checks open. Wave 3 staging/closeout/push/production open. Restore five original publisher states from ignored .cache/s381-publishers.json after acceptance. Preserve operator caches and captures. CDR reviewed: no new human creative direction. Context usage remains unmeasured.
+
+## In progress — Session 381
+
+Session Intent: full fresh /arc; direct main commit/push and full deployment authorized. Native goal 01a14085-61d3-7452-b03f-28f285198b91 binds S381. Startup and fresh audit complete; implement candidate-browser-origin then verify staging, closeout, required exact candidate checks and production. Existing operator caches preserved. No new creative direction.
+
+Wave1 startup/audit complete; Wave2 implementation open; Wave3 staging/closeout/push/deploy open. Audit: docs/AUDIT_2026-10-15-S381.json.
+
 ## Where We Left Off (Session 380) — verified production
 
 Session Intent: full fresh /arc, direct main commit/push and full deployment authorized. Native goal 01a13fb9-0568-7961-ad6a-79bc74aabb86 binds this completed S380 invocation.

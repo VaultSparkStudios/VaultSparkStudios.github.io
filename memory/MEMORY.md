@@ -1,3 +1,4 @@
+- [S381 candidate-bound browser verification](S381.md): actual-source negative fixtures and explicit overrides.
 <!-- Current S380: browser discovery; release evidence docs/RELEASE_S380.json. -->
 - [S380 browser discovery](S380.md): mandatory collection and runner isolation.
 

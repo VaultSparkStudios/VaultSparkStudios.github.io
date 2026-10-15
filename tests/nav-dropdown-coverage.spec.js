@@ -18,9 +18,8 @@ test.describe('Header nav dropdown coverage (S136)', () => {
 
     const failures = [];
     for (const href of hrefs) {
-      if (!href.startsWith('/')) continue;     // skip external
-      if (href.startsWith('#')) continue;       // skip anchors
-      const url = new URL(href, 'https://vaultsparkstudios.com').toString();
+      if (!href.startsWith('/') || href.startsWith('//')) continue; // skip external
+      const url = new URL(href, page.url()).toString();
       try {
         const res = await request.get(url, { timeout: 15000 });
         // 3xx is fine (redirects to canonical, e.g., /investor/* → /investor-portal/).

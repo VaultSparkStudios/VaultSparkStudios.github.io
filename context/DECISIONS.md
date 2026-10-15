@@ -2216,3 +2216,17 @@ The clean staging archive reached 2,151,356,408 bytes and exceeded Node's single
 ## D-S380.6 — Keep accessible names aligned with visible labels
 
 The required hosted accessibility gate rejected real label-content-name mismatches. Use the brand link's natural text instead of an override that omits its visible tagline. Include “Join The Discord”, “Mind-blown” and “Hmm” in the corresponding accessible names. Apply the news generator in write mode, then reconcile shell references and integrity attributes with the existing shell producer before regenerating news proof hashes. Preserve the visible layout, auth holds and all accessibility assertions. Capture and inspect before/after in every theme at desktop and mobile widths; do not treat held authenticated portal checks as public accessibility failures or passes.
+
+
+## D-S381.1 — Verify the selected browser candidate (2026-10-15)
+
+Browser navigation probes resolve internal links against the loaded candidate page; protocol-relative external destinations are skipped. Visual snapshots inherit configured Playwright baseURL unless VR_BASE_URL explicitly chooses a different deployment. Pull-request visual workflow starts the checked-out local preview; manual deployed-origin capture remains intentional. Temporary actual-spec fixtures prove a candidate404 fails despite a healthy decoy and demonstrate old-origin false passes. Existing committed baselines and pixel tolerances are unchanged.
+
+## D-S381.2 — Existing release exceptions remain explicit (2026-10-15)
+
+Routine non-identity promotion follows RELEASE_PROMOTION_PROTOCOL. Existing CANON-045 provider acceptance and D-S374.3 terminology remain explicit STRONG gaps; startup found zero ABSOLUTE gaps. Historic optional E2E failures are diagnostic, not proven fixed by origin routing. No trust policy, rights, pricing, lifecycle or identity changes. CANON-053 changed-files check passes with no UI changes. Local startup sync/maintenance/checklist helpers are absent; available canonical tools were used without claiming missing commands ran. Canon reconciliation succeeded against this project and official frontier evidence is current.
+
+
+## D-S381.3 — Preconnect scope excludes operator artifacts (2026-10-15)
+
+The full diagnostic gate rejected an original untracked HTML report under .cache. Exclude .cache, .ops-cache and output directories from public-page preconnect enforcement, preserving those artifacts in place. A temporary fixture proves reports are ignored and a public index missing its required Cloudflare preconnect still fails. Independent review passed.

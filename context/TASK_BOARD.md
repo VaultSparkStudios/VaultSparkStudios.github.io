@@ -1,3 +1,10 @@
+## S381 — selected candidate verification
+
+- [x] Repair navigation and visual origin selection; preserve manual override and verify actual-source regressions.
+- [ ] S381 release: full local check, exact staging, canonical closeout, required hosted checks and production readback.
+- [ ] [SIL][S381] Classify the remaining broad E2E failures against the candidate now that target association is corrected; do not refresh visual baselines to conceal differences.
+- [ ] [SIL][S381] Assess candidate-origin contracts for other browser API probes in a future bounded audit; keep explicit external integration checks distinct.
+
 ## S380 — browser discovery release
 
 - [x] Restore three-project browser collection and add a mandatory authentication-independent CI gate; independent review pass.
