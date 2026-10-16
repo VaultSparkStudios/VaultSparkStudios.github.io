@@ -1,3 +1,13 @@
+## Where We Left Off (Session 386) — complete
+
+- Shipped: 3 fixes in 1 group — Desk art autopilot (reviewer brief parity, daily critique-guided re-roll, case-insensitive worktree identity).
+- Tests: autopilot 47/47 · generator 60/60 · 3 negative mutations detected.
+- Deploy: pending verification at write-back time; see the release note appended below.
+
+S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
+
+Session Intent: /arc with founder-authorized direct push to main and full deploy. All waves complete at write-back; CDR reviewed — no new human creative direction. Next: watch the 23:45Z/07:45Z art runs and the 09:17Z CI Health Monitor.
+
 ## Where We Left Off (Session 385) — complete
 
 S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.

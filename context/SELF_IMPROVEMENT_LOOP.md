@@ -9,9 +9,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last5 totals): ▇▇▇▇▇
-Avgs —3:933.0 |5:933.0 |10:932.2 |25:948.5 |all:unmeasured (archived history excluded)
+Avgs —3:933.7 |5:933.4 |10:933.0 |25:946.5 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session:2026-10-16 |Session385 |Total:933/1000 |Velocity:2 |protocolVelocity:2
+Last session:2026-10-16 |Session386 |Total:935/1000 |Velocity:3 |protocolVelocity:2
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2791,3 +2791,25 @@ S385 final implementation evidence:15/15 focused cases across three engines; thr
 
 S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
 All two selected outcomes shipped; all three waves complete. Same S385 score, no additional scored session.
+
+
+## Session 386 — 2026-10-16 — Desk art review contract
+
+S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
+
+Product rubric: Dev Health95; Creative Alignment94; Momentum90; Engagement95; Process Quality91; Cross-Repo Coherence92; Security Posture94; Ecosystem Integration91; Capital Efficiency95; Automation Coverage98. Total:935/1000 (+2). A daily-red health signal traced to a generator/reviewer contract mismatch and an unrecoverable re-roll dead end, both fixed at the root with mutation-checked tests. Velocity:3, protocolVelocity:2.
+
+Brainstorm: an automated judge must see exactly what the producer was asked to make; a retry cap without a recovery path converts a transient failure into a permanent one. Commitments: confirm the next art runs and CI Health Monitor; classify disabled-workflow dispatches as deferred.
+
+| Category | Score |
+|---|---|
+| devHealth | 95 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 95 |
+| processQuality | 91 |
+| crossRepoCoherence | 92 |
+| securityPosture | 94 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 98 |

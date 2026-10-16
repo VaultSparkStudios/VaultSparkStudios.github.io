@@ -1,7 +1,13 @@
+## S386 — Desk art review contract
+
+- [x] Art reviewer gets the generator brief; daily critique re-roll; re-cased worktree accepted. 47/47+60/60; dry run passes 3/3.
+- [ ] [SIL][S386] Confirm next art runs publish them and CI Health Monitor turns green.
+- [ ] [SIL][S386] Treat disabled-workflow 422 as deferred; diagnose the idle 30-min ingest scan (10-16 19:45Z).
+
 ## S385 — public data contracts
 
-- [x] Fresh full startup and nine-axis audit; community earned-rank and ecosystem coverage contracts implemented,15/15 browser cases and three negative mutations verified; hashed directory delivery and13 shell unit cases verified. Actual blank-handle directory defect fixed;112 rendered captures and56 scoped contrast samples verified.
-S385 release/closeout acceptance: docs/RELEASE_S385.json is authoritative; completion requires accepted:true and no remaining gates.
+- [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed. Record: docs/AUDIT_2026-10-16-S385.json.
+S385 release acceptance: docs/RELEASE_S385.json (verified).
 - [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
 - [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
 

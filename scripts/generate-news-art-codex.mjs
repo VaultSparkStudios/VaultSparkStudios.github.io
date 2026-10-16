@@ -477,6 +477,19 @@ function findProducedPng(dir, preferredName = 'art.png') {
   return pngs[0] || null;
 }
 
+/**
+ * S386: the autopilot's last verdict for this story/kind (staged review.json).
+ * When it failed, the re-roll prompt names what the reviewer rejected, so a
+ * re-roll is not a blind repeat of the prompt that already failed.
+ */
+export function rejectionNote(itemDir, kind) {
+  let rec;
+  try { rec = JSON.parse(fs.readFileSync(path.join(itemDir, 'review.json'), 'utf8'))[kind === 'satire' ? 'satire' : 'banner']; } catch { return ''; }
+  if (!rec || rec.pass !== false || !Array.isArray(rec.reasons)) return '';
+  const reasons = rec.reasons.map((r) => clean(r, 240)).filter(Boolean).slice(0, 4);
+  return reasons.length ? `A previous render for this story was rejected by the reviewer. Avoid repeating: ${reasons.join('; ')}` : '';
+}
+
 /** Generate (or resume) one story's staged illustration. */
 export async function generateOne(target, {
   stagingDir = DEFAULT_STAGING_DIR,
@@ -504,7 +517,9 @@ export async function generateOne(target, {
     fs.renameSync(staged, path.join(itemDir, `${files.invalid}-${now().getTime()}.png`));
   }
   const persona = satire ? (target.persona || PERSONAS.find((p) => p.id === target.story?.memeLine?.personaId)) : null;
-  const prompt = satire ? buildSatirePrompt(target.story, persona) : buildPrompt(target.story);
+  const base = satire ? buildSatirePrompt(target.story, persona) : buildPrompt(target.story);
+  const note = rejectionNote(itemDir, kind);
+  const prompt = note ? base.replace(/\nAfter saving, reply with only the filename\.\n$/, `\n${note}\nAfter saving, reply with only the filename.\n`) : base;
   fs.writeFileSync(path.join(itemDir, files.prompt), prompt);
   const errors = [];
   for (let attempt = 1; attempt <= retries + 1; attempt += 1) {
@@ -768,6 +783,18 @@ async function selfTest() {
     t('timeout is recorded as a failure', timeout.status === 'failed' && /timeout/.test(timeout.errors[0]));
     const flat = await generateOne(target, { stagingDir: path.join(tmp, 'staging-5'), workRoot, retries: 0, run: writer(fallbackPng) });
     t('a low-entropy (flat/diagram) output is rejected', flat.status === 'failed' && /entropy/.test(flat.errors[0]));
+
+    /* S386: a re-roll carries the reviewer's last rejection into the prompt. */
+    const rejectedStaging = path.join(tmp, 'staging-6');
+    fs.mkdirSync(path.join(rejectedStaging, target.id), { recursive: true });
+    fs.writeFileSync(path.join(rejectedStaging, target.id, 'review.json'), JSON.stringify({ banner: { pass: false, reasons: ['The clock face contains numeral-like markings.', 'check failed: noText'] }, satire: { pass: true, reasons: [] } }));
+    const rerollCalls = [];
+    const rerolled = await generateOne(target, { stagingDir: rejectedStaging, workRoot, force: true, run: (cmd, args, o) => { rerollCalls.push(o.input); fs.writeFileSync(path.join(o.cwd, 'art.png'), realBuffer); return { status: 0, stdout: '', stderr: '' }; } });
+    t('a re-roll after a rejection names the rejected reasons before the closing instruction',
+      rerolled.status === 'generated' && /Avoid repeating: The clock face contains numeral-like markings\.; check failed: noText\nAfter saving, reply with only the filename\.\n$/.test(rerollCalls[0])
+      && rerollCalls[0].startsWith(buildPrompt(target.story).replace(/After saving, reply with only the filename\.\n$/, '')));
+    t('meta hashes the prompt actually sent', rerolled.promptSha256 === crypto.createHash('sha256').update(rerollCalls[0]).digest('hex'));
+    t('a passed verdict or no verdict adds nothing', rejectionNote(path.join(rejectedStaging, target.id), 'satire') === '' && rejectionNote(path.join(tmp, 'nowhere'), 'banner') === '');
 
     ensureSelfIgnoringDir(stagingDir);
     t('staging dir is self-ignoring (.gitignore "*")', fs.readFileSync(path.join(stagingDir, '.gitignore'), 'utf8').includes('\n*\n'));

@@ -1606,3 +1606,8 @@ S385 final implementation evidence:15/15 focused cases across three engines; thr
 
 S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
 All two selected outcomes shipped; all three waves complete. Same S385 score, no additional scored session.
+
+
+### S386 — Desk art reviewer truth (2026-10-16)
+
+The art-currency failure was not missing art generation: images existed and were rejected by a reviewer given a narrower story than the generator. Reviewer input now matches the generator brief. The two 2026-10-16 "release dispatch failed" lines were a temporarily disabled workflow; the art reached production through a later full release (served bytes verified identical).

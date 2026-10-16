@@ -1,6 +1,6 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
-║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   12d                                            ║
 ║  ✓  IGNIS         46461 FORGE  ·  -1d old                        ║

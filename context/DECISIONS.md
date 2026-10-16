@@ -2314,3 +2314,11 @@ The canonical wipe guard reports exactly one size-based finding: docs/visual-qa/
 
 Rendered light-theme samples exposed low rank/avatar contrast. Use existing primary text tokens, retaining rank-colored decoration.112 before/after captures cover default and three search states in all7 themes and both viewports;56 measured text/background samples pass scoped thresholds. The final replacement plan and visual index retain their exact S384 predecessors; the documented wipe override is limited to these two size-based findings after exact archive/hash checks. No append-only history or gate is bypassed.
 
+
+## D-S386.1 — The Desk art reviewer judges against the generator's brief (2026-10-16)
+
+CI Health Monitor failed 2026-10-15 and 2026-10-16 on `check-desk-art-currency`: one banner on placeholder art past 48h and three stories without satire cartoons. The autopilot reviewer received only headline and scene, while the generator draws from sourced facts, the satire target/setup/payoff and the caption. It therefore rejected faithful renders on every run (a UK setting stated only in the facts; a gag that draws the supplied payoff). `storyBrief()` now gives the reviewer up to four fact lines, the joke, caption and any `satireDirection`, all fenced as data. Country and punchline checks name those sources. No strict check, likeness rule or injection fence is relaxed.
+
+## D-S386.2 — Exhausted art re-rolls get one critique-guided attempt per UTC day (2026-10-16)
+
+After two in-run re-rolls the staged image was re-reviewed unchanged every run, so a stuck story could never recover without an operator. An exhausted, still-failing story/kind now gets at most one re-roll per UTC day, recorded as `dailyReroll` in the staged review record. The generator appends the last rejection reasons (cleaned, at most four, 240 characters each) before the closing instruction. Meta hashes the prompt actually sent. Banner and satire base prompts are unchanged.
