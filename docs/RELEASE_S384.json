@@ -58,7 +58,7 @@
     "review": "Independent review_s384 pass, zero findings",
     "canonAbsoluteGaps": 0,
     "visualQA": {
-      "receipt": "docs/visual-qa/LATEST.json",
+      "receipt": "docs/visual-qa/S384_SITEMAP.json",
       "captured": 28,
       "reviewed": 28,
       "themes": 7,
@@ -12684,6 +12684,33 @@
       "openRowsPreserved": 114,
       "archiveShard": "context/archive/TASK_BOARD_ARCHIVE.md.shard3.md",
       "lossless": true
+    },
+    "incomingArtVisualQA": {
+      "receipt": "docs/visual-qa/LATEST.json",
+      "captures": 84,
+      "reviewed": 84,
+      "themes": 7,
+      "widths": [
+        1366,
+        390
+      ],
+      "scope": "Reviewed article main/satire and label/caption regions, full news leadcard, and representative shared relatedcard in all84 representations; not every pixel of all137 articles.",
+      "findings": [
+        {
+          "severity": "advisory",
+          "page": "/news/",
+          "state": "desktop lead-card cover crop",
+          "finding": "Fixed cover thumbnail crops decorative embedded banner text/date/footer; authoritative DOM title, metadata and full article artwork remain readable",
+          "blocking": false,
+          "disposition": "Accepted thumbnail presentation limitation; preserve approved artwork and existing CSS"
+        }
+      ],
+      "captureRepair": {
+        "at": "2026-10-16T15:40:58.511Z",
+        "finding": "Full-page screenshot left content-visibility:auto related-card pixels unpainted despite loaded images",
+        "fix": "Scrolled each real baseline/after card into view, then captured entire actual card element; initial screenshots retained in ignored cache",
+        "recaptured": 28
+      }
     }
   },
   "remaining": [
@@ -12695,5 +12722,22 @@
     "publisher restoration",
     "final closeout"
   ],
-  "rollback": "Previous confirmed full production source6f80ad39edcd2548823eb73428e65bd515fe8870; normal pinned workflow promotion after staging, no force-push. Staging deploy preserves a timestamped predecessor."
+  "rollback": "Previous confirmed full production source6f80ad39edcd2548823eb73428e65bd515fe8870; normal pinned workflow promotion after staging, no force-push. Staging deploy preserves a timestamped predecessor.",
+  "integration": {
+    "state": "in-progress",
+    "preservedRemote": "b02faf7b2044af8812f6c1016a05f4da58ef4ed0",
+    "merge": "86df4389c4",
+    "scope": "Four prior routine Desk-art commits; no runtime/auth/workflow/generator source change; preserve incoming art/story/review inputs, regenerate three overlapping derived outputs.",
+    "artApproval": {
+      "source": "Existing hash-bound routine review; banner and satire pass all named checks; normalization reproduces remote published hashes. Independent read-only audit_evidence review.",
+      "semanticFlag": "semanticVerified:false is intentional ingestion default; separate promotionEligible flag is not a rejection of this approved routine.",
+      "renderedIntegration": "Independent84-representation review completed; no blocking visual defects; one explicit nonblocking cover-crop finding."
+    },
+    "supersededCandidate": {
+      "sha": "f8ca8db75337eee45839f2eae55829023704ef53",
+      "sourceEquivalence": true,
+      "criticalLeaves": 65,
+      "ceremony": "rejected10/11: Firefox attention navigation NS_ERROR_NET_ERROR_RESPONSE caused one flaky test; no passing ceremony claimed. Combined candidate must pass a fresh ceremony."
+    }
+  }
 }
