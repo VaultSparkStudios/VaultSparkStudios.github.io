@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-16 (Session 383 closeout) -->
-<!-- semantic-freshness: hash=e452eeb7989e539f next=384 silSession=383 silScore=933 handoff=383 tests=- -->
+<!-- generated-at: 2026-10-16 (Session 384 closeout) -->
+<!-- semantic-freshness: hash=ebf3ccefad3e02cb next=385 silSession=384 silScore=933 handoff=384 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 383 closeout · 2026-10-16.
+> **Fast-boot brief** — generated at Session 384 closeout · 2026-10-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 384 · 2026-10-16 · BUILDER MODE                         ║
+║  Session 385 · 2026-10-16 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S383) - WHAT SHIPPED ══════════════════════════╗
-║  S383 complete: three reproduced homepage acceptance failures n  ║
+╔══ LAST SESSION (S384) - WHAT SHIPPED ══════════════════════════╗
+║  S384: six returning-visitor cases pass across three browsers (  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -36,13 +36,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · live-production · arch=— · top-axis=—       ║
+║  Profile · website · S1 · arch=— · top-axis=—                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    933/1000   ██████████████████████░░   93%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -61,34 +61,34 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 383 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 384 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    537/537 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   12d                                            ║
 ║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.179  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  1→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  2→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓4 vs current 933)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 4.2 over last 10 forecasts                     ║
+║  Calibration: MAE 3.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Reproduce remaining optional behavioral di  ║
-║        Reproduce remaining optional behavioral diagnostics agai  ║
+║  100  [COHESION]     Reproduce remaining stats/Oracle/community  ║
+║        Reproduce remaining stats/Oracle/community contract fail  ║
 ║                                                                  ║
 ║   93  [PRODUCT]      Inspect original pixel differences by rout  ║
 ║        Inspect original pixel differences by route/theme/viewpo  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Investigate the eight unresolved behavior   ║
+║   90  [PRODUCT]      Reproduce remaining optional behavioral di  ║
+║        Reproduce remaining optional behavioral diagnostics agai  ║
+║                                                                  ║
+║   87  [PRODUCT]      Investigate the eight unresolved behavior   ║
 ║        Investigate the eight unresolved behavior assertions fro  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Inspect24 pixel differences against exact   ║
+║   84  [PRODUCT]      Inspect24 pixel differences against exact   ║
 ║        Inspect24 pixel differences against exact route/theme/vi  ║
-║                                                                  ║
-║   84  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
-║        Assess candidate-origin contracts for other browser API   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 383 closeout · 2026-10-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 384 closeout · 2026-10-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

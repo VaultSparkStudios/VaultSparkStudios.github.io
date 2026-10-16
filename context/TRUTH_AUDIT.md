@@ -1576,3 +1576,13 @@ Closing follow-through verified (2026-10-16T06:43:06.552Z): candidate 6f80ad39ed
 
 Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
 Same S383 score933/1000; no new scored session.
+
+
+### S384 — return-visit and diagnostic evidence (2026-10-16)
+
+S384 restores returning-visitor acceptance to the shipped attention contract and retains optional browser diagnostic reports. Six cases pass across Chromium, Firefox and WebKit (18/18); homepage duplication, lost previous-baseline handoff and blocked script loading are independently detected by negative mutations. Required CI always runs the digest suite without credentials. The broad job now retains configured JSON/HTML reports and failure screenshots; a deliberately failing local run produced all three artifact types. No runtime or screenshot-baseline change. Independent review passed with zero findings. Current candidate staging, full local checks, hosted artifact verification and production acceptance remain pending in docs/RELEASE_S384.json.
+
+The broad prior failures and pixel baselines remain unresolved. The new binding associates this goal only with S384; prior releases do not establish completion. Existing identity, field-vitals and terminology limitations remain separate from this nonidentity promotion.
+
+
+S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.

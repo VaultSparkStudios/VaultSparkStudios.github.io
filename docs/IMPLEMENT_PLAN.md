@@ -1,17 +1,27 @@
-# S383 implementation plan
+# S384 implementation plan
 
-Native goal 01a142dd-f958-7631-864d-a7193b851a4e, bound session383.
+Native goal 01a144ed-f74b-74b3-8146-cbf94d804898 binds this arc. Audit docs/AUDIT_2026-10-16-S384.json. Stage S1, SPARKED/public-live, supported-release stabilization.
 
-Wave1 startup and fresh nine-axis audit complete.
-Wave2 implement L2: Exercise the actual interaction-triggered milestone loader, assert the published proof/Vault Door/membership ordering, and route a deterministic public-intelligence response to verify exact score and feed-grade hydration through the production scripts. Run the whole ambient engagement suite unconditionally in required CI. Prove blocked milestone loading and corrupted intelligence are detected. Preserve all runtime and visual baselines.
-Wave3 canonical closeout, staging acceptance, exact-candidate hosted checks, main push and full production readback.
+- Wave1: startup and fresh nine-axis audit complete.
+- Wave2: L2 returning-visitor contract and browser diagnostic artifacts. Verify three-browser matrix, negative mutations and independent diff review.
+- Wave3: full local acceptance, canonical closeout, exact candidate staging/hosted checks, direct main push, full Pages deployment and production readback.
 
-Done condition: All seven ambient engagement tests pass; exact score/grade assertions and milestone loading fail under targeted mutations; independent review and required exact-candidate release checks pass. Staging and full production verified.
+## 1. Verify returning-visitor momentum without duplicating the homepage signal
 
-All three waves complete. S383 complete: three reproduced homepage acceptance failures now exercise the actual milestone loader, proof/Vault Door/membership ordering and network-bound public intelligence. All seven engagement cases run unconditionally in required CI. All21 cases across Chromium, Firefox and WebKit passed; blocked milestone loading and a corrupted intelligence score were detected by negative tests. The combined score/grade mutation proves score detection, not an independent grade-only mutation. No runtime or visual-baseline change. Local validation passed537/537 and mobile215/215. Candidate d4f69cca9327 passed the three required exact-SHA hosted checks and full Pages deployment 38856553984; stagingcritical65/65, ceremony11/11 and complete immutable/primary production readback verified. Exact-candidate optional broad diagnostics separately report589 passed,37 failed,3 flaky and60 skipped; these are not claimed fixed. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. SIL933/1000 unchanged. Evidence: docs/RELEASE_S383.json.
+Move the positive digest fixture to /games/. Await the real ledger response before silence assertions; verify homepage suppression, previous-baseline handoff, once-per-session behavior, dismissal and failed-feed silence. Load the actual asset through a request instead of inline substitution. Add the deterministic suite to required CI.
 
+Done: All digest cases pass in Chromium, Firefox and WebKit. Mutating homepage suppression, previous-baseline handoff and actual script loading causes the corresponding tests to fail. No runtime or baseline changes.
 
-Closing follow-through verified (2026-10-16T06:08:53.136Z): candidate f51949adfe6fd4fb091fa4f29f55213e7520f92c passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38859007432. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+## 2. Retain machine-readable browser failures and screenshots in CI
 
+Use configured Playwright list/HTML/JSON reporters for the optional full browser job and always upload both playwright-report and test-results. Verify deliberately failing local browser run produces JSON, HTML and screenshot; inspect exact-candidate hosted artifact.
 
-Closing follow-through verified (2026-10-16T06:43:06.552Z): candidate 6f80ad39edcd2548823eb73428e65bd515fe8870 passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38862272871. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+Done: Failing local run yields machine-readable results, HTML and failure screenshot; hosted optional job uploads report and screenshot artifacts. Required candidate workflows pass independently.
+
+Preserve unrelated caches and prior evidence. No runtime, baseline, identity, pricing, lifecycle or membership change selected.
+
+## Observed release prerequisite: sitemap theme readability
+
+Use the existing theme-aware muted-text token for sitemap URL labels, synchronize the existing REX page11 link, then inspect real before/after captures in all seven themes at desktop1366 and mobile390. Run scoped axe color-contrast checks and preserve all runtime JavaScript and screenshot baselines.
+
+Before captures expose the light-theme defect; after captures and scoped contrast checks must pass. Per-page Lighthouse is not newly measured for this color/link-only change; existing required exact-candidate Lighthouse remains a separate check, with no page-specific performance claim.

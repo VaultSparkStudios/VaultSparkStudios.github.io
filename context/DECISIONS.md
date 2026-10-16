@@ -2259,3 +2259,24 @@ Milestones load after real reader interaction or a12-second fallback, so the bro
 ## D-S383.2 — Separate observed diagnostics from release acceptance (2026-10-16)
 
 Fresh ten-test reproduction:7pass/3fail; all three failures are in ambient engagement, while the three Desk artwork cases pass. These observations do not retroactively erase the S382 original45-failure inventory or resolve pixel diagnostics. Negative mutation proves blocked milestone loading and corrupted intelligence score are caught; the combined score/grade mutation is not a separate grade-only proof. Independent review required a documentation correction, then passed. Routine promotion follows RELEASE_PROMOTION_PROTOCOL. Current canon has zero ABSOLUTE gaps; prior CANON-045 provider acceptance and terminology exceptions retain D-S379.3/D-S374.3 justification. Local startup-sync/maintenance/checklist helpers are absent; available canonical canon sync and frontier radar succeeded, and no missing local maintenance run is claimed.
+
+
+## D-S384.1 — Keep return-visit coverage aligned with attention ownership (2026-10-16)
+
+The homepage owns an inline returning signal, so the floating digest belongs on eligible interior pages. Browser fixtures load the actual asset over its script request, await ledger consumption before asserting silence, verify previous-visit handoff and reload persistence, and retain first-visit/feed-error behavior. Six cases are unconditional required CI. Each of homepage suppression, baseline handoff and actual script loading is checked with a separate failing mutation; runtime attention, storage and membership logic are unchanged.
+
+## D-S384.2 — Preserve browser failure artifacts (2026-10-16)
+
+The optional broad workflow used list-only output while uploading the HTML report directory, producing a prior missing-artifact warning. It now honors configured list/HTML/JSON reporters and retains both report and failure-screenshot directories with always-upload semantics. Local intentional failure proves JSON, HTML and screenshot generation; exact-candidate hosted upload remains required acceptance. Existing diagnostic reds remain distinct from required release checks. CANON-045 positive provider acceptance and CANON-056 terminology gaps retain prior D-S379.3/D-S374.3 justification; zero ABSOLUTE gaps observed. Startup helpers missing locally are noted, not claimed executed. Canon sync and frontier radar passed. No new dependencies, policy, pricing, lifecycle, identity or public promise changes.
+
+
+## D-S384.3 — Bound generated release changes (2026-10-16)
+
+Complete build body and retried26-step postbuild refresh session-derived contracts. A Windows UNKNOWN file-open failure is retained as a failed first attempt; the complete retry passed without assertion changes. Twenty-six persona reserializations were proven whitespace-only and excluded with preserved copies. The sitemap adds the existing REX page11 and count118 to119; all-theme desktop/mobile before/after rendered review is required. No runtime JS/CSS source change. The canonical touched-score shim was stopped after targeting the control plane; explicit recipient-owned scoring verified this website at46731 with source-bound proof. Foreign shim output is not website evidence.
+
+
+## D-S384.4 — Repair the observed sitemap contrast defect (2026-10-16)
+
+S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.
+
+The focused LATEST visual index replaces a larger historical matrix. Prior HEAD receipt was preserved byte-for-byte at docs/visual-qa/S383_RETAINED.json; the intentional index reduction loses no evidence. Any closeout content-wipe warning for this archived index replacement is reviewed on that basis, not ignored.

@@ -1,3 +1,11 @@
+## S384 — returning-visitor reliability
+
+- [x] Fresh full startup and nine-axis audit; correct returning-visitor acceptance, require it in CI, preserve diagnostic artifact reporters/paths; 18/18 and three negative mutations verified.
+- [x] S384 observed sitemap readability prerequisite: theme-aware URL labels,28 inspected captures and all119-label contrast checks across seven themes.
+- S384 release acceptance is tracked in docs/RELEASE_S384.json and the Wave3 implementation plan.
+- [ ] [SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
+- [ ] [SIL][S384] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+
 ## S383 — homepage engagement acceptance
 
 - [x] Fresh full startup and nine-axis audit; repair three reproduced homepage checks, require the seven-test suite in CI, and verify targeted negative mutations.
@@ -22,24 +30,15 @@ Release acceptance and remaining gates: `docs/RELEASE_S381.json`. This ledger re
 
 ## S380 — browser discovery release
 
-- [x] Restore three-project browser collection and add a mandatory authentication-independent CI gate; independent review pass.
-- [x] Preserve mobile findings and receipts during discovery; actual-spec regression and independent review pass.
-- [x] Repair rank-report target binding and preserve prior evidence on failed requests; actual public read and independent review pass.
-
-S380 release follow-through: authoritative pending/completed acceptance and remaining phases are recorded in docs/RELEASE_S380.json and docs/IMPLEMENT_PLAN.md.
-
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
 - [ ] [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
 
 ## S379 — accepted implementation and release
 
-- [x] Exact target registry discovery and unique declared project identity; profile13/13 and independent review passed after fixing prefix/suffix attribution.
-- [x] Bounded staging archive timeout; actual clean archive/deployment accepted, self-tests15/15.
-- [x] First full production acceptance: see docs/RELEASE_S379.json. Closing ceremony wave status remains in docs/IMPLEMENT_PLAN.md until final publication is verified.
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
 - [ ] [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
-
-
 
 ## S378 arc — Spark clears reader controls
 

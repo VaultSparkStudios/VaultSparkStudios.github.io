@@ -1,0 +1,416 @@
+{
+  "session": 384,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S384 full arc; supported-release browser reliability. Direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status",
+    "audience": "public-live"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "source": "0c12a26e5900",
+    "baseline": "Local digest 1failed/2passed. Canon zero ABSOLUTE gaps; existing CANON-045/056 gaps remain explicitly justified. Prior diagnostic failure source reviewed independently.",
+    "reuse": "Studio Ops INTERNAL_TOOLS registry, existing preview, Playwright reporters, release ceremony and exact-candidate checker. No new dependency.",
+    "market": "No docs/market/MARKET.json; no market kit skill installed. Market research retained as separate unselected candidate, no competitor claims."
+  },
+  "candidates": [
+    [
+      "feature-depth",
+      "More search evidence",
+      "Existing Spark is covered; no new defect."
+    ],
+    [
+      "feature-depth",
+      "New member ranks",
+      "No progression defect demonstrated."
+    ],
+    [
+      "new-features",
+      "Novel failed-assertion lineage explorer",
+      "Existing Playwright report provides source and attachments; reuse it."
+    ],
+    [
+      "new-features",
+      "Novel session-baseline replay",
+      "Selected through the existing browser fixture; no new runtime tooling."
+    ],
+    [
+      "ux",
+      "Returning digest acceptance",
+      "Selected: actual reproduced stale assertion."
+    ],
+    [
+      "ux",
+      "New homepage notification",
+      "Rejected: duplicates intentional inline signal."
+    ],
+    [
+      "feedback",
+      "Browser diagnostic artifact retention",
+      "Selected: observed missing CI artifact."
+    ],
+    [
+      "feedback",
+      "Novel screenshot-to-failure ownership graph",
+      "Existing report attachments suffice."
+    ],
+    [
+      "gamification",
+      "Progression expansion",
+      "No economy change needed."
+    ],
+    [
+      "gamification",
+      "Return-visit momentum honesty",
+      "Verify baseline lifecycle in selected item."
+    ],
+    [
+      "ai",
+      "AI failure classification",
+      "Source inspection and deterministic reports suffice without paid inference."
+    ],
+    [
+      "ai",
+      "Agent outcome receipt",
+      "Reuse current release JSON."
+    ],
+    [
+      "security",
+      "Auth changes",
+      "Existing Obelisk provider acceptance remains outside routine promotion."
+    ],
+    [
+      "security",
+      "Private activity exposure",
+      "Preserve removed private third-mover claim; do not change runtime to fit obsolete tests."
+    ],
+    [
+      "speed",
+      "Replace sleeps with response fences",
+      "Selected in digest tests; awaited response proves negative states after hydration."
+    ],
+    [
+      "speed",
+      "New browser harness",
+      "Existing Playwright and local preview fit."
+    ],
+    [
+      "token-cost",
+      "Machine-readable failures",
+      "Reuse existing JSON reporter to avoid log reconstruction; no unmeasured savings claim."
+    ],
+    [
+      "token-cost",
+      "New inference cache",
+      "No measured token/API problem."
+    ]
+  ],
+  "items": [
+    {
+      "slug": "returning-visitor-contract",
+      "title": "Verify returning-visitor momentum without duplicating the homepage signal",
+      "axis": "ux",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 2,
+      "recipe": "Move the positive digest fixture to /games/. Await the real ledger response before silence assertions; verify homepage suppression, previous-baseline handoff, once-per-session behavior, dismissal and failed-feed silence. Load the actual asset through a request instead of inline substitution. Add the deterministic suite to required CI.",
+      "acceptance": "All digest cases pass in Chromium, Firefox and WebKit. Mutating homepage suppression, previous-baseline handoff and actual script loading causes the corresponding tests to fail. No runtime or baseline changes.",
+      "premises": [
+        {
+          "claim": "Existing test navigates the root fixture",
+          "adapter": "file-content",
+          "target": "tests/returning-visitor-digest.spec.js",
+          "pattern": "const ORIGIN = 'http://vsx.test/';",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Runtime intentionally suppresses homepage floating digest",
+          "adapter": "file-content",
+          "target": "assets/returning-visitor-digest.js",
+          "pattern": "if ((location.pathname || '/') === '/') return;",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "id": 1,
+      "tier": "🔥",
+      "priority": 40,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Fresh local reproduction: one failure and two passes. Runtime deliberately suppresses duplicate homepage attention; test expects the retired floating notice.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Correct the positive route fixture."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Move the positive digest fixture to /games/. Await the real ledger response before silence assertions; verify homepage suppression, previous-baseline handoff, once-per-session behavior, dismissal and failed-feed silence. Load the actual asset through a request instead of inline substitution. Add the deterministic suite to required CI."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Separate scope: inspect the remaining diagnostic failures with the retained report."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-16T13:46:38.583Z",
+          "status": "implemented",
+          "note": "S384 restores returning-visitor acceptance to the shipped attention contract and retains optional browser diagnostic reports. Six cases pass across Chromium, Firefox and WebKit (18/18); homepage duplication, lost previous-baseline handoff and blocked script loading are independently detected by negative mutations. Required CI always runs the digest suite without credentials. The broad job now retains configured JSON/HTML reports and failure screenshots; a deliberately failing local run produced all three artifact types. No runtime or screenshot-baseline change. Independent review passed with zero findings. Current candidate staging, full local checks, hosted artifact verification and production acceptance remain pending in docs/RELEASE_S384.json."
+        }
+      ],
+      "readinessArea": "core journeys and product correctness",
+      "stageRationale": "Supported-release stabilization: close the demonstrated browser coverage/triage gap without expanding product scope."
+    },
+    {
+      "slug": "browser-diagnostic-artifacts",
+      "title": "Retain machine-readable browser failures and screenshots in CI",
+      "axis": "feedback",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "recipe": "Use configured Playwright list/HTML/JSON reporters for the optional full browser job and always upload both playwright-report and test-results. Verify deliberately failing local browser run produces JSON, HTML and screenshot; inspect exact-candidate hosted artifact.",
+      "acceptance": "Failing local run yields machine-readable results, HTML and failure screenshot; hosted optional job uploads report and screenshot artifacts. Required candidate workflows pass independently.",
+      "premises": [
+        {
+          "claim": "Configuration defines HTML and JSON output files",
+          "adapter": "file-content",
+          "target": "playwright.config.js",
+          "pattern": "outputFile: 'playwright-report/results.json'",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Configured screenshot capture is enabled on failure",
+          "adapter": "file-content",
+          "target": "playwright.config.js",
+          "pattern": "screenshot: 'only-on-failure'",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "id": 2,
+      "tier": "🔥",
+      "priority": 20.2,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "S381 broad job explicitly reported no playwright-report files; CLI list override discards configured JSON and HTML reporters, and screenshots are outside the upload path.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Remove reporter override."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Use configured Playwright list/HTML/JSON reporters for the optional full browser job and always upload both playwright-report and test-results. Verify deliberately failing local browser run produces JSON, HTML and screenshot; inspect exact-candidate hosted artifact."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Separate scope: inspect the remaining diagnostic failures with the retained report."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-16T13:46:38.583Z",
+          "status": "implemented",
+          "note": "S384 restores returning-visitor acceptance to the shipped attention contract and retains optional browser diagnostic reports. Six cases pass across Chromium, Firefox and WebKit (18/18); homepage duplication, lost previous-baseline handoff and blocked script loading are independently detected by negative mutations. Required CI always runs the digest suite without credentials. The broad job now retains configured JSON/HTML reports and failure screenshots; a deliberately failing local run produced all three artifact types. No runtime or screenshot-baseline change. Independent review passed with zero findings. Current candidate staging, full local checks, hosted artifact verification and production acceptance remain pending in docs/RELEASE_S384.json."
+        }
+      ],
+      "readinessArea": "observability and actionable analytics",
+      "stageRationale": "Supported-release stabilization: close the demonstrated browser coverage/triage gap without expanding product scope."
+    },
+    {
+      "id": 3,
+      "slug": "sitemap-theme-readability",
+      "title": "Repair the sitemap URL labels exposed by required rendered review",
+      "tier": "🔥",
+      "axis": "ux",
+      "impact": 7,
+      "innovation": 2,
+      "effortHours": 0.5,
+      "priority": 26.5,
+      "status": "pending",
+      "selectedDepth": "L2",
+      "why": "Required rendered review of the generated sitemap synchronization shows light-theme URL labels nearly white on a cream background; dark labels are also too faint. This is an observed release prerequisite, not speculative scope.",
+      "recipe": "Use the existing theme-aware muted-text token for sitemap URL labels, synchronize the existing REX page11 link, then inspect real before/after captures in all seven themes at desktop1366 and mobile390. Run scoped axe color-contrast checks and preserve all runtime JavaScript and screenshot baselines.",
+      "acceptance": "Twenty-eight before/after captures reviewed across seven themes and two widths. All119 URL-label foreground/background contrast samples per theme meet4.5:1; retain axe incompleteness separately. Sitemap consistency passes. Common staging/hosted/production acceptance remains separately required.",
+      "readinessArea": "accessibility, mobile parity and every supported theme",
+      "stageRationale": "Protect supported-release readers from an observed unreadable touched surface.",
+      "premises": [
+        {
+          "claim": "URL labels hardcode translucent white independently of theme",
+          "adapter": "file-content",
+          "target": "sitemap-page/index.html",
+          "pattern": "color: rgba(255,255,255,0.3);",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Replace the hardcoded color with the theme token."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Use the existing theme-aware muted-text token for sitemap URL labels, synchronize the existing REX page11 link, then inspect real before/after captures in all seven themes at desktop1366 and mobile390. Run scoped axe color-contrast checks and preserve all runtime JavaScript and screenshot baselines."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Separate scope: audit untouched pages; not selected."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-16T14:08:56.782Z",
+          "status": "implemented",
+          "note": "S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "other-obsolete-contracts",
+      "reason": "Stats population, community ranks and Oracle movers need separate bounded review; they are not selected or claimed fixed."
+    },
+    {
+      "slug": "market-research",
+      "reason": "Missing market evidence; separate research scope, no product positioning change selected."
+    }
+  ],
+  "totals": {
+    "count": 3,
+    "priority": 86.7,
+    "top3": [
+      "returning-visitor-contract",
+      "browser-diagnostic-artifacts",
+      "sitemap-theme-readability"
+    ]
+  },
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-16T13:42:05.618Z",
+  "readinessAssessment": [
+    {
+      "area": "core journeys and product correctness",
+      "status": "partial",
+      "evidence": "Digest fixture1fail/2pass; prior mandatory homepage/Spark contract passing",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.988Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify selected digest contract and required candidate checks"
+    },
+    {
+      "area": "onboarding and identity/access",
+      "status": "partial",
+      "evidence": "Existing Obelisk positive provider acceptance remains held; unchanged integration",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Retain fail-closed regressions; positive identity journey remains separately owned"
+    },
+    {
+      "area": "accessibility, mobile parity and every supported theme",
+      "status": "partial",
+      "evidence": "Prior mobile215/215 and inherited visual evidence; no UI change selected",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run current mobile acceptance and changed-file visual gate"
+    },
+    {
+      "area": "performance and capacity",
+      "status": "unknown",
+      "evidence": "No new field-vitals measurement; prior limitations retained",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Inspect current required Lighthouse result; do not imply field-vitals proof"
+    },
+    {
+      "area": "security, privacy, data integrity and abuse controls",
+      "status": "partial",
+      "evidence": "Canon zero ABSOLUTE gaps; unchanged identity/privacy/security runtime",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run security scan and current required access regression checks"
+    },
+    {
+      "area": "backup, recovery and rollback",
+      "status": "partial",
+      "evidence": "Git source rollback available; no data migration selected",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Record rollback SHA and current staging/production source"
+    },
+    {
+      "area": "email and notifications where used",
+      "status": "stale",
+      "evidence": "Prior contact/notification integration receipts; no email change selected",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Owner re-verifies actual delivery when email contract changes"
+    },
+    {
+      "area": "observability and actionable analytics",
+      "status": "fail",
+      "evidence": "Observed missing optional browser diagnostic report due reporter override",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify report JSON, HTML, failure images and hosted upload"
+    },
+    {
+      "area": "feedback, support and issue triage",
+      "status": "partial",
+      "evidence": "Source-linked optional failures reviewed; artifact loss impairs triage",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify selected diagnostic artifact outcome"
+    },
+    {
+      "area": "branding, legal, contact and rights/provenance",
+      "status": "partial",
+      "evidence": "Existing privacy/terms/contact/proprietary surfaces; terminology exception retained",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Run required compliance checks; retain CANON-056 justification"
+    },
+    {
+      "area": "human and agent access where applicable",
+      "status": "partial",
+      "evidence": "Existing agent discovery and unchanged protected surfaces",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify required compliance/access checks without claiming positive identity readiness"
+    },
+    {
+      "area": "staging, release evidence and truthful beta/release communication",
+      "status": "partial",
+      "evidence": "Existing S383 release not evidence for this arc",
+      "sourceRevision": "0c12a26e5900",
+      "observedAt": "2026-10-16T13:42:55.989Z",
+      "owner": "website",
+      "nextAcceptanceCheck": "Stage exact S384 candidate, verify hosted checks, full production and readback"
+    }
+  ]
+}

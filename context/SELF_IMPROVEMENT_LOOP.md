@@ -9,9 +9,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last5 totals): ▇▇▇▇▇
-Avgs —3:933.0 |5:933.0 |10:930.4 |25:951.5 |all:unmeasured (archived history excluded)
+Avgs —3:933.0 |5:933.0 |10:931.4 |25:950.4 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session:2026-10-16 |Session383 |Total:933/1000 |Velocity:1 |protocolVelocity:1
+Last session:2026-10-16 |Session384 |Total:933/1000 |Velocity:3 |protocolVelocity:3
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2720,3 +2720,37 @@ Closing follow-through verified (2026-10-16T06:43:06.552Z): candidate 6f80ad39ed
 
 Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
 Same S383 score933/1000; no new scored session.
+
+
+## Session 384 — 2026-10-16 — Returning-visitor reliability
+
+Product rubric, ten categories ×100; score held at933. Stronger regression coverage does not demonstrate a reader engagement gain.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Total: 933/1000
+Velocity:2
+Protocol velocity:2
+Debt:↓
+
+Browser matrix18/18, three independent negative mutations, local diagnostic artifacts and independent zero-finding review verified. Full release remains pending. Brainstorm: use controlled fixtures for remaining stats/Oracle/community diagnostic failures; inspect pixel differences before new baselines. Two future SIL tasks retained. CDR reviewed with no new direction; context usage unmeasured.
+
+
+S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.
+Same scored S384,933/1000; velocity3 including the observed readability prerequisite.
+
+
+### Session 384 local scope reconciliation
+
+The original plan contained two outcomes; the observed sitemap contrast prerequisite brings delivered local outcomes to3. Structured silVelocity and rolling header now3; score remains933/1000. No additional scored session. Website-only IGNIS proof46731 is applied with its actual observation time, replacing the older dated46897 value. Full release remains pending.
