@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S385) - WHAT SHIPPED ══════════════════════════╗
-║  S385 verifies neutral directory cards and valid trimmed profil  ║
+║  S385 verifies neutral searchable directory cards, valid trimme  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      S385 full local, staging, exact required h  ║
-║        S385 full local, staging, exact required hosted, product  ║
-║                                                                  ║
-║   92  [COHESION]     Reproduce remaining stats/Oracle/community  ║
+║   95  [COHESION]     Reproduce remaining stats/Oracle/community  ║
 ║        Reproduce remaining stats/Oracle/community contract fail  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
+║   93  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
 ║        Inspect retained pixel diagnostic failures against origi  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Inspect original pixel differences by rout  ║
+║   87  [PRODUCT]      Inspect original pixel differences by rout  ║
 ║        Inspect original pixel differences by route/theme/viewpo  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Reproduce remaining optional behavioral di  ║
+║   84  [PRODUCT]      Reproduce remaining optional behavioral di  ║
 ║        Reproduce remaining optional behavioral diagnostics agai  ║
+║                                                                  ║
+║   81  [PRODUCT]      Investigate the eight unresolved behavior   ║
+║        Investigate the eight unresolved behavior assertions fro  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
