@@ -12,6 +12,10 @@ S383 complete: three reproduced homepage acceptance failures now exercise the ac
 
 All three waves complete. CDR reviewed; no new human creative direction. Context usage unmeasured. Preserve unrelated operator state. Future bounded work: unresolved optional behavior and pixel diagnostics.
 
+**Closing follow-through**
+
+Closing follow-through verified (2026-10-16T06:08:53.136Z): candidate f51949adfe6fd4fb091fa4f29f55213e7520f92c passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38859007432. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+
 ## Where We Left Off (Session 382) — complete
 
 Session Intent: fresh full /arc, direct main push and full deployment authorized. Native goal01a1423f-c7bf-7b80-b75f-75517203c959 binds S382.
