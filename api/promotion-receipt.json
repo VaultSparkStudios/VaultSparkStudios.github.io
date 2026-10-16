@@ -16,7 +16,7 @@
     "shellParity": {
       "state": "matched",
       "observedAt": "2026-10-16T01:06:01.031Z",
-      "ageHours": 0.6,
+      "ageHours": 0.8,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
+    "consoleErrors": 8,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 1,
+        "consoleErrors": 2,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -90,17 +90,17 @@
   "receiptState": "degraded",
   "findings": [
     "the repo has advanced past the last promotion: production serves 5bf58495, repo build-sha is 18d04e02 — a promotion backlog, not a stranded deploy (shell parity is 'matched', not drift)",
-    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
+    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
   ],
-  "generatedAt": "2026-10-16T01:39:40.680Z",
+  "generatedAt": "2026-10-16T01:52:19.985Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-16T01:39:40.680Z",
-    "currentBehindStreak": 2,
-    "newestGradableAt": "2026-10-16T01:39:40.680Z",
+    "lastStrandedAt": "2026-10-16T01:52:19.985Z",
+    "currentBehindStreak": 3,
+    "newestGradableAt": "2026-10-16T01:52:19.985Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

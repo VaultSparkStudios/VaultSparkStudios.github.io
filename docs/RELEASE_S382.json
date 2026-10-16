@@ -41,11 +41,23 @@
       "runs": 2,
       "note": "Successful full runs before mandatory CI step; final source full revalidation pending"
     },
-    "workflowEnforcement": "mandatory compliance step added; review and hosted execution pending",
+    "workflowEnforcement": "mandatory compliance step reviewed; required exact-SHA hosted execution pending",
     "priorVisualReceiptArchive": {
       "file": "docs/visual-qa/S381_RETAINED.json",
       "byteIdenticalToPreviousHead": true,
       "reason": "LATEST intentionally replaces prior large matrix with focused28 before/after captures; no historical evidence lost"
+    },
+    "fullBuild": {
+      "passed": 537,
+      "failed": 0,
+      "coverageComplete": true,
+      "sourceFingerprint": "747275ce79dd17e76f62ca06",
+      "receiptId": "6de38310c8e0822a466d6c0e",
+      "finishedAt": "2026-10-16T02:01:07.957Z"
+    },
+    "mobile": {
+      "passed": 215,
+      "failed": 0
     }
   },
   "remaining": [
@@ -56,5 +68,10 @@
     "publisher restoration",
     "canonical closeout"
   ],
-  "rollback": "Re-promote previous confirmed production source using normal pinned workflow; staging keeps timestamped rollback."
+  "rollback": "Re-promote previous confirmed production source using normal pinned workflow; staging keeps timestamped rollback.",
+  "closeout": {
+    "autopilotExit": 0,
+    "sourcePublication": "local main commits completed; staging before remote push pending",
+    "intentionalVisualArchiveVerified": true
+  }
 }
