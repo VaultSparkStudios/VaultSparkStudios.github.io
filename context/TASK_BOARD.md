@@ -1,7 +1,7 @@
 ## S383 — homepage engagement acceptance
 
 - [x] Fresh full startup and nine-axis audit; repair three reproduced homepage checks, require the seven-test suite in CI, and verify targeted negative mutations.
-- [ ] S383 staging, hosted exact-candidate checks, full production and final closeout acceptance.
+- S383 release acceptance and remaining gates: docs/RELEASE_S383.json is authoritative; completion requires accepted:true and no remaining gates.
 - [ ] [SIL][S383] Reproduce remaining optional behavioral diagnostics against the current candidate before changes.
 - [ ] [SIL][S383] Inspect original pixel differences by route/theme/viewport before proposing baselines.
 

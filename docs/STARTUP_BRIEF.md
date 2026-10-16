@@ -68,7 +68,7 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      S383 staging, hosted exact-candidate check  ║
-║        S383 staging, hosted exact-candidate checks, full produc  ║
-║                                                                  ║
-║   93  [PRODUCT]      Reproduce remaining optional behavioral di  ║
+║   96  [PRODUCT]      Reproduce remaining optional behavioral di  ║
 ║        Reproduce remaining optional behavioral diagnostics agai  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Inspect original pixel differences by rout  ║
+║   93  [PRODUCT]      Inspect original pixel differences by rout  ║
 ║        Inspect original pixel differences by route/theme/viewpo  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Investigate the eight unresolved behavior   ║
+║   90  [PRODUCT]      Investigate the eight unresolved behavior   ║
 ║        Investigate the eight unresolved behavior assertions fro  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Inspect24 pixel differences against exact   ║
+║   87  [PRODUCT]      Inspect24 pixel differences against exact   ║
 ║        Inspect24 pixel differences against exact route/theme/vi  ║
+║                                                                  ║
+║   84  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
+║        Assess candidate-origin contracts for other browser API   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
