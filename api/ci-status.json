@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T06:48:04.798Z",
+  "generatedAt": "2026-10-16T06:58:52.494Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 12,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-16T01:52:19.985Z",
     "currentBehindStreak": 0,
     "newestGradableAt": "2026-10-16T04:23:58.218Z",
-    "newestAgeHours": 2.4,
+    "newestAgeHours": 2.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": false
@@ -37,10 +37,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-16T06:45:29Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-16T06:58:02Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38863015144",
       "headSha": "c2266b8d187703f523b710c39b849c9cb48203b5",
       "event": "push"
@@ -60,7 +60,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-10-16T06:45:29Z",
+      "updatedAt": "2026-10-16T06:52:07Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38863015271",
       "headSha": "c2266b8d187703f523b710c39b849c9cb48203b5",
       "event": "push"
@@ -90,13 +90,15 @@
     },
     {
       "name": "Cloudflare Analytics Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-16T06:58:05Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.01,
       "staleAfterHours": 48
     },
     {
@@ -153,7 +155,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.17,
+      "ageHours": 0.35,
       "staleAfterHours": 48
     },
     {
@@ -202,13 +204,15 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": "2026-10-16T06:42:39Z",
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-16T06:49:12Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.09,
+      "ageHours": 0.16,
       "staleAfterHours": 48
     },
     {
@@ -222,7 +226,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.67,
+      "ageHours": 2.85,
       "staleAfterHours": 48
     },
     {
