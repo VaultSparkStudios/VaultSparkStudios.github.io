@@ -40,7 +40,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 781 files  ·  M:45 A:0 D:0 ?:736                       ║
+║  Changes: 820 files  ·  M:43 A:0 D:0 ?:777                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -49,14 +49,14 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        16/17                                            ║
+║  Doctor:        15/17                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
 ║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        26 started · 26 closed · 0 running               ║
+║  shells:        31 started · 31 closed · 0 running               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║

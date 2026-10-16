@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **933/1000**
 - CI health: **check gh run list**
-- Current focus: Homepage browser coverage verified; full release acceptance in progress.
+- Current focus: Homepage engagement coverage verified and fully deployed.
 
 ## Strategic Read
 

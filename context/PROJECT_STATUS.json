@@ -105,13 +105,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-16",
-    "passing": 16,
+    "passing": 15,
     "warning": 1,
-    "failing": 0,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 17,
-    "score": 94,
+    "score": 88,
     "checks": [
       {
         "id": "manifest",
@@ -213,8 +213,8 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
-        "warn": true,
+        "pass": false,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -266,9 +266,9 @@
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 383,
-    "enumeratedAt": "2026-10-16T06:08:52.568Z",
-    "started": 30,
-    "closed": 30,
+    "enumeratedAt": "2026-10-16T06:10:42.110Z",
+    "started": 31,
+    "closed": 31,
     "running": 0,
     "ownedHandles": [
       {
@@ -390,6 +390,10 @@
       {
         "handle": 54407,
         "terminal": true
+      },
+      {
+        "handle": 80178,
+        "terminal": true
       }
     ],
     "ownedWorktreesRemoved": 2,
@@ -432,11 +436,13 @@
   },
   "activeArc": {
     "session": 383,
-    "phase": "closing-evidence-publication",
+    "phase": "complete",
     "goal": "01a142dd-f958-7631-864d-a7193b851a4e",
     "evidence": "docs/RELEASE_S383.json"
   },
-  "testsSession": 382,
+  "testsSession": 383,
   "currentBuildState": "passed",
-  "currentBuildNote": "S382 final source complete537/537; receipt 6de38310c8e0822a466d6c0e"
+  "currentBuildNote": "S383 current source complete537/537; receipt 3d1c7f0c0c9e8c8d5921f964",
+  "lastDeploySession": 383,
+  "lastDeployStatus": "full production verified (f51949adfe6f; run38859007432)"
 }

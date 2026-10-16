@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S383) - WHAT SHIPPED ══════════════════════════╗
-║  S383 repairs three reproduced homepage acceptance failures: re  ║
+║  S383 complete: three reproduced homepage acceptance failures n  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 383 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    537/537 passing  ·  Deploy: N/A                       ║
+║  Tests:    537/537 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
