@@ -3,7 +3,7 @@
 ║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
+║  ✓  IGNIS         46731 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║

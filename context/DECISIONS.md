@@ -2272,7 +2272,7 @@ The optional broad workflow used list-only output while uploading the HTML repor
 
 ## D-S384.3 — Bound generated release changes (2026-10-16)
 
-Complete build body and retried26-step postbuild refresh session-derived contracts. A Windows UNKNOWN file-open failure is retained as a failed first attempt; the complete retry passed without assertion changes. Twenty-six persona reserializations were proven whitespace-only and excluded with preserved copies. The sitemap adds the existing REX page11 and count118 to119; all-theme desktop/mobile before/after rendered review is required. No runtime JS/CSS source change. The canonical touched-score shim was stopped after targeting the control plane; explicit recipient-owned scoring verified this website at46731 with source-bound proof. Foreign shim output is not website evidence.
+Complete build body and retried26-step postbuild refresh session-derived contracts. A Windows UNKNOWN file-open failure is retained as a failed first attempt; the complete retry passed without assertion changes. Twenty-six persona reserializations were proven whitespace-only and excluded with preserved copies. The sitemap adds the existing REX page11 and count118 to119; all-theme desktop/mobile before/after rendered review is required. No runtime JavaScript or external CSS source change; the sitemap inline color prerequisite follows. The canonical touched-score shim was stopped after targeting the control plane; explicit recipient-owned scoring verified this website at46731 with source-bound proof. Foreign shim output is not website evidence.
 
 
 ## D-S384.4 — Repair the observed sitemap contrast defect (2026-10-16)
