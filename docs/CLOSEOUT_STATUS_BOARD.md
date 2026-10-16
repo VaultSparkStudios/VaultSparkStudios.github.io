@@ -1,19 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-16 (Session 383 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 384 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S383 ═══════╗
-║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S384 ═══════╗
+║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 3 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S383)                                        ║
+║  Autopilot: proven (S384)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Homepage engagement tests follow actual loaders, layout and   ║
-║  ✓ Seven engagement cases are mandatory in required CI.          ║
-║  ✓ Exact candidate passed staging, hosted checks and full produ  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ fix(S384): seal verified combined release candidate           ║
+║  ✓ chore(S384): seal corrected source and staging evidence       ║
+║  ✓ fix(S384): seal verified local release evidence               ║
+║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -40,7 +42,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 855 files  ·  M:40 A:0 D:0 ?:815                       ║
+║  Changes: 999 files  ·  M:43 A:0 D:0 ?:956                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -53,10 +55,10 @@
 ║  Compliance:    —                                                ║
 ║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         1d ago                                           ║
+║  IGNIS:         0d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        38 started · 38 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║

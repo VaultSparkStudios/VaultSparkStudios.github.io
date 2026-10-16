@@ -1,17 +1,9 @@
-**S384 rendered-review follow-through**
+## Where We Left Off (Session 384) — complete
 
-S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.
-## Where We Left Off (Session 384) — release acceptance in progress
+S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
 
-Session Intent: fresh full /arc; direct main push and full deployment authorized. Native goal01a144ed-f74b-74b3-8146-cbf94d804898 binds S384.
+All three waves complete. CDR reviewed; no new human creative direction. Preserve unrelated operator residue. Acceptance: docs/RELEASE_S384.json.
 
-S384 restores returning-visitor acceptance to the shipped attention contract and retains optional browser diagnostic reports. Six cases pass across Chromium, Firefox and WebKit (18/18); homepage duplication, lost previous-baseline handoff and blocked script loading are independently detected by negative mutations. Required CI always runs the digest suite without credentials. The broad job now retains configured JSON/HTML reports and failure screenshots; a deliberately failing local run produced all three artifact types. No runtime JavaScript or screenshot-baseline change; sitemap-only styling prerequisite described above. Independent review found and corrected stale visual slices and historical wording; final source review passed. Complete local validation and its confirmation passed537/537 each. Candidate staging, hosted artifact verification and production acceptance remain pending in docs/RELEASE_S384.json.
-
-Wave1 startup/audit complete; Wave2 implementation verified locally; Wave3 release/closeout pending. Context usage unmeasured. CDR reviewed; no human creative direction supplied. Preserve pre-existing operator residue.
-
-## In progress — Session384
-
-Session Intent: fresh full /arc; direct main push and full deployment authorized. Native goal01a144ed-f74b-74b3-8146-cbf94d804898 binds S384. Wave1 complete; Wave2 returning-visitor contract and diagnostic artifacts; Wave3 release/closeout pending. Audit docs/AUDIT_2026-10-16-S384.json. Preserve existing operator residue.
 ## Where We Left Off (Session 383) — complete
 
 Session Intent: fresh full /arc; direct main push and full deployment authorized. Native goal01a142dd-f958-7631-864d-a7193b851a4e binds S383.

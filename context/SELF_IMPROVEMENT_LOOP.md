@@ -2754,3 +2754,7 @@ Same scored S384,933/1000; velocity3 including the observed readability prerequi
 ### Session 384 local scope reconciliation
 
 The original plan contained two outcomes; the observed sitemap contrast prerequisite brings delivered local outcomes to3. Structured silVelocity and rolling header now3; score remains933/1000. No additional scored session. Website-only IGNIS proof46731 is applied with its actual observation time, replacing the older dated46897 value. Full release remains pending.
+
+
+S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
+All authorized audit outcomes shipped; all three waves complete. Same S384 score, no additional scored session.
