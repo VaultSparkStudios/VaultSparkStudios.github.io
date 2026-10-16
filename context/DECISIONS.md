@@ -2250,3 +2250,12 @@ S382 release prerequisite: regenerate public intelligence and its dependent arti
 ## D-S382.4 — Enforce public search without credentials (2026-10-16)
 
 The required compliance job runs both verified Spark/ambient browser files against its local candidate without optional-error or credential conditions. The broad diagnostic job retains its existing scope. Focused LATEST visual receipt intentionally replaces the prior larger matrix; the previous HEAD receipt is preserved byte-for-byte at docs/visual-qa/S381_RETAINED.json. Closeout content-wipe guard flags the size reduction; archival verification establishes an intentional evidence-index replacement with no history loss.
+
+
+## D-S383.1 — Verify interaction and truth-bus boundaries (2026-10-16)
+
+Milestones load after real reader interaction or a12-second fallback, so the browser test scrolls to them instead of extending a fixed sleep or injecting their script. First-scroll coverage explicitly retains proof → Vault Door → membership; initial Desk attribution was corrected from the live DOM. Intelligence fixtures intercept the public feed, leaving the production bus and consumers intact. Homepage proof derives its numeric score band; the gauge honors the feed grade. Exact score, grade and gauge-width assertions replace a loose numeric regex. Runtime, visual baselines, identity/trust, pricing and membership logic are unchanged. The full seven-test engagement suite runs unconditionally in required CI.
+
+## D-S383.2 — Separate observed diagnostics from release acceptance (2026-10-16)
+
+Fresh ten-test reproduction:7pass/3fail; all three failures are in ambient engagement, while the three Desk artwork cases pass. These observations do not retroactively erase the S382 original45-failure inventory or resolve pixel diagnostics. Negative mutation proves blocked milestone loading and corrupted intelligence score are caught; the combined score/grade mutation is not a separate grade-only proof. Independent review required a documentation correction, then passed. Routine promotion follows RELEASE_PROMOTION_PROTOCOL. Current canon has zero ABSOLUTE gaps; prior CANON-045 provider acceptance and terminology exceptions retain D-S379.3/D-S374.3 justification. Local startup-sync/maintenance/checklist helpers are absent; available canonical canon sync and frontier radar succeeded, and no missing local maintenance run is claimed.

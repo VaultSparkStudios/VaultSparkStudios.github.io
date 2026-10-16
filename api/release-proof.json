@@ -53,11 +53,11 @@
     }
   },
   "production": {
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "cspMode": "enforce",
     "receiptState": "degraded",
     "reconciled": false,
-    "observedAt": "2026-10-16T01:52:19.985Z"
+    "observedAt": "2026-10-16T04:13:17.506Z"
   },
   "productionWorkerRoutes": {
     "state": "matched",
@@ -180,7 +180,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -194,6 +194,7 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",

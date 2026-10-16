@@ -11,7 +11,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
+║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║

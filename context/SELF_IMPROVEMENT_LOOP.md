@@ -8,10 +8,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3:933.0 | 5:933.0 | 10:929.4 | 25:unmeasured | all:unmeasured (archived history excluded)
-Velocity trend:→ | Protocol velocity:→ | Debt:↓
-Last session:2026-10-16 | Session382 | Total:933/1000 | Velocity:1 | protocolVelocity:1
+Sparkline (last5 totals): ▇▇▇▇▇
+Avgs —3:933.0 |5:933.0 |10:930.4 |25:951.5 |all:unmeasured (archived history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:↓
+Last session:2026-10-16 |Session383 |Total:933/1000 |Velocity:1 |protocolVelocity:1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2677,3 +2677,28 @@ Focused19/19 and an actual broken-load mutation verify the selected repair. Broa
 
 S382 final verification (2026-10-16T03:02:45.543Z): S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
 Same scored session933/1000; no new score or engagement inference.
+
+
+## Session 383 — 2026-10-16 — Homepage engagement acceptance
+
+Product rubric, ten categories ×100. Score held at933; stronger tests are not measured reader-engagement gains.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Total: 933/1000
+Velocity:1
+Protocol velocity:1
+Debt:↓
+
+Seven focused Chromium checks pass; two negative mutations are detected. Independent review passed after one documentation fix. Broader release acceptance remains pending. Brainstorm: reproduce remaining optional behavior failures; inspect original pixel diagnostics. Both remain future SIL tasks. CDR reviewed; no new human direction. Context usage unmeasured.

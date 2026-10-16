@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Spark browser verification; full release acceptance in progress.",
+  "currentFocus": "Homepage browser coverage verified; full release acceptance in progress.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Complete S382 staging, hosted checks and production; restore publishers.",
+  "nextMilestone": "Complete S383 staging, hosted checks and full production readback.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,14 +26,14 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
   ],
   "lastUpdated": "2026-10-16",
-  "currentSession": 382,
+  "currentSession": 383,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-13",
   "silScore": 933,
   "silAvg3": 933,
   "silVelocity": 1,
   "silDebt": "down",
-  "silLastSession": 382,
+  "silLastSession": 383,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -86,7 +86,7 @@
   "entropyScore": 0.179,
   "entropyLastComputed": "2026-10-15",
   "sessionMode": "BUILDER",
-  "sessionModeAutoShiftedAt": "2026-10-16T01:08:17.122Z",
+  "sessionModeAutoShiftedAt": "2026-10-16T04:01:12.185Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
@@ -101,7 +101,7 @@
     "capitalEfficiency": 95,
     "automationCoverage": 97
   },
-  "silCategoriesUpdatedSession": 382,
+  "silCategoriesUpdatedSession": 383,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-16",
@@ -262,7 +262,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f2e7a17da3aa1b5e926e07ee",
   "testsSourceFingerprint": "747275ce79dd17e76f62ca06",
-  "lastSessionSummary": "S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.",
+  "lastSessionSummary": "S383 repairs three reproduced homepage acceptance failures: real milestone interaction, proof → Vault Door → membership ordering, and deterministic network-bound intelligence hydration with exact score, score-band, feed-grade and gauge checks. All seven Chromium engagement cases pass; blocked milestone loading and corrupted score are detected. The suite is now unconditional required CI. Three Desk artwork cases pass in current reproduction; that observation does not resolve unrelated historical pixel or behavior failures. No runtime or visual-baseline change. Independent review passed after correcting audit wording. Full staging, hosted candidate checks and production acceptance remain pending in docs/RELEASE_S383.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 382,
@@ -312,13 +312,13 @@
     "validation": "Full537/537; mobile215/215; collection689/619/619; isolation2/2; streamed archive17/17; visual112 inspected; critical65; browser3passed/3held; attention15; ceremony11",
     "closeoutVerification": "Canonical autopilot0; independent reviews passed; original publisher states restored; own shell/worktree cleanup verified"
   },
-  "lastSession": 382,
+  "lastSession": 383,
   "sessionState": {
     "version": 1,
-    "durableSession": 382,
-    "currentFocus": "Spark browser verification; full release acceptance in progress.",
-    "nextMilestone": "Complete S382 staging, hosted checks and production; restore publishers.",
-    "lastSessionSummary": "S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json."
+    "durableSession": 383,
+    "currentFocus": "Homepage browser coverage verified; full release acceptance in progress.",
+    "nextMilestone": "Complete S383 staging, hosted checks and full production readback.",
+    "lastSessionSummary": "S383 repairs three reproduced homepage acceptance failures: real milestone interaction, proof → Vault Door → membership ordering, and deterministic network-bound intelligence hydration with exact score, score-band, feed-grade and gauge checks. All seven Chromium engagement cases pass; blocked milestone loading and corrupted score are detected. The suite is now unconditional required CI. Three Desk artwork cases pass in current reproduction; that observation does not resolve unrelated historical pixel or behavior failures. No runtime or visual-baseline change. Independent review passed after correcting audit wording. Full staging, hosted candidate checks and production acceptance remain pending in docs/RELEASE_S383.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -330,10 +330,10 @@
     "behaviorChanged": false
   },
   "activeArc": {
-    "session": 382,
-    "phase": "complete",
-    "goal": "01a1423f-c7bf-7b80-b75f-75517203c959",
-    "evidence": "docs/RELEASE_S382.json"
+    "session": 383,
+    "phase": "release-acceptance",
+    "goal": "01a142dd-f958-7631-864d-a7193b851a4e",
+    "audit": "docs/AUDIT_2026-10-16-S383.json"
   },
   "testsSession": 382,
   "currentBuildState": "passed",

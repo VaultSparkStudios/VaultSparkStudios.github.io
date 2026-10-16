@@ -1,36 +1,42 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: c86cc95e5fb3 -->
-<!-- generated-at: 2026-10-16T01:08:21.105Z -->
+<!-- source-hash: c4f8f72d7659 -->
+<!-- generated-at: 2026-10-16T04:01:23.730Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 381 HANDOFF
+SESSION 382 SUMMARY
 
-Session Number: 381
-Native Goal: 01a14085-61d3-7452-b03f-28f285198b91
+Session Number: 382
+Native Goal: 01a1423f-c7bf-7b80-b75f-75517203c959
 
-SHIPPED
-- Candidate 5bf58495904c deployed via Pages run 38787970210
-- Full validation: local 537/537, focused contracts 5/5, navigation 1/1
-- Staging critical 65/65, release ceremony 11/11
-- Production immutable and readback verified
-- All five publisher states restored
+Shipped in S382:
+- Five obsolete palette tests now verify Spark behavior; all 19 affected cases run unconditionally in CI
+- Local validation: 537/537 passed; mobile 215/215 passed
+- Visual review: 28 counter + 112 inherited Desk-art captures across seven themes
+- Candidate 791ef632d4ee passed hosted checks; full Pages deployment 38842758645 verified
+- Staging critical 65/65, ceremony 11/11, production readback verified
+- Five publisher states restored; owned processes closed
 
-NOW BUCKET (Top 3)
-- Wave 3 canonical closeout/publication/deployment complete
-- Optional broad E2E diagnostics remain separate (classified for future scope)
-- Identity and field-vitals limitations unresolved; reserved for separate work
+Current Intent:
+Full /arc complete. All three waves finished. Deployment authorized and confirmed.
 
-BLOCKERS (Top 3)
-- Existing identity limitations (open)
-- Field-vitals limitations (open)
-- Context usage unmeasured (deferred)
+Now-Bucket (Top 3):
+1. Classify remaining 40 optional failures (retain original provenance)
+2. Investigate broken actual-script loading (detected, not yet resolved)
+3. Unresolved optional behavior and pixel diagnostics (bounded future scope)
 
-HUMAN-BLOCKED ITEMS
-None with age recorded.
+Top 3 Blockers:
+1. Actual-script loading broken—detection confirmed, fix pending
+2. Optional broad run: 586 passed, 43 failed, 60 skipped; failures not claimed fixed
+3. Identity/field-vitals limitations remain unresolved (separate track)
 
-CURRENT STATE
-All deployment ceremonies complete. Production stable. Unrelated operator caches and captures preserved. CDR reviewed; no new creative direction received.
+Human-Blocked Items:
+None listed with age.
 
-NEXT SESSION
-Classify optional E2E failure handling and begin Wave 1 startup audit for next full cycle.
+Preserved State:
+- SIL 933/1000 unchanged
+- Context usage unmeasured
+- Unrelated operator state preserved
+- CDR reviewed; no new creative direction
+
+Next Session: Resolve actual-script loading and classify remaining optional failures.

@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
-<!-- semantic-freshness: hash=f96ebbdb565cc328 next=383 silSession=382 silScore=933 handoff=382 tests=- -->
+<!-- generated-at: 2026-10-16 (Session 383 closeout) -->
+<!-- semantic-freshness: hash=e452eeb7989e539f next=384 silSession=383 silScore=933 handoff=383 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 382 closeout · 2026-10-16.
+> **Fast-boot brief** — generated at Session 383 closeout · 2026-10-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 383 · 2026-10-16 · BUILDER MODE                         ║
+║  Session 384 · 2026-10-16 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S382) - WHAT SHIPPED ══════════════════════════╗
-║  S382 restores five obsolete palette tests to the shipped Spark  ║
+╔══ LAST SESSION (S383) - WHAT SHIPPED ══════════════════════════╗
+║  S383 repairs three reproduced homepage acceptance failures: re  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,7 +42,7 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    933/1000   ██████████████████████░░   93%                     ║
-║    SIL v3.0  ·  Avg3: 933  ·  Velocity 1→                        ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 382 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 383 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    537/537 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -85,7 +85,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
+║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
 ║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓4 vs current 933)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 6.5 over last 10 forecasts                     ║
+║  Calibration: MAE 4.2 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Investigate the eight unresolved behavior   ║
+║   96  [PRODUCT]      S383 staging, hosted exact-candidate check  ║
+║        S383 staging, hosted exact-candidate checks, full produc  ║
+║                                                                  ║
+║   93  [PRODUCT]      Reproduce remaining optional behavioral di  ║
+║        Reproduce remaining optional behavioral diagnostics agai  ║
+║                                                                  ║
+║   90  [PRODUCT]      Inspect original pixel differences by rout  ║
+║        Inspect original pixel differences by route/theme/viewpo  ║
+║                                                                  ║
+║   87  [PRODUCT]      Investigate the eight unresolved behavior   ║
 ║        Investigate the eight unresolved behavior assertions fro  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Inspect24 pixel differences against exact   ║
+║   84  [PRODUCT]      Inspect24 pixel differences against exact   ║
 ║        Inspect24 pixel differences against exact route/theme/vi  ║
-║                                                                  ║
-║   92  [VERIFY]       Classify the remaining broad E2E failures   ║
-║        Classify the remaining broad E2E failures against the ca  ║
-║                                                                  ║
-║   90  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
-║        Assess candidate-origin contracts for other browser API   ║
-║                                                                  ║
-║   84  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
-║        Evaluate the existing Node schema-lite TODO with focused  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 382 closeout · 2026-10-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 383 closeout · 2026-10-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

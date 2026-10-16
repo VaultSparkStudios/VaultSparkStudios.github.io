@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "session": 383,
+  "accepted": false,
+  "scope": "Homepage browser engagement/intelligence acceptance. No runtime, baseline or identity change.",
+  "validation": {
+    "focusedChromium": 7,
+    "negativeMutation": {
+      "at": "2026-10-16T04:11:20.817Z",
+      "mutations": [
+        "Abort actual milestone script request",
+        "Serve wrong intelligence score and grade through actual truth bus"
+      ],
+      "exit": 1,
+      "stats": {
+        "startTime": "2026-10-16T04:10:51.148Z",
+        "duration": 29585.875,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "detected": true,
+      "failures": [
+        {
+          "title": "studio milestones render six chapters with an active now card"
+        },
+        {
+          "title": "homepage IGNIS proof rail and IGNIS gauge hydrate from public intelligence"
+        }
+      ]
+    },
+    "review": "pass; rounds1 documentation fix and2 pass",
+    "canonAbsoluteGaps": 0,
+    "visualQA": "CANON-053 changed-files PASS; no UI/UX files changed",
+    "browserMatrix": {
+      "chromium": 7,
+      "firefox": 7,
+      "webkit": 7,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "remaining": [
+    "full build",
+    "staging",
+    "required exact-SHA hosted checks",
+    "full production/readback",
+    "publisher restoration",
+    "final closeout"
+  ],
+  "rollback": "Re-promote previous confirmed full production source791ef632d4eeb52587baa14c59277e724be7c7b3 via pinned normal workflow; staging preserves timestamped rollback."
+}
