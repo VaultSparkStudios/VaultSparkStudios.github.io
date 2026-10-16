@@ -1,3 +1,11 @@
+## S382 — Spark browser acceptance
+
+- [x] Replace five retired palette assertions with real Spark behavior and verify19 focused cases plus broken-load detection.
+- [x] Classify all45 prior persistent failures by exact assertion, without inferring unresolved causes.
+S382 release acceptance and remaining phases: `docs/RELEASE_S382.json`. Implementation complete; full release unproven until that receipt passes.
+- [ ] [SIL][S382] Investigate the eight unresolved behavior assertions from E2E_DIAGNOSTICS_S382.json; reproduce runtime before changing tests.
+- [ ] [SIL][S382] Inspect24 pixel differences against exact route/theme/viewport before any baseline proposal.
+
 ## S381 — selected candidate verification
 
 - [x] Repair navigation and visual origin selection; preserve manual override and verify actual-source regressions.

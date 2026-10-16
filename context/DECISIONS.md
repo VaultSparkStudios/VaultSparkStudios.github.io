@@ -2230,3 +2230,23 @@ Routine non-identity promotion follows RELEASE_PROMOTION_PROTOCOL. Existing CANO
 ## D-S381.3 — Preconnect scope excludes operator artifacts (2026-10-15)
 
 The full diagnostic gate rejected an original untracked HTML report under .cache. Exclude .cache, .ops-cache and output directories from public-page preconnect enforcement, preserving those artifacts in place. A temporary fixture proves reports are ignored and a public index missing its required Cloudflare preconnect still fails. Independent review passed.
+
+
+## D-S382.1 — Test the shipped Spark contract (2026-10-16)
+
+Retired palette tests now exercise Spark. Content-addressed child URLs are accepted, lazy-load uniqueness is retained, and mobile focus targets the heading to preserve deliberate keyboard behavior. Spark is intentionally nonmodal; native search semantics replace obsolete combobox relationships. Existing result labels and query filtering are asserted without a fixed portfolio count. No runtime, screenshot baseline, trust-policy or membership change.
+
+## D-S382.2 — Keep diagnostic failures distinct from release acceptance (2026-10-16)
+
+Prior exact source5bf5849590 optional E2E run38785816235 contains45 persistent failures,2 flaky,60 skipped and582 passed. All45 failure assertions are classified in a public-safe inventory; only5 obsolete search tests are selected for repair. The remaining40 failures are unresolved, including24 pixel comparisons. Routine production follows RELEASE_PROMOTION_PROTOCOL and current exact candidate required workflows; optional success does not imply every browser test passed. Existing CANON-045 identity acceptance and CANON-054/terminology exceptions retain their prior justification; zero ABSOLUTE gaps observed. Startup sync/maintenance/checklist local scripts are absent; available canonical canon synchronization and frontier-radar tools were used. No missing maintenance run is claimed.
+
+
+## D-S382.3 — Regenerate coherent release projections (2026-10-16)
+
+
+S382 release prerequisite: regenerate public intelligence and its dependent artifacts after ordered session writeback. Complete npm build body and a successful26-step postbuild lifecycle refreshed projections. Only semantic HTML delta is the generated launch counter225→226;28 stabilized before/after captures across seven themes and1366/390widths were directly inspected. Persona-page differences are whitespace-only. No runtime JavaScript or CSS change. The first postbuild attempt hit a transient Windows UNKNOWN file-open error; shell retry and complete postbuild rerun passed.
+
+
+## D-S382.4 — Enforce public search without credentials (2026-10-16)
+
+The required compliance job runs both verified Spark/ambient browser files against its local candidate without optional-error or credential conditions. The broad diagnostic job retains its existing scope. Focused LATEST visual receipt intentionally replaces the prior larger matrix; the previous HEAD receipt is preserved byte-for-byte at docs/visual-qa/S381_RETAINED.json. Closeout content-wipe guard flags the size reduction; archival verification establishes an intentional evidence-index replacement with no history loss.

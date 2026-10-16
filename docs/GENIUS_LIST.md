@@ -1,16 +1,16 @@
-# Genius Hit List — Session 381
+# Genius Hit List — Session 382
 
-Generated: 2026-10-15
+Generated: 2026-10-16
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **79/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
 - Current SIL: **933/1000**
 - CI health: **check gh run list**
-- Current focus: Candidate-bound browser verification and release evidence.
+- Current focus: Spark browser verification; full release acceptance in progress.
 
 ## Strategic Read
 
@@ -22,77 +22,75 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Classify the remaining broad E2E failures against the candidate now t…
-Final score: **100**
+#### 1. [PRODUCT] Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
+Final score: **96**
+[SIL][S382] Investigate the eight unresolved behavior assertions from E2E_DIAGNOSTICS_S382.json; reproduce runtime before changing tests.
+Why it matters: Investigate the eight unresolved behavior assertions from E2E_DIAGNOST is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Inspect24 pixel differences against exact route/theme/viewport before…
+Final score: **93**
+[SIL][S382] Inspect24 pixel differences against exact route/theme/viewport before any baseline proposal.
+Why it matters: Inspect24 pixel differences against exact route/theme/viewport before  is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Classify the remaining broad E2E failures against the candidate now t…
+Final score: **92**
 [SIL][S381] Classify the remaining broad E2E failures against the candidate now that target association is corrected; do not refresh visual baselines to conceal differences.
 Why it matters: Classify the remaining broad E2E failures against the candidate now th shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [INTELLIGENCE] Assess candidate-origin contracts for other browser API probes in a f…
-Final score: **96**
+#### 4. [INTELLIGENCE] Assess candidate-origin contracts for other browser API probes in a f…
+Final score: **90**
 [SIL][S381] Assess candidate-origin contracts for other browser API probes in a future bounded audit; keep explicit external integration checks distinct.
 Why it matters: Assess candidate-origin contracts for other browser API probes in a fu keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [PRODUCT] Evaluate the existing Node schema-lite TODO with focused schema fixtu…
-Final score: **90**
+### NEXT
+
+#### 1. [PRODUCT] Evaluate the existing Node schema-lite TODO with focused schema fixtu…
+Final score: **84**
 [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
 Why it matters: Evaluate the existing Node schema-lite TODO with focused schema fixtur is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Separate optional authenticated runtime coverage from public browser …
-Final score: **87**
+#### 2. [PRODUCT] Separate optional authenticated runtime coverage from public browser …
+Final score: **81**
 [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
 Why it matters: Separate optional authenticated runtime coverage from public browser f is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Reduce staging archive overhead through the existing production publi…
-Final score: **84**
+#### 3. [PRODUCT] Reduce staging archive overhead through the existing production publi…
+Final score: **78**
 [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
 Why it matters: Reduce staging archive overhead through the existing production public is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Give staging theme captures a session-specific output directory so ru…
-Final score: **81**
+#### 4. [PRODUCT] Give staging theme captures a session-specific output directory so ru…
+Final score: **75**
 [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
 Why it matters: Give staging theme captures a session-specific output directory so run is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Keep attribute-only interaction regressions synchronized with selecto…
-Final score: **78**
+#### 5. [PRODUCT] Keep attribute-only interaction regressions synchronized with selecto…
+Final score: **72**
 [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
 Why it matters: Keep attribute-only interaction regressions synchronized with selector is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Inspect hidden-opener focus return after future placement changes; pr…
-Final score: **75**
+### LATER
+
+#### 1. [PRODUCT] Inspect hidden-opener focus return after future placement changes; pr…
+Final score: **69**
 [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
 Why it matters: Inspect hidden-opener focus return after future placement changes; pre is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Census deferred homepage modules before enabling home-intelligence; p…
-Final score: **72**
+#### 2. [PRODUCT] Census deferred homepage modules before enabling home-intelligence; p…
+Final score: **66**
 [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 Why it matters: Census deferred homepage modules before enabling home-intelligence; pr is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [INTELLIGENCE] Start maintenance lane has no local copy here; task-slice and check-a…
-Final score: **66**
+#### 3. [INTELLIGENCE] Start maintenance lane has no local copy here; task-slice and check-a…
+Final score: **60**
 [OPS/P3 · S376] Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
 Why it matters: Start maintenance lane has no local copy here; task-slice and check-au keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
-
-#### 2. [VERIFY] Keep generated receipt repairs in dependency order: status-proof befo…
-Final score: **59**
-[SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
-Why it matters: Keep generated receipt repairs in dependency order: status-proof befor is a 381-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check`
-
-#### 3. [PRODUCT] home-intelligence.js remains dormant after deferred injection; review…
-Final score: **57**
-[HOME/P2 · S374] home-intelligence.js remains dormant after deferred injection; review its member-data and layout scope before enabling. recent-ships.js shipped with early/late initialization and hashed delivery in S377.
-Why it matters: home-intelligence.js remains dormant after deferred injection; review  is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -138,18 +136,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Classify the remaining broad E2E failures against the candidate now t…
-2. Assess candidate-origin contracts for other browser API probes in a f…
-3. Evaluate the existing Node schema-lite TODO with focused schema fixtu…
-4. Separate optional authenticated runtime coverage from public browser …
-5. Reduce staging archive overhead through the existing production publi…
-6. Give staging theme captures a session-specific output directory so ru…
-7. Keep attribute-only interaction regressions synchronized with selecto…
-8. Inspect hidden-opener focus return after future placement changes; pr…
-9. Census deferred homepage modules before enabling home-intelligence; p…
-10. Start maintenance lane has no local copy here; task-slice and check-a…
-11. Keep generated receipt repairs in dependency order: status-proof befo…
-12. home-intelligence.js remains dormant after deferred injection; review…
+1. Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
+2. Inspect24 pixel differences against exact route/theme/viewport before…
+3. Classify the remaining broad E2E failures against the candidate now t…
+4. Assess candidate-origin contracts for other browser API probes in a f…
+5. Evaluate the existing Node schema-lite TODO with focused schema fixtu…
+6. Separate optional authenticated runtime coverage from public browser …
+7. Reduce staging archive overhead through the existing production publi…
+8. Give staging theme captures a session-specific output directory so ru…
+9. Keep attribute-only interaction regressions synchronized with selecto…
+10. Inspect hidden-opener focus return after future placement changes; pr…
+11. Census deferred homepage modules before enabling home-intelligence; p…
+12. Start maintenance lane has no local copy here; task-slice and check-a…
 
 ## Best Immediate Move
 

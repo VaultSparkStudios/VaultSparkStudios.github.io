@@ -9,10 +9,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3:933.0 | 5:932.6 | 10:926.5 | 25:unmeasured | all:unmeasured (archived history excluded)
-History scope: latest scored entry per session in active append-only ledger.
+Avgs — 3:933.0 | 5:933.0 | 10:929.4 | 25:unmeasured | all:unmeasured (archived history excluded)
 Velocity trend:→ | Protocol velocity:→ | Debt:↓
-Last session:2026-10-15 | Session381 | Total:933/1000 | Velocity:1 | protocolVelocity:1
+Last session:2026-10-16 | Session382 | Total:933/1000 | Velocity:1 | protocolVelocity:1
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2649,3 +2648,28 @@ S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser relea
 Same scored S381 session: 933/1000; no new score or inferred engagement gain.
 
 S381 final ledger reconciliation: older local autopilot does not emit the newer receipt ledger. Added an observed-execution receipt bound to its actual completed log SHA-256, exec83950 exit0 and final verified production run38787970210. No new run, score or application change.
+
+
+## Session 382 — 2026-10-16 — Spark behavioral acceptance
+
+Product rubric: ten categories ×100. Score held at933; test reliability is not evidence of increased reader engagement.
+
+| Category | Score |
+|---|---:|
+| Dev Health |95|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |95|
+| Process Quality |90|
+| Cross-Repo Coherence |92|
+| Security Posture |94|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |97|
+
+Total: 933/1000
+Velocity: 1
+Protocol velocity: 1
+Debt: ↓
+
+Focused19/19 and an actual broken-load mutation verify the selected repair. Broader diagnostic inventory remains honest:40 unresolved failures, including24 pixel differences. Brainstorm: reproduce the eight uncategorized behavior failures and review exact pixel diffs; both future SIL tasks recorded. CDR reviewed: no new human creative direction. Full deployment acceptance is still open. Context usage unmeasured.

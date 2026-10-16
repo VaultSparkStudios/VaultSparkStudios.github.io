@@ -1,3 +1,7 @@
+## Session 382 — Spark browser acceptance (2026-10-16)
+
+S382 restores five obsolete palette tests to the shipped Spark contract. Acceptance covers content-addressed lazy loading exactly once, keyboard toggling, mobile header clearance, intentional heading focus on small screens, close/focus return, named native search semantics, and real result filtering. A broken actual Spark script load is detected. Affected and existing Spark cases passed19/19 locally. All45 previous optional failures are enumerated with original assertion evidence in E2E_DIAGNOSTICS_S382.json; remaining40 are diagnostic, including24 unreviewed pixel differences. Full release acceptance remains pending in docs/RELEASE_S382.json.
+
 ## Session 381 — verified release (2026-10-15)
 
 S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
@@ -526,3 +530,6 @@ The owner's original dirty checkout, local backups and private evidence are pres
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+S382 release prerequisite: regenerate public intelligence and its dependent artifacts after ordered session writeback. Complete npm build body and a successful26-step postbuild lifecycle refreshed projections. Only semantic HTML delta is the generated launch counter225→226;28 stabilized before/after captures across seven themes and1366/390widths were directly inspected. Persona-page differences are whitespace-only. No runtime JavaScript or CSS change. The first postbuild attempt hit a transient Windows UNKNOWN file-open error; shell retry and complete postbuild rerun passed.

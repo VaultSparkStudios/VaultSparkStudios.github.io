@@ -1673,3 +1673,13 @@ S381 corrected validation complete: 537/537, receipt5f517a4caadab7a40f647a77; te
 S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
 
 S381 final ledger reconciliation: older local autopilot does not emit the newer receipt ledger. Added an observed-execution receipt bound to its actual completed log SHA-256, exec83950 exit0 and final verified production run38787970210. No new run, score or application change.
+
+
+## Session 382 — 2026-10-16
+
+S382 restores five obsolete palette tests to the shipped Spark contract. Acceptance covers content-addressed lazy loading exactly once, keyboard toggling, mobile header clearance, intentional heading focus on small screens, close/focus return, named native search semantics, and real result filtering. A broken actual Spark script load is detected. Affected and existing Spark cases passed19/19 locally. All45 previous optional failures are enumerated with original assertion evidence in E2E_DIAGNOSTICS_S382.json; remaining40 are diagnostic, including24 unreviewed pixel differences. Full release acceptance remains pending in docs/RELEASE_S382.json.
+
+Nine audit axes considered; source-verified stabilization selected. No public runtime or baseline change.
+
+
+S382 release prerequisite: regenerate public intelligence and its dependent artifacts after ordered session writeback. Complete npm build body and a successful26-step postbuild lifecycle refreshed projections. Only semantic HTML delta is the generated launch counter225→226;28 stabilized before/after captures across seven themes and1366/390widths were directly inspected. Persona-page differences are whitespace-only. No runtime JavaScript or CSS change. The first postbuild attempt hit a transient Windows UNKNOWN file-open error; shell retry and complete postbuild rerun passed.

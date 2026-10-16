@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-15 (Session 381 closeout) -->
-<!-- semantic-freshness: hash=96783529afac137e next=382 silSession=381 silScore=933 handoff=381 tests=- -->
+<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
+<!-- semantic-freshness: hash=f96ebbdb565cc328 next=383 silSession=382 silScore=933 handoff=382 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 381 closeout · 2026-10-15.
+> **Fast-boot brief** — generated at Session 382 closeout · 2026-10-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 382 · 2026-10-15 · BUILDER MODE                         ║
+║  Session 383 · 2026-10-16 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S381) - WHAT SHIPPED ══════════════════════════╗
-║  S381 complete: browser release checks follow their selected ca  ║
+╔══ LAST SESSION (S382) - WHAT SHIPPED ══════════════════════════╗
+║  S382 restores five obsolete palette tests to the shipped Spark  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -61,14 +61,14 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 381 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 382 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    537/537 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -76,10 +76,10 @@
 ║  ✓  Tests         537/537 passing (2026-10-15)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   11d                                            ║
-║  ✓  IGNIS         46897 FORGE  ·  -1d old                        ║
+║  ⚠  Context age   12d                                            ║
+║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/38 (84%) → ▁▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.179  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    53d · Authorize or decline immutable warm-origin migrati      ║
-║    53d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    54d · Authorize or decline immutable warm-origin migrati      ║
+║    54d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓4 vs current 933)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 7.2 over last 10 forecasts                     ║
+║  Calibration: MAE 6.5 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Classify the remaining broad E2E failures   ║
+║   96  [PRODUCT]      Investigate the eight unresolved behavior   ║
+║        Investigate the eight unresolved behavior assertions fro  ║
+║                                                                  ║
+║   93  [PRODUCT]      Inspect24 pixel differences against exact   ║
+║        Inspect24 pixel differences against exact route/theme/vi  ║
+║                                                                  ║
+║   92  [VERIFY]       Classify the remaining broad E2E failures   ║
 ║        Classify the remaining broad E2E failures against the ca  ║
 ║                                                                  ║
-║   96  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
+║   90  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
 ║        Assess candidate-origin contracts for other browser API   ║
 ║                                                                  ║
-║   90  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
+║   84  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
 ║        Evaluate the existing Node schema-lite TODO with focused  ║
-║                                                                  ║
-║   87  [PRODUCT]      Separate optional authenticated runtime co  ║
-║        Separate optional authenticated runtime coverage from pu  ║
-║                                                                  ║
-║   84  [PRODUCT]      Reduce staging archive overhead through th  ║
-║        Reduce staging archive overhead through the existing pro  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 381 closeout · 2026-10-15*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 382 closeout · 2026-10-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

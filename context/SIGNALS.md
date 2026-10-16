@@ -2,10 +2,10 @@
 ║  ✓  Tests         537/537 passing (2026-10-15)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   11d                                            ║
-║  ✓  IGNIS         46897 FORGE  ·  -1d old                        ║
+║  ⚠  Context age   12d                                            ║
+║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   32/38 (84%) → ▁▄▄▄▄▄▄▄                          ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.179  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║

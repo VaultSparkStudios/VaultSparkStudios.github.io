@@ -1542,3 +1542,8 @@ The prior hosted nav failure shows production requests while BASE_URL selects lo
 
 S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
 The staging receipt build-stamp label is 9ae27125cc; actual checkout5563ad and all3601 shared source files independently establish this candidate. No authenticated identity journey is claimed.
+
+
+### S382 — browser diagnostics (2026-10-16)
+
+The hosted optional E2E job success concealed45 persistent failed assertions under its existing continue-on-error policy. Five refer to the retired palette; these are repaired and locally verified. Other40 remain diagnostic. Inventory covers all45 exact assertions from source5bf5849590; neither source review nor workflow green proves pixel correctness. Full S382 release remains pending in RELEASE_S382.json.

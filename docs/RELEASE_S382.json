@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "session": 382,
+  "accepted": false,
+  "scope": "Spark behavioral acceptance and original broad E2E diagnostic inventory. No runtime/baseline/identity policy change.",
+  "validation": {
+    "focusedTests": 19,
+    "brokenLoadDetected": true,
+    "diagnosticInventory": "docs/E2E_DIAGNOSTICS_S382.json",
+    "independentReview": "pass",
+    "canonAbsoluteGaps": 0,
+    "brokenLoadProof": {
+      "session": 382,
+      "mutation": "Abort actual Spark child script on selected preview",
+      "expected": "lazy-load behavior test fails at dialog visibility",
+      "observedExit": 1,
+      "failed": 1,
+      "detected": true
+    },
+    "visualQA": {
+      "captures": 28,
+      "manuallyReviewed": 28,
+      "themes": 7,
+      "widths": [
+        1366,
+        390
+      ],
+      "scope": "SSR launch-day counter225 to226 before/after; client updater blocked identically in both states; reduced motion stabilizes reveal frames",
+      "receipt": "docs/visual-qa/LATEST.json"
+    },
+    "buildPrerequisite": {
+      "buildBody": "passed",
+      "initialPostbuild": "Windows UNKNOWN article file-open error",
+      "shellRetry": "passed",
+      "postbuildSteps": 26,
+      "postbuild": "passed"
+    },
+    "preCIFullBuild": {
+      "passed": 537,
+      "failed": 0,
+      "runs": 2,
+      "note": "Successful full runs before mandatory CI step; final source full revalidation pending"
+    },
+    "workflowEnforcement": "mandatory compliance step added; review and hosted execution pending",
+    "priorVisualReceiptArchive": {
+      "file": "docs/visual-qa/S381_RETAINED.json",
+      "byteIdenticalToPreviousHead": true,
+      "reason": "LATEST intentionally replaces prior large matrix with focused28 before/after captures; no historical evidence lost"
+    }
+  },
+  "remaining": [
+    "full build",
+    "staging",
+    "required exact-SHA hosted checks",
+    "production and readback",
+    "publisher restoration",
+    "canonical closeout"
+  ],
+  "rollback": "Re-promote previous confirmed production source using normal pinned workflow; staging keeps timestamped rollback."
+}
