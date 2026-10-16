@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-15 (Session 381 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S381 ═══════╗
-║  Date: 2026-10-15  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S382 ═══════╗
+║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S381)                                        ║
+║  Autopilot: BYPASSED (S382) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(closeout): record verified S381 production [skip ci]    ║
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ fix(release): bind retained visual receipt to candidate       ║
-║  ✓ chore(release): reconcile S381 candidate evidence             ║
+║  ✓ chore(release): seal merged S382 staging candidate            ║
+║  ✓ chore(release): record S382 validation candidate              ║
 ║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ test(search): enforce shipped Spark behavior in release comp  ║
+║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -30,19 +30,19 @@
 ║    Automation         97   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
+║  ✓ context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 636 files  ·  M:33 A:0 D:0 ?:603                       ║
+║  Changes: 718 files  ·  M:44 A:0 D:0 ?:674                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -55,10 +55,10 @@
 ║  Compliance:    —                                                ║
 ║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         0d ago                                           ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        29 started · 29 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║

@@ -262,48 +262,42 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f2e7a17da3aa1b5e926e07ee",
   "testsSourceFingerprint": "747275ce79dd17e76f62ca06",
-  "lastSessionSummary": "S382 restores five obsolete palette tests to the shipped Spark contract. Acceptance covers content-addressed lazy loading exactly once, keyboard toggling, mobile header clearance, intentional heading focus on small screens, close/focus return, named native search semantics, and real result filtering. A broken actual Spark script load is detected. Affected and existing Spark cases passed19/19 locally. All45 previous optional failures are enumerated with original assertion evidence in E2E_DIAGNOSTICS_S382.json; remaining40 are diagnostic, including24 unreviewed pixel differences. Full release acceptance remains pending in docs/RELEASE_S382.json.",
+  "lastSessionSummary": "S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
-    "session": 381,
-    "enumeratedAt": "2026-10-15T18:53:52.921Z",
-    "started": 29,
-    "closed": 29,
+    "session": 382,
+    "checkedAt": "2026-10-16T02:40:19.124Z",
     "running": 0,
-    "sessionIds": [
-      60013,
-      54697,
-      29721,
-      1114,
-      95356,
-      70468,
-      48398,
-      27624,
-      48549,
-      75181,
-      12109,
-      55852,
-      8963,
-      29374,
-      96113,
-      73532,
-      83950,
-      25986,
-      2007,
-      38579,
-      7195,
-      76717,
-      83825,
-      27459,
-      31720,
-      58843,
-      48400,
-      72263,
-      9637
+    "ownedHandles": [
+      {
+        "handle": 48016,
+        "role": "preview",
+        "terminal": true
+      },
+      {
+        "handle": 57527,
+        "role": "art captures",
+        "terminal": true
+      },
+      {
+        "handle": 71893,
+        "role": "final staging",
+        "terminal": true
+      },
+      {
+        "handle": 44485,
+        "role": "final ceremony",
+        "terminal": true
+      },
+      {
+        "handle": 55028,
+        "role": "final build",
+        "terminal": true
+      }
     ],
-    "previewPortClosed": true,
-    "worktreeRemoved": true,
-    "scope": "Every yielded command handle retained in this invocation and its continuation summaries; instant completed commands excluded; all terminal exit results received. Unrelated operator worktrees, caches and services preserved."
+    "ownedWorktreesRemoved": 3,
+    "previewPort4382Closed": true,
+    "scope": "Own recorded handles only; unrelated processes preserved"
   },
   "closeoutFollowthrough": {
     "session": 380,
@@ -324,7 +318,7 @@
     "durableSession": 382,
     "currentFocus": "Spark browser verification; full release acceptance in progress.",
     "nextMilestone": "Complete S382 staging, hosted checks and production; restore publishers.",
-    "lastSessionSummary": "S382 restores five obsolete palette tests to the shipped Spark contract. Acceptance covers content-addressed lazy loading exactly once, keyboard toggling, mobile header clearance, intentional heading focus on small screens, close/focus return, named native search semantics, and real result filtering. A broken actual Spark script load is detected. Affected and existing Spark cases passed19/19 locally. All45 previous optional failures are enumerated with original assertion evidence in E2E_DIAGNOSTICS_S382.json; remaining40 are diagnostic, including24 unreviewed pixel differences. Full release acceptance remains pending in docs/RELEASE_S382.json."
+    "lastSessionSummary": "S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -337,8 +331,9 @@
   },
   "activeArc": {
     "session": 382,
-    "phase": "release-acceptance",
-    "goal": "01a1423f-c7bf-7b80-b75f-75517203c959"
+    "phase": "complete",
+    "goal": "01a1423f-c7bf-7b80-b75f-75517203c959",
+    "evidence": "docs/RELEASE_S382.json"
   },
   "testsSession": 382,
   "currentBuildState": "passed",

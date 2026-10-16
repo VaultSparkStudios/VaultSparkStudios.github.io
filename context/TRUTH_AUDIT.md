@@ -1547,3 +1547,7 @@ The staging receipt build-stamp label is 9ae27125cc; actual checkout5563ad and a
 ### S382 — browser diagnostics (2026-10-16)
 
 The hosted optional E2E job success concealed45 persistent failed assertions under its existing continue-on-error policy. Five refer to the retired palette; these are repaired and locally verified. Other40 remain diagnostic. Inventory covers all45 exact assertions from source5bf5849590; neither source review nor workflow green proves pixel correctness. Full S382 release remains pending in RELEASE_S382.json.
+
+
+S382 final verification (2026-10-16T03:02:45.543Z): S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
+Same scored session933/1000; no new score or engagement inference.
