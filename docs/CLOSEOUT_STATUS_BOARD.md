@@ -1,21 +1,19 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 383 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S382 ═══════╗
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S383 ═══════╗
 ║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S382) — no receipt; run node scripts/clos  ║
+║  Autopilot: proven (S383)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(release): seal merged S382 staging candidate            ║
-║  ✓ chore(release): record S382 validation candidate              ║
-║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ test(search): enforce shipped Spark behavior in release comp  ║
-║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
+╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
+║  ✓ Homepage engagement tests follow actual loaders, layout and   ║
+║  ✓ Seven engagement cases are mandatory in required CI.          ║
+║  ✓ Exact candidate passed staging, hosted checks and full produ  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -42,7 +40,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 718 files  ·  M:44 A:0 D:0 ?:674                       ║
+║  Changes: 781 files  ·  M:45 A:0 D:0 ?:736                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -58,7 +56,7 @@
 ║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║  shells:        26 started · 26 closed · 0 running               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║

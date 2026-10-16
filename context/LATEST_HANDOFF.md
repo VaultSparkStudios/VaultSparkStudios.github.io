@@ -1,14 +1,17 @@
-## Where We Left Off (Session 383) — release acceptance in progress
+## Where We Left Off (Session 383) — complete
 
-Session Intent: full fresh /arc; direct main push and full deployment authorized. Native goal 01a142dd-f958-7631-864d-a7193b851a4e binds S383.
+Session Intent: fresh full /arc; direct main push and full deployment authorized. Native goal01a142dd-f958-7631-864d-a7193b851a4e binds S383.
 
-S383 repairs three reproduced homepage acceptance failures: real milestone interaction, proof → Vault Door → membership ordering, and deterministic network-bound intelligence hydration with exact score, score-band, feed-grade and gauge checks. All seven Chromium engagement cases pass; blocked milestone loading and corrupted score are detected. The suite is now unconditional required CI. Three Desk artwork cases pass in current reproduction; that observation does not resolve unrelated historical pixel or behavior failures. No runtime or visual-baseline change. Independent review passed after correcting audit wording. Full staging, hosted candidate checks and production acceptance remain pending in docs/RELEASE_S383.json.
+**What changed, in one line each**
 
-Wave1 startup/audit complete; Wave2 selected implementation verified; Wave3 full release and canonical closeout acceptance pending. Context usage unmeasured. CDR reviewed; no new human creative direction. Preserve pre-existing caches/captures. Restore publisher original states after release.
+- Homepage engagement tests follow actual loaders, layout and intelligence.
+- Seven engagement cases are mandatory in required CI.
+- Exact candidate passed staging, hosted checks and full production readback.
 
-## In progress — Session 383
+S383 complete: three reproduced homepage acceptance failures now exercise the actual milestone loader, proof/Vault Door/membership ordering and network-bound public intelligence. All seven engagement cases run unconditionally in required CI. All21 cases across Chromium, Firefox and WebKit passed; blocked milestone loading and a corrupted intelligence score were detected by negative tests. The combined score/grade mutation proves score detection, not an independent grade-only mutation. No runtime or visual-baseline change. Local validation passed537/537 and mobile215/215. Candidate d4f69cca9327 passed the three required exact-SHA hosted checks and full Pages deployment 38856553984; stagingcritical65/65, ceremony11/11 and complete immutable/primary production readback verified. Exact-candidate optional broad diagnostics separately report589 passed,37 failed,3 flaky and60 skipped; these are not claimed fixed. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. SIL933/1000 unchanged. Evidence: docs/RELEASE_S383.json.
 
-Session Intent: full fresh /arc; direct main push and full deployment authorized. Native goal 01a142dd-f958-7631-864d-a7193b851a4e binds S383. Wave1 complete; Wave2 homepage engagement acceptance; Wave3 release/closeout pending. Audit docs/AUDIT_2026-10-16-S383.json. Preserve pre-existing operator caches. No creative direction or runtime changes.
+All three waves complete. CDR reviewed; no new human creative direction. Context usage unmeasured. Preserve unrelated operator state. Future bounded work: unresolved optional behavior and pixel diagnostics.
+
 ## Where We Left Off (Session 382) — complete
 
 Session Intent: fresh full /arc, direct main push and full deployment authorized. Native goal01a1423f-c7bf-7b80-b75f-75517203c959 binds S382.
