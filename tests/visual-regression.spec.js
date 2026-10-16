@@ -15,7 +15,6 @@
 
 import { test, expect, devices } from '@playwright/test';
 
-const BASE_URL = process.env.VR_BASE_URL || 'https://vaultsparkstudios.com';
 const PIXEL_RATIO_TOLERANCE = 0.015; // 1.5%
 
 const SURFACES = [
@@ -62,7 +61,7 @@ for (const vp of VIEWPORTS) {
       test.use(emulationOnly(vp.config));
 
       for (const surface of SURFACES) {
-        test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page }) => {
+        test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page, baseURL }) => {
         await page.addInitScript((t) => {
           try { localStorage.setItem('vs-theme', t); } catch (_) {}
         }, theme);
@@ -70,7 +69,9 @@ for (const vp of VIEWPORTS) {
         // Use 'load' (not 'networkidle') — pages like /oracle/ have ongoing beacon
         // traffic that never reaches networkidle, causing 30s timeouts (S223).
         // 'load' waits for the window.load event which is sufficient for VR.
-        await page.goto(BASE_URL + surface.path, { waitUntil: 'load', timeout: 30000 });
+        // Use the candidate selected by Playwright. Dedicated manual baseline
+        // capture can still choose an explicit alternate VR_BASE_URL.
+        await page.goto(new URL(surface.path, process.env.VR_BASE_URL || baseURL).href, { waitUntil: 'load', timeout: 30000 });
         // Suppress ambient animations + live-data flicker so snapshots are
         // deterministic. The genome-strip + sigil read from /api shards and
         // pulse — pin to a stable opacity for the snapshot.

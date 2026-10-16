@@ -6,25 +6,37 @@
 // rubric, staging gate, and the right audit lens. Single source of truth — lives in the
 // studio-ops control plane and is referenced from siblings via:
 //     node ../vaultspark-studio-ops/scripts/arc-profile.mjs [targetDir]
-// (defaults to the current working directory). The PROJECT_REGISTRY is resolved relative
-// to THIS script, so it works no matter which repo calls it.
+// (defaults to the current working directory). Registry discovery is relative to the
+// TARGET project, so a propagated copy cannot silently profile a different checkout.
 //
 //   --json   emit machine-readable JSON only (default: human line + JSON)
+//
+// Usage:
+//   node scripts/arc-profile.mjs [targetDir] [--json]
 
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { projectMedium } from './lib/media-profile.mjs';
+import { deriveLifecycleFocus } from './lib/lifecycle-skill-profile.mjs';
 
-const HERE = path.dirname(url.fileURLToPath(import.meta.url));
-const REGISTRY = path.join(HERE, '..', 'portfolio', 'PROJECT_REGISTRY.json');
-
-export function loadRegistry() {
-  try { return JSON.parse(fs.readFileSync(REGISTRY, 'utf8')); } catch { return null; }
+export function loadRegistry(targetDir = process.cwd()) {
+  const target = path.resolve(targetDir);
+  const candidates = [
+    path.join(target, 'portfolio', 'PROJECT_REGISTRY.json'),
+    path.resolve(target, '..', 'vaultspark-studio-ops', 'portfolio', 'PROJECT_REGISTRY.json'),
+  ];
+  for (const candidate of candidates) {
+    try {
+      const registry = JSON.parse(fs.readFileSync(candidate, 'utf8'));
+      if (Array.isArray(registry) || Array.isArray(registry?.projects)) return registry;
+    } catch { /* Missing or invalid evidence is not an authoritative record. */ }
+  }
+  return null;
 }
 
-// Find the registry entry for this folder. Prefer exact slug match, then the LONGEST
-// slug that is a substring of the folder name (avoids short-slug false positives).
+// A folder must have one exact declared identity. Prefix/suffix guesses can borrow
+// another project's lifecycle, deployment URLs and staging policy.
 export function resolveEntry(reg, basename) {
   const projects = reg && Array.isArray(reg.projects) ? reg.projects
                  : Array.isArray(reg) ? reg : [];
@@ -34,14 +46,10 @@ export function resolveEntry(reg, basename) {
   const entryKeys = (p) => [
     p.slug,
     p.folderName,
-    p.localPath ? path.basename(String(p.localPath).replace(/[\\/]+$/, '')) : null,
+    p.localPath ? String(p.localPath).replace(/[\\/]+$/, '').split(/[\\/]/).pop() : null,
   ].filter(Boolean).map(norm);
-  const exact = withSlug.find(p => entryKeys(p).includes(basenameNorm));
-  if (exact) return exact;
-  const subs = withSlug
-    .filter(p => entryKeys(p).some(k => basenameNorm.includes(k) || k.includes(basenameNorm)))
-    .sort((a, b) => b.slug.length - a.slug.length);
-  return subs[0] || null;
+  const exact = withSlug.filter(p => entryKeys(p).includes(basenameNorm));
+  return exact.length === 1 ? exact[0] : null;
 }
 
 export function deriveDeployableSurfaces(entry, targetDir = null) {
@@ -101,6 +109,11 @@ export function deriveOutwardActions({ deployableSurfaces = [], hasStaging = fal
 }
 
 export function deriveProfile(entry, basename = '', targetDir = null) {
+  let projectStatus = {};
+  if (targetDir) {
+    try { projectStatus = JSON.parse(fs.readFileSync(path.join(targetDir, 'context', 'PROJECT_STATUS.json'), 'utf8')); } catch {}
+  }
+  const lifecycleFocus = deriveLifecycleFocus(entry || {}, projectStatus);
   const slug = entry?.slug || basename;
   const audience = entry?.audience || 'internal';
   const vaultStatus = String(entry?.vaultStatus || 'forge').toUpperCase();
@@ -108,7 +121,7 @@ export function deriveProfile(entry, basename = '', targetDir = null) {
 
   // `type` is often a multi-tag string ("novel,shared-universe", "dashboard,pwa,crypto")
   // or absent. Parse tags and reduce to one primary type for rubric + lens.
-  const rawType = String(entry?.type || '').toLowerCase();
+  const rawType = String(entry?.type || projectStatus.type || entry?.medium || '').toLowerCase();
   const tags = rawType.split(/[,\s]+/).filter(Boolean);
   const has = (...names) => names.some(n => tags.includes(n));
   let type;
@@ -160,7 +173,7 @@ export function deriveProfile(entry, basename = '', targetDir = null) {
             : 'none — push straight to main'));
 
   const outwardActions = deriveOutwardActions({ deployableSurfaces, hasStaging, stagingType, sanitizeBeforePush });
-  return { slug, basename, type, medium: projectMedium(entry || {}), audience, vaultStatus, stagingType, hasStaging, deployableSurfaces, hasDeployableSurfaces, sanitizeBeforePush, rubric, gitWorkflow, gitReason, auditLens, stagingGate, outwardActions, registryMatched: !!entry };
+  return { slug, basename, type, medium: projectMedium(entry || {}), audience, vaultStatus, lifecycleFocus, stagingType, hasStaging, deployableSurfaces, hasDeployableSurfaces, sanitizeBeforePush, rubric, gitWorkflow, gitReason, auditLens, stagingGate, outwardActions, registryMatched: !!entry };
 }
 
 // One-call resolver: profile for an arbitrary project directory. Reused by the
@@ -174,18 +187,24 @@ export function canonicalTargetBasename(targetDir = process.cwd()) {
 
 export function profileFor(targetDir = process.cwd()) {
   const basename = canonicalTargetBasename(targetDir);
-  const reg = loadRegistry();
+  const reg = loadRegistry(targetDir);
   const entry = reg ? resolveEntry(reg, basename) : null;
   let localEntry = null;
   if (!entry) {
     try { localEntry = JSON.parse(fs.readFileSync(path.join(path.resolve(targetDir), 'context', 'PROJECT_STATUS.json'), 'utf8')); } catch {}
   }
   const sourceEntry = entry || localEntry;
-  return { ...deriveProfile(sourceEntry, basename, targetDir), registryMatched: !!entry, profileSource: entry ? 'registry' : localEntry ? 'project-status' : 'fallback', entry: sourceEntry };
+  const profile = deriveProfile(sourceEntry, basename, targetDir);
+  if (!entry) profile.lifecycleFocus = deriveLifecycleFocus({}, localEntry || {});
+  return { ...profile, registryMatched: !!entry, profileSource: entry ? 'registry' : localEntry ? 'project-status' : 'fallback', entry: sourceEntry };
 }
 
 // CLI guard — only run the human/JSON output when invoked directly, not on import.
 if (process.argv[1] && url.pathToFileURL(process.argv[1]).href === import.meta.url) {
+  if (process.argv.includes('--help') || process.argv.includes('-h')) {
+    console.log('Usage: node scripts/arc-profile.mjs [targetDir] [--json]');
+    process.exit(0);
+  }
   const JSON_ONLY = process.argv.includes('--json');
   const targetArg = process.argv.slice(2).find(a => !a.startsWith('--'));
   const target = targetArg || process.cwd();
@@ -196,6 +215,7 @@ if (process.argv[1] && url.pathToFileURL(process.argv[1]).href === import.meta.u
     console.log(`arc profile · ${profile.slug}${profile.registryMatched ? '' : ' (NOT in registry — inferred)'}`);
     console.log(`  type=${profile.type} · audience=${profile.audience} · vaultStatus=${profile.vaultStatus}`);
     console.log(`  SIL rubric=${profile.rubric} · audit lens=${profile.auditLens}`);
+    console.log(`  lifecycle=${profile.lifecycleFocus.display} · focus=${profile.lifecycleFocus.mode} · health=${profile.lifecycleFocus.health}`);
     console.log(`  git=${profile.gitWorkflow}  (${profile.gitReason})`);
     console.log(`  staging=${profile.stagingGate}`);
     console.log(`  deployable surfaces=${profile.deployableSurfaces.length ? profile.deployableSurfaces.map((surface) => surface.id).join(', ') : 'none'}`);

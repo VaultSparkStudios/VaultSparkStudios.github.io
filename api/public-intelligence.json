@@ -1,33 +1,26 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-13T02:53:12.579Z",
+  "generatedAt": "2026-10-16T02:01:37.729Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 376,
-    "lastUpdated": "2026-10-13",
-    "currentFocus": "S376 fixed reader feedback on Desk articles (stray comment controls, reaction taps lost in WebKit, image reactions in the reader-signal feed); pushed as b59fc7d3a2 and promoted on 2026-10-13 (production reports d3c87d8ba7).",
-    "nextMilestone": "Delay the first network calls of the eager Desk presence and ambient scripts until after first paint, and show the Lighthouse check passing its unchanged floors across several consecutive runs.",
+    "currentSession": 382,
+    "lastUpdated": "2026-10-16",
+    "currentFocus": "Spark browser verification; full release acceptance in progress.",
+    "nextMilestone": "Complete S382 staging, hosted checks and production; restore publishers.",
     "ignis": {
-      "score": 46114,
+      "score": 46897,
       "grade": "FORGE",
-      "lastComputed": "2026-10-06"
+      "lastComputed": "2026-10-15T13:30:28.789Z"
     }
   },
   "pulse": {
     "now": [],
     "next": [],
-    "shipped": [
-      "Shipped: 3 items. Comment threads no longer show a Cancel reply banner (or, at phone width, a Try again button) when there is nothing to cancel or retry. Reaction taps are no longer lost in WebKit: sections are rendered late only where scroll anchoring exists, and the loader delivers a tap made before the reactions script has run. The reader-signal feed lists illustration and cartoon reactions per story, separate from story totals.",
-      "Tests: after-paint unit 12 of 12; reactions builder self-test 25 of 25; Desk browser specs (reactions, comments, after-paint, artwork) 80 of 81 with no retries on three engines, the one failure a Firefox tap that passes on retry; WebKit reactions 12 of 12 (was 5 of 12); early WebKit taps 8 of 8 delivered (was 1 of 8). Seven themes captured at 1366px and 390px, before and after.",
-      "Review: an independent review found that a tap handled by the live script could be delivered a second time while a later parked script was still loading, which would have taken the vote back. Fixed with a unit case; three smaller findings also fixed.",
-      "Deploy: Pushed as b59fc7d3a2 on 2026-10-13 UTC after a full staging publish of the rebased candidate b8d0fb6027 (receipt b9cf02706b2e9d95f5b1aadf; served bytes matched the commit; an earlier publish of 61beca59ba, receipt 6a642380c6b1dcb736fdaaca, passed the staging release spec 6/6 and delivered 6 of 6 early WebKit taps). Local gate 534/534 and mobile audit 215/215 on the pushed tree. Required checks at b59fc7d3a2: E2E 38328313060 and accessibility 38328313040 passed first time; Lighthouse 38328313078 failed its first attempt on the measured article (0.88 against the unchanged 0.90 floor) and passed on one re-run (article 0.92, homepage 0.81). Promoted through the confirmed-production lane, run 38330430872 (SCOPED; identity hold unchanged): production reports d3c87d8ba7, which contains the candidate. Readback from served bytes: tree-current at d3c87d8ba7, 1051 of 1061 files identical, 0 differing, 10 retired-route redirects (a first run left one file unread and was repeated). On production the reply banner computes display:none and 6 of 6 early WebKit taps reach the (mocked) service.",
-      "Corrected: S375 recorded the WebKit failures as a click arriving before the parked script. That mechanism exists but was not the cause; the press and release landed on different elements because the section above the reaction bar grew by 181px between them.",
-      "Found, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px. Both on the task board."
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -141,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 376,
+    "sessionsCompleted": 382,
     "liveProjects": 3,
     "projectsInForge": 17,
     "activeEdgeFunctions": 16,
@@ -156,18 +149,18 @@
     "forge": 17,
     "vaulted": 1,
     "silCategories": {
-      "devHealth": 93,
+      "devHealth": 95,
       "alignment": 94,
       "momentum": 90,
-      "engagement": 93,
-      "process": 89,
+      "engagement": 95,
+      "process": 90,
       "coherence": 92,
       "security": 94,
       "ecosystem": 91,
       "capital": 95,
-      "automation": 96,
-      "total": 927,
-      "updatedSession": 376
+      "automation": 97,
+      "total": 933,
+      "updatedSession": 382
     },
     "sealedNextRevealAt": null
   },
@@ -835,13 +828,13 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 480
+      "heat": 720
     }
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gates are still running.",
-    "checkedAt": "2026-10-13T02:48:48.256Z",
+    "summary": "CI gate status is unknown.",
+    "checkedAt": "2026-10-15T16:25:12.717Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -853,7 +846,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",

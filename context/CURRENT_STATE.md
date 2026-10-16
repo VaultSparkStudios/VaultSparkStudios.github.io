@@ -1,3 +1,35 @@
+## Session 382 — verified release (2026-10-16)
+
+S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
+
+## Session 381 — verified release (2026-10-15)
+
+S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+
+## Session 380 — browser collection and verified release (2026-10-15)
+
+S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
+
+See docs/RELEASE_S380.json for exact release receipts. No auth, membership, pricing or lifecycle policy change.
+
+## Session 379 — release-profile discovery (2026-10-15)
+
+S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate. See docs/RELEASE_S379.json.
+
+Generated homepage cadence copy now reflects the UTC day boundary. Membership economy, authentication policy and lifecycle records retain their existing behavior. The bounded archive timeout prerequisite preserves the existing deployment manifest and verification.
+
+# S378 companion control clearance — 2026-10-13
+
+S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. See docs/RELEASE_S378.json.
+
+# S377 homepage Recent Ships restored — 2026-10-13
+
+The deferred Recent Ships module now initializes once whether it loads before or after DOMContentLoaded. The homepage renders three release cards from public intelligence, with the existing changelog and unavailable-data fallbacks. A hashed child bundle makes the loader deliver the repaired executable. Local task projection and strict audit-premise adapters reuse Studio Ops and reject foreign paths and duplicate selectors.
+
+Verification: three initializer regressions and two adapter regressions; complete local and clean-checkout build gates 534/534; mobile 215/215; 28 manually inspected captures across seven themes, desktop and phone. Canonical staging browser: three passed and three explicitly held identity contracts; six feature cases passed. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+
+Existing identity hold, member-feed dormancy, field-vitals gaps and performance-stability tasks remain. Conversion impact is unmeasured.
+
 # S376 reader feedback on Desk articles — 2026-10-12
 
 - **Comment threads.** The reply banner and its Cancel reply button no longer show on a thread until a reader presses Reply; at phone width a Try again button also showed after a successful load. Both carried the `hidden` attribute and were displayed anyway because a class set `display`. `assets/desk-comments.css` now keeps hidden elements inside a thread hidden.
@@ -493,3 +525,11 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+S382 release prerequisite: regenerate public intelligence and its dependent artifacts after ordered session writeback. Complete npm build body and a successful26-step postbuild lifecycle refreshed projections. Only semantic HTML delta is the generated launch counter225→226;28 stabilized before/after captures across seven themes and1366/390widths were directly inspected. Persona-page differences are whitespace-only. No runtime JavaScript or CSS change. The first postbuild attempt hit a transient Windows UNKNOWN file-open error; shell retry and complete postbuild rerun passed.

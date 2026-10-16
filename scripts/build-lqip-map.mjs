@@ -20,6 +20,7 @@ import path from 'node:path';
 import url from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import sharp from 'sharp';
+import { NOT_SERVED } from './check-content-lane-purity.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -30,6 +31,12 @@ const FORCE = process.argv.includes('--force');
 
 const RASTER = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
 const MIN_BYTES = 20 * 1024; // skip icons/tiny graphics
+
+export function isServedRaster(relative) {
+  const normalized = String(relative).replaceAll('\\', '/').replace(/^\.\//, '');
+  return RASTER.has(path.extname(normalized).toLowerCase())
+    && !NOT_SERVED.some(prefix => normalized.startsWith(prefix));
+}
 
 // Only scan git-tracked files so local gitignored dirs (e.g. docs/mobile-audit/)
 // are excluded — keeps local and CI output identical.
@@ -66,6 +73,7 @@ async function lqipFor(absPath) {
 async function main() {
   const tracked = trackedImages();
   const files = (tracked ?? walk(ROOT)).filter((p) => {
+    if (!isServedRaster(path.relative(ROOT, p))) return false;
     try { return fs.statSync(p).size >= MIN_BYTES; } catch { return false; }
   });
 
@@ -134,4 +142,6 @@ async function main() {
   console.log(`build-lqip-map: wrote ${Object.keys(sorted).length} placeholder(s) → data/lqip-map.json (${reused} reused, ${encoded} encoded${FORCE ? ', --force' : ''})`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+if (process.argv[1] && path.resolve(process.argv[1]) === url.fileURLToPath(import.meta.url)) {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}

@@ -47,12 +47,19 @@ try {
 // guarded lazy import: where safe-spawn is absent (a copied fixture) this yields null and
 // the allocator degrades to the closed-surface answer, exactly as before.
 let gitLogText = null;
+let gitHeadSha = null;
 try {
   const { spawnSync } = await import('./lib/safe-spawn.mjs');
   const log = spawnSync('git', ['log', '-n400', '--format=%s'], {
-    cwd: ROOT, encoding: 'utf8', timeout: 15_000, windowsHide: true,
+    cwd: ROOT, encoding: 'utf8', timeout: 15_000, windowsHide: true, maxBuffer: 256 * 1024 * 1024,
   });
   if (log.status === 0 && typeof log.stdout === 'string') gitLogText = log.stdout;
+  // S373 — the commit the session starts FROM. Until now the lock held a timestamp only,
+  // so every reader that wanted "this session's commits" had to guess the start head from
+  // commit dates, and automation commits pulled at /start landed inside the window.
+  const head = spawnSync('git', ['rev-parse', '--verify', 'HEAD'], { cwd: ROOT, encoding: 'utf8', timeout: 15_000, windowsHide: true });
+  const sha = head.status === 0 ? String(head.stdout || '').trim() : '';
+  if (/^[0-9a-f]{40,64}$/i.test(sha)) gitHeadSha = sha;
 } catch { /* no git, or standalone copy without safe-spawn — degrade, never crash */ }
 
 // S291 — `--help` must never fire the action (S281). This writer had no help
@@ -140,13 +147,22 @@ const now = new Date().toISOString();
 // ledger entries by ts >= session_start). Use --force to rotate.
 const FORCE = args.includes('--force');
 let sessionStart = now;
+// S373 — start_head travels with session_start: a repeated /start in the same session
+// keeps the head the session really started from, never the head at the second call.
+// A carried-over lock with no start_head (written before S373) stays without one: the
+// current HEAD is not where that session started, and absent is the honest value.
+let startHead = gitHeadSha;
 if (!FORCE && fs.existsSync(lockPath)) {
   const prior = fs.readFileSync(lockPath, 'utf8');
   const m = prior.match(/^session_start:\s*(\S+)/m);
   if (m) {
     const priorTs = new Date(m[1]).getTime();
     // Only carry over if the prior lock is <12h old — otherwise treat as stale.
-    if (Date.now() - priorTs < 12 * 3600 * 1000) sessionStart = m[1];
+    if (Date.now() - priorTs < 12 * 3600 * 1000) {
+      sessionStart = m[1];
+      const priorHead = prior.match(/^start_head:\s*([0-9a-f]{40,64})\s*$/im)?.[1] || null;
+      startHead = priorHead;
+    }
   }
 }
 // S341 [audit #2] — A DECLARED SESSION OUTRANKS INFERENCE, BUT NEVER REWINDS THE LEDGER.
@@ -193,6 +209,7 @@ if (args.includes('--session')) {
 const content = [
   `locked_by: agent-session`,
   `session_start: ${sessionStart}`,
+  ...(startHead ? [`start_head: ${startHead}`] : []),
   ...(Number.isFinite(sessionId) ? [`session_id: ${sessionId}`, `session_source: ${sessionSource}`] : []),
   `agent: ${agentArg}`,
   `trigger: ${triggerArg}`,

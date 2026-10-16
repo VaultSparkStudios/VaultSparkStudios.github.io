@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-13T03:22:27.520Z",
+  "generatedAt": "2026-10-16T03:20:10.405Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "13d243285372327f6e12b96dc4b61180483e63b2",
+  "verifiedBrowserHeadSha": "587b39148ebdb96eee0fb3583a38ed2fbf3e1cc8",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 12,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
   "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 2 consecutive receipts. CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 3 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -26,10 +26,10 @@
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-13T02:38:24.027Z",
-    "currentBehindStreak": 2,
-    "newestGradableAt": "2026-10-13T02:38:24.027Z",
-    "newestAgeHours": 0.7,
+    "lastStrandedAt": "2026-10-16T01:52:19.985Z",
+    "currentBehindStreak": 3,
+    "newestGradableAt": "2026-10-16T01:52:19.985Z",
+    "newestAgeHours": 1.5,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -40,9 +40,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-13T03:16:13Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38339927480",
-      "headSha": "13d243285372327f6e12b96dc4b61180483e63b2",
+      "updatedAt": "2026-10-16T03:15:40Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38843627464",
+      "headSha": "587b39148ebdb96eee0fb3583a38ed2fbf3e1cc8",
       "event": "push"
     },
     {
@@ -50,9 +50,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-13T03:06:46Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38339927485",
-      "headSha": "13d243285372327f6e12b96dc4b61180483e63b2",
+      "updatedAt": "2026-10-16T03:05:49Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38843627525",
+      "headSha": "587b39148ebdb96eee0fb3583a38ed2fbf3e1cc8",
       "event": "push"
     },
     {
@@ -60,9 +60,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-13T03:20:59Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38339927522",
-      "headSha": "13d243285372327f6e12b96dc4b61180483e63b2",
+      "updatedAt": "2026-10-16T03:19:26Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38843627714",
+      "headSha": "587b39148ebdb96eee0fb3583a38ed2fbf3e1cc8",
       "event": "push"
     },
     {
@@ -101,13 +101,15 @@
     },
     {
       "name": "The Desk Dispatch — Daily Digest",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-15T23:35:45Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 3.74,
       "staleAfterHours": 48
     },
     {
@@ -167,39 +169,43 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-10-15T22:26:26Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 4.9,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-13T01:26:09Z",
+      "lastUpdatedAt": "2026-10-16T01:07:01Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.94,
+      "ageHours": 2.22,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-13T01:17:05Z",
+      "lastUpdatedAt": "2026-10-16T01:00:36Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.09,
+      "ageHours": 2.33,
       "staleAfterHours": 48
     },
     {
@@ -216,7 +222,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-13T03:14:20Z",
+      "lastUpdatedAt": "2026-10-16T01:06:09Z",
       "recentConclusions": [
         "success",
         "success",
@@ -225,7 +231,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.14,
+      "ageHours": 2.23,
       "staleAfterHours": 48
     },
     {

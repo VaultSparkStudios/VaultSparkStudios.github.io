@@ -1,0 +1,604 @@
+{
+  "session": 382,
+  "source": {
+    "run": 38785816235,
+    "job": 116597409095,
+    "sha": "5bf58495904ca0f952f9c3ea3a377cdf580f4a06",
+    "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38785816235",
+    "logSha256": "8a9efb88b330d4a15e4d8ac9897f881addcae8b0c89d6584ee43e6d66d4a6456"
+  },
+  "observed": {
+    "failed": 45,
+    "flaky": 2,
+    "skipped": 60,
+    "passed": 582,
+    "total": 689
+  },
+  "coverage": {
+    "enumeratedFailures": 45,
+    "allFailureAssertionsLocated": true
+  },
+  "groups": {
+    "retired search contract": 5,
+    "unresolved behavioral assertion": 8,
+    "tier vocabulary mismatch": 1,
+    "rank expectation mismatch": 1,
+    "navigation assertion mismatch": 4,
+    "fixed leadership-count mismatch": 1,
+    "fixed portfolio-count mismatch": 1,
+    "unreviewed pixel difference": 24
+  },
+  "failures": [
+    {
+      "title": "[chromium] › tests/ambient-bundle-integrity.spec.js:57:3 › Ambient bundle (S136) — single load + features alive › command-palette lazy-loads and opens on Cmd/Ctrl+K",
+      "category": "retired search contract",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveCount(expected) failed",
+        "Locator:  locator('script[src=\"/assets/command-palette.js\"]')",
+        "Expected: 1",
+        "Received: 0",
+        "Timeout:  5000ms"
+      ],
+      "next": "S382 replaces obsolete palette assertions with actual Spark behavior; fresh local and hosted acceptance required.",
+      "logLine": 1242
+    },
+    {
+      "title": "[chromium] › tests/ambient-bundle-integrity.spec.js:69:5 › Search remains reachable without covering mobile content › search stays in the header and returns focus at 360px",
+      "category": "retired search contract",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: getByRole('button', { name: 'Open search palette' })",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "S382 replaces obsolete palette assertions with actual Spark behavior; fresh local and hosted acceptance required.",
+      "logLine": 1304
+    },
+    {
+      "title": "[chromium] › tests/ambient-bundle-integrity.spec.js:69:5 › Search remains reachable without covering mobile content › search stays in the header and returns focus at 390px",
+      "category": "retired search contract",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: getByRole('button', { name: 'Open search palette' })",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "S382 replaces obsolete palette assertions with actual Spark behavior; fresh local and hosted acceptance required.",
+      "logLine": 1362
+    },
+    {
+      "title": "[chromium] › tests/ambient-bundle-integrity.spec.js:69:5 › Search remains reachable without covering mobile content › search stays in the header and returns focus at 430px",
+      "category": "retired search contract",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: getByRole('button', { name: 'Open search palette' })",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "S382 replaces obsolete palette assertions with actual Spark behavior; fresh local and hosted acceptance required.",
+      "logLine": 1420
+    },
+    {
+      "title": "[chromium] › tests/ambient-bundle-integrity.spec.js:117:1 › Search dialog exposes valid named combobox relationships",
+      "category": "retired search contract",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: locator('.vs-palette-results a').first()",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "S382 replaces obsolete palette assertions with actual Spark behavior; fresh local and hosted acceptance required.",
+      "logLine": 1478
+    },
+    {
+      "title": "[chromium] › tests/ambient-engagement.spec.js:52:1 › studio milestones render six chapters with an active now card",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveCount(expected) failed",
+        "Locator:  locator('[data-milestones-root] .milestone-card')",
+        "Expected: 6",
+        "Received: 0",
+        "Timeout:  10000ms"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 1536
+    },
+    {
+      "title": "[chromium] › tests/ambient-engagement.spec.js:61:1 › homepage first-scroll order keeps membership immediately after proof",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: 5",
+        "Received: 6"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 1598
+    },
+    {
+      "title": "[chromium] › tests/ambient-engagement.spec.js:112:1 › homepage IGNIS proof rail and IGNIS gauge hydrate from public intelligence",
+      "category": "tier vocabulary mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveText(expected) failed",
+        "Locator: locator('#ignis-live-tier')",
+        "Expected pattern: /^(Cooling|Warming|Hot|Ignited) tier$/i",
+        "Received string:  \"FORGE tier\"",
+        "Timeout: 5000ms"
+      ],
+      "next": "Compare actual public feed tier against IGNIS renderer and this old Cooling/Warming vocabulary.",
+      "logLine": 1642
+    },
+    {
+      "title": "[chromium] › tests/community-data.spec.js:6:1 › Community handles unnamed members without empty profile links",
+      "category": "rank expectation mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveText(expected) failed",
+        "Locator: locator('.vw-podium-rank')",
+        "Timeout: 5000ms"
+      ],
+      "next": "Compare mocked fixtures, canonical rank mapping and rendered Vault Guard/Vault Breacher labels; no economy change inferred.",
+      "logLine": 1704
+    },
+    {
+      "title": "[chromium] › tests/desk-artwork.spec.js:3:1 › artwork precedes prose; separate image threads load on request and do not move desktop prose",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: locator('[data-comment-target=\"editorial-illustration-1\"]').locator('textarea')",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 1782
+    },
+    {
+      "title": "[chromium] › tests/leaderboards.spec.js:27:3 › Leaderboards main page › period tabs exist on global panel",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveCount(expected) failed",
+        "Locator:  locator('#lb-panel-global .lb-period-tab')",
+        "Expected: 3",
+        "Received: 2",
+        "Timeout:  5000ms"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 1840
+    },
+    {
+      "title": "[chromium] › tests/nav-dropdown-coverage.spec.js:34:3 › Header nav dropdown coverage (S136) › Oracle is surfaced with gold accent + ⚡ marker",
+      "category": "navigation assertion mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeAttached() failed",
+        "Locator: locator('.nav-dropdown a[href=\"/oracle/\"]').first()",
+        "Expected: attached",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "Inspect current nav/footer and locate intended Oracle/Desk destination; source and visibility may differ.",
+      "logLine": 1902
+    },
+    {
+      "title": "[chromium] › tests/nav-dropdown-coverage.spec.js:62:3 › Header nav dropdown coverage (S136) › The Desk is discoverable from the Studio dropdown and footer",
+      "category": "navigation assertion mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toContainText(expected) failed",
+        "Locator: getByRole('heading', { level: 1 })",
+        "Expected pattern: /minds\\./i",
+        "Received string:  \"The AINews Desk.\"",
+        "Timeout: 5000ms"
+      ],
+      "next": "Inspect current nav/footer and locate intended Oracle/Desk destination; source and visibility may differ.",
+      "logLine": 1960
+    },
+    {
+      "title": "[chromium] › tests/oracle-extra.spec.js:51:3 › Ecosystem Oracle — S136 expansion › Top Movers panel renders 3 leadership cards",
+      "category": "fixed leadership-count mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: 3",
+        "Received: 2"
+      ],
+      "next": "Inspect why renderer produced2 cards before replacing expected3; source data may legitimately be sparse.",
+      "logLine": 2022
+    },
+    {
+      "title": "[chromium] › tests/oracle-extra.spec.js:90:3 › Ecosystem Oracle — S136 expansion › Layer 3 comparison deck renders and keeps shareable compare state",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(received).toMatch(expected)",
+        "Expected pattern: /^\\/oracle\\/\\?compare=[^&]+(%2C|,)[^&]+/",
+        "Received string:  \"/ignis/?compare=vaultsparkstudios-website%2Cmindframe\""
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 2066
+    },
+    {
+      "title": "[chromium] › tests/oracle-extra.spec.js:129:3 › Ecosystem Oracle — S136 expansion › production mode uses only committed public feeds",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: false",
+        "Received: true"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 2110
+    },
+    {
+      "title": "[chromium] › tests/returning-visitor-digest.spec.js:36:3 › returning-visitor-digest › shows the momentum strip when >=2 ships landed since the last visit",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: locator('[role=\"status\"]')",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 2154
+    },
+    {
+      "title": "[chromium] › tests/s134-oracle-ignis.spec.js:169:3 › Oracle page › share button is present and accessible",
+      "category": "unresolved behavioral assertion",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Locator: locator('#oracle-share-btn')",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "Reproduce this exact assertion on the current candidate before deciding whether runtime or test is wrong.",
+      "logLine": 2212
+    },
+    {
+      "title": "[chromium] › tests/s134-oracle-ignis.spec.js:179:3 › Navigation discoverability › Studio dropdown includes Ecosystem Oracle link on homepage",
+      "category": "navigation assertion mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(received).toBeGreaterThanOrEqual(expected)",
+        "Expected: >= 1",
+        "Received:    0"
+      ],
+      "next": "Inspect current nav/footer and locate intended Oracle/Desk destination; source and visibility may differ.",
+      "logLine": 2270
+    },
+    {
+      "title": "[chromium] › tests/s134-oracle-ignis.spec.js:186:3 › Navigation discoverability › Footer Studio column includes Ecosystem Oracle link",
+      "category": "navigation assertion mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveText(expected) failed",
+        "Locator: locator('footer.site-footer a[href=\"/oracle/\"]').first()",
+        "Expected pattern: /ecosystem oracle/i",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "next": "Inspect current nav/footer and locate intended Oracle/Desk destination; source and visibility may differ.",
+      "logLine": 2314
+    },
+    {
+      "title": "[chromium] › tests/stats-theme-accessibility.spec.js:27:5 › ecosystem explorer preserves denominators and all 19 project states",
+      "category": "fixed portfolio-count mismatch",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(locator).toHaveCount(expected) failed",
+        "Locator:  locator('.ecosystem-project')",
+        "Expected: 19",
+        "Received: 22",
+        "Timeout:  5000ms"
+      ],
+      "next": "Compare live registry count against fixed19 assertion; preserve denominator semantics.",
+      "logLine": 2372
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · dark › membership · iphone-se · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-f7d22-mbership-·-iphone-se-·-dark-chromium/membership-iphone-se-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2434
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · dark › journal · iphone-se · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-e9c94--journal-·-iphone-se-·-dark-chromium/journal-iphone-se-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2526
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · dark › oracle · iphone-se · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-7e097-k-oracle-·-iphone-se-·-dark-chromium/oracle-iphone-se-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2654
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · light › membership · iphone-se · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-0b1d9-bership-·-iphone-se-·-light-chromium/membership-iphone-se-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2770
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · light › journal · iphone-se · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-dd5f2-journal-·-iphone-se-·-light-chromium/journal-iphone-se-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2862
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-se · light › oracle · iphone-se · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-88a90--oracle-·-iphone-se-·-light-chromium/oracle-iphone-se-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 2984
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-13 · dark › journal · iphone-13 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-e6db9--journal-·-iphone-13-·-dark-chromium/journal-iphone-13-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3100
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-13 · dark › oracle · iphone-13 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-aad9a-k-oracle-·-iphone-13-·-dark-chromium/oracle-iphone-13-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3216
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-13 · light › journal · iphone-13 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-3cdba-journal-·-iphone-13-·-light-chromium/journal-iphone-13-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3332
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · iphone-13 · light › oracle · iphone-13 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-09930--oracle-·-iphone-13-·-light-chromium/oracle-iphone-13-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3448
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · pixel-5 · dark › journal · pixel-5 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-22330-rk-journal-·-pixel-5-·-dark-chromium/journal-pixel-5-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3564
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · pixel-5 · dark › oracle · pixel-5 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-bf33d-ark-oracle-·-pixel-5-·-dark-chromium/oracle-pixel-5-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3680
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · pixel-5 · light › journal · pixel-5 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-b7453-t-journal-·-pixel-5-·-light-chromium/journal-pixel-5-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3796
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · pixel-5 · light › oracle · pixel-5 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-02282-ht-oracle-·-pixel-5-·-light-chromium/oracle-pixel-5-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 3912
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · dark › vault-member · ipad-mini · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-5911e-t-member-·-ipad-mini-·-dark-chromium/vault-member-ipad-mini-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4028
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · dark › journal · ipad-mini · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-2ad01--journal-·-ipad-mini-·-dark-chromium/journal-ipad-mini-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4120
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · dark › oracle · ipad-mini · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-50bf5-k-oracle-·-ipad-mini-·-dark-chromium/oracle-ipad-mini-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4224
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · light › vault-member · ipad-mini · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-3669e--member-·-ipad-mini-·-light-chromium/vault-member-ipad-mini-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4328
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · light › journal · ipad-mini · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-01cef-journal-·-ipad-mini-·-light-chromium/journal-ipad-mini-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4420
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · ipad-mini · light › oracle · ipad-mini · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-87e77--oracle-·-ipad-mini-·-light-chromium/oracle-ipad-mini-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4524
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · desktop-1280 · dark › journal · desktop-1280 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-1cbfc-urnal-·-desktop-1280-·-dark-chromium/journal-desktop-1280-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4628
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · desktop-1280 · dark › oracle · desktop-1280 · dark",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-1f7ed-racle-·-desktop-1280-·-dark-chromium/oracle-desktop-1280-dark-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4732
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · desktop-1280 · light › journal · desktop-1280 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-e6818-rnal-·-desktop-1280-·-light-chromium/journal-desktop-1280-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4836
+    },
+    {
+      "title": "[chromium] › tests/visual-regression.spec.js:64:13 › visual regression · desktop-1280 · light › oracle · desktop-1280 · light",
+      "category": "unreviewed pixel difference",
+      "status": "diagnostic",
+      "evidence": [
+        "Error: expect(page).toHaveScreenshot(expected) failed",
+        "Expected: committed snapshot image; exact path retained in source run at logLine",
+        "Received: test-results/visual-regression-visual-r-a2eca-acle-·-desktop-1280-·-light-chromium/oracle-desktop-1280-light-actual.png"
+      ],
+      "next": "Inspect expected, actual and diff for this exact route/theme/viewport; do not regenerate baselines automatically.",
+      "logLine": 4940
+    }
+  ],
+  "honesty": "This inventory classifies observed symptoms, not root causes or passes. Only the five selected obsolete search cases are repaired in S382; all other diagnostics remain unresolved. Two flaky cases are not counted as persistent failures. Workflow success tolerates broad failures when auth email is absent."
+}

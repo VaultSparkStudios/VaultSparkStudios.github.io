@@ -45,6 +45,39 @@ function countList(v) {
   return Array.isArray(v) ? v.length : 0;
 }
 
+// ── S369 (ATLAS 01K2GTIT6L1DECB5157909E4FD): read the fields the runner writes ──
+//
+// S263 moved the runner's deferral record to an assertion-scoped name so a red run could
+// not re-date the file-level counts: run-tests.mjs now writes `testsAssertionsDeferred`,
+// `testsBudgetExhausted` and `testsInconclusive`. This library kept reading `testsDeferred`
+// alone. The writer changed its field; the reader did not follow; a full run that stopped
+// at its budget, or carried files with no clean verdict, rendered green.
+//
+// `testsDeferred` (file-level surface, refresh-test-count) and `testsAssertionsDeferred`
+// (assertion surface, run-tests) can name the same file, so the count is of DISTINCT files.
+
+/** Distinct files either test surface recorded as deferred. */
+export function deferralCount(status = {}) {
+  const names = new Set();
+  let unnamed = 0;
+  for (const list of [status?.testsDeferred, status?.testsAssertionsDeferred]) {
+    if (!Array.isArray(list)) continue;
+    for (const entry of list) {
+      const name = typeof entry === 'string' ? entry : entry?.file;
+      if (name) names.add(String(name).replace(/\\/g, '/'));
+      else unnamed += 1;
+    }
+  }
+  return names.size + unnamed;
+}
+
+/** Files recorded with no clean verdict. The field is a list from run-tests and a number from the reconciler. */
+export function inconclusiveCount(status = {}) {
+  const v = status?.testsInconclusive;
+  if (Array.isArray(v)) return v.length;
+  return typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : 0;
+}
+
 // ── S283 [audit #2]: was the file-level run BOUNDED? ─────────────────────────
 //
 // S263 (above) reconciled the two surfaces this module was built for. A third
@@ -81,7 +114,11 @@ const NOTE_CLAIMS_DEFERRAL = /(\d+)\s+files?\s+(?:remained\s+)?(?:budget[- ]?)?d
  * the empty-array-beside-a-note shape that made the green unfalsifiable.
  */
 export function describeBound(status = {}) {
-  const structuredDeferred = countList(status.testsDeferred);
+  // S369 — both deferral fields, plus the two assertion-run facts nothing read (see
+  // deferralCount / inconclusiveCount above).
+  const structuredDeferred = deferralCount(status);
+  const budgetExhausted = status.testsBudgetExhausted === true;
+  const inconclusive = inconclusiveCount(status);
   const mode = String(status.testsLastRunMode ?? '');
   const note = String(status.testsDeferredNote ?? '');
 
@@ -90,11 +127,15 @@ export function describeBound(status = {}) {
   const claimedDeferred = noteMatch && noteMatch[1] ? Number(noteMatch[1]) : (noteMatch ? null : 0);
   const noteBounded = Boolean(noteMatch);
 
-  const bounded = structuredDeferred > 0 || modeBounded || noteBounded;
-  const writerDefect = structuredDeferred === 0 && (modeBounded || noteBounded);
+  const bounded = structuredDeferred > 0 || budgetExhausted || inconclusive > 0 || modeBounded || noteBounded;
+  // A structured record of the bound (a file list, the budget flag, inconclusive files)
+  // means the writer DID say so; the defect is prose claiming a bound nothing structured carries.
+  const writerDefect = structuredDeferred === 0 && !budgetExhausted && inconclusive === 0 && (modeBounded || noteBounded);
 
   const reasons = [];
   if (structuredDeferred > 0) reasons.push(`${structuredDeferred} deferred file(s)`);
+  if (budgetExhausted) reasons.push('suite budget exhausted before every file ran');
+  if (inconclusive > 0) reasons.push(`${inconclusive} inconclusive file(s) with no clean verdict`);
   if (modeBounded) reasons.push(`run mode "${mode}"`);
   if (noteBounded && claimedDeferred) reasons.push(`${claimedDeferred} file(s) named as deferred in testsDeferredNote`);
   else if (noteBounded) reasons.push('testsDeferredNote records deferrals');
@@ -123,7 +164,7 @@ export function describeBound(status = {}) {
 export function resolveTestSignal(status = {}) {
   const passing = status.testsPassing;
   const total = status.testsTotal;
-  const deferred = countList(status.testsDeferred);
+  const deferred = deferralCount(status);   // S369 — both surfaces, not testsDeferred alone
   const lastRun = status.testsLastRun || null;
 
   const aPass = status.testsAssertionsPassing;

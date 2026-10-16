@@ -39,14 +39,22 @@ import { fastNodePath } from './fast-node.mjs';
 //
 // SUBSTITUTE ONLY THE EXACT INSTALLED BINARY. A caller naming 'node', 'npm', 'npx'
 // or any other command is left completely alone: those resolve through PATH and
-// carry semantics this module has no business changing. Verified this session that
-// nothing in scripts/ or ignis/ builds paths relative to process.execPath, so the
-// clone's neighbours are never consulted.
+// carry semantics this module has no business changing.
+//
+// THE CLONE HAS NO NEIGHBOURS (corrected S372 [audit #10]). This comment used to say
+// "verified that nothing in scripts/ or ignis/ builds paths relative to
+// process.execPath". That was verified in STUDIO OPS, in S292 — and this file propagates.
+// In Seamline a script resolved npm/bin/npx-cli.js beside process.execPath, so a child
+// spawned through this wrapper could not find npx and a post-deploy finalizer exited 1
+// after production deployed. A child started with the clone sees the clone as its
+// process.execPath, and there is no npm/ beside it. The resolver therefore substitutes
+// by default only in the control plane; a recipient opts in with VAULTSPARK_FAST_NODE=1
+// after checking its own tree (lib/fast-node.mjs, state `not-opted-in`).
 function substituteNodeExe(args) {
   if (!args.length || typeof args[0] !== 'string') return args;
   if (args[0] !== process.execPath) return args;
   const fast = fastNodePath(process.execPath);
-  if (fast === process.execPath) return args; // unprovisioned / drifted / opted out
+  if (fast === process.execPath) return args; // unprovisioned / drifted / opted out / recipient not opted in
   const a = args.slice();
   a[0] = fast;
   return a;

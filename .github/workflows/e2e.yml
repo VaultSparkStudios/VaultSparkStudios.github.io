@@ -9,7 +9,7 @@ on:
 
 jobs:
   # ── Compliance gate (no auth required — must always pass) ─────────────────────
-  # Runs compliance-pages.spec.js + games.spec.js against local preview.
+  # Runs compliance pages, games and Spark behavior against local preview.
   # These tests require no secrets and must never be skipped.
   compliance:
     runs-on: ubuntu-latest
@@ -62,6 +62,19 @@ jobs:
 
       - name: Public intelligence sync check
         run: npm run build:check
+
+      # Collection must pass without credentials. The optional authenticated
+      # run below cannot hide runner/configuration failures in Node unit suites.
+      - name: Browser test collection
+        run: npm run test:collection
+        env:
+          BASE_URL: http://127.0.0.1:4173
+
+      # Public search must remain a release gate even without member credentials.
+      - name: Spark navigation and search contract
+        run: npx playwright test tests/ambient-bundle-integrity.spec.js tests/spark-compass.spec.js --reporter=list --project=chromium
+        env:
+          BASE_URL: http://127.0.0.1:4173
 
       - name: Run compliance tests
         run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium

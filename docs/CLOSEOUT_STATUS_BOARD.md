@@ -1,48 +1,48 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-13 (Session 376 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S376 ═══════╗
-║  Date: 2026-10-13  ·  SIL: 927/1000  ·  Velocity: 3 stable       ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
-║  Autopilot: proven (S376)                                        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S382 ═══════╗
+║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
+║  Mode: BUILDER  ·  Agent: codex                                  ║
+║  Autopilot: BYPASSED (S382) — no receipt; run node scripts/clos  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: 3 items. Comment threads no longer show a Cancel re  ║
-║  ✓ Tests: after-paint unit 12 of 12; reactions builder self-tes  ║
-║  ✓ Review: an independent review found that a tap handled by th  ║
-║  ✓ Deploy: Pushed as b59fc7d3a2 on 2026-10-13 UTC after a full   ║
-║  ✓ Corrected: S375 recorded the WebKit failures as a click arri  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore(release): seal merged S382 staging candidate            ║
+║  ✓ chore(release): record S382 validation candidate              ║
+║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ test(search): enforce shipped Spark behavior in release comp  ║
+║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 927/1000 ═══════════════════════════════════════╗
-║    Dev Health         93   █████████░                            ║
+╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
+║    Dev Health         95   ██████████                            ║
 ║    Alignment          94   █████████░                            ║
 ║    Momentum           90   █████████░                            ║
-║    Engagement         93   █████████░                            ║
-║    Process Qual       89   █████████░                            ║
+║    Engagement         95   ██████████                            ║
+║    Process Qual       90   █████████░                            ║
 ║    Coherence          92   █████████░                            ║
 ║    Security           94   █████████░                            ║
 ║    Ecosystem          91   █████████░                            ║
 ║    Capital            95   ██████████                            ║
-║    Automation         96   ██████████                            ║
+║    Automation         97   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
+║  ✓ context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
-║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 2 files  ·  M:2 A:0 D:0 ?:0                            ║
+║  Changes: 718 files  ·  M:44 A:0 D:0 ?:674                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,14 +51,14 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/17                                            ║
+║  Doctor:        16/17                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         534/534                                          ║
+║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         7d ago                                           ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
-║  shells:        17 started · 17 closed · 0 running               ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║

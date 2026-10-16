@@ -16,6 +16,11 @@
 //   node scripts/run-tests.mjs --shards=4     # run all shards sequentially and aggregate JSON proof
 //   node scripts/run-tests.mjs --shards=64 --resume-shards --max-shards-per-run=8
 //   node scripts/run-tests.mjs --shard=1/4 --failure-sidecar=.cache/custom.ndjson
+//   node scripts/run-tests.mjs --no-preflight # skip the whole-tree contract preflight
+//
+// A full run (no --changed / --tier / --shard) and a --shards=N aggregate first run the cheap
+// whole-tree contract tests in lib/suite-preflight.mjs and stop, exit 1, before any other
+// test file when one is red twice. Skipped in hosted CI (GITHUB_ACTIONS).
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,13 +28,16 @@ import { fileURLToPath } from 'node:url';
 import { execSync, spawnSync } from './lib/safe-spawn.mjs';
 import { isSpawnExhaustion, spawnBackoffMs, spawnResilient } from './lib/spawn-resilience.mjs';
 import { getHostLoad } from './lib/host-load.mjs';
-import { discoverSuiteFiles, tierOf } from './lib/test-discovery.mjs';
+import { discoverSuiteInventory } from './lib/test-discovery.mjs';
+import { isVerifiedSuiteResult } from './lib/closeout-suite-proof.mjs';
 import { readDurationCache, recordDuration, sortByHistoricalDuration, writeDurationCache } from './lib/test-duration-ordering.mjs';
 import { buildProofSourceManifest } from './lib/proof-source-manifest.mjs';
 import { buildShardSourcePlan, shardDependencyGraph } from './lib/shard-proof-sources.mjs';
 import { liveStateBlockedMessage, missingLiveState } from './lib/test-live-state.mjs';
 import { envBlockedEntry, PRECONDITION_ABSENT, HOST_SPAWN_EXHAUSTED } from './lib/env-blocked.mjs';
 import { writeProjectStatus } from './lib/write-project-status.mjs';
+import { snapshotTrackedTree, purityDelta, mergeShardPurity, carryForwardMutations, statusTreePurity } from './lib/suite-tree-purity.mjs';
+import { SUITE_PREFLIGHT_CHECKS, PREFLIGHT_SKIP_FLAG, availablePreflightChecks, preflightApplies, preflightFailureRecords, runSuitePreflight } from './lib/suite-preflight.mjs';
 // Re-export the pure helpers so existing importers of run-tests keep working and the
 // single source of truth stays scripts/lib/spawn-resilience.mjs.
 export { isSpawnExhaustion, spawnBackoffMs };
@@ -58,7 +66,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DURATION_CACHE = path.join(ROOT, '.cache', 'test-durations.json');
 const argv = process.argv.slice(2);
 if (argv.includes('--help') || argv.includes('-h')) {
-  console.log('Usage: node scripts/run-tests.mjs [--tier=1|2] [--json] [--no-write] [--changed] [--no-retry] [--shard=N/M|--shards=N] [--resume-shards] [--max-shards-per-run=N]');
+  console.log('Usage: node scripts/run-tests.mjs [--tier=1|2] [--json] [--no-write] [--changed] [--no-retry] [--shard=N/M|--shards=N] [--resume-shards] [--max-shards-per-run=N] [--no-preflight]');
   process.exit(0);
 }
 const TIER = (argv.find(a => a.startsWith('--tier=')) || '').split('=')[1] || null;
@@ -67,6 +75,9 @@ const CHANGED = argv.includes('--changed');
 const SHARD_SPEC = (argv.find(a => a.startsWith('--shard=')) || '').split('=')[1] || '';
 const SHARD_COUNT = parsePositiveInt((argv.find(a => a.startsWith('--shards=')) || '').split('=')[1]);
 const RESUME_SHARDS = argv.includes('--resume-shards');
+const PROOF_AFTER_RAW = (argv.find(a => a.startsWith('--proof-after=')) || '').slice('--proof-after='.length);
+const PROOF_AFTER_MS = PROOF_AFTER_RAW ? Date.parse(PROOF_AFTER_RAW) : null;
+if (PROOF_AFTER_RAW && !Number.isFinite(PROOF_AFTER_MS)) throw new Error('--proof-after requires an ISO timestamp');
 const MAX_SHARDS_PER_RUN = parsePositiveInt((argv.find(a => a.startsWith('--max-shards-per-run=')) || '').split('=')[1]);
 const PROOF_DIR_ARG = (argv.find(a => a.startsWith('--proof-dir=')) || '').split('=')[1] || '';
 const FAILURE_SIDECAR_ARG = (argv.find(a => a.startsWith('--failure-sidecar=')) || '').split('=')[1] || '';
@@ -75,6 +86,41 @@ const FAILURE_SIDECAR_ARG = (argv.find(a => a.startsWith('--failure-sidecar=')) 
 // Shards also run a subset. Only the aggregate --shards=N command may write the
 // merged full-suite assertion surface.
 const NO_WRITE = argv.includes('--no-write') || CHANGED || Boolean(SHARD_SPEC);
+// S371 · [SIL][S370 #2] — which invocations run the whole-tree contract preflight is decided
+// in lib/suite-preflight.mjs (full run and sharded aggregate only; never a child shard).
+// This script is propagated to every repo; `available` is 0 where the studio-ops contract
+// tests do not exist, and the preflight is then silent and inert.
+const PREFLIGHT_GATE_INPUT = { changed: CHANGED, shardSpec: SHARD_SPEC, tier: TIER, ci: process.env.GITHUB_ACTIONS === 'true', available: availablePreflightChecks(ROOT) };
+const PREFLIGHT_GATE = preflightApplies({ ...PREFLIGHT_GATE_INPUT, skipFlag: argv.includes(PREFLIGHT_SKIP_FLAG) });
+
+/**
+ * Run the preflight and report it on stderr (stdout stays pure for --json). On a stop the
+ * live failures sidecar receives the red file(s): the run empties that ledger when it
+ * starts, and an empty ledger would read as a run in which nothing failed.
+ */
+function executeSuitePreflight() {
+  process.stderr.write(`▶ suite preflight: ${SUITE_PREFLIGHT_CHECKS.length} whole-tree contract test file(s) before the suite (${PREFLIGHT_SKIP_FLAG} to skip)\n`);
+  const pre = runSuitePreflight({
+    root: ROOT,
+    spawnSync,
+    notRunHere: (check) => {
+      const liveState = missingLiveState(path.join(ROOT, check.file), ROOT);
+      return liveState.missing.length ? liveStateBlockedMessage(liveState.missing) : '';
+    },
+  });
+  for (const line of pre.lines) process.stderr.write(line + '\n');
+  if (pre.judgement.stop) writeFailureLedger(SIDECAR_PATH, preflightFailureRecords(pre.judgement));
+  return pre;
+}
+
+function preflightSkippedRecord() {
+  // Said out loud only when the flag is what skipped it; a child shard or a --changed run
+  // never had a preflight to skip.
+  if (argv.includes(PREFLIGHT_SKIP_FLAG) && preflightApplies(PREFLIGHT_GATE_INPUT).run) {
+    process.stderr.write(`⏭ suite preflight skipped by ${PREFLIGHT_SKIP_FLAG} — a whole-tree contract red will surface inside the suite instead\n`);
+  }
+  return { ran: false, reason: PREFLIGHT_GATE.reason };
+}
 
 function parsePositiveInt(raw) {
   const n = Number(raw);
@@ -96,35 +142,7 @@ export function shouldStopForBudget(startMs, budgetSeconds, nowMs = Date.now()) 
 }
 
 function discover() {
-  const files = [];
-  const testDir = path.join(ROOT, 'scripts', 'test');
-  if (fs.existsSync(testDir)) {
-    // S313 [audit #2] — one shared definition of "the suite", imported by this runner and
-    // by refresh-test-count. They previously disagreed by 59 files and the narrower one
-    // was the founder-facing surface.
-    for (const f of discoverSuiteFiles(testDir)) {
-      if (TIER && !f.startsWith(`tier${TIER}-`)) continue;
-      files.push({ tier: tierOf(f), path: path.join(testDir, f), kind: 'node' });
-    }
-  }
-  // Legacy scripts/test-*.mjs (keep running for backward compat)
-  if (!TIER || TIER === 'legacy') {
-    for (const f of fs.readdirSync(path.join(ROOT, 'scripts'))) {
-      if (/^test-.*\.mjs$/.test(f)) {
-        files.push({ tier: 'legacy', path: path.join(ROOT, 'scripts', f), kind: 'node' });
-      }
-    }
-  }
-  // IGNIS tests
-  const ignisDir = path.join(ROOT, 'ignis', 'src');
-  if (fs.existsSync(ignisDir) && (!TIER || TIER === 'ignis')) {
-    for (const f of fs.readdirSync(ignisDir)) {
-      if (/^test-.*\.ts$/.test(f)) {
-        files.push({ tier: 'ignis', path: path.join(ignisDir, f), kind: 'tsx' });
-      }
-    }
-  }
-  return files.sort((a, b) => a.tier.localeCompare(b.tier) || a.path.localeCompare(b.path));
+  return discoverSuiteInventory(ROOT, { tier: TIER });
 }
 
 export function parseShardSpec(spec) {
@@ -193,8 +211,9 @@ export function proofShapeMatches(actual, expected) {
     && actual.proofSources?.rootHash === expected.proofSources?.rootHash;
 }
 
-export function reusableShardProof(proof, { shardCount, shardIndex, proofShape = null } = {}) {
+export function reusableShardProof(proof, { shardCount, shardIndex, proofShape = null, afterMs = null } = {}) {
   if (!proof || proof.mode !== 'shard-proof') return false;
+  if (afterMs !== null && !(Date.parse(proof.summary?.executionStartedAt || '') > afterMs)) return false;
   if (shardCount && proof.shardCount !== shardCount) return false;
   if (shardIndex && proof.shardIndex !== shardIndex) return false;
   if (proofShape && !proofShapeMatches(proof.proofShape, proofShape)) return false;
@@ -205,7 +224,15 @@ export function reusableShardProof(proof, { shardCount, shardIndex, proofShape =
     && !(parsed.envBlocked || []).length
     && !(parsed.inconclusive || []).length
     && !(parsed.deferred || []).length
-    && !parsed.budgetExhausted;
+    && !parsed.budgetExhausted
+    // S366 [audit #3] — per-file parity with the closeout gate. A shard with a FLAKY file
+    // has failures 0 and was reused, then assessCloseoutSuiteProof rejected the aggregate
+    // (S365 moved shard 22 aside by hand). One predicate now decides both.
+    && !(parsed.flaky || []).length
+    // An absent or empty result list proves nothing per file — `[].every()` is vacuously
+    // true — so a legacy/malformed proof is re-executed rather than reused (S366 review).
+    && Array.isArray(parsed.results) && parsed.results.length > 0
+    && parsed.results.every(isVerifiedSuiteResult);
 }
 
 export function boundedShardDecision({ reusable = false, executed = 0, max = null } = {}) {
@@ -219,6 +246,173 @@ export function boundedShardDecision({ reusable = false, executed = 0, max = nul
 // contention (Windows teardown/file-lock race) shows pass === total with a
 // non-zero exit. 'inconclusive' carries the passing assertions forward but is
 // surfaced distinctly — it can never mask an assertion failure.
+// ── S369 (ATLAS 01K2GTIT6L1DECB5157909E4FD, item 4): read the FINAL summary ──────────
+//
+// One regex used to read a file's count and took its FIRST match anywhere in the output,
+// so an early progress line ("step 1/3 …") became the file's verdict, and every file whose
+// summary was not shaped "<word> N/M <text>" matched nothing and was recorded as 1/1.
+// Measured on the S368 aggregate: 98 of 767 files carried that invented 1/1 — 36 node:test
+// files and 55 with a real summary in another shape.
+//
+// Shapes are tried strongest first; within a shape the LAST matching line wins. A shape
+// that states no total ("24 assertions passed") is flagged `totalDerived`, because on a
+// non-zero exit it must not be read as "every assertion passed".
+const COUNT_SHAPES = [
+  // _harness.mjs: "<label>   <pass>/<total>  ✓" or "… ⛔ N FAIL"
+  { shape: 'harness', re: /^\S.*?\s(\d+)\/(\d+)\s+(?:✓|⛔)/, read: (m) => ({ pass: +m[1], total: +m[2] }) },
+  { shape: 'tests-passed-failed', re: /(\d+)\s+tests?\s*[·,]\s*(\d+)\s+passed\s*[·,]\s*(\d+)\s+failed/i, read: (m) => ({ pass: +m[2], total: +m[1] }) },
+  { shape: 'passed-failed', re: /(\d+)\s+passed\s*[·,]\s*(\d+)\s+failed/i, read: (m) => ({ pass: +m[1], total: +m[1] + +m[2] }) },
+  { shape: 'ratio', re: /(?:^|\s)(\d+)\/(\d+)(?:\s+pass(?:ing|ed))?\s*$/i, read: (m) => ({ pass: +m[1], total: +m[2] }) },
+  // The pre-S369 shape, kept as a fallback so nothing it read is lost — but last line, not first.
+  // The ratio may open the line ("11/11 parser-boundary assertions passed"): the old regex
+  // reached it across the preceding newline.
+  { shape: 'ratio-inline', re: /(?:^|\s)(\d+)\/(\d+)\s+\S/, read: (m) => ({ pass: +m[1], total: +m[2] }) },
+  { shape: 'passed-only', re: /(\d+)\s+(?:assertions?\s+|tests?\s+)?passed\b/i, read: (m) => ({ pass: +m[1], total: +m[1], totalDerived: true }) },
+];
+
+function lastLineMatch(outputLines, re) {
+  for (let i = outputLines.length - 1; i >= 0; i -= 1) {
+    const m = re.exec(outputLines[i]);
+    if (m) return m;
+  }
+  return null;
+}
+
+/**
+ * The assertion count a test file reported, or null when it reported none.
+ * @returns {{pass:number,total:number,shape:string,totalDerived?:true}|null}
+ */
+export function parseTestCounts(output) {
+  const outputLines = String(output ?? '').split(/\r?\n/);
+  // S369 review — an impossible ratio is not a count. "started 10/9 at noon" is prose, and
+  // more passes than tests can only be two unrelated numbers; such a match is skipped, and
+  // a weaker shape with a possible count may still be read.
+  const possible = (c) => Number.isInteger(c.pass) && Number.isInteger(c.total) && c.pass >= 0 && c.pass <= c.total;
+  const lastPossible = ({ re, read }) => {
+    for (let i = outputLines.length - 1; i >= 0; i -= 1) {
+      const m = re.exec(outputLines[i]);
+      if (m && possible(read(m))) return read(m);
+    }
+    return null;
+  };
+  const harness = lastPossible(COUNT_SHAPES[0]);
+  if (harness) return { ...harness, shape: 'harness' };
+  // node:test prints its totals on separate lines ("ℹ tests 10" / "ℹ pass 9", or "# tests").
+  // Skipped and todo cases are in `tests` and in neither `pass` nor `fail`; left in the
+  // total they would record a fully passing file as short.
+  const nodeTest = nodeTestCounts(outputLines);
+  if (nodeTest && possible(nodeTest)) return { pass: nodeTest.pass, total: nodeTest.total, shape: 'node-test' };
+  for (const spec of COUNT_SHAPES.slice(1)) {
+    const counts = lastPossible(spec);
+    if (counts) return { ...counts, shape: spec.shape };
+  }
+  return null;
+}
+
+function nodeTestCounts(outputLines) {
+  const field = (name) => {
+    const m = lastLineMatch(outputLines, new RegExp(`^(?:ℹ|#) ${name} (\\d+)\\s*$`));
+    return m ? +m[1] : null;
+  };
+  const tests = field('tests');
+  const pass = field('pass');
+  if (tests === null || pass === null) return null;
+  const skipped = field('skipped');
+  const todo = field('todo');
+  return { pass, total: tests - (skipped === null ? 0 : skipped) - (todo === null ? 0 : todo), fail: field('fail') };
+}
+
+/**
+ * Does ANY summary in the output report a shortfall? Used only on a failed run, to decide
+ * whether an all-passed final line can be believed.
+ */
+function anySummaryReportsFailure(output) {
+  const outputLines = String(output ?? '').split(/\r?\n/);
+  const nodeTest = nodeTestCounts(outputLines);
+  if (nodeTest && ((nodeTest.fail !== null && nodeTest.fail > 0) || nodeTest.pass < nodeTest.total)) return true;
+  if (outputLines.some((line) => /^(?:ℹ|#) fail [1-9]\d*\s*$/.test(line))) return true;
+  for (const line of outputLines) {
+    for (const { re, read } of COUNT_SHAPES) {
+      const m = re.exec(line);
+      if (!m) continue;
+      const c = read(m);
+      if (c.pass < c.total) return true;
+    }
+  }
+  // S369 review r2 — a shortfall in a SUMMARY was the only thing looked for, so the
+  // harness's own guard ("⛔ HARNESS: 2 test(s) were registered but never executed") printed
+  // after an "8/8 ✓" line still left the run believable, as did an AssertionError, a
+  // "not ok", a "1 failed" line. The exception is for a failure that says NOTHING: any line
+  // that reports one withdraws it.
+  return outputLines.some((line) => FAILURE_LINE_RES.some((re) => re.test(line)));
+}
+
+// Deliberately NOT here: a bare `Error:` at line start. The S167 case this exception exists
+// for is a teardown file-lock race, and that is exactly how it prints (`Error: EBUSY: …
+// unlink`). Typed errors and node ERR_ codes are a program defect, not contention.
+const FAILURE_LINE_RES = [
+  /⛔|✗|✖/,
+  /^\s*not ok\b/,
+  /\b[1-9]\d*\s+(?:failed|FAIL)\b/,
+  /\b(?:Assertion|Type|Reference|Syntax|Range)Error\b/,
+  /\bERR_[A-Z][A-Z0-9_]+\b/,
+];
+
+/**
+ * pass / total / status for one test file from its output and exit status.
+ * The exit status alone decides pass or fail. `countSource` says where the numbers came
+ * from: 'summary' (the file reported them) or 'exit-code' (it reported none, so the
+ * 1-of-1 is the file-level verdict, not a measured assertion).
+ */
+export function fileResultFromOutput({ out = '', exitStatus } = {}) {
+  const failed = exitStatus !== 0;
+  const counts = parseTestCounts(out);
+  // S369 review — parsed counts never overrule the exit status.
+  //
+  // A FAILED run recorded with pass >= total is what classifyAfterRetry turns into
+  // `inconclusive` ("all assertions passed; non-zero exit"), which is not counted as a
+  // failure. The wider shapes made that reachable from "23 passed, 0 failed" followed by a
+  // crash, from a green harness line printed after a red one, and from an echoed fixture
+  // line. So on a failed run all-passed counts are dropped (0/1, fail) — with ONE exception,
+  // which is the case S167 built the inconclusive state for and which predates these shapes:
+  // the harness's own "N/N ✓" line, when NO summary anywhere in the output reports a
+  // shortfall. Anything else that claims every assertion passed while the process failed is
+  // not believed.
+  //
+  // A PASSING run recorded short (a test that prints a fixture's red summary and exits 0)
+  // would turn the suite signal red for a file that passed; those counts are dropped too.
+  let usable = counts;
+  if (usable && failed && usable.pass >= usable.total) {
+    const believable = usable.shape === 'harness' && !usable.totalDerived && !anySummaryReportsFailure(out);
+    if (!believable) usable = null;
+  }
+  // S369 review r2 — a passing exit beside a short count keeps its exit-code verdict (the
+  // exit status rules), but the counts are no longer thrown away: a test that reports
+  // failures and forgets to exit non-zero is the broken test worth finding, so the result
+  // carries what the file said and the run lists it.
+  let contradiction = null;
+  if (usable && !failed && usable.pass < usable.total) {
+    contradiction = { contradiction: 'summary-short-exit-0', reportedPass: usable.pass, reportedTotal: usable.total, reportedShape: usable.shape };
+    usable = null;
+  }
+  return {
+    pass: usable ? usable.pass : (failed ? 0 : 1),
+    total: usable ? usable.total : 1,
+    status: failed ? 'fail' : 'pass',
+    countSource: usable ? 'summary' : 'exit-code',
+    ...(contradiction || {}),
+  };
+}
+
+/**
+ * S369 review r2 — files whose own summary contradicts their exit status (today: a passing
+ * exit beside a short count). They keep the exit-code verdict; this is where they are named.
+ */
+export function summaryContradictions(results = []) {
+  return results.filter((r) => r && r.contradiction)
+    .map((r) => ({ file: r.file, contradiction: r.contradiction, reportedPass: r.reportedPass, reportedTotal: r.reportedTotal }));
+}
+
 export function classifyAfterRetry(retry) {
   if (retry.status === 'pass') return 'flaky';
   if (retry.total > 0 && retry.pass === retry.total) return 'inconclusive';
@@ -504,17 +698,12 @@ function runOne(file, { spawnRetries = SPAWN_RETRIES } = {}) {
       timeoutMs,
     });
   }
-  // harness format: "<label>  <pass>/<total>  [✓|⛔ N FAIL]"
-  const m = out.match(/(\S+)\s+(\d+)\/(\d+)\s+(.+)$/m);
-  const pass = m ? parseInt(m[2], 10) : null;
-  const total = m ? parseInt(m[3], 10) : null;
-  const failed = res.status !== 0;
+  // S369 — counts come from the file's FINAL summary, in any shape this suite prints
+  // (see parseTestCounts); a pass with no readable count is labelled, not counted as measured.
   return {
     file: path.relative(ROOT, file.path),
     tier: file.tier,
-    pass: pass ?? (failed ? 0 : 1),
-    total: total ?? 1,
-    status: failed ? 'fail' : 'pass',
+    ...fileResultFromOutput({ out, exitStatus: res.status }),
     output: out.trim().split('\n').slice(-8).join('\n'),
   };
 }
@@ -539,6 +728,16 @@ export function orderChangedTests(files, changedRel = new Set(), durationCache =
     .sort((a, b) => changedOrderRank(a, changedRel) - changedOrderRank(b, changedRel));
 }
 
+// S362 [audit #2 · SIL S347 #1] — tests whose subject is the WHOLE tree, not any one
+// file. A file-reference selector cannot see them by construction: a byte-identical
+// literal twin is two files that never mention each other. They are cheap (~0.5s), so
+// --changed runs them whenever any .mjs source changed.
+export const WHOLE_TREE_CONTRACT_TESTS = ['scripts/test/tier2-policy-drift-extract.mjs'];
+
+export function wholeTreeContractApplies(changedRelPaths) {
+  return [...changedRelPaths].some((p) => /\.mjs$/i.test(String(p)));
+}
+
 function filterToChanged(allFiles) {
   let changed = [];
   try {
@@ -559,12 +758,14 @@ function filterToChanged(allFiles) {
   }
   const selected = [];
   const seen = new Set();
+  const wholeTree = wholeTreeContractApplies(changedRel) ? new Set(WHOLE_TREE_CONTRACT_TESTS) : new Set();
   for (const f of allFiles) {
     const rel = path.relative(ROOT, f.path).replace(/\\/g, '/');
     const fname = path.basename(f.path);
     let include = false;
     if (f.tier === '1') include = true;                      // cheap guards always
     else if (changedRel.has(rel)) include = true;            // the test file itself changed
+    else if (wholeTree.has(rel)) include = true;             // whole-tree contract (twin lint)
     else if (/propagate/i.test(fname) && !propagateTouched) include = false; // skip slow walk
     else {
       try {
@@ -672,6 +873,10 @@ export function isDeferredInCi(file) {
 // Partition discovered files into {run, deferred} given host load. Defers ONLY when the host
 // is genuinely saturated and the caller did not force a full run. Pure + unit-tested.
 export function partitionForHostLoad(files, load, { forceSlow = false } = {}) {
+  // unknown-ok: an unmeasured or errored host census defers NOTHING — every file runs, which
+  // is the strict side; only a measured saturated:true may move a file out of this pass.
+  // (S369: this read was invisible to check-three-state-consumers until the file's text
+  // changed — its comment/string stripper had swallowed this region and counted 0 reads.)
   if (forceSlow || !load || load.error || !load.saturated) return { run: files, deferred: [] };
   const run = [], deferred = [];
   for (const f of files) (isDeferrableUnderLoad(f) ? deferred : run).push(f);
@@ -685,6 +890,22 @@ async function main() {
 if (SHARD_COUNT) {
   await runShardAggregate(SHARD_COUNT);
   return;
+}
+// S371 · [SIL][S370 #2] — a full run decides the cheap whole-tree contracts first. A red
+// there stops here: the suite would report the same file red some 80 minutes later.
+let preflightRecord = preflightSkippedRecord();
+if (PREFLIGHT_GATE.run) {
+  const pre = executeSuitePreflight();
+  preflightRecord = pre.record;
+  if (pre.judgement.stop) {
+    if (JSON_OUT) {
+      console.log(JSON.stringify({
+        mode: 'preflight-stopped', totalPass: 0, totalAll: 0, files: 0,
+        failures: pre.judgement.stoppedBy.length, preflight: preflightRecord, results: [],
+      }, null, 2));
+    }
+    process.exit(1);
+  }
 }
 let files = discover();
 const shard = parseShardSpec(SHARD_SPEC);
@@ -809,7 +1030,7 @@ if (RETRY) {
     catch { /* unreadable → cannot claim it changed, so it stays eligible for 'flaky' */ }
     const retry = runOne(file);
     // Always adopt the retry's detail (more informative, post-suite-noise).
-    r.pass = retry.pass; r.total = retry.total; r.output = retry.output;
+    r.pass = retry.pass; r.total = retry.total; r.output = retry.output; r.countSource = retry.countSource;
     if (retry.status === 'pass') {
       if (editedMidRun) {
         r.status = 'pass';
@@ -885,8 +1106,14 @@ const reportedInconclusive = [...new Set([...inconclusive, ...timeoutInconclusiv
 // can read one summary record without parsing the human/JSON output).
 sidecar({ phase: 'summary', totalPass, totalAll, files: results.length, failures: failedFiles.length, flaky: flaky.length, inconclusive: reportedInconclusive.length, envBlocked: envBlocked.length, deferred: deferred.length, budgetExhausted, ok: failedFiles.length === 0 && timeoutInconclusive.length === 0 });
 
+// S369 — files that passed on exit code alone: they printed no count this runner can read,
+// so their 1-of-1 is a file verdict, not a measured assertion. Named, never silently counted.
+const exitCodeOnly = results.filter(r => r.status === 'pass' && r.countSource === 'exit-code' && !r.contradiction).map(r => r.file);
+// S369 review r2 — passed on exit code while their own summary reported a shortfall.
+const contradictions = summaryContradictions(results);
+
 if (JSON_OUT) {
-  console.log(JSON.stringify({ totalPass, totalAll, files: results.length, failures: failedFiles.length, flaky, changedDuringRun, inconclusive: reportedInconclusive, envBlocked, deferred, budgetExhausted, budgetSeconds: BUDGET_SECONDS, results }, null, 2));
+  console.log(JSON.stringify({ totalPass, totalAll, files: results.length, failures: failedFiles.length, flaky, changedDuringRun, inconclusive: reportedInconclusive, envBlocked, deferred, exitCodeOnly, summaryContradictions: contradictions, budgetExhausted, budgetSeconds: BUDGET_SECONDS, preflight: preflightRecord, results }, null, 2));
 } else {
   console.log('\nStudio Ops test suite');
   console.log('─'.repeat(70));
@@ -931,6 +1158,8 @@ if (JSON_OUT) {
   ].join(', ');
   const defNote = deferred.length ? ` · ${deferred.length} deferred (${defKinds}; not counted green)` : '';
   console.log(`  ${totalPass}/${totalAll} assertions · ${passFiles}/${results.length} files${flakyNote}${changedNote}${incNote}${envNote}${defNote} · ${failedFiles.length ? '⛔' : timeoutInconclusive.length ? '◐ (inconclusive)' : deferred.length ? '✓ (smaller-green)' : '✓'}`);
+  if (contradictions.length) console.log(`  ⚠ ${contradictions.length} file(s) exited 0 while their own summary reported a shortfall (kept passing on exit code; fix the test): ${contradictions.slice(0, 5).map(c => `${c.file} ${c.reportedPass}/${c.reportedTotal}`).join(', ')}${contradictions.length > 5 ? ' …' : ''}`);
+  if (exitCodeOnly.length) console.log(`  ${exitCodeOnly.length} file(s) passed on exit code only (no assertion count printed; each is counted as 1 file verdict, not a measured assertion): ${exitCodeOnly.slice(0, 5).join(', ')}${exitCodeOnly.length > 5 ? ' …' : ''}`);
   if (failedFiles.length || timeoutInconclusive.length || envBlocked.length) console.log(`  live failures sidecar: ${path.relative(ROOT, SIDECAR_PATH)}  (tail -f during a long run)`);
 }
 
@@ -1017,8 +1246,12 @@ async function runShardAggregate(shardCount) {
     if (a.startsWith('--failure-sidecar=')) continue;
     if (a === '--resume-shards') continue;
     if (a.startsWith('--max-shards-per-run=')) continue;
+    if (a.startsWith('--proof-after=')) continue;
     if (a === '--json') continue;
     if (a === '--no-write') continue;
+    // The preflight belongs to this aggregate, never to a child shard, and must not enter
+    // the proof shape: skipping it once would otherwise invalidate every stored shard proof.
+    if (a === PREFLIGHT_SKIP_FLAG) continue;
     passthrough.push(a);
   }
   const discoveredFiles = discover();
@@ -1032,6 +1265,18 @@ async function runShardAggregate(shardCount) {
     proofSources: row.manifest,
   }));
   const aggregateProofPath = path.join(proofDir, 'aggregate.json');
+  // S370 [audit #2] · [SIL:2⛔][S305 #1] — the sharded run is the closeout suite, and it
+  // measured no purity delta: the probe read `not-yet-measured` while PROJECT_STATUS carried
+  // a delta five days old. The delta is measured PER SHARD, around the child that runs it,
+  // and stored in that shard's own proof (S370 review #3). The verdict is then bound to
+  // exactly the proofs the aggregate is built from: a reused proof brings its own window, a
+  // re-executed shard replaces its own, a killed invocation loses nothing it had finished,
+  // and a proof that carries no window makes the whole verdict unmeasurable, never clean.
+  const shardPurityRows = [];
+  let preflightRecord = preflightSkippedRecord();
+  // The gate's reason says why a preflight APPLIES; until a shard actually executes, the
+  // honest reason it has not run is that nothing has (an all-reused resume never runs it).
+  if (PREFLIGHT_GATE.run) preflightRecord = { ran: false, reason: 'no shard executed in this invocation' };
   // Aggregate owns the canonical live ledger. Child shards write only their own
   // sidecars, so concurrently running shards can never truncate each other.
   writeFailureLedger(SIDECAR_PATH, []);
@@ -1057,11 +1302,12 @@ async function runShardAggregate(shardCount) {
     if (RESUME_SHARDS && fs.existsSync(proofPath)) {
       try {
         const proof = JSON.parse(fs.readFileSync(proofPath, 'utf8'));
-        if (reusableShardProof(proof, { shardCount, shardIndex: i, proofShape: expectedShape })) {
+        if (reusableShardProof(proof, { shardCount, shardIndex: i, proofShape: expectedShape, afterMs: PROOF_AFTER_MS })) {
           const parsed = proof.parsed || {};
           for (const r of parsed.results || []) mergedResults.push(r);
           shardResults.push({ ...(proof.summary || {}), reused: true, proofPath: path.relative(ROOT, proofPath).replace(/\\/g, '/') });
           resumedShards.push(`${i}/${shardCount}`);
+          shardPurityRows.push({ shard: `${i}/${shardCount}`, purity: proof.treePurity || null });
           acceptedFailureSidecars.push({
             path: failureSidecarPath,
             shard: `${i}/${shardCount}`,
@@ -1085,6 +1331,33 @@ async function runShardAggregate(shardCount) {
       '--no-stream',
       `--failure-sidecar=${failureSidecarPath}`,
     ];
+    // The purity window opens BEFORE the preflight, so anything a preflight test file writes
+    // to the tracked tree is attributed to this shard's proof. Opened after it, that write
+    // would already be in the before-snapshot and no window would ever own it.
+    const windowStartedAt = Date.now();
+    const shardTreeBefore = snapshotTrackedTree({ spawnSync, cwd: ROOT });
+    // S371 · [SIL][S370 #2] — once per invocation, before the first shard that will actually
+    // execute. An invocation that only reuses stored proofs spawns nothing and skips it; a
+    // resumed invocation runs it again, because a repair between checkpoints is exactly
+    // where a new whole-tree red comes from.
+    if (PREFLIGHT_GATE.run && preflightRecord.ran !== true) {
+      const pre = executeSuitePreflight();
+      preflightRecord = pre.record;
+      if (pre.judgement.stop) {
+        // No aggregate proof is written: the stored one still describes the last run that
+        // measured the suite, and this run measured none of it.
+        if (JSON_OUT) {
+          console.log(JSON.stringify({
+            mode: 'sharded', state: 'preflight-stopped', complete: false, shardCount,
+            proofDir: path.relative(ROOT, proofDir).replace(/\\/g, '/'),
+            resumedShards, executedShards, pendingShards: [],
+            totalPass: 0, totalAll: 0, files: 0,
+            failures: pre.judgement.stoppedBy.length, preflight: preflightRecord, results: [],
+          }, null, 2));
+        }
+        process.exit(1);
+      }
+    }
     const startedAt = Date.now();
     const res = spawnSync(process.execPath, childArgs, {
       cwd: ROOT,
@@ -1094,6 +1367,21 @@ async function runShardAggregate(shardCount) {
       windowsHide: true,
     });
     const durationMs = Date.now() - startedAt;
+    const shardTreeAfter = snapshotTrackedTree({ spawnSync, cwd: ROOT });
+    // The proof this run replaces, when it belongs to the same proof window (review r2 #3).
+    let replacedPurity = null;
+    if (RESUME_SHARDS) {
+      try {
+        const replaced = JSON.parse(fs.readFileSync(proofPath, 'utf8')).treePurity || null;
+        if (replaced && (PROOF_AFTER_MS == null || Date.parse(replaced.startedAt) > PROOF_AFTER_MS)) replacedPurity = replaced;
+      } catch { replacedPurity = null; }
+    }
+    const shardPurity = {
+      startedAt: new Date(windowStartedAt).toISOString(),
+      endedAt: new Date().toISOString(),
+      delta: carryForwardMutations(replacedPurity, purityDelta(shardTreeBefore, shardTreeAfter), shardTreeAfter),
+    };
+    shardPurityRows.push({ shard: `${i}/${shardCount}`, purity: shardPurity });
     let parsed = null;
     try {
       parsed = JSON.parse(res.stdout || '{}');
@@ -1118,6 +1406,7 @@ async function runShardAggregate(shardCount) {
     }
     const summary = {
       shard: `${i}/${shardCount}`,
+      executionStartedAt: new Date(startedAt).toISOString(),
       exitCode: res.status ?? -1,
       signal: res.signal || null,
       durationMs,
@@ -1142,6 +1431,7 @@ async function runShardAggregate(shardCount) {
       signal: summary.signal,
       summary,
       parsed,
+      treePurity: shardPurity,
     };
     fs.writeFileSync(proofPath, JSON.stringify(proof, null, 2) + '\n', 'utf8');
     shardResults.push(summary);
@@ -1191,6 +1481,12 @@ async function runShardAggregate(shardCount) {
     deferred,
     budgetExhausted,
     childParseFailed,
+    // S369 review r2 — visible after a sharded run too, not only in a single-process one.
+    summaryContradictions: summaryContradictions(mergedResults),
+    // S371 — whether this invocation ran the whole-tree contract preflight, and what it read.
+    preflight: preflightRecord,
+    // Only a COMPLETE run has a verdict; a checkpoint has measured part of the suite.
+    treePurity: pendingShards.length ? null : mergeShardPurity(shardPurityRows, { filesRun: mergedResults.length }),
     shards: shardResults,
     results: mergedResults,
   };
@@ -1245,6 +1541,9 @@ async function runShardAggregate(shardCount) {
       j.testsLastRunMode = `sharded:${shardCount}`;
       j.testsShardProofDir = path.relative(ROOT, proofDir).replace(/\\/g, '/');
       j.testsShardProofResumed = resumedShards;
+      // A run whose proofs were all reused from an earlier invocation set with no ledger
+      // has no measurement; the older recorded delta is then left in place with its own date.
+      if (aggregate.treePurity) j.testsTreePurity = statusTreePurity(aggregate.treePurity);
       writeProjectStatus(ROOT, j, { touchLastUpdated: false });
     } catch { /* ignore write failure in CI */ }
   }

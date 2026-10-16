@@ -7,6 +7,7 @@ import path from 'node:path';
 import {execFileSync} from './lib/safe-spawn.mjs';
 import {fileURLToPath} from 'node:url';
 import {assessSessionOutcome,sessionFloorVerdict,minSessionValueGate,bootAmortization,parseBudgetDirective} from './lib/session-economics.mjs';
+import {selectScopedAudit} from './lib/execution-contract.mjs';
 const CONTROL_ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const argv=process.argv.slice(2);
 const flag=(n,d=null)=>{const i=argv.indexOf(n);return i>=0?argv[i+1]??d:d;};
@@ -24,8 +25,17 @@ const auditArg=flag('--audit');
 if(auditArg) {
   const file=path.resolve(ROOT,auditArg),rel=path.relative(ROOT,file);
   if(rel.startsWith('..')||path.isAbsolute(rel)){console.error('audit path must remain inside the selected project');process.exit(2);}
-  try{outcome={...assessSessionOutcome(JSON.parse(fs.readFileSync(file,'utf8')),{session}),audit:rel};}
-  catch{outcome={...outcome,reason:'selected audit is unreadable'};}
+  try{
+    let audit=JSON.parse(fs.readFileSync(file,'utf8'));
+    const scopeArg=flag('--scope');
+    if(scopeArg){
+      const scopeFile=path.resolve(ROOT,scopeArg),scopeRel=path.relative(ROOT,scopeFile);
+      if(scopeRel.startsWith('..')||path.isAbsolute(scopeRel))throw new Error('scope path must remain inside the selected project');
+      audit=selectScopedAudit(audit,JSON.parse(fs.readFileSync(scopeFile,'utf8')));
+    }
+    outcome={...assessSessionOutcome(audit,{session}),audit:rel};
+  }
+  catch(error){outcome={...outcome,reason:'selected audit/scope cannot be verified: '+error.message};}
 }
 // Reading context and token ledgers is not necessary to recognize completed work.
 // Resource inspection is opt-in and estimates never become observed session spend.

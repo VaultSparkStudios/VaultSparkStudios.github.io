@@ -14,7 +14,8 @@
  */
 import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { pathToFileURL } from 'url';
+import { pathToFileURL, fileURLToPath } from 'url';
+import path from 'node:path';
 
 const ROOT = join(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1'), '..', '..');
 const OUT = join(ROOT, 'api', 'rank-climbers.json');
@@ -43,6 +44,11 @@ function computeRank(points) {
   return 'Spark Initiate';
 }
 
+export function sameSupabaseProject(configuredUrl, targetUrl = SB_URL) {
+  try { return new URL(configuredUrl).origin === new URL(targetUrl).origin; }
+  catch { return false; }
+}
+
 async function resolveServiceKey() {
   // CANON-012: resolve via secrets gateway. Falls back to anon key if unavailable.
   // pathToFileURL required on Windows — bare absolute paths are not valid import specifiers.
@@ -50,6 +56,10 @@ async function resolveServiceKey() {
     const secretsPath = join(ROOT, '..', 'vaultspark-studio-ops', 'scripts', 'lib', 'secrets.mjs');
     if (existsSync(secretsPath)) {
       const { getSecret } = await import(pathToFileURL(secretsPath).href);
+      // The shared gateway can describe a different project's database. Never
+      // send that project's privileged credential to this website's endpoint.
+      const configuredUrl = await getSecret('SUPABASE_URL', 'supabase.admin');
+      if (!sameSupabaseProject(configuredUrl)) return { key: SB_ANON_KEY, isServiceRole: false };
       const key = await getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.admin');
       if (key && key.length > 50) return { key, isServiceRole: true };
     }
@@ -59,8 +69,8 @@ async function resolveServiceKey() {
 
 const CHECK = process.argv.includes('--check');
 
-async function fetchClimbers() {
-  const { key, isServiceRole } = await resolveServiceKey();
+export async function fetchClimbers({ fetchImpl = fetch, resolveKey = resolveServiceKey } = {}) {
+  const { key, isServiceRole } = await resolveKey();
 
   // Only fetch public-profile members above the starting rank (points > 49).
   // No rank_name column — rank is computed from points using RANK_THRESHOLDS.
@@ -69,14 +79,12 @@ async function fetchClimbers() {
   const headers = { apikey: key, Accept: 'application/json' };
   if (isServiceRole) headers['Authorization'] = `Bearer ${key}`;
 
-  const res = await fetch(url, { headers });
+  const res = await fetchImpl(url, { headers, signal: AbortSignal.timeout(20_000) });
   if (!res.ok) {
-    const body = await res.text().catch(() => '');
-    console.warn(`[build-rank-climbers] Supabase ${res.status} (${isServiceRole ? 'service-role' : 'anon'}) — writing empty output. ${body.slice(0, 120)}`);
-    return [];
+    throw new Error(`Supabase HTTP ${res.status}; previous rank report preserved`);
   }
   const rows = await res.json();
-  if (!Array.isArray(rows)) return [];
+  if (!Array.isArray(rows)) throw new Error('Supabase rank response is not an array; previous report preserved');
 
   return rows.map(function (row) {
     return {
@@ -93,8 +101,7 @@ const periodLabel = (function () {
 }());
 
 async function build() {
-  let climbers = [];
-  try { climbers = await fetchClimbers(); } catch (e) { console.warn('[build-rank-climbers] fetch failed:', e.message); }
+  const climbers = await fetchClimbers();
 
   const out = {
     schemaVersion: '1.0',
@@ -108,7 +115,30 @@ async function build() {
   console.log(`[build-rank-climbers] wrote api/rank-climbers.json (${climbers.length} climbers)`);
 }
 
-if (CHECK) {
+async function selfTest() {
+  const assert = await import('node:assert/strict');
+  assert.equal(sameSupabaseProject(SB_URL + '/'), true);
+  assert.equal(sameSupabaseProject('https://different-project.example'), false);
+  assert.equal(sameSupabaseProject('not a URL'), false);
+  const resolveKey = async () => ({ key: 'public-fixture', isServiceRole: false });
+  const rows = await fetchClimbers({ resolveKey, fetchImpl: async (url, options) => {
+    assert.match(url, /public_profile=eq.true/);
+    assert.equal(options.headers.Authorization, undefined);
+    return { ok: true, json: async () => [] };
+  } });
+  assert.deepEqual(rows, []);
+  await assert.rejects(fetchClimbers({ resolveKey, fetchImpl: async () => ({ ok: false, status: 401 }) }), /HTTP 401/);
+  await assert.rejects(fetchClimbers({ resolveKey, fetchImpl: async () => ({ ok: true, json: async () => ({}) }) }), /not an array/);
+  await assert.rejects(fetchClimbers({ resolveKey, fetchImpl: async () => { throw new Error('offline'); } }), /offline/);
+  console.log('build-rank-climbers --self-test: passed (target identity, public read, empty success and failure negatives)');
+}
+
+const direct = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (direct && process.argv.includes('--self-test')) {
+  selfTest().catch(error => { console.error(error.message); process.exitCode = 1; });
+} else if (direct && process.argv.includes('--help')) {
+  console.log('build-rank-climbers [--check|--self-test]: refresh public opt-in rankings; failed fetches preserve the previous report.');
+} else if (direct && CHECK) {
   if (!existsSync(OUT)) { console.error('[build-rank-climbers] MISSING api/rank-climbers.json'); process.exit(1); }
   try {
     const data = JSON.parse(readFileSync(OUT, 'utf8'));
@@ -116,6 +146,6 @@ if (CHECK) {
     if (age > 48 * 3600 * 1000) { console.error(`[build-rank-climbers] STALE — ${Math.round(age / 3600000)}h old`); process.exit(1); }
     console.log('[build-rank-climbers] OK');
   } catch (e) { console.error('[build-rank-climbers] INVALID JSON:', e.message); process.exit(1); }
-} else {
+} else if (direct) {
   build().catch(function (e) { console.error('[build-rank-climbers] fatal:', e); process.exit(1); });
 }

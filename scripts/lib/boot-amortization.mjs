@@ -1,5 +1,6 @@
 // Resource-ratio persistence and reporting. Token consumption does not establish
 // output quality, wasted work, or a requirement to extend a session.
+import { strictNumber } from './strict-number.mjs';
 import { spawnSync } from './safe-spawn.mjs';
 import fsSync from 'node:fs';
 import path from 'node:path';
@@ -147,10 +148,21 @@ export function recordAmortization(status, amort, ranAt, cap = HISTORY_CAP, meta
   // contributes one sample. Without a session the old append behaviour is kept —
   // an unstamped row is not evidence about any particular session, and dropping it
   // silently would be worse than counting it once.
-  const session = Number.isFinite(Number(meta.session)) ? Number(meta.session) : null;
+  // S351 [audit #6] — the guard above this line SAYS an unstamped row must be
+  // appended, and `Number.isFinite(Number(null))` is TRUE (null coerces to 0), so
+  // a null session took the replace-at-session-0 branch instead: every unstamped
+  // row collided into one slot and overwrote the last. Latent, not observed live
+  // (all 10 current rows are stamped), but it is the same coercion that cost the
+  // closeout-autopilot probe 273 phantom bypasses this session.
+  // S351 [self-audit] — this line first hoisted the value into a local and
+  // re-derived the check inline. That was correct but UNPROTECTED: the
+  // null-vs-absent coercion rule matches a property access, so hoisting to a
+  // local hides the identical defect from the lint that exists to catch it.
+  // One shared predicate, in a file that is tested directly.
+  const session = strictNumber(meta.session);
   if (session !== null) {
     record.session = session;
-    const at = hist.findIndex((h) => Number(h?.session) === session);
+    const at = hist.findIndex((h) => strictNumber(h?.session) === session);
     if (at >= 0) hist[at] = record; else hist.push(record);
   } else {
     hist.push(record);

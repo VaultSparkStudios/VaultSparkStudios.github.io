@@ -61,10 +61,17 @@ export function renderTitleHeader({ name, type, lifecycle, audience, vaultStatus
   }[type] || '🚀';
   const nameUpper = (name || 'Project').toUpperCase();
   const modeLabel = mode.toUpperCase();
+  // S370 review r2 #2: row() cuts at the box width, and the lifecycle word comes LAST. A
+  // long `type` (VOID: "artist-identity,website,release-campaign") pushed it off the row,
+  // so the title box no longer said what stage the project is in. The type is the part
+  // that gives way: it is shortened with an ellipsis until the rest of the row fits.
+  const tail = ` · ${lifecycle || '—'}/${audience || '—'} · ${(vaultStatus || 'FORGE').toUpperCase()}`;
+  let typeLabel = String(type || 'project');
+  if (typeLabel.length + tail.length > W) typeLabel = `${typeLabel.slice(0, Math.max(1, W - tail.length - 1))}…`;
   return [
     top(),
     row(`${emoji} ${nameUpper}`),
-    row(`${type || 'project'} · ${lifecycle || '—'}/${audience || '—'} · ${(vaultStatus || 'FORGE').toUpperCase()}`),
+    row(`${typeLabel}${tail}`),
     row(`Session ${session || '?'} · ${date || '—'} · ${modeLabel} MODE`),
     row(`Owner: ${owner || 'VaultSpark Studios'}`),
     bottom(),

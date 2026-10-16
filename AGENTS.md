@@ -1,5 +1,11 @@
 # Project Agent Guide
 
+## Native arc goal identity
+
+For a native Codex goal containing `/arc`, run `node scripts/arc-goal-binding.mjs --goal-id <threadId> --created-at <epoch-seconds>` before triage. `start-new-arc` requires the full startup and a fresh audit; repeat with `--apply` after the session lock is written. `resume-current-arc` continues that bound session's audit and unfinished phases. A continuation never starts another arc, and identical prompt text never identifies a goal.
+
+Bindings in ignored `.cache/arc-goals/` establish association only. Verify this invocation's implementation, closeout, remote push and release evidence before marking its native goal complete. A prior closeout cannot satisfy a new founder invocation.
+
 ## Session Protocol (agent-neutral — applies to Claude Code, Codex, any agent)
 
 The canonical execution protocol for every Studio OS session lives in **`docs/SESSION_PROTOCOL.md`** in this repo (propagated from studio-ops).

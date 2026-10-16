@@ -2095,3 +2095,91 @@ Session Intent: do the still-open S372 items, improve on that session's work, fi
 - Receipt binding (founder-approved, D-S373.6): routine Desk content in a reviewed article is set aside only when the generator proves the page, the block digest is recorded, and drift is reported. Verified by a three-way drill on the real repository. Art and edition publishes no longer invalidate the visual receipt.
 - Not done 2: the Lighthouse flake, which now gates releases (the homepage tier reads recurring sub-floor; run 38027265643 failed at 5a8beccc5 on the homepage at 0.75 and one article at 0.89, the same profile as S372 and not caused by S373). CI result files show observed FCP equal to observed LCP with ten scripts finishing before it in every run, steady simulated FCP (1.3s) and swinging simulated LCP (2.3–3.9s). Direction: load below-the-fold Desk scripts after paint. Thresholds unchanged.
 - Carried: identity hold unchanged; Ark questions to studio-ops (visual-QA `.cache` classification, Supabase gateway slot) await replies.
+
+---
+<!-- archived: 2026-10-13 -->
+
+## Where We Left Off (Session 375) — satire cartoon below the illustration (2026-10-12)
+
+Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). During the arc the founder asked for the satire cartoon to sit below the AI-generated art on every article with its own reaction and comment area. Intent: **Achieved** — shipped, pushed and promoted.
+
+- Shipped: 2 items. The cartoon stage renders directly below the illustration on 122 articles, with eight reactions counted under its own key and its own comment thread; the Desk feed publishes that key. The article shell can no longer be scrolled sideways.
+- Tests: `test-news-article-layout` passes on 123 articles with the new order; the reaction spec gained a cartoon vote isolation test (passes in Chromium and Firefox); a browser vote on the cartoon was stored only under the cartoon key; seven themes captured at 1366px and 390px, before and after.
+- Deploy: Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de202f4; staging release spec 6/6; cartoon probe 12/12 across Chromium, Firefox and WebKit at 1366px and 390px, after one unexplained failure in the first probe run straight after the publish). Clean-checkout gate passed at 35c661742 before the push. Required checks at c8635d986e passed on the first attempt: E2E 38210836603, Lighthouse 38210836606 (measured article 0.94 against the unchanged 0.90 floor), accessibility 38210836596. Promoted through the confirmed-production lane, run 38212109944 (SCOPED; identity hold unchanged). Readback from served bytes: tree-current at be976158c8, which contains the candidate; 1043 of 1053 files identical, 0 differing, 10 retired-route redirects. The same cartoon probe passes 12/12 against production, and the live reaction endpoint answers for the cartoon key with an empty tally.
+- Found, not fixed: seven reaction tests fail in WebKit on production and locally with the unmodified spec, and in Chromium against staging (a click right after DOMContentLoaded precedes the parked script; Chromium and Firefox pass locally and in CI); cartoon reaction totals are not in any public summary yet; an empty image thread showed two stray controls under a mocked service. Both on the task board.
+- Not selected: the homepage scripts that never initialise (enabling them turns on a feed that has never rendered in production), the four failing browser specs, Lighthouse stability. This session adds a second lazy image stage above the News Brief, so the next Lighthouse runs are new evidence for that task.
+- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
+
+
+
+---
+<!-- archived: 2026-10-13 -->
+
+## Where We Left Off (Session 376) — reader feedback on Desk articles (2026-10-12)
+
+Session Intent: /arc, then direct commit/push to main and full deployment (founder-authorized). Intent: **Achieved** — shipped, pushed and promoted.
+
+- Shipped: 3 items. Comment threads no longer show a Cancel reply banner (or, at phone width, a Try again button) when there is nothing to cancel or retry. Reaction taps are no longer lost in WebKit: sections are rendered late only where scroll anchoring exists, and the loader delivers a tap made before the reactions script has run. The reader-signal feed lists illustration and cartoon reactions per story, separate from story totals.
+- Tests: after-paint unit 12 of 12; reactions builder self-test 25 of 25; Desk browser specs (reactions, comments, after-paint, artwork) 80 of 81 with no retries on three engines, the one failure a Firefox tap that passes on retry; WebKit reactions 12 of 12 (was 5 of 12); early WebKit taps 8 of 8 delivered (was 1 of 8). Seven themes captured at 1366px and 390px, before and after.
+- Review: an independent review found that a tap handled by the live script could be delivered a second time while a later parked script was still loading, which would have taken the vote back. Fixed with a unit case; three smaller findings also fixed.
+- Deploy: Pushed as b59fc7d3a2 on 2026-10-13 UTC after a full staging publish of the rebased candidate b8d0fb6027 (receipt b9cf02706b2e9d95f5b1aadf; served bytes matched the commit; an earlier publish of 61beca59ba, receipt 6a642380c6b1dcb736fdaaca, passed the staging release spec 6/6 and delivered 6 of 6 early WebKit taps). Local gate 534/534 and mobile audit 215/215 on the pushed tree. Required checks at b59fc7d3a2: E2E 38328313060 and accessibility 38328313040 passed first time; Lighthouse 38328313078 failed its first attempt on the measured article (0.88 against the unchanged 0.90 floor) and passed on one re-run (article 0.92, homepage 0.81). Promoted through the confirmed-production lane, run 38330430872 (SCOPED; identity hold unchanged): production reports d3c87d8ba7, which contains the candidate. Readback from served bytes: tree-current at d3c87d8ba7, 1051 of 1061 files identical, 0 differing, 10 retired-route redirects (a first run left one file unread and was repeated). On production the reply banner computes display:none and 6 of 6 early WebKit taps reach the (mocked) service.
+- Corrected: S375 recorded the WebKit failures as a click arriving before the parked script. That mechanism exists but was not the cause; the press and release landed on different elements because the section above the reaction bar grew by 181px between them.
+- Found, not fixed: Firefox loses a tap issued straight after a jump about 2 times in 14; the Spark companion overlaps the Post comment button at 390px. Both on the task board.
+- Not selected: the dormant homepage scripts, the four failing browser specs, the art receipt path (needs a scheduled publish).
+- Carried: identity hold unchanged; earlier Ark questions to studio-ops still await replies.
+
+---
+<!-- archived: 2026-10-15 -->
+
+## Where We Left Off (Session 377) — homepage Recent Ships (2026-10-13)
+
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Selected outcomes achieved. Full fresh arc phases executed; closing publication452f pushed and production readback accepted. Final evidence receipt prepared for publication.
+
+- Shipped: once-only deferred release cards with hashed delivery; bounded task and strict premise adapters using the existing Studio Ops runtime.
+- Tests: local and clean-checkout full gates 534/534 before rebase; mobile 215/215; five new unit regressions; seven themes × desktop/mobile × before/after = 28 captures, all inspected. Rebase preserved reviewed UI source bytes; canonical staging browser three passed/three held, feature browser six passed.
+- Deploy: Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json.
+- Review: independent review caught duplicate selector handling and an overly broad historical premise; both fixed. Narrow screenshot-filename scan exceptions retain high-confidence secret scanning.
+- Scope: S377 is this invocation's bound session; prior closeout evidence did not substitute for startup, audit or implementation. CDR reviewed — no new creative direction. Cross-repo intelligence writes use Ark; delivery alone is not adoption.
+- Remaining: existing identity hold, field-vitals freshness, Firefox taps after jumps and companion overlap, Lighthouse repeatability, dormant home-intelligence. Preserved pre-existing local operator caches and untracked work.
+Closing acceptance: candidate452fdf163c, confirmed production38365858868, immutable served text1055/1065 exact with10 redirects; primary281 exact HTML bodies after narrow provider transport,14 declared redirects and nine held identity routes; live6/6. Exact closing workflows38362922215/38362922239/38362922275 passed (Lighthouse attempt2; unchanged floor). Fresh mobile215/215 and recaptured14 after images. See docs/RELEASE_S377.json.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+---
+<!-- archived: 2026-10-15 -->
+
+## Where We Left Off (Session 378) — Spark control clearance
+
+Session Intent: /arc then direct commit/push to main and full deployment, explicitly authorized. Native goal01a13711-2367-7bd0-8d51-29d9b12798f8 binds this fresh S378 to47da157a4667; continuation resumes this arc. Full startup and fresh nine-axis audit executed.
+
+S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. See docs/RELEASE_S378.json.
+
+Independent source review corrected selector-membership caching; final source and LQIP review pass. CDR reviewed: no new human creative direction. Preserve prior operator cache residue. Four unused newly propagated canonical helpers are held reversibly under.cache/s378-held-propagation; report dependency mismatch through Ark. Identity holds remain scoped outside acceptance.
+
+---
+<!-- archived: 2026-10-15 -->
+
+## Where We Left Off (Session 379) — target-bound release profile
+
+Session Intent: full fresh /arc, direct main commit/push and full deployment, explicitly authorized. Native goal 01a13cbb-e5fa-76e3-8574-db73dc06305d binds this invocation to S379. Startup, fresh nine-axis audit, implementation, canonical closeout and closing production acceptance are verified for this bound S379 invocation. Final evidence publication and native completion follow.
+
+S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate. See docs/RELEASE_S379.json.
+
+Independent review caught inherited fuzzy identity attribution; unique exact matching and collision fixtures resolved it. The actual archive exceeded the old300-second allowance; the900-second bounded prerequisite passed independent review and15 self-tests. An unsuitable verification wrapper regenerated unrelated outputs; those were restored before acceptance. Missing local startup maintenance and checklist helpers remain absent, not falsely reported as executed; canonical protocols and available project tools were used. Context usage remains unmeasured.
+
+Preserve operator caches. All five recorded publisher states have been restored and verified active; receipt: ignored .cache/s379-publisher-freeze.json The original operator light capture has been restored from the saved autostash. CDR reviewed: no new human creative direction. Ark pattern cargo01K4UCJTFK1116CAE8121DE704 was delivered to Studio Ops; owner adoption is not claimed.
+
+---
+<!-- archived: 2026-10-16 -->
+
+## Where We Left Off (Session 380) — verified production
+
+Session Intent: full fresh /arc, direct main commit/push and full deployment authorized. Native goal 01a13fb9-0568-7961-ad6a-79bc74aabb86 binds this completed S380 invocation.
+
+S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
+
+Next: existing SIL tasks only; preserve operator caches and the original light capture. CDR reviewed: no new human creative direction. Evidence: docs/RELEASE_S380.json.

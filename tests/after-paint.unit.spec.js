@@ -206,6 +206,8 @@ test('a page with nothing parked reports done immediately', async () => {
 test('a reaction tapped before its parked script has run is delivered once, the latest per bar', async () => {
   let releaseImage;
   const imageHeld = new Promise((resolve) => { releaseImage = resolve; });
+  let releaseReactions;
+  const reactionsHeld = new Promise((resolve) => { releaseReactions = resolve; });
   const body = `<div data-desk-reactions="one"><button data-reaction="a">A</button><button data-reaction="b">B</button></div>
 <div data-desk-reactions="two"><button data-reaction="c">C</button></div>
 <button id="other">Other</button>
@@ -222,8 +224,8 @@ test('a reaction tapped before its parked script has run is delivered once, the 
       {
         match: (u) => u.origin === ORIGIN && u.pathname === '/assets/__reactions.js',
         handle: async (route) => {
-          // Slow enough that every tap below lands before the handler exists.
-          await new Promise((done) => setTimeout(done, 400));
+          // Keep every early tap ahead of the handler regardless of host load.
+          await reactionsHeld;
           await route.fulfill({
             status: 200,
             contentType: 'application/javascript',
@@ -240,12 +242,13 @@ test('a reaction tapped before its parked script has run is delivered once, the 
     await f.page.click('#other');
     await f.page.click('[data-reaction="c"]');
     assert.equal(await f.page.evaluate(() => typeof window.__got), 'undefined', 'the taps landed before the parked script ran');
+    releaseReactions();
     await waitFor(async () => (await f.page.evaluate(() => (window.__got || []).length)) === 2, { message: 'early taps to be delivered' });
     await settle(200);
     assert.deepEqual(await f.page.evaluate(() => window.__got), ['b', 'c'], 'one tap per bar, the most recent, and nothing for other controls');
     await f.page.click('[data-reaction="a"]');
     assert.deepEqual(await f.page.evaluate(() => window.__got), ['b', 'c', 'a'], 'a later tap is handled once, not replayed');
-  } finally { releaseImage(); await f.close(); }
+  } finally { releaseReactions(); releaseImage(); await f.close(); }
 });
 
 test('a tap the reactions script already handled is not delivered again while a later parked script loads', async () => {

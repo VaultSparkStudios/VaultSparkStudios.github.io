@@ -11,8 +11,8 @@ name: Visual Regression (mobile)
 # To re-baseline locally:
 #   npx playwright test tests/visual-regression.spec.js --update-snapshots
 #
-# Baselines are captured against production by default. If the workflow ever
-# needs to diff against a preview deploy, set the VR_BASE_URL env in the job.
+# Pull requests snapshot the checked-out candidate through local preview.
+# Manual runs can explicitly select a deployed origin for baseline capture.
 #
 # ── Baseline capture (S134/S223) ─────────────────────────────────────────────
 # Local snapshots on Windows/macOS differ from Ubuntu runner pixels and are
@@ -71,6 +71,15 @@ jobs:
       - run: npm install --no-audit --no-fund
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
+      - name: Start candidate preview
+        run: |
+          node scripts/local-preview-server.mjs &
+          echo "PREVIEW_PID=$!" >> $GITHUB_ENV
+        env:
+          LOCAL_PREVIEW_HOST: 127.0.0.1
+          LOCAL_PREVIEW_PORT: '4173'
+      - name: Wait for candidate preview
+        run: timeout 30 bash -c 'until curl --fail --silent --output /dev/null http://127.0.0.1:4173/; do sleep 0.5; done'
       # Pin to chromium: the spec emulates device viewports/UA/scale, but the
       # rendering ENGINE must be a single reproducible one or baselines are
       # meaningless (webkit vs chromium differ pixel-for-pixel, and firefox
@@ -78,10 +87,15 @@ jobs:
       # crashing at collection). The S130 bug class is layout/CSS, engine-agnostic.
       - name: Run visual-regression snapshots
         env:
-          VR_BASE_URL: ${{ github.event.inputs.base_url || 'https://vaultsparkstudios.com' }}
+          BASE_URL: http://127.0.0.1:4173
+          VR_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.base_url || '' }}
         run: >-
           npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots' || '' }}
+      - name: Stop candidate preview
+        if: always()
+        run: |
+          if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
       - name: Upload new baselines (update_baselines mode)
         if: >-
           always() && github.event.inputs.update_baselines == 'true'

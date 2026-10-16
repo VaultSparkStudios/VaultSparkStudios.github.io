@@ -54,23 +54,32 @@ test.describe('Ambient bundle (S136) — single load + features alive', () => {
     expect(ct).toMatch(/javascript|ecmascript/);
   });
 
-  test('command-palette lazy-loads and opens on Cmd/Ctrl+K', async ({ page, browserName }) => {
+  test('Spark lazy-loads once and toggles on Cmd/Ctrl+K', async ({ page, browserName }) => {
+    await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
     await page.goto('/', { waitUntil: 'load' });
-    await expect(page.locator('script[src="/assets/command-palette.js"]')).toHaveCount(0);
+    // Production shell stamping gives this lazy child a content-addressed URL.
+    const script = page.locator('script[src^="/assets/spark-compass"][src$=".js"]');
+    await expect(script).toHaveCount(0);
     const key = browserName === 'webkit' ? 'Meta+k' : 'Control+k';
     await page.keyboard.press(key);
-    await expect(page.locator('script[src="/assets/command-palette.js"]')).toHaveCount(1);
-    await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
+    await expect(script).toHaveCount(1);
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await expect(page.locator('.spark-card').first()).toBeVisible();
+    await page.keyboard.press(key);
+    await expect(page.getByRole('dialog')).not.toBeVisible();
+    await page.keyboard.press(key);
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await expect(script).toHaveCount(1);
   });
 });
 
-test.describe('Search remains reachable without covering mobile content', () => {
+test.describe('Spark remains reachable without covering mobile content', () => {
   for (const width of [360, 390, 430]) {
-    test(`search stays in the header and returns focus at ${width}px`, async ({ page }) => {
+    test(`Spark stays in the header and returns focus at ${width}px`, async ({ page, browserName }) => {
       await page.setViewportSize({ width, height: 844 });
       await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
       await page.goto('/changelog/', { waitUntil: 'load' });
-      const trigger = page.getByRole('button', { name: 'Open search palette' });
+      const trigger = page.getByRole('button', { name: 'Open Spark navigation' });
       await expect(trigger).toBeVisible();
       const geometry = await trigger.evaluate(button => {
         const b = button.getBoundingClientRect();
@@ -84,29 +93,32 @@ test.describe('Search remains reachable without covering mobile content', () => 
       expect(geometry.height).toBeGreaterThanOrEqual(44);
       expect(geometry.position).not.toBe('fixed');
       await trigger.click();
-      await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
-      const close = page.getByRole('button', { name: 'Close search', exact: true });
+      const dialog = page.getByRole('dialog');
+      await expect(dialog).toBeVisible();
+      await expect(dialog).toHaveAttribute('id', 'spark-compass');
+      const close = page.getByRole('button', { name: 'Close Spark', exact: true });
       await expect(close).toBeVisible();
       expect(await close.evaluate(button => button.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
-      const query = page.getByRole('combobox', { name: 'Search query' });
+      const query = page.getByRole('searchbox', { name: 'Search Vault destinations' });
+      await expect(dialog.getByRole('heading', { level: 2 })).toBeFocused();
+      await query.focus();
       await expect(query).toBeFocused();
-      await expect(page.locator('.vs-palette-results a').first()).toBeVisible();
-      await page.keyboard.press('Shift+Tab');
-      expect(await page.evaluate(() => document.querySelector('.vs-palette-overlay').contains(document.activeElement))).toBe(true);
-      await page.keyboard.press('Tab');
-      await expect(query).toBeFocused();
+      await expect(page.locator('.spark-card').first()).toBeVisible();
+      // Spark is intentionally nonmodal: page controls remain reachable.
+      expect(await dialog.evaluate(node => node.matches(':modal'))).toBe(false);
       await close.click();
       await expect(trigger).toBeFocused();
       expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden');
       await trigger.click();
       await close.focus();
       await page.keyboard.press('Escape');
-      await expect(page.locator('.vs-palette-overlay')).not.toBeVisible();
+      await expect(dialog).not.toBeVisible();
       await expect(trigger).toBeFocused();
-      await page.keyboard.press('Control+k');
-      await expect(page.locator('.vs-palette-overlay[data-open="true"]')).toBeVisible();
-      await page.keyboard.press('Control+k');
-      await expect(page.locator('.vs-palette-overlay')).not.toBeVisible();
+      const key = browserName === 'webkit' ? 'Meta+k' : 'Control+k';
+      await page.keyboard.press(key);
+      await expect(dialog).toBeVisible();
+      await page.keyboard.press(key);
+      await expect(dialog).not.toBeVisible();
       await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
       await expect(trigger).toBeVisible();
       expect(await trigger.evaluate(button => button.getBoundingClientRect().bottom <= document.querySelector('.site-header').getBoundingClientRect().bottom)).toBe(true);
@@ -114,19 +126,28 @@ test.describe('Search remains reachable without covering mobile content', () => 
   }
 });
 
-test('Search dialog exposes valid named combobox relationships', async ({ page }) => {
+test('Spark exposes a named dialog and a working native search field', async ({ page }) => {
   const AxeBuilder = require('@axe-core/playwright').default;
+  await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
   await page.goto('/changelog/', { waitUntil: 'load' });
-  await page.keyboard.press('Control+k');
-  await expect(page.locator('.vs-palette-results a').first()).toBeVisible();
-  const results = await new AxeBuilder({ page }).include('.vs-palette-overlay').withRules(['aria-required-attr', 'aria-valid-attr', 'aria-valid-attr-value', 'aria-required-children', 'aria-required-parent', 'aria-input-field-name']).analyze();
+  await page.getByRole('button', { name: 'Open Spark navigation' }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toHaveAccessibleName(/Follow a world/);
+  await expect(page.locator('.spark-card').first()).toBeVisible();
+  const results = await new AxeBuilder({ page }).include('#spark-compass').withRules(['aria-required-attr', 'aria-valid-attr', 'aria-valid-attr-value', 'aria-required-children', 'aria-required-parent', 'aria-input-field-name']).analyze();
   expect(results.violations).toEqual([]);
-  const query = page.getByRole('combobox', { name: 'Search query' });
-  await expect(query).toHaveAttribute('aria-controls', 'vs-palette-results');
-  await expect(query).toHaveAttribute('aria-expanded', 'true');
-  await expect(query).toHaveAttribute('aria-activedescendant', 'vs-palette-option-0');
-  await page.keyboard.press('ArrowDown');
-  await expect(query).toHaveAttribute('aria-activedescendant', 'vs-palette-option-1');
+  await dialog.getByRole('button', { name: 'Play', exact: true }).first().click();
+  const query = page.getByRole('searchbox', { name: 'Search Vault destinations' });
+  const cards = page.locator('.spark-card');
+  const unfiltered = await cards.count();
+  await query.fill('Franchise');
+  await expect(cards.getByRole('heading', { name: 'Franchise Architect', exact: true })).toBeVisible();
+  await expect.poll(() => cards.count()).toBeLessThan(unfiltered);
+  await query.fill('no-destination-matches-this-query');
+  await expect(cards).toHaveCount(0);
+  await query.fill('');
+  await expect(cards.first()).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(page.locator('.vs-palette-input')).toHaveAttribute('aria-expanded', 'false');
+  await expect(dialog).not.toBeVisible();
+  await expect(page.getByRole('button', { name: 'Open Spark navigation' })).toBeFocused();
 });

@@ -3,6 +3,10 @@
  * (S157 #3). Append-only: one named export per extracted pair. Each entry
  * cites the pair it collapsed so the provenance is greppable.
  */
+// Delivery checks and onboarding sandboxes inherit this exact non-credential set.
+export const ISOLATED_PROCESS_ENV_KEYS = Object.freeze(['PATH','Path','PATHEXT','SystemRoot','WINDIR','TEMP','TMP','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','COMSPEC','LANG']);
+// A complete suite proof cannot carry any of these unresolved result buckets.
+export const NONPASSING_SUITE_BUCKETS = Object.freeze(['flaky','inconclusive','envBlocked','deferred']);
 // extracted from scripts/run-doctor.mjs:124 <-> scripts/validate-studio-manifest.mjs:24 (similarity 1)
 export const STUDIO_MANIFEST_REQUIRED_KEYS = ['identity', 'studioOs', 'listingMetadata', 'surfaces', 'capabilities', 'integrations', 'hosting', 'capacity', 'publicMetadata', 'automation', 'contracts'];
 
@@ -65,3 +69,17 @@ export const CONSOLE_TREE_DIRTY_GIT_ARGS = ['status', '--short', '--', 'studio-c
 // pre-sync — so the two must resolve the SAME ref, or one could call a tree
 // synced that the other calls behind.
 export const GIT_UPSTREAM_REF_ARGS = ['rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}'];
+
+// extracted S369 from scripts/lib/inflight-census.mjs <-> scripts/render-launch-control.mjs (similarity 1).
+// The Launch Control tiers whose founder actions are surfaced. Launch Control builds its
+// founder-action list from these tiers and the inflight-blocker census re-reads the same
+// artifact by the same tiers; if the two lists drifted, the census would count actions
+// Launch Control never surfaced (or miss ones it did) and still call itself complete.
+export const LAUNCH_FOUNDER_ACTION_TIERS = ['T1_READY', 'T2_MINOR_UNBLOCK', 'T3_FOUNDER_DECISION', 'T4_FAR_FROM_LAUNCH'];
+
+// extracted S370 from scripts/closeout-autopilot.mjs <-> scripts/start-sync.mjs (similarity 1).
+// Canonical `git diff` argv listing the paths that have anything STAGED, NUL-separated.
+// Closeout uses it to decide which paths a respect-staged commit must leave alone; the
+// /start sync uses it to decide which regenerated paths it may restore to HEAD. Both are
+// answering "does the index hold something for this path" and must ask the same way.
+export const STAGED_PATHS_GIT_ARGS = ['diff', '--cached', '--name-only', '-z'];

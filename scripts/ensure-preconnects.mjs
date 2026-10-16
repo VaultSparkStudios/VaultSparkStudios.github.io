@@ -26,6 +26,7 @@ const HOSTS = [
 
 const SKIP_DIRS = new Set([
   '.git', '.well-known', '.claude', 'node_modules', 'playwright-report', 'test-results',
+  '.cache', '.ops-cache', 'output',
   'scripts', 'docs', 'cloudflare', 'supabase', 'logs', 'context', 'tests',
 ]);
 

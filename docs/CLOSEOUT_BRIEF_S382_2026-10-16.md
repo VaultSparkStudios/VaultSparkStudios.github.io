@@ -1,0 +1,39 @@
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session 382 · 2026-10-16 · agent: codex · repo: VaultSparkStudios.github.io                  ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    Spark behavior is mandatory in release CI; full production verified.                       ║
+║                                                                                               ║
+║  PROJECT IMPACT     ██████░░░░   60/100                                                       ║
+║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
+║  SIL DELTA          933 → 933  (+0)                                                           ║
+║  RELEASE            537/537 local;19 focused;215 mobile;staging65/65;ceremony11/11;production verified  ║
+║  CDR                Reviewed; no new human creative direction                                 ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [1]  spark-browser-contract                                     PROJ 6  ·  ECOS 3
+         ── organization ────────────────────────────────────────────────────────────────────
+         Search checks exercise the shipped Spark interface, including mobile focus and
+         filtering. A broken child load fails the actual test. Every prior persistent browser
+         failure has an assertion-level diagnostic entry.
+         → 19 focused cases; negative mutation; E2E_DIAGNOSTICS_S382.json
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • 40 other optional failures remain diagnostic, including24 unreviewed pixel comparisons.
+
+  BLOCKERS
+    (none)
+
+  ACTION GATE
+    Authorized full production and canonical closeout verified.
+
+```

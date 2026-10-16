@@ -53,7 +53,9 @@ function readEntries(ledgerPath = LEDGER) {
 }
 
 function entryCost(e) {
+  if(e.usageComplete===false)return null;
   const price = priceForModel(e.model, { inputTokens: (e.input || 0) + (e.cache_read || 0) + (e.cache_create || 0) });
+  if(!price)return null;
   return (
     ((e.input || 0)        / 1e6) * price.input +
     ((e.cache_create || 0) / 1e6) * price.cacheWrite +
@@ -86,7 +88,8 @@ function billingSurfaceOf(e) {
   if (!e.script || INTERACTIVE_SCRIPTS.has(e.script)) return 'interactive-maxplan';
   return 'metered-api';
 }
-// REAL billed cost: $0 for flat-rate interactive turns, list price for metered API.
+// Compatibility name: this is an ESTIMATE at catalog prices, not provider billing.
+// Interactive Max Plan activity has no incremental token charge in this model.
 function entryRealCost(e) {
   return billingSurfaceOf(e) === 'metered-api' ? entryCost(e) : 0;
 }
@@ -135,13 +138,13 @@ export function evaluateCostAnomaly(entries, { now = new Date(), thresholds = CO
   const notional7d = { interactive: notInteractive, metered: notMetered, total: notInteractive + notMetered };
 
   const notionalNote = notional7d.total > 0.01
-    ? `7d notional $${notional7d.total.toFixed(2)} (flat-rate Max Plan, $0 billed: $${notional7d.interactive.toFixed(2)} interactive + $${notional7d.metered.toFixed(2)} metered)`
+    ? `7d catalog estimate $${notional7d.total.toFixed(2)} (flat-rate Max Plan interactive notional $${notional7d.interactive.toFixed(2)} + metered API estimate $${notional7d.metered.toFixed(2)}; provider billing not reconciled)`
     : null;
 
   let level = 'pass';
   const reasons = [];
   if (realTotal < thresholds.minTotalUsd) {
-    const base = `real metered total $${realTotal.toFixed(4)} < $${thresholds.minTotalUsd} threshold — no anomaly detection yet`;
+    const base = `estimated metered total $${realTotal.toFixed(4)} < $${thresholds.minTotalUsd} threshold — no anomaly detection yet`;
     reasons.push(notionalNote ? `${base} · ${notionalNote}` : base);
   } else {
     // S284 [audit #3] — a ratio only means something once the window carries real
@@ -158,11 +161,14 @@ export function evaluateCostAnomaly(entries, { now = new Date(), thresholds = CO
     }
   }
   if (reasons.length === 0) {
-    const base = `real metered total $${realTotal.toFixed(4)} across ${dayCosts.length} days — normal`;
+    const base = `estimated metered total $${realTotal.toFixed(4)} across ${dayCosts.length} days — normal`;
     reasons.push(notionalNote ? `${base} · ${notionalNote}` : base);
   }
+  const unpricedCalls=entries.filter(e=>entryCost(e)===null).length;
+  if(unpricedCalls){level='warn';reasons.push(`${unpricedCalls} calls have unknown prices/usage; totals are lower bounds and cannot establish absence of a cost anomaly.`);}
   const sig = level === 'warn' ? (ratio !== null && ratio >= thresholds.failRatio ? '⛔' : '⚠') : '✓';
-  return { level, sig, ratio, realMetered7d, priorMetered7d, realTotal, maxDayCost, avgDayCost, notional7d, notionalNote, reasons };
+  return { level, sig, ratio, realMetered7d, priorMetered7d, realTotal, maxDayCost, avgDayCost, notional7d, notionalNote, reasons,
+    unpricedCalls,costBasis: unpricedCalls?'partial-catalog-estimate-lower-bound':'usage-times-catalog-price-estimate', billingReconciled: false };
 }
 
 /**
@@ -187,10 +193,11 @@ export function rollup(entries, { windowMonths = null, now = new Date() } = {}) 
     const isBatch = e.mode === 'batch';
 
     if (!byMonth.has(month)) {
-      byMonth.set(month, { month, calls: 0, cost: 0, batchCost: 0, syncCost: 0, cache_read: 0, input: 0, output: 0, cache_create: 0 });
+      byMonth.set(month, { month, calls: 0, unpricedCalls:0,costBasis:'catalog-estimate-lower-bound',cost: 0, batchCost: 0, syncCost: 0, cache_read: 0, input: 0, output: 0, cache_create: 0 });
     }
     const m = byMonth.get(month);
     m.calls += 1;
+    if(cost===null)m.unpricedCalls++;
     m.cost += cost;
     if (isBatch) m.batchCost += cost; else m.syncCost += cost;
     m.cache_read += e.cache_read || 0;
@@ -200,10 +207,11 @@ export function rollup(entries, { windowMonths = null, now = new Date() } = {}) 
 
     const smKey = `${month}|${e.script || 'unknown'}`;
     if (!byScriptMonth.has(smKey)) {
-      byScriptMonth.set(smKey, { month, script: e.script || 'unknown', calls: 0, cost: 0, models: new Set() });
+      byScriptMonth.set(smKey, { month, script: e.script || 'unknown', calls: 0,unpricedCalls:0,costBasis:'catalog-estimate-lower-bound', cost: 0, models: new Set() });
     }
     const sm = byScriptMonth.get(smKey);
     sm.calls += 1;
+    if(cost===null)sm.unpricedCalls++;
     sm.cost += cost;
     sm.models.add(shortModelName(e.model));
   }
@@ -229,6 +237,7 @@ export function rollup(entries, { windowMonths = null, now = new Date() } = {}) 
  * the threshold + z-score so the surface can explain WHY (no opaque alarms).
  */
 export function flagOutliers(scriptMonths, { sigma = OUTLIER_SIGMA, floor = OUTLIER_FLOOR } = {}) {
+  scriptMonths=scriptMonths.filter(s=>!s.unpricedCalls);
   const costs = scriptMonths.map(s => s.cost);
   if (costs.length < 2) return [];
   const mean = costs.reduce((a, b) => a + b, 0) / costs.length;
@@ -258,7 +267,7 @@ function renderReport({ months, scriptMonths, outliers, totalEntries }) {
     return lines.join('\n');
   }
   const grand = months.reduce((a, m) => a + m.cost, 0);
-  lines.push(`  Months: ${months.length} · Entries: ${totalEntries} · Total est. spend: ${fmtUSD(grand)}`);
+  lines.push(`  Months: ${months.length} · Entries: ${totalEntries} · Catalog estimate lower bound: ${fmtUSD(grand)} · Unpriced calls: ${months.reduce((n,m)=>n+m.unpricedCalls,0)} · Billed USD unknown`);
   lines.push('');
   lines.push('  Month     Calls   Spend       Batch       Sync        Hit-rate');
   for (const m of months) {
@@ -278,7 +287,7 @@ function renderReport({ months, scriptMonths, outliers, totalEntries }) {
       lines.push(`    ⚠ ${o.month}  ${o.script}  ${fmtUSD(o.cost)}  (z=${o.z.toFixed(1)}, threshold ${fmtUSD(o.threshold)})`);
     }
   } else {
-    lines.push('  ✓ No cost outliers — spend is within normal variance.');
+    lines.push('  No cost outliers detected among fully priced script-months; incomplete usage remains unknown.');
   }
   return lines.join('\n');
 }

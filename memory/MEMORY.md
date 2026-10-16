@@ -1,3 +1,11 @@
+- [S382 Spark browser coverage](S382.md): actual search semantics and honest failure inventory.
+- [S381 candidate-bound browser verification](S381.md): actual-source negative fixtures and explicit overrides.
+<!-- Current S380: browser discovery; release evidence docs/RELEASE_S380.json. -->
+- [S380 browser discovery](S380.md): mandatory collection and runner isolation.
+
+<!-- Current S379: closing production accepted; final evidence in docs/RELEASE_S379.json. -->
+- [S379 release-profile discovery](S379.md): exact identity, canonical registry and release verification.
+
 # Project memory
 
 Current S370 acceptance: production `ee8db4f7f`, Pages `37807641227`; see [S370 follow-through](S370-followthrough.md). Earlier release pointers below are historical.

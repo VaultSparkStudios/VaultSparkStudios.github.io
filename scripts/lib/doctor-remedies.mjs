@@ -238,6 +238,10 @@ export const DRIFT_META = {
   // CANON-055 adoption across SIBLING repos — studio-ops surfaces it but does not own
   // the fix, and the checker is explicitly structural-only, so it warns rather than blocks.
   'surface-followthrough': { driftClass: 'portfolio-outdated', blocking: false },
+  // S371 — reads the Living Protocol's own Live Schema Court run conclusion. The
+  // database, the court and the workflow are all the sibling's; studio-ops only
+  // surfaces the verdict, so it is portfolio-outdated and never blocks a closeout here.
+  'live-schema-drift': { driftClass: 'portfolio-outdated', blocking: false },
 };
 
 // S171 [audit #1] — provenance-derived driftClass. The old run-doctor default

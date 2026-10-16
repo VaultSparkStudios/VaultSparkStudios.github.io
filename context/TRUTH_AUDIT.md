@@ -1,3 +1,15 @@
+### S378 production acceptance — 2026-10-13T22:52:51.834Z
+
+Own-invocation release accepted; docs/RELEASE_S378.json binds exact source, actual deploy steps and served proofs. Staging receipt intent6633 differs from actual candidate57ca: independent Git/served hashes establish the relationship. Primary raw HTML differs due to narrowly verified provider transport; no raw-primary tree-current or positive held-identity acceptance is claimed. Canonical closeout/closing publication still pending.
+
+### S378 — 2026-10-13
+
+Fresh goal bound to S378; native completion unproven until new release evidence. Initial startup brief used a stale previous-session context estimate; live meter is UNMEASURED, not 98% used. CANON checks: no absolute gaps; existing identity hold and two terminology findings remain explicit. Local feature proofs pass; production rollout remains pending. Existing external maintenance warnings are not website failures.
+
+### S377 truth reconciliation — 2026-10-13
+
+Homepage Recent Ships previously remained empty because its listener was registered after DOMContentLoaded; the repaired initializer now renders three cards in six production browser/width cases. Local and remote receipts distinguish prior candidate evidence, explicit identity holds and current production byte parity. Candidate 6633fe0d22; required E2E 38352394138, Lighthouse 38352394170, accessibility 38352394172; production run 38355129571, served 6633fe0d22. Production feature probe 6/6; immutable production deployment parity 1052/1062 identical, zero differing, 10 declared redirects; primary-domain HTML: 280 exact site bodies after declared Cloudflare transport, 14 declared redirects and nine held identity routes. Exact receipts: docs/RELEASE_S377.json. Conversion/field performance improvements remain unmeasured; no identity acceptance claim.
+
 ### S376 truth reconciliation — 2026-10-12
 
 One published definition was wrong and is corrected. The reader-signal feed said it counted reactions on a story "or on its generated illustration"; reactions sent from an image panel were never read. They are now read and listed under `panels`, apart from the story total, and the definition says which reactions are stored where. All 248 panels are below the five-signal floor, so the feed publishes no image total yet. One recorded cause was wrong: S375 attributed seven WebKit test failures to a tap arriving before a parked script. Measured this session, the cause was a late-rendered section changing height in a browser without scroll anchoring.
@@ -1485,3 +1497,57 @@ Production metadata and fourteen served artifacts match the candidate after docu
 Canonical closeout completed with two full 531-step passes. Corrected native proof closure passed 92/92 blocking checks across 109 commands. Earlier 215 mobile probes and 168 reviewed article captures retain their actual observation dates. Live Spark passed 11/11 after the closing promotion. Initial browser Find positioning remains a documented preexisting limitation; identity holds remain unchanged.
 
 The owner's original dirty checkout, local backups and private evidence are preserved. Retained temporary preview, capture and verification handles completed, and port 4175 no longer listens. Field performance and conversion remain unmeasured.
+
+### S378 closing acceptance — 2026-10-14T01:34:10.290Z
+
+S378 complete: Spark clears reader controls and editing, then returns with preferences and header recall preserved. Closing candidate 0a3fa422354d pushed normally to main and fully deployed by confirmed Pages run 38495788787. Exact required hosted checks passed; local full534/534, mobile215/215, Spark42/42, shell13/13 and56 inspected captures across seven themes. Closing staging/live Spark9/9, scoped content3 passed/3 identity held, attention15/15 and production ceremony11/11. Immutable served text matches the candidate; primary HTML matches after strictly bounded provider transport. Existing identity and field-vitals holds remain outside this release. Canonical closeout completed; temporary publishing schedules restored. Earlier pending/failed entries are retained as history; this addendum records actual final acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+### S378 record recovery — 2026-10-14
+
+Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+### S379 — release-profile source disagreement resolved (2026-10-15)
+
+Arc and shared skill discovery now agree on canonical S1 supported-release; local health remains yellow. Missing evidence stays unknown, and similarly named or ambiguous folders cannot borrow another project's record. First production acceptance is verified in RELEASE_S379.json. Existing identity holds, field-vitals freshness and D-S374.3 terminology exceptions remain explicit. Context usage was unmeasured. Canonical owner cargo delivery is not adoption. Final closeout publication remains tracked separately until actual readback.
+
+### S379 closing acceptance — 2026-10-15T02:11:05.668Z
+
+S379 complete: target-bound canonical release-profile discovery shipped, with exact identity and unknown fallback preserved. Closing candidate d049e56b763b pushed normally to main and fully deployed by confirmed Pages run 38669110903. Exact required hosted checks passed; complete535/535 and fresh mobile215/215, profile13/13, archive-deployer15/15,56 directly inspected cadence/counter captures across seven themes. Closing staging critical65/65, content3passed/3identityheld and attention15/15; production ceremony11/11. Immutable served text and primary source readback verified. Canonical closeout complete; all five publisher states and original operator capture restored. Existing identity and field-vitals limitations remain separate.
+
+The closeout launch-counter drift was corrected with the existing producer, followed by28 fresh inspected captures and a new215-case mobile audit. Visual retention inventory and closeout brief artifact names were reconciled through their existing tools; failed/partial runs were never substituted for complete acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+### S380 — browser discovery evidence (2026-10-15)
+
+The inherited broad E2E discovery failure is reproduced and repaired. Actual browser inventories contain no Node unit specs and mandatory collection cannot be tolerated by the optional auth job. Full runtime coverage is not inferred from collection. Node suite 430 passed / 0 failed / 1 TODO; schema-lite TODO stays unverified. Full build and production acceptance remain pending in RELEASE_S380.json. No UI change, current rendered-pixel checker passed. Missing maintenance helpers are not claimed as executed.
+
+
+### S380 rank-report prerequisite
+
+Diagnostic freshness enforcement exposed a foreign-project service credential and an error-to-empty fallback. Target-origin validation now runs before privileged key resolution; valid public read200[] was observed. Provider failures preserve the previous file. Focused self-test and independent review passed. Full537 acceptance is still required; no authentication-policy, RLS or membership change.
+
+### S380 final release acceptance — 2026-10-15T16:01:26.471Z
+
+S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
+
+Failed and partial checks remain recorded; they never substitute for complete acceptance. Conversion and field-vitals effects remain unmeasured.
+
+
+### S381 — candidate association (2026-10-15)
+
+The prior hosted nav failure shows production requests while BASE_URL selects loopback; visual fallback and PR workflow also bypassed the candidate. Source and actual-spec mutations prove the defect and repair. Origin correctness does not establish that historical visual baselines or optional browser failures pass. Production acceptance remains pending in RELEASE_S381.json.
+
+
+S381 final verification (2026-10-15T18:52:03.511Z): S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+The staging receipt build-stamp label is 9ae27125cc; actual checkout5563ad and all3601 shared source files independently establish this candidate. No authenticated identity journey is claimed.
+
+
+### S382 — browser diagnostics (2026-10-16)
+
+The hosted optional E2E job success concealed45 persistent failed assertions under its existing continue-on-error policy. Five refer to the retired palette; these are repaired and locally verified. Other40 remain diagnostic. Inventory covers all45 exact assertions from source5bf5849590; neither source review nor workflow green proves pixel correctness. Full S382 release remains pending in RELEASE_S382.json.
+
+
+S382 final verification (2026-10-16T03:02:45.543Z): S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
+Same scored session933/1000; no new score or engagement inference.
