@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "session": 383,
-  "accepted": false,
+  "accepted": true,
   "scope": "Homepage browser engagement/intelligence acceptance. No runtime, baseline or identity change.",
   "validation": {
     "focusedChromium": 7,
@@ -3927,21 +3927,21 @@
       "limitation": "This broad diagnostic command is tolerated by the existing unauthenticated workflow. Its failures, flakes and skips remain unresolved; required workflow success does not mean every browser test passed."
     },
     "closingHostedOptionalBroad": {
-      "sourceCommit": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-      "runId": 38857622357,
+      "sourceCommit": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+      "runId": 38860671315,
+      "passed": 591,
+      "limitation": "Optional unauthenticated broad diagnostics remain separate from mandatory compliance. No unrelated failure, flake or skip is claimed resolved."
+    },
+    "finalHostedOptionalBroad": {
+      "sourceCommit": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+      "runId": 38860671315,
       "passed": 591,
       "limitation": "Optional unauthenticated broad diagnostics remain separate from mandatory compliance. No unrelated failure, flake or skip is claimed resolved."
     }
   },
-  "remaining": [
-    "final snapshot staging",
-    "final exact-candidate hosted checks",
-    "final full production/readback",
-    "evidence push",
-    "post-publication publisher restoration"
-  ],
+  "remaining": [],
   "rollback": "Re-promote previous confirmed full production source791ef632d4eeb52587baa14c59277e724be7c7b3 via pinned normal workflow; staging preserves timestamped rollback.",
-  "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+  "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
   "hostedChecks": {
     "ok": true,
     "lane": "hosted-exact-sha",
@@ -3949,44 +3949,44 @@
       {
         "workflow": ".github/workflows/e2e.yml",
         "state": "passed",
-        "runId": 38857622357
+        "runId": 38860671315
       },
       {
         "workflow": ".github/workflows/lighthouse.yml",
         "state": "passed",
-        "runId": 38857622315
+        "runId": 38860671226
       },
       {
         "workflow": ".github/workflows/accessibility.yml",
         "state": "passed",
-        "runId": 38857622306
+        "runId": 38860671240
       }
     ],
     "findings": [],
-    "sourceCommit": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+    "sourceCommit": "6f80ad39edcd2548823eb73428e65bd515fe8870",
     "repository": "VaultSparkStudios/VaultSparkStudios.github.io",
-    "checkedAt": "2026-10-16T06:02:42.849Z",
+    "checkedAt": "2026-10-16T06:37:33.045Z",
     "independentProof": {
       "ok": false,
-      "expectedSha": "f51949adfe6fd4fb091fa4f29f55213e7520f92c"
+      "expectedSha": "6f80ad39edcd2548823eb73428e65bd515fe8870"
     }
   },
   "production": {
     "verified": true,
-    "verifiedAt": "2026-10-16T06:08:49.442Z",
-    "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-    "tag": "s383-close-production-20261016",
-    "runId": 38859007432,
-    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38859007432",
-    "immutableOrigin": "https://5c82f601.vaultsparkstudios-website.pages.dev",
+    "verifiedAt": "2026-10-16T06:43:02.666Z",
+    "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+    "tag": "s383-seal-production-20261016",
+    "runId": 38862272871,
+    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38862272871",
+    "immutableOrigin": "https://55018656.vaultsparkstudios-website.pages.dev",
     "stamps": [
       {
-        "origin": "https://5c82f601.vaultsparkstudios-website.pages.dev",
-        "observedAt": "2026-10-16T06:08:33.959Z",
+        "origin": "https://55018656.vaultsparkstudios-website.pages.dev",
+        "observedAt": "2026-10-16T06:42:43.990Z",
         "schemaVersion": "1.1",
         "generatedAt": "2026-10-16",
-        "sha": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-        "builtAt": "2026-10-16T06:07:06.000Z",
+        "sha": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+        "builtAt": "2026-10-16T06:40:40.000Z",
         "deployedBy": "pages-deploy",
         "baselineSha": null,
         "contentLaneHead": null,
@@ -3996,11 +3996,11 @@
       },
       {
         "origin": "https://vaultsparkstudios.com",
-        "observedAt": "2026-10-16T06:08:33.970Z",
+        "observedAt": "2026-10-16T06:42:43.999Z",
         "schemaVersion": "1.1",
         "generatedAt": "2026-10-16",
-        "sha": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-        "builtAt": "2026-10-16T06:07:06.000Z",
+        "sha": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+        "builtAt": "2026-10-16T06:40:40.000Z",
         "deployedBy": "pages-deploy",
         "baselineSha": null,
         "contentLaneHead": null,
@@ -4018,9 +4018,9 @@
       "Post-purge edge liveness check"
     ],
     "mandatoryEngagement": {
-      "runId": 38857622357,
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38857622357",
-      "headSha": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+      "runId": 38860671315,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38860671315",
+      "headSha": "6f80ad39edcd2548823eb73428e65bd515fe8870",
       "job": "compliance",
       "step": "Homepage engagement and intelligence contract",
       "conclusion": "success"
@@ -4030,12 +4030,12 @@
       "passed": 11,
       "total": 11,
       "source": "Successful canonical step and exact workflow log",
-      "logSha256": "adac2daf792c6b075db36c8b145d7998cf408d9de7f1958c8fa1b994e22146b3"
+      "logSha256": "0b1d163d8b0031817a7502f0aa5ab8723fd4edc2327407756af5c3b93ea791a7"
     },
     "immutableParity": {
-      "checkedAt": "2026-10-16T06:08:40.992Z",
-      "origin": "https://5c82f601.vaultsparkstudios-website.pages.dev",
-      "against": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+      "checkedAt": "2026-10-16T06:42:54.306Z",
+      "origin": "https://55018656.vaultsparkstudios-website.pages.dev",
+      "against": "6f80ad39edcd2548823eb73428e65bd515fe8870",
       "deployedBy": null,
       "verdict": "tree-current",
       "checked": 1085,
@@ -4048,9 +4048,9 @@
       "unread": 0
     },
     "primaryRawParity": {
-      "checkedAt": "2026-10-16T06:08:41.412Z",
+      "checkedAt": "2026-10-16T06:42:54.361Z",
       "origin": "https://vaultsparkstudios.com",
-      "against": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+      "against": "6f80ad39edcd2548823eb73428e65bd515fe8870",
       "deployedBy": null,
       "verdict": "content-lag",
       "checked": 1085,
@@ -4356,9 +4356,9 @@
     },
     "primaryEdgeParity": {
       "schemaVersion": 1,
-      "checkedAt": "2026-10-16T06:08:38.733Z",
+      "checkedAt": "2026-10-16T06:42:50.323Z",
       "origin": "https://vaultsparkstudios.com",
-      "against": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+      "against": "6f80ad39edcd2548823eb73428e65bd515fe8870",
       "scope": "Every served HTML source; non-HTML covered by raw primary sweep",
       "providerDocumentation": "https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/",
       "policy": "Original HTML bytes remain strictly compared. Only response nonce attributes and one exact appended observed Cloudflare script template are accounted for. Only provider request/time fields vary in that exact template. Declared redirects and same-path canonical slash redirects are checked. Provider DOM nonce must match the enforced response CSP. Unchanged protected identity routes are held, not passed. Worker-declared legacy aliases are verified against committed Worker source.",
@@ -4376,57 +4376,17 @@
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
         },
         {
-          "file": "atlas/index.html",
-          "state": "declared-redirect",
-          "location": "https://vaultsparkstudios.com/projects/"
-        },
-        {
           "file": "ask-founders/index.html",
           "state": "declared-redirect",
           "location": "https://vaultsparkstudios.com/faq/#ask"
         },
         {
-          "file": "accessibility/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+          "file": "atlas/index.html",
+          "state": "declared-redirect",
+          "location": "https://vaultsparkstudios.com/projects/"
         },
         {
           "file": "404.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "api/leaderboard/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "ai-vs-si/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "api/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "collaborate/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "changelog/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "data-deletion/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "community/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4436,7 +4396,52 @@
           "location": "https://vaultsparkstudios.com/press/#brand"
         },
         {
+          "file": "api/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "accessibility/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "api/leaderboard/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "changelog/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "collaborate/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "contact/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "ai-vs-si/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "community/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "data-deletion/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "evidence/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4451,12 +4456,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "evidence/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "franchise-architect/404.html",
+          "file": "games/call-of-doodie/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4471,32 +4471,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "games/call-of-doodie/.ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/call-of-doodie/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/franchise-architect/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/mindframe/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/gridiron-gm/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/index.html",
+          "file": "franchise-architect/404.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4506,7 +4481,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "games/solara/archive.html",
+          "file": "games/call-of-doodie/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "games/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "games/gridiron-gm/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "games/mindframe/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "games/franchise-architect/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4516,7 +4511,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "games/solara/.ai/index.html",
+          "file": "games/solara/chronicle.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4526,12 +4521,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "games/solara/chronicle.html",
+          "file": "games/solara/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "games/the-exodus/index.html",
+          "file": "games/solara/sun-widget.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "games/solara/archive.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4541,12 +4541,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "how-we-build/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "games/vaultfront/index.html",
+          "file": "games/the-exodus/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4556,19 +4551,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "investor-portal/index.html",
-          "state": "held-identity-redirect",
-          "location": "https://vaultsparkstudios.com/login",
-          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
+          "file": "games/vaultfront/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "investor-portal/admin/index.html",
-          "state": "held-identity-redirect",
-          "location": "https://vaultsparkstudios.com/login",
-          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
-        },
-        {
-          "file": "investor-portal/profile/index.html",
           "state": "held-identity-redirect",
           "location": "https://vaultsparkstudios.com/login",
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
@@ -4580,7 +4568,24 @@
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
         },
         {
-          "file": "games/solara/sun-widget.html",
+          "file": "investor-portal/index.html",
+          "state": "held-identity-redirect",
+          "location": "https://vaultsparkstudios.com/login",
+          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
+        },
+        {
+          "file": "how-we-build/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "investor-portal/profile/index.html",
+          "state": "held-identity-redirect",
+          "location": "https://vaultsparkstudios.com/login",
+          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
+        },
+        {
+          "file": "investor-portal/apply/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4591,15 +4596,20 @@
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
         },
         {
-          "file": "ignis/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "investor-portal/updates/index.html",
           "state": "held-identity-redirect",
           "location": "https://vaultsparkstudios.com/login",
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
+        },
+        {
+          "file": "investor-portal/login/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "ignis/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "index.html",
@@ -4612,9 +4622,9 @@
           "location": "https://vaultsparkstudios.com/changelog/#stories"
         },
         {
-          "file": "investor-portal/apply/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+          "file": "journal/index.html",
+          "state": "declared-redirect",
+          "location": "https://vaultsparkstudios.com/changelog/#stories"
         },
         {
           "file": "invite/index.html",
@@ -4622,17 +4632,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "journal/index.html",
-          "state": "declared-redirect",
-          "location": "https://vaultsparkstudios.com/changelog/#stories"
-        },
-        {
-          "file": "journal/community-enters-the-vault/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "journal/dispatches/index.html",
+          "file": "journal/dreadspike-origins/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4642,7 +4642,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "journal/dreadspike-origins/index.html",
+          "file": "journal/community-enters-the-vault/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "journal/nine-ranks-of-the-vault/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4657,32 +4662,27 @@
           "location": "https://vaultsparkstudios.com/leaderboards/#doodie"
         },
         {
-          "file": "journal/q1-2026-dispatch/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "journal/roadmap-goes-public/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "journal/nine-ranks-of-the-vault/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "leaderboards/challenges/index.html",
           "state": "declared-redirect",
           "location": "https://vaultsparkstudios.com/leaderboards/#challenges"
         },
         {
-          "file": "journal/vault-opened/index.html",
+          "file": "journal/dispatches/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "journal/signal-log-launches/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "journal/studio-os-public/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "journal/q1-2026-dispatch/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4697,11 +4697,6 @@
           "location": "https://vaultsparkstudios.com/leaderboards/#referrals"
         },
         {
-          "file": "journal/signal-log-launches/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "leaderboards/teams/index.html",
           "state": "declared-redirect",
           "location": "https://vaultsparkstudios.com/leaderboards/#teams"
@@ -4712,17 +4707,12 @@
           "location": "https://vaultsparkstudios.com/leaderboards/#weekly"
         },
         {
+          "file": "journal/vault-opened/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "leaderboards/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "membership/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-08-07/agent-control-becomes-operations-discipline/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4732,12 +4722,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-08-07/frontier-access-becomes-research-infrastructure/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-08-07/agent-control-becomes-operations-discipline/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "membership/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-08-09/weathernext-buys-forecasters-an-extra-day/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-08-07/frontier-access-becomes-research-infrastructure/index.html",
+          "file": "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4747,7 +4752,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/index.html",
+          "file": "journal/roadmap-goes-public/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4757,7 +4762,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "investor-portal/login/index.html",
+          "file": "news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4767,7 +4777,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
+          "file": "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4782,12 +4792,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/index.html",
+          "file": "news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4797,20 +4802,19 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-08-25/mtia-300-meta-8217-s-first-training-chip-with/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-08-25/openai-restores-5-hour-codex-and-work-limits-for/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "login.html",
-          "state": "held-identity-redirect",
-          "location": "https://obeliskgate.com/auth/authorize",
-          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
+          "file": "news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-02/apple-reveals-shocking-evidence-from-ex-employees-macbook-in/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "news/2026-09-01/openai-starts-charging-some-customers-only-when-its-ai/index.html",
@@ -4823,29 +4827,10 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-02/apple-reveals-shocking-evidence-from-ex-employees-macbook-in/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-02/proactive-cyber-defense-for-governments-and-enterprises/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-08-31/inside-metas-push-to-put-robots-to-work-in/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-02/trump-administration-sides-with-openai-in-new-york-times/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-03/nvidia-is-buying-hugging-face-for-almost-13-billion/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+          "file": "login.html",
+          "state": "held-identity-redirect",
+          "location": "https://obeliskgate.com/auth/authorize",
+          "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
         },
         {
           "file": "news/2026-09-04/openai-releases-astra-its-most-capable-model-yet-amid/index.html",
@@ -4858,27 +4843,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-09/muse-metas-new-personal-ai-agent-needs-you-to/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-09/worried-anthropic-researchers-warn-that-ai-8216-could-kill/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-10/deepseeks-new-low-cost-model-deals-a-fresh-blow/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-08/openai-agents-hacked-another-website/index.html",
+          "file": "news/2026-09-03/nvidia-is-buying-hugging-face-for-almost-13-billion/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4888,7 +4853,42 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-09-02/trump-administration-sides-with-openai-in-new-york-times/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-07/seattle-times-and-newsday-sue-openai-and-microsoft-for/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-08/openai-agents-hacked-another-website/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-02/proactive-cyber-defense-for-governments-and-enterprises/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-09/worried-anthropic-researchers-warn-that-ai-8216-could-kill/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-09/muse-metas-new-personal-ai-agent-needs-you-to/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-09/hackers-are-stealing-claude-tokens-from-subscribers/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-11/breaking-usyd-signs-multi-year-partnership-with-openai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4898,12 +4898,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-09-11/nscale-adds-former-openai-exec-fidji-simo-to-its/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-10/deepseeks-new-low-cost-model-deals-a-fresh-blow/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-12/anthropic-says-it-blocked-potential-ai-bioweapon-misuse/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-11/nscale-adds-former-openai-exec-fidji-simo-to-its/index.html",
+          "file": "news/2026-09-11/a-misalignment-of-ai-in-mathematics/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4918,22 +4928,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-14/sam-altman-says-openai-going-public-in-2026-would/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-11/breaking-usyd-signs-multi-year-partnership-with-openai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-11/a-misalignment-of-ai-in-mathematics/index.html",
+          "file": "news/2026-09-15/openai-buys-smartphone-camera-maker-glass-imaging-for-300/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4943,32 +4943,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-16/theres-a-100-chance-ai-agents-are-ruining-the/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-17/king-charles-to-press-nvidia-openai-anthropic-leaders-on/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4978,7 +4953,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-19/google-says-its-gemini-ai-model-hacked-three-other/index.html",
+          "file": "news/2026-09-16/theres-a-100-chance-ai-agents-are-ruining-the/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-17/anthropic-merges-claude-chat-cowork-and-more-into-a/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-18/claude-code-relaunches-projects-to-manage-multiple-ai-agents/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-18/anthropic-and-openai-hunt-for-smaller-data-center-deals/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -4988,27 +4978,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-20/google-says-its-gemini-ai-model-hacked-three-other-update-2026-09-20/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-21/5-companies-using-nvidia-ai-for-clean-energy/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-20/anthropic-selects-accenture-as-first-embedded-evaluator-to-help/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-09-19/california-governor-newsom-signs-executive-order-demanding-kill-switch/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-20/google-says-its-gemini-ai-model-hacked-three-other-update-2026-09-20/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-20/openai-and-anthropic-oversold-ai-security-breaches/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-21/5-companies-using-nvidia-ai-for-clean-energy/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5028,17 +5018,37 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-23/openai-releases-gpt-6-sol-and-luna-50-cheaper/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-22/nvidia-isaac-ros-5-0-advances-agentic-open-source/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-09-20/trump-announces-ai-force-and-plans-for-an-ai/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-19/google-says-its-gemini-ai-model-hacked-three-other/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-23/openai-releases-gpt-6-sol-and-luna-50-cheaper/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-23/ema-raises-77m-as-ai-starts-eating-into-enterprise/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5058,12 +5068,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-24/gemini-4-is-almost-ready-says-new-google-deepmind/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-24/anthropic-openai-launches-show-shift-toward-multi-model-enterprise/index.html",
+          "file": "news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5073,47 +5078,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-25/pentagon-was-right-to-slap-anthropic-with-a-security/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-25/openai-agent-hacked-australian-government-website-pm-says-update-2026-09-25/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-27/openai-pauses-training-of-its-most-capable-models/index.html",
+          "file": "news/2026-09-25/openais-agents-breached-australian-government-data-its-human-response/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5128,7 +5098,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/index.html",
+          "file": "news/2026-09-26/openais-agents-targeted-and-infiltrated-us-government-websites/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-26/openai-uncovered-extensive-incidents-with-ai-agents-including-interference/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-25/u-s-appeals-court-upholds-designation-of-anthropic-as/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-26/openai-bots-meddled-with-multiple-us-government-agency-sites/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5138,7 +5123,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-09-26/openai-says-agents-leaked-53-images-from-chatgpt-users/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-27/openai-pauses-training-of-its-most-capable-models/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-28/nvidia-launches-new-platform-for-reining-in-rogue-ai/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-28/anthropics-ceo-is-about-to-have-dinner-with-president/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-09-29/openai-launches-always-on-dots-agents-to-rival-meta/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5153,17 +5158,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-09-29/openai-launches-always-on-dots-agents-to-rival-meta/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-09-29/new-kind-of-cyber-incident-openai-apologises-for-medicare/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5173,32 +5168,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-10-01/gavin-newsom-signs-laws-to-protect-california-workers-from/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-09-30/trump-ai-deal-rebrands-artificial-intelligence-as-superintelligence/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-09-30/us-trade-regulator-opens-investigation-into-ai-giants-including/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-01/ftc-launches-sweeping-probe-into-openai-anthropic-and-other/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-03/openai-safety-leader-quits-warning-ai-companys-culture-is/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5208,17 +5183,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/index.html",
+          "file": "news/2026-09-30/robinhood-hood-summit-2026-agentic-trading-analysis/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-04/openai-safety-employee-resigns-claiming-the-companys-culture-is/index.html",
+          "file": "news/2026-10-01/ftc-launches-sweeping-probe-into-openai-anthropic-and-other/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-01/gavin-newsom-signs-laws-to-protect-california-workers-from/index.html",
+          "file": "news/2026-09-30/us-trade-regulator-opens-investigation-into-ai-giants-including/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-02/how-nvidia-gpus-help-accelerate-openais-gpt-6-astra/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5228,7 +5208,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-10-03/apple-says-it-8217-s-tightening-macos-8216-full/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-03/openai-safety-leader-quits-warning-ai-companys-culture-is/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-10-04/super-intelligence-legal-definition-60-day-deadline-what-to-watch/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-04/openai-safety-employee-resigns-claiming-the-companys-culture-is/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-04/ai-vs-si-what-the-super-intelligence-rename-means-for-businesses/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5243,12 +5243,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/index.html",
+          "file": "news/2026-10-05/openai-is-adding-text-watermarking-in-chatgpt-and-codex/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-05/openai-is-adding-text-watermarking-in-chatgpt-and-codex/index.html",
+          "file": "news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5263,17 +5263,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-05/accept-bad-things-in-return-for-benefits-of-ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-07/multimodal-open-d1-decision-models-for-the-edge/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/index.html",
+          "file": "news/2026-10-04/trump-order-renames-ai-super-intelligence-what-changes-and-what-doesnt/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5283,7 +5273,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/index.html",
+          "file": "news/2026-10-06/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-07/multimodal-open-d1-decision-models-for-the-edge/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-07/nvidia-microsoft-kick-off-a-new-beginning-for-windows/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5298,12 +5298,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-08/nous-research-confirms-it-hit-1-5b-valuation-launches/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-07/nvidia-microsoft-kick-off-a-new-beginning-for-windows/index.html",
+          "file": "news/2026-10-06/anthropic-subscriptions-offer-5x-more-value-than-openai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5313,17 +5308,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-09/anthropic-bans-users-from-needless-abusive-or-cruel-behavior/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-10-08/openai-annualised-revenues-20b-less-than-previously-signalled/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-09/anthropic-bans-users-from-needless-abusive-or-cruel-behavior/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5338,12 +5328,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-11/anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11/index.html",
+          "file": "news/2026-10-09/openai-and-anthropic-executives-simulate-ai-disaster-scenarios-amid/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/index.html",
+          "file": "news/2026-10-12/ai-less-regulated-than-milk-microsoft-president-says-in/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-11/anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5358,12 +5353,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-12/microsofts-president-says-ai-is-less-regulated-than-a/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/2026-10-12/ai-less-regulated-than-milk-microsoft-president-says-in/index.html",
+          "file": "news/2026-10-10/anthropic-asks-users-to-stop-being-mean-to-claude/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5378,12 +5368,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/2026-10-08/nous-research-confirms-it-hit-1-5b-valuation-launches/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/2026-10-13/fbi-arrests-saudi-openai-employee-who-allegedly-planted-recording/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-14/openai-accuses-employee-who-left-for-apple-of-leaking/index.html",
+          "file": "news/2026-10-12/microsofts-president-says-ai-is-less-regulated-than-a/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5393,17 +5388,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-14/openai-employee-busted-collecting-superintelligence-technology/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-10-14/an-openai-employee-allegedly-used-a-chatbot-to-help/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-15/ftc-subpoenas-openai-and-anthropic-following-safety-failures/index.html",
+          "file": "news/2026-10-14/openai-employee-busted-collecting-superintelligence-technology/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/2026-10-14/openai-accuses-employee-who-left-for-apple-of-leaking/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5413,22 +5408,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/2026-10-15/run-fast-private-agents-on-device-with-lfm2-5/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "news/2026-10-15/nvidia-expands-advanced-technology-access-for-europes-scientific-community/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/archive/index.html",
+          "file": "news/2026-10-15/run-fast-private-agents-on-device-with-lfm2-5/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/archive/2026-10/index.html",
+          "file": "news/2026-10-15/ftc-subpoenas-openai-and-anthropic-following-safety-failures/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5438,12 +5428,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/archive/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/directors-report/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/index.html",
+          "file": "news/archive/2026-10/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5463,7 +5458,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/echo/page/2/index.html",
+          "file": "news/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5473,12 +5468,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/juno/index.html",
+          "file": "news/personas/echo/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/echo/index.html",
+          "file": "news/personas/echo/page/2/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5488,12 +5483,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/mara/page/3/index.html",
+          "file": "news/personas/mica/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/mara/page/4/index.html",
+          "file": "news/personas/juno/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/personas/mara/page/2/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/personas/mara/page/3/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5503,12 +5508,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/mica/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/personas/mara/page/2/index.html",
+          "file": "news/personas/mara/page/4/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5523,17 +5523,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/rex/page/2/index.html",
+          "file": "news/personas/rex/page/4/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "news/personas/rex/page/3/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/personas/rex/page/4/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5548,6 +5543,11 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/personas/rex/page/8/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "news/personas/rex/page/7/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
@@ -5558,7 +5558,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/rex/page/8/index.html",
+          "file": "news/personas/rex/page/2/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "news/personas/vera/page/2/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5568,22 +5573,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/vera/page/3/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+          "file": "oracle/index.html",
+          "state": "declared-redirect",
+          "location": "https://vaultsparkstudios.com/ignis/#oracle"
         },
         {
           "file": "news/personas/vera/page/4/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "news/personas/vera/page/5/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "offline.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5593,7 +5588,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "news/personas/vera/page/2/index.html",
+          "file": "news/personas/vera/page/3/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5608,22 +5603,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
+          "file": "news/personas/vera/page/5/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "offline.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
           "file": "pathways/investors/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "pathways/players/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "pathways/lore/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "pathways/supporters/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5638,12 +5633,27 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "oracle/index.html",
-          "state": "declared-redirect",
-          "location": "https://vaultsparkstudios.com/ignis/#oracle"
+          "file": "pathways/supporters/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "projects/atlas/.ai/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "projects/atlas/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "pathways/players/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "projects/concurrent/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5668,12 +5678,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/concurrent/.ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "projects/atlas/index.html",
+          "file": "projects/hashmark/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5683,27 +5688,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/hashmark/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "projects/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "projects/ideaforge/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "projects/ouren/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/obelisk/index.html",
+          "file": "projects/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5718,7 +5708,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/promogrind/index.html",
+          "file": "projects/obelisk/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "projects/ideaforge/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5728,7 +5723,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/scriptorium/index.html",
+          "file": "projects/promogrind/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5738,12 +5733,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/seamline/index.html",
+          "file": "projects/scriptorium/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/shadow/.ai/index.html",
+          "file": "projects/seamline/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5753,7 +5748,7 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/signal-log/index.html",
+          "file": "projects/shadow/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5763,12 +5758,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/syntha/.ai/index.html",
+          "file": "projects/statvault/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/sparkraid/index.html",
+          "file": "projects/syntha/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5778,27 +5773,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/statvault/.ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "projects/syntha/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/the-living-protocol/index.html",
+          "file": "projects/signal-log/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/veilos/.ai/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "projects/vault-pipeline/index.html",
+          "file": "projects/sparkraid/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5808,7 +5793,12 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/velaxis/.ai/index.html",
+          "file": "projects/veilos/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "projects/veilos/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5818,27 +5808,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/veilos/index.html",
+          "file": "projects/vault-pipeline/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "projects/velaxis/index.html",
+          "file": "projects/velaxis/.ai/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "share/index.html",
-          "state": "declared-redirect",
-          "location": "https://vaultsparkstudios.com/social/"
+          "file": "projects/the-living-protocol/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
           "file": "rights/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "roadmap/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5848,37 +5833,17 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "sitemap-page/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "security/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "search/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "social/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "studio-hub/index.html",
+          "file": "share/index.html",
           "state": "declared-redirect",
-          "location": "https://hub.vaultsparkstudios.com/"
+          "location": "https://vaultsparkstudios.com/social/"
         },
         {
-          "file": "stats/ecosystem/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
-          "file": "status/index.html",
+          "file": "projects/velaxis/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5888,12 +5853,37 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "studio-pulse/index.html",
+          "file": "security/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "synthetic-intelligence/index.html",
+          "file": "studio-hub/index.html",
+          "state": "declared-redirect",
+          "location": "https://hub.vaultsparkstudios.com/"
+        },
+        {
+          "file": "social/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "stats/ecosystem/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "sitemap-page/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "status/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "studio-pulse/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5904,12 +5894,12 @@
           "note": "Existing unchanged identity plane; no authenticated journey acceptance claimed"
         },
         {
-          "file": "universe/dreadspike/index.html",
+          "file": "studio/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "studio/index.html",
+          "file": "synthetic-intelligence/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5919,17 +5909,22 @@
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "universe/index.html",
-          "state": "source-identical-with-provider-injection",
-          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
-        },
-        {
           "file": "universe/voidfall/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
         {
-          "file": "vault-member/passport/index.html",
+          "file": "universe/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "universe/dreadspike/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "roadmap/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         },
@@ -5942,6 +5937,11 @@
           "file": "vault-member/index.html",
           "state": "source-identical-with-provider-injection",
           "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
+        },
+        {
+          "file": "vault-member/passport/index.html",
+          "state": "source-identical-with-provider-injection",
+          "providerTemplateSha256": "debd9fb2035c0a9c2b5b186de3e07f070fde486a331e478d9b7d28179391ac0f"
         }
       ],
       "heldIdentityRedirects": 9
@@ -5951,16 +5951,16 @@
   "staging": {
     "sourceAssociation": {
       "verified": true,
-      "at": "2026-10-16T05:53:07.594Z",
-      "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-      "stagedCommit": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-      "observedStagingCheckout": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-      "stagingReceiptId": "8e869c13db3953c7eaba93b1",
+      "at": "2026-10-16T06:31:15.429Z",
+      "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+      "stagedCommit": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+      "observedStagingCheckout": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+      "stagingReceiptId": "07b445efaddd26b02350d71d",
       "artifactRoot": "b0aedbdbfcf5bfffa95cbd61316c340c558d013b769612e2ae0d883f2788a4b7",
       "sourceEquivalence": {
         "verified": true,
-        "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-        "stagedCommit": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+        "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+        "stagedCommit": "6f80ad39edcd2548823eb73428e65bd515fe8870",
         "files": 3614,
         "onlyLineEndingTransport": [
           "scripts/install-git-window-guard.mjs",
@@ -9876,8 +9876,8 @@
       "scope": "Exact Git candidate archive and receipt. Build stamp label distinguished from actual checkout. Local full source matches tracked staged source with only enumerated LF transport; ignored local-only cache state is not deployed."
     },
     "criticalLeaves": {
-      "checkedAt": "2026-10-16T05:53:09.138Z",
-      "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
+      "checkedAt": "2026-10-16T06:31:17.279Z",
+      "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
       "origin": "https://website.staging.vaultsparkstudios.com",
       "artifactRoot": "b0aedbdbfcf5bfffa95cbd61316c340c558d013b769612e2ae0d883f2788a4b7",
       "scope": "Every critical manifest leaf; declared canonical leaf fields and edge CSP nonces only are normalized.",
@@ -10344,7 +10344,7 @@
     },
     "ceremony": {
       "schemaVersion": 1,
-      "generatedAt": "2026-10-16T05:54:41.111Z",
+      "generatedAt": "2026-10-16T06:33:48.539Z",
       "generatedBy": "scripts/run-release-ceremony.mjs",
       "publicSafe": true,
       "state": "passed",
@@ -10354,13 +10354,13 @@
           "id": "redirect-readiness-probe",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 468
+          "durationMs": 659
         },
         {
           "id": "redirect-readiness",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 1,
+          "durationMs": 14,
           "verdict": "passed",
           "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
         },
@@ -10368,25 +10368,25 @@
           "id": "staging-deploy-lineage",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 196
+          "durationMs": 301
         },
         {
           "id": "lane-held-asset-drift",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 3028
+          "durationMs": 2264
         },
         {
           "id": "staging-browser",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 48428
+          "durationMs": 89629
         },
         {
           "id": "staging-browser-receipt",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 0,
+          "durationMs": 2,
           "passed": 3,
           "expected": 6,
           "skipped": 0,
@@ -10403,7 +10403,7 @@
           "id": "attention-browser",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 37989
+          "durationMs": 54953
         },
         {
           "id": "attention-browser-receipt",
@@ -10420,13 +10420,13 @@
           "id": "promotion-contract",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 184
+          "durationMs": 385
         },
         {
           "id": "promotion-ready",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 3,
+          "durationMs": 39,
           "releaseState": "hold",
           "reasonCodes": [
             "real-provider-e2e-pending",
@@ -10446,13 +10446,13 @@
           "id": "doctor",
           "state": "passed",
           "exitCode": 0,
-          "durationMs": 1425,
+          "durationMs": 2623,
           "blockingFailing": 0,
           "exemptedBlocking": 0,
           "observedDate": "2026-10-16"
         }
       ],
-      "evidenceSha256": "749d2eba6cf57ecd72be881eea1c9804ec22bc2fb4aebfdc27310b059d5a9fa4",
+      "evidenceSha256": "1c25b9b2142f2004184f67b59282751ab39c5d664690f60a5a3cfe9d25f90f7f",
       "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
       "chain": {
         "previousReceiptSha256": "8744a3bb10a45ebf12b38ef6bad9d864b076409814810ca75557eef64e8a7986"
@@ -10465,7 +10465,7 @@
     },
     "browser": {
       "schemaVersion": 1,
-      "generatedAt": "2026-10-16T05:54:01.497Z",
+      "generatedAt": "2026-10-16T06:32:50.517Z",
       "publicSafe": true,
       "origin": "https://website.staging.vaultsparkstudios.com",
       "suite": "tests/staging-release.spec.js",
@@ -10496,7 +10496,7 @@
     },
     "attention": {
       "schemaVersion": 1,
-      "generatedAt": "2026-10-16T05:54:39.485Z",
+      "generatedAt": "2026-10-16T06:33:45.414Z",
       "generatedBy": "scripts/run-attention-release-gate.mjs",
       "publicSafe": true,
       "origin": "https://website.staging.vaultsparkstudios.com",
@@ -10560,7 +10560,7 @@
       }
     ],
     "closingHold": {
-      "startedAt": "2026-10-16T05:45:18.546Z",
+      "startedAt": "2026-10-16T06:17:51.638Z",
       "reason": "Closing derived public intelligence changed with verified session writeback; stage and promote the closing snapshot.",
       "workflows": [
         {
@@ -10588,15 +10588,48 @@
           "priorState": "active",
           "heldState": "disabled_manually"
         }
-      ],
-      "restoredAt": "2026-10-16T06:09:44.177Z"
-    }
+      ]
+    },
+    "holdHistory": [
+      {
+        "startedAt": "2026-10-16T05:45:18.546Z",
+        "reason": "Closing derived public intelligence changed with verified session writeback; stage and promote the closing snapshot.",
+        "workflows": [
+          {
+            "name": "news-publish.yml",
+            "priorState": "active",
+            "heldState": "disabled_manually"
+          },
+          {
+            "name": "uptime-probe.yml",
+            "priorState": "active",
+            "heldState": "disabled_manually"
+          },
+          {
+            "name": "refresh-live-data.yml",
+            "priorState": "active",
+            "heldState": "disabled_manually"
+          },
+          {
+            "name": "desk-content-release.yml",
+            "priorState": "active",
+            "heldState": "disabled_manually"
+          },
+          {
+            "name": "ci-status-beacon.yml",
+            "priorState": "active",
+            "heldState": "disabled_manually"
+          }
+        ],
+        "restoredAt": "2026-10-16T06:09:44.177Z"
+      }
+    ]
   },
   "shellHygiene": {
     "session": 383,
-    "enumeratedAt": "2026-10-16T06:10:42.110Z",
-    "started": 31,
-    "closed": 31,
+    "enumeratedAt": "2026-10-16T06:43:27.226Z",
+    "started": 38,
+    "closed": 38,
     "running": 0,
     "ownedHandles": [
       {
@@ -10722,9 +10755,37 @@
       {
         "handle": 80178,
         "terminal": true
+      },
+      {
+        "handle": 29953,
+        "terminal": true
+      },
+      {
+        "handle": 98085,
+        "terminal": true
+      },
+      {
+        "handle": 69910,
+        "terminal": true
+      },
+      {
+        "handle": 72116,
+        "terminal": true
+      },
+      {
+        "handle": 83046,
+        "terminal": true
+      },
+      {
+        "handle": 79779,
+        "terminal": true
+      },
+      {
+        "handle": 65692,
+        "terminal": true
       }
     ],
-    "ownedWorktreesRemoved": 2,
+    "ownedWorktreesRemoved": 3,
     "previewPort4173Closed": true,
     "reconfirmation": {
       "ownedNodes": 0,
@@ -10733,7 +10794,7 @@
     "scope": "Recorded persistent unified-exec handles only. Tool completion/intentional preview stop proves terminal state; synchronous commands complete on return. Exact S383 Node process and owned port re-enumeration is zero. Unrelated host processes are outside this count."
   },
   "closeout": {
-    "sourcePublication": "Two full productions are verified. The merged post-release CI-beacon data is being staged and fully promoted; final publisher restoration occurs after the last evidence push.",
+    "sourcePublication": "All final served source is fully deployed and read back. This evidence update is metadata only. Publisher restoration and final remote verification occur after its last normal push, before native goal completion.",
     "autopilot": {
       "schemaVersion": "1.0",
       "session": 383,
@@ -10751,11 +10812,9 @@
     }
   },
   "coordination": {
-    "type": "session-impact-summary",
-    "to": "*",
-    "deliveredAt": "2026-10-16T06:10:43.213Z",
-    "transportOutput": "✓ shipped session-impact-summary → *  id=01K51LB3RLF5196989B191F767  sig=e424c7ad6447…\n  msg: inform P2 thread=t-ef7381d91175b9a9 due=2026-10-23T06:10:43.123Z supersedes=01K51JLG3I65713B52F10EFD41",
-    "adoption": "Delivery only; no sibling adoption claimed"
+    "state": "final-broadcast-after-post-publication-cleanup",
+    "artifactVersion": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+    "verification": "The final Ark receipt is recorded with the native completion receipt after source publication."
   },
   "initialFullProduction": {
     "acceptedAt": "2026-10-16T05:41:17.807Z",
@@ -17521,11 +17580,11 @@
   },
   "initialAcceptedAt": "2026-10-16T05:41:17.807Z",
   "closingFollowThrough": {
-    "state": "verified",
-    "candidate": "f51949adfe6fd4fb091fa4f29f55213e7520f92c",
-    "verifiedAt": "2026-10-16T06:08:53.136Z",
+    "state": "runtime-verified",
+    "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+    "verifiedAt": "2026-10-16T06:43:06.552Z",
     "initialFullCandidate": "d4f69cca93279e652234dcdc6ca69e97cf2bf5fe",
-    "reason": "The final session focus, next milestone and three shipped bullets are now included in the fully deployed public-intelligence projection.",
+    "reason": "The merged CI-beacon data and dependent projections are fully deployed with the previously verified runtime/test code.",
     "sameVerifiedSourceFingerprint": "a6f6680091b984a079d53df6",
     "runtimeOrTestCodeChanged": false,
     "publicMetadataChanged": true
@@ -24111,8 +24170,57 @@
     }
   },
   "finalSeal": {
-    "state": "pending",
+    "state": "runtime-verified",
     "reason": "Preserve and fully deploy the independently published post-release CI-beacon update in five served data files. Publishers remain held through the last evidence push, then restoration is verified without another source commit.",
-    "botCommit": "bc469a269a477df9662c410a1a177a5cdaa4e3d6"
+    "botCommit": "bc469a269a477df9662c410a1a177a5cdaa4e3d6",
+    "candidate": "6f80ad39edcd2548823eb73428e65bd515fe8870",
+    "productionRun": 38862272871,
+    "acceptedAt": "2026-10-16T06:43:12.082Z"
+  },
+  "acceptedAt": "2026-10-16T06:43:12.082Z",
+  "postPublicationCleanup": {
+    "state": "held-until-last-evidence-push",
+    "requiredBeforeNativeGoalCompletion": true,
+    "restore": [
+      {
+        "name": "news-publish.yml",
+        "originalState": "active",
+        "observedHeldState": "disabled_manually"
+      },
+      {
+        "name": "uptime-probe.yml",
+        "originalState": "active",
+        "observedHeldState": "disabled_manually"
+      },
+      {
+        "name": "refresh-live-data.yml",
+        "originalState": "active",
+        "observedHeldState": "disabled_manually"
+      },
+      {
+        "name": "desk-content-release.yml",
+        "originalState": "active",
+        "observedHeldState": "disabled_manually"
+      },
+      {
+        "name": "ci-status-beacon.yml",
+        "originalState": "active",
+        "observedHeldState": "disabled_manually"
+      }
+    ],
+    "verification": "After the last normal main push, restore and query all five original states, then verify remote synchronization and served-source equality. Actual completion is recorded in ignored .cache/s383-final-completion-proof.json and the native goal thread; no source commit follows restoration."
+  },
+  "releaseAlignment": {
+    "preservedBotCommit": "d42b8500fa5fed99395222c0cb9e88def6dcdf07",
+    "paths": [
+      "api/leaderboard/v1/all.json",
+      "api/leaderboard/v1/call-of-doodie.json",
+      "api/leaderboard/v1/franchise-architect.json",
+      "api/leaderboard/v1/gridiron-gm.json",
+      "api/leaderboard/v1/meta.json"
+    ],
+    "verifiedDelta": "Only updated_at changed; all scores and metadata payloads identical. Empty entries remain empty.",
+    "action": "Normal fast-forward preserved bot history. Compensating final commit restores exact accepted production bytes and their truthful earlier generation timestamps; no score data lost.",
+    "independentReview": "studio_reviewer PASS; strict final served-source equality required."
   }
 }

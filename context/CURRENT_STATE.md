@@ -4,7 +4,7 @@ S383 complete: three reproduced homepage acceptance failures now exercise the ac
 
 **Closing follow-through**
 
-Closing follow-through complete (2026-10-16T06:09:44.178Z): f51949adfe6fd4fb091fa4f29f55213e7520f92c passed exact hosted checks, current staging, full production 38859007432 and complete immutable/primary source readback. Candidate and closing evidence were pushed normally; all five original publisher states are restored. Final acceptance is recorded in docs/RELEASE_S383.json. Existing identity holds and unrelated optional diagnostics remain separate.
+Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
 
 ## Session 382 — verified release (2026-10-16)
 

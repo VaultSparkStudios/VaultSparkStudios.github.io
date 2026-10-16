@@ -2713,3 +2713,10 @@ Closing follow-through verified (2026-10-16T06:08:53.136Z): candidate f51949adfe
 
 Closing follow-through complete (2026-10-16T06:09:44.178Z): f51949adfe6fd4fb091fa4f29f55213e7520f92c passed exact hosted checks, current staging, full production 38859007432 and complete immutable/primary source readback. Candidate and closing evidence were pushed normally; all five original publisher states are restored. Final acceptance is recorded in docs/RELEASE_S383.json. Existing identity holds and unrelated optional diagnostics remain separate.
 Same S383 score933/1000; no new scored session.
+
+
+Closing follow-through verified (2026-10-16T06:43:06.552Z): candidate 6f80ad39edcd2548823eb73428e65bd515fe8870 passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38862272871. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+
+
+Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
+Same S383 score933/1000; no new scored session.
