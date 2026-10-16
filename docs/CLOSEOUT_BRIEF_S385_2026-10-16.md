@@ -11,8 +11,10 @@
 ║  PROJECT IMPACT     ██████▌░░░   65/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███▌░░░░░░   35/100                                                       ║
 ║  SIL DELTA          933 → 933  (+0)                                                           ║
-║  RELEASE            Full local, staging, hosted and production acceptance pending             ║
+║  RELEASE            537/537;215 mobile;staging66/66;ceremony11/11;full production/readback    ║
 ║  CDR                Reviewed; no new human direction                                          ║
+║  LIVE BROWSER       Default14/15 (Firefox driver); adapted original assertions15/15 with exact native Fetch hash  ║
+║  OPTIONAL DIAGNOSTICS 600pass34fail1flaky60skip; retained separately                          ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 

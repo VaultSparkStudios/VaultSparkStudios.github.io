@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-16 (Session 384 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 385 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S384 ═══════╗
-║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 3 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S385 ═══════╗
+║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 2 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S384)                                        ║
+║  Autopilot: proven (S385)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
 ║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ fix(S384): seal verified combined release candidate           ║
-║  ✓ chore(S384): seal corrected source and staging evidence       ║
-║  ✓ fix(S384): seal verified local release evidence               ║
+║  ✓ fix(S385): seal verified public release candidate             ║
 ║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
+║  ✓ fix(S385): preserve community identities and verify public d  ║
+║  ✓ docs(S384): record verified full release and closeout [skip   ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -42,7 +42,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 999 files  ·  M:43 A:0 D:0 ?:956                       ║
+║  Changes: 1162 files  ·  M:47 A:0 D:0 ?:1115                     ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
