@@ -10,9 +10,9 @@
     "days": 53,
     "firstDate": "2026-08-07",
     "latestDate": "2026-10-16",
-    "stories": 137,
-    "words": 51578,
-    "minutes": 254,
+    "stories": 138,
+    "words": 51924,
+    "minutes": 256,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -39,6 +39,7 @@
       "anthropic.com",
       "arstechnica.com",
       "bbc.com",
+      "bfl.ai",
       "blog.cloudflare.com",
       "blog.google",
       "blogs.nvidia.com",
@@ -76,14 +77,14 @@
       "whitehouse.gov",
       "wired.com"
     ],
-    "sourceCount": 42,
-    "facts": 434,
-    "panels": 137,
+    "sourceCount": 43,
+    "facts": 440,
+    "panels": 138,
     "formats": {
       "bit": 4,
       "roast": 5,
       "quick": 9,
-      "explainer": 36,
+      "explainer": 37,
       "debate": 80,
       "deep": 1
     },
@@ -91,12 +92,12 @@
       "midday": 38,
       "wire": 37,
       "close": 25,
-      "latenight": 35
+      "latenight": 36
     },
     "shapes": {
       "split": 45,
       "solo": 6,
-      "agree": 76,
+      "agree": 77,
       "lean": 10
     },
     "predictions": {
@@ -6180,7 +6181,7 @@
       "panelBy": "rex",
       "format": "debate",
       "edition": "midday",
-      "isLead": true,
+      "isLead": false,
       "shape": "split",
       "spread": 3,
       "label": "4 voices, and they split",
@@ -6209,6 +6210,50 @@
       "predictions": {
         "onRecord": 2,
         "open": 2,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "slug": "welcome-flux-3-image-klein-in-diffusers",
+      "words": 346,
+      "minutes": 2,
+      "voices": [
+        "juno",
+        "dot"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "bfl.ai",
+        "huggingface.co"
+      ],
+      "sourceCount": 2,
+      "factCount": 6,
+      "panels": 1,
+      "panelBy": "juno",
+      "format": "explainer",
+      "edition": "latenight",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "juno",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "dot",
+          "direction": 1,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 1,
+        "open": 1,
         "graded": 0,
         "correct": 0
       }
