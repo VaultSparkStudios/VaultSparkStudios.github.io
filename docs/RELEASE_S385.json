@@ -1,0 +1,154 @@
+{
+  "session": 385,
+  "state": "implementation-verified-release-pending",
+  "startedAt": "2026-10-16T16:46:40.397Z",
+  "startHead": "45eb2fbafd2e247c5686acda7124dbce1c437851",
+  "authorization": "Founder authorized direct commit/push to main and full deployment in this goal.",
+  "implementation": {
+    "browserStats": {
+      "startTime": "2026-10-16T18:01:46.931Z",
+      "duration": 26342.449,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "mutations": {
+      "at": "2026-10-16T18:02:37.649Z",
+      "verified": true,
+      "results": [
+        {
+          "name": "directory-script-load",
+          "exit": 1,
+          "stats": {
+            "startTime": "2026-10-16T18:02:14.412Z",
+            "duration": 7182.447,
+            "expected": 0,
+            "skipped": 0,
+            "unexpected": 1,
+            "flaky": 0
+          },
+          "detected": true,
+          "expectedFailure": "#members-grid .mc-username"
+        },
+        {
+          "name": "wrong-rank",
+          "exit": 1,
+          "stats": {
+            "startTime": "2026-10-16T18:02:22.641Z",
+            "duration": 7160.875,
+            "expected": 0,
+            "skipped": 0,
+            "unexpected": 1,
+            "flaky": 0
+          },
+          "detected": true,
+          "expectedFailure": ".vw-podium-rank"
+        },
+        {
+          "name": "dropped-project",
+          "exit": 1,
+          "stats": {
+            "startTime": "2026-10-16T18:02:30.750Z",
+            "duration": 6859.3910000000005,
+            "expected": 0,
+            "skipped": 0,
+            "unexpected": 1,
+            "flaky": 0
+          },
+          "detected": true,
+          "expectedFailure": ".ecosystem-project h3"
+        }
+      ]
+    },
+    "visualReceipt": "docs/visual-qa/S385_COMMUNITY.json",
+    "mobile": {
+      "passed": 215,
+      "failed": 0,
+      "source": "final hashed delivery source",
+      "log": ".cache/s385-mobile.log",
+      "receipt": "docs/mobile-audit/receipt.json"
+    },
+    "shell": {
+      "passed": 13,
+      "failed": 0,
+      "manifestCurrent": true,
+      "servedAsset": "assets/members-directory.shell-14b3ddc2e1.js"
+    },
+    "cardContrast": {
+      "method": "Computed text foreground against actual rendered card-background pixel at text-row padded edge; avatar interior sample5px inside circle edge. Does not claim whole-site or gradient-wide AA.",
+      "measuredTextRows": 56,
+      "thresholdFailures": 0,
+      "scope": "Card ranks, avatars, names and points sampled across7themes; not whole-site AA"
+    },
+    "visualCaptures": 112,
+    "independentReview": {
+      "reviewer": "closeout_reviewer",
+      "verdict": "pass",
+      "findings": 0,
+      "scope": "Final directory foreground and search source/test changes; full release independently remains pending"
+    }
+  },
+  "limitations": [
+    "Existing identity/provider acceptance holds unchanged; not positive authenticated acceptance.",
+    "Axe gradient contrast incomplete; zero violations is not complete AA evidence.",
+    "Optional broad browser diagnostics retained separately."
+  ],
+  "release": null,
+  "cloudflareAuth": {
+    "at": "2026-10-16T17:06:39.911Z",
+    "command": "Installed Wrangler whoami --json",
+    "exit": 0,
+    "authenticated": true,
+    "authType": "User API Token",
+    "expectedAccountObserved": true,
+    "scope": "Machine secrets-gateway credential only; hosted deployment auth is independently verified by its actual successful deploy step. Account identity and raw auth output intentionally excluded."
+  },
+  "rollback": {
+    "previousProduction": "7a9159690566056665f2cfb1a92f664f4dc8c87c",
+    "method": "Normal pinned full promotion of recorded predecessor after staging; no force-push. Hetzner staging retains timestamped predecessor."
+  },
+  "localAttempts": [
+    {
+      "state": "failed",
+      "step": 160,
+      "total": 537,
+      "reason": "visual release-candidate binding missing; corrected, full rerun required",
+      "evidence": ".cache/s385-first-build-failed.json"
+    },
+    {
+      "state": "failed",
+      "step": 246,
+      "total": 537,
+      "reason": "Visual declared route/theme/viewport/state matrix missing; metadata corrected without changing source or capture bytes; validators rerun, complete acceptance remains pending.",
+      "evidence": ".cache/s385-second-build-failed.json"
+    },
+    {
+      "state": "checks-passed-commit-held",
+      "passed": 537,
+      "failed": 0,
+      "runs": 2,
+      "reason": "Intentional smaller visual index reviewed with exact retained predecessor; documented override scope verified.",
+      "retention": {
+        "verified": true,
+        "at": "2026-10-16T17:50:26.536Z",
+        "scope": "Only LATEST visual index replacement; no history deletion; existing guard and hooks unchanged",
+        "findings": [
+          {
+            "file": "docs/visual-qa/LATEST.json",
+            "issue": "content-wipe",
+            "ratio": 0.11970244505077064
+          }
+        ],
+        "priorSha256": "3dd025e4e3ef69ebb5c79388a84e320607f2419ecdbd03a0c27e99e3247b8833",
+        "archiveSha256": "3dd025e4e3ef69ebb5c79388a84e320607f2419ecdbd03a0c27e99e3247b8833",
+        "archive": "docs/visual-qa/S384_RETAINED.json",
+        "currentCapturesVerified": 28
+      }
+    },
+    {
+      "state": "intentionally-stopped-obsolete-candidate",
+      "reason": "Measured light-theme card contrast defect discovered while next full gate ran; owned verification process stopped before changing source. Old537-pass evidence retained separately; new source requires full validation."
+    }
+  ]
+}

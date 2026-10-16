@@ -42,7 +42,7 @@
   function normalizeMember(member) {
     var points = Number(member.vault_points ?? member.points ?? 0);
     return {
-      username: member.username || 'VaultMember',
+      username: typeof member.username === 'string' ? member.username.trim() : '',
       points: Number.isFinite(points) ? points : 0,
       rankTitle: member.rank_title || '',
       memberNumber: member.member_number || null,
@@ -70,7 +70,7 @@
     var filtered = allMembers.filter(function (member) {
       var rank = getRankInfo(member.points, member.rankTitle);
       var rankMatch = activeRankFilter === 'All' || rank.name === activeRankFilter;
-      var searchMatch = !searchQuery || member.username.toLowerCase().indexOf(searchQuery) !== -1;
+      var searchMatch = !searchQuery || (member.username || 'Vault Member').toLowerCase().indexOf(searchQuery) !== -1;
       return rankMatch && searchMatch;
     });
 
@@ -85,16 +85,17 @@
 
     grid.innerHTML = filtered.map(function (member) {
       var rank = getRankInfo(member.points, member.rankTitle);
-      var initials = member.username.charAt(0).toUpperCase();
+      var label = member.username || 'Vault Member';
+      var initials = label.charAt(0).toUpperCase();
       var isGenesis = member.memberNumber && member.memberNumber <= 100;
       return [
-        '<a href="/member/?u=', encodeURIComponent(member.username), '" class="member-card">',
-        '<div class="mc-avatar" style="background:', rank.color, '22;color:', rank.color, ';border:2px solid ', rank.color, '44;">', initials, '</div>',
-        '<div class="mc-username">', esc(member.username), '</div>',
-        '<div class="mc-rank" style="color:', rank.color, ';">', esc(rank.name), '</div>',
+        member.username ? '<a href="/member/?u=' + encodeURIComponent(member.username) + '" class="member-card">' : '<div class="member-card">',
+        '<div class="mc-avatar" style="background:', rank.color, '22;color:var(--text);border:2px solid ', rank.color, '44;">', esc(initials), '</div>',
+        '<div class="mc-username">', esc(label), '</div>',
+        '<div class="mc-rank" style="color:var(--text);">', esc(rank.name), '</div>',
         '<div class="mc-pts">', member.points.toLocaleString('en-US'), ' pts</div>',
         isGenesis ? '<div class="mc-badge">Genesis Member</div>' : '',
-        '</a>'
+        member.username ? '</a>' : '</div>'
       ].join('');
     }).join('');
   }

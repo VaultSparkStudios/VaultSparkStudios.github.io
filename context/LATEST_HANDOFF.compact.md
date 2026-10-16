@@ -1,39 +1,32 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 954a47352229 -->
-<!-- generated-at: 2026-10-16T13:39:02.936Z -->
+<!-- source-hash: 18b4d4213c18 -->
+<!-- generated-at: 2026-10-16T16:47:05.744Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 383 HANDOFF
+SESSION 384 COMPLETE HANDOFF
 
-Native Goal: 01a142dd-f958-7631-864d-a7193b851a4e
+Intent: Full release verification and deployment finalized (2026-10-16T16:32).
 
-What Shipped:
-- Homepage engagement tests now exercise actual milestone loader, proof/Vault Door/membership ordering, network-bound public intelligence
-- Seven engagement cases mandatory in required CI
-- Candidate d4f69cca9327 passed all hosted checks, stagingcritical65/65, ceremony11/11, full Pages deployment 38856553984
+Shipped:
+- Returning-visitor contract 6/6, engines 18/18
+- Mobile coverage 215/215, sitemap 84 incoming-art renders
+- Full source validation 537/537, staging 65/65, ceremony 11/11
+- Pages deployment 38931769343, 1089 text files + 315 HTML routes verified
+- Diagnostics: 596 expected, 36 unexpected, 0 flaky, 60 skipped
 
-Current State:
-- All 21 cases passed across Chromium, Firefox, WebKit
-- Local validation 537/537, mobile 215/215
-- Blocked milestone loading and corrupted intelligence score detected by negative tests
-- Score/grade mutation proves detection mechanism
-- No runtime or visual-baseline change
-- SIL933/1000 unchanged
+Acceptance: docs/RELEASE_S384.json
 
-Now-Bucket Top 3:
-- Five publisher states restored; owned processes closed (pending cache push verification)
-- Optional broad diagnostics: 589 passed, 37 failed, 3 flaky, 60 skipped (not claimed fixed)
-- Final source seal verified (2026-10-16T06:43:12.082Z), immutable/primary readback covers 1085 text files and 313 HTML routes
+Known Limitations:
+- Field-vitals constraints remain unresolved
+- Axe gradient incompleteness separate issue
+- SIL at 933/1000 (unchanged across sessions)
 
-Blockers Top 3:
-- Unresolved optional behavior remaining
-- Pixel diagnostics incomplete
-- Existing identity/field-vitals limitations remain separate scope
+Human Direction: None new; preserve unrelated operator residue.
 
-Human-Blocked:
-- None noted; CDR reviewed, no new creative direction
+Blockers/Open:
+- Identity hold persists
+- Optional diagnostic pixel failures (589 passed, 37 failed, 3 flaky, 60 skipped) not claimed fixed
+- Publisher restoration and cleanup pending before final goal completion
 
-Evidence: docs/RELEASE_S383.json, .cache/s383-final-completion-proof.json
-
-Next session: verify publisher workflow synchronization and served-source equivalence, then resolve optional behavior scope.
+Next: Final metadata push, publisher restoration, owned-process cleanup, then native goal completion.

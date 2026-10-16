@@ -2285,3 +2285,32 @@ The focused LATEST visual index replaces a larger historical matrix. Prior HEAD 
 ## D-S384.5 — Preserve concurrent approved Desk artwork (2026-10-16)
 
 Remote main received four routine-art/proof commits while local verification ran. Merge both histories normally; preserve incoming art, story and review inputs, and regenerate the three overlapping derived status/stat outputs. Independent hash review confirms banner and satire approval survives normalization into published assets. The ingestion semanticVerified:false default and separate stricter promotionEligible flag are not rejection evidence. There is no incoming runtime JavaScript, stylesheet, authentication, workflow or generator-source change. The combined candidate still requires representative rendered before/after review of main/satire, listing and shared related-card surfaces across all themes and both widths, fresh complete local source checks, staging, exact hosted checks and full production readback. Earlier candidate evidence cannot substitute. This is release integration, not an extra scored outcome or editorial rewrite.
+
+
+## D-S385.1 — Preserve earned rank and coverage truth (2026-10-16)
+
+Point boundaries and podium order are independent of display handles and paid membership. Tests cover both sides of all nine rank boundaries and retain the full-population denominator. Ecosystem assertions consume the actual response rather than freezing the portfolio at19 projects; they check all project names/states, coverage denominators and filter results, plus a self-consistent unobserved single-project fixture and503 response. No rank economy, auth policy or public promise changes.
+
+## D-S385.2 — Follow the retained link assertion to its source (2026-10-16)
+
+Correcting the stale rank expectation exposed the member directory links for missing handles. Trim only actual strings, keep missing handles absent, render neutral non-link cards, and escape initials. Existing public-view requests and fallback remain intact. All15 focused browser cases pass and two independent mutations are detected. Twenty-eight actual before/after captures were inspected across seven themes; prior S384 LATEST receipt is retained byte-for-byte at docs/visual-qa/S384_RETAINED.json. Automated gradient contrast remains incomplete. Canon zero ABSOLUTE gaps; existing CANON-045/056 exceptions retain D-S379.3/D-S374.3 justification. Missing local startup-sync/checklist helpers are recorded rather than claimed run; canonical sync/radar succeeded.
+
+
+## D-S385.3 — Preserve startup history within the existing budget (2026-10-16)
+
+Canonical rotator found no eligible blocks. Moved completed S377/S378 notes verbatim to the existing task archive; all117 unchecked rows remain byte-for-byte in the active board. Saved820bytes without changing the42000-token guard. Existing source-preserving archive policy is reused.
+
+
+## D-S385.4 — Deliver the directory fix through a new cache key (2026-10-16)
+
+Live mutable directory asset advertises a604800-second browser cache lifetime. Register the source with the existing hashed shell builder, which rewrites the community script reference and excludes mutable source aliases from the service-worker shell. This is required delivery follow-through for the reproduced directory defect. Preserve existing asset cache policy. The first full gate stopped honestly at step160 because the visual receipt lacked its candidate binding; add that existing receipt field after final captures, then reverify the finished source.
+
+
+## D-S385.5 — Retain prior rendered evidence when replacing its index (2026-10-16)
+
+The canonical wipe guard reports exactly one size-based finding: docs/visual-qa/LATEST.json is12% of its previous index. HEAD receipt and docs/visual-qa/S384_RETAINED.json are byte-identical; all28 new capture hashes and source bindings verify. Prior history and every append-only surface remain preserved. Use the existing documented --allow-wipe option only for this intentional reviewed index replacement. No guard code, hooks or checks are disabled; final source is revalidated normally.
+
+## D-S385.6 — Complete directory readability and search acceptance (2026-10-16)
+
+Rendered light-theme samples exposed low rank/avatar contrast. Use existing primary text tokens, retaining rank-colored decoration.112 before/after captures cover default and three search states in all7 themes and both viewports;56 measured text/background samples pass scoped thresholds. The final replacement plan and visual index retain their exact S384 predecessors; the documented wipe override is limited to these two size-based findings after exact archive/hash checks. No append-only history or gate is bypassed.
+

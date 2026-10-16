@@ -9,9 +9,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last5 totals): ▇▇▇▇▇
-Avgs —3:933.0 |5:933.0 |10:931.4 |25:950.4 |all:unmeasured (archived history excluded)
+Avgs —3:933.0 |5:933.0 |10:932.2 |25:948.5 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session:2026-10-16 |Session384 |Total:933/1000 |Velocity:3 |protocolVelocity:3
+Last session:2026-10-16 |Session385 |Total:933/1000 |Velocity:2 |protocolVelocity:2
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2758,3 +2758,32 @@ The original plan contained two outcomes; the observed sitemap contrast prerequi
 
 S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
 All authorized audit outcomes shipped; all three waves complete. Same S384 score, no additional scored session.
+
+
+## Session 385 — 2026-10-16 — community and ecosystem data contracts
+
+S385 verifies earned community ranks and ecosystem coverage against delivered data. The retained global link assertion exposed an actual directory defect: blank handles linked to invented or whitespace profiles. Directory cards now use neutral non-link labels for absent handles, trim valid handles and escape initials. All15 focused cases pass across Chromium, Firefox and WebKit; separate wrong-rank and dropped-project mutations fail as expected. Required CI runs all five public cases without credentials. Twenty-eight before/after captures across seven themes and two widths are inspected and source-bound. Gradient contrast analysis remains incomplete despite zero reported violations. Full local, staging, hosted candidate and production acceptance remain pending in docs/RELEASE_S385.json.
+
+Product rubric: Dev Health95; Creative Alignment94; Momentum90; Engagement95; Process Quality90; Cross-Repo Coherence92; Security Posture94; Ecosystem Integration91; Capital Efficiency95; Automation Coverage97. Total:933/1000 unchanged. Focused regression protection and a concrete reader fix improve evidence without resolving wider identity and field-vitals limitations. Velocity:2, protocolVelocity:2, debt down.
+
+Brainstorm: response-bound public-data assertions resist portfolio growth; unnamed directory cards must preserve identity absence. Commitments: inspect remaining Oracle canonical-route assertions and original pixel diagnostics as separate future bounded work.
+
+
+| Category | Score |
+|---|---|
+| devHealth | 95 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 95 |
+| processQuality | 90 |
+| crossRepoCoherence | 92 |
+| securityPosture | 94 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 97 |
+
+
+S385 delivery follow-through: live mutable directory URL is cached604800seconds. Existing shell pipeline now emits a hashed directory asset, rewrites the actual community script and excludes the mutable alias from service-worker caching. All15 focused cases re-pass across three engines; three negative mutations detect blocked hashed execution, wrong ranks and dropped projects. Existing13 shell unit cases pass, shell references are synchronized, and all14 after captures were recaptured and inspected across seven themes. Before captures remain original. Candidate binding is now present; first full gate failed honestly at160/537 on its absence, not a source runtime failure. Full mobile revalidation and complete local/staging/hosted/production acceptance remain pending.
+
+
+S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.

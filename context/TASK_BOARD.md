@@ -1,3 +1,10 @@
+## S385 — public data contracts
+
+- [x] Fresh full startup and nine-axis audit; community earned-rank and ecosystem coverage contracts implemented,15/15 browser cases and three negative mutations verified; hashed directory delivery and13 shell unit cases verified. Actual blank-handle directory defect fixed;112 rendered captures and56 scoped contrast samples verified.
+S385 release/closeout acceptance: docs/RELEASE_S385.json is authoritative; completion requires accepted:true and no remaining gates.
+- [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
+- [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
+
 ## S384 — returning-visitor reliability
 
 - [x] Fresh full startup and nine-axis audit; correct returning-visitor acceptance, require it in CI, preserve diagnostic artifact reporters/paths; 18/18 and three negative mutations verified.
@@ -42,21 +49,16 @@ Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt)
 
 ## S378 arc — Spark clears reader controls
 
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
 - [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
 
-- [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
-- [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
-- [x] Wave 3 release: exact staging, hosted checks, direct main push and production acceptance verified in docs/RELEASE_S378.json.
-- [x] Wave 3 closeout: canonical autopilot completed; closing source and confirmed production accepted; schedules restored. Final evidence publication and native goal completion follow final review.
 ## S377 arc — homepage Recent Ships
 
-- [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
-- [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
-- [x] Wave 3: independent review, local 534/534, clean checkout 534/534, mobile 215/215, seven-theme pixels, staging and required hosted checks.
-- [x] Wave 4: closeout autopilot passed; closing452f candidate pushed, deployed and accepted by served readback.
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 - [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
+
 ## S376 arc — reader feedback on Desk articles
 
 - [x] Wave1: sync, triage (not cut off), /start, canon sync.

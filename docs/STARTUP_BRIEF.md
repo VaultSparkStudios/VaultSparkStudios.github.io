@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-16 (Session 384 closeout) -->
-<!-- semantic-freshness: hash=ebf3ccefad3e02cb next=385 silSession=384 silScore=933 handoff=384 tests=- -->
+<!-- generated-at: 2026-10-16 (Session 385 closeout) -->
+<!-- semantic-freshness: hash=2bd7cd75e10fbec9 next=386 silSession=385 silScore=933 handoff=385 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 384 closeout · 2026-10-16.
+> **Fast-boot brief** — generated at Session 385 closeout · 2026-10-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 385 · 2026-10-16 · BUILDER MODE                         ║
+║  Session 386 · 2026-10-16 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S384) - WHAT SHIPPED ══════════════════════════╗
-║  S384: six returning-visitor cases pass across three browsers (  ║
+╔══ LAST SESSION (S385) - WHAT SHIPPED ══════════════════════════╗
+║  S385 verifies neutral directory cards and valid trimmed profil  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -61,7 +61,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 384 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 385 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    537/537 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -77,7 +77,7 @@
 ║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46731 FORGE  ·  -1d old                        ║
+║  ✓  IGNIS         46461 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -116,24 +116,24 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓4 vs current 933)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 3.4 over last 10 forecasts                     ║
+║  Calibration: MAE 3.5 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [COHESION]     Reproduce remaining stats/Oracle/community  ║
+║   96  [PRODUCT]      S385 full local, staging, exact required h  ║
+║        S385 full local, staging, exact required hosted, product  ║
+║                                                                  ║
+║   92  [COHESION]     Reproduce remaining stats/Oracle/community  ║
 ║        Reproduce remaining stats/Oracle/community contract fail  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Inspect original pixel differences by rout  ║
+║   90  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
+║        Inspect retained pixel diagnostic failures against origi  ║
+║                                                                  ║
+║   84  [PRODUCT]      Inspect original pixel differences by rout  ║
 ║        Inspect original pixel differences by route/theme/viewpo  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Reproduce remaining optional behavioral di  ║
+║   81  [PRODUCT]      Reproduce remaining optional behavioral di  ║
 ║        Reproduce remaining optional behavioral diagnostics agai  ║
-║                                                                  ║
-║   87  [PRODUCT]      Investigate the eight unresolved behavior   ║
-║        Investigate the eight unresolved behavior assertions fro  ║
-║                                                                  ║
-║   84  [PRODUCT]      Inspect24 pixel differences against exact   ║
-║        Inspect24 pixel differences against exact route/theme/vi  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 384 closeout · 2026-10-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 385 closeout · 2026-10-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

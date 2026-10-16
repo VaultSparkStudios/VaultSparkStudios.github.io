@@ -1204,3 +1204,27 @@ S380 release follow-through: authoritative pending/completed acceptance and rema
 
 
 
+
+
+## S385 — completed-note excerpts (2026-10-16)
+
+Full original S379/S380 blocks retained below; their unchecked rows remain verbatim in the active board. This is a source-preserving history excerpt, not task completion.
+
+## S378 arc — Spark clears reader controls
+
+- [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
+- [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
+
+- [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
+- [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
+- [x] Wave 3 release: exact staging, hosted checks, direct main push and production acceptance verified in docs/RELEASE_S378.json.
+- [x] Wave 3 closeout: canonical autopilot completed; closing source and confirmed production accepted; schedules restored. Final evidence publication and native goal completion follow final review.
+
+## S377 arc — homepage Recent Ships
+
+- [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
+- [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
+- [x] Wave 3: independent review, local 534/534, clean checkout 534/534, mobile 215/215, seven-theme pixels, staging and required hosted checks.
+- [x] Wave 4: closeout autopilot passed; closing452f candidate pushed, deployed and accepted by served readback.
+- [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
+- [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
