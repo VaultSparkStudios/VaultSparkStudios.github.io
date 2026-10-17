@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-17",
+  "simulated": false,
+  "leadSlug": "welcome-muse-spark-open-open-weight-frontier-multimodal-mixture",
+  "stories": [
+    {
+      "slug": "welcome-muse-spark-open-open-weight-frontier-multimodal-mixture",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "wire",
+      "headline": "Meta Unveils Muse Spark Open: 816B Parameters, 42B Active",
+      "hook": "Meta’s new multimodal MoE model ships with massive scale but selective activation.",
+      "tldr": "Meta has released Muse Spark Open, a natively multimodal mixture-of-experts model featuring 816 billion total parameters and only 42 billion active per token. It supports a one million token context window for text, images, audio, and video. Weights are downloadable via major cloud providers, while API access is live on platforms like Groq and Baseten. This architecture aims to balance frontier capability with inference efficiency by activating sparse subsets of the network. The release marks a significant step in open-weight frontier modeling, offering developers immediate access to high-capacity reasoning without the full compute cost of dense models.",
+      "facts": [
+        {
+          "text": "Muse Spark Open is a natively multimodal model with 816B total parameters (42B active) and a 1M-token context window.",
+          "sourceUrl": "https://research.meta.ai/blog/muse-spark-open"
+        },
+        {
+          "text": "Muse Spark Open is available today through API platforms at Baseten, Fireworks AI, Groq, Modal, Nebius, OpenRouter and Together AI.",
+          "sourceUrl": "https://research.meta.ai/blog/muse-spark-open"
+        },
+        {
+          "text": "Model weights are available for download on Amazon SageMaker AI, Google Cloud Model Garden, Hugging Face, and Microsoft Foundry Models.",
+          "sourceUrl": "https://research.meta.ai/blog/muse-spark-open"
+        },
+        {
+          "text": "The mixture of experts model brings text, images, audio, and video into a model with approximately 816 billion parameters, around 42 billion active per token, and a context window of up to one million tokens.",
+          "sourceUrl": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "text": "Muse Glimmer 30B uses an encoder with the same architecture.",
+          "sourceUrl": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "text": "Mixture of Experts The language model has 62 layers and a hidden dimension of 8192.",
+          "sourceUrl": "https://huggingface.co/blog/meta-muse-spark-open"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "The 42B active parameter count transforms an 816B model into a viable daily driver, unlocking long-context reasoning that was previously too expensive to run at scale.",
+          "sources": [
+            "https://research.meta.ai/blog/muse-spark-open",
+            "https://huggingface.co/blog/meta-muse-spark-open"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "horizon": -1,
+          "verdict": "fair",
+          "confidence": 0.9,
+          "position": "Downloading weights does not solve the inference cost; the 42B active figure is theoretical until measured against real-world latency and energy consumption on standard hardware.",
+          "sources": [
+            "https://research.meta.ai/blog/muse-spark-open",
+            "https://huggingface.co/blog/meta-muse-spark-open"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-10-17-rex-1",
+          "personaId": "rex",
+          "claim": "By Q2 2027, Muse Spark Open will be the default backbone for enterprise video analysis pipelines due to its native multimodal support.",
+          "confidence": 0.65,
+          "resolveBy": "2026-12-01",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-10-17-dot-2",
+          "personaId": "dot",
+          "claim": "Within six months, the operational cost of running Muse Spark Open will exceed budget projections by 30% due to memory bandwidth bottlenecks.",
+          "confidence": 0.75,
+          "resolveBy": "2027-02-14",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "rex",
+          "text": "You are looking at 816 billion parameters. But you are only using 42 billion. That is the trick. You get the knowledge base of a giant with the speed of a sprinter. Watch what happens when you feed it a whole movie."
+        },
+        {
+          "personaId": "dot",
+          "text": "Eight hundred sixteen billion. Forty-two billion active. The difference is where the money goes. Downloading weights is free. Running them is not."
+        }
+      ],
+      "memeLine": {
+        "text": "Big brain, small footprint.",
+        "personaId": "rex"
+      },
+      "body": [
+        {
+          "voice": "rex",
+          "text": "Everyone is arguing about the demo. I am reading the changelog. Meta has dropped Muse Spark Open, and it is a natively multimodal model with 816B total parameters (42B active) and a 1M-token context window. This is not just another language model pretending to see. It brings text, images, audio, and video into a single architecture. The mixture of experts design means the language model has 62 layers and a hidden dimension of 8192, but it only wakes up the parts it needs. You are going to see this shift the baseline for long-context reasoning. Most models choke after a few thousand tokens. This thing holds a million. That is a library, not a document."
+        },
+        {
+          "voice": "dot",
+          "text": "Someone is paying for this. It is worth knowing who. The model weights are available for download on Amazon SageMaker AI, Google Cloud Model Garden, Hugging Face, and Microsoft Foundry Models. API platforms include Baseten, Fireworks AI, Groq, Modal, Nebius, OpenRouter and Together AI. The numbers are precise: approximately 816 billion parameters, around 42 billion active per token. But the chart tells the real story. Inference cost scales with active parameters, not total ones. Yet, memory bandwidth remains the bottleneck. If you are not measuring latency per dollar, you are guessing. The 42B figure is a promise. The bill is the reality."
+        },
+        {
+          "voice": "rex",
+          "text": "The Overhang is clear. With a context window of up to one million tokens, you can ingest entire codebases or legal archives in one go. Muse Glimmer 30B uses an encoder with the same architecture, suggesting a family strategy. You do not need to fine-tune separate vision and text encoders anymore. The native multimodal approach means fewer integration points and more coherent reasoning across media types. This is the infrastructure layer for the next generation of agents. They will not just read your email; they will watch the attached video, listen to the voice note, and summarize the action items in one pass. The efficiency gains from the MoE structure make this feasible where dense models would fail."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-10-17--welcome-muse-spark-open-open-weight-frontier-multimodal-mixture.png",
+        "scene": "A chaotic server room filled with glowing blue cables, where a single tiny green LED labeled '42B' is struggling to hold up a massive, crumbling stone slab labeled '816B'. The composition shows green LED supports stone slab.",
+        "alt": "A close-up shot of a small green light bulb supporting a heavy stone block in a dark server rack, symbolizing efficient activation. The composition shows green LED supports stone slab.",
+        "anchors": [
+          "816B total parameters",
+          "42B active",
+          "one million tokens"
+        ],
+        "relationships": [
+          {
+            "id": "tiny-led-supports-slab",
+            "subject": [
+              "green LED"
+            ],
+            "action": [
+              "supports"
+            ],
+            "object": [
+              "stone slab"
+            ],
+            "evidenceAnchorRefs": [
+              "816B total parameters"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "92cf2819e7be086b6f0480fad61d566dcfd1bb97ea293a07dd185f37c77aa90c",
+          "semanticVerified": false,
+          "reviewed": false,
+          "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)",
+          "kind": "procedural-fallback",
+          "entropy": 1.135
+        },
+        "generatedArt": false,
+        "satire": {
+          "target": "The modern enterprise IT department's obsession with purchasing massive, underutilized hardware capacity instead of optimizing software efficiency for actual workload requirements.",
+          "setup": "A CTO proudly displays a server rack capable of processing 816 billion parameters, claiming it ensures future-proofing against any conceivable data surge.",
+          "payoff": "The engineer quietly reveals that the system only activates 42 billion parameters, meaning the rest of the expensive hardware sits idle and hot all day.",
+          "institutional": true
+        }
+      },
+      "authoredBy": {
+        "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "requested": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "fellBack": false,
+        "attempt": 2,
+        "at": "2026-10-17T06:34:02.346Z"
+      }
+    }
+  ]
+}
