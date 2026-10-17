@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-17T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa",
+    "url": "https://vaultsparkstudios.com/news/2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-01-a2da67c75d07",
+      "hash": "a2da67c75d07e1448f533fff449761a94d71d926a67565c5e590f3f0a061fe11",
+      "text": "Anthropic is donating the $36,864 bounty to the Internet Security Research Group .",
+      "sourceUrl": "https://the-decoder.com/anthropics-claude-cracks-a-25-year-old-nsa-cryptography-mystery-in-under-30-minutes/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa/#fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-01-a2da67c75d07"
+    },
+    {
+      "id": "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-02-71201c14e90b",
+      "hash": "71201c14e90b994582900a05de2a1133e2695f3227909190bf9462e44f3355ec",
+      "text": "Anthropics' Claude cracks a 25-year-old NSA cryptography mystery in under 30 minutes Matthias Bastian View the LinkedIn Profile of Matthias Bastian Oct 17, 2026 Anthropic's AI Claude has solved a 25-year-old cryptography mystery.",
+      "sourceUrl": "https://the-decoder.com/anthropics-claude-cracks-a-25-year-old-nsa-cryptography-mystery-in-under-30-minutes/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa/#fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-02-71201c14e90b"
+    },
+    {
+      "id": "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-03-4de50a8cedb8",
+      "hash": "4de50a8cedb82ad6ead0ef49ee5b8327b7776a7267116e02770fe928dc35c187",
+      "text": "Claude spotted the pattern because \"lrand48\" only outputs 31 bits, and the top bits in some seeds were systematically zero.",
+      "sourceUrl": "https://the-decoder.com/anthropics-claude-cracks-a-25-year-old-nsa-cryptography-mystery-in-under-30-minutes/",
+      "sourceHost": "the-decoder.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-17/anthropics-039-claude-cracks-a-25-year-old-nsa/#fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-03-4de50a8cedb8"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "vera:fair",
+      "persona": "vera",
+      "text": "A demo of spotting a specific bit-flaw in lrand48 is not a production-ready vulnerability scanner. We need to see if this scales to novel, non-deterministic codebases before we panic or celebrate.",
+      "confidence": 0.75,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-01-a2da67c75d07",
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-02-71201c14e90b",
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-03-4de50a8cedb8"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "This proves AI can identify subtle statistical anomalies in legacy code patterns faster than any human team. Watch what happens when this capability is applied to modern, complex software stacks next year.",
+      "confidence": 0.65,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-01-a2da67c75d07",
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-02-71201c14e90b",
+        "fact-2026-10-17-anthropics-039-claude-cracks-a-25-year-old-nsa-03-4de50a8cedb8"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-10-17-vera-1",
+      "persona": "vera",
+      "text": "No major CVEs will be filed against enterprise software using lrand48 as a primary security mechanism within six months of this announcement.",
+      "confidence": 0.85,
+      "resolveBy": "2026-12-01",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    },
+    {
+      "kind": "prediction",
+      "id": "p-2026-10-17-rex-2",
+      "persona": "rex",
+      "text": "By October 2027, at least two major SaaS providers will integrate AI-driven static analysis tools capable of detecting similar statistical biases in random number generation.",
+      "confidence": 0.55,
+      "resolveBy": "2027-02-14",
+      "status": "open",
+      "factRefs": [],
+      "evidenceStatus": "unlinked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-10-17--anthropics-039-claude-cracks-a-25-year-old-nsa.png",
+    "artSha256": "aeb02ba00592a49ad5276478482a0da00f3daad5bc83142ffdfb5cdccc987300",
+    "pageSha256": "9c2d26eaef34baf27be27d9523086bb3394e3104017f2bb97f4ff3836c1c7b22",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "c38d539f2d483035580a172a0295dfd974d78999ead52274604e61e0f0dfa533",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
