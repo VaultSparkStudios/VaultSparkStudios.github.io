@@ -1,9 +1,9 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
+║  ⚠  Context age   13d                                            ║
+║  ✓  IGNIS         46461 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -11,12 +11,12 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
+║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║
 ║  Unchecked tasks require task-level triage.                      ║
-║  ✓  Cost          real $0.03/7d · 7d catalog estimate $0.08…     ║
+║  ✓  Cost          real $0.05/7d · 7d catalog estimate $0.10…     ║
 ╚════════════════════════════════════════════════════════════════╝

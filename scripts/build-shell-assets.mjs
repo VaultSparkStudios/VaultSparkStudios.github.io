@@ -27,6 +27,9 @@ const SHELL_ASSETS = [
   // before the loader so both can travel through the safe content lane.
   { key: 'vaultPulse', source: 'assets/vault-pulse.js', stem: 'vault-pulse.shell', attribute: 'src' },
   { key: 'recentShips', source: 'assets/recent-ships.js', stem: 'recent-ships.shell', attribute: 'src' },
+  // Directory fixes must reach returning visitors whose mutable asset URL
+  // is still fresh in the browser's week-long cache.
+  { key: 'membersDirectory', source: 'assets/members-directory.js', stem: 'members-directory.shell', attribute: 'src' },
   { key: 'homeIdleLoader', source: 'assets/home-idle-loader.js', stem: 'home-idle-loader.shell', attribute: 'src' },
   // S136 speed sprint: ambient scripts concatenated into hashed bundles.
   // S175 stable-core split: core (rarely changes - hash survives feature

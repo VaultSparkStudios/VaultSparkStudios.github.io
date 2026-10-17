@@ -1,36 +1,32 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: c86cc95e5fb3 -->
-<!-- generated-at: 2026-10-16T01:08:21.105Z -->
+<!-- source-hash: 18b4d4213c18 -->
+<!-- generated-at: 2026-10-16T16:47:05.744Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 381 HANDOFF
+SESSION 384 COMPLETE HANDOFF
 
-Session Number: 381
-Native Goal: 01a14085-61d3-7452-b03f-28f285198b91
+Intent: Full release verification and deployment finalized (2026-10-16T16:32).
 
-SHIPPED
-- Candidate 5bf58495904c deployed via Pages run 38787970210
-- Full validation: local 537/537, focused contracts 5/5, navigation 1/1
-- Staging critical 65/65, release ceremony 11/11
-- Production immutable and readback verified
-- All five publisher states restored
+Shipped:
+- Returning-visitor contract 6/6, engines 18/18
+- Mobile coverage 215/215, sitemap 84 incoming-art renders
+- Full source validation 537/537, staging 65/65, ceremony 11/11
+- Pages deployment 38931769343, 1089 text files + 315 HTML routes verified
+- Diagnostics: 596 expected, 36 unexpected, 0 flaky, 60 skipped
 
-NOW BUCKET (Top 3)
-- Wave 3 canonical closeout/publication/deployment complete
-- Optional broad E2E diagnostics remain separate (classified for future scope)
-- Identity and field-vitals limitations unresolved; reserved for separate work
+Acceptance: docs/RELEASE_S384.json
 
-BLOCKERS (Top 3)
-- Existing identity limitations (open)
-- Field-vitals limitations (open)
-- Context usage unmeasured (deferred)
+Known Limitations:
+- Field-vitals constraints remain unresolved
+- Axe gradient incompleteness separate issue
+- SIL at 933/1000 (unchanged across sessions)
 
-HUMAN-BLOCKED ITEMS
-None with age recorded.
+Human Direction: None new; preserve unrelated operator residue.
 
-CURRENT STATE
-All deployment ceremonies complete. Production stable. Unrelated operator caches and captures preserved. CDR reviewed; no new creative direction received.
+Blockers/Open:
+- Identity hold persists
+- Optional diagnostic pixel failures (589 passed, 37 failed, 3 flaky, 60 skipped) not claimed fixed
+- Publisher restoration and cleanup pending before final goal completion
 
-NEXT SESSION
-Classify optional E2E failure handling and begin Wave 1 startup audit for next full cycle.
+Next: Final metadata push, publisher restoration, owned-process cleanup, then native goal completion.

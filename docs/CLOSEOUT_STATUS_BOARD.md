@@ -1,21 +1,21 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
+<!-- generated-at: 2026-10-16 (Session 385 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S382 ═══════╗
-║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 1 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S385 ═══════╗
+║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 2 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: BYPASSED (S382) — no receipt; run node scripts/clos  ║
+║  Autopilot: proven (S385)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(release): seal merged S382 staging candidate            ║
-║  ✓ chore(release): record S382 validation candidate              ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ fix(S385): seal verified public release candidate             ║
 ║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ test(search): enforce shipped Spark behavior in release comp  ║
-║  ✓ chore(proof): record Desk art routine maintenance [skip ci]   ║
+║  ✓ fix(S385): preserve community identities and verify public d  ║
+║  ✓ docs(S384): record verified full release and closeout [skip   ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
@@ -42,7 +42,7 @@
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 718 files  ·  M:44 A:0 D:0 ?:674                       ║
+║  Changes: 1162 files  ·  M:47 A:0 D:0 ?:1115                     ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,11 +51,11 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        16/17                                            ║
+║  Doctor:        15/17                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         537/537                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         1d ago                                           ║
+║  IGNIS:         0d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

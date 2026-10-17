@@ -8,10 +8,10 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3:933.0 | 5:933.0 | 10:929.4 | 25:unmeasured | all:unmeasured (archived history excluded)
-Velocity trend:→ | Protocol velocity:→ | Debt:↓
-Last session:2026-10-16 | Session382 | Total:933/1000 | Velocity:1 | protocolVelocity:1
+Sparkline (last5 totals): ▇▇▇▇▇
+Avgs —3:933.7 |5:933.4 |10:933.0 |25:946.5 |all:unmeasured (archived history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:↓
+Last session:2026-10-16 |Session386 |Total:935/1000 |Velocity:3 |protocolVelocity:2
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2677,3 +2677,145 @@ Focused19/19 and an actual broken-load mutation verify the selected repair. Broa
 
 S382 final verification (2026-10-16T03:02:45.543Z): S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
 Same scored session933/1000; no new score or engagement inference.
+
+
+## Session 383 — 2026-10-16 — Homepage engagement acceptance
+
+Product rubric, ten categories ×100. Score held at933; stronger tests are not measured reader-engagement gains.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Total: 933/1000
+Velocity:1
+Protocol velocity:1
+Debt:↓
+
+Seven focused Chromium checks pass; two negative mutations are detected. Independent review passed after one documentation fix. Broader release acceptance remains pending. Brainstorm: reproduce remaining optional behavior failures; inspect original pixel diagnostics. Both remain future SIL tasks. CDR reviewed; no new human direction. Context usage unmeasured.
+
+
+S383 final verification (2026-10-16T05:41:17.807Z): S383 complete: three reproduced homepage acceptance failures now exercise the actual milestone loader, proof/Vault Door/membership ordering and network-bound public intelligence. All seven engagement cases run unconditionally in required CI. All21 cases across Chromium, Firefox and WebKit passed; blocked milestone loading and a corrupted intelligence score were detected by negative tests. The combined score/grade mutation proves score detection, not an independent grade-only mutation. No runtime or visual-baseline change. Local validation passed537/537 and mobile215/215. Candidate d4f69cca9327 passed the three required exact-SHA hosted checks and full Pages deployment 38856553984; stagingcritical65/65, ceremony11/11 and complete immutable/primary production readback verified. Exact-candidate optional broad diagnostics separately report589 passed,37 failed,3 flaky and60 skipped; these are not claimed fixed. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. SIL933/1000 unchanged. Evidence: docs/RELEASE_S383.json.
+Same scored session933/1000; no additional score or engagement inference.
+
+
+Closing follow-through verified (2026-10-16T06:08:53.136Z): candidate f51949adfe6fd4fb091fa4f29f55213e7520f92c passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38859007432. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+
+
+Closing follow-through complete (2026-10-16T06:09:44.178Z): f51949adfe6fd4fb091fa4f29f55213e7520f92c passed exact hosted checks, current staging, full production 38859007432 and complete immutable/primary source readback. Candidate and closing evidence were pushed normally; all five original publisher states are restored. Final acceptance is recorded in docs/RELEASE_S383.json. Existing identity holds and unrelated optional diagnostics remain separate.
+Same S383 score933/1000; no new scored session.
+
+
+Closing follow-through verified (2026-10-16T06:43:06.552Z): candidate 6f80ad39edcd2548823eb73428e65bd515fe8870 passed required exact-SHA hosted checks, stagingcritical65/65 and ceremony11/11, then full Pages deployment 38862272871. All1085 served text files and313 HTML routes were read back against the closing source. No runtime/test source change; original full source receipt537/537 still matches a6f6680091b984a079d53df6. Final evidence publication and publisher restoration follow. Existing identity and optional-diagnostic limitations remain separate.
+
+
+Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
+Same S383 score933/1000; no new scored session.
+
+
+## Session 384 — 2026-10-16 — Returning-visitor reliability
+
+Product rubric, ten categories ×100; score held at933. Stronger regression coverage does not demonstrate a reader engagement gain.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 90 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 97 |
+
+Total: 933/1000
+Velocity:2
+Protocol velocity:2
+Debt:↓
+
+Browser matrix18/18, three independent negative mutations, local diagnostic artifacts and independent zero-finding review verified. Full release remains pending. Brainstorm: use controlled fixtures for remaining stats/Oracle/community diagnostic failures; inspect pixel differences before new baselines. Two future SIL tasks retained. CDR reviewed with no new direction; context usage unmeasured.
+
+
+S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.
+Same scored S384,933/1000; velocity3 including the observed readability prerequisite.
+
+
+### Session 384 local scope reconciliation
+
+The original plan contained two outcomes; the observed sitemap contrast prerequisite brings delivered local outcomes to3. Structured silVelocity and rolling header now3; score remains933/1000. No additional scored session. Website-only IGNIS proof46731 is applied with its actual observation time, replacing the older dated46897 value. Full release remains pending.
+
+
+S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
+All authorized audit outcomes shipped; all three waves complete. Same S384 score, no additional scored session.
+
+
+## Session 385 — 2026-10-16 — community and ecosystem data contracts
+
+S385 verifies earned community ranks and ecosystem coverage against delivered data. The retained global link assertion exposed an actual directory defect: blank handles linked to invented or whitespace profiles. Directory cards now use neutral non-link labels for absent handles, trim valid handles and escape initials. All15 focused cases pass across Chromium, Firefox and WebKit; separate wrong-rank and dropped-project mutations fail as expected. Required CI runs all five public cases without credentials. Twenty-eight before/after captures across seven themes and two widths are inspected and source-bound. Gradient contrast analysis remains incomplete despite zero reported violations. Full local, staging, hosted candidate and production acceptance remain pending in docs/RELEASE_S385.json.
+
+Product rubric: Dev Health95; Creative Alignment94; Momentum90; Engagement95; Process Quality90; Cross-Repo Coherence92; Security Posture94; Ecosystem Integration91; Capital Efficiency95; Automation Coverage97. Total:933/1000 unchanged. Focused regression protection and a concrete reader fix improve evidence without resolving wider identity and field-vitals limitations. Velocity:2, protocolVelocity:2, debt down.
+
+Brainstorm: response-bound public-data assertions resist portfolio growth; unnamed directory cards must preserve identity absence. Commitments: inspect remaining Oracle canonical-route assertions and original pixel diagnostics as separate future bounded work.
+
+
+| Category | Score |
+|---|---|
+| devHealth | 95 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 95 |
+| processQuality | 90 |
+| crossRepoCoherence | 92 |
+| securityPosture | 94 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 97 |
+
+
+S385 delivery follow-through: live mutable directory URL is cached604800seconds. Existing shell pipeline now emits a hashed directory asset, rewrites the actual community script and excludes the mutable alias from service-worker caching. All15 focused cases re-pass across three engines; three negative mutations detect blocked hashed execution, wrong ranks and dropped projects. Existing13 shell unit cases pass, shell references are synchronized, and all14 after captures were recaptured and inspected across seven themes. Before captures remain original. Candidate binding is now present; first full gate failed honestly at160/537 on its absence, not a source runtime failure. Full mobile revalidation and complete local/staging/hosted/production acceptance remain pending.
+
+
+S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.
+
+
+S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
+All two selected outcomes shipped; all three waves complete. Same S385 score, no additional scored session.
+
+
+## Session 386 — 2026-10-16 — Desk art review contract
+
+S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
+
+Product rubric: Dev Health95; Creative Alignment94; Momentum90; Engagement95; Process Quality91; Cross-Repo Coherence92; Security Posture94; Ecosystem Integration91; Capital Efficiency95; Automation Coverage98. Total:935/1000 (+2). A daily-red health signal traced to a generator/reviewer contract mismatch and an unrecoverable re-roll dead end, both fixed at the root with mutation-checked tests. Velocity:3, protocolVelocity:2.
+
+Brainstorm: an automated judge must see exactly what the producer was asked to make; a retry cap without a recovery path converts a transient failure into a permanent one. Commitments: confirm the next art runs and CI Health Monitor; classify disabled-workflow dispatches as deferred.
+
+| Category | Score |
+|---|---|
+| devHealth | 95 |
+| creativeAlignment | 94 |
+| momentum | 90 |
+| engagement | 95 |
+| processQuality | 91 |
+| crossRepoCoherence | 92 |
+| securityPosture | 94 |
+| ecosystemIntegration | 91 |
+| capitalEfficiency | 95 |
+| automationCoverage | 98 |
+
+S386 follow-through: S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-seal-production-20261016); production serves it, shell parity clean, served parity 1080/1090 identical, 0 differ. Autopilot then published 4 approved satire cartoons and 2 banners; the stuck milk banner passed on its first critique-guided re-roll; all live bytes matched; art currency now green (122 stories, 44 cartoons). A dispatched CI Health Monitor then reached a later check: the release contract ranked same-day stories alphabetically, so after the latenight edition it demanded a homepage link to the midday story. It now ranks by publication instant (8/8 cases, mutation detected). Persona pagination pages 404 after Desk lane releases because the lane allowlist and the root-owned Hetzner copy omit them; a full promotion ships them. P0 open: account-wide KV free write quota exhausted 2026-10-16 (1,186 writes); /login returned named 503 on staging and production until 00:00Z. Same S386 score.
+
+### Session 386 addendum
+
+S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction. Same S386 score (935/1000).

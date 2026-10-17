@@ -2250,3 +2250,83 @@ S382 release prerequisite: regenerate public intelligence and its dependent arti
 ## D-S382.4 — Enforce public search without credentials (2026-10-16)
 
 The required compliance job runs both verified Spark/ambient browser files against its local candidate without optional-error or credential conditions. The broad diagnostic job retains its existing scope. Focused LATEST visual receipt intentionally replaces the prior larger matrix; the previous HEAD receipt is preserved byte-for-byte at docs/visual-qa/S381_RETAINED.json. Closeout content-wipe guard flags the size reduction; archival verification establishes an intentional evidence-index replacement with no history loss.
+
+
+## D-S383.1 — Verify interaction and truth-bus boundaries (2026-10-16)
+
+Milestones load after real reader interaction or a12-second fallback, so the browser test scrolls to them instead of extending a fixed sleep or injecting their script. First-scroll coverage explicitly retains proof → Vault Door → membership; initial Desk attribution was corrected from the live DOM. Intelligence fixtures intercept the public feed, leaving the production bus and consumers intact. Homepage proof derives its numeric score band; the gauge honors the feed grade. Exact score, grade and gauge-width assertions replace a loose numeric regex. Runtime, visual baselines, identity/trust, pricing and membership logic are unchanged. The full seven-test engagement suite runs unconditionally in required CI.
+
+## D-S383.2 — Separate observed diagnostics from release acceptance (2026-10-16)
+
+Fresh ten-test reproduction:7pass/3fail; all three failures are in ambient engagement, while the three Desk artwork cases pass. These observations do not retroactively erase the S382 original45-failure inventory or resolve pixel diagnostics. Negative mutation proves blocked milestone loading and corrupted intelligence score are caught; the combined score/grade mutation is not a separate grade-only proof. Independent review required a documentation correction, then passed. Routine promotion follows RELEASE_PROMOTION_PROTOCOL. Current canon has zero ABSOLUTE gaps; prior CANON-045 provider acceptance and terminology exceptions retain D-S379.3/D-S374.3 justification. Local startup-sync/maintenance/checklist helpers are absent; available canonical canon sync and frontier radar succeeded, and no missing local maintenance run is claimed.
+
+
+## D-S384.1 — Keep return-visit coverage aligned with attention ownership (2026-10-16)
+
+The homepage owns an inline returning signal, so the floating digest belongs on eligible interior pages. Browser fixtures load the actual asset over its script request, await ledger consumption before asserting silence, verify previous-visit handoff and reload persistence, and retain first-visit/feed-error behavior. Six cases are unconditional required CI. Each of homepage suppression, baseline handoff and actual script loading is checked with a separate failing mutation; runtime attention, storage and membership logic are unchanged.
+
+## D-S384.2 — Preserve browser failure artifacts (2026-10-16)
+
+The optional broad workflow used list-only output while uploading the HTML report directory, producing a prior missing-artifact warning. It now honors configured list/HTML/JSON reporters and retains both report and failure-screenshot directories with always-upload semantics. Local intentional failure proves JSON, HTML and screenshot generation; exact-candidate hosted upload remains required acceptance. Existing diagnostic reds remain distinct from required release checks. CANON-045 positive provider acceptance and CANON-056 terminology gaps retain prior D-S379.3/D-S374.3 justification; zero ABSOLUTE gaps observed. Startup helpers missing locally are noted, not claimed executed. Canon sync and frontier radar passed. No new dependencies, policy, pricing, lifecycle, identity or public promise changes.
+
+
+## D-S384.3 — Bound generated release changes (2026-10-16)
+
+Complete build body and retried26-step postbuild refresh session-derived contracts. A Windows UNKNOWN file-open failure is retained as a failed first attempt; the complete retry passed without assertion changes. Twenty-six persona reserializations were proven whitespace-only and excluded with preserved copies. The sitemap adds the existing REX page11 and count118 to119; all-theme desktop/mobile before/after rendered review is required. No runtime JavaScript or external CSS source change; the sitemap inline color prerequisite follows. The canonical touched-score shim was stopped after targeting the control plane; explicit recipient-owned scoring verified this website at46731 with source-bound proof. Foreign shim output is not website evidence.
+
+
+## D-S384.4 — Repair the observed sitemap contrast defect (2026-10-16)
+
+S384 rendered-review prerequisite: sitemap URL labels now use the theme-aware muted token; count119 includes the already published REX page11. All28 before/after captures across seven themes and1366/390 widths were inspected in header/REX regions; measured all119 URL labels per theme at≥5.291:1. Axe reported zero violations but gradient results remain incomplete, not passed. Mobile215/215 and collection692/622/622 passed. No runtime JavaScript, membership, trust-policy or screenshot-baseline changes. Sitemap inline color is the only styling change. Staging/hosted/production acceptance remains pending.
+
+The focused LATEST visual index replaces a larger historical matrix. Prior HEAD receipt was preserved byte-for-byte at docs/visual-qa/S383_RETAINED.json; the intentional index reduction loses no evidence. Any closeout content-wipe warning for this archived index replacement is reviewed on that basis, not ignored.
+
+
+## D-S384.5 — Preserve concurrent approved Desk artwork (2026-10-16)
+
+Remote main received four routine-art/proof commits while local verification ran. Merge both histories normally; preserve incoming art, story and review inputs, and regenerate the three overlapping derived status/stat outputs. Independent hash review confirms banner and satire approval survives normalization into published assets. The ingestion semanticVerified:false default and separate stricter promotionEligible flag are not rejection evidence. There is no incoming runtime JavaScript, stylesheet, authentication, workflow or generator-source change. The combined candidate still requires representative rendered before/after review of main/satire, listing and shared related-card surfaces across all themes and both widths, fresh complete local source checks, staging, exact hosted checks and full production readback. Earlier candidate evidence cannot substitute. This is release integration, not an extra scored outcome or editorial rewrite.
+
+
+## D-S385.1 — Preserve earned rank and coverage truth (2026-10-16)
+
+Point boundaries and podium order are independent of display handles and paid membership. Tests cover both sides of all nine rank boundaries and retain the full-population denominator. Ecosystem assertions consume the actual response rather than freezing the portfolio at19 projects; they check all project names/states, coverage denominators and filter results, plus a self-consistent unobserved single-project fixture and503 response. No rank economy, auth policy or public promise changes.
+
+## D-S385.2 — Follow the retained link assertion to its source (2026-10-16)
+
+Correcting the stale rank expectation exposed the member directory links for missing handles. Trim only actual strings, keep missing handles absent, render neutral non-link cards, and escape initials. Existing public-view requests and fallback remain intact. All15 focused browser cases pass and two independent mutations are detected. Twenty-eight actual before/after captures were inspected across seven themes; prior S384 LATEST receipt is retained byte-for-byte at docs/visual-qa/S384_RETAINED.json. Automated gradient contrast remains incomplete. Canon zero ABSOLUTE gaps; existing CANON-045/056 exceptions retain D-S379.3/D-S374.3 justification. Missing local startup-sync/checklist helpers are recorded rather than claimed run; canonical sync/radar succeeded.
+
+
+## D-S385.3 — Preserve startup history within the existing budget (2026-10-16)
+
+Canonical rotator found no eligible blocks. Moved completed S377/S378 notes verbatim to the existing task archive; all117 unchecked rows remain byte-for-byte in the active board. Saved820bytes without changing the42000-token guard. Existing source-preserving archive policy is reused.
+
+
+## D-S385.4 — Deliver the directory fix through a new cache key (2026-10-16)
+
+Live mutable directory asset advertises a604800-second browser cache lifetime. Register the source with the existing hashed shell builder, which rewrites the community script reference and excludes mutable source aliases from the service-worker shell. This is required delivery follow-through for the reproduced directory defect. Preserve existing asset cache policy. The first full gate stopped honestly at step160 because the visual receipt lacked its candidate binding; add that existing receipt field after final captures, then reverify the finished source.
+
+
+## D-S385.5 — Retain prior rendered evidence when replacing its index (2026-10-16)
+
+The canonical wipe guard reports exactly one size-based finding: docs/visual-qa/LATEST.json is12% of its previous index. HEAD receipt and docs/visual-qa/S384_RETAINED.json are byte-identical; all28 new capture hashes and source bindings verify. Prior history and every append-only surface remain preserved. Use the existing documented --allow-wipe option only for this intentional reviewed index replacement. No guard code, hooks or checks are disabled; final source is revalidated normally.
+
+## D-S385.6 — Complete directory readability and search acceptance (2026-10-16)
+
+Rendered light-theme samples exposed low rank/avatar contrast. Use existing primary text tokens, retaining rank-colored decoration.112 before/after captures cover default and three search states in all7 themes and both viewports;56 measured text/background samples pass scoped thresholds. The final replacement plan and visual index retain their exact S384 predecessors; the documented wipe override is limited to these two size-based findings after exact archive/hash checks. No append-only history or gate is bypassed.
+
+
+## D-S386.1 — The Desk art reviewer judges against the generator's brief (2026-10-16)
+
+CI Health Monitor failed 2026-10-15 and 2026-10-16 on `check-desk-art-currency`: one banner on placeholder art past 48h and three stories without satire cartoons. The autopilot reviewer received only headline and scene, while the generator draws from sourced facts, the satire target/setup/payoff and the caption. It therefore rejected faithful renders on every run (a UK setting stated only in the facts; a gag that draws the supplied payoff). `storyBrief()` now gives the reviewer up to four fact lines, the joke, caption and any `satireDirection`, all fenced as data. Country and punchline checks name those sources. No strict check, likeness rule or injection fence is relaxed.
+
+## D-S386.2 — Exhausted art re-rolls get one critique-guided attempt per UTC day (2026-10-16)
+
+After two in-run re-rolls the staged image was re-reviewed unchanged every run, so a stuck story could never recover without an operator. An exhausted, still-failing story/kind now gets at most one re-roll per UTC day, recorded as `dailyReroll` in the staged review record. The generator appends the last rejection reasons (cleaned, at most four, 240 characters each) before the closing instruction. Meta hashes the prompt actually sent. Banner and satire base prompts are unchanged.
+
+## D-S386.3 — The newest Desk story is the latest publication instant (2026-10-16)
+
+`deriveNewsReleaseContract` ranked by date, then id alphabetically. After the 22:22Z latenight edition it named the 12:35Z midday story newest; the homepage correctly features the later story, so CI Health Monitor reported a missing homepage link. Ranking now uses the full `date_published` instant before the id tie-break. Date-scoped fact/stance ledger checks are unchanged. Consumers (live matrix, live news release check, staging content deploy) share the library, so candidate and live evidence stay consistent.
+
+## D-S386.4 — Persona pagination stays out of the Desk lane until the server rules move with it (2026-10-16)
+
+The Desk content allowlist admits persona index pages but not `news/personas/<p>/page/<n>/`; editions add those pages and the sitemap lists them, so they 404 until a full promotion. The Hetzner staging receiver validates against a root-owned copy of the rules, so changing only the repository allowlist would make the lane send paths staging refuses and break the newsroom release. This session ships the pages through the full promotion; the coordinated allowlist and server-rules change remains a separate, approved trust-policy update.

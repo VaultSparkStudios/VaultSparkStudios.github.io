@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-cecfd7419d3b8778';
+const CACHE_NAME = 'vaultspark-shell-f6edb7158006a036';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -32,6 +32,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/vault-pulse.shell-141c057d30.js',
   '/assets/recent-ships.shell-001af71d31.js',
+  '/assets/members-directory.shell-14b3ddc2e1.js',
   '/assets/home-idle-loader.shell-7b976ad580.js',
   '/assets/ambient-core.shell-816a2a481c.js',
   '/assets/ambient-feature.shell-9b5baeb1ab.js',
@@ -84,6 +85,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/sentry-init.js',
   '/assets/vault-pulse.js',
   '/assets/recent-ships.js',
+  '/assets/members-directory.js',
   '/assets/home-idle-loader.js',
   '/assets/ambient-core.bundle.js',
   '/assets/ambient-feature.bundle.js',
@@ -144,7 +146,7 @@ const STATIC_ASSETS = [
   '/assets/game-utils.js',
   '/assets/countdown.shell-f058757524.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
-  '/assets/members-directory.js',
+  '/assets/members-directory.shell-14b3ddc2e1.js',
   '/assets/analytics.js',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/vault-score.js',

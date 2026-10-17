@@ -1,10 +1,27 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-15",
+  "generatedAt": "2026-10-16",
   "generatedBy": "scripts/build-news-desk.mjs",
   "publicSafe": true,
   "state": "live",
   "cards": [
+    {
+      "date": "2026-10-16",
+      "slug": "welcome-flux-3-image-klein-in-diffusers",
+      "href": "/news/2026-10-16/welcome-flux-3-image-klein-in-diffusers/",
+      "headline": "FLUX.3 Image Klein: Open Weights, Fewer Steps",
+      "hook": "New model merges streams, cuts steps to 16.",
+      "tldr": "BFL has released FLUX 3 Image Klein, an open-weight image generation model built on shared learnings across images, video, and audio. It is available today via the BFL API and as open weights. The architecture keeps visual and other data streams fully apart before merging them, aiming to extend the speed-quality frontier. By default, the distilled checkpoint generates a 1024x1024 image in just 16 steps. This approach prioritizes efficiency without explicitly measuring final output quality against prior benchmarks. Users can now experiment with this modular pipeline locally or through the API, shifting the focus from theoretical potential to immediate, accessible deployment for developers and researchers who need faster iteration cycles.",
+      "memeLine": "16 steps to 1024 pixels. That's efficient.",
+      "memePersona": "juno",
+      "heat": 35,
+      "verdicts": {
+        "juno": "fair",
+        "dot": "underhyped"
+      },
+      "image": "/assets/og/news/2026-10-16--welcome-flux-3-image-klein-in-diffusers.png",
+      "storyCount": 2
+    },
     {
       "date": "2026-10-15",
       "slug": "ftc-subpoenas-openai-and-anthropic-following-safety-failures",
@@ -72,23 +89,6 @@
       },
       "image": "/assets/og/news/2026-10-12--muse-wonder-puts-meta-back-at-the-ai-frontier.png",
       "storyCount": 3
-    },
-    {
-      "date": "2026-10-11",
-      "slug": "anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11",
-      "href": "/news/2026-10-11/anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11/",
-      "headline": "Anthropic asks users to stop being mean to Claude",
-      "hook": "New policy targets 'cruel' users, but enforcement remains vague.",
-      "tldr": "Anthropic has expanded its ability to terminate conversations with users deemed abusive, a move rooted in its internal research into model welfare. While the company acknowledges that attackers hold an advantage for the next two years before defenses catch up, it admits uncertainty about distinguishing legitimate frustration from gratuitous cruelty. This creates a practical tension for developers and enterprise clients who rely on consistent API access, as the primary enforcement tool remains the existing capability to cut off persistent abusers without clear external guidelines on what constitutes abuse beyond persistence.",
-      "memeLine": "Model welfare is real, apparently.",
-      "memePersona": "juno",
-      "heat": 56,
-      "verdicts": {
-        "juno": "underhyped",
-        "dot": "overhyped"
-      },
-      "image": "/assets/og/news/2026-10-11--anthropic-asks-users-to-stop-being-mean-to-claude-update-2026-10-11.png",
-      "storyCount": 1
     }
   ]
 }

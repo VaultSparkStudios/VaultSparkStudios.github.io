@@ -1,3 +1,32 @@
+## S386 — Desk art review contract
+
+- [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json
+- [ ] [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
+- [ ] [S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
+- [ ] [SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+
+## S385 — public data contracts
+
+- [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed.
+S385 release acceptance: docs/RELEASE_S385.json (verified).
+- [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
+- [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
+
+## S384 — returning-visitor reliability
+
+- [x] Fresh full startup and nine-axis audit; correct returning-visitor acceptance, require it in CI, preserve diagnostic artifact reporters/paths; 18/18 and three negative mutations verified.
+- [x] S384 observed sitemap readability prerequisite: theme-aware URL labels,28 inspected captures and all119-label contrast checks across seven themes.
+- S384 release acceptance is tracked in docs/RELEASE_S384.json and the Wave3 implementation plan.
+- [ ] [SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
+- [ ] [SIL][S384] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+
+## S383 — homepage engagement acceptance
+
+- [x] Fresh full startup and nine-axis audit; repair three reproduced homepage checks, require the seven-test suite in CI, and verify targeted negative mutations.
+- S383 release acceptance and remaining gates: docs/RELEASE_S383.json is authoritative; completion requires accepted:true and no remaining gates.
+- [ ] [SIL][S383] Reproduce remaining optional behavioral diagnostics against the current candidate before changes.
+- [ ] [SIL][S383] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+
 ## S382 — Spark browser acceptance
 
 - [x] Replace five retired palette assertions with real Spark behavior and verify19 focused cases plus broken-load detection.
@@ -15,42 +44,28 @@ Release acceptance and remaining gates: `docs/RELEASE_S381.json`. This ledger re
 
 ## S380 — browser discovery release
 
-- [x] Restore three-project browser collection and add a mandatory authentication-independent CI gate; independent review pass.
-- [x] Preserve mobile findings and receipts during discovery; actual-spec regression and independent review pass.
-- [x] Repair rank-report target binding and preserve prior evidence on failed requests; actual public read and independent review pass.
-
-S380 release follow-through: authoritative pending/completed acceptance and remaining phases are recorded in docs/RELEASE_S380.json and docs/IMPLEMENT_PLAN.md.
-
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
 - [ ] [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
 
 ## S379 — accepted implementation and release
 
-- [x] Exact target registry discovery and unique declared project identity; profile13/13 and independent review passed after fixing prefix/suffix attribution.
-- [x] Bounded staging archive timeout; actual clean archive/deployment accepted, self-tests15/15.
-- [x] First full production acceptance: see docs/RELEASE_S379.json. Closing ceremony wave status remains in docs/IMPLEMENT_PLAN.md until final publication is verified.
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S384 lossless excerpt).
 - [ ] [SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
 - [ ] [SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
 
-
-
 ## S378 arc — Spark clears reader controls
 
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
 - [ ] [SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
 
-- [x] Wave 1: full startup, native goal binding, fresh nine-axis audit and rendered before evidence.
-- [x] Wave 2: implement companion clearance; independent review, 42 browser cases and 56 inspected captures.
-- [x] Wave 3 release: exact staging, hosted checks, direct main push and production acceptance verified in docs/RELEASE_S378.json.
-- [x] Wave 3 closeout: canonical autopilot completed; closing source and confirmed production accepted; schedules restored. Final evidence publication and native goal completion follow final review.
 ## S377 arc — homepage Recent Ships
 
-- [x] Wave 1: full startup and fresh nine-axis audit; two premises verified before changes.
-- [x] Wave 2: once-only early/late initializer, hashed delivery, bounded local audit adapters.
-- [x] Wave 3: independent review, local 534/534, clean checkout 534/534, mobile 215/215, seven-theme pixels, staging and required hosted checks.
-- [x] Wave 4: closeout autopilot passed; closing452f candidate pushed, deployed and accepted by served readback.
+Completed history: context/archive/TASK_BOARD_ARCHIVE.md (S385 lossless excerpt).
 - [ ] [SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
 - [ ] [SIL/P3 · S377] Keep generated receipt repairs in dependency order: status-proof before stats-surface; verify current candidate after rebases.
+
 ## S376 arc — reader feedback on Desk articles
 
 - [x] Wave1: sync, triage (not cut off), /start, canon sync.

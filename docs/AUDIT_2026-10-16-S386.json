@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-16T20:05:21.963Z",
+  "session": 386,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S386 full arc: supported-release stabilization of the scheduled Desk art pipeline that keeps CI Health Monitor red; direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "audience": "public-live",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "ai": 3,
+    "feedback": 2.5,
+    "speed": 1
+  },
+  "investigation": {
+    "source": "b8b2882365a6de4de59fb2196d92b75756649cb8",
+    "baseline": "Doctor blockingFailing=0; sched-staleness fails: CI Health Monitor failed 2026-10-15 and 2026-10-16 on check-desk-art-currency (2026-10-12 milk story on placeholder banner 92h > 48h; three stories without satire cartoons, 2026-10-09 reaching the 7-day blocking limit at ~2026-10-17T00:00Z). Autopilot log: identical rejections every run (landmarksMatchCountry, punchlineFits). Reviewer storyFor() supplies headline + scene only, while the generator prompt is driven by satire target/setup/payoff, caption and facts — the 2026-10-12 facts state the UK government is preparing to legislate, yet the reviewer reports no UK setting. Re-rolls reuse the same prompt with no rejection feedback. Release workflow 370760439 returned HTTP 422 (disabled) on two dispatches; art still reached production via later release (live bytes verified identical).",
+    "reuse": "Reuse desk-art-autopilot.mjs, generate-news-art-codex.mjs self-tests, satireCartoonBrief and existing CI Health Monitor; no new tools or dependencies.",
+    "market": "Not applicable; no market claims."
+  },
+  "candidates": [
+    [
+      "ai",
+      "Reviewer receives the generator brief",
+      "Selected: reproduced contract mismatch."
+    ],
+    [
+      "ai",
+      "Critique-guided re-roll",
+      "Selected: identical rejections repeat every run."
+    ],
+    [
+      "ai",
+      "Loosen reviewer checks",
+      "Rejected: would weaken likeness/landmark safety."
+    ],
+    [
+      "feedback",
+      "Hand-write satireDirection for stuck stories",
+      "Deferred: root contract fix first; direction remains an operator lever."
+    ],
+    [
+      "ops",
+      "Classify disabled-workflow 422 distinctly",
+      "Deferred: art reached production; record as follow-up."
+    ],
+    [
+      "speed",
+      "Raise art staleness threshold",
+      "Rejected: hides a real public placeholder."
+    ]
+  ],
+  "items": [
+    {
+      "slug": "desk-art-review-contract",
+      "title": "Give the Desk art reviewer the same story brief the generator drew from",
+      "axis": "ai",
+      "target": "scripts/desk-art-autopilot.mjs",
+      "pattern": "return { headline: s.headline, scene: s.visual?.scene };",
+      "recipe": "storyFor() returns headline, scene, sourced fact lines, satire target/setup/payoff, caption and any satireDirection. reviewPrompt fences all of it as data; landmarksMatchCountry judges against the supplied facts; punchlineFits judges against the supplied joke/caption as well as the headline. Keep every strict check and the injection fence. Add self-tests that facts and caption reach the prompt and stay fenced.",
+      "acceptance": "Self-tests pass, including fence-escape of every new field; a 2026-10-12 review prompt contains the UK-legislation fact and the caption. Next scheduled run uses the fixed reviewer; Desk art currency check turns green or each remaining rejection is a genuine image defect.",
+      "id": 1,
+      "tier": "🔥",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 1.5,
+      "priority": 40,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "CI Health Monitor fails daily; the reviewer rejects faithful images it cannot verify.",
+      "readinessArea": "core journeys and observability",
+      "stageRationale": "Supported-release stabilization: public stories show placeholder art.",
+      "premises": [
+        {
+          "claim": "Reviewer receives only headline and scene",
+          "adapter": "file-content",
+          "target": "scripts/desk-art-autopilot.mjs",
+          "pattern": "return { headline: s.headline, scene: s.visual?.scene };",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Add facts only."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Full brief parity with fencing and self-tests."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Shared brief object consumed by both generator and reviewer."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-16T22:58:40.047Z",
+          "status": "shipped",
+          "note": "Reviewer brief parity live; 4 previously rejected or new cartoons approved and published, all live bytes matched; art currency green.",
+          "evidence": "docs/RELEASE_S386.json"
+        },
+        {
+          "at": "2026-10-17T01:16:41.580Z",
+          "status": "shipped",
+          "note": "Final promotion cef79ce719 verified; CI Health Monitor success.",
+          "evidence": "docs/RELEASE_S386.json",
+          "candidate": "cef79ce71989eb9fa60e51df31a36e944e8dff41"
+        }
+      ],
+      "shippedAt": "2026-10-16T22:58:40.047Z"
+    },
+    {
+      "slug": "desk-art-critique-reroll",
+      "title": "Carry the reviewer rejection into the next render prompt",
+      "axis": "feedback",
+      "target": "scripts/generate-news-art-codex.mjs",
+      "pattern": "const prompt = satire ? buildSatirePrompt(target.story, persona) : buildPrompt(target.story);",
+      "recipe": "generateOne reads the staged review.json for that kind; when the last verdict failed, append a bounded, cleaned note naming the rejection reasons to avoid. Prompt hash in meta still reflects the actual prompt. Self-test both with and without a prior rejection.",
+      "acceptance": "Generator self-tests pass; a forced re-roll after a recorded rejection writes a prompt containing the bounded reasons; no reasons are added after a pass.",
+      "id": 2,
+      "tier": "⚡",
+      "impact": 6,
+      "innovation": 6,
+      "effortHours": 1,
+      "priority": 36,
+      "status": "shipped",
+      "selectedDepth": "L2",
+      "why": "Same rejection reasons repeated across 4+ runs with an unchanged prompt.",
+      "readinessArea": "core journeys and observability",
+      "stageRationale": "Converges stuck stories without weakening review.",
+      "premises": [
+        {
+          "claim": "Re-roll prompt ignores prior rejection",
+          "adapter": "file-content",
+          "target": "scripts/generate-news-art-codex.mjs",
+          "pattern": "const prompt = satire ? buildSatirePrompt(target.story, persona) : buildPrompt(target.story);",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Append raw reasons."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Bounded cleaned reasons, kind-specific, tested."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Learn per-story direction from repeated rejections."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-16T22:58:40.047Z",
+          "status": "shipped",
+          "note": "Daily critique-guided re-roll and rejection note live; milk banner passed on its first critique-guided re-roll and is live.",
+          "evidence": "docs/RELEASE_S386.json"
+        },
+        {
+          "at": "2026-10-17T01:16:41.581Z",
+          "status": "shipped",
+          "note": "Final promotion cef79ce719 verified; CI Health Monitor success.",
+          "evidence": "docs/RELEASE_S386.json",
+          "candidate": "cef79ce71989eb9fa60e51df31a36e944e8dff41"
+        }
+      ],
+      "shippedAt": "2026-10-16T22:58:40.047Z"
+    }
+  ],
+  "skipped": [],
+  "totals": {
+    "count": 2,
+    "priority": 76,
+    "top3": [
+      "desk-art-review-contract",
+      "desk-art-critique-reroll"
+    ]
+  }
+}

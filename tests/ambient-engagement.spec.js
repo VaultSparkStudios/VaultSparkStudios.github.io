@@ -54,11 +54,17 @@ test('studio milestones render six chapters with an active now card', async ({ p
   await page.goto(BASE + '/', { waitUntil: 'load' });
 
   const milestones = page.locator('[data-milestones-root] .milestone-card');
+  // This below-fold surface loads after reader interaction (12s idle fallback).
+  // Scroll to the surface like a reader instead of racing that fallback.
+  await page.locator('[data-milestones-root]').scrollIntoViewIfNeeded();
+  // WebKit may finish programmatic scrolling before the loader receives its
+  // scroll event. A real pointer interaction also starts the same idle queue.
+  await page.locator('#milestones-heading').click();
   await expect(milestones).toHaveCount(6, { timeout: 10000 });
   await expect(page.locator('[data-milestones-root] .milestone-pill--live')).toContainText('Active now');
   await expect(page.locator('[data-milestones-root]')).toContainText(/worlds playable|build sessions on the record/);
 });
-test('homepage first-scroll order keeps membership immediately after proof', async ({ page }) => {
+test('homepage first-scroll order leads from proof through the vault door to membership', async ({ page }) => {
   test.setTimeout(25000);
   await page.goto(BASE + '/', { waitUntil: 'load' });
 
@@ -70,11 +76,14 @@ test('homepage first-scroll order keeps membership immediately after proof', asy
 
   const proof = order.indexOf('vault-proof');
   const membership = order.indexOf('vault-membership');
+  const door = order.indexOf('vault-door');
   const pulse = order.indexOf('studio-pulse-teaser-heading');
   const spine = order.indexOf('studio-spine');
 
   expect(proof).toBeGreaterThan(-1);
-  expect(membership).toBe(proof + 1);
+  expect(door).toBe(proof + 1);
+  expect(membership).toBe(door + 1);
+  await expect(page.locator('#vault-door')).toBeVisible();
   expect(pulse).toBe(membership + 1);
   expect(spine).toBeGreaterThan(pulse);
   await expect(page.locator('[class*="vault-live-"]')).toHaveCount(0);
@@ -111,21 +120,25 @@ test('social icon sprite resolves on homepage, footer, social dashboard, and PWA
 
 test('homepage IGNIS proof rail and IGNIS gauge hydrate from public intelligence', async ({ page }) => {
   test.setTimeout(25000);
-  await page.addInitScript(() => {
-    window.VSPublicIntel = {
-      get: () => Promise.resolve({ project: { ignis: { score: 91234, grade: 'Ignited' } } })
-    };
+  // Mock the network boundary, leaving the production truth bus and consumers
+  // intact. An init-script facade is overwritten by public-intelligence.js.
+  const feed = require('../api/public-intelligence.json');
+  const fixture = { ...feed, project: { ...feed.project, ignis: { ...feed.project.ignis, score: 91234, grade: 'FORGE' } } };
+  await page.route('**/api/public-intelligence.json*', route => {
+    return route.fulfill({ json: fixture });
   });
 
   await page.goto(BASE + '/', { waitUntil: 'load' });
-  await page.addScriptTag({ url: BASE + '/assets/ignis-live.js' });
-  await expect(page.locator('#proof-ignis-score')).toHaveText(/^\d{1,3}(,\d{3})*$/, { timeout: 5000 });
-  await expect(page.locator('#proof-ignis-tier')).toHaveText(/^(Cooling|Warming|Hot|Ignited) tier$/i);
+  await page.locator('#vault-proof').scrollIntoViewIfNeeded();
+  await expect(page.locator('#proof-ignis-score')).toHaveText('91,234', { timeout: 10000 });
+  await expect(page.locator('#proof-ignis-tier')).toHaveText('Ignited tier');
 
   await page.goto(BASE + '/ignis/', { waitUntil: 'load' });
-  await page.addScriptTag({ url: BASE + '/assets/ignis-live.js' });
-  await expect(page.locator('#ignis-live-score')).toHaveText(/^\d{1,3}(,\d{3})*$/, { timeout: 5000 });
-  await expect(page.locator('#ignis-live-tier')).toHaveText(/^(Cooling|Warming|Hot|Ignited) tier$/i);
+  await expect(page.locator('#ignis-live-score')).toHaveText('91,234', { timeout: 5000 });
+  // The gauge deliberately honors the feed's project grade; the proof rail
+  // reports the numeric score band. They are separate concepts.
+  await expect(page.locator('#ignis-live-tier')).toHaveText('FORGE tier');
+  expect(await page.locator('#ignis-live-bar').evaluate(el => parseFloat(el.style.width))).toBeCloseTo(91.234, 3);
 });
 
 test('membership rank strip and world teaser render complete on desktop and mobile', async ({ page }) => {

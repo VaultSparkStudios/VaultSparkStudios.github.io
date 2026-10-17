@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-16 (Session 382 closeout) -->
-<!-- semantic-freshness: hash=f96ebbdb565cc328 next=383 silSession=382 silScore=933 handoff=382 tests=- -->
+<!-- generated-at: 2026-10-17 (Session 386 closeout) -->
+<!-- semantic-freshness: hash=5f0469c2c89e1d01 next=387 silSession=386 silScore=935 handoff=386 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 382 closeout · 2026-10-16.
+> **Fast-boot brief** — generated at Session 386 closeout · 2026-10-17.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 383 · 2026-10-16 · BUILDER MODE                         ║
+║  Session 387 · 2026-10-17 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S382) - WHAT SHIPPED ══════════════════════════╗
-║  S382 restores five obsolete palette tests to the shipped Spark  ║
+╔══ LAST SESSION (S386) - WHAT SHIPPED ══════════════════════════╗
+║  S386 (2026-10-16, from SIL ledger): Total: 935/1000 | Velocity  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,9 +41,9 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    933/1000   ██████████████████████░░   93%                     ║
-║    SIL v3.0  ·  Avg3: 933  ·  Velocity 1→                        ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    935/1000   ██████████████████████░░   94%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3→                          ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -57,13 +57,13 @@
 ║    Security          94    █████████░  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 382 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 386 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    537/537 passing  ·  Deploy: N/A                       ║
+║  Tests:    537/537 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -74,10 +74,10 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
-║  ⚠  Velocity      1 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46897 FORGE  ·  0d old                         ║
+║  ⚠  Context age   13d                                            ║
+║  ✓  IGNIS         46461 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -85,9 +85,9 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  2d old (2026-10-13)                            ║
+║  ✓  Revenue sig.  3d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        15/17 (88%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    54d · Authorize or decline immutable warm-origin migrati      ║
-║    54d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    55d · Authorize or decline immutable warm-origin migrati      ║
+║    55d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  1→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  3→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  929/1000  (↓4 vs current 933)                       ║
-║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 6.5 over last 10 forecasts                     ║
+║  Projected:  932/1000  (↓3 vs current 935)                       ║
+║  All categories forecast stable or rising.                       ║
+║  Calibration: MAE 3.7 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Investigate the eight unresolved behavior   ║
-║        Investigate the eight unresolved behavior assertions fro  ║
+║   96  [PRODUCT]      KV write quota (1,186/day 10-16) 503s /log  ║
+║        KV write quota (1,186/day 10-16) 503s /login: isolate au  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Inspect24 pixel differences against exact   ║
-║        Inspect24 pixel differences against exact route/theme/vi  ║
+║   93  [PRODUCT]      Persona page/N 404s: lane allowlist + Hetz  ║
+║        Persona page/N 404s: lane allowlist + Hetzner rules toge  ║
 ║                                                                  ║
-║   92  [VERIFY]       Classify the remaining broad E2E failures   ║
-║        Classify the remaining broad E2E failures against the ca  ║
+║   90  [PRODUCT]      Disabled-workflow 422 = deferred; idle 30-  ║
+║        Disabled-workflow 422 = deferred; idle 30-min ingest sca  ║
 ║                                                                  ║
-║   90  [INTELLIGENCE]  Assess candidate-origin contracts for oth  ║
-║        Assess candidate-origin contracts for other browser API   ║
+║   86  [COHESION]     Reproduce remaining stats/Oracle/community  ║
+║        Reproduce remaining stats/Oracle/community contract fail  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Evaluate the existing Node schema-lite TOD  ║
-║        Evaluate the existing Node schema-lite TODO with focused  ║
+║   84  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
+║        Inspect retained pixel diagnostic failures against origi  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 382 closeout · 2026-10-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 386 closeout · 2026-10-17*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

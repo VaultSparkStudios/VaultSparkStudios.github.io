@@ -2183,3 +2183,49 @@ Session Intent: full fresh /arc, direct main commit/push and full deployment aut
 S380 complete: Playwright collects browser tests without loading Node unit suites and preserves mobile evidence. Collection is mandatory without authentication credentials; inventories are 689 Chromium, 619 Firefox and 619 WebKit tests. Fresh mobile cases passed 215/215 and survived collection byte-for-byte. The complete build passed 537/537 steps, isolation regressions 2/2, and Node tests 430 passed with zero failures and one existing TODO. Rank reports resolve privileged credentials only for their target and preserve previous evidence on fetch failure. Streamed SHA-256 verified the actual staging archive above 2 GiB; deployer self-tests passed 17/17. Shared brand, Discord and reaction names now contain their visible labels. Public accessibility passed 20/20; all 112 before/after captures across seven themes and two widths were inspected. Independent reviews passed, and concurrent Desk art commits were preserved by normal merge. Candidate 4ce367580b22 was pushed normally to main and fully deployed by confirmed Pages run 38763989597. Immutable and primary readback verified the deployed source. Staging verified 65/65 critical leaves and the tested source association. Browser checks passed three cases with three identity cases explicitly held; attention passed 15/15 and the production ceremony 11/11. All five publisher states were restored; canonical closeout is complete. Existing identity and field-vitals limitations remain separate. Broad optional E2E remains unresolved: 573 passed, 55 failed, 60 skipped, 1 flaky on exact candidate run 38761766861; the inherited workflow tolerates these failures when authentication email is absent.
 
 Next: existing SIL tasks only; preserve operator caches and the original light capture. CDR reviewed: no new human creative direction. Evidence: docs/RELEASE_S380.json.
+
+
+---
+<!-- archived: 2026-10-16 -->
+
+## Where We Left Off (Session 381) — complete
+
+Session Intent: fresh full /arc, direct main push and full deployment authorized. Native goal 01a14085-61d3-7452-b03f-28f285198b91 binds S381.
+
+S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json.
+
+Wave 1 startup/fresh audit, Wave 2 implementation and Wave 3 canonical closeout/publication/deployment complete. CDR reviewed; no new human creative direction. Context usage unmeasured. Preserve unrelated operator caches and captures. Future bounded scope: classify optional E2E failures.
+
+
+---
+<!-- archived: 2026-10-16 -->
+
+## Where We Left Off (Session 382) — complete
+
+Session Intent: fresh full /arc, direct main push and full deployment authorized. Native goal01a1423f-c7bf-7b80-b75f-75517203c959 binds S382.
+
+S382 complete: five obsolete palette tests now verify shipped Spark behavior, and all19 affected/existing cases run unconditionally in required CI. Broken actual-script loading is detected. The45 prior optional failures are classified; remaining40 retain their original provenance. Current optional broad run separately reports586 passed,43 failed and60 skipped; those failures are not claimed fixed. Local full validation passed537/537 and mobile215/215. Seven-theme visual review covers28 counter and112 inherited Desk-art captures. Candidate 791ef632d4ee passed required exact-SHA hosted checks and full Pages deployment 38842758645; stagingcritical65/65, ceremony11/11 and immutable/primary production readback verified. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. Evidence: docs/RELEASE_S382.json.
+
+All three waves complete. CDR reviewed; no new human creative direction. SIL933/1000 unchanged, context usage unmeasured. Preserve unrelated operator state. Future bounded work: unresolved optional behavior and pixel diagnostics.
+
+
+---
+<!-- archived: 2026-10-16 -->
+
+## Where We Left Off (Session 383) — complete
+
+Session Intent: fresh full /arc; direct main push and full deployment authorized. Native goal01a142dd-f958-7631-864d-a7193b851a4e binds S383.
+
+**What changed, in one line each**
+
+- Homepage engagement tests follow actual loaders, layout and intelligence.
+- Seven engagement cases are mandatory in required CI.
+- Exact candidate passed staging, hosted checks and full production readback.
+
+S383 complete: three reproduced homepage acceptance failures now exercise the actual milestone loader, proof/Vault Door/membership ordering and network-bound public intelligence. All seven engagement cases run unconditionally in required CI. All21 cases across Chromium, Firefox and WebKit passed; blocked milestone loading and a corrupted intelligence score were detected by negative tests. The combined score/grade mutation proves score detection, not an independent grade-only mutation. No runtime or visual-baseline change. Local validation passed537/537 and mobile215/215. Candidate d4f69cca9327 passed the three required exact-SHA hosted checks and full Pages deployment 38856553984; stagingcritical65/65, ceremony11/11 and complete immutable/primary production readback verified. Exact-candidate optional broad diagnostics separately report589 passed,37 failed,3 flaky and60 skipped; these are not claimed fixed. Five publisher states restored and owned processes closed. Existing identity/field-vitals limitations remain separate. SIL933/1000 unchanged. Evidence: docs/RELEASE_S383.json.
+
+All three waves complete. CDR reviewed; no new human creative direction. Context usage unmeasured. Preserve unrelated operator state. Future bounded work: unresolved optional behavior and pixel diagnostics.
+
+**Closing follow-through**
+
+Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.

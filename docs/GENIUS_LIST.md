@@ -1,16 +1,16 @@
-# Genius Hit List — Session 382
+# Genius Hit List — Session 386
 
-Generated: 2026-10-16
+Generated: 2026-10-17
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **77/100**
 - Health: **yellow**
-- Current SIL: **933/1000**
+- Current SIL: **935/1000**
 - CI health: **check gh run list**
-- Current focus: Spark browser verification; full release acceptance in progress.
+- Current focus: Desk art autopilot reliability: reviewer brief parity and bounded critique-guided re-rolls.
 
 ## Strategic Read
 
@@ -22,75 +22,73 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
+#### 1. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
 Final score: **96**
+[P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
+Why it matters: KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut teleme is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Persona page/N 404s: lane allowlist + Hetzner rules together.
+Final score: **93**
+[S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
+Why it matters: Persona page/N 404s: lane allowlist + Hetzner rules together. is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+Final score: **90**
+[SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+Why it matters: Disabled-workflow 422 = deferred; idle 30-min ingest scan. is open, local, and unblocked — can ship this session.
+
+#### 4. [COHESION] Reproduce remaining stats/Oracle/community contract failures against …
+Final score: **86**
+[SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
+Why it matters: Reproduce remaining stats/Oracle/community contract failures against c is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+### NEXT
+
+#### 1. [PRODUCT] Inspect retained pixel diagnostic failures against original route/the…
+Final score: **84**
+[SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.
+Why it matters: Inspect retained pixel diagnostic failures against original route/them is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Inspect original pixel differences by route/theme/viewport before pro…
+Final score: **78**
+[SIL][S384] Inspect original pixel differences by route/theme/viewport before proposing baselines.
+Why it matters: Inspect original pixel differences by route/theme/viewport before prop is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Reproduce remaining optional behavioral diagnostics against the curre…
+Final score: **75**
+[SIL][S383] Reproduce remaining optional behavioral diagnostics against the current candidate before changes.
+Why it matters: Reproduce remaining optional behavioral diagnostics against the curren is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
+Final score: **72**
 [SIL][S382] Investigate the eight unresolved behavior assertions from E2E_DIAGNOSTICS_S382.json; reproduce runtime before changing tests.
 Why it matters: Investigate the eight unresolved behavior assertions from E2E_DIAGNOST is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Inspect24 pixel differences against exact route/theme/viewport before…
-Final score: **93**
+#### 5. [PRODUCT] Inspect24 pixel differences against exact route/theme/viewport before…
+Final score: **69**
 [SIL][S382] Inspect24 pixel differences against exact route/theme/viewport before any baseline proposal.
 Why it matters: Inspect24 pixel differences against exact route/theme/viewport before  is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Classify the remaining broad E2E failures against the candidate now t…
-Final score: **92**
-[SIL][S381] Classify the remaining broad E2E failures against the candidate now that target association is corrected; do not refresh visual baselines to conceal differences.
-Why it matters: Classify the remaining broad E2E failures against the candidate now th shipped last session — confirm it works in production before piling new work on top.
+### LATER
 
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [INTELLIGENCE] Assess candidate-origin contracts for other browser API probes in a f…
-Final score: **90**
+#### 1. [INTELLIGENCE] Assess candidate-origin contracts for other browser API probes in a f…
+Final score: **66**
 [SIL][S381] Assess candidate-origin contracts for other browser API probes in a future bounded audit; keep explicit external integration checks distinct.
 Why it matters: Assess candidate-origin contracts for other browser API probes in a fu keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### NEXT
-
-#### 1. [PRODUCT] Evaluate the existing Node schema-lite TODO with focused schema fixtu…
-Final score: **84**
+#### 2. [PRODUCT] Evaluate the existing Node schema-lite TODO with focused schema fixtu…
+Final score: **60**
 [SIL][S380] Evaluate the existing Node schema-lite TODO with focused schema fixtures in a future authorized scope.
 Why it matters: Evaluate the existing Node schema-lite TODO with focused schema fixtur is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Separate optional authenticated runtime coverage from public browser …
-Final score: **81**
+#### 3. [PRODUCT] Separate optional authenticated runtime coverage from public browser …
+Final score: **57**
 [SIL][S380] Separate optional authenticated runtime coverage from public browser failures using measured current results; discovery is now mandatory.
 Why it matters: Separate optional authenticated runtime coverage from public browser f is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] Reduce staging archive overhead through the existing production publi…
-Final score: **78**
-[SIL][S379][OPS/P2] Reduce staging archive overhead through the existing production public-surface policy; prove advertised routes and rollback before changing the manifest.
-Why it matters: Reduce staging archive overhead through the existing production public is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] Give staging theme captures a session-specific output directory so ru…
-Final score: **75**
-[SIL][S379][QA/P2] Give staging theme captures a session-specific output directory so runtime gates preserve pre-existing operator screenshots.
-Why it matters: Give staging theme captures a session-specific output directory so run is open, local, and unblocked — can ship this session.
-
-#### 5. [PRODUCT] Keep attribute-only interaction regressions synchronized with selecto…
-Final score: **72**
-[SIL/P3 · S378] Keep attribute-only interaction regressions synchronized with selector membership when companion controls evolve.
-Why it matters: Keep attribute-only interaction regressions synchronized with selector is open, local, and unblocked — can ship this session.
-
-### LATER
-
-#### 1. [PRODUCT] Inspect hidden-opener focus return after future placement changes; pr…
-Final score: **69**
-[SIL/P3 · S378] Inspect hidden-opener focus return after future placement changes; preserve header fallback.
-Why it matters: Inspect hidden-opener focus return after future placement changes; pre is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Census deferred homepage modules before enabling home-intelligence; p…
-Final score: **66**
-[SIL/P3 · S377] Census deferred homepage modules before enabling home-intelligence; preserve dormant member-query scope until its own review.
-Why it matters: Census deferred homepage modules before enabling home-intelligence; pr is open, local, and unblocked — can ship this session.
-
-#### 3. [INTELLIGENCE] Start maintenance lane has no local copy here; task-slice and check-a…
-Final score: **60**
-[OPS/P3 · S376] Start maintenance lane has no local copy here; task-slice and check-audit-premises shipped S377.
-Why it matters: Start maintenance lane has no local copy here; task-slice and check-au keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
 
 ### DEFERRED / GATED
 
@@ -136,18 +134,18 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
-2. Inspect24 pixel differences against exact route/theme/viewport before…
-3. Classify the remaining broad E2E failures against the candidate now t…
-4. Assess candidate-origin contracts for other browser API probes in a f…
-5. Evaluate the existing Node schema-lite TODO with focused schema fixtu…
-6. Separate optional authenticated runtime coverage from public browser …
-7. Reduce staging archive overhead through the existing production publi…
-8. Give staging theme captures a session-specific output directory so ru…
-9. Keep attribute-only interaction regressions synchronized with selecto…
-10. Inspect hidden-opener focus return after future placement changes; pr…
-11. Census deferred homepage modules before enabling home-intelligence; p…
-12. Start maintenance lane has no local copy here; task-slice and check-a…
+1. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+2. Persona page/N 404s: lane allowlist + Hetzner rules together.
+3. Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+4. Reproduce remaining stats/Oracle/community contract failures against …
+5. Inspect retained pixel diagnostic failures against original route/the…
+6. Inspect original pixel differences by route/theme/viewport before pro…
+7. Reproduce remaining optional behavioral diagnostics against the curre…
+8. Investigate the eight unresolved behavior assertions from E2E_DIAGNOS…
+9. Inspect24 pixel differences against exact route/theme/viewport before…
+10. Assess candidate-origin contracts for other browser API probes in a f…
+11. Evaluate the existing Node schema-lite TODO with focused schema fixtu…
+12. Separate optional authenticated runtime coverage from public browser …
 
 ## Best Immediate Move
 

@@ -1,3 +1,6 @@
+- [S385 public data contracts](S385.md): ranks, coverage denominators and neutral directory cards.
+- [S384 return-visit browser evidence](S384.md): baseline lifecycle and diagnostic artifact retention.
+- [S383 homepage browser truth](S383.md): interaction loaders, deterministic feed and exact assertions.
 - [S382 Spark browser coverage](S382.md): actual search semantics and honest failure inventory.
 - [S381 candidate-bound browser verification](S381.md): actual-source negative fixtures and explicit overrides.
 <!-- Current S380: browser discovery; release evidence docs/RELEASE_S380.json. -->
