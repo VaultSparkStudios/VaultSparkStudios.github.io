@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-16T23:35:23.029Z",
+  "generatedAt": "2026-10-17T00:26:19.052Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,15 +20,16 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
     "candidateBuildSha": "b8b2882365a6de4de59fb2196d92b75756649cb8",
-    "deployedBuildSha": "b8b2882365a6de4de59fb2196d92b75756649cb8",
-    "candidateShaBound": true,
+    "deployedBuildSha": "e5233032cdf3680509ffb428cd1120f6629b267d",
+    "candidateShaBound": false,
     "artifactManifest": {
       "candidateRoot": "8c456986bc28b22c9c81548e314cf419af1d4115adee11d185a4f356834a62c2",
       "candidateLeafCount": 66,
-      "stagingRoot": "7c1393a80dfc014292aeeb79cd122e7ea90394527c7f19c2ff89f0265df3499c",
+      "stagingRoot": "aaeed15ba71092ea6c201de6c68650e36a52c8e50e7200efc73033f2e2bf40fb",
       "stagingLeafCount": 66,
       "matched": false
     },
@@ -70,13 +71,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 1,
-    "ageHours": 0.4,
-    "observedAt": "2026-10-16T23:35:23.029Z",
+    "commitsBehind": 2,
+    "ageHours": 0.8,
+    "observedAt": "2026-10-17T00:26:19.052Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-16T23:35:23.029Z",
+      "observedAt": "2026-10-17T00:26:19.052Z",
       "expectedFrom": "3745df0842d65109a4bcfc71fcce13c287cc9d2a76c9a4514450836404fbf880",
       "supersededBy": null,
       "ageHours": 0,
@@ -181,7 +182,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -197,6 +198,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
