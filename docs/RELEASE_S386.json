@@ -1,0 +1,88 @@
+{
+  "session": 386,
+  "state": "verified",
+  "startedAt": "2026-10-16T19:59:20.590Z",
+  "startHead": "b8b2882365a6de4de59fb2196d92b75756649cb8",
+  "authorization": "Founder /arc goal: direct commit/push to main and full deploy.",
+  "implementation": {
+    "audit": "docs/AUDIT_2026-10-16-S386.json",
+    "selfTests": {
+      "autopilot": "47/47",
+      "generator": "60/60"
+    },
+    "mutationsDetected": 3,
+    "dryRun": "3/3 previously rejected satire cartoons approved and image-inspected; banner fails only noText; one daily re-roll"
+  },
+  "validation": {
+    "fullLocal": {
+      "passed": 537,
+      "failed": 0,
+      "runs": 3,
+      "mobile": "215/215 (post-rollover)",
+      "evidence": "api/build-check-diagnostics.json"
+    }
+  },
+  "staging": {
+    "receipt": "13615cad5b54f18485a956be",
+    "files": 11811,
+    "stagedCommit": "83c7b4cd54",
+    "rollback": "/opt/studio/staging/website/.rollback/20261016211524",
+    "browserSpec": "3/6 — the 3 Obelisk boundary cases fail with auth_store_unavailable (KV daily write quota), also failing on production before this candidate",
+    "ceremony": "11/11",
+    "final": {
+      "receipt": "984cfec257999ef5d898a3c4",
+      "files": 11849,
+      "rollback": "/opt/studio/staging/website/.rollback/20261017001842",
+      "browserSpec": "6/6 across 3 engines incl. Obelisk boundary (after KV reset)",
+      "ceremony": "11/11"
+    }
+  },
+  "candidate": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+  "hostedChecks": {
+    "ok": true,
+    "lane": "hosted-exact-sha",
+    "e2e": 38986916312,
+    "accessibility": 38986916213,
+    "lighthouse": {
+      "runId": 38986916225,
+      "attempt1": "article 0.89 < 0.90; article differs only by one swapped related-story card",
+      "attempt2": "passed"
+    }
+  },
+  "promotion": {
+    "scope": "promotable=true · scoped-disjoint",
+    "tag": "s386-final-production-20261017",
+    "runId": 38989131366,
+    "gateHeld": false
+  },
+  "production": {
+    "verified": true,
+    "servedSha": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+    "deployedBy": "pages-deploy",
+    "shellParity": "ok",
+    "servedParity": "1083/1093 identical, 0 differ, 10 redirected, 0 not served",
+    "personaPage": "/news/personas/juno/page/2/ 200"
+  },
+  "rollback": {
+    "previousProduction": "facc75343b677ac57817392a6cc29c51138a766a",
+    "method": "Pinned full promotion of the recorded predecessor; no force-push. Hetzner staging retains its timestamped predecessor."
+  },
+  "artPublication": "5 approved images + milk banner live, bytes matched (release runs 38976366127, 38977721461); art currency green",
+  "limitations": [
+    "P0 open: account-wide Cloudflare KV free-tier write quota exhausted 2026-10-16 (1,186 writes: staging RATE_LIMIT 400, production RATE_LIMIT 350, one unidentified namespace 408); /login returns named 503 auth_store_unavailable on staging and production until the 00:00Z reset; recovered (302) at 00:02Z 10-17. Not caused or changed by this candidate.",
+    "Persona pagination still bypasses the Desk lane until the allowlist and Hetzner root-owned rules change together (D-S386.4)."
+  ],
+  "accepted": true,
+  "acceptedAt": "2026-10-17T01:16:05.376Z",
+  "remaining": [],
+  "firstPromotion": {
+    "candidate": "0a434fad211e1c3608f4523f81eadf3a76d6728c",
+    "runId": 38974570139,
+    "tag": "s386-seal-production-20261016",
+    "servedParity": "1080/1090 identical, 0 differ, 10 redirected, 0 not served"
+  },
+  "ciHealth": {
+    "runId": 38989927325,
+    "result": "success (scheduled workflow health + daily live routes and Desk assurance)"
+  }
+}
