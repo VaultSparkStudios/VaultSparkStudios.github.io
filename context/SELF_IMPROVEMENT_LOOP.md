@@ -2813,3 +2813,5 @@ Brainstorm: an automated judge must see exactly what the producer was asked to m
 | ecosystemIntegration | 91 |
 | capitalEfficiency | 95 |
 | automationCoverage | 98 |
+
+S386 follow-through: S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-seal-production-20261016); production serves it, shell parity clean, served parity 1080/1090 identical, 0 differ. Autopilot then published 4 approved satire cartoons and 2 banners; the stuck milk banner passed on its first critique-guided re-roll; all live bytes matched; art currency now green (122 stories, 44 cartoons). A dispatched CI Health Monitor then reached a later check: the release contract ranked same-day stories alphabetically, so after the latenight edition it demanded a homepage link to the midday story. It now ranks by publication instant (8/8 cases, mutation detected). Persona pagination pages 404 after Desk lane releases because the lane allowlist and the root-owned Hetzner copy omit them; a full promotion ships them. P0 open: account-wide KV free write quota exhausted 2026-10-16 (1,186 writes); /login returned named 503 on staging and production until 00:00Z. Same S386 score.

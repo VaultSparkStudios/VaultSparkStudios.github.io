@@ -1,12 +1,13 @@
 ## S386 — Desk art review contract
 
-- [x] Art reviewer gets the generator brief; daily critique re-roll; re-cased worktree accepted. 47/47+60/60; dry run passes 3/3.
-- [ ] [SIL][S386] Confirm next art runs publish them and CI Health Monitor turns green.
-- [ ] [SIL][S386] Treat disabled-workflow 422 as deferred; diagnose the idle 30-min ingest scan (10-16 19:45Z).
+- [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json
+- [ ] [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
+- [ ] [S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
+- [ ] [SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
 
 ## S385 — public data contracts
 
-- [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed. Record: docs/AUDIT_2026-10-16-S385.json.
+- [x] S385 community earned-rank and ecosystem coverage contracts (15/15 across 3 engines, 3 mutations); blank-handle directory defect fixed.
 S385 release acceptance: docs/RELEASE_S385.json (verified).
 - [ ] [SIL][S385] Investigate remaining Oracle canonical-route and feed assertions against actual source; preserve privacy and current navigation.
 - [ ] [SIL][S385] Inspect retained pixel diagnostic failures against original route/theme/viewport before proposing baseline changes.

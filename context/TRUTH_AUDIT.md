@@ -1611,3 +1611,5 @@ All two selected outcomes shipped; all three waves complete. Same S385 score, no
 ### S386 — Desk art reviewer truth (2026-10-16)
 
 The art-currency failure was not missing art generation: images existed and were rejected by a reviewer given a narrower story than the generator. Reviewer input now matches the generator brief. The two 2026-10-16 "release dispatch failed" lines were a temporarily disabled workflow; the art reached production through a later full release (served bytes verified identical).
+
+S386 follow-through: "newest Desk story" now means the latest publication instant on the newest date, matching the homepage. Production /login 503 on 2026-10-16 was KV quota exhaustion, not a code regression; persona page 2+ 404s are a lane allowlist gap, not missing source.

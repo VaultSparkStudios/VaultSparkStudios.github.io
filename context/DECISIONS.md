@@ -2322,3 +2322,11 @@ CI Health Monitor failed 2026-10-15 and 2026-10-16 on `check-desk-art-currency`:
 ## D-S386.2 — Exhausted art re-rolls get one critique-guided attempt per UTC day (2026-10-16)
 
 After two in-run re-rolls the staged image was re-reviewed unchanged every run, so a stuck story could never recover without an operator. An exhausted, still-failing story/kind now gets at most one re-roll per UTC day, recorded as `dailyReroll` in the staged review record. The generator appends the last rejection reasons (cleaned, at most four, 240 characters each) before the closing instruction. Meta hashes the prompt actually sent. Banner and satire base prompts are unchanged.
+
+## D-S386.3 — The newest Desk story is the latest publication instant (2026-10-16)
+
+`deriveNewsReleaseContract` ranked by date, then id alphabetically. After the 22:22Z latenight edition it named the 12:35Z midday story newest; the homepage correctly features the later story, so CI Health Monitor reported a missing homepage link. Ranking now uses the full `date_published` instant before the id tie-break. Date-scoped fact/stance ledger checks are unchanged. Consumers (live matrix, live news release check, staging content deploy) share the library, so candidate and live evidence stay consistent.
+
+## D-S386.4 — Persona pagination stays out of the Desk lane until the server rules move with it (2026-10-16)
+
+The Desk content allowlist admits persona index pages but not `news/personas/<p>/page/<n>/`; editions add those pages and the sitemap lists them, so they 404 until a full promotion. The Hetzner staging receiver validates against a root-owned copy of the rules, so changing only the repository allowlist would make the lane send paths staging refuses and break the newsroom release. This session ships the pages through the full promotion; the coordinated allowlist and server-rules change remains a separate, approved trust-policy update.

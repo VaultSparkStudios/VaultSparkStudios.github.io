@@ -27,9 +27,14 @@ export function deriveNewsReleaseContract(feed, claimsText) {
   if (!feed || typeof feed !== 'object' || !Array.isArray(feed.items) || feed.items.length === 0) {
     throw new Error('News JSON Feed has no items');
   }
-  const ranked = feed.items.map((item) => ({ item, date: publishedDate(item) }))
+  // S386: rank by the full publication instant. Ranking by date alone broke ties
+  // alphabetically, so on a multi-edition day the midday story ("meta-…") beat
+  // the later edition the homepage features ("welcome-…") and the live matrix
+  // reported a homepage that "does not link to the newest story".
+  const instant = (item) => { const t = Date.parse(String(item?.date_published || item?.date_modified || '')); return Number.isFinite(t) ? t : 0; };
+  const ranked = feed.items.map((item) => ({ item, date: publishedDate(item), at: instant(item) }))
     .filter((entry) => entry.date)
-    .sort((a, b) => b.date.localeCompare(a.date) || String(a.item.id || a.item.url || '').localeCompare(String(b.item.id || b.item.url || '')));
+    .sort((a, b) => b.date.localeCompare(a.date) || b.at - a.at || String(a.item.id || a.item.url || '').localeCompare(String(b.item.id || b.item.url || '')));
   if (!ranked.length) throw new Error('News JSON Feed has no dated items');
 
   const newest = ranked[0];
@@ -79,6 +84,10 @@ export function runNewsReleaseContractSelfTest(log = console.log) {
     ['missing newest fact fails closed', rejects(feed, JSON.stringify({ type: 'stance', date: '2026-08-22' }), /no fact row/)],
     ['missing newest stance fails closed', rejects(feed, JSON.stringify({ type: 'fact', date: '2026-08-22' }), /no stance row/)],
     ['route/date mismatch fails closed', rejects({ items: [{ ...feed.items[1], url: 'https://vaultsparkstudios.com/news/2026-08-21/newest/' }] }, claims, /does not match/)],
+    ['a later edition on the same day wins over alphabetical order', deriveNewsReleaseContract({ items: [
+      { id: 'a-midday', url: 'https://vaultsparkstudios.com/news/2026-08-22/a-midday/', date_published: '2026-08-22T12:35:57Z' },
+      { id: 'z-latenight', url: 'https://vaultsparkstudios.com/news/2026-08-22/z-latenight/', date_published: '2026-08-22T22:22:16Z' },
+    ] }, claims).route === '/news/2026-08-22/z-latenight/'],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) log(`  ${ok ? '✓' : '✗'} ${name}`);

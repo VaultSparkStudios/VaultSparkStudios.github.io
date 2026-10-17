@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-16T21:07:39.256Z",
+  "generatedAt": "2026-10-17T00:04:51.397Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -25,7 +25,7 @@
     "currentSession": 386,
     "lastUpdated": "2026-10-16",
     "currentFocus": "Desk art autopilot reliability: reviewer brief parity and bounded critique-guided re-rolls.",
-    "nextMilestone": "Next scheduled art runs publish the approved cartoons and a numeral-free banner; CI Health Monitor green.",
+    "nextMilestone": "Resolve the KV free-tier write budget so sign-in cannot be starved by telemetry or staging traffic.",
     "blockers": [
       "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
       "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -34,7 +34,8 @@
       "Account signup acceptance, member newsletter arming, public-member-data and immutable warm-origin choices remain unobserved or undecided.",
       "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
       "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
-      "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action."
+      "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
+      "KV free write quota (account-wide, ~1,000/day) exhausted 2026-10-16; sign-in returned named 503 until 00:00Z reset. Recurrence risk until auth storage is isolated from telemetry writes."
     ],
     "queues": {
       "now": [
@@ -53,7 +54,7 @@
       "shipped": [
         "Shipped: 3 fixes in 1 group — Desk art autopilot (reviewer brief parity, daily critique-guided re-roll, case-insensitive worktree identity).",
         "Tests: autopilot 47/47 · generator 60/60 · 3 negative mutations detected.",
-        "Deploy: pending verification at write-back time; see the release note appended below."
+        "Deploy: deployed to production (0a434fad21, byte-verified); contract-fix promotion recorded in docs/RELEASE_S386.json."
       ]
     },
     "ignis": {

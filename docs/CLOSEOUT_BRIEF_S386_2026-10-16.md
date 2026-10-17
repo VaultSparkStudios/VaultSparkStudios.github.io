@@ -5,13 +5,16 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Desk art reviewer now judges the brief the artist was given; stuck stories can recover.    ║
+║    Desk art reviewer judges the brief the artist was given; stuck art is live and the         ║
+║    newest-story contract matches the homepage.                                                ║
 ║                                                                                               ║
-║  PROJECT IMPACT     ██████▌░░░   65/100                                                       ║
-║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
+║  PROJECT IMPACT     ██████░░░░   60/100                                                       ║
+║  ECOSYSTEM IMPACT   ██▌░░░░░░░   27/100                                                       ║
 ║  SIL DELTA          933 → 935  (+2)                                                           ║
 ║  CDR                Reviewed; no new human direction                                          ║
-║  CI HEALTH          Red 10-15/10-16 on art currency; awaiting next scheduled art run          ║
+║  RELEASE            0a434fad21 promoted; served parity 1080/1090, 0 differ                    ║
+║  ART                5 images + milk banner live, bytes matched; art currency green            ║
+║  P0                 KV free write quota exhausted 10-16; /login named 503 until 00:00Z        ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -32,17 +35,25 @@
          run.
          → 60/60 generator self-tests; note and daily-limit mutations detected; dry run fired exactly one re-roll
 
+  [3]  newest-story-contract                                      PROJ 5  ·  ECOS 2
+         ── feedback ────────────────────────────────────────────────────────────────────────
+         Same-day stories were ranked alphabetically, so the live health check demanded a
+         homepage link to the midday story after the latenight edition. Ranking now uses the
+         publication instant.
+         → 8/8 contract cases; tie-break mutation detected; real-data inspectDesk OK
+
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Confirm next art runs and CI Health Monitor
+    • KV write budget: isolate auth storage; cut telemetry writes
+    • Persona page/N lane allowlist with Hetzner rules
     • Disabled-workflow 422 as deferred; idle ingest scan
 
   BLOCKERS
-    (none)
+    • KV quota P0 (sign-in) — architectural, auth-adjacent; escalated
 
   ACTION GATE
-    2 items shipped · ready to commit & push? [y/N]
+    3 items shipped · ready to commit & push? [y/N]
 
 ```
 

@@ -2,8 +2,8 @@
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46461 FORGE  ·  -1d old                        ║
+║  ⚠  Context age   13d                                            ║
+║  ✓  IGNIS         46461 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -18,5 +18,5 @@
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  Open current tasks 36 / Human-action entries 6                  ║
 ║  Unchecked tasks require task-level triage.                      ║
-║  ✓  Cost          real $0.03/7d · 7d catalog estimate $0.08…     ║
+║  ✓  Cost          real $0.05/7d · 7d catalog estimate $0.10…     ║
 ╚════════════════════════════════════════════════════════════════╝

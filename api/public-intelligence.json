@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-16T21:07:39.261Z",
+  "generatedAt": "2026-10-17T00:04:51.398Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -10,7 +10,7 @@
     "currentSession": 386,
     "lastUpdated": "2026-10-16",
     "currentFocus": "Desk art autopilot reliability: reviewer brief parity and bounded critique-guided re-rolls.",
-    "nextMilestone": "Next scheduled art runs publish the approved cartoons and a numeral-free banner; CI Health Monitor green.",
+    "nextMilestone": "Resolve the KV free-tier write budget so sign-in cannot be starved by telemetry or staging traffic.",
     "ignis": {
       "score": 46461,
       "grade": "FORGE",
@@ -23,7 +23,7 @@
     "shipped": [
       "Shipped: 3 fixes in 1 group — Desk art autopilot (reviewer brief parity, daily critique-guided re-roll, case-insensitive worktree identity).",
       "Tests: autopilot 47/47 · generator 60/60 · 3 negative mutations detected.",
-      "Deploy: pending verification at write-back time; see the release note appended below."
+      "Deploy: deployed to production (0a434fad21, byte-verified); contract-fix promotion recorded in docs/RELEASE_S386.json."
     ]
   },
   "consumerChangelog": [
@@ -837,8 +837,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gate status is unknown.",
-    "checkedAt": "2026-10-16T07:01:09.558Z",
+    "summary": "Production deployment is stranded for 10 consecutive receipts. CI gate status is unknown.",
+    "checkedAt": "2026-10-16T22:12:06.821Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

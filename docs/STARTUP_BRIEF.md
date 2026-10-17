@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-16 (Session 386 closeout) -->
+<!-- generated-at: 2026-10-17 (Session 386 closeout) -->
 <!-- semantic-freshness: hash=5f0469c2c89e1d01 next=387 silSession=386 silScore=935 handoff=386 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 386 closeout · 2026-10-16.
+> **Fast-boot brief** — generated at Session 386 closeout · 2026-10-17.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,7 +15,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 387 · 2026-10-16 · FOUNDER MODE                         ║
+║  Session 387 · 2026-10-17 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    935/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3→                          ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,8 +76,8 @@
 ║  ✓  Tests         537/537 passing (2026-10-16)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⚠  Context age   12d                                            ║
-║  ✓  IGNIS         46461 FORGE  ·  -1d old                        ║
+║  ⚠  Context age   13d                                            ║
+║  ✓  IGNIS         46461 FORGE  ·  0d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    54d · Authorize or decline immutable warm-origin migrati      ║
-║    54d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    55d · Authorize or decline immutable warm-origin migrati      ║
+║    55d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Treat disabled-workflow 422 as deferred; d  ║
-║        Treat disabled-workflow 422 as deferred; diagnose the id  ║
+║   96  [PRODUCT]      KV write quota (1,186/day 10-16) 503s /log  ║
+║        KV write quota (1,186/day 10-16) 503s /login: isolate au  ║
 ║                                                                  ║
-║   92  [COHESION]     Reproduce remaining stats/Oracle/community  ║
+║   93  [PRODUCT]      Persona page/N 404s: lane allowlist + Hetz  ║
+║        Persona page/N 404s: lane allowlist + Hetzner rules toge  ║
+║                                                                  ║
+║   90  [PRODUCT]      Disabled-workflow 422 = deferred; idle 30-  ║
+║        Disabled-workflow 422 = deferred; idle 30-min ingest sca  ║
+║                                                                  ║
+║   86  [COHESION]     Reproduce remaining stats/Oracle/community  ║
 ║        Reproduce remaining stats/Oracle/community contract fail  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
+║   84  [PRODUCT]      Inspect retained pixel diagnostic failures  ║
 ║        Inspect retained pixel diagnostic failures against origi  ║
-║                                                                  ║
-║   84  [PRODUCT]      Inspect original pixel differences by rout  ║
-║        Inspect original pixel differences by route/theme/viewpo  ║
-║                                                                  ║
-║   81  [PRODUCT]      Reproduce remaining optional behavioral di  ║
-║        Reproduce remaining optional behavioral diagnostics agai  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 386 closeout · 2026-10-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 386 closeout · 2026-10-17*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
