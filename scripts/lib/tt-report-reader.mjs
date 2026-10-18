@@ -13,14 +13,18 @@ export function parseTtListing(xml) {
   // an HTTP 200 or opening root tag alone is never evidence of an empty bucket.
   const stack = [];
   let roots = 0, offset = 0;
+  let contents = 0;
+  if (/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/.test(xml)) throw new Error('Malformed TT R2 XML entity');
   for (const match of xml.matchAll(/<[^>]*>/g)) {
-    if (xml.slice(offset, match.index).includes('<')) throw new Error('Malformed TT R2 XML');
+    const text = xml.slice(offset, match.index);
+    if (text.includes('<') || (!stack.length && text.trim())) throw new Error('Malformed TT R2 XML');
     const tag = match[0]; offset = match.index + tag.length;
     if (/^<\?xml\s[^?]*\?>$/.test(tag) && match.index === 0) continue;
     const close = tag.match(/^<\/([A-Za-z][\w:-]*)\s*>$/);
     if (close) { if (stack.pop() !== close[1]) throw new Error('Malformed TT R2 XML'); continue; }
     const open = tag.match(/^<([A-Za-z][\w:-]*)(?:\s+[^<>]*)?\s*\/?>$/);
     if (!open) throw new Error('Unsupported TT R2 XML');
+    if (open[1] === 'Contents') contents++;
     if (!stack.length && (++roots !== 1 || open[1] !== 'ListBucketResult')) throw new Error('Invalid TT R2 root');
     if (!tag.endsWith('/>')) stack.push(open[1]);
   }
@@ -30,7 +34,9 @@ export function parseTtListing(xml) {
   const tokens = [...xml.matchAll(/<NextContinuationToken>([^<]+)<\/NextContinuationToken>/g)];
   if (tokens.length > 1 || (truncated[0][1] === 'true' && tokens.length !== 1)) throw new Error('Incomplete TT R2 listing');
   const keys = [...xml.matchAll(/<Key>([^<]+)<\/Key>/g)].map(match => decodeXml(match[1]));
-  if (keys.length !== [...xml.matchAll(/<Contents>/g)].length) throw new Error('Incomplete TT R2 contents');
+  if (keys.length !== contents) throw new Error('Incomplete TT R2 contents');
+  const counts = [...xml.matchAll(/<KeyCount>(\d+)<\/KeyCount>/g)];
+  if (counts.length > 1 || (/<KeyCount\b/.test(xml) && counts.length !== 1) || (counts.length && Number(counts[0][1]) !== keys.length)) throw new Error('Incomplete TT R2 key count');
   return { keys, cursor: truncated[0][1] === 'true' ? decodeXml(tokens[0][1]) : '' };
 }
 

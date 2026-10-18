@@ -43,6 +43,7 @@ RATE_LIMIT_ENABLED = "1"
 # sample 100% of TT reports and hold them 30 days so probe-tt-soak.mjs can
 # read a real signal. Report-only intake only — does NOT change enforcement.
 # S387: private TT_REPORTS R2 storage now carries the 30-day lifecycle.
+# Intake also has an independent global SQLite budget of 3 batches/hour.
 TT_REPORT_SAMPLE_RATE = "1"
 
 # S335: Trusted Types ENFORCE switch. "1" moves require-trusted-types-for into the

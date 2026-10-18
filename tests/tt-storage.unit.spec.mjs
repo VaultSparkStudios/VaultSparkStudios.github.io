@@ -1,14 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/security-headers-worker.js';
+import { PublicFormRateLimiter } from '../cloudflare/public-form-rate-limit.mjs';
 import { readTtReports, decodeXml, parseTtListing } from '../scripts/lib/tt-report-reader.mjs';
 
-async function intake({ raw, storage, rate = '1', method = 'POST', headers = {} } = {}) {
+async function intake({ raw, storage, budget, rate = '1', method = 'POST', headers = {} } = {}) {
   const pending = [], writes = [];
   const env = {
     TT_REPORT_SAMPLE_RATE: rate,
     RATE_LIMIT: new Proxy({}, { get() { throw new Error('diagnostics touched auth KV'); } }),
     TT_REPORTS: storage === null ? undefined : { put: storage || (async (key, body) => writes.push({ key, body: JSON.parse(body) })) },
+    FORM_RATE_LIMIT: budget === null ? undefined : budget || { idFromName: name => name, get: () => ({ fetch: async () => Response.json({ allowed: true, remaining: 2 }) }) },
   };
   const request = new Request('https://vaultsparkstudios.com/v/tt-report', {
     method, headers, ...(method === 'POST' ? { body: typeof raw === 'string' ? raw : JSON.stringify(raw ?? { 'csp-report': { 'document-uri': 'https://vaultsparkstudios.com/proof/', 'source-file': 'https://vaultsparkstudios.com/assets/example.js', 'line-number': 7, 'violated-directive': 'require-trusted-types-for' } }) } : {}),
@@ -27,10 +29,28 @@ test('TT intake survives exhausted auth KV and stores one normalized private bat
   assert.equal(writes[0].body.reports[0].sourceFile, 'https://vaultsparkstudios.com/assets/example.js');
 });
 test('TT storage outage, absent binding, malformed reports and sampling never fall back to KV', async () => {
-  for (const options of [{ storage: async () => { throw new Error('R2 unavailable'); } }, { storage: () => { throw new Error('sync fault'); } }, { storage: null }, { raw: '{bad' }, { rate: '0' }, { method: 'OPTIONS' }, { headers: { 'Content-Length': '8193' } }]) {
+  for (const options of [{ storage: async () => { throw new Error('R2 unavailable'); } }, { storage: () => { throw new Error('sync fault'); } }, { storage: null }, { budget: null }, { raw: '{bad' }, { raw: JSON.stringify({ body: { sourceFile: 'x'.repeat(8193) } }) }, { rate: '0' }, { method: 'OPTIONS' }, { headers: { 'Content-Length': '8193' } }]) {
     const { response, writes } = await intake(options);
     assert.equal(response.status, 204);
     assert.equal(writes.length, 0);
+  }
+});
+test('the actual existing SQLite counter caps TT globally at three batches per hour', async () => {
+  const values = new Map(); let queue = Promise.resolve();
+  const storage = { get: async key => values.get(key), put: async (key, value) => values.set(key, value), transaction(fn) { const result = queue.then(() => fn(storage)); queue = result.catch(() => {}); return result; } };
+  const counter = new PublicFormRateLimiter({ storage });
+  const names = new Set(), stored = [];
+  const budget = { idFromName: name => { names.add(name); return name; }, get: () => ({ fetch: (url, init) => counter.fetch(new Request(url, init)) }) };
+  await Promise.all(Array.from({ length: 20 }, () => intake({ budget, storage: async (key, body) => stored.push({ key, body }) })));
+  assert.equal(stored.length, 3);
+  assert.deepEqual([...names], ['diagnostic:tt:write-budget:v1']);
+  assert.equal(values.size, 1, 'one counter row; no visitor identifier or raw report');
+});
+test('denied, malformed or unavailable diagnostic budget never writes R2', async () => {
+  for (const reply of [{ allowed: false, remaining: 0 }, { allowed: true, remaining: 999 }, { allowed: true }, null]) {
+    const budget = { idFromName: name => name, get: () => ({ fetch: async () => reply ? Response.json(reply) : new Response('', { status: 503 }) }) };
+    const { response, writes } = await intake({ budget });
+    assert.equal(response.status, 204); assert.equal(writes.length, 0);
   }
 });
 test('TT browser batches remain capped at five reports in one object', async () => {
@@ -78,6 +98,10 @@ test('failed legacy KV or R2 reads and truncated listing remain nonpassing', asy
   await assert.rejects(readTtReports(fixture({ truncated: true })), /Incomplete TT R2 listing/);
 });
 test('malformed HTTP-200 XML cannot claim complete empty evidence', () => {
+  for (const fragment of ['<Contents/>', '<Contents />', '<KeyCount>1</KeyCount>', '&broken']) {
+    assert.throws(() => parseTtListing(`<ListBucketResult><IsTruncated>false</IsTruncated>${fragment}</ListBucketResult>`), /TT R2/);
+  }
+  assert.throws(() => parseTtListing('garbage<ListBucketResult><IsTruncated>false</IsTruncated></ListBucketResult>'), /TT R2/);
   for (const xml of ['<ListBucketResult>', '<ListBucketResult></ListBucketResult>', '<ListBucketResult><IsTruncated>false</IsTruncated><Contents></ListBucketResult>', '<ListBucketResult><IsTruncated>false</IsTruncated><Contents></Contents></ListBucketResult>', '<ListBucketResult><IsTruncated>false</IsTruncated><IsTruncated>true</IsTruncated></ListBucketResult>']) {
     assert.throws(() => parseTtListing(xml), /TT R2/);
   }

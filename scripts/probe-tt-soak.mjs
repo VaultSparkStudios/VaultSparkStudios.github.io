@@ -47,6 +47,7 @@ const { redact } = await import('./lib/secrets.mjs');
 const { readTtReports } = await import('./lib/tt-report-reader.mjs');
 try {
   const evidence = await readTtReports({ days: DAYS, namespace: NAMESPACE_ID });
+  console.log('Storage reads are complete; sampled and budget-capped intake is not a complete traffic census.');
   const days = {};
   for (const row of evidence.reports) {
     const day = row.ts.slice(0, 10);

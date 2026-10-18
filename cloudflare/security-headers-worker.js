@@ -24,7 +24,7 @@
  */
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
-import { checkDurableFormRateLimit } from './public-form-rate-limit.mjs';
+import { checkDurableFormRateLimit, FORM_MAX_ATTEMPTS } from './public-form-rate-limit.mjs';
 export { PublicFormRateLimiter } from './public-form-rate-limit.mjs';
 import guideShellManifest from '../assets/shell-manifest.json' with { type: 'json' };
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
@@ -691,20 +691,49 @@ async function handleTrustedTypesReport(request, env, ctx) {
   }
 
   let raw;
-  try { raw = await request.json(); } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
-  if (!env.TT_REPORTS) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+  try {
+    // Content-Length is optional and untrusted. Bound the actual stream too,
+    // before parsing or retaining strings supplied by a public endpoint.
+    const reader = request.body?.getReader();
+    if (!reader) throw new Error('Missing report body');
+    const bytes = new Uint8Array(TT_REPORT_MAX_BODY_BYTES);
+    let size = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (size + value.byteLength > bytes.length) {
+          await reader.cancel();
+          throw new Error('Report body too large');
+        }
+        bytes.set(value, size); size += value.byteLength;
+      }
+    } finally { reader.releaseLock(); }
+    raw = JSON.parse(new TextDecoder().decode(bytes.subarray(0, size)));
+  } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
+  if (!env.TT_REPORTS || !env.FORM_RATE_LIMIT) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 
   const reports = normalizeTrustedTypesReports(raw, request);
   if (!reports.length) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
   const day = reports[0].ts.slice(0, 10);
   // Diagnostic volume must never consume the KV write budget used by sign-in.
   // One private object per bounded browser batch; tt/raw/ has a 30-day lifecycle.
-  // No fallback to KV: object-store failure is best-effort diagnostic loss.
+  // Reuse the existing SQLite counter on one distinct, non-identifier object:
+  // at most 3 batches/hour (72/day), separate from the hashed per-visitor form
+  // objects. No new service, KV counter, auth policy or paid API is introduced.
+  // No fallback to KV: store/counter failure is best-effort diagnostic loss.
   const key = `tt/raw/dt=${day}/${crypto.randomUUID()}.json`;
-  ctx.waitUntil(Promise.resolve().then(() => env.TT_REPORTS.put(key,
-    JSON.stringify({ schemaVersion: 1, reports }), {
+  ctx.waitUntil(Promise.resolve().then(async () => {
+    const counter = env.FORM_RATE_LIMIT.get(env.FORM_RATE_LIMIT.idFromName('diagnostic:tt:write-budget:v1'));
+    const response = await counter.fetch('https://form-counter.internal/', { method: 'POST', body: JSON.stringify({ seed: 0 }) });
+    if (!response.ok) throw new Error('Diagnostic write counter unavailable');
+    const budget = await response.json();
+    if (budget.allowed !== true || !Number.isInteger(budget.remaining) || budget.remaining < 0 || budget.remaining >= FORM_MAX_ATTEMPTS) return;
+    await env.TT_REPORTS.put(key, JSON.stringify({ schemaVersion: 1,
+      collection: { sampleRate, globalBatchLimitPerHour: FORM_MAX_ATTEMPTS, maxBodyBytes: TT_REPORT_MAX_BODY_BYTES }, reports }), {
       httpMetadata: { contentType: 'application/json' },
-    })).catch(() => {}));
+    });
+  }).catch(() => {}));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 

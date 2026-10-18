@@ -129,10 +129,10 @@
       "priority": 17.23,
       "why": "Diagnostic volume can exhaust the shared write quota and deny real sign-in.",
       "userOutcome": "Members can begin sign-in without Trusted Types reporting consuming its KV write allowance; operators retain readable report evidence.",
-      "recipe": "Move Trusted Types diagnostic writes out of RATE_LIMIT KV into private R2 storage, reusing the existing signing implementation. Keep normalized reports, sampling and report-only enforcement unchanged. Update both soak readers to include legacy KV and new R2 reports without turning incomplete reads into clean evidence. Enforce retention and isolated staging storage. Verify KV-exhaustion and storage-failure behavior, pagination, retention, readers, local full validation, current staging, exact candidate hosted checks and production readback.",
+      "recipe": "Move Trusted Types diagnostic writes out of RATE_LIMIT KV into private R2 storage, reusing the existing signing implementation. Keep normalized reports, sampling and report-only enforcement unchanged. Update both soak readers to include legacy KV and new R2 reports without turning incomplete reads into clean evidence. Enforce retention and isolated staging storage. Verify KV-exhaustion and storage-failure behavior, pagination, retention, readers, local full validation, current staging, exact candidate hosted checks and production readback. Bound object-store volume with the existing SQLite counter on a distinct non-identifier object (3 batches/hour), enforce the actual streamed 8192-byte body limit, and prove concurrent attempts cannot exceed the budget. Counts describe stored samples, not a traffic census.",
       "selectedDepth": "L2",
       "status": "pending",
-      "acceptance": "No RATE_LIMIT access from TT intake, bounded normalized R2 records, isolated staging and retention verified; legacy and R2 evidence readers preserve failures; hermetic tests plus current full release checks and production readback pass.",
+      "acceptance": "No RATE_LIMIT access from TT intake, bounded normalized R2 records, isolated staging and retention verified; legacy and R2 evidence readers preserve failures; hermetic tests plus current full release checks and production readback pass. Concurrent report intake permits no more than 3 batches/hour; oversize bodies without Content-Length, missing/failed budget and object-store failure never access KV or write unbounded objects.",
       "premises": [
         {
           "claim": "TT intake writes reports to shared KV",
@@ -158,14 +158,20 @@
         },
         "L2": {
           "effortHours": 3,
-          "recipe": "Move Trusted Types diagnostic writes out of RATE_LIMIT KV into private R2 storage, reusing the existing signing implementation. Keep normalized reports, sampling and report-only enforcement unchanged. Update both soak readers to include legacy KV and new R2 reports without turning incomplete reads into clean evidence. Enforce retention and isolated staging storage. Verify KV-exhaustion and storage-failure behavior, pagination, retention, readers, local full validation, current staging, exact candidate hosted checks and production readback."
+          "recipe": "Move Trusted Types diagnostic writes out of RATE_LIMIT KV into private R2 storage, reusing the existing signing implementation. Keep normalized reports, sampling and report-only enforcement unchanged. Update both soak readers to include legacy KV and new R2 reports without turning incomplete reads into clean evidence. Enforce retention and isolated staging storage. Verify KV-exhaustion and storage-failure behavior, pagination, retention, readers, local full validation, current staging, exact candidate hosted checks and production readback. Bound object-store volume with the existing SQLite counter on a distinct non-identifier object (3 batches/hour), enforce the actual streamed 8192-byte body limit, and prove concurrent attempts cannot exceed the budget. Counts describe stored samples, not a traffic census."
         },
         "L3": {
           "effortHours": 12,
           "recipe": "Separate future scope: isolate every diagnostic writer and account-wide auth storage."
         }
       },
-      "executionLog": []
+      "executionLog": [
+        {
+          "at": "2026-10-18T14:59:27.736Z",
+          "status": "pending",
+          "note": "Implementation and isolated staging round trip verified; full release remains pending. Pre-release review added a global SQLite budget (3 batches/hour) and actual stream body cap. Current focused acceptance 88/88 (76 Worker, 3 form counter, 9 TT); fresh closeout review and redeployment pending."
+        }
+      ]
     }
   ],
   "skipped": [

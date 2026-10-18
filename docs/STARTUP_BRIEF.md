@@ -36,7 +36,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
-║  Profile · website · S1 · arch=— · top-axis=—                    ║
+║  Profile · website · live-production · arch=— · top-axis=—       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
@@ -67,9 +67,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
-║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
+║  ⚠  ████████████████████████  102% used                          ║
+║     278,446 / 272,000 tok  ·  codex  ·  heuristic-stale          ║
+║     Verdict: CONSIDER_CLOSEOUT  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
@@ -77,11 +77,11 @@
 ║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   14d                                            ║
-║  ✓  IGNIS         46461 FORGE  ·  1d old                         ║
+║  ✓  IGNIS         46190 FORGE  ·  -1d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.179  (healthy)                               ║
+║  ✓  Entropy       0.204  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -116,7 +116,7 @@
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
 ║  Projected:  929/1000  (↓6 vs current 935)                       ║
 ║  At-risk:    Momentum Δ-3                                        ║
-║  Calibration: MAE 3.3 over last 10 forecasts                     ║
+║  Calibration: MAE 4.2 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗

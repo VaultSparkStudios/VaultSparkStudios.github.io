@@ -11,9 +11,9 @@
   "implementation": {
     "sourceCommit": "f42694e6a0",
     "audit": "docs/AUDIT_2026-10-18.json",
-    "focusedTests": "7 TT storage + 76 Worker + 8 clustering; 14 existing signing/path/error-policy and 4 retention checks",
+    "focusedTests": "88/88 Worker/form/TT acceptance; reader round-2 malformed-listing regressions 9/9",
     "unitSuite": {
-      "passed": 440,
+      "passed": 442,
       "failed": 0,
       "todo": 1,
       "note": "Existing bare required-schema validator TODO; not counted as passed."
@@ -22,7 +22,20 @@
       "round1": "one XML completeness finding fixed",
       "round2": "pass"
     },
-    "visual": "28 inspected sitemap before/after captures across seven themes and desktop/mobile; docs/visual-qa/LATEST.json"
+    "visual": "28 inspected sitemap before/after captures across seven themes and desktop/mobile; docs/visual-qa/LATEST.json",
+    "rebasedSourceCommit": "c0d1abb7a0",
+    "writeBudget": {
+      "batchesPerHour": 3,
+      "maxReportsPerBatch": 5,
+      "maxRequestBytes": 8192,
+      "storageCounter": "existing SQLite Durable Object, distinct diagnostic object",
+      "focusedAcceptance": "88/88"
+    },
+    "mobile": "215/215 (current UI; Worker-only hardening follows)",
+    "closeoutReview": {
+      "round1": "malformed envelope/entity/count listing finding fixed",
+      "round2": "PASS; independent 9/9 rerun"
+    }
   },
   "storage": {
     "at": "2026-10-18T14:18:39.996Z",
@@ -45,15 +58,15 @@
     ]
   },
   "stagingWorker": {
-    "at": "2026-10-18T14:18:38.725Z",
-    "workerVersion": "b774a556-9a59-40b9-a6f0-9d14b1310501",
+    "at": "2026-10-18T15:04:16.750Z",
+    "workerVersion": "07361918-d805-4d4d-8877-f7898bfd09a6",
     "intake": 204,
     "r2Roundtrip": true,
-    "before": 0,
-    "after": 1,
+    "before": 1,
+    "after": 2,
     "login": 302,
     "legacyKvComplete": true,
-    "marker": "/__qa__/s387-1792333117666.js"
+    "marker": "/__qa__/s387-1792335854284.js"
   },
   "rollback": {
     "workerVersion": "ed6ca127-f30b-4397-8ee5-852451cb335a",
@@ -61,7 +74,8 @@
   },
   "limitations": [
     "Other shared KV writers remain; this does not prove account-wide quota independence.",
-    "Existing identity/field-vitals holds and the schema-validator TODO remain separate."
+    "Existing identity/field-vitals holds and the schema-validator TODO remain separate.",
+    "Three batches/hour caps successful R2 writes; inbound diagnostic requests and Durable Object calls remain uncapped."
   ],
   "remaining": [
     "complete current full local validation",

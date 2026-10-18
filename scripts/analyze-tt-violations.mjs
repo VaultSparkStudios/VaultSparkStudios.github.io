@@ -191,6 +191,7 @@ try {
   const evidence = await readTtReports({ days: DAYS, namespace: NAMESPACE_ID });
   const reports = evidence.reports;
   console.log(`analyze-tt-violations: ${reports.length} reports · ${evidence.legacyRecords} legacy KV records + ${evidence.r2Objects} R2 batches · complete`);
+  console.log('Storage reads are complete; sampled and budget-capped intake is not a complete traffic census.');
   const clusters = clusterReports(reports);
   const today = new Date().toISOString().slice(0, 10);
   const freshnessRanked = rankByFreshness(clusters, today);
