@@ -1613,3 +1613,6 @@ The first complete local run passed541/541. Before production, review identified
 ### S388 production acceptance
 
 S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized.
+
+
+S388 canonical closeout completed with current541/541 measured checks, zero failed, and cleared session lock. Final evidence records follow pinned runtime candidate98538ff5b9; production acceptance is not a claim that later record-only commits were deployed.

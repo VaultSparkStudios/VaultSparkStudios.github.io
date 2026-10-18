@@ -2250,3 +2250,21 @@ S385 delivery follow-through: live mutable directory URL is cached604800seconds.
 
 
 S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.
+
+
+---
+<!-- archived: 2026-10-18 -->
+
+## Where We Left Off (Session 386) — complete
+
+- Shipped: 3 fixes in 1 group — Desk art autopilot (reviewer brief parity, daily critique-guided re-roll, case-insensitive worktree identity).
+- Tests: autopilot 47/47 · generator 60/60 · 3 negative mutations detected.
+- Deploy: deployed to production (0a434fad21, byte-verified); contract-fix promotion recorded in docs/RELEASE_S386.json.
+
+S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
+
+Session Intent: /arc with founder-authorized direct push to main and full deploy. All waves complete at write-back; CDR reviewed — no new human creative direction. S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-seal-production-20261016); production serves it, shell parity clean, served parity 1080/1090 identical, 0 differ. Autopilot then published 4 approved satire cartoons and 2 banners; the stuck milk banner passed on its first critique-guided re-roll; all live bytes matched; art currency now green (122 stories, 44 cartoons). A dispatched CI Health Monitor then reached a later check: the release contract ranked same-day stories alphabetically, so after the latenight edition it demanded a homepage link to the midday story. It now ranks by publication instant (8/8 cases, mutation detected). Persona pagination pages 404 after Desk lane releases because the lane allowlist and the root-owned Hetzner copy omit them; a full promotion ships them. P0 open: account-wide KV free write quota exhausted 2026-10-16 (1,186 writes); /login returned named 503 on staging and production until 00:00Z.
+
+Next: P0 KV quota (move auth flow/session records off the shared free KV write budget or reduce telemetry writers; Trusted Types sampling still 100% since S172); coordinated persona-pagination allowlist update including the Hetzner root-owned rules.
+
+S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction.

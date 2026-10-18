@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
   "session": 388,
-  "accepted": false,
-  "state": "production-verified-closeout-pending",
+  "accepted": true,
+  "state": "complete",
   "goal": {
     "threadId": "01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac",
     "createdAt": 1792343118
@@ -54,9 +54,7 @@
     },
     "cspTests": 13
   },
-  "remaining": [
-    "canonical closeout autopilot and final record publication"
-  ],
+  "remaining": [],
   "rollback": "Prior verified full production source3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7. Use normal pinned full workflows after staging; no force-push. Existing staging deploy retains timestamped predecessor. Lifecycle pre-mutation snapshot remains in private .cache/tt-storage; remove only new csp-diagnostics-3d rule if reverting it.",
   "stagingWorker": {
     "at": "2026-10-18T17:54:03.790Z",
@@ -168,7 +166,8 @@
       "differ": 0,
       "unread": 0,
       "primaryHtml": 323,
-      "unverified": 0
+      "unverified": 0,
+      "heldIdentity": 9
     },
     "worker": {
       "at": "2026-10-18T18:41:40.530Z",
@@ -220,5 +219,21 @@
     "Other shared KV writers remain; no account-wide quota cure claimed.",
     "Limits bound retained batches and expensive summary computations, not inbound requests or counter calls. Public callers can exhaust temporary summary visibility.",
     "Retained reports are samples, not a traffic census; existing identity/field evidence holds and schema-validator TODO remain separate."
-  ]
+  ],
+  "closeout": {
+    "startedAt": "2026-10-18T18:46:02.242Z",
+    "finishedAt": "2026-10-18T19:06:28.372Z",
+    "exitCode": 0,
+    "signal": null,
+    "error": null,
+    "canonicalCommit": "94f645f136eea0495862551b1f3e667cf77f0ace",
+    "validation": {
+      "passed": 541,
+      "failed": 0,
+      "coverageComplete": true,
+      "receiptId": "361b7d64d6ad8986ddfeb39b",
+      "sourceFingerprint": "586c8e8731aece9e270d9b56"
+    },
+    "recordScope": "Evidence and closeout records follow the pinned runtime release; no claim that post-release record commits were deployed as runtime code."
+  }
 }

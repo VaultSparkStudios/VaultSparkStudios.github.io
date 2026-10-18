@@ -2876,3 +2876,7 @@ Complete pre-hardening validation541/541 is recorded separately from the final r
 ### S388 verified release receipt (same session)
 
 S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized. Score remains935/1000; no additional session or velocity.
+
+### S388 canonical closeout completion (same session)
+
+Canonical autopilot exited0, cleared the session lock, and passed two complete541/541 validation runs. Post-closeout reconciliation94f645f136 records the session-closed event and derived contracts; it introduces no product behavior or new decision. This receipt captures that reconciliation in the same S388 writeback. Score remains935/1000; no additional session or velocity. Final acceptance: docs/RELEASE_S388.json. The two SIL follow-ups remain queued.

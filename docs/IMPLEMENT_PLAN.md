@@ -8,4 +8,4 @@ Session intent: fresh /arc, authorized direct main push and full deploy. Native 
 
 Supported-release reliability outcome: protect membership sign-in allowance and make diagnostic evidence useful. No lifecycle transition. Acceptance contract: docs/AUDIT_2026-10-18-S388.json.
 
-All three waves verified at 98538ff5b98aa464655fb1b2fed0c2148b049967. Full acceptance: docs/RELEASE_S388.json. Final canonical closeout record publication remains.
+All three waves verified at 98538ff5b98aa464655fb1b2fed0c2148b049967. Full acceptance: docs/RELEASE_S388.json. Canonical closeout complete.
