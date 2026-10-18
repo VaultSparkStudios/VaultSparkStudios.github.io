@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-18T17:24:43.972Z",
+  "generatedAt": "2026-10-18T19:06:23.979Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 388,
     "lastUpdated": "2026-10-18",
-    "currentFocus": "S388 CSP diagnostic isolation verified locally; full release acceptance in progress.",
-    "nextMilestone": "Complete S388 full local, exact staging, main publication and production readback.",
+    "currentFocus": "S388 CSP diagnostic reliability deployed and verified.",
+    "nextMilestone": "Observe retained CSP collection and account-wide quota usage.",
     "ignis": {
       "score": 45412,
       "grade": "FORGE",
@@ -828,17 +828,17 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 880
+      "heat": 920
     }
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 11 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-10-18T16:57:13.441Z",
+    "summary": "Production deployment is stranded for 11 consecutive receipts. Push gates green, but scheduled-workflow evidence is incomplete (6/15 observed).",
+    "checkedAt": "2026-10-18T17:09:38.167Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -846,7 +846,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",
