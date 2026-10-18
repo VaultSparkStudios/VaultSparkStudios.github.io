@@ -111,16 +111,18 @@
     }
   },
   "staticStaging": {
-    "sha": "4c1f0399fcfbf5e88d801d9b4a30c5dd62f6b415",
-    "completedAt": "2026-10-18T15:29:46.449Z",
-    "receipt": "8c4452f01ee9bc76f69a4a48",
+    "sha": "8cbacc7fb25a90c7ff1ca4f5fc748dfbd4436dfd",
+    "receipt": "02c544d36c075700f213c1f6",
+    "artifactRoot": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957",
+    "criticalFilesMatched": 66,
+    "sourceFilesMatched": 3699,
     "ceremony": {
       "state": "passed",
       "steps": 11
     },
     "browser": {
       "schemaVersion": 1,
-      "generatedAt": "2026-10-18T15:31:50.088Z",
+      "generatedAt": "2026-10-18T16:12:12.825Z",
       "publicSafe": true,
       "origin": "https://website.staging.vaultsparkstudios.com",
       "suite": "tests/staging-release.spec.js",
@@ -151,7 +153,7 @@
     },
     "attention": {
       "schemaVersion": 1,
-      "generatedAt": "2026-10-18T15:33:07.996Z",
+      "generatedAt": "2026-10-18T16:13:31.599Z",
       "generatedBy": "scripts/run-attention-release-gate.mjs",
       "publicSafe": true,
       "origin": "https://website.staging.vaultsparkstudios.com",
@@ -190,7 +192,16 @@
   },
   "promotionArtifact": {
     "root": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957",
-    "stagingRefreshRequired": true,
+    "stagingRefreshRequired": false,
     "reason": "Canonical rebuild includes the actual commit-activity heat count (840 to880). Runtime source is unchanged."
-  }
+  },
+  "hostedAttempt1": {
+    "sha": "8cbacc7fb25a90c7ff1ca4f5fc748dfbd4436dfd",
+    "e2e": 39143276680,
+    "result": "failure at release-proof timestamp drift",
+    "fix": "Regenerate dependent release proof after retaining the tested shell-manifest timestamp; reproduced as generatedAt-only in isolated checkout.",
+    "lighthouse": "success",
+    "accessibility": "success"
+  },
+  "immutableArtifactPolicy": "Retain the staged compiled public-intelligence snapshot while merging newer uptime observations; no regeneration of commit-activity counts during promotion. All runtime source and the66 critical files remain bound to the staged candidate."
 }
