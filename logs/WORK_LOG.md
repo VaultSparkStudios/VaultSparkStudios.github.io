@@ -1759,3 +1759,7 @@ S387 moves normalized Trusted Types diagnostic batches to private R2 storage, wi
 Acceptance is maintained in docs/RELEASE_S387.json; implementation/staging evidence does not claim full production acceptance. No new human creative direction.
 
 S387 pre-release hardening: actual 8192-byte stream bound and one global diagnostic SQLite budget, reusing the existing class without changing form policy. Concurrent 20-attempt fixture stores exactly 3 batches; current focused acceptance 88/88. Release remains pending.
+
+### S387 final release acceptance
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.

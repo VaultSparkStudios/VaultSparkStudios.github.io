@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-10-18T16:32:08.354Z",
+  "generatedAt": "2026-10-18T16:49:39.502Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -8,7 +8,7 @@
     "health": "yellow",
     "vaultStatus": "SPARKED",
     "currentSession": 387,
-    "lastUpdated": "2026-10-18",
+    "lastUpdated": "2026-10-18T16:46:56.351Z",
     "currentFocus": "S387: Trusted Types diagnostics isolated from auth KV; full release acceptance is tracked in docs/RELEASE_S387.json.",
     "nextMilestone": "Verify remaining shared KV usage without claiming account-wide quota isolation from one diagnostic migration.",
     "ignis": {
@@ -20,7 +20,11 @@
   "pulse": {
     "now": [],
     "next": [],
-    "shipped": []
+    "shipped": [
+      "Shipped: private, retained diagnostic storage isolated from sign-in KV, bounded writes and complete stored-evidence readers.",
+      "Deploy: 3ceaae612d, tag s387-production-v2-20261018; Pages run 39146002633; Worker run 39146002602, version 73bd16bb-e430-4609-9901-34d3a845f98a.",
+      "Evidence: docs/RELEASE_S387.json; all selected acceptance gates verified."
+    ]
   },
   "consumerChangelog": [
     {
@@ -833,12 +837,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 11 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-10-18T16:26:53.466Z",
+    "summary": "Production deployment is stranded for 11 consecutive receipts. Push gates green, but scheduled-workflow evidence is incomplete (8/15 observed).",
+    "checkedAt": "2026-10-18T16:39:45.188Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -846,7 +850,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",

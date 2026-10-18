@@ -2836,3 +2836,8 @@ S387 moves normalized Trusted Types diagnostic batches to private R2 storage, wi
 Retire or isolate the remaining high-volume diagnostic KV writers using measured account usage. Re-read a complete current TT cohort without confusing missing evidence with a clean soak. Both are queued as [SIL] follow-ups in TASK_BOARD; no automatic scope expansion. Full local and production acceptance are pending until docs/RELEASE_S387.json proves them. CDR reviewed — no new human creative direction.
 
 S387 machine-readable score: Total:935/1000 | Velocity:1 | Debt:→
+
+### S387 final release acceptance
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+Score remains 935/1000. Both committed SIL follow-ups remain queued; no unrelated maintenance was added.

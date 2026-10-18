@@ -1,10 +1,15 @@
-## Where We Left Off (Session 387) — implementation verified, release in progress
+## Where We Left Off (Session 387) — complete
 
-S387 moves normalized Trusted Types diagnostic batches to private R2 storage, with no auth-KV access or fallback. Both evidence readers combine legacy KV and complete paginated R2 reads; malformed or failed sources remain nonpassing. Production and isolated staging buckets have verified 30-day tt/raw/ retention and private access. Source commit f42694e6a0; staging Worker b774a556-9a59-40b9-a6f0-9d14b1310501 passed an actual report round trip and /login 302 to Obelisk. Independent review fixed one incomplete-XML finding and then passed. Focused tests pass; unit suite has 440 passing and one pre-existing schema-validator TODO. The sitemap generator also adds the existing sixth VERA archive page, covered by 28 inspected theme/viewport before/after captures.
+- Shipped: private, retained diagnostic storage isolated from sign-in KV, bounded writes and complete stored-evidence readers.
+- Deploy: 3ceaae612d, tag s387-production-v2-20261018; Pages run 39146002633; Worker run 39146002602, version 73bd16bb-e430-4609-9901-34d3a845f98a.
+- Evidence: docs/RELEASE_S387.json; all selected acceptance gates verified.
 
-Session Intent: /arc then founder-authorized direct main push and full deploy. Native goal 01a14f58-25bc-7d32-b310-7fc051d58f6d (createdAt 1792332555) is bound to S387, start 37964277185349772d3da0ebc21b18da1330dc01 at 2026-10-18T14:10:04.440Z. Continue this audit, never start a replacement arc. Audit: docs/AUDIT_2026-10-18.json. Acceptance: docs/RELEASE_S387.json. Full validation, exact candidate hosted checks, static staging, promotion and production readback remain open until that record proves them. CDR reviewed — no new human creative direction.
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
 
-Pre-existing tracked residue is preserved in git stash named arc-goal-24ee755-preserved-tracked-residue; unrelated untracked artifacts remain untouched. Do not stage them wholesale. Preview http://127.0.0.1:4387 belongs to this session and must close at completion.
+Session Intent: fresh /arc with authorized direct main push and full deploy. Native goal 01a14f58-25bc-7d32-b310-7fc051d58f6d (createdAt 1792332555) is bound to S387, start 37964277185349772d3da0ebc21b18da1330dc01 at 2026-10-18T14:10:04.440Z. All three waves complete; CDR reviewed, no new human creative direction.
+
+Next: attribute remaining shared KV writers and read a current stored TT cohort; no absence-of-reports enforcement claim. Existing identity holds and schema-validator TODO remain. Pre-existing residue is preserved in the arc-goal/arc-S387 named stashes; unrelated untracked files were not staged. The owned preview on 4387 is closed.
+
 ## Where We Left Off (Session 386) — complete
 
 - Shipped: 3 fixes in 1 group — Desk art autopilot (reviewer brief parity, daily critique-guided re-roll, case-insensitive worktree identity).

@@ -8,4 +8,4 @@ Selected audit: `docs/AUDIT_2026-10-18.json`, item 1, L2. Lifecycle: SPARKED / S
 
 Done means the acceptance contract in the audit is proven. Until release evidence exists, implementation remains partial. Other KV writers and existing identity/readiness holds remain visible.
 
-Wave 1: startup and audit complete. Wave 2: implementation in progress. Wave 3: closeout and release pending.
+Wave 1: startup and fresh audit complete. Wave 2: selected L2 implementation verified. Wave 3: closeout, main publication and full production release verified. Acceptance: docs/RELEASE_S387.json.

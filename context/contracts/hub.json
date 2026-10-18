@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-18T15:56:48.710Z",
+  "generatedAt": "2026-10-18T16:49:39.500Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -23,7 +23,7 @@
   },
   "pulse": {
     "currentSession": 387,
-    "lastUpdated": "2026-10-18",
+    "lastUpdated": "2026-10-18T16:46:56.351Z",
     "currentFocus": "S387: Trusted Types diagnostics isolated from auth KV; full release acceptance is tracked in docs/RELEASE_S387.json.",
     "nextMilestone": "Verify remaining shared KV usage without claiming account-wide quota isolation from one diagnostic migration.",
     "blockers": [
@@ -51,7 +51,11 @@
       "next": [
         "[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE. Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made."
       ],
-      "shipped": []
+      "shipped": [
+        "Shipped: private, retained diagnostic storage isolated from sign-in KV, bounded writes and complete stored-evidence readers.",
+        "Deploy: 3ceaae612d, tag s387-production-v2-20261018; Pages run 39146002633; Worker run 39146002602, version 73bd16bb-e430-4609-9901-34d3a845f98a.",
+        "Evidence: docs/RELEASE_S387.json; all selected acceptance gates verified."
+      ]
     },
     "ignis": {
       "score": 46190,

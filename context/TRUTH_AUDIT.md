@@ -1618,3 +1618,7 @@ All two selected outcomes shipped; all three waves complete. Same S385 score, no
 The art-currency failure was not missing art generation: images existed and were rejected by a reviewer given a narrower story than the generator. Reviewer input now matches the generator brief. The two 2026-10-16 "release dispatch failed" lines were a temporarily disabled workflow; the art reached production through a later full release (served bytes verified identical).
 
 S386 follow-through: "newest Desk story" now means the latest publication instant on the newest date, matching the homepage. Production /login 503 on 2026-10-16 was KV quota exhaustion, not a code regression; persona page 2+ 404s are a lane allowlist gap, not missing source.
+
+### S387 final release acceptance
+
+Verified 2026-10-18T16:46:56.351Z: exact source 3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7; Worker73bd16bb-e430-4609-9901-34d3a845f98a; Pages workflow39146002633. Deployment claims now rest on observed version, stored-report round trip and full served readback. Existing identity holds are not reclassified as accepted journeys.

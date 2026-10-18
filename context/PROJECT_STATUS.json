@@ -26,7 +26,7 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-18",
+  "lastUpdated": "2026-10-18T16:46:56.351Z",
   "currentSession": 387,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-13",
@@ -263,7 +263,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "369df2612b655fedd4fb5c57",
   "testsSourceFingerprint": "0710080efd98312442f6375f",
-  "lastSessionSummary": "S387 diagnostic storage isolation; local, staging and production acceptance recorded separately in docs/RELEASE_S387.json.",
+  "lastSessionSummary": "S387 diagnostic storage isolation deployed at3ceaae612d; all selected release acceptance is verified in docs/RELEASE_S387.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 385,
@@ -296,7 +296,7 @@
     "durableSession": 387,
     "currentFocus": "S387: Trusted Types diagnostics isolated from auth KV; full release acceptance is tracked in docs/RELEASE_S387.json.",
     "nextMilestone": "Verify remaining shared KV usage without claiming account-wide quota isolation from one diagnostic migration.",
-    "lastSessionSummary": "S387 diagnostic storage isolation; local, staging and production acceptance recorded separately in docs/RELEASE_S387.json."
+    "lastSessionSummary": "S387 diagnostic storage isolation deployed at3ceaae612d; all selected release acceptance is verified in docs/RELEASE_S387.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -318,5 +318,11 @@
   "currentBuildNote": "S385 current source complete537/537; receipt6f93630b73630ef28cd356f9; source98af2b44764a9508bba8caf4",
   "lastDeploySession": 385,
   "lastDeployStatus": "full production verified (facc75343b67; run38950850357)",
-  "silAvg5": 933.8
+  "silAvg5": 933.8,
+  "lastReleaseAcceptance": {
+    "session": 387,
+    "candidate": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+    "verifiedAt": "2026-10-18T16:46:56.351Z",
+    "evidence": "docs/RELEASE_S387.json"
+  }
 }
