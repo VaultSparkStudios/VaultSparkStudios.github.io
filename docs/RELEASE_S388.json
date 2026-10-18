@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0",
+  "session": 388,
+  "accepted": false,
+  "state": "release-pending",
+  "goal": {
+    "threadId": "01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac",
+    "createdAt": 1792343118
+  },
+  "scope": "Bounded CSP diagnostics and truthful retained summaries; unchanged policy and identity.",
+  "implementation": {
+    "focused": {
+      "passed": 86,
+      "failed": 0
+    },
+    "probeSelfTests": 17,
+    "lifecycleSelfTests": 10,
+    "unit": {
+      "passed": 452,
+      "failed": 0,
+      "todo": 1
+    },
+    "review": {
+      "rounds": 2,
+      "findings": 1,
+      "fixed": 1,
+      "verdict": "pass"
+    },
+    "canonAbsoluteGaps": 0,
+    "visualQA": "No UI/UX source changes; changed-files verifier remains required.",
+    "storage": {
+      "at": "2026-10-18T17:19:33.420Z",
+      "applied": false,
+      "buckets": [
+        {
+          "bucket": "vaultspark-rum",
+          "retentionDays": 30,
+          "prefix": "tt/raw/",
+          "cspRetentionDays": 3,
+          "cspPrefix": "csp/raw/",
+          "private": true,
+          "unrelatedRulesPreserved": true
+        },
+        {
+          "bucket": "vaultspark-tt-staging",
+          "retentionDays": 30,
+          "prefix": "tt/raw/",
+          "cspRetentionDays": 3,
+          "cspPrefix": "csp/raw/",
+          "private": true,
+          "unrelatedRulesPreserved": true
+        }
+      ],
+      "provisioningApplied": true
+    }
+  },
+  "remaining": [
+    "full local",
+    "isolated staging",
+    "required exact-candidate hosted checks",
+    "main publication",
+    "full Worker/Pages promotion",
+    "production storage roundtrip and source readback",
+    "final closeout"
+  ],
+  "rollback": "Prior verified full production source3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7. Use normal pinned full workflows after staging; no force-push. Existing staging deploy retains timestamped predecessor. Lifecycle pre-mutation snapshot remains in private .cache/tt-storage; remove only new csp-diagnostics-3d rule if reverting it.",
+  "stagingWorker": {
+    "at": "2026-10-18T17:18:42.913Z",
+    "mode": "staging",
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "workerVersion": "aec1b552-7624-40eb-a9b9-8c05a8c7b400",
+    "deploymentId": "0c84f06f-c367-4251-8030-63952169a4a3",
+    "intake": 204,
+    "r2Roundtrip": true,
+    "aggregate": {
+      "state": "complete",
+      "total3d": 1,
+      "countMeaning": "retained-reports",
+      "exhaustive": false
+    },
+    "login": 302,
+    "syntheticFixtureRemoved": true,
+    "fixtureKey": "csp/raw/dt=2026-10-18/ec3f0015-5a94-4f9a-ba83-ad2d1fd34fbb.json"
+  },
+  "closeoutPreparation": {
+    "sil": 935,
+    "ignis": {
+      "at": "2026-10-18T17:20:11.563Z",
+      "subject": "vaultsparkstudios-website",
+      "status": 0,
+      "proof": {
+        "ok": true,
+        "score": 45412,
+        "tier": "FORGE",
+        "project": "vaultsparkstudios-website",
+        "sourceFingerprint": "8245650f272322e2b70425b270fe49ff15b381d74208998fb26e20554c6e932e",
+        "historyHash": "5f171d0750989f79d19a50991e10717874ab3fdf915dac5472a5404b0053d902",
+        "mindHash": "2125b7a5c96d3764d564d0638dd1dd72098377d54848ee09b8877b47d3655164"
+      },
+      "error": null
+    },
+    "entropy": 0.197,
+    "genome": "23/25",
+    "cdr": "reviewed; no new human creative direction"
+  }
+}

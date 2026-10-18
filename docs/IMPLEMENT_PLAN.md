@@ -1,11 +1,9 @@
-# S387 implementation plan
+# S388 implementation plan
 
-Selected audit: `docs/AUDIT_2026-10-18.json`, item 1, L2. Lifecycle: SPARKED / S1, supported release.
+Session intent: fresh /arc, authorized direct main push and full deploy. Native goal 01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac (createdAt 1792343118), bound S388.
 
-1. Preserve normalized Trusted Types reports and sampling while replacing their shared-KV writes with private R2 batches. Reuse the existing SQLite counter on a distinct global diagnostic object: at most 3 batches/hour. Enforce the actual streamed 8192-byte body bound. Reuse existing signing code; add no dependency.
-2. Migrate both evidence readers through one complete, paginated reader covering legacy KV plus current R2. Failed reads remain nonpassing. Configure isolated staging storage and 30-day lifecycle retention before enabling production writes.
-3. Verify with outage/failure and reader tests, independent review, full project checks, staging, required exact-candidate checks and production readback. Close out and push the evidence.
+1. Wave 1: startup and fresh nine-axis audit; premise gate before code edits.
+2. Wave 2: selected L2 CSP diagnostic isolation and truthful summaries. Focused fault, concurrency and ring tests; independent review.
+3. Wave 3: full local checks, isolated staging, exact-candidate hosted checks, closeout, direct main push, full production deployment and readback.
 
-Done means the acceptance contract in the audit is proven. Until release evidence exists, implementation remains partial. Other KV writers and existing identity/readiness holds remain visible.
-
-Wave 1: startup and fresh audit complete. Wave 2: selected L2 implementation verified. Wave 3: closeout, main publication and full production release verified. Acceptance: docs/RELEASE_S387.json.
+Supported-release reliability outcome: protect membership sign-in allowance and make diagnostic evidence useful. No lifecycle transition. Acceptance contract: docs/AUDIT_2026-10-18-S388.json.

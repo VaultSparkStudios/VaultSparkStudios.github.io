@@ -1,0 +1,215 @@
+{
+  "session": 388,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh S388 full arc, direct main push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "audience": "public-live",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "candidates": {
+    "featureDepth": [
+      [
+        "Complete diagnostic summaries",
+        "Selected: current ring counter wraps to false zero."
+      ],
+      [
+        "Expand member tools",
+        "No fresh missing-tool evidence."
+      ]
+    ],
+    "innovativeFeatures": [
+      [
+        "Novel quota provenance map",
+        "Useful later; live read today shows 224 account writes, not current exhaustion."
+      ],
+      [
+        "Novel retained-evidence completeness envelope",
+        "Selected: distinguish bounded retained samples from all traffic."
+      ]
+    ],
+    "ux": [
+      [
+        "Prevent diagnostics consuming sign-in allowance",
+        "Selected reliability and membership entry outcome."
+      ],
+      [
+        "Revise navigation",
+        "No new rendered defect established."
+      ]
+    ],
+    "feedback": [
+      [
+        "Correct CSP counter wrap and slot omission",
+        "Selected: modulo 200 counter cannot represent retained report count."
+      ],
+      [
+        "Novel missing-source health dimension",
+        "Selected: storage faults must not yield a clean diagnostic result."
+      ]
+    ],
+    "gamification": [
+      [
+        "Increase rank rewards",
+        "No authorization to alter tier economy."
+      ],
+      [
+        "New member streak",
+        "No measured retention defect."
+      ]
+    ],
+    "ai": [
+      [
+        "Classify CSP reports with inference",
+        "Deterministic directive aggregation already fits."
+      ],
+      [
+        "Add agent diagnostic endpoint",
+        "Existing aggregate endpoint fits."
+      ]
+    ],
+    "security": [
+      [
+        "Isolate CSP diagnostic storage",
+        "Selected: public report POST writes shared auth KV twice without budget."
+      ],
+      [
+        "Enable Trusted Types enforcement",
+        "Existing separate load-order and approval hold."
+      ]
+    ],
+    "speed": [
+      [
+        "Bound diagnostic persistence",
+        "Selected: at most 72 successful object writes/day under existing hourly counter."
+      ],
+      [
+        "Persona pagination lane repair",
+        "Separate root-owned deployment contract; not selected."
+      ]
+    ],
+    "token": [
+      [
+        "Reuse private R2 and existing SQLite counter",
+        "Selected; no install or paid inference."
+      ],
+      [
+        "Cache all operator context",
+        "No fresh token measurement supports changes."
+      ]
+    ]
+  },
+  "investigation": {
+    "baseline": "CSP intake computes (current + 1) % 200 and makes two KV writes per report. Summary treats the ring index as a count, reads slot 0000 on first report, and reports zero on wrap. Today account analytics reports 224 writes; no current outage claimed.",
+    "reuse": "Internal registry checked; existing TT_REPORTS private R2, SQLite FORM_RATE_LIMIT counter and test harness fit. No dependency or paid API required.",
+    "canon": "No ABSOLUTE gaps. Existing Obelisk and terminology STRONG gaps require documented disposition; scope preserves identity and policy."
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "csp-diagnostic-storage-isolation",
+      "title": "Bound CSP diagnostics independently of sign-in KV and preserve truthful summaries",
+      "tier": "🔥",
+      "axis": "speed",
+      "impact": 10,
+      "innovation": 4,
+      "effortHours": 4,
+      "priority": 15.47,
+      "why": "A public diagnostic stream can exhaust shared sign-in KV writes, while modulo counters hide actual stored violations.",
+      "userOutcome": "Members retain sign-in write allowance; operators can find accurate retained diagnostic counts and distinguish unavailable evidence.",
+      "recipe": "Replace the unbounded CSP KV ring writer with private R2 diagnostic batches using the existing isolated TT_REPORTS binding and a separate existing SQLite counter (three stored batches per hour). Bound actual streamed bodies to 16 KiB. Preserve legacy three-day evidence, repair ring-wrap/first-slot summary errors, read new objects with complete bounded pagination, and return unavailable rather than a false zero on incomplete storage. Retain CSP objects for three days. Verify concurrent intake, quota/storage faults, legacy ring boundaries, summary pagination, exact staging and production storage round trips. Keep CSP enforcement, headers and identity policy intact.",
+      "selectedDepth": "L2",
+      "status": "pending",
+      "acceptance": "Replace the unbounded CSP KV ring writer with private R2 diagnostic batches using the existing isolated TT_REPORTS binding and a separate existing SQLite counter (three stored batches per hour). Bound actual streamed bodies to 16 KiB. Preserve legacy three-day evidence, repair ring-wrap/first-slot summary errors, read new objects with complete bounded pagination, and return unavailable rather than a false zero on incomplete storage. Retain CSP objects for three days. Verify concurrent intake, quota/storage faults, legacy ring boundaries, summary pagination, exact staging and production storage round trips. Keep CSP enforcement, headers and identity policy intact.",
+      "premises": [
+        {
+          "claim": "CSP ring uses a modulo index rather than a bounded write budget",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "const next = (current + 1) % 200;",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "CSP intake writes its counter into shared KV",
+          "adapter": "file-content",
+          "target": "cloudflare/security-headers-worker.js",
+          "pattern": "env.RATE_LIMIT.put(counterKey, String(next)",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add a bounded persistence budget and explicitly mark inaccurate legacy ring coverage."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Replace the unbounded CSP KV ring writer with private R2 diagnostic batches using the existing isolated TT_REPORTS binding and a separate existing SQLite counter (three stored batches per hour). Bound actual streamed bodies to 16 KiB. Preserve legacy three-day evidence, repair ring-wrap/first-slot summary errors, read new objects with complete bounded pagination, and return unavailable rather than a false zero on incomplete storage. Retain CSP objects for three days. Verify concurrent intake, quota/storage faults, legacy ring boundaries, summary pagination, exact staging and production storage round trips. Keep CSP enforcement, headers and identity policy intact."
+        },
+        "L3": {
+          "effortHours": 16,
+          "recipe": "Separate future scope: account-wide quota attribution and isolate remaining auth storage."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-18T17:17:01.597Z",
+          "status": "pending",
+          "note": "S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.",
+          "phase": "implementation-verified-release-pending"
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "studio-market",
+      "reason": "No MARKET.json. Market research does not repair the directly verified diagnostic quota and evidence defect; no competitor facts invented."
+    }
+  ],
+  "innovationReserve": [],
+  "totals": {
+    "count": 1,
+    "priority": 15.47,
+    "top3": [
+      "csp-diagnostic-storage-isolation"
+    ]
+  },
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-18T17:09:05.594Z",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-18T17:09:12.123Z",
+    "head": "3c8c3cca8abd8e47aa8c78d73714da463ffd150c",
+    "sidecar": "docs/AUDIT_2026-10-18-S388.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "e6d6cfce90c5325e077e400ed8e8472c622324a88ea3ae987eacbd98a99e0ebe",
+    "implementationDirty": null,
+    "workspaceInventory": {
+      "count": 253,
+      "sha256": "d71d67335914ec012fe9e1d05145d3dc9f71d4ba2fb0edd8138be169d80c9cfe",
+      "selectedSourceDirty": [],
+      "publication": "Detailed unrelated workspace paths withheld from public record. Original timestamped gate receipt retained privately. This public projection does not assert a clean workspace or passing clean-tree timing check."
+    }
+  }
+}

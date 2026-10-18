@@ -8,13 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 8 totals): 933 · 933 · 933 · 933 · 933 · 933 · 935 · 935 ▁▁▁▁▁▁██ (→)
-Avgs — 3: 934.3 | 5: 933.8 | 10: 933.4 | 25: 945.0 | v3 all: 949.1
+Sparkline (last5 totals): ▄▄▆██ (→)
+Avgs —3:935.0 |5:934.2 |10:933.6 |25:943.2 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Momentum runway: N/A | Intent rate: N/A
-Last session: 2026-10-18 | Session 387 | Total: 935/1000 | Velocity: 1
-  └ S387 arc: Trusted Types diagnostic storage isolated; release acceptance in docs/RELEASE_S387.json.
-─────────────────────────────────────────────────────────────────────
+Last session: 2026-10-18 | Session388 | Total:935/1000 | Velocity:1
+  └ CSP diagnostic reliability; production acceptance tracked separately in docs/RELEASE_S388.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2841,3 +2839,30 @@ S387 machine-readable score: Total:935/1000 | Velocity:1 | Debt:→
 
 S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
 Score remains 935/1000. Both committed SIL follow-ups remain queued; no unrelated maintenance was added.
+
+
+## Session 388 — 2026-10-18 — CSP diagnostic reliability
+
+Product rubric, ten categories ×100; score held at935. Reliability coverage improved; no engagement increase or completed deployment claimed yet.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 935/1000
+Velocity:1
+Protocol velocity:1
+Debt:→
+
+S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.
+
+Brainstorm: observe bounded collection and real account usage; make deploy CLI unknown arguments inert. Two SIL tasks committed to TASK_BOARD. No new human creative direction. Context usage unmeasured.

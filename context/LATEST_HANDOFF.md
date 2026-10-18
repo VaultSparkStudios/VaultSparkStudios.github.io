@@ -1,3 +1,11 @@
+## Where We Left Off (Session 388) — release acceptance in progress
+
+S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.
+
+Session Intent: fresh full /arc, direct commit/push main and full deploy authorized. Native goal01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac, createdAt1792343118, is bound to S388 at2026-10-18T17:06:00.236Z from ec9464281023237ddefa950222846348665db0b3. Continue this invocation; do not start a replacement arc. Audit: docs/AUDIT_2026-10-18-S388.json. Release: docs/RELEASE_S388.json. Wave1 and2 complete; Wave3 open. Context usage unmeasured. CDR reviewed — no new human creative direction.
+
+Unrelated untracked artifacts and pre-existing tracked cache residue remain excluded. A --help staging request unexpectedly began archive preparation; its owned process tree was stopped. Candidate deployment must use an isolated committed checkout. No production mutation was requested by that command.
+
 ## Where We Left Off (Session 387) — complete
 
 - Shipped: private, retained diagnostic storage isolated from sign-in KV, bounded writes and complete stored-evidence readers.

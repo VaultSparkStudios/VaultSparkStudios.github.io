@@ -1622,3 +1622,8 @@ S386 follow-through: "newest Desk story" now means the latest publication instan
 ### S387 final release acceptance
 
 Verified 2026-10-18T16:46:56.351Z: exact source 3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7; Worker73bd16bb-e430-4609-9901-34d3a845f98a; Pages workflow39146002633. Deployment claims now rest on observed version, stored-report round trip and full served readback. Existing identity holds are not reclassified as accepted journeys.
+
+
+## S388 — diagnostic completeness (2026-10-18)
+
+CSP ring index was not a retained-record count; exactly200 reports could read as zero. New summaries count complete legacy/new stored records and expose unavailable on failures. The probe rejects old counter-only responses. Successful retained zero is not proof of no violations. Full staging/production evidence remains pending in docs/RELEASE_S388.json; existing identity/field evidence is not reclassified.

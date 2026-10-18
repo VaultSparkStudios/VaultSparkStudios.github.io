@@ -1,3 +1,10 @@
+## S388 — release follow-through
+
+- [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
+- [ ] [SIL][S388][OPS/P2] Reject unknown arguments in deployment CLIs so help requests cannot begin staging work.
+
+Wave 1 startup/fresh audit complete; Wave 2 CSP implementation/tests/review complete; Wave 3 full validation/staging/publication/production acceptance in progress.
+
 ## S387 — reliability follow-through
 
 - [x] Implement TT diagnostic isolation, complete legacy/R2 evidence reading, private retention and isolated staging round-trip acceptance. Full release acceptance is recorded separately in docs/RELEASE_S387.json.
@@ -708,3 +715,8 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+## S388 authorized arc
+
+- [ ] [S388 #1] CSP isolation implementation verified; full local, staging, main publication and production acceptance remain in docs/RELEASE_S388.json.

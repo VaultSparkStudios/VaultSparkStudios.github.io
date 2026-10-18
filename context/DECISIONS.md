@@ -2347,3 +2347,12 @@ R2 intake must not turn a shared free KV outage risk into unbounded diagnostic w
 
 ### D-S387.4 — Missing meter remains unknown
 A five-second meter timeout made the brief publish a file-byte estimate as runtime pressure and failed the live freshness gate. The fallback now keeps usage null and reports UNMEASURED; independent review and the existing freshness fixtures passed.
+
+
+## D-S388.1 — Bound CSP diagnostics and report retained evidence (2026-10-18)
+
+Reuse the existing private diagnostic buckets and a distinct diagnostic:csp:write-budget:v1 SQLite object. Never fall back to auth KV on intake storage failure. Keep enforcement/headers/identity unchanged. Preserve actual legacy ring entries through complete listing, not modulo counters. Summaries disclose retained counts and return503/null when any source is incomplete. CSP objects expire after3 days; TT30-day and unrelated rules are preserved. Official Cloudflare limits confirm1000 internal subrequests; accepted summary bounds stay below that limit, with concurrency5. This does not prove an account-wide quota cure.
+
+## D-S388.2 — Authorized release and remaining canon posture (2026-10-18)
+
+The founder authorized direct main push and full promotion for this fresh goal. Current canon sync and frontier radar passed; no ABSOLUTE gaps. Existing Obelisk identity and hybrid-terminology STRONG gaps stay outside this diagnostic change and are not claimed resolved. Routine release uses exact-candidate checks, current isolated staging, rollback and production readback. Legacy unit schema-validator TODO remains explicit. Unrelated cache/forecast/operator residue is excluded from publication.

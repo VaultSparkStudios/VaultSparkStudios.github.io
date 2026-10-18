@@ -24,6 +24,7 @@
  */
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
+import { handleCspReport, handleCspSummary } from './csp-reports.mjs';
 import { checkDurableFormRateLimit, FORM_MAX_ATTEMPTS } from './public-form-rate-limit.mjs';
 export { PublicFormRateLimiter } from './public-form-rate-limit.mjs';
 import guideShellManifest from '../assets/shell-manifest.json' with { type: 'json' };
@@ -1272,87 +1273,9 @@ const worker = {
       return handleTrustedTypesReport(request, env, ctx);
     }
 
-    // --- Layer 0: CSP violation reporting (S199) ----------------------------
-    // report-uri /v/csp-report in WORKER_CSP routes browser violations here.
-    // Stores structured entries in KV under csp:date:sequence (same namespace
-    // as TT reports). Sampled at 100% — full CSP violations are rare and high-signal.
-    if (url.pathname === '/v/csp-report') {
-      if (request.method !== 'POST') return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-      const len = Number(request.headers.get('Content-Length') || 0);
-      if (len > 16384) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-      try {
-        const raw = await request.json();
-        if (env.RATE_LIMIT) {
-          const report = raw?.['csp-report'] || raw?.['content-security-policy-report'] || raw || {};
-          const day = new Date().toISOString().slice(0, 10);
-          const counterKey = `csp:${day}:counter`;
-          const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
-          const next = (current + 1) % 200;
-          const entry = {
-            ts: new Date().toISOString(),
-            directive: String(report['violated-directive'] || report.violatedDirective || '').slice(0, 120),
-            blockedUri: String(report['blocked-uri'] || report.blockedURL || '').slice(0, 200),
-            documentUri: String(report['document-uri'] || report.documentURL || '').slice(0, 200),
-          };
-          ctx.waitUntil(Promise.all([
-            env.RATE_LIMIT.put(`csp:${day}:${String(next).padStart(4, '0')}`, JSON.stringify(entry), { expirationTtl: 259200 }),
-            env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: 262800 }),
-          ]));
-        }
-      } catch (_) { /* absorb parse errors — always 204 */ }
-      return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-    }
-
-    // --- Layer 0: CSP violation summary probe (S228) -------------------------
-    // GET /v/csp-violations-summary — aggregate-only read of csp: KV entries.
-    // Used by check-csp-violations.mjs doctor probe; no raw URIs exposed.
-    if (url.pathname === '/v/csp-violations-summary' && request.method === 'GET') {
-      if (!env.RATE_LIMIT) {
-        return Response.json(
-          { error: 'no-kv', total3d: 0, byDay: [], topDirectives: [], ts: new Date().toISOString() },
-          { status: 503, headers: { 'Cache-Control': 'no-store' } }
-        );
-      }
-      const now = new Date();
-      const byDay = [];
-      for (let i = 0; i < 3; i++) {
-        const d = new Date(now);
-        d.setDate(d.getDate() - i);
-        const date = d.toISOString().slice(0, 10);
-        const count = Number(await env.RATE_LIMIT.get(`csp:${date}:counter`)) || 0;
-        if (count > 0) byDay.push({ date, count });
-      }
-      const total3d = byDay.reduce((s, d) => s + d.count, 0);
-      const topDirectives = [];
-      if (total3d > 0 && byDay.length > 0) {
-        const sampleDay = byDay[0].date;
-        const sampleN = Math.min(20, byDay[0].count);
-        const rows = await Promise.all(
-          Array.from({ length: sampleN }, (_, j) =>
-            env.RATE_LIMIT.get(`csp:${sampleDay}:${String(j).padStart(4, '0')}`)
-          )
-        );
-        const dirCounts = {};
-        for (const raw of rows) {
-          if (!raw) continue;
-          try {
-            const e = JSON.parse(raw);
-            const dir = String(e.directive || 'unknown').slice(0, 80);
-            dirCounts[dir] = (dirCounts[dir] || 0) + 1;
-          } catch (_) { /* skip malformed entries */ }
-        }
-        topDirectives.push(
-          ...Object.entries(dirCounts)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 5)
-            .map(([directive, count]) => ({ directive, count }))
-        );
-      }
-      return Response.json(
-        { total3d, byDay, topDirectives, ts: now.toISOString() },
-        { headers: { 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' } }
-      );
-    }
+    // CSP diagnostics use private bounded R2 storage, separate from account KV.
+    if (url.pathname === '/v/csp-report') return handleCspReport(request, env, ctx);
+    if (url.pathname === '/v/csp-violations-summary' && request.method === 'GET') return handleCspSummary(env);
 
     // --- Layer 0: Web-push subscription management (S211) -------------------
     // POST stores subscription JSON in KV (vs:push:sub:<sha256-prefix>); TTL 90d.
