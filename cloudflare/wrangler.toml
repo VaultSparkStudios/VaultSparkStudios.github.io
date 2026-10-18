@@ -42,9 +42,8 @@ RATE_LIMIT_ENABLED = "1"
 # zero tt:* keys while the report-only header was live. For the soak window,
 # sample 100% of TT reports and hold them 30 days so probe-tt-soak.mjs can
 # read a real signal. Report-only intake only — does NOT change enforcement.
-# Revert both to defaults after the enforce decision lands.
+# S387: private TT_REPORTS R2 storage now carries the 30-day lifecycle.
 TT_REPORT_SAMPLE_RATE = "1"
-TT_REPORT_TTL_SEC     = "2592000"
 
 # S335: Trusted Types ENFORCE switch. "1" moves require-trusted-types-for into the
 # live Content-Security-Policy and drops the report-only header. Flip only when
@@ -107,6 +106,11 @@ id = "adfe5ed60c90426ea1286321360138e3"
 binding = "RUM_BUCKET"
 bucket_name = "vaultspark-rum"
 
+# Diagnostic writes are isolated from the KV budget used by sign-in.
+[[env.production.r2_buckets]]
+binding = "TT_REPORTS"
+bucket_name = "vaultspark-rum"
+
 [env.staging]
 workers_dev = true
 preview_urls = false
@@ -132,6 +136,11 @@ NONCE_CSP_ENABLED = "1"
 EDGE_CACHE_ENABLED = "0"
 RATE_LIMIT_ENABLED = "1"
 HUB_SUBDOMAIN_ENABLED = "0"
+TT_REPORT_SAMPLE_RATE = "1"
+
+[[env.staging.r2_buckets]]
+binding = "TT_REPORTS"
+bucket_name = "vaultspark-tt-staging"
 
 [[env.staging.kv_namespaces]]
 binding = "RATE_LIMIT"

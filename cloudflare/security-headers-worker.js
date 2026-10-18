@@ -158,18 +158,7 @@ const RATE_LIMIT_MAX = 3;
 const RUM_MAX_BODY_BYTES = 4096;
 const TT_REPORT_MAX_BODY_BYTES = 8192;
 const TT_REPORT_SAMPLE_RATE = 0.005;
-// S172 tt-soak-kv-probe: 1-day TTL + 0.5% sampling + low traffic meant the
-// soak could never accumulate evidence (KV probe found zero tt:* keys while
-// the header was live). TTL is now env-tunable so the soak window can hold
-// reports long enough to be read; see TT_REPORT_TTL_SEC var in wrangler.toml.
-const TT_REPORT_TTL_SEC = 86400;
-function resolveTtReportTtl(env) {
-  const n = Number(env?.TT_REPORT_TTL_SEC);
-  // KV minimum TTL is 60s; cap at 90 days to bound storage.
-  if (!Number.isFinite(n) || n < 60) return TT_REPORT_TTL_SEC;
-  return Math.min(n, 90 * 86400);
-}
-const TT_REPORT_BUCKET_SIZE = 1000;
+// Private R2 tt/raw/ objects have a 30-day lifecycle; no auth-KV counters.
 const TT_REPORT_CSP = "require-trusted-types-for 'script'; report-to vs-tt";
 // S335: Trusted Types enforcement is a one-variable flip (TT_ENFORCE_ENABLED="1"
 // in wrangler.toml). Default off: api/tt-readiness.json must report
@@ -703,23 +692,19 @@ async function handleTrustedTypesReport(request, env, ctx) {
 
   let raw;
   try { raw = await request.json(); } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
-  if (!env.RATE_LIMIT) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+  if (!env.TT_REPORTS) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 
   const reports = normalizeTrustedTypesReports(raw, request);
   if (!reports.length) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
   const day = reports[0].ts.slice(0, 10);
-  const counterKey = `tt:${day}:counter`;
-  const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
-  const ttlSec = resolveTtReportTtl(env);
-  const puts = [];
-  let next = current;
-  for (const normalized of reports) {
-    next = (next + 1) % TT_REPORT_BUCKET_SIZE;
-    const key = `tt:${day}:${String(next).padStart(4, '0')}`;
-    puts.push(env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: ttlSec }));
-  }
-  puts.push(env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: ttlSec + 3600 }));
-  ctx.waitUntil(Promise.all(puts));
+  // Diagnostic volume must never consume the KV write budget used by sign-in.
+  // One private object per bounded browser batch; tt/raw/ has a 30-day lifecycle.
+  // No fallback to KV: object-store failure is best-effort diagnostic loss.
+  const key = `tt/raw/dt=${day}/${crypto.randomUUID()}.json`;
+  ctx.waitUntil(Promise.resolve().then(() => env.TT_REPORTS.put(key,
+    JSON.stringify({ schemaVersion: 1, reports }), {
+      httpMetadata: { contentType: 'application/json' },
+    })).catch(() => {}));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
