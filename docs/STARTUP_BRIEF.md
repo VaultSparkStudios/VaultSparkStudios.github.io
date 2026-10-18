@@ -120,9 +120,6 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Re-read the current 30-day TT cohort after  ║
 ║        Re-read the current 30-day TT cohort after production pr  ║
 ║                                                                  ║
@@ -134,6 +131,9 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Persona page/N 404s: lane allowlist + Hetz  ║
 ║        Persona page/N 404s: lane allowlist + Hetzner rules toge  ║
+║                                                                  ║
+║   84  [PRODUCT]      Disabled-workflow 422 = deferred; idle 30-  ║
+║        Disabled-workflow 422 = deferred; idle 30-min ingest sca  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
