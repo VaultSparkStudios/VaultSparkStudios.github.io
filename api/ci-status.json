@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-18T16:35:27.056Z",
+  "generatedAt": "2026-10-18T16:39:45.188Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 9,
-    "healthy": 9,
-    "unknown": 6,
+    "observed": 8,
+    "healthy": 8,
+    "unknown": 7,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "scheduled_unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 11 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 11 consecutive receipts. Push gates green, but scheduled-workflow evidence is incomplete (8/15 observed).",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-18T15:36:08.991Z",
     "currentBehindStreak": 11,
     "newestGradableAt": "2026-10-18T15:36:08.991Z",
-    "newestAgeHours": 1,
+    "newestAgeHours": 1.1,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-18T16:31:09Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-18T16:38:49Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39144790887",
       "headSha": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
       "event": "push"
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 7.3,
+      "ageHours": 7.38,
       "staleAfterHours": 48
     },
     {
@@ -100,7 +100,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 9.68,
+      "ageHours": 9.76,
       "staleAfterHours": 48
     },
     {
@@ -135,7 +135,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 9.29,
+      "ageHours": 9.36,
       "staleAfterHours": 48
     },
     {
@@ -181,7 +181,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.07,
+      "ageHours": 4.14,
       "staleAfterHours": 48
     },
     {
@@ -195,7 +195,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.76,
+      "ageHours": 3.83,
       "staleAfterHours": 48
     },
     {
@@ -210,26 +210,24 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.05,
+      "ageHours": 0.12,
       "staleAfterHours": 48
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-18T06:48:31Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 9.78,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-18T16:10:36Z",
+      "lastUpdatedAt": "2026-10-18T16:37:30Z",
       "recentConclusions": [
         "success",
         "success",
@@ -238,7 +236,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.41,
+      "ageHours": 0.04,
       "staleAfterHours": 48
     },
     {
@@ -251,7 +249,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.46,
+      "ageHours": 3.54,
       "staleAfterHours": 48
     },
     {
