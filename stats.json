@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-18T06:48:25.039Z",
+  "generatedAt": "2026-10-18T06:50:01.031Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -178,7 +178,7 @@
       "value": 83,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-10-18T06:48:25.039Z",
+      "computedAt": "2026-10-18T06:49:59.963Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -187,7 +187,7 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-18T06:48:25.039Z",
+      "observedThrough": "2026-10-18T06:49:59.963Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
@@ -199,7 +199,7 @@
       "value": 0,
       "unitOrDenominator": "accepted anonymous route-performance observations",
       "period": "7 complete UTC days",
-      "computedAt": "2026-10-17T06:53:57.028Z",
+      "computedAt": "2026-10-18T06:50:01.031Z",
       "source": "/api/analytics-summary.json",
       "sourceType": "vaultspark-rum",
       "sourceDataset": "data/rum-history.ndjson",
@@ -208,14 +208,14 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-10-17",
+      "observedThrough": "2026-10-18",
       "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
       "window": {
-        "start": "2026-10-10",
-        "endExclusive": "2026-10-17",
+        "start": "2026-10-11",
+        "endExclusive": "2026-10-18",
         "days": 7,
         "timezone": "UTC"
       },
@@ -234,7 +234,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-10-18T06:48:25.039Z",
+      "computedAt": "2026-10-18T06:49:59.963Z",
       "values": {
         "fresh": 15,
         "stale": 3,
@@ -253,9 +253,54 @@
     }
   },
   "history": {
-    "performanceSamplesDaily": [],
+    "performanceSamplesDaily": [
+      {
+        "day": "2026-09-18",
+        "samples": 22
+      },
+      {
+        "day": "2026-09-19",
+        "samples": 7
+      },
+      {
+        "day": "2026-09-20",
+        "samples": 13
+      },
+      {
+        "day": "2026-09-21",
+        "samples": 24
+      },
+      {
+        "day": "2026-09-22",
+        "samples": 21
+      },
+      {
+        "day": "2026-09-23",
+        "samples": 57
+      },
+      {
+        "day": "2026-09-24",
+        "samples": 13
+      },
+      {
+        "day": "2026-09-25",
+        "samples": 9
+      },
+      {
+        "day": "2026-09-26",
+        "samples": 7
+      },
+      {
+        "day": "2026-09-27",
+        "samples": 3
+      },
+      {
+        "day": "2026-09-28",
+        "samples": 13
+      }
+    ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-10-17T06:53:57.028Z",
+    "computedAt": "2026-10-18T06:50:01.031Z",
     "warning": "Performance samples are not an audience trend."
   },
   "reconciliation": {
