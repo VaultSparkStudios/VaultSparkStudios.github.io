@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-18T17:07:41.914Z",
+  "generatedAt": "2026-10-18T17:09:38.167Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "ec9464281023237ddefa950222846348665db0b3",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "scheduled_unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 11 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 11 consecutive receipts. Push gates green, but scheduled-workflow evidence is incomplete (6/15 observed).",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -29,7 +29,7 @@
     "lastStrandedAt": "2026-10-18T15:36:08.991Z",
     "currentBehindStreak": 11,
     "newestGradableAt": "2026-10-18T15:36:08.991Z",
-    "newestAgeHours": 1.5,
+    "newestAgeHours": 1.6,
     "maxAgeHours": 48,
     "stale": false,
     "strandedAlert": true
@@ -57,10 +57,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-10-18T17:00:36Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-18T17:08:35Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39147113859",
       "headSha": "ec9464281023237ddefa950222846348665db0b3",
       "event": "push"
@@ -87,7 +87,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 7.84,
+      "ageHours": 7.87,
       "staleAfterHours": 48
     },
     {
@@ -177,7 +177,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.6,
+      "ageHours": 4.64,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +190,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.3,
+      "ageHours": 4.33,
       "staleAfterHours": 48
     },
     {
@@ -204,7 +204,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.58,
+      "ageHours": 0.62,
       "staleAfterHours": 48
     },
     {
@@ -221,7 +221,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-18T17:07:13Z",
+      "lastUpdatedAt": "2026-10-18T17:09:07Z",
       "recentConclusions": [
         "success",
         "success",
@@ -243,7 +243,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4,
+      "ageHours": 4.03,
       "staleAfterHours": 48
     },
     {
