@@ -2,12 +2,29 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/security-headers-worker.js';
 import { handleCspReport, handleCspSummary, normalizeCspReports, CSP_MAX_BODY_BYTES } from '../cloudflare/csp-reports.mjs';
+import { PublicFormRateLimiter, FORM_WINDOW_MS } from '../cloudflare/public-form-rate-limit.mjs';
 
 const now = new Date('2026-10-18T12:00:00Z');
 const row = (directive = 'script-src', day = '2026-10-18') => ({ ts: `${day}T12:00:00Z`, directive, documentUri: 'https://private.test/secret?q=private' });
+function realCounterNamespace(names) {
+  const objects = new Map();
+  return {
+    idFromName(name) { names.push(name); return name; },
+    get(name) {
+      if (!objects.has(name)) {
+        const data = new Map(); let tail = Promise.resolve();
+        const storage = { get: async key => data.get(key), put: async (key, value) => { data.set(key, value); } };
+        const limiter = new PublicFormRateLimiter({ storage: { transaction(fn) {
+          const result = tail.then(() => fn(storage)); tail = result.catch(() => {}); return result;
+        } } });
+        objects.set(name, { fetch: (url, init) => limiter.fetch(new Request(url, init)) });
+      }
+      return objects.get(name);
+    },
+  };
+}
 function fixture() {
   const legacy = new Map(), objects = new Map(), writes = [], names = [];
-  let used = 0;
   const env = {
     RATE_LIMIT: {
       list: async ({ prefix }) => ({ keys: [...legacy.keys()].filter(name => name.startsWith(prefix)).map(name => ({ name })), list_complete: true }),
@@ -19,7 +36,7 @@ function fixture() {
       get: async key => objects.has(key) ? { json: async () => objects.get(key) } : null,
       put: async (key, value) => { writes.push(key); objects.set(key, JSON.parse(value)); },
     },
-    FORM_RATE_LIMIT: { idFromName: name => { names.push(name); return name; }, get: () => ({ fetch: async () => Response.json(used < 3 ? { allowed: true, remaining: 2 - used++ } : { allowed: false, remaining: 0 }) }) },
+    FORM_RATE_LIMIT: realCounterNamespace(names),
   };
   return { env, legacy, objects, writes, names };
 }
@@ -33,9 +50,11 @@ async function intake(req, env) {
 
 test('500 diagnostic posts use only three private batches and never even read shared KV', async () => {
   const f = fixture();
-  f.env.RATE_LIMIT = new Proxy({}, { get() { throw new Error('CSP intake touched shared KV'); } });
+  let kvTouches = 0;
+  f.env.RATE_LIMIT = new Proxy({}, { get() { kvTouches++; throw new Error('CSP intake touched shared KV'); } });
   for (let i = 0; i < 500; i++) await intake(request({ 'csp-report': { 'violated-directive': 'script-src' } }), f.env);
   assert.equal(f.writes.length, 3);
+  assert.equal(kvTouches, 0, 'best-effort error absorption must not hide a KV access');
   assert.equal(new Set(f.names).size, 1);
   assert.equal(f.names[0], 'diagnostic:csp:write-budget:v1');
   assert.equal([...f.objects.values()][0].collection.sampleRate, 1);
@@ -123,6 +142,13 @@ test('maximum accepted window stays below internal request budget with at most f
     for (let i = 0; i < 200; i++) f.legacy.set(`csp:${day}:${String(i).padStart(4, '0')}`, row('script-src', day));
     for (let i = 0; i < 96; i++) f.objects.set(`csp/raw/dt=${day}/a-${i}.json`, { schemaVersion: 1, reports: [row('img-src', day)] });
   }
+  for (const [binding, field, completeField] of [[f.env.RATE_LIMIT, 'keys', 'list_complete'], [f.env.TT_REPORTS, 'objects', 'truncated']]) {
+    const original = binding.list;
+    binding.list = async args => {
+      const all = (await original(args))[field], page = Number(args.cursor || 0), size = Math.ceil(all.length / 3);
+      return { [field]: all.slice(page * size, (page + 1) * size), [completeField]: completeField === 'truncated' ? page < 2 : page === 2, cursor: String(page + 1) };
+    };
+  }
   let active = 0, peak = 0, calls = 0;
   for (const [binding, method] of [[f.env.RATE_LIMIT, 'get'], [f.env.RATE_LIMIT, 'list'], [f.env.TT_REPORTS, 'get'], [f.env.TT_REPORTS, 'list']]) {
     const original = binding[method];
@@ -134,8 +160,73 @@ test('maximum accepted window stays below internal request budget with at most f
   const result = await handleCspSummary(f.env, now);
   assert.equal(result.status, 200);
   assert.equal((await result.json()).total3d, 888);
-  assert.equal(calls, 894);
+  assert.equal(calls, 906);
+  assert.equal(calls + f.names.length, 907, 'includes the one durable admission request');
   assert.ok(peak <= 5);
+});
+
+test('real transactional summary counter admits three concurrent computations and resets next fixed hour', async () => {
+  const originalNow = Date.now;
+  const clock = Math.floor(originalNow() / FORM_WINDOW_MS) * FORM_WINDOW_MS + 123456;
+  Date.now = () => clock;
+  try {
+    const f = fixture(); let reads = 0;
+    for (const binding of [f.env.RATE_LIMIT, f.env.TT_REPORTS]) {
+      const original = binding.list;
+      binding.list = async args => { reads++; return original(args); };
+    }
+    const fetchSummary = () => worker.fetch(new Request('https://vaultsparkstudios.com/v/csp-violations-summary'), f.env, {});
+    const results = await Promise.all(Array.from({ length: 12 }, fetchSummary));
+    assert.equal(results.filter(r => r.status === 200).length, 3);
+    assert.equal(results.filter(r => r.status === 429).length, 9);
+    assert.equal(reads, 18, 'only admitted requests read the three days of KV/R2 sources');
+    for (const response of results.filter(r => r.status === 429)) {
+      assert.equal(response.headers.get('Retry-After'), '3477');
+      assert.equal(response.headers.get('Cache-Control'), 'no-store');
+      assert.equal((await response.json()).total3d, null);
+    }
+    assert.deepEqual(new Set(f.names), new Set(['diagnostic:csp:summary-budget:v1']));
+    Date.now = () => clock + FORM_WINDOW_MS;
+    assert.equal((await fetchSummary()).status, 200);
+    assert.equal(reads, 24);
+    // Summary admission must not spend the independently named intake budget.
+    for (let i = 0; i < 4; i++) await intake(request({ violatedDirective: 'script-src' }), f.env);
+    assert.equal(f.writes.length, 3);
+    assert.equal(f.names.includes('diagnostic:csp:write-budget:v1'), true);
+  } finally { Date.now = originalNow; }
+});
+
+test('failed computations consume admission; later denials do not read diagnostic sources', async () => {
+  const f = fixture(); let reads = 0;
+  f.env.RATE_LIMIT.list = async () => { reads++; throw new Error('storage unavailable'); };
+  for (let i = 0; i < 3; i++) assert.equal((await handleCspSummary(f.env, now)).status, 503);
+  const denied = await handleCspSummary(f.env, now);
+  assert.equal(denied.status, 429);
+  assert.equal((await denied.json()).total3d, null);
+  assert.equal(reads, 3);
+});
+
+test('missing, failed or malformed admission fails unknown before any KV/R2 call', async () => {
+  const mutations = [
+    f => { delete f.env.FORM_RATE_LIMIT; },
+    f => { f.env.FORM_RATE_LIMIT.get = () => ({ fetch: async () => { throw new Error('counter offline'); } }); },
+    f => { f.env.FORM_RATE_LIMIT.get = () => ({ fetch: async () => new Response('{}', { status: 503 }) }); },
+    f => { f.env.FORM_RATE_LIMIT.get = () => ({ fetch: async () => new Response('invalid json') }); },
+    ...[{}, { allowed: true, remaining: 3 }, { allowed: true, remaining: -1 }, { allowed: true, remaining: 0.5 }, { allowed: false, remaining: 1 }, { allowed: 'yes', remaining: 0 }].map(budget => f => {
+      f.env.FORM_RATE_LIMIT.get = () => ({ fetch: async () => Response.json(budget) });
+    }),
+  ];
+  for (const mutate of mutations) {
+    const f = fixture(); mutate(f); let reads = 0;
+    for (const binding of [f.env.RATE_LIMIT, f.env.TT_REPORTS]) {
+      binding.list = async () => { reads++; throw new Error('must not read'); };
+      binding.get = async () => { reads++; throw new Error('must not read'); };
+    }
+    const response = await handleCspSummary(f.env, now);
+    assert.equal(response.status, 503);
+    assert.equal((await response.json()).total3d, null);
+    assert.equal(reads, 0);
+  }
 });
 
 test('a verified empty source is zero; unavailable, malformed or truncated sources are unknown', async () => {

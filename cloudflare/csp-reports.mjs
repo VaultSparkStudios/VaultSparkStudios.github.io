@@ -1,5 +1,5 @@
 // Diagnostic storage is isolated from the KV budget used by visitor accounts.
-import { FORM_MAX_ATTEMPTS } from './public-form-rate-limit.mjs';
+import { FORM_MAX_ATTEMPTS, FORM_WINDOW_MS } from './public-form-rate-limit.mjs';
 
 export const CSP_MAX_BODY_BYTES = 16384;
 const MAX_BATCH_REPORTS = 5;
@@ -134,6 +134,18 @@ async function storedReports(bucket, day) {
 
 export async function handleCspSummary(env, now = new Date()) {
   try {
+    // Admission is global and separate from intake/auth counters. Even failed
+    // computations consume an attempt: a bad source cannot amplify read traffic.
+    if (!env.FORM_RATE_LIMIT) throw new Error('Missing summary budget');
+    const counter = env.FORM_RATE_LIMIT.get(env.FORM_RATE_LIMIT.idFromName('diagnostic:csp:summary-budget:v1'));
+    const admission = await counter.fetch('https://form-counter.internal/', { method: 'POST', body: JSON.stringify({ seed: 0 }) });
+    if (!admission.ok) throw new Error('Summary budget unavailable');
+    const budget = await admission.json();
+    if (typeof budget.allowed !== 'boolean' || !Number.isInteger(budget.remaining) || budget.remaining < 0 || budget.remaining >= FORM_MAX_ATTEMPTS || (!budget.allowed && budget.remaining !== 0)) throw new Error('Invalid summary budget');
+    if (!budget.allowed) {
+      const retryAfter = Math.ceil((FORM_WINDOW_MS - Date.now() % FORM_WINDOW_MS) / 1000);
+      return unavailableSummary(now, 429, { 'Retry-After': String(retryAfter) });
+    }
     if (!env.RATE_LIMIT || !env.TT_REPORTS) throw new Error('Missing diagnostic source');
     const byDay = [], directives = new Map();
     let legacyRecords = 0, r2Reports = 0;
@@ -155,7 +167,11 @@ export async function handleCspSummary(env, now = new Date()) {
         globalBatchLimitPerHour: FORM_MAX_ATTEMPTS, maxReportsPerBatch: MAX_BATCH_REPORTS, legacyRecords, r2Reports }, ts: now.toISOString(),
     }, { headers: HEADERS });
   } catch {
-    return Response.json({ state: 'unavailable', error: 'diagnostic_sources_incomplete', total3d: null,
-      byDay: [], topDirectives: [], ts: now.toISOString() }, { status: 503, headers: HEADERS });
+    return unavailableSummary(now, 503);
   }
+}
+
+function unavailableSummary(now, status, extraHeaders = {}) {
+  return Response.json({ state: 'unavailable', error: status === 429 ? 'diagnostic_summary_rate_limited' : 'diagnostic_sources_incomplete', total3d: null,
+    byDay: [], topDirectives: [], ts: now.toISOString() }, { status, headers: { ...HEADERS, ...extraHeaders } });
 }

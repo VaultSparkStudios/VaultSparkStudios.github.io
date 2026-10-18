@@ -2356,3 +2356,8 @@ Reuse the existing private diagnostic buckets and a distinct diagnostic:csp:writ
 ## D-S388.2 — Authorized release and remaining canon posture (2026-10-18)
 
 The founder authorized direct main push and full promotion for this fresh goal. Current canon sync and frontier radar passed; no ABSOLUTE gaps. Existing Obelisk identity and hybrid-terminology STRONG gaps stay outside this diagnostic change and are not claimed resolved. Routine release uses exact-candidate checks, current isolated staging, rollback and production readback. Legacy unit schema-validator TODO remains explicit. Unrelated cache/forecast/operator residue is excluded from publication.
+
+
+## D-S388.3 — Bound diagnostic summary read amplification (2026-10-18)
+
+Pre-release review found that a public GET could perform up to894 storage operations, so a per-request bound alone did not bound aggregate R2 cost or protect shared KV reads. Reuse the existing SQLite class on a distinct diagnostic:csp:summary-budget:v1 object: three expensive computations per fixed hourly window, with no intake/account key sharing or KV fallback. Admit before reading storage. Denied admission returns429 and unavailable/null; missing, failed or malformed admission returns503 and unavailable/null. Failed computations consume a slot. This bounds evidence reads, not inbound requests/counter calls; a public caller can temporarily consume operator visibility. Maximum accepted internal operations with pagination and admission907. Staging and production namespaces must be observed distinct.

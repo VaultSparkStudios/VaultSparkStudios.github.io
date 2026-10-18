@@ -1,7 +1,7 @@
 ## S388 — release follow-through
 
 - [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
-- [ ] [SIL][S388][OPS/P2] Reject unknown arguments in deployment CLIs so help requests cannot begin staging work.
+- [ ] [SIL][S388][OPS/P2] Reject unknown deployment arguments; use deterministic handoff compaction by default and require approval for paid summaries.
 
 Wave 1 startup/fresh audit complete; Wave 2 CSP implementation/tests/review complete; Wave 3 full validation/staging/publication/production acceptance in progress.
 

@@ -10,7 +10,7 @@
   "scope": "Bounded CSP diagnostics and truthful retained summaries; unchanged policy and identity.",
   "implementation": {
     "focused": {
-      "passed": 86,
+      "passed": 89,
       "failed": 0
     },
     "probeSelfTests": 17,
@@ -18,13 +18,12 @@
     "unit": {
       "passed": 452,
       "failed": 0,
-      "todo": 1
+      "todo": 1,
+      "scope": "Pre-read-budget run; final current broad results recorded by full validation."
     },
     "review": {
-      "rounds": 2,
-      "findings": 1,
-      "fixed": 1,
-      "verdict": "pass"
+      "verdict": "pass",
+      "scope": "Independent current read-budget implementation review; 89 focused tests verified."
     },
     "canonAbsoluteGaps": 0,
     "visualQA": "No UI/UX source changes; changed-files verifier remains required.",
@@ -52,24 +51,25 @@
         }
       ],
       "provisioningApplied": true
-    }
+    },
+    "cspTests": 13
   },
   "remaining": [
-    "full local",
-    "isolated staging",
+    "fresh full local validation",
+    "isolated exact-candidate staging",
     "required exact-candidate hosted checks",
     "main publication",
     "full Worker/Pages promotion",
-    "production storage roundtrip and source readback",
+    "production storage/read-budget and source readback",
     "final closeout"
   ],
   "rollback": "Prior verified full production source3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7. Use normal pinned full workflows after staging; no force-push. Existing staging deploy retains timestamped predecessor. Lifecycle pre-mutation snapshot remains in private .cache/tt-storage; remove only new csp-diagnostics-3d rule if reverting it.",
   "stagingWorker": {
-    "at": "2026-10-18T17:18:42.913Z",
+    "at": "2026-10-18T17:54:03.790Z",
     "mode": "staging",
     "origin": "https://website.staging.vaultsparkstudios.com",
-    "workerVersion": "aec1b552-7624-40eb-a9b9-8c05a8c7b400",
-    "deploymentId": "0c84f06f-c367-4251-8030-63952169a4a3",
+    "workerVersion": "6c8156f3-db5b-4ae6-a70e-fdb3c7b1dee7",
+    "deploymentId": "a4b0186b-3836-4e03-b7ab-52380eab339c",
     "intake": 204,
     "r2Roundtrip": true,
     "aggregate": {
@@ -80,7 +80,13 @@
     },
     "login": 302,
     "syntheticFixtureRemoved": true,
-    "fixtureKey": "csp/raw/dt=2026-10-18/ec3f0015-5a94-4f9a-ba83-ad2d1fd34fbb.json"
+    "fixtureKey": "csp/raw/dt=2026-10-18/12412431-772e-4047-a9cf-af5f6ee17a7f.json",
+    "sourceHashes": {
+      "cloudflare/security-headers-worker.js": "977015c38c170af9d4a0de418a9c9766015d77973b967497ece0a69a52824c44",
+      "cloudflare/csp-reports.mjs": "0d897b3d9d40e328bf61eabfc2555e3000fc2446c006d4ccc002471edd0bb436",
+      "cloudflare/public-form-rate-limit.mjs": "2d164d9a5c58b55653c01520945106c9bd6ad9e8293a2170c466b6db45046da7",
+      "cloudflare/wrangler.toml": "4212623b9f2420fa1760e5cbad3b9d8919a7870c0dead3bd51825968b2a33b7a"
+    }
   },
   "closeoutPreparation": {
     "sil": 935,
@@ -102,5 +108,28 @@
     "entropy": 0.197,
     "genome": "23/25",
     "cdr": "reviewed; no new human creative direction"
+  },
+  "preReadBudgetValidation": {
+    "passed": 541,
+    "failed": 0,
+    "coverageComplete": true,
+    "sourceFingerprint": "4075902f2427ba45c783fe45",
+    "at": "2026-10-18T17:48:54.426Z",
+    "scope": "Before summary read budget; not current-source final acceptance."
+  },
+  "stagingSummaryBudget": {
+    "at": "2026-10-18T17:54:08.381Z",
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "workerVersion": "6c8156f3-db5b-4ae6-a70e-fdb3c7b1dee7",
+    "firstAdmitted": 1,
+    "concurrentAdmitted": 2,
+    "concurrentDenied": 3,
+    "unavailableNullOnDenial": true,
+    "retryAfterAndNoStoreVerified": true,
+    "scope": "Public staging summary counter exhausted by owned verification; no intake/account counter mutation or reset."
+  },
+  "stagingIsolation": {
+    "verified": true,
+    "scope": "Cloudflare settings observed distinct Durable Object namespaces and private R2 buckets; identifiers kept private."
   }
 }

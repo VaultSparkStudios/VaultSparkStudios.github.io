@@ -2866,3 +2866,8 @@ Debt:→
 S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.
 
 Brainstorm: observe bounded collection and real account usage; make deploy CLI unknown arguments inert. Two SIL tasks committed to TASK_BOARD. No new human creative direction. Context usage unmeasured.
+
+
+### S388 pre-release hardening
+
+Complete pre-hardening validation541/541 is recorded separately from the final read-budget candidate. Summary computations also need an aggregate cap to keep diagnostic cost independent of public request volume. The feature adds no inference service; the legacy startup compactor call is recorded privately. Existing SIL follow-up for safe CLI defaults now includes deterministic compaction. Score remains935/1000; no extra session or velocity counted.
