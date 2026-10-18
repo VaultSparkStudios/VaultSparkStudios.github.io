@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S387) - WHAT SHIPPED ══════════════════════════╗
-║  S387 diagnostic storage isolation; local, staging and producti  ║
+║  S387 diagnostic storage isolation deployed at3ceaae612d; all s  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -43,7 +43,7 @@
 ║                                                                  ║
 ║    935/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: 934.3  ·  Velocity 1→                      ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: -1d  ·  Last closeout: 0d  ·  (active =…         ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -120,6 +120,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Re-read the current 30-day TT cohort after  ║
 ║        Re-read the current 30-day TT cohort after production pr  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Persona page/N 404s: lane allowlist + Hetz  ║
 ║        Persona page/N 404s: lane allowlist + Hetzner rules toge  ║
-║                                                                  ║
-║   84  [PRODUCT]      Disabled-workflow 422 = deferred; idle 30-  ║
-║        Disabled-workflow 422 = deferred; idle 30-min ingest sca  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
