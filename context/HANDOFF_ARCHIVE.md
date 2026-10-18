@@ -2229,3 +2229,24 @@ All three waves complete. CDR reviewed; no new human creative direction. Context
 **Closing follow-through**
 
 Final source seal verified (2026-10-16T06:43:12.082Z): 6f80ad39edcd2548823eb73428e65bd515fe8870 passed exact required hosted checks, stagingcritical65/65, ceremony11/11 and full Pages deployment 38862272871. Complete immutable and primary readback covers1085 served text files and313 HTML routes. The five publishing workflows remain intentionally held until this evidence is pushed; their actual original-state restoration, remote synchronization and strict served-source equivalence are verified afterwards in .cache/s383-final-completion-proof.json before native goal completion. No further Git mutation follows restoration. Existing identity and optional-diagnostic limitations remain separate.
+
+
+---
+<!-- archived: 2026-10-18 -->
+
+## Where We Left Off (Session 385) — complete
+
+S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
+
+Native goal01a1459b-2ba2-7863-b06e-0fa86eb23b24 remains associated with this invocation S385, start45eb2fbafd. All three waves complete. CDR reviewed; no new human creative direction. Final metadata push and ignored cleanup proof precede native completion. Preserve unrelated residue. Acceptance: docs/RELEASE_S385.json.
+## Where We Left Off (Session 384) — complete
+
+S384 verified full release (2026-10-16T16:32:24.488Z): returning-visitor contract6/6 across three engines18/18, three negative mutations detected, mobile215/215,28 sitemap plus84 incoming-art rendered captures and119 sitemap labels/theme measured at minimum5.291:1. Complete current-source validation537/537; stagingcritical65/65; ceremony11/11; exact required hosted checks; full Pages deployment38931769343 at 7a9159690566056665f2cfb1a92f664f4dc8c87c. Immutable readback1089 served text files and primary315 HTML routes verified. Hosted optional diagnostics: 596 expected,36 unexpected,0 flaky,60 skipped; JSON/HTML reports and168 failure screenshots retained. Existing identity holds, field-vitals limitations and axe gradient incompleteness remain separate. Final metadata push, publisher restoration and owned-process cleanup follow before native goal completion. SIL933/1000 unchanged.
+
+All three waves complete. CDR reviewed; no new human creative direction. Preserve unrelated operator residue. Acceptance: docs/RELEASE_S384.json.
+
+
+S385 delivery follow-through: live mutable directory URL is cached604800seconds. Existing shell pipeline now emits a hashed directory asset, rewrites the actual community script and excludes the mutable alias from service-worker caching. All15 focused cases re-pass across three engines; three negative mutations detect blocked hashed execution, wrong ranks and dropped projects. Existing13 shell unit cases pass, shell references are synchronized, and all14 after captures were recaptured and inspected across seven themes. Before captures remain original. Candidate binding is now present; first full gate failed honestly at160/537 on its absence, not a source runtime failure. Full mobile revalidation and complete local/staging/hosted/production acceptance remain pending.
+
+
+S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.

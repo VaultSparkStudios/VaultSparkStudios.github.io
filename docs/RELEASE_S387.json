@@ -78,7 +78,6 @@
     "Three batches/hour caps successful R2 writes; inbound diagnostic requests and Durable Object calls remain uncapped."
   ],
   "remaining": [
-    "complete current full local validation",
     "required exact-SHA hosted checks",
     "push and production Worker/Pages promotion",
     "production readback",
@@ -103,7 +102,12 @@
     },
     "entropy": 0.204,
     "genome": "23/25",
-    "cdr": "reviewed; no new human creative direction"
+    "cdr": "reviewed; no new human creative direction",
+    "autopilot": {
+      "exitCode": 0,
+      "push": "deliberately deferred until final reconciliation",
+      "measuredRuns": 2
+    }
   },
   "staticStaging": {
     "sha": "4c1f0399fcfbf5e88d801d9b4a30c5dd62f6b415",
@@ -167,5 +171,20 @@
         "truncated": false
       }
     }
+  },
+  "localValidation": {
+    "coverageComplete": true,
+    "passed": 539,
+    "failed": 0,
+    "sourceFingerprint": "0710080efd98312442f6375f",
+    "receiptId": "cf904b4070ab788f39163af3",
+    "completeRuns": 2
+  },
+  "stagingSource": {
+    "candidate": "4c1f0399fcfbf5e88d801d9b4a30c5dd62f6b415",
+    "stagedCommit": "4c1f0399fcfbf5e88d801d9b4a30c5dd62f6b415",
+    "files": 3699,
+    "artifactRoot": "c980416466b70e0325a8c40a19425f6c3e7ee444e4a27d8901c22e20a4039f54",
+    "criticalFilesMatched": 66
   }
 }
