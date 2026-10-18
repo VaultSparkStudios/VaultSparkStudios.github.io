@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-18T00:00:00.000Z",
+  "generatedBy": "scripts/build-news-critique-packets.mjs",
+  "generatedFrom": "published Desk claim receipts and hash-bound visual review evidence; no runtime model call",
+  "story": {
+    "id": "2026-10-18/anthropic-says-its-committing-5-of-its-shares-to",
+    "url": "https://vaultsparkstudios.com/news/2026-10-18/anthropic-says-its-committing-5-of-its-shares-to/",
+    "claimsFeed": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson"
+  },
+  "facts": [
+    {
+      "id": "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-01-5b2ce3cf63b6",
+      "hash": "5b2ce3cf63b67056fe11a9727da08471a84895e468a15a37a4c3d25bf72daf6c",
+      "text": "Anthropic said that it will commit 5% of its shares to the fund — structured as a wholly-owned entity within the company — with the option to contribute an additional 2% for every 50% increase in Anthropic’s value.",
+      "sourceUrl": "https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-18/anthropic-says-its-committing-5-of-its-shares-to/#fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-01-5b2ce3cf63b6"
+    },
+    {
+      "id": "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-02-7bb1c7619f13",
+      "hash": "7bb1c7619f13eacdd3ad9b2f0f5e3fd32680f57084b87e6b5e86d986fa7b268f",
+      "text": "Anthropic announced today that it’s creating a “public benefit fund” that will give the company “increased flexibility and scale” to support projects for societal good.",
+      "sourceUrl": "https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/",
+      "sourceHost": "techcrunch.com",
+      "sourceHealth": {
+        "state": "declared",
+        "checkedAt": null,
+        "method": "editorial-source-link; availability is not inferred at build time"
+      },
+      "articleAnchor": "https://vaultsparkstudios.com/news/2026-10-18/anthropic-says-its-committing-5-of-its-shares-to/#fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-02-7bb1c7619f13"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "stance",
+      "id": "echo:fair",
+      "persona": "echo",
+      "text": "Corporate structures evolve slowly; this is just another layer of governance added to manage influence, like past tech giants did before regulation.",
+      "confidence": 0.8,
+      "verdict": "fair",
+      "direction": 0,
+      "factRefs": [
+        "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-01-5b2ce3cf63b6",
+        "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-02-7bb1c7619f13"
+      ],
+      "evidenceStatus": "linked"
+    },
+    {
+      "kind": "stance",
+      "id": "rex:underhyped",
+      "persona": "rex",
+      "text": "Tying contributions to valuation growth ensures funding scales with success. This unlocks capital for external projects without immediate dilution.",
+      "confidence": 0.7,
+      "verdict": "underhyped",
+      "direction": 1,
+      "factRefs": [
+        "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-01-5b2ce3cf63b6",
+        "fact-2026-10-18-anthropic-says-its-committing-5-of-its-shares-to-02-7bb1c7619f13"
+      ],
+      "evidenceStatus": "linked"
+    }
+  ],
+  "visualEvidence": {
+    "art": "data/news-desk/art/2026-10-18--anthropic-says-its-committing-5-of-its-shares-to.png",
+    "artSha256": "e32dd3bed2fcf7747607274f5bbc46f9cb31513f45d14840f2f16f498866a042",
+    "pageSha256": "d6c59c69c5aa58d1002e1292ad2596d1de484975edab3a2166c906933d4c8386",
+    "safeZone": {
+      "xPct": 5,
+      "yPct": 8,
+      "widthPct": 90,
+      "heightPct": 84,
+      "contract": "editorial focal content and legible text stay inside this inset"
+    },
+    "review": {
+      "pixelsReviewed": false,
+      "semanticVerified": false,
+      "reviewer": "scripts/generate-news-art.mjs procedural fallback pixel-integrity review (real illustration pending)"
+    },
+    "sceneFingerprint": "f33c68a22fb8e564d072688746ab77fe08d55699223a8b793cadbf1338d4fdbd",
+    "promotionEligible": false
+  },
+  "critiqueProtocol": {
+    "posture": "Treat facts as sourced evidence, stances as arguments, predictions as falsifiable claims, and unlinked claims as unsupported by this packet.",
+    "questions": [
+      "Do the cited facts entail the linked claim, merely support it, or leave a gap?",
+      "Which material counterevidence or alternative explanation is absent?",
+      "Is the stated confidence calibrated to the evidence and uncertainty?",
+      "Does the visual framing clarify the argument or bias interpretation?",
+      "What observation would falsify each prediction by its resolve-by date?"
+    ]
+  }
+}
