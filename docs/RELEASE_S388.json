@@ -235,5 +235,23 @@
       "sourceFingerprint": "586c8e8731aece9e270d9b56"
     },
     "recordScope": "Evidence and closeout records follow the pinned runtime release; no claim that post-release record commits were deployed as runtime code."
+  },
+  "postAcceptanceSignals": {
+    "lighthouseTrend": {
+      "observedAt": "2026-10-18T19:10:42.645Z",
+      "source": "Upstream automation commit a5af032266 received after both canonical full runs",
+      "check": "node scripts/check-lighthouse-trend.mjs --check",
+      "exitCode": 1,
+      "state": "unresolved-trend",
+      "games": {
+        "baseline": 0.93,
+        "observed": 0.81
+      },
+      "homepage": {
+        "baseline": 0.82,
+        "observed": 0.76
+      },
+      "scope": "Required exact-candidate hosted Lighthouse workflow passed its absolute release gates. This newly received relative trend is unresolved; cause is not established. No UI/assets changed in the CSP outcome, and no performance improvement is claimed."
+    }
   }
 }

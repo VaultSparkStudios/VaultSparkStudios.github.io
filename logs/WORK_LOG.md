@@ -1616,3 +1616,6 @@ S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private 
 
 
 S388 canonical closeout completed with current541/541 measured checks, zero failed, and cleared session lock. Final evidence records follow pinned runtime candidate98538ff5b9; production acceptance is not a claim that later record-only commits were deployed.
+
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.

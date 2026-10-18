@@ -2880,3 +2880,8 @@ S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private 
 ### S388 canonical closeout completion (same session)
 
 Canonical autopilot exited0, cleared the session lock, and passed two complete541/541 validation runs. Post-closeout reconciliation94f645f136 records the session-closed event and derived contracts; it introduces no product behavior or new decision. This receipt captures that reconciliation in the same S388 writeback. Score remains935/1000; no additional session or velocity. Final acceptance: docs/RELEASE_S388.json. The two SIL follow-ups remain queued.
+
+
+### S388 final automation reconciliation (same session)
+
+Merge8f8c5c426e preserves canonical closeout commits and receives only the automation Lighthouse ledger. Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed. Score remains935/1000; no additional session or velocity.
