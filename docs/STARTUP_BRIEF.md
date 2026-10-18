@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S388) - WHAT SHIPPED ══════════════════════════╗
-║  S388 isolates Content Security Policy (CSP) diagnostics from s  ║
+║  S388 deployed 98538ff5b9: Content Security Policy (CSP) diagno  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,7 +63,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 388 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    539/539 passing  ·  Deploy: full production…          ║
+║  Tests:    541/541 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -73,7 +73,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         539/539 passing (2026-10-18)                   ║
+║  ✓  Tests         541/541 passing (2026-10-18)                   ║
 ║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⚠  Context age   14d                                            ║
@@ -120,8 +120,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   93  [PRODUCT]      Reject unknown arguments in deployment CLI  ║
-║        Reject unknown arguments in deployment CLIs so help requ  ║
+║   93  [PRODUCT]      Reject unknown deployment arguments; use d  ║
+║        Reject unknown deployment arguments; use deterministic h  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Re-read the current 30-day TT cohort after  ║
 ║        Re-read the current 30-day TT cohort after production pr  ║

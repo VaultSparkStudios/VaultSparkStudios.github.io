@@ -1608,3 +1608,8 @@ Fresh startup and nine-axis audit, premise gate before implementation, two indep
 ### S388 pre-release hardening and operational clarification
 
 The first complete local run passed541/541. Before production, review identified public summary read amplification and required a distinct three-computations/hour budget, followed by fresh acceptance. The CSP feature adds no inference service. The earlier session-wide inference-spend statement was too broad: startup used a legacy compactor API default. Its actual usage record is kept privately; subsequent handoff operations use deterministic trimming.
+
+
+### S388 production acceptance
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized.

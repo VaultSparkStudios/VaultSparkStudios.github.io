@@ -19,7 +19,7 @@
          ── reliability ─────────────────────────────────────────────────────────────────────
          Intake no longer writes shared sign-in KV. Summaries count stored reports and
          preserve incomplete-source failures; retained zero never proves no violations.
-         → docs/RELEASE_S388.json; full production acceptance remains pending
+         → docs/RELEASE_S388.json; exact candidate 98538ff5b98aa464655fb1b2fed0c2148b049967 production verified
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 

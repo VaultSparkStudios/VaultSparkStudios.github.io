@@ -131,7 +131,7 @@
       "userOutcome": "Members retain sign-in write allowance; operators can find accurate retained diagnostic counts and distinguish unavailable evidence.",
       "recipe": "Replace the unbounded CSP KV ring writer with private R2 diagnostic batches using the existing isolated TT_REPORTS binding and a separate existing SQLite counter (three stored batches per hour). Bound actual streamed bodies to 16 KiB. Preserve legacy three-day evidence, repair ring-wrap/first-slot summary errors, read new objects with complete bounded pagination, and return unavailable rather than a false zero on incomplete storage. Retain CSP objects for three days. Verify concurrent intake, quota/storage faults, legacy ring boundaries, summary pagination, exact staging and production storage round trips. Keep CSP enforcement, headers and identity policy intact. Also bound public summary computations globally with a distinct existing SQLite object, at most three per fixed hourly window; reject denied, missing or failed admission before storage reads with unavailable/null. Verify real transactional concurrency/reset, isolated staging admission/denial and production readback. Failed computations consume admission; inbound requests/counter calls remain outside this cap.",
       "selectedDepth": "L2",
-      "status": "pending",
+      "status": "shipped",
       "acceptance": "Replace the unbounded CSP KV ring writer with private R2 diagnostic batches using the existing isolated TT_REPORTS binding and a separate existing SQLite counter (three stored batches per hour). Bound actual streamed bodies to 16 KiB. Preserve legacy three-day evidence, repair ring-wrap/first-slot summary errors, read new objects with complete bounded pagination, and return unavailable rather than a false zero on incomplete storage. Retain CSP objects for three days. Verify concurrent intake, quota/storage faults, legacy ring boundaries, summary pagination, exact staging and production storage round trips. Keep CSP enforcement, headers and identity policy intact. Also bound public summary computations globally with a distinct existing SQLite object, at most three per fixed hourly window; reject denied, missing or failed admission before storage reads with unavailable/null. Verify real transactional concurrency/reset, isolated staging admission/denial and production readback. Failed computations consume admission; inbound requests/counter calls remain outside this cap.",
       "premises": [
         {
@@ -177,6 +177,11 @@
           "status": "pending",
           "phase": "pre-release-read-budget",
           "note": "One complete541/541 pre-hardening run passed. Review then required a global read-computation budget to prevent per-user R2/KV read amplification; current-source validation and release must be repeated after the change."
+        },
+        {
+          "at": "2026-10-18T18:44:08.209Z",
+          "status": "shipped",
+          "note": "S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized."
         }
       ]
     }

@@ -2871,3 +2871,8 @@ Brainstorm: observe bounded collection and real account usage; make deploy CLI u
 ### S388 pre-release hardening
 
 Complete pre-hardening validation541/541 is recorded separately from the final read-budget candidate. Summary computations also need an aggregate cap to keep diagnostic cost independent of public request volume. The feature adds no inference service; the legacy startup compactor call is recorded privately. Existing SIL follow-up for safe CLI defaults now includes deterministic compaction. Score remains935/1000; no extra session or velocity counted.
+
+
+### S388 verified release receipt (same session)
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized. Score remains935/1000; no additional session or velocity.

@@ -1627,3 +1627,8 @@ Verified 2026-10-18T16:46:56.351Z: exact source 3ceaae612d54f3f08c9a0c6b074ebc8e
 ## S388 — diagnostic completeness (2026-10-18)
 
 CSP ring index was not a retained-record count; exactly200 reports could read as zero. New summaries count complete legacy/new stored records and expose unavailable on failures. The probe rejects old counter-only responses. Successful retained zero is not proof of no violations. Full staging/production evidence remains pending in docs/RELEASE_S388.json; existing identity/field evidence is not reclassified.
+
+
+### S388 release acceptance
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized. Account-wide quota reduction remains unmeasured.

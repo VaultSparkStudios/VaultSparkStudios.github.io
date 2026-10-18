@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "session": 388,
   "accepted": false,
-  "state": "release-pending",
+  "state": "production-verified-closeout-pending",
   "goal": {
     "threadId": "01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac",
     "createdAt": 1792343118
@@ -55,13 +55,7 @@
     "cspTests": 13
   },
   "remaining": [
-    "fresh full local validation",
-    "isolated exact-candidate staging",
-    "required exact-candidate hosted checks",
-    "main publication",
-    "full Worker/Pages promotion",
-    "production storage/read-budget and source readback",
-    "final closeout"
+    "canonical closeout autopilot and final record publication"
   ],
   "rollback": "Prior verified full production source3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7. Use normal pinned full workflows after staging; no force-push. Existing staging deploy retains timestamped predecessor. Lifecycle pre-mutation snapshot remains in private .cache/tt-storage; remove only new csp-diagnostics-3d rule if reverting it.",
   "stagingWorker": {
@@ -131,5 +125,100 @@
   "stagingIsolation": {
     "verified": true,
     "scope": "Cloudflare settings observed distinct Durable Object namespaces and private R2 buckets; identifiers kept private."
-  }
+  },
+  "releaseCandidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+  "localValidation": {
+    "passed": 541,
+    "failed": 0,
+    "coverageComplete": true,
+    "sourceFingerprint": "cc419d940314f5dc704ee869",
+    "receiptId": "c96cd21ae605a8875184eb28"
+  },
+  "staging": {
+    "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+    "artifactRoot": "b26c0ec2557a4cd9d2a944e03c0c5ef31e9ee2fcc539a97420d18fd0160658cc",
+    "sourceEquivalence": {
+      "verified": true,
+      "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+      "stagedCommit": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+      "files": 3701,
+      "onlyLineEndingTransport": [
+        "scripts/install-git-window-guard.mjs",
+        "scripts/lib/git-window-guard.mjs",
+        "scripts/lib/windows-hide-shim.cjs"
+      ],
+      "localOnlyExcluded": {
+        "count": 40,
+        "sha256": "9c0fec640c602b3b4d85e9cc0337eddd21679204b02d82ca024c8cfba767e802",
+        "publication": "Exact ignored local cache inventory remains private; none was deployed."
+      }
+    },
+    "ceremony": {
+      "passed": 11,
+      "total": 11
+    }
+  },
+  "production": {
+    "tag": "s388-production-20261018",
+    "pages": {
+      "runId": 39155025993,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39155025993",
+      "immutableOrigin": "https://3a6c95dc.vaultsparkstudios-website.pages.dev",
+      "inventory": 1107,
+      "differ": 0,
+      "unread": 0,
+      "primaryHtml": 323,
+      "unverified": 0
+    },
+    "worker": {
+      "at": "2026-10-18T18:41:40.530Z",
+      "mode": "production",
+      "origin": "https://vaultsparkstudios.com",
+      "workerVersion": "b225a999-a147-4d94-bb51-88fe6e496f37",
+      "deploymentId": "46b14895-316a-44a4-a49e-19713138085f",
+      "intake": 204,
+      "r2Roundtrip": true,
+      "aggregate": {
+        "state": "complete",
+        "total3d": 1,
+        "countMeaning": "retained-reports",
+        "exhaustive": false
+      },
+      "login": 302,
+      "syntheticFixtureRemoved": true,
+      "fixtureKey": "csp/raw/dt=2026-10-18/74b772b2-9c9c-45d1-aaee-fb4bb0deeda6.json",
+      "sourceHashes": {
+        "cloudflare/security-headers-worker.js": "977015c38c170af9d4a0de418a9c9766015d77973b967497ece0a69a52824c44",
+        "cloudflare/csp-reports.mjs": "0d897b3d9d40e328bf61eabfc2555e3000fc2446c006d4ccc002471edd0bb436",
+        "cloudflare/public-form-rate-limit.mjs": "2d164d9a5c58b55653c01520945106c9bd6ad9e8293a2170c466b6db45046da7",
+        "cloudflare/wrangler.toml": "4212623b9f2420fa1760e5cbad3b9d8919a7870c0dead3bd51825968b2a33b7a"
+      },
+      "runId": 39155022769,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39155022769"
+    },
+    "mandatoryEngagement": {
+      "runId": 39153818917,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39153818917",
+      "headSha": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+      "job": "compliance",
+      "steps": [
+        "Homepage engagement and intelligence contract",
+        "Returning visitor momentum contract",
+        "Public community and ecosystem data contracts"
+      ],
+      "conclusion": "success"
+    },
+    "ceremony": {
+      "state": "passed",
+      "passed": 11,
+      "total": 11,
+      "source": "Successful canonical step and exact workflow log",
+      "logSha256": "e963e577e18056763776e76fcb274b186d7d077d8cf8d7dc8d49be09b538c9bd"
+    }
+  },
+  "limitations": [
+    "Other shared KV writers remain; no account-wide quota cure claimed.",
+    "Limits bound retained batches and expensive summary computations, not inbound requests or counter calls. Public callers can exhaust temporary summary visibility.",
+    "Retained reports are samples, not a traffic census; existing identity/field evidence holds and schema-validator TODO remain separate."
+  ]
 }

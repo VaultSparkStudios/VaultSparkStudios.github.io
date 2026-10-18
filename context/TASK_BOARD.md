@@ -3,7 +3,7 @@
 - [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
 - [ ] [SIL][S388][OPS/P2] Reject unknown deployment arguments; use deterministic handoff compaction by default and require approval for paid summaries.
 
-Wave 1 startup/fresh audit complete; Wave 2 CSP implementation/tests/review complete; Wave 3 full validation/staging/publication/production acceptance in progress.
+Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
 
 ## S387 — reliability follow-through
 
@@ -719,4 +719,4 @@ Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metad
 
 ## S388 authorized arc
 
-- [ ] [S388 #1] CSP isolation implementation verified; full local, staging, main publication and production acceptance remain in docs/RELEASE_S388.json.
+- [x] [S388 #1] CSP isolation deployed; full541, exact staging/hosted checks and production readback verified. docs/RELEASE_S388.json.
