@@ -79,7 +79,6 @@
   ],
   "remaining": [
     "complete current full local validation",
-    "exact-candidate static staging and ceremony",
     "required exact-SHA hosted checks",
     "push and production Worker/Pages promotion",
     "production readback",
@@ -105,5 +104,68 @@
     "entropy": 0.204,
     "genome": "23/25",
     "cdr": "reviewed; no new human creative direction"
+  },
+  "staticStaging": {
+    "sha": "4c1f0399fcfbf5e88d801d9b4a30c5dd62f6b415",
+    "completedAt": "2026-10-18T15:29:46.449Z",
+    "receipt": "8c4452f01ee9bc76f69a4a48",
+    "ceremony": {
+      "state": "passed",
+      "steps": 11
+    },
+    "browser": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-18T15:31:50.088Z",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/staging-release.spec.js",
+      "state": "passed",
+      "expectedTests": 6,
+      "observedTests": 6,
+      "executedTests": 3,
+      "passed": 3,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "held": 3,
+      "heldContracts": [
+        "anonymous Obelisk boundary is fail-closed and reaches the provider"
+      ],
+      "heldSurfaces": [
+        "identity",
+        "worker:identity"
+      ],
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "attention": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-18T15:33:07.996Z",
+      "generatedBy": "scripts/run-attention-release-gate.mjs",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/attention-surfaces.spec.js",
+      "state": "passed",
+      "expectedTests": 15,
+      "observedTests": 15,
+      "passed": 15,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    }
   }
 }
