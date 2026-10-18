@@ -67,9 +67,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ⚠  ████████████████████████  102% used                          ║
-║     278,446 / 272,000 tok  ·  codex  ·  heuristic-stale          ║
-║     Verdict: CONSIDER_CLOSEOUT  ← act now                        ║
+║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
+║     no ledger measurement yet this session — a byte estimate…    ║
+║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗

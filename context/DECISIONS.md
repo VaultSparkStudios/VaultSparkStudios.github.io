@@ -2344,3 +2344,6 @@ The founder authorized direct main publication and full deployment for this goal
 ## D-S387.3 — Bound diagnostic storage before release (2026-10-18)
 
 R2 intake must not turn a shared free KV outage risk into unbounded diagnostic writes. Reuse the existing SQLite counter on the distinct diagnostic:tt:write-budget:v1 object: at most 3 batches/hour (72/day), each with at most 5 reports and an actual streamed 8192-byte request bound. Missing or failed counter/storage drops best-effort diagnostics without KV fallback. Existing hashed per-visitor form objects and auth policy are unchanged. Counts represent stored samples, never a complete traffic census.
+
+### D-S387.4 — Missing meter remains unknown
+A five-second meter timeout made the brief publish a file-byte estimate as runtime pressure and failed the live freshness gate. The fallback now keeps usage null and reports UNMEASURED; independent review and the existing freshness fixtures passed.
