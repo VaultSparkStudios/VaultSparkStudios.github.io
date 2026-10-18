@@ -1,3 +1,11 @@
+## S387 — reliability follow-through
+
+- [x] Implement TT diagnostic isolation, complete legacy/R2 evidence reading, private retention and isolated staging round-trip acceptance. Full release acceptance is recorded separately in docs/RELEASE_S387.json.
+- [ ] [SIL][S387][RELIABILITY/P1] Attribute remaining shared KV writers (CSP reports, rate counters and other account namespaces); verify real daily usage before claiming the account-wide outage risk eliminated.
+- [ ] [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
+
+Wave 1 · trace diagnostic quota coupling and audit: complete. Wave 2 · isolate intake and preserve evidence: implementation/staging verified. Wave 3 · exact-candidate release and closeout: acceptance source docs/RELEASE_S387.json.
+
 ## S386 — Desk art review contract
 
 - [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json

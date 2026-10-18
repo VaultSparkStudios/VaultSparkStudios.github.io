@@ -1750,3 +1750,10 @@ S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-se
 Decisions D-S386.3 and D-S386.4. Release docs/RELEASE_S386.json.
 
 S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction.
+
+
+## Session 387 — 2026-10-18 — diagnostic isolation
+
+S387 moves normalized Trusted Types diagnostic batches to private R2 storage, with no auth-KV access or fallback. Both evidence readers combine legacy KV and complete paginated R2 reads; malformed or failed sources remain nonpassing. Production and isolated staging buckets have verified 30-day tt/raw/ retention and private access. Source commit f42694e6a0; staging Worker b774a556-9a59-40b9-a6f0-9d14b1310501 passed an actual report round trip and /login 302 to Obelisk. Independent review fixed one incomplete-XML finding and then passed. Focused tests pass; unit suite has 440 passing and one pre-existing schema-validator TODO. The sitemap generator also adds the existing sixth VERA archive page, covered by 28 inspected theme/viewport before/after captures.
+
+Acceptance is maintained in docs/RELEASE_S387.json; implementation/staging evidence does not claim full production acceptance. No new human creative direction.

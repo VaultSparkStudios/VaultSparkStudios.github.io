@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Released S386: Desk art review contract and newest-story contract; next is the KV write-budget P0.",
+  "currentFocus": "S387: Trusted Types diagnostics isolated from auth KV; full release acceptance is tracked in docs/RELEASE_S387.json.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Resolve the KV free-tier write budget so sign-in cannot be starved by telemetry or staging traffic.",
+  "nextMilestone": "Verify remaining shared KV usage without claiming account-wide quota isolation from one diagnostic migration.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -24,17 +24,17 @@
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
     "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
-    "KV free write quota (account-wide, ~1,000/day) exhausted 2026-10-16; sign-in returned named 503 until 00:00Z reset. Recurrence risk until auth storage is isolated from telemetry writes."
+    "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-17",
-  "currentSession": 386,
+  "lastUpdated": "2026-10-18",
+  "currentSession": 387,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-13",
   "silScore": 935,
-  "silAvg3": 933.7,
-  "silVelocity": 3,
+  "silAvg3": 934.3,
+  "silVelocity": 1,
   "silDebt": "down",
-  "silLastSession": 386,
+  "silLastSession": 387,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -80,12 +80,12 @@
     }
   ],
   "vaultStatus": "SPARKED",
-  "ignisScore": 46461,
-  "ignisScoreDelta": -270,
+  "ignisScore": 46190,
+  "ignisScoreDelta": -271,
   "ignisGrade": "FORGE",
-  "ignisLastComputed": "2026-10-16T17:03:48.560Z",
-  "entropyScore": 0.179,
-  "entropyLastComputed": "2026-10-15",
+  "ignisLastComputed": "2026-10-18T14:44:04.662Z",
+  "entropyScore": 0.204,
+  "entropyLastComputed": "2026-10-18",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-10-16T19:59:21.348Z",
   "silRubricVersion": "3.0",
@@ -102,15 +102,15 @@
     "capitalEfficiency": 95,
     "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 386,
+  "silCategoriesUpdatedSession": 387,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-17",
+    "date": "2026-10-18",
     "passing": 15,
-    "warning": 1,
-    "failing": 1,
+    "warning": 2,
+    "failing": 0,
     "blockingFailing": 0,
-    "advisoryFailing": 1,
+    "advisoryFailing": 0,
     "total": 17,
     "score": 88,
     "checks": [
@@ -215,7 +215,7 @@
       {
         "id": "sched-staleness",
         "pass": false,
-        "warn": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -263,7 +263,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f2e7a17da3aa1b5e926e07ee",
   "testsSourceFingerprint": "98af2b44764a9508bba8caf4",
-  "lastSessionSummary": "S386 (2026-10-16, from SIL ledger): Total: 935/1000 | Velocity: 3.",
+  "lastSessionSummary": "S387 diagnostic storage isolation; local, staging and production acceptance recorded separately in docs/RELEASE_S387.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 385,
@@ -290,13 +290,13 @@
     "validation": "Full537/537; mobile215/215; collection689/619/619; isolation2/2; streamed archive17/17; visual112 inspected; critical65; browser3passed/3held; attention15; ceremony11",
     "closeoutVerification": "Canonical autopilot0; independent reviews passed; original publisher states restored; own shell/worktree cleanup verified"
   },
-  "lastSession": 386,
+  "lastSession": 387,
   "sessionState": {
     "version": 1,
-    "durableSession": 386,
-    "currentFocus": "Desk art autopilot reliability: reviewer brief parity and bounded critique-guided re-rolls.",
-    "nextMilestone": "Next scheduled art runs publish the approved cartoons and a numeral-free banner; CI Health Monitor green.",
-    "lastSessionSummary": "S386 (2026-10-16, from SIL ledger): Total: 935/1000 | Velocity: 3."
+    "durableSession": 387,
+    "currentFocus": "S387: Trusted Types diagnostics isolated from auth KV; full release acceptance is tracked in docs/RELEASE_S387.json.",
+    "nextMilestone": "Verify remaining shared KV usage without claiming account-wide quota isolation from one diagnostic migration.",
+    "lastSessionSummary": "S387 diagnostic storage isolation; local, staging and production acceptance recorded separately in docs/RELEASE_S387.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -317,5 +317,6 @@
   "currentBuildState": "passed",
   "currentBuildNote": "S385 current source complete537/537; receipt6f93630b73630ef28cd356f9; source98af2b44764a9508bba8caf4",
   "lastDeploySession": 385,
-  "lastDeployStatus": "full production verified (facc75343b67; run38950850357)"
+  "lastDeployStatus": "full production verified (facc75343b67; run38950850357)",
+  "silAvg5": 933.8
 }

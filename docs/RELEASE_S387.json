@@ -1,0 +1,95 @@
+{
+  "session": 387,
+  "state": "in-progress",
+  "nativeGoal": {
+    "threadId": "01a14f58-25bc-7d32-b310-7fc051d58f6d",
+    "createdAt": 1792332555,
+    "sessionStart": "2026-10-18T14:10:04.440Z",
+    "startHead": "37964277185349772d3da0ebc21b18da1330dc01"
+  },
+  "authorization": "Founder /arc goal with direct main push and full deploy.",
+  "implementation": {
+    "sourceCommit": "f42694e6a0",
+    "audit": "docs/AUDIT_2026-10-18.json",
+    "focusedTests": "7 TT storage + 76 Worker + 8 clustering; 14 existing signing/path/error-policy and 4 retention checks",
+    "unitSuite": {
+      "passed": 440,
+      "failed": 0,
+      "todo": 1,
+      "note": "Existing bare required-schema validator TODO; not counted as passed."
+    },
+    "review": {
+      "round1": "one XML completeness finding fixed",
+      "round2": "pass"
+    },
+    "visual": "28 inspected sitemap before/after captures across seven themes and desktop/mobile; docs/visual-qa/LATEST.json"
+  },
+  "storage": {
+    "at": "2026-10-18T14:18:39.996Z",
+    "applied": false,
+    "buckets": [
+      {
+        "bucket": "vaultspark-rum",
+        "retentionDays": 30,
+        "prefix": "tt/raw/",
+        "private": true,
+        "unrelatedRulesPreserved": true
+      },
+      {
+        "bucket": "vaultspark-tt-staging",
+        "retentionDays": 30,
+        "prefix": "tt/raw/",
+        "private": true,
+        "unrelatedRulesPreserved": true
+      }
+    ]
+  },
+  "stagingWorker": {
+    "at": "2026-10-18T14:18:38.725Z",
+    "workerVersion": "b774a556-9a59-40b9-a6f0-9d14b1310501",
+    "intake": 204,
+    "r2Roundtrip": true,
+    "before": 0,
+    "after": 1,
+    "login": 302,
+    "legacyKvComplete": true,
+    "marker": "/__qa__/s387-1792333117666.js"
+  },
+  "rollback": {
+    "workerVersion": "ed6ca127-f30b-4397-8ee5-852451cb335a",
+    "pagesCandidate": "cef79ce71989eb9fa60e51df31a36e944e8dff41"
+  },
+  "limitations": [
+    "Other shared KV writers remain; this does not prove account-wide quota independence.",
+    "Existing identity/field-vitals holds and the schema-validator TODO remain separate."
+  ],
+  "remaining": [
+    "complete current full local validation",
+    "exact-candidate static staging and ceremony",
+    "required exact-SHA hosted checks",
+    "push and production Worker/Pages promotion",
+    "production readback",
+    "canonical closeout completion and final metadata push"
+  ],
+  "closeoutPreparation": {
+    "sil": 935,
+    "previousSil": 935,
+    "ignis": {
+      "score": 46190,
+      "tier": "FORGE",
+      "project": "vaultsparkstudios-website",
+      "sourceFingerprint": "48eb51d94acb7d75bfe9ed22bdbbc22e3951097649b31a8b58b9c5b36411fe53",
+      "resultVerified": true,
+      "at": "2026-10-18T14:44:04.662Z"
+    },
+    "doctor": {
+      "passing": 15,
+      "warning": 2,
+      "failing": 0,
+      "blockingFailing": 0
+    },
+    "entropy": 0.204,
+    "genome": "23/25",
+    "cdr": "reviewed; no new human creative direction"
+  }
+}

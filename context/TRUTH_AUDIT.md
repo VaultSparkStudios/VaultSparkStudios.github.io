@@ -1,3 +1,8 @@
+## S387 — 2026-10-18 — report storage and release truth
+
+TT intake no longer depends on auth KV. Staging R2 report round trip and unchanged Obelisk redirect are observed. Both buckets are private with 30-day prefix retention. Independent review passed after fixing malformed HTTP-200 XML being treated as complete evidence. Source implementation is distinct from full deployment; acceptance is exclusively docs/RELEASE_S387.json. Other KV writers, existing identity holds, the unit TODO and unmeasured field-vitals remain visible.
+
+
 ### S378 production acceptance — 2026-10-13T22:52:51.834Z
 
 Own-invocation release accepted; docs/RELEASE_S378.json binds exact source, actual deploy steps and served proofs. Staging receipt intent6633 differs from actual candidate57ca: independent Git/served hashes establish the relationship. Primary raw HTML differs due to narrowly verified provider transport; no raw-primary tree-current or positive held-identity acceptance is claimed. Canonical closeout/closing publication still pending.

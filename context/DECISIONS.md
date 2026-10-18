@@ -2330,3 +2330,12 @@ After two in-run re-rolls the staged image was re-reviewed unchanged every run, 
 ## D-S386.4 — Persona pagination stays out of the Desk lane until the server rules move with it (2026-10-16)
 
 The Desk content allowlist admits persona index pages but not `news/personas/<p>/page/<n>/`; editions add those pages and the sitemap lists them, so they 404 until a full promotion. The Hetzner staging receiver validates against a root-owned copy of the rules, so changing only the repository allowlist would make the lane send paths staging refuses and break the newsroom release. This session ships the pages through the full promotion; the coordinated allowlist and server-rules change remains a separate, approved trust-policy update.
+
+
+## D-S387.1 — Diagnostics do not consume sign-in KV writes (2026-10-18)
+
+Use private R2 batches for normalized Trusted Types reports, reusing the existing signer. Keep sampling and enforcement policy unchanged; object-store faults never fall back to auth KV. The private tt/raw/ prefix expires after 30 days, preserving unrelated lifecycle rules; staging has its own bucket. Evidence readers include legacy KV and current R2, and reject incomplete or failed reads. Other shared KV writers remain explicit follow-up work.
+
+## D-S387.2 — Bounded release and truthful evidence (2026-10-18)
+
+The founder authorized direct main publication and full deployment for this goal. Preserve existing identity holds; routine promotion uses the scoped release contract and actual candidate checks. Canon checks found no ABSOLUTE gaps; existing Obelisk and terminology STRONG gaps remain outside this diagnostic change and are not claimed resolved. Preserve unrelated operator residue. The broad unit suite has one existing schema-validator TODO, distinct from ordinary failures; no green wrapper converts it into a passing test.
