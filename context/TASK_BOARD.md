@@ -8,7 +8,7 @@
 - [ ] [SIL][S389] Audit other outward CLIs.
 - [ ] [SIL][S389] Measure extract omissions.
 
-Waves1–2 verified; Wave3 pending: docs/RELEASE_S389.json.
+Waves1–2 verified; Wave3 release pending: docs/RELEASE_S389.json.
 
 ## S388 — release follow-through
 

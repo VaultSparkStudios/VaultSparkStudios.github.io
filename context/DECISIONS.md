@@ -2381,3 +2381,6 @@ Reuse the existing deterministic generator and active public insight/tier depend
 ## D-S389.4 — Publish field proof after grading
 
 Reuse canonical measured verdicts and existing proof generator. Grade before deriving field-win and its consumers; stage the proof in all affected publishers. No measurement/classification change or session performance-improvement claim.
+
+
+S389 D-S389.4 implementation clarification: playable recommendations embed the field-proof hash. The full profile now derives them immediately after field proof; RUM rebuilds/checks/stages them, and the existing graph node enforces their publication.43 order assertions and37 cascade fixtures cover this closure.

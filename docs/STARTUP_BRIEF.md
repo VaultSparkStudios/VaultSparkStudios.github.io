@@ -42,7 +42,7 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    935/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -74,7 +74,7 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         541/541 passing (2026-10-18)                   ║
-║  ✓  Velocity      4 →  ·  Debt: →                                ║
+║  ✓  Velocity      5 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   15d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  0d old                         ║
@@ -108,7 +108,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  4→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  5→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝

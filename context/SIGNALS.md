@@ -1,6 +1,6 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         541/541 passing (2026-10-18)                   ║
-║  ✓  Velocity      4 →  ·  Debt: →                                ║
+║  ✓  Velocity      5 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   15d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  0d old                         ║

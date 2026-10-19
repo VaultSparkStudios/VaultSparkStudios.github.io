@@ -5,7 +5,7 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Five locally verified repairs; full release acceptance and closeout remain pending.        ║
+║    Five repairs locally verified; complete validation and production acceptance pending.      ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ████████░░   80/100                                                       ║
 ║  ECOSYSTEM IMPACT   ████████░░   80/100                                                       ║

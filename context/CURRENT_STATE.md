@@ -1,10 +1,6 @@
-## Session 389 — reliable release tooling (2026-10-19)
+## Session 389 — local implementation verified; release pending (2026-10-19)
 
-S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
-
-Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
-
-S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed.
 
 ## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
 

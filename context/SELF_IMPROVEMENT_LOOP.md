@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): ▄▄▆██ (→)
-Avgs —3:935.0 |5:934.2 |10:933.6 |25:943.2 |all:unmeasured (archived history excluded)
+Sparkline (last5 totals): 933 → 935 → 935 → 935 → 935
+Avgs (available audit totals) —3:935.0 |5:934.6 |10:933.8 |25:945.0 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-19 | Session389 | Total:935/1000 | Velocity:2
-  └ CSP diagnostic reliability; production acceptance tracked separately in docs/RELEASE_S388.json.
+Last session: 2026-10-19 | Session389 | Total:935/1000 | Velocity:5
+  └ Five verified local repairs; complete validation and production acceptance pending in docs/RELEASE_S389.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2921,3 +2921,6 @@ S389 required Oracle repair: existing public answer content is unchanged (13 ans
 
 
 S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+S389 local closeout evidence: S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed. Score935/1000 and velocity5 unchanged. Existing two S389 SIL follow-ups remain queued. Complete validation and release evidence will be appended to this same session; no new session is authorized by continuation.

@@ -1648,3 +1648,6 @@ S389 full-check findings: startup source budget was42150/42000 and the human sit
 
 
 S389 Oracle corpus drift was generatedAt only; answer text did not change. Its previously unmodeled dependency is now explicit and the two build profiles derive insights before answers. Diagnostic remainder runs never substitute for the final complete check.
+
+
+S389 local closeout: S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed. Automated art commits preserved. Timeline refresh uses the existing gateway credential after an unauthenticated rate limit; public GitHub/Desk observations recovered. Historical field regressions and identity holds remain visible.
