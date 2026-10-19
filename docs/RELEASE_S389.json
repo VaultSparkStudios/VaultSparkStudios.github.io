@@ -5,8 +5,8 @@
     "threadId": "01a1557e-9d32-7d13-b5cf-3e802fd6616d",
     "createdAt": 1792435752
   },
-  "accepted": false,
-  "state": "core-release-verified-status-followthrough",
+  "accepted": true,
+  "state": "verified",
   "scope": "Strict deployment CLI admission; deterministic handoff extraction; existing Dot/Echo archive discovery through the human sitemap and publication cascade; Oracle answer dependency/order repair without answer text changes; field-proof publication order preserving measured verdict logic. Identity policy unchanged.",
   "implementation": {
     "focused": {
@@ -94,11 +94,7 @@
       "receipt": "docs/mobile-audit/receipt.json"
     }
   },
-  "remaining": [
-    "Publish final status content partition",
-    "Restore publishers and nightly task",
-    "Push final evidence and retire owned resources"
-  ],
+  "remaining": [],
   "rollback": {
     "productionBefore": {
       "schemaVersion": "1.1",
@@ -136,7 +132,8 @@
     "pushPending": false,
     "session": 389,
     "silScore": 935,
-    "velocity": 5
+    "velocity": 5,
+    "autopilotLedger": "portfolio/CLOSEOUT_AUTOPILOT_RECEIPTS.ndjson"
   },
   "production": {
     "pages": {
@@ -2214,7 +2211,7 @@
     "worker": {
       "verified": true,
       "acceptanceScope": "Exact Worker deployment/provider version plus live anonymous runtime checks. Existing held authenticated journeys remain separate.",
-      "verifiedAt": "2026-10-19T21:21:00.756Z",
+      "verifiedAt": "2026-10-19T21:45:32.441Z",
       "candidate": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
       "tag": "s389-production-20261019",
       "runId": 39326087269,
@@ -2241,5 +2238,550 @@
         "logSha256": "6865ccf8472b0a615deceb1f9c42a5e9df5cfc74d083aa36ffe57735dd906268"
       }
     }
+  },
+  "acceptedAt": "2026-10-19T21:45:45.334Z",
+  "statusFollowThrough": {
+    "verified": true,
+    "verifiedAt": "2026-10-19T21:44:59.453Z",
+    "baseline": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+    "contentHead": "4b4c2dba41adc17aa5f7af96e9301e73f48df0ea",
+    "runId": 39329492923,
+    "workflowUrl": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39329492923",
+    "immutableOrigin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+    "paths": [
+      "api/ai-discovery-health.json",
+      "api/analytics-summary.json",
+      "api/candidate-artifact-manifest.json",
+      "api/canonical-destination-reachability.json",
+      "api/ecosystem-state.json",
+      "api/ecosystem-stats.json",
+      "api/ecosystem-velocity.json",
+      "api/field-win.json",
+      "api/geo-vitals.json",
+      "api/heartbeat.json",
+      "api/ignis-platform-status.json",
+      "api/intelligence-budget.json",
+      "api/intent-map.json",
+      "api/nervous-system.json",
+      "api/oracle-insights.json",
+      "api/proof-aware-projects.json",
+      "api/proof-surface-diagnostics.json",
+      "api/public-intelligence.json",
+      "api/release-dependencies.json",
+      "api/status-proof.json",
+      "api/studio-timeline.json",
+      "api/tt-summary.json",
+      "api/ux-decision-ledger.json",
+      "data/stats-surface.json",
+      "stats.json"
+    ],
+    "pathSetSha256": "2609f7674006cd622fa06653c5edc01368787e8cc2460c7c0ff2593f25c0968f",
+    "withheldServed": [],
+    "checks": 75,
+    "stamps": [
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-19",
+        "sha": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+        "baselineSha": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+        "builtAt": "2026-10-19T21:43:26.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "4b4c2dba41adc17aa5f7af96e9301e73f48df0ea",
+        "contentLanePaths": "25 paths",
+        "contentLanePathSetSha256": "2609f7674006cd622fa06653c5edc01368787e8cc2460c7c0ff2593f25c0968f",
+        "workflowRunId": "39329492923"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "schemaVersion": "1.1",
+        "generatedAt": "2026-10-19",
+        "sha": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+        "baselineSha": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+        "builtAt": "2026-10-19T21:43:26.000Z",
+        "deployedBy": "pages-deploy-content-lane",
+        "contentLaneHead": "4b4c2dba41adc17aa5f7af96e9301e73f48df0ea",
+        "contentLanePaths": "25 paths",
+        "contentLanePathSetSha256": "2609f7674006cd622fa06653c5edc01368787e8cc2460c7c0ff2593f25c0968f",
+        "workflowRunId": "39329492923"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-10-19",
+        "sha": "e385fb7c69240a49a4f0ceb52919e501fc791af2",
+        "builtAt": "2026-10-19T21:41:21.000Z",
+        "deployedBy": "staging-content-lane",
+        "contentLaneHead": "4b4c2dba41adc17aa5f7af96e9301e73f48df0ea",
+        "contentLanePaths": "25 paths"
+      }
+    ],
+    "readback": [
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ai-discovery-health.json",
+        "sha256": "05691fea9750b083dca54b3d639b12b00df659f7320978fbd2dfb060c5cff810"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ecosystem-state.json",
+        "sha256": "f794d481f108d4343e8e86ed0618c7acfb0fc27c2bfa1969d7f22a09dd56d3b6"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/canonical-destination-reachability.json",
+        "sha256": "701eb1d832b5b39d71f32b668e350c0b861367a7bb4212696bf50c2b00d03bdb"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/candidate-artifact-manifest.json",
+        "sha256": "1695d1875d15780fdfe73c6befa95af4f8054281e728c3171d003c0ba43a2594"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/analytics-summary.json",
+        "sha256": "4b3fa8e30359e1749ceaef6db09ab3c3159d31054119e5714c7717226eecb0a7"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ecosystem-velocity.json",
+        "sha256": "011c1cc03c38783b5ba588cf7724cb0699597ed68973dc5c0e106d9a0ce6b188"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/field-win.json",
+        "sha256": "6148100afc771204d253bd917f4b4d983a2d3318d2396413794b0d7180e05ffe"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/geo-vitals.json",
+        "sha256": "d2cfb2df7906d9616e299894ee9f51bc0b1b4c179ddbb2763792215b5aca986b"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ecosystem-stats.json",
+        "sha256": "aaec20565ba4fac9c6e6dfabab3342f7fd8c7f4394bac885ee5353468573efc5"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/heartbeat.json",
+        "sha256": "49defbbf207d5f1eea1ef3305f8543fca3564512faa3d541bb3b0630cc33fc92"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ignis-platform-status.json",
+        "sha256": "1c9b535307f12869db8da58f7b3c301880a459b24d24ff335cbb9bce3eb28ac3"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/intelligence-budget.json",
+        "sha256": "be97eee55f4969e406adc0925f0afaee34b963cadcdf02ade3cce540c56f2b06"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/intent-map.json",
+        "sha256": "4f43a51497e0f5a486f732b78e824483b08020ffea778998f0160cebd2f744b9"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/nervous-system.json",
+        "sha256": "78c3d3eb557f924f0601047e4968a8eac51f7ca661fa0892d6cf60f291dae486"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/oracle-insights.json",
+        "sha256": "3097e670477ab9824bd84a14ce348b36281e41cbf752ea110c69ba9c975fc859"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/proof-aware-projects.json",
+        "sha256": "3d835afb9dae15c238e81a487933fa483b77c11023278a8348f7cdfb969d6e7f"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/release-dependencies.json",
+        "sha256": "97cc1b9eeefe416979009ae2baa940eca12a1faf051bdb26ee400e5579755ef0"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/proof-surface-diagnostics.json",
+        "sha256": "116c41d63a41fa6312e7189d59674e2b552f7f0e8d5cd34928fc40da8e692657"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/public-intelligence.json",
+        "sha256": "203890dd8f78a7f63837ca5c7e31e6d357d738b3cc82534b2a722bf7491ad76d"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/status-proof.json",
+        "sha256": "3341593dc136e51e5033677319bcf8b258d58a693b1dfd2259ca18687f72c1bb"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/tt-summary.json",
+        "sha256": "1589855bd92ac81042dee3f8ed421331116f2e3136bbd89795b8b9799b0e8c8c"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/ux-decision-ledger.json",
+        "sha256": "efee696ce9910c883a8b5069c03958525bd098c7e61fa1bea711a7e30ac47fb3"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "data/stats-surface.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "api/studio-timeline.json",
+        "sha256": "e2912cfd372ad1bad22b6d853dc5e1446b736199b94d6fb5e0316212078f0861"
+      },
+      {
+        "origin": "https://a2f74706.vaultsparkstudios-website.pages.dev",
+        "file": "stats.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ai-discovery-health.json",
+        "sha256": "05691fea9750b083dca54b3d639b12b00df659f7320978fbd2dfb060c5cff810"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/analytics-summary.json",
+        "sha256": "4b3fa8e30359e1749ceaef6db09ab3c3159d31054119e5714c7717226eecb0a7"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/canonical-destination-reachability.json",
+        "sha256": "701eb1d832b5b39d71f32b668e350c0b861367a7bb4212696bf50c2b00d03bdb"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/candidate-artifact-manifest.json",
+        "sha256": "1695d1875d15780fdfe73c6befa95af4f8054281e728c3171d003c0ba43a2594"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ecosystem-state.json",
+        "sha256": "f794d481f108d4343e8e86ed0618c7acfb0fc27c2bfa1969d7f22a09dd56d3b6"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ecosystem-velocity.json",
+        "sha256": "011c1cc03c38783b5ba588cf7724cb0699597ed68973dc5c0e106d9a0ce6b188"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/field-win.json",
+        "sha256": "6148100afc771204d253bd917f4b4d983a2d3318d2396413794b0d7180e05ffe"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/geo-vitals.json",
+        "sha256": "d2cfb2df7906d9616e299894ee9f51bc0b1b4c179ddbb2763792215b5aca986b"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ecosystem-stats.json",
+        "sha256": "aaec20565ba4fac9c6e6dfabab3342f7fd8c7f4394bac885ee5353468573efc5"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/heartbeat.json",
+        "sha256": "49defbbf207d5f1eea1ef3305f8543fca3564512faa3d541bb3b0630cc33fc92"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/intelligence-budget.json",
+        "sha256": "be97eee55f4969e406adc0925f0afaee34b963cadcdf02ade3cce540c56f2b06"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ignis-platform-status.json",
+        "sha256": "1c9b535307f12869db8da58f7b3c301880a459b24d24ff335cbb9bce3eb28ac3"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/intent-map.json",
+        "sha256": "4f43a51497e0f5a486f732b78e824483b08020ffea778998f0160cebd2f744b9"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/nervous-system.json",
+        "sha256": "78c3d3eb557f924f0601047e4968a8eac51f7ca661fa0892d6cf60f291dae486"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/oracle-insights.json",
+        "sha256": "3097e670477ab9824bd84a14ce348b36281e41cbf752ea110c69ba9c975fc859"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/proof-aware-projects.json",
+        "sha256": "3d835afb9dae15c238e81a487933fa483b77c11023278a8348f7cdfb969d6e7f"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/release-dependencies.json",
+        "sha256": "97cc1b9eeefe416979009ae2baa940eca12a1faf051bdb26ee400e5579755ef0"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/proof-surface-diagnostics.json",
+        "sha256": "116c41d63a41fa6312e7189d59674e2b552f7f0e8d5cd34928fc40da8e692657"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/public-intelligence.json",
+        "sha256": "203890dd8f78a7f63837ca5c7e31e6d357d738b3cc82534b2a722bf7491ad76d"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/status-proof.json",
+        "sha256": "3341593dc136e51e5033677319bcf8b258d58a693b1dfd2259ca18687f72c1bb"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/tt-summary.json",
+        "sha256": "1589855bd92ac81042dee3f8ed421331116f2e3136bbd89795b8b9799b0e8c8c"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/ux-decision-ledger.json",
+        "sha256": "efee696ce9910c883a8b5069c03958525bd098c7e61fa1bea711a7e30ac47fb3"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "data/stats-surface.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "api/studio-timeline.json",
+        "sha256": "e2912cfd372ad1bad22b6d853dc5e1446b736199b94d6fb5e0316212078f0861"
+      },
+      {
+        "origin": "https://vaultsparkstudios.com",
+        "file": "stats.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ai-discovery-health.json",
+        "sha256": "05691fea9750b083dca54b3d639b12b00df659f7320978fbd2dfb060c5cff810"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/canonical-destination-reachability.json",
+        "sha256": "701eb1d832b5b39d71f32b668e350c0b861367a7bb4212696bf50c2b00d03bdb"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ecosystem-state.json",
+        "sha256": "f794d481f108d4343e8e86ed0618c7acfb0fc27c2bfa1969d7f22a09dd56d3b6"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/analytics-summary.json",
+        "sha256": "4b3fa8e30359e1749ceaef6db09ab3c3159d31054119e5714c7717226eecb0a7"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/candidate-artifact-manifest.json",
+        "sha256": "1695d1875d15780fdfe73c6befa95af4f8054281e728c3171d003c0ba43a2594"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ecosystem-velocity.json",
+        "sha256": "011c1cc03c38783b5ba588cf7724cb0699597ed68973dc5c0e106d9a0ce6b188"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/field-win.json",
+        "sha256": "6148100afc771204d253bd917f4b4d983a2d3318d2396413794b0d7180e05ffe"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/geo-vitals.json",
+        "sha256": "d2cfb2df7906d9616e299894ee9f51bc0b1b4c179ddbb2763792215b5aca986b"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ecosystem-stats.json",
+        "sha256": "aaec20565ba4fac9c6e6dfabab3342f7fd8c7f4394bac885ee5353468573efc5"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/heartbeat.json",
+        "sha256": "49defbbf207d5f1eea1ef3305f8543fca3564512faa3d541bb3b0630cc33fc92"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ignis-platform-status.json",
+        "sha256": "1c9b535307f12869db8da58f7b3c301880a459b24d24ff335cbb9bce3eb28ac3"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/intelligence-budget.json",
+        "sha256": "be97eee55f4969e406adc0925f0afaee34b963cadcdf02ade3cce540c56f2b06"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/nervous-system.json",
+        "sha256": "78c3d3eb557f924f0601047e4968a8eac51f7ca661fa0892d6cf60f291dae486"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/intent-map.json",
+        "sha256": "4f43a51497e0f5a486f732b78e824483b08020ffea778998f0160cebd2f744b9"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/oracle-insights.json",
+        "sha256": "3097e670477ab9824bd84a14ce348b36281e41cbf752ea110c69ba9c975fc859"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/proof-aware-projects.json",
+        "sha256": "3d835afb9dae15c238e81a487933fa483b77c11023278a8348f7cdfb969d6e7f"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/release-dependencies.json",
+        "sha256": "97cc1b9eeefe416979009ae2baa940eca12a1faf051bdb26ee400e5579755ef0"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/public-intelligence.json",
+        "sha256": "203890dd8f78a7f63837ca5c7e31e6d357d738b3cc82534b2a722bf7491ad76d"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/proof-surface-diagnostics.json",
+        "sha256": "116c41d63a41fa6312e7189d59674e2b552f7f0e8d5cd34928fc40da8e692657"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/status-proof.json",
+        "sha256": "3341593dc136e51e5033677319bcf8b258d58a693b1dfd2259ca18687f72c1bb"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/tt-summary.json",
+        "sha256": "1589855bd92ac81042dee3f8ed421331116f2e3136bbd89795b8b9799b0e8c8c"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/studio-timeline.json",
+        "sha256": "e2912cfd372ad1bad22b6d853dc5e1446b736199b94d6fb5e0316212078f0861"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "api/ux-decision-ledger.json",
+        "sha256": "efee696ce9910c883a8b5069c03958525bd098c7e61fa1bea711a7e30ac47fb3"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "data/stats-surface.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      },
+      {
+        "origin": "https://website.staging.vaultsparkstudios.com",
+        "file": "stats.json",
+        "sha256": "d3bb05a512df7af6ddabe294eb425db8a9e19c4549c3c56b9f7c22108b460b60"
+      }
+    ],
+    "workerSource": {
+      "unchanged": true,
+      "files": 15,
+      "baseline": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f"
+    },
+    "scope": "25 final status files exact at staging, immutable deployment and apex; original full Pages and Worker proofs remain authoritative. Workflow-generated content receipts are additional declared deployment artifacts.",
+    "stagingBaselineExplanation": "The isolated full checkout was c861; its committed build stamp names ancestor e385, recorded separately by the original staging/source proofs. Scoped status deployment used the actual matching staging stamp e385 and exactly the same25 reviewed production paths; all25 were then hash-verified at staging and both production origins.",
+    "validation": {
+      "checks": 109,
+      "blockingPassed": 92,
+      "advisoryFindings": 0,
+      "logSha256": "f95fd5f252283a311b8a24f97e0752cb0570513d2b6d3fcba0b5157517719aa7",
+      "retainedBaseline": {
+        "base": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
+        "retained": [
+          "assets/shell-manifest.json",
+          "api/commit-map.json",
+          "api/feedback-provenance.json",
+          "feed/forge-ledger.json",
+          "feed/forge-ledger.xml",
+          "data/ignis-search-index.json"
+        ],
+        "reason": "Retain released history/search bytes while publishing final session status; original contracts pass."
+      },
+      "independentReview": {
+        "verdict": "pass",
+        "materialFindings": 0
+      }
+    }
+  },
+  "restoration": {
+    "workflows": [
+      {
+        "name": "news-publish.yml",
+        "priorState": "active",
+        "finalState": "active",
+        "restoredAt": "2026-10-19T21:45:24.203Z"
+      },
+      {
+        "name": "uptime-probe.yml",
+        "priorState": "active",
+        "finalState": "active",
+        "restoredAt": "2026-10-19T21:45:25.559Z"
+      },
+      {
+        "name": "refresh-live-data.yml",
+        "priorState": "active",
+        "finalState": "active",
+        "restoredAt": "2026-10-19T21:45:27.065Z"
+      },
+      {
+        "name": "desk-content-release.yml",
+        "priorState": "active",
+        "finalState": "active",
+        "restoredAt": "2026-10-19T21:45:28.427Z"
+      },
+      {
+        "name": "ci-status-beacon.yml",
+        "priorState": "active",
+        "finalState": "active",
+        "restoredAt": "2026-10-19T21:45:29.543Z"
+      }
+    ],
+    "nightlyDeskArt": {
+      "restored": true,
+      "enabled": true,
+      "verifiedAt": "2026-10-19T21:45:17.6973347Z"
+    }
+  },
+  "cleanup": {
+    "isolatedStagingWorktreeRetired": true,
+    "sharedDependenciesPreserved": true,
+    "unrelatedResiduePreserved": true,
+    "ownedNativeProcessesObserved": 0,
+    "historicalShellCounts": "unmeasured; no fabricated totals",
+    "observedAt": "2026-10-19T21:45:45.334Z",
+    "sessionLockRetired": true,
+    "session": 389
+  },
+  "limitations": [
+    "Nine identity routes remain held; anonymous runtime verification is not authenticated journey acceptance.",
+    "Historical field-vitals and existing operational risks are preserved; no measured performance improvement is claimed.",
+    "Final evidence-only commit is repository metadata; full runtime baseline and status partition are identified separately."
+  ],
+  "coordination": {
+    "type": "session-impact-summary",
+    "id": "01K5B21CJR93CE44D4DE01A4C3",
+    "signed": true,
+    "deliveryOnly": true,
+    "source": "Actual canonical Ark ship result; receipt does not claim recipient application."
   }
 }
