@@ -1,6 +1,8 @@
-## Session 389 — local implementation verified; release pending (2026-10-19)
+## Session 389 — release verified (2026-10-19)
 
-S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed.
+S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.
+
+Continue with the two queued S389 SIL observations. Native goal01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 is bound to S389; this release belongs to that invocation. Final publication, restoration and cleanup evidence is recorded in docs/RELEASE_S389.json.
 
 ## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
 

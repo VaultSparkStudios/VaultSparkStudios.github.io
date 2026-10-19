@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S389 implementation verified; exact-candidate release acceptance pending",
+  "currentFocus": "S389 release reliability and publication repairs verified",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Complete canonical validation, staging, exact-SHA CI and full production promotion/readback",
+  "nextMilestone": "Observe deployment admission and deterministic handoff extraction in routine use",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -105,14 +105,14 @@
   "silCategoriesUpdatedSession": 389,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-10-18",
-    "passing": 16,
-    "warning": 1,
+    "date": "2026-10-19",
+    "passing": 15,
+    "warning": 2,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 17,
-    "score": 94,
+    "score": 88,
     "checks": [
       {
         "id": "manifest",
@@ -214,7 +214,7 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
+        "pass": false,
         "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
@@ -263,7 +263,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "fd7d111ee935ae90d7abca12",
   "testsSourceFingerprint": "f38f0513435e085f2fbbcea4",
-  "lastSessionSummary": "S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed.",
+  "lastSessionSummary": "S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 385,
@@ -294,9 +294,9 @@
   "sessionState": {
     "version": 1,
     "durableSession": 389,
-    "currentFocus": "S389 implementation verified; exact-candidate release acceptance pending",
-    "nextMilestone": "Complete canonical validation, staging, exact-SHA CI and full production promotion/readback",
-    "lastSessionSummary": "S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed."
+    "currentFocus": "S389 release reliability and publication repairs verified",
+    "nextMilestone": "Observe deployment admission and deterministic handoff extraction in routine use",
+    "lastSessionSummary": "S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
