@@ -679,58 +679,6 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 **Honest limits:** the E2E fix is proven locally, not yet by a green GitHub run (boarded `[S340][VERIFY/P1]`). The ordering gate's `--check` is not wired into `build:check` — only its self-test — because it needs a trace no CI job produces; boarded rather than implied.
 
 
-## 2026-09-04 — Session 343 · the site had no users because it could not accept one
-
-**The finding.** Asked to plan the site's finalization, I went looking for why a live,
-announced, architecturally excellent site had zero members. It was not marketing.
-`vault-member/portal-auth.js` called `VS.kitSubscribe(...)` — a function defined nowhere
-in the codebase — inside the registration try-block, before `showDashboard()`. The
-subscribe checkbox ships checked. So every stranger who tried to join threw a TypeError,
-read *"Could not complete registration. Please try again."*, and left — while their
-account had in fact been created, so the retry hit `register_open`'s uniqueness guard and
-failed differently. Every other finding this session was downstream of that one.
-
-**Shipped (live at `57e69bfcd`, production serving verified, not inferred).** The opt-in
-moved off the success path entirely: after `showDashboard()`, guarded on `window.VaultKit`,
-un-awaited, rejection swallowed — an optional side effect must never be able to fail a
-registration. A taken handle, which `register_open` reports as DATA rather than as
-`rpcErr`, no longer reads as success. `/login` content-negotiates so a browser gets a
-branded page instead of a raw JSON blob when the IdP is down. The funnel beacon now
-separates bots from people — the site has advertised that on `/stats/ecosystem/` for
-months without doing it — with `looksLikeBot()` returning a boolean so the UA is read and
-discarded rather than stored, because a retained UA is a fingerprint. `VS.openCustomerPortal()`
-now exists: the edge function had zero callers and the button was `typeof`-guarded, so it
-failed silently while the copy promised "Cancel anytime". The homepage stopped shipping
-~6 KB to run two modules that early-return on `/`. `vs_visit_count` has one writer again.
-
-**Verification.** build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean ·
-mobile 215/215 · worker 57/57 · CANON-053: 84 captures, 2 pixel-inspected. Production
-verified by reading the SERVED `portal-auth.js`, not by trusting the deploy's green: the
-only surviving `kitSubscribe` is the comment explaining its removal.
-
-**Two rebase races.** Publisher crons landed 14 commits during the gate run and 1 more
-during the push. Both conflicted only on generated artifacts; resolved take-theirs then
-re-derive (22 and 17 artifacts rebuilt), with the hash-bound receipts re-checked after
-each so the CANON-053 evidence binds to what actually shipped rather than to a pre-rebase
-tree. The `0 0` divergence reported by the first failed push was the detached-HEAD
-artifact, not a clean state — checked the branch was attached before believing it.
-
-**Two findings logged, not fixed.** The gateway's `supabase.admin` key is valid and
-scoped to a DIFFERENT project (`ckwtolofoqzrqouqkmvs` vs this site's `fjnpzjjyhnpmunfoycrp`),
-401s on first use, and reads `READY 2/2` in the audit because presence is not validity —
-a second, independent reason the Obelisk ceremony would fail, after the founder completes
-the passkey flow (D-S343.4). And the homepage hero published *"The studio keeps resync
-after publisher race"* to strangers (D-S343.5). Neither was fixed in-session: the tree was
-frozen under a passing gate with two hash-bound receipts.
-
-**Honest limits.** The plan's Phase 0 gate is a human signup in a clean browser profile,
-and it has NOT been run — I verified the code path in the served bundle, not the lived
-experience. The pixel review covered 2 of 84 captures; the vault-member portal, which
-carries this session's largest change, is absent from the theme matrix entirely and was
-covered by the mobile suite instead. Phases 3–7 of the plan are untouched: the adaptive
-front door, the three competing intent taxonomies, activation instrumentation, the welcome
-email, the three divergent rank ladders, and surfacing `/how-we-build/` and `/evidence/`.
-
 ## S344 — 2026-09-07 · full arc (/start → /audit → /implement → /closeout)
 
 **Audit: 5 items, 1 disproved before shipping.** Every premise was verified against a live
@@ -938,49 +886,6 @@ The performance lab found a preview-only duplicate transfer: preloaded fingerpri
 ### S347 release addendum
 
 Pushed recovery checkpoint `172073cb7`, deployed the full candidate to Hetzner staging (6,490 files; rollback `20260909222156`; attested receipt `bb5016b2a85891bf778e4f87`; lineage depth 59), and passed the canonical ten-step release ceremony. Production content promotion completed in GitHub Actions run `34412238486` with content-purity, reference, capability-slice, liveness, discovery, and exact News gates green. Live deploy currency is `content-current` with matched shell parity; Doctor now reports 13 pass, 1 warning, 2 advisory failures, and `blockingFailing: 0`.
-
-## 2026-09-10 — Session 348 · recovered arc saturation and release closeout
-
-- Continued from the independently recovered/pushed S347 boundary (`172073cb7`, receipt follow-up `59bade85e`) and completed the founder-requested uninterrupted `/start → /audit → /implement → /closeout` arc.
-- Shipped 11 S348 audit outcomes: progressive Changelog hydration; multi-run, host-noise-aware performance evidence; atomic mobile receipts; deterministic Forge/feedback provenance; complete 67/67 checked-generator evidence coverage; closure of all 29 publisher cascades; meaningful Git-history window safety; byte-preserving CURRENT_STATE sharding; measured Desk feed probation; stale-task truth reconciliation; and per-story claim/evidence critique packets.
-- Generated 30 deterministic `critique.json` packets plus a SHA-256 manifest. Stable `factRefs` join facts to stances and predictions; unsupported claims remain explicitly `unlinked`; article pages link the packet; the build graph and scheduled publishers regenerate and stage the complete fan-out.
-- Preserved evidence honesty: the Changelog lab verdict abstained as volatile (LCP p75 1.636s, CLS median 0.0021); visual review, mobile evidence, full build, Doctor, staging, production, and post-push CI are recorded only after their final closeout gates complete.
-- No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
-- Final local authority is non-phantom green: `npm run build:check` passed 479/479 from step one after fixing each discovered drift class; mobile runtime passed 215/215 with zero P0/P1 findings; 28/28 final touched-state captures were manually reviewed; Doctor exits 0 with `blockingFailing: 0`.
-
-### Release addendum
-
-- Found a real production release gap after the first content promotion: the fingerprinted idle loader still imported mutable `vault-pulse.js`, so production retained the opacity-fading version. Added content addressing for the child module, rewrote the generated parent reference, and pinned the relationship in the S151 contract.
-- Root-caused staging ceremony 404s to retired hero-ticker fallbacks. Added deterministic `api/recent-ships.json` generation from the public Changelog narrative; staging then emitted zero resource 404s.
-- Resolved repeated scheduled-publisher races only with `pull --rebase`; generated collisions preserved upstream truth and were regenerated afterward. No reset-hard, force push, or hook bypass occurred.
-- Final release evidence: 479/479 build steps; 215/215 retry-free mobile cells; 14/14 manually reviewed Changelog captures; ceremony 10/10; staging receipt `5d2df635546d213dbd236c80`, lineage depth 71; production workflow `34508529884`; live smoke 6/6; production theme sweep 3/3 engines.
-
-## 2026-09-10 — Session 349 · arc: uptime observability honesty + edge-vantage sampler
-
-- Ran the full arc: `/start` (S349, SIL 993 inherited), `/audit` (3 items, every premise pre-verified against live code and a live network probe), `/implement`, `/closeout`.
-- **Found the session's real work by measurement, not from the board.** `data/uptime-history.ndjson` held 1488 retained rows and 604 of them read `edge-degraded`, every one with `contentOk: true` and `down: 0`. Probing directly: `GET /api/founder-presence.json` returns 200 from a residential IP and 403 in 127ms from CI. Cloudflare had widened bot challenges to JSON and OPTIONS paths, expiring the premise the probe was rewritten on in S177. `/status/` had therefore published a false outage continuously since 2026-07-13.
-- Gave the `liveness`, `workerIngest` and `rumIngestPost` legs the challenge-shape classification the `login` leg already had, and introduced `observable` as a question separate from `ok`. A challenged leg is neither an outage nor a pass: `overall` reports the new `edge-unobservable`, unobserved rows leave the rollup denominators, and `dueAlerts` no longer pages on a challenge.
-- Fixed a consequence nobody had noticed: `edgeHtmlBroken` guarded on `!liveness.ok`, which was permanently true while challenged, so the S179 apex-HTML failure shape it exists to catch could not have fired once in the whole window.
-- Carried the new state to every consumer in the same session — `check-uptime-contract` STATES, the public `/status/` tile, rollup denominators, and the history row shape (`livenessObservable`, `workerIngestObservable`, `cv`).
-- Shipped the Worker `scheduled()` uptime sampler DARK behind `UPTIME_SAMPLER_ENABLED="0"`: a Cloudflare cron is the only vantage that can observe our edge, because it is never challenged. Bounded KV (one fixed key per window, 7-day TTL — never a write per request, which is what exhausted the free tier in S319) and no subrequest to any hostname on our own routes (the S179 self-loop shape). Five unit tests assert the deploy is provably inert while the flag is off.
-- Added `scripts/drain-uptime-kv.mjs` (12/12 self-tests): folds edge samples into the unchanged uptime contract, append-only, de-duplicated by timestamp, never rewriting an existing row and never interpolating a missing window.
-- Taught the secrets gateway to consult the disproof it already held: `resolveCapability` returned READY for `supabase.admin` while the same map entry recorded `lastProbeStatus: "auth-error"`. It now renders a distinct FAILING state — which surfaced a second unknown failure, `openai.api` unreachable. Honest ready count 44/72, not 46/72.
-- Separated the service worker page cache from the install precache. Both shared `CACHE_NAME`, and the LRU deletes `keys[0]` — the first entry ever written, which is `/` from `STATIC_ASSETS`. Past 60 entries every navigation was evicting a precached shell asset in order, quietly dismantling the offline experience. Also fixed `activate`, whose `k !== CACHE_NAME` test destroyed the API cache on every single activation.
-- Fixed a WCAG 2.4.7 defect on all 108 shell pages: `.skip-link:focus{top:0}` existed only in the async-loaded stylesheet, so a keyboard user tabbing before the swap focused an element parked at `top:-100%`. Fixed in the generator; verified 108/108 pages carry it and 0 remain unpatched.
-- Verification is non-phantom: 479/479 build steps exit 0 from a frozen tree, 119/119 unit, 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells against a LOCAL preview (production would have measured the old pages), 14/14 theme captures re-captured and inspected directly, Doctor `blockingFailing: 0`.
-- No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
-
-## 2026-09-11 — Session 350 · arc: recovery + hidden-tab polling, shell prune, heading order
-
-- `/arc` triage: tree clean and synced after pulling 51 automation commits, but `check-writeback-currency` reported `50f13941` (S349 follow-up) un-written-back at 20.7h. Recorded it here; CANON-055 exemption declared in LATEST_HANDOFF because its only effect is a CI probe's output and exit code.
-- `/audit` (5 items, premises verified against live code): `docs/AUDIT_2026-09-11.md`. Two premises were half-false and are recorded as wins: desk-presence already gated its network call, and the shell prune already existed.
-- Root-fixed `cleanupOldFingerprintedFiles`: its pattern escaped `$` and so matched nothing. Reproduced in node before fixing; the rebuild pruned eight stale shells and re-hashed vault-pulse, desk-presence and the home idle loader that embeds vault-pulse.
-- favicon-pulse and vault-pulse no longer poll or rotate in hidden tabs; all three scripts refresh on return.
-- Community, Journal and Contact h3→h2, with per-page rules rescoped and `font-family: inherit` to keep the look.
-- Sampler enabling held: gateway token has no KV scope (error 10000); the MCP namespace creation was denied by the permission layer. Not routed around.
-- Rendered-pixel pass (CANON-053) found a pre-existing defect on the main inbound form: Contact's name/email/subject inputs measured 22px, not 48px, in every theme. `.input-field`'s `flex: 1` zeroes the flex-basis inside the column-flex `.form-group`, overriding the declared height. Contact is the only page nesting them; fixed there with `flex: none`.
-- Two Git Bash traps hit during verification: MSYS path conversion rewrote `--routes /community/` into `C:/Program Files/Git/community/` (fix: `MSYS_NO_PATHCONV=1`), and a refreshed observed leaf (`worker-route-provenance.json`) changes `observedRoot`, so it does require a reseal even though it is excluded from `root`.
-- Self-inflicted drift, caught by the gate: `resync-derived --sweep-repair` ran `build-brand-assets.mjs`, which on this machine (no source masters) skipped every job and still wrote the manifest, replacing the correct 7-entry `brand/assets.json` with an empty list and staging it. `build:check` step 111 failed on it; restored from HEAD, and the generator bug is carried to next session.
 
 ## Session 351 — 2026-09-12 — the edge sampler is armed; two silent producers made honest
 
@@ -1435,42 +1340,6 @@ Newsletter production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a deployed after
 Newsletter follow-through is published: source d607927ec56d1a3bda4b57856b9ae917c70388ea, confirmed Pages run37548337150 (successful actual deploy), production Worker d12535f4-a4a9-4baf-ab41-03c4a502102a after11/11 ceremony checks. The uninterrupted full suite passed530/530, with zero secret findings. Live desktop1366/mobile390 welcome screens were captured and inspected; the served content head matches, all newsletter challenge slots are absent and the human/agent contract is available. Backend recipient/global limits, premium confirmation/plain-text emails and signed cancellation are deployed; the digest design is updated. No extra real emails were sent. Founder confirmed the prior regular signup; delivery/rendering of the upgraded email in a real mailbox remains unverified. All four temporarily paused publishers are active again. Existing identity holds remain separate.
 
 
-## 2026-10-07 — S370 publication evidence arc
-
-S370 hardens automated Desk publication: pinned candidate checkout and title/SHA-bound run confirmation; served banner and satire derivatives must match the pinned bytes. Focused 39/39 checks and independent review passed. Scheduled art and publisher release follow-ups were verified against actual runs. Canonical propagated source copies removed project-local capability contracts; retained snapshots in .cache/S370-propagation-backup and restored the compatible project tooling. Final staging/production acceptance pending.
-
-
-## 2026-10-07 — S370 release acceptance
-
-S370 publication evidence is shipped: the art release pins checkout to its requested SHA, confirms the matching workflow run, and verifies served banner and satire bytes against the candidate. Candidate 8068adfcea36eef062c3b6a7dbd56260f82571a6; pinned Desk run 37651535578; production Desk run 37651733967; general content run 37652265810. Hosted acceptance succeeded; live image hashes and article references passed. Independent review passed; focused checks 39/39, mobile 215/215, visual 28/28 in seven themes, staging content byte parity and browser contracts passed. Existing identity holds remain enforced. Canonical closeout records updated locally; no sibling-tree write. Full repository source proof is measured through run-build-check, never assembled from partial runs.
-
-
-### 2026-10-07 — requested site and Desk follow-through
-
-Published Super Intelligence title, animated corner Spark with optional popup and preferences, expanded top Story Overview and full illustration reactions across 112 articles. Removed a rejected optional campaign field; regular digest delivery is verified without an extra send. Production content release 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973, is published and its served contentLaneHead matches. Exact-commit E2E/compliance run 37713267729 passed the full 530-step suite and 215 mobile checks; Lighthouse run 37713273657 passed 9 route tiers (article performance 92/accessibility 100); accessibility run 37713280248 passed after restarting a stalled browser download. Focused browser checks passed 14/14 locally, on canonical staging and on production. Seven themes were inspected at desktop/mobile sizes with 140 primary and 84 supplemental current captures, plus 56 retained before captures. Sixteen production screenshots were inspected in dark/light at 1366/390px. Private recipient data is excluded.
-
-
-### 2026-10-08 — S370 explicit final closeout
-
-Reconciled all founder-requested Spark/Desk outcomes and their publication evidence; restored top-level current handoff, appended creative direction and truth provenance, refreshed project and Codex memory. Retained the existing 916/1000 score and earlier history. Stopped the obsolete local preview terminal. Production content 6f6fe8388339674d331422c5033c8a95c8f9e55a, Pages run 37714546973. Exact-source E2E/compliance 37713267729, Lighthouse 37713273657 and accessibility 37713280248 passed. Full suite 530/530, mobile 215/215, focused local/staging/production browser checks 14/14. Seven themes received desktop/mobile pixel review; 16 production images were inspected in dark/light. October 8 live readback confirmed the deployed content head, title, overview-before-art and complete reaction labels.
-
-
-### S370 final validation coherence repair
-
-Closeout validation found an omitted generated answer-feed rebuild. The full derived-build profile now refreshes Oracle answers before candidate sealing; citation remains last. Independent review passed; ordering37/37 and invocation10/10 self-tests pass. Rebuilt answer and visual-retention outputs; proof-surface92/92 blocking checks pass. This is a necessary closeout coherence repair, with no browser, identity or pricing change.
-
-### 2026-10-08 — S370 final follow-through acceptance
-
-Production content ee8db4f7fcb72857f3ba7401efd2bb19cca7658c; confirmed Pages run 37807641227. Exact-source E2E/compliance 37805030392, Lighthouse 37805029771 attempt 2 and accessibility 37805029706 passed. Hosted full suite 530/530 and mobile 215/215. Canonical staging verified 514 overlays and three safe removals; focused staging checks 14/14. Production browser checks passed in four dark/light desktop/mobile contexts: animated nonmodal Spark, correct title, 483-character overview before art and complete unclipped reactions. Sixteen production images captured; four representative images inspected. Existing seven-theme implementation receipts retain their original hashes and review dates.
-
-Corrected candidate-only proof metadata after the hosted mismatch; independent review confirmed all original source/capture/review fields were retained. Lighthouse's first corrected-candidate run missed the existing article tier (88 vs 90); unchanged-source rerun passed without changing thresholds. Private subscription records remain excluded. Original preview and two temporary capture servers are closed.
-
-
-## 2026-10-09 — Session 371 release maintenance
-
-Bounded four-outcome maintenance arc; preserved original working tree and incoming propagation. Independent review found a subject classification gap and it was fixed. Focused tests4/4; news153/153; mobile215/215 and seven-theme84-image pixel review pass. Full release checks and staging/production proof remain pending at this checkpoint. No paid model call, install, pricing or identity change.
-
-
 ## S371 final observed acceptance — 2026-10-09
 
 Candidate `f50960d2156091769e7922e0ac8904b22b65c516` (tag release-S371-f50960d21) is verified live through Pages run `37981014146`. All three exact-candidate required checks passed: e2e.yml 37978505492, lighthouse.yml 37978505511, accessibility.yml 37978505521. Earlier Lighthouse failures and the predeployment provenance-expiry failure remain recorded. Fresh production Worker provenance matched 9/9. Canonical staging 20261009191141 verified 562 overlays and 3 safe removals.
@@ -1537,42 +1406,6 @@ Promotion: candidate 2b001af82 pushed after a full staging publish (receipt 45f9
 The records commit 4e2f42773 passed E2E, Lighthouse and accessibility on its first attempt. Release candidate check ok at that exact SHA; promotion scope promotable and disjoint from the held identity surfaces. Worker deploy run 38073945913 (version ed6ca127) and full Pages lane run 38074236799 both ran their deploy steps and were not held or cancelled. Production serves a2c339580: tree-current, 1033 of 1043 identical, 0 differing, 10 retired-route redirects. smoke-live 6/6, production redirect and Desk-card specs pass, Worker routes 9/9 matched.
 
 The earlier entry saying production was not promoted described 2b001af82, where Lighthouse failed twice. That SHA was never promoted.
-
-## 2026-10-11 — Session 374 scripts after first paint, SI first use
-
-Arc under the founder's instruction to push to main and fully deploy. Synced 80 automation commits; triage found the prior session closed out.
-
-Audit `docs/AUDIT_2026-10-11-S374.md`: four items, premises 5/5. A fifth candidate, rebuilding `/stats/`, was dropped when history showed S368 retired it into `/evidence/#numbers` on purpose.
-
-Shipped: `assets/after-paint.js` and the `<template data-after-paint>` convention. Desk pages park four scripts, the homepage seven of 28. The consent banner was parked at first and returned to eager after reading its attention contract; Desk presence likewise, after an independent review pointed out it times the visit from when it runs. The same review led to a settle timeout, per-script error isolation, a double-include guard and a wait for later eager scripts. Unit spec 10/10, browser spec 3/3 on three engines; layout shift unchanged. Menu label "Synthetic Intelligence (SI)" sitewide, checked in seven themes on desktop and mobile; `check-si-terminology` 258 findings to 2. Stats small-count clearance. Ark `01K4MH9K7Q3360206BDD384910` to studio-ops.
-
-Found and boarded, not fixed: four browser specs that fail locally against production and the local build alike; `main` red at build:check step 37 in CI at ee0074f3e2.
-
-#### S374 addendum — pushed and promoted (2026-10-12 UTC)
-
-Pushed as be218812c8 after a full staging publish (receipt 650f4592a4e8d8c158a06bf4; staging release spec 6/6, after-paint spec 9/9 on staging). Required checks at that exact commit passed on the first attempt: E2E 38189819783, Lighthouse 38189819765, accessibility 38189819792. Lighthouse performance over three runs each: homepage 0.81, 0.95, 0.98 against the unchanged 0.76 floor (0.75 to 0.78 before); the measured article 0.98, 0.99, 0.99 against 0.90 (0.82 to 0.92 before). Promoted through the full confirmed-production lane, run 38191069141 (SCOPED; identity hold unchanged): production serves 8b29b2f6c1, which contains be218812c8. Read back from served bytes: tree-current, 1043 of 1053 identical, 0 differing, 10 retired-route redirects; smoke-live 6/6; after-paint spec 9/9 against production.
-
-The push took three attempts at convergence. A stale retention report and image-placeholder map followed the 42 new review captures; the UTC day change moved two date-derived homepage values, each needing a real mobile-audit re-run (215 of 215 each time); one push lost a race with the half-hourly uptime publisher. Nothing was bypassed. Correction, same day: the records commit 1f29cc7bf9 failed Lighthouse on its first attempt and passed on one re-run. Three Lighthouse runs on the same page bytes after the change: be218812c8 passed first time (homepage 0.81, 0.95, 0.98; article 0.98, 0.99, 0.99); the records commit 1f29cc7bf9 failed its first attempt on the article (0.88, 0.88, 0.96 against 0.90; homepage 0.66, 0.82, 0.83) and passed on one re-run (article 0.95, 0.96, 0.95; homepage 0.81, 0.82, 0.85), run 38193011995. Both pages score higher than before (homepage medians 0.82 to 0.95, was 0.75 to 0.78; article medians 0.88 to 0.99, was 0.82 to 0.92), and the article still fell below its floor once in three. In the failing runs the load event came before the first paint and 24 to 25 requests had finished by then, including data fetches made by scripts that stayed eager (Desk presence, the ambient bundle); in the first passing run 13 to 14 had. That is a correlation from three runs, not a proven cause. The Lighthouse task was reopened.
-
-The closeout wipe guard flagged the compact handoff, which a start-of-session script had rewritten with a different generator; the committed version was restored instead of overriding the guard.
-
-## 2026-10-12 — Session 375 satire cartoon below the illustration
-
-/arc with direct push and full deployment authorized. No cut-off found; six automation commits pulled. During the audit the founder asked for the satire cartoon to move below the AI-generated art on every article with its own reaction and comment area; that became the session's lead item.
-
-The generator now emits a cartoon stage right after the illustration stage. Its side panel carries eight reactions under `/panel/satire-cartoon` and the existing cartoon comment thread. All 123 articles were regenerated; 122 carry a cartoon. The layout test, the public contract check and the artwork browser spec were updated to the new order, and the feed gained `satire_reaction_key`.
-
-Capturing the change exposed an older defect: the article shell could be scrolled 352px sideways when an image comment panel opened at 1366px. It reproduced twice and stopped after `overflow:clip`. Seven themes were captured at desktop and mobile, before and after.
-
-Three hit-list items were assessed and not selected; reasons are in the audit and D-S375.3.
-
-#### S375 addendum — pushed and promoted (2026-10-12 UTC)
-
-Pushed as c8635d986e after a full staging publish (receipt 2982bfbb74b865eb2de202f4; staging release spec 6/6; cartoon probe 12/12 across Chromium, Firefox and WebKit at 1366px and 390px, after one unexplained failure in the first probe run straight after the publish). Clean-checkout gate passed at 35c661742 before the push. Required checks at c8635d986e passed on the first attempt: E2E 38210836603, Lighthouse 38210836606 (measured article 0.94 against the unchanged 0.90 floor), accessibility 38210836596. Promoted through the confirmed-production lane, run 38212109944 (SCOPED; identity hold unchanged). Readback from served bytes: tree-current at be976158c8, which contains the candidate; 1043 of 1053 files identical, 0 differing, 10 retired-route redirects. The same cartoon probe passes 12/12 against production, and the live reaction endpoint answers for the cartoon key with an empty tally.
-
-Convergence took four gate runs. The first stopped on the score ledger's size cap (rotated with the tool the check names; 21 blocks moved to the quarter archives). The next two stopped on derived files left stale by a late test fix, which a full sweep of the gated generators cleared. The closeout tool was run with the wipe override because the ledger rotation shrinks the hot file; the moved blocks are in `context/archive/SIL_2026Q3.md` and `SIL_2026Q4.md`. One rebase onto five automated commits was resolved by regenerating, not hand-merging.
-
-The reaction spec assumed one image reaction panel and needed scoping to the illustration row; that was missed until the staging run. Running it there also showed seven older failures that reproduce on production with the unmodified spec: a click sent right after DOMContentLoaded arrives before the parked reactions script. It is on the task board.
 
 ## 2026-10-12 — Session 376 reader feedback on Desk articles
 
@@ -1750,3 +1583,39 @@ S386 follow-through: candidate 0a434fad21 promoted (run 38974570139, tag s386-se
 Decisions D-S386.3 and D-S386.4. Release docs/RELEASE_S386.json.
 
 S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction.
+
+
+## Session 387 — 2026-10-18 — diagnostic isolation
+
+S387 moves normalized Trusted Types diagnostic batches to private R2 storage, with no auth-KV access or fallback. Both evidence readers combine legacy KV and complete paginated R2 reads; malformed or failed sources remain nonpassing. Production and isolated staging buckets have verified 30-day tt/raw/ retention and private access. Source commit f42694e6a0; staging Worker b774a556-9a59-40b9-a6f0-9d14b1310501 passed an actual report round trip and /login 302 to Obelisk. Independent review fixed one incomplete-XML finding and then passed. Focused tests pass; unit suite has 440 passing and one pre-existing schema-validator TODO. The sitemap generator also adds the existing sixth VERA archive page, covered by 28 inspected theme/viewport before/after captures.
+
+Acceptance is maintained in docs/RELEASE_S387.json; implementation/staging evidence does not claim full production acceptance. No new human creative direction.
+
+S387 pre-release hardening: actual 8192-byte stream bound and one global diagnostic SQLite budget, reusing the existing class without changing form policy. Concurrent 20-attempt fixture stores exactly 3 batches; current focused acceptance 88/88. Release remains pending.
+
+### S387 final release acceptance
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+
+
+## Session388 — 2026-10-18 — CSP diagnostic reliability
+
+S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.
+
+Fresh startup and nine-axis audit, premise gate before implementation, two independent review rounds. No UI/UX source change. No new dependencies, inference spend, identity policy or CSP enforcement change. CDR reviewed; no new direction.
+
+
+### S388 pre-release hardening and operational clarification
+
+The first complete local run passed541/541. Before production, review identified public summary read amplification and required a distinct three-computations/hour budget, followed by fresh acceptance. The CSP feature adds no inference service. The earlier session-wide inference-spend statement was too broad: startup used a legacy compactor API default. Its actual usage record is kept privately; subsequent handoff operations use deterministic trimming.
+
+
+### S388 production acceptance
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized.
+
+
+S388 canonical closeout completed with current541/541 measured checks, zero failed, and cleared session lock. Final evidence records follow pinned runtime candidate98538ff5b9; production acceptance is not a claim that later record-only commits were deployed.
+
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.

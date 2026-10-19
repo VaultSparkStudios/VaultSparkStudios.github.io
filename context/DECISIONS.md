@@ -2330,3 +2330,34 @@ After two in-run re-rolls the staged image was re-reviewed unchanged every run, 
 ## D-S386.4 — Persona pagination stays out of the Desk lane until the server rules move with it (2026-10-16)
 
 The Desk content allowlist admits persona index pages but not `news/personas/<p>/page/<n>/`; editions add those pages and the sitemap lists them, so they 404 until a full promotion. The Hetzner staging receiver validates against a root-owned copy of the rules, so changing only the repository allowlist would make the lane send paths staging refuses and break the newsroom release. This session ships the pages through the full promotion; the coordinated allowlist and server-rules change remains a separate, approved trust-policy update.
+
+
+## D-S387.1 — Diagnostics do not consume sign-in KV writes (2026-10-18)
+
+Use private R2 batches for normalized Trusted Types reports, reusing the existing signer. Keep sampling and enforcement policy unchanged; object-store faults never fall back to auth KV. The private tt/raw/ prefix expires after 30 days, preserving unrelated lifecycle rules; staging has its own bucket. Evidence readers include legacy KV and current R2, and reject incomplete or failed reads. Other shared KV writers remain explicit follow-up work.
+
+## D-S387.2 — Bounded release and truthful evidence (2026-10-18)
+
+The founder authorized direct main publication and full deployment for this goal. Preserve existing identity holds; routine promotion uses the scoped release contract and actual candidate checks. Canon checks found no ABSOLUTE gaps; existing Obelisk and terminology STRONG gaps remain outside this diagnostic change and are not claimed resolved. Preserve unrelated operator residue. The broad unit suite has one existing schema-validator TODO, distinct from ordinary failures; no green wrapper converts it into a passing test.
+
+
+## D-S387.3 — Bound diagnostic storage before release (2026-10-18)
+
+R2 intake must not turn a shared free KV outage risk into unbounded diagnostic writes. Reuse the existing SQLite counter on the distinct diagnostic:tt:write-budget:v1 object: at most 3 batches/hour (72/day), each with at most 5 reports and an actual streamed 8192-byte request bound. Missing or failed counter/storage drops best-effort diagnostics without KV fallback. Existing hashed per-visitor form objects and auth policy are unchanged. Counts represent stored samples, never a complete traffic census.
+
+### D-S387.4 — Missing meter remains unknown
+A five-second meter timeout made the brief publish a file-byte estimate as runtime pressure and failed the live freshness gate. The fallback now keeps usage null and reports UNMEASURED; independent review and the existing freshness fixtures passed.
+
+
+## D-S388.1 — Bound CSP diagnostics and report retained evidence (2026-10-18)
+
+Reuse the existing private diagnostic buckets and a distinct diagnostic:csp:write-budget:v1 SQLite object. Never fall back to auth KV on intake storage failure. Keep enforcement/headers/identity unchanged. Preserve actual legacy ring entries through complete listing, not modulo counters. Summaries disclose retained counts and return503/null when any source is incomplete. CSP objects expire after3 days; TT30-day and unrelated rules are preserved. Official Cloudflare limits confirm1000 internal subrequests; accepted summary bounds stay below that limit, with concurrency5. This does not prove an account-wide quota cure.
+
+## D-S388.2 — Authorized release and remaining canon posture (2026-10-18)
+
+The founder authorized direct main push and full promotion for this fresh goal. Current canon sync and frontier radar passed; no ABSOLUTE gaps. Existing Obelisk identity and hybrid-terminology STRONG gaps stay outside this diagnostic change and are not claimed resolved. Routine release uses exact-candidate checks, current isolated staging, rollback and production readback. Legacy unit schema-validator TODO remains explicit. Unrelated cache/forecast/operator residue is excluded from publication.
+
+
+## D-S388.3 — Bound diagnostic summary read amplification (2026-10-18)
+
+Pre-release review found that a public GET could perform up to894 storage operations, so a per-request bound alone did not bound aggregate R2 cost or protect shared KV reads. Reuse the existing SQLite class on a distinct diagnostic:csp:summary-budget:v1 object: three expensive computations per fixed hourly window, with no intake/account key sharing or KV fallback. Admit before reading storage. Denied admission returns429 and unavailable/null; missing, failed or malformed admission returns503 and unavailable/null. Failed computations consume a slot. This bounds evidence reads, not inbound requests/counter calls; a public caller can temporarily consume operator visibility. Maximum accepted internal operations with pagination and admission907. Staging and production namespaces must be observed distinct.

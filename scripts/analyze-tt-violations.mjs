@@ -2,7 +2,7 @@
 /**
  * analyze-tt-violations.mjs (S174 audit #3 · tt-intake-forensics-fix)
  *
- * Reads every sampled Trusted Types report body from Workers KV and clusters
+ * Reads sampled Trusted Types reports from private R2 plus legacy Workers KV and clusters
  * violations by (sourceFile, lineNumber) so the burndown is evidence-driven
  * instead of one-sample guesswork.
  *
@@ -185,58 +185,13 @@ if (args.includes('--self-test')) {
 // KV access (deploy token first — same path probe-tt-soak.mjs verified)
 // ---------------------------------------------------------------------------
 
-const { getSecret, redact } = await import('./lib/secrets.mjs');
-
-let token, accountId;
+const { redact } = await import('./lib/secrets.mjs');
+const { readTtReports } = await import('./lib/tt-report-reader.mjs');
 try {
-  accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');
-  try {
-    token = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.deploy');
-  } catch {
-    token = getSecret('CLOUDFLARE_STUDIO_TOKEN', 'cloudflare.studio');
-  }
-} catch (err) {
-  console.error(`analyze-tt-violations: credential resolution failed — ${redact(String(err?.message || err))}`);
-  process.exit(1);
-}
-
-const API = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${NAMESPACE_ID}`;
-const headers = { Authorization: `Bearer ${token}` };
-
-async function cf(pathPart) {
-  const res = await fetch(`${API}${pathPart}`, { headers });
-  const text = await res.text();
-  if (!res.ok) {
-    let detail = `HTTP ${res.status}`;
-    try { detail = JSON.parse(text)?.errors?.map((e) => `${e.code}: ${e.message}`).join(' · ') || detail; } catch {}
-    throw new Error(`${detail} (${pathPart.split('?')[0]})`);
-  }
-  return text;
-}
-
-try {
-  const keys = [];
-  let cursor = '';
-  do {
-    const page = JSON.parse(await cf(`/keys?prefix=tt%3A&limit=1000${cursor ? `&cursor=${cursor}` : ''}`));
-    keys.push(...(page.result || []).map((k) => k.name));
-    cursor = page.result_info?.cursor || '';
-  } while (cursor);
-
-  const cutoff = new Date(Date.now() - DAYS * 86400000).toISOString().slice(0, 10);
-  const reportKeys = keys.filter((k) => {
-    const m = k.match(/^tt:(\d{4}-\d{2}-\d{2}):(\d{4})$/);
-    return m && m[1] >= cutoff;
-  });
-
-  console.log(`analyze-tt-violations: ${reportKeys.length} report body/ies in window (${DAYS}d)`);
-  const reports = [];
-  for (const key of reportKeys) {
-    try {
-      reports.push(JSON.parse(await cf(`/values/${encodeURIComponent(key)}`)));
-    } catch { /* expired between list and read — skip */ }
-  }
-
+  const evidence = await readTtReports({ days: DAYS, namespace: NAMESPACE_ID });
+  const reports = evidence.reports;
+  console.log(`analyze-tt-violations: ${reports.length} reports · ${evidence.legacyRecords} legacy KV records + ${evidence.r2Objects} R2 batches · complete`);
+  console.log('Storage reads are complete; sampled and budget-capped intake is not a complete traffic census.');
   const clusters = clusterReports(reports);
   const today = new Date().toISOString().slice(0, 10);
   const freshnessRanked = rankByFreshness(clusters, today);

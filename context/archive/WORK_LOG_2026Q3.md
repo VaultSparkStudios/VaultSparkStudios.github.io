@@ -1115,3 +1115,100 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 
 ---
 
+
+<!-- rotated-from: logs/WORK_LOG.md · 2026-10-18 -->
+## 2026-09-04 — Session 343 · the site had no users because it could not accept one
+
+**The finding.** Asked to plan the site's finalization, I went looking for why a live,
+announced, architecturally excellent site had zero members. It was not marketing.
+`vault-member/portal-auth.js` called `VS.kitSubscribe(...)` — a function defined nowhere
+in the codebase — inside the registration try-block, before `showDashboard()`. The
+subscribe checkbox ships checked. So every stranger who tried to join threw a TypeError,
+read *"Could not complete registration. Please try again."*, and left — while their
+account had in fact been created, so the retry hit `register_open`'s uniqueness guard and
+failed differently. Every other finding this session was downstream of that one.
+
+**Shipped (live at `57e69bfcd`, production serving verified, not inferred).** The opt-in
+moved off the success path entirely: after `showDashboard()`, guarded on `window.VaultKit`,
+un-awaited, rejection swallowed — an optional side effect must never be able to fail a
+registration. A taken handle, which `register_open` reports as DATA rather than as
+`rpcErr`, no longer reads as success. `/login` content-negotiates so a browser gets a
+branded page instead of a raw JSON blob when the IdP is down. The funnel beacon now
+separates bots from people — the site has advertised that on `/stats/ecosystem/` for
+months without doing it — with `looksLikeBot()` returning a boolean so the UA is read and
+discarded rather than stored, because a retained UA is a fingerprint. `VS.openCustomerPortal()`
+now exists: the edge function had zero callers and the button was `typeof`-guarded, so it
+failed silently while the copy promised "Cancel anytime". The homepage stopped shipping
+~6 KB to run two modules that early-return on `/`. `vs_visit_count` has one writer again.
+
+**Verification.** build:check 388/388 · doctor blockingFailing 0 · scan-secrets clean ·
+mobile 215/215 · worker 57/57 · CANON-053: 84 captures, 2 pixel-inspected. Production
+verified by reading the SERVED `portal-auth.js`, not by trusting the deploy's green: the
+only surviving `kitSubscribe` is the comment explaining its removal.
+
+**Two rebase races.** Publisher crons landed 14 commits during the gate run and 1 more
+during the push. Both conflicted only on generated artifacts; resolved take-theirs then
+re-derive (22 and 17 artifacts rebuilt), with the hash-bound receipts re-checked after
+each so the CANON-053 evidence binds to what actually shipped rather than to a pre-rebase
+tree. The `0 0` divergence reported by the first failed push was the detached-HEAD
+artifact, not a clean state — checked the branch was attached before believing it.
+
+**Two findings logged, not fixed.** The gateway's `supabase.admin` key is valid and
+scoped to a DIFFERENT project (`ckwtolofoqzrqouqkmvs` vs this site's `fjnpzjjyhnpmunfoycrp`),
+401s on first use, and reads `READY 2/2` in the audit because presence is not validity —
+a second, independent reason the Obelisk ceremony would fail, after the founder completes
+the passkey flow (D-S343.4). And the homepage hero published *"The studio keeps resync
+after publisher race"* to strangers (D-S343.5). Neither was fixed in-session: the tree was
+frozen under a passing gate with two hash-bound receipts.
+
+**Honest limits.** The plan's Phase 0 gate is a human signup in a clean browser profile,
+and it has NOT been run — I verified the code path in the served bundle, not the lived
+experience. The pixel review covered 2 of 84 captures; the vault-member portal, which
+carries this session's largest change, is absent from the theme matrix entirely and was
+covered by the mobile suite instead. Phases 3–7 of the plan are untouched: the adaptive
+front door, the three competing intent taxonomies, activation instrumentation, the welcome
+email, the three divergent rank ladders, and surfacing `/how-we-build/` and `/evidence/`.
+
+## 2026-09-10 — Session 348 · recovered arc saturation and release closeout
+
+- Continued from the independently recovered/pushed S347 boundary (`172073cb7`, receipt follow-up `59bade85e`) and completed the founder-requested uninterrupted `/start → /audit → /implement → /closeout` arc.
+- Shipped 11 S348 audit outcomes: progressive Changelog hydration; multi-run, host-noise-aware performance evidence; atomic mobile receipts; deterministic Forge/feedback provenance; complete 67/67 checked-generator evidence coverage; closure of all 29 publisher cascades; meaningful Git-history window safety; byte-preserving CURRENT_STATE sharding; measured Desk feed probation; stale-task truth reconciliation; and per-story claim/evidence critique packets.
+- Generated 30 deterministic `critique.json` packets plus a SHA-256 manifest. Stable `factRefs` join facts to stances and predictions; unsupported claims remain explicitly `unlinked`; article pages link the packet; the build graph and scheduled publishers regenerate and stage the complete fan-out.
+- Preserved evidence honesty: the Changelog lab verdict abstained as volatile (LCP p75 1.636s, CLS median 0.0021); visual review, mobile evidence, full build, Doctor, staging, production, and post-push CI are recorded only after their final closeout gates complete.
+- No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
+- Final local authority is non-phantom green: `npm run build:check` passed 479/479 from step one after fixing each discovered drift class; mobile runtime passed 215/215 with zero P0/P1 findings; 28/28 final touched-state captures were manually reviewed; Doctor exits 0 with `blockingFailing: 0`.
+
+### Release addendum
+
+- Found a real production release gap after the first content promotion: the fingerprinted idle loader still imported mutable `vault-pulse.js`, so production retained the opacity-fading version. Added content addressing for the child module, rewrote the generated parent reference, and pinned the relationship in the S151 contract.
+- Root-caused staging ceremony 404s to retired hero-ticker fallbacks. Added deterministic `api/recent-ships.json` generation from the public Changelog narrative; staging then emitted zero resource 404s.
+- Resolved repeated scheduled-publisher races only with `pull --rebase`; generated collisions preserved upstream truth and were regenerated afterward. No reset-hard, force push, or hook bypass occurred.
+- Final release evidence: 479/479 build steps; 215/215 retry-free mobile cells; 14/14 manually reviewed Changelog captures; ceremony 10/10; staging receipt `5d2df635546d213dbd236c80`, lineage depth 71; production workflow `34508529884`; live smoke 6/6; production theme sweep 3/3 engines.
+
+## 2026-09-10 — Session 349 · arc: uptime observability honesty + edge-vantage sampler
+
+- Ran the full arc: `/start` (S349, SIL 993 inherited), `/audit` (3 items, every premise pre-verified against live code and a live network probe), `/implement`, `/closeout`.
+- **Found the session's real work by measurement, not from the board.** `data/uptime-history.ndjson` held 1488 retained rows and 604 of them read `edge-degraded`, every one with `contentOk: true` and `down: 0`. Probing directly: `GET /api/founder-presence.json` returns 200 from a residential IP and 403 in 127ms from CI. Cloudflare had widened bot challenges to JSON and OPTIONS paths, expiring the premise the probe was rewritten on in S177. `/status/` had therefore published a false outage continuously since 2026-07-13.
+- Gave the `liveness`, `workerIngest` and `rumIngestPost` legs the challenge-shape classification the `login` leg already had, and introduced `observable` as a question separate from `ok`. A challenged leg is neither an outage nor a pass: `overall` reports the new `edge-unobservable`, unobserved rows leave the rollup denominators, and `dueAlerts` no longer pages on a challenge.
+- Fixed a consequence nobody had noticed: `edgeHtmlBroken` guarded on `!liveness.ok`, which was permanently true while challenged, so the S179 apex-HTML failure shape it exists to catch could not have fired once in the whole window.
+- Carried the new state to every consumer in the same session — `check-uptime-contract` STATES, the public `/status/` tile, rollup denominators, and the history row shape (`livenessObservable`, `workerIngestObservable`, `cv`).
+- Shipped the Worker `scheduled()` uptime sampler DARK behind `UPTIME_SAMPLER_ENABLED="0"`: a Cloudflare cron is the only vantage that can observe our edge, because it is never challenged. Bounded KV (one fixed key per window, 7-day TTL — never a write per request, which is what exhausted the free tier in S319) and no subrequest to any hostname on our own routes (the S179 self-loop shape). Five unit tests assert the deploy is provably inert while the flag is off.
+- Added `scripts/drain-uptime-kv.mjs` (12/12 self-tests): folds edge samples into the unchanged uptime contract, append-only, de-duplicated by timestamp, never rewriting an existing row and never interpolating a missing window.
+- Taught the secrets gateway to consult the disproof it already held: `resolveCapability` returned READY for `supabase.admin` while the same map entry recorded `lastProbeStatus: "auth-error"`. It now renders a distinct FAILING state — which surfaced a second unknown failure, `openai.api` unreachable. Honest ready count 44/72, not 46/72.
+- Separated the service worker page cache from the install precache. Both shared `CACHE_NAME`, and the LRU deletes `keys[0]` — the first entry ever written, which is `/` from `STATIC_ASSETS`. Past 60 entries every navigation was evicting a precached shell asset in order, quietly dismantling the offline experience. Also fixed `activate`, whose `k !== CACHE_NAME` test destroyed the API cache on every single activation.
+- Fixed a WCAG 2.4.7 defect on all 108 shell pages: `.skip-link:focus{top:0}` existed only in the async-loaded stylesheet, so a keyboard user tabbing before the swap focused an element parked at `top:-100%`. Fixed in the generator; verified 108/108 pages carry it and 0 remain unpatched.
+- Verification is non-phantom: 479/479 build steps exit 0 from a frozen tree, 119/119 unit, 62/62 probe self-tests, 12/12 drain self-tests, 215/215 mobile cells against a LOCAL preview (production would have measured the old pages), 14/14 theme captures re-captured and inspected directly, Doctor `blockingFailing: 0`.
+- No dependency, paid model call, identity/auth mutation, membership/pricing change, newsletter send, or production-data migration occurred.
+
+## 2026-09-11 — Session 350 · arc: recovery + hidden-tab polling, shell prune, heading order
+
+- `/arc` triage: tree clean and synced after pulling 51 automation commits, but `check-writeback-currency` reported `50f13941` (S349 follow-up) un-written-back at 20.7h. Recorded it here; CANON-055 exemption declared in LATEST_HANDOFF because its only effect is a CI probe's output and exit code.
+- `/audit` (5 items, premises verified against live code): `docs/AUDIT_2026-09-11.md`. Two premises were half-false and are recorded as wins: desk-presence already gated its network call, and the shell prune already existed.
+- Root-fixed `cleanupOldFingerprintedFiles`: its pattern escaped `$` and so matched nothing. Reproduced in node before fixing; the rebuild pruned eight stale shells and re-hashed vault-pulse, desk-presence and the home idle loader that embeds vault-pulse.
+- favicon-pulse and vault-pulse no longer poll or rotate in hidden tabs; all three scripts refresh on return.
+- Community, Journal and Contact h3→h2, with per-page rules rescoped and `font-family: inherit` to keep the look.
+- Sampler enabling held: gateway token has no KV scope (error 10000); the MCP namespace creation was denied by the permission layer. Not routed around.
+- Rendered-pixel pass (CANON-053) found a pre-existing defect on the main inbound form: Contact's name/email/subject inputs measured 22px, not 48px, in every theme. `.input-field`'s `flex: 1` zeroes the flex-basis inside the column-flex `.form-group`, overriding the declared height. Contact is the only page nesting them; fixed there with `flex: none`.
+- Two Git Bash traps hit during verification: MSYS path conversion rewrote `--routes /community/` into `C:/Program Files/Git/community/` (fix: `MSYS_NO_PATHCONV=1`), and a refreshed observed leaf (`worker-route-provenance.json`) changes `observedRoot`, so it does require a reseal even though it is excluded from `root`.
+- Self-inflicted drift, caught by the gate: `resync-derived --sweep-repair` ran `build-brand-assets.mjs`, which on this machine (no source masters) skipped every job and still wrote the manifest, replacing the correct 7-entry `brand/assets.json` with an empty list and staging it. `build:check` step 111 failed on it; restored from HEAD, and the generator bug is carried to next session.
+

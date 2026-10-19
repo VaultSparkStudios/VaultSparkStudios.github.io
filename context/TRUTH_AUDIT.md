@@ -1,3 +1,8 @@
+## S387 — 2026-10-18 — report storage and release truth
+
+TT intake no longer depends on auth KV. Staging R2 report round trip and unchanged Obelisk redirect are observed. Both buckets are private with 30-day prefix retention. Independent review passed after fixing malformed HTTP-200 XML being treated as complete evidence. Source implementation is distinct from full deployment; acceptance is exclusively docs/RELEASE_S387.json. Other KV writers, existing identity holds, the unit TODO and unmeasured field-vitals remain visible.
+
+
 ### S378 production acceptance — 2026-10-13T22:52:51.834Z
 
 Own-invocation release accepted; docs/RELEASE_S378.json binds exact source, actual deploy steps and served proofs. Staging receipt intent6633 differs from actual candidate57ca: independent Git/served hashes establish the relationship. Primary raw HTML differs due to narrowly verified provider transport; no raw-primary tree-current or positive held-identity acceptance is claimed. Canonical closeout/closing publication still pending.
@@ -1613,3 +1618,22 @@ All two selected outcomes shipped; all three waves complete. Same S385 score, no
 The art-currency failure was not missing art generation: images existed and were rejected by a reviewer given a narrower story than the generator. Reviewer input now matches the generator brief. The two 2026-10-16 "release dispatch failed" lines were a temporarily disabled workflow; the art reached production through a later full release (served bytes verified identical).
 
 S386 follow-through: "newest Desk story" now means the latest publication instant on the newest date, matching the homepage. Production /login 503 on 2026-10-16 was KV quota exhaustion, not a code regression; persona page 2+ 404s are a lane allowlist gap, not missing source.
+
+### S387 final release acceptance
+
+Verified 2026-10-18T16:46:56.351Z: exact source 3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7; Worker73bd16bb-e430-4609-9901-34d3a845f98a; Pages workflow39146002633. Deployment claims now rest on observed version, stored-report round trip and full served readback. Existing identity holds are not reclassified as accepted journeys.
+
+
+## S388 — diagnostic completeness (2026-10-18)
+
+CSP ring index was not a retained-record count; exactly200 reports could read as zero. New summaries count complete legacy/new stored records and expose unavailable on failures. The probe rejects old counter-only responses. Successful retained zero is not proof of no violations. Full staging/production evidence remains pending in docs/RELEASE_S388.json; existing identity/field evidence is not reclassified.
+
+
+### S388 release acceptance
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized. Account-wide quota reduction remains unmeasured.
+
+
+### S388 newly received performance signal
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.

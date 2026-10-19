@@ -1,0 +1,363 @@
+{
+  "session": 387,
+  "state": "complete",
+  "nativeGoal": {
+    "threadId": "01a14f58-25bc-7d32-b310-7fc051d58f6d",
+    "createdAt": 1792332555,
+    "sessionStart": "2026-10-18T14:10:04.440Z",
+    "startHead": "37964277185349772d3da0ebc21b18da1330dc01"
+  },
+  "authorization": "Founder /arc goal with direct main push and full deploy.",
+  "implementation": {
+    "sourceCommit": "c0d1abb7a0",
+    "audit": "docs/AUDIT_2026-10-18.json",
+    "focusedTests": "88/88 Worker/form/TT acceptance; reader round-2 malformed-listing regressions 9/9",
+    "unitSuite": {
+      "passed": 442,
+      "failed": 0,
+      "todo": 1,
+      "note": "Existing bare required-schema validator TODO; not counted as passed."
+    },
+    "review": {
+      "round1": "one XML completeness finding fixed",
+      "round2": "pass"
+    },
+    "visual": "28 inspected sitemap before/after captures across seven themes and desktop/mobile; docs/visual-qa/LATEST.json",
+    "rebasedSourceCommit": "c0d1abb7a0",
+    "writeBudget": {
+      "batchesPerHour": 3,
+      "maxReportsPerBatch": 5,
+      "maxRequestBytes": 8192,
+      "storageCounter": "existing SQLite Durable Object, distinct diagnostic object",
+      "focusedAcceptance": "88/88"
+    },
+    "mobile": "215/215 (current UI; Worker-only hardening follows)",
+    "closeoutReview": {
+      "round1": "malformed envelope/entity/count listing finding fixed",
+      "round2": "PASS; independent 9/9 rerun"
+    },
+    "sourceCommits": [
+      "c0d1abb7a0",
+      "ea91d30a82",
+      "4c1f0399fc"
+    ]
+  },
+  "storage": {
+    "at": "2026-10-18T15:57:30.916Z",
+    "applied": false,
+    "buckets": [
+      {
+        "bucket": "vaultspark-rum",
+        "retentionDays": 30,
+        "prefix": "tt/raw/",
+        "private": true,
+        "unrelatedRulesPreserved": true
+      },
+      {
+        "bucket": "vaultspark-tt-staging",
+        "retentionDays": 30,
+        "prefix": "tt/raw/",
+        "private": true,
+        "unrelatedRulesPreserved": true
+      }
+    ],
+    "provisioningApplied": true
+  },
+  "stagingWorker": {
+    "at": "2026-10-18T15:04:16.750Z",
+    "workerVersion": "07361918-d805-4d4d-8877-f7898bfd09a6",
+    "intake": 204,
+    "r2Roundtrip": true,
+    "before": 1,
+    "after": 2,
+    "login": 302,
+    "legacyKvComplete": true,
+    "marker": "/__qa__/s387-1792335854284.js"
+  },
+  "rollback": {
+    "workerVersion": "ed6ca127-f30b-4397-8ee5-852451cb335a",
+    "pagesCandidate": "cef79ce71989eb9fa60e51df31a36e944e8dff41"
+  },
+  "limitations": [
+    "Other shared KV writers remain; this does not prove account-wide quota independence.",
+    "Existing identity/field-vitals holds and the schema-validator TODO remain separate.",
+    "Three batches/hour caps successful R2 writes; inbound diagnostic requests and Durable Object calls remain uncapped."
+  ],
+  "remaining": [],
+  "closeoutPreparation": {
+    "sil": 935,
+    "previousSil": 935,
+    "ignis": {
+      "score": 46190,
+      "tier": "FORGE",
+      "project": "vaultsparkstudios-website",
+      "sourceFingerprint": "48eb51d94acb7d75bfe9ed22bdbbc22e3951097649b31a8b58b9c5b36411fe53",
+      "resultVerified": true,
+      "at": "2026-10-18T14:44:04.662Z"
+    },
+    "doctor": {
+      "passing": 15,
+      "warning": 2,
+      "failing": 0,
+      "blockingFailing": 0
+    },
+    "entropy": 0.204,
+    "genome": "23/25",
+    "cdr": "reviewed; no new human creative direction",
+    "autopilot": {
+      "exitCode": 0,
+      "measuredRuns": 2,
+      "published": true
+    }
+  },
+  "staticStaging": {
+    "sha": "8cbacc7fb25a90c7ff1ca4f5fc748dfbd4436dfd",
+    "receipt": "02c544d36c075700f213c1f6",
+    "artifactRoot": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957",
+    "criticalFilesMatched": 66,
+    "sourceFilesMatched": 3699,
+    "ceremony": {
+      "state": "passed",
+      "steps": 11
+    },
+    "browser": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-18T16:12:12.825Z",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/staging-release.spec.js",
+      "state": "passed",
+      "expectedTests": 6,
+      "observedTests": 6,
+      "executedTests": 3,
+      "passed": 3,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "held": 3,
+      "heldContracts": [
+        "anonymous Obelisk boundary is fail-closed and reaches the provider"
+      ],
+      "heldSurfaces": [
+        "identity",
+        "worker:identity"
+      ],
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "attention": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-10-18T16:13:31.599Z",
+      "generatedBy": "scripts/run-attention-release-gate.mjs",
+      "publicSafe": true,
+      "origin": "https://website.staging.vaultsparkstudios.com",
+      "suite": "tests/attention-surfaces.spec.js",
+      "state": "passed",
+      "expectedTests": 15,
+      "observedTests": 15,
+      "passed": 15,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "reasons": [],
+      "failures": [],
+      "failureEvidence": {
+        "projects": [],
+        "tests": [],
+        "files": [],
+        "truncated": false
+      }
+    },
+    "sourceEquivalentCandidate": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7"
+  },
+  "localValidation": {
+    "coverageComplete": true,
+    "passed": 539,
+    "failed": 0,
+    "sourceFingerprint": "0710080efd98312442f6375f",
+    "receiptId": "cf904b4070ab788f39163af3",
+    "completeRuns": 2
+  },
+  "stagingSource": {
+    "actualStagedGit": "8cbacc7fb25a90c7ff1ca4f5fc748dfbd4436dfd",
+    "promotionCandidate": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+    "sourceEquivalent": true,
+    "sourceFingerprint": "0710080efd98312442f6375f",
+    "files": 3699,
+    "artifactRoot": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957",
+    "criticalFilesMatched": 66,
+    "onlyLineEndingTransport": [
+      "context/DECISIONS.md",
+      "scripts/install-git-window-guard.mjs",
+      "scripts/lib/git-window-guard.mjs",
+      "scripts/lib/windows-hide-shim.cjs"
+    ],
+    "localOnlyExcluded": [
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/176c907073fc436f2d4bceaf1df3e1ab5f8d8545123d6e9ec8c32ce35dd0cd18000001a020b563ef",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/17ad02efc1fc032411ff5926cfd4844834572c55e9c39fbd7efa408d1d49dddf000001a020b704ca",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/19a92ad12c80f2075bf51f73510be5d1a97722ebf1c0701286bac8c36f0571cc000001a020b70a78",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/1d26b241a65f4766bc0491288218b5a5f1a532f9ce4d77753d95459a5232e7b2000001a020b561a1",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/20d626985cd44f9bbefc024fb37dec00b4b238a3ffdb09daec872ff6d2a901e1000001a020b56223",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/21b98f7ecd3cf8a29940f351b9f77283f826b195cda34e45a24ca9f75cfc00d5000001a020b5672c",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/3935a4250a96975f39ebfe60e9875968f6c32e1a654af1c2b0e7f9fcfb85ec44000001a020b7071d",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/3c03675570f72bcfac3f38b15fd362c3f7f729ce509262afc2a4eaa71154eedd000001a020b55f70",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/472864b173cabcc304270129e1a6393c5b3db4ce7b4d90a028b25cf4c44147f1000001a020b56393",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/4d851df12fa2ee530be136bc3770efcab92b67e3f40b5c4313604adcf6319bcc000001a020b70426",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/63713cc2ac578565de245c013ef3163aea7b9234f71c5cb2e9ad6d7ac388738a000001a020b70ab9",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/69ad33aa1d937662e8a879cd00d9eabe186adc81146cffd5af7646434126c26b000001a020b55f53",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/6ac51dc4c9181a9478efeacfdfd439a3b052a267bd8d2c91d350d478bc09c4e7000001a020b56446",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/736534d9590bb549d964426437ab8dd448407d14eb541313010000f26abd9013000001a020b70afc",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/7574e83b206a218c98f16e9e0da372362b40ed23823da80fe938b119bf74ae32000001a020b5674b",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/7d943895340ee31acf86922bad7b885310eee4d1fd41da1c26ceb1368e1f9960000001a020b564ea",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/7df4c995c428abfc1ce3430bff0dd6b1a995334f9c2b098d82545b7dc7e4a33e000001a020b70b05",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/88ce4fbceb95aa6ecba92ae737c64f4aa6b126b6b0e441bd8834398b18969876000001a020b70459",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/939611ea99e759532cf492c77520b73ba74cee2cd0e6af6b34ca284696d2d546000001a020baf4e1",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/9d66242c0a179e93db69cf0a55f3da8f7ca9e3fe078196632f3b5b6919cb8fab000001a020b5621a",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/aef30e2d87f462a02a78959a974cd7e860b9b3dad824f934c6683a51be3b289f000001a020b566e9",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/be18d3850b06c44e80b19ffb221b7c029a9fcfe74e39b4922151af23911190ce000001a020b706c0",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/c8a69c30ad5a8f232cd0f36466ea7416600a09b29583bc8f764c0ef59550fdaf000001a020b56168",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/ce92078d1bf898b55f5838d9cdf598d418a4a3a98b489ebecdef9934c3f57cca000001a020b70af2",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/d1e7e4f7e62f23deeae31d5fba2eb14eb4447cbfa21008a7df542a9fd55d80e1000001a020b56602",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/d8907dc657da20eab6911f563d0a8fd8eb2014ac407d5b458913545f2bffa73b000001a020b56271",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/d8f63f662204a8d68fcb61e9b9db661b5685b53e5c0e2a26bcc4ad0f2e51cc7f000001a020b56115",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/e6c1a3a0d6541515720244f84ea789d0ae6e5ae3586af66ca7b20dd9360c5e8d000001a020b70740",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/e9eefffa08b6af34d12b7be025f1cec349e3894669ca0fdf69b176ca1f5ca14a000001a020b5650f",
+      "cloudflare/.wrangler/state/v3/cache/default/blobs/fd8271504139f094569c43fcdf59bc9d9f9c8aa4618eb293441c892c357b6820000001a020baf4cf",
+      "cloudflare/.wrangler/state/v3/cache/miniflare-CacheObject/9f458c07675338a7426a7b81ac4fb1baf92d034efbcaaf4336379640ed744ded.sqlite",
+      "cloudflare/.wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite",
+      "cloudflare/.wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite-shm",
+      "cloudflare/.wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite-wal",
+      "cloudflare/.wrangler/state/v3/kv/miniflare-KVNamespaceObject/metadata.sqlite",
+      "cloudflare/.wrangler/state/v3/kv/miniflare-KVNamespaceObject/metadata.sqlite-shm",
+      "cloudflare/.wrangler/state/v3/kv/miniflare-KVNamespaceObject/metadata.sqlite-wal",
+      "cloudflare/.wrangler/tmp/deploy-xAXG0E/security-headers-worker.js",
+      "cloudflare/.wrangler/tmp/deploy-xAXG0E/security-headers-worker.js.map",
+      "scripts/package-lock.json"
+    ]
+  },
+  "promotionArtifact": {
+    "root": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957",
+    "stagingRefreshRequired": false,
+    "reason": "Canonical rebuild includes the actual commit-activity heat count (840 to880). Runtime source is unchanged."
+  },
+  "hostedAttempt1": {
+    "sha": "8cbacc7fb25a90c7ff1ca4f5fc748dfbd4436dfd",
+    "e2e": 39143276680,
+    "result": "failure at release-proof timestamp drift",
+    "fix": "Regenerate dependent release proof after retaining the tested shell-manifest timestamp; reproduced as generatedAt-only in isolated checkout.",
+    "lighthouse": "success",
+    "accessibility": "success"
+  },
+  "immutableArtifactPolicy": "Retain the staged compiled public-intelligence snapshot while merging newer uptime observations; no regeneration of commit-activity counts during promotion. All runtime source and the 66 critical files remain bound to the staged candidate.",
+  "accepted": true,
+  "verifiedAt": "2026-10-18T16:46:56.351Z",
+  "releaseCandidate": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+  "hosted": {
+    "ok": true,
+    "sourceCommit": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+    "checks": [
+      {
+        "workflow": ".github/workflows/e2e.yml",
+        "state": "passed",
+        "runId": 39144790859
+      },
+      {
+        "workflow": ".github/workflows/lighthouse.yml",
+        "state": "passed",
+        "runId": 39144790887
+      },
+      {
+        "workflow": ".github/workflows/accessibility.yml",
+        "state": "passed",
+        "runId": 39144790874
+      }
+    ]
+  },
+  "production": {
+    "candidate": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+    "tag": "s387-production-v2-20261018",
+    "pages": {
+      "runId": 39146002633,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39146002633",
+      "immutableOrigin": "https://b2229ab2.vaultsparkstudios-website.pages.dev",
+      "stamps": [
+        {
+          "origin": "https://b2229ab2.vaultsparkstudios-website.pages.dev",
+          "observedAt": "2026-10-18T16:45:05.892Z",
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-18",
+          "sha": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+          "builtAt": "2026-10-18T16:43:13.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        },
+        {
+          "origin": "https://vaultsparkstudios.com",
+          "observedAt": "2026-10-18T16:45:05.898Z",
+          "schemaVersion": "1.1",
+          "generatedAt": "2026-10-18",
+          "sha": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+          "builtAt": "2026-10-18T16:43:13.000Z",
+          "deployedBy": "pages-deploy",
+          "baselineSha": null,
+          "contentLaneHead": null,
+          "contentLanePaths": null,
+          "contentLanePathSetSha256": null,
+          "workflowRunId": null
+        }
+      ],
+      "ceremony": {
+        "state": "passed",
+        "passed": 11,
+        "total": 11,
+        "source": "Successful canonical step and exact workflow log",
+        "logSha256": "49706ca35dd4fef75d683f06e90bb8a20b91ecbd43df725b8d7450b611cebed3"
+      },
+      "inventory": 1107,
+      "immutableDiffer": 0,
+      "immutableUnread": 0,
+      "primaryHtml": 323,
+      "primaryUnverified": 0,
+      "mandatoryEngagement": {
+        "runId": 39144790859,
+        "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39144790859",
+        "headSha": "3ceaae612d54f3f08c9a0c6b074ebc8ee7596ef7",
+        "job": "compliance",
+        "steps": [
+          "Homepage engagement and intelligence contract",
+          "Returning visitor momentum contract",
+          "Public community and ecosystem data contracts"
+        ],
+        "conclusion": "success"
+      },
+      "receiptSha256": "b19b50ca4d298044a496756b93c7449ca0683958b56e1643c5e145efdf1f08cf",
+      "identical": 1097,
+      "redirected": 10,
+      "heldIdentityRedirects": 9
+    },
+    "worker": {
+      "at": "2026-10-18T16:45:12.275Z",
+      "workerVersion": "73bd16bb-e430-4609-9901-34d3a845f98a",
+      "deploymentId": "1017641c-83b0-42c9-bfcd-1156a02088db",
+      "intake": 204,
+      "r2Roundtrip": true,
+      "legacyKvComplete": true,
+      "login": 302,
+      "syntheticFixtureRemoved": true,
+      "runId": 39146002602,
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39146002602"
+    },
+    "scope": "Pinned source; all declared served text inventory excluding documented deployment stamps, plus primary HTML with only declared edge nonce/provider injection and held identity redirects. No authenticated identity acceptance claimed."
+  },
+  "nativeGoalOutcomeVerified": true
+}

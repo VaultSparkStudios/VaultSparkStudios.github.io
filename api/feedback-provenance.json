@@ -1,11 +1,82 @@
 {
-  "generatedAt": "2026-10-18",
+  "generatedAt": "2026-10-19",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 0,
-  "themes": [],
+  "themeCount": 4,
+  "themes": [
+    {
+      "key": "conversion",
+      "label": "Conversion",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "c0d1abb7",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "isolate Trusted Types diagnostics from auth KV",
+          "ts": "2026-10-18T14:48:34.000Z"
+        }
+      ]
+    },
+    {
+      "key": "trust",
+      "label": "Trust & legal",
+      "count": 3,
+      "commits": [
+        {
+          "sha": "adb8f8ff",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "close verified CSP reliability release",
+          "ts": "2026-10-18T19:06:19.000Z"
+        },
+        {
+          "sha": "98538ff5",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "bound public CSP summary computations and verify staging",
+          "ts": "2026-10-18T18:09:20.000Z"
+        },
+        {
+          "sha": "96071b67",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "bound CSP diagnostics and preserve complete summaries",
+          "ts": "2026-10-18T17:26:55.000Z"
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "3ceaae61",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "reconcile release proof with verified snapshot inputs",
+          "ts": "2026-10-18T16:22:31.000Z"
+        }
+      ]
+    },
+    {
+      "key": "frontdoor",
+      "label": "Front door",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "4c1f0399",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "keep unavailable context measurements unknown",
+          "ts": "2026-10-18T15:15:11.000Z"
+        }
+      ]
+    }
+  ],
   "decisionSampler": {
     "kAnonymityThreshold": 5,
     "observedTotal": 0,

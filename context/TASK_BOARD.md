@@ -1,3 +1,18 @@
+## S388 — release follow-through
+
+- [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
+- [ ] [SIL][S388][OPS/P2] Reject unknown deployment arguments; use deterministic handoff compaction by default and require approval for paid summaries.
+
+Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
+
+## S387 — reliability follow-through
+
+- [x] Implement TT diagnostic isolation, complete legacy/R2 evidence reading, private retention and isolated staging round-trip acceptance. Full release acceptance is recorded separately in docs/RELEASE_S387.json.
+- [ ] [SIL][S387][RELIABILITY/P1] Attribute remaining shared KV writers (CSP reports, rate counters and other account namespaces); verify real daily usage before claiming the account-wide outage risk eliminated.
+- [ ] [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
+
+Wave 1 · trace diagnostic quota coupling and audit: complete. Wave 2 · isolate intake and preserve evidence: implementation/staging verified. Wave 3 · exact-candidate release and closeout: acceptance source docs/RELEASE_S387.json.
+
 ## S386 — Desk art review contract
 
 - [x] Art reviewer sees the generator brief; daily critique re-roll; newest-story contract. docs/RELEASE_S386.json
@@ -307,7 +322,7 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 
 - [x] **[S341][OBS/P3] The `silent` cron verdict is fixture-proven only -- and now says so itself.** **DONE S345.** Re-probed live: `broken: 1` (the newsletter), `silent: 0`, `unmeasured: 0`. There is no real silent cron to pin against, and disabling a live workflow to manufacture one would be fabricating evidence to pass a test. Took the item's second branch, but made it self-declaring rather than a note in a doc that rots: the run now computes `liveCorroboration` per verdict class and reports `fixtureOnlyVerdicts` on BOTH the pass and fail paths, plus in `--json`. The point is that `silent: 0` read identically whether the detector worked or was quietly broken; it now distinguishes 'no instance' from 'verified all-clear'. Self-test 18/18 with the silent fixture pinned as the only proof it has. CANON-031.
 
-- [x] **[S340][BUILD/P2] `resync-derived.mjs` reported clean over a subset it could not see.** **DONE S345.** The graph models 29 of 67 byte-checked generators; `check-evidence-graph-coverage` keeps the other 38 a deliberate visible RATCHET, because guessing their `sources` would produce a confidently-wrong graph -- strictly worse than an admittedly partial one. So the debt was real but visible only in a config file, never at the moment of repair, which is the only moment it costs anything. Both live drifters (`build-intelligence-budget` S340, `build-nervous-system` S341) are still unmodeled today. Fixed by making the repairer state the scope of its own claim: every success exit in `main()` now routes through `finish()`, which runs the UNMODELED generators' own `--check` -- read-only, and a direct measurement rather than a prediction from sources we do not have. Default is FAIL-NAMED (exit 1); `--sweep-repair` rebuilds, guarded by the same world-acting-builder prefix test as the graph path; `--no-sweep` says so out loud. `--dry-run` now declares what its plan omits. Negative control reproduced the exact S340 incident: with `api/intelligence-budget.json` staled, the old path printed `5 artifact(s) rebuilt + staged` and exit 0; the new one exits **1** naming `build-intelligence-budget`, and `--sweep-repair` exits **0** having rebuilt it (exit codes read directly, not through a pipe). Self-test 16/16 including a structural assertion that no bare `process.exit(0)` can bypass the sweep. Prerequisite: `check-evidence-graph-coverage.mjs` was not import-safe (`else run()` fired on import) -- fixed with the repo's `isDirect` idiom. Baseline lowered 39 -> 38. See D-S345.1.
+- [x] **[S340→S345][BUILD/P2] Derived-generator coverage repair completed.** Full original evidence: context/archive/TASK_BOARD_ARCHIVE.md (S387 rotation).
 
 - [x] **[S340][BUILD/P1] Register `/evidence/` in `config/intelligence-suite.json` and end the nav tug-of-war.** S347: canonical Evidence route and shared-suite ownership implemented and focused-tested. Final generated matrix and release verification pending.
 
@@ -700,3 +715,8 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+
+
+## S388 authorized arc
+
+- [x] [S388 #1] CSP isolation deployed; full541, exact staging/hosted checks and production readback verified. docs/RELEASE_S388.json.

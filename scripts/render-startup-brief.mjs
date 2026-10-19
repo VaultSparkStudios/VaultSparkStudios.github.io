@@ -253,24 +253,18 @@ function loadLiveContextMeter() {
       };
     }
   } catch { /* fall through */ }
-  // Heuristic fallback — old behavior
-  const bytes = [
-    'AGENTS.md', 'CLAUDE.md', 'context/PROJECT_BRIEF.md', 'context/SOUL.md',
-    'context/BRAIN.md', 'context/CURRENT_STATE.md', 'context/DECISIONS.md',
-    'context/TASK_BOARD.md', 'context/LATEST_HANDOFF.md',
-    'context/SELF_IMPROVEMENT_LOOP.md', 'context/TRUTH_AUDIT.md',
-  ].reduce((sum, file) => sum + bytesOf(file), 0);
-  const usedTokens = Math.round(bytes / 4);
+  // A timed-out or unreadable meter is unknown. File bytes cannot measure the
+  // runtime context window or justify a closeout recommendation.
   return {
     live: false,
-    usedTokens,
+    usedTokens: null,
     limit: meterLimit,
-    pctUsed: usedTokens / meterLimit,
+    pctUsed: null,
     turnsToCompact: null,
     continueCostPerTurn: null,
     cacheHitRate: null,
-    recommendation: usedTokens / meterLimit > 0.75 ? 'CONSIDER_CLOSEOUT' : 'CONTINUE',
-    confidence: 'heuristic-stale',
+    recommendation: 'UNMEASURED',
+    confidence: 'unmeasured',
     agent: meterAgent,
     model: '',
   };

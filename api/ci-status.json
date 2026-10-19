@@ -1,48 +1,48 @@
 {
-  "generatedAt": "2026-10-17T01:00:49.503Z",
+  "generatedAt": "2026-10-18T19:28:19.093Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 5,
-    "healthy": 5,
-    "unknown": 10,
+    "observed": 3,
+    "healthy": 3,
+    "unknown": 12,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "unknown",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gate status is unknown.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
-    "state": "stranded",
+    "state": "clear",
     "threshold": 2,
-    "alert": true,
+    "alert": false,
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-16T18:09:27.404Z",
-    "currentBehindStreak": 10,
-    "newestGradableAt": "2026-10-16T18:09:27.404Z",
-    "newestAgeHours": 6.9,
+    "lastStrandedAt": "2026-10-18T15:36:08.991Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-18T18:47:28.984Z",
+    "newestAgeHours": 0.7,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   },
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
+      "status": "failure",
       "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-10-17T00:45:35Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38986916312",
-      "headSha": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+      "conclusion": "failure",
+      "updatedAt": "2026-10-18T19:23:21Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39157581685",
+      "headSha": "9e04d0d675f2363069de4e88662008390fc19c13",
       "event": "push"
     },
     {
@@ -50,9 +50,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-17T00:35:35Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38986916213",
-      "headSha": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+      "updatedAt": "2026-10-18T19:13:09Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39157581711",
+      "headSha": "9e04d0d675f2363069de4e88662008390fc19c13",
       "event": "push"
     },
     {
@@ -60,20 +60,20 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-10-17T00:59:51Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/38986916225",
-      "headSha": "cef79ce71989eb9fa60e51df31a36e944e8dff41",
+      "updatedAt": "2026-10-18T19:27:00Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39157581581",
+      "headSha": "9e04d0d675f2363069de4e88662008390fc19c13",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "unknown",
-      "rawStatus": "unknown",
-      "conclusion": null,
-      "updatedAt": null,
-      "url": null,
-      "headSha": null,
-      "event": null
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-18T18:23:02Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/39153818852",
+      "headSha": "98538ff5b98aa464655fb1b2fed0c2148b049967",
+      "event": "push"
     }
   ],
   "scheduledWorkflows": [
@@ -101,15 +101,13 @@
     },
     {
       "name": "The Desk Dispatch — Daily Digest",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-16T23:33:53Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 1.45,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -169,41 +167,39 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-16T22:22:36Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 2.64,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-16T18:50:42Z",
+      "lastUpdatedAt": "2026-10-18T18:47:37Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 6.17,
+      "ageHours": 0.68,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-17T00:59:57Z",
+      "lastUpdatedAt": "2026-10-18T16:32:40Z",
       "recentConclusions": [
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.01,
+      "ageHours": 2.93,
       "staleAfterHours": 48
     },
     {
@@ -220,16 +216,15 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-17T00:26:30Z",
+      "lastUpdatedAt": "2026-10-18T17:09:07Z",
       "recentConclusions": [
-        "success",
         "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.57,
+      "ageHours": 2.32,
       "staleAfterHours": 48
     },
     {

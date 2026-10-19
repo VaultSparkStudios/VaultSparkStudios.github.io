@@ -34,22 +34,22 @@
       "edgeDegradedSince": "2026-09-15T05:13:10.586Z"
     },
     "onsetEvidence": {
-      "state": "bounded",
+      "state": "conflict",
       "interval": {
-        "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
+        "onsetNotEarlierThan": null,
         "onsetNotLaterThan": "2026-09-15T05:13:10.586Z",
-        "widthHours": 797.2,
-        "widthDays": 33.2
+        "widthHours": null,
+        "widthDays": null
       },
       "contributions": [
         {
           "source": "data/rum-history.ndjson",
           "resolution": "day (aggregate; exact event time unavailable)",
           "observedWindow": {
-            "start": "2026-08-13T00:00:00.000Z",
-            "endExclusive": "2026-08-14T00:00:00.000Z"
+            "start": "2026-09-28T00:00:00.000Z",
+            "endExclusive": "2026-09-29T00:00:00.000Z"
           },
-          "samples": 1,
+          "samples": 9,
           "role": "lower-bound"
         },
         {
@@ -65,7 +65,7 @@
           "reason": "Static Pages reconciliation does not prove which Worker script was routed at the edge."
         }
       ],
-      "consistent": true,
+      "consistent": false,
       "note": "Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset."
     },
     "vantageChallengeAt": null
@@ -74,7 +74,7 @@
     "openIncidents": 0,
     "totalRoutes": 9,
     "onsetNotLaterThan": "2026-09-15T05:13:10.586Z",
-    "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
+    "onsetNotEarlierThan": null,
     "degradedForMs": 218771502,
     "degradedForHours": 60.8,
     "degradedForDays": 2.5

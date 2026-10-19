@@ -1,3 +1,18 @@
+## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
+
+Continue the bound S388 goal; do not start another arc. Canonical closeout complete; release evidence is ready for publication. Other KV writers and existing identity holds remain separate.
+
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+## Session 387 — diagnostic storage isolation deployed (2026-10-18)
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+
+Other shared KV writers remain a recurrence risk. The cap bounds successful R2 writes, not inbound requests or Durable Object calls. Stored samples are not a traffic census. Existing identity/field-vitals holds remain separate.
+
 ## Session 386 — Desk art review contract (2026-10-16)
 
 S386 repairs the scheduled Desk art pipeline that kept CI Health Monitor red on 2026-10-15 and 2026-10-16 (one banner on placeholder art past 48h; three stories without satire cartoons). The autopilot reviewer saw only headline and scene while the generator draws from sourced facts, the satire joke and caption, so faithful renders were rejected every run. The reviewer now receives the same fenced brief; an exhausted story gets one critique-guided re-roll per UTC day, with the last rejection reasons in the prompt; a re-cased Windows checkout path no longer aborts the run as a foreign worktree. Autopilot self-test 47/47 and generator 60/60, with three negative mutations detected. Real-data dry run: all three stuck satire cartoons now pass and were image-inspected; the milk banner fails only a genuine numeral-clock noText defect, and the bounded daily re-roll fired exactly once.
@@ -12,7 +27,7 @@ S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + r
 
 S385 verified full release (2026-10-16T19:09:25.849Z): neutral searchable directory identities, trimmed profile links, earned-rank boundaries and response-bound ecosystem coverage.15/15 local focused cases across3engines and3 negative mutations;13 shell tests;215 mobile cases;112 inspected before/after theme captures;56 scoped contrast samples pass. Complete current-source validation537/537; stagingcritical66/66; ceremony11/11; required exact hosted checks; confirmed full Pages run38950850357 at facc75343b677ac57817392a6cc29c51138a766a. Immutable readback1090 served text files and primary315 HTML routes verified. Live defaults14/15 with one Firefox driver body-retrieval failure; all15 original assertions pass with a Firefox-only original Fetch-clone reader and exact feed hash; a dropped-project mutation is still detected. Existing identity holds, field-vitals limits, axe gradient incompleteness and optional broad diagnostics600pass/34fail/1flaky/60skip remain explicit. SIL933/1000 unchanged.
 
-Native goal01a1459b-2ba2-7863-b06e-0fa86eb23b24 remains associated with this invocation S385, start45eb2fbafd. All three waves complete. CDR reviewed; no new human creative direction. Final metadata push and ignored cleanup proof precede native completion. Preserve unrelated residue. Acceptance: docs/RELEASE_S385.json.
+Native goal 01a1459b-2ba2-7863-b06e-0fa86eb23b24 remains associated with this invocation S385, start45eb2fbafd. All three waves complete. CDR reviewed; no new human creative direction. Final metadata push and ignored cleanup proof precede native completion. Preserve unrelated residue. Acceptance: docs/RELEASE_S385.json.
 
 ## Session 384 — verified release (2026-10-16)
 

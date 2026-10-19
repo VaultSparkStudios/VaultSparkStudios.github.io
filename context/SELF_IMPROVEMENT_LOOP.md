@@ -8,10 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): ▇▇▇▇▇
-Avgs —3:933.7 |5:933.4 |10:933.0 |25:946.5 |all:unmeasured (archived history excluded)
-Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session:2026-10-16 |Session386 |Total:935/1000 |Velocity:3 |protocolVelocity:2
+Sparkline (last5 totals): ▄▄▆██ (→)
+Avgs —3:935.0 |5:934.2 |10:933.6 |25:943.2 |all:unmeasured (archived history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-18 | Session388 | Total:935/1000 | Velocity:1
+  └ CSP diagnostic reliability; production acceptance tracked separately in docs/RELEASE_S388.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2819,3 +2820,68 @@ S386 follow-through: S386 follow-through: candidate 0a434fad21 promoted (run 389
 ### Session 386 addendum
 
 S386 final release (2026-10-17): candidate cef79ce719 (newest-story contract + records) promoted, run 38989131366, tag s386-final-production-20261017. Exact-SHA E2E/Accessibility passed; Lighthouse passed on rerun after the documented article flake (0.89, article changed only by one related-story card). Full staging spec 6/6 across 3 engines incl. Obelisk after the KV reset; ceremony 11/11; build:check 537/537 (3 runs); mobile 215/215. Production served parity 1083/1093 identical, 0 differ; juno/page/2 now 200. Dispatched CI Health Monitor 38989927325: both jobs success. Acceptance: docs/RELEASE_S386.json. All three waves complete; CDR reviewed, no new human creative direction. Same S386 score (935/1000).
+
+
+## Session 387 — 2026-10-18 — diagnostic storage isolation
+
+### Product rubric (10 × 100)
+Dev Health 95 · Creative Alignment 94 · Momentum 90 · Engagement 95 · Process Quality 91 · Cross-Repo Coherence 92 · Security Posture 94 · Ecosystem Integration 91 · Capital Efficiency 95 · Automation Coverage 98. Total: **935/1000**, unchanged; structural reliability improvement, not an invented score jump. Velocity: 1 implemented outcome; release acceptance is separately recorded in docs/RELEASE_S387.json.
+
+### Evidence and learning
+S387 moves normalized Trusted Types diagnostic batches to private R2 storage, with no auth-KV access or fallback. Both evidence readers combine legacy KV and complete paginated R2 reads; malformed or failed sources remain nonpassing. Production and isolated staging buckets have verified 30-day tt/raw/ retention and private access. Source commit f42694e6a0; staging Worker b774a556-9a59-40b9-a6f0-9d14b1310501 passed an actual report round trip and /login 302 to Obelisk. Independent review fixed one incomplete-XML finding and then passed. Focused tests pass; unit suite has 440 passing and one pre-existing schema-validator TODO. The sitemap generator also adds the existing sixth VERA archive page, covered by 28 inspected theme/viewport before/after captures.
+
+### Brainstorm and commitments
+Retire or isolate the remaining high-volume diagnostic KV writers using measured account usage. Re-read a complete current TT cohort without confusing missing evidence with a clean soak. Both are queued as [SIL] follow-ups in TASK_BOARD; no automatic scope expansion. Full local and production acceptance are pending until docs/RELEASE_S387.json proves them. CDR reviewed — no new human creative direction.
+
+S387 machine-readable score: Total:935/1000 | Velocity:1 | Debt:→
+
+### S387 final release acceptance
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+Score remains 935/1000. Both committed SIL follow-ups remain queued; no unrelated maintenance was added.
+
+
+## Session 388 — 2026-10-18 — CSP diagnostic reliability
+
+Product rubric, ten categories ×100; score held at935. Reliability coverage improved; no engagement increase or completed deployment claimed yet.
+
+| Category | Score |
+|---|---:|
+| Dev Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 935/1000
+Velocity:1
+Protocol velocity:1
+Debt:→
+
+S388 isolates Content Security Policy (CSP) diagnostics from sign-in KV writes. Intake uses private R2 batches with a separate existing SQLite counter, at most three stored batches/hour and five reports/batch, with an actual streamed 16 KiB body bound. Summary counts actual retained legacy ring records and complete current object records over three UTC dates; storage faults return unavailable, never a clean zero. The advisory probe requires explicit completeness. Three-day csp/raw/ and existing 30-day tt/raw/ retention are verified in both private buckets. Focused Worker/CSP tests86/86, probe17/17 and lifecycle8/8 pass; broad unit suite452 passed/0 failed/1 existing TODO. Independent review passed after one probe-state fix. Full local, exact staging, hosted checks and production acceptance remain pending in docs/RELEASE_S388.json.
+
+Brainstorm: observe bounded collection and real account usage; make deploy CLI unknown arguments inert. Two SIL tasks committed to TASK_BOARD. No new human creative direction. Context usage unmeasured.
+
+
+### S388 pre-release hardening
+
+Complete pre-hardening validation541/541 is recorded separately from the final read-budget candidate. Summary computations also need an aggregate cap to keep diagnostic cost independent of public request volume. The feature adds no inference service; the legacy startup compactor call is recorded privately. Existing SIL follow-up for safe CLI defaults now includes deterministic compaction. Score remains935/1000; no extra session or velocity counted.
+
+
+### S388 verified release receipt (same session)
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout is being finalized. Score remains935/1000; no additional session or velocity.
+
+### S388 canonical closeout completion (same session)
+
+Canonical autopilot exited0, cleared the session lock, and passed two complete541/541 validation runs. Post-closeout reconciliation94f645f136 records the session-closed event and derived contracts; it introduces no product behavior or new decision. This receipt captures that reconciliation in the same S388 writeback. Score remains935/1000; no additional session or velocity. Final acceptance: docs/RELEASE_S388.json. The two SIL follow-ups remain queued.
+
+
+### S388 final automation reconciliation (same session)
+
+Merge8f8c5c426e preserves canonical closeout commits and receives only the automation Lighthouse ledger. Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed. Score remains935/1000; no additional session or velocity.

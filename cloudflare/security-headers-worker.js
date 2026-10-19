@@ -24,7 +24,8 @@
  */
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
-import { checkDurableFormRateLimit } from './public-form-rate-limit.mjs';
+import { handleCspReport, handleCspSummary } from './csp-reports.mjs';
+import { checkDurableFormRateLimit, FORM_MAX_ATTEMPTS } from './public-form-rate-limit.mjs';
 export { PublicFormRateLimiter } from './public-form-rate-limit.mjs';
 import guideShellManifest from '../assets/shell-manifest.json' with { type: 'json' };
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
@@ -158,18 +159,7 @@ const RATE_LIMIT_MAX = 3;
 const RUM_MAX_BODY_BYTES = 4096;
 const TT_REPORT_MAX_BODY_BYTES = 8192;
 const TT_REPORT_SAMPLE_RATE = 0.005;
-// S172 tt-soak-kv-probe: 1-day TTL + 0.5% sampling + low traffic meant the
-// soak could never accumulate evidence (KV probe found zero tt:* keys while
-// the header was live). TTL is now env-tunable so the soak window can hold
-// reports long enough to be read; see TT_REPORT_TTL_SEC var in wrangler.toml.
-const TT_REPORT_TTL_SEC = 86400;
-function resolveTtReportTtl(env) {
-  const n = Number(env?.TT_REPORT_TTL_SEC);
-  // KV minimum TTL is 60s; cap at 90 days to bound storage.
-  if (!Number.isFinite(n) || n < 60) return TT_REPORT_TTL_SEC;
-  return Math.min(n, 90 * 86400);
-}
-const TT_REPORT_BUCKET_SIZE = 1000;
+// Private R2 tt/raw/ objects have a 30-day lifecycle; no auth-KV counters.
 const TT_REPORT_CSP = "require-trusted-types-for 'script'; report-to vs-tt";
 // S335: Trusted Types enforcement is a one-variable flip (TT_ENFORCE_ENABLED="1"
 // in wrangler.toml). Default off: api/tt-readiness.json must report
@@ -702,24 +692,49 @@ async function handleTrustedTypesReport(request, env, ctx) {
   }
 
   let raw;
-  try { raw = await request.json(); } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
-  if (!env.RATE_LIMIT) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+  try {
+    // Content-Length is optional and untrusted. Bound the actual stream too,
+    // before parsing or retaining strings supplied by a public endpoint.
+    const reader = request.body?.getReader();
+    if (!reader) throw new Error('Missing report body');
+    const bytes = new Uint8Array(TT_REPORT_MAX_BODY_BYTES);
+    let size = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (size + value.byteLength > bytes.length) {
+          await reader.cancel();
+          throw new Error('Report body too large');
+        }
+        bytes.set(value, size); size += value.byteLength;
+      }
+    } finally { reader.releaseLock(); }
+    raw = JSON.parse(new TextDecoder().decode(bytes.subarray(0, size)));
+  } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
+  if (!env.TT_REPORTS || !env.FORM_RATE_LIMIT) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 
   const reports = normalizeTrustedTypesReports(raw, request);
   if (!reports.length) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
   const day = reports[0].ts.slice(0, 10);
-  const counterKey = `tt:${day}:counter`;
-  const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
-  const ttlSec = resolveTtReportTtl(env);
-  const puts = [];
-  let next = current;
-  for (const normalized of reports) {
-    next = (next + 1) % TT_REPORT_BUCKET_SIZE;
-    const key = `tt:${day}:${String(next).padStart(4, '0')}`;
-    puts.push(env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: ttlSec }));
-  }
-  puts.push(env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: ttlSec + 3600 }));
-  ctx.waitUntil(Promise.all(puts));
+  // Diagnostic volume must never consume the KV write budget used by sign-in.
+  // One private object per bounded browser batch; tt/raw/ has a 30-day lifecycle.
+  // Reuse the existing SQLite counter on one distinct, non-identifier object:
+  // at most 3 batches/hour (72/day), separate from the hashed per-visitor form
+  // objects. No new service, KV counter, auth policy or paid API is introduced.
+  // No fallback to KV: store/counter failure is best-effort diagnostic loss.
+  const key = `tt/raw/dt=${day}/${crypto.randomUUID()}.json`;
+  ctx.waitUntil(Promise.resolve().then(async () => {
+    const counter = env.FORM_RATE_LIMIT.get(env.FORM_RATE_LIMIT.idFromName('diagnostic:tt:write-budget:v1'));
+    const response = await counter.fetch('https://form-counter.internal/', { method: 'POST', body: JSON.stringify({ seed: 0 }) });
+    if (!response.ok) throw new Error('Diagnostic write counter unavailable');
+    const budget = await response.json();
+    if (budget.allowed !== true || !Number.isInteger(budget.remaining) || budget.remaining < 0 || budget.remaining >= FORM_MAX_ATTEMPTS) return;
+    await env.TT_REPORTS.put(key, JSON.stringify({ schemaVersion: 1,
+      collection: { sampleRate, globalBatchLimitPerHour: FORM_MAX_ATTEMPTS, maxBodyBytes: TT_REPORT_MAX_BODY_BYTES }, reports }), {
+      httpMetadata: { contentType: 'application/json' },
+    });
+  }).catch(() => {}));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
@@ -1258,87 +1273,9 @@ const worker = {
       return handleTrustedTypesReport(request, env, ctx);
     }
 
-    // --- Layer 0: CSP violation reporting (S199) ----------------------------
-    // report-uri /v/csp-report in WORKER_CSP routes browser violations here.
-    // Stores structured entries in KV under csp:date:sequence (same namespace
-    // as TT reports). Sampled at 100% — full CSP violations are rare and high-signal.
-    if (url.pathname === '/v/csp-report') {
-      if (request.method !== 'POST') return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-      const len = Number(request.headers.get('Content-Length') || 0);
-      if (len > 16384) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-      try {
-        const raw = await request.json();
-        if (env.RATE_LIMIT) {
-          const report = raw?.['csp-report'] || raw?.['content-security-policy-report'] || raw || {};
-          const day = new Date().toISOString().slice(0, 10);
-          const counterKey = `csp:${day}:counter`;
-          const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
-          const next = (current + 1) % 200;
-          const entry = {
-            ts: new Date().toISOString(),
-            directive: String(report['violated-directive'] || report.violatedDirective || '').slice(0, 120),
-            blockedUri: String(report['blocked-uri'] || report.blockedURL || '').slice(0, 200),
-            documentUri: String(report['document-uri'] || report.documentURL || '').slice(0, 200),
-          };
-          ctx.waitUntil(Promise.all([
-            env.RATE_LIMIT.put(`csp:${day}:${String(next).padStart(4, '0')}`, JSON.stringify(entry), { expirationTtl: 259200 }),
-            env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: 262800 }),
-          ]));
-        }
-      } catch (_) { /* absorb parse errors — always 204 */ }
-      return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
-    }
-
-    // --- Layer 0: CSP violation summary probe (S228) -------------------------
-    // GET /v/csp-violations-summary — aggregate-only read of csp: KV entries.
-    // Used by check-csp-violations.mjs doctor probe; no raw URIs exposed.
-    if (url.pathname === '/v/csp-violations-summary' && request.method === 'GET') {
-      if (!env.RATE_LIMIT) {
-        return Response.json(
-          { error: 'no-kv', total3d: 0, byDay: [], topDirectives: [], ts: new Date().toISOString() },
-          { status: 503, headers: { 'Cache-Control': 'no-store' } }
-        );
-      }
-      const now = new Date();
-      const byDay = [];
-      for (let i = 0; i < 3; i++) {
-        const d = new Date(now);
-        d.setDate(d.getDate() - i);
-        const date = d.toISOString().slice(0, 10);
-        const count = Number(await env.RATE_LIMIT.get(`csp:${date}:counter`)) || 0;
-        if (count > 0) byDay.push({ date, count });
-      }
-      const total3d = byDay.reduce((s, d) => s + d.count, 0);
-      const topDirectives = [];
-      if (total3d > 0 && byDay.length > 0) {
-        const sampleDay = byDay[0].date;
-        const sampleN = Math.min(20, byDay[0].count);
-        const rows = await Promise.all(
-          Array.from({ length: sampleN }, (_, j) =>
-            env.RATE_LIMIT.get(`csp:${sampleDay}:${String(j).padStart(4, '0')}`)
-          )
-        );
-        const dirCounts = {};
-        for (const raw of rows) {
-          if (!raw) continue;
-          try {
-            const e = JSON.parse(raw);
-            const dir = String(e.directive || 'unknown').slice(0, 80);
-            dirCounts[dir] = (dirCounts[dir] || 0) + 1;
-          } catch (_) { /* skip malformed entries */ }
-        }
-        topDirectives.push(
-          ...Object.entries(dirCounts)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 5)
-            .map(([directive, count]) => ({ directive, count }))
-        );
-      }
-      return Response.json(
-        { total3d, byDay, topDirectives, ts: now.toISOString() },
-        { headers: { 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' } }
-      );
-    }
+    // CSP diagnostics use private bounded R2 storage, separate from account KV.
+    if (url.pathname === '/v/csp-report') return handleCspReport(request, env, ctx);
+    if (url.pathname === '/v/csp-violations-summary' && request.method === 'GET') return handleCspSummary(env);
 
     // --- Layer 0: Web-push subscription management (S211) -------------------
     // POST stores subscription JSON in KV (vs:push:sub:<sha256-prefix>); TTL 90d.
