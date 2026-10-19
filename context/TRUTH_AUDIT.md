@@ -1637,3 +1637,14 @@ S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private 
 ### S388 newly received performance signal
 
 Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+
+## S389 — command intent and handoff provenance (2026-10-19)
+
+Ignored CLI arguments previously allowed help/typos to start outward deployment work. Strict admission now rejects malformed intent before operations. Old cached model summaries are no longer accepted as deterministic source extracts. Extract omissions remain explicit and require source lookup; source text is never inferred. No UI change, identity-policy change, current quota cure or performance improvement is claimed. Full deployment proof remains pending.
+
+
+S389 full-check findings: startup source budget was42150/42000 and the human sitemap omitted two existing routes. Completed history is preserved, and the sitemap now has123 links with two additions. The root publish cascade is enforced; no new persona content or identity change is claimed.
+
+
+S389 Oracle corpus drift was generatedAt only; answer text did not change. Its previously unmodeled dependency is now explicit and the two build profiles derive insights before answers. Diagnostic remainder runs never substitute for the final complete check.

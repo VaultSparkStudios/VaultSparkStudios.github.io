@@ -18,11 +18,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { getSecret, redact } from './lib/secrets.mjs';
 import { verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 import { appendStagingDeployHistory, parseStagingDeployHistory, renderStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 import { createStagingDeployReceipt, runStagingDeployReceiptSelfTest, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
+
+import { admitDeployment } from './lib/deploy-argv.mjs';
+const admitted = admitDeployment({"name":"deploy-staging","boolFlags":["--self-test","--probe"],"modes":["--self-test","--probe"],"usage":"node scripts/deploy-staging.mjs [--probe | --self-test]"});
+const { getSecret, redact } = await import('./lib/secrets.mjs');
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const args = new Set(process.argv.slice(2));

@@ -1,7 +1,19 @@
+## S389
+
+- [x] [S389 #1] Deploy argv guards.
+- [x] [S389 #2] Deterministic handoffs.
+- [x] [S389 #3] Human sitemap links and five-publisher cascade.
+- [x] [S389 #4] Oracle answer dependency and build order.
+- [x] [S389 #5] Field-proof publication order.
+- [ ] [SIL][S389] Audit other outward CLIs.
+- [ ] [SIL][S389] Measure extract omissions.
+
+Waves1–2 verified; Wave3 pending: docs/RELEASE_S389.json.
+
 ## S388 — release follow-through
 
 - [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
-- [ ] [SIL][S388][OPS/P2] Reject unknown deployment arguments; use deterministic handoff compaction by default and require approval for paid summaries.
+- [x] [SIL][S388][OPS/P2] Resolved by S389 #1/#2.
 
 Waves1–3 verified; release evidence: docs/RELEASE_S388.json.
 
@@ -493,21 +505,12 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 
 - [x] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies. **Shipped S293** — see the S293 outcome block above.
 - [x] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source. **Shipped S293** — see the S293 outcome block above.
-## Historical Now
 
-- [x] **[S289→S290][SIL][SEC/P1] Supabase control-plane capability split — DONE S290.** `api/supabase-control-plane.json` now separates REST, management API, SQL migration, and Edge Function authority; gateway-native read-only probes report REST **ready (HTTP 200)** and the other three planes independently blocked. Self-test **8/8**, public-safe/hash drift check green.
-- [x] **[S289→S290][SIL][RELEASE/P1] Durable identity migration receipt — DONE S290.** `api/identity-migration-receipt.json` binds issuer, callback host/path, final staging Worker version, migration/function source hashes and deployment state, member/investor/revocation proof states, and rollback anchors. It is correctly **honest-dark / productionEligible=false** with no identifiers, credentials, or claims.
-## Historical Now (pre-S289)
 
-- [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.
-- [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** Live TT probe/analyzer refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md`, `docs/TT_BURNDOWN_2026-07-06.md`, and `.cache/tt-active-local-sinks.json`; enforcement remains AMBER because violations are still present.
 ## Next (historical)
 
 - [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
-## Historical Runway (Session 254)
 
-- [x] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257.** `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.
-- [x] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK - DONE S255; stale carry closed S257.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply`; `rotate-taskboard.mjs` also includes S254 stale session-tagged heading consolidation.
 ## Historical Runway (Session 249)
 
 - [~] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — PARTIAL S262: clean R2 pull named `/games/vaultspark-football-gm/` as the dominant route (91 phase samples, presentation-heavy pointer hover); shipped page-level paint/compositing mitigation. Needs post-deploy field soak before closing.
@@ -720,3 +723,6 @@ Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metad
 ## S388 authorized arc
 
 - [x] [S388 #1] CSP isolation deployed; full541, exact staging/hosted checks and production readback verified. docs/RELEASE_S388.json.
+
+
+Completed S254/S260/S289 carries preserved verbatim in context/archive/TASK_BOARD_ARCHIVE.md (S389 archival).

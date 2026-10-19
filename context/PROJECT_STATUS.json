@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S388 CSP diagnostic reliability deployed and verified.",
+  "currentFocus": "S389 release-command admission and deterministic handoff verified; full promotion in progress.",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Observe retained CSP collection and account-wide quota usage.",
+  "nextMilestone": "Complete S389 exact staging, required candidate checks, canonical closeout and production readback.",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -26,15 +26,15 @@
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
-  "lastUpdated": "2026-10-18",
-  "currentSession": 388,
+  "lastUpdated": "2026-10-19",
+  "currentSession": 389,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-13",
   "silScore": 935,
   "silAvg3": 935,
-  "silVelocity": 1,
+  "silVelocity": 5,
   "silDebt": "down",
-  "silLastSession": 388,
+  "silLastSession": 389,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -87,7 +87,7 @@
   "entropyScore": 0.197,
   "entropyLastComputed": "2026-10-18",
   "sessionMode": "BUILDER",
-  "sessionModeAutoShiftedAt": "2026-10-16T19:59:21.348Z",
+  "sessionModeAutoShiftedAt": "2026-10-19T18:50:19.213Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
@@ -102,7 +102,7 @@
     "capitalEfficiency": 95,
     "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 388,
+  "silCategoriesUpdatedSession": 389,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-18",
@@ -263,7 +263,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "ea332b69f89e06cde6b0b32b",
   "testsSourceFingerprint": "586c8e8731aece9e270d9b56",
-  "lastSessionSummary": "S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.",
+  "lastSessionSummary": "S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json. Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending. S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending. S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 385,
@@ -290,13 +290,13 @@
     "validation": "Full537/537; mobile215/215; collection689/619/619; isolation2/2; streamed archive17/17; visual112 inspected; critical65; browser3passed/3held; attention15; ceremony11",
     "closeoutVerification": "Canonical autopilot0; independent reviews passed; original publisher states restored; own shell/worktree cleanup verified"
   },
-  "lastSession": 388,
+  "lastSession": 389,
   "sessionState": {
     "version": 1,
-    "durableSession": 388,
-    "currentFocus": "S388 CSP diagnostic reliability deployed and verified.",
-    "nextMilestone": "Observe retained CSP collection and account-wide quota usage.",
-    "lastSessionSummary": "S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete."
+    "durableSession": 389,
+    "currentFocus": "S389 release-command admission and deterministic handoff verified; full promotion in progress.",
+    "nextMilestone": "Complete S389 exact staging, required candidate checks, canonical closeout and production readback.",
+    "lastSessionSummary": "S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json. Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending. S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending. S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending."
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -308,10 +308,10 @@
     "behaviorChanged": false
   },
   "activeArc": {
-    "session": 388,
-    "phase": "complete",
-    "goal": "01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac",
-    "audit": "docs/AUDIT_2026-10-18-S388.json"
+    "session": 389,
+    "phase": "release-acceptance",
+    "goal": "01a1557e-9d32-7d13-b5cf-3e802fd6616d",
+    "audit": "docs/AUDIT_2026-10-19-S389.json"
   },
   "testsSession": 385,
   "currentBuildState": "passed",

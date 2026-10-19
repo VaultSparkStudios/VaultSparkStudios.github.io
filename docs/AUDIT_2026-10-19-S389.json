@@ -1,0 +1,499 @@
+{
+  "session": 389,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh full S389 arc with direct main commit/push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "audience": "public-live",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "candidates": {
+    "featureDepth": [
+      [
+        "Reliable release commands",
+        "Selected; ignored arguments currently reach deploy."
+      ],
+      [
+        "Expand member portal",
+        "No fresh missing feature evidence."
+      ]
+    ],
+    "innovativeFeatures": [
+      [
+        "Novel release-intent echo",
+        "Preview contract fits existing commands; no extra dashboard."
+      ],
+      [
+        "Novel provenance-first handoff map",
+        "Registered deterministic extract already fits; innovation capped4."
+      ]
+    ],
+    "ux": [
+      [
+        "Protect reliable published membership entry",
+        "Selected safe deployment outcome."
+      ],
+      [
+        "Redesign navigation",
+        "No new rendered defect established."
+      ]
+    ],
+    "feedback": [
+      [
+        "Explicit omitted handoff evidence",
+        "Selected deterministic lookup."
+      ],
+      [
+        "Novel command admission receipt",
+        "CLI exit and existing release evidence suffice."
+      ]
+    ],
+    "gamification": [
+      [
+        "New reward tiers",
+        "Existing nine-tier economy is a hard constraint."
+      ],
+      [
+        "Expand challenges",
+        "No fresh retention evidence."
+      ]
+    ],
+    "ai": [
+      [
+        "Paid handoff summary",
+        "Rejected: current default spends on straightforward extraction."
+      ],
+      [
+        "Deterministic source grounding",
+        "Selected registered internal helper."
+      ]
+    ],
+    "security": [
+      [
+        "Fail closed on deployment typos",
+        "Selected before all IO."
+      ],
+      [
+        "Change identity policies",
+        "Outside authorization and no demonstrated need."
+      ]
+    ],
+    "speed": [
+      [
+        "Deployment CLI admission",
+        "Selected; production staging commands ignore unsupported flags."
+      ],
+      [
+        "Repair persona lane",
+        "Separate root-owned staging contract, not selected."
+      ]
+    ],
+    "token": [
+      [
+        "Hash-bound deterministic handoff",
+        "Selected: remove default model call and TTL refresh."
+      ],
+      [
+        "Universal context cache",
+        "No measured need beyond this known default spend."
+      ]
+    ]
+  },
+  "investigation": {
+    "reuse": "INTERNAL_TOOLS registry contains argv-guard and deterministic handoff-digest; adopt local helpers, no dependencies or paid API.",
+    "baseline": "Full staging ignores unknown flags; Worker ignores unknown flags and inline env values. Handoff digest defaults to callClaude after TTL expiry. Desk Dispatch already rejects unknown input.",
+    "canon": "Canon sync and radar current; no ABSOLUTE gaps. Existing identity/terminology STRONG gaps remain outside scope.",
+    "measurement": "Measure deterministic output byte length, repeat equality, source-hash invalidation and zero network/credential calls. No unsupported token-saving percentage."
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "deployment-argument-admission",
+      "title": "Reject ambiguous deployment input before side effects",
+      "axis": "speed",
+      "recipe": "Reuse the existing argv guard to validate every token before any credential lookup, subprocess, network or write. Cover the full staging, Worker, content staging, Desk staging and member newsletter entry points; retain Desk Dispatch strict parser. Help and preview aliases are inert. Reject unknown options, positionals, boolean assignments, missing/duplicate values and conflicting modes. Preserve documented real invocations and production confirmation. Verify actual CLIs under an IO tripwire, plus valid invocation parsing fixtures.",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 16,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Full staging reads argv as a set without strict admission",
+      "userOutcome": "Members receive releases only through intentional deployment commands.",
+      "acceptance": "Reuse the existing argv guard to validate every token before any credential lookup, subprocess, network or write. Cover the full staging, Worker, content staging, Desk staging and member newsletter entry points; retain Desk Dispatch strict parser. Help and preview aliases are inert. Reject unknown options, positionals, boolean assignments, missing/duplicate values and conflicting modes. Preserve documented real invocations and production confirmation. Verify actual CLIs under an IO tripwire, plus valid invocation parsing fixtures.",
+      "premises": [
+        {
+          "claim": "Full staging reads argv as a set without strict admission",
+          "adapter": "file-content",
+          "target": "scripts/deploy-staging.mjs",
+          "pattern": "const args = new Set(process.argv.slice(2));",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Refuse unknown primary entrypoint options; retain current behavior elsewhere."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Reuse the existing argv guard to validate every token before any credential lookup, subprocess, network or write. Cover the full staging, Worker, content staging, Desk staging and member newsletter entry points; retain Desk Dispatch strict parser. Help and preview aliases are inert. Reject unknown options, positionals, boolean assignments, missing/duplicate values and conflicting modes. Preserve documented real invocations and production confirmation. Verify actual CLIs under an IO tripwire, plus valid invocation parsing fixtures."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Separate future scope: portfolio-wide CLI contracts and full structured handoff migration."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-19T18:57:15.578Z",
+          "status": "implemented",
+          "note": "S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json."
+        },
+        {
+          "at": "2026-10-19T19:01:25.083Z",
+          "status": "shipped",
+          "note": "Selected L2 implementation and focused tests verified. Independent reviewer passed; admission review round1 fixed one configuration import ordering finding, round2 zero findings. Full release acceptance remains separate in docs/RELEASE_S389.json."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "deterministic-handoff-extract",
+      "title": "Use deterministic hash-bound handoff extraction by default",
+      "axis": "tokenCost",
+      "recipe": "Adopt the registered deterministic source-extract handoff helper with its structural parser. Default and --force require no credentials, network or model API. Bind cache to full source hash and deterministic format; disclose omitted content and source line lookup. Preserve archive-before-trim behavior. Verify exact source preservation, deterministic cache, changed-source invalidation and no paid path under isolated fixtures.",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 16,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Handoff default invokes paid inference",
+      "userOutcome": "Agents can find exact source facts and omissions without paid inference.",
+      "acceptance": "Adopt the registered deterministic source-extract handoff helper with its structural parser. Default and --force require no credentials, network or model API. Bind cache to full source hash and deterministic format; disclose omitted content and source line lookup. Preserve archive-before-trim behavior. Verify exact source preservation, deterministic cache, changed-source invalidation and no paid path under isolated fixtures.",
+      "premises": [
+        {
+          "claim": "Handoff default invokes paid inference",
+          "adapter": "file-content",
+          "target": "scripts/compact-handoff.mjs",
+          "pattern": "const resp = await callClaude({",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Refuse unknown primary entrypoint options; retain current behavior elsewhere."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Adopt the registered deterministic source-extract handoff helper with its structural parser. Default and --force require no credentials, network or model API. Bind cache to full source hash and deterministic format; disclose omitted content and source line lookup. Preserve archive-before-trim behavior. Verify exact source preservation, deterministic cache, changed-source invalidation and no paid path under isolated fixtures."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Separate future scope: portfolio-wide CLI contracts and full structured handoff migration."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-19T18:57:15.578Z",
+          "status": "implemented",
+          "note": "S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json."
+        },
+        {
+          "at": "2026-10-19T19:01:25.085Z",
+          "status": "shipped",
+          "note": "Selected L2 implementation and focused tests verified. Independent reviewer passed; admission review round1 fixed one configuration import ordering finding, round2 zero findings. Full release acceptance remains separate in docs/RELEASE_S389.json."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "sitemap-pagination-discovery",
+      "title": "Expose the existing Dot and Echo archive pages in the human sitemap",
+      "tier": "⚡",
+      "axis": "ux",
+      "impact": 7,
+      "innovation": 2,
+      "effortHours": 0.5,
+      "priority": 10.59,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Full current-source check102 detects stale human sitemap; pure renderer comparison adds two existing archive links and removes none.",
+      "userOutcome": "Visitors can find every existing persona archive through the human sitemap.",
+      "recipe": "Regenerate the canonical sitemap and human sitemap so existing Dot page5 and Echo page3 archives are discoverable. Preserve layout and other links. Verify both route sources exist, exact generator checks, real before/after desktop/mobile renders in all seven themes, hash-bound inspected receipt and full build checks. This is a required release repair discovered at full-check step102, not a new design direction. Mark the existing graph node publishCascade:true, regenerate and stage the human sitemap in all five XML publishers, and mutation-test both builder and staging omissions.",
+      "acceptance": "Regenerate the canonical sitemap and human sitemap so existing Dot page5 and Echo page3 archives are discoverable. Preserve layout and other links. Verify both route sources exist, exact generator checks, real before/after desktop/mobile renders in all seven themes, hash-bound inspected receipt and full build checks. This is a required release repair discovered at full-check step102, not a new design direction. Mark the existing graph node publishCascade:true, regenerate and stage the human sitemap in all five XML publishers, and mutation-test both builder and staging omissions.",
+      "premises": [
+        {
+          "claim": "Current human sitemap omits the existing Dot page5 archive",
+          "adapter": "file-content",
+          "target": "sitemap-page/index.html",
+          "pattern": "/news/personas/dot/page/5/",
+          "operator": "eq",
+          "expected": false
+        },
+        {
+          "claim": "Dot page5 already exists",
+          "adapter": "file-exists",
+          "target": "news/personas/dot/page/5/index.html",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Echo page3 already exists",
+          "adapter": "file-exists",
+          "target": "news/personas/echo/page/3/index.html",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Regenerate human sitemap using existing generator."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Regenerate the canonical sitemap and human sitemap so existing Dot page5 and Echo page3 archives are discoverable. Preserve layout and other links. Verify both route sources exist, exact generator checks, real before/after desktop/mobile renders in all seven themes, hash-bound inspected receipt and full build checks. This is a required release repair discovered at full-check step102, not a new design direction. Mark the existing graph node publishCascade:true, regenerate and stage the human sitemap in all five XML publishers, and mutation-test both builder and staging omissions."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Separate future scope: diagnose automated publisher sitemap cascade ownership."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-19T19:23:13.439Z",
+          "status": "shipped",
+          "note": "Two pre-existing archive links and count121→123 regenerated; no removed links. 28 inspected seven-theme desktop/mobile before/after captures, hash-bound receipt passes. Root cause repaired in the existing graph and five publishers; cascade fixtures26/26,31-workflow live closure, YAML,pathspec,graph and publisher-resync checks pass. Independent review recorded separately. Full release acceptance remains pending."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "oracle-answer-cascade",
+      "title": "Keep Oracle answers synchronized with their canonical public inputs",
+      "tier": "⚡",
+      "axis": "feedback",
+      "impact": 8,
+      "innovation": 2,
+      "effortHours": 1,
+      "priority": 10.1,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Full check165 reaches a stale Oracle corpus. Its builder exists in the full profile but the graph does not model it, so resync silently omits the dependent after rebuilding insights.",
+      "userOutcome": "Oracle readers get answers synchronized with the same public insight and tier facts they can inspect.",
+      "recipe": "Model the existing deterministic Oracle answer corpus as a dependent of its public insight and tier inputs in the existing evidence graph. Rebuild after insight clustering and before candidate sealing in the refresh profile; require affected publishers to rebuild and stage answers with those inputs. Verify acyclic dependency order, publisher closure and negative fixtures, exact corpus check and the diagnostic remainder followed by a complete current-source run. Preserve canonical prices, auth, runtime engine and zero-inference behavior.",
+      "acceptance": "Model the existing deterministic Oracle answer corpus as a dependent of its public insight and tier inputs in the existing evidence graph. Rebuild after insight clustering and before candidate sealing in the refresh profile; require affected publishers to rebuild and stage answers with those inputs. Verify acyclic dependency order, publisher closure and negative fixtures, exact corpus check and the diagnostic remainder followed by a complete current-source run. Preserve canonical prices, auth, runtime engine and zero-inference behavior.",
+      "premises": [
+        {
+          "claim": "Existing evidence graph omits the Oracle answer corpus node",
+          "adapter": "file-content",
+          "target": "config/evidence-graph.json",
+          "pattern": "\"id\": \"oracle-answers\"",
+          "operator": "eq",
+          "expected": false
+        },
+        {
+          "claim": "Existing answer builder is available for reuse",
+          "adapter": "file-exists",
+          "target": "scripts/build-oracle-answers.mjs",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Regenerate the corpus with its existing generator."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Model the existing deterministic Oracle answer corpus as a dependent of its public insight and tier inputs in the existing evidence graph. Rebuild after insight clustering and before candidate sealing in the refresh profile; require affected publishers to rebuild and stage answers with those inputs. Verify acyclic dependency order, publisher closure and negative fixtures, exact corpus check and the diagnostic remainder followed by a complete current-source run. Preserve canonical prices, auth, runtime engine and zero-inference behavior."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Separate future scope: recursively audit all nested proof-surface generators against graph coverage."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-19T19:38:07.127Z",
+          "status": "shipped",
+          "note": "Graph90 nodes acyclic, full/refresh ordering39/39, publisher cascade31/31 and31workflow live closure pass. Independent review zero findings.13 answers unchanged; generatedAt corrected Oct18→19. Final complete validation and release remain pending."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "field-verdict-publication-order",
+      "title": "Publish the current field verdict proof after grading and before its consumers",
+      "tier": "⚡",
+      "axis": "feedback",
+      "impact": 8,
+      "innovation": 2,
+      "effortHours": 1,
+      "priority": 10.1,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Diagnostic remainder197 found field-win drift. Its graph node exists but is not publication-enforced; RUM grades verdicts after building downstream public proofs and omits field-win.",
+      "userOutcome": "Visitors see a public performance proof that matches the canonical measured verdicts, including regressions and unavailable data.",
+      "recipe": "Use the existing field-verdict proof generator without changing measurement or classification. Enable publication enforcement on its existing graph node; grade current RUM windows before deriving field-win and public-status/proof consumers. Rebuild in shared profiles before consumers and stage field-win in affected publishers. Add missing-publication and wrong-order regression cases. Regenerate from the committed verdicts, preserve regressions/pending semantics, and require complete final validation before release.",
+      "acceptance": "Use the existing field-verdict proof generator without changing measurement or classification. Enable publication enforcement on its existing graph node; grade current RUM windows before deriving field-win and public-status/proof consumers. Rebuild in shared profiles before consumers and stage field-win in affected publishers. Add missing-publication and wrong-order regression cases. Regenerate from the committed verdicts, preserve regressions/pending semantics, and require complete final validation before release.",
+      "premises": [
+        {
+          "claim": "RUM publisher omits field-win builder",
+          "adapter": "file-content",
+          "target": ".github/workflows/rum-pull.yml",
+          "pattern": "node scripts/build-field-win-proof.mjs",
+          "operator": "eq",
+          "expected": false
+        },
+        {
+          "claim": "Existing field verdict source is available",
+          "adapter": "file-exists",
+          "target": "data/field-verdicts.json",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Regenerate field-win from committed verdicts."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Use the existing field-verdict proof generator without changing measurement or classification. Enable publication enforcement on its existing graph node; grade current RUM windows before deriving field-win and public-status/proof consumers. Rebuild in shared profiles before consumers and stage field-win in affected publishers. Add missing-publication and wrong-order regression cases. Regenerate from the committed verdicts, preserve regressions/pending semantics, and require complete final validation before release."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Separate future scope: review measured field-window attribution; do not alter verdicts in this repair."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-10-19T19:50:34.831Z",
+          "status": "shipped",
+          "note": "Build-order41/41, cascade35/35 and31 live workflows pass. Independent review pass0. Existing measured verdicts preserved. Final full validation and release pending."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "studio-market",
+      "reason": "No market artifact; no competitor facts invented. This stabilization arc addresses proven release-command and handoff defects."
+    }
+  ],
+  "innovationReserve": [],
+  "totals": {
+    "count": 5,
+    "priority": 62.79,
+    "top3": [
+      "deployment-argument-admission",
+      "deterministic-handoff-extract",
+      "sitemap-pagination-discovery"
+    ]
+  },
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-19T18:52:12.386Z",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-19T19:46:20.220Z",
+    "head": "36add04cdd36fbb497df0b2dfc5ae9433c6d702d",
+    "sidecar": "docs/AUDIT_2026-10-19-S389.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 6,
+    "contradicted": 3,
+    "unverified": 0,
+    "premiseDigest": "98fb11be7eae2deac2f12c107c0caf736b5f6abfa7a80dee73c846dc0bb8b051",
+    "implementationDirty": null,
+    "workspaceInventory": {
+      "count": 347,
+      "sha256": "a3abe5ed96dc52c11270c6a45b6470b4337d6029d39c18cba29a4d6cfd462546",
+      "publication": "Unrelated workspace paths withheld; original gate retained privately."
+    }
+  },
+  "initialPremiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-19T18:52:16.158Z",
+    "head": "36add04cdd36fbb497df0b2dfc5ae9433c6d702d",
+    "sidecar": "docs/AUDIT_2026-10-19-S389.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "5b470e5899344152c0b7a97f6111a143edcb6798d4a62a07fde67b6c0a9fd3be",
+    "implementationDirty": null,
+    "workspaceInventory": {
+      "count": 256,
+      "sha256": "c9cb5624bf06571458dc829675d02a5249eae623af9253834f0047aa65a7e2db",
+      "selectedSourceDirty": [],
+      "publication": "Unrelated workspace inventory withheld; original timestamped gate retained privately. This projection does not claim a clean workspace."
+    }
+  },
+  "sitemapPremiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-19T19:17:14.250Z",
+    "head": "36add04cdd36fbb497df0b2dfc5ae9433c6d702d",
+    "sidecar": "docs/AUDIT_2026-10-19-S389.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 4,
+    "contradicted": 1,
+    "unverified": 0,
+    "premiseDigest": "c3bdf236c01abd063247c5bcc2a3a49224ea9223ae57a44503292c33f743950b",
+    "implementationDirty": null,
+    "workspaceInventory": {
+      "count": 301,
+      "sha256": "5ee31b296342fe6696320296f2aa546a149f5ec45a86ccfb934cb1e56a691d6c",
+      "publication": "Unrelated detailed workspace paths withheld. Original timestamped receipt retained privately; this gate specifically admitted the added sitemap repair after items1/2 were implemented."
+    }
+  },
+  "oraclePremiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-19T19:35:49.779Z",
+    "head": "36add04cdd36fbb497df0b2dfc5ae9433c6d702d",
+    "sidecar": "docs/AUDIT_2026-10-19-S389.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 5,
+    "contradicted": 2,
+    "unverified": 0,
+    "premiseDigest": "d8818562b0de61dd64fe45a5a23d8b79b96ff4e8e44f119970279272de754506",
+    "implementationDirty": null,
+    "workspaceInventory": {
+      "count": 344,
+      "sha256": "78455d563989d9f9c25e509f4a09c9088c29572f251f499fce443ff502998999",
+      "publication": "Detailed unrelated workspace paths withheld. Original gate retained privately; this gate admitted the added Oracle repair after items1–3 were implemented."
+    }
+  }
+}

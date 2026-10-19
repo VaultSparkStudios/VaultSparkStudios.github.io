@@ -116,16 +116,28 @@ export function rebuiltBuilders(text) {
   return builders;
 }
 
+export function fieldProofOrder(text) {
+  const lines = text.split('\n').map(line => line.trim().replace(/^run:\s*/, ''));
+  const grade = lines.findIndex(line => line.startsWith('node scripts/compare-rum-windows.mjs --grade-receipts'));
+  const proof = lines.indexOf('node scripts/build-field-win-proof.mjs');
+  const consumer = lines.indexOf('node scripts/build-public-status.mjs');
+  return grade >= 0 && proof > grade && consumer > proof;
+}
+
 // Core check for one workflow's text. Returns an array of violation strings.
 export function checkWorkflow(name, text) {
   const tokens = stagedTokens(text);
   if (!tokens.length) return [];
   const produced = new Set(SOURCE_FEEDS.filter((f) => covered(tokens, f)));
   if (!produced.size) return [];
-  const rebuildsAll = /npm run build\b/.test(text);
-  const rebuilt = rebuiltBuilders(text);
+  const executable = text.split('\n').filter(line => !line.trimStart().startsWith('#'))
+    .map(line => line.replace(/\s+#.*$/, '')).join('\n');
+  // Comments, echo output, and build:check are not executions of the build script.
+  const rebuildsAll = /^\s*(?:run:\s*)?npm\s+run\s+build(?:\s|$)/m.test(executable);
+  const rebuilt = rebuiltBuilders(executable);
   const required = requiredDerived(produced);
   const violations = [];
+  if (name === 'rum-pull.yml' && !fieldProofOrder(executable)) violations.push(name + ': grade field verdicts before building field-win and public-status');
   for (const artifact of required) {
     if (!covered(tokens, artifact)) {
       violations.push(`${name}: stages a source of ${artifact} but never \`git add\`s ${artifact} (cascade strand)`);
@@ -191,7 +203,7 @@ function selfTest() {
   // it is derived from api/funnel-summary.json, which a broad `api/` add covers —
   // so a workflow staging `api/` must now stage it too. Same widening shape as
   // index.html above; the mutation below proves it still bites.
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt\n  git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml sitemap-page/index.html oracle/answers/index.json journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt\n  git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
   // Mutation the other way: dropping index.html must FAIL, or the widening above
   // would be indistinguishable from having quietly disabled the check.
@@ -213,6 +225,25 @@ function selfTest() {
     checkWorkflow('desk.yml', 'run: |\n  git add news/ sitemap.xml').some((v) => v.includes('generate-sitemap.mjs'))]);
   cases.push(['declared derived-build profile counts as real regeneration',
     rebuiltBuilders('node scripts/run-derived-builds.mjs --profile refresh-live-data').has('build-citation.mjs')]);
+
+  // S389: persona pagination changes XML and its human discovery surface together.
+  cases.push(['sitemap sources require the human sitemap transitively', requiredDerived(new Set(['news/'])).has('sitemap-page/index.html')]);
+  cases.push(['dropping human sitemap from a broad publisher is flagged', checkWorkflow('broad.yml', broad.replace(' sitemap-page/index.html', '')).some(v => v.includes('sitemap-page/index.html'))]);
+  cases.push(['XML-only rebuild cannot pass the human sitemap builder contract', checkWorkflow('sitemap.yml', 'run: |\n  node scripts/generate-sitemap.mjs\n  git add sitemap.xml sitemap-page/index.html').some(v => v.includes('build-sitemap-page.mjs'))]);
+  for (const pretend of ['# Order mirrors npm run build', 'echo "npm run build"', 'npm run build:check']) {
+    cases.push([`${pretend} is not a full rebuild`, checkWorkflow('pretend.yml', `run: |\n  ${pretend}\n  git add sitemap.xml sitemap-page/index.html`).some(v => v.includes('build-sitemap-page.mjs'))]);
+  }
+
+  cases.push(['public insight changes require Oracle answers', requiredDerived(new Set(['api/oracle-insights.json'])).has('oracle/answers/index.json')]);
+  cases.push(['dropping Oracle answers from a broad publisher is flagged', checkWorkflow('broad.yml', broad.replace(' oracle/answers/index.json', '')).some(v => v.includes('oracle/answers/index.json'))]);
+
+  cases.push(['field verdict updates require field proof', requiredDerived(new Set(['data/field-verdicts.json'])).has('api/field-win.json')]);
+  cases.push(['field verdict publisher must stage its proof', checkWorkflow('field.yml', 'run: |\n  node scripts/build-field-win-proof.mjs\n  git add data/field-verdicts.json').some(v => v.includes('api/field-win.json'))]);
+  cases.push(['field proof requires recommendation refresh', requiredDerived(new Set(['api/field-win.json'])).has('api/proof-aware-projects.json')]);
+  cases.push(['field publisher must stage recommendations', checkWorkflow('field.yml', 'run: |\n  node scripts/build-field-win-proof.mjs\n  git add api/field-win.json').some(v => v.includes('api/proof-aware-projects.json'))]);
+  const fieldOrder = 'node scripts/compare-rum-windows.mjs --grade-receipts\nnode scripts/build-field-win-proof.mjs\nnode scripts/build-public-status.mjs';
+  cases.push(['grading before proof and consumers is valid', fieldProofOrder(fieldOrder)]);
+  cases.push(['grading after proof is rejected', !fieldProofOrder(fieldOrder.split('\n').reverse().join('\n'))]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS
   const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;

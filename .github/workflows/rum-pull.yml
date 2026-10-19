@@ -33,6 +33,12 @@ jobs:
           node scripts/fetch-rum-from-r2.mjs
           node scripts/rollup-rum.mjs
           node scripts/pull-rum-summary.mjs
+          # Grade before publishing any field-proof consumer. Preserve last-known source on grading failure.
+          node scripts/compare-rum-windows.mjs --grade-receipts || echo "verdict engine not present or no boundary — skipping"
+          node scripts/build-field-win-proof.mjs
+          node scripts/build-field-win-proof.mjs --check
+          node scripts/build-proof-aware-projects.mjs
+          node scripts/build-proof-aware-projects.mjs --check
           # The R2 raw corpus exists only in this job's workspace. Build the
           # country aggregate here before that cache disappears; the uptime
           # workflow cannot recover real-visitor geography from its own cache.
@@ -67,9 +73,8 @@ jobs:
           # S352: this step stages news/, and sitemap.xml is derived from it.
           node scripts/generate-sitemap.mjs
           node scripts/generate-sitemap.mjs --check
-
-      - name: Grade field verdicts (S174 field-verdict-engine)
-        run: node scripts/compare-rum-windows.mjs --grade-receipts || echo "verdict engine not present or no boundary — skipping"
+          node scripts/build-sitemap-page.mjs
+          node scripts/build-sitemap-page.mjs --check
 
       - name: Regression alerting (S175)
         env:
@@ -80,7 +85,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/news-visual-receipts.json api/news-critique-packets.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
+          git add api/proof-aware-projects.json api/field-win.json data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/news-visual-receipts.json api/news-critique-packets.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml sitemap-page/index.html assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new field samples today"
           else

@@ -157,7 +157,8 @@
         "node",
         "scripts/build-proof-aware-projects.mjs",
         "--check"
-      ]
+      ],
+      "publishCascade": true
     },
     {
       "id": "security-posture",
@@ -1125,14 +1126,16 @@
       "id": "field-win-proof",
       "output": "api/field-win.json",
       "sources": [
-        "data/field-verdicts.json"
+        "data/field-verdicts.json",
+        "scripts/build-field-win-proof.mjs"
       ],
       "builder": "scripts/build-field-win-proof.mjs",
       "check": [
         "node",
         "scripts/build-field-win-proof.mjs",
         "--check"
-      ]
+      ],
+      "publishCascade": true
     },
     {
       "id": "forge-feed",
@@ -1565,7 +1568,25 @@
         "node",
         "scripts/build-sitemap-page.mjs",
         "--check"
-      ]
+      ],
+      "publishCascade": true
+    },
+    {
+      "id": "oracle-answers",
+      "output": "oracle/answers/index.json",
+      "sources": [
+        "api/oracle-insights.json",
+        "api/membership-tiers.json",
+        "scripts/build-oracle-answers.mjs"
+      ],
+      "builder": "scripts/build-oracle-answers.mjs",
+      "check": [
+        "node",
+        "scripts/build-oracle-answers.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "Answers derive from canonical public insights and tiers. In supported builds both feeds provide generatedAt; citation is only a fallback day when both dates are absent, never answer content or seal input. Omitting that inactive fallback edge avoids a candidate/citation cycle."
     }
   ]
 }

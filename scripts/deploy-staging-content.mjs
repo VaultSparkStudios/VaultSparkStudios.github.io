@@ -17,8 +17,6 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { getSecret, redact } from './lib/secrets.mjs';
-import { classifyPath, partition } from './check-content-lane-purity.mjs';
 import { isDiscoveryPath } from './lib/discovery-content.mjs';
 import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
@@ -46,6 +44,11 @@ export function normaliseEdgeNonces(route, buffer) {
     .replace(/<meta name="csp-nonce" content="[A-Za-z0-9+/_=-]*">/g, '');
   return Buffer.from(normalised, 'utf8');
 }
+
+import { admitDeployment } from './lib/deploy-argv.mjs';
+const admitted = admitDeployment({"name":"deploy-staging-content","boolFlags":["--self-test","--repair-permissions"],"valueFlags":["--baseline","--paths"],"modes":["--self-test","--repair-permissions"],"usage":"node scripts/deploy-staging-content.mjs --baseline <sha> [--paths <paths>] | --repair-permissions | --self-test"});
+const { classifyPath, partition } = await import('./check-content-lane-purity.mjs');
+const { getSecret, redact } = await import('./lib/secrets.mjs');
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGING_URL = 'https://website.staging.vaultsparkstudios.com';

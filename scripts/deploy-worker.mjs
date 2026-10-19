@@ -8,7 +8,10 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { envForSpawn, resolveCapability } from './lib/secrets.mjs';
+
+import { admitDeployment } from './lib/deploy-argv.mjs';
+const admitted = admitDeployment({"name":"deploy-worker","boolFlags":["--self-test","--confirm-production"],"valueFlags":["--env"],"usage":"node scripts/deploy-worker.mjs [--env staging|production] [--confirm-production] | --self-test"});
+const { envForSpawn, resolveCapability } = await import('./lib/secrets.mjs');
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const args = process.argv.slice(2);
@@ -41,8 +44,7 @@ if (args.includes('--self-test')) {
   process.exit(0);
 }
 
-const envFlag = args.indexOf('--env');
-const target = envFlag >= 0 ? args[envFlag + 1] : 'staging';
+const target = admitted.values['--env'] ?? 'staging';
 
 if (!['staging', 'production'].includes(target)) {
   console.error('deploy-worker: --env must be staging or production');

@@ -1,3 +1,11 @@
+## Session 389 — reliable release tooling (2026-10-19)
+
+S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
+
+Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
+
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+
 ## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
 
 S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
@@ -584,3 +592,6 @@ S385 delivery follow-through: live mutable directory URL is cached604800seconds.
 
 
 S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.

@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-10-02",
-  "contractSha256": "dcd1521f08c375412181685b69753e918b95c45eedc58eea9fe2d3acb8046387",
+  "contractSha256": "41b4cdc75a49ac16aa8f315a8c94dcedf9f970e0e7644e27e531d1c5a6f4cf50",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 89,
-  "cascadeNodeCount": 42,
+  "nodeCount": 90,
+  "cascadeNodeCount": 46,
   "buildOrder": [
     "ai-canonical-pages",
     "ambient-bundles",
@@ -91,6 +91,7 @@
     "candidate-artifact-manifest",
     "deploy-currency",
     "intelligence-budget",
+    "oracle-answers",
     "intent-map",
     "staging-deploy-receipt",
     "startup-brief",
@@ -556,14 +557,15 @@
       "output": "api/field-win.json",
       "builder": "scripts/build-field-win-proof.mjs",
       "verify": "node scripts/build-field-win-proof.mjs --check",
-      "publishCascade": false,
+      "publishCascade": true,
       "dependsOn": [],
       "feeds": [
         "api/proof-aware-projects.json",
         "api/status-proof.json"
       ],
       "externalSources": [
-        "data/field-verdicts.json"
+        "data/field-verdicts.json",
+        "scripts/build-field-win-proof.mjs"
       ]
     },
     {
@@ -1069,6 +1071,21 @@
       ]
     },
     {
+      "id": "oracle-answers",
+      "output": "oracle/answers/index.json",
+      "builder": "scripts/build-oracle-answers.mjs",
+      "verify": "node scripts/build-oracle-answers.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/oracle-insights.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/membership-tiers.json",
+        "scripts/build-oracle-answers.mjs"
+      ]
+    },
+    {
       "id": "oracle-query-clusters",
       "output": "api/oracle-insights.json",
       "builder": "scripts/build-oracle-query-clusters.mjs",
@@ -1078,7 +1095,9 @@
         "api/public-intelligence.json",
         "data/ignis-search-index.json"
       ],
-      "feeds": [],
+      "feeds": [
+        "oracle/answers/index.json"
+      ],
       "externalSources": [
         "api/leaderboard/v1/all.json",
         "api/oracle-queries.json",
@@ -1145,7 +1164,7 @@
       "output": "api/proof-aware-projects.json",
       "builder": "scripts/build-proof-aware-projects.mjs",
       "verify": "node scripts/build-proof-aware-projects.mjs --check",
-      "publishCascade": false,
+      "publishCascade": true,
       "dependsOn": [
         "api/commit-map.json",
         "api/field-win.json"
@@ -1400,7 +1419,7 @@
       "output": "sitemap-page/index.html",
       "builder": "scripts/build-sitemap-page.mjs",
       "verify": "node scripts/build-sitemap-page.mjs --check",
-      "publishCascade": false,
+      "publishCascade": true,
       "dependsOn": [
         "sitemap.xml"
       ],

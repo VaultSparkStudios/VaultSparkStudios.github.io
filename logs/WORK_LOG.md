@@ -1619,3 +1619,19 @@ S388 canonical closeout completed with current541/541 measured checks, zero fail
 
 
 Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+
+## Session 389 — 2026-10-19 — reliable release tooling
+
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+
+Fresh startup, nine-axis audit and typed premise gate preceded implementation. Internal-first reuse; no dependency install or paid API. CDR reviewed; no new direction. Full release acceptance remains tracked separately.
+
+
+S389 required release repair: Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
+
+
+S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.

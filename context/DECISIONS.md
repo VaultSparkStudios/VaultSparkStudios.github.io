@@ -2361,3 +2361,23 @@ The founder authorized direct main push and full promotion for this fresh goal. 
 ## D-S388.3 — Bound diagnostic summary read amplification (2026-10-18)
 
 Pre-release review found that a public GET could perform up to894 storage operations, so a per-request bound alone did not bound aggregate R2 cost or protect shared KV reads. Reuse the existing SQLite class on a distinct diagnostic:csp:summary-budget:v1 object: three expensive computations per fixed hourly window, with no intake/account key sharing or KV fallback. Admit before reading storage. Denied admission returns429 and unavailable/null; missing, failed or malformed admission returns503 and unavailable/null. Failed computations consume a slot. This bounds evidence reads, not inbound requests/counter calls; a public caller can temporarily consume operator visibility. Maximum accepted internal operations with pagination and admission907. Staging and production namespaces must be observed distinct.
+
+
+## D-S389.1 — Admit deployment intent before operational IO (2026-10-19)
+
+Reuse the existing argv guard through an additive strict wrapper; preserve caller behavior for real documented invocations. Unknown/ambiguous input exits before credential resolution, child processes, network or writes. All help and preview aliases are inert, including mixed deploy/preview requests. Desk planning remains explicit and networked under --plan. Handoff default becomes deterministic extraction with exact source hash and omission lookup; no optional paid path is needed. Preserve archive-before-trim and newline boundaries. Existing Obelisk/terminology STRONG gaps stay outside scope; no ABSOLUTE gaps were found. Founder authorization covers direct main push and full routine promotion, with staging, exact-candidate checks and readback.
+
+
+## D-S389.2 — Close the human sitemap publication cascade (2026-10-19)
+
+Full validation found existing Dot/Echo archive links missing from the human sitemap. Reuse the existing sitemap-page graph node with publishCascade:true; all five XML publishers must rebuild and stage the human page in the same commit. Negative fixtures reject a missing builder or staged page. Keep existing Desk lane/remote allowlists and identity holds unchanged. Full promotion delivers the corrected sitemap and existing archive routes. Startup-budget repair preserves three completed historical blocks verbatim in the existing archive and leaves open work live.
+
+
+## D-S389.3 — Derive Oracle answers before sealing (2026-10-19)
+
+Reuse the existing deterministic generator and active public insight/tier dependencies. Model the previously omitted answer node; build insight clusters before answers in both profiles, then seal the candidate. Require publishers of those inputs to stage the answer corpus. Current canonical dates make citation’s fallback day inactive; the graph documents this rather than introducing a candidate/citation cycle. No answer text, canonical pricing, identity flow or runtime inference changes.
+
+
+## D-S389.4 — Publish field proof after grading
+
+Reuse canonical measured verdicts and existing proof generator. Grade before deriving field-win and its consumers; stage the proof in all affected publishers. No measurement/classification change or session performance-improvement claim.

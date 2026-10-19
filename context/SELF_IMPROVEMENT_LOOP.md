@@ -11,7 +11,7 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 totals): ▄▄▆██ (→)
 Avgs —3:935.0 |5:934.2 |10:933.6 |25:943.2 |all:unmeasured (archived history excluded)
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-18 | Session388 | Total:935/1000 | Velocity:1
+Last session: 2026-10-19 | Session389 | Total:935/1000 | Velocity:2
   └ CSP diagnostic reliability; production acceptance tracked separately in docs/RELEASE_S388.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
@@ -2885,3 +2885,39 @@ Canonical autopilot exited0, cleared the session lock, and passed two complete54
 ### S388 final automation reconciliation (same session)
 
 Merge8f8c5c426e preserves canonical closeout commits and receives only the automation Lighthouse ledger. Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed. Score remains935/1000; no additional session or velocity.
+
+
+## Session 389 — 2026-10-19 — reliable release tooling
+
+Product rubric, ten categories ×100. Score held at935; focused reliability and no-inference defaults improve evidence without inventing engagement or performance gains.
+
+| Category | Score |
+|---|---:|
+| Development Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 935/1000
+Velocity:5
+Protocol velocity:5
+Debt:↓
+
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+
+Brainstorm: assess remaining outward CLI contracts; measure omission frequency before increasing extract size. Two SIL follow-ups committed to TASK_BOARD. CDR reviewed; no new human direction. Context usage unmeasured.
+
+
+S389 release-repair acceptance: Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
+
+
+S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.

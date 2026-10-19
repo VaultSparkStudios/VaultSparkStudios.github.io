@@ -1233,3 +1233,19 @@ Full original S379/S380 blocks retained below; their unchecked rows remain verba
 ## S387 lossless completed-entry rotation — 2026-10-18
 
 - [x] **[S340][BUILD/P2] `resync-derived.mjs` reported clean over a subset it could not see.** **DONE S345.** The graph models 29 of 67 byte-checked generators; `check-evidence-graph-coverage` keeps the other 38 a deliberate visible RATCHET, because guessing their `sources` would produce a confidently-wrong graph -- strictly worse than an admittedly partial one. So the debt was real but visible only in a config file, never at the moment of repair, which is the only moment it costs anything. Both live drifters (`build-intelligence-budget` S340, `build-nervous-system` S341) are still unmodeled today. Fixed by making the repairer state the scope of its own claim: every success exit in `main()` now routes through `finish()`, which runs the UNMODELED generators' own `--check` -- read-only, and a direct measurement rather than a prediction from sources we do not have. Default is FAIL-NAMED (exit 1); `--sweep-repair` rebuilds, guarded by the same world-acting-builder prefix test as the graph path; `--no-sweep` says so out loud. `--dry-run` now declares what its plan omits. Negative control reproduced the exact S340 incident: with `api/intelligence-budget.json` staled, the old path printed `5 artifact(s) rebuilt + staged` and exit 0; the new one exits **1** naming `build-intelligence-budget`, and `--sweep-repair` exits **0** having rebuilt it (exit codes read directly, not through a pipe). Self-test 16/16 including a structural assertion that no bare `process.exit(0)` can bypass the sweep. Prerequisite: `check-evidence-graph-coverage.mjs` was not import-safe (`else run()` fired on import) -- fixed with the repo's `isDirect` idiom. Baseline lowered 39 -> 38. See D-S345.1.
+
+
+## S389 startup-budget archival (2026-10-19)
+
+## Historical Now
+
+- [x] **[S289→S290][SIL][SEC/P1] Supabase control-plane capability split — DONE S290.** `api/supabase-control-plane.json` now separates REST, management API, SQL migration, and Edge Function authority; gateway-native read-only probes report REST **ready (HTTP 200)** and the other three planes independently blocked. Self-test **8/8**, public-safe/hash drift check green.
+- [x] **[S289→S290][SIL][RELEASE/P1] Durable identity migration receipt — DONE S290.** `api/identity-migration-receipt.json` binds issuer, callback host/path, final staging Worker version, migration/function source hashes and deployment state, member/investor/revocation proof states, and rollback anchors. It is correctly **honest-dark / productionEligible=false** with no identifiers, credentials, or claims.
+## Historical Now (pre-S289)
+
+- [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.
+- [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** Live TT probe/analyzer refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md`, `docs/TT_BURNDOWN_2026-07-06.md`, and `.cache/tt-active-local-sinks.json`; enforcement remains AMBER because violations are still present.
+## Historical Runway (Session 254)
+
+- [x] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257.** `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.
+- [x] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK - DONE S255; stale carry closed S257.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply`; `rotate-taskboard.mjs` also includes S254 stale session-tagged heading consolidation.

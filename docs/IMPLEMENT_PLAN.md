@@ -1,11 +1,15 @@
-# S388 implementation plan
+# S389 implementation plan
 
-Session intent: fresh /arc, authorized direct main push and full deploy. Native goal 01a14ff9-6b11-7cb0-8ca8-432fd7a2e7ac (createdAt 1792343118), bound S388.
+Session Intent: fresh full /arc; direct main commit/push and full deployment authorized. Native goal 01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 bound S389.
 
-1. Wave 1: startup and fresh nine-axis audit; premise gate before code edits.
-2. Wave 2: selected L2 CSP diagnostic isolation and truthful summaries. Focused fault, concurrency and ring tests; independent review.
-3. Wave 3: full local checks, isolated staging, exact-candidate hosted checks, closeout, direct main push, full production deployment and readback.
+- Wave 1: startup and fresh nine-axis audit, typed premise gate before code changes.
+- Wave 2: strict deployment admission, then deterministic handoff extract. Focused CLI IO-tripwire tests, independent review and full project checks.
+- Wave 3: current isolated staging, exact-candidate required hosted checks, canonical closeout, push, full Pages/Worker deployment and production readback.
 
-Supported-release reliability outcome: protect membership sign-in allowance and make diagnostic evidence useful. No lifecycle transition. Acceptance contract: docs/AUDIT_2026-10-18-S388.json.
+Supported-release stabilization; no lifecycle change. Acceptance: docs/AUDIT_2026-10-19-S389.json. Keep private/operator residue out of public commits.
 
-All three waves verified at 98538ff5b98aa464655fb1b2fed0c2148b049967. Full acceptance: docs/RELEASE_S388.json. Canonical closeout complete.
+Required release repair: full check102 found two existing archive routes missing from the human sitemap. Add item3 with premise evidence before regeneration; inspect before/after across all themes/viewports.
+
+Required release repair4: full check165 exposed Oracle answer corpus drift after an unmodeled insight dependency. Reuse the existing graph/profile/publisher enforcement; prove order and source coherence before the final complete run.
+
+Required release repair5: diagnostic197 exposed existing field-win publication/order drift. Grade before deriving proof and consumers; enforce its existing graph edge and preserve actual measurements.
