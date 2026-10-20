@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-20T13:08:45.004Z",
+  "generatedAt": "2026-10-20T13:39:25.567Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -11,23 +11,16 @@
   "staging": {
     "status": "yellow",
     "routeCount": 3,
-    "reachable": false,
+    "reachable": true,
     "reasonCodes": [
       "header-mismatch",
+      "prod-forbidden",
       "shell-mismatch",
-      "staging-canonical-csp-drift",
-      "staging-security-header-baseline",
-      "staging-unreachable",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-artifact-root-mismatch",
-      "/:stagingReachable",
-      "/:stagingStatus",
-      "/:stagingCanonicalCsp",
-      "/:stagingSecurityHeaders",
-      "/:localShellParity",
       "/studio-pulse/:localShellParity",
       "/membership/:localShellParity"
     ],
@@ -79,13 +72,13 @@
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 2,
-    "ageHours": 0.2,
-    "observedAt": "2026-10-20T13:08:45.004Z",
+    "commitsBehind": 4,
+    "ageHours": 0.7,
+    "observedAt": "2026-10-20T13:39:25.567Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-20T13:08:45.004Z",
+      "observedAt": "2026-10-20T13:39:25.567Z",
       "expectedFrom": "c30a51cd38dc388e918e1c8ae653966893f5592a55b257f3aa1512ff1338e00a",
       "supersededBy": null,
       "ageHours": 0,
@@ -188,7 +181,7 @@
   },
   "checks": {
     "canonicalFavicon": true,
-    "stagingReachable": false,
+    "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
@@ -205,7 +198,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "stagingReachable",
     "stagingCandidateReady",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
