@@ -78,17 +78,17 @@
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — source outcomes verified, release…    ║
-║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
+║  ⛔  Truth         yellow — scoped public product release…        ║
+║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.181  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  7d old (2026-10-13)                            ║
+║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
-║  ✓  Codex trust   trusted project active                         ║
+║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
+║  ⚠  Codex trust   local hooks/config not trusted                 ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -123,6 +123,9 @@
 ║   99  [INTELLIGENCE]  Record strict premise acceptance before c  ║
 ║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Measure and remove generated leaderboard m  ║
 ║        Measure and remove generated leaderboard metadata/whites  ║
 ║                                                                  ║
@@ -131,9 +134,6 @@
 ║                                                                  ║
 ║   87  [PRODUCT]      Require the strict premise checkpoint befo  ║
 ║        Require the strict premise checkpoint before delegated e  ║
-║                                                                  ║
-║   87  [INTELLIGENCE]  Assess the existing mobile Spark overlap   ║
-║        Assess the existing mobile Spark overlap with article pr  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
