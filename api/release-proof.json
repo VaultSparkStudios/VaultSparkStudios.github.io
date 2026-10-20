@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-20T02:06:10.273Z",
+  "generatedAt": "2026-10-20T02:24:55.691Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -65,15 +68,15 @@
   },
   "productionDeploy": {
     "state": "behind",
-    "commitsBehind": 14,
-    "ageHours": 3.4,
-    "observedAt": "2026-10-20T01:28:25.042Z",
+    "commitsBehind": 27,
+    "ageHours": 4.7,
+    "observedAt": "2026-10-20T02:24:55.691Z",
     "shellParity": {
-      "state": "superseded",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-10-20T01:28:25.042Z",
-      "expectedFrom": "3745df0842d65109a4bcfc71fcce13c287cc9d2a76c9a4514450836404fbf880",
-      "supersededBy": "c30a51cd38dc388e918e1c8ae653966893f5592a55b257f3aa1512ff1338e00a",
+      "observedAt": "2026-10-20T02:24:55.691Z",
+      "expectedFrom": "c30a51cd38dc388e918e1c8ae653966893f5592a55b257f3aa1512ff1338e00a",
+      "supersededBy": null,
       "ageHours": 0,
       "stale": false,
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -93,7 +96,7 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-7f501cc04e.css",
+        "assets/style.shell-dafcbbf695.css",
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
@@ -117,8 +120,12 @@
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [],
-      "unexpected": [],
+      "missing": [
+        "assets/style.shell-dafcbbf695.css"
+      ],
+      "unexpected": [
+        "assets/style.shell-7f501cc04e.css"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
