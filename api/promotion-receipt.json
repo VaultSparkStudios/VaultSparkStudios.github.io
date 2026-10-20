@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
+    "sha": "eaf846da50b013376d703a95194f3208b952344c",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
     "sha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
-    "contentLaneHead": null,
+    "contentLaneHead": "2a2ccdd40fa872acb98796e42b811d6e15572dd2",
     "reachable": true,
-    "reconciliation": "ahead",
+    "reconciliation": "unknown",
     "shellParity": {
-      "state": "matched",
-      "observedAt": "2026-10-20T05:44:14.166Z",
-      "ageHours": 1.3,
+      "state": "unobserved",
+      "observedAt": "2026-10-20T14:39:28.147Z",
+      "ageHours": 1.9,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,10 +89,10 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production serves ceeeb2de, newer than the recorded promoted 82162788 (benign — a later rebuild moved on)",
+    "served contentLaneHead 2a2ccdd4 is at/after promoted eaf846da, but shell parity was not observed as matched (state 'unobserved', observed 1.9h ago, max 12h) — not graded as current (honest-dark)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-20T07:02:26.289Z",
+  "generatedAt": "2026-10-20T16:32:33.872Z",
   "history": {
     "window": 20,
     "gradable": 20,
@@ -100,7 +100,7 @@
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-20T00:46:15.727Z",
     "currentBehindStreak": 0,
-    "newestGradableAt": "2026-10-20T07:02:26.289Z",
+    "newestGradableAt": "2026-10-20T16:32:33.872Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,

@@ -1,3 +1,11 @@
+## S392 — partial release record (2026-10-20)
+
+Overall status: yellow — source outcomes verified, release unaccepted.
+
+Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.
+
+Original failed receipts remain in ignored verification logs. Historical S391 full545/545 and S390 production evidence cannot satisfy this goal. IGNIS touched-score shim resolves the control plane; only a dry-run was used and no foreign score is borrowed. CDR unchanged; no new creative direction.
+
 ## S391 — current acceptance evidence (2026-10-20)
 
 Overall status: yellow — local acceptance complete, live release held.

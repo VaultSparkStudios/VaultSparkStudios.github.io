@@ -68,6 +68,32 @@ readFileSync(new URL(import.meta.url), 'utf8');`);
         }
       }
     }
+    const id = '1e2d3c4b-5a69-4788-99aa-bbccddeeff00';
+    const cases = {
+      'moderate-desk-comments': {
+        safe: [['--help'], ['-h'], ['list', '--help']],
+        invalid: [[], ['--typo'], ['list', '--status'], ['list', '--status', '--json'],
+          ['list', '--limit', 'NaN'], ['list', '--limit', '0'], ['list', '--limit', '1.5'], ['list', '--limit', '501'],
+          ['list', '--limit', '4', '--limit', '5'], ['list', id], ['list', '--status', 'bogus'],
+          ['list', '--slug', 'bad'], ['approve', id, '--status', 'held'], ['reject', id, '--json'],
+          ['remove', id, '--limit', '3'], ['feature', id, '--slug', '2026-09-14/a-story'],
+          ['approve', id, '--dry-run'], ['--self-test', '--json'], ['--help', '--typo'], ['toString', id]],
+      },
+      'check-public-rest-contract': {
+        safe: [['--help'], ['-h'], ['-?'], ['/?'], ['--dry'], ['-n'], ['--check'], ['--live', '--dry-run']],
+        invalid: [['--typo'], ['oops'], ['--live=false'], ['--write'], ['--write', '--dry-run'], ['--write', '--help'], ['--live', '--live'],
+          ['--self-test', '--live'], ['--self-test', '--write'], ['--help', '--typo'], ['--help=false']],
+      },
+    };
+    for (const [script, modes] of Object.entries(cases)) {
+      for (const [kind, argvList] of Object.entries(modes)) for (const argv of argvList) {
+        const result = spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, `scripts/${script}.mjs`, ...argv], {
+          cwd: root, encoding: 'utf8', timeout: 15000,
+        });
+        assert.equal(result.status, kind === 'safe' ? 0 : 2, `${script} ${argv.join(' ')}: ${result.stderr}`);
+        assert.doesNotMatch(result.stderr || '', /OPERATIONAL_IO_TRIPWIRE/);
+      }
+    }
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }

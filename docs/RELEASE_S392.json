@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "1.0",
+  "session": 392,
+  "nativeGoal": {
+    "threadId": "01a159cf-3925-7480-959e-0dd6caa69447",
+    "createdAt": 1792508182
+  },
+  "state": "partial-closeout-release-pending",
+  "releaseAccepted": false,
+  "updatedAt": "2026-10-20T16:51:14.733Z",
+  "summary": "Both operator-input boundaries are locally implemented and independently reviewed. The latest full-suite attempt passed167 checks and stopped168 on a stale mobile source receipt. A real local browser audit then passed215/215 cells with zero P0/P1. Complete current-source validation remains unproven. Full site build failed at Supabase rank-climbers; database/REST/auth remain UNHEALTHY. One restart approval is pending, none performed. No S392 push or production deployment is claimed.",
+  "recovery": {
+    "merge": "cbf94a80022b81e160f8c5419d647d3eb2a971b4",
+    "preservedCommits": [
+      "13123f55fd",
+      "23fdb17c7a"
+    ],
+    "restartPerformed": false,
+    "restartApproval": "pending",
+    "approvalGate": {
+      "decision": "ask",
+      "confidence": 0.5,
+      "reason": "no signal — defer to founder",
+      "checkedDuring": "S392 continuation",
+      "command": "node .cache/S391/recover-supabase-rest.mjs --restart"
+    }
+  },
+  "implementation": {
+    "selected": 2,
+    "verified": 2,
+    "review": "round2 pass; two findings fixed"
+  },
+  "verification": {
+    "focused": "5/5",
+    "operationalTripwire": "Final-source required step1 passed, including all final mode cases, moderation request and public REST canary tests.",
+    "moderationSelfTest": "17/17",
+    "restSelfTest": "10/10",
+    "windowsHide": "701 files checked",
+    "doctor": {
+      "passing": 13,
+      "warning": 3,
+      "advisoryFailing": 1,
+      "blockingFailing": 0,
+      "total": 17,
+      "scope": "Partial closeout observation",
+      "evidence": ".cache/S392/doctor-closeout.json"
+    },
+    "offlineRest": "125 recorded queries/7 deferrals; historical manifest, NOT current provider acceptance",
+    "build": {
+      "state": "failed",
+      "step": "build-rank-climbers",
+      "reason": "Supabase TimeoutError"
+    },
+    "fullSuite": {
+      "state": "failed",
+      "coverageComplete": false,
+      "passed": 21,
+      "failed": 1,
+      "total": 545,
+      "receiptId": "5c10ed343182d99c35b37901",
+      "failures": [
+        {
+          "step": 22,
+          "command": "node scripts/check-startup-context-budget.mjs",
+          "status": 1,
+          "durationMs": 950,
+          "error": null
+        }
+      ]
+    },
+    "repairs": [
+      "Existing task-board rotation archives completed history losslessly after the startup-context check failed at step22."
+    ],
+    "generatedReconciliation": {
+      "state": "requires-final-suite",
+      "built": 62,
+      "planned": 63,
+      "sideEffectingSkipped": [
+        "staging-deploy-receipt"
+      ],
+      "initialVerificationFailures": [
+        "startup-brief",
+        "shell-assets"
+      ],
+      "repairs": [
+        "Active handoff heading no longer represents a completed session; coherence check passes S391 -> brief S392.",
+        "Final shell reconciliation updated six generated leaderboard pages; exact shell check passes."
+      ],
+      "evidence": ".cache/S392/resync.log"
+    },
+    "diagnosticContinuation": {
+      "state": "failed",
+      "firstStep": 22,
+      "lastStep": 34,
+      "passed": 12,
+      "failed": 1,
+      "reason": "Identity receipt drift after startup provider observation; regenerated truthfully and its check passes. Partial diagnostic coverage only."
+    },
+    "postbuild": {
+      "state": "passed",
+      "steps": 27,
+      "evidence": ".cache/S392/postbuild.log",
+      "scope": "Existing normal post-build reconciliation only; not proof of the full build, staging, or production."
+    },
+    "providerHealth": {
+      "state": "unhealthy",
+      "recordedAt": "2026-10-20T15:44:33.723Z",
+      "project": "fjnpzjjyhnpmunfoycrp",
+      "services": {
+        "db": "UNHEALTHY",
+        "rest": "UNHEALTHY",
+        "auth": "UNHEALTHY"
+      },
+      "source": "Read-only guarded recovery health probe; no restart performed"
+    },
+    "latestFullAttempt": {
+      "state": "failed",
+      "passed": 167,
+      "failed": 1,
+      "stoppedAt": 168,
+      "planned": 545,
+      "reason": "Mobile receipt source binding stale for index.html; refreshed through real215-cell runtime audit, not rebound.",
+      "evidence": ".cache/S392/attempt-stopped-at-168.json"
+    },
+    "intelligenceCascade": {
+      "state": "passed",
+      "rebuilt": 43,
+      "verified": 43,
+      "skipped": [
+        "staging-deploy-receipt"
+      ],
+      "evidence": ".cache/S392/intel-cascade.log",
+      "scope": "Declared generated-artifact checks; not whole545-step suite, main build or release acceptance."
+    },
+    "startupDoctor": {
+      "blockingFailing": 0,
+      "passing": 14,
+      "warning": 2,
+      "advisoryFailing": 1,
+      "total": 17,
+      "scope": "Startup observation, before partial closeout"
+    },
+    "mobileRuntime": {
+      "state": "passed",
+      "completed": 215,
+      "expected": 215,
+      "blockingFindings": 0,
+      "evidence": "docs/mobile-audit/receipt.json",
+      "scope": "Real browser against local candidate; automated-only, no staging/production claim"
+    }
+  },
+  "production": {
+    "state": "not-promoted",
+    "lastAcceptedSource": "ceeeb2de9f66d9fe239906f368991afe86c512f6"
+  },
+  "rollback": {
+    "tag": "s390-production-20261020",
+    "method": "Restore prior accepted Pages release through existing deployment workflow."
+  },
+  "remaining": [
+    "Provider recovery and complete build",
+    "Complete current-source suite and generated-output reconciliation",
+    "Staging payload/parity and runtime ceremony",
+    "Exact candidate required hosted checks",
+    "Canonical closeout and sanitized direct main push",
+    "Full production promotion and SHA/artifact readback"
+  ],
+  "closeout": {
+    "state": "partial-writeback-prepared",
+    "silScore": 935,
+    "releaseAccepted": false,
+    "cdr": "reviewed; no new creative direction",
+    "ignis": "touched-score shim resolves studio-ops; dry-run only, no project-local rescore claimed"
+  }
+}

@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): 935 → 935 → 935 → 940 → 936
-Avgs (available audit totals) —3:937.0 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured (archived history excluded)
-Velocity trend:↓ |Protocol velocity:↓ |Debt:→
-Last session: 2026-10-20 | Session391 | Total:936/1000 | Velocity:2
-  └ Six CLI guards and hosted REST canary verified; full production acceptance remains pending.
+Sparkline (last5 available totals): 935 → 935 → 940 → 936 → 935
+Avgs (available ten-category audit totals) —3:937.0 |5:936.2 |10:935.0 |25:unmeasured |all:931.5 (archived/noncomparable history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:→
+Last session: 2026-10-20 | Session392 | Total:935/1000 | Velocity:2
+  └ Two local input-boundary outcomes verified; release and native goal remain incomplete.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3007,3 +3007,27 @@ Hosted canary39383473357 executed and passed125 queries with7 existing deferrals
 Complete545/545 receipt 0b8668eb3491ff08b5f522b3 at sourceca9cba1d10ba7a057f94491e; Spark42, mobile215 and visual28 pass. Controlled Chrome155 traces eliminate the collision loop forced layouts, but Lighthouse median improvement is unproven. Current provider outage fails125/125 live reads and the staging runtime ceremony; no restart or production promotion performed. Score remains936/1000; the two committed SIL observations stay unchanged. Premise timing remains nonpassing. Brainstorm: shared runtime hash changes must rebuild dependent page-provenance and critique packets before the full acceptance freeze.
 
 S391 safe handoff: local repair committed as13123f55fd; remote main and production unchanged by this repair. All12 temporarily paused workflows restored and independently verified. Ark impact cargo01K5CAF19T90B68DFE230AE7A2 sent; delivery is not application. Actual local autopilot execution is supported by its log and website commits, but the local canonical receipt ledger is missing the row; foreign studio-ops S391 receipts are not borrowed. Provider restart approval remains pending.
+
+
+## Session 392 — 2026-10-20 — partial closeout, release pending
+
+Product rubric, ten categories ×100. Total:935/1000. Velocity:2 locally verified outcomes; released outcomes:0. Debt:→. This is not native-goal completion or deployment acceptance.
+
+| Category | Score |
+|---|---:|
+| Dev Health |93|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |96|
+| Process Quality |88|
+| Cross-Repo Coherence |93|
+| Security Posture |97|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.
+
+Score rationale versus936: Momentum−1 for incomplete publication/release; Process Quality−1 for avoidable handoff-label and tracked-test preparation errors; Security Posture+1 for two measured input boundaries before IO. No conversion, engagement, performance, provider recovery or fleet adoption gain is claimed.
+
+Brainstorm: (1) cheap parity/generated-data preflight before an expensive suite; (2) explicit active-versus-completed session headings; (3) preserve source-bound partial receipts without treating them as complete proof. Committed to TASK_BOARD: first two [SIL][S392] follow-ups; they are future work, not automatic scope expansion.

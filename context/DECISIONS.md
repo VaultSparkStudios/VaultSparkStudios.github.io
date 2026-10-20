@@ -2414,3 +2414,16 @@ The final passing strict premise checkpoint followed two delegated implementatio
 ## D-S391.4 — Keep offscreen layout deferred during Spark collision checks (2026-10-20)
 
 Two exact-candidate hosted Lighthouse runs failed the unchanged News performance floor at 0.88. Chrome 155 traces identified Spark measuring controls inside skipped content-visibility subtrees. Feature-detect checkVisibility before measuring those controls; visible controls and unsupported browsers retain the existing collision path. A controlled trace comparison removed the inner loop's 10–11 forced layouts (about 20 ms); Lighthouse medians remained effectively unchanged, so this is not evidence of a score improvement. Require browser collision checks, rendered visual evidence, fresh staging and exact-candidate hosted acceptance before promotion.
+
+
+## D-S392.1 — Reject ambiguous operator input before access (2026-10-20)
+
+Moderation list filters and mutation actions have distinct grammars. Missing, duplicate, unknown and cross-command options reject before credential access. REST --write requires --live even with help/preview. Existing valid request construction remains unchanged. No authentication policy or membership-tier change.
+
+## D-S392.2 — A partial record is not release acceptance (2026-10-20)
+
+Use an explicitly active handoff heading before durable closeout; the completed-session heading had prematurely advanced generated public session counts. Preserve failed complete and partial test attempts. The premise timing verifier remains nonpassing because a startup-generated control-plane receipt preceded the strict checkpoint; selected source edits followed the checkpoint, but no clean timing pass is claimed. Existing STRONG identity and terminology gaps remain unchanged; no ABSOLUTE gap was observed.
+
+## D-S392.3 — Preserve the recovery approval boundary (2026-10-20)
+
+The exact guarded one-project Supabase restart received Founder-Twin ASK with reason no signal — defer to founder. The explicit approval question remains unanswered. Do not attempt the restart through another surface, change the helper name, or disable the gate. Observe healthy recovery non-mutatingly; production remains pending current acceptance.

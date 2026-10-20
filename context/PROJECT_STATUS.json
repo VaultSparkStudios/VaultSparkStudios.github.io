@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Safe operational CLI commands and scheduled public REST drift detection",
+  "currentFocus": "S392 input boundaries verified; full validation and provider recovery required before release",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Observe weekly REST canary results and support stable public-site operations",
+  "nextMilestone": "Resolve one-project recovery approval or observe healthy service; complete build, full suite, staging, hosted checks and production readback",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -24,17 +24,18 @@
     "Field-vitals freshness requires a genuinely fresh RUM cohort; local lab evidence deliberately abstains.",
     "The Supabase service-role slot in the secrets gateway points at the sibling project (supabase-credential-project-mismatch). Row-data admin is degraded; management, SQL and edge-function deploy authority are live and were used this session.",
     "api/founder-presence.json still carries 30 revisions in public git history. The purge needs crons disabled, a filter-repo rewrite and a force-push — CANON-019 founder action.",
-    "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
+    "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json.",
+    "S392: Supabase database/REST/auth observed UNHEALTHY; full build times out. One guarded website-project restart awaits explicit approval after Founder-Twin ASK. No restart performed."
   ],
   "lastUpdated": "2026-10-20",
-  "currentSession": 391,
+  "currentSession": 392,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-10-20",
-  "silScore": 936,
+  "silScore": 935,
   "silAvg3": 937,
-  "silVelocity": 1,
+  "silVelocity": 2,
   "silDebt": "stable",
-  "silLastSession": 391,
+  "silLastSession": 392,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -42,13 +43,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "yellow",
-      "note": "S391 production remains ceeeb2de9f; current Supabase database/REST/auth unhealthy. Release held."
+      "note": "No S392 production promotion. Existing last accepted release is historical; current readback still required."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "yellow",
-      "note": "S391 full12183-file payload and core66 verified; current runtime ceremony rejects upstream504/CORS. Local full545/545 passed."
+      "note": "S392 current staging acceptance pending; prior S391 staging does not satisfy this invocation."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -64,19 +65,19 @@
       "command": "npm run verify:local",
       "type": "local",
       "status": "yellow",
-      "note": "S391 focused checks pass; latest full attempt272/273 found a session-only orphan diagnostic; narrowly documented, complete rerun pending."
+      "note": "S392 complete acceptance pending;125 checks passed before repaired tracked-test parity failure. Historical S391 results are separate."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "yellow",
-      "note": "S391 full12183-file payload and core66 verified; current runtime ceremony rejects upstream504/CORS. Local full545/545 passed."
+      "note": "S392 current staging acceptance pending; prior S391 staging does not satisfy this invocation."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
       "status": "yellow",
-      "note": "S391 focused checks pass; latest full attempt272/273 found a session-only orphan diagnostic; narrowly documented, complete rerun pending."
+      "note": "S392 complete acceptance pending;125 checks passed before repaired tracked-test parity failure. Historical S391 results are separate."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -84,7 +85,7 @@
   "ignisScoreDelta": 0,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-10-18T17:20:11.563Z",
-  "entropyScore": 0.177,
+  "entropyScore": 0.181,
   "entropyLastComputed": "2026-10-20",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-10-19T22:10:28.054Z",
@@ -93,26 +94,26 @@
   "silCategoriesV3": {
     "devHealth": 93,
     "creativeAlignment": 94,
-    "momentum": 91,
+    "momentum": 90,
     "engagement": 96,
-    "processQuality": 89,
+    "processQuality": 88,
     "crossRepoCoherence": 93,
-    "securityPosture": 96,
+    "securityPosture": 97,
     "ecosystemIntegration": 91,
     "capitalEfficiency": 95,
     "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 391,
+  "silCategoriesUpdatedSession": 392,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-20",
-    "passing": 16,
-    "warning": 1,
-    "failing": 0,
+    "passing": 13,
+    "warning": 3,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 17,
-    "score": 94,
+    "score": 76,
     "checks": [
       {
         "id": "manifest",
@@ -172,7 +173,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -214,15 +215,15 @@
       },
       {
         "id": "sched-staleness",
-        "pass": true,
+        "pass": false,
         "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "desk-model-servability",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "expected-external",
         "blocking": false
       },
@@ -263,7 +264,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f338d4094410e28ed169df2a",
   "testsSourceFingerprint": "ca9cba1d10ba7a057f94491e",
-  "lastSessionSummary": "S391 six CLI guards and a hosted read-only REST canary verified; release evidence in docs/RELEASE_S391.json",
+  "lastSessionSummary": "S392 partial closeout: two local outcomes verified, publication and deployment remain pending",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 391,
@@ -274,26 +275,19 @@
     "scope": "All owned verification handles terminal; zero S391-named helper processes and zero known preview listeners in read-only reconfirmation. Historical started/closed totals unmeasured; do not manufacture numeric totals."
   },
   "closeoutFollowthrough": {
-    "session": 391,
-    "date": "2026-10-20",
-    "agent": "codex",
-    "state": "provider-recovery-required",
-    "requestedOutcomes": 2,
+    "session": 392,
+    "state": "partial",
     "completedOutcomes": 2,
-    "sourcePublication": "3bc93c7f2e2942b55a85019db32bf1f501841f96",
-    "deployment": "Repaired staging payload verified; live runtime ceremony rejects upstream504/CORS. Production unchanged.",
-    "validation": "Complete545/545 (0b8668eb3491ff08b5f522b3), Spark42, mobile215 and visual28 passed; current live125/125 fail",
-    "evidence": "docs/RELEASE_S391.json",
-    "publisherRestoration": "12/12 prior states restored and independently verified",
-    "arkCargo": "01K5CAF19T90B68DFE230AE7A2"
+    "releasedOutcomes": 0,
+    "validation": "Focused and input-boundary suites pass; full545-step acceptance and release remain pending."
   },
-  "lastSession": 391,
+  "lastSession": 392,
   "sessionState": {
     "version": 1,
-    "durableSession": 391,
-    "currentFocus": "Safe operational CLI commands and scheduled public REST drift detection",
-    "nextMilestone": "Observe weekly REST canary results and support stable public-site operations",
-    "lastSessionSummary": "S391 six CLI guards and a hosted read-only REST canary verified; release evidence in docs/RELEASE_S391.json"
+    "durableSession": 392,
+    "currentFocus": "S392 input boundaries verified; full validation and provider recovery required before release",
+    "nextMilestone": "Resolve one-project recovery approval or observe healthy service; complete build, full suite, staging, hosted checks and production readback",
+    "lastSessionSummary": "S392 partial closeout: two local outcomes verified, publication and deployment remain pending"
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -305,22 +299,30 @@
     "behaviorChanged": false
   },
   "activeArc": {
-    "session": 391,
-    "phase": "provider-recovery-required",
-    "goal": "01a157cd-72fc-7c72-88e1-90d3e0c93ba9",
-    "audit": "docs/AUDIT_2026-10-20-S391.json",
-    "pendingApproval": "One bounded Supabase restart requested after Founder-Twin ASK; no restart performed"
+    "session": 392,
+    "goalId": "01a159cf-3925-7480-959e-0dd6caa69447",
+    "goalCreatedAt": 1792508182,
+    "phase": "partial-closeout-release-pending",
+    "audit": "docs/AUDIT_2026-10-20-S392.json",
+    "releaseEvidence": "docs/RELEASE_S392.json"
   },
   "testsSession": 391,
-  "currentBuildState": "passed",
-  "currentBuildNote": "S391 current source545/545; receipt0b8668eb3491ff08b5f522b3; sourceca9cba1d10ba7a057f94491e",
+  "currentBuildState": "incomplete",
+  "currentBuildNote": "S392 latest complete attempt125 pass/1 fail at126 of545 planned; parity repaired, complete rerun required.",
   "lastDeploySession": 390,
   "lastDeployStatus": "full production verified (ceeeb2de9f; run 39359262188)",
-  "silAvg5": 934.2,
+  "silAvg5": 936.2,
   "lastReleaseAcceptance": {
     "session": 388,
     "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
     "receipt": "docs/RELEASE_S388.json"
   },
-  "truthAuditSummary": "S391 full545/545, mobile215 and Spark42 pass; staging payload verified. Current Supabase outage rejects live125/125 and staging runtime ceremony. Production remains unchanged; premise timing nonpassing."
+  "truthAuditSummary": "Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.",
+  "currentVerification": {
+    "session": 392,
+    "state": "incomplete",
+    "source": "docs/RELEASE_S392.json",
+    "lastCompleteTestsSession": 391,
+    "note": "Historical test counters refer to testsSession391; no complete S392 suite is accepted yet."
+  }
 }

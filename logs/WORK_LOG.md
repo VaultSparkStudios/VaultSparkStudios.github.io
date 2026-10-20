@@ -1664,3 +1664,13 @@ Six operational CLI argument boundaries verified under IO tripwires. Weekly read
 Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
 
 Complete receipt 0b8668eb3491ff08b5f522b3; prior partial runs exposed and then repaired dependent News provenance/critique and Stats drift. Hosted3bc93 E2E/accessibility passed, Lighthouse failed0.88 against0.90 twice before the bounded repair; its new hosted acceptance is still required. No production promotion or recovery restart claimed.
+
+
+### S392 generated reconciliation checkpoint — 2026-10-20
+
+S392 two operator-admission fixes independently reviewed and verified. Final-source admission and deployment argument tests pass. Full candidate attempt stopped at22 on taskboard history; lossless archive fixed it. Diagnostic continuation stopped at34 on identity receipt drift; repaired. Dependency rebuild generated62 artifacts; its startup-brief and shell verification failures repaired without claiming full suite acceptance. Full build remains blocked on Supabase timeout; no restart or production promotion. This is an active-arc checkpoint, not closeout or release acceptance.
+
+
+### S392 partial closeout — 2026-10-20
+
+Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed. Generated drift was reconciled through declared dependency checks;43/43 targeted checks pass. Source publication and full production acceptance remain open. No hook bypass, dependency addition, identity-policy change or paid service was used.

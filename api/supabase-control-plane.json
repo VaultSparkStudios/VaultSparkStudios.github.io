@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-09-20T18:35:05.575Z",
+  "generatedAt": "2026-10-20T14:59:51.166Z",
   "generatedBy": "scripts/probe-supabase-control-plane.mjs",
   "publicSafe": true,
   "projectRef": "fjnpzjjyhnpmunfoycrp",
@@ -25,11 +25,11 @@
       }
     },
     "sqlMigration": {
-      "status": "ready",
+      "status": "blocked",
       "authority": "database-migration",
       "liveProbe": {
-        "status": "ok",
-        "httpStatus": 201
+        "status": "unreachable",
+        "httpStatus": null
       },
       "source": {
         "migration": {
@@ -56,7 +56,8 @@
     }
   },
   "blockers": [
-    "supabase-credential-project-mismatch"
+    "supabase-credential-project-mismatch",
+    "supabase-sql-probe-failed"
   ],
   "invariants": {
     "serviceRoleDoesNotImplyManagementApi": true,

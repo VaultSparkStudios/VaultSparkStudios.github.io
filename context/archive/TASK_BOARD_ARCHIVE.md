@@ -1258,3 +1258,18 @@ Full original S379/S380 blocks retained below; their unchecked rows remain verba
 
 
 Completed S254/S260/S289 carries preserved verbatim in context/archive/TASK_BOARD_ARCHIVE.md (S389 archival).
+
+
+<!-- rotated 2026-10-20 · sessions < 390 · 1 block(s) -->
+
+## S389
+
+- [x] [S389 #1] Deploy argv guards.
+- [x] [S389 #2] Deterministic handoffs.
+- [x] [S389 #3] Human sitemap links and five-publisher cascade.
+- [x] [S389 #4] Oracle answer dependency and build order.
+- [x] [S389 #5] Field-proof publication order.
+- [x] [SIL][S389] Audit other outward CLIs. (S390 #3)
+- [x] [SIL][S389] Measure extract omissions. (S390 #4)
+
+Waves1–3 verified; release evidence: docs/RELEASE_S389.json.

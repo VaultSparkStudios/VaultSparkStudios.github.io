@@ -1,0 +1,284 @@
+{
+  "date": "2026-10-20-S392",
+  "session": 392,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh native-goal arc: stabilize operator command admission, recover the outstanding release, then verify staging and full production deployment.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "investigation": {
+    "reuse": "Existing deploy-argv and operational-admission tripwires; no dependency or paid service required.",
+    "provider": "2026-10-20 current management health reports db/rest/auth UNHEALTHY. A single restart awaits explicit approval; no restart executed.",
+    "recovery": "Both unpushed S391 commits preserved through merge cbf94a8002 with current remote publications; generated conflicts use the newer remote feeds. Rebuild and staging acceptance remain required.",
+    "candidateSurvey": {
+      "featureDepth": [
+        "Restore rank orb: deferred pending designed member-data contract",
+        "Repair achievement schema: deferred pending public-member policy"
+      ],
+      "innovativeFeatures": [
+        "Command intent witness: novel, unselected until admission basics pass",
+        "Provider outage timeline: novel, unselected; management health already provides needed evidence"
+      ],
+      "ux": [
+        "Spark collision repair: already implemented S391; preserve and verify",
+        "New navigation design: no measured defect; unselected"
+      ],
+      "feedbackLoop": [
+        "REST checker ignores help/unknown flags: selected",
+        "Novel canary provenance graph: unselected; existing query manifest suffices"
+      ],
+      "gamification": [
+        "Rank economy expansion: policy escalation; unselected",
+        "Achievements display: existing schema/policy dependency"
+      ],
+      "ai": [
+        "Model-driven query repair: unnecessary paid use; rejected",
+        "Agent intent receipt: novel but not needed for this stabilization"
+      ],
+      "security": [
+        "Moderation ignores list-only flags on mutation commands: selected",
+        "Auth rewrite: outside authorized policy scope"
+      ],
+      "speed": [
+        "Reconcile stale generated output: release prerequisite",
+        "Broader build redesign: no measured premise; unselected"
+      ],
+      "tokenCost": [
+        "Bound audit context with existing task-slice: already available",
+        "New summary cache: no measured savings; unselected"
+      ]
+    },
+    "market": "No competitor facts asserted; market refresh is outside this release stabilization selection.",
+    "timingDeviation": {
+      "state": "nonpassing",
+      "reason": "The checker classifies the startup-generated api/supabase-control-plane.json as pre-implementation dirt. Both selected source files were unmodified at the recorded passing gate. Preserve the original receipt; no timing pass is claimed."
+    }
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "moderation-command-admission",
+      "title": "Validate moderation options per command before credentials",
+      "axis": "security",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 20.19,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Mutation commands accept list filters and ignore them; missing flag values and invalid limits can reach credentials. Unknown options print success-shaped help.",
+      "userOutcome": "Operators cannot accidentally moderate a broader set of comments through silently ignored options.",
+      "acceptance": "Malformed, duplicate, missing, cross-command and conflicting options exit 2 before credentials/network; valid list and mutation inputs preserve their existing requests; help and self-test are inert.",
+      "premises": [
+        {
+          "claim": "The parser accepts --status independent of command and without validating a following value",
+          "adapter": "file-content",
+          "target": "scripts/moderate-desk-comments.mjs",
+          "pattern": "else if (arg === '--status') out.status = argv[++i] || null;",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Document rejected argument combinations."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Validate a complete command grammar before serviceKey; retain list filters, UUID actions and standalone self-test/help; cover actual CLI under IO tripwires and test valid request construction."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Extend command-specific grammar to other operator tools after a separate inventory."
+        }
+      },
+      "recipe": "Validate complete moderation grammar before credentials, then verify actual CLI with IO tripwires and valid request construction.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T15:09:57.913Z",
+          "state": "shipped",
+          "status": "shipped",
+          "evidence": "Actual CLI IO-tripwire suite5/5 and focused tests5/5; moderation17/17 and REST10/10 self-tests. Independent review round2 pass. Complete site release remains separate.",
+          "note": "Actual CLI IO-tripwire suite5/5 and focused tests5/5; moderation17/17 and REST10/10 self-tests. Independent review round2 pass. Complete site release remains separate."
+        }
+      ],
+      "readinessArea": "security, privacy, data integrity and abuse controls",
+      "stageRationale": "Supported public release stabilization: reject ambiguous operator intent before operational access."
+    },
+    {
+      "id": 2,
+      "slug": "rest-checker-admission",
+      "title": "Reject unintended REST checker modes before filesystem or network",
+      "axis": "feedbackLoop",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 0.6,
+      "priority": 20.31,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "The checker treats help and unknown flags as an ordinary offline run; --write without --live is silently ignored, and malformed live flags can trigger network probing.",
+      "userOutcome": "Operators receive an explicit failure for misspelled or contradictory validation commands; help remains safe during provider outages.",
+      "acceptance": "Help and preview have zero IO; unknown/duplicate/conflicting options exit 2 before IO; --write requires --live; existing offline, live read-only and live-write modes remain explicit and tested.",
+      "premises": [
+        {
+          "claim": "REST checker modes are selected only by includes without complete argv admission",
+          "adapter": "file-content",
+          "target": "scripts/check-public-rest-contract.mjs",
+          "pattern": "const LIVE = args.includes('--live');",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Document the valid modes."
+        },
+        "L2": {
+          "effortHours": 0.6,
+          "recipe": "Reuse deploy-argv admission before collect, reject write without live and self-test conflicts, add actual CLI tripwire coverage while retaining probe tests."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Create a separate provenance artifact after a real consumer requires it."
+        }
+      },
+      "recipe": "Reuse strict admission before collecting files, preserve explicit modes and cover rejected invocations under IO tripwires.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T15:09:57.913Z",
+          "state": "shipped",
+          "status": "shipped",
+          "evidence": "Actual CLI IO-tripwire suite5/5 and focused tests5/5; moderation17/17 and REST10/10 self-tests. Independent review round2 pass. Complete site release remains separate.",
+          "note": "Actual CLI IO-tripwire suite5/5 and focused tests5/5; moderation17/17 and REST10/10 self-tests. Independent review round2 pass. Complete site release remains separate."
+        }
+      ],
+      "readinessArea": "feedback, support and issue triage",
+      "stageRationale": "Supported public release stabilization: reject ambiguous operator intent before operational access."
+    }
+  ],
+  "executionLog": [
+    {
+      "at": "2026-10-20T15:09:57.913Z",
+      "state": "release-pending",
+      "evidence": "S392 fresh audit selected moderation command grammar and REST checker admission. Both implemented; focused5/5, IO-tripwire5/5, moderation17/17 and REST10/10 pass; independent review passed after two fixes. Full site build fails at rank-climbers on current Supabase timeout; management health reports database/REST/auth UNHEALTHY. Restart approval pending; no restart executed. Full suite, staging, exact-SHA hosted acceptance, push, closeout and production remain required."
+    },
+    {
+      "at": "2026-10-20T16:22:01.836Z",
+      "state": "partial-closeout",
+      "note": "Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed."
+    }
+  ],
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-20T15:02:45.172Z",
+    "head": "cbf94a80022b81e160f8c5419d647d3eb2a971b4",
+    "sidecar": "docs/AUDIT_2026-10-20-S392.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 2,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "8eb8e967f69b92895296ffa97cffd9563ea3fc5d1d3a86693ae603dd0ca583d6",
+    "implementationDirty": [
+      "api/supabase-control-plane.json"
+    ]
+  },
+  "generatedAt": "2026-10-20T15:02:39.282Z",
+  "schemaVersion": "1.0",
+  "totals": {
+    "count": 2,
+    "priority": 40.5,
+    "top3": [
+      "moderation-command-admission",
+      "rest-checker-admission"
+    ]
+  },
+  "readinessAssessment": [
+    {
+      "area": "core journeys and product correctness",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "onboarding and identity/access",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "accessibility, mobile parity and every supported theme",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "performance and capacity",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "security, privacy, data integrity and abuse controls",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "backup, recovery and rollback",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "email and notifications where used",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "observability and actionable analytics",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "feedback, support and issue triage",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "branding, legal, contact and rights/provenance",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "human and agent access where applicable",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    },
+    {
+      "area": "staging, release evidence and truthful beta/release communication",
+      "status": "unknown",
+      "owner": "website",
+      "nextAcceptanceCheck": "Verify applicable current candidate staging and release evidence; historical acceptance is not borrowed."
+    }
+  ]
+}

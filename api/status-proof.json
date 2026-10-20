@@ -1,32 +1,26 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-10-20T14:39:30.131Z",
+  "generatedAt": "2026-10-20T16:32:43.121Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 18,
     "present": 18,
-    "fresh": 15,
-    "stale": 3,
-    "trustScore": 83,
+    "fresh": 16,
+    "stale": 2,
+    "trustScore": 89,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 4799656,
+      "ageSeconds": 4806449,
       "generatedAt": "2026-08-26T01:25:14.581Z"
     },
     "seedRisk": [
       {
         "key": "identity-migration-receipt",
-        "ageHours": 1333,
+        "ageHours": 1335,
         "staleAfterH": 336,
         "pctOfWindow": 397
-      },
-      {
-        "key": "supabase-control-plane",
-        "ageHours": 716,
-        "staleAfterH": 168,
-        "pctOfWindow": 426
       }
     ]
   },
@@ -35,7 +29,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-10-20T14:39:20.102Z",
-      "freshnessSeconds": 10,
+      "freshnessSeconds": 6803,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -196,7 +190,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-10-18T17:26:13.584Z",
-      "freshnessSeconds": 162797,
+      "freshnessSeconds": 169590,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -331,7 +325,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-10-20T14:39:28.147Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 6795,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -349,7 +343,7 @@
             "/ → fingerprinted shell paths"
           ]
         },
-        "state": "content-current",
+        "state": "behind",
         "observedAt": "2026-10-20T14:39:28.147Z",
         "observedOrigin": "multi-vantage-quorum",
         "deployedSha": "3c77b973added33e27e0c3e59a75c765247e70f7",
@@ -456,11 +450,11 @@
           ]
         },
         "shellParity": {
-          "state": "matched",
+          "state": "superseded",
           "route": "/",
           "observedAt": "2026-10-20T14:39:28.147Z",
           "expectedFrom": "c30a51cd38dc388e918e1c8ae653966893f5592a55b257f3aa1512ff1338e00a",
-          "supersededBy": null,
+          "supersededBy": "b44484ca1469cb5c4dbe450d09fae7c007a482a5634fd22a90c838273809fa20",
           "ageHours": 0,
           "stale": false,
           "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
@@ -525,8 +519,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-10-20T13:12:27.845Z",
-      "freshnessSeconds": 5222,
+      "generatedAt": "2026-10-20T16:32:34.984Z",
+      "freshnessSeconds": 8,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -586,19 +580,19 @@
             "postLcpP75": 1460
           }
         ],
-        "generatedAt": "2026-10-20T13:12:27.845Z"
+        "generatedAt": "2026-10-20T16:32:34.984Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-10-20T13:12:50.072Z",
-      "freshnessSeconds": 5200,
+      "generatedAt": "2026-10-20T16:32:40.395Z",
+      "freshnessSeconds": 3,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-20T13:12:50.072Z",
+        "generatedAt": "2026-10-20T16:32:40.395Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -627,7 +621,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-10-20T03:46:42.666Z",
-      "freshnessSeconds": 39167,
+      "freshnessSeconds": 45960,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -893,7 +887,7 @@
       "present": true,
       "source": "/api/newsroom-run.json",
       "generatedAt": "2026-10-20T03:46:42.666Z",
-      "freshnessSeconds": 39167,
+      "freshnessSeconds": 45960,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -943,8 +937,8 @@
     "promotion-receipt": {
       "present": true,
       "source": "/api/promotion-receipt.json",
-      "generatedAt": "2026-10-20T07:02:26.289Z",
-      "freshnessSeconds": 27424,
+      "generatedAt": "2026-10-20T16:32:33.872Z",
+      "freshnessSeconds": 9,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -953,19 +947,19 @@
         "publicSafe": true,
         "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
         "promoted": {
-          "sha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
+          "sha": "eaf846da50b013376d703a95194f3208b952344c",
           "source": "api/build-sha.json"
         },
         "production": {
           "origin": "https://vaultsparkstudios-website.pages.dev",
           "sha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
-          "contentLaneHead": null,
+          "contentLaneHead": "2a2ccdd40fa872acb98796e42b811d6e15572dd2",
           "reachable": true,
-          "reconciliation": "ahead",
+          "reconciliation": "unknown",
           "shellParity": {
-            "state": "matched",
-            "observedAt": "2026-10-20T05:44:14.166Z",
-            "ageHours": 1.3,
+            "state": "unobserved",
+            "observedAt": "2026-10-20T14:39:28.147Z",
+            "ageHours": 1.9,
             "stale": false,
             "maxAgeHours": 12,
             "source": "api/deploy-currency.json → shellParity"
@@ -1038,10 +1032,10 @@
         "reconciled": false,
         "receiptState": "degraded",
         "findings": [
-          "production serves ceeeb2de, newer than the recorded promoted 82162788 (benign — a later rebuild moved on)",
+          "served contentLaneHead 2a2ccdd4 is at/after promoted eaf846da, but shell parity was not observed as matched (state 'unobserved', observed 1.9h ago, max 12h) — not graded as current (honest-dark)",
           "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
         ],
-        "generatedAt": "2026-10-20T07:02:26.289Z",
+        "generatedAt": "2026-10-20T16:32:33.872Z",
         "history": {
           "window": 20,
           "gradable": 20,
@@ -1049,7 +1043,7 @@
           "reconciledPct": 0,
           "lastStrandedAt": "2026-10-20T00:46:15.727Z",
           "currentBehindStreak": 0,
-          "newestGradableAt": "2026-10-20T07:02:26.289Z",
+          "newestGradableAt": "2026-10-20T16:32:33.872Z",
           "newestAgeHours": 0,
           "maxAgeHours": 48,
           "stale": false,
@@ -1061,7 +1055,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-10-20T01:30:58.160Z",
-      "freshnessSeconds": 47312,
+      "freshnessSeconds": 54105,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1089,7 +1083,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-10-20T14:39:28.065Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 6795,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1293,7 +1287,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-26T01:25:14.581Z",
-      "freshnessSeconds": 4799656,
+      "freshnessSeconds": 4806449,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1448,7 +1442,7 @@
         },
         "controlPlane": {
           "overall": "partial",
-          "readyPlanes": 3,
+          "readyPlanes": 2,
           "totalPlanes": 4
         },
         "blockers": [
@@ -1465,13 +1459,13 @@
     "supabase-control-plane": {
       "present": true,
       "source": "/api/supabase-control-plane.json",
-      "generatedAt": "2026-09-20T18:35:05.575Z",
-      "freshnessSeconds": 2577865,
+      "generatedAt": "2026-10-20T14:59:51.166Z",
+      "freshnessSeconds": 5572,
       "staleAfterH": 168,
-      "stale": true,
+      "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-09-20T18:35:05.575Z",
+        "generatedAt": "2026-10-20T14:59:51.166Z",
         "generatedBy": "scripts/probe-supabase-control-plane.mjs",
         "publicSafe": true,
         "projectRef": "fjnpzjjyhnpmunfoycrp",
@@ -1496,11 +1490,11 @@
             }
           },
           "sqlMigration": {
-            "status": "ready",
+            "status": "blocked",
             "authority": "database-migration",
             "liveProbe": {
-              "status": "ok",
-              "httpStatus": 201
+              "status": "unreachable",
+              "httpStatus": null
             },
             "source": {
               "migration": {
@@ -1527,7 +1521,8 @@
           }
         },
         "blockers": [
-          "supabase-credential-project-mismatch"
+          "supabase-credential-project-mismatch",
+          "supabase-sql-probe-failed"
         ],
         "invariants": {
           "serviceRoleDoesNotImplyManagementApi": true,
@@ -1540,13 +1535,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-10-20T14:39:29.938Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-10-20T15:53:11.672Z",
+      "freshnessSeconds": 2371,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-20T14:39:29.938Z",
+        "generatedAt": "2026-10-20T15:53:11.672Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1554,15 +1549,15 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-07-02",
-          "days": 38
+          "lastDay": "2026-09-10",
+          "days": 61
         },
         "countries": [
           {
             "country": "US",
-            "samples": 464,
-            "lcpP75": 992,
-            "ttfbP75": 157,
+            "samples": 891,
+            "lcpP75": 936,
+            "ttfbP75": 123,
             "confidence": "high",
             "colos": [
               "ATL",
@@ -1570,24 +1565,82 @@
               "CMH",
               "DEN",
               "DFW",
+              "DTW",
               "EWR",
+              "HNL",
               "IAD",
+              "JAX",
+              "LAS",
               "LAX",
               "MCI",
+              "MIA",
+              "OMA",
               "ORD",
+              "PHL",
+              "PHX",
               "SEA",
+              "SJC",
+              "SMF",
+              "YYZ"
+            ]
+          },
+          {
+            "country": "CN",
+            "samples": 13,
+            "lcpP75": 1000,
+            "ttfbP75": 10,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX",
               "SJC"
             ]
           },
           {
             "country": "GB",
-            "samples": 8,
-            "lcpP75": 1388,
-            "ttfbP75": 437,
+            "samples": 13,
+            "lcpP75": 1072,
+            "ttfbP75": 337,
             "confidence": "low",
             "colos": [
               "LHR",
               "MAN"
+            ]
+          },
+          {
+            "country": "RU",
+            "samples": 10,
+            "lcpP75": 1584,
+            "ttfbP75": 196,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "DME",
+              "FRA",
+              "GIG"
+            ]
+          },
+          {
+            "country": "AU",
+            "samples": 7,
+            "lcpP75": 2368,
+            "ttfbP75": 568,
+            "confidence": "low",
+            "colos": [
+              "MEL",
+              "PER",
+              "SIN"
+            ]
+          },
+          {
+            "country": "CA",
+            "samples": 7,
+            "lcpP75": 9960,
+            "ttfbP75": 1286,
+            "confidence": "low",
+            "colos": [
+              "YVR",
+              "YYZ"
             ]
           },
           {
@@ -1603,25 +1656,23 @@
             ]
           },
           {
-            "country": "CA",
-            "samples": 6,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
+            "country": "HN",
+            "samples": 5,
+            "lcpP75": 1876,
+            "ttfbP75": 78,
             "confidence": "low",
             "colos": [
-              "YVR",
-              "YYZ"
+              "ATL"
             ]
           },
           {
-            "country": "CN",
-            "samples": 6,
-            "lcpP75": 1020,
-            "ttfbP75": 746,
+            "country": "BR",
+            "samples": 4,
+            "lcpP75": 1724,
+            "ttfbP75": 538,
             "confidence": "low",
             "colos": [
-              "AMS",
-              "LAX"
+              "GRU"
             ]
           },
           {
@@ -1635,6 +1686,17 @@
             ]
           },
           {
+            "country": "DE",
+            "samples": 4,
+            "lcpP75": 9756,
+            "ttfbP75": 529,
+            "confidence": "low",
+            "colos": [
+              "CPH",
+              "FRA"
+            ]
+          },
+          {
             "country": "EG",
             "samples": 4,
             "lcpP75": 2184,
@@ -1642,6 +1704,28 @@
             "confidence": "low",
             "colos": [
               "MRS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 4,
+            "lcpP75": 1522,
+            "ttfbP75": 880,
+            "confidence": "low",
+            "colos": [
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "IT",
+            "samples": 3,
+            "lcpP75": 1599,
+            "ttfbP75": 975,
+            "confidence": "low",
+            "colos": [
+              "FCO",
+              "MXP"
             ]
           },
           {
@@ -1655,6 +1739,16 @@
             ]
           },
           {
+            "country": "SG",
+            "samples": 3,
+            "lcpP75": 1084,
+            "ttfbP75": 118,
+            "confidence": "low",
+            "colos": [
+              "SIN"
+            ]
+          },
+          {
             "country": "TR",
             "samples": 3,
             "lcpP75": 764,
@@ -1665,26 +1759,34 @@
             ]
           },
           {
-            "country": "other",
-            "samples": 21,
-            "lcpP75": 1284,
-            "ttfbP75": 538,
-            "confidence": "high",
+            "country": "UA",
+            "samples": 3,
+            "lcpP75": 1824,
+            "ttfbP75": 318,
+            "confidence": "low",
             "colos": [
+              "VIE"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 19,
+            "lcpP75": 1256,
+            "ttfbP75": 594,
+            "confidence": "low",
+            "colos": [
+              "AKL",
               "ARN",
               "BOM",
               "BRU",
               "BUD",
-              "DME",
-              "FCO",
-              "FRA",
-              "GRU",
+              "CDG",
+              "CPH",
+              "HKG",
               "LIS",
               "MAD",
-              "MNL",
               "MRS",
               "PRG",
-              "SIN",
               "WAW"
             ]
           }
@@ -1695,7 +1797,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 3508770,
+      "freshnessSeconds": 3515563,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2092,7 +2194,7 @@
       "present": true,
       "source": "/api/attention-pressure.json",
       "generatedAt": "2026-09-10T00:00:00.000Z",
-      "freshnessSeconds": 3508770,
+      "freshnessSeconds": 3515563,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -2122,13 +2224,13 @@
     "canonical-destination-reachability": {
       "present": true,
       "source": "/api/canonical-destination-reachability.json",
-      "generatedAt": "2026-10-20T13:12:41.801Z",
-      "freshnessSeconds": 5208,
+      "generatedAt": "2026-10-20T15:52:37.221Z",
+      "freshnessSeconds": 2406,
       "staleAfterH": 36,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-10-20T13:12:41.801Z",
+        "generatedAt": "2026-10-20T15:52:37.221Z",
         "generatedBy": "scripts/probe-canonical-destinations.mjs",
         "publicSafe": true,
         "source": {
@@ -2148,7 +2250,7 @@
           "passed": 18,
           "failed": 0,
           "unknown": 2,
-          "longestUnknownStreak": 340,
+          "longestUnknownStreak": 342,
           "neverKnownGood": 2
         },
         "results": [
@@ -2166,7 +2268,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2183,7 +2285,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2200,7 +2302,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2217,7 +2319,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2234,7 +2336,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2251,7 +2353,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2268,7 +2370,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2285,7 +2387,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2302,7 +2404,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2313,7 +2415,7 @@
             "attemptCount": 2,
             "attempts": [
               {
-                "status": 403,
+                "status": 401,
                 "redirected": false,
                 "outcome": "unknown"
               },
@@ -2323,7 +2425,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 340,
+            "unknownStreak": 342,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2341,7 +2443,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2358,7 +2460,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2375,7 +2477,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2392,7 +2494,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2409,7 +2511,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2430,7 +2532,7 @@
                 "outcome": "unknown"
               }
             ],
-            "unknownStreak": 303,
+            "unknownStreak": 305,
             "lastKnownGoodAt": null,
             "lastKnownGoodAgeHours": null
           },
@@ -2448,7 +2550,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2465,7 +2567,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2482,7 +2584,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           },
           {
@@ -2499,7 +2601,7 @@
               }
             ],
             "unknownStreak": 0,
-            "lastKnownGoodAt": "2026-10-20T13:12:41.801Z",
+            "lastKnownGoodAt": "2026-10-20T15:52:37.221Z",
             "lastKnownGoodAgeHours": 0
           }
         ],
@@ -2510,7 +2612,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-10-20T00:00:00.000Z",
-      "freshnessSeconds": 52770,
+      "freshnessSeconds": 59563,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -2525,7 +2627,7 @@
           "forge": 17,
           "vaulted": 5,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-10-20T08:27:25.000Z",
+          "lastArkBroadcastAt": "2026-10-20T14:59:56.000Z",
           "ignisHeartbeatAt": "2026-10-20T07:18:26.457Z",
           "lastShippedOn": "2026-10-20"
         },
@@ -2573,7 +2675,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-10-20T00:00:00.000Z",
-      "freshnessSeconds": 52770,
+      "freshnessSeconds": 59563,
       "staleAfterH": 720,
       "stale": false,
       "data": {

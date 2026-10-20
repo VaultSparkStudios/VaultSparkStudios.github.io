@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { admitDeployment } from './lib/deploy-argv.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -225,6 +226,16 @@ function selfTest() {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === url.fileURLToPath(import.meta.url)) {
+  if (WRITE && !LIVE) {
+    console.error('--write requires --live');
+    process.exit(2);
+  }
+  const admitted = admitDeployment({
+    name: 'check-public-rest-contract',
+    usage: 'node scripts/check-public-rest-contract.mjs [--live [--write] | --self-test]',
+    boolFlags: ['--live', '--write', '--self-test'],
+    exclusive: [['--self-test', '--live'], ['--self-test', '--write']],
+  });
   if (SELF_TEST) selfTest();
   else await main();
 }

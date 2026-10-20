@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-20 (Session 391 closeout) -->
-<!-- semantic-freshness: hash=d551bd8925ca81ae next=392 silSession=391 silScore=936 handoff=391 tests=- -->
+<!-- generated-at: 2026-10-20 (Session 392 closeout) -->
+<!-- semantic-freshness: hash=ae1b4ca73f9b9d90 next=393 silSession=392 silScore=935 handoff=392 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 391 closeout · 2026-10-20.
+> **Fast-boot brief** — generated at Session 392 closeout · 2026-10-20.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 392 · 2026-10-20 · FOUNDER MODE                         ║
+║  Session 393 · 2026-10-20 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S391) - WHAT SHIPPED ══════════════════════════╗
-║  S391 six CLI guards and a hosted read-only REST canary verifie  ║
+╔══ LAST SESSION (S392) - WHAT SHIPPED ══════════════════════════╗
+║  S392 partial closeout: two local outcomes verified, publicatio  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,53 +41,53 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    936/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1↓                          ║
+║    935/1000   ██████████████████████░░   94%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
-║    Trend  ▄▂▄▆▄  ↓  (last 5 sessions)                            ║
+║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Alignment         94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Momentum          90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      91    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      88    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         93    █████████░  ········ →                ║
-║    Security          96    ██████████  ········ →                ║
+║    Security          97    ██████████  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
 ║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 391 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 392 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    545/545 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         545/545 passing (2026-10-20)                   ║
-║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
+║  ✓  Velocity      2 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — implementation verified; full…        ║
+║  ⛔  Truth         yellow — source outcomes verified, release…    ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.177  (healthy)                               ║
+║  ✓  Entropy       0.181  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  7d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        13/17 (76%)  ·  1 failing                      ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -108,14 +108,14 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  1↓  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  2→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  933/1000  (↓3 vs current 936)                       ║
-║  At-risk:    Momentum Δ-3                                        ║
+║  Projected:  928/1000  (↓7 vs current 935)                       ║
+║  At-risk:    Momentum Δ-4                                        ║
 ║  Calibration: MAE 3.9 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -123,11 +123,11 @@
 ║   96  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
 ║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
-║   96  [INTELLIGENCE]  Validate moderation options per subcomman  ║
-║        Validate moderation options per subcommand in a future a  ║
-║                                                                  ║
-║   90  [PRODUCT]      Require the strict premise checkpoint befo  ║
+║   93  [PRODUCT]      Require the strict premise checkpoint befo  ║
 ║        Require the strict premise checkpoint before delegated e  ║
+║                                                                  ║
+║   93  [INTELLIGENCE]  Assess the existing mobile Spark overlap   ║
+║        Assess the existing mobile Spark overlap with article pr  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Rank orb never renders for members.         ║
 ║        Rank orb never renders for members. is open, local, and   ║
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 391 closeout · 2026-10-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 392 closeout · 2026-10-20*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

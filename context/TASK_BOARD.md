@@ -1,14 +1,15 @@
+
+
 ## S391 — operational reliability
 
 - [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
 - [x] [S391 #2] REST canary verified locally and hosted125/7; receipt in docs/RELEASE_S391.json.
 - [ ] [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
-- [ ] [SIL][S391] Validate moderation options per subcommand in a future audit.
+- [x] [SIL][S391] Moderation options verified in S392.
 - [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
 - [ ] [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
 
 Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.md.
-
 ## S390 — public data contracts
 
 - [x] [S390 #1] Public data queries repaired.
@@ -22,17 +23,6 @@ Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.
 - [ ] [S390][SEC/P2] event_rsvps exposes user_id to anon.
 - [x] [SIL][S390] Inventory remaining outward CLIs. (S391: six guards + documented remaining scope.)
 - [x] [SIL][S390] Schedule weekly live REST probe. (S391 hosted run39383473357 passed125/7.)
-## S389
-
-- [x] [S389 #1] Deploy argv guards.
-- [x] [S389 #2] Deterministic handoffs.
-- [x] [S389 #3] Human sitemap links and five-publisher cascade.
-- [x] [S389 #4] Oracle answer dependency and build order.
-- [x] [S389 #5] Field-proof publication order.
-- [x] [SIL][S389] Audit other outward CLIs. (S390 #3)
-- [x] [SIL][S389] Measure extract omissions. (S390 #4)
-
-Waves1–3 verified; release evidence: docs/RELEASE_S389.json.
 ## S388 — release follow-through
 
 - [ ] [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
@@ -725,3 +715,11 @@ Eight older completed technical tasks are preserved in context/archive/TASK_BOAR
 ### S378 record recovery — 2026-10-14
 
 Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metadata and final production-source evidence. They introduced no additional feature or identity change. The accepted Spark control-clearance outcome and release evidence remain recorded in docs/RELEASE_S378.json. S378 score remains 933/1000; existing identity and field-vitals limitations remain. This addendum records those two commits before the fresh S379 arc.
+## S392 checkpoint + remaining release
+
+- [x] [S392] Two command-admission outcomes verified; independent review passed.
+- [ ] [S392] Finish full validation, staging, push and production readback. Supabase unhealthy; one restart approval pending. Evidence: docs/RELEASE_S392.json.
+- [ ] [SIL][S392] Run tracked-test parity and generated-data preflight before the full suite.
+- [ ] [SIL][S392] Keep active handoff headings distinct from completed-session evidence.
+
+Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release gates and deployment carried forward. Phase tally:3 phases,2 done,1 open.
