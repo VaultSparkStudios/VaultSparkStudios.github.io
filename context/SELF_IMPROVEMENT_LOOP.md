@@ -2966,3 +2966,5 @@ Brainstorm:
 3. Server-side public leaderboard RPCs for anon-blocked tables so challenge/weekly boards can show real data — first step: list the RLS-hidden tables. (Medium)
 
 Committed to TASK_BOARD: [SIL][S390] Inventory remaining outward CLIs · [SIL][S390] Schedule weekly live REST probe.
+
+S390 release verification: production serves ceeeb2de9f (Pages run 39359262188), byte parity tree-current 1105/1115, 0 Supabase 4xx (was 11), staging spec 6/6, required exact-SHA checks passed. Score 940/1000 unchanged. Lesson recorded: the closeout autopilot commits untracked scratch; local excludes added and recovery done before push.
