@@ -4,19 +4,19 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "36333d1c240a2ccb97d7cf47d60e5e7acebd53be",
+    "sha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "c86109ee05dff52ad0fe134ed34a060b97bcbe4f",
-    "contentLaneHead": "4b4c2dba41adc17aa5f7af96e9301e73f48df0ea",
+    "sha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "shellParity": {
-      "state": "unobserved",
-      "observedAt": "2026-10-19T18:43:31.104Z",
-      "ageHours": 6,
+      "state": "matched",
+      "observedAt": "2026-10-20T05:44:14.166Z",
+      "ageHours": 1.3,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -33,7 +33,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 8,
+    "consoleErrors": 7,
     "workerRouteErrors": 7,
     "signalCardinality": 7,
     "signalEndpoints": [
@@ -76,7 +76,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 1,
         "workerRouteErrors": 1,
         "signalCardinality": 2,
         "signalEndpoints": [
@@ -89,21 +89,21 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves c86109ee, repo build-sha is 36333d1c — a promotion backlog, not a stranded deploy (shell parity is 'unobserved', not drift)",
-    "8 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 1 unexplained"
+    "production serves ceeeb2de, newer than the recorded promoted 82162788 (benign — a later rebuild moved on)",
+    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-20T00:46:15.727Z",
+  "generatedAt": "2026-10-20T07:02:26.289Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
     "lastStrandedAt": "2026-10-20T00:46:15.727Z",
-    "currentBehindStreak": 3,
-    "newestGradableAt": "2026-10-20T00:46:15.727Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-20T07:02:26.289Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }

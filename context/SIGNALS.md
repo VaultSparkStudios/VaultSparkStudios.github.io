@@ -1,10 +1,10 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         544/544 passing (2026-10-20)                   ║
+║  ✓  Tests         545/545 passing (2026-10-20)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — S391 operational implementation…      ║
+║  ⛔  Truth         yellow — implementation verified; full…        ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.177  (healthy)                               ║

@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S391) - WHAT SHIPPED ══════════════════════════╗
-║  S391 six CLI guards and bounded REST canary implemented; provi  ║
+║  Two S391 outcomes verified; hosted canary125/7 passed; product  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,22 +63,22 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 391 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    544/544 passing  ·  Deploy: full production…          ║
+║  Tests:    545/545 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         544/544 passing (2026-10-20)                   ║
+║  ✓  Tests         545/545 passing (2026-10-20)                   ║
 ║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — S391 operational implementation…      ║
+║  ⛔  Truth         yellow — implementation verified; full…        ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
 ║  ✓  Entropy       0.177  (healthy)                               ║

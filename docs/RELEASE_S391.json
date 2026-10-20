@@ -7,7 +7,7 @@
     "startHead": "01294dee26026a39d0ac5ac5312495ea8a2d6a95"
   },
   "accepted": false,
-  "state": "in-progress",
+  "state": "awaiting-exact-candidate-hosted-checks",
   "scope": "Six operational CLI argument boundaries, weekly public REST canary, and required release verification. No UI, schema, membership policy or identity-flow change.",
   "audit": "docs/AUDIT_2026-10-20-S391.json",
   "implementation": {
@@ -47,11 +47,14 @@
       "note": "Revenue freshness advisory; initial report also included unmeasured scheduled observation."
     },
     "fullSuite": {
-      "state": "incomplete",
-      "passedSteps": 428,
-      "executedSteps": 429,
+      "state": "passed",
+      "passedSteps": 545,
+      "executedSteps": 545,
       "plannedSteps": 545,
-      "failure": "Latest full attempt stopped at step429: session timing diagnostic lacked lifecycle scope. Exact source declaration added; reachability check passes262/262 build checks and345/345 self-tests. Full closing run remains required."
+      "receiptId": "3254008b18ccb9798b1029f6",
+      "sourceFingerprint": "4ddfb82af4abc24a2e53290d",
+      "finishedAt": "2026-10-20T07:18:05.733Z",
+      "note": "Two complete closing runs passed; latest receipt verifies reconciled generated state."
     },
     "derivedContracts": {
       "rebuilt": 53,
@@ -76,36 +79,39 @@
       "state": "nonpassing",
       "note": "Final strict gate followed two delegated source edits. Historical source replay supports baseline inspection but cannot prove timely gate execution. Original receipt retained."
     },
-    "testSignal": "Stamper correctly refused incomplete diagnostics; previous verified test fields remain historical and do not prove current-source acceptance.",
+    "testSignal": "Canonical stamper updated from complete measured diagnostics; invariant check passed.",
     "globalIgnis": "Control plane lock observed active; only dry-run selection inspected. No cross-repo rescore claimed."
   },
   "staging": {
     "origin": "https://website.staging.vaultsparkstudios.com",
-    "state": "deployed-parity-verified",
-    "receiptId": "d6053cb4464f70ce2b5ef417",
+    "state": "verified",
+    "receiptId": "8cc8e5c3bfa71ac772d645bb",
     "source": {
-      "commitSha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
-      "fingerprint": "93ff7b6a6a4ba2db11e49c65"
+      "commitSha": "eaf846da50b013376d703a95194f3208b952344c",
+      "fingerprint": "4ddfb82af4abc24a2e53290d"
     },
     "candidate": {
-      "artifactRoot": "b0bae12f858c88519065a81aa76310d064e4485430dcb8f0e5d1386512898966",
+      "artifactRoot": "3f15406e0cfaefc113f3ded37ff069ce6f2754d25145e9e96e5f3558f7aab6e0",
       "leafCount": 66
     },
-    "files": 12149,
+    "files": 12152,
     "browser": {
-      "state": "passed",
       "passed": 3,
       "held": 3,
-      "skipped": 0,
-      "scope": "unchanged identity remains held"
+      "failed": 0,
+      "skipped": 0
     },
-    "note": "Initial working-tree deployment; final candidate checks still required.",
     "attention": {
-      "state": "passed",
       "passed": 15,
       "failed": 0,
       "skipped": 0
-    }
+    },
+    "ceremony": {
+      "state": "passed",
+      "passed": 11,
+      "total": 11
+    },
+    "note": "Working-tree bytes verified by artifact root and source fingerprint. Receipt source commit uses the pre-closeout build stamp; final commit relationship verified separately."
   },
   "production": {
     "state": "unchanged",
@@ -116,10 +122,8 @@
     "method": "Use existing full Pages deployment workflow for the verified prior release; staging deploy retains rollback directories."
   },
   "remaining": [
-    "Complete current-source local validation",
-    "Final candidate staging and applicable browser checks",
-    "Direct main push and required exact-SHA hosted checks",
-    "Canonical closeout write-back and authorized full production promotion",
-    "Production readback and workflow/process restoration"
+    "Final main publication and exact-SHA hosted required checks",
+    "Full confirmed Pages production promotion",
+    "Production readback, final proof write-back and workflow/process restoration"
   ]
 }
