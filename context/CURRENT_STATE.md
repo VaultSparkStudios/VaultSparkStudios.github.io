@@ -1,8 +1,8 @@
-## S393 — local implementation accepted; release in progress
+## S393 — full product release verified
 
-S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
 
-Evidence: docs/RELEASE_S393.json. This invocation is native goal01a15a69-1391-7741-84ce-7401d74e1360 createdAt1792518208, bound to S393. Continue its unfinished validation and release; do not start a new arc on continuation.
+Current publication successor, remaining actions and final acceptance are maintained in docs/RELEASE_S393.json. Earlier pre-release addenda below retain their original historical state.
 
 ## S392 — partial closeout; release acceptance pending
 

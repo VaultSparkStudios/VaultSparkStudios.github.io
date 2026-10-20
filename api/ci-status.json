@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T21:32:17.464Z",
+  "generatedAt": "2026-10-20T22:12:49.513Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": true,
@@ -17,22 +17,22 @@
   },
   "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gate status is unknown.",
+  "summary": "CI gate status is unknown.",
   "deploymentReconciliation": {
-    "state": "stranded",
+    "state": "clear",
     "threshold": 2,
-    "alert": true,
+    "alert": false,
     "window": 20,
     "gradable": 20,
-    "reconciled": 0,
-    "reconciledPct": 0,
+    "reconciled": 1,
+    "reconciledPct": 5,
     "lastStrandedAt": "2026-10-20T20:03:59.015Z",
-    "currentBehindStreak": 5,
-    "newestGradableAt": "2026-10-20T20:03:59.015Z",
-    "newestAgeHours": 1.5,
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-20T22:12:39.699Z",
+    "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   },
   "workflows": [
     {
@@ -170,13 +170,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-10-20T18:30:13Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.03,
+      "ageHours": 3.71,
       "staleAfterHours": 48
     },
     {
@@ -190,7 +189,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.66,
+      "ageHours": 3.34,
       "staleAfterHours": 48
     },
     {
@@ -216,7 +215,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.94,
+      "ageHours": 1.62,
       "staleAfterHours": 48
     },
     {
@@ -233,7 +232,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-10-20T21:07:42Z",
+      "lastUpdatedAt": "2026-10-20T22:07:25Z",
       "recentConclusions": [
         "success",
         "success",
@@ -242,7 +241,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.41,
+      "ageHours": 0.09,
       "staleAfterHours": 48
     },
     {
@@ -255,7 +254,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 8.32,
+      "ageHours": 9,
       "staleAfterHours": 48
     },
     {

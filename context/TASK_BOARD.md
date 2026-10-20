@@ -5,11 +5,12 @@
 Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
 
 - [x] [S393 #1] Validate canonical timestamps, future/stale dates, report schema/counts and member rows; verify actual CLI/provider failure preservation. Focused3/3 and independent review round2 pass.
-- [ ] [S393 RELEASE] Complete current whole-project suite, staging runtime/artifact parity, sanitized direct-main publication, exact-candidate required checks, full production promotion and readback.
+- [x] [S393 #2] Restore all seven generated leaderboard themes, isolate capture contexts, reject false observed-theme receipt reuse, and inspect84 actual theme captures.
+- [x] [S393 RELEASE] Complete545/545 twice, current staging11/11, direct-main publication, all3 required exact-candidate workflows, normal full Pages production promotion and strict readback for c0488e184f. Final publication evidence: docs/RELEASE_S393.json.
 - [ ] [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 - [ ] [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
 
-Wave 1: startup, preservation merge and fresh nine-axis audit complete. Wave 2: selected implementation/review complete; whole-project validation and visual receipt in progress. Wave 3: canonical closeout in progress; current staging, main push and production acceptance pending.
+Waves1–3 implemented and verified for the full product release. Closing status/publication receipts are maintained in docs/RELEASE_S393.json; the two future SIL rows remain unselected.
 ## S391 — operational reliability
 
 - [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
@@ -714,6 +715,5 @@ Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release 
 
 ### S393 release-dependent theme outcome
 
-- [x] [S393 #2] Restore all seven generated leaderboard themes, isolate capture contexts, reject false observed-theme receipt reuse, and inspect84 actual theme captures.
 
 Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.

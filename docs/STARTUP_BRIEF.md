@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S393) - WHAT SHIPPED ══════════════════════════╗
-║  S393 rank integrity and leaderboard themes locally accepted; v  ║
+║  S393 validated canonical rank reports and restored actual seve  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -63,12 +63,12 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 393 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: pending                   ║
+║  Tests:    545/545 passing  ·  Deploy: verified                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -120,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Complete current whole-project suite, stag  ║
-║        Complete current whole-project suite, staging runtime/ar  ║
-║                                                                  ║
-║   96  [INTELLIGENCE]  Record strict premise acceptance before c  ║
+║   99  [INTELLIGENCE]  Record strict premise acceptance before c  ║
 ║        Record strict premise acceptance before creating any pla  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Measure and remove generated leaderboard m  ║
+║   93  [PRODUCT]      Measure and remove generated leaderboard m  ║
 ║        Measure and remove generated leaderboard metadata/whites  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
+║   90  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
 ║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
-║   84  [PRODUCT]      Require the strict premise checkpoint befo  ║
+║   87  [PRODUCT]      Require the strict premise checkpoint befo  ║
 ║        Require the strict premise checkpoint before delegated e  ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Assess the existing mobile Spark overlap   ║
+║        Assess the existing mobile Spark overlap with article pr  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

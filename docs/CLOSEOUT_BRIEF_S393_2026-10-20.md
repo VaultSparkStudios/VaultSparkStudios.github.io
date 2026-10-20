@@ -5,8 +5,8 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    Rank evidence and all seven leaderboard themes are verified locally; full validation       ║
-║    and deployment remain in progress.                                                         ║
+║    Rank-report integrity and generated themes are fully released; final status publication    ║
+║    is tracked separately.                                                                     ║
 ║                                                                                               ║
 ║  PROJECT IMPACT     ███████▌░░   75/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
@@ -22,19 +22,19 @@
          Generated shells now load the shared theme controller and run the body bootstrap
          after body exists. Captures isolate each theme and reject mismatched rendered state,
          including receipt-only reuse.
-         → Theme9/9 including42 combinations; capture receipt rejection1/1; fresh84 inspected theme captures and215/215 mobile cells; source reviews pass, including orphan-exemption cleanup. Complete suite and release still pending.
+         → Theme9/9 with42 combinations; receipt rejection1/1;84 inspected captures; mobile215/215;6 origin artifacts match and6 canonical301 redirects retained.
 
   [1]  rank-report-integrity                                      PROJ 7  ·  ECOS 3
          ── featureDepth ────────────────────────────────────────────────────────────────────
          Invalid dates and malformed rank data no longer pass offline acceptance or overwrite
          the prior report. Actual CLI tests and injected provider failures verify both
          boundaries.
-         → Final focused3/3; review round2 pass; complete build/postbuild and125 live REST queries pass with7 retained deferrals.
+         → Rank3/3; two complete545 runs; exact-candidate hosted checks and full Pages readback pass.
 
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   FOLLOW-UPS
-    • Complete fresh whole-project validation, current staging, exact-candidate required checks and full production readback.
+    • Publish the prepared closing-status artifacts and final receipt.
 
   BLOCKERS
     (none)

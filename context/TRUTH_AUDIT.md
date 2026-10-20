@@ -1,8 +1,10 @@
-## S393 — current observation, 2026-10-20
+## S393 — verified full product release, 2026-10-20
 
-Overall: yellow — local implementation accepted; release in progress. S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+Overall: yellow — scoped public product release verified; existing identity holds unchanged.
 
-The full build was retried only after management health reported db/rest/auth ACTIVE_HEALTHY. It then passed its real postbuild lifecycle. Final focused tests3/3 and125 live REST queries pass; seven existing deferrals remain. Control-plane discovery still reports the shared data credential targets another project, while management/SQL/function authority probes are ready; no credential mismatch is treated as usable data authority. No restart was performed. Six generated social-image metadata changes receive fresh before/after theme captures. Premise timing remains nonpassing because the plan artifact existed before the strict checkpoint; no retrospective cure or borrowed S392 completion evidence is claimed.
+S393 validates canonical rank-report timestamps, schema/counts and provider rows before publication, preserving the prior report on invalid provider data. Generated leaderboard shells load the actual shared theme controller after the body exists; capture contexts isolate all seven themes and reject false observed-theme receipts. Normal full Pages release c0488e184ff5839a09aabe11447e6c8ab28d90e3 (run39501117343) is verified: 1108/1118 served-text candidates identical,10 configured redirects, zero differences/missing/unread;65 nonstamp critical leaves and6 origin artifacts match. All6 S147 canonical301 redirects remain. Local545/545 passed twice; required exact-candidate E2E, Lighthouse and accessibility pass; mobile215/215 and84 inspected captures pass. Original premise timing remains nonpassing,7 REST deferrals and the disjoint identity holds remain unchanged. No provider restart or measured performance gain is claimed.
+
+The provider recovered without a restart. The complete site build and actual26-step postbuild passed;125 live REST queries passed with7 explicit existing deferrals. See docs/RELEASE_S393.json for exact source, deployment and closing-publication evidence.
 
 ## S392 — partial release record (2026-10-20)
 

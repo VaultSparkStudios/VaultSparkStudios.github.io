@@ -9,14 +9,14 @@
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
-    "contentLaneHead": "9217cdadb0707fc9378f06f8eedb051d31845688",
+    "sha": "c0488e184ff5839a09aabe11447e6c8ab28d90e3",
+    "contentLaneHead": null,
     "reachable": true,
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "shellParity": {
-      "state": "unobserved",
-      "observedAt": "2026-10-20T19:40:10.375Z",
-      "ageHours": 0.4,
+      "state": "matched",
+      "observedAt": "2026-10-20T22:12:31.571Z",
+      "ageHours": 0,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -31,79 +31,31 @@
     "headerName": "content-security-policy"
   },
   "browser": {
-    "captured": true,
-    "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 7,
-    "workerRouteErrors": 7,
-    "signalCardinality": 7,
-    "signalEndpoints": [
-      "api/ecosystem-state.json",
-      "api/ignis-conduit.json",
-      "api/membership-tiers.json",
-      "api/public-intelligence.json",
-      "api/rank-climbers.json",
-      "api/recent-ships.json",
-      "v/rum"
-    ],
-    "routes": [
-      {
-        "route": "/",
-        "target": "https://vaultsparkstudios-website.pages.dev/",
-        "captured": true,
-        "consoleErrors": 5,
-        "workerRouteErrors": 5,
-        "signalCardinality": 5,
-        "signalEndpoints": [
-          "api/ignis-conduit.json",
-          "api/public-intelligence.json",
-          "api/rank-climbers.json",
-          "api/recent-ships.json",
-          "v/rum"
-        ]
-      },
-      {
-        "route": "/vault-member/",
-        "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
-        "captured": true,
-        "consoleErrors": 1,
-        "workerRouteErrors": 1,
-        "signalCardinality": 1,
-        "signalEndpoints": [
-          "api/membership-tiers.json"
-        ]
-      },
-      {
-        "route": "/games/franchise-architect/",
-        "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
-        "captured": true,
-        "consoleErrors": 1,
-        "workerRouteErrors": 1,
-        "signalCardinality": 2,
-        "signalEndpoints": [
-          "api/ecosystem-state.json",
-          "api/public-intelligence.json"
-        ]
-      }
-    ]
+    "captured": false,
+    "target": null,
+    "consoleErrors": null,
+    "workerRouteErrors": null,
+    "signalCardinality": null,
+    "signalEndpoints": [],
+    "routes": []
   },
-  "reconciled": false,
-  "receiptState": "degraded",
+  "reconciled": true,
+  "receiptState": "verified",
   "findings": [
-    "the repo has advanced past the last promotion: production serves ceeeb2de, repo build-sha is 38d4fabd — a promotion backlog, not a stranded deploy (shell parity is 'unobserved', not drift)",
-    "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
+    "production serves c0488e18, newer than the recorded promoted 38d4fabd (benign — a later rebuild moved on)"
   ],
-  "generatedAt": "2026-10-20T20:03:59.015Z",
+  "generatedAt": "2026-10-20T22:12:39.699Z",
   "history": {
     "window": 20,
     "gradable": 20,
-    "reconciled": 0,
-    "reconciledPct": 0,
+    "reconciled": 1,
+    "reconciledPct": 5,
     "lastStrandedAt": "2026-10-20T20:03:59.015Z",
-    "currentBehindStreak": 5,
-    "newestGradableAt": "2026-10-20T20:03:59.015Z",
+    "currentBehindStreak": 0,
+    "newestGradableAt": "2026-10-20T22:12:39.699Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
-    "strandedAlert": true
+    "strandedAlert": false
   }
 }

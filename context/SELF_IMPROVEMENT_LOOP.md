@@ -3063,3 +3063,8 @@ Brainstorm: (1) record the premise gate before creating plan artifacts; (2) remo
 ### S393 selected-outcome addendum — 2026-10-20
 
 Velocity2: rank integrity plus the observed generated-theme release dependency are locally accepted. Final full build and84 real theme images pass. Score remains935/1000; no measured conversion or field performance gain. The original timing deviation remains nonpassing. Current full-suite and production acceptance are pending.
+
+
+### S393 product release evidence addendum
+
+Full product release c0488e184f is verified by exact-candidate hosted checks, staging11/11 and1118-file production comparison. SIL remains935/1000 across the existing ten categories; velocity2. No performance/conversion gain is claimed. The original premise timing deviation remains nonpassing. The two existing S393 future SIL rows remain the only queued follow-ups; status receipt details live in docs/RELEASE_S393.json.

@@ -2441,3 +2441,8 @@ Retain the original nonpassing premise-timing receipt: the plan existed before t
 ## D-S393.3 — Generated shell and visual evidence repair (2026-10-20)
 
 Use the master stylesheet and shared theme controller, and execute the existing bootstrap after body opens. Each captured theme owns a new browser context; root/body/storage must match the request, including receipt-only acceptance. Real before images exposed the defect;84 after images now show seven palettes. Preserve12 actual dark baseline images and disclose the pre-existing dismissible mobile Spark overlap. No membership, identity or pricing policy changes.
+
+
+### D-S393.4 — Immutable full product release and bounded status publication
+
+Promote the checked c0488e184f tag through the normal full Pages path, then verify served source, provider identity and retained edge routing. The deployment-stamped build identity is checked separately; the pre-stamp staging Merkle root is not claimed byte-identical after stamping. Publish durable closing-status wording once using existing scoped gates and readback. Keep receipt-only additions separate from deployed payload generation. Existing identity holds and S147 canonical redirects are unchanged; the failed Lighthouse attempt is retained.

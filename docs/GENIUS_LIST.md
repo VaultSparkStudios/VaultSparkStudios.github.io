@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **79/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
 - Current SIL: **935/1000**
 - CI health: **check gh run list**
-- Current focus: S393 rank integrity and leaderboard themes locally accepted; validation and full release in progress
+- Current focus: Rank report integrity and generated leaderboard theme preferences
 
 ## Strategic Read
 
@@ -22,73 +22,73 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Complete current whole-project suite, staging runtime/artifact parity…
-Final score: **96**
-[S393 RELEASE] Complete current whole-project suite, staging runtime/artifact parity, sanitized direct-main publication, exact-candidate required checks, full production promotion and readback.
-Why it matters: Complete current whole-project suite, staging runtime/artifact parity, is open, local, and unblocked — can ship this session.
-
-#### 2. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
-Final score: **96**
+#### 1. [INTELLIGENCE] Record strict premise acceptance before creating any plan artifact in…
+Final score: **99**
 [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
 Why it matters: Record strict premise acceptance before creating any plan artifact in  keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
-Final score: **90**
+#### 2. [PRODUCT] Measure and remove generated leaderboard metadata/whitespace churn at…
+Final score: **93**
 [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
 Why it matters: Measure and remove generated leaderboard metadata/whitespace churn at  is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Complete suite, exact-candidate publication, production promotion/rea…
-Final score: **87**
+#### 3. [PRODUCT] Complete suite, exact-candidate publication, production promotion/rea…
+Final score: **90**
 [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
 Why it matters: Complete suite, exact-candidate publication, production promotion/read is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Require the strict premise checkpoint before delegated edits.
-Final score: **84**
+#### 4. [PRODUCT] Require the strict premise checkpoint before delegated edits.
+Final score: **87**
 [SIL][S391] Require the strict premise checkpoint before delegated edits.
 Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
-Final score: **84**
+### NEXT
+
+#### 1. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
+Final score: **87**
 [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
 Why it matters: Assess the existing mobile Spark overlap with article prose in a futur keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [PRODUCT] Rank orb never renders for members.
-Final score: **78**
+#### 2. [PRODUCT] Rank orb never renders for members.
+Final score: **81**
 [S390][UX/P2] Rank orb never renders for members.
 Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Member achievements schema/display.
-Final score: **75**
+#### 3. [PRODUCT] Member achievements schema/display.
+Final score: **78**
 [S390][DATA/P2] Member achievements schema/display.
 Why it matters: Member achievements schema/display. is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] event_rsvps exposes user_id to anon.
-Final score: **72**
+#### 4. [PRODUCT] event_rsvps exposes user_id to anon.
+Final score: **75**
 [S390][SEC/P2] event_rsvps exposes user_id to anon.
 Why it matters: event_rsvps exposes user_id to anon. is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
-Final score: **63**
+#### 5. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
+Final score: **66**
 [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
 Why it matters: Re-read the current 30-day TT cohort after production promotion; no-da is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
-Final score: **60**
+### LATER
+
+#### 1. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+Final score: **63**
 [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
 Why it matters: KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut teleme is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Observe real post-release CSP collection and shared KV usage before c…
-Final score: **57**
+#### 2. [PRODUCT] Observe real post-release CSP collection and shared KV usage before c…
+Final score: **60**
 [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
 Why it matters: Observe real post-release CSP collection and shared KV usage before cl is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Persona page/N 404s: lane allowlist + Hetzner rules together.
+Final score: **60**
+[S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
+Why it matters: Persona page/N 404s: lane allowlist + Hetzner rules together. is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -134,18 +134,18 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 
-1. Complete current whole-project suite, staging runtime/artifact parity…
-2. Record strict premise acceptance before creating any plan artifact in…
-3. Measure and remove generated leaderboard metadata/whitespace churn at…
-4. Complete suite, exact-candidate publication, production promotion/rea…
-5. Require the strict premise checkpoint before delegated edits.
-6. Assess the existing mobile Spark overlap with article prose in a futu…
-7. Rank orb never renders for members.
-8. Member achievements schema/display.
-9. event_rsvps exposes user_id to anon.
-10. Re-read the current 30-day TT cohort after production promotion; no-d…
-11. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
-12. Observe real post-release CSP collection and shared KV usage before c…
+1. Record strict premise acceptance before creating any plan artifact in…
+2. Measure and remove generated leaderboard metadata/whitespace churn at…
+3. Complete suite, exact-candidate publication, production promotion/rea…
+4. Require the strict premise checkpoint before delegated edits.
+5. Assess the existing mobile Spark overlap with article prose in a futu…
+6. Rank orb never renders for members.
+7. Member achievements schema/display.
+8. event_rsvps exposes user_id to anon.
+9. Re-read the current 30-day TT cohort after production promotion; no-d…
+10. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+11. Observe real post-release CSP collection and shared KV usage before c…
+12. Persona page/N 404s: lane allowlist + Hetzner rules together.
 
 ## Best Immediate Move
 
