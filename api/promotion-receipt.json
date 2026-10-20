@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "e11228271c0b04346f6dd3c742f8b45693461d3c",
+    "sha": "38d4fabddc05738936f7a7f02cf3ce6afabe32aa",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -15,8 +15,8 @@
     "reconciliation": "behind",
     "shellParity": {
       "state": "unobserved",
-      "observedAt": "2026-10-20T18:09:59.474Z",
-      "ageHours": 0.9,
+      "observedAt": "2026-10-20T19:40:10.375Z",
+      "ageHours": 0.4,
       "stale": false,
       "maxAgeHours": 12,
       "source": "api/deploy-currency.json → shellParity"
@@ -89,18 +89,18 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "the repo has advanced past the last promotion: production serves ceeeb2de, repo build-sha is e1122827 — a promotion backlog, not a stranded deploy (shell parity is 'unobserved', not drift)",
+    "the repo has advanced past the last promotion: production serves ceeeb2de, repo build-sha is 38d4fabd — a promotion backlog, not a stranded deploy (shell parity is 'unobserved', not drift)",
     "7 console error(s) on the promoted artifact — 7 from Worker-only route(s) this Pages vantage cannot serve, 0 unexplained"
   ],
-  "generatedAt": "2026-10-20T19:06:33.106Z",
+  "generatedAt": "2026-10-20T20:03:59.015Z",
   "history": {
     "window": 20,
     "gradable": 20,
     "reconciled": 0,
     "reconciledPct": 0,
-    "lastStrandedAt": "2026-10-20T19:06:33.106Z",
-    "currentBehindStreak": 3,
-    "newestGradableAt": "2026-10-20T19:06:33.106Z",
+    "lastStrandedAt": "2026-10-20T20:03:59.015Z",
+    "currentBehindStreak": 5,
+    "newestGradableAt": "2026-10-20T20:03:59.015Z",
     "newestAgeHours": 0,
     "maxAgeHours": 48,
     "stale": false,
