@@ -33,8 +33,31 @@ export function snapshotTrackedTree({ spawnSync, cwd }) {
   try {
     const r = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd, encoding: 'utf8', windowsHide: true, maxBuffer: GIT_STATUS_MAX_BUFFER });
     if (r.error || r.status !== 0) return { ok: false, text: null, error: r.error?.message || `git exit ${r.status}` };
-    return { ok: true, text: r.stdout, error: null };
+    return { ok: true, text: r.stdout, error: null, fingerprints: fingerprintDirtyPaths({ spawnSync, cwd, text: r.stdout }) };
   } catch (e) { return { ok: false, text: null, error: e.message }; }
+}
+
+/**
+ * S385 [audit #2] · [SIL:3⛔][S381 #1] — BYTE fingerprints, scoped to paths already dirty.
+ *
+ * Status codes cannot see a suite that rewrites a file which was ALREADY dirty: ' M' before,
+ * ' M' after, different bytes, reported clean. Each dirty, non-deleted path is hashed as raw
+ * working-tree bytes (`--no-filters`, so a CRLF-only rewrite counts too) in one git call.
+ * Scope is deliberate: a clean path that changes already shows up as a new status code.
+ * A path git could not hash maps to null — unfingerprinted, never "unchanged".
+ *
+ * @returns {Record<string,string|null>|null} null when the hash read itself failed
+ */
+export function fingerprintDirtyPaths({ spawnSync, cwd, text }) {
+  const paths = [...parsePorcelain(text)].filter(([, code]) => !code.includes('D')).map(([p]) => p);
+  if (paths.length === 0) return {};
+  try {
+    const r = spawnSync('git', ['hash-object', '--no-filters', '--stdin-paths'], { cwd, encoding: 'utf8', windowsHide: true, input: `${paths.join('\n')}\n`, maxBuffer: GIT_STATUS_MAX_BUFFER });
+    if (r.error || r.status !== 0) return null;
+    const ids = String(r.stdout || '').split(/\r?\n/).filter(Boolean);
+    if (ids.length !== paths.length) return null;
+    return Object.fromEntries(paths.map((p, i) => [p, /^[0-9a-f]{40,64}$/.test(ids[i]) ? ids[i] : null]));
+  } catch { return null; }
 }
 
 /**
@@ -49,18 +72,50 @@ export function purityDelta(before, after) {
   const a = parsePorcelain(before.text);
   const b = parsePorcelain(after.text);
   const mutated = [];
+  // Byte comparison runs only when BOTH windows carry fingerprints (S385). A snapshot taken
+  // without them (an older proof, an injected fixture) keeps the status-code comparison and
+  // says so — `bytes: 'not-measured'` — rather than claiming byte identity.
+  const fpA = before.fingerprints;
+  const fpB = after.fingerprints;
+  const bytesMeasured = fpA !== undefined && fpB !== undefined;
+  const unfingerprinted = [];
   for (const [p, code] of b) {
     // A path dirty BEFORE the suite is pre-existing state, not a suite mutation — unless its
-    // status code changed (e.g. ' M' → 'MM'), which is new writing on top of old.
+    // status code changed (e.g. ' M' → 'MM'), which is new writing on top of old, or its
+    // bytes moved under an unchanged code.
     if (!a.has(p)) mutated.push({ path: p, before: null, after: code });
     else if (a.get(p) !== code) mutated.push({ path: p, before: a.get(p), after: code });
+    else if (bytesMeasured && !code.includes('D')) {
+      const x = fpA?.[p];
+      const y = fpB?.[p];
+      if (!x || !y) unfingerprinted.push(p);
+      else if (x !== y) mutated.push({ path: p, before: code, after: code, bytesChanged: true });
+    }
   }
-  return { measurable: true, mutated, preExisting: a.size, reason: null };
+  // S385 review #11 — a pre-dirty path that is CLEAN afterwards was written too (restored,
+  // e.g. a checkout wiping uncommitted work). Iterating only the after-snapshot missed it.
+  for (const [p, code] of a) if (!b.has(p)) mutated.push({ path: p, before: code, after: null, restored: true });
+  return {
+    measurable: true, mutated, preExisting: a.size, reason: null,
+    bytes: bytesMeasured ? 'pre-dirty-fingerprinted' : 'not-measured',
+    unfingerprinted,
+  };
+}
+
+// S385 — "byte-identical" is claimed only where bytes were compared: a clean path's status
+// code proves it, and a pre-dirty path needs its fingerprint. Without fingerprints the
+// honest claim for pre-dirty paths is status identity.
+function cleanDetail(delta) {
+  if (!delta.preExisting) return 'tracked tree byte-identical across the suite (0 pre-existing dirty path(s) excluded)';
+  if (delta.bytes === 'pre-dirty-fingerprinted') {
+    return `tracked tree byte-identical across the suite (${delta.preExisting} pre-existing dirty path(s) unchanged by byte fingerprint)`;
+  }
+  return `tracked tree status-identical across the suite (${delta.preExisting} pre-existing dirty path(s) excluded; their bytes were not fingerprinted)`;
 }
 
 export function describePurity(delta) {
   if (!delta.measurable) return delta.reason;
-  if (delta.mutated.length === 0) return `tracked tree byte-identical across the suite (${delta.preExisting} pre-existing dirty path(s) excluded)`;
+  if (delta.mutated.length === 0) return cleanDetail(delta);
   const names = delta.mutated.slice(0, 6).map((m) => m.path).join(', ') + (delta.mutated.length > 6 ? ` +${delta.mutated.length - 6} more` : '');
   return `suite left ${delta.mutated.length} tracked file(s) changed: ${names} — attribution PRESUMPTIVE (a concurrent writer inside the window is indistinguishable from the suite)`;
 }
@@ -142,6 +197,16 @@ export function describePartitionedPurity(delta) {
         + ' — attribution PRESUMPTIVE (a concurrent writer inside the window is indistinguishable from the suite)',
     };
   }
+  // Checked BEFORE the known-regeneration pass (S385 review #1): the suite always rewrites
+  // expected paths, so checking after it let a failed hash read pass in the common case.
+  if (delta.unfingerprinted?.length) {
+    return {
+      pass: false,
+      warn: true,
+      detail: `${delta.unfingerprinted.length} pre-existing dirty path(s) could not be byte-fingerprinted (${delta.unfingerprinted.slice(0, 4).join(', ')}) — byte purity UNMEASURED for them, not clean`
+        + `${p.expected.length ? ` · ${p.expected.length} known regeneration(s)` : ''}`,
+    };
+  }
   if (p.expected.length) {
     return {
       pass: true,
@@ -150,7 +215,7 @@ export function describePartitionedPurity(delta) {
         + 'Attributed, not excused: the durable fix is running the suite in a throwaway worktree.',
     };
   }
-  return { pass: true, warn: false, detail: `tracked tree byte-identical across the suite (${delta.preExisting} pre-existing dirty path(s) excluded)` };
+  return { pass: true, warn: false, detail: cleanDetail(delta) };
 }
 
 /**
@@ -204,7 +269,13 @@ export function mergeInvocationPurity(invocations, { filesRun = null } = {}) {
   } else {
     const byPath = new Map();
     for (const row of rows) for (const m of row.delta.mutated) byPath.set(m.path, m);
-    delta = { measurable: true, mutated: [...byPath.values()], preExisting: rows[0].delta.preExisting, reason: null };
+    // Bytes count as measured only if EVERY window fingerprinted; one unfingerprinted
+    // path in any window keeps the merged verdict from claiming byte purity.
+    delta = {
+      measurable: true, mutated: [...byPath.values()], preExisting: rows[0].delta.preExisting, reason: null,
+      bytes: rows.every((row) => row.delta.bytes === 'pre-dirty-fingerprinted') ? 'pre-dirty-fingerprinted' : 'not-measured',
+      unfingerprinted: [...new Set(rows.flatMap((row) => row.delta.unfingerprinted || []))],
+    };
   }
   const parts = partitionPurity(delta);
   const verdict = describePartitionedPurity(delta);
@@ -254,9 +325,11 @@ export function carryForwardMutations(priorPurity, delta, afterSnapshot) {
   if (!delta?.measurable || !priorPurity?.delta?.measurable || !afterSnapshot?.ok) return delta;
   const stillDirty = parsePorcelain(afterSnapshot.text);
   const have = new Set(delta.mutated.map((m) => m.path));
+  // A RESTORED finding (pre-dirty path wiped clean) is still true while the path stays
+  // clean; a re-run starts from that clean state and cannot see it (review S385 r2 #11).
   const carried = priorPurity.delta.mutated
-    .filter((m) => !have.has(m.path) && stillDirty.has(m.path))
-    .map((m) => ({ ...m, after: stillDirty.get(m.path), carried: true }));
+    .filter((m) => !have.has(m.path) && (m.restored ? !stillDirty.has(m.path) : stillDirty.has(m.path)))
+    .map((m) => (m.restored ? { ...m, carried: true } : { ...m, after: stillDirty.get(m.path), carried: true }));
   return carried.length ? { ...delta, mutated: [...delta.mutated, ...carried] } : delta;
 }
 

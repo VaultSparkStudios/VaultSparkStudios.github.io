@@ -111,6 +111,9 @@ export function parseArgvStrict({
     if (valueFlags.includes(bare)) {
       values[bare] = eq > 0 ? token.slice(eq + 1) : argv[i + 1] ?? null;
     } else {
+      // A declared boolean/dry alias has no value grammar. Callers must never
+      // approve a spelling that their includes('--flag') readers ignore.
+      if (eq > 0) { bad.push(token); continue; }
       flags.add(bare);
     }
   }

@@ -10,6 +10,7 @@
  *   node scripts/ops.mjs write-session-lock --agent claude-code
  */
 
+import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -48,6 +49,7 @@ try {
 // the allocator degrades to the closed-surface answer, exactly as before.
 let gitLogText = null;
 let gitHeadSha = null;
+let gitAuthorDigest = null;
 try {
   const { spawnSync } = await import('./lib/safe-spawn.mjs');
   const log = spawnSync('git', ['log', '-n400', '--format=%s'], {
@@ -60,6 +62,12 @@ try {
   const head = spawnSync('git', ['rev-parse', '--verify', 'HEAD'], { cwd: ROOT, encoding: 'utf8', timeout: 15_000, windowsHide: true });
   const sha = head.status === 0 ? String(head.stdout || '').trim() : '';
   if (/^[0-9a-f]{40,64}$/i.test(sha)) gitHeadSha = sha;
+  // S386 — the identity this session commits as, so the premise-gate timing check can tell
+  // its own commits from routine Actions landing on main mid-session. A digest, never the
+  // address (CANON-028); must match premise-gate-timing.mjs authorDigest().
+  const ident = spawnSync('git', ['var', 'GIT_AUTHOR_IDENT'], { cwd: ROOT, encoding: 'utf8', timeout: 15_000, windowsHide: true });
+  const email = ident.status === 0 ? String(ident.stdout || '').match(/<([^>]*)>/)?.[1]?.trim().toLowerCase() : '';
+  if (email) gitAuthorDigest = crypto.createHash('sha256').update(email).digest('hex');
 } catch { /* no git, or standalone copy without safe-spawn — degrade, never crash */ }
 
 // S291 — `--help` must never fire the action (S281). This writer had no help
@@ -210,6 +218,7 @@ const content = [
   `locked_by: agent-session`,
   `session_start: ${sessionStart}`,
   ...(startHead ? [`start_head: ${startHead}`] : []),
+  ...(gitAuthorDigest ? [`author_digest: ${gitAuthorDigest}`] : []),
   ...(Number.isFinite(sessionId) ? [`session_id: ${sessionId}`, `session_source: ${sessionSource}`] : []),
   `agent: ${agentArg}`,
   `trigger: ${triggerArg}`,
