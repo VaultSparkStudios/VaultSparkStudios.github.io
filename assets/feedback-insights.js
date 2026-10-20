@@ -48,6 +48,9 @@
     }
     var tbody = document.querySelector('#insights-pages tbody');
     if (tbody) tbody.innerHTML = '<tr><td colspan="3" class="insights-empty">' + (message || 'No data yet — first responses seed this view.') + '</td></tr>';
+    // Early exits never reach renderThemes; settle its placeholder too.
+    var themes = document.getElementById('insights-themes');
+    if (themes && themes.querySelector('.insights-themes__empty')) renderThemesEmpty(themes);
     setStat('total', '0');
     setStat('useful_pct', '—');
     setStat('returning_useful_pct', '—');
@@ -113,10 +116,20 @@
     return { tone: '#ff7676', word: 'Needs work' };
   }
 
+  // The page ships a one-line placeholder in the grid; an empty result swaps its
+  // text rather than hiding the grid, which would collapse its margin and shift
+  // everything below it.
+  function renderThemesEmpty(el) {
+    var note = document.createElement('p');
+    note.className = 'insights-themes__empty';
+    note.textContent = 'No themed signal yet.';
+    el.replaceChildren(note);
+  }
+
   function renderThemes(rows) {
     var el = document.getElementById('insights-themes');
     if (!el) return;
-    if (!rows || !rows.length) { el.style.display = 'none'; return; }
+    if (!rows || !rows.length) { renderThemesEmpty(el); return; }
     var buckets = {};
     rows.forEach(function (r) {
       var t = themeFor(r.path);
@@ -141,9 +154,8 @@
           '<div style="font-size:0.74rem;color:var(--dim,#6272a0);margin-top:0.2rem;">' + fmt(b.total) + ' response' + (b.total === 1 ? '' : 's') + '</div>' +
         '</div>';
       }).join('');
-    if (!cards) { el.style.display = 'none'; return; }
+    if (!cards) { renderThemesEmpty(el); return; }
     el.innerHTML = cards;
-    el.style.display = '';
   }
 
   function renderSummary(latest) {

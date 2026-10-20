@@ -34,6 +34,8 @@ import { findInvocationModeViolations, selfTest as invocationModesSelfTest } fro
 //   citation             → consumes the final status proof chain (last)
 export const DERIVED_BUILD_ORDER = [
   { script: 'sanitize-public-oracle-feed.mjs', timeout: 30000, why: 'writes ecosystem-state.json (source for shards)' },
+  { script: 'build-field-win-proof.mjs', timeout: 30000, why: 'derives current field verdict evidence before public status and seals' },
+  { script: 'build-proof-aware-projects.mjs', timeout: 30000, why: 'refreshes recommendations that embed the current field proof hash' },
   { script: 'build-llms-full-shards.mjs',      timeout: 60000, why: 'reads ecosystem-state.json' },
   { script: 'build-ambient-ledger.mjs',        timeout: 30000, why: 'ambient source ledger' },
   { script: 'build-nervous-system.mjs',        timeout: 30000, why: 'reads api/ outputs refreshed above' },
@@ -50,6 +52,7 @@ export const DERIVED_BUILD_ORDER = [
   // Answers use public insights/tiers; citation supplies only a fallback day,
   // not its seal. Refresh these bytes before sealing so closeout also satisfies
   // the answer-feed drift contract after public intelligence changes.
+  { script: 'build-oracle-query-clusters.mjs', timeout: 30000, why: 'refreshes insights from the current search index before answers' },
   { script: 'build-oracle-answers.mjs',        timeout: 30000, why: 'refreshes public answer bytes before the candidate seal' },
   { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals critical artifacts after every leaf mutation' },
   { script: 'build-release-proof.mjs',       timeout: 30000, why: 'consumes the refreshed candidate seal' },
@@ -60,6 +63,7 @@ export const DERIVED_BUILD_ORDER = [
 
 export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'generate-public-intelligence.mjs', timeout: 30000, why: 'refreshes the portfolio source snapshot' },
+  { script: 'build-field-win-proof.mjs', timeout: 30000, why: 'derives committed field verdict evidence before public consumers' },
   { script: 'build-public-ecosystem.mjs', timeout: 30000, why: 'projects the refreshed public catalog into the canonical ecosystem feed' },
   { script: 'probe-canonical-destinations.mjs', timeout: 30000, why: 'samples destinations from the refreshed ecosystem feed' },
   { script: 'build-llms-full-shards.mjs', timeout: 60000, why: 'rebuilds agent discovery shards from the refreshed ecosystem feed' },
@@ -75,6 +79,7 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-flight-director.mjs', timeout: 30000, why: 'keeps intent-graph SSR synchronized before search indexing and the candidate seal' },
   { script: 'build-ignis-search-index.mjs', timeout: 30000, why: 'indexes refreshed public content' },
   { script: 'build-oracle-query-clusters.mjs', timeout: 30000, why: 'projects refreshed search evidence' },
+  { script: 'build-oracle-answers.mjs', timeout: 30000, why: 'derives answers after refreshed insight clustering and before the seal' },
   // S356: /studio-pulse/ reads api/nervous-system.json, which only a closeout
   // rebuilt, so its signal digest sat days behind the 4-hourly public feed.
   { script: 'build-nervous-system.mjs', timeout: 30000, why: 'reprojects the Pulse signal digest from refreshed public intelligence before the budget reads it' },
@@ -142,6 +147,12 @@ function selfTest() {
     ['newsroom receipt before status proof', idx('build-newsroom-run.mjs') < idx('build-status-proof.mjs')],
     ['agents before AI discovery health', idx('build-agents-json.mjs') < idx('build-ai-discovery-health.mjs')],
     ['AI discovery health before candidate seal', idx('build-ai-discovery-health.mjs') < idx('build-candidate-artifact-manifest.mjs')],
+    ['Field proof before recommendations', idx('build-field-win-proof.mjs') >= 0 && idx('build-proof-aware-projects.mjs') > idx('build-field-win-proof.mjs')],
+    ['Refresh field proof before recommendations', refresh.indexOf('build-field-win-proof.mjs') >= 0 && refresh.indexOf('build-proof-aware-projects.mjs') > refresh.indexOf('build-field-win-proof.mjs')],
+    ['Field proof before public status', idx('build-field-win-proof.mjs') < idx('build-public-status.mjs')],
+    ['Refresh field proof before public status', refresh.indexOf('build-field-win-proof.mjs') >= 0 && refresh.indexOf('build-field-win-proof.mjs') < refresh.indexOf('build-public-status.mjs')],
+    ['Oracle insights before answers', idx('build-oracle-query-clusters.mjs') < idx('build-oracle-answers.mjs')],
+    ['Refresh Oracle insights before answers', refresh.indexOf('build-oracle-query-clusters.mjs') < refresh.indexOf('build-oracle-answers.mjs') && refresh.indexOf('build-oracle-answers.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
     ['Oracle answers before candidate seal', idx('build-oracle-answers.mjs') >= 0 && idx('build-oracle-answers.mjs') < idx('build-candidate-artifact-manifest.mjs')],
     ['candidate before release proof', idx('build-candidate-artifact-manifest.mjs') < idx('build-release-proof.mjs')],
     ['release before status proof', idx('build-release-proof.mjs') < idx('build-status-proof.mjs')],

@@ -1,32 +1,30 @@
-<!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 18b4d4213c18 -->
-<!-- generated-at: 2026-10-16T16:47:05.744Z -->
+<!-- generated-by: scripts/compact-handoff.mjs deterministic-v1 -->
+<!-- source-hash: 35fe49ba127369bd708bce8b9ff80eea5082e0b253d3554e79e39403b9715a05 -->
 
-# LATEST_HANDOFF (compact)
+# LATEST_HANDOFF (source extract)
 
-SESSION 384 COMPLETE HANDOFF
+## Where We Left Off (Session 389) — release acceptance in progress
 
-Intent: Full release verification and deployment finalized (2026-10-16T16:32).
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
 
-Shipped:
-- Returning-visitor contract 6/6, engines 18/18
-- Mobile coverage 215/215, sitemap 84 incoming-art renders
-- Full source validation 537/537, staging 65/65, ceremony 11/11
-- Pages deployment 38931769343, 1089 text files + 315 HTML routes verified
-- Diagnostics: 596 expected, 36 unexpected, 0 flaky, 60 skipped
+Session Intent: fresh full /arc with authorized direct main commit/push and full deployment. Goal01a1557e-9d32-7d13-b5cf-3e802fd6616d, createdAt1792435752, bound S389 from36add04cdd36fbb497df0b2dfc5ae9433c6d702d. Continue this invocation, not a new arc. Wave1/2 complete; Wave3 open. Audit: docs/AUDIT_2026-10-19-S389.json. Release: docs/RELEASE_S389.json. No UI/UX changes; no new human creative direction. Context usage remains unmeasured. Preserve unrelated caches, forecast residue and untracked operator artifacts; staging must use a clean committed checkout.
 
-Acceptance: docs/RELEASE_S384.json
+## Where We Left Off (Session 388) — complete
 
-Known Limitations:
-- Field-vitals constraints remain unresolved
-- Axe gradient incompleteness separate issue
-- SIL at 933/1000 (unchanged across sessions)
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
 
-Human Direction: None new; preserve unrelated operator residue.
+Continue the bound S388 goal; do not start another arc. Canonical closeout complete; release evidence is ready for publication. Other KV writers and existing identity holds remain separate.
 
-Blockers/Open:
-- Identity hold persists
-- Optional diagnostic pixel failures (589 passed, 37 failed, 3 flaky, 60 skipped) not claimed fixed
-- Publisher restoration and cleanup pending before final goal completion
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
 
-Next: Final metadata push, publisher restoration, owned-process cleanup, then native goal completion.
+## Where We Left Off (Session 387) — complete
+
+- Shipped: private, retained diagnostic storage isolated from sign-in KV, bounded writes and complete stored-evidence readers.
+- Deploy: 3ceaae612d, tag s387-production-v2-20261018; Pages run 39146002633; Worker run 39146002602, version 73bd16bb-e430-4609-9901-34d3a845f98a.
+- Evidence: docs/RELEASE_S387.json; all selected acceptance gates verified.
+
+S387 deployed 3ceaae612d: Trusted Types diagnostic writes use private R2 batches and a distinct existing SQLite counter, capped at 3 batches per one-hour counter window, five reports per batch and 8192 streamed request bytes. Intake never accesses or falls back to sign-in KV. Legacy and paginated R2 reads reject failed/incomplete evidence. Both buckets are private with 30-day tt/raw/ retention. Production Worker 73bd16bb-e430-4609-9901-34d3a845f98a returned 204, its synthetic report was read back from R2 and removed with 404 verification; /login remained 302 to Obelisk. Required exact-SHA hosted checks and the 11-step staging ceremony passed. Two full local 539-step runs passed; unit acceptance 442 passed/0 failed/1 existing TODO; mobile 215/215; 28 inspected sitemap theme/viewport captures. Pages readback covered 1,107 served text files with zero differences or unread responses; primary HTML coverage 323, zero unverified. Full evidence: docs/RELEASE_S387.json.
+
+Session Intent: fresh /arc with authorized direct main push and full deploy. Native goal 01a14f58-25bc-7d32-b310-7fc051d58f6d (createdAt 1792332555) is bound to S387, start 37964277185349772d3da0ebc21b18da1330dc01 at 2026-10-18T14:10:04.440Z. All three waves complete; CDR reviewed, no new human creative direction.
+
+Next: attribute remaining shared KV writers and read a current stored TT cohort; no absence-of-reports enforcement claim. Existing identity holds and schema-validator TODO remain. Pre-existing residue is preserved in the arc-goal/arc-S387 named stashes; unrelated untracked files were not staged. The owned preview on 4387 is closed.

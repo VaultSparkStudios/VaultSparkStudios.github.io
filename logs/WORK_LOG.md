@@ -1619,3 +1619,32 @@ S388 canonical closeout completed with current541/541 measured checks, zero fail
 
 
 Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+
+## Session 389 — 2026-10-19 — reliable release tooling
+
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+
+Fresh startup, nine-axis audit and typed premise gate preceded implementation. Internal-first reuse; no dependency install or paid API. CDR reviewed; no new direction. Full release acceptance remains tracked separately.
+
+
+S389 required release repair: Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
+
+
+S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+S389 local closeout boundary (release not yet accepted): S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed. Integrated four remote Desk-art commits without discarding source;64 graph artifacts rebuilt. Complete validation attempts remain nonpassing/partial, with the last stopped at a missing correctly named local brief cache; canonical cache path corrected and boundary check passes.
+
+S389 intelligence refresh: project state vector, entropy0.206 and genome23/25 refreshed. IGNIS touched-score shim dry-run targets studio-ops, so no sibling score writes were performed or claimed; current score is1.1 days old. Local human-direction review found no new creative direction. Pattern extraction produced4 local drafts; copied upstream handoff helpers are reuse, not new studio invention.
+
+
+S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.
+
+
+S390 (2026-10-19, Claude Code, founder-authorized direct main push + full deploy): audit found ten browser PostgREST queries rejected by production (event_rsvps.id, public_leaderboard.vault_points, leaderboard embeds, weekly rank, members table, vault_challenges, portal point_events/challenges columns, investor game_sessions) hidden behind any-select mocks; repaired, plus orphan membership-stats.js removed. New check-public-rest-contract gate (offline in build:check, --live refresh) with 125 verified queries and 7 noted deferrals. /changelog/#stories CLS 0.1154 → <0.01 (push slot reserved with static ship-feed fallback, summary min-height, themes placeholder). notify-subscribers, notify-changelog-subscribers, push-dispatch and send-regression-alert admit argv strictly. compact-handoff --measure: 31/80 versions omit, 2/80 cut newest; cap kept. Visual QA 84 reviewed / 40 retained. Release pending at write time.
+
+S390 release verification: required exact-SHA checks (e2e, lighthouse, accessibility) passed at ceeeb2de9f; staging served the sealed candidate (release spec 6/6, 0 Supabase 4xx); confirmed Pages run 39359262188 promoted tag s390-production-20261020; production serves ceeeb2de9f with byte parity tree-current (1105/1115 identical, 0 differ, 10 redirected), 0 Supabase 4xx (was 11), /changelog/#stories CLS ≤0.0017. Worker unchanged since S389. The closeout autopilot had swept ~2,500 untracked scratch files into its commit; recovered locally before any push.

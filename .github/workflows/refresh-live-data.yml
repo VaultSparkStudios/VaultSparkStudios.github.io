@@ -54,7 +54,9 @@ jobs:
           # S352: `news/` is staged here, and sitemap.xml is derived from it.
           node scripts/generate-sitemap.mjs
           node scripts/generate-sitemap.mjs --check
-          git add index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml api/ data/ stats.json feed/ journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
+          node scripts/build-sitemap-page.mjs
+          node scripts/build-sitemap-page.mjs --check
+          git add index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml sitemap-page/index.html oracle/answers/index.json api/field-win.json api/ data/ stats.json feed/ journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
           git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

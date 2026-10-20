@@ -307,8 +307,8 @@
         if (VSPublic) {
           const result = await VSPublic
             .from('challenges')
-            .select('title,points_reward')
-            .eq('is_active', true)
+            .select('title,points')
+            .eq('active', true)
             .order('created_at', false)
             .limit(1)
             .get();
@@ -317,7 +317,7 @@
           if (titleEl) {
             if (challenges.length > 0) {
               const c = challenges[0];
-              titleEl.textContent = c.title + (c.points_reward ? ' (+' + c.points_reward + ' pts)' : '');
+              titleEl.textContent = c.title + (c.points ? ' (+' + c.points + ' pts)' : '');
             } else {
               titleEl.textContent = 'No active challenges right now — check back soon.';
               const btn = document.getElementById('dlw-challenge-btn');
@@ -1085,15 +1085,15 @@
         const since = new Date(Date.now() - 84 * 86400000).toISOString();
         const { data: events } = await VSSupabase
           .from('point_events')
-          .select('occurred_at')
+          .select('created_at')
           .eq('user_id', session.user.id)
-          .gte('occurred_at', since)
-          .order('occurred_at', { ascending: true });
+          .gte('created_at', since)
+          .order('created_at', { ascending: true });
 
         // Build day bucket map: 'YYYY-MM-DD' → count
         const dayMap = {};
         (events || []).forEach(ev => {
-          const key = ev.occurred_at.slice(0, 10);
+          const key = ev.created_at.slice(0, 10);
           dayMap[key] = (dayMap[key] || 0) + 1;
         });
 
@@ -1159,7 +1159,7 @@
           .select('id')
           .eq('user_id', session.user.id)
           .eq('reason', 'anniversary')
-          .gte('occurred_at', startOfYear)
+          .gte('created_at', startOfYear)
           .limit(1);
 
         if (existing && existing.length > 0) {
@@ -1212,12 +1212,12 @@
 
         const { data: events } = await VSSupabase
           .from('point_events')
-          .select('amount')
+          .select('points')
           .eq('user_id', session.user.id)
-          .gte('occurred_at', lastMonday.toISOString())
-          .lt('occurred_at', lastSunday.toISOString());
+          .gte('created_at', lastMonday.toISOString())
+          .lt('created_at', lastSunday.toISOString());
 
-        const weekPts = (events || []).reduce((s, e) => s + (e.amount || 0), 0);
+        const weekPts = (events || []).reduce((s, e) => s + (e.points || 0), 0);
         if (weekPts === 0) return;
 
         const rank = VS.getRank(member.points);
@@ -1305,7 +1305,7 @@
         // public_leaderboard only lists members who chose to be public.
         const { data: members } = await VSSupabase
           .from('public_leaderboard')
-          .select('username, points, member_number, accent')
+          .select('username, points, member_number')
           .order('points', { ascending: false })
           .limit(50);
 

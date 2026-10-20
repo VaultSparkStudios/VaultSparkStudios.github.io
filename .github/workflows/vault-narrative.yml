@@ -54,6 +54,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           node scripts/run-derived-builds.mjs --profile refresh-live-data
+          node scripts/generate-sitemap.mjs
+          node scripts/generate-sitemap.mjs --check
+          node scripts/build-sitemap-page.mjs
+          node scripts/build-sitemap-page.mjs --check
+          node scripts/build-lqip-map.mjs
+          node scripts/build-lqip-map.mjs --check
           node scripts/build-public-status.mjs
           node scripts/build-candidate-artifact-manifest.mjs
           node scripts/build-release-proof.mjs
@@ -85,7 +91,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt
+          git add api/ data/ stats.json feed/ index.html changelog/index.html membership/index.html games/index.html studio-pulse/index.html universe/index.html news/ sitemap.xml sitemap-page/index.html oracle/answers/index.json api/field-win.json journal/dispatches/feed.xml agents.json .well-known/llms.txt .well-known/llms-full.txt llms-full.txt
           git add 'projects/*/llms-full.txt' 'games/*/llms-full.txt' 'universe/*/llms-full.txt' .cache/cta-readiness.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh vault narrative [skip ci]"

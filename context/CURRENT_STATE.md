@@ -1,3 +1,13 @@
+## Session 390 — public data contract repair (2026-10-19)
+
+S390 repairs public data queries that production rejected: Community RSVP counts, the members directory, the leaderboard game, challenge and weekly tables, the signed-in /membership/ rank strip, three member-portal dashboard widgets and the investor KPI session series. A new offline gate (`scripts/check-public-rest-contract.mjs`, in build:check) requires every browser REST query, including filter and order columns, to match a live-verified manifest: 125 queries recorded, 7 deferred with notes (vault-sdk member fetch, rank orb, challenge streaks, member achievements, investor messages, studio-hub feedback). /changelog/#stories (the /journal/ redirect target) no longer shifts: CLS 0.1154 → below 0.01 at four widths, local Lighthouse 0.0017. Four member-facing send commands admit argv strictly; the handoff extract keeps its 6000-character cap on measured evidence (2/80 versions cut the newest session). Visual QA: 56 hash-bound captures (84 reviewed). Released: production serves ceeeb2de9f, byte parity tree-current, 0 Supabase 4xx; docs/RELEASE_S390.json.
+
+## Session 389 — release verified (2026-10-19)
+
+S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json.
+
+Continue with the two queued S389 SIL observations. Native goal01a1557e-9d32-7d13-b5cf-3e802fd6616d createdAt1792435752 is bound to S389; this release belongs to that invocation. Final publication, restoration and cleanup evidence is recorded in docs/RELEASE_S389.json.
+
 ## Session 388 — CSP diagnostic reliability deployed (2026-10-18)
 
 S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
@@ -584,3 +594,6 @@ S385 delivery follow-through: live mutable directory URL is cached604800seconds.
 
 
 S385 final implementation evidence:15/15 focused cases across three engines; three mutations detected;13 shell tests;112 image-inspected before/after captures across7themes and1366/390px, covering default, neutral search, trimmed search and empty results. Theme primary text fixes the measured light rank/avatar failures; all56 sampled card foreground/background combinations pass their scoped thresholds. Axe gradient analysis remains incomplete. Hashed delivery prevents the old seven-day mutable cache from retaining the bug. Complete current-source local/staging/hosted/production acceptance remains pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.

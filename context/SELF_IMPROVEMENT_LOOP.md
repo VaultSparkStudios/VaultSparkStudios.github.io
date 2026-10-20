@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): ▄▄▆██ (→)
-Avgs —3:935.0 |5:934.2 |10:933.6 |25:943.2 |all:unmeasured (archived history excluded)
-Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-18 | Session388 | Total:935/1000 | Velocity:1
-  └ CSP diagnostic reliability; production acceptance tracked separately in docs/RELEASE_S388.json.
+Sparkline (last5 totals): 935 → 935 → 935 → 935 → 940
+Avgs (available audit totals) —3:936.7 |5:936.0 |10:934.5 |25:943.2 |all:unmeasured (archived history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:↓
+Last session: 2026-10-19 | Session390 | Total:940/1000 | Velocity:5
+  └ Ten production-rejected public queries repaired behind a live-verified contract gate; release evidence in docs/RELEASE_S390.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2885,3 +2885,86 @@ Canonical autopilot exited0, cleared the session lock, and passed two complete54
 ### S388 final automation reconciliation (same session)
 
 Merge8f8c5c426e preserves canonical closeout commits and receives only the automation Lighthouse ledger. Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed. Score remains935/1000; no additional session or velocity.
+
+
+## Session 389 — 2026-10-19 — reliable release tooling
+
+Product rubric, ten categories ×100. Score held at935; focused reliability and no-inference defaults improve evidence without inventing engagement or performance gains.
+
+| Category | Score |
+|---|---:|
+| Development Health | 95 |
+| Creative Alignment | 94 |
+| Momentum | 90 |
+| Engagement | 95 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 92 |
+| Security Posture | 94 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 935/1000
+Velocity:5
+Protocol velocity:5
+Debt:↓
+
+S389 adds strict argument admission to all six deployment entry points before operational IO: unknown flags, positionals, boolean assignments, missing/duplicate values and conflicting modes fail closed; help/preview aliases remain inert. Existing real workflow invocations and production confirmation remain intact. Handoff compaction now extracts exact source text with a full hash and omission lookup, without credentials or paid inference; old paid caches are rejected and trimming preserves session boundaries. Focused admission/digest tests6/6, Desk Dispatch7/7, Worker4/4, staging17/17, content26/26, Desk path29+ancestry4 and newsletter21/21 pass. Full release acceptance remains pending in docs/RELEASE_S389.json.
+
+Brainstorm: assess remaining outward CLI contracts; measure omission frequency before increasing extract size. Two SIL follow-ups committed to TASK_BOARD. CDR reviewed; no new human direction. Context usage unmeasured.
+
+
+S389 release-repair acceptance: Required S389 release repairs: archive three completed historical board sections verbatim to pass startup budget (41553/42000); add existing Dot page5/Echo page3 links and human sitemap count121→123. 28 inspected before/after theme/viewport captures pass. The existing evidence graph now requires all five XML publishers to rebuild/stage the human sitemap, with29/29 cascade fixtures and31 workflows checked. Full release acceptance remains pending.
+
+
+S389 required Oracle repair: existing public answer content is unchanged (13 answers); only generatedAt advances Oct18→19. The existing graph now models the corpus, both profiles cluster insights before deriving answers and sealing, and affected publishers stage answers. Build-order39/39, cascade31/31 and independent review pass. Full current-source validation and deployment remain pending.
+
+
+S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+S389 local closeout evidence: S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed. Score935/1000 and velocity5 unchanged. Existing two S389 SIL follow-ups remain queued. Complete validation and release evidence will be appended to this same session; no new session is authorized by continuation.
+
+
+S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.
+
+
+## Session 389 addendum — 2026-10-19
+
+The post-closeout correction b62baea5 (verified production release record) landed after the S389 SIL anchor; it records release evidence only and changes no score. S389 stays 935/1000.
+
+## Session 390 — 2026-10-19 — public data contracts
+
+Product rubric, ten categories ×100. Score 940 (+5): live member-facing failures fixed and a gate that prevents the class; no engagement or performance gain is claimed beyond the measured /changelog/ layout shift.
+
+| Category | Score |
+|---|---:|
+| Development Health | 96 |
+| Creative Alignment | 94 |
+| Momentum | 91 |
+| Engagement | 96 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 95 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 940/1000
+Velocity:5
+Protocol velocity:5
+Debt:↓
+
+S390 found ten browser queries production rejected (400/404) behind mocks that accept any select, repaired them (Community RSVP, members directory, three leaderboard tables, signed-in rank strip, portal dashboard, investor KPIs), and added scripts/check-public-rest-contract.mjs: 125 live-verified queries, 7 deferred with notes. /changelog/#stories CLS 0.1154 → <0.01. Four send commands admit argv strictly under IO tripwires (8/8 admission tests). Handoff extract cap kept on measured evidence.
+
+Top win: a gate that turns "production rejects this query" from invisible into a build failure.
+Top gap: Playwright's default baseURL is production, so a local run silently tested live; and the leaderboards spec has a stale period-tab assertion since S368.
+
+Brainstorm:
+1. Weekly live REST probe workflow that files the drift — first step: run `check-public-rest-contract.mjs --live` from the existing scheduled verifier lane. (High)
+2. Make playwright.config refuse the production default when the working tree is dirty — first step: warn when BASE_URL is unset. (Medium)
+3. Server-side public leaderboard RPCs for anon-blocked tables so challenge/weekly boards can show real data — first step: list the RLS-hidden tables. (Medium)
+
+Committed to TASK_BOARD: [SIL][S390] Inventory remaining outward CLIs · [SIL][S390] Schedule weekly live REST probe.
+
+S390 release verification: production serves ceeeb2de9f (Pages run 39359262188), byte parity tree-current 1105/1115, 0 Supabase 4xx (was 11), staging spec 6/6, required exact-SHA checks passed. Score 940/1000 unchanged. Lesson recorded: the closeout autopilot commits untracked scratch; local excludes added and recovery done before push.

@@ -1637,3 +1637,20 @@ S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private 
 ### S388 newly received performance signal
 
 Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+
+
+## S389 — command intent and handoff provenance (2026-10-19)
+
+Ignored CLI arguments previously allowed help/typos to start outward deployment work. Strict admission now rejects malformed intent before operations. Old cached model summaries are no longer accepted as deterministic source extracts. Extract omissions remain explicit and require source lookup; source text is never inferred. No UI change, identity-policy change, current quota cure or performance improvement is claimed. Full deployment proof remains pending.
+
+
+S389 full-check findings: startup source budget was42150/42000 and the human sitemap omitted two existing routes. Completed history is preserved, and the sitemap now has123 links with two additions. The root publish cascade is enforced; no new persona content or identity change is claimed.
+
+
+S389 Oracle corpus drift was generatedAt only; answer text did not change. Its previously unmodeled dependency is now explicit and the two build profiles derive insights before answers. Diagnostic remainder runs never substitute for the final complete check.
+
+
+S389 local closeout: S389 locally verifies five repairs: strict deployment argument admission, deterministic source-hashed handoffs, existing archive links and human sitemap publication, Oracle answer build order, and field-proof/recommendation publication order. Focused6/6, build-order43/43, cascade37/37 across31 workflows, mobile215/215 (zero P0/P1),28 inspected sitemap captures and independent review pass. Complete validation is pending canonical autopilot; staging, main push, required exact-SHA CI, full Pages/Worker deployment and strict readback remain pending. No performance improvement or identity acceptance is claimed. Automated art commits preserved. Timeline refresh uses the existing gateway credential after an unauthenticated rate limit; public GitHub/Desk observations recovered. Historical field regressions and identity holds remain visible.
+
+
+S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.

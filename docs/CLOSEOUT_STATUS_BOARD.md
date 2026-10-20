@@ -1,68 +1,69 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-16 (Session 385 closeout) -->
+<!-- generated-at: 2026-10-19 (Session 389 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S385 ═══════╗
-║  Date: 2026-10-16  ·  SIL: 933/1000  ·  Velocity: 2 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S389 ═══════╗
+║  Date: 2026-10-19  ·  SIL: 935/1000  ·  Velocity: 5 down         ║
 ║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S385)                                        ║
+║  Autopilot: proven (S389)                                        ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ fix(S385): seal verified public release candidate             ║
-║  ✓ chore: post-closeout events.ndjson + contracts reconcile [sk  ║
-║  ✓ fix(S385): preserve community identities and verify public d  ║
-║  ✓ docs(S384): record verified full release and closeout [skip   ║
+║ Strict deploy arguments; deterministic handoff extraction.     ║
+║ Archive sitemap discovery; Oracle and field-proof ordering.    ║
+║ Five selected outcomes verified; no extra session credited.    ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 933/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
 ║    Dev Health         95   ██████████                            ║
 ║    Alignment          94   █████████░                            ║
 ║    Momentum           90   █████████░                            ║
 ║    Engagement         95   ██████████                            ║
-║    Process Qual       90   █████████░                            ║
+║    Process Qual       91   █████████░                            ║
 ║    Coherence          92   █████████░                            ║
 ║    Security           94   █████████░                            ║
 ║    Ecosystem          91   █████████░                            ║
 ║    Capital            95   ██████████                            ║
-║    Automation         97   ██████████                            ║
+║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · Codex agent memory                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 1162 files  ·  M:47 A:0 D:0 ?:1115                     ║
+║  Changes: 1453 files  ·  M:30 A:0 D:0 ?:1423                     ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
-║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
-║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
+║ Staging: exact status25/25; full baseline c861 verified.       ║
+║ Live: Pages39326784514 + Worker39326087269 verified.           ║
+║ Status overlay39329492923:75 hash checks passed.               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/17                                            ║
-║  Compliance:    —                                                ║
-║  Tests:         537/537                                          ║
-║  Validation:    full-fresh                                       ║
-║  IGNIS:         0d ago                                           ║
-║  Truth:         yellow                                           ║
-║  Sanitization:  —                                                ║
-║  shells:        unknown · missing/stale enumeration              ║
+║ Doctor: canonical16/17;0 blocking;0 advisory.                  ║
+║ Tests: core542/542 twice; final status109/109.                 ║
+║ Visual:28 inspected captures; mobile215/215.                   ║
+║ IGNIS: prior score retained; no sibling rescore claimed.       ║
+║ Truth: existing identity/field-data holds preserved.           ║
+║ Sanitization: clean; staged secrets scan0 findings.            ║
+║ Shells: historic totals unmeasured; owned active0.             ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
-║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
+║ Observe outward CLI admission and handoff omissions.           ║
+║ Existing identity/field-data holds remain explicit.            ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
 *Generated by `scripts/render-closeout-board.mjs v1.1`*
+
+S389 release evidence: docs/RELEASE_S389.json. The board uses the canonical renderer; release-specific rows are bound to the accepted receipt. Historical shell totals are unmeasured; final owned native process inventory found0 active. Pre-existing unrelated operator residue is preserved.

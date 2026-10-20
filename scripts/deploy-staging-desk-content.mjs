@@ -5,11 +5,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { deskContentPartition, selfTestDeskContentPaths } from './lib/desk-content-paths.mjs';
+
+import { admitDeployment } from './lib/deploy-argv.mjs';
+const admitted = admitDeployment({"name":"deploy-staging-desk-content","boolFlags":["--self-test","--plan","--full","--deploy"],"valueFlags":["--production-baseline"],"modes":["--self-test","--plan","--deploy"],"usage":"node scripts/deploy-staging-desk-content.mjs [--plan | --deploy] [--full] [--production-baseline <sha>] | --self-test"});
+const { deskContentPartition, selfTestDeskContentPaths } = await import('./lib/desk-content-paths.mjs');
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGING = 'https://website.staging.vaultsparkstudios.com';
-const arg = (name) => { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : ''; };
+const arg = (name) => admitted.values[name] || ''; 
 const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
 const run = (command, args, extra = {}) => spawnSync(command, args, { cwd: ROOT, encoding: 'utf8', timeout: 120_000, ...extra });
 const checked = (result, label) => { if (result.status !== 0) throw new Error(`${label} failed: ${(result.stderr || result.stdout || '').slice(0, 350)}`); return result.stdout.trim(); };

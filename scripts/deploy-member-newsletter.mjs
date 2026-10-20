@@ -55,6 +55,9 @@ import crypto from 'node:crypto';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 
+import { admitDeployment } from './lib/deploy-argv.mjs';
+const admitted = admitDeployment({"name":"deploy-member-newsletter","boolFlags":["--self-test","--status","--brevo-secret","--deploy","--secret","--verify"],"valueFlags":["--only","--unsubscribe-base"],"modes":["--self-test","--status","--brevo-secret","--deploy","--secret","--verify"],"usage":"node scripts/deploy-member-newsletter.mjs --status | --brevo-secret | --deploy [--only=<slug>] | --secret | --verify [--unsubscribe-base=<url>] | --self-test"});
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MGMT = 'https://api.supabase.com/v1';
 const SLUG = 'send-member-newsletter';
@@ -77,7 +80,7 @@ const PROJECT_REF = 'fjnpzjjyhnpmunfoycrp';
 
 const argv = process.argv.slice(2);
 const args = new Set(argv);
-const argValue = (name) => argv.find((a) => a.startsWith(`${name}=`))?.slice(name.length + 1);
+const argValue = (name) => admitted.values[name];
 const redact = (s) => String(s).replace(/\b(sbp_[a-z0-9]+|re_[A-Za-z0-9_-]+|xkeysib-[A-Za-z0-9-]+|eyJ[\w.-]{20,})/g, '[redacted]');
 
 async function secrets() {

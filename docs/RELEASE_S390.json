@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0",
+  "session": 390,
+  "goal": {
+    "agent": "claude-code",
+    "sessionId": "02f984f7-d3e8-4932-b23b-e88b50a20643",
+    "binding": "Claude Code /goal; no native Codex thread binding exists for this agent"
+  },
+  "accepted": true,
+  "state": "verified",
+  "scope": "Public PostgREST query repairs against the live schema; live-verified REST contract gate; /changelog/#stories layout-shift repair; strict argv admission for four send commands; handoff extract omission measurement. Identity, auth, membership tier logic and Worker code unchanged.",
+  "implementation": {
+    "publicQueries": {
+      "productionRejectedBefore": 10,
+      "localBrowserSupabase4xxAfter": 0,
+      "productionBrowserBaseline4xx": 11,
+      "contractQueries": 125,
+      "knownFailingWithNotes": 7
+    },
+    "layoutShift": {
+      "route": "/changelog/#stories (via /journal/ 301)",
+      "clsBefore": 0.1154,
+      "clsAfterMax": 0.0085,
+      "localLighthouseJournal": 0.0017
+    },
+    "admission": {
+      "scripts": 4,
+      "tests": "deployment-admission 8/8"
+    },
+    "handoffMeasurement": {
+      "versions": 80,
+      "omitted": 31,
+      "newestCut": 2,
+      "capKept": 6000
+    },
+    "visualQA": {
+      "reviewed": 84,
+      "retained": 40,
+      "receipt": "docs/visual-qa/LATEST.json"
+    },
+    "review": {
+      "verdict": "pass",
+      "rounds": 2,
+      "findings": 2,
+      "fixed": 2,
+      "remaining": 0
+    },
+    "mobile": {
+      "passed": 215,
+      "failed": 0
+    }
+  },
+  "remaining": [],
+  "limitations": [
+    "The signed-in rank strip was verified with a mocked member session; no real member session was used.",
+    "Leaderboard challenge and weekly tables stay empty for anon visitors because RLS hides their source rows; the queries are now valid."
+  ],
+  "localValidation": {
+    "autopilotBuildCheck": "544/544 twice",
+    "cleanCheckout": "verify:clean PASS (544/544)",
+    "note": "Autopilot initially swept untracked scratch into its commit; recovered before push by soft reset and recommit (no scratch left the machine)."
+  },
+  "staging": {
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "servedSha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
+    "candidateRoot": "b0bae12f858c",
+    "stagingReleaseSpec": "6/6 (chromium, firefox, webkit)",
+    "supabase4xx": 0
+  },
+  "production": {
+    "sourceCommit": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+    "tag": "s390-production-20261020",
+    "requiredChecks": {
+      "lane": "hosted-exact-sha",
+      "e2e": 39357425224,
+      "lighthouse": 39357425064,
+      "accessibility": 39357425114
+    },
+    "promotionScope": "scoped-disjoint",
+    "pagesRunId": 39359262188,
+    "servedSha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+    "parity": "tree-current 1105/1115 identical, 0 differ, 10 redirected, 0 unread",
+    "supabase4xxAfter": 0,
+    "supabase4xxBefore": 11,
+    "clsChangelogStories": "0.0000-0.0017 (3 runs, throttled 412px)",
+    "worker": "unchanged since S389 deploy c86109ee05 (cloudflare/ diff empty); no Worker deploy needed",
+    "verifiedAt": "2026-10-20T02:47:22.265Z"
+  },
+  "rollback": {
+    "method": "Re-dispatch pages-deploy for tag s389-production-20261019 (c86109ee05); staging rollback dirs retained on Hetzner."
+  }
+}

@@ -1,0 +1,520 @@
+{
+  "schema": "public-rest-contract/v1",
+  "verifiedAt": "2026-10-19T22:49:49.991Z",
+  "queries": {
+    "beta_keys|*": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_completions|challenge_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_completions|challenge_id,completed_at,challenges(title,points)|where:completed_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_completions|challenge_id,completed_at|where:completed_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_completions|id|where:completed_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_completions|id|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_submissions|created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_submissions|id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_submissions|member_id,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenge_submissions|member_id,vault_members(username)|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenges|id,title,challenge_type,points|where:active": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenges|id|where:active": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "challenges|title,points|where:active,created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "daily_scores|player_name,wave_reached,faction,date_seed|where:date_seed,wave_reached": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "daily_scores|player_name,wave_reached,faction,date_seed|where:season,wave_reached": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "daily_scores|player_name,wave_reached,faction|where:date_seed,wave_reached": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "event_rsvps|event_slug|where:event_slug": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "event_rsvps|event_slug|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "fan_art_submissions|id,title,username,character_tag,file_path|where:status,submitted_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "fan_art_submissions|id,username,title,description,character_tag,file_path,submitted_at,admin_notes|where:status,submitted_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "fan_art_vote_counts|fan_art_id,vote_count|where:fan_art_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "fan_art_votes|fan_art_id|where:fan_art_id": {
+      "verdict": "auth-only",
+      "status": 401
+    },
+    "feedback_summaries|*|where:week_start": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_ratings|rating|where:game_slug": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_ratings|rating|where:game_slug,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_scores|score,vault_members(username,points)|where:game_slug,score": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_scores|score|where:game_slug,score,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_scores|user_id,score,vault_members(username,points)|where:game_slug,score": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|game_slug,played_at|where:played_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|game_slug,played_at|where:played_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|game_slug|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|id|where:played_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|id|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "game_sessions|played_at|where:played_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "graves|id,player_name,epitaph,x,y,faction,wave_reached,season,date_seed,created_at,sunstone_offerings,is_shrine,is_major_shrine|where:created_at,season": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "graves|id,player_name,epitaph,x,y,faction,wave_reached,season,date_seed,sunstone_offerings,is_shrine,created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "graves|id|where:season,sunstone_offerings": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "ignis_alerts|*|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "ignis_spend_today|*": {
+      "verdict": "auth-only",
+      "status": 401
+    },
+    "ignis_usage_monthly|request_count,last_request_at|where:month_bucket,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investor_activity|action,target_label,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investor_documents|id,title,description,document_type,version,uploaded_at,file_size_bytes,visibility_scope|where:is_active,uploaded_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investor_documents|id,title,document_type,version,uploaded_at,file_size_bytes,visibility_scope|where:is_active,uploaded_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investor_message_thread|*|where:created_at": {
+      "verdict": "auth-only",
+      "status": 401
+    },
+    "investor_messages|id,subject,body,category,created_at|where:created_at": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "42703 column investor_messages.body does not exist",
+      "note": "S390 deferred: investor-portal message view names a body column production lacks; investor surface needs the real message schema."
+    },
+    "investor_requests|why_approve,why_vaultspark,investing_history,value_beyond_capital,how_heard,created_at,full_name,entity_type,organization,investment_range|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investor_updates|id,title,update_type,visibility_tier,published_at,body_html|where:is_published,published_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "investors|id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "journal_reactions|emoji|where:post_slug": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "journal_reactions|emoji|where:post_slug,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "journal_reactions|post_slug,emoji|where:post_slug": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "journal_reactions|post_slug,emoji|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "journal_views|id|where:post_slug": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "member_achievements|earned_at,achievements!achievement_id(slug)|where:member_id": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "PGRST200 Could not find a relationship between 'member_achievements' and 'achievements' in the schema cache",
+      "note": "S390 deferred: live achievements table (profile_id, achievement_key) differs from the committed migration; achievement display awaits the public-member-data decision."
+    },
+    "member_achievements|unlocked_at,achievements(name,emoji)|where:unlocked_at,user_id": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "PGRST200 Could not find a relationship between 'member_achievements' and 'achievements' in the schema cache",
+      "note": "S390 deferred: live achievements table (profile_id, achievement_key) differs from the committed migration; achievement display awaits the public-member-data decision."
+    },
+    "member_follows|following_id|where:follower_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "membership_phases|plan_key,phase,price_label,subscriber_cap,subscriber_count,is_current|where:is_current": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "page_feedback_signals|*": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "page_feedback|page,type,answer,referrer,created_at|where:created_at": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "42703 column page_feedback.page does not exist",
+      "note": "S390 deferred: internal studio-hub view reads raw service-role-only rows with columns the table never had; needs a redesign onto page_feedback_7d."
+    },
+    "player_echoes|id,player_name,traveler_sigil,kind,headline,summary,wave_reached,faction,created_at,commend_count,heed_count,mourn_count|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "player_echoes|id,player_name,traveler_sigil,kind,headline,summary,wave_reached,faction,created_at,commend_count,heed_count,mourn_count|where:created_at,season": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|created_at|where:created_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|id,label,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|id|where:created_at,reason,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|id|where:reason,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|label,points,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|label,points,created_at|where:created_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|points,created_at,label,reason|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|points,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|points,reason,label,created_at|where:created_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|points|where:created_at,user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|reason,points|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "point_events|reason|where:reason": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "poll_votes|poll_id,option_index|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "polls|id,question,is_active,closes_at,options|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "polls|id,question,options,closes_at,is_active|where:created_at,is_active": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "polls|id,question,options,closes_at|where:created_at,is_active": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|id,username,points,created_at,member_number": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|id|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|id|where:is_sparked": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,points,created_at,is_sparked|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,points,created_at|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,points,member_number,created_at|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,points,member_number|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "public_leaderboard|username,points|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "studio_pulse|*|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "studio_pulse|id,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "studio_pulse|id,message,type,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "studio_pulse|id,type,message,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "studio_pulse|message,type,created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "subscriptions|plan,status,current_period_end|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "subscriptions|status,plan,current_period_end|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "sun_state|brightness,total_deaths": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "sun_state|brightness,total_deaths,season": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "sun_state|brightness,total_deaths,season,season_name": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "team_members|team_id|where:team_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "teams|id,name,total_points|where:total_points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "teams|id|where:invite_code": {
+      "verdict": "auth-only",
+      "status": 401
+    },
+    "treasury_items|*|where:cost,is_active": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "treasury_purchases|item_id|where:user_id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|*|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|challenge_streak,last_challenge_date|where:id": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "42703 column vault_members.challenge_streak does not exist",
+      "note": "S390 deferred: challenge streak columns are absent in production; streak feature needs a server-side source."
+    },
+    "vault_members|created_at|where:created_at": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|created_at|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|id,username": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|id,username,points,plan_key,is_sparked,vault_rank|where:id": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "42703 column vault_members.vault_rank does not exist",
+      "note": "S390 founder review: cross-project vault-sdk member fetch fails on vault_rank, so external consumers see no member; restoring it changes membership gating for consumers."
+    },
+    "vault_members|id|where:created_at,referred_by": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|plan_key,is_sparked,username|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|points,created_at,achievements,username|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|points,created_at|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|points|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|prefs|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|rank_name,points,season_xp,username|where:id": {
+      "verdict": "known-failing",
+      "status": 400,
+      "detail": "42703 column vault_members.rank_name does not exist",
+      "note": "S390 deferred: sitewide rank orb never renders for signed-in members (rank_name/season_xp absent); needs a designed points-based rank and visual QA."
+    },
+    "vault_members|username,points,created_at,member_number,subscribed|where:points": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|username,points,plan_key,achievements|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|username,referred_by|where:referred_by": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|username_lower|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "vault_members|username|where:id": {
+      "verdict": "ok",
+      "status": 200
+    },
+    "weekly_game_scores|username,rank_title,score,week_start|where:game_slug,score,week_start": {
+      "verdict": "ok",
+      "status": 200
+    }
+  }
+}

@@ -21,7 +21,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSecret, redact } from './lib/secrets.mjs';
+import { parseDeployArgv } from './lib/deploy-argv.mjs';
+// Resolve credentials only on an admitted operational path.
+let getSecret;
+let redact = (value) => value;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SLUG = 'subscribe-desk-dispatch';
@@ -259,7 +262,14 @@ async function verify({ liveEmail = null } = {}) {
 }
 
 export async function main(argv = process.argv.slice(2), operations = {}) {
-  const options = parseOptions(argv);
+  const admission = parseDeployArgv(argv, { name: 'deploy-desk-dispatch', boolFlags: ['--all','--secrets','--deploy','--verify','--limits','--no-live'], valueFlags: ['--live-email'], modes: ['--all','--secrets','--deploy','--verify','--limits'] });
+  if (admission.help || admission.dry) {
+    console.log('Usage: deploy-desk-dispatch --secrets | --deploy | --verify | --limits | --all [--live-email=<address>]\nHelp/preview: no action taken.');
+    return true;
+  }
+  const normalized = argv.map((arg, i) => arg === '--live-email' ? '--live-email=' + argv[i+1] : arg).filter((arg,i) => argv[i-1] !== '--live-email');
+  const options = parseOptions(normalized);
+  ({ getSecret, redact } = await import('./lib/secrets.mjs'));
   const ops = { assertProject, setSecrets, deploy, deployLimits, verify,
     settle: () => new Promise((r) => setTimeout(r, 4000)), ...operations };
   await ops.assertProject();

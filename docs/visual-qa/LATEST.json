@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "session": 387,
-  "capturedAt": "2026-10-18T14:37:50.563Z",
-  "generatedBy": "S387 real Chromium before/after sitemap archive-link correction",
+  "session": 390,
+  "capturedAt": "2026-10-20T00:39:46.952Z",
+  "generatedBy": "S390 real Chromium before/after: signed-in rank strip on /membership/ and /changelog/ layout-shift repair",
   "themes": [
     "dark",
     "light",
@@ -15,25 +15,46 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "ba10a8518e3ad5b0e81142c7e49bc20eca3b61e207f2ae24d11682602eb9fa07",
+    "sha256": "91edb6f8d2c5bb8c70aa96c2e392abc78150f7428919f3c51212852b001a3ec7",
     "files": [
-      "assets/style.shell-7f501cc04e.css",
-      "sitemap-page/index.html"
+      "assets/feedback-insights.js",
+      "assets/membership-live-tier.js",
+      "assets/push-subscribe.js",
+      "assets/style.css",
+      "changelog/index.html",
+      "membership/index.html"
     ],
     "entries": [
       {
-        "path": "assets/style.shell-7f501cc04e.css",
-        "sha256": "7f501cc04eff8391511c34164d0cbf9340b0a9f2c45423a613525b6165354c7e"
+        "path": "assets/feedback-insights.js",
+        "sha256": "03c0d987d35e86be35c64f35d6f9b522f933e3c04851a9228cc5f07212888082"
       },
       {
-        "path": "sitemap-page/index.html",
-        "sha256": "c41e58a52daa7ebb6714604f9bfa36c6773ad75c3ab20a487b7259fae7159081"
+        "path": "assets/membership-live-tier.js",
+        "sha256": "550855b6d936520fcf902a89b91dd29166e208f232448add5c737320c796d3d4"
+      },
+      {
+        "path": "assets/push-subscribe.js",
+        "sha256": "e33353563718bb97989527c01864bf8c51f36021830438193325634d7442499d"
+      },
+      {
+        "path": "assets/style.css",
+        "sha256": "90be10c8732d9185e81515c4698213e3d5f7c50da8a3e4ae4e715efe9dfc6287"
+      },
+      {
+        "path": "changelog/index.html",
+        "sha256": "4d3f767d4cebed7d26f82339079c490d0ea99dbb6747dd9cf87375e77c53f22b"
+      },
+      {
+        "path": "membership/index.html",
+        "sha256": "13a016a9363ebc21273d9b56be7fa5a9ee1eef30e219d8e30f1edf326336dd7b"
       }
     ]
   },
   "matrix": {
     "routes": [
-      "/sitemap-page/"
+      "/membership/",
+      "/changelog/"
     ],
     "themes": [
       "dark",
@@ -47,7 +68,7 @@
     "viewports": [
       {
         "name": "desktop",
-        "width": 1366,
+        "width": 1280,
         "height": 900
       },
       {
@@ -60,488 +81,942 @@
       "before",
       "after"
     ],
-    "expectedCaptures": 28,
-    "completedCaptures": 28
+    "expectedCaptures": 56,
+    "completedCaptures": 56
   },
   "captures": [
     {
-      "file": "s387-sitemap-dark-desktop-before.png",
-      "sha256": "ba81f00d7ecbdd085825c064cbb57c43be17af89bc94cb139710433f7b228e66",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-dark-desktop-before.png",
+      "sha256": "1e0b1eb7f221b54f41c3430dd434333382c7914b560bc5918ae3a7e1b7882bac",
+      "page": "/membership/",
       "theme": "dark",
       "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-dark-desktop-after.png",
-      "sha256": "06eec72531f36b0a11290878006589b05d378aa189237c53e471882eb6b6df64",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-dark-desktop-before.png",
+      "sha256": "de4e37525b55a962da66effbc0fa99d4b1e70cd06760cc1c84a4ce5762cda756",
+      "page": "/changelog/",
       "theme": "dark",
       "viewportName": "desktop",
-      "state": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-dark-mobile-before.png",
-      "sha256": "e4adfa2d1b4cb75c0c6275a7c6d03974c4b6247d49b7d3d45e43e978ff4729fa",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-dark-desktop-after.png",
+      "sha256": "706b8d2a7e8fadab836503b38e6c33d4210c7db9bb3f9797cbdec74dd0bc57ab",
+      "page": "/membership/",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-dark-desktop-after.png",
+      "sha256": "8a22d53689bc5d95c26fa9deac75e7cb3d54b80e2617ada96be1ae40f6cd2e06",
+      "page": "/changelog/",
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-dark-mobile-before.png",
+      "sha256": "5115fb620829ed42955fff86c52f8278fdc529def18c8986eb7678f85b27f062",
+      "page": "/membership/",
       "theme": "dark",
       "viewportName": "mobile",
-      "state": "before",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-dark-mobile-after.png",
-      "sha256": "ecab437efe300b076d4e493d77ec087fe753e9c9d9316b99693b17f6b5cfa6ef",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-dark-mobile-before.png",
+      "sha256": "8a297acef75e98df3f9b3d82e4d8215dae569e135f03a80059856bff9ccb6f0d",
+      "page": "/changelog/",
       "theme": "dark",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-light-desktop-before.png",
-      "sha256": "44900452011dc628c5a03082d4e6fc01a4bf70e090eb0b9e71e84f91836942a2",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-dark-mobile-after.png",
+      "sha256": "6370005b7a5117bc583c074eca6afb9621aa94ae48593f949cac800b5bef4745",
+      "page": "/membership/",
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-dark-mobile-after.png",
+      "sha256": "aefb98c6382bec6205eb4272df8166ef6abd543620c6fa85c963d73cf05ae3b7",
+      "page": "/changelog/",
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-light-desktop-before.png",
+      "sha256": "e630779c1c50254d0f1032dbb0bdad1310c83c24dff0890af8d6e2f18cb75c47",
+      "page": "/membership/",
       "theme": "light",
       "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-light-desktop-after.png",
-      "sha256": "fbd005cd747c56b966d1ba6196f79b7046a6aa21fa07a8ec44e8d059b4fe2e5c",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-light-desktop-before.png",
+      "sha256": "9a1815fbc3e6b1170c540af1883ae19f7df33a7628d54c356973ee0acc7ad3f2",
+      "page": "/changelog/",
       "theme": "light",
       "viewportName": "desktop",
-      "state": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-light-mobile-before.png",
-      "sha256": "269cfd72f009b4e2799a10ff7499674bc4e9c8514d76a24c0f28c661f2b7c849",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-light-desktop-after.png",
+      "sha256": "ed53a78a7a7f9bdc884b6b13e96f8afb6c0f29d6c2e3f7192b2904462e312d63",
+      "page": "/membership/",
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-light-desktop-after.png",
+      "sha256": "dd6d47d3d0ecc17e2f798c699e1cbc0bcf535f7ddc764f581b658afdc6fb6f24",
+      "page": "/changelog/",
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-light-mobile-before.png",
+      "sha256": "32fa36905bb119de4a4806f6512a8b7464299d40853d16e26a75dfd82e756afa",
+      "page": "/membership/",
       "theme": "light",
       "viewportName": "mobile",
-      "state": "before",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-light-mobile-after.png",
-      "sha256": "23c8aafc925e62a12ace1a2f0b1cefa145df5214ec797efc34758f414f5b9db1",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-light-mobile-before.png",
+      "sha256": "b47741702feea923a3547ebdb16753d03bd8dc62bcd08e79128a9069ed340657",
+      "page": "/changelog/",
       "theme": "light",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-ambient-desktop-before.png",
-      "sha256": "ba2f92f1b4c0f2162b9b4d1540208ac719dd60e9c6c1b3d4b02137fcadaae4f3",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-light-mobile-after.png",
+      "sha256": "3ac659c78481c5090769e36e0392bda3a982bf5800ab7a77bc044f86823245aa",
+      "page": "/membership/",
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-light-mobile-after.png",
+      "sha256": "f9f725f13f5a6f3f1e97867204cad45465b3225fa742b8d6ddc7fadfdcaebf04",
+      "page": "/changelog/",
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-ambient-desktop-before.png",
+      "sha256": "322e560ba7cae3dc91f65160a4f97d2ac644b65690587ebdf0418755ebcfa01c",
+      "page": "/membership/",
       "theme": "ambient",
       "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-ambient-desktop-after.png",
-      "sha256": "c7d718c33a84aec1ee17b5f5af52c68c0dcd15892aceff22b5aed15da7346fbb",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-ambient-desktop-before.png",
+      "sha256": "493bb39de849b2c97523721d8832cbf94f3a2cd1c5477621d20b269b60a46004",
+      "page": "/changelog/",
       "theme": "ambient",
       "viewportName": "desktop",
-      "state": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-ambient-mobile-before.png",
-      "sha256": "a2a0a11f1f6e7d1cab04b1487b1f3ebe021d59124179a143441d3e77542fb1de",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-ambient-desktop-after.png",
+      "sha256": "e5e92f1c3d4feede532fe1cfa746ff25191373dfbc211c11a707f8fb79a07cb7",
+      "page": "/membership/",
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-ambient-desktop-after.png",
+      "sha256": "3af09b88fdfe070576efcaed5d7990b181f0b6907b7bdc7f26bb01e7c5fe7ec6",
+      "page": "/changelog/",
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-ambient-mobile-before.png",
+      "sha256": "ef6ae091c604cf421802d7edfa9f0bb956e03016dc02b679f4217c98c938129b",
+      "page": "/membership/",
       "theme": "ambient",
       "viewportName": "mobile",
-      "state": "before",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-ambient-mobile-after.png",
-      "sha256": "c553807025741e08a5727a67d522bd087033aaab0663de9b0ab149eee136e9be",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-ambient-mobile-before.png",
+      "sha256": "43bb7a78d61d696b2f29c1678c809c4ab2a8db8b9626bf74eb799cf44cb32a26",
+      "page": "/changelog/",
       "theme": "ambient",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-warm-desktop-before.png",
-      "sha256": "ae389d19adf2bbac5dc08deb5fb141f4cbd785be0e61639ca6902955ba456df4",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-ambient-mobile-after.png",
+      "sha256": "6ea96638f7aa3c4ffca765e4f4633c2b5cf61ba48eea5579c087a33924afc69d",
+      "page": "/membership/",
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-ambient-mobile-after.png",
+      "sha256": "fc3594ebd39e713d61a357a219d79b6fcbd47f6c7421ee198c1061c661459ea1",
+      "page": "/changelog/",
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-warm-desktop-before.png",
+      "sha256": "f4ec8f1630d69cb9bfe42cfb05296c1ea7c58c8bd16270f0c7fc392596fbece2",
+      "page": "/membership/",
       "theme": "warm",
       "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-warm-desktop-after.png",
-      "sha256": "bced80c187e0d0478ec1147eeb556b88b57bdcba228318ecfadfe1c1c1b0220d",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-warm-desktop-before.png",
+      "sha256": "4c568aef443c5c9abe2d348ff67b735664ce2770f931a5b97c42d30a2e963cdb",
+      "page": "/changelog/",
       "theme": "warm",
       "viewportName": "desktop",
-      "state": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-warm-mobile-before.png",
-      "sha256": "adc0447d270c361f40bc89b0fe8de11f10509a88b506cccb5a7902ef81934381",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-warm-desktop-after.png",
+      "sha256": "3fb07b8e87d37da34e9790aec72045612fed1c98749c09977421f491d716a984",
+      "page": "/membership/",
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-warm-desktop-after.png",
+      "sha256": "c570e08f2ee4cb6a6e90e4c3fbdb72cc9d42923c442568fd5323091334761f8e",
+      "page": "/changelog/",
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-warm-mobile-before.png",
+      "sha256": "10ed768c60445aee24ec3965f0a9cc7028fb6c31cde39e3f77d836afe58a5807",
+      "page": "/membership/",
       "theme": "warm",
       "viewportName": "mobile",
-      "state": "before",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-warm-mobile-after.png",
-      "sha256": "95669183ccd7c0e513b79bb88ff345aa73af7221fd3a0a3a44e8c7395e76491b",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-warm-mobile-before.png",
+      "sha256": "2bf2b75da6d5841bd291edb085531cd1f1eac016e2ed4f62a1cd579831679a5c",
+      "page": "/changelog/",
       "theme": "warm",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-cool-desktop-before.png",
-      "sha256": "8f974fece12fee0c129bc299f3e9bea6a6a2edb23338b0685fb29ff65cad37aa",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-warm-mobile-after.png",
+      "sha256": "ab2c0ffe1311b966f2edfee347e5e4028aab512dfc3c1faf0d4ee89d77253334",
+      "page": "/membership/",
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-warm-mobile-after.png",
+      "sha256": "94753829f1406125ea106a229f7d737d50cce76537f6220b6b3187a2724e3eee",
+      "page": "/changelog/",
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-cool-desktop-before.png",
+      "sha256": "3d1ccf117215128b8baca4b31d8cf92b224e28ab8bfadfee4eb46ee8eecf6f9b",
+      "page": "/membership/",
       "theme": "cool",
       "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-cool-desktop-after.png",
-      "sha256": "1ae86f4930a1e95a72824bb4c5be37c1b157041569c56e45d525eb81e1bc9042",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-cool-desktop-before.png",
+      "sha256": "a9bc0d50a83d37f4065b6c6d33f314d505306ad069925996f46710ec431e6a75",
+      "page": "/changelog/",
       "theme": "cool",
       "viewportName": "desktop",
-      "state": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-cool-mobile-before.png",
-      "sha256": "f1df1dd15d89c76eb2431f6bf64a6e06b459559611703286d545f36db42df388",
-      "page": "/sitemap-page/",
+      "file": "s390-rank-strip-cool-desktop-after.png",
+      "sha256": "c240836abdbda3a09b6547c4ffd9473b42a33233fffc7a53014a4649f3baa1ef",
+      "page": "/membership/",
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-cool-desktop-after.png",
+      "sha256": "7cc2f471db52b9662bcabac9b91ea6a189f881f4bb5e39aac222f3e64b9dd8b9",
+      "page": "/changelog/",
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-cool-mobile-before.png",
+      "sha256": "8caeba6353e2e4d74505f93136f9d5ace4dea9ea8ba1b397001f024a5fe5a0de",
+      "page": "/membership/",
       "theme": "cool",
       "viewportName": "mobile",
-      "state": "before",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-cool-mobile-after.png",
-      "sha256": "5d48000e7ad3e49a37926c69fb474f66c3082f1e2a7b20587c5149a2014bced0",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-cool-mobile-before.png",
+      "sha256": "d36bcd5e7ac7096924ae79eb881afa8e8a4964cc65cff4b58c96339864e09033",
+      "page": "/changelog/",
       "theme": "cool",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
-      }
-    },
-    {
-      "file": "s387-sitemap-lava-desktop-before.png",
-      "sha256": "540ff041765a0e2245d69104d11139a0942e6cfb388b2a830bfa7fa8a9f5bb06",
-      "page": "/sitemap-page/",
-      "theme": "lava",
-      "viewportName": "desktop",
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-lava-desktop-after.png",
-      "sha256": "9dbb9b708e750ea8dea116cf39a61c93c16a2c292a688ea0d9831101a374c558",
-      "page": "/sitemap-page/",
-      "theme": "lava",
-      "viewportName": "desktop",
+      "file": "s390-rank-strip-cool-mobile-after.png",
+      "sha256": "4a6224d5735334ec45d29b4c9b7c125a506321d6e469ec1168270eeba70149b9",
+      "page": "/membership/",
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
       "state": "after",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-lava-mobile-before.png",
-      "sha256": "951c919fa6245de49fd919abf9c6440eec7da221d495aed35560292b73fb4231",
-      "page": "/sitemap-page/",
-      "theme": "lava",
+      "file": "s390-changelog-hero-cool-mobile-after.png",
+      "sha256": "6c4f3a99831e2ca77e830b45dba390a755a7a75c1d453b5762ebfffcc397b5e1",
+      "page": "/changelog/",
+      "theme": "cool",
       "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-lava-desktop-before.png",
+      "sha256": "52c928bc0d92f67c8bcd7c8a59a338aa27b662830cbd012251a267fba87968b8",
+      "page": "/membership/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 390,
-        "height": 844
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-lava-mobile-after.png",
-      "sha256": "012e3263bab28379e42f0faf3f42172879472dd306ee09c86a8d03ca1990f12d",
-      "page": "/sitemap-page/",
+      "file": "s390-changelog-hero-lava-desktop-before.png",
+      "sha256": "4b26a3127f6fd7552575da206c163749a8f1b6aea875c95094e94874102cc96c",
+      "page": "/changelog/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-lava-desktop-after.png",
+      "sha256": "c7ee3277ccc45170b5aa1e3993ee406c7f37cd3e353d9ae125f5419aaa88d149",
+      "page": "/membership/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-lava-desktop-after.png",
+      "sha256": "7d469f658f915b21f4d4b05775b9e3492fa8c45ff96b9b27d6b8c13ef934ea20",
+      "page": "/changelog/",
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-lava-mobile-before.png",
+      "sha256": "e85998bd7ab3ea461da4cd307959494f97b4a6336e5de95f1e8d6ba1fe2fa5ef",
+      "page": "/membership/",
       "theme": "lava",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
-      }
-    },
-    {
-      "file": "s387-sitemap-high-contrast-desktop-before.png",
-      "sha256": "d939ed9d71c601d4974a276cb1ff2a88f16caaccd42b2b4c80e043cedd0371e2",
-      "page": "/sitemap-page/",
-      "theme": "high-contrast",
-      "viewportName": "desktop",
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-high-contrast-desktop-after.png",
-      "sha256": "f6a11c6ea2e2073a9cb419dc2d9e7a9468d8255907650d2a774ff296006eeb0e",
-      "page": "/sitemap-page/",
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      }
-    },
-    {
-      "file": "s387-sitemap-high-contrast-mobile-before.png",
-      "sha256": "30a812ce8b91b732e30cb6a8fac3f47abb8d02ba723131530cc3e774eeaaaa67",
-      "page": "/sitemap-page/",
-      "theme": "high-contrast",
+      "file": "s390-changelog-hero-lava-mobile-before.png",
+      "sha256": "a05ada702c1ec226ce28bdd3c873cc6e93822b3043c231595533b22c815bfec1",
+      "page": "/changelog/",
+      "theme": "lava",
       "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
       "state": "before",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
-      "viewport": {
-        "width": 390,
-        "height": 844
+        "reviewer": "claude-code-S390"
       }
     },
     {
-      "file": "s387-sitemap-high-contrast-mobile-after.png",
-      "sha256": "f2c2557ec01b79ce6e3eca1ced6769cf42281d359a47232b0d86a30f99749309",
-      "page": "/sitemap-page/",
-      "theme": "high-contrast",
+      "file": "s390-rank-strip-lava-mobile-after.png",
+      "sha256": "79192bc437087896deac2effe3826e7d31fed019764fc1ae8e68cfbe00268194",
+      "page": "/membership/",
+      "theme": "lava",
       "viewportName": "mobile",
-      "state": "after",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex image inspection"
-      },
       "viewport": {
         "width": 390,
         "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-lava-mobile-after.png",
+      "sha256": "4fc8e45da958fe93d078db8caacc4729269ebfd2e6860a13ba401210bd0b0f96",
+      "page": "/changelog/",
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-high-contrast-desktop-before.png",
+      "sha256": "332c336b8e31d0f71287fd8e42857e669b8dfc4c9bf25c69761c06bb0765e336",
+      "page": "/membership/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-high-contrast-desktop-before.png",
+      "sha256": "6709f06afaa0539d299d42cd83c230b940973c1a9ddf37b656be6e6642a08bc6",
+      "page": "/changelog/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-high-contrast-desktop-after.png",
+      "sha256": "f2f19ee54e55a3051ee6699392432d14a3a3ef4addda36c52271fc5a8c3d614c",
+      "page": "/membership/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-high-contrast-desktop-after.png",
+      "sha256": "6a7ebcec9f011c525bc81a5582ac0a589f0cf38373d71178c274d6d49d52a173",
+      "page": "/changelog/",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-high-contrast-mobile-before.png",
+      "sha256": "fbcfa6ff79f7b874aebd7409aeaedb7caa7ecc53c8f857ff8af14935a34dc168",
+      "page": "/membership/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-high-contrast-mobile-before.png",
+      "sha256": "3d1d32d6f0b1dfc90cb12b4865b723a1854d32ba4f7ef2809024f07dfdbe6b75",
+      "page": "/changelog/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "before",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-rank-strip-high-contrast-mobile-after.png",
+      "sha256": "0cc31fa13b3fa08e559b56c2d428daae86718534700465018d97fafe5ffd8ea7",
+      "page": "/membership/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
+      }
+    },
+    {
+      "file": "s390-changelog-hero-high-contrast-mobile-after.png",
+      "sha256": "bc2498b122ae2a8d00b47f8a962e241aacaf0ddf76e5a82886a834395b696c7c",
+      "page": "/changelog/",
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "after",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "claude-code-S390"
       }
     }
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "codex image inspection",
+    "reviewer": "claude-code-S390",
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
+      "totalCaptures": 56,
+      "manuallyReviewed": 56,
       "automatedOnly": 0,
       "complete": true
     },
     "findings": [
-      "All 28 before/after views inspected across seven themes at 1366px and 390px. The sixth VERA archive link is visible, readable and stays within its card; no new clipping or horizontal overflow. Raw light mobile and dark desktop images confirm the contact sheet detail. Cookie consent remains an existing separate overlay below the changed link."
+      "Rank strip: signed-in member now sees the live highlight and \"Your rank\" badge in all seven themes at 1280px and 390px; mobile strip centers the active tier without page scroll; no horizontal overflow.",
+      "Light theme: hard-coded #FFC400 on the badge, active tier and The Sparked name failed WCAG AA on the light surface; now var(--gold) (#8a6000 in light, unchanged elsewhere).",
+      "Active tier lift was clipped at the top of the scroll container; 6px padding/negative-margin pair gives it room with zero net layout change.",
+      "Changelog hero reserves the push slot and shows a readable ship-feed fallback in every theme; feedback insights show \"No themed signal yet.\" in the theme muted color instead of collapsing the grid.",
+      "Also reviewed outside this matrix: 28 before/after captures of the /changelog/ feedback-insights block (not retained); the themes empty state reads in the theme muted color in all seven themes.",
+      "Element screenshots overlap the sticky header and cookie banner on long mobile sections; these are capture artifacts, not page defects.",
+      "Data-only query repairs on /community/ and /leaderboards/ render the same empty states as before for anon visitors; verified through request status, not pixels."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "membership-live-tier.js: own vault_members row, DOM-built badge, strip-only centering, no false vs:rank_up haptic.",
+      "style.css + membership/index.html: theme gold token for rank names; room for the lifted tier.",
+      "changelog/index.html + feedback-insights.js + push-subscribe.js: reserved push slot with static fallback, summary min-height at narrow widths, themes placeholder instead of display:none."
+    ],
     "blockingDefectsOpen": 0,
-    "limitation": null
+    "limitation": "Before-state rank strip reproduces production by rejecting the member query; a real member session was not used."
   },
-  "baseline": {
-    "commit": "37964277185349772d3da0ebc21b18da1330dc01",
-    "path": "sitemap-page/index.html",
-    "method": "Git baseline HTML fulfilled through real Chromium; current unchanged theme assets"
+  "beforeSource": {
+    "commit": "36333d1c240a2ccb97d7cf47d60e5e7acebd53be",
+    "method": "HEAD worktree served on a second local preview port for /changelog/; /membership/ before-state replays the production 404 member query."
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "839399fd4e630aa1679c36781cb0db4a34451c3cc6af6e92093d56a29472e83f",
-    "candidateSha": "37964277185349772d3da0ebc21b18da1330dc01",
-    "root": "b1bdb623ea8a1950475ddb7e46b06c9ab64f7bf3cf62aa858c58113be67c4957"
+    "manifestSha256": "016bd007cd306b91e34237d4c26e7b4d219983b1e8b5e6ed2f46e7203c426687",
+    "candidateSha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
+    "root": "b0bae12f858c88519065a81aa76310d064e4485430dcb8f0e5d1386512898966"
   },
-  "metadataRebinding": {
-    "at": "2026-10-18T15:59:35.693Z",
-    "reason": "Current generated activity heat count; all inspected UI source and capture hashes unchanged."
-  }
+  "candidateBindingNote": "Candidate metadata attached after dependent artifact rebuild; capture/review dates, pixels and source hashes preserved."
 }
