@@ -1,69 +1,45 @@
-<!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-10-19 (Session 389 closeout) -->
-
-# Closeout Status Board — VaultSparkStudios.github.io
+# S391 release handoff status
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S389 ═══════╗
-║  Date: 2026-10-19  ·  SIL: 935/1000  ·  Velocity: 5 down         ║
-║  Mode: BUILDER  ·  Agent: codex                                  ║
-║  Autopilot: proven (S389)                                        ║
-║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║ Strict deploy arguments; deterministic handoff extraction.     ║
-║ Archive sitemap discovery; Oracle and field-proof ordering.    ║
-║ Five selected outcomes verified; no extra session credited.    ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
-║    Dev Health         95   ██████████                            ║
-║    Alignment          94   █████████░                            ║
-║    Momentum           90   █████████░                            ║
-║    Engagement         95   ██████████                            ║
-║    Process Qual       91   █████████░                            ║
-║    Coherence          92   █████████░                            ║
-║    Security           94   █████████░                            ║
-║    Ecosystem          91   █████████░                            ║
-║    Capital            95   ██████████                            ║
-║    Automation         98   ██████████                            ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
-║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
-║  · Codex agent memory                                            ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 1453 files  ·  M:30 A:0 D:0 ?:1423                     ║
-║  Ahead: 0  ·  Behind: 0                                          ║
-║  Branch: main                                                    ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
-║ Staging: exact status25/25; full baseline c861 verified.       ║
-║ Live: Pages39326784514 + Worker39326087269 verified.           ║
-║ Status overlay39329492923:75 hash checks passed.               ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║ Doctor: canonical16/17;0 blocking;0 advisory.                  ║
-║ Tests: core542/542 twice; final status109/109.                 ║
-║ Visual:28 inspected captures; mobile215/215.                   ║
-║ IGNIS: prior score retained; no sibling rescore claimed.       ║
-║ Truth: existing identity/field-data holds preserved.           ║
-║ Sanitization: clean; staged secrets scan0 findings.            ║
-║ Shells: historic totals unmeasured; owned active0.             ║
-╚════════════════════════════════════════════════════════════════╝
-╔══ NEXT SESSION ════════════════════════════════════════════════╗
-║ Observe outward CLI admission and handoff omissions.           ║
-║ Existing identity/field-data holds remain explicit.            ║
-╚════════════════════════════════════════════════════════════════╝
+╔═ SESSION CLOSEOUT · S391 · delivery pending ════════════════════════════╗
+║ SIL936/1000; actual local autopilot log and commits observed.            ║
+║ Canonical local autopilot ledger row missing; no foreign receipt borrowed. ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ WHAT SHIPPED · source verified; release held ══════════════════════════╗
+║ ✓ Six operational CLI boundaries; weekly REST canary source published.   ║
+║ ✓ Spark collision guard verified locally; repair is not pushed.          ║
+║ ✓ Full545/545; Spark42; mobile215; visual28 reviewed.                    ║
+║ □ Current live125/125 fail; no S391 production promotion.                ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ SCORES ════════════════════════════════════════════════════════════════╗
+║ Dev93 Alignment94 Momentum91 Engagement96 Process89                      ║
+║ Coherence93 Security96 Ecosystem91 Capital95 Automation98                ║
+║ Total936/1000; premise timing nonpassing; no LH median win claimed.      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ WRITE-BACK STATUS ═════════════════════════════════════════════════════╗
+║ ✓ CURRENT_STATE, TASK_BOARD, HANDOFF, STATUS, DECISIONS, SIL, WORK_LOG   ║
+║ ✓ Agent memory and release evidence current; no new creative direction.  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ GIT STATUS ════════════════════════════════════════════════════════════╗
+║ Repair code13123f55fd local; remote3bc93c7f2e; push held.                ║
+║ Cache/output WIP and prior recovery stashes preserved.                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ DEPLOYMENT ════════════════════════════════════════════════════════════╗
+║ Staging: full12183-file payload33908ab59dc9 verified; runtime rejected.  ║
+║ Production: ceeeb2de9f remains deployed; Supabase UNHEALTHY.             ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ POST-SESSION SIGNALS ══════════════════════════════════════════════════╗
+║ Tests545/545; sourceca9cba1d10ba7a057f94491e; current receipt bound.     ║
+║ Last canonical doctor:0 blocking,1 advisory. Secret scan:0 findings.     ║
+║ Publishers12/12 restored; Ark cargo sent; native goal NOT complete.      ║
+║ Owned verification handles0; named helpers0; known preview listeners0.   ║
+║ Historical shell totals unmeasured; global IGNIS rescore not claimed.    ║
+╚══════════════════════════════════════════════════════════════════════════╝
+╔═ NEXT SESSION ══════════════════════════════════════════════════════════╗
+║ Resume this SAME S391 native goal; no new arc.                           ║
+║ Await explicit restart approval or independently verified recovery.      ║
+║ Then staging ceremony, exact-SHA CI, full Pages and production readback. ║
+╚══════════════════════════════════════════════════════════════════════════╝
 ```
 
-*Generated by `scripts/render-closeout-board.mjs v1.1`*
-
-S389 release evidence: docs/RELEASE_S389.json. The board uses the canonical renderer; release-specific rows are bound to the accepted receipt. Historical shell totals are unmeasured; final owned native process inventory found0 active. Pre-existing unrelated operator residue is preserved.
+Evidence: docs/RELEASE_S391.json. Canonical board shape validated; actual execution log and git anchors used, not a foreign same-number session receipt.

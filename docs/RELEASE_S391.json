@@ -186,6 +186,13 @@
         "auth": "ACTIVE_HEALTHY"
       },
       "notes": "Live checker exited0 for125 queries with7 existing declared deferrals after provider recovery. No restart executed; earlier recovery approval is unnecessary."
+    },
+    "closeoutExecution": {
+      "state": "actual-local-run-observed",
+      "source": ".cache/S391/closeout-autopilot.log",
+      "commit": "3ae4b8ffb779708ef01fb299facc1cfa0b052db9",
+      "reconcileCommit": "6006f4121163711ab03e69cd35f6c1c044990c92",
+      "note": "Local autopilot logged completion and produced these website commits. The local canonical receipt ledger has no S391 row; foreign studio-ops S391 receipts do not prove this invocation. Do not label ledger proof complete."
     }
   },
   "staging": {
@@ -239,10 +246,9 @@
     "method": "Use existing full Pages deployment workflow for the verified prior release; staging deploy retains rollback directories."
   },
   "remaining": [
-    "Provider recovery and a passing current live REST probe + staging ceremony",
-    "Publish the repaired candidate and pass required hosted checks at its exact SHA",
-    "Confirmed full Pages deployment and production SHA/tree readback",
-    "Final release write-back, Ark/status-board evidence and publisher restoration"
+    "Provider recovery and passing current live REST/staging runtime ceremony",
+    "Publish repaired candidate and pass required hosted checks at its exact SHA",
+    "Confirmed full Pages deployment, production SHA/tree readback and final accepted release write-back"
   ],
   "recovery": {
     "state": "approval-pending",
@@ -255,5 +261,32 @@
     },
     "restartPerformed": false,
     "note": "Approval requested in the current conversation; silence is not approval. Recheck health before any approved recovery; never restart a healthy service."
+  },
+  "publication": {
+    "remoteSource": "3bc93c7f2e2942b55a85019db32bf1f501841f96",
+    "localRepairCode": "13123f55fd65a800b621d0145b36296a14d028a8",
+    "repairPushed": false,
+    "note": "Local repair remains off remote main until current staging runtime acceptance passes."
+  },
+  "restoration": {
+    "publishers": {
+      "count": 12,
+      "allRestored": true,
+      "verifiedAt": "2026-10-20T09:30:54.105Z"
+    },
+    "processes": {
+      "at": "2026-10-20T09:32:35.7519494Z",
+      "s391NamedHelperProcesses": 0,
+      "knownPreviewListeners": 0,
+      "historicalStartedClosed": "unmeasured",
+      "ownedVerificationHandlesOpen": 0
+    },
+    "wip": "Prestart cache and reconciliation stashes preserved; cache/output residue stays out of public commits."
+  },
+  "coordination": {
+    "type": "session-impact-summary",
+    "cargoId": "01K5CAF19T90B68DFE230AE7A2",
+    "state": "sent",
+    "note": "Transport success only; no recipient acceptance or application claimed."
   }
 }
