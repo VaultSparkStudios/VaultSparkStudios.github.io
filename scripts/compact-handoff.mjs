@@ -18,17 +18,18 @@
  *   node scripts/compact-handoff.mjs --force   # force re-digest
  *   node scripts/compact-handoff.mjs --trim    # archive old sessions
  *   node scripts/compact-handoff.mjs --trim --dry-run  # preview only
+ *   node scripts/compact-handoff.mjs --measure  # read-only: extract omissions across committed handoff history
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { archiveBeforeMutate } from './lib/archive-then-compact.mjs';
-import { handoffDigest } from './lib/handoff-digest.mjs';
+import { handoffDigest, measureOmissions } from './lib/handoff-digest.mjs';
 import { trimHandoffText } from './lib/handoff-trim.mjs';
 import { parseDeployArgv } from './lib/deploy-argv.mjs';
-const admission = parseDeployArgv(process.argv.slice(2), { name: 'compact-handoff', boolFlags: ['--force','--trim'] });
-if (admission.help) { console.log('Usage: compact-handoff [--force | --trim] [--dry-run] — deterministic source extraction, no API.'); process.exit(0); }
+const admission = parseDeployArgv(process.argv.slice(2), { name: 'compact-handoff', boolFlags: ['--force','--trim','--measure'], modes: ['--force','--trim','--measure'] });
+if (admission.help) { console.log('Usage: compact-handoff [--force | --trim | --measure] [--dry-run] — deterministic source extraction, no API.'); process.exit(0); }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -75,6 +76,17 @@ if (trim) {
   } else {
     console.log(`(dry-run) would rewrite LATEST_HANDOFF.md + append ${toArchive.length} to HANDOFF_ARCHIVE.md`);
   }
+  process.exit(0);
+}
+
+// ── MEASURE MODE (read-only) ─────────────────────────────────────────────────
+if (process.argv.includes('--measure')) {
+  // Loaded here only: the default extract path stays free of subprocess modules.
+  const { execFileSync } = await import('./lib/safe-spawn.mjs');
+  const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8', windowsHide: true, maxBuffer: 64 * 1024 * 1024 });
+  const shas = git('log', '--format=%H', '-n', '80', '--', 'context/LATEST_HANDOFF.md').split(/\r?\n/).filter(Boolean);
+  const sources = shas.map(sha => { try { return git('show', `${sha}:context/LATEST_HANDOFF.md`); } catch { return null; } }).filter(s => s !== null);
+  console.log(JSON.stringify(measureOmissions(sources), null, 2));
   process.exit(0);
 }
 

@@ -802,7 +802,7 @@
       listEl.textContent = 'Loading…';
       try {
         const [{ data: challenges }, { data: submissions }] = await Promise.all([
-          VSSupabase.from('challenges').select('id,title,challenge_type,points').eq('is_active', true),
+          VSSupabase.from('challenges').select('id,title,challenge_type,points').eq('active', true),
           VSSupabase.from('challenge_completions').select('challenge_id'),
         ]);
         if (!challenges) { listEl.textContent = 'Could not load.'; return; }

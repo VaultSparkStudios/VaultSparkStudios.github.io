@@ -163,7 +163,7 @@
       Array.prototype.forEach.call(containers, function (c) { renderContainer(c, subscribed, config); });
       emitUx('push:prompt_shown');
     }).catch(function () {
-      Array.prototype.forEach.call(containers, function (c) { c.style.display = 'none'; });
+      // Keep the container's static fallback: hiding it would shift everything below.
     });
   }
 

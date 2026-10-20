@@ -2384,3 +2384,16 @@ Reuse canonical measured verdicts and existing proof generator. Grade before der
 
 
 S389 D-S389.4 implementation clarification: playable recommendations embed the field-proof hash. The full profile now derives them immediately after field proof; RUM rebuilds/checks/stages them, and the existing graph node enforces their publication.43 order assertions and37 cascade fixtures cover this closure.
+
+
+## D-S390.1 — Public REST queries need a live verdict (2026-10-19)
+
+Playwright mocks fulfil any select, so ten browser queries reached production naming columns or tables it does not have. Every client query (table, select, filter and order columns) must now appear in scripts/public-rest-contract.json with a live verdict from read-only anon `limit=0` probes; build:check enforces it offline and `--live --write` refreshes it. A rejected query may remain only as `known-failing` with a deferral note. Membership-tier and identity-adjacent fixes (vault-sdk, world gates) stay deferred for founder review; the rank strip uses points only.
+
+## D-S390.2 — Keep the handoff extract cap (2026-10-19)
+
+Measured over 80 committed handoff versions: 31 omitted content (median 2,432 characters), and 2 cut into the newest session. The omission lookup covers older sessions, so the 6000-character cap stays. Re-measure with `compact-handoff.mjs --measure` before changing it.
+
+## D-S390.3 — Reserve late-filled space instead of collapsing it (2026-10-19)
+
+/journal/ redirects to /changelog/#stories, so late content above the anchor moved what readers were looking at (CLS 0.1154). The push slot reserves its height and ships a static ship-feed fallback; the empty themes grid keeps a one-line state instead of display:none; the summary reserves its settled height at narrow widths.

@@ -17,17 +17,24 @@ import { createRequire } from 'node:module';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validatePushSubscription } from '../cloudflare/worker-lib.mjs';
+import { admitCommand } from './lib/deploy-argv.mjs';
 
 const ROOT  = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OPS   = join(ROOT, '..', 'vaultspark-studio-ops');
-const args  = process.argv.slice(2);
+// Sends to every push subscriber: refuse input it does not understand.
+const admitted = admitCommand({
+  name: 'notify-subscribers',
+  boolFlags: ['--count'],
+  valueFlags: ['--title', '--body', '--url', '--game'],
+  usage: 'node scripts/notify-subscribers.mjs --title "..." --body "..." [--url /path/] [--game cod|fgm|forge] [--dry-run] | --count',
+});
 
-const DRY_RUN     = args.includes('--dry-run');
-const COUNT_ONLY  = args.includes('--count');
-const GAME_FILTER = args.includes('--game') ? args[args.indexOf('--game') + 1] : null;
-const TITLE       = args.includes('--title') ? args[args.indexOf('--title') + 1] : 'VaultSpark Studios';
-const BODY        = args.includes('--body')  ? args[args.indexOf('--body')  + 1] : '';
-const URL_PATH    = args.includes('--url')   ? args[args.indexOf('--url')   + 1] : '/vault-member/';
+const DRY_RUN     = admitted.dry;
+const COUNT_ONLY  = admitted.flags.has('--count');
+const GAME_FILTER = admitted.values['--game'] ?? null;
+const TITLE       = admitted.values['--title'] ?? 'VaultSpark Studios';
+const BODY        = admitted.values['--body'] ?? '';
+const URL_PATH    = admitted.values['--url'] ?? '/vault-member/';
 
 const GAME_ALLOW = new Set(['cod', 'fgm', 'forge']);
 if (GAME_FILTER && !GAME_ALLOW.has(GAME_FILTER)) {

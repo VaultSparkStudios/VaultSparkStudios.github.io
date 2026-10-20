@@ -1,0 +1,644 @@
+{
+  "session": 390,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios"
+  },
+  "scope": "Fresh full S390 arc with direct main commit/push and full deployment authorized.",
+  "lifecycleFocus": {
+    "stage": "S1",
+    "mode": "supported-release",
+    "health": "yellow",
+    "audience": "public-live",
+    "stageSource": "registry",
+    "statusSource": "project-status"
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "investigation": {
+    "reuse": "Existing Supabase publishable-key client paths, existing rank tier helpers, existing shell-asset builder and existing argv guard. No dependency, paid API or schema change.",
+    "baseline": "Latest Lighthouse CI artifact (run 39330136891) fails errors-in-console on all nine audited pages. Two of the console errors are real production PostgREST 400s. An anon live probe of 66 distinct client queries (limit=0, read-only) found 10 failing in production: event_rsvps.id, public_leaderboard.vault_points, game_scores->vault_members.rank_title, challenge_submissions.user_id/vault_members.challenge_streak, weekly_game_scores.rank (parsed as an aggregate), members (missing table), vault_challenges (missing table), member_achievements->achievements (no relationship), page_feedback.page. ignis_spend_today 401 is the intended admin-only posture. Homepage Lighthouse trend is stable at 0.80-0.84 across 20 runs: the S388 0.82->0.76 note was a single-run excursion. /changelog/ CLS is constant at 0.0857 across 20 runs.",
+    "canon": "Canon sync current at S389; no ABSOLUTE gaps. Existing identity/terminology STRONG gaps remain outside scope. CANON-053 applies to any rendered UI change.",
+    "measurement": "Before/after live anon probe of every client query; Playwright community/leaderboard specs; Lighthouse console-error audit on the next CI run; CLS measured locally in a real browser before/after."
+  },
+  "candidates": {
+    "ux": [
+      [
+        "Repair live-broken public data queries",
+        "Selected; RSVP counts, leaderboards and member rank strip fail in production."
+      ],
+      [
+        "Redesign community page",
+        "No evidence; stabilization focus."
+      ]
+    ],
+    "speed": [
+      [
+        "Remove guaranteed-400 primary members query",
+        "Selected inside item 1; one wasted round trip per /community/ visit."
+      ],
+      [
+        "Chase homepage Lighthouse 0.76",
+        "Contradicted: 20-run trend is stable."
+      ]
+    ],
+    "featureDepth": [
+      [
+        "Public REST contract gate",
+        "Selected; mocks accept any select, so drift reached production unseen."
+      ],
+      [
+        "Member achievements on profiles",
+        "Deferred: live schema differs from migrations and public-member-data choice is undecided."
+      ]
+    ],
+    "security": [
+      [
+        "event_rsvps exposes user_id to anon",
+        "Recorded for founder review; auth/RLS change requires escalation."
+      ]
+    ],
+    "innovativeFeatures": [
+      [
+        "Live-verified query manifest",
+        "Every shipped anon query carries a live verdict; a new or changed query cannot ship unverified."
+      ]
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "public-data-query-repair",
+      "title": "Repair public data queries that fail in production",
+      "axis": "ux",
+      "tier": "🔥",
+      "impact": 9,
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 18,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Ten live client queries return 400/404 in production; RSVP counts show a dash, the members directory spends a guaranteed failing request, three game leaderboards and the signed-in rank strip never load.",
+      "userOutcome": "Visitors see real RSVP counts, leaderboards render their real (or honestly empty) state, and signed-in members get their rank highlighted on /membership/.",
+      "acceptance": "Live anon probe of every extracted client query returns no 400/404 except declared auth-only views; community and leaderboard Playwright specs pass; no console 400 from Supabase on /community/ or /leaderboards/* in a real browser.",
+      "premises": [
+        {
+          "claim": "Community RSVP count selects a nonexistent id column",
+          "adapter": "file-content",
+          "target": "community/index.html",
+          "pattern": "event_rsvps?event_slug=eq.'+ev+'&select=id",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Members directory queries vault_points first",
+          "adapter": "file-content",
+          "target": "assets/members-directory.js",
+          "pattern": "select=username,vault_points,rank_title",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Game leaderboards embed a nonexistent rank_title",
+          "adapter": "file-content",
+          "target": "leaderboards/call-of-doodie/index.html",
+          "pattern": "vault_members(username,rank_title)",
+          "operator": "eq",
+          "expected": true
+        },
+        {
+          "claim": "Rank strip reads a nonexistent members table",
+          "adapter": "file-content",
+          "target": "assets/membership-live-tier.js",
+          "pattern": "/rest/v1/members?select=plan,vault_points",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Fix the community RSVP count and members-directory query only."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Fix every failing public query against the real schema: RSVP count (event_slug), members directory (points), three leaderboard pages (score embed via points, challenge champions via member_id, weekly board without the aggregate-parsed rank column), rank strip (own vault_members row), remove the unreferenced membership-stats.js orphan, studio-hub feedback column. Rebuild shell assets. Verify with live anon probe and Playwright."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Separate scope: server-side public leaderboard views for anon-blocked tables and member achievements display after the public-member-data decision."
+        }
+      },
+      "recipe": "Fix every failing public query against the real schema: RSVP count (event_slug), members directory (points), three leaderboard pages (score embed via points, challenge champions via member_id, weekly board without the aggregate-parsed rank column), rank strip (own vault_members row), remove the unreferenced membership-stats.js orphan, studio-hub feedback column. Rebuild shell assets. Verify with live anon probe and Playwright.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T00:05:35.238Z",
+          "status": "implemented",
+          "note": "Repaired: community RSVP count (event_slug), members directory (points only), 7 leaderboard pages (game embed via points + getRankInfo, challenge champions via member_id, weekly without aggregate-parsed rank), signed-in rank strip (own vault_members row; DOM badge; strip-only centering; no false rank_up haptic; light-theme gold token), portal dashboard (point_events created_at/points, challenges points/active, spotlight without accent), portal features challenges active, investor KPIs (game_sessions played_at, challenges active); removed orphan membership-stats.js. Local browser: 0 Supabase 4xx on /community/ and /leaderboards/ (production baseline 11 failing). Deferred with notes: vault-sdk (founder review), rank orb, streaks, achievements, investor messages, studio-hub feedback."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "public-rest-contract-gate",
+      "title": "Gate shipped client queries on a live-verified contract",
+      "axis": "featureDepth",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 7,
+      "effortHours": 2,
+      "priority": 14,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Playwright mocks fulfil any select, so schema drift between client code and production reached users unseen for months.",
+      "userOutcome": "A public page cannot ship a data query that production rejects.",
+      "acceptance": "scripts/check-public-rest-contract.mjs extracts every client REST/VSPublic query; offline mode fails when a query is absent from the committed live-verified manifest or recorded as failing; --live re-verifies with read-only anon limit=0 requests; self-test fixtures pass; wired into build:check.",
+      "premises": [
+        {
+          "claim": "No public REST contract checker exists",
+          "adapter": "file-exists",
+          "target": "scripts/check-public-rest-contract.mjs",
+          "operator": "eq",
+          "expected": false
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Commit the live probe as a manual script."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Offline manifest gate in build:check plus --live refresh, with self-test fixtures for extraction and drift."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "Scheduled live drift workflow with issue filing."
+        }
+      },
+      "recipe": "Offline manifest gate in build:check plus --live refresh, with self-test fixtures for extraction and drift.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T00:05:35.238Z",
+          "status": "implemented",
+          "note": "scripts/check-public-rest-contract.mjs: extracts REST URLs, supabase-js chains and single-table helper queries incl. filter/order columns; offline gate in build:check; --live probes anon limit=0; manifest 125 queries, 7 known-failing with notes; self-test 10/10."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "outward-cli-admission-audit",
+      "title": "Audit remaining outward CLIs for argument admission",
+      "axis": "speed",
+      "tier": "⚡",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 1.5,
+      "priority": 10.3,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "S389 admitted arguments for six deployment entry points; other scripts that push, publish or write remotely were not inventoried.",
+      "userOutcome": "Release and publishing commands only act on intentional input.",
+      "acceptance": "Inventory of outward-acting scripts with admission status recorded; any script that ignores unknown arguments before a remote write adopts the existing strict wrapper with an IO-tripwire test.",
+      "premises": [
+        {
+          "claim": "S389 outward CLI follow-up is open",
+          "adapter": "file-content",
+          "target": "context/TASK_BOARD.md",
+          "pattern": "- [ ] [SIL][S389] Audit other outward CLIs.",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Inventory only."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Inventory plus strict admission for unguarded outward scripts with tests."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Portfolio-wide CLI contract via Ark."
+        }
+      },
+      "recipe": "Inventory plus strict admission for unguarded outward scripts with tests.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T00:05:35.238Z",
+          "status": "implemented",
+          "note": "Inventory: 72 outward scripts, 6 strictly admitted before. Added admitCommand (validate-only) and applied strict admission to notify-subscribers, notify-changelog-subscribers, send-regression-alert (all dry aliases preview) and push-dispatch (admitDeployment; help/dry inert). Tripwire tests 8/8 incl. --dryrun typo exit 2."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "handoff-extract-omission-measure",
+      "title": "Measure deterministic handoff extract omissions",
+      "axis": "featureDepth",
+      "tier": "💡",
+      "impact": 5,
+      "innovation": 5,
+      "effortHours": 1,
+      "priority": 9.6,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "S389 made handoff extraction deterministic with omission lookup; omission frequency was never measured before deciding extract size.",
+      "userOutcome": "Session handoffs keep the content the next session needs without growing the startup budget blindly.",
+      "acceptance": "A measurement over the real handoff history reports omitted-section counts and bytes per session; the result decides keep/grow with evidence recorded in DECISIONS.",
+      "premises": [
+        {
+          "claim": "S389 extract-omission follow-up is open",
+          "adapter": "file-content",
+          "target": "context/TASK_BOARD.md",
+          "pattern": "- [ ] [SIL][S389] Measure extract omissions.",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "One-off measurement recorded in DECISIONS."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Measurement mode on the existing digest script with a fixture test."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Adaptive extract size."
+        }
+      },
+      "recipe": "Measurement mode on the existing digest script with a fixture test.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T00:05:35.238Z",
+          "status": "implemented",
+          "note": "compact-handoff --measure over 80 committed versions: 31 omitted (median 2432, max 16185 chars), 2 cut the newest session; cap 6000 kept (D-S390.2). Fixture test added."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "changelog-layout-shift",
+      "title": "Remove the constant /changelog/ layout shift",
+      "axis": "speed",
+      "tier": "💡",
+      "impact": 5,
+      "innovation": 3,
+      "effortHours": 1,
+      "priority": 8.2,
+      "selectedDepth": "L2",
+      "status": "shipped",
+      "why": "Every Lighthouse run for 20 runs records CLS 0.0857 on /changelog/ while every other page sits at 0.0002.",
+      "userOutcome": "The changelog does not jump while reading.",
+      "acceptance": "Shift source identified in a real browser; fixed with reserved space; local CLS below 0.01; before/after captures in every theme at desktop and mobile with a visual QA receipt.",
+      "premises": [
+        {
+          "claim": "Changelog CLS is recorded at 0.0857",
+          "adapter": "file-content",
+          "target": ".cache/lighthouse-trend.json",
+          "pattern": "\"cls\": 0.0857",
+          "operator": "eq",
+          "expected": true
+        }
+      ],
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Reserve space for the shifting element."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Bisect the shift in a real browser, fix at source, verify CLS and visual QA."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Sitewide CLS budget gate."
+        }
+      },
+      "recipe": "Bisect the shift in a real browser, fix at source, verify CLS and visual QA.",
+      "executionLog": [
+        {
+          "at": "2026-10-20T00:05:35.238Z",
+          "status": "implemented",
+          "note": "Cause: /journal/ 301 to /changelog/#stories; late content above the anchor (push slot 0 to 69px, summary 26 to 77px, themes grid display:none margin collapse). Reserved slot with static ship-feed fallback, summary min-height at narrow widths, themes placeholder. CLS 0.1154 to 0.000-0.0085 across 390/412/768/1280; local Lighthouse /journal/ 0.0017. Visual QA receipt 40 hash-bound captures (84 reviewed)."
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "member-achievements-display",
+      "reason": "Live achievements table (profile_id, achievement_key) differs from the committed migration and public display of per-member achievements awaits the open public-member-data decision. Query stays as-is; recorded in TASK_BOARD."
+    },
+    {
+      "slug": "homepage-lighthouse-regression",
+      "reason": "Contradicted: 20-run trend holds 0.80-0.84; the 0.76 reading was one run."
+    },
+    {
+      "slug": "kv-usage-observation",
+      "reason": "S388 SIL observation needs a production analytics read; stays queued, not claimed."
+    },
+    {
+      "slug": "event-rsvps-user-id-exposure",
+      "reason": "RLS change is an auth/security flow change requiring escalation; recorded for founder review."
+    },
+    {
+      "slug": "studio-market",
+      "reason": "No market artifact; no competitor facts invented."
+    }
+  ],
+  "innovationReserve": [],
+  "totals": {
+    "count": 5,
+    "priority": 60.1,
+    "top3": [
+      "public-data-query-repair",
+      "public-rest-contract-gate",
+      "outward-cli-admission-audit"
+    ]
+  },
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-10-19T22:45:00.000Z",
+  "premiseGate": {
+    "schema": "premise-gate/v1",
+    "at": "2026-10-19T22:32:23.124Z",
+    "head": "36333d1c240a2ccb97d7cf47d60e5e7acebd53be",
+    "sidecar": "docs/AUDIT_2026-10-19-S390.json",
+    "selectionMode": "explicit",
+    "recordPathPolicy": "project",
+    "strict": true,
+    "exit": 0,
+    "verified": 8,
+    "contradicted": 0,
+    "unverified": 0,
+    "premiseDigest": "805bb8a9e9826fa4d07d690450ca46322dada84e1c2d5bace22a11cac58e63d0",
+    "implementationDirty": [
+      ".ops-cache/handoff-digest.json",
+      "docs/GENIUS_LIST.md",
+      "docs/cache-ledger.ndjson",
+      "ignis/output/pillar-repair-plan.json",
+      "ignis/output/unified-score.json",
+      "portfolio/compiled/FORECAST_LEDGER.json",
+      "cloudflare/.cache/spark-worker-dry-run/security-headers-worker.js",
+      "cloudflare/.cache/spark-worker-dry-run/security-headers-worker.js.map",
+      "docs/AGENT_ACTION_REFERENCE.md",
+      "docs/EXECUTION_CONTRACT.md",
+      "docs/PERF_TRACE_PROD_AUTO_20260930.json",
+      "docs/PERF_TRACE_PROD_AUTO_20260930.md",
+      "docs/PERF_TRACE_PROD_AUTO_20261019.json",
+      "docs/PERF_TRACE_PROD_AUTO_20261019.md",
+      "docs/RELEASE_PROMOTION_PROTOCOL.md",
+      "docs/STAGE_DIRECTED_WORK.md",
+      "output/playwright/s379-clock-after/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--cool--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--cool--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--dark--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--dark--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--lava--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--lava--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--light--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--light--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/home--warm--desktop--changed-surface.png",
+      "output/playwright/s379-clock-after/home--warm--mobile--changed-surface.png",
+      "output/playwright/s379-clock-after/manifest.json",
+      "output/playwright/s379-clock-copy-after/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--cool--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--cool--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--dark--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--dark--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--lava--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--lava--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--light--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--light--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--warm--desktop--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/home--warm--mobile--changed-surface.png",
+      "output/playwright/s379-clock-copy-after/manifest.json",
+      "output/playwright/s379-launch-after/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--cool--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--cool--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--dark--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--dark--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--lava--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--lava--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--light--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--light--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/home--warm--desktop--changed-surface.png",
+      "output/playwright/s379-launch-after/home--warm--mobile--changed-surface.png",
+      "output/playwright/s379-launch-after/manifest.json",
+      "output/playwright/s380-a11y-cartoon-before/manifest.json",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/manifest.json",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-cartoon-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/community--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-after/manifest.json",
+      "output/playwright/s380-a11y-discord-before/community--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/community--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-before/manifest.json",
+      "output/playwright/s380-a11y-discord-final/community--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/community--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-discord-final/manifest.json",
+      "output/playwright/s380-a11y-header-after/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/home--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-after/manifest.json",
+      "output/playwright/s380-a11y-header-before/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/home--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-before/manifest.json",
+      "output/playwright/s380-a11y-header-final/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/home--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-header-final/manifest.json",
+      "output/playwright/s380-a11y-reactions-after/manifest.json",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-after/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/manifest.json",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-before/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/manifest.json",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop--changed-surface.png",
+      "output/playwright/s380-a11y-reactions-final/news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--cool--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--cool--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--dark--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--dark--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--lava--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--lava--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--light--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--light--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/home--warm--desktop--changed-surface.png",
+      "output/playwright/s380-current-desk/home--warm--mobile--changed-surface.png",
+      "output/playwright/s380-current-desk/manifest.json",
+      "output/playwright/s380-current-home/home--ambient--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--ambient--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--cool--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--cool--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--dark--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--dark--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--high-contrast--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--high-contrast--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--lava--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--lava--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--light--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--light--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/home--warm--desktop--changed-surface.png",
+      "output/playwright/s380-current-home/home--warm--mobile--changed-surface.png",
+      "output/playwright/s380-current-home/manifest.json",
+      "portfolio/ops/obelisk-receipts.ndjson"
+    ]
+  }
+}

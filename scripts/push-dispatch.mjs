@@ -18,12 +18,21 @@
 import { createRequire } from 'node:module';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { admitDeployment } from './lib/deploy-argv.mjs';
+
+// Sends a push: refuse input it does not understand; help and preview aliases are inert.
+const admitted = admitDeployment({
+  name: 'push-dispatch',
+  boolFlags: ['--status', '--test'],
+  valueFlags: ['--endpoint'],
+  exclusive: [['--status', '--test', '--endpoint']],
+  usage: 'node scripts/push-dispatch.mjs --endpoint <push-subscription-url> | --test | --status',
+});
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const args = process.argv.slice(2);
-const STATUS_ONLY = args.includes('--status');
-const TEST_MODE = args.includes('--test');
-const endpointArg = args.includes('--endpoint') ? args[args.indexOf('--endpoint') + 1] : null;
+const STATUS_ONLY = admitted.flags.has('--status');
+const TEST_MODE = admitted.flags.has('--test');
+const endpointArg = admitted.values['--endpoint'] ?? null;
 
 async function getVapidCreds() {
   try {

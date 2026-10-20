@@ -19,11 +19,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { admitCommand } from './lib/deploy-argv.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SENT = path.join(ROOT, '.cache', 'regression-alerts-sent.json');
-const DRY = process.argv.includes('--dry-run');
+// Sends email: refuse input it does not understand; every dry alias previews.
+const DRY = admitCommand({ name: 'send-regression-alert', boolFlags: ['--self-test'], modes: ['--self-test', '--dry-run'], usage: 'node scripts/send-regression-alert.mjs [--dry-run] | --self-test' }).dry;
 const TO = 'founder@vaultsparkstudios.com';
 
 function readJson(rel, fallback) {

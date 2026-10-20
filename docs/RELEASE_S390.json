@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "session": 390,
+  "goal": {
+    "agent": "claude-code",
+    "sessionId": "02f984f7-d3e8-4932-b23b-e88b50a20643",
+    "binding": "Claude Code /goal; no native Codex thread binding exists for this agent"
+  },
+  "accepted": false,
+  "state": "local-closeout",
+  "scope": "Public PostgREST query repairs against the live schema; live-verified REST contract gate; /changelog/#stories layout-shift repair; strict argv admission for four send commands; handoff extract omission measurement. Identity, auth, membership tier logic and Worker code unchanged.",
+  "implementation": {
+    "publicQueries": {
+      "productionRejectedBefore": 10,
+      "localBrowserSupabase4xxAfter": 0,
+      "productionBrowserBaseline4xx": 11,
+      "contractQueries": 125,
+      "knownFailingWithNotes": 7
+    },
+    "layoutShift": {
+      "route": "/changelog/#stories (via /journal/ 301)",
+      "clsBefore": 0.1154,
+      "clsAfterMax": 0.0085,
+      "localLighthouseJournal": 0.0017
+    },
+    "admission": { "scripts": 4, "tests": "deployment-admission 8/8" },
+    "handoffMeasurement": { "versions": 80, "omitted": 31, "newestCut": 2, "capKept": 6000 },
+    "visualQA": { "reviewed": 84, "retained": 40, "receipt": "docs/visual-qa/LATEST.json" }
+  },
+  "remaining": ["full local validation", "staging", "required exact-SHA checks", "production promotion", "production readback"],
+  "limitations": [
+    "The signed-in rank strip was verified with a mocked member session; no real member session was used.",
+    "Leaderboard challenge and weekly tables stay empty for anon visitors because RLS hides their source rows; the queries are now valid."
+  ]
+}

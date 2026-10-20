@@ -1,3 +1,17 @@
+## S390 — public data contracts
+
+- [x] [S390 #1] Public data queries repaired.
+- [x] [S390 #2] Live-verified REST contract gate.
+- [x] [S390 #3] Send commands admit argv strictly.
+- [x] [S390 #4] Extract omissions measured; cap kept.
+- [x] [S390 #5] /changelog/#stories layout shift removed.
+- [ ] [S390][FOUNDER REVIEW] vault-sdk member fetch fails on vault_rank; fixing changes consumer gating.
+- [ ] [S390][UX/P2] Rank orb never renders for members.
+- [ ] [S390][DATA/P2] Member achievements schema/display.
+- [ ] [S390][SEC/P2] event_rsvps exposes user_id to anon.
+- [ ] [SIL][S390] Inventory remaining outward CLIs.
+- [ ] [SIL][S390] Schedule weekly live REST probe.
+
 ## S389
 
 - [x] [S389 #1] Deploy argv guards.
@@ -5,8 +19,8 @@
 - [x] [S389 #3] Human sitemap links and five-publisher cascade.
 - [x] [S389 #4] Oracle answer dependency and build order.
 - [x] [S389 #5] Field-proof publication order.
-- [ ] [SIL][S389] Audit other outward CLIs.
-- [ ] [SIL][S389] Measure extract omissions.
+- [x] [SIL][S389] Audit other outward CLIs. (S390 #3)
+- [x] [SIL][S389] Measure extract omissions. (S390 #4)
 
 Waves1–3 verified; release evidence: docs/RELEASE_S389.json.
 

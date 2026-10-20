@@ -122,12 +122,7 @@
     var grid = document.getElementById('members-grid');
 
     try {
-      var data;
-      try {
-        data = await fetchMembers('select=username,vault_points,rank_title,member_number,created_at&order=vault_points.desc&limit=200');
-      } catch (primaryError) {
-        data = await fetchMembers('select=username,points,member_number,created_at&order=points.desc&limit=200');
-      }
+      var data = await fetchMembers('select=username,points,member_number,created_at&order=points.desc&limit=200');
 
       allMembers = Array.isArray(data) ? data.map(normalizeMember) : [];
       renderMembers();

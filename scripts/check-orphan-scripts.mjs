@@ -83,8 +83,6 @@ const ALLOWLIST = {
     'Manual .txt→.env credential intake wrapper (secrets gateway). Human-initiated; never automated.',
   'ignis-pause.mjs':
     'Manual IGNIS global kill-switch (IGNIS_GLOBAL_PAUSE). Operator-only; invoked in an incident, never by CI.',
-  'push-dispatch.mjs':
-    'Manual VAPID test-push sender (S205). Run on demand to verify the web-push stack end-to-end.',
   'check-cloudflare-web-analytics.mjs':
     'Manual Cloudflare Web Analytics configuration probe. It requires live Account Settings Read authority, which the scheduled analytics token intentionally does not have; run on demand after that narrow capability is provisioned, never in the offline build.',
   // ── Periodic / event-driven ops (scheduled or triggered outside the build). ───

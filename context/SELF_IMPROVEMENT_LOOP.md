@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): 933 → 935 → 935 → 935 → 935
-Avgs (available audit totals) —3:935.0 |5:934.6 |10:933.8 |25:945.0 |all:unmeasured (archived history excluded)
-Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-19 | Session389 | Total:935/1000 | Velocity:5
-  └ Five verified local repairs; complete validation and production acceptance pending in docs/RELEASE_S389.json.
+Sparkline (last5 totals): 935 → 935 → 935 → 935 → 940
+Avgs (available audit totals) —3:936.7 |5:936.0 |10:934.5 |25:943.2 |all:unmeasured (archived history excluded)
+Velocity trend:→ |Protocol velocity:→ |Debt:↓
+Last session: 2026-10-19 | Session390 | Total:940/1000 | Velocity:5
+  └ Ten production-rejected public queries repaired behind a live-verified contract gate; release evidence in docs/RELEASE_S390.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2927,3 +2927,42 @@ S389 local closeout evidence: S389 locally verifies five repairs: strict deploym
 
 
 S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.
+
+
+## Session 389 addendum — 2026-10-19
+
+The post-closeout correction b62baea5 (verified production release record) landed after the S389 SIL anchor; it records release evidence only and changes no score. S389 stays 935/1000.
+
+## Session 390 — 2026-10-19 — public data contracts
+
+Product rubric, ten categories ×100. Score 940 (+5): live member-facing failures fixed and a gate that prevents the class; no engagement or performance gain is claimed beyond the measured /changelog/ layout shift.
+
+| Category | Score |
+|---|---:|
+| Development Health | 96 |
+| Creative Alignment | 94 |
+| Momentum | 91 |
+| Engagement | 96 |
+| Process Quality | 91 |
+| Cross-Repo Coherence | 93 |
+| Security Posture | 95 |
+| Ecosystem Integration | 91 |
+| Capital Efficiency | 95 |
+| Automation Coverage | 98 |
+
+Total: 940/1000
+Velocity:5
+Protocol velocity:5
+Debt:↓
+
+S390 found ten browser queries production rejected (400/404) behind mocks that accept any select, repaired them (Community RSVP, members directory, three leaderboard tables, signed-in rank strip, portal dashboard, investor KPIs), and added scripts/check-public-rest-contract.mjs: 125 live-verified queries, 7 deferred with notes. /changelog/#stories CLS 0.1154 → <0.01. Four send commands admit argv strictly under IO tripwires (8/8 admission tests). Handoff extract cap kept on measured evidence.
+
+Top win: a gate that turns "production rejects this query" from invisible into a build failure.
+Top gap: Playwright's default baseURL is production, so a local run silently tested live; and the leaderboards spec has a stale period-tab assertion since S368.
+
+Brainstorm:
+1. Weekly live REST probe workflow that files the drift — first step: run `check-public-rest-contract.mjs --live` from the existing scheduled verifier lane. (High)
+2. Make playwright.config refuse the production default when the working tree is dirty — first step: warn when BASE_URL is unset. (Medium)
+3. Server-side public leaderboard RPCs for anon-blocked tables so challenge/weekly boards can show real data — first step: list the RLS-hidden tables. (Medium)
+
+Committed to TASK_BOARD: [SIL][S390] Inventory remaining outward CLIs · [SIL][S390] Schedule weekly live REST probe.

@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-19 (Session 389 closeout) -->
-<!-- semantic-freshness: hash=c480fcd844e7841c next=390 silSession=389 silScore=935 handoff=389 tests=- -->
+<!-- generated-at: 2026-10-20 (Session 390 closeout) -->
+<!-- semantic-freshness: hash=f6a270dc8a10f741 next=391 silSession=390 silScore=940 handoff=390 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 389 closeout · 2026-10-19.
+> **Fast-boot brief** — generated at Session 390 closeout · 2026-10-20.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 390 · 2026-10-19 · BUILDER MODE                         ║
+║  Session 391 · 2026-10-20 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S389) - WHAT SHIPPED ══════════════════════════╗
-║  S389 verifies five repairs: deployment argument admission, det  ║
+╔══ LAST SESSION (S390) - WHAT SHIPPED ══════════════════════════╗
+║  S390 public data contracts: production-rejected queries repair  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -41,9 +41,9 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    935/1000   ██████████████████████░░   94%                     ║
+║    940/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5→                          ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -53,31 +53,31 @@
 ║    Momentum          90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Process Qual      91    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         92    █████████░  ········ →                ║
-║    Security          94    █████████░  ········ →                ║
+║    Coherence         93    █████████░  ········ →                ║
+║    Security          95    ██████████  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
 ║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 389 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 390 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    542/542 passing  ·  Deploy: full production…          ║
+║  Tests:    544/544 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no ledger measurement yet this session — a byte estimate…    ║
+║     no session lock — agent identity unavailable, so there is…   ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         542/542 passing (2026-10-19)                   ║
-║  ✓  Velocity      5 →  ·  Debt: →                                ║
+║  ✓  Tests         544/544 passing (2026-10-20)                   ║
+║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
-║  ⛔  Context age   15d                                            ║
-║  ✓  IGNIS         45412 FORGE  ·  0d old                         ║
+║  ⛔  Context age   16d                                            ║
+║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
 ║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
@@ -87,7 +87,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  6d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⚠  Doctor        15/17 (88%)  ·  2 warn: 2 self                 ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
 ║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
@@ -95,8 +95,8 @@
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    57d · Authorize or decline immutable warm-origin migrati      ║
-║    57d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
+║    58d · Authorize or decline immutable warm-origin migrati      ║
+║    58d · [S323][ARK] Ship a `pattern-share` to studio-ops o      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -114,26 +114,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  934/1000  (↓1 vs current 935)                       ║
+║  Projected:  941/1000  (↑1 vs current 940)                       ║
 ║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 3.5 over last 10 forecasts                     ║
+║  Calibration: MAE 3.7 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [INTELLIGENCE]  Audit other outward CLIs.                  ║
-║        Audit other outward CLIs. keeps the ranked audit current  ║
+║   96  [PRODUCT]      Rank orb never renders for members.         ║
+║        Rank orb never renders for members. is open, local, and   ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
+║   93  [PRODUCT]      Member achievements schema/display.         ║
+║        Member achievements schema/display. is open, local, and   ║
 ║                                                                  ║
-║   93  [PRODUCT]      Measure extract omissions.                  ║
-║        Measure extract omissions. is open, local, and unblocked  ║
+║   90  [PRODUCT]      event_rsvps exposes user_id to anon.        ║
+║        event_rsvps exposes user_id to anon. is open, local, and  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Re-read the current 30-day TT cohort after  ║
-║        Re-read the current 30-day TT cohort after production pr  ║
+║   87  [PRODUCT]      Inventory remaining outward CLIs.           ║
+║        Inventory remaining outward CLIs. is open, local, and un  ║
 ║                                                                  ║
-║   81  [PRODUCT]      KV write quota (1,186/day 10-16) 503s /log  ║
-║        KV write quota (1,186/day 10-16) 503s /login: isolate au  ║
+║   84  [PRODUCT]      Schedule weekly live REST probe.            ║
+║        Schedule weekly live REST probe. is open, local, and unb  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 389 closeout · 2026-10-19*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 390 closeout · 2026-10-20*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

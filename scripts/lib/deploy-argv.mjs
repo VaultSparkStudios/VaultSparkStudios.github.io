@@ -22,6 +22,23 @@ export function parseDeployArgv(argv, { name, boolFlags = [], valueFlags = [], m
   return { ...parsed, help: HELP_ALIASES.some(flag => seen.has(flag)) };
 }
 
+/**
+ * Validate-only admission for outward commands whose preview is itself useful
+ * (it reads recipients or state). Unknown, duplicate or malformed input exits 2
+ * and help exits 0 before any IO; every dry alias reaches the caller as `dry`, so
+ * `--dry` can never fall through to a real send.
+ */
+export function admitCommand(options, argv = process.argv.slice(2)) {
+  let parsed;
+  try { parsed = parseDeployArgv(argv, options); }
+  catch (error) { console.error(error.message); process.exit(2); }
+  if (parsed.help) {
+    console.log(`${options.name}\nUsage: ${options.usage}\nHelp: no operational reads, credentials, subprocesses, writes or network actions.`);
+    process.exit(0);
+  }
+  return parsed;
+}
+
 export function admitDeployment(options) {
   let parsed;
   try { parsed = parseDeployArgv(process.argv.slice(2), options); }

@@ -2285,3 +2285,16 @@ Session Intent: fresh /arc with authorized direct main push and full deploy. Nat
 
 Next: attribute remaining shared KV writers and read a current stored TT cohort; no absence-of-reports enforcement claim. Existing identity holds and schema-validator TODO remain. Pre-existing residue is preserved in the arc-goal/arc-S387 named stashes; unrelated untracked files were not staged. The owned preview on 4387 is closed.
 
+
+
+---
+<!-- archived: 2026-10-20 -->
+
+## Where We Left Off (Session 388) — complete
+
+S388 deployed 98538ff5b9: Content Security Policy (CSP) diagnostics use private three-day R2 storage, with three batches/hour and a separate three-computations/hour summary budget. Intake never accesses shared sign-in KV. Complete retained summaries distinguish unavailable sources from verified zero. Focused tests89/89; full local checks541/541; exact-candidate hosted checks and staging ceremony11/11 passed. Production Worker b225a999-a147-4d94-bb51-88fe6e496f37 passed report storage/readback, fixture cleanup404 and Obelisk login302. Pages readback covered 1107 text paths with zero differences/unread responses and 323 primary HTML paths accounted for. Evidence: docs/RELEASE_S388.json. Canonical closeout complete.
+
+Continue the bound S388 goal; do not start another arc. Canonical closeout complete; release evidence is ready for publication. Other KV writers and existing identity holds remain separate.
+
+Post-closeout automation input reports a relative Lighthouse performance trend: /games/0.93→0.81 and homepage0.82→0.76. Cause is not established and the trend is unresolved. Required exact-candidate hosted Lighthouse gates passed; CSP source changes no UI/assets. The complete local runs preceded this new measurement input. No performance fix is claimed.
+

@@ -1,11 +1,10 @@
 /**
  * VaultSpark — Membership Live Tier.
  *
- * Two upgrades in one script:
- *  1. Rank strip live highlight — logged-in members see their active tier lit up,
- *     animated into view, and haptic-fired on load (PWA/Android).
- *  2. World Vault live gates — world cards show "You have access" vs
- *     "Upgrade to unlock" labels based on the member's actual tier.
+ * Rank strip live highlight — signed-in members see their tier (from their own
+ * vault_members points) lit up and centered in the strip, with a "Your rank" line.
+ * World-vault access labels stay static until the paid-tier source is decided
+ * (S390: plan_key alone ignores subscription status).
  *
  * Requires: supabase-client.js OR the VS auth session from localStorage.
  * Falls back silently when the member is not signed in.
@@ -18,13 +17,6 @@
     'spark_initiate', 'vault_runner', 'rift_scout', 'vault_guard',
     'vault_breacher', 'void_operative', 'vault_keeper', 'forge_master', 'the_sparked'
   ];
-
-  // Tier order: free < vault_sparked < vault_sparked_pro
-  var TIER_ORDER = { free: 0, vault_sparked: 1, vault_sparked_pro: 2 };
-
-  function tierRank(plan) {
-    return TIER_ORDER[plan] != null ? TIER_ORDER[plan] : 0;
-  }
 
   function getMemberSession() {
     // Try VSMembershipAccess.getSession() if available (loaded by membership-access.js)
@@ -46,10 +38,11 @@
 
   function getMemberProfile() {
     return getMemberSession().then(function (session) {
-      if (!session || !session.access_token) return null;
+      if (!session || !session.access_token || !session.user || !session.user.id) return null;
       var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
       var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-      return fetch(SB_URL + '/rest/v1/members?select=plan,vault_points&limit=1', {
+      // vault_members is the member table; the id filter selects the caller's own row.
+      return fetch(SB_URL + '/rest/v1/vault_members?select=points&id=eq.' + encodeURIComponent(session.user.id) + '&limit=1', {
         headers: {
           'apikey': SB_KEY,
           'Authorization': 'Bearer ' + session.access_token,
@@ -78,12 +71,17 @@
         el.classList.add('rank-strip-item--active');
         el.setAttribute('aria-current', 'true');
         el.setAttribute('aria-label', (el.querySelector('.rank-strip-name') || {}).textContent + ' — your current rank');
-        // Scroll into view (centered, smooth)
-        setTimeout(function () {
-          el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }, 400);
-        // Haptic + rank-up event for PWA
-        document.dispatchEvent(new CustomEvent('vs:rank_up', { bubbles: true, detail: { rankIndex: rankIndex } }));
+        // Center the tier inside the horizontal strip only. scrollIntoView would also
+        // move the page, and vs:rank_up is reserved for an actual rank change.
+        var scroller = el.closest('.rank-strip-scroll');
+        if (scroller) {
+          setTimeout(function () {
+            var box = scroller.getBoundingClientRect();
+            var item = el.getBoundingClientRect();
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            scroller.scrollTo({ left: scroller.scrollLeft + item.left - box.left - (box.width - item.width) / 2, behavior: reduce ? 'auto' : 'smooth' });
+          }, 400);
+        }
       } else {
         el.classList.remove('rank-strip-item--active');
         el.removeAttribute('aria-current');
@@ -97,48 +95,17 @@
       badge.id = 'rank-strip-live-badge';
       badge.className = 'rank-strip-live-badge';
       badge.setAttribute('aria-live', 'polite');
-      badge.innerHTML = 'Your rank: <strong>' +
-        (document.querySelectorAll('.rank-strip-name')[rankIndex] || {}).textContent +
-        '</strong>';
+      var name = document.createElement('strong');
+      name.textContent = (document.querySelectorAll('.rank-strip-name')[rankIndex] || {}).textContent || '';
+      badge.append('Your rank: ', name);
       heading.insertAdjacentElement('afterend', badge);
     }
-  }
-
-  /* ── 2. World Vault Live Gates ─────────────────────── */
-  function activateWorldGates(plan) {
-    var tier = tierRank(plan);
-    // Cards: free=0, sparked=1, eternal=2 → map to unlock row classes
-    var UNLOCK_TIER = { 'mem-world-unlock--free': 0, 'mem-world-unlock--sparked': 1, 'mem-world-unlock--eternal': 2 };
-    document.querySelectorAll('.mem-world-card').forEach(function (card) {
-      card.querySelectorAll('.mem-world-unlock').forEach(function (row) {
-        var rowTier = 0;
-        Object.keys(UNLOCK_TIER).forEach(function (cls) {
-          if (row.classList.contains(cls)) rowTier = UNLOCK_TIER[cls];
-        });
-        var hasAccess = tier >= rowTier;
-        // Add or update the access badge
-        var badge = row.querySelector('.mem-world-access-badge');
-        if (!badge) {
-          badge = document.createElement('span');
-          badge.className = 'mem-world-access-badge';
-          row.appendChild(badge);
-        }
-        badge.textContent = hasAccess ? '✓ You have access' : '→ Upgrade to unlock';
-        badge.classList.toggle('mem-world-access-badge--yes', hasAccess);
-        badge.classList.toggle('mem-world-access-badge--no', !hasAccess);
-        badge.setAttribute('aria-label', hasAccess ? 'You have access to this benefit' : 'Upgrade to unlock this benefit');
-      });
-    });
   }
 
   function init() {
     getMemberProfile().then(function (profile) {
       if (!profile) return; // not signed in — static display is correct
-      var plan = profile.plan || 'free';
-      var pts = profile.vault_points || 0;
-      var rankIdx = rankIndexFromPoints(pts);
-      activateRankStrip(rankIdx);
-      activateWorldGates(plan);
+      activateRankStrip(rankIndexFromPoints(profile.points || 0));
     }).catch(function () {});
   }
 

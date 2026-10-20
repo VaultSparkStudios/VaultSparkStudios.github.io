@@ -22,13 +22,16 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { admitCommand } from './lib/deploy-argv.mjs';
+
+// Sends to every push subscriber: refuse input it does not understand.
+const admitted = admitCommand({ name: 'notify-changelog-subscribers', boolFlags: ['--force'], usage: 'node scripts/notify-changelog-subscribers.mjs [--dry-run] [--force]' });
 
 const ROOT     = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FEED     = join(ROOT, 'api', 'changelog-narrative.json');
 const SENTINEL = join(ROOT, 'data', 'last-notified-changelog.json');
-const args     = process.argv.slice(2);
-const DRY_RUN  = args.includes('--dry-run');
-const FORCE    = args.includes('--force');
+const DRY_RUN  = admitted.dry;
+const FORCE    = admitted.flags.has('--force');
 
 function loadFeed() {
   if (!existsSync(FEED)) {
