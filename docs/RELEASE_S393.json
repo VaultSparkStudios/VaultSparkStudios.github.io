@@ -5,7 +5,7 @@
     "threadId": "01a15a69-1391-7741-84ce-7401d74e1360",
     "createdAt": 1792518208
   },
-  "state": "release-verified-closeout-publication-pending",
+  "state": "complete",
   "releaseAccepted": true,
   "implementation": {
     "selected": 2,
@@ -329,11 +329,9 @@
     },
     "acceptedAt": "2026-10-20T21:56:14.655Z"
   },
-  "remaining": [
-    "Publish final source receipts, Ark impact cargo and canonical board; then complete native goal"
-  ],
+  "remaining": [],
   "closeout": {
-    "state": "source-push-ark-board-pending",
+    "state": "complete",
     "silScore": 935,
     "cdr": "reviewed; no new creative direction",
     "historicalTiming": "original strict premise timing remains nonpassing",
@@ -356,7 +354,34 @@
       "path": ".cache/skill-trace/studio-closeout-393.json",
       "scope": "Late closeout evidence recovery only; original trace start timing remains unmeasured. Completion event follows actual publication."
     },
-    "finalReceiptScope": "Post-deployment documentation and evidence receipts are published in source. The exact full S393 baseline and explicitly restored approved Desk overlay are immutable; later routine automation is preserved separately. No deployment is repeated merely to record its own success."
+    "finalReceiptScope": "Post-deployment documentation and evidence receipts are published in source. The exact full S393 baseline and explicitly restored approved Desk overlay are immutable; later routine automation is preserved separately. No deployment is repeated merely to record its own success.",
+    "sourcePublication": {
+      "releaseReceiptCommit": "391fed590b9e439fd4be99f1e8f611750266e9ae",
+      "finalProtocolReceipt": "Published by the commit containing this receipt; native goal completion follows successful final remote publication."
+    },
+    "scaffold": {
+      "tasks": 3,
+      "done": 3,
+      "inProgress": 0,
+      "open": 0,
+      "selectedProductOutcomes": 2,
+      "futureUnselectedTasks": 2
+    },
+    "ark": {
+      "state": "shipped",
+      "type": "session-impact-summary",
+      "to": "*",
+      "cargoId": "01K5DORVH881E5E0C252F26AF2",
+      "thread": "t-3fef09d77b4961ca",
+      "due": "2026-10-27T23:03:14.660Z",
+      "receiptMeaning": "Transport acceptance only; no recipient application or fleet adoption claimed."
+    },
+    "board": {
+      "path": "docs/CLOSEOUT_STATUS_BOARD.md",
+      "renderer": "scripts/render-closeout-board.mjs v1.1",
+      "validation": "passed; all eight canonical blocks present"
+    },
+    "nativeGoalStatus": "Native status is authoritative; completion is set after final protocol receipt publication succeeds."
   },
   "rollback": {
     "beforeProduct": {

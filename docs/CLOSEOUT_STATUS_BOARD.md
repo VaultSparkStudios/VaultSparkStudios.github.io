@@ -1,45 +1,72 @@
-# S391 release handoff status
+<!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
+<!-- generated-at: 2026-10-20 (Session 393 closeout) -->
+
+# Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔═ SESSION CLOSEOUT · S391 · delivery pending ════════════════════════════╗
-║ SIL936/1000; actual local autopilot log and commits observed.            ║
-║ Canonical local autopilot ledger row missing; no foreign receipt borrowed. ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ WHAT SHIPPED · source verified; release held ══════════════════════════╗
-║ ✓ Six operational CLI boundaries; weekly REST canary source published.   ║
-║ ✓ Spark collision guard verified locally; repair is not pushed.          ║
-║ ✓ Full545/545; Spark42; mobile215; visual28 reviewed.                    ║
-║ □ Current live125/125 fail; no S391 production promotion.                ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ SCORES ════════════════════════════════════════════════════════════════╗
-║ Dev93 Alignment94 Momentum91 Engagement96 Process89                      ║
-║ Coherence93 Security96 Ecosystem91 Capital95 Automation98                ║
-║ Total936/1000; premise timing nonpassing; no LH median win claimed.      ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ WRITE-BACK STATUS ═════════════════════════════════════════════════════╗
-║ ✓ CURRENT_STATE, TASK_BOARD, HANDOFF, STATUS, DECISIONS, SIL, WORK_LOG   ║
-║ ✓ Agent memory and release evidence current; no new creative direction.  ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ GIT STATUS ════════════════════════════════════════════════════════════╗
-║ Repair code13123f55fd local; remote3bc93c7f2e; push held.                ║
-║ Cache/output WIP and prior recovery stashes preserved.                   ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ DEPLOYMENT ════════════════════════════════════════════════════════════╗
-║ Staging: full12183-file payload33908ab59dc9 verified; runtime rejected.  ║
-║ Production: ceeeb2de9f remains deployed; Supabase UNHEALTHY.             ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ POST-SESSION SIGNALS ══════════════════════════════════════════════════╗
-║ Tests545/545; sourceca9cba1d10ba7a057f94491e; current receipt bound.     ║
-║ Last canonical doctor:0 blocking,1 advisory. Secret scan:0 findings.     ║
-║ Publishers12/12 restored; Ark cargo sent; native goal NOT complete.      ║
-║ Owned verification handles0; named helpers0; known preview listeners0.   ║
-║ Historical shell totals unmeasured; global IGNIS rescore not claimed.    ║
-╚══════════════════════════════════════════════════════════════════════════╝
-╔═ NEXT SESSION ══════════════════════════════════════════════════════════╗
-║ Resume this SAME S391 native goal; no new arc.                           ║
-║ Await explicit restart approval or independently verified recovery.      ║
-║ Then staging ceremony, exact-SHA CI, full Pages and production readback. ║
-╚══════════════════════════════════════════════════════════════════════════╝
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S393 ═══════╗
+║  Date: 2026-10-20  ·  SIL: 935/1000  ·  Velocity: 2 stable       ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
+║  Autopilot: proven (S393)                                        ║
+║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ docs: record verified S393 releases and preserved Desk editi  ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ feat(desk): publish the latenight edition [skip ci]           ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ SCORES · SIL 935/1000 ═══════════════════════════════════════╗
+║    Dev Health         93   █████████░                            ║
+║    Alignment          94   █████████░                            ║
+║    Momentum           90   █████████░                            ║
+║    Engagement         96   ██████████                            ║
+║    Process Qual       88   █████████░                            ║
+║    Coherence          93   █████████░                            ║
+║    Security           97   ██████████                            ║
+║    Ecosystem          91   █████████░                            ║
+║    Capital            95   ██████████                            ║
+║    Automation         98   ██████████                            ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
+║  · Codex agent memory                                            ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ GIT STATUS ══════════════════════════════════════════════════╗
+║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 0                                          ║
+║  Branch: main                                                    ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
+║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
+║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
+║  Doctor:        13/17                                            ║
+║  Compliance:    —                                                ║
+║  Tests:         545/545                                          ║
+║  Validation:    full-fresh                                       ║
+║  IGNIS:         2d ago                                           ║
+║  Truth:         yellow                                           ║
+║  Sanitization:  —                                                ║
+║  shells:        unknown · missing/stale enumeration              ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ NEXT SESSION ════════════════════════════════════════════════╗
+║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
+╚════════════════════════════════════════════════════════════════╝
 ```
 
-Evidence: docs/RELEASE_S391.json. Canonical board shape validated; actual execution log and git anchors used, not a foreign same-number session receipt.
+*Generated by `scripts/render-closeout-board.mjs v1.1`*
+
+S393 acceptance clarification: the renderer’s “last 5 commits” block is commit history. The two selected outcomes are canonical rank-report integrity and actual seven-theme generation/capture support. The three execution rows (two outcomes plus release) are done: 3/3; two future SIL tasks remain unselected. Full validation passed 545/545 twice, mobile 215/215, and 84 inspected theme captures. Current verified publication is full baseline `ae7e2f99e9097996f6eeeff19b50a1795e06f39f` plus the approved Desk edition `69e5e99ae67ff0a85d8c7051d82921c483e948a3`; see [release evidence](RELEASE_S393.json).
+
+Shell clarification: all recorded S393 handles terminated and zero attributable helpers remained at the final enumeration. Historical started/closed totals are unmeasured; the renderer’s unknown label does not imply a running owned helper. Unattributed processes were excluded and left untouched.
