@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-10-20T16:42:03.176Z
-Receipt: `3a28332d05d6e94b1743b30e` · coverage 88/109
+Generated: 2026-10-20T17:13:27.731Z
+Receipt: `d04e23b48e741e932af47f5e` · coverage 109/109
 
-Latest: **87/88** passed · blocking 87/88 · advisory findings 0/0 · total 80.0s
+Latest: **108/109** passed · blocking 92/92 · advisory findings 1/17 · total 119.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 78 | blocking | 5.2s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 22 | blocking | 4.9s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 65 | blocking | 4.3s | 0 | `node scripts/check-content-coherence.mjs` |
-| 88 | blocking | 4.1s | 1 | `node scripts/check-receipt-ordering.mjs` |
-| 37 | blocking | 3.8s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 38 | blocking | 3.2s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 88 | blocking | 7.2s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 22 | blocking | 6.1s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 38 | blocking | 4.7s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 49 | blocking | 4.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 46 | blocking | 4.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 92 | blocking | 3.9s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 78 | blocking | 3.3s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
+| 36 | blocking | 2.8s | 0 | `node scripts/build-news-desk.mjs --self-test` |
 | 35 | blocking | 2.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 49 | blocking | 1.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 46 | blocking | 1.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 40 | blocking | 1.5s | 0 | `node scripts/build-newsroom-run.mjs --check` |
+| 106 | advisory | 2.5s | 1 | `node scripts/generate-build-sha.mjs --check` |
 
 ## Failures
 
-- Step 88 [blocking]: `node scripts/check-receipt-ordering.mjs` exited 1 — self/contract
+- Step 106 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness

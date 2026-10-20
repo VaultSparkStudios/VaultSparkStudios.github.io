@@ -1674,3 +1674,6 @@ S392 two operator-admission fixes independently reviewed and verified. Final-sou
 ### S392 partial closeout — 2026-10-20
 
 Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed. Generated drift was reconciled through declared dependency checks;43/43 targeted checks pass. Source publication and full production acceptance remain open. No hook bypass, dependency addition, identity-policy change or paid service was used.
+
+S392 validation checkpoint: Complete545/545 suite passed twice and real mobile215/215 passed. Canonical local closeout commits c6c9d8ff9a and a4a0a4520d are acknowledged. No push/deployment/restart. Provider db/rest/auth still UNHEALTHY; restart approval pending. Release evidence: docs/RELEASE_S392.json.
+

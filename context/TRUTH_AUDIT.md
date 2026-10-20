@@ -2,7 +2,7 @@
 
 Overall status: yellow — source outcomes verified, release unaccepted.
 
-Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.
+Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
 
 Original failed receipts remain in ignored verification logs. Historical S391 full545/545 and S390 production evidence cannot satisfy this goal. IGNIS touched-score shim resolves the control plane; only a dry-run was used and no foreign score is borrowed. CDR unchanged; no new creative direction.
 

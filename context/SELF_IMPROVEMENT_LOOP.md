@@ -3031,3 +3031,6 @@ Two operator-input boundaries are implemented and independently reviewed: modera
 Score rationale versus936: Momentum−1 for incomplete publication/release; Process Quality−1 for avoidable handoff-label and tracked-test preparation errors; Security Posture+1 for two measured input boundaries before IO. No conversion, engagement, performance, provider recovery or fleet adoption gain is claimed.
 
 Brainstorm: (1) cheap parity/generated-data preflight before an expensive suite; (2) explicit active-versus-completed session headings; (3) preserve source-bound partial receipts without treating them as complete proof. Committed to TASK_BOARD: first two [SIL][S392] follow-ups; they are future work, not automatic scope expansion.
+
+Verification addendum (S392): Both complete545/545 runs passed, including post-signal reconciliation; real mobile215/215 passed. Local commits c6c9d8ff9a and a4a0a4520d are recorded; score935 unchanged. Full site build/provider recovery, current staging, remote publication and production readback remain pending. Evidence: docs/RELEASE_S392.json.
+

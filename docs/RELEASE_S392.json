@@ -7,8 +7,8 @@
   },
   "state": "partial-closeout-release-pending",
   "releaseAccepted": false,
-  "updatedAt": "2026-10-20T16:51:14.733Z",
-  "summary": "Both operator-input boundaries are locally implemented and independently reviewed. The latest full-suite attempt passed167 checks and stopped168 on a stale mobile source receipt. A real local browser audit then passed215/215 cells with zero P0/P1. Complete current-source validation remains unproven. Full site build failed at Supabase rank-climbers; database/REST/auth remain UNHEALTHY. One restart approval is pending, none performed. No S392 push or production deployment is claimed.",
+  "updatedAt": "2026-10-20T17:21:13.080Z",
+  "summary": "Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.",
   "recovery": {
     "merge": "cbf94a80022b81e160f8c5419d647d3eb2a971b4",
     "preservedCommits": [
@@ -52,21 +52,17 @@
       "reason": "Supabase TimeoutError"
     },
     "fullSuite": {
-      "state": "failed",
-      "coverageComplete": false,
-      "passed": 21,
-      "failed": 1,
+      "state": "passed",
+      "coverageComplete": true,
+      "passed": 545,
+      "failed": 0,
       "total": 545,
-      "receiptId": "5c10ed343182d99c35b37901",
-      "failures": [
-        {
-          "step": 22,
-          "command": "node scripts/check-startup-context-budget.mjs",
-          "status": 1,
-          "durationMs": 950,
-          "error": null
-        }
-      ]
+      "sourceFingerprint": "befa99e3957d725fc10fd29e",
+      "planFingerprint": "0bfbca8990e7ccc6de44888e",
+      "startedAt": "2026-10-20T17:03:49.593Z",
+      "finishedAt": "2026-10-20T17:18:45.987Z",
+      "evidence": "api/build-check-diagnostics.json",
+      "scope": "Local repository validation; full site build/staging/production remain separate"
     },
     "repairs": [
       "Existing task-board rotation archives completed history losslessly after the startup-context check failed at step22."
@@ -114,13 +110,17 @@
       "source": "Read-only guarded recovery health probe; no restart performed"
     },
     "latestFullAttempt": {
-      "state": "failed",
-      "passed": 167,
-      "failed": 1,
-      "stoppedAt": 168,
-      "planned": 545,
-      "reason": "Mobile receipt source binding stale for index.html; refreshed through real215-cell runtime audit, not rebound.",
-      "evidence": ".cache/S392/attempt-stopped-at-168.json"
+      "state": "passed",
+      "coverageComplete": true,
+      "passed": 545,
+      "failed": 0,
+      "total": 545,
+      "sourceFingerprint": "befa99e3957d725fc10fd29e",
+      "planFingerprint": "0bfbca8990e7ccc6de44888e",
+      "startedAt": "2026-10-20T17:03:49.593Z",
+      "finishedAt": "2026-10-20T17:18:45.987Z",
+      "evidence": "api/build-check-diagnostics.json",
+      "scope": "Local repository validation; full site build/staging/production remain separate"
     },
     "intelligenceCascade": {
       "state": "passed",
@@ -147,7 +147,13 @@
       "blockingFindings": 0,
       "evidence": "docs/mobile-audit/receipt.json",
       "scope": "Real browser against local candidate; automated-only, no staging/production claim"
-    }
+    },
+    "priorFailedAttempts": [
+      ".cache/S392/attempt-stopped-at-45.json",
+      ".cache/S392/attempt-stopped-at-126.json",
+      ".cache/S392/attempt-stopped-at-168.json"
+    ],
+    "postSignalReconciliation": "545/545 passed after measured test signal and derived-output regeneration; preceding complete545/545 receipt preserved in .cache/S392/full-suite-before-signal.json"
   },
   "production": {
     "state": "not-promoted",
@@ -158,18 +164,22 @@
     "method": "Restore prior accepted Pages release through existing deployment workflow."
   },
   "remaining": [
-    "Provider recovery and complete build",
-    "Complete current-source suite and generated-output reconciliation",
-    "Staging payload/parity and runtime ceremony",
-    "Exact candidate required hosted checks",
-    "Canonical closeout and sanitized direct main push",
-    "Full production promotion and SHA/artifact readback"
+    "Provider recovery and complete site build",
+    "Current staging payload/parity and runtime acceptance",
+    "Remote synchronization without losing publisher commits",
+    "Exact-candidate required hosted checks",
+    "Sanitized direct main push and full production promotion",
+    "Production SHA/artifact readback"
   ],
   "closeout": {
-    "state": "partial-writeback-prepared",
+    "state": "local-checkpoint-completed-release-pending",
     "silScore": 935,
     "releaseAccepted": false,
     "cdr": "reviewed; no new creative direction",
-    "ignis": "touched-score shim resolves studio-ops; dry-run only, no project-local rescore claimed"
+    "ignis": "touched-score shim resolves studio-ops; dry-run only, no project-local rescore claimed",
+    "commits": [
+      "c6c9d8ff9a",
+      "a4a0a4520d"
+    ]
   }
 }

@@ -262,8 +262,8 @@
   "truthGenome": "23/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "f338d4094410e28ed169df2a",
-  "testsSourceFingerprint": "ca9cba1d10ba7a057f94491e",
+  "testsPlanFingerprint": "0bfbca8990e7ccc6de44888e",
+  "testsSourceFingerprint": "befa99e3957d725fc10fd29e",
   "lastSessionSummary": "S392 partial closeout: two local outcomes verified, publication and deployment remain pending",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
@@ -306,9 +306,9 @@
     "audit": "docs/AUDIT_2026-10-20-S392.json",
     "releaseEvidence": "docs/RELEASE_S392.json"
   },
-  "testsSession": 391,
-  "currentBuildState": "incomplete",
-  "currentBuildNote": "S392 latest complete attempt125 pass/1 fail at126 of545 planned; parity repaired, complete rerun required.",
+  "testsSession": 392,
+  "currentBuildState": "failed-provider-dependency",
+  "currentBuildNote": "Complete local545/545 validation passed twice; full site build failed at Supabase rank-climbers. Release pending.",
   "lastDeploySession": 390,
   "lastDeployStatus": "full production verified (ceeeb2de9f; run 39359262188)",
   "silAvg5": 936.2,
@@ -317,12 +317,12 @@
     "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
     "receipt": "docs/RELEASE_S388.json"
   },
-  "truthAuditSummary": "Two operator-input boundaries are implemented and independently reviewed: moderation validates command-specific options before credentials; the REST checker rejects malformed modes before filesystem/network access. Final-source argument suites pass. The latest complete attempt passed125 checks and stopped126 because the new test was not staged; staging it repaired unit parity (45/45). Complete current-source validation remains unproven. The full site build timed out at Supabase rank-climbers; database/REST/auth health is UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push or production deployment is claimed.",
+  "truthAuditSummary": "Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.",
   "currentVerification": {
     "session": 392,
-    "state": "incomplete",
+    "state": "local-suite-passed-release-pending",
     "source": "docs/RELEASE_S392.json",
-    "lastCompleteTestsSession": 391,
-    "note": "Historical test counters refer to testsSession391; no complete S392 suite is accepted yet."
+    "lastCompleteTestsSession": 392,
+    "note": "545/545 passed, including post-signal reconciliation; provider-dependent full site build, current staging and release remain unaccepted."
   }
 }

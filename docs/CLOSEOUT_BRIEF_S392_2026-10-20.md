@@ -12,7 +12,7 @@
 ║  SIL DELTA          936 → 935  (-1)                                                           ║
 ║  PHASE TALLY        3 phases; 2 done, 1 release pending                                       ║
 ║  RELEASE            Not accepted; no S392 push or deployment                                  ║
-║  VALIDATION         167/168 observed of545; mobile refresh215/215; full suite pending         ║
+║  VALIDATION         545/545 passed twice; mobile215/215; release pending                      ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -34,7 +34,7 @@
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   HONESTY LEDGER + FOLLOW-UPS
-    • Local verification is not deployment: latest full attempt167pass/1fail of545; real mobile refresh215/215 passed. Fresh full suite, build, staging, hosted checks and production readback remain required.
+    • Local verification is not deployment: two complete545/545 runs and215/215 mobile cases passed. Provider-dependent full site build, current staging, exact-candidate hosted checks and production readback remain required.
     • Procedural failures preserved: Premise timing remains nonpassing due a startup receipt; repeated failed checks and source-only versus public release outcomes stay distinct.
     • Tracked-test and generated-data preflight before full validation.
     • Explicit active/completed handoff headings.
