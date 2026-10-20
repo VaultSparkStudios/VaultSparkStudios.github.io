@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-20T02:24:55.691Z",
+  "generatedAt": "2026-10-20T02:48:36.622Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -67,14 +67,14 @@
     "sourceContractSha256": "977015c38c170af9d4a0de418a9c9766015d77973b967497ece0a69a52824c44"
   },
   "productionDeploy": {
-    "state": "behind",
-    "commitsBehind": 27,
-    "ageHours": 4.7,
-    "observedAt": "2026-10-20T02:24:55.691Z",
+    "state": "content-current",
+    "commitsBehind": 5,
+    "ageHours": 0.3,
+    "observedAt": "2026-10-20T02:48:36.622Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-10-20T02:24:55.691Z",
+      "observedAt": "2026-10-20T02:48:36.622Z",
       "expectedFrom": "c30a51cd38dc388e918e1c8ae653966893f5592a55b257f3aa1512ff1338e00a",
       "supersededBy": null,
       "ageHours": 0,
@@ -116,16 +116,12 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-b33242e1cc.js",
-        "assets/style.shell-7f501cc04e.css",
+        "assets/style.shell-dafcbbf695.css",
         "assets/theme-toggle.shell-8221605898.js",
         "assets/vault-door.shell-20bb2584bc.js"
       ],
-      "missing": [
-        "assets/style.shell-dafcbbf695.css"
-      ],
-      "unexpected": [
-        "assets/style.shell-7f501cc04e.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -189,7 +185,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -198,7 +194,6 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
