@@ -13,6 +13,9 @@
  * Inputs (env): LANE_PATHS (space-separated repo paths) · CF_PURGE_TOKEN · CF_ZONE_ID
  * Modes: --self-test (pure URL building) · default (purge + verify)
  */
+import { admitDeployment } from './lib/deploy-argv.mjs';
+admitDeployment({ name: 'purge-promoted-urls', boolFlags: ['--self-test'], usage: '[--self-test] (default: purge LANE_PATHS and verify)' });
+
 import { isChallenged } from './lib/vantage-challenge.mjs';
 
 const ORIGIN = 'https://vaultsparkstudios.com';

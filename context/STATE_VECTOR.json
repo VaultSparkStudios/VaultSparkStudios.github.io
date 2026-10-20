@@ -1,14 +1,14 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-10-19",
-  "generatedAtMs": 1792441186359,
-  "session": 389,
-  "vectorHash": "104921de1cc61267",
-  "silTotal": 935,
+  "generatedAt": "2026-10-20",
+  "generatedAtMs": 1792476973222,
+  "session": 391,
+  "vectorHash": "e690d840a8dc5934",
+  "silTotal": 936,
   "silMax": 1000,
-  "silAvg3": 935,
-  "velocity": 5,
-  "debt": "down",
+  "silAvg3": 937,
+  "velocity": 1,
+  "debt": "stable",
   "runway": "unknown",
   "intentRate": "unknown",
   "openNow": 36,
@@ -21,7 +21,7 @@
   ],
   "topNext": [],
   "health": "yellow",
-  "truthStatus": "yellow — exact-SHA Obelisk staging candidate green; Supabase runtime deploy + real-provider E2E incomplete",
+  "truthStatus": "yellow — S391 operational implementation verified locally; full suite, live provider recovery and production release pending.",
   "genome": "23/25",
   "ignisScore": 45412,
   "ignisGrade": "FORGE",
@@ -30,12 +30,12 @@
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Complete canonical validation, staging, exact-SHA CI and full production promotion/readback",
-  "currentFocus": "S389 implementation verified; exact-candidate release acceptance pending",
+  "nextMilestone": "Finish current-source validation and exact-candidate staging/hosted checks, then full production promotion/readback; recover observed provider outage only within approval",
+  "currentFocus": "S391 operational reliability: CLI guards verified; REST canary and full release acceptance pending",
   "lastShipped": "see LATEST_HANDOFF.md",
   "blockers": [
+    "S391 live REST125/125 probes fail; provider db/REST/auth health observed UNHEALTHY. Management authority is READY; bounded recovery approval pending, no restart executed.",
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
-    "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
-    "604 pre-S349 uptime rows remain unresolvable — a challenge and a real edge outage are indistinguishable in them now the shape is gone. They are labelled, never re-scored, and age out naturally."
+    "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019)."
   ]
 }

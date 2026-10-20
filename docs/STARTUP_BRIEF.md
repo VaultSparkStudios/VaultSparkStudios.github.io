@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-20 (Session 390 closeout) -->
-<!-- semantic-freshness: hash=f6a270dc8a10f741 next=391 silSession=390 silScore=940 handoff=390 tests=- -->
+<!-- generated-at: 2026-10-20 (Session 391 closeout) -->
+<!-- semantic-freshness: hash=d551bd8925ca81ae next=392 silSession=391 silScore=936 handoff=391 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 390 closeout · 2026-10-20.
+> **Fast-boot brief** — generated at Session 391 closeout · 2026-10-20.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,24 +15,24 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 391 · 2026-10-20 · FOUNDER MODE                         ║
+║  Session 392 · 2026-10-20 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S390) - WHAT SHIPPED ══════════════════════════╗
-║  S390 public data contracts: production-rejected queries repair  ║
+╔══ LAST SESSION (S391) - WHAT SHIPPED ══════════════════════════╗
+║  S391 six CLI guards and bounded REST canary implemented; provi  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
-║  Production    → https://vaultsparkstudios.com/ ✓                ║
-║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
+║  Production    → https://vaultsparkstudios.com/ ⚠                ║
+║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
 ║  Custom        → https://vaultsparkstudios.com/?nav=sheet ⚠      ║
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
-║  Local dev     → npm run verify:local ✓                          ║
-║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
-║  Unit tests    → npm run build:check ✓                           ║
+║  Local dev     → npm run verify:local ⚠                          ║
+║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
+║  Unit tests    → npm run build:check ⚠                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -41,10 +41,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    940/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5→                          ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest…   ║
-║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
+║    936/1000   ██████████████████████░░   94%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1↓                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
+║    Trend  ▄▂▄▆▄  ↓  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -54,41 +54,41 @@
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Process Qual      91    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         93    █████████░  ········ →                ║
-║    Security          95    ██████████  ········ →                ║
+║    Security          96    ██████████  ········ →                ║
 ║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           95    ██████████  ········ →                ║
 ║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 390 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 391 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    544/544 passing  ·  Deploy: full production…          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         544/544 passing (2026-10-20)                   ║
-║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
+║  ⚠  Velocity      1 ↓  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
-║  ⛔  Truth         yellow — exact-SHA Obelisk staging…            ║
-║  ⛔  Compliance   0/0 (0%) ↓ ▄▄▄▄▄▄▄▁                             ║
+║  ⛔  Truth         yellow — S391 operational implementation…      ║
+║  ⛔  Compliance   32/38 (84%) → ▄▄▄▄▄▄▄▄                          ║
 ║  ✓  Genome dims   all stable  (23/25)                            ║
-║  ✓  Entropy       0.206  (healthy)                               ║
+║  ✓  Entropy       0.177  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⛔  Revenue sig.  unavailable (no canonical source reachable)    ║
+║  ⚠  Revenue sig.  7d old (2026-10-13)                            ║
 ║  ⚠  Deploy gaps   UNMEASURED — never generated; run: node…       ║
-║  ⛔  Doctor        14/17 (82%)  ·  1 failing                      ║
-║  ⚠  Codex trust   local hooks/config not trusted                 ║
+║  ⚠  Doctor        16/17 (94%)  ·  1 warn: 1 self                 ║
+║  ✓  Codex trust   trusted project active                         ║
 ║  ⚠  Canon adopt.  5/55 pending review                            ║
 ║  · 4 line(s) trimmed (tile budget 1.8KB)
 ╚════════════════════════════════════════════════════════════════╝
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  5→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  1↓  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  941/1000  (↑1 vs current 940)                       ║
-║  All categories forecast stable or rising.                       ║
-║  Calibration: MAE 3.7 over last 10 forecasts                     ║
+║  Projected:  933/1000  (↓3 vs current 936)                       ║
+║  At-risk:    Momentum Δ-3                                        ║
+║  Calibration: MAE 3.9 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Rank orb never renders for members.         ║
+║   96  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
+║        Complete suite, exact-candidate publication, production   ║
+║                                                                  ║
+║   96  [INTELLIGENCE]  Validate moderation options per subcomman  ║
+║        Validate moderation options per subcommand in a future a  ║
+║                                                                  ║
+║   90  [PRODUCT]      Require the strict premise checkpoint befo  ║
+║        Require the strict premise checkpoint before delegated e  ║
+║                                                                  ║
+║   87  [PRODUCT]      Rank orb never renders for members.         ║
 ║        Rank orb never renders for members. is open, local, and   ║
 ║                                                                  ║
-║   93  [PRODUCT]      Member achievements schema/display.         ║
+║   84  [PRODUCT]      Member achievements schema/display.         ║
 ║        Member achievements schema/display. is open, local, and   ║
-║                                                                  ║
-║   90  [PRODUCT]      event_rsvps exposes user_id to anon.        ║
-║        event_rsvps exposes user_id to anon. is open, local, and  ║
-║                                                                  ║
-║   87  [PRODUCT]      Inventory remaining outward CLIs.           ║
-║        Inventory remaining outward CLIs. is open, local, and un  ║
-║                                                                  ║
-║   84  [PRODUCT]      Schedule weekly live REST probe.            ║
-║        Schedule weekly live REST probe. is open, local, and unb  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 390 closeout · 2026-10-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 391 closeout · 2026-10-20*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

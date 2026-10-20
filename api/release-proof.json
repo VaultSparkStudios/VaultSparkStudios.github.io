@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-20T06:51:26.056Z",
+  "generatedAt": "2026-10-20T06:54:47.875Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -32,22 +32,22 @@
     },
     "productionParity": false,
     "deployReceipt": {
-      "receiptId": "95b243d6e838b5c4e7647430",
+      "receiptId": "d6053cb4464f70ce2b5ef417",
       "state": "verified",
-      "deployId": "20261020015246",
-      "manifestFileCount": 12134,
-      "remoteFileCount": 12134,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20261020015246",
-      "sourceFingerprint": "d45721b2c39e8200491ebae0",
-      "archiveSha256": "df8aa75b5bc1379e6ed4fe53f607d4186a12d88bf22a52ce65939634311bea39",
+      "deployId": "20261020060156",
+      "manifestFileCount": 12149,
+      "remoteFileCount": 12149,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20261020060156",
+      "sourceFingerprint": "93ff7b6a6a4ba2db11e49c65",
+      "archiveSha256": "ad9c1791a8165f2f0405b1eab7e9d087f00c9c0a5b7ae27a55b6cd431eef0d63",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
-      "depth": 147,
-      "headReceiptId": "95b243d6e838b5c4e7647430",
-      "previousReceiptId": "e2489cd96ef3765bb57f72c5",
+      "depth": 148,
+      "headReceiptId": "d6053cb4464f70ce2b5ef417",
+      "previousReceiptId": "95b243d6e838b5c4e7647430",
       "bound": true,
       "reason": null
     }
@@ -180,8 +180,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -194,6 +194,8 @@
     "releaseDependenciesSatisfied": true
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",

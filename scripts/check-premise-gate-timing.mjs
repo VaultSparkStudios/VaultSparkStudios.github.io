@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope session-lifecycle
 // check-premise-gate-timing.mjs — S385 [audit #1] · closes [SIL:2⛔][S382 #1].
 //
 // Did the strict premise gate run BEFORE implementation began? Reads the sidecar's

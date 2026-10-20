@@ -41,6 +41,9 @@ const selfTest = args.includes('--self-test');
 
 // ── Allowlist: scripts legitimately referenced-by-nothing-scannable ───────────
 const ALLOWLIST = {
+  'check-premise-gate-timing.mjs':
+    'Session audit timing diagnostic: invoked with the selected --audit sidecar before closeout. ' +
+    'It measures session-specific gate chronology, including honest nonpassing results; it is not a repository build gate.',
   'capture-theme-matrix.mjs':
     'Manual CANON-047 harness: captures the 7-theme × key-route screenshot matrix for AI image review. ' +
     'Invoked by an agent (or human) before release; verdicts recorded in docs/THEME_READABILITY_MATRIX.md.',

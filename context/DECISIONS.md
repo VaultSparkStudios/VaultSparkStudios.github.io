@@ -2397,3 +2397,16 @@ Measured over 80 committed handoff versions: 31 omitted content (median 2,432 ch
 ## D-S390.3 — Reserve late-filled space instead of collapsing it (2026-10-19)
 
 /journal/ redirects to /changelog/#stories, so late content above the anchor moved what readers were looking at (CLS 0.1154). The push slot reserves its height and ships a static ship-feed fallback; the empty themes grid keeps a one-line state instead of display:none; the summary reserves its settled height at narrow widths.
+
+
+## D-S391.1 — Preserve operational modes while refusing ambiguous intent (2026-10-20)
+
+Reuse strict argv admission before operational imports in six outward tools. Preserve documented no-argument callers. Provisioner --check remains an operational read-only audit; migration --dry-run remains a pre-image operation. Other preview aliases and mixed apply/preview requests are inert. Unknown migration probe names reject before credentials or SQL. No database policy, identity flow or membership logic changes.
+
+## D-S391.2 — Detect live REST drift without rewriting accepted evidence (2026-10-20)
+
+The weekly/manual canary uses anonymous limit=0 probes, three concurrent requests, ten-second request bounds and a ten-minute read-only hosted job. Existing deferrals carry only when rejection status and detail match; transport failures and new permission denials remain failures. CI never rewrites the manifest. Existing STRONG identity and terminology gaps remain outside this routine operational release; no ABSOLUTE gap was observed. Founder authorization covers direct main publication and full routine deployment after relevant gates.
+
+## D-S391.3 — Keep the procedural deviation visible (2026-10-20)
+
+The final passing strict premise checkpoint followed two delegated implementation edits; synced routine/propagation commits also appear after start_head. Retain the original nonpassing timing evidence. Baseline source inspection/replay supports the premises but cannot turn a late checkpoint into a timely one. Future delegation must wait for the passing recorded checkpoint.

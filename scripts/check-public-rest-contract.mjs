@@ -133,16 +133,47 @@ export function evaluate(queries, manifest) {
   return { failures, deferred };
 }
 
-async function probe(key) {
+export async function probe(key, fetchFn = fetch) {
+  try {
   const [table, select, where = ''] = key.split('|');
   // `not.is.null` is valid for every column type, so it tests only that the column exists.
   const filters = where.replace(/^where:/, '').split(',').filter(Boolean).map(c => `&${c}=not.is.null`).join('');
-  const res = await fetch(`${SB_URL}/rest/v1/${table}?select=${encodeURIComponent(select)}${filters}&limit=0`, { headers: { apikey: SB_KEY } });
+  const res = await fetchFn(`${SB_URL}/rest/v1/${table}?select=${encodeURIComponent(select)}${filters}&limit=0`, { headers: { apikey: SB_KEY }, signal: AbortSignal.timeout(10000) });
   if (res.ok) return { verdict: 'ok', status: res.status };
   let body = {};
   try { body = await res.json(); } catch {}
   if (body.code === '42501') return { verdict: 'auth-only', status: res.status };
   return { verdict: 'failing', status: res.status, detail: `${body.code || ''} ${body.message || ''}`.trim().slice(0, 160) };
+  } catch {
+    return { verdict: 'failing', status: null, detail: 'transport failure (timeout or network)' };
+  }
+}
+
+export function reconcileProbe(result, prior) {
+  // Permission loss is a regression unless the query was already auth-only.
+  if (result.verdict === 'auth-only' && prior?.verdict !== 'auth-only') {
+    return { ...result, verdict: 'failing', detail: 'unexpected anonymous permission denial' };
+  }
+  // Never hide transport failure or a different server rejection under old debt.
+  if (result.verdict === 'failing' && result.status !== null && prior?.verdict === 'known-failing'
+      && prior.note && prior.status === result.status && prior.detail === result.detail) {
+    return { ...result, verdict: 'known-failing', note: prior.note };
+  }
+  return result;
+}
+
+// Three bounded read-only requests at once: 125 worst-case timeouts fit the
+// ten-minute hosted job budget without creating an unbounded request burst.
+export async function probeAll(keys, prior, probeFn = probe) {
+  const results = new Map();
+  let index = 0;
+  await Promise.all(Array.from({ length: Math.min(3, keys.length) }, async () => {
+    while (index < keys.length) {
+      const key = keys[index++];
+      results.set(key, reconcileProbe(await probeFn(key), prior[key]));
+    }
+  }));
+  return Object.fromEntries(keys.map(key => [key, results.get(key)]));
 }
 
 function readManifest() {
@@ -153,14 +184,8 @@ async function main() {
   const queries = collect();
   let manifest = readManifest();
   if (LIVE) {
-    const next = {};
-    for (const key of [...queries.keys()].sort()) {
-      const result = await probe(key);
-      const prior = manifest.queries?.[key];
-      // A recorded deferral survives re-probing while production still rejects it.
-      if (result.verdict === 'failing' && prior?.verdict === 'known-failing' && prior.note) {
-        next[key] = { ...prior, status: result.status, detail: result.detail };
-      } else next[key] = result;
+    const next = await probeAll([...queries.keys()].sort(), manifest.queries || {});
+    for (const [key, result] of Object.entries(next)) {
       if (result.verdict === 'failing') console.log(`  ✗ ${key} → ${result.status} ${result.detail}`);
     }
     manifest = { schema: 'public-rest-contract/v1', verifiedAt: new Date().toISOString(), queries: next };

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0",
+  "session": 391,
+  "goal": {
+    "threadId": "01a157cd-72fc-7c72-88e1-90d3e0c93ba9",
+    "createdAt": 1792474465,
+    "startHead": "01294dee26026a39d0ac5ac5312495ea8a2d6a95"
+  },
+  "accepted": false,
+  "state": "in-progress",
+  "scope": "Six operational CLI argument boundaries, weekly public REST canary, and required release verification. No UI, schema, membership policy or identity-flow change.",
+  "audit": "docs/AUDIT_2026-10-20-S391.json",
+  "implementation": {
+    "admission": {
+      "scripts": 6,
+      "tests": "Expanded actual-CLI IO-tripwire suite passed independently; full-run first step passed 5/5 including canary fixtures.",
+      "semanticValidation": "Unknown migration probe names are rejected before operational IO; added negative CLI fixtures."
+    },
+    "canary": {
+      "workflow": ".github/workflows/public-rest-contract.yml",
+      "schedule": "Weekly Monday 08:23 UTC plus manual dispatch",
+      "permissions": "contents:read",
+      "concurrency": 3,
+      "requestTimeoutMs": 10000,
+      "jobTimeoutMinutes": 10,
+      "writesManifest": false,
+      "tests": "4 focused tests and 10 extractor/evaluator self-tests passed",
+      "hostedDispatch": "pending"
+    },
+    "review": {
+      "rounds": 2,
+      "verdict": "pass",
+      "findings": 0
+    }
+  },
+  "verification": {
+    "doctor": {
+      "blockingFailing": 0,
+      "advisoryFailing": 1,
+      "note": "Revenue freshness advisory; initial report also included unmeasured scheduled observation."
+    },
+    "fullSuite": {
+      "state": "incomplete",
+      "passedSteps": 428,
+      "executedSteps": 429,
+      "plannedSteps": 545,
+      "failure": "Latest full attempt stopped at step429: session timing diagnostic lacked lifecycle scope. Exact source declaration added; reachability check passes262/262 build checks and345/345 self-tests. Full closing run remains required."
+    },
+    "derivedContracts": {
+      "rebuilt": 53,
+      "passed": 53,
+      "skipped": 1,
+      "note": "Side-effecting staging receipt rebuilt only by the actual authorized deployment."
+    },
+    "liveRest": {
+      "state": "passed",
+      "queried": 125,
+      "failed": 0,
+      "deferred": 7,
+      "evidence": ".cache/S391/live-rest-stability.log",
+      "serviceHealth": {
+        "db": "ACTIVE_HEALTHY",
+        "rest": "ACTIVE_HEALTHY",
+        "auth": "ACTIVE_HEALTHY"
+      },
+      "notes": "Live checker exited0 for125 queries with7 existing declared deferrals after provider recovery. No restart executed; earlier recovery approval is unnecessary."
+    },
+    "premiseTiming": {
+      "state": "nonpassing",
+      "note": "Final strict gate followed two delegated source edits. Historical source replay supports baseline inspection but cannot prove timely gate execution. Original receipt retained."
+    },
+    "testSignal": "Stamper correctly refused incomplete diagnostics; previous verified test fields remain historical and do not prove current-source acceptance.",
+    "globalIgnis": "Control plane lock observed active; only dry-run selection inspected. No cross-repo rescore claimed."
+  },
+  "staging": {
+    "origin": "https://website.staging.vaultsparkstudios.com",
+    "state": "deployed-parity-verified",
+    "receiptId": "d6053cb4464f70ce2b5ef417",
+    "source": {
+      "commitSha": "82162788108f3ffbd3d6550fc3dc369448d3bcf2",
+      "fingerprint": "93ff7b6a6a4ba2db11e49c65"
+    },
+    "candidate": {
+      "artifactRoot": "b0bae12f858c88519065a81aa76310d064e4485430dcb8f0e5d1386512898966",
+      "leafCount": 66
+    },
+    "files": 12149,
+    "browser": {
+      "state": "passed",
+      "passed": 3,
+      "held": 3,
+      "skipped": 0,
+      "scope": "unchanged identity remains held"
+    },
+    "note": "Initial working-tree deployment; final candidate checks still required.",
+    "attention": {
+      "state": "passed",
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "production": {
+    "state": "unchanged",
+    "sourceCommit": "ceeeb2de9f66d9fe239906f368991afe86c512f6"
+  },
+  "rollback": {
+    "tag": "s390-production-20261020",
+    "method": "Use existing full Pages deployment workflow for the verified prior release; staging deploy retains rollback directories."
+  },
+  "remaining": [
+    "Complete current-source local validation",
+    "Final candidate staging and applicable browser checks",
+    "Direct main push and required exact-SHA hosted checks",
+    "Canonical closeout write-back and authorized full production promotion",
+    "Production readback and workflow/process restoration"
+  ]
+}

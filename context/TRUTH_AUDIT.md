@@ -1,3 +1,9 @@
+## S391 — current acceptance evidence (2026-10-20)
+
+Overall status: yellow — S391 operational implementation and live REST acceptance verified; complete suite and production release pending.
+
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 is bound to this fresh S391 arc. Six CLI guards and the bounded REST canary are implemented; local fixtures and independent review pass. Latest full attempt passed272/273 steps, stopping on standalone check-premise-gate-timing; its exact allowlist repair passes self-tests5/5 and check. Complete rerun remains pending. Derived49/49 and initial staging parity verified; browser3passed/3held identity and attention15/15 pass. Held identity remains unaccepted. Live REST now passes125 queries with7 existing deferrals; db/REST/auth report ACTIVE_HEALTHY. No restart executed; recovery approval is unnecessary. Final strict premise timing stays nonpassing; a baseline replay cannot prove timely execution. Production remains ceeeb2de9f. All remaining requirements are listed in docs/RELEASE_S391.json, accepted:false.
+
 ## S387 — 2026-10-18 — report storage and release truth
 
 TT intake no longer depends on auth KV. Staging R2 report round trip and unchanged Obelisk redirect are observed. Both buckets are private with 30-day prefix retention. Independent review passed after fixing malformed HTTP-200 XML being treated as complete evidence. Source implementation is distinct from full deployment; acceptance is exclusively docs/RELEASE_S387.json. Other KV writers, existing identity holds, the unit TODO and unmeasured field-vitals remain visible.

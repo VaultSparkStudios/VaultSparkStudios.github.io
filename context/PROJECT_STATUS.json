@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
+  "currentFocus": "S391 operational reliability: CLI guards and healthy REST canary verified; release checks in progress",
   "publicNote": "Membership is now simple and honest: free Vault Member, VaultSparked at $4.99 a month and VaultSparked Eternal at $29.99 a month. Season 1 runs to October 14. New Vault accounts are invite-led for now; request an invite from the contact page.",
-  "nextMilestone": "Schedule the weekly live REST probe and resolve the founder-review vault-sdk deferral",
+  "nextMilestone": "Complete current-source validation, hosted canary, exact-candidate staging and full production readback",
   "blockers": [
     "Obelisk production enrolment is still invite-only (re-probed 2026-10-02: 403), so the site routes visitors to an invite request. Ark question to Obelisk pending since S367.",
     "Edge uptime sampler cannot run: Workers Free caps the account at 5 cron triggers and all five belong to other projects. Cloudflare error 10072. Needs a founder to free a slot or move to Workers Paid (billing, CANON-019).",
@@ -27,28 +27,28 @@
     "Shared account KV write budget remains a risk from other writers. S387 isolates Trusted Types diagnostics; actual release and usage evidence is in docs/RELEASE_S387.json."
   ],
   "lastUpdated": "2026-10-20",
-  "currentSession": 390,
+  "currentSession": 391,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-10-13",
-  "silScore": 940,
-  "silAvg3": 936.7,
-  "silVelocity": 5,
-  "silDebt": "down",
-  "silLastSession": 390,
+  "truthAuditLastRun": "2026-10-20",
+  "silScore": 936,
+  "silAvg3": 937,
+  "silVelocity": 1,
+  "silDebt": "stable",
+  "silLastSession": 391,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
     {
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
-      "status": "green",
-      "note": "S381 complete: browser release checks follow their selected candidate, and pull-request visual checks audit the checked-out preview. Actual-spec negative fixtures and independent review passed. Complete local validation passed 537/537, focused contracts 5/5 and real local navigation 1/1. Candidate 5bf58495904c passed required exact-SHA hosted checks and was fully deployed by confirmed Pages run 38787970210. Staging critical leaves passed 65/65 and release ceremony 11/11; production immutable and primary readback verified. All five publisher states restored and owned processes closed. Existing identity and field-vitals limitations and optional broad E2E diagnostics remain separate. Exact evidence: docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S391: production remains ceeeb2de9f; source changes are not promoted. Live REST provider degradation observed; docs/RELEASE_S391.json."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
-      "status": "green",
-      "note": "S381 candidate 5bf58495904c; critical65/65, ceremony11/11, browser3passed/3identityheld; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S391 initial receipt d6053cb4464f70ce2b5ef417 verified; browser3passed/3identityheld and attention15/15. Final current-source candidate binding pending."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -63,20 +63,20 @@
     {
       "command": "npm run verify:local",
       "type": "local",
-      "status": "green",
-      "note": "S381 complete537/537; focused5/5; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S391 focused checks pass; latest full attempt272/273 found a session-only orphan diagnostic; narrowly documented, complete rerun pending."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
-      "status": "green",
-      "note": "S381 candidate 5bf58495904c; critical65/65, ceremony11/11, browser3passed/3identityheld; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S391 initial receipt d6053cb4464f70ce2b5ef417 verified; browser3passed/3identityheld and attention15/15. Final current-source candidate binding pending."
     },
     {
       "command": "npm run build:check",
       "type": "tests",
-      "status": "green",
-      "note": "S381 complete537/537; focused5/5; docs/RELEASE_S381.json."
+      "status": "yellow",
+      "note": "S391 focused checks pass; latest full attempt272/273 found a session-only orphan diagnostic; narrowly documented, complete rerun pending."
     }
   ],
   "vaultStatus": "SPARKED",
@@ -84,25 +84,25 @@
   "ignisScoreDelta": 0,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-10-18T17:20:11.563Z",
-  "entropyScore": 0.206,
-  "entropyLastComputed": "2026-10-19",
+  "entropyScore": 0.177,
+  "entropyLastComputed": "2026-10-20",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-10-19T22:10:28.054Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silCategoriesV3": {
-    "devHealth": 96,
+    "devHealth": 93,
     "creativeAlignment": 94,
     "momentum": 91,
     "engagement": 96,
-    "processQuality": 91,
+    "processQuality": 89,
     "crossRepoCoherence": 93,
-    "securityPosture": 95,
+    "securityPosture": 96,
     "ecosystemIntegration": 91,
     "capitalEfficiency": 95,
     "automationCoverage": 98
   },
-  "silCategoriesUpdatedSession": 390,
+  "silCategoriesUpdatedSession": 391,
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-10-20",
@@ -263,7 +263,7 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f21b7f992f59351952c2c189",
   "testsSourceFingerprint": "6cca325771d6fa49efc959f6",
-  "lastSessionSummary": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
+  "lastSessionSummary": "S391 six CLI guards and bounded REST canary implemented; provider recovered without intervention; release verification in progress",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
     "session": 385,
@@ -278,25 +278,24 @@
     "scope": "Actual inventory found only this synchronous recording runner; it closes on return. Historical command totals are unmeasured. Earlier retained asynchronous handles are terminal; no total historical shell count is invented. Unrelated host processes and preexisting operator work remain preserved."
   },
   "closeoutFollowthrough": {
-    "session": 380,
-    "date": "2026-10-15",
+    "session": 391,
+    "date": "2026-10-20",
     "agent": "codex",
-    "releasedContentSha": "4ce367580b22c2a2541ff56af269d0fbca800074",
-    "pagesRunId": 38763989597,
-    "requestedOutcomes": 1,
+    "state": "partial",
+    "requestedOutcomes": 2,
     "completedOutcomes": 1,
-    "sourcePublication": "Normal main push and immutable tag verified",
-    "deployment": "Confirmed full production; exact immutable and primary readback verified",
-    "validation": "Full537/537; mobile215/215; collection689/619/619; isolation2/2; streamed archive17/17; visual112 inspected; critical65; browser3passed/3held; attention15; ceremony11",
-    "closeoutVerification": "Canonical autopilot0; independent reviews passed; original publisher states restored; own shell/worktree cleanup verified"
+    "sourcePublication": "pending",
+    "deployment": "Initial staging parity/browser checks pass; production unchanged",
+    "validation": "Focused tests and49/49 derived contracts pass; full current-source rerun pending",
+    "evidence": "docs/RELEASE_S391.json"
   },
-  "lastSession": 390,
+  "lastSession": 391,
   "sessionState": {
     "version": 1,
-    "durableSession": 390,
-    "currentFocus": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate",
-    "nextMilestone": "Schedule the weekly live REST probe and resolve the founder-review vault-sdk deferral",
-    "lastSessionSummary": "S390 public data contracts: production-rejected queries repaired behind a live-verified gate"
+    "durableSession": 391,
+    "currentFocus": "S391 operational reliability: CLI guards and healthy REST canary verified; release checks in progress",
+    "nextMilestone": "Complete current-source validation, hosted canary, exact-candidate staging and full production readback",
+    "lastSessionSummary": "S391 six CLI guards and bounded REST canary implemented; provider recovered without intervention; release verification in progress"
   },
   "s378RecordRecovery": {
     "date": "2026-10-14",
@@ -308,10 +307,10 @@
     "behaviorChanged": false
   },
   "activeArc": {
-    "session": 390,
-    "phase": "complete",
-    "goal": "claude-code:02f984f7-d3e8-4932-b23b-e88b50a20643",
-    "audit": "docs/AUDIT_2026-10-19-S390.json"
+    "session": 391,
+    "phase": "verification",
+    "goal": "01a157cd-72fc-7c72-88e1-90d3e0c93ba9",
+    "audit": "docs/AUDIT_2026-10-20-S391.json"
   },
   "testsSession": 385,
   "currentBuildState": "passed",
@@ -323,5 +322,6 @@
     "session": 388,
     "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
     "receipt": "docs/RELEASE_S388.json"
-  }
+  },
+  "truthAuditSummary": "S391 focused verification and healthy live REST125/7 pass. Complete suite and exact-candidate hosted/production acceptance remain pending. Premise timing remains nonpassing."
 }

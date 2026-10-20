@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 totals): 935 → 935 → 935 → 935 → 940
-Avgs (available audit totals) —3:936.7 |5:936.0 |10:934.5 |25:943.2 |all:unmeasured (archived history excluded)
-Velocity trend:→ |Protocol velocity:→ |Debt:↓
-Last session: 2026-10-19 | Session390 | Total:940/1000 | Velocity:5
-  └ Ten production-rejected public queries repaired behind a live-verified contract gate; release evidence in docs/RELEASE_S390.json.
+Sparkline (last5 totals): 935 → 935 → 935 → 940 → 936
+Avgs (available audit totals) —3:937.0 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured (archived history excluded)
+Velocity trend:↓ |Protocol velocity:↓ |Debt:→
+Last session: 2026-10-20 | Session391 | Total:936/1000 | Velocity:1
+  └ Six CLI guards verified; REST canary exposes a live outage. Release remains pending in docs/RELEASE_S391.json.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2968,3 +2968,31 @@ Brainstorm:
 Committed to TASK_BOARD: [SIL][S390] Inventory remaining outward CLIs · [SIL][S390] Schedule weekly live REST probe.
 
 S390 release verification: production serves ceeeb2de9f (Pages run 39359262188), byte parity tree-current 1105/1115, 0 Supabase 4xx (was 11), staging spec 6/6, required exact-SHA checks passed. Score 940/1000 unchanged. Lesson recorded: the closeout autopilot commits untracked scratch; local excludes added and recovery done before push.
+
+
+## Session 390 addendum — 2026-10-20
+
+Post-closeout correction01294dee reconciled derived feeds after merging routine publishers. This was verified during S391 startup; it changes no S390 score or release claim.
+
+## Session 391 — 2026-10-20 — operational reliability, verification checkpoint
+
+Product rubric, ten categories ×100. Total:936/1000. Velocity:1. Protocol velocity:1. Debt:→. This is a partial checkpoint, not verified deployment or native-goal completion.
+
+| Category | Score |
+|---|---:|
+| Development Health |93|
+| Creative Alignment |94|
+| Momentum |91|
+| Engagement |96|
+| Process Quality |89|
+| Cross-Repo Coherence |93|
+| Security Posture |96|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+Six outward CLI guards preserve documented operational modes while refusing ambiguous input before IO; unknown migration probes reject before credential/pre-image/SQL work. The weekly/manual read-only REST canary has bounded concurrency/timeouts and refuses newly changed failures. Tripwire tests and focused fixtures pass; independent review finds no outstanding defect. Initial staging parity and applicable browser/attention checks pass. Complete local validation, hosted checks, source publication and full production readback remain pending. Live125/125 queries failed during observed provider degradation; no healthy acceptance is claimed.
+
+Score rationale: Development Health−3 for the observed data-plane outage; Process Quality−2 for delegating two edits before the final passing premise checkpoint; Security Posture+1 for measured six-command admission. Other categories unchanged. The original timing receipt remains nonpassing; source replay cannot prove timely execution. No engagement or performance improvement is claimed.
+
+Brainstorm: (1) validate recognized moderation options per mutation/list subcommand; (2) require a passing recorded premise checkpoint before delegation; (3) add a separate provider-health summary to canary failures so operational and schema failures are easier to distinguish. Committed to TASK_BOARD: first two [SIL][S391] observations for a future selected audit.

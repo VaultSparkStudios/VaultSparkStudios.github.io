@@ -1,0 +1,26 @@
+name: Public REST Contract Canary
+
+on:
+  schedule:
+    - cron: '23 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-rest-contract-canary
+  cancel-in-progress: false
+
+jobs:
+  live-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      # Read-only anonymous limit=0 probes. Never rewrite/bless the manifest in CI.
+      - name: Probe every shipped public REST query
+        run: node scripts/check-public-rest-contract.mjs --live

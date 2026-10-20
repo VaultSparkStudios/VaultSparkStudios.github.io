@@ -13,7 +13,15 @@
  *   node scripts/provision-worker-staging-origin.mjs --apply
  */
 import { spawnSync } from './lib/safe-spawn.mjs';
-import { getSecret, redact } from './lib/secrets.mjs';
+
+
+import { admitCommand } from './lib/deploy-argv.mjs';
+const admission = admitCommand({ name: 'provision-worker-staging-origin', boolFlags: ['--self-test', '--check', '--apply'], modes: ['--self-test', '--check', '--apply'], usage: '--self-test | --check | --apply' });
+// --check is the existing operational read-only audit; other previews are inert.
+if (['--dry-run', '--dry', '-n'].some(flag => process.argv.includes(flag))) {
+  console.log('provision-worker-staging-origin: preview only; no operational IO');
+  process.exit(0);
+}
 
 const ORIGIN_DOMAIN = 'website-origin.staging.vaultsparkstudios.com';
 const PUBLIC_DOMAIN = 'website.staging.vaultsparkstudios.com';
@@ -61,6 +69,7 @@ if (!args.has('--check') && !args.has('--apply')) {
 // Reuse the Studio control plane's bounded DNS client. This keeps credentials
 // inside the canonical gateway and makes timeouts/error normalization identical
 // to every other Cloudflare mutation in the Studio.
+const { getSecret, redact } = await import('./lib/secrets.mjs');
 const { cfDns, cfZoneId } = await import('../../vaultspark-studio-ops/scripts/lib/cf-deploy.mjs');
 const zoneId = cfZoneId();
 const sshKey = getSecret('HETZNER_SSH_KEY_PATH', 'hetzner.ssh');
