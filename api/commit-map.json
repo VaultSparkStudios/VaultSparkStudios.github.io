@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19",
+  "generatedAt": "2026-10-20",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -10,7 +10,7 @@
     "scope": "locally available Git history; not remote-history completeness",
     "ceiling": 2000,
     "fetched": 2001,
-    "inspected": 175,
+    "inspected": 126,
     "target": 24,
     "selected": 24,
     "quotaSatisfied": true,
@@ -18,6 +18,50 @@
     "state": "quota-satisfied"
   },
   "entries": [
+    {
+      "sha": "b62baea5",
+      "ts": "2026-10-19T21:46:40.000Z",
+      "type": "docs",
+      "scope": "S389",
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "record verified production release and closeout",
+      "visitorFacing": false
+    },
+    {
+      "sha": "4b4c2dba",
+      "ts": "2026-10-19T21:41:17.000Z",
+      "type": "chore",
+      "scope": "S389",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "publish verified release status",
+      "visitorFacing": false
+    },
+    {
+      "sha": "c86109ee",
+      "ts": "2026-10-19T20:42:04.000Z",
+      "type": "chore",
+      "scope": "S389",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "seal validated release candidate",
+      "visitorFacing": false
+    },
+    {
+      "sha": "f403267a",
+      "ts": "2026-10-19T20:38:34.000Z",
+      "type": "chore",
+      "scope": "S389",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "close verified implementation before production promotion",
+      "visitorFacing": true
+    },
     {
       "sha": "e385fb7c",
       "ts": "2026-10-19T20:09:27.000Z",
@@ -237,50 +281,6 @@
       "tone": "fix",
       "summary": "keep unavailable context measurements unknown",
       "visitorFacing": true
-    },
-    {
-      "sha": "ea91d30a",
-      "ts": "2026-10-18T15:09:49.000Z",
-      "type": "fix",
-      "scope": "S387",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "bound diagnostic writes and reject incomplete evidence",
-      "visitorFacing": true
-    },
-    {
-      "sha": "71bd3499",
-      "ts": "2026-10-18T14:49:15.000Z",
-      "type": "chore",
-      "scope": "S387",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "prepare diagnostic release verification artifacts",
-      "visitorFacing": true
-    },
-    {
-      "sha": "c0d1abb7",
-      "ts": "2026-10-18T14:48:34.000Z",
-      "type": "fix",
-      "scope": "S387",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "isolate Trusted Types diagnostics from auth KV",
-      "visitorFacing": true
-    },
-    {
-      "sha": "5267dc6f",
-      "ts": "2026-10-17T13:51:42.000Z",
-      "type": "chore",
-      "scope": "routine-desk-art",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "reseal derived outputs after auto art",
-      "visitorFacing": false
     }
   ]
 }
