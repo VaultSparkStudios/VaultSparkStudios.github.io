@@ -91,6 +91,10 @@
       if(!bounds.width||!bounds.height)return false;
       if(!controls)controls=Array.from(document.querySelectorAll('a[href],button,input,select,textarea,summary,[role="button"],[contenteditable]')).filter(function(n){return !dock.contains(n)&&!n.closest('#spark-compass');});
       return controls.some(function(n){
+        // Measuring a control in a skipped content-visibility subtree forces
+        // its offscreen section to lay out. It cannot obstruct the dock yet;
+        // the existing scroll/resize observers reconsider it when rendered.
+        if(n.checkVisibility&&!n.checkVisibility({contentVisibilityAuto:true}))return false;
         var rect=n.getBoundingClientRect();
         if(!rect.width||!rect.height||rect.bottom<=bounds.top-12||rect.top>=bounds.bottom+12||rect.right<=bounds.left-12||rect.left>=bounds.right+12)return false;
         var visibility=getComputedStyle(n);

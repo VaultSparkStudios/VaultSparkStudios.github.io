@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:55:25.249Z",
+  "generatedAt": "2026-10-20T08:57:29.367Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
-  "state": "passed",
+  "state": "rejected",
   "stagingOrigin": "https://website.staging.vaultsparkstudios.com",
   "steps": [
     {
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 539
+      "durationMs": 550
     },
     {
       "id": "redirect-readiness",
@@ -24,26 +24,26 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 241
+      "durationMs": 227
     },
     {
       "id": "lane-held-asset-drift",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1992
+      "durationMs": 1927
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 42404
+      "durationMs": 79590
     },
     {
       "id": "staging-browser-receipt",
-      "state": "passed",
-      "exitCode": 0,
-      "durationMs": 2,
-      "passed": 3,
+      "state": "rejected",
+      "exitCode": 1,
+      "durationMs": 1,
+      "passed": 0,
       "expected": 6,
       "skipped": 0,
       "held": 3,
@@ -59,7 +59,7 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 36229
+      "durationMs": 44729
     },
     {
       "id": "attention-browser-receipt",
@@ -76,7 +76,7 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 374
+      "durationMs": 348
     },
     {
       "id": "promotion-ready",
@@ -102,16 +102,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1549,
+      "durationMs": 1473,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
       "observedDate": "2026-10-20"
     }
   ],
-  "evidenceSha256": "849844e3132b5c0230c2f0c709704606b881f70831ae5d08ca56e434c2c4bc3b",
+  "evidenceSha256": "32195d5769beb6540cf053f98c90d4801113a7bae6b6623c634b0b03fe2cab22",
   "contractSha256": "c3eb0abf77afc414837705d29312eeba13262463d7ad6935f12f8b594a73bf01",
   "chain": {
-    "previousReceiptSha256": "099cf16dc70dc909baf59d1da6c19b9f7cc429e783fd9da151fb9e56cf158678"
+    "previousReceiptSha256": "326ca41df28f253b8527f769f355e9c05be41cbd4c6c01cf1cb27e53777af7c9"
   },
   "privacy": {
     "stdoutRetained": false,

@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **77/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
 - Current SIL: **936/1000**
 - CI health: **check gh run list**
@@ -39,56 +39,56 @@ Final score: **90**
 [SIL][S391] Require the strict premise checkpoint before delegated edits.
 Why it matters: Require the strict premise checkpoint before delegated edits. is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Rank orb never renders for members.
-Final score: **87**
-[S390][UX/P2] Rank orb never renders for members.
-Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
+#### 4. [INTELLIGENCE] Assess the existing mobile Spark overlap with article prose in a futu…
+Final score: **90**
+[UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
+Why it matters: Assess the existing mobile Spark overlap with article prose in a futur keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] Member achievements schema/display.
+#### 1. [PRODUCT] Rank orb never renders for members.
 Final score: **84**
+[S390][UX/P2] Rank orb never renders for members.
+Why it matters: Rank orb never renders for members. is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Member achievements schema/display.
+Final score: **81**
 [S390][DATA/P2] Member achievements schema/display.
 Why it matters: Member achievements schema/display. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] event_rsvps exposes user_id to anon.
-Final score: **81**
+#### 3. [PRODUCT] event_rsvps exposes user_id to anon.
+Final score: **78**
 [S390][SEC/P2] event_rsvps exposes user_id to anon.
 Why it matters: event_rsvps exposes user_id to anon. is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
-Final score: **72**
+#### 4. [PRODUCT] Re-read the current 30-day TT cohort after production promotion; no-d…
+Final score: **69**
 [SIL][S387][OBS/P2] Re-read the current 30-day TT cohort after production promotion; no-data or incomplete evidence never authorizes enforcement.
 Why it matters: Re-read the current 30-day TT cohort after production promotion; no-da is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
-Final score: **69**
+#### 5. [PRODUCT] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+Final score: **66**
 [P0][S386] KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telemetry writes.
 Why it matters: KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut teleme is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Observe real post-release CSP collection and shared KV usage before c…
-Final score: **66**
+### LATER
+
+#### 1. [PRODUCT] Observe real post-release CSP collection and shared KV usage before c…
+Final score: **63**
 [SIL][S388][OBS/P2] Observe real post-release CSP collection and shared KV usage before claiming account-wide quota isolation.
 Why it matters: Observe real post-release CSP collection and shared KV usage before cl is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Persona page/N 404s: lane allowlist + Hetzner rules together.
-Final score: **66**
+#### 2. [PRODUCT] Persona page/N 404s: lane allowlist + Hetzner rules together.
+Final score: **63**
 [S386] Persona page/N 404s: lane allowlist + Hetzner rules together.
 Why it matters: Persona page/N 404s: lane allowlist + Hetzner rules together. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
-Final score: **63**
+#### 3. [PRODUCT] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
+Final score: **60**
 [SIL][S386] Disabled-workflow 422 = deferred; idle 30-min ingest scan.
 Why it matters: Disabled-workflow 422 = deferred; idle 30-min ingest scan. is open, local, and unblocked — can ship this session.
-
-#### 3. [COHESION] Reproduce remaining stats/Oracle/community contract failures against …
-Final score: **59**
-[SIL][S384] Reproduce remaining stats/Oracle/community contract failures against controlled current fixtures; preserve actual rank/privacy semantics.
-Why it matters: Reproduce remaining stats/Oracle/community contract failures against c is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
 
 ### DEFERRED / GATED
 
@@ -137,15 +137,15 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 1. Complete suite, exact-candidate publication, production promotion/rea…
 2. Validate moderation options per subcommand in a future audit.
 3. Require the strict premise checkpoint before delegated edits.
-4. Rank orb never renders for members.
-5. Member achievements schema/display.
-6. event_rsvps exposes user_id to anon.
-7. Re-read the current 30-day TT cohort after production promotion; no-d…
-8. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
-9. Observe real post-release CSP collection and shared KV usage before c…
-10. Persona page/N 404s: lane allowlist + Hetzner rules together.
-11. Disabled-workflow 422 = deferred; idle 30-min ingest scan.
-12. Reproduce remaining stats/Oracle/community contract failures against …
+4. Assess the existing mobile Spark overlap with article prose in a futu…
+5. Rank orb never renders for members.
+6. Member achievements schema/display.
+7. event_rsvps exposes user_id to anon.
+8. Re-read the current 30-day TT cohort after production promotion; no-d…
+9. KV write quota (1,186/day 10-16) 503s /login: isolate auth; cut telem…
+10. Observe real post-release CSP collection and shared KV usage before c…
+11. Persona page/N 404s: lane allowlist + Hetzner rules together.
+12. Disabled-workflow 422 = deferred; idle 30-min ingest scan.
 
 ## Best Immediate Move
 

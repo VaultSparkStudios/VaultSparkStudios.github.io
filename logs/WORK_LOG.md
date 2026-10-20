@@ -1658,3 +1658,9 @@ Fresh goal-bound arc: startup, nine-axis premise-checked audit and implementatio
 ### S391 closeout verification — 2026-10-20
 
 Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit. Source checkpoint eaf846da50 pushed; no production deployment claimed from that push. All53 regenerated artifact checks passed after preserving queued publisher updates.
+
+## S391 release follow-through — 2026-10-20
+
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Complete receipt 0b8668eb3491ff08b5f522b3; prior partial runs exposed and then repaired dependent News provenance/critique and Stats drift. Hosted3bc93 E2E/accessibility passed, Lighthouse failed0.88 against0.90 twice before the bounded repair; its new hosted acceptance is still required. No production promotion or recovery restart claimed.

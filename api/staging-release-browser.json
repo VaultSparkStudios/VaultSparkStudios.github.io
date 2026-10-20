@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:54:47.085Z",
+  "generatedAt": "2026-10-20T08:56:42.804Z",
   "publicSafe": true,
   "origin": "https://website.staging.vaultsparkstudios.com",
   "suite": "tests/staging-release.spec.js",
-  "state": "passed",
+  "state": "rejected",
   "expectedTests": 6,
   "observedTests": 6,
   "executedTests": 3,
-  "passed": 3,
-  "failed": 0,
+  "passed": 0,
+  "failed": 3,
   "flaky": 0,
   "skipped": 0,
   "held": 3,
@@ -20,12 +20,50 @@
     "identity",
     "worker:identity"
   ],
-  "reasons": [],
-  "failures": [],
+  "reasons": [
+    "failed-3"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "chromium",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 6\n\n- Array []\n+ Array [\n+   \"Access to fetch at '[URL]' from origin '[URL]' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.\",\n+   \"Failed to load resource: net::ERR_FAILED\",\n+   \"Access to fetch at '[URL]' from origin '[URL]' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.\",\n+   \"Fai",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    },
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "firefox",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"[JavaScript Error: \\\"Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at [URL] (Reason: CORS header ‘Access-Control-Allow-Origin’ missing). Status code: 504.\\\"]\",\n+ ]",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    },
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "webkit",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 4\n\n- Array []\n+ Array [\n+   \"Origin [URL] is not allowed by Access-Control-Allow-Origin. Status code: 504\",\n+   \"Failed to load resource: Origin [URL] is not allowed by Access-Control-Allow-Origin. Status code: 504\",\n+ ]",
+      "files": [
+        "tests/staging-release.spec.js"
+      ],
+      "evidenceTruncated": false
+    }
+  ],
   "failureEvidence": {
-    "projects": [],
-    "tests": [],
-    "files": [],
+    "projects": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "tests": [
+      "mobile drawer and every theme are readable"
+    ],
+    "files": [
+      "tests/staging-release.spec.js"
+    ],
     "truncated": false
   }
 }

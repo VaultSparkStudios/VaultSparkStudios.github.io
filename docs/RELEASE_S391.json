@@ -7,8 +7,8 @@
     "startHead": "01294dee26026a39d0ac5ac5312495ea8a2d6a95"
   },
   "accepted": false,
-  "state": "awaiting-exact-candidate-hosted-checks",
-  "scope": "Six operational CLI argument boundaries, weekly public REST canary, and required release verification. No UI, schema, membership policy or identity-flow change.",
+  "state": "provider-recovery-required-before-promotion",
+  "scope": "Six operational CLI argument boundaries, weekly public REST canary, and required release verification including a trace-supported Spark collision-scan repair. No schema, membership policy or identity-flow change.",
   "audit": "docs/AUDIT_2026-10-20-S391.json",
   "implementation": {
     "admission": {
@@ -51,10 +51,10 @@
       "passedSteps": 545,
       "executedSteps": 545,
       "plannedSteps": 545,
-      "receiptId": "16064300e0b47912d906619c",
-      "sourceFingerprint": "305f0d4b019a3fc1f184024c",
-      "finishedAt": "2026-10-20T08:23:35.172Z",
-      "note": "Current source completed the full suite. Earlier full and partial runs remain historical; no partial run substitutes for this receipt."
+      "receiptId": "0b8668eb3491ff08b5f522b3",
+      "sourceFingerprint": "ca9cba1d10ba7a057f94491e",
+      "finishedAt": "2026-10-20T09:23:10.627Z",
+      "note": "Complete current-source run; canonical test signal stamped and source checked again after projection rebuild. Partial diagnostic tails are not acceptance."
     },
     "derivedContracts": {
       "rebuilt": 53,
@@ -63,17 +63,17 @@
       "note": "Side-effecting staging receipt rebuilt only by the actual authorized deployment."
     },
     "liveRest": {
-      "state": "passed",
+      "state": "failed",
       "queried": 125,
-      "failed": 0,
-      "deferred": 7,
-      "evidence": ".cache/S391/live-rest-stability.log",
+      "failed": 125,
+      "deferred": 0,
+      "evidence": ".cache/S391/live-rest-after-spark-repair.log",
       "serviceHealth": {
-        "db": "ACTIVE_HEALTHY",
-        "rest": "ACTIVE_HEALTHY",
-        "auth": "ACTIVE_HEALTHY"
+        "db": "UNHEALTHY",
+        "rest": "UNHEALTHY",
+        "auth": "UNHEALTHY"
       },
-      "notes": "Live checker exited0 for125 queries with7 existing declared deferrals after provider recovery. No restart executed; earlier recovery approval is unnecessary."
+      "note": "Read-only health snapshots repeatedly confirm the outage. Current failures are timeouts/504, never carried as the old seven deferrals. No restart executed."
     },
     "premiseTiming": {
       "state": "nonpassing",
@@ -85,7 +85,12 @@
       "repair": "Scoped original-reader ESM load hook; runtime filesystem negative control and all credential/network/write/subprocess traps retained.",
       "windowsFocused": "passed",
       "independentReview": "passed",
-      "linuxHosted": "Required exact-candidate hosted result remains pending"
+      "linuxHosted": {
+        "state": "passed",
+        "sourceCommit": "3bc93c7f2e2942b55a85019db32bf1f501841f96",
+        "runId": 39393556179,
+        "note": "Both e2e and compliance jobs passed; scoped loader/runtime-tripwire repair verified on hosted Linux."
+      }
     },
     "retainedVisualEvidence": {
       "captures": 56,
@@ -98,26 +103,108 @@
       "Post-closeout shell timestamp drift caused a failed fingerprint check; a chained source checkpoint continued, but production was never promoted from it. Exact verified shell bytes restored.",
       "Earlier candidate37b54 hosted E2E failed the test harness on Linux Node24.21; scoped loader repair added with runtime-read negative control.",
       "Earlier candidate37b54 Lighthouse News route median0.88 failed0.90; final candidate must independently pass unchanged threshold.",
-      "One staging ceremony failed upstream504/CORS; later live125-query probe and ceremony passed; no restart performed."
-    ]
+      "One staging ceremony failed upstream504/CORS; later live125-query probe and ceremony passed; no restart performed.",
+      "Candidate3bc93 Lighthouse39393556289 also failed News median0.88; E2E39393556179 and Accessibility39393556189 passed.",
+      "Browser wrapper attempted a full build and stopped at an upstream rank-climber fetch timeout before browser launch; direct browser tests subsequently passed42/42. Six generated leaderboard pages restored from verified HEAD with only current core hash/SRI references."
+    ],
+    "previousFullSuiteBeforePerformanceRepair": {
+      "state": "passed",
+      "passedSteps": 545,
+      "executedSteps": 545,
+      "plannedSteps": 545,
+      "receiptId": "16064300e0b47912d906619c",
+      "sourceFingerprint": "305f0d4b019a3fc1f184024c",
+      "finishedAt": "2026-10-20T08:23:35.172Z",
+      "note": "Current source completed the full suite. Earlier full and partial runs remain historical; no partial run substitutes for this receipt."
+    },
+    "performanceRepair": {
+      "source": "assets/command-palette-loader.js",
+      "reason": "Two exact-candidate Lighthouse runs failed News at median0.88 against unchanged0.90 floor.",
+      "mechanism": "Feature-detected checkVisibility({contentVisibilityAuto:true}) avoids measuring controls in skipped subtrees; visible controls and unsupported browsers retain collision behavior.",
+      "experiment": {
+        "browser": "Chrome155",
+        "lighthouse": "11.4.0",
+        "integrity": "SRI removed in both isolated proxy arms; ambient core execution confirmed in every trace. Production SRI retained and regenerated normally.",
+        "baselineLoopLayoutMs": [
+          19.7,
+          19.45,
+          20.61
+        ],
+        "guardLoopLayoutMs": [
+          0,
+          0,
+          0
+        ],
+        "baselinePerformance": [
+          0.88,
+          0.94,
+          0.97
+        ],
+        "guardPerformance": [
+          0.96,
+          0.94,
+          0.92
+        ],
+        "medianConclusion": "No robust Lighthouse median improvement proven; eliminated forced layouts only.",
+        "priorInvalidExperiment": "Earlier guarded proxy comparison retained original SRI and blocked the modified script. Excluded from acceptance."
+      },
+      "browserRegression": {
+        "state": "passed",
+        "tests": 42,
+        "browsers": [
+          "chromium",
+          "firefox",
+          "webkit"
+        ],
+        "evidence": ".cache/S391/spark-guard-browser-direct.log"
+      },
+      "visual": {
+        "state": "passed",
+        "receipt": "docs/visual-qa/LATEST.json",
+        "reviewedCaptures": 28,
+        "supportingCollisionCaptures": 2,
+        "preexistingMinorFinding": "Mobile mascot can overlap plain prose; unchanged and queued for a future UI audit."
+      },
+      "hostedAcceptance": "Pending fresh exact-candidate strict checks. No floor relaxation.",
+      "mobile": {
+        "state": "passed",
+        "probes": 215,
+        "p0": 0,
+        "p1": 0
+      },
+      "additionalDerivedRepairs": "Rebuilt News visual provenance, all146 critique packets, visual-retention report and Stats projection after shared core reference changes; their focused checks and the full545 pass."
+    },
+    "previousHealthyLiveRest": {
+      "state": "passed",
+      "queried": 125,
+      "failed": 0,
+      "deferred": 7,
+      "evidence": ".cache/S391/live-rest-stability.log",
+      "serviceHealth": {
+        "db": "ACTIVE_HEALTHY",
+        "rest": "ACTIVE_HEALTHY",
+        "auth": "ACTIVE_HEALTHY"
+      },
+      "notes": "Live checker exited0 for125 queries with7 existing declared deferrals after provider recovery. No restart executed; earlier recovery approval is unnecessary."
+    }
   },
   "staging": {
     "origin": "https://website.staging.vaultsparkstudios.com",
-    "state": "verified",
-    "receiptId": "6e494c510d37150d9586b357",
+    "state": "payload-verified-runtime-rejected",
+    "receiptId": "33908ab59dc9422c5ccf10d4",
     "source": {
       "commitSha": "eaf846da50b013376d703a95194f3208b952344c",
-      "fingerprint": "4ddfb82af4abc24a2e53290d"
+      "fingerprint": "ca9cba1d10ba7a057f94491e"
     },
     "candidate": {
-      "artifactRoot": "ea96a578c6fa1c269b9ec049710034671ecb845cf8d4c4cff1deada83d027c27",
+      "artifactRoot": "0ffcf24143a2d4e0731db0984327c528008c5e553aba470938c2863046ea8b5e",
       "leafCount": 66
     },
-    "files": 12152,
+    "files": 12183,
     "browser": {
-      "passed": 3,
+      "passed": 0,
+      "failed": 3,
       "held": 3,
-      "failed": 0,
       "skipped": 0
     },
     "attention": {
@@ -126,34 +213,47 @@
       "skipped": 0
     },
     "ceremony": {
-      "state": "passed",
-      "passed": 11,
+      "state": "rejected",
+      "passed": 10,
       "total": 11
     },
-    "note": "Working-tree bytes verified by artifact root and source fingerprint. Receipt source commit uses the pre-closeout build stamp; final commit relationship verified separately.",
     "currentSourceRelation": {
-      "stageFingerprint": "4ddfb82af4abc24a2e53290d",
-      "acceptedLocalSourceFingerprint": "305f0d4b019a3fc1f184024c",
-      "unservedSourceDelta": [
-        "tests/operational-admission.unit.spec.mjs"
-      ],
-      "servedCandidateLeavesChecked": 66,
-      "servedCandidateLeavesMatched": 66,
-      "comparison": "60 non-HTML canonical hashes exact;6 HTML hashes exact only after known nonce transport fields removed",
-      "note": "The stage source fingerprint is preserved as actually observed. Subsequent test-harness-only source repair changes no served payload; current artifact root and actual served leaves were independently rechecked."
-    }
+      "stageFingerprint": "ca9cba1d10ba7a057f94491e",
+      "acceptedLocalFingerprint": "ca9cba1d10ba7a057f94491e",
+      "equal": true,
+      "coreLeafReadback": {
+        "checked": 66,
+        "passed": 66,
+        "note": "60 canonical non-HTML matches and6 HTML matches after only known transport nonce removal; not raw primary HTML byte equality."
+      }
+    },
+    "note": "Full archive and remote ledger verified. Runtime ceremony rejected because all three content browser tests observed upstream504/CORS. Existing three identity contracts remain held; no identity acceptance claimed."
   },
   "production": {
-    "state": "unchanged",
-    "sourceCommit": "ceeeb2de9f66d9fe239906f368991afe86c512f6"
+    "state": "not-promoted",
+    "sourceCommit": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+    "rollbackTag": "s390-production-20261020"
   },
   "rollback": {
     "tag": "s390-production-20261020",
     "method": "Use existing full Pages deployment workflow for the verified prior release; staging deploy retains rollback directories."
   },
   "remaining": [
-    "Final main publication and exact-SHA hosted required checks",
-    "Full confirmed Pages production promotion",
-    "Production readback, final proof write-back and workflow/process restoration"
-  ]
+    "Provider recovery and a passing current live REST probe + staging ceremony",
+    "Publish the repaired candidate and pass required hosted checks at its exact SHA",
+    "Confirmed full Pages deployment and production SHA/tree readback",
+    "Final release write-back, Ark/status-board evidence and publisher restoration"
+  ],
+  "recovery": {
+    "state": "approval-pending",
+    "requestedAction": "One restart of this website Supabase project",
+    "managementCapability": "ready; provider health read succeeded",
+    "approvalGate": {
+      "decision": "ask",
+      "reason": "no signal — defer to founder",
+      "source": "AGENTS.md Founder-Twin gate"
+    },
+    "restartPerformed": false,
+    "note": "Approval requested in the current conversation; silence is not approval. Recheck health before any approved recovery; never restart a healthy service."
+  }
 }

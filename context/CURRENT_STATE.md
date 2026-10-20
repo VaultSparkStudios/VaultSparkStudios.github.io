@@ -1,8 +1,8 @@
-## S391 — operational reliability, production verification in progress
+## S391 — local acceptance complete, live release held
 
-Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit.
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
 
-Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391; resume this arc, never start another. Evidence: docs/RELEASE_S391.json.
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
 
 ## Session 390 — public data contract repair (2026-10-19)
 

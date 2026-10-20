@@ -42,13 +42,13 @@
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
       "status": "yellow",
-      "note": "S391: production remains ceeeb2de9f; source changes are not promoted. Live REST provider degradation observed; docs/RELEASE_S391.json."
+      "note": "S391 production remains ceeeb2de9f; current Supabase database/REST/auth unhealthy. Release held."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
       "status": "yellow",
-      "note": "S391 initial receipt d6053cb4464f70ce2b5ef417 verified; browser3passed/3identityheld and attention15/15. Final current-source candidate binding pending."
+      "note": "S391 full12183-file payload and core66 verified; current runtime ceremony rejects upstream504/CORS. Local full545/545 passed."
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -70,7 +70,7 @@
       "url": "https://website.staging.vaultsparkstudios.com/status/",
       "type": "staging",
       "status": "yellow",
-      "note": "S391 initial receipt d6053cb4464f70ce2b5ef417 verified; browser3passed/3identityheld and attention15/15. Final current-source candidate binding pending."
+      "note": "S391 full12183-file payload and core66 verified; current runtime ceremony rejects upstream504/CORS. Local full545/545 passed."
     },
     {
       "command": "npm run build:check",
@@ -262,7 +262,7 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "f338d4094410e28ed169df2a",
-  "testsSourceFingerprint": "305f0d4b019a3fc1f184024c",
+  "testsSourceFingerprint": "ca9cba1d10ba7a057f94491e",
   "lastSessionSummary": "S391 six CLI guards and a hosted read-only REST canary verified; release evidence in docs/RELEASE_S391.json",
   "runtimeUrl": "https://vaultsparkstudios.com/",
   "sessionShellHygiene": {
@@ -281,12 +281,12 @@
     "session": 391,
     "date": "2026-10-20",
     "agent": "codex",
-    "state": "release-verification",
+    "state": "provider-recovery-required",
     "requestedOutcomes": 2,
     "completedOutcomes": 2,
-    "sourcePublication": "eaf846da50b013376d703a95194f3208b952344c",
-    "deployment": "Initial staging parity/browser checks pass; production unchanged",
-    "validation": "Focused suites, hosted REST125/7 and53/53 generated contracts passed; full closing suite pending",
+    "sourcePublication": "3bc93c7f2e2942b55a85019db32bf1f501841f96",
+    "deployment": "Repaired staging payload verified; live runtime ceremony rejects upstream504/CORS. Production unchanged.",
+    "validation": "Complete545/545 (0b8668eb3491ff08b5f522b3), Spark42, mobile215 and visual28 passed; current live125/125 fail",
     "evidence": "docs/RELEASE_S391.json"
   },
   "lastSession": 391,
@@ -308,13 +308,14 @@
   },
   "activeArc": {
     "session": 391,
-    "phase": "release-verification",
+    "phase": "provider-recovery-required",
     "goal": "01a157cd-72fc-7c72-88e1-90d3e0c93ba9",
-    "audit": "docs/AUDIT_2026-10-20-S391.json"
+    "audit": "docs/AUDIT_2026-10-20-S391.json",
+    "pendingApproval": "One bounded Supabase restart requested after Founder-Twin ASK; no restart performed"
   },
-  "testsSession": 385,
+  "testsSession": 391,
   "currentBuildState": "passed",
-  "currentBuildNote": "S385 current source complete537/537; receipt6f93630b73630ef28cd356f9; source98af2b44764a9508bba8caf4",
+  "currentBuildNote": "S391 current source545/545; receipt0b8668eb3491ff08b5f522b3; sourceca9cba1d10ba7a057f94491e",
   "lastDeploySession": 390,
   "lastDeployStatus": "full production verified (ceeeb2de9f; run 39359262188)",
   "silAvg5": 934.2,
@@ -323,5 +324,5 @@
     "candidate": "98538ff5b98aa464655fb1b2fed0c2148b049967",
     "receipt": "docs/RELEASE_S388.json"
   },
-  "truthAuditSummary": "S391 focused verification and healthy live REST125/7 pass. Complete suite and exact-candidate hosted/production acceptance remain pending. Premise timing remains nonpassing."
+  "truthAuditSummary": "S391 full545/545, mobile215 and Spark42 pass; staging payload verified. Current Supabase outage rejects live125/125 and staging runtime ceremony. Production remains unchanged; premise timing nonpassing."
 }

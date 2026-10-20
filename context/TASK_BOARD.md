@@ -5,6 +5,7 @@
 - [ ] [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
 - [ ] [SIL][S391] Validate moderation options per subcommand in a future audit.
 - [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
+- [ ] [UI follow-up][S391] Assess the existing mobile Spark overlap with article prose in a future UI audit.
 
 Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.md.
 

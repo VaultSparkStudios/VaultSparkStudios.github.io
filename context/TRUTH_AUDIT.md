@@ -1,14 +1,10 @@
-## S391 closing verification — 2026-10-20
-
-Overall status: yellow — implementation verified; full production verification in progress.
-
-Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit.
-
 ## S391 — current acceptance evidence (2026-10-20)
 
-Overall status: yellow — S391 operational implementation and live REST acceptance verified; complete suite and production release pending.
+Overall status: yellow — local acceptance complete, live release held.
 
-Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 is bound to this fresh S391 arc. Six CLI guards and the bounded REST canary are implemented; local fixtures and independent review pass. Latest full attempt passed272/273 steps, stopping on standalone check-premise-gate-timing; its exact allowlist repair passes self-tests5/5 and check. Complete rerun remains pending. Derived49/49 and initial staging parity verified; browser3passed/3held identity and attention15/15 pass. Held identity remains unaccepted. Live REST now passes125 queries with7 existing deferrals; db/REST/auth report ACTIVE_HEALTHY. No restart executed; recovery approval is unnecessary. Final strict premise timing stays nonpassing; a baseline replay cannot prove timely execution. Production remains ceeeb2de9f. All remaining requirements are listed in docs/RELEASE_S391.json, accepted:false.
+Six operational CLI guards and the weekly read-only REST canary are implemented. The canary previously passed hosted125/7. The bounded Spark collision repair removes offscreen forced layouts;42 browser tests,215 mobile probes,28 reviewed visual captures and the complete545/545 suite pass. Full staging payload12183 files is verified at source ca9cba1d10ba7a057f94491e. Current Supabase database/REST/auth are UNHEALTHY; all125 live queries fail and staging ceremony rejects10/11 on504/CORS. One restart awaits approval; none performed. Production remains ceeeb2de9f. Premise timing remains nonpassing; existing identity holds remain unaccepted. Evidence: docs/RELEASE_S391.json.
+
+Earlier healthy provider observations are historical; they do not describe the current outage. Receipt 0b8668eb3491ff08b5f522b3 proves the full local suite; diagnostics beginning after step1 never substitute for it. Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391. Resume this arc and its release verification; do not start another arc or mark native completion.
 
 ## S387 — 2026-10-18 — report storage and release truth
 

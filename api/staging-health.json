@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-10-20T07:49:59.975Z",
+  "generatedAt": "2026-10-20T09:17:20.153Z",
   "candidateReady": true,
   "candidateFindings": [],
   "candidateBuildSha": "eaf846da50b013376d703a95194f3208b952344c",
   "stagingBuildSha": "eaf846da50b013376d703a95194f3208b952344c",
   "artifactManifest": {
-    "candidateRoot": "ea96a578c6fa1c269b9ec049710034671ecb845cf8d4c4cff1deada83d027c27",
+    "candidateRoot": "0ffcf24143a2d4e0731db0984327c528008c5e553aba470938c2863046ea8b5e",
     "candidateLeafCount": 66,
-    "stagingRoot": "ea96a578c6fa1c269b9ec049710034671ecb845cf8d4c4cff1deada83d027c27",
+    "stagingRoot": "0ffcf24143a2d4e0731db0984327c528008c5e553aba470938c2863046ea8b5e",
     "stagingLeafCount": 66,
     "matched": true
   },
@@ -16,7 +16,7 @@
   "publicSafe": true,
   "production": "https://vaultsparkstudios.com",
   "staging": "https://website.staging.vaultsparkstudios.com",
-  "status": "green",
+  "status": "yellow",
   "surfaceParity": {
     "state": "matched",
     "productionRoutes": 283,
@@ -36,7 +36,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/after-paint.shell-0392b76d45.js",
         "assets/ambient-core.shell-816a2a481c.js",
@@ -59,7 +59,7 @@
       ],
       "stagingShell": [
         "assets/after-paint.shell-0392b76d45.js",
-        "assets/ambient-core.shell-816a2a481c.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/hero-ticker.shell-550971e267.js",
@@ -94,7 +94,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     },
     {
       "route": "/studio-pulse/",
@@ -102,7 +104,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-816a2a481c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -117,7 +119,7 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-816a2a481c.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
@@ -146,7 +148,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     },
     {
       "route": "/membership/",
@@ -154,7 +158,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-816a2a481c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
@@ -168,7 +172,7 @@
         "assets/trust-depth.shell-bad58045cc.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-816a2a481c.js",
+        "assets/ambient-core.shell-29a2e1a95c.js",
         "assets/ambient-feature.shell-9b5baeb1ab.js",
         "assets/nav-sheet.shell-c0fddc0c73.js",
         "assets/public-intelligence.shell-c86a6ecc39.js",
@@ -196,7 +200,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     }
   ]
 }

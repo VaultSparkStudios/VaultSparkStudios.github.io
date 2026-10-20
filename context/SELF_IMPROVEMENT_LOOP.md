@@ -3001,3 +3001,7 @@ Brainstorm: (1) validate recognized moderation options per mutation/list subcomm
 ### S391 verification addendum — 2026-10-20
 
 Hosted canary39383473357 executed and passed125 queries with7 existing deferrals. Provider recovered without a restart. Both selected outcomes verified; release acceptance remains separate. Score remains936/1000 (940→936,−4); no retrospective timing cure, performance gain or identity acceptance is claimed. Existing two SIL commitments remain on TASK_BOARD. Complete closing suite and production readback are required before native completion.
+
+### S391 current-source acceptance and provider hold — 2026-10-20
+
+Complete545/545 receipt 0b8668eb3491ff08b5f522b3 at sourceca9cba1d10ba7a057f94491e; Spark42, mobile215 and visual28 pass. Controlled Chrome155 traces eliminate the collision loop forced layouts, but Lighthouse median improvement is unproven. Current provider outage fails125/125 live reads and the staging runtime ceremony; no restart or production promotion performed. Score remains936/1000; the two committed SIL observations stay unchanged. Premise timing remains nonpassing. Brainstorm: shared runtime hash changes must rebuild dependent page-provenance and critique packets before the full acceptance freeze.

@@ -2410,3 +2410,7 @@ The weekly/manual canary uses anonymous limit=0 probes, three concurrent request
 ## D-S391.3 — Keep the procedural deviation visible (2026-10-20)
 
 The final passing strict premise checkpoint followed two delegated implementation edits; synced routine/propagation commits also appear after start_head. Retain the original nonpassing timing evidence. Baseline source inspection/replay supports the premises but cannot turn a late checkpoint into a timely one. Future delegation must wait for the passing recorded checkpoint.
+
+## D-S391.4 — Keep offscreen layout deferred during Spark collision checks (2026-10-20)
+
+Two exact-candidate hosted Lighthouse runs failed the unchanged News performance floor at 0.88. Chrome 155 traces identified Spark measuring controls inside skipped content-visibility subtrees. Feature-detect checkVisibility before measuring those controls; visible controls and unsupported browsers retain the existing collision path. A controlled trace comparison removed the inner loop's 10–11 forced layouts (about 20 ms); Lighthouse medians remained effectively unchanged, so this is not evidence of a score improvement. Require browser collision checks, rendered visual evidence, fresh staging and exact-candidate hosted acceptance before promotion.
