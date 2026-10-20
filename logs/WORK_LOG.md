@@ -1653,3 +1653,8 @@ S390 release verification: required exact-SHA checks (e2e, lighthouse, accessibi
 ## Session 391 — 2026-10-20 — operational reliability checkpoint
 
 Fresh goal-bound arc: startup, nine-axis premise-checked audit and implementation of six outward CLI guards plus a read-only weekly/manual REST canary. Actual CLI tripwires and canary fixtures pass; independent review passes. Full validation reached76/77 and stopped on two startup findings; both repaired. Generated contracts49/49 pass. Initial staging deployment12149 files and served receipt/ledger verified; applicable browser3passed/3identityheld; attention15/15. Production remains ceeeb2de9f. All125 REST probes failed during provider degradation; management capability is READY, service-health and SQL probes attempted, one bounded restart approval pending. No restart executed. Full current-source suite, exact-candidate publication and full production readback remain pending in docs/RELEASE_S391.json. CDR reviewed, no new creative direction. Premise timing deviation retained as nonpassing.
+
+
+### S391 closeout verification — 2026-10-20
+
+Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit. Source checkpoint eaf846da50 pushed; no production deployment claimed from that push. All53 regenerated artifact checks passed after preserving queued publisher updates.

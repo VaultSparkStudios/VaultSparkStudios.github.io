@@ -1,7 +1,7 @@
 ## S391 — operational reliability
 
 - [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
-- [x] [S391 #2] REST canary implemented; healthy live/hosted acceptance pending in docs/RELEASE_S391.json.
+- [x] [S391 #2] REST canary verified locally and hosted125/7; receipt in docs/RELEASE_S391.json.
 - [ ] [S391 RELEASE] Complete suite, exact-candidate publication, production promotion/readback (docs/RELEASE_S391.json).
 - [ ] [SIL][S391] Validate moderation options per subcommand in a future audit.
 - [ ] [SIL][S391] Require the strict premise checkpoint before delegated edits.
@@ -20,7 +20,7 @@ Waves1–2 implemented; Wave3 release pending. Goal association: LATEST_HANDOFF.
 - [ ] [S390][DATA/P2] Member achievements schema/display.
 - [ ] [S390][SEC/P2] event_rsvps exposes user_id to anon.
 - [x] [SIL][S390] Inventory remaining outward CLIs. (S391: six guards + documented remaining scope.)
-- [x] [SIL][S390] Schedule weekly live REST probe. (S391 workflow implemented; first hosted/live acceptance tracked in RELEASE_S391.)
+- [x] [SIL][S390] Schedule weekly live REST probe. (S391 hosted run39383473357 passed125/7.)
 ## S389
 
 - [x] [S389 #1] Deploy argv guards.

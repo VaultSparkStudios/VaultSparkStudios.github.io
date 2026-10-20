@@ -5,10 +5,9 @@
 ╠═════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                               ║
 ║  HEADLINE                                                                                     ║
-║    CLI previews are verified safe; live REST passes after provider recovery. Full release     ║
-║    remains pending.                                                                           ║
+║    Six CLI guards and a hosted REST canary verified; full release checks in progress.         ║
 ║                                                                                               ║
-║  PROJECT IMPACT     ███████░░░   70/100                                                       ║
+║  PROJECT IMPACT     ███████▌░░   75/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███░░░░░░░   30/100                                                       ║
 ║  SIL DELTA          940 → 936  (-4)                                                           ║
 ║                                                                                               ║
@@ -16,6 +15,12 @@
 
   ITEMS                                                       (sorted: left × right)
   ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [#2]  scheduled-public-rest-canary                              PROJ 8  ·  ECOS 3
+         ── feedbackLoop ────────────────────────────────────────────────────────────────────
+         Weekly read-only probes use bounded requests and fail on new errors; first hosted
+         run passed125 queries with7 declared deferrals.
+         → GitHub run39383473357
 
   [#1]  operational-cli-admission                                 PROJ 7  ·  ECOS 3
          ── security ────────────────────────────────────────────────────────────────────────
@@ -31,10 +36,10 @@
     • Require a passing recorded premise checkpoint before delegation.
 
   BLOCKERS
-    • Complete suite rerun, hosted candidate checks, main publication and production promotion/readback remain pending.
+    (none)
 
   ACTION GATE
-    1 items shipped · ready to commit & push? [y/N]
+    2 items shipped · ready to commit & push? [y/N]
 
 ```
 

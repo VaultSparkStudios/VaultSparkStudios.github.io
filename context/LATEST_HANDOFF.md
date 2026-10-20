@@ -1,12 +1,8 @@
-## Where We Left Off (Session 391) — active arc, release pending
+## Where We Left Off (Session 391) — release verification in progress
 
-Session Intent: full fresh /arc, direct main commit/push, and fully verified deployment. Native Codex goal 01a157cd-72fc-7c72-88e1-90d3e0c93ba9, createdAt1792474465, is bound to S391; continuation resumes this audit and never starts another arc.
+Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit.
 
-Selected audit: docs/AUDIT_2026-10-20-S391.json. Six CLI guards and the read-only REST canary are implemented; independent review passes. IO-tripwire and canary fixtures pass. Latest full validation passed272/273 steps, stopping on standalone check-premise-gate-timing; its exact manual-diagnostic allowlist repair passes self-tests5/5 and check. Earlier startup findings are repaired. Complete rerun remains required. Unknown migration probes reject before operational IO. Derived contracts49/49 pass. Initial staging receipt d6053cb4464f70ce2b5ef417 and served ledger are verified. Applicable browser3passed/3identityheld and attention15/15 pass; final current-source candidate binding remains pending.
-
-Deploy: production unchanged at ceeeb2de9f. After provider recovery, .cache/S391/live-rest-stability.log passes125 queries with7 existing deferrals; db/REST/auth report ACTIVE_HEALTHY. No restart executed and the earlier recovery approval is unnecessary. No schema/policy change or paid API use occurred. Commit/push/full deployment authorization already exists.
-
-Next: inspect .cache/S391/state.json and live tool handles, complete current-source suite, stage final candidate, push/observe exact-SHA required checks, canonical closeout and full production promotion/readback. Preserve evidence of the timing deviation: the final strict gate followed two delegated edits; a baseline source replay does not prove timely execution. Current release evidence: docs/RELEASE_S391.json (accepted:false). CDR reviewed: no new human creative direction. Waves1–2 implemented; Wave3 remains open in TASK_BOARD and RELEASE_S391.
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391; resume this arc, never start another. Evidence: docs/RELEASE_S391.json.
 
 ## Where We Left Off (Session 390) — public data contracts
 

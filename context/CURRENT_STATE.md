@@ -1,6 +1,8 @@
-## Session 391 — verification in progress (2026-10-20)
+## S391 — operational reliability, production verification in progress
 
-Six operational CLIs now validate argv before operational IO; unknown migration probes are rejected before credentials/pre-images/SQL. A read-only weekly/manual public REST canary bounds requests and refuses new transport, schema or permission failures. Focused tests and independent review pass. The Latest full attempt reached428/429, then found the same session diagnostic missing its lifecycle marker; narrowly declared and reachability check passes. Complete rerun remains pending. Generated contracts pass49/49. Initial staging deploy is parity verified; production remains ceeeb2de9f. Live REST now passes125 queries with7 existing deferrals; db/REST/auth report ACTIVE_HEALTHY. No restart executed; recovery approval is unnecessary. Premise timing remains nonpassing. Full closeout, main publication, required hosted checks and production readback remain pending. Evidence: docs/RELEASE_S391.json. Native goal 01a157cd-72fc-7c72-88e1-90d3e0c93ba9 is bound to this invocation.
+Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit.
+
+Native goal01a157cd-72fc-7c72-88e1-90d3e0c93ba9 remains bound to S391; resume this arc, never start another. Evidence: docs/RELEASE_S391.json.
 
 ## Session 390 — public data contract repair (2026-10-19)
 

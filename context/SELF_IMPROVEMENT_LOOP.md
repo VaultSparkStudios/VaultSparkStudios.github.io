@@ -11,8 +11,8 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last5 totals): 935 → 935 → 935 → 940 → 936
 Avgs (available audit totals) —3:937.0 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured (archived history excluded)
 Velocity trend:↓ |Protocol velocity:↓ |Debt:→
-Last session: 2026-10-20 | Session391 | Total:936/1000 | Velocity:1
-  └ Six CLI guards verified; REST canary exposes a live outage. Release remains pending in docs/RELEASE_S391.json.
+Last session: 2026-10-20 | Session391 | Total:936/1000 | Velocity:2
+  └ Six CLI guards and hosted REST canary verified; full production acceptance remains pending.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -2996,3 +2996,8 @@ Six outward CLI guards preserve documented operational modes while refusing ambi
 Score rationale: Development Health−3 for the observed data-plane outage; Process Quality−2 for delegating two edits before the final passing premise checkpoint; Security Posture+1 for measured six-command admission. Other categories unchanged. The original timing receipt remains nonpassing; source replay cannot prove timely execution. No engagement or performance improvement is claimed.
 
 Brainstorm: (1) validate recognized moderation options per mutation/list subcommand; (2) require a passing recorded premise checkpoint before delegation; (3) add a separate provider-health summary to canary failures so operational and schema failures are easier to distinguish. Committed to TASK_BOARD: first two [SIL][S391] observations for a future selected audit.
+
+
+### S391 verification addendum — 2026-10-20
+
+Hosted canary39383473357 executed and passed125 queries with7 existing deferrals. Provider recovered without a restart. Both selected outcomes verified; release acceptance remains separate. Score remains936/1000 (940→936,−4); no retrospective timing cure, performance gain or identity acceptance is claimed. Existing two SIL commitments remain on TASK_BOARD. Complete closing suite and production readback are required before native completion.

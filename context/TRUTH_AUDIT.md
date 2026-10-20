@@ -1,3 +1,9 @@
+## S391 closing verification — 2026-10-20
+
+Overall status: yellow — implementation verified; full production verification in progress.
+
+Six operational CLI argument boundaries verified under IO tripwires. Weekly read-only REST canary passed locally and in hosted run39383473357 at eaf846da50 (125 queries,7 existing deferrals). Provider recovered without intervention; no restart occurred. Full closing suite and exact-candidate staging/production acceptance remain pending. Premise timing remains nonpassing and unchanged identity holds remain explicit.
+
 ## S391 — current acceptance evidence (2026-10-20)
 
 Overall status: yellow — S391 operational implementation and live REST acceptance verified; complete suite and production release pending.

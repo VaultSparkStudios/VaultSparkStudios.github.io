@@ -137,7 +137,7 @@
       "effortHours": 1.5,
       "priority": 17.71,
       "selectedDepth": "L2",
-      "status": "pending",
+      "status": "shipped",
       "why": "Purge CLI falls through to operational main for unknown/help/dry input; provision-tt-storage accepts apply alongside ignored input.",
       "userOutcome": "Operators can inspect commands without accidentally changing the site; visitors retain a reliable production cache and staging origin.",
       "acceptance": "Unknown/malformed/duplicate arguments exit 2; help and dry aliases perform no operational IO; existing self-tests and explicit read-only --check modes remain valid; inventory names unmodified commands and actual semantics.",
@@ -171,6 +171,13 @@
           "at": "2026-10-20T05:55:28.653Z",
           "state": "implemented",
           "evidence": "Expanded six-CLI IO-tripwire suite passed independently; full build run step1 passed 5/5 tests; review passes, zero findings. No real mutation was used for testing."
+        },
+        {
+          "at": "2026-10-20T07:00:15.500Z",
+          "state": "shipped",
+          "evidence": "Six actual CLI IO-tripwire tests and independent review pass; grammar preserves operational modes.",
+          "status": "shipped",
+          "note": "Six actual CLI IO-tripwire tests and independent review pass; grammar preserves operational modes."
         }
       ]
     },
@@ -185,7 +192,7 @@
       "effortHours": 1,
       "priority": 25.24,
       "selectedDepth": "L2",
-      "status": "pending",
+      "status": "shipped",
       "why": "Live REST probing exists only as a manual mode and fetch has no timeout.",
       "userOutcome": "Visitors get valid public data queries, with live schema drift detected between releases.",
       "acceptance": "Offline contract and extraction tests pass; network failures become explicit nonpassing query verdicts; scheduled/manual read-only workflow has bounded runtime and contents:read; live check passes with declared deferrals; first hosted dispatch verified.",
@@ -219,6 +226,13 @@
           "at": "2026-10-20T05:55:28.654Z",
           "state": "implemented",
           "evidence": "Four focused canary tests and ten extraction/evaluation self-tests pass. Live run correctly fails all 125 currently unreachable queries; hosted dispatch and healthy live acceptance remain pending."
+        },
+        {
+          "at": "2026-10-20T07:00:15.500Z",
+          "state": "shipped",
+          "evidence": "Local and hosted run39383473357 passed125 queries/7 existing deferrals; actual probe step executed successfully at eaf846da50.",
+          "status": "shipped",
+          "note": "Local and hosted run39383473357 passed125 queries/7 existing deferrals; actual probe step executed successfully at eaf846da50."
         }
       ]
     }
@@ -228,6 +242,11 @@
       "at": "2026-10-20T05:55:28.654Z",
       "state": "verification-in-progress",
       "evidence": "Full build run reached step77 and stopped: stale startup-revenue-agreement and orphan standalone medium-quality-gates CLI. Regenerate current brief and document actual standalone CLI use; no gate bypass."
+    },
+    {
+      "at": "2026-10-20T07:00:15.500Z",
+      "state": "selected-outcomes-verified",
+      "evidence": "Two implementation outcomes verified. Full closing validation and production delivery remain required."
     }
   ],
   "premiseGate": {
