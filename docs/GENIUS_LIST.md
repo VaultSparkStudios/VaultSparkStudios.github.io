@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **936/1000**
 - CI health: **check gh run list**
-- Current focus: S391 CLI guards and hosted REST canary verified; full release validation in progress
+- Current focus: Safe operational CLI commands and scheduled public REST drift detection
 
 ## Strategic Read
 

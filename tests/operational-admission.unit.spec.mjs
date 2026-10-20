@@ -16,12 +16,31 @@ test('operational CLI admission exits before credentials, reads, network, writes
   fs.writeFileSync(preload, `import {registerHooks, syncBuiltinESMExports} from 'node:module';
 import fs from 'node:fs'; import fsp from 'node:fs/promises'; import cp from 'node:child_process'; import http from 'node:http'; import https from 'node:https';
 const trap=()=>{throw Error('OPERATIONAL_IO_TRIPWIRE');};
-registerHooks({resolve(spec,context,next){if(/(?:secrets|model-router|csp-policy|static-csp)[.]mjs$/.test(spec))trap(); return next(spec,context);}});
+// Node's ESM loader may use public fs.readFileSync. Preserve that capability
+// exclusively inside the module-source load hook; runtime reads stay trapped.
+const readModuleSource=fs.readFileSync.bind(fs);
+registerHooks({
+resolve(spec,context,next){if(/(?:secrets|model-router|csp-policy|static-csp)[.]mjs$/.test(spec))trap(); return next(spec,context);},
+load(url,context,next){
+  const sourceUrl=new URL(url);
+  if(sourceUrl.protocol==='file:' && sourceUrl.pathname.endsWith('.mjs'))return {format:'module',source:readModuleSource(sourceUrl,'utf8'),shortCircuit:true};
+  return next(url,context);
+}});
 for(const key of ['readFileSync','readdirSync','writeFileSync','appendFileSync','mkdirSync','rmSync','unlinkSync','renameSync','mkdtempSync'])fs[key]=trap;
 for(const key of ['readFile','readdir','writeFile','appendFile','mkdir','rm','unlink','rename','mkdtemp'])fsp[key]=trap;
 for(const key of ['spawn','spawnSync','exec','execSync','execFile','execFileSync','fork'])cp[key]=trap;
 http.request=trap; http.get=trap; https.request=trap; https.get=trap; globalThis.fetch=trap; syncBuiltinESMExports();`);
   try {
+    const runtimeRead = path.join(dir, 'runtime-read.mjs');
+    fs.writeFileSync(runtimeRead, `import {readFileSync} from 'node:fs';
+console.log('RUNTIME_READ_REACHED');
+readFileSync(new URL(import.meta.url), 'utf8');`);
+    const control = spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, runtimeRead], {
+      cwd: root, encoding: 'utf8', timeout: 15000,
+    });
+    assert.equal(control.status, 1, `runtime read control: ${control.stderr}`);
+    assert.match(control.stdout, /RUNTIME_READ_REACHED/);
+    assert.match(control.stderr, /OPERATIONAL_IO_TRIPWIRE/);
     for (const script of scripts) {
       const provisioning = script.startsWith('provision-') && script !== 'provision-vault-test-accounts';
       const migration = script === 'apply-supabase-migration';

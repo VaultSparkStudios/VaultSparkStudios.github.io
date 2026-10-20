@@ -20,7 +20,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S391) - WHAT SHIPPED ══════════════════════════╗
-║  Two S391 outcomes verified; hosted canary125/7 passed; product  ║
+║  S391 six CLI guards and a hosted read-only REST canary verifie  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
