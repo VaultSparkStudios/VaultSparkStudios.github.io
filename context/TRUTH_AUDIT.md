@@ -1,3 +1,9 @@
+## S393 — current observation, 2026-10-20
+
+Overall: yellow — local implementation accepted; release in progress. S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+The full build was retried only after management health reported db/rest/auth ACTIVE_HEALTHY. It then passed its real postbuild lifecycle. Final focused tests3/3 and125 live REST queries pass; seven existing deferrals remain. Control-plane discovery still reports the shared data credential targets another project, while management/SQL/function authority probes are ready; no credential mismatch is treated as usable data authority. No restart was performed. Six generated social-image metadata changes receive fresh before/after theme captures. Premise timing remains nonpassing because the plan artifact existed before the strict checkpoint; no retrospective cure or borrowed S392 completion evidence is claimed.
+
 ## S392 — partial release record (2026-10-20)
 
 Overall status: yellow — source outcomes verified, release unaccepted.
@@ -1670,3 +1676,13 @@ S389 local closeout: S389 locally verifies five repairs: strict deployment argum
 
 
 S389 release verification: S389 verifies five repairs: deployment argument admission, deterministic handoff extraction, archive sitemap discovery, Oracle answer ordering, and field-proof publication ordering. Complete local validation passed542/542 twice; post-event closure109/109; mobile215/215 with zero P0/P1;28 sitemap captures inspected. Exact-candidate staging, hosted checks, full Pages and Worker deployment and strict production readback verified for c86109ee05dff52ad0fe134ed34a060b97bcbe4f. No measured performance improvement or authenticated identity acceptance is claimed. Release evidence: docs/RELEASE_S389.json. Score935/1000; velocity5. Existing historical partial attempts remain recorded; they are not counted as passing runs.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393 current runtime evidence
+
+Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.

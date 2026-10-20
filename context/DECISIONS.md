@@ -2427,3 +2427,17 @@ Use an explicitly active handoff heading before durable closeout; the completed-
 ## D-S392.3 — Preserve the recovery approval boundary (2026-10-20)
 
 The exact guarded one-project Supabase restart received Founder-Twin ASK with reason no signal — defer to founder. The explicit approval question remains unanswered. Do not attempt the restart through another surface, change the helper name, or disable the gate. Observe healthy recovery non-mutatingly; production remains pending current acceptance.
+
+
+## D-S393.1 — Validate rank evidence at both boundaries (2026-10-20)
+
+Require canonical ISO timestamps, no future claims, the existing48h freshness window, consistent schema/counts and ranks derived from finite qualifying points. Reject malformed provider rows before writing; valid empty results remain valid. Keep public-profile filtering, rank thresholds, credential targeting and membership policy unchanged. Rollback: revert the bounded rank validation change and its registered tests; retain the last accepted report bytes.
+
+## D-S393.2 — Keep release and process evidence scoped (2026-10-20)
+
+Retain the original nonpassing premise-timing receipt: the plan existed before the checkpoint, while the selected source remained clean. Current provider recovery is observed, not attributed to a restart. Existing STRONG CANON-045 identity and CANON-056 terminology gaps remain outside this routine stabilization; held identity surfaces and policy choices are preserved, and no new identity/trust flow or public promise is introduced. Deployment still requires current staging, applicable access regressions, exact-candidate CI and production readback.
+
+
+## D-S393.3 — Generated shell and visual evidence repair (2026-10-20)
+
+Use the master stylesheet and shared theme controller, and execute the existing bootstrap after body opens. Each captured theme owns a new browser context; root/body/storage must match the request, including receipt-only acceptance. Real before images exposed the defect;84 after images now show seven palettes. Preserve12 actual dark baseline images and disclose the pre-existing dismissible mobile Spark overlap. No membership, identity or pricing policy changes.

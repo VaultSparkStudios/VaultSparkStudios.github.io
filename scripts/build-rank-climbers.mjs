@@ -69,6 +69,28 @@ async function resolveServiceKey() {
 
 const CHECK = process.argv.includes('--check');
 
+const MAX_REPORT_AGE_MS = 48 * 3600 * 1000;
+
+export function validateRankReport(data, now = Date.now()) {
+  if (!data || data.schemaVersion !== '1.0') throw new Error('INVALID rank report schema');
+  const generatedAt = typeof data.generatedAt === 'string' ? Date.parse(data.generatedAt) : NaN;
+  if (!Number.isFinite(generatedAt) || new Date(generatedAt).toISOString() !== data.generatedAt) {
+    throw new Error('INVALID rank report timestamp');
+  }
+  const age = now - generatedAt;
+  if (age < 0) throw new Error('INVALID future rank report timestamp');
+  if (age > MAX_REPORT_AGE_MS) throw new Error(`STALE rank report — ${Math.round(age / 3600000)}h old`);
+  if (typeof data.period !== 'string' || !data.period.trim()) throw new Error('INVALID rank report period');
+  if (!Array.isArray(data.climbers) || data.climbers.length > 10
+      || data.totalClimbers !== data.climbers.length) throw new Error('INVALID rank report count');
+  for (const row of data.climbers) {
+    if (!row || typeof row.handle !== 'string' || !row.handle.trim()
+        || !Number.isFinite(row.points) || row.points <= 49
+        || row.rank !== computeRank(row.points)) throw new Error('INVALID rank report climber');
+  }
+  return data;
+}
+
 export async function fetchClimbers({ fetchImpl = fetch, resolveKey = resolveServiceKey } = {}) {
   const { key, isServiceRole } = await resolveKey();
 
@@ -87,10 +109,14 @@ export async function fetchClimbers({ fetchImpl = fetch, resolveKey = resolveSer
   if (!Array.isArray(rows)) throw new Error('Supabase rank response is not an array; previous report preserved');
 
   return rows.map(function (row) {
+    if (!row || !Number.isFinite(row.points) || row.points <= 49
+        || (row.username != null && typeof row.username !== 'string')) {
+      throw new Error('Supabase rank row is invalid; previous report preserved');
+    }
     return {
-      handle: row.username || 'VaultMember',
+      handle: row.username?.trim() || 'VaultMember',
       rank: computeRank(row.points),
-      points: typeof row.points === 'number' ? row.points : 0
+      points: row.points
     };
   });
 }
@@ -111,6 +137,7 @@ async function build() {
     totalClimbers: climbers.length
   };
 
+  validateRankReport(out);
   writeFileSync(OUT, JSON.stringify(out, null, 2));
   console.log(`[build-rank-climbers] wrote api/rank-climbers.json (${climbers.length} climbers)`);
 }
@@ -141,11 +168,9 @@ if (direct && process.argv.includes('--self-test')) {
 } else if (direct && CHECK) {
   if (!existsSync(OUT)) { console.error('[build-rank-climbers] MISSING api/rank-climbers.json'); process.exit(1); }
   try {
-    const data = JSON.parse(readFileSync(OUT, 'utf8'));
-    const age = Date.now() - new Date(data.generatedAt || 0).getTime();
-    if (age > 48 * 3600 * 1000) { console.error(`[build-rank-climbers] STALE — ${Math.round(age / 3600000)}h old`); process.exit(1); }
+    validateRankReport(JSON.parse(readFileSync(OUT, 'utf8')));
     console.log('[build-rank-climbers] OK');
-  } catch (e) { console.error('[build-rank-climbers] INVALID JSON:', e.message); process.exit(1); }
+  } catch (e) { console.error('[build-rank-climbers]', e.message); process.exit(1); }
 } else if (direct) {
   build().catch(function (e) { console.error('[build-rank-climbers] fatal:', e); process.exit(1); });
 }

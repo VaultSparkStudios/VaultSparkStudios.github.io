@@ -6,6 +6,7 @@
 // Run: node --test tests/theme-toggle.unit.spec.js
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { launchBrowser, openFixture, html, waitFor, settle } from './fixtures/browser-harness.mjs';
 
 // Mirrors production: deferred in <head>. The inline listener records what the
@@ -30,6 +31,35 @@ before(async () => { browser = await launchBrowser(); });
 after(async () => { await browser?.close(); });
 
 const seedTheme = (value) => ({ fn: (v) => { if (!sessionStorage.getItem('__seeded')) { if (v !== null) localStorage.setItem('vs_theme', v); sessionStorage.setItem('__seeded', '1'); } }, arg: value });
+
+test('generated leaderboard shells apply every stored theme to the actual page', async () => {
+  const themes = ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast'];
+  const names = ['call-of-doodie', 'challenges', 'football-gm', 'recruiters', 'teams', 'weekly'];
+  for (const name of names) {
+    const route = `/leaderboards/${name}/`;
+    const source = fs.readFileSync(new URL(`../leaderboards/${name}/index.html`, import.meta.url), 'utf8');
+    const palettes = new Map();
+    for (const theme of themes) {
+      const f = await openFixture(browser, { pages: { [route]: source }, initScripts: [seedTheme(theme)] });
+      try {
+        await f.goto(route);
+        const observed = await f.page.evaluate(() => ({
+          root: document.documentElement.dataset.theme,
+          body: document.body.dataset.theme,
+          controller: window.VSTheme?.get(),
+          background: getComputedStyle(document.body).getPropertyValue('--page-bg').trim(),
+          text: getComputedStyle(document.body).color,
+        }));
+        assert.equal(observed.root, theme, `${route} root ${theme}`);
+        assert.equal(observed.body, theme, `${route} body ${theme}`);
+        assert.equal(observed.controller, theme, `${route} controller ${theme}`);
+        palettes.set(theme, `${observed.background}|${observed.text}`);
+      } finally { await f.close(); }
+    }
+    assert.notEqual(palettes.get('light'), palettes.get('dark'), `${route} light palette must actually differ`);
+    assert.equal(new Set(palettes.values()).size, themes.length, `${route} every palette renders distinctly`);
+  }
+});
 
 async function withFixture({ theme = null, initScripts = [], handlers = [] } = {}, fn) {
   const f = await openFixture(browser, { pages: { '/': FIXTURE }, initScripts: [seedTheme(theme), ...initScripts], handlers });

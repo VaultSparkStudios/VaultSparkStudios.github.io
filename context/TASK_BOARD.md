@@ -1,5 +1,15 @@
 
 
+## S393 — rank-report integrity and authorized full release
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+- [x] [S393 #1] Validate canonical timestamps, future/stale dates, report schema/counts and member rows; verify actual CLI/provider failure preservation. Focused3/3 and independent review round2 pass.
+- [ ] [S393 RELEASE] Complete current whole-project suite, staging runtime/artifact parity, sanitized direct-main publication, exact-candidate required checks, full production promotion and readback.
+- [ ] [SIL][S393][PROTOCOL/P2] Record strict premise acceptance before creating any plan artifact in the next selected audit.
+- [ ] [SIL][S393][BUILD/P2] Measure and remove generated leaderboard metadata/whitespace churn at its existing builder boundaries; preserve canonical social previews and rendered evidence. Future selection only.
+
+Wave 1: startup, preservation merge and fresh nine-axis audit complete. Wave 2: selected implementation/review complete; whole-project validation and visual receipt in progress. Wave 3: canonical closeout in progress; current staging, main push and production acceptance pending.
 ## S391 — operational reliability
 
 - [x] [S391 #1] Six CLI guards verified; semantic migration probe admission included.
@@ -481,31 +491,9 @@ Last updated: 2026-10-08 UTC (S370 requested closeout)
 - [x] **[S320][RELEASE/P0] Give route-provenance a vantage CI can actually use — PREMISE DISPROVEN S321, re-scoped above (D-S321.5).** The committed approach was to probe the `pages.dev` origin as a corroborating second vantage. Measured directly in S321, `pages.dev` returns 404 for `/_health` and `/api/auth/me` and 405 for `OPTIONS /v/rum`: it is the Pages origin *behind* the Worker, and the Worker owns the `vaultsparkstudios.com/*` route, so it can never observe Worker route provenance. Implementing it as written would have been worse than leaving the gap open — `isMissingRoute` treats a 404 beside a clear control as a fact about the deployment, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict. Re-scoped to the staging `workers_dev` binding (see the S321 item above). The underlying gap remains open; only this approach is closed.
 - [x] **[S320][SIL][OBS/P1] Promote `contractLive` to a hard assertion in the `/v/rum` ingest probe.** SHIPPED S321 — the tolerance existed only for the Worker rollout window (D-S320.4) and the code said so ("Tighten once contractLive holds"). Verified live `202 {"ok":true,"synthetic":true}`, so `summarize()` now treats `contractLive === false` as `edge-degraded`. Both directions self-tested (a healthy contract must not page, or the assertion gets muted). probe-uptime 40/40.
 - [x] **[S320][VERIFY/P1] Confirm sign-in recovers at the 00:00 UTC KV reset.** VERIFIED S321 — `GET /login` returns **302** to `obeliskgate.com/auth/authorize` carrying a complete S256 PKCE challenge. The 503 cleared. Verifying it also surfaced that the recovery was never retracted from the public status surface, and that the S319 crash fix covered only the start leg; both fixed this session.
-## Previous Now (Session 314 — audit saturated and live)
-
-- [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
-- [x] **[S314][NEWS/P0] Relationship-aware story/art parity.** Authored subject/action/object relationships bind scene, alt text, caption, satire setup/payoff, and evidence anchors; contradictory mutations fail before publication.
-- [x] **[S314][UX/P0] Modal mobile navigation contract.** The sheet now focuses on open, traps Tab/Shift+Tab, inerts present and late-added background nodes, locks scroll, and restores the hamburger for Escape/backdrop/close.
-- [x] **[S314][FEEDBACK/P0] Honest reaction delivery.** Selections are remembered only after accepted/already-counted responses; failed and unavailable submissions expose retryable aria-live states.
-- [x] **[S314][MEASURE/P1] Hero-choice denominators.** Viewport-qualified hero/portfolio impressions and named CTA clicks now make Play/Join/Map choice rates measurable without fabricated conversion claims.
-- [x] **[S314][VISUAL/P1] Per-capture visual review receipts.** Forty-two hash-bound captures distinguish manual review from automated-only coverage across seven themes, desktop/mobile, page/nav/showcase/report states.
-- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; final live receipt cc5d67845b37…, chain depth 6.
-- [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
-- [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
-- [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.
 ## Next (future runway)
 
 - [x] **[S348][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet — DONE.** Every Desk story now links to a deterministic `critique.json` argument map joining stable fact receipts, stances, predictions, and hash-bound visual evidence. Unsupported claims stay explicitly `unlinked`; orphan cross-references fail closed; no runtime model call is made.
-## Previous runway (Session 293 — carried forward)
-
-- [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.
-- [x] **[S293→S294][DEPLOY/P0] Production staleness diagnosis — DONE S294.** The fail-closed promotion interlock is working as designed; this is not a broken deploy path. `api/deploy-currency.json` measures the intentionally held production state continuously.
-- [x] **[S293→S295][OBS/P1] Wire `verify:deploy-parity` into a gate — DONE S295.** The scheduled deploy-currency receipt now runs real route-local production shell parity; a structural contract forbids `--local` production evidence.
-- [x] **[S293→S295][SIL][OBS/P1] Onset corroboration beyond one coarse probe — DONE S295.** RUM supplies the labelled last-healthy lower window, uptime the coarse upper bound, route history its own observation, and unrelated promotion history is explicitly excluded.
-## Previous runway (Session 292 — both items shipped in S293)
-
-- [x] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies. **Shipped S293** — see the S293 outcome block above.
-- [x] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source. **Shipped S293** — see the S293 outcome block above.
 ## Next (historical)
 
 - [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
@@ -723,3 +711,9 @@ Final post-closeout commits 3499f494 and 3c2c2c66 updated accepted release metad
 - [ ] [SIL][S392] Keep active handoff headings distinct from completed-session evidence.
 
 Wave 1 ✔ fresh audit. Wave 2 ✔ two input-boundary fixes. Wave 3 ◻ release gates and deployment carried forward. Phase tally:3 phases,2 done,1 open.
+
+### S393 release-dependent theme outcome
+
+- [x] [S393 #2] Restore all seven generated leaderboard themes, isolate capture contexts, reject false observed-theme receipt reuse, and inspect84 actual theme captures.
+
+Both selected local outcomes are accepted. Whole-project and release checks remain pending; no prior-session acceptance is borrowed.

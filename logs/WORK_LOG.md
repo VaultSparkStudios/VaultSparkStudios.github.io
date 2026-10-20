@@ -1677,3 +1677,17 @@ Two operator-input boundaries are implemented and independently reviewed: modera
 
 S392 validation checkpoint: Complete545/545 suite passed twice and real mobile215/215 passed. Canonical local closeout commits c6c9d8ff9a and a4a0a4520d are acknowledged. No push/deployment/restart. Provider db/rest/auth still UNHEALTHY; restart approval pending. Release evidence: docs/RELEASE_S392.json.
 
+
+
+## S393 — 2026-10-20 — rank integrity and release preparation
+
+Session Intent: /arc then I authorize a direct push/commit to main/remote and fully deploy.
+
+S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+Publisher updates and S392 local work are preserved by merge e11228271c. The strict premise checkpoint verified both claims before source edits, but the plan artifact preceded it; timing remains nonpassing and its original receipt is retained. No source-publication, current staging acceptance or production promotion is claimed at this write-back boundary.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.

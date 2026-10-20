@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "1.0",
+  "session": 393,
+  "nativeGoal": {
+    "threadId": "01a15a69-1391-7741-84ce-7401d74e1360",
+    "createdAt": 1792518208
+  },
+  "state": "two-outcomes-and-current-runtime-proofs-verified-complete-suite-and-release-pending",
+  "releaseAccepted": false,
+  "implementation": {
+    "selected": 2,
+    "localAcceptance": "Strict canonical timestamps, future/stale dates, schema/count/row integrity and invalid-provider preservation covered by focused CLI/provider tests.",
+    "review": "Rank and theme source independently reviewed; both round2 pass. Required whole-project checks and visual acceptance remain separate.",
+    "scope": "Rank-report validation, six generated social-image metadata repairs, and a newly observed leaderboard theme/capture release dependency; membership and identity policy unchanged.",
+    "verified": 2,
+    "integrationCleanup": "Removed obsolete manual-only capture tool orphan exemption after real CLI test consumer was registered; independent review round1 pass. Runtime behavior unchanged by this gate cleanup."
+  },
+  "verification": {
+    "build": {
+      "state": "passed",
+      "postbuildSteps": 26,
+      "scope": "Final rank and theme source, complete npm build and actual postbuild lifecycle",
+      "log": ".cache/S393/build-final.log"
+    },
+    "provider": {
+      "state": "healthy",
+      "observedAt": "2026-10-20T18:07:00.667Z",
+      "services": {
+        "db": "ACTIVE_HEALTHY",
+        "rest": "ACTIVE_HEALTHY",
+        "auth": "ACTIVE_HEALTHY"
+      },
+      "restartPerformed": false,
+      "restartApproval": "not-needed-provider-recovered"
+    },
+    "postbuild": {
+      "state": "passed",
+      "scope": "Local postbuild reconciliation only; not full build or release acceptance."
+    },
+    "doctor": {
+      "blockingFailing": 0,
+      "passing": 13,
+      "warning": 3,
+      "advisoryFailing": 1,
+      "total": 17
+    },
+    "fullSuite": {
+      "state": "pending-complete-run",
+      "coverageComplete": false,
+      "attempts": [
+        {
+          "scope": "complete attempt",
+          "failedStep": 22,
+          "reason": "Startup context budget42317 exceeded42000; three completed blocks losslessly archived; open rows preserved; repaired41358"
+        },
+        {
+          "scope": "complete attempt",
+          "failedStep": 55,
+          "reason": "Deploy-currency receipt stale after publisher merge; refreshed with43 graph checks passing"
+        },
+        {
+          "scope": "complete attempt",
+          "failedStep": 168,
+          "reason": "Mobile receipt candidate mismatch; fresh215-cell audit passed and both receipts now bind current candidate"
+        },
+        {
+          "scope": "partial preflight",
+          "failedStep": 234,
+          "reason": "Canonical S393 closeout filename/cache contract absent; rendered canonical artifacts and boundary passes"
+        },
+        {
+          "scope": "proof-surface recheck",
+          "failedSubcheck": 90,
+          "reason": "Visual-retention report stale after new captures; refreshed, zero deleted; full109 checks subsequently pass"
+        },
+        {
+          "scope": "partial preflight",
+          "failedStep": 273,
+          "reason": "New real capture CLI test made manual orphan exemption redundant; exemption removed, five self-tests and542-script consumer check pass; independent review pass"
+        }
+      ],
+      "remainderPreflight": {
+        "state": "passed",
+        "firstStep": 274,
+        "lastStep": 545,
+        "coverageComplete": false,
+        "log": ".cache/S393/remaining-preflight-274.log"
+      }
+    },
+    "premiseTiming": {
+      "state": "nonpassing",
+      "reason": "The session plan was written before the recorded strict checkpoint and was classified as implementation dirt. Selected implementation source was unchanged at that passing checkpoint. Preserve the original receipt."
+    },
+    "focused": {
+      "state": "passed",
+      "passed": 3,
+      "failed": 0,
+      "finalSource": true
+    },
+    "liveRest": {
+      "state": "passed",
+      "queries": 125,
+      "deferrals": 7,
+      "manifestRewritten": false
+    },
+    "visual": {
+      "state": "passed",
+      "captures": 84,
+      "themes": 7,
+      "routes": 6,
+      "viewports": 2,
+      "receipt": "docs/visual-qa/LATEST.json",
+      "baselineCaptures": 12,
+      "limitation": "Pre-existing dismissible mobile Spark overlap disclosed in receipt; initial mislabeled dark-only matrix is not palette proof.",
+      "capturedAt": "2026-10-20T19:07:45.024Z",
+      "scope": "Fresh recapture after graph reconciliation; all seven contact sheets inspected; CANON053 pass"
+    },
+    "themeTests": {
+      "passed": 9,
+      "routeThemeCombinations": 42,
+      "receiptRejectionTests": 1,
+      "review": "round2 pass"
+    },
+    "mobile": {
+      "state": "passed",
+      "cells": 215,
+      "scope": "Fresh S393 local-candidate audit across43 routes and5 viewports",
+      "receipt": "docs/mobile-audit/receipt.json",
+      "log": ".cache/S393/mobile-runtime-local.log"
+    },
+    "proofSurface": {
+      "state": "passed",
+      "commands": 109,
+      "blockingPassed": 92,
+      "advisoryFindings": 0,
+      "log": ".cache/S393/proof-surface-recheck.log"
+    }
+  },
+  "staging": {
+    "state": "not-accepted-for-S393"
+  },
+  "production": {
+    "state": "not-promoted-for-S393"
+  },
+  "remaining": [
+    "Complete current required local validation",
+    "Current staging artifact/configuration parity and runtime acceptance",
+    "Canonical closeout, sanitized direct main push and exact-candidate required hosted checks",
+    "Authorized full routine production promotion and production readback"
+  ],
+  "closeout": {
+    "state": "writeback-completed-validation-and-release-pending",
+    "silScore": 935,
+    "cdr": "reviewed; no new creative direction"
+  },
+  "rollback": {
+    "tag": "s390-production-20261020",
+    "observedProduction": {
+      "baselineSha": "ceeeb2de9f66d9fe239906f368991afe86c512f6",
+      "contentLaneHead": "2a2ccdd40fa872acb98796e42b811d6e15572dd2",
+      "workflowRunId": "39455278286"
+    },
+    "method": "Restore previous accepted Pages deployment using the established rollback path."
+  }
+}

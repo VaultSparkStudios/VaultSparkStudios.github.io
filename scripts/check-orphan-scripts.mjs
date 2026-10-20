@@ -44,9 +44,6 @@ const ALLOWLIST = {
   'check-premise-gate-timing.mjs':
     'Session audit timing diagnostic: invoked with the selected --audit sidecar before closeout. ' +
     'It measures session-specific gate chronology, including honest nonpassing results; it is not a repository build gate.',
-  'capture-theme-matrix.mjs':
-    'Manual CANON-047 harness: captures the 7-theme × key-route screenshot matrix for AI image review. ' +
-    'Invoked by an agent (or human) before release; verdicts recorded in docs/THEME_READABILITY_MATRIX.md.',
   'check-news-visual-proof.mjs':
     'Manual CANON-053 News proof: launches Chromium across 3 changed News routes, 7 themes, and desktop/mobile viewports, ' +
     'then checks visible copy, overflow, and non-blank pixels. Run during News visual changes; the hash-bound release receipt ' +

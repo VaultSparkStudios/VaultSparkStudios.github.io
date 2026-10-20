@@ -8,11 +8,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last5 available totals): 935 → 935 → 940 → 936 → 935
-Avgs (available ten-category audit totals) —3:937.0 |5:936.2 |10:935.0 |25:unmeasured |all:931.5 (archived/noncomparable history excluded)
+Sparkline (last5 available totals): 935 → 940 → 936 → 935 → 935
+Avgs (available rolling totals) —3:935.3 |5:936.2 |10:unmeasured |25:unmeasured |all:unmeasured
 Velocity trend:→ |Protocol velocity:→ |Debt:→
-Last session: 2026-10-20 | Session392 | Total:935/1000 | Velocity:2
-  └ Two local input-boundary outcomes verified; release and native goal remain incomplete.
+Last session: 2026-10-20 | Session393 | Total:935/1000 | Velocity:2
+  └ Rank integrity and generated themes locally verified; full validation and release remain in progress.
 <!-- rolling-status-end -->
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
@@ -3034,3 +3034,32 @@ Brainstorm: (1) cheap parity/generated-data preflight before an expensive suite;
 
 Verification addendum (S392): Both complete545/545 runs passed, including post-signal reconciliation; real mobile215/215 passed. Local commits c6c9d8ff9a and a4a0a4520d are recorded; score935 unchanged. Full site build/provider recovery, current staging, remote publication and production readback remain pending. Evidence: docs/RELEASE_S392.json.
 
+
+
+## Session 393 — 2026-10-20 — implementation verified, release in progress
+
+Product rubric, ten categories ×100. Total:935/1000. Velocity:1 locally verified outcome; release acceptance remains pending.
+
+| Category | Score |
+|---|---:|
+| Dev Health |93|
+| Creative Alignment |94|
+| Momentum |90|
+| Engagement |96|
+| Process Quality |88|
+| Cross-Repo Coherence |93|
+| Security Posture |97|
+| Ecosystem Integration |91|
+| Capital Efficiency |95|
+| Automation Coverage |98|
+
+S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+Score unchanged from S392: no measured conversion, engagement, field-performance or ecosystem-adoption gain is claimed. The source boundary is tested and independently reviewed; process timing remains nonpassing and release is unfinished.
+
+Brainstorm: (1) record the premise gate before creating plan artifacts; (2) remove generated leaderboard metadata/whitespace churn at its source after a measured, separately selected audit; (3) preserve provider recovery observations separately from operational interventions. First two committed as future [SIL][S393] TASK_BOARD items; no automatic scope expansion.
+
+
+### S393 selected-outcome addendum — 2026-10-20
+
+Velocity2: rank integrity plus the observed generated-theme release dependency are locally accepted. Final full build and84 real theme images pass. Score remains935/1000; no measured conversion or field performance gain. The original timing deviation remains nonpassing. Current full-suite and production acceptance are pending.

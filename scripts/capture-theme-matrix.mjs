@@ -103,8 +103,8 @@ async function main() {
   const manifest = [];
   const failures = [];
   for (const viewport of VIEWPORTS) {
-    const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height }, deviceScaleFactor: 1 });
     for (const theme of THEMES) {
+      const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height }, deviceScaleFactor: 1 });
       // Theme is applied by the head boot script from localStorage before paint.
       await context.addInitScript((t) => {
         try {
@@ -118,6 +118,14 @@ async function main() {
           // 'load' not 'networkidle': several pages poll feeds forever.
           const response = await page.goto(`http://127.0.0.1:${PORT}${route}`, { waitUntil: 'load', timeout: 30000 });
           await page.waitForTimeout(600);
+          const observedTheme = await page.evaluate(() => ({
+            stored: localStorage.getItem('vs_theme'),
+            root: document.documentElement.dataset.theme,
+            body: document.body.dataset.theme,
+          }));
+          if (observedTheme.stored !== theme || observedTheme.root !== theme || observedTheme.body !== theme) {
+            throw new Error(`Theme mismatch: requested ${theme}, observed ${JSON.stringify(observedTheme)}`);
+          }
 
           // S341 blank-capture guard. A screenshot of nothing is not evidence, but it
           // IS a PNG, so it flows into the manifest and `record-visual-review --all`
@@ -199,7 +207,7 @@ async function main() {
           else if (FOCUS_CHANGELOG_REACTIONS) await page.locator('.cl-phase').nth(Math.max(0, Math.min(8, (await page.locator('.cl-phase').count()) - 1))).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
           else if (focusSelector) await page.locator(focusSelector).screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
           else await page.screenshot({ animations: 'disabled', path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file });
+          manifest.push({ route, theme, observedTheme, capturedAt: new Date().toISOString(), viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : FOCUS_CHANGELOG_REACTIONS ? 'changelog-reactions' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           // S341: count it. A skipped capture used to shrink the receipt silently,
@@ -212,9 +220,8 @@ async function main() {
         }
       }
       // New context per theme keeps localStorage init scripts from stacking.
-      await context.clearCookies();
+      await context.close();
     }
-    await context.close();
   }
   await browser.close();
   server.close();
@@ -246,6 +253,12 @@ function writeCanonReceipt(manifest) {
   // A canonical receipt is always the complete requested Cartesian matrix.
   // Partial receipts cannot prove route × theme × viewport completion.
   const wanted = manifest;
+  for (const shot of wanted) {
+    if (!shot.observedTheme) throw new Error(`Theme evidence missing for ${shot.file}; recapture before writing a receipt`);
+    if (['stored', 'root', 'body'].some(key => shot.observedTheme[key] !== shot.theme)) {
+      throw new Error(`Theme evidence mismatch for ${shot.file}; requested ${shot.theme}`);
+    }
+  }
   const reviewedFiles = new Set(arg('--reviewed-files', '').split(',').map((value) => value.trim()).filter(Boolean));
   const reviewer = arg('--reviewer', 'image-capable agent');
   const capturedFiles = new Set(wanted.map((shot) => shot.file));
@@ -259,6 +272,7 @@ function writeCanonReceipt(manifest) {
     fs.copyFileSync(src, dest);
     return {
       theme: shot.theme,
+      observedTheme: shot.observedTheme,
       viewportName: shot.viewport,
       viewport: VIEWPORT_PRESETS.find((viewport) => viewport.name === shot.viewport),
       file: shot.file,

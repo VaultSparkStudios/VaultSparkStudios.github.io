@@ -1,3 +1,9 @@
+## S393 — local implementation accepted; release in progress
+
+S393 validates rank-report timestamps, schema/counts and member rows before publication and offline acceptance. Final focused tests3/3 and independent review pass. Supabase recovered without a restart; the complete site build/postbuild and125 live REST queries pass (7 existing deferrals). Whole-project validation, current staging, hosted exact-candidate checks and full production readback remain pending.
+
+Evidence: docs/RELEASE_S393.json. This invocation is native goal01a15a69-1391-7741-84ce-7401d74e1360 createdAt1792518208, bound to S393. Continue its unfinished validation and release; do not start a new arc on continuation.
+
 ## S392 — partial closeout; release acceptance pending
 
 Two operator-input boundaries are implemented and independently reviewed. Both complete545-step validation runs passed; the second verifies regenerated test-signal outputs. The real local mobile audit passed215/215 with zero P0/P1. Local checkpoint commits c6c9d8ff9a and a4a0a4520d are recorded. The full site build failed at Supabase rank-climbers; provider database/REST/auth remain UNHEALTHY. One guarded restart awaits explicit approval; none performed. No S392 push, current staging acceptance or production deployment is claimed.
@@ -609,3 +615,13 @@ S385 final implementation evidence:15/15 focused cases across three engines; thr
 
 
 S389 field-proof repair: RUM grading now precedes field-win and public consumers; both build profiles and affected publisher staging enforce that dependency. Build-order41/41, cascade35/35 and independent review pass. Measured verdict logic unchanged; full validation and release remain pending.
+
+
+### S393 current validation addendum
+
+S393 theme release dependency accepted locally: Final build/postbuild26 pass; generated-page theme tests9/9 including42 route/theme combinations, receipt rejection1/1, independent source review round2 pass. All84 final desktop/mobile captures inspected in seven theme contact sheets; actual root/body/stored theme matches; CANON053 hash-bound receipt passes. Pre-existing dismissible mobile Spark overlap is disclosed. Whole-project suite, current staging, sanitized main push, required exact-candidate CI and full production readback remain pending.
+
+
+### S393 current runtime evidence
+
+Fresh215/215 local mobile cells and84 inspected final theme captures pass. Both receipts bind the current candidate; all109 proof-surface checks pass (92 blocking, zero advisory findings). Partial remainder274–545 passes; it is diagnostic coverage, not a complete whole-project acceptance receipt. Canonical closeout filename/cache and obsolete capture-tool orphan exemption are corrected. Full545-step acceptance, current staging, sanitized main push, required exact-candidate hosted checks and normal full production readback remain pending.

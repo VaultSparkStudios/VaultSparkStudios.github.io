@@ -1,12 +1,12 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-10-20 (Session 392 closeout) -->
-<!-- semantic-freshness: hash=ae1b4ca73f9b9d90 next=393 silSession=392 silScore=935 handoff=392 tests=- -->
+<!-- generated-at: 2026-10-20 (Session 393 closeout) -->
+<!-- semantic-freshness: hash=a2bbc8fb85c8a7cc next=394 silSession=393 silScore=935 handoff=393 tests=- -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 392 closeout · 2026-10-20.
+> **Fast-boot brief** — generated at Session 393 closeout · 2026-10-20.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -15,12 +15,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 393 · 2026-10-20 · FOUNDER MODE                         ║
+║  Session 394 · 2026-10-20 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S392) - WHAT SHIPPED ══════════════════════════╗
-║  S392 partial closeout: two local outcomes verified, publicatio  ║
+╔══ LAST SESSION (S393) - WHAT SHIPPED ══════════════════════════╗
+║  S393 rank integrity and leaderboard themes locally accepted; v  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,7 +42,7 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    935/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 1→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest…   ║
 ║    Trend  ▄▂▄▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -61,20 +61,20 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 392 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 393 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    545/545 passing  ·  Deploy: full production…          ║
+║  Tests:    545/545 passing  ·  Deploy: pending                   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⚠  ░░░░░░░░░░░░░░░░░░░░░░░░   UNMEASURED                        ║
-║     no session lock — agent identity unavailable, so there is…   ║
+║     no ledger measurement yet this session — a byte estimate…    ║
 ║     Verdict: UNMEASURED  ← re-run inside a locked session to…    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         545/545 passing (2026-10-20)                   ║
-║  ✓  Velocity      2 →  ·  Debt: →                                ║
+║  ⚠  Velocity      1 →  ·  Debt: →                                ║
 ║  ⚠  Runway        UNRECOGNISED — no runway measure in the…       ║
 ║  ⛔  Context age   16d                                            ║
 ║  ✓  IGNIS         45412 FORGE  ·  1d old                         ║
@@ -108,32 +108,32 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄▆▄  2→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▆▄  1→  (last 5 sessions)                        ║
 ║  Intent:     ?% achieved last 5                                  ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  928/1000  (↓7 vs current 935)                       ║
-║  At-risk:    Momentum Δ-4                                        ║
-║  Calibration: MAE 3.9 over last 10 forecasts                     ║
+║  Projected:  931/1000  (↓4 vs current 935)                       ║
+║  At-risk:    Momentum Δ-3                                        ║
+║  Calibration: MAE 4.4 over last 10 forecasts                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
+║   96  [PRODUCT]      Complete current whole-project suite, stag  ║
+║        Complete current whole-project suite, staging runtime/ar  ║
+║                                                                  ║
+║   96  [INTELLIGENCE]  Record strict premise acceptance before c  ║
+║        Record strict premise acceptance before creating any pla  ║
+║                                                                  ║
+║   90  [PRODUCT]      Measure and remove generated leaderboard m  ║
+║        Measure and remove generated leaderboard metadata/whites  ║
+║                                                                  ║
+║   87  [PRODUCT]      Complete suite, exact-candidate publicatio  ║
 ║        Complete suite, exact-candidate publication, production   ║
 ║                                                                  ║
-║   93  [PRODUCT]      Require the strict premise checkpoint befo  ║
+║   84  [PRODUCT]      Require the strict premise checkpoint befo  ║
 ║        Require the strict premise checkpoint before delegated e  ║
-║                                                                  ║
-║   93  [INTELLIGENCE]  Assess the existing mobile Spark overlap   ║
-║        Assess the existing mobile Spark overlap with article pr  ║
-║                                                                  ║
-║   87  [PRODUCT]      Rank orb never renders for members.         ║
-║        Rank orb never renders for members. is open, local, and   ║
-║                                                                  ║
-║   84  [PRODUCT]      Member achievements schema/display.         ║
-║        Member achievements schema/display. is open, local, and   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 392 closeout · 2026-10-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 393 closeout · 2026-10-20*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -1,3 +1,5 @@
+- [S393 active arc](S393.md): rank integrity accepted locally; provider recovered, complete build/live REST pass; full validation and release in progress.
+
 - [S392 partial checkpoint](S392.md): two input-boundary fixes verified; complete validation, recovery approval, publication and deployment remain pending. Resume the bound S392 goal.
 - [S391 active arc](S391.md): six CLI guards, REST canary and pending release/provider recovery evidence.
 - [S385 public data contracts](S385.md): ranks, coverage denominators and neutral directory cards.
